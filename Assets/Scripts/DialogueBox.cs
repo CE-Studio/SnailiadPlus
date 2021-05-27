@@ -5,11 +5,14 @@ using UnityEngine;
 public class DialogueBox : MonoBehaviour
 {
     public Animator anim;
+    public AudioSource sfx;
 
     public GameObject cam;
     public GameObject player;
     public TextMesh dialogueText;
     public TextMesh dialogueShadow;
+
+    public AudioClip dialogue0;
 
     private float camPos = 0;
     private int dialogueType = 1;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
@@ -17,16 +20,16 @@ public class DialogueBox : MonoBehaviour
     private int pointer = 0;          // This pointer looks at what page of text it's looking at
     private bool buttonDown = false;
     private bool active = false;
+    private bool playSound = true;
     
     void Start()
     {
         anim = GetComponent<Animator>();
+        sfx = GetComponent<AudioSource>();
         cam = transform.parent.gameObject;
         player = GameObject.FindWithTag("Player");
         dialogueText = transform.Find("Text").gameObject.GetComponent<TextMesh>();
         dialogueShadow = transform.Find("Shadow").gameObject.GetComponent<TextMesh>();
-
-
     }
 
     void Update()
@@ -73,6 +76,7 @@ public class DialogueBox : MonoBehaviour
                     anim.SetBool("isActive", true);
                     boxState = 1;
                     dialogueType = type;
+                    playSound = true;
                     yield return new WaitForSeconds(0.25f);
                     break;
                 case 1:
@@ -97,6 +101,11 @@ public class DialogueBox : MonoBehaviour
                         {
                             dialogueText.text += text[pointer][i];
                             dialogueShadow.text = dialogueText.text;
+                            if (text[pointer][i] != ' ' && playSound)
+                            {
+                                sfx.PlayOneShot(dialogue0);
+                            }
+                            playSound = !playSound;
                             yield return new WaitForFixedUpdate();
                         }
                         if (type == 2)
