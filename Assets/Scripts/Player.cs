@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
     public const float TERMINAL_VELOCITY = -0.66f;
 
+    public const float RAINBOW_WAVE_COOLDOWN = 0.15f;
+
 
     private bool _inShell = false;
 
@@ -83,6 +85,12 @@ public class Player : MonoBehaviour
 
     private bool _readyToRoundCorner = false;
 
+    private int bulletPointer = 0;
+
+    private float fireCooldown = 0;
+
+    public int selectedWeapon = 0;
+
 
     public Animator anim;
 
@@ -95,6 +103,10 @@ public class Player : MonoBehaviour
     public AudioClip shell;
 
     public AudioClip jump;
+
+    public AudioClip shootRWave;
+
+    public GameObject bulletPool;
 
 
     public LayerMask playerCollide;
@@ -109,6 +121,8 @@ public class Player : MonoBehaviour
     public GameObject debugRight;
 
     public GameObject debugJump;
+
+    public GameObject debugShoot;
 
     public Sprite keyIdle;
 
@@ -130,11 +144,14 @@ public class Player : MonoBehaviour
         // to play the background music.
         PlayState.GetNewRoom("Test Zone");
 
+        bulletPool = GameObject.Find("Player Bullet Pool");
+
         debugUp = GameObject.Find("View/Debug Keypress Indicators/Up");
         debugDown = GameObject.Find("View/Debug Keypress Indicators/Down");
         debugLeft = GameObject.Find("View/Debug Keypress Indicators/Left");
         debugRight = GameObject.Find("View/Debug Keypress Indicators/Right");
         debugJump = GameObject.Find("View/Debug Keypress Indicators/Jump");
+        debugShoot = GameObject.Find("View/Debug Keypress Indicators/Shoot");
 
         StartCoroutine("DebugKeys");
     }
@@ -436,6 +453,99 @@ public class Player : MonoBehaviour
             //{
             //    _onSurface = false;
             //}
+
+            // Shoot controls!
+            fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
+            if ((selectedWeapon == 0 && PlayState.hasRainbowWave))
+            {
+                if (fireCooldown == 0 && Input.GetAxisRaw("Shoot") == 1)
+                {
+                    int dir;
+                    Vector2 inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                    if (inputs.x == 1)
+                    {
+                        if (inputs.y == 1)
+                        {
+                            dir = 2;
+                        }
+                        else if (inputs.y == -1)
+                        {
+                            dir = 7;
+                        }
+                        else
+                        {
+                            dir = 4;
+                        }
+                    }
+                    else if (inputs.x == -1)
+                    {
+                        if (inputs.y == 1)
+                        {
+                            dir = 0;
+                        }
+                        else if (inputs.y == -1)
+                        {
+                            dir = 5;
+                        }
+                        else
+                        {
+                            dir = 3;
+                        }
+                    }
+                    else
+                    {
+                        if (inputs.y == 1)
+                        {
+                            dir = 1;
+                        }
+                        else if (inputs.y == -1)
+                        {
+                            dir = 6;
+                        }
+                        else
+                        {
+                            if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && _facingLeft)
+                            {
+                                dir = 3;
+                            }
+                            else if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && !_facingLeft)
+                            {
+                                dir = 4;
+                            }
+                            else if (_currentSurface == DIR_WALL && _facingUp)
+                            {
+                                dir = 1;
+                            }
+                            else
+                            {
+                                dir = 6;
+                            }
+                        }
+                    }
+                    if (bulletPool.transform.GetChild(bulletPointer).gameObject.GetComponent<Bullet>().isActive == false)
+                    {
+                        string weaponType;
+                        switch (selectedWeapon)
+                        {
+                            case 0:
+                                weaponType = "Rainbow Wave";
+                                fireCooldown = RAINBOW_WAVE_COOLDOWN;
+                                break;
+                            default:
+                                weaponType = "Rainbow Wave";
+                                fireCooldown = RAINBOW_WAVE_COOLDOWN;
+                                break;
+                        }
+                        sfx.PlayOneShot(shootRWave);
+                        bulletPool.transform.GetChild(bulletPointer).GetComponent<Bullet>().Shoot(weaponType, dir);
+                        bulletPointer++;
+                        if (bulletPointer == bulletPool.transform.childCount)
+                        {
+                            bulletPointer = 0;
+                        }
+                    }
+                }
+            }
 
             // Jump controls!
             //Debug.Log("Distance from ceiling: " + distanceFromCeiling.distance + ", on surface: " + _onSurface + ", just jumped: " + _justJumped + ", holding jump: " + _holdingJump);
@@ -874,7 +984,7 @@ public class Player : MonoBehaviour
                 _facingUp = false;
             }
             // Here we control the player's shell state
-            if ((_relativeRight || _relativeLeft || Input.GetAxisRaw("Jump") == 1) && _onSurface && _inShell)
+            if ((_relativeRight || _relativeLeft || Input.GetAxisRaw("Jump") == 1 || Input.GetAxisRaw("Shoot") == 1) && _onSurface && _inShell)
             {
                 _inShell = false;
                 _justLeftShell = true;
@@ -1172,48 +1282,58 @@ public class Player : MonoBehaviour
     // This coroutine here is meant to display the keypress indicators intended for debugging purposes
     IEnumerator DebugKeys()
     {
-        if (Input.GetAxisRaw("Horizontal") == 1)
+        while (true)
         {
-            debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            debugRight.GetComponent<SpriteRenderer>().sprite = keyHeld;
-        }
-        else if (Input.GetAxisRaw("Horizontal") == -1)
-        {
-            debugLeft.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
-        }
-        else
-        {
-            debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
-        }
+            if (Input.GetAxisRaw("Horizontal") == 1)
+            {
+                debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
+                debugRight.GetComponent<SpriteRenderer>().sprite = keyHeld;
+            }
+            else if (Input.GetAxisRaw("Horizontal") == -1)
+            {
+                debugLeft.GetComponent<SpriteRenderer>().sprite = keyHeld;
+                debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
+            else
+            {
+                debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
+                debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
 
-        if (Input.GetAxisRaw("Vertical") == 1)
-        {
-            debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            debugUp.GetComponent<SpriteRenderer>().sprite = keyHeld;
-        }
-        else if (Input.GetAxisRaw("Vertical") == -1)
-        {
-            debugDown.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
-        }
-        else
-        {
-            debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
-        }
+            if (Input.GetAxisRaw("Vertical") == 1)
+            {
+                debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
+                debugUp.GetComponent<SpriteRenderer>().sprite = keyHeld;
+            }
+            else if (Input.GetAxisRaw("Vertical") == -1)
+            {
+                debugDown.GetComponent<SpriteRenderer>().sprite = keyHeld;
+                debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
+            else
+            {
+                debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
+                debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
 
-        if (Input.GetAxisRaw("Jump") == 1)
-        {
-            debugJump.GetComponent<SpriteRenderer>().sprite = keyHeld;
-        }
-        else
-        {
-            debugJump.GetComponent<SpriteRenderer>().sprite = keyIdle;
-        }
+            if (Input.GetAxisRaw("Jump") == 1)
+            {
+                debugJump.GetComponent<SpriteRenderer>().sprite = keyHeld;
+            }
+            else
+            {
+                debugJump.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
+            if (Input.GetAxisRaw("Shoot") == 1)
+            {
+                debugShoot.GetComponent<SpriteRenderer>().sprite = keyHeld;
+            }
+            else
+            {
+                debugShoot.GetComponent<SpriteRenderer>().sprite = keyIdle;
+            }
 
-        yield return new WaitForEndOfFrame();
-        StartCoroutine("DebugKeys");
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

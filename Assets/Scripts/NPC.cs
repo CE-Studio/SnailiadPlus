@@ -37,7 +37,7 @@ public class NPC : MonoBehaviour
         bodyAnim = transform.Find("NPC body").GetComponent<Animator>();
         shellAnim = transform.Find("NPC shell").GetComponent<Animator>();
         speechBubble = transform.Find("Speech bubble").gameObject;
-        player = GameObject.Find("Player");
+        player = GameObject.FindWithTag("Player");
 
         body.color = colors[ID * 2];
         shell.color = colors[ID * 2 + 1];

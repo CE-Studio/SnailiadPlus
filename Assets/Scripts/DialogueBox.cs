@@ -21,6 +21,7 @@ public class DialogueBox : MonoBehaviour
     private bool buttonDown = false;
     private bool active = false;
     private bool playSound = true;
+    private bool forcedClosed = false;
     
     void Start()
     {
@@ -63,6 +64,7 @@ public class DialogueBox : MonoBehaviour
     public IEnumerator Box(int type, int speaker, List<string> text)
     {
         active = true;
+        forcedClosed = false;
         while (active)
         {
             switch (boxState)
@@ -99,6 +101,10 @@ public class DialogueBox : MonoBehaviour
                     {
                         for (int i = 0; i < text[pointer].Length; i++)
                         {
+                            if (forcedClosed)
+                            {
+                                break;
+                            }
                             dialogueText.text += text[pointer][i];
                             dialogueShadow.text = dialogueText.text;
                             if (text[pointer][i] != ' ' && playSound)
@@ -143,11 +149,7 @@ public class DialogueBox : MonoBehaviour
                     yield return new WaitForEndOfFrame();
                     break;
                 case 3:
-                    active = false;
-                    pointer = 0;
-                    dialogueText.text = "";
-                    dialogueShadow.text = "";
-                    anim.SetBool("isActive", false);
+                    CloseBox();
                     yield return new WaitForEndOfFrame();
                     break;
                 case 4:
@@ -180,6 +182,11 @@ public class DialogueBox : MonoBehaviour
 
     public void CloseBox()
     {
-        boxState = 3;
+        forcedClosed = true;
+        active = false;
+        pointer = 0;
+        dialogueText.text = "";
+        dialogueShadow.text = "";
+        anim.SetBool("isActive", false);
     }
 }

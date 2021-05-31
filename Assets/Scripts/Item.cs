@@ -42,6 +42,7 @@ public class Item : MonoBehaviour
             {
                 case "Rainbow Wave":
                     PlayState.hasRainbowWave = true;
+                    collision.GetComponent<Player>().selectedWeapon = 0;
                     break;
                 default:
                     break;
