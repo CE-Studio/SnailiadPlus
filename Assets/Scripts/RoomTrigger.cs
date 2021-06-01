@@ -26,7 +26,6 @@ public class RoomTrigger : MonoBehaviour
             }
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 1) * 0.5f - 12.5f, (box.size.y + 1) * 0.5f - 7.5f);
-            Debug.Log("(" + transform.position.x + ", " + transform.position.y + "), (" + PlayState.camBoundaryBuffers.x + ", " + PlayState.camBoundaryBuffers.y + ")");
         }
     }
 
