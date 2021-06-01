@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
+        anim.speed = 1;
         if (PlayState.gameState == "Game")
         {
             if (isActive)
@@ -74,6 +75,10 @@ public class Bullet : MonoBehaviour
                 sprite.enabled = false;
                 lifeTimer = 0;
             }
+        }
+        else
+        {
+            anim.speed = 0;
         }
     }
 

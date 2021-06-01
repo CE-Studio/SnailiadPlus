@@ -108,6 +108,14 @@ public class Player : MonoBehaviour
 
     public GameObject bulletPool;
 
+    public GameObject iconRWave;
+
+    public Sprite blank;
+
+    public Sprite iconRWaveDeselected;
+
+    public Sprite iconRWaveSelected;
+
 
     public LayerMask playerCollide;
 
@@ -145,6 +153,8 @@ public class Player : MonoBehaviour
         PlayState.GetNewRoom("Test Zone");
 
         bulletPool = GameObject.Find("Player Bullet Pool");
+
+        iconRWave = GameObject.Find("View/Weapon Icons/Rainbow Wave");
 
         debugUp = GameObject.Find("View/Debug Keypress Indicators/Up");
         debugDown = GameObject.Find("View/Debug Keypress Indicators/Down");
@@ -545,6 +555,18 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
+            }
+            if (PlayState.hasRainbowWave && selectedWeapon == 0)
+            {
+                iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveSelected;
+            }
+            else if (PlayState.hasRainbowWave)
+            {
+                iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveDeselected;
+            }
+            else
+            {
+                iconRWave.GetComponent<SpriteRenderer>().sprite = blank;
             }
 
             // Jump controls!
