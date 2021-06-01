@@ -8,6 +8,7 @@ TagManager:
   - EnemyCollide
   - Item
   - PlayerBullet
+  - RoomTrigger
   layers:
   - Default
   - TransparentFX

@@ -19,6 +19,9 @@ public class PlayState
 
     public static bool hasRainbowWave = false;
 
+    public static Vector2 camCenter;
+    public static Vector2 camBoundaryBuffers;
+
     public static void GetNewRoom(string intendedArea)
     {
         area = intendedArea;
