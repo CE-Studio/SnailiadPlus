@@ -151,6 +151,17 @@ public class DialogueBox : MonoBehaviour
                                 sfx.PlayOneShot(dialogue0);
                             }
                             playSound = !playSound;
+                            if (Input.GetAxisRaw("Shoot") == 0 && buttonDown)
+                            {
+                                buttonDown = false;
+                            }
+                            if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown && type == 3)
+                            {
+                                buttonDown = true;
+                                dialogueText.text = text[pointer];
+                                dialogueShadow.text = text[pointer];
+                                break;
+                            }
                             yield return new WaitForFixedUpdate();
                         }
                         if (type == 2)
@@ -167,11 +178,11 @@ public class DialogueBox : MonoBehaviour
                     break;
                 case 2:
                     anim.SetBool("canContinue", true);
-                    if (Input.GetAxisRaw("Jump") == 0 && buttonDown)
+                    if (Input.GetAxisRaw("Shoot") == 0 && buttonDown)
                     {
                         buttonDown = false;
                     }
-                    if (Input.GetAxisRaw("Jump") == 1 && !buttonDown)
+                    if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown)
                     {
                         buttonDown = true;
                         anim.SetBool("canContinue", false);
