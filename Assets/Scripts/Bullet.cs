@@ -71,9 +71,7 @@ public class Bullet : MonoBehaviour
             }
             if (lifeTimer > 3)
             {
-                isActive = false;
-                sprite.enabled = false;
-                lifeTimer = 0;
+                Despawn();
             }
         }
         else
@@ -178,10 +176,15 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide"))
         {
-            isActive = false;
-            sprite.enabled = false;
-            lifeTimer = 0;
+            Despawn();
         }
+    }
+
+    public void Despawn()
+    {
+        isActive = false;
+        sprite.enabled = false;
+        lifeTimer = 0;
     }
 
     private void MoveNW()

@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 0326f4d4b7c0b2e41b956071c8f07aa2
+guid: 04ebd8f4d2d9e204593e53b0371c787f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 354841553234022460
-    second: DebugKey_idle
+      213: -8233279692294183291
+    second: DialoguePortrait_0
   - first:
-      213: 5456780478236383563
-    second: DebugKey_pressed
+      213: 9180505643162347052
+    second: DialoguePortrait_1
   - first:
-      213: 4321494891793345434
-    second: DebugKey_held
+      213: 3015035862605544690
+    second: DialoguePortrait_2
+  - first:
+      213: 4765963678563621145
+    second: DialoguePortrait_3
+  - first:
+      213: -1285042617439647903
+    second: DialoguePortrait_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -132,64 +138,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DebugKey_idle
+      name: DialoguePortrait_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 8
-        height: 8
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c30df0c3386ace400800000000000000
-      internalID: 354841553234022460
+      spriteID: 5862e5cddb38dbd80800000000000000
+      internalID: -8233279692294183291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DebugKey_pressed
+      name: DialoguePortrait_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
-        width: 8
-        height: 8
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b49d0960fe06abb40800000000000000
-      internalID: 5456780478236383563
+      spriteID: c262927fd35b76f70800000000000000
+      internalID: 9180505643162347052
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DebugKey_held
+      name: DialoguePortrait_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fcbaa7842f87d920800000000000000
+      internalID: 3015035862605544690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DialoguePortrait_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 919d239e6ba142240800000000000000
+      internalID: 4765963678563621145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DialoguePortrait_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 8
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9be10435b809fb30800000000000000
-      internalID: 4321494891793345434
+      spriteID: 16785424c8c9a2ee0800000000000000
+      internalID: -1285042617439647903
       vertices: []
       indices: 
       edges: []

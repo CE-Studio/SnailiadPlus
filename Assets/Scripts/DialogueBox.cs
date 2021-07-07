@@ -9,12 +9,14 @@ public class DialogueBox : MonoBehaviour
 
     public GameObject cam;
     public GameObject player;
+    public GameObject portrait;
     public TextMesh dialogueText;
     public TextMesh dialogueShadow;
 
     public AudioClip dialogue0;
 
     private float camPos = 0;
+    private float portraitPos = 0;
     private int dialogueType = 1;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int boxState = 0;
     private int pointer = 0;          // This pointer looks at what page of text it's looking at
@@ -28,6 +30,8 @@ public class DialogueBox : MonoBehaviour
         anim = GetComponent<Animator>();
         sfx = GetComponent<AudioSource>();
         cam = transform.parent.gameObject;
+        portrait = transform.Find("Portrait").gameObject;
+        portrait.SetActive(false);
         player = GameObject.FindWithTag("Player");
         dialogueText = transform.Find("Text").gameObject.GetComponent<TextMesh>();
         dialogueShadow = transform.Find("Shadow").gameObject.GetComponent<TextMesh>();
@@ -35,14 +39,22 @@ public class DialogueBox : MonoBehaviour
 
     void Update()
     {
-        if (player.transform.position.y > cam.transform.position.y)
+        if (dialogueType != 3)
         {
-            camPos = Mathf.Lerp(transform.position.y, -4.5f, 1f);
+            if (player.transform.position.y > cam.transform.position.y + 0.125f)
+            {
+                camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
+            }
+            else
+            {
+                camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
+            }
         }
         else
         {
-            camPos = Mathf.Lerp(transform.position.y, 4.5f, 1f);
+            camPos = -4.5f;
         }
+
         if (dialogueType != 1)
         {
             transform.localPosition = new Vector2(0, camPos);
@@ -51,17 +63,32 @@ public class DialogueBox : MonoBehaviour
         {
             transform.localPosition = Vector2.zero;
         }
+
+        portrait.transform.localPosition = new Vector2(-10, portraitPos);
+        portraitPos = Mathf.Lerp(portraitPos, 3, 7 * Time.deltaTime);
+
+        if (dialogueType == 2 && boxState == 0)
+        {
+            if (player.transform.position.y > cam.transform.position.y + 0.125f)
+            {
+                camPos = transform.localPosition.y - 4.5f;
+            }
+            else
+            {
+                camPos = transform.localPosition.y + 4.5f;
+            }
+        }
     }
 
-    public void RunBox(int type, int speaker, List<string> text)
+    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors)
     {
         boxState = 0;
         pointer = 0;
-        IEnumerator cor = Box(type, speaker, text);
+        IEnumerator cor = Box(type, speaker, text, colors);
         StartCoroutine(cor);
     }
 
-    public IEnumerator Box(int type, int speaker, List<string> text)
+    public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors)
     {
         active = true;
         forcedClosed = false;
@@ -80,8 +107,20 @@ public class DialogueBox : MonoBehaviour
                     dialogueType = type;
                     playSound = true;
                     yield return new WaitForSeconds(0.25f);
+                    if (type == 3)
+                    {
+                        portrait.SetActive(true);
+                    }
+                    portraitPos = 1;
                     break;
                 case 1:
+                    if (type == 3)
+                    {
+                        portrait.transform.GetChild(1).GetComponent<SpriteRenderer>().color = colors[pointer * 3];
+                        portrait.transform.GetChild(2).GetComponent<SpriteRenderer>().color = colors[pointer * 3 + 1];
+                        portrait.transform.GetChild(3).GetComponent<SpriteRenderer>().color = colors[pointer * 3 + 2];
+                    }
+
                     if (type == 1)
                     {
                         dialogueText.text = text[pointer];
@@ -120,6 +159,7 @@ public class DialogueBox : MonoBehaviour
                         }
                         else if (type == 3)
                         {
+                            pointer++;
                             boxState = 2;
                         }
                     }
@@ -142,6 +182,11 @@ public class DialogueBox : MonoBehaviour
                         }
                         else
                         {
+                            if (type == 3)
+                            {
+                                dialogueText.text = "";
+                                dialogueShadow.text = "";
+                            }
                             boxState = 1;
                             yield return new WaitForEndOfFrame();
                         }
@@ -188,5 +233,7 @@ public class DialogueBox : MonoBehaviour
         dialogueText.text = "";
         dialogueShadow.text = "";
         anim.SetBool("isActive", false);
+        portrait.SetActive(false);
+        PlayState.paralyzed = false;
     }
 }

@@ -15,8 +15,12 @@ public class PlayState
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
 
+    public static GameObject player = GameObject.Find("Player");
     public static GameObject cam = GameObject.Find("View");
+    public static GameObject screenCover = GameObject.Find("View/Cover");
 
+    public static bool paralyzed = false;
+    public static bool isArmed = false;
     public static bool hasRainbowWave = false;
 
     public static Vector2 camCenter;
@@ -44,6 +48,7 @@ public class PlayState
         areaMus = mus.clip;
         mus.PlayOneShot(majorItemJingle);
         List<string> text = new List<string>();
+        List<Color32> colors = new List<Color32>();
         switch (item)
         {
             case "Rainbow Wave":
@@ -53,17 +58,37 @@ public class PlayState
                 text.Add("There's other text here, but it\ncontains some spoilers that I\nwanted to hide. Sorry!!");
                 break;
         }
+        for (int i = 0; i < text.Count; i++)
+        {
+            colors.Add(new Color32(0, 0, 0, 0));
+            colors.Add(new Color32(0, 0, 0, 0));
+            colors.Add(new Color32(0, 0, 0, 0));
+        }
         gameState = "Dialogue";
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, colors);
     }
 
-    public static void OpenDialogue(int type, int speaker, List<string> text)
+    public static void OpenDialogue(int type, int speaker, List<string> text, List<Color32> colors)
     {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, colors);
     }
 
     public static void CloseDialogue()
     {
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
+    }
+
+    public static void ScreenFlash(string type, int red, int green, int blue, int alpha)
+    {
+        switch (type)
+        {
+            default:
+                screenCover.GetComponent<SpriteRenderer>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
+                break;
+            case "Room Transition":
+                screenCover.GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, 200);
+                player.GetComponent<Player>().ExecuteCoverCommand(type);
+                break;
+        }
     }
 }
