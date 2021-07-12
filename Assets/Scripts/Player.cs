@@ -95,6 +95,8 @@ public class Player : MonoBehaviour
 
     public int maxHealth = 12;
 
+    public bool stunned = false;
+
 
     public Animator anim;
 
@@ -107,6 +109,8 @@ public class Player : MonoBehaviour
     public AudioClip shell;
 
     public AudioClip jump;
+
+    public AudioClip hurt;
 
     public AudioClip shootRWave;
 
@@ -706,47 +710,53 @@ public class Player : MonoBehaviour
                                 {
                                     transform.position += new Vector3(-checkHoriz.distance + 0.0625f, 0, 0);
                                     // And don't forget to check to see if we want to climb a wall!
-                                    if (_relativeUp)
+                                    if (!stunned)
                                     {
-                                        _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(0.25f, -0.25f, 0);
-                                        _justGrabbedWall = true;
-                                    }
-                                    else if (_relativeDown && !_onSurface)
-                                    {
-                                        _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(0.25f, -0.25f, 0);
-                                        _justGrabbedWall = true;
+                                        if (_relativeUp)
+                                        {
+                                            _currentSurface = DIR_WALL;
+                                            anim.SetInteger("currentSurface", 1);
+                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+                                            transform.position += new Vector3(0.25f, -0.25f, 0);
+                                            _justGrabbedWall = true;
+                                        }
+                                        else if (_relativeDown && !_onSurface)
+                                        {
+                                            _currentSurface = DIR_WALL;
+                                            anim.SetInteger("currentSurface", 1);
+                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+                                            transform.position += new Vector3(0.25f, -0.25f, 0);
+                                            _justGrabbedWall = true;
+                                        }
                                     }
                                 }
                                 else
                                 {
                                     transform.position += new Vector3(checkHoriz.distance - 0.0625f, 0, 0);
-                                    if (_relativeUp)
+                                    if (!stunned)
                                     {
-                                        _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(-0.25f, -0.25f, 0);
-                                        _justGrabbedWall = true;
-                                        _onSurface = true;
-                                    }
-                                    else if (_relativeDown && !_onSurface)
-                                    {
-                                        _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(-0.25f, -0.25f, 0);
-                                        _justGrabbedWall = true;
-                                        _onSurface = true;
+                                        if (_relativeUp)
+                                        {
+                                            _currentSurface = DIR_WALL;
+                                            anim.SetInteger("currentSurface", 1);
+                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+                                            transform.position += new Vector3(-0.25f, -0.25f, 0);
+                                            _justGrabbedWall = true;
+                                            _onSurface = true;
+                                        }
+                                        else if (_relativeDown && !_onSurface)
+                                        {
+                                            _currentSurface = DIR_WALL;
+                                            anim.SetInteger("currentSurface", 1);
+                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+                                            transform.position += new Vector3(-0.25f, -0.25f, 0);
+                                            _justGrabbedWall = true;
+                                            _onSurface = true;
+                                        }
                                     }
                                 }
                                 _velocity.x = 0;
@@ -1053,7 +1063,7 @@ public class Player : MonoBehaviour
                 _inShell = false;
                 _justLeftShell = true;
             }
-            if (_relativeDown && !_relativeLeft && !_relativeRight && _justPressedDown && !_inShell && (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed))
+            if (_relativeDown && !_relativeLeft && !_relativeRight && _justPressedDown && !_inShell && (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed) && !stunned)
             {
                 _inShell = true;
                 sfx.PlayOneShot(shell);
@@ -1444,7 +1454,7 @@ public class Player : MonoBehaviour
             NewHeart.transform.localPosition = new Vector3(-12 + (0.5f * (i % 7)), 7 - (0.5f * ((i / 7) % 7)), 0);
             NewHeart.AddComponent<SpriteRenderer>();
             NewHeart.GetComponent<SpriteRenderer>().sprite = heart4;
-            NewHeart.name = "Heart";
+            NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
     }
 
@@ -1480,5 +1490,28 @@ public class Player : MonoBehaviour
                 totalOfPreviousHearts += 4;
             }
         }
+    }
+
+    public IEnumerator StunTimer()
+    {
+        stunned = true;
+        sfx.PlayOneShot(hurt);
+        UpdateHearts();
+        _currentSurface = DIR_FLOOR;
+        _inShell = false;
+        float timer = 0;
+        while (timer < 1)
+        {
+            sprite.enabled = !sprite.enabled;
+            timer += 0.02f;
+            yield return new WaitForFixedUpdate();
+        }
+        sprite.enabled = true;
+        stunned = false;
+    }
+
+    public void BecomeStunned()
+    {
+        StartCoroutine(nameof(StunTimer));
     }
 }

@@ -9,9 +9,11 @@ public class Bullet : MonoBehaviour
     public bool isActive;
     private float lifeTimer;
     private float velocity;
+    public float damage;
 
     public SpriteRenderer sprite;
     public Animator anim;
+    public BoxCollider2D box;
 
     public GameObject player;
     
@@ -20,6 +22,8 @@ public class Bullet : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         sprite.enabled = false;
         anim = GetComponent<Animator>();
+        box = GetComponent<BoxCollider2D>();
+        box.enabled = false;
 
         player = GameObject.FindWithTag("Player");
     }
@@ -84,6 +88,7 @@ public class Bullet : MonoBehaviour
     {
         isActive = true;
         sprite.enabled = true;
+        box.enabled = true;
         transform.position = new Vector2(
             player.transform.position.x + player.GetComponent<Player>().box.offset.x,
             player.transform.position.y + player.GetComponent<Player>().box.offset.y);
@@ -184,7 +189,9 @@ public class Bullet : MonoBehaviour
     {
         isActive = false;
         sprite.enabled = false;
+        box.enabled = false;
         lifeTimer = 0;
+        transform.position = Vector2.zero;
     }
 
     private void MoveNW()

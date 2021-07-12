@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomTrigger : MonoBehaviour
 {
     public BoxCollider2D box;
+    public bool active = true;
     
     void Start()
     {
@@ -19,7 +20,7 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && active)
         {
             foreach (Transform child in transform)
             {
@@ -33,6 +34,17 @@ public class RoomTrigger : MonoBehaviour
                     else
                     {
                         child.GetComponent<Door>().SetState2();
+                    }
+                }
+                else if (child.name.Contains("Grass"))
+                {
+                    switch (child.name)
+                    {
+                        default:
+                            break;
+                        case "Grass":
+                            child.GetComponent<Grass>().Spawn();
+                            break;
                     }
                 }
             }
@@ -56,6 +68,18 @@ public class RoomTrigger : MonoBehaviour
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + 0.125f, PlayState.player.transform.position.y);
             }
+
+            foreach (Transform trigger in transform.parent)
+            {
+                if (!trigger.GetComponent<Collider2D>().enabled && trigger.name != transform.name)
+                {
+                    trigger.GetComponent<Collider2D>().enabled = true;
+                    trigger.GetComponent<RoomTrigger>().active = true;
+                    trigger.GetComponent<RoomTrigger>().DespawnEverything();
+                }
+            }
+
+            box.enabled = false;
         }
     }
 
@@ -63,7 +87,7 @@ public class RoomTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            DespawnEverything();
+            active = false;
         }
     }
 
@@ -75,6 +99,17 @@ public class RoomTrigger : MonoBehaviour
             if (child.name == "Door")
             {
                 child.GetComponent<Door>().SetStateDespawn();
+            }
+            else if (child.name.Contains("Grass"))
+            {
+                switch (child.name)
+                {
+                    default:
+                        break;
+                    case "Grass":
+                        child.GetComponent<Grass>().ToggleActive(false);
+                        break;
+                }
             }
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");

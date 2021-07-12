@@ -9,6 +9,8 @@ TagManager:
   - Item
   - PlayerBullet
   - RoomTrigger
+  - Enemy
+  - Grass
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - 
   - PlayerCollide
   - EnemyCollide
-  - 
-  - 
+  - NonCollidable
+  - Player
   - 
   - 
   - 
