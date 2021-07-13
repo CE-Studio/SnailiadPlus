@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public string bulletType;
+    public int bulletTypeInt;
     public int direction;
     public bool isActive;
     private float lifeTimer;
@@ -120,6 +121,13 @@ public class Bullet : MonoBehaviour
                 break;
         }
         bulletType = type;
+        switch (type)
+        {
+            case "Rainbow Wave":
+                bulletTypeInt = 2;
+                box.size = new Vector2(1.9f, 1.9f);
+                break;
+        }
         direction = dir;
         switch (type)
         {
@@ -179,7 +187,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide"))
+        if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide")) && bulletType == "Peashooter")
         {
             Despawn();
         }
