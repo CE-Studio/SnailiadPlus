@@ -1454,6 +1454,7 @@ public class Player : MonoBehaviour
             NewHeart.transform.localPosition = new Vector3(-12 + (0.5f * (i % 7)), 7 - (0.5f * ((i / 7) % 7)), 0);
             NewHeart.AddComponent<SpriteRenderer>();
             NewHeart.GetComponent<SpriteRenderer>().sprite = heart4;
+            NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
     }

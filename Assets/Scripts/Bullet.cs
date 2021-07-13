@@ -196,7 +196,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNW()
     {
-        transform.position = new Vector2(transform.position.x + (-0.7f * velocity), transform.position.y + (0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (-0.75f * velocity), transform.position.y + (0.7f * velocity));
     }
 
     private void MoveN()
@@ -206,7 +206,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNE()
     {
-        transform.position = new Vector2(transform.position.x + (0.7f * velocity), transform.position.y + (0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (0.75f * velocity), transform.position.y + (0.7f * velocity));
     }
 
     private void MoveW()
@@ -221,7 +221,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveSW()
     {
-        transform.position = new Vector2(transform.position.x + (-0.7f * velocity), transform.position.y + (-0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (-0.75f * velocity), transform.position.y + (-0.7f * velocity));
     }
 
     private void MoveS()
@@ -231,6 +231,6 @@ public class Bullet : MonoBehaviour
 
     private void MoveSE()
     {
-        transform.position = new Vector2(transform.position.x + (0.7f * velocity), transform.position.y + (-0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (0.75f * velocity), transform.position.y + (-0.7f * velocity));
     }
 }

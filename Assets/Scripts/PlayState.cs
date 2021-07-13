@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayState
 {
@@ -25,6 +26,9 @@ public class PlayState
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
+
+    public static Vector2 respawnCoords = new Vector2(-7, 0);
+    public static Scene respawnScene = SceneManager.GetActiveScene();
 
     public static void GetNewRoom(string intendedArea)
     {
