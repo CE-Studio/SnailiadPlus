@@ -56,111 +56,223 @@ public class Door : MonoBehaviour
 
     public void PlayAnim(string animType)
     {
-        switch (animType)
+        if (direction == 1 || direction == 3)
         {
-            default:
-                anim.Play("Base Layer.H Blue Hold", 0, 0);
-                break;
-            case "hold":
-                if (PlayState.colorblindMode)
-                {
+            switch (animType)
+            {
+                default:
+                    anim.Play("Base Layer.V Blue Hold", 0, 0);
+                    break;
+                case "hold":
+                    if (PlayState.colorblindMode)
+                    {
+                        if (locked)
+                        {
+                            anim.Play("Base Layer.V Locked Hold2", 0, 0);
+                        }
+                        else
+                        {
+                            switch (doorWeapon)
+                            {
+                                case 0:
+                                    anim.Play("Base Layer.V Blue Hold2", 0, 0);
+                                    break;
+                                case 1:
+                                    anim.Play("Base Layer.V Purple Hold2", 0, 0);
+                                    break;
+                                case 2:
+                                    anim.Play("Base Layer.V Red Hold2", 0, 0);
+                                    break;
+                                case 3:
+                                    anim.Play("Base Layer.V Green Hold2", 0, 0);
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (locked)
+                        {
+                            anim.Play("Base Layer.V Locked Hold", 0, 0);
+                        }
+                        else
+                        {
+                            switch (doorWeapon)
+                            {
+                                case 0:
+                                    anim.Play("Base Layer.V Blue Hold", 0, 0);
+                                    break;
+                                case 1:
+                                    anim.Play("Base Layer.V Purple Hold", 0, 0);
+                                    break;
+                                case 2:
+                                    anim.Play("Base Layer.V Red Hold", 0, 0);
+                                    break;
+                                case 3:
+                                    anim.Play("Base Layer.V Green Hold", 0, 0);
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                case "open":
                     if (locked)
                     {
-                        anim.Play("Base Layer.H Locked Hold2", 0, 0);
+                        anim.Play("Base Layer.V Locked Open", 0, 0);
                     }
                     else
                     {
                         switch (doorWeapon)
                         {
                             case 0:
-                                anim.Play("Base Layer.H Blue Hold2", 0, 0);
+                                anim.Play("Base Layer.V Blue Open", 0, 0);
                                 break;
                             case 1:
-                                anim.Play("Base Layer.H Purple Hold2", 0, 0);
+                                anim.Play("Base Layer.V Purple Open", 0, 0);
                                 break;
                             case 2:
-                                anim.Play("Base Layer.H Red Hold2", 0, 0);
+                                anim.Play("Base Layer.V Red Open", 0, 0);
                                 break;
                             case 3:
-                                anim.Play("Base Layer.H Green Hold2", 0, 0);
+                                anim.Play("Base Layer.V Green Open", 0, 0);
                                 break;
                         }
                     }
-                }
-                else
-                {
+                    break;
+                case "close":
                     if (locked)
                     {
-                        anim.Play("Base Layer.H Locked Hold", 0, 0);
+                        anim.Play("Base Layer.V Locked Close", 0, 0);
                     }
                     else
                     {
                         switch (doorWeapon)
                         {
                             case 0:
-                                anim.Play("Base Layer.H Blue Hold", 0, 0);
+                                anim.Play("Base Layer.V Blue Close", 0, 0);
                                 break;
                             case 1:
-                                anim.Play("Base Layer.H Purple Hold", 0, 0);
+                                anim.Play("Base Layer.V Purple Close", 0, 0);
                                 break;
                             case 2:
-                                anim.Play("Base Layer.H Red Hold", 0, 0);
+                                anim.Play("Base Layer.V Red Close", 0, 0);
                                 break;
                             case 3:
-                                anim.Play("Base Layer.H Green Hold", 0, 0);
+                                anim.Play("Base Layer.V Green Close", 0, 0);
                                 break;
                         }
                     }
-                }
-                break;
-            case "open":
-                if (locked)
-                {
-                    anim.Play("Base Layer.H Locked Open", 0, 0);
-                }
-                else
-                {
-                    switch (doorWeapon)
+                    break;
+            }
+        }
+        else
+        {
+            switch (animType)
+            {
+                default:
+                    anim.Play("Base Layer.H Blue Hold", 0, 0);
+                    break;
+                case "hold":
+                    if (PlayState.colorblindMode)
                     {
-                        case 0:
-                            anim.Play("Base Layer.H Blue Open", 0, 0);
-                            break;
-                        case 1:
-                            anim.Play("Base Layer.H Purple Open", 0, 0);
-                            break;
-                        case 2:
-                            anim.Play("Base Layer.H Red Open", 0, 0);
-                            break;
-                        case 3:
-                            anim.Play("Base Layer.H Green Open", 0, 0);
-                            break;
+                        if (locked)
+                        {
+                            anim.Play("Base Layer.H Locked Hold2", 0, 0);
+                        }
+                        else
+                        {
+                            switch (doorWeapon)
+                            {
+                                case 0:
+                                    anim.Play("Base Layer.H Blue Hold2", 0, 0);
+                                    break;
+                                case 1:
+                                    anim.Play("Base Layer.H Purple Hold2", 0, 0);
+                                    break;
+                                case 2:
+                                    anim.Play("Base Layer.H Red Hold2", 0, 0);
+                                    break;
+                                case 3:
+                                    anim.Play("Base Layer.H Green Hold2", 0, 0);
+                                    break;
+                            }
+                        }
                     }
-                }
-                break;
-            case "close":
-                if (locked)
-                {
-                    anim.Play("Base Layer.H Locked Close", 0, 0);
-                }
-                else
-                {
-                    switch (doorWeapon)
+                    else
                     {
-                        case 0:
-                            anim.Play("Base Layer.H Blue Close", 0, 0);
-                            break;
-                        case 1:
-                            anim.Play("Base Layer.H Purple Close", 0, 0);
-                            break;
-                        case 2:
-                            anim.Play("Base Layer.H Red Close", 0, 0);
-                            break;
-                        case 3:
-                            anim.Play("Base Layer.H Green Close", 0, 0);
-                            break;
+                        if (locked)
+                        {
+                            anim.Play("Base Layer.H Locked Hold", 0, 0);
+                        }
+                        else
+                        {
+                            switch (doorWeapon)
+                            {
+                                case 0:
+                                    anim.Play("Base Layer.H Blue Hold", 0, 0);
+                                    break;
+                                case 1:
+                                    anim.Play("Base Layer.H Purple Hold", 0, 0);
+                                    break;
+                                case 2:
+                                    anim.Play("Base Layer.H Red Hold", 0, 0);
+                                    break;
+                                case 3:
+                                    anim.Play("Base Layer.H Green Hold", 0, 0);
+                                    break;
+                            }
+                        }
                     }
-                }
-                break;
+                    break;
+                case "open":
+                    if (locked)
+                    {
+                        anim.Play("Base Layer.H Locked Open", 0, 0);
+                    }
+                    else
+                    {
+                        switch (doorWeapon)
+                        {
+                            case 0:
+                                anim.Play("Base Layer.H Blue Open", 0, 0);
+                                break;
+                            case 1:
+                                anim.Play("Base Layer.H Purple Open", 0, 0);
+                                break;
+                            case 2:
+                                anim.Play("Base Layer.H Red Open", 0, 0);
+                                break;
+                            case 3:
+                                anim.Play("Base Layer.H Green Open", 0, 0);
+                                break;
+                        }
+                    }
+                    break;
+                case "close":
+                    if (locked)
+                    {
+                        anim.Play("Base Layer.H Locked Close", 0, 0);
+                    }
+                    else
+                    {
+                        switch (doorWeapon)
+                        {
+                            case 0:
+                                anim.Play("Base Layer.H Blue Close", 0, 0);
+                                break;
+                            case 1:
+                                anim.Play("Base Layer.H Purple Close", 0, 0);
+                                break;
+                            case 2:
+                                anim.Play("Base Layer.H Red Close", 0, 0);
+                                break;
+                            case 3:
+                                anim.Play("Base Layer.H Green Close", 0, 0);
+                                break;
+                        }
+                    }
+                    break;
+            }
         }
     }
 
@@ -287,26 +399,26 @@ public class Door : MonoBehaviour
             //            break;
             //    }
             //}
-            if (!locked && collision.GetComponent<Bullet>().bulletTypeInt >= doorWeapon)
+            if (!locked && (collision.GetComponent<Bullet>().bulletTypeInt >= doorWeapon || (collision.GetComponent<Bullet>().bulletTypeInt >= 3 && doorWeapon == 3)))
             {
                 SetState0();
             }
 
-            switch (direction)
-            {
-                case 0:
-                    collision.transform.position = new Vector2(collision.transform.position.x - 1, collision.transform.position.y);
-                    break;
-                case 1:
-                    collision.transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y + 1);
-                    break;
-                case 2:
-                    collision.transform.position = new Vector2(collision.transform.position.x + 1, collision.transform.position.y);
-                    break;
-                case 3:
-                    collision.transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y - 1);
-                    break;
-            }
+            //switch (direction)
+            //{
+            //    case 0:
+            //        collision.transform.position = new Vector2(collision.transform.position.x - 1, collision.transform.position.y);
+            //        break;
+            //    case 1:
+            //        collision.transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y + 1);
+            //        break;
+            //    case 2:
+            //        collision.transform.position = new Vector2(collision.transform.position.x + 1, collision.transform.position.y);
+            //        break;
+            //    case 3:
+            //        collision.transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y - 1);
+            //        break;
+            //}
         }
     }
 

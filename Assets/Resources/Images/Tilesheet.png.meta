@@ -161,6 +161,9 @@ TextureImporter:
   - first:
       213: -2909065860053656818
     second: Tilesheet_35
+  - first:
+      213: 1387119121077405875
+    second: Tilesheet_36
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
