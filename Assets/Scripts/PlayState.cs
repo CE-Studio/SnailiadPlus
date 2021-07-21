@@ -12,7 +12,7 @@ public class PlayState
     public static float playbackTime;
     public static string area;
     public static AudioClip areaMus;
-    public static bool colorblindMode = true;
+    public static bool colorblindMode = false;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");

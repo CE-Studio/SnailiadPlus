@@ -5,16 +5,24 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public string itemType = "Rainbow Wave";
+    public bool countedInPercentage;
+    public bool collected;
+    public int itemID;
 
     public Animator anim;
     public BoxCollider2D box;
+    public SpriteRenderer sprite;
+    public AudioSource sfx;
 
-    public bool countedInPercentage;
+    public AudioClip minorJingle;
+    public AudioClip majorJingle;
     
     void Start()
     {
         anim = GetComponent<Animator>();
         box = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        sfx = GetComponent<AudioSource>();
 
         switch (itemType)
         {
@@ -44,12 +52,30 @@ public class Item : MonoBehaviour
                     PlayState.hasRainbowWave = true;
                     PlayState.isArmed = true;
                     collision.GetComponent<Player>().selectedWeapon = 0;
+                    GetMinorItem("Rainbow Wave");
                     break;
                 default:
                     break;
             }
-            PlayState.RunItemPopup(itemType);
-            Destroy(gameObject);
+            //PlayState.RunItemPopup(itemType);
+            //Destroy(gameObject);
+            SetDeactivated();
         }
+    }
+
+    void GetMinorItem(string item)
+    {
+        sfx.PlayOneShot(minorJingle);
+    }
+
+    void GetMajorItem(string item)
+    {
+        sfx.PlayOneShot(majorJingle);
+    }
+
+    public void SetDeactivated()
+    {
+        box.enabled = false;
+        sprite.enabled = false;
     }
 }

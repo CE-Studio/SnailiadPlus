@@ -129,60 +129,78 @@ public class Bullet : MonoBehaviour
                 break;
         }
         direction = dir;
-        switch (type)
+        switch (bulletType)
         {
             case "Rainbow Wave":
-                anim.SetInteger("bulletType", 0);
-                velocity = 0;
-                break;
-            default:
-                anim.SetInteger("bulletType", 0);
                 velocity = 0;
                 break;
         }
-        switch (dir)
+        PlayAnim();
+    }
+
+    void PlayAnim()
+    {
+        string animToPlay = "";
+        switch (bulletType)
+        {
+            case "Rainbow Wave":
+                animToPlay += "Rainbow Wave ";
+                break;
+            default:
+                animToPlay += "Rainbow Wave ";
+                break;
+        }
+        switch (direction)
         {
             case 0:
-                anim.SetInteger("direction", 2);
+                animToPlay += "diagonal";
                 sprite.flipX = true;
                 sprite.flipY = false;
                 break;
             case 1:
-                anim.SetInteger("direction", 1);
+                animToPlay += "vertical";
                 sprite.flipX = false;
                 sprite.flipY = false;
                 break;
             case 2:
-                anim.SetInteger("direction", 2);
+                animToPlay += "diagonal";
                 sprite.flipX = false;
                 sprite.flipY = false;
                 break;
             case 3:
-                anim.SetInteger("direction", 0);
+                animToPlay += "horizontal";
                 sprite.flipX = true;
                 sprite.flipY = false;
                 break;
             case 4:
-                anim.SetInteger("direction", 0);
+                animToPlay += "horizontal";
                 sprite.flipX = false;
                 sprite.flipY = false;
                 break;
             case 5:
-                anim.SetInteger("direction", 2);
+                animToPlay += "diagonal";
                 sprite.flipX = true;
                 sprite.flipY = true;
                 break;
             case 6:
-                anim.SetInteger("direction", 1);
+                animToPlay += "vertical";
                 sprite.flipX = false;
                 sprite.flipY = true;
                 break;
             case 7:
-                anim.SetInteger("direction", 2);
+                animToPlay += "diagonal";
                 sprite.flipX = false;
                 sprite.flipY = true;
                 break;
         }
+        float startTime = 0;
+        switch (bulletType)
+        {
+            case "Rainbow Wave":
+                startTime = Random.Range(1, 7) * 0.16f;
+                break;
+        }
+        anim.Play(animToPlay, 0, startTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
