@@ -136,6 +136,10 @@ public class Player : MonoBehaviour
 
     public Sprite heart4;
 
+    public GameObject itemTextGroup;
+
+    public GameObject itemPercentageGroup;
+
 
     public LayerMask playerCollide;
 
@@ -186,6 +190,9 @@ public class Player : MonoBehaviour
         debugJump = GameObject.Find("View/Debug Keypress Indicators/Jump");
         debugShoot = GameObject.Find("View/Debug Keypress Indicators/Shoot");
         debugStrafe = GameObject.Find("View/Debug Keypress Indicators/Strafe");
+
+        itemTextGroup = GameObject.Find("View/Item Get Text");
+        itemPercentageGroup = GameObject.Find("View/Item Percentage Text");
 
         RenderNewHearts();
         UpdateHearts();
@@ -1514,5 +1521,155 @@ public class Player : MonoBehaviour
     public void BecomeStunned()
     {
         StartCoroutine(nameof(StunTimer));
+    }
+
+    public void FlashItemText(string itemName)
+    {
+        StartCoroutine(FlashText("item", itemName));
+    }
+
+    public void FlashCollectionText()
+    {
+        StartCoroutine(FlashText("collection", ""));
+    }
+
+    public IEnumerator FlashText(string textType, string itemName)
+    {
+        float timer = 0;
+        int colorPointer = 0;
+        int colorCooldown = 0;
+        switch (textType)
+        {
+            default:
+                yield return new WaitForEndOfFrame();
+                break;
+            case "item":
+                SetTextAlpha("item", 255);
+                SetTextDisplayed("item", itemName);
+                while (timer < 3)
+                {
+                    if (colorCooldown <= 0)
+                    {
+                        switch (colorPointer)
+                        {
+                            case 0:
+                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(189, 191, 198, 255);
+                                break;
+                            case 1:
+                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(247, 196, 223, 255);
+                                break;
+                            case 2:
+                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(252, 214, 136, 255);
+                                break;
+                            case 3:
+                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(170, 229, 214, 255);
+                                break;
+                        }
+                        colorPointer++;
+                        if (colorPointer >= 4)
+                        {
+                            colorPointer = 0;
+                        }
+                        colorCooldown = 12;
+                    }
+                    else
+                        colorCooldown--;
+
+                    if (timer > 2.5f)
+                    {
+                        SetTextAlpha("item", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)));
+                    }
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                SetTextAlpha("item", 0);
+                break;
+            case "collection":
+                SetTextAlpha("collection", 255);
+                SetTextDisplayed("collection", "Item collection ??% complete!!  Saving not yet implemented.");
+                while (timer < 2)
+                {
+                    if (colorCooldown <= 0)
+                    {
+                        switch (colorPointer)
+                        {
+                            case 0:
+                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(189, 191, 198, 255);
+                                break;
+                            case 1:
+                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(247, 196, 223, 255);
+                                break;
+                            case 2:
+                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(252, 214, 136, 255);
+                                break;
+                            case 3:
+                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(170, 229, 214, 255);
+                                break;
+                        }
+                        colorPointer++;
+                        if (colorPointer >= 4)
+                        {
+                            colorPointer = 0;
+                        }
+                        colorCooldown = 12;
+                    }
+                    else
+                        colorCooldown--;
+
+                    if (timer > 1.5f)
+                    {
+                        SetTextAlpha("collection", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)));
+                    }
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                SetTextAlpha("collection", 0);
+                break;
+        }
+        yield return new WaitForEndOfFrame();
+    }
+
+    void SetTextAlpha(string textGroup, int alpha)
+    {
+        switch (textGroup)
+        {
+            case "item":
+                foreach (Transform textObj in itemTextGroup.transform)
+                {
+                    textObj.GetComponent<TextMesh>().color = new Color32(
+                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
+                        (byte)alpha
+                        );
+                }
+                break;
+            case "collection":
+                foreach (Transform textObj in itemPercentageGroup.transform)
+                {
+                    textObj.GetComponent<TextMesh>().color = new Color32(
+                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
+                        (byte)alpha
+                        );
+                }
+                break;
+        }
+    }
+
+    void SetTextDisplayed(string textGroup, string textToDisplay)
+    {
+        switch (textGroup)
+        {
+            case "item":
+                foreach (Transform textObj in itemTextGroup.transform)
+                    textObj.GetComponent<TextMesh>().text = textToDisplay;
+                break;
+            case "collection":
+                foreach (Transform textObj in itemPercentageGroup.transform)
+                    textObj.GetComponent<TextMesh>().text = textToDisplay;
+                break;
+        }
     }
 }

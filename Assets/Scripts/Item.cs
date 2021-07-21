@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
     public bool collected;
     public int itemID;
 
+    public Vector2 originPos;
+
     public Animator anim;
     public BoxCollider2D box;
     public SpriteRenderer sprite;
@@ -24,14 +26,16 @@ public class Item : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         sfx = GetComponent<AudioSource>();
 
+        originPos = transform.localPosition;
+
         switch (itemType)
         {
             case "Rainbow Wave":
-                anim.SetInteger("itemType", 0);
+                anim.Play("RainbowWave", 0, 0);
                 box.size = new Vector2(1.25f, 2f);
                 break;
             default:
-                anim.SetInteger("itemType", 0);
+                anim.Play("RainbowWave", 0, 0);
                 box.size = new Vector2(1.25f, 2f);
                 break;
         }
@@ -59,7 +63,10 @@ public class Item : MonoBehaviour
             }
             //PlayState.RunItemPopup(itemType);
             //Destroy(gameObject);
-            SetDeactivated();
+            PlayState.FlashItemText(itemType);
+            PlayState.FlashCollectionText();
+            //SetDeactivated();
+            StartCoroutine(nameof(HoverOverPlayer));
         }
     }
 
@@ -77,5 +84,34 @@ public class Item : MonoBehaviour
     {
         box.enabled = false;
         sprite.enabled = false;
+    }
+
+    public IEnumerator HoverOverPlayer()
+    {
+        box.enabled = false;
+        float timer = 0;
+        GameObject player = GameObject.Find("Player");
+        while (timer < 2)
+        {
+            switch (player.GetComponent<Player>()._currentSurface)
+            {
+                case 0:
+                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.5f));
+                    break;
+                case 1:
+                    if (player.GetComponent<Player>()._facingLeft)
+                        transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.5f), player.transform.position.y);
+                    else
+                        transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.5f), player.transform.position.y);
+                    break;
+                case 2:
+                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.5f));
+                    break;
+            }
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
+        transform.localPosition = originPos;
+        SetDeactivated();
     }
 }

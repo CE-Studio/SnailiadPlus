@@ -96,4 +96,14 @@ public class PlayState
                 break;
         }
     }
+
+    public static void FlashItemText(string item)
+    {
+        player.GetComponent<Player>().FlashItemText(item);
+    }
+
+    public static void FlashCollectionText()
+    {
+        player.GetComponent<Player>().FlashCollectionText();
+    }
 }
