@@ -97,6 +97,10 @@ public class Player : MonoBehaviour
 
     public bool stunned = false;
 
+    private string currentAnim = "";
+
+    private bool inDeathCutscene = false;
+
 
     public Animator anim;
 
@@ -111,6 +115,8 @@ public class Player : MonoBehaviour
     public AudioClip jump;
 
     public AudioClip hurt;
+
+    public AudioClip die;
 
     public AudioClip shootRWave;
 
@@ -203,7 +209,7 @@ public class Player : MonoBehaviour
     // FixedUpdate() is called repeatedly over a fixed duration of time (every 0.02 seconds)
     void FixedUpdate()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == "Game" && !inDeathCutscene)
         {
             anim.speed = 1;
             // This is a boxcast meant to test the player's X movement
@@ -652,12 +658,10 @@ public class Player : MonoBehaviour
                             box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
                             _currentSurface = 0;
                             _onSurface = false;
-                            anim.SetInteger("currentSurface", 0);
                             sprite.flipY = false;
                             sfx.PlayOneShot(jump);
                             _justJumped = true;
                             _inShell = false;
-                            anim.SetBool("inShell", false);
                         }
                     }
                     // If not, jump normally
@@ -677,7 +681,6 @@ public class Player : MonoBehaviour
                             _onSurface = false;
                             transform.position += new Vector3(0, JUMPPOWER_NORMAL * Time.fixedDeltaTime, 0);
                             _inShell = false;
-                            anim.SetBool("inShell", false);
                         }
                         else
                         {
@@ -722,7 +725,6 @@ public class Player : MonoBehaviour
                                         if (_relativeUp)
                                         {
                                             _currentSurface = DIR_WALL;
-                                            anim.SetInteger("currentSurface", 1);
                                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                             box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
                                             transform.position += new Vector3(0.25f, -0.25f, 0);
@@ -731,7 +733,6 @@ public class Player : MonoBehaviour
                                         else if (_relativeDown && !_onSurface)
                                         {
                                             _currentSurface = DIR_WALL;
-                                            anim.SetInteger("currentSurface", 1);
                                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                             box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
                                             transform.position += new Vector3(0.25f, -0.25f, 0);
@@ -747,7 +748,6 @@ public class Player : MonoBehaviour
                                         if (_relativeUp)
                                         {
                                             _currentSurface = DIR_WALL;
-                                            anim.SetInteger("currentSurface", 1);
                                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                             box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
                                             transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -757,7 +757,6 @@ public class Player : MonoBehaviour
                                         else if (_relativeDown && !_onSurface)
                                         {
                                             _currentSurface = DIR_WALL;
-                                            anim.SetInteger("currentSurface", 1);
                                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                             box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
                                             transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -807,7 +806,6 @@ public class Player : MonoBehaviour
                                 {
                                     _currentSurface = DIR_CEILING;
                                     sprite.flipY = true;
-                                    anim.SetInteger("currentSurface", 0);
                                     transform.position += new Vector3(0, -1.125f, 0);
                                     _justGrabbedWall = true;
                                     _onSurface = true;
@@ -827,7 +825,6 @@ public class Player : MonoBehaviour
                         else if (!_facingLeft && _relativeDown && _relativeRight && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
                         {
                             _currentSurface = DIR_WALL;
-                            anim.SetInteger("currentSurface", 1);
                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                             box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
                             transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.25f), transform.position.y - 0.25f, 0);
@@ -839,7 +836,6 @@ public class Player : MonoBehaviour
                         else if (_facingLeft && _relativeDown && _relativeLeft && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
                         {
                             _currentSurface = DIR_WALL;
-                            anim.SetInteger("currentSurface", 1);
                             box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                             box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_SIZEX);
                             transform.position = new Vector3(Mathf.RoundToInt(transform.position.x - 0.25f), transform.position.y - 0.25f, 0);
@@ -897,7 +893,6 @@ public class Player : MonoBehaviour
                                 if (Mathf.Sign(_velocity.y) == -1)
                                 {
                                     transform.position += new Vector3(0, -checkVert.distance + 0.0625f, 0);
-                                    anim.SetInteger("currentSurface", 0);
                                     _currentSurface = DIR_FLOOR;
                                     box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
                                     box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
@@ -926,7 +921,6 @@ public class Player : MonoBehaviour
                                     // ...UNLESS the player specifically states they want to move to the ceiling
                                     if (_facingLeft && _relativeUp)
                                     {
-                                        anim.SetInteger("currentSurface", 0);
                                         _currentSurface = DIR_CEILING;
                                         _facingLeft = false;
                                         sprite.flipX = false;
@@ -937,7 +931,6 @@ public class Player : MonoBehaviour
                                     }
                                     else if (!_facingLeft && _relativeUp)
                                     {
-                                        anim.SetInteger("currentSurface", 0);
                                         _currentSurface = DIR_CEILING;
                                         _facingLeft = true;
                                         sprite.flipX = true;
@@ -959,7 +952,6 @@ public class Player : MonoBehaviour
                         if (checkHoriz.collider == null && !_justGrabbedWall)
                         {
                             _currentSurface = DIR_FLOOR;
-                            anim.SetInteger("currentSurface", 0);
                             box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
                             box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
                             if (_facingLeft)
@@ -991,7 +983,6 @@ public class Player : MonoBehaviour
                                     if (_relativeUp)
                                     {
                                         _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
                                         box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                         box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
                                         transform.position += new Vector3(0.25f, 0.25f, 0);
@@ -1005,7 +996,6 @@ public class Player : MonoBehaviour
                                     if (_relativeUp)
                                     {
                                         _currentSurface = DIR_WALL;
-                                        anim.SetInteger("currentSurface", 1);
                                         box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
                                         box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
                                         transform.position += new Vector3(-0.25f, 0.25f, 0);
@@ -1033,10 +1023,8 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        else
-        {
+        else if (!inDeathCutscene)
             anim.speed = 0;
-        }
     }
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
@@ -1044,6 +1032,9 @@ public class Player : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
+            // This is only here to make sure it's called once, before anything else that needs it
+            PlayState.armorPingPlayedThisFrame = false;
+
             // First, get the inputs, converted to the right relative directions
             GetInputs();
 
@@ -1104,11 +1095,14 @@ public class Player : MonoBehaviour
             // Set the right animation for in shell vs out of shell
             if (_inShell)
             {
-                anim.SetBool("inShell", true);
+                //anim.SetBool("inShell", true);
+                PlayAnim("shell");
             }
             else
             {
-                anim.SetBool("inShell", false);
+                //anim.SetBool("inShell", false);
+                if (!inDeathCutscene)
+                    PlayAnim("idle");
             }
 
             // Get specifics on current inputs and set velocities before FixedUpdate handles them
@@ -1433,6 +1427,9 @@ public class Player : MonoBehaviour
             case "Room Transition":
                 StartCoroutine(nameof(CoverRoomTransition));
                 break;
+            case "Death Transition":
+                StartCoroutine(nameof(CoverDeathTransition));
+                break;
         }
     }
     public IEnumerator CoverRoomTransition()
@@ -1442,6 +1439,18 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
             sprite.color = new Color32(0, 0, 0, (byte)Mathf.Clamp((sprite.color.a * 255) - 15, 0, Mathf.Infinity));
+        }
+    }
+
+    public IEnumerator CoverDeathTransition()
+    {
+        SpriteRenderer sprite = PlayState.screenCover.GetComponent<SpriteRenderer>();
+        float timer = 0;
+        while (sprite.color.a < 1)
+        {
+            yield return new WaitForFixedUpdate();
+            sprite.color = new Color32(0, 64, 127, (byte)Mathf.Lerp(0, 255, timer * 2));
+            timer += Time.fixedDeltaTime;
         }
     }
 
@@ -1530,10 +1539,10 @@ public class Player : MonoBehaviour
 
     public void FlashCollectionText()
     {
-        StartCoroutine(FlashText("collection", ""));
+        StartCoroutine(FlashText("collection"));
     }
 
-    public IEnumerator FlashText(string textType, string itemName)
+    public IEnumerator FlashText(string textType, string itemName = "No item")
     {
         float timer = 0;
         int colorPointer = 0;
@@ -1570,7 +1579,7 @@ public class Player : MonoBehaviour
                         {
                             colorPointer = 0;
                         }
-                        colorCooldown = 12;
+                        colorCooldown = 2;
                     }
                     else
                         colorCooldown--;
@@ -1579,14 +1588,14 @@ public class Player : MonoBehaviour
                     {
                         SetTextAlpha("item", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)));
                     }
-                    yield return new WaitForEndOfFrame();
+                    yield return new WaitForFixedUpdate();
                     timer += Time.deltaTime;
                 }
                 SetTextAlpha("item", 0);
                 break;
             case "collection":
                 SetTextAlpha("collection", 255);
-                SetTextDisplayed("collection", "Item collection ??% complete!!  Saving not yet implemented.");
+                SetTextDisplayed("collection", "Item collection ??% complete!  Saving not yet implemented.");
                 while (timer < 2)
                 {
                     if (colorCooldown <= 0)
@@ -1611,7 +1620,7 @@ public class Player : MonoBehaviour
                         {
                             colorPointer = 0;
                         }
-                        colorCooldown = 12;
+                        colorCooldown = 2;
                     }
                     else
                         colorCooldown--;
@@ -1620,7 +1629,7 @@ public class Player : MonoBehaviour
                     {
                         SetTextAlpha("collection", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)));
                     }
-                    yield return new WaitForEndOfFrame();
+                    yield return new WaitForFixedUpdate();
                     timer += Time.deltaTime;
                 }
                 SetTextAlpha("collection", 0);
@@ -1670,6 +1679,62 @@ public class Player : MonoBehaviour
                 foreach (Transform textObj in itemPercentageGroup.transform)
                     textObj.GetComponent<TextMesh>().text = textToDisplay;
                 break;
+        }
+    }
+
+    IEnumerator DieAndRespawn()
+    {
+        inDeathCutscene = true;
+        box.enabled = false;
+        PlayState.paralyzed = true;
+        sfx.PlayOneShot(die);
+        PlayAnim("die");
+        float timer = 0;
+        bool hasStartedTransition = false;
+        Vector3 fallDir = new Vector3(0.125f, 0.35f, 0);
+        if (!_facingLeft)
+            fallDir = new Vector3(-0.125f, 0.35f, 0);
+        while (timer < 1.6f)
+        {
+            transform.position += fallDir;
+            fallDir = new Vector3(fallDir.x, Mathf.Clamp(fallDir.y - 0.025f, -0.5f, Mathf.Infinity), 0);
+            yield return new WaitForFixedUpdate();
+            timer += Time.fixedDeltaTime;
+            if (timer > 1 && !hasStartedTransition)
+            {
+                hasStartedTransition = true;
+                PlayState.ScreenFlash("Death Transition");
+            }
+        }
+        transform.position = PlayState.respawnCoords;
+        inDeathCutscene = false;
+        box.enabled = true;
+        PlayAnim("idle");
+        PlayState.paralyzed = false;
+        health = maxHealth;
+        UpdateHearts();
+    }
+
+    public void Die()
+    {
+        StartCoroutine(nameof(DieAndRespawn));
+    }
+
+    public void PlayAnim(string state)
+    {
+        string newAnim = "Normal ";
+        if (state != "die")
+        {
+            if (_currentSurface == 1)
+                newAnim += "wall ";
+            else
+                newAnim += "floor ";
+        }
+        newAnim += state;
+        if (newAnim != currentAnim)
+        {
+            currentAnim = newAnim;
+            anim.Play(newAnim, 0, 0);
         }
     }
 }

@@ -3880,6 +3880,75 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!1001 &1050991733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 120995303}
+    m_Modifications:
+    - target: {fileID: 28404413206069153, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_Name
+      value: Floatspike
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -14
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 28404413206069157, guid: 718423e6ca6782044aa129cf9d1cbd65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 718423e6ca6782044aa129cf9d1cbd65, type: 3}
 --- !u!1001 &1085163747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24911,6 +24980,7 @@ MonoBehaviour:
   shell: {fileID: 8300000, guid: 9e02dacb0ab01b847bee5870ece648e3, type: 3}
   jump: {fileID: 8300000, guid: 1833729db56346849a7ea64a62767286, type: 3}
   hurt: {fileID: 8300000, guid: aea2d15c509e82a4cb9e1dde506466b7, type: 3}
+  die: {fileID: 8300000, guid: 2d51383e8ac72ff4582a885fe27cf668, type: 3}
   shootRWave: {fileID: 8300000, guid: 8295f1190af965144b4e754d413e6318, type: 3}
   bulletPool: {fileID: 0}
   iconRWave: {fileID: 0}

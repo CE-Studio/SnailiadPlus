@@ -14,6 +14,7 @@ public class Floatspike : Enemy
         box.size = new Vector2(0.95f, 0.95f);
         attack = 2;
         defense = 59;
+        letsPermeatingShotsBy = true;
 
         origin = new Vector2(transform.position.x, transform.position.y);
         targetX = origin.x;

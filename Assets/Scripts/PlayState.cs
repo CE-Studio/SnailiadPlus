@@ -13,6 +13,7 @@ public class PlayState
     public static string area;
     public static AudioClip areaMus;
     public static bool colorblindMode = false;
+    public static bool armorPingPlayedThisFrame = false;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
@@ -83,7 +84,7 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 
-    public static void ScreenFlash(string type, int red, int green, int blue, int alpha)
+    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0)
     {
         switch (type)
         {
@@ -92,6 +93,9 @@ public class PlayState
                 break;
             case "Room Transition":
                 screenCover.GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, 200);
+                player.GetComponent<Player>().ExecuteCoverCommand(type);
+                break;
+            case "Death Transition":
                 player.GetComponent<Player>().ExecuteCoverCommand(type);
                 break;
         }
