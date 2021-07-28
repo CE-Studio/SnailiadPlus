@@ -1684,6 +1684,8 @@ public class Player : MonoBehaviour
 
     IEnumerator DieAndRespawn()
     {
+        health = 0;
+        UpdateHearts();
         inDeathCutscene = true;
         box.enabled = false;
         PlayState.paralyzed = true;
