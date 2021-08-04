@@ -1093,15 +1093,11 @@ public class Player : MonoBehaviour
             _justPressedRight = false;
             _justPressedUp = false;
             // Set the right animation for in shell vs out of shell
-            if (_inShell)
+            if (!inDeathCutscene)
             {
-                //anim.SetBool("inShell", true);
-                PlayAnim("shell");
-            }
-            else
-            {
-                //anim.SetBool("inShell", false);
-                if (!inDeathCutscene)
+                if (_inShell)
+                    PlayAnim("shell");
+                else
                     PlayAnim("idle");
             }
 
@@ -1696,7 +1692,7 @@ public class Player : MonoBehaviour
         Vector3 fallDir = new Vector3(0.125f, 0.35f, 0);
         if (!_facingLeft)
             fallDir = new Vector3(-0.125f, 0.35f, 0);
-        while (timer < 1.6f)
+        while ((timer < 1.6f && PlayState.quickDeathTransition) || (timer < 2 && !PlayState.quickDeathTransition))
         {
             transform.position += fallDir;
             fallDir = new Vector3(fallDir.x, Mathf.Clamp(fallDir.y - 0.025f, -0.5f, Mathf.Infinity), 0);

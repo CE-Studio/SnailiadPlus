@@ -13,6 +13,7 @@ public class PlayState
     public static string area;
     public static AudioClip areaMus;
     public static bool colorblindMode = false;
+    public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
