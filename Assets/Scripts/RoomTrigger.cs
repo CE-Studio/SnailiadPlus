@@ -8,10 +8,15 @@ public class RoomTrigger : MonoBehaviour
     public bool active = true;
 
     public float parallaxBackgroundModifier = 0;
+
+    public TextMesh roomNameText;
+    public TextMesh roomNameShadow;
     
     void Start()
     {
         box = GetComponent<BoxCollider2D>();
+        roomNameText = GameObject.Find("View/Minimap Panel/Room Name Text").GetComponent<TextMesh>();
+        roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Shadow").GetComponent<TextMesh>();
         DespawnEverything();
     }
 
@@ -54,6 +59,17 @@ public class RoomTrigger : MonoBehaviour
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
             PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
             PlayState.parallaxMod = parallaxBackgroundModifier;
+
+            string newRoomName = "";
+            foreach (char character in transform.name)
+            {
+                if (character == '|')
+                    newRoomName += "\n";
+                else
+                    newRoomName += character;
+            }
+            roomNameText.text = newRoomName;
+            roomNameShadow.text = newRoomName;
 
             if (PlayState.player.GetComponent<Player>()._currentSurface == 1 && PlayState.player.GetComponent<Player>()._facingUp)
             {
