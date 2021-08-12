@@ -566,6 +566,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1371750771}
     m_Modifications:
+    - target: {fileID: 4727603495965231525, guid: a761117de8285a943bf79bbd483601f6,
+        type: 3}
+      propertyPath: parallaxBackgroundModifier
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 4864329900485946832, guid: a761117de8285a943bf79bbd483601f6,
         type: 3}
       propertyPath: m_Name

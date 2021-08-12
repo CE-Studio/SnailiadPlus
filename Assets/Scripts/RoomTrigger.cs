@@ -6,6 +6,8 @@ public class RoomTrigger : MonoBehaviour
 {
     public BoxCollider2D box;
     public bool active = true;
+
+    public float parallaxBackgroundModifier = 0;
     
     void Start()
     {
@@ -51,6 +53,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
             PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
+            PlayState.parallaxMod = parallaxBackgroundModifier;
 
             if (PlayState.player.GetComponent<Player>()._currentSurface == 1 && PlayState.player.GetComponent<Player>()._facingUp)
             {

@@ -1106,6 +1106,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        PlayState.skyLayer.transform.localPosition = new Vector2(
+            Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxMod * 16) * 0.0625f,
+            Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxMod * 16) * 0.0625f
+            );
+        PlayState.minimap.transform.localPosition = new Vector2(
+            //-(Mathf.Round(transform.position.x + PlayState.minimapOrigin.x / 26) * 0.125f) * 8 * 0.5f,
+            //-(Mathf.Round(transform.position.y + PlayState.minimapOrigin.y / 22) * 0.125f) * 8 * 0.5f
+            -Mathf.Round(((PlayState.minimapOrigin.x + transform.position.x - 1 - 13) / 26) + 0.5f) * 0.5f + 0.25f,
+            -Mathf.Round(((PlayState.minimapOrigin.y + transform.position.y - 1 - 8) / 16) + 0.5f) * 0.5f + 0.25f
+            );
+        Debug.Log(PlayState.minimap.transform.localPosition.x + ", " + PlayState.minimap.transform.localPosition.y);
+        Debug.Log(Mathf.Round(((transform.position.x - 13) / 26) + 0.5f) + ", " + Mathf.Round(((transform.position.y - 8) / 16) + 0.5f));
+    }
+
     // This function translates player inputs into directions relative to whatever surface Snaily is currently grabbing
     void GetInputs()
     {

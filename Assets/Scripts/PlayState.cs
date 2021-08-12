@@ -15,6 +15,8 @@ public class PlayState
     public static bool colorblindMode = false;
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
+    public static float parallaxMod = 0;
+    public static Vector2 minimapOrigin = new Vector2(104.5f, 96.5f);
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
@@ -22,6 +24,8 @@ public class PlayState
     public static GameObject player = GameObject.Find("Player");
     public static GameObject cam = GameObject.Find("View");
     public static GameObject screenCover = GameObject.Find("View/Cover");
+    public static GameObject skyLayer = GameObject.Find("Grid/Sky");
+    public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
