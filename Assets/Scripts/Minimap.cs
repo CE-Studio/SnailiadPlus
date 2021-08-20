@@ -16,7 +16,7 @@ public class Minimap : MonoBehaviour
     {
         -55, -54, -53, -52, -51, -50, -49,
         -29, -28, -27, -26, -25, -24, -23,
-        -3, -2, -1, 1, 2, 3,
+        -3, -2, -1, 0, 1, 2, 3,
         23, 24, 25, 26, 27, 28, 29,
         49, 50, 51, 52, 53, 54, 45
     };
@@ -40,7 +40,7 @@ public class Minimap : MonoBehaviour
             transform.GetChild(1).GetChild(24).gameObject, transform.GetChild(1).GetChild(25).gameObject, transform.GetChild(1).GetChild(26).gameObject,
             transform.GetChild(1).GetChild(27).gameObject, transform.GetChild(1).GetChild(28).gameObject, transform.GetChild(1).GetChild(29).gameObject,
             transform.GetChild(1).GetChild(30).gameObject, transform.GetChild(1).GetChild(31).gameObject, transform.GetChild(1).GetChild(32).gameObject,
-            transform.GetChild(1).GetChild(33).gameObject
+            transform.GetChild(1).GetChild(33).gameObject, transform.GetChild(1).GetChild(34).gameObject
         };
 
         minimap.transform.localPosition = new Vector2(
@@ -57,7 +57,7 @@ public class Minimap : MonoBehaviour
             -Mathf.Round(((origin.y + player.transform.position.y - 1 - 8) / 16) + 0.5f) * 0.5f + 0.25f
             );
         GetNewCurrentCellID();
-        if (currentCellID >= 0 && currentCellID < currentMap.Length)
+        if (currentCellID >= 0 && currentCellID < currentMap.Length && !player.GetComponent<Player>().inDeathCutscene)
         {
             if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2)
                 currentMap[currentCellID]++;

@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
 
     private string currentAnim = "";
 
-    private bool inDeathCutscene = false;
+    public bool inDeathCutscene = false;
 
 
     public Animator anim;

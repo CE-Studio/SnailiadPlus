@@ -12,7 +12,7 @@ public class PlayState
     public static float playbackTime;
     public static string area;
     public static AudioClip areaMus;
-    public static bool colorblindMode = false;
+    public static bool colorblindMode = true;
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
     public static float parallaxMod = 0;

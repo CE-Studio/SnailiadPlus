@@ -90,10 +90,16 @@ public class Door : MonoBehaviour
                     animToPlay += "Hold";
                 break;
             case "open":
-                animToPlay += "Open";
+                if (PlayState.colorblindMode)
+                    animToPlay += "Open2";
+                else
+                    animToPlay += "Open";
                 break;
             case "close":
-                animToPlay += "Close";
+                if (PlayState.colorblindMode)
+                    animToPlay += "Close2";
+                else
+                    animToPlay += "Close";
                 break;
         }
         anim.Play(animToPlay, 0, 0);
