@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class RoomTrigger : MonoBehaviour
 {
@@ -11,12 +12,19 @@ public class RoomTrigger : MonoBehaviour
 
     public TextMesh roomNameText;
     public TextMesh roomNameShadow;
+
+    public Tilemap bg;
+    public Tilemap breakableMap;
+    public GameObject breakableBlock;
     
     void Start()
     {
         box = GetComponent<BoxCollider2D>();
         roomNameText = GameObject.Find("View/Minimap Panel/Room Name Text").GetComponent<TextMesh>();
         roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Shadow").GetComponent<TextMesh>();
+        bg = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
+        breakableMap = GameObject.Find("Grid/Breakables").GetComponent<Tilemap>();
+        breakableBlock = (GameObject)Resources.Load("Objects/Breakable Block");
         DespawnEverything();
     }
 
@@ -29,6 +37,16 @@ public class RoomTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player") && active)
         {
+            foreach (Transform trigger in transform.parent)
+            {
+                if (!trigger.GetComponent<Collider2D>().enabled && trigger.name != transform.name)
+                {
+                    trigger.GetComponent<Collider2D>().enabled = true;
+                    trigger.GetComponent<RoomTrigger>().active = true;
+                    trigger.GetComponent<RoomTrigger>().DespawnEverything();
+                }
+            }
+
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
@@ -71,6 +89,8 @@ public class RoomTrigger : MonoBehaviour
             roomNameText.text = newRoomName;
             roomNameShadow.text = newRoomName;
 
+            CheckForBreakables(collision.transform);
+
             if (PlayState.player.GetComponent<Player>()._currentSurface == 1 && PlayState.player.GetComponent<Player>()._facingUp)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y + 0.125f);
@@ -86,16 +106,6 @@ public class RoomTrigger : MonoBehaviour
             else
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + 0.125f, PlayState.player.transform.position.y);
-            }
-
-            foreach (Transform trigger in transform.parent)
-            {
-                if (!trigger.GetComponent<Collider2D>().enabled && trigger.name != transform.name)
-                {
-                    trigger.GetComponent<Collider2D>().enabled = true;
-                    trigger.GetComponent<RoomTrigger>().active = true;
-                    trigger.GetComponent<RoomTrigger>().DespawnEverything();
-                }
             }
 
             box.enabled = false;
@@ -130,6 +140,10 @@ public class RoomTrigger : MonoBehaviour
                         break;
                 }
             }
+            else if (child.name.Contains("Breakable Block"))
+            {
+                Destroy(child.gameObject);
+            }
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++)
@@ -139,6 +153,25 @@ public class RoomTrigger : MonoBehaviour
                 pool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
             }
             pool.transform.GetChild(i).transform.position = Vector2.zero;
+        }
+    }
+
+    private void CheckForBreakables(Transform player)
+    {
+        int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
+        int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
+        for (int x = -limitX; x <= limitX; x++)
+        {
+            for (int y = -limitY; y <= limitY; y++)
+            {
+                Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
+                Sprite currentTile = breakableMap.GetSprite(tilePos);
+                if (currentTile != null)
+                {
+                    GameObject Breakable = Instantiate(breakableBlock, new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f), Quaternion.identity);
+                    Breakable.transform.parent = transform;
+                }
+            }
         }
     }
 }

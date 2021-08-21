@@ -15,6 +15,7 @@ public class PlayState
     public static bool colorblindMode = true;
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
+    public static bool explodePlayedThisFrame = false;
     public static float parallaxMod = 0;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");

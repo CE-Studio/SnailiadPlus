@@ -3841,7 +3841,7 @@ GameObject:
   - component: {fileID: 594929764}
   - component: {fileID: 594929763}
   m_Layer: 0
-  m_Name: Special
+  m_Name: Breakables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42444,6 +42444,7 @@ MonoBehaviour:
   health: 12
   maxHealth: 12
   stunned: 0
+  inDeathCutscene: 0
   anim: {fileID: 0}
   sprite: {fileID: 0}
   box: {fileID: 0}

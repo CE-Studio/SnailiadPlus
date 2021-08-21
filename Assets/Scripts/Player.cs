@@ -1032,8 +1032,9 @@ public class Player : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
-            // This is only here to make sure it's called once, before anything else that needs it
+            // These are only here to make sure they're called once, before anything else that needs it
             PlayState.armorPingPlayedThisFrame = false;
+            PlayState.explodePlayedThisFrame = false;
 
             // First, get the inputs, converted to the right relative directions
             GetInputs();

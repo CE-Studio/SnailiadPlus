@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator Flash()
     {
-        sprite.material.SetFloat("_FlashAmount", 1);
+        sprite.material.SetFloat("_FlashAmount", 0.75f);
         box.enabled = false;
         yield return new WaitForSeconds(0.025f);
         sprite.material.SetFloat("_FlashAmount", 0);
