@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BreakableBlock : MonoBehaviour
 {
@@ -14,14 +15,17 @@ public class BreakableBlock : MonoBehaviour
     public AudioClip expl3;
     public AudioClip expl4;
 
-    private Sprite coverSprite;
+    public Sprite coverSprite;
+    public TileBase originalTile;
     public Sprite blankSprite;
+    public Tilemap homeMap;
     
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
+        sprite.sprite = coverSprite;
 
         expl1 = (AudioClip)Resources.Load("Sounds/Sfx/Explode1");
         expl2 = (AudioClip)Resources.Load("Sounds/Sfx/Explode2");
@@ -29,16 +33,15 @@ public class BreakableBlock : MonoBehaviour
         expl4 = (AudioClip)Resources.Load("Sounds/Sfx/Explode4");
     }
 
-    public void Instantiate(Sprite tileSprite, int type, bool silent)
+    public void Instantiate(int type, bool silent)
     {
-        // Sprite-setting code here
         requiredWeapon = type;
         isSilent = silent;
     }
 
     public void Despawn()
     {
-        // Tile-setting code here
+        homeMap.SetTile(new Vector3Int((int)Mathf.Round(transform.position.x - 0.5f), (int)Mathf.Round(transform.position.y - 0.5f), 0), originalTile);
         Destroy(gameObject);
     }
 

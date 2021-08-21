@@ -26,6 +26,7 @@ public class RoomTrigger : MonoBehaviour
         breakableMap = GameObject.Find("Grid/Breakables").GetComponent<Tilemap>();
         breakableBlock = (GameObject)Resources.Load("Objects/Breakable Block");
         DespawnEverything();
+        breakableMap.color = new Color32(255, 255, 255, 0);
     }
 
     void Update()
@@ -142,7 +143,7 @@ public class RoomTrigger : MonoBehaviour
             }
             else if (child.name.Contains("Breakable Block"))
             {
-                Destroy(child.gameObject);
+                child.GetComponent<BreakableBlock>().Despawn();
             }
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
@@ -165,11 +166,39 @@ public class RoomTrigger : MonoBehaviour
             for (int y = -limitY; y <= limitY; y++)
             {
                 Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
-                Sprite currentTile = breakableMap.GetSprite(tilePos);
+                TileBase originalTile = bg.GetTile(tilePos);
+                Sprite originalTileSprite = bg.GetSprite(tilePos);
+                TileBase currentTile = breakableMap.GetTile(tilePos);
+                Sprite currentTileSprite = breakableMap.GetSprite(tilePos);
                 if (currentTile != null)
                 {
+                    int weaponType = 0;
+                    bool isSilent = false;
+                    switch (currentTileSprite.name)
+                    {
+                        case "Tilesheet_72":
+                            weaponType = 1;
+                            break;
+                        case "Tilesheet_73":
+                            weaponType = 2;
+                            break;
+                        case "Tilesheet_74":
+                            weaponType = 3;
+                            break;
+                        case "Tilesheet_439":
+                            weaponType = 3;
+                            isSilent = true;
+                            break;
+                    }
+
                     GameObject Breakable = Instantiate(breakableBlock, new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f), Quaternion.identity);
                     Breakable.transform.parent = transform;
+                    Breakable.GetComponent<BreakableBlock>().coverSprite = originalTileSprite;
+                    Breakable.GetComponent<BreakableBlock>().originalTile = originalTile;
+                    Breakable.GetComponent<BreakableBlock>().homeMap = bg;
+                    Breakable.GetComponent<BreakableBlock>().Instantiate(weaponType, isSilent);
+
+                    bg.SetTile(tilePos, null);
                 }
             }
         }
