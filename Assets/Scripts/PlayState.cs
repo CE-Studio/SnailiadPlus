@@ -17,6 +17,7 @@ public class PlayState
     public static bool armorPingPlayedThisFrame = false;
     public static bool explodePlayedThisFrame = false;
     public static float parallaxMod = 0;
+    public static int thisExplosionID = 0;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
@@ -26,6 +27,7 @@ public class PlayState
     public static GameObject screenCover = GameObject.Find("View/Cover");
     public static GameObject skyLayer = GameObject.Find("Grid/Sky");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
+    public static GameObject explosionPool = GameObject.Find("Explosion Pool");
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
@@ -140,5 +142,32 @@ public class PlayState
     public static void FlashCollectionText()
     {
         player.GetComponent<Player>().FlashCollectionText();
+    }
+
+    public static void RequestExplosion(int size, Vector2 position)
+    {
+        if (!explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive)
+        {
+            explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive = true;
+            explosionPool.transform.GetChild(thisExplosionID).position = position;
+            switch (size)
+            {
+                case 1:
+                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
+                    break;
+                case 2:
+                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion small", 0, 0);
+                    break;
+                case 3:
+                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion big", 0, 0);
+                    break;
+                case 4:
+                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
+                    break;
+            }
+            thisExplosionID++;
+            if (thisExplosionID >= explosionPool.transform.childCount)
+                thisExplosionID = 0;
+        }
     }
 }

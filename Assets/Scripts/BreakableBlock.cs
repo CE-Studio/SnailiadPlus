@@ -14,6 +14,7 @@ public class BreakableBlock : MonoBehaviour
     public AudioClip expl2;
     public AudioClip expl3;
     public AudioClip expl4;
+    public AudioClip ping;
 
     public Sprite coverSprite;
     public TileBase originalTile;
@@ -31,6 +32,7 @@ public class BreakableBlock : MonoBehaviour
         expl2 = (AudioClip)Resources.Load("Sounds/Sfx/Explode2");
         expl3 = (AudioClip)Resources.Load("Sounds/Sfx/Explode3");
         expl4 = (AudioClip)Resources.Load("Sounds/Sfx/Explode4");
+        ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
     }
 
     public void Instantiate(int type, bool silent)
@@ -55,7 +57,7 @@ public class BreakableBlock : MonoBehaviour
                 sprite.sprite = blankSprite;
                 if (!PlayState.explodePlayedThisFrame)
                 {
-                    int i = Random.Range(1, 4);
+                    int i = Random.Range(1, 5);
                     switch (i)
                     {
                         case 1:
@@ -73,6 +75,13 @@ public class BreakableBlock : MonoBehaviour
                     }
                     PlayState.explodePlayedThisFrame = true;
                 }
+                for (int i = 0; i < 4; i++)
+                    PlayState.RequestExplosion(2, new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f)));
+            }
+            else if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+            {
+                sfx.PlayOneShot(ping);
+                PlayState.armorPingPlayedThisFrame = true;
             }
         }
     }
