@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 24, y: 14}
+  m_Size: {x: 24.5, y: 14.5}
   m_EdgeRadius: 0
 --- !u!50 &4864329900485946834
 Rigidbody2D:
@@ -92,3 +92,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f0a3f60a9f07543862d5fc7cb73be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box: {fileID: 0}
+  active: 1
+  parallaxForeground2Modifier: 0
+  parallaxForeground1Modifier: 0
+  parallaxBackgroundModifier: 0
+  parallaxSkyModifier: 0
+  roomNameText: {fileID: 0}
+  roomNameShadow: {fileID: 0}
+  bg: {fileID: 0}
+  fg: {fileID: 0}
+  breakableMap: {fileID: 0}
+  breakableBlock: {fileID: 0}

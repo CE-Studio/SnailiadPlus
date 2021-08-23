@@ -8,7 +8,10 @@ public class RoomTrigger : MonoBehaviour
     public BoxCollider2D box;
     public bool active = true;
 
+    public float parallaxForeground2Modifier = 0;
+    public float parallaxForeground1Modifier = 0;
     public float parallaxBackgroundModifier = 0;
+    public float parallaxSkyModifier = 0;
 
     public TextMesh roomNameText;
     public TextMesh roomNameShadow;
@@ -79,7 +82,10 @@ public class RoomTrigger : MonoBehaviour
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
             PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
-            PlayState.parallaxMod = parallaxBackgroundModifier;
+            PlayState.parallaxFg2Mod = parallaxForeground2Modifier;
+            PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
+            PlayState.parallaxBgMod = parallaxBackgroundModifier;
+            PlayState.parallaxSkyMod = parallaxSkyModifier;
 
             string newRoomName = "";
             foreach (char character in transform.name)

@@ -16,7 +16,10 @@ public class PlayState
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
     public static bool explodePlayedThisFrame = false;
-    public static float parallaxMod = 0;
+    public static float parallaxFg2Mod = 0;
+    public static float parallaxFg1Mod = 0;
+    public static float parallaxBgMod = 0;
+    public static float parallaxSkyMod = 0;
     public static int thisExplosionID = 0;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
@@ -25,6 +28,9 @@ public class PlayState
     public static GameObject player = GameObject.Find("Player");
     public static GameObject cam = GameObject.Find("View");
     public static GameObject screenCover = GameObject.Find("View/Cover");
+    public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");
+    public static GameObject fg1Layer = GameObject.Find("Grid/Foreground");
+    public static GameObject bgLayer = GameObject.Find("Grid/Background");
     public static GameObject skyLayer = GameObject.Find("Grid/Sky");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
     public static GameObject explosionPool = GameObject.Find("Explosion Pool");
