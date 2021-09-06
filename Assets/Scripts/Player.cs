@@ -171,6 +171,12 @@ public class Player : MonoBehaviour
     public Sprite keyHeld;
 
 
+    // FPS stuff
+    int frameCount = 0;
+    float dt = 0f;
+    float fps = 0f;
+    float updateRate = 4;
+
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()
     {
@@ -1125,6 +1131,18 @@ public class Player : MonoBehaviour
             Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxSkyMod * 16) * 0.0625f,
             Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxSkyMod * 16) * 0.0625f
             );
+
+        // FPS calculator
+        frameCount++;
+        dt += Time.deltaTime;
+        if (dt > 1 / updateRate)
+        {
+            fps = frameCount / dt;
+            frameCount = 0;
+            dt -= 1 / updateRate;
+        }
+        PlayState.fpsText.text = "" + fps + "FPS";
+        PlayState.fpsShadow.text = "" + fps + "FPS";
     }
 
     // This function translates player inputs into directions relative to whatever surface Snaily is currently grabbing

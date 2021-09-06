@@ -45,6 +45,9 @@ public class PlayState
     public static Vector2 respawnCoords = new Vector2(-7, 0);
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
+    public static TextMesh fpsText = GameObject.Find("View/FPS Text").GetComponent<TextMesh>();
+    public static TextMesh fpsShadow = GameObject.Find("View/FPS Shadow").GetComponent<TextMesh>();
+
     public static int[] defaultMinimapState = new int []
     {
         0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
