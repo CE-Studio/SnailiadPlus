@@ -60712,6 +60712,7 @@ GameObject:
   - component: {fileID: 1831220121}
   - component: {fileID: 1831220122}
   - component: {fileID: 1831220123}
+  - component: {fileID: 1831220124}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -61005,6 +61006,74 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1831220124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831220116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c425a28f4a60d45a450ce15ec841bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSurface: 0
+  _facingLeft: 0
+  _facingUp: 0
+  selectedWeapon: 0
+  health: 0
+  maxHealth: 0
+  stunned: 0
+  inDeathCutscene: 0
+  anim: {fileID: 0}
+  sprite: {fileID: 0}
+  box: {fileID: 0}
+  sfx: {fileID: 0}
+  shell: {fileID: 0}
+  jump: {fileID: 0}
+  hurt: {fileID: 0}
+  die: {fileID: 0}
+  shootRWave: {fileID: 0}
+  bulletPool: {fileID: 0}
+  iconRWave: {fileID: 0}
+  blank: {fileID: 0}
+  iconRWaveDeselected: {fileID: 0}
+  iconRWaveSelected: {fileID: 0}
+  hearts: {fileID: 0}
+  heart0: {fileID: 0}
+  heart1: {fileID: 0}
+  heart2: {fileID: 0}
+  heart3: {fileID: 0}
+  heart4: {fileID: 0}
+  itemTextGroup: {fileID: 0}
+  itemPercentageGroup: {fileID: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  debugUp: {fileID: 0}
+  debugDown: {fileID: 0}
+  debugLeft: {fileID: 0}
+  debugRight: {fileID: 0}
+  debugJump: {fileID: 0}
+  debugShoot: {fileID: 0}
+  debugStrafe: {fileID: 0}
+  keyIdle: {fileID: 0}
+  keyPressed: {fileID: 0}
+  keyHeld: {fileID: 0}
+  WEAPON_COOLDOWNS:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  box: {fileID: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &1842881981
 PrefabInstance:
   m_ObjectHideFlags: 0

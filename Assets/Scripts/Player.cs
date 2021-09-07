@@ -213,825 +213,825 @@ public class Player : MonoBehaviour
     }
 
     // FixedUpdate() is called repeatedly over a fixed duration of time (every 0.02 seconds)
-    void FixedUpdate()
-    {
-        if (PlayState.gameState == "Game" && !inDeathCutscene)
-        {
-            anim.speed = 1;
-            // This is a boxcast meant to test the player's X movement
-            RaycastHit2D checkHoriz = Physics2D.BoxCast(
-                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                0,
-                Vector2.right,
-                _velocity.x * Time.fixedDeltaTime,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            // And this one tests their Y movement
-            RaycastHit2D checkVert = Physics2D.BoxCast(
-                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                0,
-                Vector2.up,
-                _velocity.y * Time.fixedDeltaTime,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            if (checkVert.point.x != 0)
-            {
-                _lastVcheckHitX = checkVert.point.x;
-            }
-            // This is just a secondary vertical boxcast, mainly used in the ground state to check for valid jumps
-            RaycastHit2D checkVertSecondary = Physics2D.BoxCast(
-                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                0,
-                Vector2.up,
-                Mathf.Infinity,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            //if (checkVert.point.x != 0)
-            //{
-            //    _lastV2checkHitX = checkVertSecondary.point.x;
-            //}
-            RaycastHit2D jumpChecker = Physics2D.BoxCast(
-                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                0,
-                Vector2.up,
-                Mathf.Infinity,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            if (_currentSurface == 1 && _facingLeft)
-            {
-                jumpChecker = Physics2D.BoxCast(
-                    new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                    new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                    0,
-                    Vector2.right,
-                    Mathf.Infinity,
-                    playerCollide,
-                    Mathf.Infinity,
-                    Mathf.Infinity
-                    );
-            }
-            else if (_currentSurface == 1 && !_facingLeft)
-            {
-                jumpChecker = Physics2D.BoxCast(
-                    new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                    new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                    0,
-                    -Vector2.right,
-                    Mathf.Infinity,
-                    playerCollide,
-                    Mathf.Infinity,
-                    Mathf.Infinity
-                    );
-            }
-            else if (_currentSurface == 2)
-            {
-                jumpChecker = Physics2D.BoxCast(
-                    new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                    new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
-                    0,
-                    -Vector2.up,
-                    Mathf.Infinity,
-                    playerCollide,
-                    Mathf.Infinity,
-                    Mathf.Infinity
-                    );
-            }
-            if (checkVert.point.x != 0)
-            {
-                _lastV2checkHitX = jumpChecker.point.x;
-            }
-            Debug.DrawLine(
-                new Vector2(checkVert.point.x - 0.25f, checkVert.point.y - 0.25f),
-                new Vector2(checkVert.point.x + 0.25f, checkVert.point.y + 0.25f),
-                Color.red,
-                0,
-                false
-                );
-            Debug.DrawLine(
-                new Vector2(checkVert.point.x + 0.25f, checkVert.point.y - 0.25f),
-                new Vector2(checkVert.point.x - 0.25f, checkVert.point.y + 0.25f),
-                Color.red,
-                0,
-                false
-                );
-            Debug.DrawLine(
-                new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y - 0.25f),
-                new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y + 0.25f),
-                Color.yellow,
-                0,
-                false
-                );
-            Debug.DrawLine(
-                new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y - 0.25f),
-                new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y + 0.25f),
-                Color.yellow,
-                0,
-                false
-                );
-            // This raycast, dependent on where exactly checkVert found a collider, returns the exact distance from the player to the ground
-            RaycastHit2D distanceFromGround = Physics2D.Raycast(
-                new Vector2(_lastVcheckHitX, transform.position.y + box.offset.y),
-                new Vector2(0, -1),
-                Mathf.Infinity,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            // Similarly, this one travels in both X directions to return the wall distance
-            RaycastHit2D distanceFromWall;
-            if (_facingLeft)
-            {
-                distanceFromWall = Physics2D.Raycast(
-                    new Vector2(transform.position.x, transform.position.y + box.offset.y),
-                    new Vector2(-1, 0),
-                    1,
-                    playerCollide,
-                    Mathf.Infinity,
-                    Mathf.Infinity
-                    );
-            }
-            else
-            {
-                distanceFromWall = Physics2D.Raycast(
-                    new Vector2(transform.position.x, transform.position.y + box.offset.y),
-                    new Vector2(1, 0),
-                    1,
-                    playerCollide,
-                    Mathf.Infinity,
-                    Mathf.Infinity
-                    );
-            }
-            // And this one checks the ceiling; essentially distanceFromFloor in reverse
-            RaycastHit2D distanceFromCeiling = Physics2D.Raycast(
-                new Vector2(_lastV2checkHitX, transform.position.y + box.offset.y),
-                new Vector2(0, 1),
-                Mathf.Infinity,
-                playerCollide,
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-            Debug.DrawLine(
-                new Vector2(_lastVcheckHitX, transform.position.y + box.offset.y),
-                distanceFromGround.point,
-                Color.red,
-                0,
-                false
-                );
-            Debug.DrawLine(
-                new Vector2(_lastV2checkHitX, transform.position.y + box.offset.y),
-                distanceFromCeiling.point,
-                Color.yellow,
-                0,
-                false
-                );
-
-            // This switch statement essentially makes sure Snaily's hitbox is the right shape and positioned correctly based on the current surface and shell state
-            switch (_currentSurface)
-            {
-                case 0:
-                    if (_inShell)
-                    {
-                        box.size = new Vector2(HITBOX_SIZEX_SHELL, HITBOX_SIZEY);
-                        box.offset = new Vector2(HITBOX_OFFSETX_SHELL, HITBOX_OFFSETY);
-                        if (_facingLeft)
-                        {
-                            box.offset = new Vector2(-box.offset.x, box.offset.y);
-                        }
-                    }
-                    else
-                    {
-                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                        box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
-
-                        int tempCheckDir = 1;
-                        if (!_facingLeft)
-                        {
-                            tempCheckDir = -1;
-                        }
-                        RaycastHit2D tempReverseWallDistance = Physics2D.Raycast(
-                            new Vector2(transform.position.x, transform.position.y + box.offset.y),
-                            new Vector2(1, 0),
-                            tempCheckDir,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        if (_justLeftShell && distanceFromWall.collider != null)
-                        {
-                            if (_facingLeft)
-                            {
-                                transform.position += new Vector3(0.920272f - distanceFromWall.distance, 0, 0);
-                            }
-                            else
-                            {
-                                transform.position -= new Vector3(0.920272f - distanceFromWall.distance, 0, 0);
-                            }
-                            _justLeftShell = false;
-                        }
-                        else if (_justLeftShell && tempReverseWallDistance.collider != null)
-                        {
-                            if (_facingLeft)
-                            {
-                                transform.position -= new Vector3(0.125f + tempReverseWallDistance.distance, 0, 0);
-                            }
-                            else
-                            {
-                                transform.position += new Vector3(0.125f + tempReverseWallDistance.distance, 0, 0);
-                            }
-                            _justLeftShell = false;
-                        }
-                    }
-                    break;
-                case 1:
-                    if (_inShell)
-                    {
-                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX_SHELL);
-                        box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX_SHELL);
-                        if (_facingLeft)
-                        {
-                            box.offset = new Vector2(-box.offset.x, box.offset.y);
-                        }
-                        if (_facingUp)
-                        {
-                            box.offset = new Vector2(box.offset.x, -box.offset.y);
-                        }
-                    }
-                    else
-                    {
-                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                        box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
-                        if (_facingLeft)
-                        {
-                            box.offset = new Vector2(-box.offset.x, box.offset.y);
-                        }
-                        if (_facingUp)
-                        {
-                            box.offset = new Vector2(box.offset.x, -box.offset.y);
-                        }
-                    }
-                    break;
-                case 2:
-                    if (_inShell)
-                    {
-                        box.size = new Vector2(HITBOX_SIZEX_SHELL, HITBOX_SIZEY);
-                        box.offset = new Vector2(HITBOX_OFFSETX_SHELL, -HITBOX_OFFSETY);
-                        if (_facingLeft)
-                        {
-                            box.offset = new Vector2(-box.offset.x, box.offset.y);
-                        }
-                    }
-                    else
-                    {
-                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                        box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
-                    }
-                    break;
-            }
-
-            // Ensuring if the player is on the ground or not (Currently unused as it was previously causing problems)
-            //if ((_currentSurface == 0 && distanceFromGround.distance <= 0.55f) || _currentSurface != 0)
-            //{
-            //    _onSurface = true;
-            //}
-            //else
-            //{
-            //    _onSurface = false;
-            //}
-
-            // Shoot controls!
-            if (!PlayState.paralyzed)
-            {
-                fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
-                if ((selectedWeapon == 0 && PlayState.hasRainbowWave))
-                {
-                    if (fireCooldown == 0 && (Input.GetAxisRaw("Shoot") == 1 || Input.GetAxisRaw("Strafe") == 1))
-                    {
-                        int dir;
-                        Vector2 inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                        if (inputs.x == 1)
-                        {
-                            if (inputs.y == 1)
-                            {
-                                dir = 2;
-                            }
-                            else if (inputs.y == -1)
-                            {
-                                dir = 7;
-                            }
-                            else
-                            {
-                                dir = 4;
-                            }
-                        }
-                        else if (inputs.x == -1)
-                        {
-                            if (inputs.y == 1)
-                            {
-                                dir = 0;
-                            }
-                            else if (inputs.y == -1)
-                            {
-                                dir = 5;
-                            }
-                            else
-                            {
-                                dir = 3;
-                            }
-                        }
-                        else
-                        {
-                            if (inputs.y == 1)
-                            {
-                                dir = 1;
-                            }
-                            else if (inputs.y == -1)
-                            {
-                                dir = 6;
-                            }
-                            else
-                            {
-                                if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && _facingLeft)
-                                {
-                                    dir = 3;
-                                }
-                                else if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && !_facingLeft)
-                                {
-                                    dir = 4;
-                                }
-                                else if (_currentSurface == DIR_WALL && _facingUp)
-                                {
-                                    dir = 1;
-                                }
-                                else
-                                {
-                                    dir = 6;
-                                }
-                            }
-                        }
-                        if (bulletPool.transform.GetChild(bulletPointer).gameObject.GetComponent<Bullet>().isActive == false)
-                        {
-                            string weaponType;
-                            switch (selectedWeapon)
-                            {
-                                case 0:
-                                    weaponType = "Rainbow Wave";
-                                    fireCooldown = RAINBOW_WAVE_COOLDOWN;
-                                    break;
-                                default:
-                                    weaponType = "Rainbow Wave";
-                                    fireCooldown = RAINBOW_WAVE_COOLDOWN;
-                                    break;
-                            }
-                            sfx.PlayOneShot(shootRWave);
-                            bulletPool.transform.GetChild(bulletPointer).GetComponent<Bullet>().Shoot(weaponType, dir);
-                            bulletPointer++;
-                            if (bulletPointer == bulletPool.transform.childCount)
-                            {
-                                bulletPointer = 0;
-                            }
-                        }
-                    }
-                }
-                if (PlayState.hasRainbowWave && selectedWeapon == 0)
-                {
-                    iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveSelected;
-                }
-                else if (PlayState.hasRainbowWave)
-                {
-                    iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveDeselected;
-                }
-                else
-                {
-                    iconRWave.GetComponent<SpriteRenderer>().sprite = blank;
-                }
-            }
-
-            // Jump controls!
-            if (!PlayState.paralyzed)
-            {
-                if (Input.GetAxisRaw("Jump") == 1 && _onSurface && !_justJumped && !_holdingJump)
-                {
-                    // If we're on a wall/ceiling, disconnect from it and return to facing the ground
-                    if (_currentSurface != 0)
-                    {
-                        Debug.DrawLine(
-                            new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y - 0.25f),
-                            new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y + 0.25f),
-                            Color.green,
-                            1,
-                            false
-                            );
-                        Debug.DrawLine(
-                            new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y - 0.25f),
-                            new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y + 0.25f),
-                            Color.green,
-                            1,
-                            false
-                            );
-                        if (((_currentSurface == 1 && Vector2.Distance(
-                            new Vector2(transform.position.x + box.offset.x, jumpChecker.point.y),
-                            jumpChecker.point
-                            ) > 0.65f) || Vector2.Distance(
-                                new Vector2(jumpChecker.point.x, transform.position.y + box.offset.y),
-                                jumpChecker.point
-                                ) > 0.65f) && !_holdingJump)
-                        {
-                            if (_facingLeft && _currentSurface == DIR_WALL)
-                            {
-                                transform.position += new Vector3(0.125f, 0, 0);
-                            }
-                            else if (!_facingLeft && _currentSurface == DIR_WALL)
-                            {
-                                transform.position += new Vector3(-0.125f, 0, 0);
-                            }
-                            else if (_currentSurface == DIR_CEILING)
-                            {
-                                transform.position += new Vector3(0, 1, 0);
-                            }
-                            box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                            box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
-                            _currentSurface = 0;
-                            _onSurface = false;
-                            sprite.flipY = false;
-                            sfx.PlayOneShot(jump);
-                            _justJumped = true;
-                            _inShell = false;
-                        }
-                    }
-                    // If not, jump normally
-                    else
-                    {
-                        if (((_currentSurface == 1 && Vector2.Distance(
-                            new Vector2(transform.position.x + box.offset.x, jumpChecker.point.y),
-                            jumpChecker.point
-                            ) > 0.65f) || Vector2.Distance(
-                                new Vector2(jumpChecker.point.x, transform.position.y + box.offset.y),
-                                jumpChecker.point
-                                ) > 0.65f) && !_holdingJump)
-                        {
-                            sfx.PlayOneShot(jump);
-                            _justJumped = true;
-                            _velocity.y = JUMPPOWER_NORMAL;
-                            _onSurface = false;
-                            transform.position += new Vector3(0, JUMPPOWER_NORMAL * Time.fixedDeltaTime, 0);
-                            _inShell = false;
-                        }
-                        else
-                        {
-                            _onSurface = true;
-                            _justJumped = false;
-                            _holdingJump = true;
-                        }
-                    }
-                }
-                // If we just jumped and have left the ground, then tell the code we're holding the jump button
-                if (_justJumped || (!_justJumped && !_holdingJump && Input.GetAxisRaw("Jump") == 1))
-                {
-                    _justJumped = false;
-                    _holdingJump = true;
-                }
-                if (_holdingJump && Input.GetAxisRaw("Jump") != 1)
-                {
-                    _holdingJump = false;
-                }
-            }
-
-            // Move controls!
-            if (!PlayState.paralyzed)
-            {
-                switch (_currentSurface)
-                {
-                    // Floor
-                    case 0:
-                        // First, we run horizontal checks
-                        // But ONLY if we're not strafing. If we have no weapons, though, it shouldn't matter if we're strafing or not
-                        if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
-                        {
-                            // If our wall-finding boxcast found something to run into, move forward the distance plus some offset
-                            if (checkHoriz.collider != null)
-                            {
-                                if (_facingLeft)
-                                {
-                                    transform.position += new Vector3(-checkHoriz.distance + 0.0625f, 0, 0);
-                                    // And don't forget to check to see if we want to climb a wall!
-                                    if (!stunned)
-                                    {
-                                        if (_relativeUp)
-                                        {
-                                            _currentSurface = DIR_WALL;
-                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                            transform.position += new Vector3(0.25f, -0.25f, 0);
-                                            _justGrabbedWall = true;
-                                        }
-                                        else if (_relativeDown && !_onSurface)
-                                        {
-                                            _currentSurface = DIR_WALL;
-                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                            transform.position += new Vector3(0.25f, -0.25f, 0);
-                                            _justGrabbedWall = true;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    transform.position += new Vector3(checkHoriz.distance - 0.0625f, 0, 0);
-                                    if (!stunned)
-                                    {
-                                        if (_relativeUp)
-                                        {
-                                            _currentSurface = DIR_WALL;
-                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                            transform.position += new Vector3(-0.25f, -0.25f, 0);
-                                            _justGrabbedWall = true;
-                                            _onSurface = true;
-                                        }
-                                        else if (_relativeDown && !_onSurface)
-                                        {
-                                            _currentSurface = DIR_WALL;
-                                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                            transform.position += new Vector3(-0.25f, -0.25f, 0);
-                                            _justGrabbedWall = true;
-                                            _onSurface = true;
-                                        }
-                                    }
-                                }
-                                _velocity.x = 0;
-                            }
-                            // If it didn't find anything, simply move however far the current runspeed will allow
-                            else
-                            {
-                                transform.position += new Vector3(_velocity.x * Time.fixedDeltaTime, 0, 0);
-                            }
-                        }
-
-                        // Now we make vertical checks
-                        RaycastHit2D tempVCheck = Physics2D.BoxCast(
-                            new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-                            new Vector2(box.size.x - 0.125f, box.size.y - 0.25f),
-                            0,
-                            new Vector2(0, -1),
-                            1,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        // Because on the ground vertical movement is different, being worked by gravity instead of direct movement control, we work off different
-                        // conditions to find valid moves
-                        // This first one assumes we're in the air and looking for walls in a direction based off our vertical velocity
-                        if (tempVCheck.collider == null)
-                        {
-                            _onSurface = false;
-                        }
-                        if (checkVert.collider != null && !_onSurface)
-                        {
-                            if (Mathf.Sign(_velocity.y) == -1)
-                            {
-                                transform.position = new Vector3(transform.position.x, distanceFromGround.point.y + (box.size.y * 0.5f) - box.offset.y, 0);
-                                _onSurface = true;
-                            }
-                            else
-                            {
-                                transform.position += new Vector3(0, checkVert.distance - 0.0625f, 0);
-                                if (_relativeUp)
-                                {
-                                    _currentSurface = DIR_CEILING;
-                                    sprite.flipY = true;
-                                    transform.position += new Vector3(0, -1.125f, 0);
-                                    _justGrabbedWall = true;
-                                    _onSurface = true;
-                                    _holdingDown = true;
-                                }
-                            }
-                            _velocity.y = 0;
-                        }
-                        // This next one ensures we don't fall through floors and stay grounded
-                        else if (distanceFromGround.distance <= 0.55 && _onSurface)
-                        {
-                            transform.position = new Vector3(transform.position.x, distanceFromGround.point.y + (box.size.y * 0.5f) - box.offset.y, 0);
-                            _velocity.y = 0;
-                            _readyToRoundCorner = true;
-                        }
-                        // This pair is here to work crawling around ground corners
-                        else if (!_facingLeft && _relativeDown && _relativeRight && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
-                        {
-                            _currentSurface = DIR_WALL;
-                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                            box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
-                            transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.25f), transform.position.y - 0.25f, 0);
-                            _justGrabbedWall = true;
-                            _onSurface = true;
-                            _facingLeft = true;
-                            _readyToRoundCorner = false;
-                        }
-                        else if (_facingLeft && _relativeDown && _relativeLeft && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
-                        {
-                            _currentSurface = DIR_WALL;
-                            box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                            box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_SIZEX);
-                            transform.position = new Vector3(Mathf.RoundToInt(transform.position.x - 0.25f), transform.position.y - 0.25f, 0);
-                            _justGrabbedWall = true;
-                            _onSurface = true;
-                            _facingLeft = false;
-                            _readyToRoundCorner = false;
-                        }
-                        // This last one applies to unhindered movement through the air, moving based off our current velocity minus gravity
-                        else
-                        {
-                            transform.position += new Vector3(0, Mathf.Clamp(_velocity.y * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity), 0);
-                            // We get a higher jump by holding the jump button if we decrease the gravity scale on the upward half of a jump while the button is down!
-                            if (_velocity.y > 0 && Input.GetAxisRaw("Jump") != 1)
-                            {
-                                _velocity.y -= GRAVITY * 2.5f;
-                            }
-                            else
-                            {
-                                _velocity.y -= GRAVITY;
-                            }
-                            _onSurface = false;
-                        }
-                        //Debug.Log(_onSurface);
-                        if (_onSurface)
-                        {
-                            _surfacedLastFrame = true;
-                        }
-                        else
-                        {
-                            _surfacedLastFrame = false;
-                        }
-                        break;
-                    // Walls
-                    case 1:
-                        _onSurface = true;
-                        // This just makes sure our horizontal velocity is facing the current wall to check if we're on it; our horizontal position shouldn't be updated
-                        // otherwise in this state
-                        if (_facingLeft)
-                        {
-                            _velocity.x = -RUNSPEED_NORMAL;
-                        }
-                        else
-                        {
-                            _velocity.x = RUNSPEED_NORMAL;
-                        }
-
-                        // Again, we should only move if we're not strafing
-                        if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
-                        {
-                            // This checks for walls we might run into on our wall-crawling journey
-                            if (checkVert.collider != null)
-                            {
-                                // In the case that we're going down, automatically enter the floor state with the required directional and hitbox adjustments
-                                if (Mathf.Sign(_velocity.y) == -1)
-                                {
-                                    transform.position += new Vector3(0, -checkVert.distance + 0.0625f, 0);
-                                    _currentSurface = DIR_FLOOR;
-                                    box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                                    box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
-                                    _holdingDown = true;
-                                    if (_facingLeft)
-                                    {
-                                        _facingLeft = false;
-                                        sprite.flipX = false;
-                                        transform.position += new Vector3(-0.25f, 0.25f, 0);
-                                    }
-                                    else
-                                    {
-                                        _facingLeft = true;
-                                        sprite.flipX = true;
-                                        transform.position += new Vector3(0.25f, 0.25f, 0);
-                                    }
-                                }
-                                // If we're going up, just move the required amount and stop
-                                else
-                                {
-                                    transform.position += new Vector3(0, checkVert.distance - 0.0625f, 0);
-                                    if (checkVert.distance == 0)
-                                    {
-                                        transform.position += new Vector3(0, -distanceFromCeiling.distance, 0);
-                                    }
-                                    // ...UNLESS the player specifically states they want to move to the ceiling
-                                    if (_facingLeft && _relativeUp)
-                                    {
-                                        _currentSurface = DIR_CEILING;
-                                        _facingLeft = false;
-                                        sprite.flipX = false;
-                                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                                        box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
-                                        _holdingDown = true;
-                                        transform.position += new Vector3(-0.25f, -0.25f, 0);
-                                    }
-                                    else if (!_facingLeft && _relativeUp)
-                                    {
-                                        _currentSurface = DIR_CEILING;
-                                        _facingLeft = true;
-                                        sprite.flipX = true;
-                                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                                        box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
-                                        _holdingDown = true;
-                                        transform.position += new Vector3(0.25f, -0.25f, 0);
-                                    }
-                                }
-                            }
-                            // If no walls are found, move as much as you'd like. Or as much as the runspeed will allow
-                            else
-                            {
-                                transform.position += new Vector3(0, _velocity.y * Time.fixedDeltaTime, 0);
-                            }
-                        }
-                        // Now we have the horizontal check to do. This check is done to try and find any point when the player is no longer physically on any wall so as
-                        // to adjust accordingly based on which direction the player's facing
-                        if (checkHoriz.collider == null && !_justGrabbedWall)
-                        {
-                            _currentSurface = DIR_FLOOR;
-                            box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
-                            box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
-                            if (_facingLeft)
-                            {
-                                transform.position += new Vector3(-0.375f, 0.125f, 0);
-                            }
-                            else
-                            {
-                                transform.position += new Vector3(0.375f, 0.125f, 0);
-                            }
-                            _holdingDown = true;
-                            if (Mathf.Sign(_velocity.y) == 1)
-                            {
-                                _velocity.y = 0;
-                            }
-                        }
-                        _justGrabbedWall = false;
-                        break;
-                    case 2:
-                        // The ceiling state here is just a dumbed-down version of the floor state
-                        _velocity.y = 1;
-                        if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
-                        {
-                            if (checkHoriz.collider != null)
-                            {
-                                if (_facingLeft)
-                                {
-                                    transform.position += new Vector3(-checkHoriz.distance + 0.0625f, 0, 0);
-                                    if (_relativeUp)
-                                    {
-                                        _currentSurface = DIR_WALL;
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(0.25f, 0.25f, 0);
-                                        _justGrabbedWall = true;
-                                        _onSurface = true;
-                                    }
-                                }
-                                else
-                                {
-                                    transform.position += new Vector3(checkHoriz.distance - 0.0625f, 0, 0);
-                                    if (_relativeUp)
-                                    {
-                                        _currentSurface = DIR_WALL;
-                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
-                                        box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
-                                        transform.position += new Vector3(-0.25f, 0.25f, 0);
-                                        _justGrabbedWall = true;
-                                        _onSurface = true;
-                                    }
-                                }
-                                _velocity.x = 0;
-                            }
-                            else
-                            {
-                                transform.position += new Vector3(_velocity.x * Time.fixedDeltaTime, 0, 0);
-                            }
-                        }
-
-                        if (checkVertSecondary.point.y > transform.position.y + 1.125f)
-                        {
-                            transform.position += new Vector3(0, 1.125f, 0);
-                            box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
-                            _facingUp = false;
-                            _currentSurface = DIR_FLOOR;
-                            _onSurface = false;
-                        }
-                        break;
-                }
-            }
-        }
-        else if (!inDeathCutscene)
-            anim.speed = 0;
-    }
+    //void FixedUpdate()
+    //{
+    //    if (PlayState.gameState == "Game" && !inDeathCutscene)
+    //    {
+    //        anim.speed = 1;
+    //        // This is a boxcast meant to test the player's X movement
+    //        RaycastHit2D checkHoriz = Physics2D.BoxCast(
+    //            new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //            new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //            0,
+    //            Vector2.right,
+    //            _velocity.x * Time.fixedDeltaTime,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        // And this one tests their Y movement
+    //        RaycastHit2D checkVert = Physics2D.BoxCast(
+    //            new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //            new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //            0,
+    //            Vector2.up,
+    //            _velocity.y * Time.fixedDeltaTime,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        if (checkVert.point.x != 0)
+    //        {
+    //            _lastVcheckHitX = checkVert.point.x;
+    //        }
+    //        // This is just a secondary vertical boxcast, mainly used in the ground state to check for valid jumps
+    //        RaycastHit2D checkVertSecondary = Physics2D.BoxCast(
+    //            new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //            new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //            0,
+    //            Vector2.up,
+    //            Mathf.Infinity,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        //if (checkVert.point.x != 0)
+    //        //{
+    //        //    _lastV2checkHitX = checkVertSecondary.point.x;
+    //        //}
+    //        RaycastHit2D jumpChecker = Physics2D.BoxCast(
+    //            new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //            new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //            0,
+    //            Vector2.up,
+    //            Mathf.Infinity,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        if (_currentSurface == 1 && _facingLeft)
+    //        {
+    //            jumpChecker = Physics2D.BoxCast(
+    //                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //                0,
+    //                Vector2.right,
+    //                Mathf.Infinity,
+    //                playerCollide,
+    //                Mathf.Infinity,
+    //                Mathf.Infinity
+    //                );
+    //        }
+    //        else if (_currentSurface == 1 && !_facingLeft)
+    //        {
+    //            jumpChecker = Physics2D.BoxCast(
+    //                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //                0,
+    //                -Vector2.right,
+    //                Mathf.Infinity,
+    //                playerCollide,
+    //                Mathf.Infinity,
+    //                Mathf.Infinity
+    //                );
+    //        }
+    //        else if (_currentSurface == 2)
+    //        {
+    //            jumpChecker = Physics2D.BoxCast(
+    //                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //                new Vector2(box.size.x - 0.125f, box.size.y - 0.125f),
+    //                0,
+    //                -Vector2.up,
+    //                Mathf.Infinity,
+    //                playerCollide,
+    //                Mathf.Infinity,
+    //                Mathf.Infinity
+    //                );
+    //        }
+    //        if (checkVert.point.x != 0)
+    //        {
+    //            _lastV2checkHitX = jumpChecker.point.x;
+    //        }
+    //        Debug.DrawLine(
+    //            new Vector2(checkVert.point.x - 0.25f, checkVert.point.y - 0.25f),
+    //            new Vector2(checkVert.point.x + 0.25f, checkVert.point.y + 0.25f),
+    //            Color.red,
+    //            0,
+    //            false
+    //            );
+    //        Debug.DrawLine(
+    //            new Vector2(checkVert.point.x + 0.25f, checkVert.point.y - 0.25f),
+    //            new Vector2(checkVert.point.x - 0.25f, checkVert.point.y + 0.25f),
+    //            Color.red,
+    //            0,
+    //            false
+    //            );
+    //        Debug.DrawLine(
+    //            new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y - 0.25f),
+    //            new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y + 0.25f),
+    //            Color.yellow,
+    //            0,
+    //            false
+    //            );
+    //        Debug.DrawLine(
+    //            new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y - 0.25f),
+    //            new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y + 0.25f),
+    //            Color.yellow,
+    //            0,
+    //            false
+    //            );
+    //        // This raycast, dependent on where exactly checkVert found a collider, returns the exact distance from the player to the ground
+    //        RaycastHit2D distanceFromGround = Physics2D.Raycast(
+    //            new Vector2(_lastVcheckHitX, transform.position.y + box.offset.y),
+    //            new Vector2(0, -1),
+    //            Mathf.Infinity,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        // Similarly, this one travels in both X directions to return the wall distance
+    //        RaycastHit2D distanceFromWall;
+    //        if (_facingLeft)
+    //        {
+    //            distanceFromWall = Physics2D.Raycast(
+    //                new Vector2(transform.position.x, transform.position.y + box.offset.y),
+    //                new Vector2(-1, 0),
+    //                1,
+    //                playerCollide,
+    //                Mathf.Infinity,
+    //                Mathf.Infinity
+    //                );
+    //        }
+    //        else
+    //        {
+    //            distanceFromWall = Physics2D.Raycast(
+    //                new Vector2(transform.position.x, transform.position.y + box.offset.y),
+    //                new Vector2(1, 0),
+    //                1,
+    //                playerCollide,
+    //                Mathf.Infinity,
+    //                Mathf.Infinity
+    //                );
+    //        }
+    //        // And this one checks the ceiling; essentially distanceFromFloor in reverse
+    //        RaycastHit2D distanceFromCeiling = Physics2D.Raycast(
+    //            new Vector2(_lastV2checkHitX, transform.position.y + box.offset.y),
+    //            new Vector2(0, 1),
+    //            Mathf.Infinity,
+    //            playerCollide,
+    //            Mathf.Infinity,
+    //            Mathf.Infinity
+    //            );
+    //        Debug.DrawLine(
+    //            new Vector2(_lastVcheckHitX, transform.position.y + box.offset.y),
+    //            distanceFromGround.point,
+    //            Color.red,
+    //            0,
+    //            false
+    //            );
+    //        Debug.DrawLine(
+    //            new Vector2(_lastV2checkHitX, transform.position.y + box.offset.y),
+    //            distanceFromCeiling.point,
+    //            Color.yellow,
+    //            0,
+    //            false
+    //            );
+    //
+    //        // This switch statement essentially makes sure Snaily's hitbox is the right shape and positioned correctly based on the current surface and shell state
+    //        switch (_currentSurface)
+    //        {
+    //            case 0:
+    //                if (_inShell)
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEX_SHELL, HITBOX_SIZEY);
+    //                    box.offset = new Vector2(HITBOX_OFFSETX_SHELL, HITBOX_OFFSETY);
+    //                    if (_facingLeft)
+    //                    {
+    //                        box.offset = new Vector2(-box.offset.x, box.offset.y);
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                    box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
+    //
+    //                    int tempCheckDir = 1;
+    //                    if (!_facingLeft)
+    //                    {
+    //                        tempCheckDir = -1;
+    //                    }
+    //                    RaycastHit2D tempReverseWallDistance = Physics2D.Raycast(
+    //                        new Vector2(transform.position.x, transform.position.y + box.offset.y),
+    //                        new Vector2(1, 0),
+    //                        tempCheckDir,
+    //                        playerCollide,
+    //                        Mathf.Infinity,
+    //                        Mathf.Infinity
+    //                        );
+    //                    if (_justLeftShell && distanceFromWall.collider != null)
+    //                    {
+    //                        if (_facingLeft)
+    //                        {
+    //                            transform.position += new Vector3(0.920272f - distanceFromWall.distance, 0, 0);
+    //                        }
+    //                        else
+    //                        {
+    //                            transform.position -= new Vector3(0.920272f - distanceFromWall.distance, 0, 0);
+    //                        }
+    //                        _justLeftShell = false;
+    //                    }
+    //                    else if (_justLeftShell && tempReverseWallDistance.collider != null)
+    //                    {
+    //                        if (_facingLeft)
+    //                        {
+    //                            transform.position -= new Vector3(0.125f + tempReverseWallDistance.distance, 0, 0);
+    //                        }
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(0.125f + tempReverseWallDistance.distance, 0, 0);
+    //                        }
+    //                        _justLeftShell = false;
+    //                    }
+    //                }
+    //                break;
+    //            case 1:
+    //                if (_inShell)
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX_SHELL);
+    //                    box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX_SHELL);
+    //                    if (_facingLeft)
+    //                    {
+    //                        box.offset = new Vector2(-box.offset.x, box.offset.y);
+    //                    }
+    //                    if (_facingUp)
+    //                    {
+    //                        box.offset = new Vector2(box.offset.x, -box.offset.y);
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                    box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                    if (_facingLeft)
+    //                    {
+    //                        box.offset = new Vector2(-box.offset.x, box.offset.y);
+    //                    }
+    //                    if (_facingUp)
+    //                    {
+    //                        box.offset = new Vector2(box.offset.x, -box.offset.y);
+    //                    }
+    //                }
+    //                break;
+    //            case 2:
+    //                if (_inShell)
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEX_SHELL, HITBOX_SIZEY);
+    //                    box.offset = new Vector2(HITBOX_OFFSETX_SHELL, -HITBOX_OFFSETY);
+    //                    if (_facingLeft)
+    //                    {
+    //                        box.offset = new Vector2(-box.offset.x, box.offset.y);
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                    box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
+    //                }
+    //                break;
+    //        }
+    //
+    //        // Ensuring if the player is on the ground or not (Currently unused as it was previously causing problems)
+    //        //if ((_currentSurface == 0 && distanceFromGround.distance <= 0.55f) || _currentSurface != 0)
+    //        //{
+    //        //    _onSurface = true;
+    //        //}
+    //        //else
+    //        //{
+    //        //    _onSurface = false;
+    //        //}
+    //
+    //        // Shoot controls!
+    //        if (!PlayState.paralyzed)
+    //        {
+    //            fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
+    //            if ((selectedWeapon == 0 && PlayState.hasRainbowWave))
+    //            {
+    //                if (fireCooldown == 0 && (Input.GetAxisRaw("Shoot") == 1 || Input.GetAxisRaw("Strafe") == 1))
+    //                {
+    //                    int dir;
+    //                    Vector2 inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    //                    if (inputs.x == 1)
+    //                    {
+    //                        if (inputs.y == 1)
+    //                        {
+    //                            dir = 2;
+    //                        }
+    //                        else if (inputs.y == -1)
+    //                        {
+    //                            dir = 7;
+    //                        }
+    //                        else
+    //                        {
+    //                            dir = 4;
+    //                        }
+    //                    }
+    //                    else if (inputs.x == -1)
+    //                    {
+    //                        if (inputs.y == 1)
+    //                        {
+    //                            dir = 0;
+    //                        }
+    //                        else if (inputs.y == -1)
+    //                        {
+    //                            dir = 5;
+    //                        }
+    //                        else
+    //                        {
+    //                            dir = 3;
+    //                        }
+    //                    }
+    //                    else
+    //                    {
+    //                        if (inputs.y == 1)
+    //                        {
+    //                            dir = 1;
+    //                        }
+    //                        else if (inputs.y == -1)
+    //                        {
+    //                            dir = 6;
+    //                        }
+    //                        else
+    //                        {
+    //                            if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && _facingLeft)
+    //                            {
+    //                                dir = 3;
+    //                            }
+    //                            else if ((_currentSurface == DIR_FLOOR || _currentSurface == DIR_CEILING) && !_facingLeft)
+    //                            {
+    //                                dir = 4;
+    //                            }
+    //                            else if (_currentSurface == DIR_WALL && _facingUp)
+    //                            {
+    //                                dir = 1;
+    //                            }
+    //                            else
+    //                            {
+    //                                dir = 6;
+    //                            }
+    //                        }
+    //                    }
+    //                    if (bulletPool.transform.GetChild(bulletPointer).gameObject.GetComponent<Bullet>().isActive == false)
+    //                    {
+    //                        string weaponType;
+    //                        switch (selectedWeapon)
+    //                        {
+    //                            case 0:
+    //                                weaponType = "Rainbow Wave";
+    //                                fireCooldown = RAINBOW_WAVE_COOLDOWN;
+    //                                break;
+    //                            default:
+    //                                weaponType = "Rainbow Wave";
+    //                                fireCooldown = RAINBOW_WAVE_COOLDOWN;
+    //                                break;
+    //                        }
+    //                        sfx.PlayOneShot(shootRWave);
+    //                        bulletPool.transform.GetChild(bulletPointer).GetComponent<Bullet>().Shoot(weaponType, dir);
+    //                        bulletPointer++;
+    //                        if (bulletPointer == bulletPool.transform.childCount)
+    //                        {
+    //                            bulletPointer = 0;
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //            if (PlayState.hasRainbowWave && selectedWeapon == 0)
+    //            {
+    //                iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveSelected;
+    //            }
+    //            else if (PlayState.hasRainbowWave)
+    //            {
+    //                iconRWave.GetComponent<SpriteRenderer>().sprite = iconRWaveDeselected;
+    //            }
+    //            else
+    //            {
+    //                iconRWave.GetComponent<SpriteRenderer>().sprite = blank;
+    //            }
+    //        }
+    //
+    //        // Jump controls!
+    //        if (!PlayState.paralyzed)
+    //        {
+    //            if (Input.GetAxisRaw("Jump") == 1 && _onSurface && !_justJumped && !_holdingJump)
+    //            {
+    //                // If we're on a wall/ceiling, disconnect from it and return to facing the ground
+    //                if (_currentSurface != 0)
+    //                {
+    //                    Debug.DrawLine(
+    //                        new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y - 0.25f),
+    //                        new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y + 0.25f),
+    //                        Color.green,
+    //                        1,
+    //                        false
+    //                        );
+    //                    Debug.DrawLine(
+    //                        new Vector2(jumpChecker.point.x + 0.25f, jumpChecker.point.y - 0.25f),
+    //                        new Vector2(jumpChecker.point.x - 0.25f, jumpChecker.point.y + 0.25f),
+    //                        Color.green,
+    //                        1,
+    //                        false
+    //                        );
+    //                    if (((_currentSurface == 1 && Vector2.Distance(
+    //                        new Vector2(transform.position.x + box.offset.x, jumpChecker.point.y),
+    //                        jumpChecker.point
+    //                        ) > 0.65f) || Vector2.Distance(
+    //                            new Vector2(jumpChecker.point.x, transform.position.y + box.offset.y),
+    //                            jumpChecker.point
+    //                            ) > 0.65f) && !_holdingJump)
+    //                    {
+    //                        if (_facingLeft && _currentSurface == DIR_WALL)
+    //                        {
+    //                            transform.position += new Vector3(0.125f, 0, 0);
+    //                        }
+    //                        else if (!_facingLeft && _currentSurface == DIR_WALL)
+    //                        {
+    //                            transform.position += new Vector3(-0.125f, 0, 0);
+    //                        }
+    //                        else if (_currentSurface == DIR_CEILING)
+    //                        {
+    //                            transform.position += new Vector3(0, 1, 0);
+    //                        }
+    //                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                        box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
+    //                        _currentSurface = 0;
+    //                        _onSurface = false;
+    //                        sprite.flipY = false;
+    //                        sfx.PlayOneShot(jump);
+    //                        _justJumped = true;
+    //                        _inShell = false;
+    //                    }
+    //                }
+    //                // If not, jump normally
+    //                else
+    //                {
+    //                    if (((_currentSurface == 1 && Vector2.Distance(
+    //                        new Vector2(transform.position.x + box.offset.x, jumpChecker.point.y),
+    //                        jumpChecker.point
+    //                        ) > 0.65f) || Vector2.Distance(
+    //                            new Vector2(jumpChecker.point.x, transform.position.y + box.offset.y),
+    //                            jumpChecker.point
+    //                            ) > 0.65f) && !_holdingJump)
+    //                    {
+    //                        sfx.PlayOneShot(jump);
+    //                        _justJumped = true;
+    //                        _velocity.y = JUMPPOWER_NORMAL;
+    //                        _onSurface = false;
+    //                        transform.position += new Vector3(0, JUMPPOWER_NORMAL * Time.fixedDeltaTime, 0);
+    //                        _inShell = false;
+    //                    }
+    //                    else
+    //                    {
+    //                        _onSurface = true;
+    //                        _justJumped = false;
+    //                        _holdingJump = true;
+    //                    }
+    //                }
+    //            }
+    //            // If we just jumped and have left the ground, then tell the code we're holding the jump button
+    //            if (_justJumped || (!_justJumped && !_holdingJump && Input.GetAxisRaw("Jump") == 1))
+    //            {
+    //                _justJumped = false;
+    //                _holdingJump = true;
+    //            }
+    //            if (_holdingJump && Input.GetAxisRaw("Jump") != 1)
+    //            {
+    //                _holdingJump = false;
+    //            }
+    //        }
+    //
+    //        // Move controls!
+    //        if (!PlayState.paralyzed)
+    //        {
+    //            switch (_currentSurface)
+    //            {
+    //                // Floor
+    //                case 0:
+    //                    // First, we run horizontal checks
+    //                    // But ONLY if we're not strafing. If we have no weapons, though, it shouldn't matter if we're strafing or not
+    //                    if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
+    //                    {
+    //                        // If our wall-finding boxcast found something to run into, move forward the distance plus some offset
+    //                        if (checkHoriz.collider != null)
+    //                        {
+    //                            if (_facingLeft)
+    //                            {
+    //                                transform.position += new Vector3(-checkHoriz.distance + 0.0625f, 0, 0);
+    //                                // And don't forget to check to see if we want to climb a wall!
+    //                                if (!stunned)
+    //                                {
+    //                                    if (_relativeUp)
+    //                                    {
+    //                                        _currentSurface = DIR_WALL;
+    //                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                        transform.position += new Vector3(0.25f, -0.25f, 0);
+    //                                        _justGrabbedWall = true;
+    //                                    }
+    //                                    else if (_relativeDown && !_onSurface)
+    //                                    {
+    //                                        _currentSurface = DIR_WALL;
+    //                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                        transform.position += new Vector3(0.25f, -0.25f, 0);
+    //                                        _justGrabbedWall = true;
+    //                                    }
+    //                                }
+    //                            }
+    //                            else
+    //                            {
+    //                                transform.position += new Vector3(checkHoriz.distance - 0.0625f, 0, 0);
+    //                                if (!stunned)
+    //                                {
+    //                                    if (_relativeUp)
+    //                                    {
+    //                                        _currentSurface = DIR_WALL;
+    //                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                        transform.position += new Vector3(-0.25f, -0.25f, 0);
+    //                                        _justGrabbedWall = true;
+    //                                        _onSurface = true;
+    //                                    }
+    //                                    else if (_relativeDown && !_onSurface)
+    //                                    {
+    //                                        _currentSurface = DIR_WALL;
+    //                                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                        transform.position += new Vector3(-0.25f, -0.25f, 0);
+    //                                        _justGrabbedWall = true;
+    //                                        _onSurface = true;
+    //                                    }
+    //                                }
+    //                            }
+    //                            _velocity.x = 0;
+    //                        }
+    //                        // If it didn't find anything, simply move however far the current runspeed will allow
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(_velocity.x * Time.fixedDeltaTime, 0, 0);
+    //                        }
+    //                    }
+    //
+    //                    // Now we make vertical checks
+    //                    RaycastHit2D tempVCheck = Physics2D.BoxCast(
+    //                        new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+    //                        new Vector2(box.size.x - 0.125f, box.size.y - 0.25f),
+    //                        0,
+    //                        new Vector2(0, -1),
+    //                        1,
+    //                        playerCollide,
+    //                        Mathf.Infinity,
+    //                        Mathf.Infinity
+    //                        );
+    //                    // Because on the ground vertical movement is different, being worked by gravity instead of direct movement control, we work off different
+    //                    // conditions to find valid moves
+    //                    // This first one assumes we're in the air and looking for walls in a direction based off our vertical velocity
+    //                    if (tempVCheck.collider == null)
+    //                    {
+    //                        _onSurface = false;
+    //                    }
+    //                    if (checkVert.collider != null && !_onSurface)
+    //                    {
+    //                        if (Mathf.Sign(_velocity.y) == -1)
+    //                        {
+    //                            transform.position = new Vector3(transform.position.x, distanceFromGround.point.y + (box.size.y * 0.5f) - box.offset.y, 0);
+    //                            _onSurface = true;
+    //                        }
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(0, checkVert.distance - 0.0625f, 0);
+    //                            if (_relativeUp)
+    //                            {
+    //                                _currentSurface = DIR_CEILING;
+    //                                sprite.flipY = true;
+    //                                transform.position += new Vector3(0, -1.125f, 0);
+    //                                _justGrabbedWall = true;
+    //                                _onSurface = true;
+    //                                _holdingDown = true;
+    //                            }
+    //                        }
+    //                        _velocity.y = 0;
+    //                    }
+    //                    // This next one ensures we don't fall through floors and stay grounded
+    //                    else if (distanceFromGround.distance <= 0.55 && _onSurface)
+    //                    {
+    //                        transform.position = new Vector3(transform.position.x, distanceFromGround.point.y + (box.size.y * 0.5f) - box.offset.y, 0);
+    //                        _velocity.y = 0;
+    //                        _readyToRoundCorner = true;
+    //                    }
+    //                    // This pair is here to work crawling around ground corners
+    //                    else if (!_facingLeft && _relativeDown && _relativeRight && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
+    //                    {
+    //                        _currentSurface = DIR_WALL;
+    //                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                        box.offset = new Vector2(HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                        transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.25f), transform.position.y - 0.25f, 0);
+    //                        _justGrabbedWall = true;
+    //                        _onSurface = true;
+    //                        _facingLeft = true;
+    //                        _readyToRoundCorner = false;
+    //                    }
+    //                    else if (_facingLeft && _relativeDown && _relativeLeft && (_onSurface || _surfacedLastFrame) && _readyToRoundCorner && !_justJumped && _velocity.y <= 0)
+    //                    {
+    //                        _currentSurface = DIR_WALL;
+    //                        box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                        box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_SIZEX);
+    //                        transform.position = new Vector3(Mathf.RoundToInt(transform.position.x - 0.25f), transform.position.y - 0.25f, 0);
+    //                        _justGrabbedWall = true;
+    //                        _onSurface = true;
+    //                        _facingLeft = false;
+    //                        _readyToRoundCorner = false;
+    //                    }
+    //                    // This last one applies to unhindered movement through the air, moving based off our current velocity minus gravity
+    //                    else
+    //                    {
+    //                        transform.position += new Vector3(0, Mathf.Clamp(_velocity.y * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity), 0);
+    //                        // We get a higher jump by holding the jump button if we decrease the gravity scale on the upward half of a jump while the button is down!
+    //                        if (_velocity.y > 0 && Input.GetAxisRaw("Jump") != 1)
+    //                        {
+    //                            _velocity.y -= GRAVITY * 2.5f;
+    //                        }
+    //                        else
+    //                        {
+    //                            _velocity.y -= GRAVITY;
+    //                        }
+    //                        _onSurface = false;
+    //                    }
+    //                    //Debug.Log(_onSurface);
+    //                    if (_onSurface)
+    //                    {
+    //                        _surfacedLastFrame = true;
+    //                    }
+    //                    else
+    //                    {
+    //                        _surfacedLastFrame = false;
+    //                    }
+    //                    break;
+    //                // Walls
+    //                case 1:
+    //                    _onSurface = true;
+    //                    // This just makes sure our horizontal velocity is facing the current wall to check if we're on it; our horizontal position shouldn't be updated
+    //                    // otherwise in this state
+    //                    if (_facingLeft)
+    //                    {
+    //                        _velocity.x = -RUNSPEED_NORMAL;
+    //                    }
+    //                    else
+    //                    {
+    //                        _velocity.x = RUNSPEED_NORMAL;
+    //                    }
+    //
+    //                    // Again, we should only move if we're not strafing
+    //                    if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
+    //                    {
+    //                        // This checks for walls we might run into on our wall-crawling journey
+    //                        if (checkVert.collider != null)
+    //                        {
+    //                            // In the case that we're going down, automatically enter the floor state with the required directional and hitbox adjustments
+    //                            if (Mathf.Sign(_velocity.y) == -1)
+    //                            {
+    //                                transform.position += new Vector3(0, -checkVert.distance + 0.0625f, 0);
+    //                                _currentSurface = DIR_FLOOR;
+    //                                box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                                box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
+    //                                _holdingDown = true;
+    //                                if (_facingLeft)
+    //                                {
+    //                                    _facingLeft = false;
+    //                                    sprite.flipX = false;
+    //                                    transform.position += new Vector3(-0.25f, 0.25f, 0);
+    //                                }
+    //                                else
+    //                                {
+    //                                    _facingLeft = true;
+    //                                    sprite.flipX = true;
+    //                                    transform.position += new Vector3(0.25f, 0.25f, 0);
+    //                                }
+    //                            }
+    //                            // If we're going up, just move the required amount and stop
+    //                            else
+    //                            {
+    //                                transform.position += new Vector3(0, checkVert.distance - 0.0625f, 0);
+    //                                if (checkVert.distance == 0)
+    //                                {
+    //                                    transform.position += new Vector3(0, -distanceFromCeiling.distance, 0);
+    //                                }
+    //                                // ...UNLESS the player specifically states they want to move to the ceiling
+    //                                if (_facingLeft && _relativeUp)
+    //                                {
+    //                                    _currentSurface = DIR_CEILING;
+    //                                    _facingLeft = false;
+    //                                    sprite.flipX = false;
+    //                                    box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                                    box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
+    //                                    _holdingDown = true;
+    //                                    transform.position += new Vector3(-0.25f, -0.25f, 0);
+    //                                }
+    //                                else if (!_facingLeft && _relativeUp)
+    //                                {
+    //                                    _currentSurface = DIR_CEILING;
+    //                                    _facingLeft = true;
+    //                                    sprite.flipX = true;
+    //                                    box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                                    box.offset = new Vector2(HITBOX_OFFSETX, -HITBOX_OFFSETY);
+    //                                    _holdingDown = true;
+    //                                    transform.position += new Vector3(0.25f, -0.25f, 0);
+    //                                }
+    //                            }
+    //                        }
+    //                        // If no walls are found, move as much as you'd like. Or as much as the runspeed will allow
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(0, _velocity.y * Time.fixedDeltaTime, 0);
+    //                        }
+    //                    }
+    //                    // Now we have the horizontal check to do. This check is done to try and find any point when the player is no longer physically on any wall so as
+    //                    // to adjust accordingly based on which direction the player's facing
+    //                    if (checkHoriz.collider == null && !_justGrabbedWall)
+    //                    {
+    //                        _currentSurface = DIR_FLOOR;
+    //                        box.size = new Vector2(HITBOX_SIZEX, HITBOX_SIZEY);
+    //                        box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
+    //                        if (_facingLeft)
+    //                        {
+    //                            transform.position += new Vector3(-0.375f, 0.125f, 0);
+    //                        }
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(0.375f, 0.125f, 0);
+    //                        }
+    //                        _holdingDown = true;
+    //                        if (Mathf.Sign(_velocity.y) == 1)
+    //                        {
+    //                            _velocity.y = 0;
+    //                        }
+    //                    }
+    //                    _justGrabbedWall = false;
+    //                    break;
+    //                case 2:
+    //                    // The ceiling state here is just a dumbed-down version of the floor state
+    //                    _velocity.y = 1;
+    //                    if (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed)
+    //                    {
+    //                        if (checkHoriz.collider != null)
+    //                        {
+    //                            if (_facingLeft)
+    //                            {
+    //                                transform.position += new Vector3(-checkHoriz.distance + 0.0625f, 0, 0);
+    //                                if (_relativeUp)
+    //                                {
+    //                                    _currentSurface = DIR_WALL;
+    //                                    box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                    box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                    transform.position += new Vector3(0.25f, 0.25f, 0);
+    //                                    _justGrabbedWall = true;
+    //                                    _onSurface = true;
+    //                                }
+    //                            }
+    //                            else
+    //                            {
+    //                                transform.position += new Vector3(checkHoriz.distance - 0.0625f, 0, 0);
+    //                                if (_relativeUp)
+    //                                {
+    //                                    _currentSurface = DIR_WALL;
+    //                                    box.size = new Vector2(HITBOX_SIZEY, HITBOX_SIZEX);
+    //                                    box.offset = new Vector2(-HITBOX_OFFSETY, HITBOX_OFFSETX);
+    //                                    transform.position += new Vector3(-0.25f, 0.25f, 0);
+    //                                    _justGrabbedWall = true;
+    //                                    _onSurface = true;
+    //                                }
+    //                            }
+    //                            _velocity.x = 0;
+    //                        }
+    //                        else
+    //                        {
+    //                            transform.position += new Vector3(_velocity.x * Time.fixedDeltaTime, 0, 0);
+    //                        }
+    //                    }
+    //
+    //                    if (checkVertSecondary.point.y > transform.position.y + 1.125f)
+    //                    {
+    //                        transform.position += new Vector3(0, 1.125f, 0);
+    //                        box.offset = new Vector2(HITBOX_OFFSETX, HITBOX_OFFSETY);
+    //                        _facingUp = false;
+    //                        _currentSurface = DIR_FLOOR;
+    //                        _onSurface = false;
+    //                    }
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //    else if (!inDeathCutscene)
+    //        anim.speed = 0;
+    //}
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
     void Update()
