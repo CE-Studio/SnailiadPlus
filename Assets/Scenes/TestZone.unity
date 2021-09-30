@@ -60760,7 +60760,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -50
-  m_Sprite: {fileID: -7890797848284347783, guid: a62ce9089a4252b4ea36340cd2c2e1e1,
+  m_Sprite: {fileID: -2311659948842064771, guid: 6334b35aae18ecc4ba3f595cdad21831,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -60799,7 +60799,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.56098896}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -60810,7 +60810,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4675083, y: 0.87450564}
+  m_Size: {x: 1.4675083, y: 0.96}
   m_EdgeRadius: 0
 --- !u!114 &1831220120
 MonoBehaviour:
@@ -61018,49 +61018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c425a28f4a60d45a450ce15ec841bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSurface: 0
-  _facingLeft: 0
-  _facingUp: 0
-  selectedWeapon: 0
-  health: 0
-  maxHealth: 0
-  stunned: 0
-  inDeathCutscene: 0
-  anim: {fileID: 0}
-  sprite: {fileID: 0}
-  box: {fileID: 0}
-  sfx: {fileID: 0}
-  shell: {fileID: 0}
-  jump: {fileID: 0}
-  hurt: {fileID: 0}
-  die: {fileID: 0}
-  shootRWave: {fileID: 0}
-  bulletPool: {fileID: 0}
-  iconRWave: {fileID: 0}
-  blank: {fileID: 0}
-  iconRWaveDeselected: {fileID: 0}
-  iconRWaveSelected: {fileID: 0}
-  hearts: {fileID: 0}
-  heart0: {fileID: 0}
-  heart1: {fileID: 0}
-  heart2: {fileID: 0}
-  heart3: {fileID: 0}
-  heart4: {fileID: 0}
-  itemTextGroup: {fileID: 0}
-  itemPercentageGroup: {fileID: 0}
-  playerCollide:
-    serializedVersion: 2
-    m_Bits: 0
-  debugUp: {fileID: 0}
-  debugDown: {fileID: 0}
-  debugLeft: {fileID: 0}
-  debugRight: {fileID: 0}
-  debugJump: {fileID: 0}
-  debugShoot: {fileID: 0}
-  debugStrafe: {fileID: 0}
-  keyIdle: {fileID: 0}
-  keyPressed: {fileID: 0}
-  keyHeld: {fileID: 0}
   WEAPON_COOLDOWNS:
   - 0
   - 0
@@ -61071,9 +61028,14 @@ MonoBehaviour:
   - 0
   - 0
   box: {fileID: 0}
+  sprite: {fileID: 0}
+  sfx: {fileID: 0}
+  shell: {fileID: 0}
+  jump: {fileID: 0}
   playerCollide:
     serializedVersion: 2
     m_Bits: 0
+  player: {fileID: 0}
 --- !u!1001 &1842881981
 PrefabInstance:
   m_ObjectHideFlags: 0

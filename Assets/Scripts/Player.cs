@@ -1042,74 +1042,74 @@ public class Player : MonoBehaviour
             PlayState.armorPingPlayedThisFrame = false;
             PlayState.explodePlayedThisFrame = false;
 
-            // First, get the inputs, converted to the right relative directions
-            GetInputs();
-
-            // Flip the sprite where it should be
-            if ((_relativeLeft && _currentSurface == DIR_FLOOR) || (_relativeRight && _currentSurface == DIR_CEILING))
-            {
-                _facingLeft = true;
-            }
-            else if ((_relativeRight && _currentSurface == DIR_FLOOR) || (_relativeLeft && _currentSurface == DIR_CEILING))
-            {
-                _facingLeft = false;
-            }
-            if ((((_relativeLeft && _facingLeft) || (_relativeRight && !_facingLeft)) && _currentSurface == DIR_WALL) || _currentSurface == DIR_CEILING)
-            {
-                _facingUp = true;
-            }
-            else if ((((_relativeRight && _facingLeft) || (_relativeLeft && !_facingLeft)) && _currentSurface == DIR_WALL) || _currentSurface == DIR_FLOOR)
-            {
-                _facingUp = false;
-            }
-            // Here we control the player's shell state
-            if ((_relativeRight || _relativeLeft || Input.GetAxisRaw("Jump") == 1 || Input.GetAxisRaw("Shoot") == 1 || (Input.GetAxisRaw("Strafe") == 1 && PlayState.isArmed)) && _onSurface && _inShell)
-            {
-                _inShell = false;
-                _justLeftShell = true;
-            }
-            if (_relativeDown && !_relativeLeft && !_relativeRight && _justPressedDown && !_inShell && (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed) && !stunned)
-            {
-                _inShell = true;
-                sfx.PlayOneShot(shell);
-                _justPressedDown = false;
-                _holdingDown = true;
-            }
-
-            // This block actually performs the sprite flips
-            if (_facingLeft)
-            {
-                sprite.flipX = true;
-            }
-            else
-            {
-                sprite.flipX = false;
-            }
-            if (_facingUp)
-            {
-                sprite.flipY = true;
-            }
-            else
-            {
-                sprite.flipY = false;
-            }
-
-            // Reset all the "just pressed this button" vars to false before the next method call
-            _justPressedDown = false;
-            _justPressedLeft = false;
-            _justPressedRight = false;
-            _justPressedUp = false;
-            // Set the right animation for in shell vs out of shell
-            if (!inDeathCutscene)
-            {
-                if (_inShell)
-                    PlayAnim("shell");
-                else
-                    PlayAnim("idle");
-            }
-
-            // Get specifics on current inputs and set velocities before FixedUpdate handles them
-            CheckMoveInput();
+            // // First, get the inputs, converted to the right relative directions
+            // GetInputs();
+            // 
+            // // Flip the sprite where it should be
+            // if ((_relativeLeft && _currentSurface == DIR_FLOOR) || (_relativeRight && _currentSurface == DIR_CEILING))
+            // {
+            //     _facingLeft = true;
+            // }
+            // else if ((_relativeRight && _currentSurface == DIR_FLOOR) || (_relativeLeft && _currentSurface == DIR_CEILING))
+            // {
+            //     _facingLeft = false;
+            // }
+            // if ((((_relativeLeft && _facingLeft) || (_relativeRight && !_facingLeft)) && _currentSurface == DIR_WALL) || _currentSurface == DIR_CEILING)
+            // {
+            //     _facingUp = true;
+            // }
+            // else if ((((_relativeRight && _facingLeft) || (_relativeLeft && !_facingLeft)) && _currentSurface == DIR_WALL) || _currentSurface == DIR_FLOOR)
+            // {
+            //     _facingUp = false;
+            // }
+            // // Here we control the player's shell state
+            // if ((_relativeRight || _relativeLeft || Input.GetAxisRaw("Jump") == 1 || Input.GetAxisRaw("Shoot") == 1 || (Input.GetAxisRaw("Strafe") == 1 && PlayState.isArmed)) && _onSurface && _inShell)
+            // {
+            //     _inShell = false;
+            //     _justLeftShell = true;
+            // }
+            // if (_relativeDown && !_relativeLeft && !_relativeRight && _justPressedDown && !_inShell && (Input.GetAxisRaw("Strafe") != 1 || !PlayState.isArmed) && !stunned)
+            // {
+            //     _inShell = true;
+            //     sfx.PlayOneShot(shell);
+            //     _justPressedDown = false;
+            //     _holdingDown = true;
+            // }
+            // 
+            // // This block actually performs the sprite flips
+            // if (_facingLeft)
+            // {
+            //     sprite.flipX = true;
+            // }
+            // else
+            // {
+            //     sprite.flipX = false;
+            // }
+            // if (_facingUp)
+            // {
+            //     sprite.flipY = true;
+            // }
+            // else
+            // {
+            //     sprite.flipY = false;
+            // }
+            // 
+            // // Reset all the "just pressed this button" vars to false before the next method call
+            // _justPressedDown = false;
+            // _justPressedLeft = false;
+            // _justPressedRight = false;
+            // _justPressedUp = false;
+            // // Set the right animation for in shell vs out of shell
+            // if (!inDeathCutscene)
+            // {
+            //     if (_inShell)
+            //         PlayAnim("shell");
+            //     else
+            //         PlayAnim("idle");
+            // }
+            // 
+            // // Get specifics on current inputs and set velocities before FixedUpdate handles them
+            // CheckMoveInput();
         }
     }
 

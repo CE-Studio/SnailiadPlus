@@ -7,8 +7,8 @@ InputManager:
   m_Axes:
   - serializedVersion: 3
     m_Name: Horizontal
-    descriptiveName: 
-    descriptiveNegativeName: 
+    descriptiveName: Horizontal Positive
+    descriptiveNegativeName: Horizontal Negative
     negativeButton: left
     positiveButton: right
     altNegativeButton: a
@@ -23,8 +23,8 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical
-    descriptiveName: 
-    descriptiveNegativeName: 
+    descriptiveName: Vertical Positive
+    descriptiveNegativeName: Vertical Negative
     negativeButton: down
     positiveButton: up
     altNegativeButton: s
@@ -39,7 +39,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Jump
-    descriptiveName: 
+    descriptiveName: Jump
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: z
@@ -55,7 +55,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Shoot
-    descriptiveName: 
+    descriptiveName: Shoot
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: x
@@ -71,7 +71,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Strafe
-    descriptiveName: 
+    descriptiveName: Strafe
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: c
@@ -87,7 +87,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Map
-    descriptiveName: 
+    descriptiveName: Map
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: m
