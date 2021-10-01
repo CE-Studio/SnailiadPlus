@@ -10,8 +10,8 @@ public class Snaily : MonoBehaviour
     public const float TERMINAL_VELOCITY = -0.66f;
     public const float HITBOX_X = 1.467508f;
     public const float HITBOX_Y = 0.96f;
-    public const float HITBOX_SHELL_X = 0.8745056f;
-    public const float HITBOX_SHELL_Y = 0.8745056f;
+    public const float HITBOX_SHELL_X = 0.75f;
+    public const float HITBOX_SHELL_Y = 0.96f;
     public const float HITBOX_SHELL_OFFSET = 0.186518f;
     public const int DIR_FLOOR = 0;
     public const int DIR_WALL_LEFT = 1;
@@ -36,12 +36,14 @@ public class Snaily : MonoBehaviour
     private int relativeRight = DIR_WALL_RIGHT;
     private int relativeUp = DIR_CEILING;
     private bool holdingJump = false;
+    private bool holdingShell = false;
 
     private RaycastHit2D boxHoriz;
     private RaycastHit2D boxVert;
 
     public BoxCollider2D box;
     public SpriteRenderer sprite;
+    public Animator anim;
     public AudioSource sfx;
 
     public AudioClip shell;
@@ -55,6 +57,7 @@ public class Snaily : MonoBehaviour
     {
         box = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         sfx = GetComponent<AudioSource>();
         player = GetComponent<Player>();
         playerCollide = LayerMask.GetMask("PlayerCollide");
@@ -69,28 +72,6 @@ public class Snaily : MonoBehaviour
         WEAPON_COOLDOWNS[3] = 0.0425f;
         WEAPON_COOLDOWNS[4] = 0.15f;
         WEAPON_COOLDOWNS[5] = 0.085f;
-
-        // Setting bases for move-checking boxcasts
-        //boxHoriz = Physics2D.BoxCast(
-        //    new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-        //    new Vector2(box.size.x, box.size.y),
-        //    0,
-        //    Vector2.right,
-        //    boxDistances.x,
-        //    playerCollide,
-        //    Mathf.Infinity,
-        //    Mathf.Infinity
-        //    );
-        //boxVert = Physics2D.BoxCast(
-        //    new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-        //    new Vector2(box.size.x, box.size.y),
-        //    0,
-        //    Vector2.up,
-        //    boxDistances.y,
-        //    playerCollide,
-        //    Mathf.Infinity,
-        //    Mathf.Infinity
-        //    );
     }
 
     void Update()
@@ -100,6 +81,12 @@ public class Snaily : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Firstly, let's ensure Snaily's collider's offset is oriented properly
+        if (facingLeft)
+            box.offset = new Vector2(Mathf.Abs(box.offset.x), box.offset.y);
+        else
+            box.offset = new Vector2(-Mathf.Abs(box.offset.x), box.offset.y);
+
         // Set up boxcasts
         boxHoriz = Physics2D.BoxCast(
             new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
@@ -141,7 +128,6 @@ public class Snaily : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("Current vertical velocity is " + velocity.y);
                     // If we happen to be falling, let's increase our downward velocity by some increment
                     // However we should slow it if jump is held as long as we're still going up
                     if (!holdingJump && velocity.y > 0)
@@ -152,7 +138,28 @@ public class Snaily : MonoBehaviour
                     //Debug.Log("Now it's " + velocity.y);
                 }
 
-                // Let's run left/right move checks first
+                // Firstly, let's see if Snaily wants to toggle being in their shell
+                // We'll start by un-shelling Snaily if they're shelled and decide to move, jump, or shoot
+                if (shelled && ((Input.GetAxisRaw("Horizontal") != 0 && grounded) ||
+                    (Input.GetAxisRaw("Jump") != 0 && grounded)))
+                {
+                    ToggleShell();
+                }
+                // Now we'll shell/unshell based on the button press
+                if (Input.GetAxisRaw("Vertical") == -1 && Input.GetAxisRaw("Horizontal") == 0 && !holdingShell)
+                {
+                    ToggleShell();
+                }
+                if (!holdingShell && Input.GetAxisRaw("Vertical") == -1)
+                {
+                    holdingShell = true;
+                }
+                if (holdingShell && Input.GetAxisRaw("Vertical") != -1)
+                {
+                    holdingShell = false;
+                }
+
+                // Let's run left/right move checks next
                 if (Input.GetAxisRaw("Horizontal") != 0)
                 {
                     UpdateBoxcasts(Input.GetAxisRaw("Horizontal") * RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime, boxDistances.y);
@@ -177,9 +184,9 @@ public class Snaily : MonoBehaviour
                         if (boxWall.distance != 0)
                         {
                             if (boxDistances.x > 0)
-                                velocity.x = boxWall.distance - (box.size.x * 0.5f);
+                                velocity.x = boxWall.distance - (box.size.x * 0.5f) - box.offset.x;
                             else
-                                velocity.x = -boxWall.distance + (box.size.x * 0.5f);
+                                velocity.x = -boxWall.distance + (box.size.x * 0.5f) - box.offset.x;
                         }
                     }
                     // If the boxcast didn't hit anything...
@@ -323,6 +330,7 @@ public class Snaily : MonoBehaviour
                 box.size = new Vector2(HITBOX_Y, HITBOX_X);
             else
                 box.size = new Vector2(HITBOX_X, HITBOX_Y);
+            PlayAnim("idle");
         }
         else
         {
@@ -343,6 +351,51 @@ public class Snaily : MonoBehaviour
                 box.size = new Vector2(HITBOX_SHELL_X, HITBOX_SHELL_Y);
             }
             sfx.PlayOneShot(shell);
+            PlayAnim("shell");
         }
+        shelled = !shelled;
+    }
+
+    private void PlayAnim(string action)
+    {
+        string animName = "";
+        animName += "Normal ";
+        switch (action)
+        {
+            case "wall":
+                animName += "wall ";
+                if (shelled)
+                    animName += "shell";
+                else
+                    animName += "idle";
+                break;
+            case "floor":
+                animName += "floor ";
+                if (shelled)
+                    animName += "shell";
+                else
+                    animName += "idle";
+                break;
+            case "shell":
+                if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+                    animName += "wall ";
+                else
+                    animName += "floor ";
+                animName += "shell";
+                break;
+            case "idle":
+                if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+                    animName += "wall ";
+                else
+                    animName += "floor ";
+                animName += "idle";
+                break;
+            case "die":
+                animName += "die";
+                break;
+            default:
+                return;
+        }
+        anim.Play(animName, 0, 0);
     }
 }

@@ -32,11 +32,11 @@ public class Item : MonoBehaviour
         {
             case "Rainbow Wave":
                 anim.Play("RainbowWave", 0, 0);
-                box.size = new Vector2(1.25f, 2f);
+                box.size = new Vector2(1.25f, 1.825f);
                 break;
             default:
                 anim.Play("RainbowWave", 0, 0);
-                box.size = new Vector2(1.25f, 2f);
+                box.size = new Vector2(1.25f, 1.825f);
                 break;
         }
     }
