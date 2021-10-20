@@ -116,6 +116,9 @@ public class Snaily : MonoBehaviour
         // Decide which direction we're currently falling
         switch (gravityDir)
         {
+                                                                                 ////////////////
+                                                                                 ////  DOWN  ////
+                                                                                 ////////////////
             case DIR_FLOOR:
                 // Firstly, we ensure we're oriented correctly
                 SwapDir(DIR_FLOOR);
@@ -183,10 +186,52 @@ public class Snaily : MonoBehaviour
                         // If we didn't do this, Snaily might jitter around a bit upon hitting one
                         if (boxWall.distance != 0)
                         {
+                            bool queryRight = false;
                             if (boxDistances.x > 0)
+                            {
                                 velocity.x = boxWall.distance - (box.size.x * 0.5f) - box.offset.x;
+                                queryRight = true;
+                            }
                             else
+                            {
                                 velocity.x = -boxWall.distance + (box.size.x * 0.5f) - box.offset.x;
+                            }
+
+                            RaycastHit2D boxClimbTest = Physics2D.Raycast(
+                                    new Vector2(transform.position.x, transform.position.y),
+                                    Vector2.up,
+                                    Mathf.Infinity,
+                                    playerCollide,
+                                    Mathf.Infinity,
+                                    Mathf.Infinity
+                                    );
+                            if ((Input.GetAxisRaw("Vertical") == 1 || (Input.GetAxisRaw("Vertical") == -1 && !grounded)) && boxClimbTest.distance > 1.5f)
+                            {
+                                bool queryUp = (Input.GetAxisRaw("Vertical") == 1);
+
+                                gravityDir = queryRight ? DIR_WALL_RIGHT : DIR_WALL_LEFT;
+                                SwitchSurfaceAxis();
+                                SwapDir(queryRight ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                                SwapDir(queryUp ? DIR_CEILING : DIR_FLOOR);
+                                PlayAnim("wall");
+
+                                boxClimbTest = Physics2D.Raycast(
+                                    new Vector2(transform.position.x, transform.position.y),
+                                    Vector2.down,
+                                    Mathf.Infinity,
+                                    playerCollide,
+                                    Mathf.Infinity,
+                                    Mathf.Infinity
+                                    );
+                                float vertMod = 0;
+                                if (boxClimbTest.distance < box.size.y * 0.5f)
+                                    vertMod = boxClimbTest.distance - (box.size.y * 0.5f);
+                                transform.position = new Vector2(transform.position.x, transform.position.y + vertMod);
+
+                                velocity.x = queryRight ? boxWall.distance - (box.size.x * 0.5f) - box.offset.x : -boxWall.distance + (box.size.x * 0.5f) - box.offset.x;
+                                transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                                velocity.x = 0;
+                            }
                         }
                     }
                     // If the boxcast didn't hit anything...
@@ -222,8 +267,16 @@ public class Snaily : MonoBehaviour
                         // If your character is more than one unit tall, don't forget to change this!
                         if (velocity.y > 0 && boxCeiling.distance < 0.5f)
                         {
-                            //transform.position = new Vector2(transform.position.x, transform.position.y + boxCeiling.distance - (box.size.y * 0.5f) - 0.03125f);
                             transform.position = new Vector2(transform.position.x, transform.position.y + boxCeiling.distance - (box.size.y * 0.5f));
+                            if (Input.GetAxisRaw("Vertical") == 1)
+                            {
+                                grounded = true;
+                                if (shelled)
+                                    ToggleShell();
+                                gravityDir = DIR_CEILING;
+                                SwapDir(DIR_CEILING);
+                                return;
+                            }
                             velocity.y = -0.0125f;
                             UpdateBoxcasts(boxDistances.x, velocity.y);
                         }
@@ -288,6 +341,21 @@ public class Snaily : MonoBehaviour
                     );
                 transform.position = new Vector2(transform.position.x + finalVel.x, transform.position.y + finalVel.y);
                 break;
+                                                                                 ////////////////
+                                                                                 ////  LEFT  ////
+                                                                                 ////////////////
+            case DIR_WALL_LEFT:
+                break;
+                                                                                 /////////////////
+                                                                                 ////  RIGHT  ////
+                                                                                 /////////////////
+            case DIR_WALL_RIGHT:
+                break;
+                                                                                 ////////////////
+                                                                                 ////   UP   ////
+                                                                                 ////////////////
+            case DIR_CEILING:
+                break;
         }
     }
 
@@ -319,6 +387,15 @@ public class Snaily : MonoBehaviour
                 sprite.flipY = true;
                 break;
         }
+    }
+
+    private void SwitchSurfaceAxis()
+    {
+        if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+            PlayAnim("floor");
+        else
+            PlayAnim("idle");
+        box.size = new Vector2(box.size.y, box.size.x);
     }
 
     private void ToggleShell()

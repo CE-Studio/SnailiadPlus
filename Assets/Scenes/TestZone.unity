@@ -18006,7 +18006,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -5
   m_Sprite: {fileID: -5261992394389525642, guid: 38bf9f778cbeae541b07250c40b958b6,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -59359,7 +59359,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -6
   m_Sprite: {fileID: 1153654555230969462, guid: 48a71a8642d4c1e47a0137d7562f6ffc,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -61029,6 +61029,7 @@ MonoBehaviour:
   - 0
   box: {fileID: 0}
   sprite: {fileID: 0}
+  anim: {fileID: 0}
   sfx: {fileID: 0}
   shell: {fileID: 0}
   jump: {fileID: 0}
