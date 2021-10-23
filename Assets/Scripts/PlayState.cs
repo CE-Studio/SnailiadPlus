@@ -38,6 +38,7 @@ public class PlayState
     public static bool paralyzed = false;
     public static bool isArmed = false;
     public static bool hasRainbowWave = false;
+    public static bool hasGravitySnail = false;
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
