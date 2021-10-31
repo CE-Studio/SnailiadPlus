@@ -128,7 +128,7 @@ public class Snaily : MonoBehaviour
                 if (true)
                 {
                     // Firstly, we ensure we're oriented correctly
-                    SwapDir(DIR_FLOOR);
+                    //SwapDir(DIR_FLOOR);
 
                     // Now, we make sure our collision-finding boxcasts are facing the right way
                     if (grounded)
@@ -381,7 +381,263 @@ public class Snaily : MonoBehaviour
                 // We have this if statement here SPECIFICALLY so we can hide this block away with Visual Studio's little minus button there on the left
                 if (true)
                 {
+                    // Firstly, we ensure we're oriented correctly
+                    SwapDir(DIR_WALL_LEFT);
 
+                    // Now, we make sure our collision-finding boxcasts are facing the right way
+                    if (grounded)
+                    {
+                        velocity.x = 0;
+                        UpdateBoxcasts(-1, boxDistances.y);
+                    }
+                    else
+                    {
+                        // If we happen to be falling, let's increase our downward velocity by some increment
+                        // However we should slow it if jump is held as long as we're still going up
+                        if (!holdingJump && velocity.x > 0)
+                            velocity.x = Mathf.Clamp(velocity.x - GRAVITY * gravityMod * Time.fixedDeltaTime * FALLSPEED_MOD, TERMINAL_VELOCITY, Mathf.Infinity);
+                        else
+                            velocity.x = Mathf.Clamp(velocity.x - GRAVITY * gravityMod * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity);
+                        UpdateBoxcasts(velocity.x, boxDistances.y);
+                    }
+
+                    // Firstly, let's see if Snaily wants to toggle being in their shell
+                    // We'll start by un-shelling Snaily if they're shelled and decide to move, jump, or shoot
+                    if (shelled && ((Input.GetAxisRaw("Vertical") != 0 && grounded) ||
+                        (Input.GetAxisRaw("Jump") != 0 && grounded)))
+                    {
+                        ToggleShell();
+                    }
+                    // Now we'll shell/unshell based on the button press
+                    if (Input.GetAxisRaw("Horizontal") == -1 && Input.GetAxisRaw("Vertical") == 0 && !holdingShell)
+                    {
+                        ToggleShell();
+                    }
+                    if (!holdingShell && Input.GetAxisRaw("Horizontal") == -1)
+                    {
+                        holdingShell = true;
+                    }
+                    if (holdingShell && Input.GetAxisRaw("Horizontal") != -1)
+                    {
+                        holdingShell = false;
+                    }
+
+                    // Let's run left/right move checks next
+                    if (Input.GetAxisRaw("Vertical") != 0)
+                    {
+                        UpdateBoxcasts(boxDistances.x, Input.GetAxisRaw("Vertical") * RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime);
+                        // Let's make sure Snaily is facing where they're going!
+                        if (Input.GetAxisRaw("Vertical") > 0)
+                            SwapDir(DIR_CEILING);
+                        else
+                            SwapDir(DIR_FLOOR);
+                        // If the boxcast hit something...
+                        if (boxVert.collider != null)
+                        {
+                            RaycastHit2D boxWall = Physics2D.Raycast(
+                                new Vector2(boxVert.point.x, transform.position.y),
+                                Vector2.up * Mathf.Sign(Input.GetAxisRaw("Vertical")),
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            // We check if the distance is 0 on the offchance the point of collision originates inside a ceiling
+                            // If we didn't do this, Snaily might jitter around a bit upon hitting one
+                            if (boxWall.distance != 0)
+                            {
+                                bool queryUp = false;
+                                if (boxDistances.y > 0)
+                                {
+                                    velocity.y = boxWall.distance - (box.size.y * 0.5f) - box.offset.y;
+                                    queryUp = true;
+                                }
+                                else
+                                {
+                                    velocity.y = -boxWall.distance + (box.size.y * 0.5f) - box.offset.y;
+                                }
+
+                                RaycastHit2D boxClimbTest = Physics2D.Raycast(
+                                        new Vector2(transform.position.x, transform.position.y),
+                                        Vector2.right,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                if ((Input.GetAxisRaw("Horizontal") == 1 || (Input.GetAxisRaw("Horizontal") == -1 && !grounded)) && boxClimbTest.distance > 1.5f)
+                                {
+                                    bool queryRight = (Input.GetAxisRaw("Horizontal") == 1);
+
+                                    gravityDir = queryUp ? DIR_CEILING : DIR_FLOOR;
+                                    SwitchSurfaceAxis();
+                                    SwapDir(queryUp ? DIR_CEILING : DIR_FLOOR);
+                                    SwapDir(queryRight ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                                    PlayAnim("floor");
+
+                                    boxClimbTest = Physics2D.Raycast(
+                                        new Vector2(transform.position.x, transform.position.y),
+                                        Vector2.left,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    float vertMod = 0;
+                                    if (boxClimbTest.distance < box.size.x * 0.5f)
+                                        vertMod = boxClimbTest.distance - (box.size.x * 0.5f);
+                                    transform.position = new Vector2(transform.position.x + vertMod, transform.position.y);
+
+                                    velocity.y = queryUp ? boxWall.distance - (box.size.y * 0.5f) - box.offset.y : -boxWall.distance + (box.size.y * 0.5f) - box.offset.y;
+                                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                                    velocity.y = 0;
+                                }
+                            }
+                        }
+                        // If the boxcast didn't hit anything...
+                        else
+                            velocity.y = boxDistances.y;
+                    }
+                    else
+                        velocity.y = 0;
+
+                    // Here we check to see if Snaily's run off the edge of a platform
+                    Debug.Log("boxHoriz report\nOrigin: (" + (transform.position.x + box.offset.x) + ", " + (transform.position.y + box.offset.y) +
+                        ")\nDistance: " + boxHoriz.distance + "\nHit point: " + boxHoriz.point + "\nCollider: " + boxHoriz.collider
+                        );
+                    if (grounded && (boxHoriz.collider == null))
+                    {
+                        // If the player is holding down, we check to see if a floor corner is present so they can round it
+                        if (Input.GetAxisRaw("Horizontal") == -1)
+                        {
+                            bool queryUp = (Input.GetAxisRaw("Vertical") == 1);
+                            RaycastHit2D boxCornerTest = Physics2D.Raycast(
+                                new Vector2(transform.position.x - 1, transform.position.y),
+                                queryUp ? Vector2.down : Vector2.up,
+                                0.95f,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+
+                            Debug.DrawLine(
+                                new Vector2(transform.position.x - 1, transform.position.y),
+                                boxCornerTest.point,
+                                Color.red,
+                                1,
+                                false
+                                );
+
+                            if (boxCornerTest.collider != null)
+                            {
+                                SwapDir(queryUp ? DIR_FLOOR : DIR_CEILING);
+                                SwitchSurfaceAxis();
+                                transform.position = new Vector2(transform.position.x, transform.position.y + (boxCornerTest.distance - (box.size.y * 0.5f)) * (queryUp ? -1 : 1));
+                                gravityDir = (queryUp ? DIR_FLOOR : DIR_CEILING);
+                                PlayAnim("floor");
+                                velocity.y = 0;
+                            }
+                        }
+                        else
+                        {
+                            grounded = false;
+                            velocity.x = 0;
+                            UpdateBoxcasts(-GRAVITY * gravityMod * Time.fixedDeltaTime, boxDistances.y);
+                        }
+                    }
+                    // If we happen to be in the air...
+                    if (!grounded)
+                    {
+                        // If the boxcast hit something...
+                        if (boxHoriz.collider != null)
+                        {
+                            RaycastHit2D boxCeiling = Physics2D.Raycast(
+                                new Vector2(transform.position.x, boxHoriz.point.y),
+                                Vector2.right,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            // If we hit a ceiling, stop
+                            // This 0.5f here is the distance to check for ceiling collision. In Snaily's case, it's half a unit
+                            // If your character is more than one unit tall, don't forget to change this!
+                            if (velocity.x > 0 && boxCeiling.distance < 0.5f)
+                            {
+                                transform.position = new Vector2(transform.position.x + boxCeiling.distance - (box.size.x * 0.5f), transform.position.y);
+                                if (Input.GetAxisRaw("Horizontal") == 1)
+                                {
+                                    grounded = true;
+                                    if (shelled)
+                                        ToggleShell();
+                                    gravityDir = DIR_WALL_RIGHT;
+                                    SwapDir(DIR_WALL_RIGHT);
+                                    holdingShell = true;
+                                    return;
+                                }
+                                velocity.x = -0.0125f;
+                                UpdateBoxcasts(velocity.x, boxDistances.y);
+                            }
+                            // If we hit a floor, mark ourselves as grounded and stop moving vertically at all
+                            // Right after we get the exact distance from the ground and move just the right amount to align ourself with it
+                            else if (velocity.x <= 0)
+                            {
+                                RaycastHit2D boxLand = Physics2D.Raycast(
+                                    new Vector2(transform.position.x, boxHoriz.point.y),
+                                    Vector2.left,
+                                    Mathf.Infinity,
+                                    playerCollide,
+                                    Mathf.Infinity,
+                                    Mathf.Infinity
+                                    );
+                                if (boxLand.point.x < transform.position.x)
+                                {
+                                    velocity.x = -boxLand.distance + (box.size.x * 0.5f) + 0.03124f;
+                                    grounded = true;
+                                }
+                            }
+                        }
+                        // If the boxcast didn't hit anything...
+                        else
+                            // ...just move the max velocity we can
+                            velocity.x = boxHoriz.distance;
+                    }
+                    // If we happen to be on the ground...
+                    else
+                    {
+                        // Let's allow jumping!
+                        // First, check to see if the button is even down
+                        if (Input.GetAxisRaw("Jump") == 1 && !holdingJump)
+                        {
+                            holdingJump = true;
+                            // Now, let's see if we have the space to
+                            RaycastHit2D boxJump = Physics2D.BoxCast(
+                                new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
+                                new Vector2(box.size.x, box.size.y),
+                                0,
+                                Vector2.left,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+
+                            if (Vector2.Distance(transform.position, boxJump.point) > 0.75f)
+                            {
+                                // Looks like we're clear!
+                                velocity.x = JUMPPOWER_NORMAL * Time.fixedDeltaTime;
+                                sfx.PlayOneShot(jump);
+                                grounded = false;
+                            }
+                        }
+                    }
+
+                    // Let's clamp our velocity values just to make sure we don't shoot across the map
+                    finalVel = new Vector2(
+                        Mathf.Clamp(velocity.x, TERMINAL_VELOCITY, Mathf.Infinity),
+                        Mathf.Clamp(velocity.y, -RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime, RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime)
+                        );
+                    transform.position = new Vector2(transform.position.x + finalVel.x, transform.position.y + finalVel.y);
                 }
                 break;
                                                                                  /////////////////
@@ -639,15 +895,17 @@ public class Snaily : MonoBehaviour
                             {
                                 // Looks like we're clear!
                                 sfx.PlayOneShot(jump);
+                                grounded = false;
                                 if (PlayState.hasGravitySnail)
                                 {
                                     velocity.y = -JUMPPOWER_NORMAL * Time.fixedDeltaTime;
-                                    grounded = false;
                                 }
                                 else
                                 {
                                     gravityDir = DIR_FLOOR;
                                     SwapDir(DIR_FLOOR);
+                                    holdingShell = true;
+                                    UpdateBoxcasts(boxDistances.x, velocity.y);
                                 }
                             }
                         }
@@ -662,6 +920,7 @@ public class Snaily : MonoBehaviour
                 }
                 break;
         }
+        //Debug.Log(getDirName() + ", (" + velocity.x + ", " + velocity.y + ")");
     }
 
     private void UpdateBoxcasts(float x, float y)
@@ -697,9 +956,9 @@ public class Snaily : MonoBehaviour
     private void SwitchSurfaceAxis()
     {
         if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-            PlayAnim("floor");
+            PlayAnim("wall");
         else
-            PlayAnim("idle");
+            PlayAnim("floor");
         box.size = new Vector2(box.size.y, box.size.x);
     }
 
@@ -779,5 +1038,26 @@ public class Snaily : MonoBehaviour
                 return;
         }
         anim.Play(animName, 0, 0);
+    }
+
+    private string getDirName()
+    {
+        string name = "";
+        switch (gravityDir)
+        {
+            case 0:
+                name = "FLOOR";
+                break;
+            case 1:
+                name = "LEFT WALL";
+                break;
+            case 2:
+                name = "RIGHT WALL";
+                break;
+            case 3:
+                name = "CEILING";
+                break;
+        }
+        return name;
     }
 }
