@@ -41,6 +41,8 @@ public class Snaily : MonoBehaviour
 
     private RaycastHit2D boxHoriz;
     private RaycastHit2D boxVert;
+    private RaycastHit2D boxCorner;
+    private Vector2 lastPosition;
 
     public BoxCollider2D box;
     public SpriteRenderer sprite;
@@ -109,12 +111,39 @@ public class Snaily : MonoBehaviour
             Mathf.Infinity,
             Mathf.Infinity
             );
+        Vector2 boxCornerDir = Vector2.zero;
+        switch (gravityDir)
+        {
+            case DIR_FLOOR:
+                boxCornerDir = Vector2.down;
+                break;
+            case DIR_WALL_LEFT:
+                boxCornerDir = Vector2.left;
+                break;
+            case DIR_WALL_RIGHT:
+                boxCornerDir = Vector2.right;
+                break;
+            case DIR_CEILING:
+                boxCornerDir = Vector2.up;
+                break;
+        }
+        boxCorner = Physics2D.BoxCast(
+            lastPosition,
+            new Vector2(box.size.x - 0.025f, box.size.y - 0.025f),
+            0,
+            boxCornerDir,
+            1,
+            playerCollide,
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
 
         // Before we move, let's just make sure all the keys are how they should be
         if (holdingJump && Input.GetAxisRaw("Jump") == 0)
             holdingJump = false;
 
         Vector2 finalVel = Vector2.zero;
+        lastPosition = transform.position;
 
         // Decide which direction we're currently falling
         // Note: all comments are relative to the ground state
@@ -127,10 +156,7 @@ public class Snaily : MonoBehaviour
                 // We have this if statement here SPECIFICALLY so we can hide this block away with Visual Studio's little minus button there on the left
                 if (true)
                 {
-                    // Firstly, we ensure we're oriented correctly
-                    //SwapDir(DIR_FLOOR);
-
-                    // Now, we make sure our collision-finding boxcasts are facing the right way
+                    // Firstly, we make sure our collision-finding boxcasts are facing the right way
                     if (grounded)
                     {
                         velocity.y = 0;
@@ -248,7 +274,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // Here we check to see if Snaily's run off the edge of a platform
-                    if (grounded && boxVert.collider == null)
+                    if (grounded && boxVert.collider == null && boxCorner.collider != null)
                     {
                         // If the player is holding down, we check to see if a floor corner is present so they can round it
                         if (Input.GetAxisRaw("Vertical") == -1)
@@ -381,10 +407,7 @@ public class Snaily : MonoBehaviour
                 // We have this if statement here SPECIFICALLY so we can hide this block away with Visual Studio's little minus button there on the left
                 if (true)
                 {
-                    // Firstly, we ensure we're oriented correctly
-                    SwapDir(DIR_WALL_LEFT);
-
-                    // Now, we make sure our collision-finding boxcasts are facing the right way
+                    // Firstly, we make sure our collision-finding boxcasts are facing the right way
                     if (grounded)
                     {
                         velocity.x = 0;
@@ -505,10 +528,10 @@ public class Snaily : MonoBehaviour
                     Debug.Log("boxHoriz report\nOrigin: (" + (transform.position.x + box.offset.x) + ", " + (transform.position.y + box.offset.y) +
                         ")\nDistance: " + boxHoriz.distance + "\nHit point: " + boxHoriz.point + "\nCollider: " + boxHoriz.collider
                         );
-                    if (grounded && (boxHoriz.collider == null))
+                    if (grounded && boxHoriz.collider == null && boxCorner.collider != null)
                     {
                         // If the player is holding down, we check to see if a floor corner is present so they can round it
-                        if (Input.GetAxisRaw("Horizontal") == -1)
+                        if (Input.GetAxisRaw("Horizontal") == -1 && boxHoriz.point != Vector2.zero)
                         {
                             bool queryUp = (Input.GetAxisRaw("Vertical") == 1);
                             RaycastHit2D boxCornerTest = Physics2D.Raycast(
@@ -657,10 +680,7 @@ public class Snaily : MonoBehaviour
                 // We have this if statement here SPECIFICALLY so we can hide this block away with Visual Studio's little minus button there on the left
                 if (true)
                 {
-                    // Firstly, we ensure we're oriented correctly
-                    SwapDir(DIR_CEILING);
-
-                    // Now, we make sure our collision-finding boxcasts are facing the right way
+                    // Firstly, we make sure our collision-finding boxcasts are facing the right way
                     if (grounded)
                     {
                         velocity.y = 0;
@@ -778,7 +798,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // Here we check to see if Snaily's run off the edge of a platform
-                    if (grounded && boxVert.collider == null)
+                    if (grounded && boxVert.collider == null && boxCorner.collider != null)
                     {
                         // If the player is holding down, we check to see if a floor corner is present so they can round it
                         if (Input.GetAxisRaw("Vertical") == 1 && PlayState.hasGravitySnail)
@@ -921,6 +941,7 @@ public class Snaily : MonoBehaviour
                 break;
         }
         //Debug.Log(getDirName() + ", (" + velocity.x + ", " + velocity.y + ")");
+        Debug.Log("Ground test null states: " + ((boxVert.collider == null) ? "true, " : "false, ") + ((boxCorner.collider == null) ? "true" : "false"));
     }
 
     private void UpdateBoxcasts(float x, float y)
