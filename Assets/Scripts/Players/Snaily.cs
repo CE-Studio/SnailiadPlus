@@ -59,6 +59,7 @@ public class Snaily : MonoBehaviour
 
     public Player player;
 
+    // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
     void Start()
     {
         box = GetComponent<BoxCollider2D>();
@@ -80,11 +81,14 @@ public class Snaily : MonoBehaviour
         WEAPON_COOLDOWNS[5] = 0.085f;
     }
 
+    // This function is called once per frame
     void Update()
     {
         
     }
 
+    // This function is called once every 0.02 seconds (50 time a second) regardless of framerate. Unity requires all physics calculations to be
+    // run in this function, so it's where I put movement code as it utilizes boxcasts
     void FixedUpdate()
     {
         // To start things off, we mark our current position as the last position we took. Same with our hitbox size
@@ -105,6 +109,9 @@ public class Snaily : MonoBehaviour
                 {
                     // We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
                     velocity.x = 0;
+                    if (grounded)
+                        velocity.y = 0;
+
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
                     if (Input.GetAxisRaw("Horizontal") != 0)
                     {
@@ -119,33 +126,63 @@ public class Snaily : MonoBehaviour
                         else
                             velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
                         transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                        UpdateBoxcasts();
                     }
+
                     // Now, we perform relatively vertical checks. This mainly involves jumping and falling
                     if (!grounded)
                     {
-                        velocity.y = Mathf.Clamp(velocity.y - GRAVITY * gravityMod * Time.fixedDeltaTime * (!holdingJump && velocity.y > 0 ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
-                        if (boxD.distance < velocity.y && Mathf.Sign(velocity.y) == -1)
+                        bool pokedCeiling = false;
+                        velocity.y = Mathf.Clamp(velocity.y - GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
+                        if (boxD.distance != 0 && boxU.distance != 0)
                         {
-                            velocity.y -= boxD.distance;
-                            grounded = true;
-                        }
-                        else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
-                        {
-                            velocity.y -= boxU.distance;
+                            if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
+                            {
+                                velocity.y = -boxD.distance;
+                                grounded = true;
+                            }
+                            else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
+                            {
+                                velocity.y = boxU.distance;
+                                pokedCeiling = true;
+                            }
                         }
                         transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                        velocity.y = 0;
+                        UpdateBoxcasts();
+                        if (pokedCeiling)
+                            velocity.y = 0;
                     }
+                    else
+                    {
+                        if (boxD.distance > 0.0125f)
+                        {
+                            grounded = false;
+                        }
+                    }
+
+                    // Now, let's see if we can jump
+                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxU.distance > 0.95f)
+                    {
+                        grounded = false;
+                        velocity.y = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        sfx.PlayOneShot(jump);
+                    }
+                    if (Input.GetAxisRaw("Jump") == 1 && !holdingJump)
+                        holdingJump = true;
+                    else if (Input.GetAxisRaw("Jump") != 1 && holdingJump)
+                        holdingJump = false;
                 }
                 break;
         }
     }
 
+    // This function is used to reset all five boxcasts the player character uses for ground checks. It's called once per
+    // FixedUpdate() call automatically plus any additional resets needed, for instance, after a gravity change
     private void UpdateBoxcasts()
     {
         boxL = Physics2D.BoxCast(
             new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-            box.size,
+            new Vector2(box.size.x, box.size.y - 0.015625f),
             0,
             Vector2.left,
             Mathf.Infinity,
@@ -155,7 +192,7 @@ public class Snaily : MonoBehaviour
             );
         boxR = Physics2D.BoxCast(
             new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-            box.size,
+            new Vector2(box.size.x, box.size.y - 0.015625f),
             0,
             Vector2.right,
             Mathf.Infinity,
@@ -165,7 +202,7 @@ public class Snaily : MonoBehaviour
             );
         boxU = Physics2D.BoxCast(
             new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-            box.size,
+            new Vector2(box.size.x - 0.015625f, box.size.y),
             0,
             Vector2.up,
             Mathf.Infinity,
@@ -175,7 +212,7 @@ public class Snaily : MonoBehaviour
             );
         boxD = Physics2D.BoxCast(
             new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y),
-            box.size,
+            new Vector2(box.size.x - 0.015625f, box.size.y),
             0,
             Vector2.down,
             Mathf.Infinity,
@@ -205,6 +242,9 @@ public class Snaily : MonoBehaviour
             );
     }
 
+    // This function is callede to reorient the player character in any way necessary
+    // Note: this only accounts for four directions in either the ground/ceiling state or the wall state, never both. A call to
+    // SwitchSurfaceAxis() is necessary for that
     private void SwapDir(int dirToFace)
     {
         switch (dirToFace)
@@ -228,6 +268,7 @@ public class Snaily : MonoBehaviour
         }
     }
 
+    // This function is used to swap the player character between the ground/ceiling state and the wall state and vice versa
     private void SwitchSurfaceAxis()
     {
         if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
@@ -237,6 +278,7 @@ public class Snaily : MonoBehaviour
         box.size = new Vector2(box.size.y, box.size.x);
     }
 
+    // This function is called whenever a shelled character asks to enter/exit their shell
     private void ToggleShell()
     {
         if (shelled)
@@ -272,6 +314,7 @@ public class Snaily : MonoBehaviour
         shelled = !shelled;
     }
 
+    // This function acts as an animation manager, converting a string into an animation name
     private void PlayAnim(string action)
     {
         string animName = "";
@@ -315,6 +358,7 @@ public class Snaily : MonoBehaviour
         anim.Play(animName, 0, 0);
     }
 
+    // This function returns a string version of the current gravity direction, formatted in a different manner to the variable names
     private string getDirName()
     {
         string name = "";
