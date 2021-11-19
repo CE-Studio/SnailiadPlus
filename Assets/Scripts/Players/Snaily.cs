@@ -163,6 +163,8 @@ public class Snaily : MonoBehaviour
                     // Now, let's see if we can jump
                     if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxU.distance > 0.95f)
                     {
+                        if (shelled)
+                            ToggleShell();
                         grounded = false;
                         velocity.y = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
                         sfx.PlayOneShot(jump);
@@ -171,6 +173,22 @@ public class Snaily : MonoBehaviour
                         holdingJump = true;
                     else if (Input.GetAxisRaw("Jump") != 1 && holdingJump)
                         holdingJump = false;
+
+                    // Finally, we check to see if we can shell
+                    if (Input.GetAxisRaw("Vertical") == -1 &&
+                        Input.GetAxisRaw("Horizontal") == 0 &&
+                        Input.GetAxisRaw("Jump") == 0 &&
+                        Input.GetAxisRaw("Shoot") == 0 &&
+                        Input.GetAxisRaw("Strafe") == 0 &&
+                        !holdingShell)
+                    {
+                        if (!shelled)
+                            sfx.PlayOneShot(shell);
+                        ToggleShell();
+                        holdingShell = true;
+                    }
+                    if (holdingShell && Input.GetAxisRaw("Vertical") != -1)
+                        holdingShell = false;
                 }
                 break;
         }
@@ -221,7 +239,7 @@ public class Snaily : MonoBehaviour
             Mathf.Infinity
             );
 
-        Vector2 cornerTestDir = Vector2.zero;
+        Vector2 cornerTestDir;
         if (getDirName() == "CEILING")
             cornerTestDir = Vector2.up;
         else if (getDirName() == "WALL LEFT")
@@ -242,7 +260,7 @@ public class Snaily : MonoBehaviour
             );
     }
 
-    // This function is callede to reorient the player character in any way necessary
+    // This function is called to reorient the player character in any way necessary
     // Note: this only accounts for four directions in either the ground/ceiling state or the wall state, never both. A call to
     // SwitchSurfaceAxis() is necessary for that
     private void SwapDir(int dirToFace)
