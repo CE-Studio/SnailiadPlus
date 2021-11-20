@@ -38,6 +38,7 @@ public class Snaily : MonoBehaviour
     private bool holdingJump = false;
     private bool holdingShell = false;
     private bool justSwapped = false;
+    private bool axisFlag = false;
 
     private RaycastHit2D boxL;
     private RaycastHit2D boxR;
@@ -122,6 +123,29 @@ public class Snaily : MonoBehaviour
                         if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                         {
                             velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
+                            // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
+                            // we check to see if climbing is possible in either direction and switch the character's gravity state
+                            if ((boxD.distance + boxU.distance) >= 2)
+                            {
+                                if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1 && !grounded)
+                                {
+                                    float ceilDis = boxU.distance;
+                                    float floorDis = boxD.distance;
+                                    SwitchSurfaceAxis();
+                                    UpdateBoxcasts();
+                                    float adjustment = 0;
+                                    if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                        adjustment = -(ceilDis - (box.size.y * 0.5f));
+                                    else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                        adjustment = floorDis - (box.size.y * 0.5f);
+                                    transform.position = new Vector2(
+                                        transform.position.x + (((facingLeft ? boxL : boxR).distance - (box.size.x * 0.5f)) * (facingLeft ? -1 : 1)),
+                                        transform.position.y + adjustment
+                                        );
+                                    SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
+                                    gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                                }
+                            }
                         }
                         else
                             velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
@@ -289,10 +313,11 @@ public class Snaily : MonoBehaviour
     // This function is used to swap the player character between the ground/ceiling state and the wall state and vice versa
     private void SwitchSurfaceAxis()
     {
-        if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+        if (!axisFlag)
             PlayAnim("wall");
         else
             PlayAnim("floor");
+        axisFlag = !axisFlag;
         box.size = new Vector2(box.size.y, box.size.x);
     }
 
@@ -330,6 +355,7 @@ public class Snaily : MonoBehaviour
             PlayAnim("shell");
         }
         shelled = !shelled;
+        UpdateBoxcasts();
     }
 
     // This function acts as an animation manager, converting a string into an animation name
