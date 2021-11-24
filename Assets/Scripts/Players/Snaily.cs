@@ -177,7 +177,15 @@ public class Snaily : MonoBehaviour
                         transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
                         UpdateBoxcasts();
                         if (pokedCeiling)
+                        {
                             velocity.y = 0;
+                            if (Input.GetAxisRaw("Vertical") == 1)
+                            {
+                                gravityDir = DIR_CEILING;
+                                SwapDir(DIR_CEILING);
+                                grounded = true;
+                            }
+                        }
                     }
                     else
                     {
