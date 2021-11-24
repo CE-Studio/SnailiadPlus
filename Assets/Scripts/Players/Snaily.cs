@@ -22,7 +22,6 @@ public class Snaily : MonoBehaviour
     public float[] WEAPON_COOLDOWNS = new float[6];
 
     private Vector2 velocity = new Vector2(0, 0);
-    private Vector2 boxDistances = new Vector2(0, 0);
     private int gravityDir = DIR_FLOOR;
     private bool grounded = false;
     private bool shelled = false;
@@ -31,13 +30,8 @@ public class Snaily : MonoBehaviour
     private float gravityMod = 1;
     private bool facingLeft = false;
     private bool facingDown = false;
-    private int relativeDown = DIR_FLOOR;
-    private int relativeLeft = DIR_WALL_LEFT;
-    private int relativeRight = DIR_WALL_RIGHT;
-    private int relativeUp = DIR_CEILING;
     private bool holdingJump = false;
     private bool holdingShell = false;
-    private bool justSwapped = false;
     private bool axisFlag = false;
 
     private RaycastHit2D boxL;
