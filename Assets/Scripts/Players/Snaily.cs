@@ -119,7 +119,7 @@ public class Snaily : MonoBehaviour
                             velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
-                            if ((boxD.distance + boxU.distance) >= 2)
+                            if ((boxD.distance + boxU.distance) >= 1)
                             {
                                 if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1 && !grounded)
                                 {
@@ -242,6 +242,8 @@ public class Snaily : MonoBehaviour
                         ToggleShell();
                         holdingShell = true;
                     }
+                    else if (!holdingShell && Input.GetAxisRaw("Vertical") == -1)
+                        holdingShell = true;
                     if (holdingShell && Input.GetAxisRaw("Vertical") != -1)
                         holdingShell = false;
                 }
@@ -268,7 +270,7 @@ public class Snaily : MonoBehaviour
                             velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
-                            if ((boxL.distance + boxR.distance) >= 2)
+                            if ((boxL.distance + boxR.distance) >= 1)
                             {
                                 if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 && !grounded)
                                 {
@@ -338,7 +340,16 @@ public class Snaily : MonoBehaviour
                         {
                             if (boxCorner.distance <= 0.0125f)
                             {
-                                if (Input.GetAxisRaw("Horizontal") == -1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1))
+                                if (!PlayState.CheckForItem("Gravity Snail"))
+                                {
+                                    SwapDir(DIR_FLOOR);
+                                    SwitchSurfaceAxis();
+                                    gravityDir = DIR_FLOOR;
+                                    if (Input.GetAxisRaw("Vertical") == -1)
+                                        holdingShell = true;
+                                    return;
+                                }
+                                else if (Input.GetAxisRaw("Horizontal") == -1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1))
                                 {
                                     SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
                                     SwitchSurfaceAxis();
@@ -370,7 +381,15 @@ public class Snaily : MonoBehaviour
                         if (shelled)
                             ToggleShell();
                         grounded = false;
-                        velocity.x = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        if (PlayState.CheckForItem("Gravity Snail"))
+                            velocity.x = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        else
+                        {
+                            transform.position = new Vector2(transform.position.x + (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
+                        }
                         sfx.PlayOneShot(jump);
                     }
                     if (Input.GetAxisRaw("Jump") == 1 && !holdingJump)
@@ -391,6 +410,8 @@ public class Snaily : MonoBehaviour
                         ToggleShell();
                         holdingShell = true;
                     }
+                    else if (!holdingShell && Input.GetAxisRaw("Horizontal") == -1)
+                        holdingShell = true;
                     if (holdingShell && Input.GetAxisRaw("Horizontal") != -1)
                         holdingShell = false;
                 }
@@ -417,7 +438,7 @@ public class Snaily : MonoBehaviour
                             velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
-                            if ((boxL.distance + boxR.distance) >= 2)
+                            if ((boxL.distance + boxR.distance) >= 1)
                             {
                                 if (Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Horizontal") == 1 && !grounded)
                                 {
@@ -452,7 +473,7 @@ public class Snaily : MonoBehaviour
                     if (!grounded)
                     {
                         bool pokedCeiling = false;
-                        velocity.x = Mathf.Clamp(velocity.x + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
+                        velocity.x = Mathf.Clamp(velocity.x + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
                         if (boxL.distance != 0 && boxR.distance != 0)
                         {
                             if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -474,7 +495,7 @@ public class Snaily : MonoBehaviour
                             if (Input.GetAxisRaw("Horizontal") == -1)
                             {
                                 gravityDir = DIR_WALL_LEFT;
-                                SwapDir(DIR_WALL_RIGHT);
+                                SwapDir(DIR_WALL_LEFT);
                                 grounded = true;
                                 holdingShell = true;
                                 return;
@@ -485,7 +506,16 @@ public class Snaily : MonoBehaviour
                     {
                         if (boxR.distance > 0.0125f)
                         {
-                            if (boxCorner.distance <= 0.0125f)
+                            if (!PlayState.CheckForItem("Gravity Snail"))
+                            {
+                                SwapDir(DIR_FLOOR);
+                                SwitchSurfaceAxis();
+                                gravityDir = DIR_FLOOR;
+                                if (Input.GetAxisRaw("Vertical") == -1)
+                                    holdingShell = true;
+                                return;
+                            }
+                            else if (boxCorner.distance <= 0.0125f)
                             {
                                 if (Input.GetAxisRaw("Horizontal") == 1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1))
                                 {
@@ -519,7 +549,15 @@ public class Snaily : MonoBehaviour
                         if (shelled)
                             ToggleShell();
                         grounded = false;
-                        velocity.x = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        if (PlayState.CheckForItem("Gravity Snail"))
+                            velocity.x = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        else
+                        {
+                            transform.position = new Vector2(transform.position.x - (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
+                        }
                         sfx.PlayOneShot(jump);
                     }
                     if (Input.GetAxisRaw("Jump") == 1 && !holdingJump)
@@ -540,6 +578,8 @@ public class Snaily : MonoBehaviour
                         ToggleShell();
                         holdingShell = true;
                     }
+                    else if (!holdingShell && Input.GetAxisRaw("Horizontal") == 1)
+                        holdingShell = true;
                     if (holdingShell && Input.GetAxisRaw("Horizontal") != 1)
                         holdingShell = false;
                 }
@@ -566,7 +606,7 @@ public class Snaily : MonoBehaviour
                             velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
-                            if ((boxD.distance + boxU.distance) >= 2)
+                            if ((boxD.distance + boxU.distance) >= 1)
                             {
                                 if (Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1 && !grounded)
                                 {
@@ -636,7 +676,12 @@ public class Snaily : MonoBehaviour
                         {
                             if (boxCorner.distance <= 0.0125f)
                             {
-                                if (Input.GetAxisRaw("Vertical") == 1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1))
+                                if (!PlayState.CheckForItem("Gravity Snail"))
+                                {
+                                    SwapDir(DIR_FLOOR);
+                                    gravityDir = DIR_FLOOR;
+                                }
+                                else if (Input.GetAxisRaw("Vertical") == 1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1))
                                 {
                                     SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                     SwitchSurfaceAxis();
@@ -668,7 +713,13 @@ public class Snaily : MonoBehaviour
                         if (shelled)
                             ToggleShell();
                         grounded = false;
-                        velocity.y = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        if (PlayState.CheckForItem("Gravity Snail"))
+                            velocity.y = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                        else
+                        {
+                            SwapDir(DIR_FLOOR);
+                            gravityDir = DIR_FLOOR;
+                        }
                         sfx.PlayOneShot(jump);
                     }
                     if (Input.GetAxisRaw("Jump") == 1 && !holdingJump)
@@ -689,6 +740,8 @@ public class Snaily : MonoBehaviour
                         ToggleShell();
                         holdingShell = true;
                     }
+                    else if (!holdingShell && Input.GetAxisRaw("Vertical") == 1)
+                        holdingShell = true;
                     if (holdingShell && Input.GetAxisRaw("Vertical") != 1)
                         holdingShell = false;
                 }
@@ -744,9 +797,9 @@ public class Snaily : MonoBehaviour
         Vector2 cornerTestDir;
         if (getDirName() == "CEILING")
             cornerTestDir = Vector2.up;
-        else if (getDirName() == "WALL LEFT")
+        else if (getDirName() == "LEFT WALL")
             cornerTestDir = Vector2.left;
-        else if (getDirName() == "WALL RIGHT")
+        else if (getDirName() == "RIGHT WALL")
             cornerTestDir = Vector2.right;
         else
             cornerTestDir = Vector2.down;

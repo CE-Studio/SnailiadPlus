@@ -180,4 +180,9 @@ public class PlayState
                 thisExplosionID = 0;
         }
     }
+
+    public static bool CheckForItem(string itemName)
+    {
+        return false;
+    }
 }
