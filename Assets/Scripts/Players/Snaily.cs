@@ -108,7 +108,7 @@ public class Snaily : MonoBehaviour
                         velocity.y = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Horizontal") != 0)
+                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0)
                     {
                         SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                         if (shelled && grounded)
@@ -259,7 +259,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Vertical") != 0)
+                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0)
                     {
                         SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
                         if (shelled && grounded)
@@ -427,7 +427,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Vertical") != 0)
+                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0)
                     {
                         SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
                         if (shelled && grounded)
@@ -595,7 +595,7 @@ public class Snaily : MonoBehaviour
                         velocity.y = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Horizontal") != 0)
+                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0)
                     {
                         SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                         if (shelled && grounded)
@@ -795,11 +795,11 @@ public class Snaily : MonoBehaviour
             );
 
         Vector2 cornerTestDir;
-        if (getDirName() == "CEILING")
+        if (GetDirName() == "CEILING")
             cornerTestDir = Vector2.up;
-        else if (getDirName() == "LEFT WALL")
+        else if (GetDirName() == "LEFT WALL")
             cornerTestDir = Vector2.left;
-        else if (getDirName() == "RIGHT WALL")
+        else if (GetDirName() == "RIGHT WALL")
             cornerTestDir = Vector2.right;
         else
             cornerTestDir = Vector2.down;
@@ -934,7 +934,7 @@ public class Snaily : MonoBehaviour
     }
 
     // This function returns a string version of the current gravity direction, formatted in a different manner to the variable names
-    private string getDirName()
+    private string GetDirName()
     {
         string name = "";
         switch (gravityDir)
@@ -953,5 +953,11 @@ public class Snaily : MonoBehaviour
                 break;
         }
         return name;
+    }
+
+    // This function handles activation of projectiles when the player presses either shoot button
+    private void Shoot()
+    {
+
     }
 }

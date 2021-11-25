@@ -75,6 +75,26 @@ public class PlayState
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
 
+    public static int[] itemCollection = new int[]
+    {
+        0,  // Peashooter
+        0,  // Boomerang
+        0,  // Rainbow Wave
+        0,  // Devastator
+        0,  // High Jump          Wall Grab
+        0,  // Shell Shield       Shelmet
+        0,  // Rapid Fire         Backfire
+        0,  // Ice Snail
+        0,  // Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
+        0,  // Full-Metal Snail
+        0,  // Gravity Shock
+        0,  // Super Secret Boomerang
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // Heart Containers
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // Helix Fragments
+    };
+    public const byte OFFSET_HEARTS = 12;
+    public const byte OFFSET_FRAGMENTS = 23;
+
     public static void GetNewRoom(string intendedArea)
     {
         area = intendedArea;
@@ -183,6 +203,64 @@ public class PlayState
 
     public static bool CheckForItem(string itemName)
     {
-        return false;
+        return itemCollection[TranslateItemNameToID(itemName)] == 1;
+    }
+
+    public static void AddItem(string itemName)
+    {
+        itemCollection[TranslateItemNameToID(itemName)] = 1;
+        if (itemName == "Super Secret Boomerang")
+            itemCollection[1] = 1;
+    }
+
+    private static byte TranslateItemNameToID(string itemName)
+    {
+        byte id = 0;
+        switch (itemName)
+        {
+            case "Peashooter":
+                id = 0;
+                break;
+            case "Boomerang":
+                id = 1;
+                break;
+            case "Rainbow Wave":
+                id = 2;
+                break;
+            case "Devastator":
+                id = 3;
+                break;
+            case "High Jump":
+            case "Wall Grab":
+                id = 4;
+                break;
+            case "Shell Shield":
+            case "Shelmet":
+                id = 5;
+                break;
+            case "Rapid Fire":
+            case "Backfire":
+                id = 6;
+                break;
+            case "Ice Snail":
+                id = 7;
+                break;
+            case "Gravity Snail":
+            case "Magnetic Foot":
+            case "Corkscrew Jump":
+            case "Angel Jump":
+                id = 8;
+                break;
+            case "Full-Metal Snail":
+                id = 9;
+                break;
+            case "Gravity Shock":
+                id = 10;
+                break;
+            case "Super Secret Boomerang":
+                id = 11;
+                break;
+        }
+        return id;
     }
 }
