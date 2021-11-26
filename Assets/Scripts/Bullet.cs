@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public string bulletType;
-    public int bulletTypeInt;
+    public int bulletType;
     public int direction;
     public bool isActive;
     private float lifeTimer;
@@ -39,7 +38,7 @@ public class Bullet : MonoBehaviour
                 lifeTimer += Time.fixedDeltaTime;
                 switch (bulletType)
                 {
-                    case "Rainbow Wave":
+                    case 3:
                         velocity = Mathf.Clamp(velocity + 0.04f, 0, 0.75f);
                         break;
                     default:
@@ -85,7 +84,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Shoot(string type, int dir)
+    public void Shoot(int type, int dir)
     {
         isActive = true;
         sprite.enabled = true;
@@ -123,18 +122,12 @@ public class Bullet : MonoBehaviour
         bulletType = type;
         switch (type)
         {
-            case "Rainbow Wave":
-                bulletTypeInt = 2;
+            case 3:
                 box.size = new Vector2(1.9f, 1.9f);
-                break;
-        }
-        direction = dir;
-        switch (bulletType)
-        {
-            case "Rainbow Wave":
                 velocity = 0;
                 break;
         }
+        direction = dir;
         PlayAnim();
     }
 
@@ -143,7 +136,7 @@ public class Bullet : MonoBehaviour
         string animToPlay = "";
         switch (bulletType)
         {
-            case "Rainbow Wave":
+            case 3:
                 animToPlay += "Rainbow Wave ";
                 break;
             default:
@@ -196,7 +189,7 @@ public class Bullet : MonoBehaviour
         float startTime = 0;
         switch (bulletType)
         {
-            case "Rainbow Wave":
+            case 3:
                 startTime = Random.Range(1, 7) * 0.16f;
                 break;
         }
@@ -205,7 +198,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide")) && bulletType == "Peashooter")
+        if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide")) && bulletType == 1)
         {
             Despawn();
         }

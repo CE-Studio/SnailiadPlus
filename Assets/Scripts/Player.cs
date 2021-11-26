@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     public bool stunned = false;
     private string currentAnim = "";
     public bool inDeathCutscene = false;
+    public int gravityDir = 0;
 
     public Animator anim;
     public SpriteRenderer sprite;

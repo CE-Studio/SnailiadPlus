@@ -51,7 +51,7 @@ public class BreakableBlock : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            if (collision.GetComponent<Bullet>().bulletTypeInt >= requiredWeapon)
+            if (collision.GetComponent<Bullet>().bulletType >= requiredWeapon)
             {
                 box.enabled = false;
                 sprite.sprite = blankSprite;

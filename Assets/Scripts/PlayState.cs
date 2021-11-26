@@ -209,8 +209,6 @@ public class PlayState
     public static void AddItem(string itemName)
     {
         itemCollection[TranslateItemNameToID(itemName)] = 1;
-        if (itemName == "Super Secret Boomerang")
-            itemCollection[1] = 1;
     }
 
     private static byte TranslateItemNameToID(string itemName)

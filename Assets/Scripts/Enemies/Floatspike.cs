@@ -20,12 +20,9 @@ public class Floatspike : Enemy
         targetX = origin.x;
         targetY = origin.y;
 
-        resistances.Add("Rainbow Wave");
-        resistances.Add("Charged Wave");
-        resistances.Add("Paralaser");
-        resistances.Add("Charged Laser");
-        resistances.Add("Charged Rang");
-        resistances.Add("Charged Flares");
+        resistances.Add(1);
+        resistances.Add(2);
+        resistances.Add(3);
     }
 
     void Update()

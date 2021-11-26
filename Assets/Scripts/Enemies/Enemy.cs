@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public int health;
     public int attack;
     public int defense;
-    public List<string> resistances;
+    public List<int> resistances;
     public bool letsPermeatingShotsBy;
 
     public BoxCollider2D box;

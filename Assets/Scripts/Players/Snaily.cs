@@ -33,6 +33,8 @@ public class Snaily : MonoBehaviour
     private bool holdingJump = false;
     private bool holdingShell = false;
     private bool axisFlag = false;
+    private float fireCooldown = 0;
+    private int bulletID = 0;
 
     private RaycastHit2D boxL;
     private RaycastHit2D boxR;
@@ -49,6 +51,7 @@ public class Snaily : MonoBehaviour
 
     public AudioClip shell;
     public AudioClip jump;
+    public AudioClip fireRainbow;
 
     public LayerMask playerCollide;
 
@@ -92,6 +95,10 @@ public class Snaily : MonoBehaviour
         lastSize = box.size;
         // We also update all our boxcasts, both for the corner and in case they're misaligned with our current gravity state
         UpdateBoxcasts();
+        // Next, we decrease the fire cooldown
+        fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
+        // Finally, we update the parent Player script with our current gravity
+        player.gravityDir = gravityDir;
 
         // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
         // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
@@ -747,6 +754,13 @@ public class Snaily : MonoBehaviour
                 }
                 break;
         }
+
+        if (Input.GetAxisRaw("Shoot") == 1 || Input.GetAxisRaw("Strafe") == 1)
+        {
+            if (shelled)
+                ToggleShell();
+            Shoot();
+        }
     }
 
     // This function is used to reset all five boxcasts the player character uses for ground checks. It's called once per
@@ -958,6 +972,57 @@ public class Snaily : MonoBehaviour
     // This function handles activation of projectiles when the player presses either shoot button
     private void Shoot()
     {
+        if (fireCooldown == 0 && player.selectedWeapon != 0)
+        {
+            Vector2 inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            int type = player.selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
+            int dir = 0;
+            switch (inputDir.x + "" + inputDir.y)
+            {
+                case "-11":
+                    dir = 0;
+                    break;
+                case "01":
+                    dir = 1;
+                    break;
+                case "11":
+                    dir = 2;
+                    break;
+                case "-10":
+                    dir = 3;
+                    break;
+                case "10":
+                    dir = 4;
+                    break;
+                case "-1-1":
+                    dir = 5;
+                    break;
+                case "0-1":
+                    dir = 6;
+                    break;
+                case "1-1":
+                    dir = 7;
+                    break;
+                case "00":
+                    dir = -1;
+                    break;
+            }
 
+            if (type == 1)
+            {
+                if (gravityDir == DIR_FLOOR && (dir == 5 || dir == 6 || dir == 7 || dir == -1))
+                    dir = facingLeft ? 3 : 4;
+                else if (gravityDir == DIR_WALL_LEFT && (dir == 0 || dir == 3 || dir == 5 || dir == -1))
+                    dir = facingDown ? 6 : 1;
+                else if (gravityDir == DIR_WALL_RIGHT && (dir == 2 || dir == 4 || dir == 7 || dir == -1))
+                    dir = facingDown ? 6 : 1;
+                else if (gravityDir == DIR_CEILING && (dir == 0 || dir == 1 || dir == 2 || dir == -1))
+                    dir = facingLeft ? 3 : 4;
+            }
+            player.bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
+            bulletID++;
+            if (bulletID >= player.bulletPool.transform.childCount)
+                bulletID = 0;
+        }
     }
 }
