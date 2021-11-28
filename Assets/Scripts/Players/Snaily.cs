@@ -23,7 +23,7 @@ public class Snaily : MonoBehaviour
 
     private Vector2 velocity = new Vector2(0, 0);
     private int gravityDir = DIR_FLOOR;
-    private bool grounded = false;
+    public bool grounded = false;
     private bool shelled = false;
     private float speedMod = 1;
     private float jumpMod = 1;
@@ -69,6 +69,7 @@ public class Snaily : MonoBehaviour
 
         shell = (AudioClip)Resources.Load("Sounds/Sfx/Shell");
         jump = (AudioClip)Resources.Load("Sounds/Sfx/Jump");
+        fireRainbow = (AudioClip)Resources.Load("Sounds/Sfx/RWaveShot");
 
         // Weapon cooldowns; first three are without Rapid Fire, last three are with
         WEAPON_COOLDOWNS[0] = 0.085f;
@@ -99,6 +100,31 @@ public class Snaily : MonoBehaviour
         fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
         // Finally, we update the parent Player script with our current gravity
         player.gravityDir = gravityDir;
+
+        Color lineColor = Color.white;
+        switch (Random.Range(1, 7))
+        {
+            case 1:
+                lineColor = Color.red;
+                break;
+            case 2:
+                lineColor = Color.green;
+                break;
+            case 3:
+                lineColor = Color.blue;
+                break;
+            case 4:
+                lineColor = Color.yellow;
+                break;
+            case 5:
+                lineColor = Color.black;
+                break;
+        }
+        Debug.DrawLine(transform.position, boxD.point, lineColor, 0.5f, false);
+        Debug.DrawLine(transform.position, boxU.point, lineColor, 0.5f, false);
+        Debug.DrawLine(transform.position, boxL.point, lineColor, 0.5f, false);
+        Debug.DrawLine(transform.position, boxR.point, lineColor, 0.5f, false);
+        Debug.Log(boxD.distance);
 
         // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
         // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
@@ -223,6 +249,11 @@ public class Snaily : MonoBehaviour
                     }
 
                     // Now, let's see if we can jump
+                    if (boxD.distance == 0)
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
+                        UpdateBoxcasts();
+                    }
                     if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxU.distance > 0.95f)
                     {
                         if (shelled)
@@ -383,6 +414,11 @@ public class Snaily : MonoBehaviour
                     }
 
                     // Now, let's see if we can jump
+                    if (boxL.distance == 0)
+                    {
+                        transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
+                        UpdateBoxcasts();
+                    }
                     if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxR.distance > 0.95f)
                     {
                         if (shelled)
@@ -551,6 +587,11 @@ public class Snaily : MonoBehaviour
                     }
 
                     // Now, let's see if we can jump
+                    if (boxR.distance == 0)
+                    {
+                        transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
+                        UpdateBoxcasts();
+                    }
                     if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxL.distance > 0.95f)
                     {
                         if (shelled)
@@ -715,6 +756,11 @@ public class Snaily : MonoBehaviour
                     }
 
                     // Now, let's see if we can jump
+                    if (boxU.distance == 0)
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
+                        UpdateBoxcasts();
+                    }
                     if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxD.distance > 0.95f)
                     {
                         if (shelled)
@@ -1010,19 +1056,46 @@ public class Snaily : MonoBehaviour
 
             if (type == 1)
             {
-                if (gravityDir == DIR_FLOOR && (dir == 5 || dir == 6 || dir == 7 || dir == -1))
+                if (gravityDir == DIR_FLOOR && (dir == 5 || dir == 6 || dir == 7))
                     dir = facingLeft ? 3 : 4;
-                else if (gravityDir == DIR_WALL_LEFT && (dir == 0 || dir == 3 || dir == 5 || dir == -1))
+                else if (gravityDir == DIR_WALL_LEFT && (dir == 0 || dir == 3 || dir == 5))
                     dir = facingDown ? 6 : 1;
-                else if (gravityDir == DIR_WALL_RIGHT && (dir == 2 || dir == 4 || dir == 7 || dir == -1))
+                else if (gravityDir == DIR_WALL_RIGHT && (dir == 2 || dir == 4 || dir == 7))
                     dir = facingDown ? 6 : 1;
-                else if (gravityDir == DIR_CEILING && (dir == 0 || dir == 1 || dir == 2 || dir == -1))
+                else if (gravityDir == DIR_CEILING && (dir == 0 || dir == 1 || dir == 2))
                     dir = facingLeft ? 3 : 4;
             }
-            player.bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
-            bulletID++;
-            if (bulletID >= player.bulletPool.transform.childCount)
-                bulletID = 0;
+            if (dir == -1)
+            {
+                if (gravityDir == DIR_FLOOR && dir == -1)
+                    dir = facingLeft ? 3 : 4;
+                else if (gravityDir == DIR_WALL_LEFT && dir == -1)
+                    dir = facingDown ? 6 : 1;
+                else if (gravityDir == DIR_WALL_RIGHT && dir == -1)
+                    dir = facingDown ? 6 : 1;
+                else if (gravityDir == DIR_CEILING && dir == -1)
+                    dir = facingLeft ? 3 : 4;
+            }
+            if (!player.bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
+            {
+                player.bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
+                bulletID++;
+                if (bulletID >= player.bulletPool.transform.childCount)
+                    bulletID = 0;
+                fireCooldown = WEAPON_COOLDOWNS[type - 1];
+                if (type == 6)
+                    sfx.PlayOneShot(fireRainbow);
+                else if (type == 5)
+                    sfx.PlayOneShot(fireRainbow);
+                else if (type == 4)
+                    sfx.PlayOneShot(fireRainbow);
+                else if (type == 3)
+                    sfx.PlayOneShot(fireRainbow);
+                else if (type == 2)
+                    sfx.PlayOneShot(fireRainbow);
+                else
+                    sfx.PlayOneShot(fireRainbow);
+            }
         }
     }
 }

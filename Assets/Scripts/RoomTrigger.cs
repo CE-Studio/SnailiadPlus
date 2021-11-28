@@ -207,16 +207,16 @@ public class RoomTrigger : MonoBehaviour
                             switch (currentTileSprite.name)
                             {
                                 case "Tilesheet_72":
-                                    weaponType = 1;
-                                    break;
-                                case "Tilesheet_73":
                                     weaponType = 2;
                                     break;
-                                case "Tilesheet_74":
+                                case "Tilesheet_73":
                                     weaponType = 3;
                                     break;
+                                case "Tilesheet_74":
+                                    weaponType = 4;
+                                    break;
                                 case "Tilesheet_439":
-                                    weaponType = 3;
+                                    weaponType = 4;
                                     isSilent = true;
                                     break;
                             }

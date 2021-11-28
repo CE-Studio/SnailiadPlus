@@ -55,7 +55,7 @@ public class Item : MonoBehaviour
                 case "Rainbow Wave":
                     PlayState.AddItem("Rainbow Wave");
                     PlayState.isArmed = true;
-                    collision.GetComponent<Player>().selectedWeapon = 0;
+                    collision.GetComponent<Player>().selectedWeapon = 3;
                     GetMinorItem("Rainbow Wave");
                     break;
                 default:

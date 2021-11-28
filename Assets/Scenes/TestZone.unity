@@ -61054,6 +61054,7 @@ MonoBehaviour:
   maxHealth: 12
   stunned: 0
   inDeathCutscene: 0
+  gravityDir: 0
   anim: {fileID: 0}
   sprite: {fileID: 0}
   box: {fileID: 0}
@@ -61249,12 +61250,14 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  grounded: 0
   box: {fileID: 0}
   sprite: {fileID: 0}
   anim: {fileID: 0}
   sfx: {fileID: 0}
   shell: {fileID: 0}
   jump: {fileID: 0}
+  fireRainbow: {fileID: 0}
   playerCollide:
     serializedVersion: 2
     m_Bits: 0
