@@ -171,8 +171,8 @@ public class Player : MonoBehaviour
             frameCount = 0;
             dt -= 1 / updateRate;
         }
-        PlayState.fpsText.text = "" + fps + "FPS";
-        PlayState.fpsShadow.text = "" + fps + "FPS";
+        PlayState.fpsText.text = "" + Mathf.Round(fps) + "FPS";
+        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + "FPS";
     }
 
     // This coroutine here is meant to display the keypress indicators intended for debugging purposes

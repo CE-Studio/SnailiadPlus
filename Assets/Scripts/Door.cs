@@ -23,6 +23,7 @@ public class Door : MonoBehaviour
     public AudioClip open;
     public AudioClip close;
     public AudioClip reflect;
+    public AudioClip ping;
     
     void Start()
     {
@@ -34,6 +35,7 @@ public class Door : MonoBehaviour
 
         open = (AudioClip)Resources.Load("Sounds/Sfx/DoorOpen");
         close = (AudioClip)Resources.Load("Sounds/Sfx/DoorClose");
+        ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
 
         if (direction == 1 || direction == 3)
         {
@@ -166,6 +168,14 @@ public class Door : MonoBehaviour
             if (!locked && ((collision.GetComponent<Bullet>().bulletType >= doorWeapon && doorWeapon != 3) || (collision.GetComponent<Bullet>().bulletType >= 4 && doorWeapon == 3)))
             {
                 SetState0();
+            }
+            else
+            {
+                if (!PlayState.armorPingPlayedThisFrame)
+                {
+                    PlayState.armorPingPlayedThisFrame = true;
+                    sfx.PlayOneShot(ping);
+                }
             }
         }
     }
