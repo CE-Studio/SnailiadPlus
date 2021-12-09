@@ -98,6 +98,27 @@ public class Snaily : MonoBehaviour
         UpdateBoxcasts();
         // Next, we decrease the fire cooldown
         fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
+        // Then, we check to see if Snaily has been stunned and this script has not been made aware
+        if (player.stunned && gravityDir != DIR_FLOOR && grounded && !PlayState.CheckForItem("Gravity Snail"))
+        {
+            switch (gravityDir)
+            {
+                case DIR_WALL_LEFT:
+                case DIR_WALL_RIGHT:
+                    SwapDir(DIR_FLOOR);
+                    SwitchSurfaceAxis();
+                    transform.position = new Vector2(transform.position.x + ((box.size.x - box.size.y) * 0.5f * (facingLeft ? 1 : -1)), transform.position.y);
+                    gravityDir = DIR_FLOOR;
+                    grounded = false;
+                    break;
+                case DIR_CEILING:
+                    grounded = false;
+                    gravityDir = DIR_FLOOR;
+                    SwapDir(DIR_FLOOR);
+                    break;
+            }
+            return;
+        }
         // Finally, we update the parent Player script with our current gravity
         player.gravityDir = gravityDir;
 
@@ -154,31 +175,29 @@ public class Snaily : MonoBehaviour
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
                             if ((boxD.distance + boxU.distance) >= 1)
                             {
-                                Debug.Log("Enter state");
-                                if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1 && !grounded)
+                                if (!player.stunned)
                                 {
-                                    Debug.Log(boxU.distance + ", " + boxU.collider);
-                                    Debug.Log(boxD.distance + ", " + boxD.collider);
-                                    float boxCorrection = (box.size.y - box.size.x) * 0.5f;
-                                    float ceilDis = boxU.distance - boxCorrection;
-                                    float floorDis = boxD.distance - boxCorrection;
-                                    SwitchSurfaceAxis();
-                                    UpdateBoxcasts();
-                                    float adjustment = 0;
-                                    if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                        adjustment = -(ceilDis - (box.size.y * 0.5f));
-                                    else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                        adjustment = floorDis - (box.size.y * 0.5f);
-                                    Vector2 oldPos = transform.position;
-                                    transform.position = new Vector2(
-                                        transform.position.x + velocity.x + (facingLeft ? boxCorrection : -boxCorrection),
-                                        transform.position.y - adjustment
-                                        );
-                                    SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
-                                    gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                    grounded = true;
-                                    Debug.Log("boxCorrection: " + boxCorrection + "\nadjustment: " + adjustment + "\noldPos: " + oldPos.x + ", " + oldPos.y + "\nnewPos: " + transform.position.x + ", " + transform.position.y);
-                                    return;
+                                    if (Input.GetAxisRaw("Vertical") == 1 || (Input.GetAxisRaw("Vertical") == -1 && !grounded))
+                                    {
+                                        float boxCorrection = (box.size.y - box.size.x) * 0.5f;
+                                        float ceilDis = boxU.distance - boxCorrection;
+                                        float floorDis = boxD.distance - boxCorrection;
+                                        SwitchSurfaceAxis();
+                                        UpdateBoxcasts();
+                                        float adjustment = 0;
+                                        if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                            adjustment = -(ceilDis - (box.size.y * 0.5f));
+                                        else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                            adjustment = floorDis - (box.size.y * 0.5f);
+                                        transform.position = new Vector2(
+                                            transform.position.x + velocity.x + (facingLeft ? boxCorrection : -boxCorrection),
+                                            transform.position.y - adjustment
+                                            );
+                                        SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
+                                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                                        grounded = true;
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -227,7 +246,7 @@ public class Snaily : MonoBehaviour
                         {
                             if (boxCorner.distance <= 0.0125f)
                             {
-                                if (Input.GetAxisRaw("Vertical") == -1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1))
+                                if ((Input.GetAxisRaw("Vertical") == -1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1)) && !player.stunned)
                                 {
                                     SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                     SwitchSurfaceAxis();
@@ -315,26 +334,29 @@ public class Snaily : MonoBehaviour
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
                             if ((boxL.distance + boxR.distance) >= 1)
                             {
-                                if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 && !grounded)
+                                if (!player.stunned)
                                 {
-                                    float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                                    float ceilDis = boxR.distance - boxCorrection;
-                                    float floorDis = boxL.distance - boxCorrection;
-                                    SwitchSurfaceAxis();
-                                    UpdateBoxcasts();
-                                    float adjustment = 0;
-                                    if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                        adjustment = -(ceilDis - (box.size.y * 0.5f));
-                                    else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                        adjustment = floorDis - (box.size.y * 0.5f);
-                                    transform.position = new Vector2(
-                                        transform.position.x - adjustment,
-                                        transform.position.y + velocity.x + (facingDown ? boxCorrection : -boxCorrection)
-                                        );
-                                    SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                    gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                    grounded = true;
-                                    return;
+                                    if (Input.GetAxisRaw("Horizontal") == 1 || (Input.GetAxisRaw("Horizontal") == -1 && !grounded))
+                                    {
+                                        float boxCorrection = (box.size.x - box.size.y) * 0.5f;
+                                        float ceilDis = boxR.distance - boxCorrection;
+                                        float floorDis = boxL.distance - boxCorrection;
+                                        SwitchSurfaceAxis();
+                                        UpdateBoxcasts();
+                                        float adjustment = 0;
+                                        if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                            adjustment = -(ceilDis - (box.size.y * 0.5f));
+                                        else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                            adjustment = floorDis - (box.size.y * 0.5f);
+                                        transform.position = new Vector2(
+                                            transform.position.x - adjustment,
+                                            transform.position.y + velocity.x + (facingDown ? boxCorrection : -boxCorrection)
+                                            );
+                                        SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                                        grounded = true;
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -392,7 +414,7 @@ public class Snaily : MonoBehaviour
                                         holdingShell = true;
                                     return;
                                 }
-                                else if (Input.GetAxisRaw("Horizontal") == -1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1))
+                                else if ((Input.GetAxisRaw("Horizontal") == -1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1)) && !player.stunned)
                                 {
                                     SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
                                     SwitchSurfaceAxis();
@@ -488,28 +510,29 @@ public class Snaily : MonoBehaviour
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
                             if ((boxL.distance + boxR.distance) >= 1)
                             {
-                                if (Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Horizontal") == 1 && !grounded)
+                                if (!player.stunned)
                                 {
-                                    float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                                    float ceilDis = boxL.distance - boxCorrection;
-                                    float floorDis = boxR.distance - boxCorrection;
-                                    SwitchSurfaceAxis();
-                                    UpdateBoxcasts();
-                                    float adjustment = 0;
-                                    if (ceilDis < floorDis && ceilDis < box.size.x * 0.5f)
-                                        adjustment = ceilDis - (box.size.x * 0.5f);
-                                    else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
-                                        adjustment = -(floorDis - (box.size.x * 0.5f));
-                                    Vector2 oldPos = transform.position;
-                                    transform.position = new Vector2(
-                                        transform.position.x + adjustment,
-                                        transform.position.y + velocity.y + (facingDown ? boxCorrection : -boxCorrection)
-                                        );
-                                    SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                    gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                    grounded = true;
-                                    Debug.Log("boxCorrection: " + boxCorrection + "\nadjustment: " + adjustment + "\noldPos: " + oldPos.x + ", " + oldPos.y + "\nnewPos: " + transform.position.x + ", " + transform.position.y);
-                                    return;
+                                    if (Input.GetAxisRaw("Horizontal") == -1 || (Input.GetAxisRaw("Horizontal") == 1 && !grounded))
+                                    {
+                                        float boxCorrection = (box.size.x - box.size.y) * 0.5f;
+                                        float ceilDis = boxL.distance - boxCorrection;
+                                        float floorDis = boxR.distance - boxCorrection;
+                                        SwitchSurfaceAxis();
+                                        UpdateBoxcasts();
+                                        float adjustment = 0;
+                                        if (ceilDis < floorDis && ceilDis < box.size.x * 0.5f)
+                                            adjustment = ceilDis - (box.size.x * 0.5f);
+                                        else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
+                                            adjustment = -(floorDis - (box.size.x * 0.5f));
+                                        transform.position = new Vector2(
+                                            transform.position.x + adjustment,
+                                            transform.position.y + velocity.y + (facingDown ? boxCorrection : -boxCorrection)
+                                            );
+                                        SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                                        grounded = true;
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -567,7 +590,7 @@ public class Snaily : MonoBehaviour
                             }
                             else if (boxCorner.distance <= 0.0125f)
                             {
-                                if (Input.GetAxisRaw("Horizontal") == 1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1))
+                                if ((Input.GetAxisRaw("Horizontal") == 1 && Input.GetAxisRaw("Vertical") == (facingDown ? -1 : 1)) && !player.stunned)
                                 {
                                     SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
                                     SwitchSurfaceAxis();
@@ -663,26 +686,29 @@ public class Snaily : MonoBehaviour
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
                             if ((boxD.distance + boxU.distance) >= 1)
                             {
-                                if (Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1 && !grounded)
+                                if (!player.stunned)
                                 {
-                                    float boxCorrection = (box.size.y - box.size.x) * 0.5f;
-                                    float ceilDis = boxD.distance - boxCorrection;
-                                    float floorDis = boxU.distance - boxCorrection;
-                                    SwitchSurfaceAxis();
-                                    UpdateBoxcasts();
-                                    float adjustment = 0;
-                                    if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                        adjustment = ceilDis - (box.size.y * 0.5f);
-                                    else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                        adjustment = -(floorDis - (box.size.y * 0.5f));
-                                    transform.position = new Vector2(
-                                        transform.position.x + velocity.x + (facingLeft ? boxCorrection : -boxCorrection),
-                                        transform.position.y + adjustment
-                                        );
-                                    SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
-                                    gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                    grounded = true;
-                                    return;
+                                    if (Input.GetAxisRaw("Vertical") == -1 || (Input.GetAxisRaw("Vertical") == 1 && !grounded))
+                                    {
+                                        float boxCorrection = (box.size.y - box.size.x) * 0.5f;
+                                        float ceilDis = boxD.distance - boxCorrection;
+                                        float floorDis = boxU.distance - boxCorrection;
+                                        SwitchSurfaceAxis();
+                                        UpdateBoxcasts();
+                                        float adjustment = 0;
+                                        if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                            adjustment = ceilDis - (box.size.y * 0.5f);
+                                        else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                            adjustment = -(floorDis - (box.size.y * 0.5f));
+                                        transform.position = new Vector2(
+                                            transform.position.x + velocity.x + (facingLeft ? boxCorrection : -boxCorrection),
+                                            transform.position.y + adjustment
+                                            );
+                                        SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
+                                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                                        grounded = true;
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -736,7 +762,7 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     gravityDir = DIR_FLOOR;
                                 }
-                                else if (Input.GetAxisRaw("Vertical") == 1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1))
+                                else if ((Input.GetAxisRaw("Vertical") == 1 && Input.GetAxisRaw("Horizontal") == (facingLeft ? -1 : 1)) && !player.stunned)
                                 {
                                     SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                     SwitchSurfaceAxis();

@@ -529,6 +529,13 @@ public class Player : MonoBehaviour
                 PlayState.ScreenFlash("Death Transition");
             }
         }
+        //GameObject roomArray = GameObject.Find("Room Triggers");
+        //for (int i = 0; i < roomArray.transform.childCount; i++)
+        //{
+        //    if (!roomArray.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled)
+        //        roomArray.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = true;
+        //}
+        yield return new WaitForEndOfFrame();
         transform.position = PlayState.respawnCoords;
         inDeathCutscene = false;
         box.enabled = true;
@@ -536,6 +543,7 @@ public class Player : MonoBehaviour
         PlayState.paralyzed = false;
         health = maxHealth;
         UpdateHearts();
+        PlayState.ScreenFlash("Room Transition");
     }
 
     public void Die()
