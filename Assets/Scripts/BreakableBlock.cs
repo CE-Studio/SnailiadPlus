@@ -7,7 +7,6 @@ public class BreakableBlock : MonoBehaviour
 {
     public int requiredWeapon;
     public bool isSilent;
-    public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AudioSource sfx;
     public AudioClip expl1;
@@ -16,23 +15,34 @@ public class BreakableBlock : MonoBehaviour
     public AudioClip expl4;
     public AudioClip ping;
 
-    public Sprite coverSprite;
-    public TileBase originalTile;
-    public Sprite blankSprite;
-    public Tilemap homeMap;
+    public TileBase gTile = null;
+    public TileBase fgTile = null;
+    public TileBase fg2Tile = null;
+    public List<Tilemap> maps = new List<Tilemap>();
+    public Vector3Int tilePos;
     
     void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
-        sprite.sprite = coverSprite;
 
         expl1 = (AudioClip)Resources.Load("Sounds/Sfx/Explode1");
         expl2 = (AudioClip)Resources.Load("Sounds/Sfx/Explode2");
         expl3 = (AudioClip)Resources.Load("Sounds/Sfx/Explode3");
         expl4 = (AudioClip)Resources.Load("Sounds/Sfx/Explode4");
         ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
+
+        maps.Add(GameObject.Find("Grid/Ground").GetComponent<Tilemap>());
+        maps.Add(GameObject.Find("Grid/Foreground").GetComponent<Tilemap>());
+        maps.Add(GameObject.Find("Grid/Foreground 2").GetComponent<Tilemap>());
+
+        tilePos = new Vector3Int((int)Mathf.Round(transform.position.x - 0.5f), (int)Mathf.Round(transform.position.y - 0.5f), 0);
+        if (maps[0].GetTile(tilePos) != null)
+            gTile = maps[0].GetTile(tilePos);
+        if (maps[1].GetTile(tilePos) != null)
+            fgTile = maps[1].GetTile(tilePos);
+        if (maps[2].GetTile(tilePos) != null)
+            fg2Tile = maps[2].GetTile(tilePos);
     }
 
     public void Instantiate(int type, bool silent)
@@ -43,7 +53,13 @@ public class BreakableBlock : MonoBehaviour
 
     public void Despawn()
     {
-        homeMap.SetTile(new Vector3Int((int)Mathf.Round(transform.position.x - 0.5f), (int)Mathf.Round(transform.position.y - 0.5f), 0), originalTile);
+        tilePos = new Vector3Int((int)Mathf.Round(transform.position.x - 0.5f), (int)Mathf.Round(transform.position.y - 0.5f), 0);
+        if (gTile != null)
+            maps[0].SetTile(tilePos, gTile);
+        if (fgTile != null)
+            maps[1].SetTile(tilePos, fgTile);
+        if (fg2Tile != null)
+            maps[2].SetTile(tilePos, fg2Tile);
         Destroy(gameObject);
     }
 
@@ -53,8 +69,10 @@ public class BreakableBlock : MonoBehaviour
         {
             if (collision.GetComponent<Bullet>().bulletType >= requiredWeapon)
             {
+                maps[0].SetTile(tilePos, null);
+                maps[1].SetTile(tilePos, null);
+                maps[2].SetTile(tilePos, null);
                 box.enabled = false;
-                sprite.sprite = blankSprite;
                 if (!PlayState.explodePlayedThisFrame)
                 {
                     int i = Random.Range(1, 5);

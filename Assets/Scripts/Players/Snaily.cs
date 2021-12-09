@@ -124,7 +124,7 @@ public class Snaily : MonoBehaviour
         Debug.DrawLine(transform.position, boxU.point, lineColor, 0.5f, false);
         Debug.DrawLine(transform.position, boxL.point, lineColor, 0.5f, false);
         Debug.DrawLine(transform.position, boxR.point, lineColor, 0.5f, false);
-        Debug.Log(boxD.distance);
+        //Debug.Log(boxD.distance);
 
         // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
         // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
@@ -154,8 +154,11 @@ public class Snaily : MonoBehaviour
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
                             if ((boxD.distance + boxU.distance) >= 1)
                             {
+                                Debug.Log("Enter state");
                                 if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1 && !grounded)
                                 {
+                                    Debug.Log(boxU.distance + ", " + boxU.collider);
+                                    Debug.Log(boxD.distance + ", " + boxD.collider);
                                     float boxCorrection = (box.size.y - box.size.x) * 0.5f;
                                     float ceilDis = boxU.distance - boxCorrection;
                                     float floorDis = boxD.distance - boxCorrection;
@@ -166,6 +169,7 @@ public class Snaily : MonoBehaviour
                                         adjustment = -(ceilDis - (box.size.y * 0.5f));
                                     else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
                                         adjustment = floorDis - (box.size.y * 0.5f);
+                                    Vector2 oldPos = transform.position;
                                     transform.position = new Vector2(
                                         transform.position.x + velocity.x + (facingLeft ? boxCorrection : -boxCorrection),
                                         transform.position.y - adjustment
@@ -173,6 +177,7 @@ public class Snaily : MonoBehaviour
                                     SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
                                     gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                                     grounded = true;
+                                    Debug.Log("boxCorrection: " + boxCorrection + "\nadjustment: " + adjustment + "\noldPos: " + oldPos.x + ", " + oldPos.y + "\nnewPos: " + transform.position.x + ", " + transform.position.y);
                                     return;
                                 }
                             }
@@ -495,6 +500,7 @@ public class Snaily : MonoBehaviour
                                         adjustment = ceilDis - (box.size.x * 0.5f);
                                     else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
                                         adjustment = -(floorDis - (box.size.x * 0.5f));
+                                    Vector2 oldPos = transform.position;
                                     transform.position = new Vector2(
                                         transform.position.x + adjustment,
                                         transform.position.y + velocity.y + (facingDown ? boxCorrection : -boxCorrection)
@@ -502,6 +508,7 @@ public class Snaily : MonoBehaviour
                                     SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                     gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
                                     grounded = true;
+                                    Debug.Log("boxCorrection: " + boxCorrection + "\nadjustment: " + adjustment + "\noldPos: " + oldPos.x + ", " + oldPos.y + "\nnewPos: " + transform.position.x + ", " + transform.position.y);
                                     return;
                                 }
                             }

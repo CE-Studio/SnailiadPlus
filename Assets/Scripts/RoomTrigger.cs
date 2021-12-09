@@ -196,8 +196,6 @@ public class RoomTrigger : MonoBehaviour
                     Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
                     TileBase currentTile = breakableMap.GetTile(tilePos);
                     Sprite currentTileSprite = breakableMap.GetSprite(tilePos);
-                    TileBase originalTile = currentMap.GetTile(tilePos);
-                    Sprite originalTileSprite = currentMap.GetSprite(tilePos);
                     if (currentTile != null)
                     {
                         if (currentTileSprite.name == "Tilesheet_72" || currentTileSprite.name == "Tilesheet_73" || currentTileSprite.name == "Tilesheet_74" || currentTileSprite.name == "Tilesheet_439")
@@ -223,9 +221,6 @@ public class RoomTrigger : MonoBehaviour
 
                             GameObject Breakable = Instantiate(breakableBlock, new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f), Quaternion.identity);
                             Breakable.transform.parent = transform;
-                            Breakable.GetComponent<BreakableBlock>().coverSprite = originalTileSprite;
-                            Breakable.GetComponent<BreakableBlock>().originalTile = originalTile;
-                            Breakable.GetComponent<BreakableBlock>().homeMap = currentMap;
                             Breakable.GetComponent<BreakableBlock>().Instantiate(weaponType, isSilent);
                             switch (i)
                             {
@@ -236,8 +231,6 @@ public class RoomTrigger : MonoBehaviour
                                     Breakable.GetComponent<SpriteRenderer>().sortingOrder = -20;
                                     break;
                             }
-
-                            currentMap.SetTile(tilePos, null);
                         }
                         else if (currentTileSprite.name == "Tilesheet_376")
                         {
