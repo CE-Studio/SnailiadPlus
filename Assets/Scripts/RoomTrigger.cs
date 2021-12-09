@@ -24,8 +24,8 @@ public class RoomTrigger : MonoBehaviour
     void Start()
     {
         box = GetComponent<BoxCollider2D>();
-        roomNameText = GameObject.Find("View/Minimap Panel/Room Name Text").GetComponent<TextMesh>();
-        roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Shadow").GetComponent<TextMesh>();
+        roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
+        roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
         bg = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
         fg = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
         breakableMap = GameObject.Find("Grid/Special").GetComponent<Tilemap>();

@@ -12,18 +12,20 @@ public class DialogueBox : MonoBehaviour
     public GameObject portrait;
     public TextMesh dialogueText;
     public TextMesh dialogueShadow;
+    public Transform roomText;
 
     public AudioClip dialogue0;
 
     private float camPos = 0;
     private float portraitPos = 0;
-    private int dialogueType = 1;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
+    private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int boxState = 0;
     private int pointer = 0;          // This pointer looks at what page of text it's looking at
     private bool buttonDown = false;
     private bool active = false;
     private bool playSound = true;
     private bool forcedClosed = false;
+    private Vector2 roomTextOrigin;
     
     void Start()
     {
@@ -35,6 +37,8 @@ public class DialogueBox : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         dialogueText = transform.Find("Text").gameObject.GetComponent<TextMesh>();
         dialogueShadow = transform.Find("Shadow").gameObject.GetComponent<TextMesh>();
+        roomText = GameObject.Find("View/Minimap Panel/Room Name Parent").transform;
+        roomTextOrigin = roomText.localPosition;
     }
 
     void Update()
@@ -43,11 +47,17 @@ public class DialogueBox : MonoBehaviour
         {
             if (player.transform.position.y > cam.transform.position.y + 0.125f)
             {
-                camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
+                if (active)
+                    camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
+                else
+                    camPos = -4.5f;
             }
             else
             {
-                camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
+                if (active)
+                    camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
+                else
+                    camPos = 4.5f;
             }
         }
         else
@@ -78,6 +88,11 @@ public class DialogueBox : MonoBehaviour
                 camPos = transform.localPosition.y + 4.5f;
             }
         }
+
+        if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + 0.125f)
+            roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x + 5, 8 * Time.deltaTime), roomTextOrigin.y);
+        else
+            roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
     }
 
     public void RunBox(int type, int speaker, List<string> text, List<Color32> colors)
@@ -246,5 +261,6 @@ public class DialogueBox : MonoBehaviour
         anim.SetBool("isActive", false);
         portrait.SetActive(false);
         PlayState.paralyzed = false;
+        dialogueType = 0;
     }
 }
