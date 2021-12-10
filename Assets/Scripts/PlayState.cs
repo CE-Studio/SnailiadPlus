@@ -137,7 +137,7 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, colors);
     }
 
-    public static void OpenDialogue(int type, int speaker, List<string> text, List<Color32> colors = null, List<string> stateList = null, bool facingLeft = false)
+    public static void OpenDialogue(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, colors, stateList, facingLeft);
     }

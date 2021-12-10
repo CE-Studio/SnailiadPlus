@@ -162,7 +162,7 @@ public class Snaily : MonoBehaviour
                         velocity.y = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0)
+                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0 && !PlayState.paralyzed)
                     {
                         SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                         if (shelled && grounded)
@@ -278,7 +278,7 @@ public class Snaily : MonoBehaviour
                         transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
                         UpdateBoxcasts();
                     }
-                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxU.distance > 0.95f)
+                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxU.distance > 0.95f && !PlayState.paralyzed)
                     {
                         if (shelled)
                             ToggleShell();
@@ -297,7 +297,7 @@ public class Snaily : MonoBehaviour
                         Input.GetAxisRaw("Jump") == 0 &&
                         Input.GetAxisRaw("Shoot") == 0 &&
                         Input.GetAxisRaw("Strafe") == 0 &&
-                        !holdingShell)
+                        !holdingShell && !PlayState.paralyzed)
                     {
                         if (!shelled)
                             sfx.PlayOneShot(shell);
@@ -321,7 +321,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0)
+                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0 && !PlayState.paralyzed)
                     {
                         SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
                         if (shelled && grounded)
@@ -446,7 +446,7 @@ public class Snaily : MonoBehaviour
                         transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
                         UpdateBoxcasts();
                     }
-                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxR.distance > 0.95f)
+                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxR.distance > 0.95f && !PlayState.paralyzed)
                     {
                         if (shelled)
                             ToggleShell();
@@ -473,7 +473,7 @@ public class Snaily : MonoBehaviour
                         Input.GetAxisRaw("Jump") == 0 &&
                         Input.GetAxisRaw("Shoot") == 0 &&
                         Input.GetAxisRaw("Strafe") == 0 &&
-                        !holdingShell)
+                        !holdingShell && !PlayState.paralyzed)
                     {
                         if (!shelled)
                             sfx.PlayOneShot(shell);
@@ -497,7 +497,7 @@ public class Snaily : MonoBehaviour
                         velocity.x = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0)
+                    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Strafe") == 0 && !PlayState.paralyzed)
                     {
                         SwapDir((Input.GetAxisRaw("Vertical") == 1) ? DIR_CEILING : DIR_FLOOR);
                         if (shelled && grounded)
@@ -622,7 +622,7 @@ public class Snaily : MonoBehaviour
                         transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
                         UpdateBoxcasts();
                     }
-                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxL.distance > 0.95f)
+                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxL.distance > 0.95f && !PlayState.paralyzed)
                     {
                         if (shelled)
                             ToggleShell();
@@ -649,7 +649,7 @@ public class Snaily : MonoBehaviour
                         Input.GetAxisRaw("Jump") == 0 &&
                         Input.GetAxisRaw("Shoot") == 0 &&
                         Input.GetAxisRaw("Strafe") == 0 &&
-                        !holdingShell)
+                        !holdingShell && !PlayState.paralyzed)
                     {
                         if (!shelled)
                             sfx.PlayOneShot(shell);
@@ -673,7 +673,7 @@ public class Snaily : MonoBehaviour
                         velocity.y = 0;
 
                     // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0)
+                    if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Strafe") == 0 && !PlayState.paralyzed)
                     {
                         SwapDir((Input.GetAxisRaw("Horizontal") == 1) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                         if (shelled && grounded)
@@ -794,7 +794,7 @@ public class Snaily : MonoBehaviour
                         transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
                         UpdateBoxcasts();
                     }
-                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxD.distance > 0.95f)
+                    if (Input.GetAxisRaw("Jump") == 1 && grounded && !holdingJump && boxD.distance > 0.95f && !PlayState.paralyzed)
                     {
                         if (shelled)
                             ToggleShell();
@@ -819,7 +819,7 @@ public class Snaily : MonoBehaviour
                         Input.GetAxisRaw("Jump") == 0 &&
                         Input.GetAxisRaw("Shoot") == 0 &&
                         Input.GetAxisRaw("Strafe") == 0 &&
-                        !holdingShell)
+                        !holdingShell && !PlayState.paralyzed)
                     {
                         if (!shelled)
                             sfx.PlayOneShot(shell);
@@ -834,7 +834,7 @@ public class Snaily : MonoBehaviour
                 break;
         }
 
-        if (Input.GetAxisRaw("Shoot") == 1 || Input.GetAxisRaw("Strafe") == 1)
+        if ((Input.GetAxisRaw("Shoot") == 1 || Input.GetAxisRaw("Strafe") == 1) && !PlayState.paralyzed)
         {
             if (shelled)
                 ToggleShell();

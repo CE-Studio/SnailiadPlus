@@ -103,7 +103,7 @@ public class DialogueBox : MonoBehaviour
             roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
     }
 
-    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors = null, List<string> stateList = null, bool facingLeft = false)
+    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
         pointer = 0;
@@ -111,7 +111,7 @@ public class DialogueBox : MonoBehaviour
         StartCoroutine(cor);
     }
 
-    public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors = null, List<string> stateList = null, bool facingLeft = false)
+    public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
         active = true;
         forcedClosed = false;
@@ -139,10 +139,10 @@ public class DialogueBox : MonoBehaviour
                 case 1:
                     if (type == 3)
                     {
-                        for (int i = 0; i < portraitParts.Count - 1; i++)
-                            portraitParts[i].color = colors[i];
-                        if (stateList[pointer] == "npc")
+                        if (stateList[pointer] != 0)
                         {
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                                portraitParts[i].color = colors[(i + 1) * stateList[pointer] - 1];
                             for (int i = 0; i < portraitParts.Count - 1; i++)
                             {
                                 portraitParts[i].enabled = true;
@@ -153,7 +153,7 @@ public class DialogueBox : MonoBehaviour
                             }
                             portraitParts[5].enabled = false;
                         }
-                        else if (stateList[pointer] == "player")
+                        else if (stateList[pointer] == 0)
                         {
                             for (int i = 0; i < portraitParts.Count - 1; i++)
                                 portraitParts[i].enabled = false;
@@ -195,11 +195,11 @@ public class DialogueBox : MonoBehaviour
                                 sfx.PlayOneShot(dialogue0);
                             }
                             playSound = !playSound;
-                            if (Input.GetAxisRaw("Shoot") == 0 && buttonDown)
+                            if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
                             {
                                 buttonDown = false;
                             }
-                            if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown && type == 3)
+                            if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && type == 3)
                             {
                                 buttonDown = true;
                                 dialogueText.text = text[pointer];
@@ -222,11 +222,11 @@ public class DialogueBox : MonoBehaviour
                     break;
                 case 2:
                     anim.SetBool("canContinue", true);
-                    if (Input.GetAxisRaw("Shoot") == 0 && buttonDown)
+                    if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
                     {
                         buttonDown = false;
                     }
-                    if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown)
+                    if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
                     {
                         buttonDown = true;
                         anim.SetBool("canContinue", false);

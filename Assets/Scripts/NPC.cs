@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour
     public List<Color32> colors = new List<Color32>();
 
     private List<Color32> portraitColors = new List<Color32>();
-    private List<string> portraitStateList = new List<string>();
+    private List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
 
     public List<SpriteRenderer> parts = new List<SpriteRenderer>();
@@ -82,15 +82,15 @@ public class NPC : MonoBehaviour
                     break;
 
                 case 51:
-                    AddNPCColors();
+                    AddNPCColors(ID);
                     textToSend.Add("Hey there, " + playerName + "!! I see you\nfigured out how to start a\nmulti-page conversation!");
-                    BuildPortraitStateList("npc");
+                    portraitStateList.Add(1);
                     textToSend.Add("The hope is this talk should go\n100% smoothly. What do you\nthink?");
-                    BuildPortraitStateList("npc");
+                    portraitStateList.Add(1);
                     textToSend.Add("Impressive! I do hope that\'s my\nportrait showing right now, if it\neven is there.");
-                    BuildPortraitStateList("player");
+                    portraitStateList.Add(0);
                     textToSend.Add("I\'m here to test multiple things,\nit seems!");
-                    BuildPortraitStateList("npc");
+                    portraitStateList.Add(1);
                     break;
 
                 default:
@@ -100,7 +100,7 @@ public class NPC : MonoBehaviour
             if (textToSend.Count > 1)
             {
                 speechBubble.GetComponent<SpriteRenderer>().enabled = true;
-                if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown)
+                if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
                 {
                     chatting = true;
                     PlayState.paralyzed = true;
@@ -123,7 +123,7 @@ public class NPC : MonoBehaviour
             speechBubble.GetComponent<SpriteRenderer>().enabled = false;
         }
 
-        if (Input.GetAxisRaw("Shoot") == 1)
+        if (Input.GetAxisRaw("Speak") == 1)
         {
             buttonDown = true;
         }
@@ -133,26 +133,12 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void AddNPCColors()
+    private void AddNPCColors(int inputID)
     {
-        portraitColors.Add(parts[0].color);
-        portraitColors.Add(parts[1].color);
-        portraitColors.Add(parts[2].color);
-        portraitColors.Add(parts[3].color);
-        portraitColors.Add(parts[4].color);
-    }
-
-    private void BuildPortraitStateList(string speaker)
-    {
-        switch (speaker)
-        {
-            case "player":
-                portraitStateList.Add("player");
-                break;
-            case "npc":
-            default:
-                portraitStateList.Add("npc");
-                break;
-        }
+        portraitColors.Add(colorTable.GetPixel(0, inputID));
+        portraitColors.Add(colorTable.GetPixel(1, inputID));
+        portraitColors.Add(colorTable.GetPixel(2, inputID));
+        portraitColors.Add(colorTable.GetPixel(3, inputID));
+        portraitColors.Add(colorTable.GetPixel(4, inputID));
     }
 }

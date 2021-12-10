@@ -157,6 +157,10 @@ public class RoomTrigger : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            else if (child.name == "Item")
+            {
+                child.transform.localPosition = child.GetComponent<Item>().originPos;
+            }
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++)
