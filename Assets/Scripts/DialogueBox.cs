@@ -27,6 +27,7 @@ public class DialogueBox : MonoBehaviour
     private bool forcedClosed = false;
     private Vector2 roomTextOrigin;
     private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
+    private bool forceDownPosition;
     
     void Start()
     {
@@ -53,7 +54,7 @@ public class DialogueBox : MonoBehaviour
     {
         if (dialogueType != 3)
         {
-            if (player.transform.position.y > cam.transform.position.y + 0.125f)
+            if (player.transform.position.y > cam.transform.position.y + 0.125f || forceDownPosition)
             {
                 if (active)
                     camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
@@ -282,6 +283,8 @@ public class DialogueBox : MonoBehaviour
 
     public void CloseBox()
     {
+        if (dialogueType == 3)
+            forceDownPosition = true;
         forcedClosed = true;
         active = false;
         pointer = 0;
@@ -291,5 +294,10 @@ public class DialogueBox : MonoBehaviour
         portrait.SetActive(false);
         PlayState.paralyzed = false;
         dialogueType = 0;
+    }
+
+    public void DeactivateForceDown()
+    {
+        forceDownPosition = false;
     }
 }

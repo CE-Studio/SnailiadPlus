@@ -59,9 +59,9 @@ public class Floatspike : Enemy
             else
             {
                 transform.localPosition = new Vector2(transform.localPosition.x,
-                    Mathf.Lerp(origin.y - 0.0625f, origin.y + 0.125f, (time - 0.25f) * 4));
+                    Mathf.Lerp(origin.y - 0.0625f, origin.y + 0.125f, time * 4));
             }
-            time += Time.deltaTime * 0.12f;
+            time += Time.deltaTime * 0.25f;
             if (time >= 1)
                 time = 0;
         }
