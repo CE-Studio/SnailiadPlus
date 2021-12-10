@@ -26,6 +26,7 @@ public class DialogueBox : MonoBehaviour
     private bool playSound = true;
     private bool forcedClosed = false;
     private Vector2 roomTextOrigin;
+    private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
     
     void Start()
     {
@@ -39,6 +40,13 @@ public class DialogueBox : MonoBehaviour
         dialogueShadow = transform.Find("Shadow").gameObject.GetComponent<TextMesh>();
         roomText = GameObject.Find("View/Minimap Panel/Room Name Parent").transform;
         roomTextOrigin = roomText.localPosition;
+
+        portraitParts.Add(portrait.transform.GetChild(0).GetComponent<SpriteRenderer>());
+        portraitParts.Add(portrait.transform.GetChild(1).GetComponent<SpriteRenderer>());
+        portraitParts.Add(portrait.transform.GetChild(2).GetComponent<SpriteRenderer>());
+        portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
+        portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
+        portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
     }
 
     void Update()
@@ -95,15 +103,15 @@ public class DialogueBox : MonoBehaviour
             roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
     }
 
-    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors)
+    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors = null, List<string> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
         pointer = 0;
-        IEnumerator cor = Box(type, speaker, text, colors);
+        IEnumerator cor = Box(type, speaker, text, colors, stateList, facingLeft);
         StartCoroutine(cor);
     }
 
-    public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors)
+    public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors = null, List<string> stateList = null, bool facingLeft = false)
     {
         active = true;
         forcedClosed = false;
@@ -131,9 +139,30 @@ public class DialogueBox : MonoBehaviour
                 case 1:
                     if (type == 3)
                     {
-                        portrait.transform.GetChild(1).GetComponent<SpriteRenderer>().color = colors[pointer * 3];
-                        portrait.transform.GetChild(2).GetComponent<SpriteRenderer>().color = colors[pointer * 3 + 1];
-                        portrait.transform.GetChild(3).GetComponent<SpriteRenderer>().color = colors[pointer * 3 + 2];
+                        for (int i = 0; i < portraitParts.Count - 1; i++)
+                            portraitParts[i].color = colors[i];
+                        if (stateList[pointer] == "npc")
+                        {
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                            {
+                                portraitParts[i].enabled = true;
+                                if (facingLeft)
+                                    portraitParts[i].flipX = true;
+                                else
+                                    portraitParts[i].flipX = false;
+                            }
+                            portraitParts[5].enabled = false;
+                        }
+                        else if (stateList[pointer] == "player")
+                        {
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                                portraitParts[i].enabled = false;
+                            portraitParts[5].enabled = true;
+                            if (facingLeft)
+                                portraitParts[5].flipX = false;
+                            else
+                                portraitParts[5].flipX = true;
+                        }
                     }
 
                     if (type == 1)

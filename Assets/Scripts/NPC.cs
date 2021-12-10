@@ -12,17 +12,12 @@ public class NPC : MonoBehaviour
     public string playerName;
 
     public List<Color32> colors = new List<Color32>();
-    public List<int> IDsWithLongDialogue = new List<int>();
 
-    private List<Color32> savedColors = new List<Color32>();
     private List<Color32> portraitColors = new List<Color32>();
+    private List<string> portraitStateList = new List<string>();
+    public Texture2D colorTable;
 
-    public SpriteRenderer outline;
-    public SpriteRenderer body;
-    public SpriteRenderer shell;
-    public Animator outlineAnim;
-    public Animator bodyAnim;
-    public Animator shellAnim;
+    public List<SpriteRenderer> parts = new List<SpriteRenderer>();
     public GameObject speechBubble;
 
     public GameObject player;
@@ -31,36 +26,26 @@ public class NPC : MonoBehaviour
     {
         playerName = "Snaily";
 
-        colors.Add(new Color32(96, 96, 96, 255));
-        colors.Add(new Color32(220, 0, 212, 255));
-        colors.Add(new Color32(0, 0, 0, 0));
-        colors.Add(new Color32(220, 0, 212, 255));
-        colors.Add(new Color32(96, 96, 96, 255));
-        colors.Add(new Color32(0, 0, 0, 0));
+        colorTable = (Texture2D)Resources.Load("Images/Entities/SnailNpcColor");
 
-        outline = GetComponent<SpriteRenderer>();
-        body = transform.Find("NPC body").GetComponent<SpriteRenderer>();
-        shell = transform.Find("NPC shell").GetComponent<SpriteRenderer>();
-        outlineAnim = GetComponent<Animator>();
-        bodyAnim = transform.Find("NPC body").GetComponent<Animator>();
-        shellAnim = transform.Find("NPC shell").GetComponent<Animator>();
+        parts.Add(transform.GetComponent<SpriteRenderer>());
+        parts.Add(transform.GetChild(0).GetComponent<SpriteRenderer>());
+        parts.Add(transform.GetChild(1).GetComponent<SpriteRenderer>());
+        parts.Add(transform.GetChild(2).GetComponent<SpriteRenderer>());
+        parts.Add(transform.GetChild(3).GetComponent<SpriteRenderer>());
         speechBubble = transform.Find("Speech bubble").gameObject;
         player = GameObject.FindWithTag("Player");
 
-        body.color = colors[ID * 3];
-        shell.color = colors[ID * 3 + 1];
-
-        savedColors.Add(colors[ID * 3 + 1]);
-        savedColors.Add(colors[ID * 3]);
-        savedColors.Add(colors[ID * 3 + 2]);
-
-        IDsWithLongDialogue.Add(1);
+        parts[0].color = colorTable.GetPixel(0, ID);
+        parts[1].color = colorTable.GetPixel(1, ID);
+        parts[2].color = colorTable.GetPixel(2, ID);
+        parts[3].color = colorTable.GetPixel(3, ID);
+        parts[4].color = colorTable.GetPixel(4, ID);
 
         if (upsideDown)
         {
-            outline.flipY = true;
-            body.flipY = true;
-            shell.flipY = true;
+            for (int i = 0; i < parts.Count; i++)
+                parts[i].flipY = true;
             speechBubble.GetComponent<SpriteRenderer>().flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
@@ -71,84 +56,61 @@ public class NPC : MonoBehaviour
     {
         if (player.transform.position.x < transform.position.x)
         {
-            outline.flipX = true;
-            body.flipX = true;
-            shell.flipX = true;
+            for (int i = 0; i < parts.Count; i++)
+                parts[i].flipX = true;
             speechBubble.GetComponent<SpriteRenderer>().flipX = false;
         }
         else
         {
-            outline.flipX = false;
-            body.flipX = false;
-            shell.flipX = false;
+            for (int i = 0; i < parts.Count; i++)
+                parts[i].flipX = false;
             speechBubble.GetComponent<SpriteRenderer>().flipX = true;
-        }
-
-        if (PlayState.gameState != "Game")
-        {
-            outlineAnim.speed = 0;
-            bodyAnim.speed = 0;
-            shellAnim.speed = 0;
-        }
-        else
-        {
-            outlineAnim.speed = 1;
-            bodyAnim.speed = 1;
-            shellAnim.speed = 1;
         }
 
         if (Vector2.Distance(transform.position, player.transform.position) < 3 && !chatting)
         {
             List<string> textToSend = new List<string>();
             portraitColors.Clear();
-            if (IDsWithLongDialogue.Contains(ID))
+            portraitStateList.Clear();
+            switch (ID)
+            {
+                case 50:
+                    if (PlayState.hasRainbowWave)
+                        textToSend.Add("Woah!!  Nice Rainbow Wave, " + playerName + "!!\nI\'d love one too, but I don\'t\nhave a jump button.");
+                    else
+                        textToSend.Add("Oh, hey, " + playerName + "! I'm here to test\nsingle-page dialogue!!");
+                    break;
+
+                case 51:
+                    AddNPCColors();
+                    textToSend.Add("Hey there, " + playerName + "!! I see you\nfigured out how to start a\nmulti-page conversation!");
+                    BuildPortraitStateList("npc");
+                    textToSend.Add("The hope is this talk should go\n100% smoothly. What do you\nthink?");
+                    BuildPortraitStateList("npc");
+                    textToSend.Add("Impressive! I do hope that\'s my\nportrait showing right now, if it\neven is there.");
+                    BuildPortraitStateList("player");
+                    textToSend.Add("I\'m here to test multiple things,\nit seems!");
+                    BuildPortraitStateList("npc");
+                    break;
+
+                default:
+                    textToSend.Add("Hey " + playerName + "!  Unfortunately I,\nsnail #" + ID + ", don\'t have any\ndialogue to offer.  Sorry!!");
+                    break;
+            }
+            if (textToSend.Count > 1)
             {
                 speechBubble.GetComponent<SpriteRenderer>().enabled = true;
                 if (Input.GetAxisRaw("Shoot") == 1 && !buttonDown)
                 {
                     chatting = true;
                     PlayState.paralyzed = true;
-                    switch (ID)
-                    {
-                        case 1:
-                            textToSend.Add("Hey there, " + playerName + "!! I see you\nfigured out how to start a\nmulti-page conversation!");
-                            AddColorsNPC();
-                            textToSend.Add("The hope is this talk should go\n100% smoothly. What do you\nthink?");
-                            AddColorsNPC();
-                            textToSend.Add("Impressive! I do hope that\'s my\nportrait showing right now, if it\neven is there.");
-                            AddColorsPlayer();
-                            textToSend.Add("I\'m here to test multiple things,\nit seems!");
-                            AddColorsNPC();
-                            break;
-                        default:
-                            textToSend.Add("Hey " + playerName + "!  Unfortunately I,\nsnail #" + ID + ", don\'t have any\ndialogue to offer.");
-                            AddColorsNPC();
-                            break;
-                    }
-                    PlayState.OpenDialogue(3, ID, textToSend, portraitColors);
+                    PlayState.OpenDialogue(3, ID, textToSend, portraitColors, portraitStateList, player.transform.position.x < transform.position.x);
                 }
             }
             else
             {
                 chatting = true;
-                switch (ID)
-                {
-                    case 0:
-                        if (PlayState.hasRainbowWave)
-                        {
-                            textToSend.Add("Woah!!  Nice Rainbow Wave, " + playerName + "!!\nI\'d love one too, but I don\'t\nhave a jump button.");
-                        }
-                        else
-                        {
-                            textToSend.Add("Oh, hey, " + playerName + "! I'm here to test\nsingle-page dialogue!!");
-                        }
-                        break;
-                    default:
-                        textToSend.Add("Hey " + playerName + "!  Unfortunately I,\nsnail #" + ID + ", don\'t have any\ndialogue to offer.");
-                        break;
-                }
-                portraitColors.Add(new Color32(0, 0, 0, 0));
-                PlayState.OpenDialogue(2, ID, textToSend, portraitColors);
+                PlayState.OpenDialogue(2, ID, textToSend);
             }
         }
         else if (Vector2.Distance(transform.position, player.transform.position) > 5 && chatting)
@@ -156,7 +118,7 @@ public class NPC : MonoBehaviour
             chatting = false;
             PlayState.CloseDialogue();
         }
-        else if (Vector2.Distance(transform.position, player.transform.position) > 3 && !chatting && IDsWithLongDialogue.Contains(ID))
+        else if (Vector2.Distance(transform.position, player.transform.position) > 3 && (!chatting || PlayState.paralyzed))
         {
             speechBubble.GetComponent<SpriteRenderer>().enabled = false;
         }
@@ -171,17 +133,26 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void AddColorsNPC()
+    private void AddNPCColors()
     {
-        portraitColors.Add(savedColors[0]);
-        portraitColors.Add(savedColors[1]);
-        portraitColors.Add(savedColors[2]);
+        portraitColors.Add(parts[0].color);
+        portraitColors.Add(parts[1].color);
+        portraitColors.Add(parts[2].color);
+        portraitColors.Add(parts[3].color);
+        portraitColors.Add(parts[4].color);
     }
 
-    private void AddColorsPlayer()
+    private void BuildPortraitStateList(string speaker)
     {
-        portraitColors.Add(new Color32(252, 160, 72, 255));
-        portraitColors.Add(new Color32(252, 120, 252, 255));
-        portraitColors.Add(new Color32(0, 0, 0, 0));
+        switch (speaker)
+        {
+            case "player":
+                portraitStateList.Add("player");
+                break;
+            case "npc":
+            default:
+                portraitStateList.Add("npc");
+                break;
+        }
     }
 }
