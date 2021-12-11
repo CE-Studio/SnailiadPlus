@@ -75,6 +75,10 @@ public class NPC : MonoBehaviour
             portraitStateList.Clear();
             switch (ID)
             {
+                case 7:
+                    textToSend.Add("Are you leaving town, " + playerName + "?\n" + "Well, be careful!  Make sure\n" + "you save your game often!!");
+                    break;
+
                 case 50:
                     if (PlayState.hasRainbowWave)
                         textToSend.Add("Woah!!  Nice Rainbow Wave, " + playerName + "!!\nI\'d love one too, but I don\'t\nhave a jump button.");

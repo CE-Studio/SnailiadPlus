@@ -87,6 +87,9 @@ public class RoomTrigger : MonoBehaviour
                         case "Grass":
                             child.GetComponent<Grass>().Spawn();
                             break;
+                        case "Power Grass":
+                            child.GetComponent<PowerGrass>().Spawn();
+                            break;
                     }
                 }
                 else if (child.name == "Save Point")
@@ -162,6 +165,9 @@ public class RoomTrigger : MonoBehaviour
                         break;
                     case "Grass":
                         child.GetComponent<Grass>().ToggleActive(false);
+                        break;
+                    case "Power Grass":
+                        child.GetComponent<PowerGrass>().ToggleActive(false);
                         break;
                 }
             }

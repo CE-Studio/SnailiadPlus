@@ -1,13 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grass : MonoBehaviour
+public class PowerGrass : MonoBehaviour
 {
-    public int totalBites = 3;
-    public int healthPerBite = 1;
-    public float biteTimeout = 0.22f;
-    public float regrowTimeout = 15f;
+    public int totalBites = 12;
+    public int healthPerBite = 3;
+    public float biteTimeout = 0.17f;
 
     public int bitesRemaining;
     public bool active = false;
@@ -17,21 +16,21 @@ public class Grass : MonoBehaviour
     public BoxCollider2D box;
     public AudioSource sfx;
     public AudioClip bite;
-    public AudioClip regrow;
 
     public Sprite nom0;
     public Sprite nom1;
     public Sprite nom2;
     public Sprite nom3;
-    
+
+    public GameObject player;
+
     public void Start()
     {
         bitesRemaining = totalBites;
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
-        bite = (AudioClip)Resources.Load("Sounds/Sfx/EatGrass");
-        regrow = (AudioClip)Resources.Load("Sounds/Sfx/GrassGrow");
+        bite = (AudioClip)Resources.Load("Sounds/Sfx/EatPowerGrass");
 
         Transform targetObj1 = transform;
         Transform targetObj2;
@@ -44,23 +43,21 @@ public class Grass : MonoBehaviour
                 Physics2D.IgnoreCollision(targetObj2.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             }
         }
+
+        player = GameObject.Find("Player");
     }
 
-    public void Update()
+    void Update()
     {
         if (PlayState.gameState == "Game")
         {
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
         }
-        if (active && timer == 0)
+        if (sprite.enabled && timer == 0)
         {
             box.enabled = true;
-            if (!sprite.enabled)
-            {
-                sfx.PlayOneShot(regrow);
-                sprite.enabled = true;
-                bitesRemaining = totalBites;
-            }
+            player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.0001f);
+            // Because otherwise Snaily stops eating after three or four bites unless you move
         }
     }
 
@@ -95,7 +92,6 @@ public class Grass : MonoBehaviour
             bitesRemaining--;
             if (bitesRemaining == 0)
             {
-                timer = regrowTimeout;
                 sprite.enabled = false;
             }
             else
