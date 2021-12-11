@@ -5,48 +5,48 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const int DIR_FLOOR = 0;
-    public const int DIR_WALL = 1;
-    public const int DIR_CEILING = 2;
-    public const float HITBOX_SIZEX = 1.467508f;
-    public const float HITBOX_SIZEY = 0.8745056f;
-    public const float HITBOX_SIZEX_SHELL = 0.8421245f;
-    public const float HITBOX_OFFSETX = 0f;
-    public const float HITBOX_OFFSETY = -0.560989f;
-    public const float HITBOX_OFFSETX_SHELL = -0.186518f;
-    public const float RUNSPEED_NORMAL = 8;
-    public const float JUMPPOWER_NORMAL = 22;
-    public const float GRAVITY = 1f;
-    public const float TERMINAL_VELOCITY = -0.66f;
-    public const float RAINBOW_WAVE_COOLDOWN = 0.15f;
-
-    private bool _inShell = false;
-    public int _currentSurface = 0;
-    public bool _facingLeft = false;
-    public bool _facingUp = false;
-    private bool _relativeLeft = false;
-    private bool _relativeRight = false;
-    private bool _relativeUp = false;
-    private bool _relativeDown = false;
-    private bool _justPressedLeft = false;
-    private bool _justPressedRight = false;
-    private bool _justPressedUp = false;
-    private bool _justPressedDown = false;
-    private bool _holdingLeft = false;
-    private bool _holdingRight = false;
-    private bool _holdingUp = false;
-    private bool _holdingDown = false;
-    private Vector2 _velocity = new Vector2(0, 0);
-    private bool _onSurface = false;
-    private bool _surfacedLastFrame = false;
-    private bool _justJumped = false;
-    private bool _holdingJump = false;
-    private bool _justLeftShell = false;
-    private float _lastVcheckHitX = 0f;
-    private float _lastV2checkHitX = 0f;
-    private bool _justGrabbedWall = false;
-    private bool _readyToRoundCorner = false;
+    //public const int DIR_WALL = 1;
+    //public const int DIR_CEILING = 2;
+    //public const float HITBOX_SIZEX = 1.467508f;
+    //public const float HITBOX_SIZEY = 0.8745056f;
+    //public const float HITBOX_SIZEX_SHELL = 0.8421245f;
+    //public const float HITBOX_OFFSETX = 0f;
+    //public const float HITBOX_OFFSETY = -0.560989f;
+    //public const float HITBOX_OFFSETX_SHELL = -0.186518f;
+    //public const float RUNSPEED_NORMAL = 8;
+    //public const float JUMPPOWER_NORMAL = 22;
+    //public const float GRAVITY = 1f;
+    //public const float TERMINAL_VELOCITY = -0.66f;
+    //public const float RAINBOW_WAVE_COOLDOWN = 0.15f;
+    //
+    private bool inShell = false;
+    public int currentSurface = 0;
+    public bool facingLeft = false;
+    public bool facingUp = false;
+    //private bool _relativeLeft = false;
+    //private bool _relativeRight = false;
+    //private bool _relativeUp = false;
+    //private bool _relativeDown = false;
+    //private bool _justPressedLeft = false;
+    //private bool _justPressedRight = false;
+    //private bool _justPressedUp = false;
+    //private bool _justPressedDown = false;
+    //private bool _holdingLeft = false;
+    //private bool _holdingRight = false;
+    //private bool _holdingUp = false;
+    //private bool _holdingDown = false;
+    //private Vector2 _velocity = new Vector2(0, 0);
+    //private bool _onSurface = false;
+    //private bool _surfacedLastFrame = false;
+    //private bool _justJumped = false;
+    //private bool _holdingJump = false;
+    //private bool _justLeftShell = false;
+    //private float _lastVcheckHitX = 0f;
+    //private float _lastV2checkHitX = 0f;
+    //private bool _justGrabbedWall = false;
+    //private bool _readyToRoundCorner = false;
     private int bulletPointer = 0;
-    private float fireCooldown = 0;
+    //private float fireCooldown = 0;
     public int selectedWeapon = 0;
     public int health = 12;
     public int maxHealth = 12;
@@ -59,16 +59,20 @@ public class Player : MonoBehaviour
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AudioSource sfx;
-    public AudioClip shell;
-    public AudioClip jump;
+    //public AudioClip shell;
+    //public AudioClip jump;
     public AudioClip hurt;
     public AudioClip die;
-    public AudioClip shootRWave;
+    //public AudioClip shootRWave;
     public GameObject bulletPool;
-    public GameObject iconRWave;
+    //public GameObject iconRWave;
     public Sprite blank;
-    public Sprite iconRWaveDeselected;
-    public Sprite iconRWaveSelected;
+    public Sprite iconPeaDeselected;
+    public Sprite iconPeaSelected;
+    public Sprite iconBoomDeselected;
+    public Sprite iconBoomSelected;
+    public Sprite iconWaveDeselected;
+    public Sprite iconWaveSelected;
     public GameObject hearts;
     public Sprite heart0;
     public Sprite heart1;
@@ -113,7 +117,6 @@ public class Player : MonoBehaviour
         bulletPool = GameObject.Find("Player Bullet Pool");
 
         hearts = GameObject.Find("View/Hearts");
-        iconRWave = GameObject.Find("View/Weapon Icons/Rainbow Wave");
 
         debugUp = GameObject.Find("View/Debug Keypress Indicators/Up");
         debugDown = GameObject.Find("View/Debug Keypress Indicators/Down");
@@ -335,8 +338,8 @@ public class Player : MonoBehaviour
         stunned = true;
         sfx.PlayOneShot(hurt);
         UpdateHearts();
-        _currentSurface = DIR_FLOOR;
-        _inShell = false;
+        currentSurface = DIR_FLOOR;
+        inShell = false;
         float timer = 0;
         while (timer < 1)
         {
@@ -515,7 +518,7 @@ public class Player : MonoBehaviour
         float timer = 0;
         bool hasStartedTransition = false;
         Vector3 fallDir = new Vector3(0.125f, 0.35f, 0);
-        if (!_facingLeft)
+        if (!facingLeft)
             fallDir = new Vector3(-0.125f, 0.35f, 0);
         while ((timer < 1.6f && PlayState.quickDeathTransition) || (timer < 2 && !PlayState.quickDeathTransition))
         {
@@ -556,7 +559,7 @@ public class Player : MonoBehaviour
         string newAnim = "Normal ";
         if (state != "die")
         {
-            if (_currentSurface == 1)
+            if (currentSurface == 1)
                 newAnim += "wall ";
             else
                 newAnim += "floor ";

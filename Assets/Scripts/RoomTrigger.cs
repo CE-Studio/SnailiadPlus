@@ -13,6 +13,17 @@ public class RoomTrigger : MonoBehaviour
     public float parallaxBackgroundModifier = 0;
     public float parallaxSkyModifier = 0;
 
+    public int areaID = 0;
+    // 0 = Snail Town
+    // 1 = Mare Carelia
+    // 2 = Spiralis Silere
+    // 3 = Amastrida Abyssus
+    // 4 = Lux Lirata
+    // 5 = ???
+    // 6 = Shrine of Iris
+    // 7 = Boss Rush
+    public int areaSubzone = 0;
+
     public TextMesh roomNameText;
     public TextMesh roomNameShadow;
 
@@ -100,15 +111,15 @@ public class RoomTrigger : MonoBehaviour
 
             CheckSpecialLayer();
 
-            if (PlayState.player.GetComponent<Player>()._currentSurface == 1 && PlayState.player.GetComponent<Player>()._facingUp)
+            if (PlayState.player.GetComponent<Player>().currentSurface == 1 && PlayState.player.GetComponent<Player>().facingUp)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y + 0.125f);
             }
-            else if (PlayState.player.GetComponent<Player>()._currentSurface == 1)
+            else if (PlayState.player.GetComponent<Player>().currentSurface == 1)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y - 0.125f);
             }
-            else if (PlayState.player.GetComponent<Player>()._facingLeft)
+            else if (PlayState.player.GetComponent<Player>().facingLeft)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x - 0.125f, PlayState.player.transform.position.y);
             }
