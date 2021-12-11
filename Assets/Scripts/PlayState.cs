@@ -174,6 +174,11 @@ public class PlayState
         player.GetComponent<Player>().FlashCollectionText();
     }
 
+    public static void FlashSaveText()
+    {
+        player.GetComponent<Player>().FlashSaveText();
+    }
+
     public static void RequestExplosion(int size, Vector2 position)
     {
         if (!explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive)

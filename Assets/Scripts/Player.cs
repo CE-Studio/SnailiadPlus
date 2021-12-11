@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     //private float _lastV2checkHitX = 0f;
     //private bool _justGrabbedWall = false;
     //private bool _readyToRoundCorner = false;
-    private int bulletPointer = 0;
+    //private int bulletPointer = 0;
     //private float fireCooldown = 0;
     public int selectedWeapon = 0;
     public int health = 12;
@@ -81,6 +81,7 @@ public class Player : MonoBehaviour
     public Sprite heart4;
     public GameObject itemTextGroup;
     public GameObject itemPercentageGroup;
+    public GameObject gameSaveGroup;
 
     public LayerMask playerCollide;
 
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour
 
         itemTextGroup = GameObject.Find("View/Item Get Text");
         itemPercentageGroup = GameObject.Find("View/Item Percentage Text");
+        gameSaveGroup = GameObject.Find("View/Game Saved Text");
 
         RenderNewHearts();
         UpdateHearts();
@@ -366,6 +368,11 @@ public class Player : MonoBehaviour
         StartCoroutine(FlashText("collection"));
     }
 
+    public void FlashSaveText()
+    {
+        StartCoroutine(FlashText("save"));
+    }
+
     public IEnumerator FlashText(string textType, string itemName = "No item")
     {
         float timer = 0;
@@ -458,6 +465,19 @@ public class Player : MonoBehaviour
                 }
                 SetTextAlpha("collection", 0);
                 break;
+            case "save":
+                SetTextAlpha("save", 255);
+                while (timer < 2.5f)
+                {
+                    if (timer > 2)
+                    {
+                        SetTextAlpha("save", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2) * 1.5f)));
+                    }
+                    yield return new WaitForFixedUpdate();
+                    timer += Time.deltaTime;
+                }
+                SetTextAlpha("save", 0);
+                break;
         }
         yield return new WaitForEndOfFrame();
     }
@@ -488,6 +508,17 @@ public class Player : MonoBehaviour
                         );
                 }
                 break;
+            case "save":
+                foreach (Transform textObj in gameSaveGroup.transform)
+                {
+                    textObj.GetComponent<TextMesh>().color = new Color32(
+                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
+                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
+                        (byte)alpha
+                        );
+                }
+                break;
         }
     }
 
@@ -501,6 +532,10 @@ public class Player : MonoBehaviour
                 break;
             case "collection":
                 foreach (Transform textObj in itemPercentageGroup.transform)
+                    textObj.GetComponent<TextMesh>().text = textToDisplay;
+                break;
+            case "save":
+                foreach (Transform textObj in gameSaveGroup.transform)
                     textObj.GetComponent<TextMesh>().text = textToDisplay;
                 break;
         }

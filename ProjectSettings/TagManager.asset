@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Grass
   - BreakableBlock
+  - SavePoint
   layers:
   - Default
   - TransparentFX

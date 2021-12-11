@@ -4,15 +4,49 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public bool hasBeenActivated = false;
+
+    public Animator anim;
+    public AudioSource sfx;
+    public AudioClip saveSfx;
+
+    public 
+
     void Start()
+    {
+        anim = GetComponent<Animator>();
+        sfx = GetComponent<AudioSource>();
+        saveSfx = (AudioClip)Resources.Load("Sounds/Sfx/Save");
+    }
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "Player")
+        {
+            if (!hasBeenActivated)
+            {
+                ToggleActiveState();
+                PlayState.FlashSaveText();
+            }
+        }
+    }
+
+    public void ToggleActiveState()
+    {
+        if (hasBeenActivated)
+        {
+            anim.Play("Save inactive", 0, 0);
+        }
+        else
+        {
+            sfx.PlayOneShot(saveSfx);
+            anim.Play("Save active", 0, 0);
+        }
+        hasBeenActivated = !hasBeenActivated;
     }
 }

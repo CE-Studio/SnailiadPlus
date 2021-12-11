@@ -89,6 +89,11 @@ public class RoomTrigger : MonoBehaviour
                             break;
                     }
                 }
+                else if (child.name == "Save Point")
+                {
+                    if (child.GetComponent<SavePoint>().hasBeenActivated)
+                        child.GetComponent<SavePoint>().ToggleActiveState();
+                }
             }
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
