@@ -362,13 +362,51 @@ MonoBehaviour:
   upsideDown: 0
   playerName: 
   colors: []
-  IDsWithLongDialogue: 
-  outline: {fileID: 0}
-  body: {fileID: 0}
-  shell: {fileID: 0}
-  outlineAnim: {fileID: 0}
-  bodyAnim: {fileID: 0}
-  shellAnim: {fileID: 0}
+  colorTable: {fileID: 0}
+  npcSpriteSheet:
+  - {fileID: 3862513801865770124, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -7705112838881874201, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -1870519688132881893, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 5654658704931971035, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 5623516285769831550, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -7678387409035749543, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -4457213049971740677, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 8544807206705844407, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -4994855216203237051, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 5835950756976768585, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 8121918918892616195, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 3174600279784545442, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 524857812515485558, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1252741137070664578, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -3854463108463334246, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -4751118444521941513, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1129887711738601935, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -1099810051284491472, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -6987079263087656721, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -1455228742648443923, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1229372064554274625, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -6771388722349370110, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 516554574331252556, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -4463726863175908632, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -7876630773137754357, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -5137271691564871729, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -7840543662677190912, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 7600838974995184870, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1188905409072939620, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1225303966208642367, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -680045386178998932, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -901897782964522778, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 1402760231065468922, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 7144963550718856974, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -8710990207598183318, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 8484136978994077133, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 3407181846449806904, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 2133740788873660446, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 7216924227768811827, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -3938111629178055236, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: -8566299241727231145, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  - {fileID: 7107475878791808953, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  parts: []
   speechBubble: {fileID: 0}
   player: {fileID: 0}
 --- !u!212 &450049468564987500
@@ -431,7 +469,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450049468564987502}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7822c0f2f69544f45a67d51f913bd171, type: 2}
   m_CullingMode: 0

@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
     private List<Color32> portraitColors = new List<Color32>();
     private List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
+    public Sprite[] npcSpriteSheet;
 
     public List<SpriteRenderer> parts = new List<SpriteRenderer>();
     public GameObject speechBubble;
@@ -44,8 +45,8 @@ public class NPC : MonoBehaviour
 
         if (upsideDown)
         {
-            for (int i = 0; i < parts.Count; i++)
-                parts[i].flipY = true;
+            for (int j = 0; j < parts.Count; j++)
+                parts[j].flipY = true;
             speechBubble.GetComponent<SpriteRenderer>().flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
@@ -140,5 +141,13 @@ public class NPC : MonoBehaviour
         portraitColors.Add(colorTable.GetPixel(2, inputID));
         portraitColors.Add(colorTable.GetPixel(3, inputID));
         portraitColors.Add(colorTable.GetPixel(4, inputID));
+    }
+
+    public void ChangeSprite(int spriteID)
+    {
+        for (int i = 0; i < parts.Count; i++)
+        {
+            parts[i].sprite = npcSpriteSheet[(6 * i) + spriteID];
+        }
     }
 }
