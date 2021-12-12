@@ -78,6 +78,8 @@ public class Snaily : MonoBehaviour
         WEAPON_COOLDOWNS[3] = 0.0425f;
         WEAPON_COOLDOWNS[4] = 0.15f;
         WEAPON_COOLDOWNS[5] = 0.085f;
+
+        PlayState.currentCharacter = "Snaily";
     }
 
     // This function is called once per frame
@@ -141,10 +143,10 @@ public class Snaily : MonoBehaviour
                 lineColor = Color.black;
                 break;
         }
-        Debug.DrawLine(transform.position, boxD.point, lineColor, 0.5f, false);
-        Debug.DrawLine(transform.position, boxU.point, lineColor, 0.5f, false);
-        Debug.DrawLine(transform.position, boxL.point, lineColor, 0.5f, false);
-        Debug.DrawLine(transform.position, boxR.point, lineColor, 0.5f, false);
+        //Debug.DrawLine(transform.position, boxD.point, lineColor, 0.5f, false);
+        //Debug.DrawLine(transform.position, boxU.point, lineColor, 0.5f, false);
+        //Debug.DrawLine(transform.position, boxL.point, lineColor, 0.5f, false);
+        //Debug.DrawLine(transform.position, boxR.point, lineColor, 0.5f, false);
         //Debug.Log(boxD.distance);
 
         // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate

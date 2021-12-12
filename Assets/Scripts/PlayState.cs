@@ -49,7 +49,12 @@ public class PlayState
     public static TextMesh fpsText = GameObject.Find("View/FPS Text").GetComponent<TextMesh>();
     public static TextMesh fpsShadow = GameObject.Find("View/FPS Shadow").GetComponent<TextMesh>();
 
-    public static int[] defaultMinimapState = new int []
+    public static int currentProfile = 1;
+    public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
+    public static string currentCharacter = "";
+    public static float[] currentTime = new float[] { 0, 0, 0 };
+
+    public static int[] defaultMinimapState = new int[]
     {
         0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -92,8 +97,20 @@ public class PlayState
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // Heart Containers
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // Helix Fragments
     };
+
+    public static int[] bossStates = new int[]
+    {
+        1,  // Shellbreaker / Super Shellbreaker
+        1,  // Stompy / Vis Vires
+        1,  // Space Box / Time Cube
+        1   // Moon Snail / Sun Snail
+    };
+
     public const byte OFFSET_HEARTS = 12;
     public const byte OFFSET_FRAGMENTS = 23;
+
+    public bool hasSeenIris;
+    public bool talkedToCaveSnail;
 
     public static void GetNewRoom(string intendedArea)
     {
@@ -219,51 +236,129 @@ public class PlayState
     private static byte TranslateItemNameToID(string itemName)
     {
         byte id = 0;
-        switch (itemName)
+        if (itemName.Contains("Heart Container"))
         {
-            case "Peashooter":
-                id = 0;
-                break;
-            case "Boomerang":
-                id = 1;
-                break;
-            case "Rainbow Wave":
-                id = 2;
-                break;
-            case "Devastator":
-                id = 3;
-                break;
-            case "High Jump":
-            case "Wall Grab":
-                id = 4;
-                break;
-            case "Shell Shield":
-            case "Shelmet":
-                id = 5;
-                break;
-            case "Rapid Fire":
-            case "Backfire":
-                id = 6;
-                break;
-            case "Ice Snail":
-                id = 7;
-                break;
-            case "Gravity Snail":
-            case "Magnetic Foot":
-            case "Corkscrew Jump":
-            case "Angel Jump":
-                id = 8;
-                break;
-            case "Full-Metal Snail":
-                id = 9;
-                break;
-            case "Gravity Shock":
-                id = 10;
-                break;
-            case "Super Secret Boomerang":
-                id = 11;
-                break;
+            id = byte.Parse(itemName.Substring(15, itemName.Length));
+        }
+        else if (itemName.Contains("Helix Fragment"))
+        {
+            id = byte.Parse(itemName.Substring(14, itemName.Length));
+        }
+        else
+        {
+            switch (itemName)
+            {
+                case "Peashooter":
+                    id = 0;
+                    break;
+                case "Boomerang":
+                    id = 1;
+                    break;
+                case "Rainbow Wave":
+                    id = 2;
+                    break;
+                case "Devastator":
+                    id = 3;
+                    break;
+                case "High Jump":
+                case "Wall Grab":
+                    id = 4;
+                    break;
+                case "Shell Shield":
+                case "Shelmet":
+                    id = 5;
+                    break;
+                case "Rapid Fire":
+                case "Backfire":
+                    id = 6;
+                    break;
+                case "Ice Snail":
+                    id = 7;
+                    break;
+                case "Gravity Snail":
+                case "Magnetic Foot":
+                case "Corkscrew Jump":
+                case "Angel Jump":
+                    id = 8;
+                    break;
+                case "Full-Metal Snail":
+                    id = 9;
+                    break;
+                case "Gravity Shock":
+                    id = 10;
+                    break;
+                case "Super Secret Boomerang":
+                    id = 11;
+                    break;
+            }
         }
         return id;
+    }
+
+    public void WriteSave(string dataType)
+    {
+        if (dataType == "game")
+        {
+            // Save data is stored in the following order:
+            // - Profile beign played on
+            // - Difficulty being played on
+            // - Game time, saved as hours, minutes, and seconds + hundredths
+            // - World position of the player's last save point, individually saved as two floats
+            // - Current campaign character
+            // - Item list
+            // - Selected weapon
+            // - Boss states
+            // - NPC variables
+            string gameData = "/";
+
+            // Profile
+            gameData += currentProfile + "/";
+
+            // Difficulty
+            gameData += currentDifficulty + "/";
+
+            // Time
+            gameData += currentTime[0] + "," + currentTime[1] + "," + currentTime[2] + "/";
+
+            // Save position
+            gameData += respawnCoords.x + "/" + respawnCoords.y + "/";
+
+            // Character
+            gameData += currentCharacter + "/";
+
+            // Items
+            int index = 0;
+            while (index < itemCollection.Length)
+            {
+                gameData += itemCollection[index] + (index == itemCollection.Length - 1 ? "/" : ",");
+                index++;
+            }
+
+            // Selected weapon
+            gameData += player.GetComponent<Player>().selectedWeapon + "/";
+
+            // Boss states
+            index = 0;
+            while (index < bossStates.Length)
+            {
+                gameData += bossStates[index] + (index == itemCollection.Length - 1 ? "/" : ",");
+                index++;
+            }
+
+            // NPC vars
+            gameData += (hasSeenIris ? "1," : "0,") + (talkedToCaveSnail ? "1/" : "0/");
+
+            // Current time
+
+            PlayerPrefs.SetString("SaveGameData" + currentProfile, gameData);
+        }
+        else if (dataType == "options")
+        {
+
+        }
+        else
+        {
+            Debug.Log("Invalid save type!");
+        }
     }
 }

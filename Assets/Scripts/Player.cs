@@ -178,6 +178,20 @@ public class Player : MonoBehaviour
         }
         PlayState.fpsText.text = "" + Mathf.Round(fps) + "FPS";
         PlayState.fpsShadow.text = "" + Mathf.Round(fps) + "FPS";
+
+        // Game time counter
+        if (PlayState.gameState == "Game")
+            PlayState.currentTime[2] += Time.deltaTime;
+        if (PlayState.currentTime[2] >= 60)
+        {
+            PlayState.currentTime[2] -= 60;
+            PlayState.currentTime[1] += 1;
+        }
+        if (PlayState.currentTime[1] >= 60)
+        {
+            PlayState.currentTime[1] -= 60;
+            PlayState.currentTime[1] += 1;
+        }
     }
 
     // This coroutine here is meant to display the keypress indicators intended for debugging purposes
