@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     public bool countedInPercentage;
     public bool collected;
     public int itemID;
+    public bool isSuperUnique;
 
     public Vector2 originPos;
 
@@ -28,9 +29,9 @@ public class Item : MonoBehaviour
 
         originPos = transform.localPosition;
 
-        switch (itemType)
+        switch (itemID)
         {
-            case "Rainbow Wave":
+            case 2:
                 anim.Play("RainbowWave", 0, 0);
                 box.size = new Vector2(1.25f, 1.825f);
                 break;
@@ -46,42 +47,39 @@ public class Item : MonoBehaviour
         
     }
 
+    public void CheckIfCollected()
+    {
+        if (PlayState.itemCollection[itemID] == 1)
+            SetDeactivated();
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            switch (itemType)
+            PlayState.AddItem(itemID);
+            if (isSuperUnique)
+                sfx.PlayOneShot(majorJingle);
+            else
+                sfx.PlayOneShot(minorJingle);
+            switch (itemID)
             {
-                case "Rainbow Wave":
-                    PlayState.AddItem("Rainbow Wave");
+                case 2:
                     PlayState.isArmed = true;
                     collision.GetComponent<Player>().selectedWeapon = 3;
-                    GetMinorItem("Rainbow Wave");
                     break;
                 default:
                     break;
             }
-            //PlayState.RunItemPopup(itemType);
-            //Destroy(gameObject);
             PlayState.FlashItemText(itemType);
             PlayState.FlashCollectionText();
-            //SetDeactivated();
             StartCoroutine(nameof(HoverOverPlayer));
         }
     }
 
-    void GetMinorItem(string item)
-    {
-        sfx.PlayOneShot(minorJingle);
-    }
-
-    void GetMajorItem(string item)
-    {
-        sfx.PlayOneShot(majorJingle);
-    }
-
     public void SetDeactivated()
     {
+        transform.localPosition = originPos;
         box.enabled = false;
         sprite.enabled = false;
     }
@@ -111,7 +109,6 @@ public class Item : MonoBehaviour
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
         }
-        transform.localPosition = originPos;
         SetDeactivated();
     }
 }

@@ -223,9 +223,19 @@ public class PlayState
         }
     }
 
+    public static bool CheckForItem(int itemID)
+    {
+        return itemCollection[itemID] == 1;
+    }
+
     public static bool CheckForItem(string itemName)
     {
         return itemCollection[TranslateItemNameToID(itemName)] == 1;
+    }
+
+    public static void AddItem(int itemID)
+    {
+        itemCollection[itemID] = 1;
     }
 
     public static void AddItem(string itemName)
@@ -233,7 +243,7 @@ public class PlayState
         itemCollection[TranslateItemNameToID(itemName)] = 1;
     }
 
-    private static byte TranslateItemNameToID(string itemName)
+    public static byte TranslateItemNameToID(string itemName)
     {
         byte id = 0;
         if (itemName.Contains("Heart Container"))
@@ -295,6 +305,74 @@ public class PlayState
         return id;
     }
 
+    public static string TranslateIDToItemName(int itemID)
+    {
+        string name = "";
+        if (itemID >= 23)
+            name = "Helix Fragment " + (itemID - 23);
+        else if (itemID >= 12)
+            name = "Heart Container " + (itemID - 12);
+        else
+        {
+            switch (itemID)
+            {
+                case 0:
+                    name = "Peashooter";
+                    break;
+                case 1:
+                    name = "Boomerang";
+                    break;
+                case 2:
+                    name = "Rainbow Wave";
+                    break;
+                case 3:
+                    name = "Devastator";
+                    break;
+                case 4:
+                    if (currentCharacter == "Blobby")
+                        name = "Wall Grab";
+                    else
+                        name = "High Jump";
+                    break;
+                case 5:
+                    if (currentCharacter == "Blobby")
+                        name = "Shelmet";
+                    else
+                        name = "Shell Shield";
+                    break;
+                case 6:
+                    if (currentCharacter == "Leechy")
+                        name = "Backfire";
+                    else
+                        name = "Rapid Fire";
+                    break;
+                case 7:
+                    name = "Ice Snail";
+                    break;
+                case 8:
+                    if (currentCharacter == "Upside")
+                        name = "Magnetic Foot";
+                    else if (currentCharacter == "Leggy")
+                        name = "Corkscrew Jump";
+                    else if (currentCharacter == "Blobby")
+                        name = "Angel Jump";
+                    else
+                        name = "Gravity Snail";
+                    break;
+                case 9:
+                    name = "Full-Metal Snail";
+                    break;
+                case 10:
+                    name = "Gravity Shock";
+                    break;
+                case 11:
+                    name = "Super Secret Boomerang";
+                    break;
+            }
+        }
+        return name;
+    }
+
     public void WriteSave(string dataType)
     {
         if (dataType == "game")
@@ -347,8 +425,6 @@ public class PlayState
 
             // NPC vars
             gameData += (hasSeenIris ? "1," : "0,") + (talkedToCaveSnail ? "1/" : "0/");
-
-            // Current time
 
             PlayerPrefs.SetString("SaveGameData" + currentProfile, gameData);
         }
