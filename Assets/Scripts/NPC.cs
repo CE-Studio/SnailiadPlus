@@ -6,8 +6,8 @@ public class NPC : MonoBehaviour
 {
     public int ID = 0;
     public bool upsideDown = false;
-    private bool chatting = false;
-    private bool buttonDown = false;
+    public bool chatting = false;
+    public bool buttonDown = false;
 
     public string playerName;
 
@@ -23,7 +23,7 @@ public class NPC : MonoBehaviour
 
     public GameObject player;
 
-    void Start()
+    public virtual void Start()
     {
         playerName = "Snaily";
 
@@ -53,7 +53,7 @@ public class NPC : MonoBehaviour
         speechBubble.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    void Update()
+    public virtual void Update()
     {
         if (player.transform.position.x < transform.position.x)
         {
@@ -76,7 +76,7 @@ public class NPC : MonoBehaviour
             switch (ID)
             {
                 case 7:
-                    textToSend.Add("Are you leaving town, " + playerName + "?\n" + "Well, be careful!  Make sure\n" + "you save your game often!!");
+                    textToSend.Add("Are you leaving town, " + playerName + "?\nWell, be careful!  Make sure\nyou save your game often!!");
                     break;
 
                 case 50:
