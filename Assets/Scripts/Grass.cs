@@ -33,17 +33,7 @@ public class Grass : MonoBehaviour
         bite = (AudioClip)Resources.Load("Sounds/Sfx/EatGrass");
         regrow = (AudioClip)Resources.Load("Sounds/Sfx/GrassGrow");
 
-        Transform targetObj1 = transform;
-        Transform targetObj2;
-        while (targetObj1.parent != null)
-        {
-            targetObj2 = targetObj1;
-            targetObj1 = targetObj1.parent;
-            if (targetObj1.name == "Room Triggers")
-            {
-                Physics2D.IgnoreCollision(targetObj2.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            }
-        }
+        Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
     public void Update()

@@ -98,7 +98,10 @@ public class RoomTrigger : MonoBehaviour
                         child.GetComponent<SavePoint>().ToggleActiveState();
                 }
                 else if (child.name == "Item")
+                {
+                    child.GetComponent<Item>().SetAnim();
                     child.GetComponent<Item>().CheckIfCollected();
+                }
             }
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);

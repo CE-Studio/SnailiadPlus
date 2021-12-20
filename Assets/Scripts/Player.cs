@@ -134,6 +134,8 @@ public class Player : MonoBehaviour
         RenderNewHearts();
         UpdateHearts();
 
+        PlayState.AssignProperCollectibleIDs();
+
         StartCoroutine("DebugKeys");
     }
 

@@ -19,6 +19,7 @@ public class NPC : MonoBehaviour
     public Sprite[] npcSpriteSheet;
 
     public List<SpriteRenderer> parts = new List<SpriteRenderer>();
+    public Animator anim;
     public GameObject speechBubble;
 
     public GameObject player;
@@ -42,6 +43,9 @@ public class NPC : MonoBehaviour
         parts[2].color = colorTable.GetPixel(2, ID);
         parts[3].color = colorTable.GetPixel(3, ID);
         parts[4].color = colorTable.GetPixel(4, ID);
+
+        anim = GetComponent<Animator>();
+        anim.Play("NPC base", 0, 0);
 
         if (upsideDown)
         {
@@ -150,8 +154,6 @@ public class NPC : MonoBehaviour
     public void ChangeSprite(int spriteID)
     {
         for (int i = 0; i < parts.Count; i++)
-        {
             parts[i].sprite = npcSpriteSheet[(6 * i) + spriteID];
-        }
     }
 }

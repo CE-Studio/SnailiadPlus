@@ -383,33 +383,43 @@ public class Snaily : MonoBehaviour
                     // Now, we perform relatively vertical checks. This mainly involves jumping and falling
                     if (!grounded)
                     {
-                        bool pokedCeiling = false;
-                        velocity.x = Mathf.Clamp(velocity.x - GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
-                        if (boxL.distance != 0 && boxR.distance != 0)
+                        if (!PlayState.CheckForItem("Gravity Snail"))
                         {
-                            if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
-                            {
-                                velocity.x = -boxL.distance;
-                                grounded = true;
-                            }
-                            else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
-                            {
-                                velocity.x = boxR.distance;
-                                pokedCeiling = true;
-                            }
+                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
                         }
-                        transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                        UpdateBoxcasts();
-                        if (pokedCeiling)
+                        else
                         {
-                            velocity.x = 0;
-                            if (Input.GetAxisRaw("Horizontal") == 1)
+                            bool pokedCeiling = false;
+                            velocity.x = Mathf.Clamp(velocity.x - GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
+                            if (boxL.distance != 0 && boxR.distance != 0)
                             {
-                                gravityDir = DIR_WALL_RIGHT;
-                                SwapDir(DIR_WALL_RIGHT);
-                                grounded = true;
-                                holdingShell = true;
-                                return;
+                                if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                                {
+                                    velocity.x = -boxL.distance;
+                                    grounded = true;
+                                }
+                                else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
+                                {
+                                    velocity.x = boxR.distance;
+                                    pokedCeiling = true;
+                                }
+                            }
+                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            UpdateBoxcasts();
+                            if (pokedCeiling)
+                            {
+                                velocity.x = 0;
+                                if (Input.GetAxisRaw("Horizontal") == 1)
+                                {
+                                    gravityDir = DIR_WALL_RIGHT;
+                                    SwapDir(DIR_WALL_RIGHT);
+                                    grounded = true;
+                                    holdingShell = true;
+                                    return;
+                                }
                             }
                         }
                     }
@@ -566,33 +576,43 @@ public class Snaily : MonoBehaviour
                     // Now, we perform relatively vertical checks. This mainly involves jumping and falling
                     if (!grounded)
                     {
-                        bool pokedCeiling = false;
-                        velocity.x = Mathf.Clamp(velocity.x + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
-                        if (boxL.distance != 0 && boxR.distance != 0)
+                        if (!PlayState.CheckForItem("Gravity Snail"))
                         {
-                            if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
-                            {
-                                velocity.x = -boxL.distance;
-                                pokedCeiling = true;
-                            }
-                            else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
-                            {
-                                velocity.x = boxR.distance;
-                                grounded = true;
-                            }
+                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
                         }
-                        transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                        UpdateBoxcasts();
-                        if (pokedCeiling)
+                        else
                         {
-                            velocity.x = 0;
-                            if (Input.GetAxisRaw("Horizontal") == -1)
+                            bool pokedCeiling = false;
+                            velocity.x = Mathf.Clamp(velocity.x + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
+                            if (boxL.distance != 0 && boxR.distance != 0)
                             {
-                                gravityDir = DIR_WALL_LEFT;
-                                SwapDir(DIR_WALL_LEFT);
-                                grounded = true;
-                                holdingShell = true;
-                                return;
+                                if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                                {
+                                    velocity.x = -boxL.distance;
+                                    pokedCeiling = true;
+                                }
+                                else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
+                                {
+                                    velocity.x = boxR.distance;
+                                    grounded = true;
+                                }
+                            }
+                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            UpdateBoxcasts();
+                            if (pokedCeiling)
+                            {
+                                velocity.x = 0;
+                                if (Input.GetAxisRaw("Horizontal") == -1)
+                                {
+                                    gravityDir = DIR_WALL_LEFT;
+                                    SwapDir(DIR_WALL_LEFT);
+                                    grounded = true;
+                                    holdingShell = true;
+                                    return;
+                                }
                             }
                         }
                     }
@@ -749,33 +769,41 @@ public class Snaily : MonoBehaviour
                     // Now, we perform relatively vertical checks. This mainly involves jumping and falling
                     if (!grounded)
                     {
-                        bool pokedCeiling = false;
-                        velocity.y = Mathf.Clamp(velocity.y + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
-                        if (boxD.distance != 0 && boxU.distance != 0)
+                        if (!PlayState.CheckForItem("Gravity Snail"))
                         {
-                            if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
-                            {
-                                velocity.y = -boxD.distance;
-                                pokedCeiling = true;
-                            }
-                            else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
-                            {
-                                velocity.y = boxU.distance;
-                                grounded = true;
-                            }
+                            SwapDir(DIR_FLOOR);
+                            gravityDir = DIR_FLOOR;
                         }
-                        transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                        UpdateBoxcasts();
-                        if (pokedCeiling)
+                        else
                         {
-                            velocity.y = 0;
-                            if (Input.GetAxisRaw("Vertical") == -1)
+                            bool pokedCeiling = false;
+                            velocity.y = Mathf.Clamp(velocity.y + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
+                            if (boxD.distance != 0 && boxU.distance != 0)
                             {
-                                gravityDir = DIR_FLOOR;
-                                SwapDir(DIR_FLOOR);
-                                grounded = true;
-                                holdingShell = true;
-                                return;
+                                if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
+                                {
+                                    velocity.y = -boxD.distance;
+                                    pokedCeiling = true;
+                                }
+                                else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
+                                {
+                                    velocity.y = boxU.distance;
+                                    grounded = true;
+                                }
+                            }
+                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            UpdateBoxcasts();
+                            if (pokedCeiling)
+                            {
+                                velocity.y = 0;
+                                if (Input.GetAxisRaw("Vertical") == -1)
+                                {
+                                    gravityDir = DIR_FLOOR;
+                                    SwapDir(DIR_FLOOR);
+                                    grounded = true;
+                                    holdingShell = true;
+                                    return;
+                                }
                             }
                         }
                     }

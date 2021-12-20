@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public string itemType = "Rainbow Wave";
+    private string itemType;
     public bool countedInPercentage;
     public bool collected;
     public int itemID;
@@ -29,22 +29,55 @@ public class Item : MonoBehaviour
 
         originPos = transform.localPosition;
 
-        switch (itemID)
+        if (itemID >= 23)
         {
-            case 2:
-                anim.Play("RainbowWave", 0, 0);
-                box.size = new Vector2(1.25f, 1.825f);
-                break;
-            default:
-                anim.Play("RainbowWave", 0, 0);
-                box.size = new Vector2(1.25f, 1.825f);
-                break;
+            anim.Play("Helix Fragment", 0, 0);
+            box.size = new Vector2(0.95f, 0.95f);
         }
+        else
+        {
+            switch (itemID)
+            {
+                case 2:
+                    anim.Play("Rainbow Wave", 0, 0);
+                    box.size = new Vector2(1.25f, 1.825f);
+                    break;
+                default:
+                    anim.Play("Helix Fragment", 0, 0);
+                    box.size = new Vector2(0.95f, 0.95f);
+                    break;
+            }
+        }
+
+        itemType = PlayState.TranslateIDToItemName(itemID);
     }
 
     void Update()
     {
         
+    }
+
+    public void SetAnim()
+    {
+        if (itemID >= 23)
+        {
+            anim.Play("Helix Fragment", 0, 0);
+            box.size = new Vector2(0.95f, 0.95f);
+        }
+        else
+        {
+            switch (itemID)
+            {
+                case 2:
+                    anim.Play("Rainbow Wave", 0, 0);
+                    box.size = new Vector2(1.25f, 1.825f);
+                    break;
+                default:
+                    anim.Play("Helix Fragment", 0, 0);
+                    box.size = new Vector2(0.95f, 0.95f);
+                    break;
+            }
+        }
     }
 
     public void CheckIfCollected()

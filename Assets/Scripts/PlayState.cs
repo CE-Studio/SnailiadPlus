@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -111,6 +112,20 @@ public class PlayState
 
     public bool hasSeenIris;
     public bool talkedToCaveSnail;
+
+    [Serializable]
+    public struct GameSaveData
+    {
+        public int profile;
+        public int difficulty;
+        public float[] gameTime;
+        public Vector2 saveCoords;
+        public string character;
+        public int[] items;
+        public int weapon;
+        public int[] bossStates;
+        public int[] NPCVars;
+    }
 
     public static void GetNewRoom(string intendedArea)
     {
@@ -243,6 +258,38 @@ public class PlayState
         itemCollection[TranslateItemNameToID(itemName)] = 1;
     }
 
+    public static void AssignProperCollectibleIDs()
+    {
+        Transform roomTriggerArray = GameObject.Find("Room Triggers").transform;
+        int currentHelixCount = 0;
+        int currentHeartCount = 0;
+
+        foreach (Transform area in roomTriggerArray)
+        {
+            foreach (Transform room in area)
+            {
+                foreach (Transform entity in room)
+                {
+                    if (entity.name == "Item")
+                    {
+                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS)
+                        {
+                            entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + currentHelixCount;
+                            //entity.GetComponent<Item>().itemType = "Helix Fragment " + OFFSET_FRAGMENTS;
+                            currentHelixCount++;
+                        }
+                        else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS)
+                        {
+                            entity.GetComponent<Item>().itemID = OFFSET_HEARTS + currentHeartCount;
+                            //entity.GetComponent<Item>().itemType = "Heart Container " + OFFSET_HEARTS;
+                            currentHeartCount++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public static byte TranslateItemNameToID(string itemName)
     {
         byte id = 0;
@@ -309,9 +356,11 @@ public class PlayState
     {
         string name = "";
         if (itemID >= 23)
-            name = "Helix Fragment " + (itemID - 23);
+            //name = "Helix Fragment " + (itemID - 23);
+            name = "Helix Fragment";
         else if (itemID >= 12)
-            name = "Heart Container " + (itemID - 12);
+            //name = "Heart Container " + (itemID - 12);
+            name = "Heart Container";
         else
         {
             switch (itemID)
@@ -387,46 +436,23 @@ public class PlayState
             // - Selected weapon
             // - Boss states
             // - NPC variables
-            string gameData = "/";
-
-            // Profile
-            gameData += currentProfile + "/";
-
-            // Difficulty
-            gameData += currentDifficulty + "/";
-
-            // Time
-            gameData += currentTime[0] + "," + currentTime[1] + "," + currentTime[2] + "/";
-
-            // Save position
-            gameData += respawnCoords.x + "/" + respawnCoords.y + "/";
-
-            // Character
-            gameData += currentCharacter + "/";
-
-            // Items
-            int index = 0;
-            while (index < itemCollection.Length)
+            GameSaveData data = new GameSaveData();
+            data.profile = currentProfile;
+            data.difficulty = currentDifficulty;
+            data.gameTime = currentTime;
+            data.saveCoords = respawnCoords;
+            data.character = currentCharacter;
+            data.items = itemCollection;
+            data.weapon = player.GetComponent<Player>().selectedWeapon;
+            data.bossStates = bossStates;
+            data.NPCVars = new int[]
             {
-                gameData += itemCollection[index] + (index == itemCollection.Length - 1 ? "/" : ",");
-                index++;
-            }
-
-            // Selected weapon
-            gameData += player.GetComponent<Player>().selectedWeapon + "/";
-
-            // Boss states
-            index = 0;
-            while (index < bossStates.Length)
-            {
-                gameData += bossStates[index] + (index == itemCollection.Length - 1 ? "/" : ",");
-                index++;
-            }
-
-            // NPC vars
-            gameData += (hasSeenIris ? "1," : "0,") + (talkedToCaveSnail ? "1/" : "0/");
-
-            PlayerPrefs.SetString("SaveGameData" + currentProfile, gameData);
+                hasSeenIris ? 1 : 0,
+                talkedToCaveSnail ? 1 : 0
+            };
+            string saveData = JsonUtility.ToJson(data);
+            PlayerPrefs.SetString("SaveGameData" + currentProfile, saveData);
+            PlayerPrefs.Save();
         }
         else if (dataType == "options")
         {
