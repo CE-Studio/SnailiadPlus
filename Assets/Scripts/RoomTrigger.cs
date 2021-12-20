@@ -110,6 +110,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
             PlayState.parallaxBgMod = parallaxBackgroundModifier;
             PlayState.parallaxSkyMod = parallaxSkyModifier;
+            PlayState.PlayAreaSong(areaID, areaSubzone);
 
             string newRoomName = "";
             foreach (char character in transform.name)
@@ -206,20 +207,6 @@ public class RoomTrigger : MonoBehaviour
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
         for (int i = 0; i <= 1; i++)
         {
-            Tilemap currentMap = null;
-            switch (i)
-            {
-                case 0:
-                    currentMap = bg;
-                    break;
-                case 1:
-                    currentMap = fg;
-                    break;
-                default:
-                    currentMap = bg;
-                    break;
-            }
-
             for (int x = -limitX; x <= limitX; x++)
             {
                 for (int y = -limitY; y <= limitY; y++)

@@ -25,6 +25,15 @@ public class PlayState
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
+    public static AudioClip[][] areaMusic = new AudioClip[][]
+    {
+        new AudioClip[]
+        {
+            (AudioClip)Resources.Load("Sounds/Music/SnailTown")
+        }
+    };
+    public static int currentArea = -1;
+    public static int currentSubzone = -1;
 
     public static GameObject player = GameObject.Find("Player");
     public static GameObject cam = GameObject.Find("View");
@@ -140,6 +149,24 @@ public class PlayState
                 break;
         }
         mus.Play();
+    }
+
+    public static void PlayAreaSong(int area, int subzone)
+    {
+        if (area == currentArea && subzone != currentSubzone)
+        {
+            float playTime = mus.time;
+            mus.clip = areaMusic[area][subzone];
+            mus.Play();
+            mus.time = playTime;
+        }
+        else if (area != currentArea)
+        {
+            mus.clip = areaMusic[area][subzone];
+            mus.Play();
+        }
+        currentArea = area;
+        currentSubzone = subzone;
     }
 
     public static void RunItemPopup(string item)

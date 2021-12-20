@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
 
         // This line here calls a separate script intended to handle much of the general heavy lifting of the program down the line. As of now, though, its only function is
         // to play the background music.
-        PlayState.GetNewRoom("Test Zone");
+        //PlayState.GetNewRoom("Test Zone");
 
         bulletPool = GameObject.Find("Player Bullet Pool");
 
