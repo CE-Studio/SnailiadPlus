@@ -83,6 +83,13 @@ public class NPC : MonoBehaviour
                     textToSend.Add("Are you leaving town, " + playerName + "?\nWell, be careful!  Make sure\nyou save your game often!!");
                     break;
 
+                case 19:
+                    if (!PlayState.CheckForItem("Boomerang"))
+                        textToSend.Add("Hey, " + playerName + "! If you had a\nboomerang, you could break\nall sorts of walls!");
+                    else
+                        textToSend.Add("Up, up, down, down, left,\nright...  Wait, never mind,\nthat\'s for some other game.");
+                    break;
+
                 case 50:
                     if (PlayState.hasRainbowWave)
                         textToSend.Add("Woah!!  Nice Rainbow Wave, " + playerName + "!!\nI\'d love one too, but I don\'t\nhave a jump button.");
