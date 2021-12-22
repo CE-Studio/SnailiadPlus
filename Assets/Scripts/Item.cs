@@ -91,6 +91,10 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayState.AddItem(itemID);
+            if (itemID >= 23)
+                PlayState.helixCount++;
+            else if (itemID >= 12)
+                PlayState.heartCount++;
             if (isSuperUnique)
                 sfx.PlayOneShot(majorJingle);
             else
@@ -104,10 +108,23 @@ public class Item : MonoBehaviour
                 default:
                     break;
             }
-            PlayState.FlashItemText(itemType);
+            FlashItemText();
             PlayState.FlashCollectionText();
             StartCoroutine(nameof(HoverOverPlayer));
+            PlayState.WriteSave("game");
         }
+    }
+
+    public void FlashItemText()
+    {
+        if (itemID >= 23)
+            PlayState.FlashItemText("Helix Fragment #" + PlayState.helixCount);
+        else if (itemID >= 12)
+            PlayState.FlashItemText("Heart Container #" + PlayState.heartCount);
+        else if (itemID == 11)
+            PlayState.FlashItemText("Boomerang");
+        else
+            PlayState.FlashItemText(itemType);
     }
 
     public void SetDeactivated()

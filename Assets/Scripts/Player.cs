@@ -442,7 +442,7 @@ public class Player : MonoBehaviour
                 break;
             case "collection":
                 SetTextAlpha("collection", 255);
-                SetTextDisplayed("collection", "Item collection ??% complete!  Saving not yet implemented.");
+                SetTextDisplayed("collection", "Item collection ??% complete!  Game saved.");
                 while (timer < 2)
                 {
                     if (colorCooldown <= 0)

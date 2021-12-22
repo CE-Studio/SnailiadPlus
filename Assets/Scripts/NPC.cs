@@ -80,7 +80,32 @@ public class NPC : MonoBehaviour
             switch (ID)
             {
                 case 7:
-                    textToSend.Add("Are you leaving town, " + playerName + "?\nWell, be careful!  Make sure\nyou save your game often!!");
+                    if (!PlayState.CheckForItem(0))
+                        textToSend.Add("Are you leaving town, " + playerName + "?\nWell, be careful!  Make sure\nyou save your game often!!");
+                    else if (!PlayState.CheckForItem(1))
+                        textToSend.Add("Hey, " + playerName + "!  Where\'d you get\nthe pea shooter?");
+                    else if (!PlayState.CheckForItem(2))
+                        textToSend.Add("Ooh, boomerangs!  If I had\nthose, I\'d try breaking the\nceiling over the save spot!");
+                    else if (!PlayState.CheckForItem(3))
+                        textToSend.Add("Rainbows are so pretty!\nDon\'t you think so, " + playerName + "?");
+                    else if (PlayState.CheckBossState(3))
+                        textToSend.Add("I\'m scared, " + playerName + "!\nIs Moon Snail going to take\nme away like the others?\n");
+                    else
+                        textToSend.Add("Snail Town is safe again,\nthanks to you, " + playerName + "!\n");
+                    break;
+
+                case 9:
+                    if (PlayState.itemPercentage < 100)
+                        textToSend.Add("The other snails live in houses,\nbut I like it here in the dirt.\nIsn\'t it nice in here?");
+                    else
+                        textToSend.Add("It\'s so cozy in here!  I just\nlove my little underground\nhome!");
+                    break;
+
+                case 18:
+                    if (PlayState.CheckForItem("Super Secret Boomerang"))
+                        textToSend.Add("Don\'t forget!\nPress \"X\" to shoot your\nweapon at stuff!!");
+                    else
+                        textToSend.Add("You found the super secret\nboomerang!  Way to go!\nPress \"X\" to shoot with it!");
                     break;
 
                 case 19:

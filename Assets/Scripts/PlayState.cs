@@ -64,6 +64,10 @@ public class PlayState
     public static string currentCharacter = "";
     public static float[] currentTime = new float[] { 0, 0, 0 };
 
+    public static int helixCount;
+    public static int heartCount;
+    public static int itemPercentage;
+
     public static int[] defaultMinimapState = new int[]
     {
         0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -119,8 +123,8 @@ public class PlayState
     public const byte OFFSET_HEARTS = 12;
     public const byte OFFSET_FRAGMENTS = 23;
 
-    public bool hasSeenIris;
-    public bool talkedToCaveSnail;
+    public static bool hasSeenIris;
+    public static bool talkedToCaveSnail;
 
     [Serializable]
     public struct GameSaveData
@@ -263,6 +267,11 @@ public class PlayState
             if (thisExplosionID >= explosionPool.transform.childCount)
                 thisExplosionID = 0;
         }
+    }
+
+    public static bool CheckBossState(int bossID)
+    {
+        return bossStates[bossID] == 1;
     }
 
     public static bool CheckForItem(int itemID)
@@ -449,7 +458,7 @@ public class PlayState
         return name;
     }
 
-    public void WriteSave(string dataType)
+    public static void WriteSave(string dataType)
     {
         if (dataType == "game")
         {
