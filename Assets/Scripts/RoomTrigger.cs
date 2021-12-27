@@ -125,11 +125,11 @@ public class RoomTrigger : MonoBehaviour
 
             CheckSpecialLayer();
 
-            if (PlayState.player.GetComponent<Player>().currentSurface == 1 && PlayState.player.GetComponent<Player>().facingUp)
+            if ((PlayState.player.GetComponent<Player>().gravityDir == 1 || PlayState.player.GetComponent<Player>().gravityDir == 2) && !PlayState.player.GetComponent<Player>().facingDown)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y + 0.125f);
             }
-            else if (PlayState.player.GetComponent<Player>().currentSurface == 1)
+            else if (PlayState.player.GetComponent<Player>().gravityDir == 1 || PlayState.player.GetComponent<Player>().gravityDir == 2)
             {
                 PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y - 0.125f);
             }

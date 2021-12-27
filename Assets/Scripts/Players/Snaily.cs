@@ -124,8 +124,10 @@ public class Snaily : MonoBehaviour
         }
         // We reset the flag marking if Snaily is airborne and shoving their face into a wall
         againstWallFlag = false;
-        // Finally, we update the parent Player script with our current gravity
+        // Finally, we update the parent Player script with our current gravity and directions
         player.gravityDir = gravityDir;
+        player.facingLeft = facingLeft;
+        player.facingDown = facingDown;
 
         Color lineColor = Color.white;
         switch (Random.Range(1, 7))

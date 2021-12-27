@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private bool inShell = false;
     public int currentSurface = 0;
     public bool facingLeft = false;
-    public bool facingUp = false;
+    public bool facingDown = false;
     //private bool _relativeLeft = false;
     //private bool _relativeRight = false;
     //private bool _relativeUp = false;
@@ -442,7 +442,7 @@ public class Player : MonoBehaviour
                 break;
             case "collection":
                 SetTextAlpha("collection", 255);
-                SetTextDisplayed("collection", "Item collection ??% complete!  Game saved.");
+                SetTextDisplayed("collection", "Item collection " + PlayState.GetItemPercentage() + "% complete!  Game saved.");
                 while (timer < 2)
                 {
                     if (colorCooldown <= 0)

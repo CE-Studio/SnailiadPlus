@@ -458,6 +458,17 @@ public class PlayState
         return name;
     }
 
+    public static int GetItemPercentage()
+    {
+        int itemsFound = 0;
+        foreach (int itemStatus in itemCollection)
+        {
+            if (itemStatus == 1)
+                itemsFound++;
+        }
+        return Mathf.FloorToInt(((float)itemsFound / (float)itemCollection.Length) * 100);
+    }
+
     public static void WriteSave(string dataType)
     {
         if (dataType == "game")
