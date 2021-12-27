@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
 
         originPos = transform.localPosition;
 
-        if (itemID >= 23)
+        if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
             anim.Play("Helix Fragment", 0, 0);
             box.size = new Vector2(0.95f, 0.95f);
@@ -39,6 +39,7 @@ public class Item : MonoBehaviour
             switch (itemID)
             {
                 case 2:
+                case 12:
                     anim.Play("Rainbow Wave", 0, 0);
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
@@ -59,7 +60,7 @@ public class Item : MonoBehaviour
 
     public void SetAnim()
     {
-        if (itemID >= 23)
+        if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
             anim.Play("Helix Fragment", 0, 0);
             box.size = new Vector2(0.95f, 0.95f);
@@ -69,6 +70,7 @@ public class Item : MonoBehaviour
             switch (itemID)
             {
                 case 2:
+                case 12:
                     anim.Play("Rainbow Wave", 0, 0);
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
@@ -91,9 +93,9 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayState.AddItem(itemID);
-            if (itemID >= 23)
+            if (itemID >= PlayState.OFFSET_FRAGMENTS)
                 PlayState.helixCount++;
-            else if (itemID >= 12)
+            else if (itemID >= PlayState.OFFSET_HEARTS)
                 PlayState.heartCount++;
             if (isSuperUnique)
                 sfx.PlayOneShot(majorJingle);
@@ -102,6 +104,7 @@ public class Item : MonoBehaviour
             switch (itemID)
             {
                 case 2:
+                case 12:
                     PlayState.isArmed = true;
                     collision.GetComponent<Player>().selectedWeapon = 3;
                     break;
@@ -117,12 +120,14 @@ public class Item : MonoBehaviour
 
     public void FlashItemText()
     {
-        if (itemID >= 23)
+        if (itemID >= PlayState.OFFSET_FRAGMENTS)
             PlayState.FlashItemText("Helix Fragment #" + PlayState.helixCount);
-        else if (itemID >= 12)
+        else if (itemID >= PlayState.OFFSET_HEARTS)
             PlayState.FlashItemText("Heart Container #" + PlayState.heartCount);
-        else if (itemID == 11)
+        else if (itemID == PlayState.TranslateItemNameToID("Super Secret Boomerang"))
             PlayState.FlashItemText("Boomerang");
+        else if (itemID == PlayState.TranslateItemNameToID("Debug Rainbow Wave"))
+            PlayState.FlashItemText("Rainbow Wave");
         else
             PlayState.FlashItemText(itemType);
     }

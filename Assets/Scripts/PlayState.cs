@@ -108,6 +108,7 @@ public class PlayState
         0,  // Full-Metal Snail
         0,  // Gravity Shock
         0,  // Super Secret Boomerang
+        0,  // Debug Rainbow Wave
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // Heart Containers
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // Helix Fragments
     };
@@ -120,8 +121,8 @@ public class PlayState
         1   // Moon Snail / Sun Snail
     };
 
-    public const byte OFFSET_HEARTS = 12;
-    public const byte OFFSET_FRAGMENTS = 23;
+    public const byte OFFSET_HEARTS = 13;
+    public const byte OFFSET_FRAGMENTS = 24;
 
     public static bool hasSeenIris;
     public static bool talkedToCaveSnail;
@@ -311,13 +312,11 @@ public class PlayState
                         if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS)
                         {
                             entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + currentHelixCount;
-                            //entity.GetComponent<Item>().itemType = "Helix Fragment " + OFFSET_FRAGMENTS;
                             currentHelixCount++;
                         }
                         else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS)
                         {
                             entity.GetComponent<Item>().itemID = OFFSET_HEARTS + currentHeartCount;
-                            //entity.GetComponent<Item>().itemType = "Heart Container " + OFFSET_HEARTS;
                             currentHeartCount++;
                         }
                     }
@@ -329,61 +328,59 @@ public class PlayState
     public static byte TranslateItemNameToID(string itemName)
     {
         byte id = 0;
-        if (itemName.Contains("Heart Container"))
+        switch (itemName)
         {
-            id = byte.Parse(itemName.Substring(15, itemName.Length));
-        }
-        else if (itemName.Contains("Helix Fragment"))
-        {
-            id = byte.Parse(itemName.Substring(14, itemName.Length));
-        }
-        else
-        {
-            switch (itemName)
-            {
-                case "Peashooter":
-                    id = 0;
-                    break;
-                case "Boomerang":
-                    id = 1;
-                    break;
-                case "Rainbow Wave":
-                    id = 2;
-                    break;
-                case "Devastator":
-                    id = 3;
-                    break;
-                case "High Jump":
-                case "Wall Grab":
-                    id = 4;
-                    break;
-                case "Shell Shield":
-                case "Shelmet":
-                    id = 5;
-                    break;
-                case "Rapid Fire":
-                case "Backfire":
-                    id = 6;
-                    break;
-                case "Ice Snail":
-                    id = 7;
-                    break;
-                case "Gravity Snail":
-                case "Magnetic Foot":
-                case "Corkscrew Jump":
-                case "Angel Jump":
-                    id = 8;
-                    break;
-                case "Full-Metal Snail":
-                    id = 9;
-                    break;
-                case "Gravity Shock":
-                    id = 10;
-                    break;
-                case "Super Secret Boomerang":
-                    id = 11;
-                    break;
-            }
+            case "Peashooter":
+                id = 0;
+                break;
+            case "Boomerang":
+                id = 1;
+                break;
+            case "Rainbow Wave":
+                id = 2;
+                break;
+            case "Devastator":
+                id = 3;
+                break;
+            case "High Jump":
+            case "Wall Grab":
+                id = 4;
+                break;
+            case "Shell Shield":
+            case "Shelmet":
+                id = 5;
+                break;
+            case "Rapid Fire":
+            case "Backfire":
+                id = 6;
+                break;
+            case "Ice Snail":
+                id = 7;
+                break;
+            case "Gravity Snail":
+            case "Magnetic Foot":
+            case "Corkscrew Jump":
+            case "Angel Jump":
+                id = 8;
+                break;
+            case "Full-Metal Snail":
+                id = 9;
+                break;
+            case "Gravity Shock":
+                id = 10;
+                break;
+            case "Super Secret Boomerang":
+                id = 11;
+                break;
+            case "Debug Rainbow Wave":
+                id = 12;
+                break;
+            case "Heart Container":
+                id = byte.Parse(itemName.Substring(15, itemName.Length));
+                break;
+            case "Helix Fragment":
+                id = byte.Parse(itemName.Substring(14, itemName.Length));
+                break;
         }
         return id;
     }
@@ -391,11 +388,9 @@ public class PlayState
     public static string TranslateIDToItemName(int itemID)
     {
         string name = "";
-        if (itemID >= 23)
-            //name = "Helix Fragment " + (itemID - 23);
+        if (itemID >= OFFSET_FRAGMENTS)
             name = "Helix Fragment";
-        else if (itemID >= 12)
-            //name = "Heart Container " + (itemID - 12);
+        else if (itemID >= OFFSET_HEARTS)
             name = "Heart Container";
         else
         {
@@ -452,6 +447,9 @@ public class PlayState
                     break;
                 case 11:
                     name = "Super Secret Boomerang";
+                    break;
+                case 12:
+                    name = "Debug Rainbow Wave";
                     break;
             }
         }
