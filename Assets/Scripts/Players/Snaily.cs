@@ -33,6 +33,7 @@ public class Snaily : MonoBehaviour
     private bool holdingJump = false;
     private bool holdingShell = false;
     private bool axisFlag = false;
+    private bool againstWallFlag = false;
     private float fireCooldown = 0;
     private int bulletID = 0;
 
@@ -121,6 +122,8 @@ public class Snaily : MonoBehaviour
             }
             return;
         }
+        // We reset the flag marking if Snaily is airborne and shoving their face into a wall
+        againstWallFlag = false;
         // Finally, we update the parent Player script with our current gravity
         player.gravityDir = gravityDir;
 
@@ -172,6 +175,7 @@ public class Snaily : MonoBehaviour
                         float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                         if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                         {
+                            againstWallFlag = true;
                             velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
@@ -233,7 +237,41 @@ public class Snaily : MonoBehaviour
                                 pokedCeiling = true;
                             }
                         }
-                        transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                        if (!againstWallFlag)
+                        {
+                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                        }
+                        else
+                        {
+                            // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                            for (int i = 0; i < 8; i++)
+                            {
+                                transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
+                                RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                                    new Vector2(transform.position.x, transform.position.y + 0.375f),
+                                    facingLeft ? Vector2.left : Vector2.right,
+                                    Mathf.Infinity,
+                                    playerCollide,
+                                    Mathf.Infinity,
+                                    Mathf.Infinity
+                                    );
+                                RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                                    new Vector2(transform.position.x, transform.position.y - 0.375f),
+                                    facingLeft ? Vector2.left : Vector2.right,
+                                    Mathf.Infinity,
+                                    playerCollide,
+                                    Mathf.Infinity,
+                                    Mathf.Infinity
+                                    );
+                                if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                                {
+                                    transform.position = new Vector2(
+                                        transform.position.x + ((facingLeft ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime),
+                                        Mathf.Floor(transform.position.y) + 0.5f);
+                                    i = 8;
+                                }
+                            }
+                        }
                         UpdateBoxcasts();
                         if (pokedCeiling)
                         {
@@ -337,6 +375,7 @@ public class Snaily : MonoBehaviour
                         float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                         if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                         {
+                            againstWallFlag = true;
                             velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
@@ -407,7 +446,41 @@ public class Snaily : MonoBehaviour
                                     pokedCeiling = true;
                                 }
                             }
-                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            if (!againstWallFlag)
+                            {
+                                transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            }
+                            else
+                            {
+                                // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
+                                    RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                                        new Vector2(transform.position.x + 0.375f, transform.position.y),
+                                        facingDown ? Vector2.down : Vector2.up,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                                        new Vector2(transform.position.x - 0.375f, transform.position.y),
+                                        facingDown ? Vector2.down : Vector2.up,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                                    {
+                                        transform.position = new Vector2(
+                                            Mathf.Floor(transform.position.x) + 0.5f,
+                                            transform.position.y + ((facingDown ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime));
+                                        i = 8;
+                                    }
+                                }
+                            }
                             UpdateBoxcasts();
                             if (pokedCeiling)
                             {
@@ -530,6 +603,7 @@ public class Snaily : MonoBehaviour
                         float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                         if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                         {
+                            againstWallFlag = true;
                             velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
@@ -600,7 +674,41 @@ public class Snaily : MonoBehaviour
                                     grounded = true;
                                 }
                             }
-                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            if (!againstWallFlag)
+                            {
+                                transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            }
+                            else
+                            {
+                                // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
+                                    RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                                        new Vector2(transform.position.x + 0.375f, transform.position.y),
+                                        facingDown ? Vector2.down : Vector2.up,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                                        new Vector2(transform.position.x - 0.375f, transform.position.y),
+                                        facingDown ? Vector2.down : Vector2.up,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                                    {
+                                        transform.position = new Vector2(
+                                            Mathf.Floor(transform.position.x) + 0.5f,
+                                            transform.position.y + ((facingDown ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime));
+                                        i = 8;
+                                    }
+                                }
+                            }
                             UpdateBoxcasts();
                             if (pokedCeiling)
                             {
@@ -723,6 +831,7 @@ public class Snaily : MonoBehaviour
                         float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                         if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                         {
+                            againstWallFlag = true;
                             velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
                             // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                             // we check to see if climbing is possible in either direction and switch the character's gravity state
@@ -791,7 +900,41 @@ public class Snaily : MonoBehaviour
                                     grounded = true;
                                 }
                             }
-                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            if (!againstWallFlag)
+                            {
+                                transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            }
+                            else
+                            {
+                                // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
+                                    RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                                        new Vector2(transform.position.x, transform.position.y + 0.375f),
+                                        facingLeft ? Vector2.left : Vector2.right,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                                        new Vector2(transform.position.x, transform.position.y - 0.375f),
+                                        facingLeft ? Vector2.left : Vector2.right,
+                                        Mathf.Infinity,
+                                        playerCollide,
+                                        Mathf.Infinity,
+                                        Mathf.Infinity
+                                        );
+                                    if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                                    {
+                                        transform.position = new Vector2(
+                                            transform.position.x + ((facingLeft ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime),
+                                            Mathf.Floor(transform.position.y) + 0.5f);
+                                        i = 8;
+                                    }
+                                }
+                            }
                             UpdateBoxcasts();
                             if (pokedCeiling)
                             {
