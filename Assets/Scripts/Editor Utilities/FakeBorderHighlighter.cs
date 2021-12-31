@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(FakeBorderComponent))]
+[CustomEditor(typeof(FakeRoomBorder))]
 public class FakeBorderHighlighter : Editor
 {
-    FakeBorderComponent border;
-    GameObject borderObject;
     FakeRoomBorder borderScript;
+    GameObject borderObject;
 
     void OnEnable()
     {
-        border = (FakeBorderComponent)target;
-        borderObject = border.gameObject;
-        borderScript = borderObject.GetComponent<FakeRoomBorder>();
+        borderScript = (FakeRoomBorder)target;
+        borderObject = borderScript.gameObject;
     }
 
     void OnSceneGUI()

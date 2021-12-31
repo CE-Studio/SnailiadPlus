@@ -52,6 +52,11 @@ public class PlayState
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
+    public static Vector2 camTempBuffers;
+    public static Vector2 camTempBuffersX;
+    public static Vector2 camTempBuffersY;
+    public static Vector2 posRelativeToTempBuffers;
+    public static Vector2 camTempBufferTruePos;
 
     public static Vector2 respawnCoords = new Vector2(-7, 0);
     public static Scene respawnScene = SceneManager.GetActiveScene();

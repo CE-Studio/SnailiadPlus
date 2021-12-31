@@ -54,6 +54,17 @@ public class RoomTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player") && active)
         {
+            PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
+            PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
+            PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
+            PlayState.parallaxFg2Mod = parallaxForeground2Modifier;
+            PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
+            PlayState.parallaxBgMod = parallaxBackgroundModifier;
+            PlayState.parallaxSkyMod = parallaxSkyModifier;
+            PlayState.PlayAreaSong(areaID, areaSubzone);
+
+            PlayState.camTempBuffersX = Vector2.zero;
+            PlayState.camTempBuffersY = Vector2.zero;
             foreach (Transform trigger in transform.parent)
             {
                 if (!trigger.GetComponent<Collider2D>().enabled && trigger.name != transform.name)
@@ -102,15 +113,40 @@ public class RoomTrigger : MonoBehaviour
                     child.GetComponent<Item>().SetAnim();
                     child.GetComponent<Item>().CheckIfCollected();
                 }
+                else if (child.name == "Fake Boundary")
+                {
+                    FakeRoomBorder border = child.GetComponent<FakeRoomBorder>();
+                    GameObject cam = GameObject.Find("View");
+                    if (!border.direction)
+                    {
+                        PlayState.camTempBufferTruePos.y = child.transform.position.y;
+                        if (border.workingDirections >= 2 && cam.transform.position.y > child.transform.position.y)
+                        {
+                            PlayState.camTempBuffersY.x = PlayState.camCenter.y + (PlayState.camBoundaryBuffers.y * 2) - PlayState.camTempBufferTruePos.y;
+                            PlayState.posRelativeToTempBuffers.y = 1;
+                        }
+                        if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.y < child.transform.position.y)
+                        {
+                            PlayState.camTempBuffersY.y = PlayState.camCenter.y - (PlayState.camBoundaryBuffers.y * 2) + PlayState.camTempBufferTruePos.y;
+                            PlayState.posRelativeToTempBuffers.y = -1;
+                        }
+                    }
+                    else
+                    {
+                        PlayState.camTempBufferTruePos.x = child.transform.position.x;
+                        if (border.workingDirections >= 2 && cam.transform.position.x > child.transform.position.x)
+                        {
+                            PlayState.camTempBuffersX.x = PlayState.camCenter.x + (PlayState.camBoundaryBuffers.x * 2) - PlayState.camTempBufferTruePos.x;
+                            PlayState.posRelativeToTempBuffers.x = 1;
+                        }
+                        if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.x < child.transform.position.x)
+                        {
+                            PlayState.camTempBuffersX.y = PlayState.camCenter.x - (PlayState.camBoundaryBuffers.x * 2) + PlayState.camTempBufferTruePos.x;
+                            PlayState.posRelativeToTempBuffers.x = -1;
+                        }
+                    }
+                }
             }
-            PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
-            PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
-            PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
-            PlayState.parallaxFg2Mod = parallaxForeground2Modifier;
-            PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
-            PlayState.parallaxBgMod = parallaxBackgroundModifier;
-            PlayState.parallaxSkyMod = parallaxSkyModifier;
-            PlayState.PlayAreaSong(areaID, areaSubzone);
 
             string newRoomName = "";
             foreach (char character in transform.name)
