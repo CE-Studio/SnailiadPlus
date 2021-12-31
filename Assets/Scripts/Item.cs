@@ -38,6 +38,11 @@ public class Item : MonoBehaviour
         {
             switch (itemID)
             {
+                case 1:
+                case 11:
+                    anim.Play("Boomerang", 0, 0);
+                    box.size = new Vector2(1.25f, 1.825f);
+                    break;
                 case 2:
                 case 12:
                     anim.Play("Rainbow Wave", 0, 0);
@@ -69,6 +74,11 @@ public class Item : MonoBehaviour
         {
             switch (itemID)
             {
+                case 1:
+                case 11:
+                    anim.Play("Boomerang", 0, 0);
+                    box.size = new Vector2(1.25f, 1.825f);
+                    break;
                 case 2:
                 case 12:
                     anim.Play("Rainbow Wave", 0, 0);
