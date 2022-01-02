@@ -43,6 +43,7 @@ public class PlayState
     public static GameObject bgLayer = GameObject.Find("Grid/Background");
     public static GameObject skyLayer = GameObject.Find("Grid/Sky");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
+    public static GameObject achievement = GameObject.Find("View/Achievement Panel");
     public static GameObject explosionPool = GameObject.Find("Explosion Pool");
 
     public static bool paralyzed = false;
@@ -512,5 +513,10 @@ public class PlayState
         {
             Debug.Log("Invalid save type!");
         }
+    }
+
+    public static void QueueAchievementPopup(string achID)
+    {
+        achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
     }
 }

@@ -113,6 +113,13 @@ public class Item : MonoBehaviour
                 sfx.PlayOneShot(minorJingle);
             switch (itemID)
             {
+                case 1:
+                case 11:
+                    PlayState.isArmed = true;
+                    collision.GetComponent<Player>().selectedWeapon = 2;
+                    if (itemID == 11)
+                        PlayState.QueueAchievementPopup("secrt");
+                    break;
                 case 2:
                 case 12:
                     PlayState.isArmed = true;
