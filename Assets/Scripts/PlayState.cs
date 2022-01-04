@@ -59,7 +59,7 @@ public class PlayState
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
 
-    public static Vector2 respawnCoords = new Vector2(-7, 0);
+    public static Vector2 respawnCoords = new Vector2(6, 8.5f);
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
     public static TextMesh fpsText = GameObject.Find("View/FPS Text").GetComponent<TextMesh>();
@@ -127,6 +127,11 @@ public class PlayState
         1   // Moon Snail / Sun Snail
     };
 
+    public static int[] achievementStates = new int[]
+    {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+
     public const byte OFFSET_HEARTS = 13;
     public const byte OFFSET_FRAGMENTS = 24;
 
@@ -145,6 +150,7 @@ public class PlayState
         public int weapon;
         public int[] bossStates;
         public int[] NPCVars;
+        public int[] achievements;
     }
 
     public static void GetNewRoom(string intendedArea)
@@ -501,6 +507,7 @@ public class PlayState
                 hasSeenIris ? 1 : 0,
                 talkedToCaveSnail ? 1 : 0
             };
+            data.achievements = achievementStates;
             string saveData = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("SaveGameData" + currentProfile, saveData);
             PlayerPrefs.Save();

@@ -583,12 +583,6 @@ public class Player : MonoBehaviour
                 PlayState.ScreenFlash("Death Transition");
             }
         }
-        //GameObject roomArray = GameObject.Find("Room Triggers");
-        //for (int i = 0; i < roomArray.transform.childCount; i++)
-        //{
-        //    if (!roomArray.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled)
-        //        roomArray.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = true;
-        //}
         yield return new WaitForEndOfFrame();
         transform.position = PlayState.respawnCoords;
         inDeathCutscene = false;
@@ -597,6 +591,7 @@ public class Player : MonoBehaviour
         PlayState.paralyzed = false;
         health = maxHealth;
         UpdateHearts();
+        yield return new WaitForEndOfFrame();
         PlayState.ScreenFlash("Room Transition");
     }
 
