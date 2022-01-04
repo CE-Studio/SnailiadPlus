@@ -5,8 +5,8 @@ using UnityEngine;
 public class Snaily : MonoBehaviour
 {
     public const float RUNSPEED_NORMAL = 8;
-    public const float JUMPPOWER_NORMAL = 24;
-    public const float GRAVITY = 1.25f;
+    public const float JUMPPOWER_NORMAL = 26;
+    public const float GRAVITY = 1.35f;
     public const float TERMINAL_VELOCITY = -0.66f;
     public const float HITBOX_X = 1.467508f;
     public const float HITBOX_Y = 0.96f;
