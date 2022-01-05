@@ -36,6 +36,7 @@ public class PlayState
     public static int currentSubzone = -1;
 
     public static GameObject player = GameObject.Find("Player");
+    public static Player playerScript = player.GetComponent<Player>();
     public static GameObject cam = GameObject.Find("View");
     public static GameObject screenCover = GameObject.Find("View/Cover");
     public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");

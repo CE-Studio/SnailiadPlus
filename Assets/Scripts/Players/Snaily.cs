@@ -52,6 +52,7 @@ public class Snaily : MonoBehaviour
 
     public AudioClip shell;
     public AudioClip jump;
+    public AudioClip fireBoomerang;
     public AudioClip fireRainbow;
 
     public LayerMask playerCollide;
@@ -70,7 +71,8 @@ public class Snaily : MonoBehaviour
 
         shell = (AudioClip)Resources.Load("Sounds/Sfx/Shell");
         jump = (AudioClip)Resources.Load("Sounds/Sfx/Jump");
-        fireRainbow = (AudioClip)Resources.Load("Sounds/Sfx/RWaveShot");
+        fireBoomerang = (AudioClip)Resources.Load("Sounds/Sfx/ShotBoomerang");
+        fireRainbow = (AudioClip)Resources.Load("Sounds/Sfx/ShotRainbow");
 
         // Weapon cooldowns; first three are without Rapid Fire, last three are with
         WEAPON_COOLDOWNS[0] = 0.085f;
@@ -1329,7 +1331,7 @@ public class Snaily : MonoBehaviour
                 else if (type == 3)
                     sfx.PlayOneShot(fireRainbow);
                 else if (type == 2)
-                    sfx.PlayOneShot(fireRainbow);
+                    sfx.PlayOneShot(fireBoomerang);
                 else
                     sfx.PlayOneShot(fireRainbow);
             }

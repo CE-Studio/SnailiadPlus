@@ -90596,7 +90596,7 @@ MonoBehaviour:
   sfx: {fileID: 0}
   hurt: {fileID: 8300000, guid: aea2d15c509e82a4cb9e1dde506466b7, type: 3}
   die: {fileID: 8300000, guid: 2d51383e8ac72ff4582a885fe27cf668, type: 3}
-  bulletPool: {fileID: 0}
+  bulletPool: {fileID: 1284617322}
   blank: {fileID: 21300000, guid: ca3dfb96f560ede45b879593edf87e61, type: 3}
   iconPeaDeselected: {fileID: -5824367619583394309, guid: 91403fcee8c47544da5f34b9fbc20393,
     type: 3}
@@ -90610,29 +90610,32 @@ MonoBehaviour:
     type: 3}
   iconWaveSelected: {fileID: -4213184575724999638, guid: 91403fcee8c47544da5f34b9fbc20393,
     type: 3}
-  hearts: {fileID: 0}
+  hearts: {fileID: 164479535}
   heart0: {fileID: 4606908045521496030, guid: 8cd17f3259a18094e8d845ff777bd32e, type: 3}
   heart1: {fileID: -4195582761621981391, guid: 8cd17f3259a18094e8d845ff777bd32e, type: 3}
   heart2: {fileID: 516283494600122218, guid: 8cd17f3259a18094e8d845ff777bd32e, type: 3}
   heart3: {fileID: 7630354458230478893, guid: 8cd17f3259a18094e8d845ff777bd32e, type: 3}
   heart4: {fileID: 615023859997206797, guid: 8cd17f3259a18094e8d845ff777bd32e, type: 3}
-  itemTextGroup: {fileID: 0}
-  itemPercentageGroup: {fileID: 0}
-  gameSaveGroup: {fileID: 0}
+  itemTextGroup: {fileID: 55375984}
+  itemPercentageGroup: {fileID: 2071864462}
+  gameSaveGroup: {fileID: 1029056473}
   playerCollide:
     serializedVersion: 2
     m_Bits: 256
-  debugUp: {fileID: 0}
-  debugDown: {fileID: 0}
-  debugLeft: {fileID: 0}
-  debugRight: {fileID: 0}
-  debugJump: {fileID: 0}
-  debugShoot: {fileID: 0}
-  debugStrafe: {fileID: 0}
+  debugUp: {fileID: 346034117}
+  debugDown: {fileID: 661292603}
+  debugLeft: {fileID: 807697487}
+  debugRight: {fileID: 2000359817}
+  debugJump: {fileID: 1829814852}
+  debugShoot: {fileID: 1331208869}
+  debugStrafe: {fileID: 376365327}
   keyIdle: {fileID: 354841553234022460, guid: 0326f4d4b7c0b2e41b956071c8f07aa2, type: 3}
   keyPressed: {fileID: 5456780478236383563, guid: 0326f4d4b7c0b2e41b956071c8f07aa2,
     type: 3}
   keyHeld: {fileID: 4321494891793345434, guid: 0326f4d4b7c0b2e41b956071c8f07aa2, type: 3}
+  weaponIcon1: {fileID: 1700067595}
+  weaponIcon2: {fileID: 1165666449}
+  weaponIcon3: {fileID: 1082159090}
 --- !u!95 &1831220121
 Animator:
   serializedVersion: 3
@@ -90797,6 +90800,7 @@ MonoBehaviour:
   sfx: {fileID: 0}
   shell: {fileID: 0}
   jump: {fileID: 0}
+  fireBoomerang: {fileID: 0}
   fireRainbow: {fileID: 0}
   playerCollide:
     serializedVersion: 2

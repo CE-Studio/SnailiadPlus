@@ -96,6 +96,11 @@ public class Player : MonoBehaviour
     public Sprite keyPressed;
     public Sprite keyHeld;
 
+    public GameObject weaponIcon1;
+    public GameObject weaponIcon2;
+    public GameObject weaponIcon3;
+    public SpriteRenderer[] weaponIcons;
+
     // FPS stuff
     int frameCount = 0;
     float dt = 0f;
@@ -111,25 +116,14 @@ public class Player : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
 
-        // This line here calls a separate script intended to handle much of the general heavy lifting of the program down the line. As of now, though, its only function is
-        // to play the background music.
-        //PlayState.GetNewRoom("Test Zone");
-
-        bulletPool = GameObject.Find("Player Bullet Pool");
-
-        hearts = GameObject.Find("View/Hearts");
-
-        debugUp = GameObject.Find("View/Debug Keypress Indicators/Up");
-        debugDown = GameObject.Find("View/Debug Keypress Indicators/Down");
-        debugLeft = GameObject.Find("View/Debug Keypress Indicators/Left");
-        debugRight = GameObject.Find("View/Debug Keypress Indicators/Right");
-        debugJump = GameObject.Find("View/Debug Keypress Indicators/Jump");
-        debugShoot = GameObject.Find("View/Debug Keypress Indicators/Shoot");
-        debugStrafe = GameObject.Find("View/Debug Keypress Indicators/Strafe");
-
-        itemTextGroup = GameObject.Find("View/Item Get Text");
-        itemPercentageGroup = GameObject.Find("View/Item Percentage Text");
-        gameSaveGroup = GameObject.Find("View/Game Saved Text");
+        weaponIcons = new SpriteRenderer[]
+        {
+            weaponIcon1.GetComponent<SpriteRenderer>(),
+            weaponIcon2.GetComponent<SpriteRenderer>(),
+            weaponIcon3.GetComponent<SpriteRenderer>()
+        };
+        foreach (SpriteRenderer sprite in weaponIcons)
+            sprite.enabled = false;
 
         RenderNewHearts();
         UpdateHearts();
@@ -147,6 +141,29 @@ public class Player : MonoBehaviour
             // These are only here to make sure they're called once, before anything else that needs it
             PlayState.armorPingPlayedThisFrame = false;
             PlayState.explodePlayedThisFrame = false;
+
+            // Weapon swapping
+            if (Input.GetAxisRaw("Weapon 1") == 1 && PlayState.CheckForItem(0))
+            {
+                selectedWeapon = 1;
+                weaponIcons[0].sprite = iconPeaSelected;
+                weaponIcons[1].sprite = iconBoomDeselected;
+                weaponIcons[2].sprite = iconWaveDeselected;
+            }
+            else if (Input.GetAxisRaw("Weapon 2") == 1 && PlayState.CheckForItem(1))
+            {
+                selectedWeapon = 2;
+                weaponIcons[0].sprite = iconPeaDeselected;
+                weaponIcons[1].sprite = iconBoomSelected;
+                weaponIcons[2].sprite = iconWaveDeselected;
+            }
+            else if (Input.GetAxisRaw("Weapon 3") == 1 && PlayState.CheckForItem(2))
+            {
+                selectedWeapon = 2;
+                weaponIcons[0].sprite = iconPeaDeselected;
+                weaponIcons[1].sprite = iconBoomDeselected;
+                weaponIcons[2].sprite = iconWaveSelected;
+            }
         }
     }
 

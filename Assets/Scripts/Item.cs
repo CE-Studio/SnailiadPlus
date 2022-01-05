@@ -117,6 +117,7 @@ public class Item : MonoBehaviour
                 case 11:
                     PlayState.isArmed = true;
                     collision.GetComponent<Player>().selectedWeapon = 2;
+                    PlayState.playerScript.weaponIcons[1].enabled = true;
                     if (itemID == 11)
                         PlayState.QueueAchievementPopup("secrt");
                     break;
@@ -124,6 +125,7 @@ public class Item : MonoBehaviour
                 case 12:
                     PlayState.isArmed = true;
                     collision.GetComponent<Player>().selectedWeapon = 3;
+                    PlayState.playerScript.weaponIcons[2].enabled = true;
                     break;
                 default:
                     break;
