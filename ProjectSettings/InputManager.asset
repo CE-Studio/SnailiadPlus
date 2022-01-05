@@ -122,7 +122,7 @@ InputManager:
     descriptiveName: Weapon 1
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 1
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -138,7 +138,7 @@ InputManager:
     descriptiveName: Weapon 2
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 2
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -154,7 +154,7 @@ InputManager:
     descriptiveName: Weapon 3
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 3
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3

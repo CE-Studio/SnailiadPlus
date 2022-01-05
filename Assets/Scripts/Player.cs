@@ -124,6 +124,9 @@ public class Player : MonoBehaviour
         };
         foreach (SpriteRenderer sprite in weaponIcons)
             sprite.enabled = false;
+        weaponIcons[0].sprite = iconPeaDeselected;
+        weaponIcons[1].sprite = iconBoomDeselected;
+        weaponIcons[2].sprite = iconWaveDeselected;
 
         RenderNewHearts();
         UpdateHearts();
@@ -143,27 +146,12 @@ public class Player : MonoBehaviour
             PlayState.explodePlayedThisFrame = false;
 
             // Weapon swapping
-            if (Input.GetAxisRaw("Weapon 1") == 1 && PlayState.CheckForItem(0))
-            {
-                selectedWeapon = 1;
-                weaponIcons[0].sprite = iconPeaSelected;
-                weaponIcons[1].sprite = iconBoomDeselected;
-                weaponIcons[2].sprite = iconWaveDeselected;
-            }
-            else if (Input.GetAxisRaw("Weapon 2") == 1 && PlayState.CheckForItem(1))
-            {
-                selectedWeapon = 2;
-                weaponIcons[0].sprite = iconPeaDeselected;
-                weaponIcons[1].sprite = iconBoomSelected;
-                weaponIcons[2].sprite = iconWaveDeselected;
-            }
-            else if (Input.GetAxisRaw("Weapon 3") == 1 && PlayState.CheckForItem(2))
-            {
-                selectedWeapon = 2;
-                weaponIcons[0].sprite = iconPeaDeselected;
-                weaponIcons[1].sprite = iconBoomDeselected;
-                weaponIcons[2].sprite = iconWaveSelected;
-            }
+            if (Input.GetKeyDown(KeyCode.Alpha1) && PlayState.CheckForItem(0))
+                ChangeActiveWeapon(0);
+            else if (Input.GetKeyDown(KeyCode.Alpha2) && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
+                ChangeActiveWeapon(1);
+            else if (Input.GetKeyDown(KeyCode.Alpha3) && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
+                ChangeActiveWeapon(2);
         }
     }
 
@@ -211,6 +199,22 @@ public class Player : MonoBehaviour
             PlayState.currentTime[1] -= 60;
             PlayState.currentTime[1] += 1;
         }
+    }
+
+    public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
+    {
+        weaponIcons[0].sprite = iconPeaDeselected;
+        weaponIcons[1].sprite = iconBoomDeselected;
+        weaponIcons[2].sprite = iconWaveDeselected;
+        selectedWeapon = weaponID + 1;
+        if (activateThisWeapon)
+            weaponIcons[weaponID].enabled = true;
+        if (weaponID == 2)
+            weaponIcons[2].sprite = iconWaveSelected;
+        else if (weaponID == 1)
+            weaponIcons[1].sprite = iconBoomSelected;
+        else
+            weaponIcons[0].sprite = iconPeaSelected;
     }
 
     // This coroutine here is meant to display the keypress indicators intended for debugging purposes

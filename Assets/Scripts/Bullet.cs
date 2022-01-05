@@ -16,6 +16,9 @@ public class Bullet : MonoBehaviour
     public BoxCollider2D box;
 
     public GameObject player;
+
+    private float diagOffsetX = 0.75f;
+    private float diagOffsetY = 0.65f;
     
     void Start()
     {
@@ -38,6 +41,9 @@ public class Bullet : MonoBehaviour
                 lifeTimer += Time.fixedDeltaTime;
                 switch (bulletType)
                 {
+                    case 2:
+                        velocity = velocity - 0.0125f;
+                        break;
                     case 3:
                         velocity = Mathf.Clamp(velocity + 0.04f, 0, 0.75f);
                         break;
@@ -122,6 +128,10 @@ public class Bullet : MonoBehaviour
         bulletType = type;
         switch (type)
         {
+            case 2:
+                box.size = new Vector2(1.9f, 1.9f);
+                velocity = 0.415f;
+                break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
                 velocity = 0;
@@ -136,6 +146,11 @@ public class Bullet : MonoBehaviour
         string animToPlay = "";
         switch (bulletType)
         {
+            case 2:
+                animToPlay += "Boomerang";
+                sprite.flipX = false;
+                sprite.flipY = false;
+                break;
             case 3:
                 animToPlay += "Rainbow Wave ";
                 break;
@@ -143,52 +158,58 @@ public class Bullet : MonoBehaviour
                 animToPlay += "Rainbow Wave ";
                 break;
         }
-        switch (direction)
+        if (bulletType == 3)
         {
-            case 0:
-                animToPlay += "diagonal";
-                sprite.flipX = true;
-                sprite.flipY = false;
-                break;
-            case 1:
-                animToPlay += "vertical";
-                sprite.flipX = false;
-                sprite.flipY = false;
-                break;
-            case 2:
-                animToPlay += "diagonal";
-                sprite.flipX = false;
-                sprite.flipY = false;
-                break;
-            case 3:
-                animToPlay += "horizontal";
-                sprite.flipX = true;
-                sprite.flipY = false;
-                break;
-            case 4:
-                animToPlay += "horizontal";
-                sprite.flipX = false;
-                sprite.flipY = false;
-                break;
-            case 5:
-                animToPlay += "diagonal";
-                sprite.flipX = true;
-                sprite.flipY = true;
-                break;
-            case 6:
-                animToPlay += "vertical";
-                sprite.flipX = false;
-                sprite.flipY = true;
-                break;
-            case 7:
-                animToPlay += "diagonal";
-                sprite.flipX = false;
-                sprite.flipY = true;
-                break;
+            switch (direction)
+            {
+                case 0:
+                    animToPlay += "diagonal";
+                    sprite.flipX = true;
+                    sprite.flipY = false;
+                    break;
+                case 1:
+                    animToPlay += "vertical";
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                    break;
+                case 2:
+                    animToPlay += "diagonal";
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                    break;
+                case 3:
+                    animToPlay += "horizontal";
+                    sprite.flipX = true;
+                    sprite.flipY = false;
+                    break;
+                case 4:
+                    animToPlay += "horizontal";
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                    break;
+                case 5:
+                    animToPlay += "diagonal";
+                    sprite.flipX = true;
+                    sprite.flipY = true;
+                    break;
+                case 6:
+                    animToPlay += "vertical";
+                    sprite.flipX = false;
+                    sprite.flipY = true;
+                    break;
+                case 7:
+                    animToPlay += "diagonal";
+                    sprite.flipX = false;
+                    sprite.flipY = true;
+                    break;
+            }
         }
         float startTime = 0;
         switch (bulletType)
         {
+            case 2:
+                startTime = Random.Range(1, 9) * 0.125f;
+                break;
             case 3:
                 startTime = Random.Range(1, 7) * 0.16f;
                 break;
@@ -215,7 +236,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNW()
     {
-        transform.position = new Vector2(transform.position.x + (-0.75f * velocity), transform.position.y + (0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (-diagOffsetX * velocity), transform.position.y + (diagOffsetY * velocity));
     }
 
     private void MoveN()
@@ -225,7 +246,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNE()
     {
-        transform.position = new Vector2(transform.position.x + (0.75f * velocity), transform.position.y + (0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (diagOffsetX * velocity), transform.position.y + (diagOffsetY * velocity));
     }
 
     private void MoveW()
@@ -240,7 +261,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveSW()
     {
-        transform.position = new Vector2(transform.position.x + (-0.75f * velocity), transform.position.y + (-0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (-diagOffsetX * velocity), transform.position.y + (-diagOffsetY * velocity));
     }
 
     private void MoveS()
@@ -250,6 +271,6 @@ public class Bullet : MonoBehaviour
 
     private void MoveSE()
     {
-        transform.position = new Vector2(transform.position.x + (0.75f * velocity), transform.position.y + (-0.7f * velocity));
+        transform.position = new Vector2(transform.position.x + (diagOffsetX * velocity), transform.position.y + (-diagOffsetY * velocity));
     }
 }
