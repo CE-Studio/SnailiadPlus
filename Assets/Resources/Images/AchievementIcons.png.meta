@@ -122,6 +122,12 @@ TextureImporter:
   - first:
       213: 2647163670388637084
     second: AchievementIcons_21
+  - first:
+      213: -6480901536647495751
+    second: AchievementIcons_22
+  - first:
+      213: -265031505987639007
+    second: AchievementIcons_23
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -704,6 +710,48 @@ TextureImporter:
       bones: []
       spriteID: c9d75db355d9cb420800000000000000
       internalID: 2647163670388637084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchievementIcons_22
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bfb7d3c3663f06a0800000000000000
+      internalID: -6480901536647495751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchievementIcons_23
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 129e15fdf3b625cf0800000000000000
+      internalID: -265031505987639007
       vertices: []
       indices: 
       edges: []

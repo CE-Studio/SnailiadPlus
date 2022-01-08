@@ -38,6 +38,8 @@ public class AchievementPanel : MonoBehaviour
     // 19 - secrt (Super Secret)
     // 20 - count (Counter-Snail)
     // 21 - maze  (Birds in the Maze Room)
+    // 22 - where (Where are we, Snaily?)
+    // 23 - omega (Omega Snail)
     public bool runningPopup = false;
     
     public void Start()
@@ -198,6 +200,18 @@ public class AchievementPanel : MonoBehaviour
                 text.text = "Birds in the\nMaze Room";
                 shadow.text = "Birds in the\nMaze Room";
                 PlayState.achievementStates[20] = 1;
+                break;
+            case "where":
+                sprite.sprite = achIconArray[21];
+                text.text = "Where are\nwe, Snaily?";
+                shadow.text = "Where are\nwe, Snaily?";
+                PlayState.achievementStates[21] = 1;
+                break;
+            case "omega":
+                sprite.sprite = achIconArray[22];
+                text.text = "Omega Snail";
+                shadow.text = "Omega Snail";
+                PlayState.achievementStates[22] = 1;
                 break;
             default:
                 popupQueue.RemoveAt(0);

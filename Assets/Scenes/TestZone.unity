@@ -1383,6 +1383,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4727603495965231525, guid: a761117de8285a943bf79bbd483601f6,
         type: 3}
+      propertyPath: areaSubzone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727603495965231525, guid: a761117de8285a943bf79bbd483601f6,
+        type: 3}
       propertyPath: parallaxSkyModifier
       value: 0.15
       objectReference: {fileID: 0}
@@ -21584,6 +21589,8 @@ MonoBehaviour:
   - {fileID: -1522448939617037900, guid: c02c1a939c63d694b9abbab16e93de25, type: 3}
   - {fileID: -1868850736756724243, guid: c02c1a939c63d694b9abbab16e93de25, type: 3}
   - {fileID: 2647163670388637084, guid: c02c1a939c63d694b9abbab16e93de25, type: 3}
+  - {fileID: -6480901536647495751, guid: c02c1a939c63d694b9abbab16e93de25, type: 3}
+  - {fileID: -265031505987639007, guid: c02c1a939c63d694b9abbab16e93de25, type: 3}
   anim: {fileID: 0}
   sfx: {fileID: 0}
   jingle: {fileID: 0}
@@ -123515,6 +123522,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2013811519}
     m_Modifications:
+    - target: {fileID: 4727603495965231525, guid: a761117de8285a943bf79bbd483601f6,
+        type: 3}
+      propertyPath: areaSubzone
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4864329900485946832, guid: a761117de8285a943bf79bbd483601f6,
         type: 3}
       propertyPath: m_Name

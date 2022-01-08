@@ -29,7 +29,8 @@ public class PlayState
     {
         new AudioClip[]
         {
-            (AudioClip)Resources.Load("Sounds/Music/SnailTown")
+            (AudioClip)Resources.Load("Sounds/Music/SnailTown"),
+            (AudioClip)Resources.Load("Sounds/Music/TestZone")
         }
     };
     public static int currentArea = -1;
@@ -130,7 +131,7 @@ public class PlayState
 
     public static int[] achievementStates = new int[]
     {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
 
     public const byte OFFSET_HEARTS = 13;

@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     public bool isActive;
     private float lifeTimer;
     private float velocity;
-    public float damage;
+    public int damage;
 
     public SpriteRenderer sprite;
     public Animator anim;
@@ -129,12 +129,14 @@ public class Bullet : MonoBehaviour
         switch (type)
         {
             case 2:
-                box.size = new Vector2(1.9f, 1.9f);
+                box.size = new Vector2(0.9f, 0.9f);
                 velocity = 0.415f;
+                damage = 20;
                 break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
                 velocity = 0;
+                damage = 30;
                 break;
         }
         direction = dir;

@@ -22,9 +22,14 @@ public class NPC : MonoBehaviour
     public Animator anim;
     public GameObject speechBubble;
 
-    public GameObject player;
+    public Vector2 origin;
 
-    public virtual void Start()
+    private RaycastHit2D groundCheck;
+    public float velocity;
+    private const float GRAVITY = 1.35f;
+    private const float TERMINAL_VELOCITY = -0.66f;
+
+    public virtual void Awake()
     {
         playerName = "Snaily";
 
@@ -36,7 +41,6 @@ public class NPC : MonoBehaviour
         parts.Add(transform.GetChild(2).GetComponent<SpriteRenderer>());
         parts.Add(transform.GetChild(3).GetComponent<SpriteRenderer>());
         speechBubble = transform.Find("Speech bubble").gameObject;
-        player = GameObject.FindWithTag("Player");
 
         parts[0].color = colorTable.GetPixel(0, ID);
         parts[1].color = colorTable.GetPixel(1, ID);
@@ -55,11 +59,64 @@ public class NPC : MonoBehaviour
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
         speechBubble.GetComponent<SpriteRenderer>().enabled = false;
+
+        origin = transform.localPosition;
+
+        groundCheck = Physics2D.BoxCast(
+            transform.position,
+            new Vector2(1.467508f, 0.82375f),
+            0,
+            upsideDown ? Vector2.up : Vector2.down,
+            Mathf.Infinity,
+            LayerMask.GetMask("PlayerCollide"),
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
+    }
+
+    public virtual void FixedUpdate()
+    {
+        if (groundCheck.distance != 0 && groundCheck.distance > 0.01f)
+            {
+            if (upsideDown)
+                velocity = Mathf.Clamp(velocity + GRAVITY * Time.fixedDeltaTime, -Mathf.Infinity, -TERMINAL_VELOCITY);
+            else
+                velocity = Mathf.Clamp(velocity - GRAVITY * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity);
+            bool resetVelFlag = false;
+            if (Mathf.Abs(velocity) > Mathf.Abs(groundCheck.distance))
+            {
+                RaycastHit2D groundCheckRay = Physics2D.Raycast(
+                    new Vector2(groundCheck.point.x, transform.position.y + (upsideDown ? 0.5f : -0.5f)),
+                    upsideDown ? Vector2.up : Vector2.down,
+                    Mathf.Infinity,
+                    LayerMask.GetMask("PlayerCollide"),
+                    Mathf.Infinity,
+                    Mathf.Infinity
+                    );
+                velocity = groundCheckRay.distance * (upsideDown ? 1 : -1);
+                resetVelFlag = true;
+            }
+            transform.position = new Vector2(transform.position.x, transform.position.y + velocity);
+            if (resetVelFlag)
+                velocity = 0;
+        }
+        else
+            velocity = 0;
+        groundCheck = Physics2D.BoxCast(
+            transform.position,
+            new Vector2(1, 0.98f),
+            0,
+            upsideDown ? Vector2.up : Vector2.down,
+            Mathf.Infinity,
+            LayerMask.GetMask("PlayerCollide"),
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
     }
 
     public virtual void Update()
     {
-        if (player.transform.position.x < transform.position.x)
+        if (PlayState.player.transform.position.x < transform.position.x)
         {
             for (int i = 0; i < parts.Count; i++)
                 parts[i].flipX = true;
@@ -72,7 +129,7 @@ public class NPC : MonoBehaviour
             speechBubble.GetComponent<SpriteRenderer>().flipX = true;
         }
 
-        if (Vector2.Distance(transform.position, player.transform.position) < 3 && !chatting)
+        if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 3 && !chatting)
         {
             List<string> textToSend = new List<string>();
             portraitColors.Clear();
@@ -116,7 +173,7 @@ public class NPC : MonoBehaviour
                     break;
 
                 case 50:
-                    if (PlayState.hasRainbowWave)
+                    if (PlayState.CheckForItem("Rainbow Wave") || PlayState.CheckForItem("Debug Rainbow Wave"))
                         textToSend.Add("Woah!!  Nice Rainbow Wave, " + playerName + "!!\nI\'d love one too, but I don\'t\nhave a jump button.");
                     else
                         textToSend.Add("Oh, hey, " + playerName + "! I'm here to test\nsingle-page dialogue!!");
@@ -145,7 +202,7 @@ public class NPC : MonoBehaviour
                 {
                     chatting = true;
                     PlayState.paralyzed = true;
-                    PlayState.OpenDialogue(3, ID, textToSend, portraitColors, portraitStateList, player.transform.position.x < transform.position.x);
+                    PlayState.OpenDialogue(3, ID, textToSend, portraitColors, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
                 }
             }
             else
@@ -154,12 +211,12 @@ public class NPC : MonoBehaviour
                 PlayState.OpenDialogue(2, ID, textToSend);
             }
         }
-        else if (Vector2.Distance(transform.position, player.transform.position) > 5 && chatting)
+        else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 5 && chatting)
         {
             chatting = false;
             PlayState.CloseDialogue();
         }
-        else if (Vector2.Distance(transform.position, player.transform.position) > 3 && (!chatting || PlayState.paralyzed))
+        else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 3 && (!chatting || PlayState.paralyzed))
         {
             speechBubble.GetComponent<SpriteRenderer>().enabled = false;
         }

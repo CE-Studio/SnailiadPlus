@@ -78,73 +78,76 @@ public class RoomTrigger : MonoBehaviour
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
-                if (child.name.Contains("Door"))
+                switch (child.name)
                 {
-                    if (Vector2.Distance(collision.transform.position, child.transform.position) < 2)
-                    {
-                        child.GetComponent<Door>().SetState1();
-                    }
-                    else
-                    {
-                        child.GetComponent<Door>().SetState2();
-                    }
-                }
-                else if (child.name.Contains("Grass"))
-                {
-                    switch (child.name)
-                    {
-                        default:
-                            break;
-                        case "Grass":
-                            child.GetComponent<Grass>().Spawn();
-                            break;
-                        case "Power Grass":
-                            child.GetComponent<PowerGrass>().Spawn();
-                            break;
-                    }
-                }
-                else if (child.name == "Save Point")
-                {
-                    if (child.GetComponent<SavePoint>().hasBeenActivated)
-                        child.GetComponent<SavePoint>().ToggleActiveState();
-                }
-                else if (child.name == "Item")
-                {
-                    child.GetComponent<Item>().SetAnim();
-                    child.GetComponent<Item>().CheckIfCollected();
-                }
-                else if (child.name == "Fake Boundary")
-                {
-                    FakeRoomBorder border = child.GetComponent<FakeRoomBorder>();
-                    GameObject cam = GameObject.Find("View");
-                    if (!border.direction)
-                    {
-                        PlayState.camTempBufferTruePos.y = child.transform.position.y;
-                        if (border.workingDirections >= 2 && cam.transform.position.y > child.transform.position.y)
+                    default:
+                        break;
+
+                    case "Door":
+                        if (Vector2.Distance(collision.transform.position, child.transform.position) < 2)
                         {
-                            PlayState.camTempBuffersY.x = PlayState.camCenter.y + (PlayState.camBoundaryBuffers.y * 2) - PlayState.camTempBufferTruePos.y;
-                            PlayState.posRelativeToTempBuffers.y = 1;
+                            child.GetComponent<Door>().SetState1();
                         }
-                        if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.y < child.transform.position.y)
+                        else
                         {
-                            PlayState.camTempBuffersY.y = PlayState.camCenter.y - (PlayState.camBoundaryBuffers.y * 2) + PlayState.camTempBufferTruePos.y;
-                            PlayState.posRelativeToTempBuffers.y = -1;
+                            child.GetComponent<Door>().SetState2();
                         }
-                    }
-                    else
-                    {
-                        PlayState.camTempBufferTruePos.x = child.transform.position.x;
-                        if (border.workingDirections >= 2 && cam.transform.position.x > child.transform.position.x)
+                        break;
+
+                    case "Grass":
+                                child.GetComponent<Grass>().Spawn();
+                                break;
+                            case "Power Grass":
+                                child.GetComponent<PowerGrass>().Spawn();
+                                break;
+
+                    case "Save Point":
+                        if (child.GetComponent<SavePoint>().hasBeenActivated)
+                            child.GetComponent<SavePoint>().ToggleActiveState();
+                        break;
+
+                    case "Item":
+                        child.GetComponent<Item>().SetAnim();
+                        child.GetComponent<Item>().CheckIfCollected();
+                        break;
+
+                    case "Fake Boundary":
+                        FakeRoomBorder border = child.GetComponent<FakeRoomBorder>();
+                        GameObject cam = GameObject.Find("View");
+                        if (!border.direction)
                         {
-                            PlayState.camTempBuffersX.x = PlayState.camCenter.x + (PlayState.camBoundaryBuffers.x * 2) - PlayState.camTempBufferTruePos.x;
-                            PlayState.posRelativeToTempBuffers.x = 1;
+                            PlayState.camTempBufferTruePos.y = child.transform.position.y;
+                            if (border.workingDirections >= 2 && cam.transform.position.y > child.transform.position.y)
+                            {
+                                PlayState.camTempBuffersY.x = PlayState.camCenter.y + (PlayState.camBoundaryBuffers.y * 2) - PlayState.camTempBufferTruePos.y;
+                                PlayState.posRelativeToTempBuffers.y = 1;
+                            }
+                            if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.y < child.transform.position.y)
+                            {
+                                PlayState.camTempBuffersY.y = PlayState.camCenter.y - (PlayState.camBoundaryBuffers.y * 2) + PlayState.camTempBufferTruePos.y;
+                                PlayState.posRelativeToTempBuffers.y = -1;
+                            }
                         }
-                        if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.x < child.transform.position.x)
+                        else
                         {
-                            PlayState.camTempBuffersX.y = PlayState.camCenter.x - (PlayState.camBoundaryBuffers.x * 2) + PlayState.camTempBufferTruePos.x;
-                            PlayState.posRelativeToTempBuffers.x = -1;
+                            PlayState.camTempBufferTruePos.x = child.transform.position.x;
+                            if (border.workingDirections >= 2 && cam.transform.position.x > child.transform.position.x)
+                            {
+                                PlayState.camTempBuffersX.x = PlayState.camCenter.x + (PlayState.camBoundaryBuffers.x * 2) - PlayState.camTempBufferTruePos.x;
+                                PlayState.posRelativeToTempBuffers.x = 1;
+                            }
+                            if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.x < child.transform.position.x)
+                            {
+                                PlayState.camTempBuffersX.y = PlayState.camCenter.x - (PlayState.camBoundaryBuffers.x * 2) + PlayState.camTempBufferTruePos.x;
+                                PlayState.posRelativeToTempBuffers.x = -1;
+                            }
                         }
-                    }
+                        break;
+
+                    case "NPC":
+                        child.transform.localPosition = child.GetComponent<NPC>().origin;
+                        child.GetComponent<NPC>().velocity = 0;
+                        break;
                 }
             }
 

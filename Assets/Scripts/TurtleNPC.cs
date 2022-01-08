@@ -6,17 +6,16 @@ public class TurtleNPC : NPC
 {
     public SpriteRenderer sprite;
     
-    public override void Start()
+    public override void Awake()
     {
         playerName = "Snaily";
-        player = GameObject.FindWithTag("Player");
 
         sprite = GetComponent<SpriteRenderer>();
     }
 
     public override void Update()
     {
-        if (player.transform.position.x < transform.position.x)
+        if (PlayState.player.transform.position.x < transform.position.x)
         {
             sprite.flipX = true;
         }
@@ -25,14 +24,14 @@ public class TurtleNPC : NPC
             sprite.flipX = false;
         }
 
-        if (Vector2.Distance(transform.position, player.transform.position) < 3 && !chatting)
+        if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 3 && !chatting)
         {
             List<string> textToSend = new List<string>();
             textToSend.Add("After this game is over, I\'m\ngoing to get some pizza!!\n");
             chatting = true;
             PlayState.OpenDialogue(2, 52, textToSend);
         }
-        else if (Vector2.Distance(transform.position, player.transform.position) > 5 && chatting)
+        else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 5 && chatting)
         {
             chatting = false;
             PlayState.CloseDialogue();

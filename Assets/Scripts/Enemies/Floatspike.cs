@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class Floatspike : Enemy
 {
-    private float targetX;
-    private float targetY;
-    private Vector2 origin;
     private float time;
     
-    void Start()
+    void Awake()
     {
         Begin();
         box.size = new Vector2(0.95f, 0.95f);
         attack = 2;
         defense = 59;
-        letsPermeatingShotsBy = true;
+        maxHealth = 5;
+        health = 5;
+        letsPermeatingShotsBy = false;
 
-        origin = new Vector2(transform.localPosition.x, transform.localPosition.y);
-        targetX = origin.x;
-        targetY = origin.y;
+        time = Random.Range(0, 100) * 0.01f;
+    }
 
-        resistances.Add(1);
-        resistances.Add(2);
-        resistances.Add(3);
-
+    public override void OnEnable()
+    {
+        base.OnEnable();
         time = Random.Range(0, 100) * 0.01f;
     }
 
@@ -32,17 +29,6 @@ public class Floatspike : Enemy
     {
         if (PlayState.gameState == "Game")
         {
-            //if (transform.position.x > targetX - 0.0125f && transform.position.x < targetX + 0.0125f)
-            //{
-            //    targetX = Random.Range(origin.x - 0.09375f, origin.x + 0.09375f);
-            //}
-            //if (transform.position.y > targetY - 0.0125f && transform.position.y < targetY + 0.0125f)
-            //{
-            //    targetY = Random.Range(origin.y - 0.09375f, origin.y + 0.09375f);
-            //}
-            //float newX = Mathf.Lerp(transform.position.x, targetX, 0.005f);
-            //float newY = Mathf.Lerp(transform.position.y, targetY, 0.005f);
-            //transform.position = new Vector2(newX, newY);
             if (time >= 0.75f)
             {
                 transform.localPosition = new Vector2(transform.localPosition.x, origin.y - 0.0625f);

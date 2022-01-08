@@ -107,6 +107,10 @@ public class Player : MonoBehaviour
     float fps = 0f;
     float updateRate = 4;
 
+    // Global sound flag stuff
+    int pingTimer = 0;
+    int explodeTimer = 0;
+
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()
     {
@@ -142,8 +146,24 @@ public class Player : MonoBehaviour
         if (PlayState.gameState == "Game")
         {
             // These are only here to make sure they're called once, before anything else that needs it
-            PlayState.armorPingPlayedThisFrame = false;
-            PlayState.explodePlayedThisFrame = false;
+            if (PlayState.armorPingPlayedThisFrame)
+            {
+                pingTimer++;
+                if (pingTimer >= 7)
+                {
+                    pingTimer = 0;
+                    PlayState.armorPingPlayedThisFrame = false;
+                }
+            }
+            if (PlayState.explodePlayedThisFrame)
+            {
+                explodeTimer++;
+                if (explodeTimer >= 7)
+                {
+                    explodeTimer = 0;
+                    PlayState.explodePlayedThisFrame = false;
+                }
+            }
 
             // Weapon swapping
             if (Input.GetKeyDown(KeyCode.Alpha1) && PlayState.CheckForItem(0))

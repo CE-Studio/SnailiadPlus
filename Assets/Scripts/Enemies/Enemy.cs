@@ -5,10 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int health;
+    public int maxHealth;
     public int attack;
     public int defense;
     public List<int> resistances;
     public bool letsPermeatingShotsBy;
+    public bool stunInvulnerability = false;
 
     public BoxCollider2D box;
     public Rigidbody2D rb;
@@ -16,9 +18,12 @@ public class Enemy : MonoBehaviour
     public AudioSource sfx;
 
     public AudioClip ping;
+    public AudioClip[] hit;
+    public AudioClip die;
     private int pingPlayer = 0;
 
-    public GameObject player;
+    public float[] spawnConditions;
+    public Vector2 origin;
     private bool intersectingPlayer = false;
     private List<GameObject> intersectingBullets = new List<GameObject>();
     
@@ -30,42 +35,62 @@ public class Enemy : MonoBehaviour
         sfx = GetComponent<AudioSource>();
 
         ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
+        hit = new AudioClip[]
+        {
+            (AudioClip)Resources.Load("Sounds/Sfx/Explode1"),
+            (AudioClip)Resources.Load("Sounds/Sfx/Explode2"),
+            (AudioClip)Resources.Load("Sounds/Sfx/Explode3"),
+            (AudioClip)Resources.Load("Sounds/Sfx/Explode4")
+        };
+        die = (AudioClip)Resources.Load("Sounds/Sfx/EnemyKilled1");
 
-        player = GameObject.Find("Player");
+        origin = transform.localPosition;
+    }
+
+    public virtual void OnEnable()
+    {
+        transform.localPosition = origin;
+        health = maxHealth;
     }
 
     private void LateUpdate()
     {
-        if (intersectingPlayer && !player.GetComponent<Player>().stunned)
+        if (intersectingPlayer && !PlayState.playerScript.stunned)
         {
-            player.GetComponent<Player>().health = Mathf.RoundToInt(Mathf.Clamp(player.GetComponent<Player>().health - attack, 0, Mathf.Infinity));
-            if (player.GetComponent<Player>().health <= 0)
-                player.GetComponent<Player>().Die();
+            PlayState.playerScript.health = Mathf.RoundToInt(Mathf.Clamp(PlayState.playerScript.health - attack, 0, Mathf.Infinity));
+            if (PlayState.playerScript.health <= 0)
+                PlayState.playerScript.Die();
             else
-                player.GetComponent<Player>().BecomeStunned();
+                PlayState.playerScript.BecomeStunned();
         }
 
-        foreach (GameObject bullet in intersectingBullets)
+        if (!stunInvulnerability)
         {
-            if (!resistances.Contains(bullet.GetComponent<Bullet>().bulletType))
+            foreach (GameObject bullet in intersectingBullets)
             {
-                //if (bullet.GetComponent<Bullet>().bulletType == "Peashooter")
-                //    bullet.GetComponent<Bullet>().Despawn();
-                StartCoroutine(nameof(Flash));
-            }
-            else
-            {
-                //bullet.GetComponent<Bullet>().Despawn();
-                if (!PlayState.armorPingPlayedThisFrame && pingPlayer <= 0)
+                Bullet bulletScript = bullet.GetComponent<Bullet>();
+                if (!resistances.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
                 {
-                    PlayState.armorPingPlayedThisFrame = true;
-                    pingPlayer = 8;
-                    sfx.PlayOneShot(ping);
+                    health -= bulletScript.damage - defense;
+                    if (health <= 0)
+                        Kill();
+                    else
+                        StartCoroutine(nameof(Flash));
                 }
-                pingPlayer -= 1;
+                else
+                {
+                    //if (!PlayState.armorPingPlayedThisFrame && pingPlayer <= 0)
+                    if (!PlayState.armorPingPlayedThisFrame)
+                    {
+                        PlayState.armorPingPlayedThisFrame = true;
+                        //pingPlayer = 8;
+                        sfx.PlayOneShot(ping);
+                    }
+                    pingPlayer -= 1;
+                }
+                if (!letsPermeatingShotsBy || bulletScript.bulletType == 1)
+                    bulletScript.Despawn();
             }
-            if (!letsPermeatingShotsBy)
-                bullet.GetComponent<Bullet>().Despawn();
         }
 
         if (intersectingBullets.Count == 0)
@@ -79,28 +104,9 @@ public class Enemy : MonoBehaviour
         switch (collision.tag)
         {
             case "PlayerBullet":
-                //if (!resistances.Contains(collision.GetComponent<Bullet>().bulletType))
-                //{
-                //    if (collision.GetComponent<Bullet>().bulletType == "Peashooter")
-                //        collision.GetComponent<Bullet>().Despawn();
-                //    StartCoroutine(nameof(Flash));
-                //}
-                //else
-                //{
-                //    collision.GetComponent<Bullet>().Despawn();
-                //    sfx.PlayOneShot(ping);
-                //}
                 intersectingBullets.Add(collision.gameObject);
                 break;
             case "Player":
-                //if (!collision.GetComponent<Player>().stunned)
-                //{
-                //    collision.GetComponent<Player>().health = Mathf.RoundToInt(Mathf.Clamp(collision.GetComponent<Player>().health - attack, 0, Mathf.Infinity));
-                //    if (collision.GetComponent<Player>().health <= 0)
-                //        collision.GetComponent<Player>().Die();
-                //    else
-                //        collision.GetComponent<Player>().BecomeStunned();
-                //}
                 intersectingPlayer = true;
                 break;
             default:
@@ -126,9 +132,20 @@ public class Enemy : MonoBehaviour
     public IEnumerator Flash()
     {
         sprite.material.SetFloat("_FlashAmount", 0.75f);
-        box.enabled = false;
+        stunInvulnerability = true;
+        sfx.PlayOneShot(hit[Random.Range(1, 4)]);
         yield return new WaitForSeconds(0.025f);
         sprite.material.SetFloat("_FlashAmount", 0);
-        box.enabled = true;
+        stunInvulnerability = false;
+    }
+
+    public virtual void Kill()
+    {
+        sfx.PlayOneShot(die);
+        box.enabled = false;
+        sprite.enabled = false;
+        for (int i = Random.Range(1, 4); i > 0; i--)
+            PlayState.RequestExplosion(1, new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)));
     }
 }
