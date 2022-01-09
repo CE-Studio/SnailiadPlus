@@ -22,10 +22,11 @@ public class Enemy : MonoBehaviour
     public AudioClip die;
     private int pingPlayer = 0;
 
-    public float[] spawnConditions;
+    public List<float> spawnConditions;
     public Vector2 origin;
     private bool intersectingPlayer = false;
     private List<GameObject> intersectingBullets = new List<GameObject>();
+    public LayerMask enemyCollide;
     
     public virtual void Begin()
     {
@@ -45,11 +46,15 @@ public class Enemy : MonoBehaviour
         die = (AudioClip)Resources.Load("Sounds/Sfx/EnemyKilled1");
 
         origin = transform.localPosition;
+
+        enemyCollide = LayerMask.GetMask("PlayerCollide", "EnemyCollide");
     }
 
     public virtual void OnEnable()
     {
         transform.localPosition = origin;
+        box.enabled = true;
+        sprite.enabled = true;
         health = maxHealth;
     }
 
@@ -66,6 +71,8 @@ public class Enemy : MonoBehaviour
 
         if (!stunInvulnerability)
         {
+            List<GameObject> bulletsToDespawn = new List<GameObject>();
+            bool killFlag = false;
             foreach (GameObject bullet in intersectingBullets)
             {
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
@@ -73,24 +80,30 @@ public class Enemy : MonoBehaviour
                 {
                     health -= bulletScript.damage - defense;
                     if (health <= 0)
-                        Kill();
+                        killFlag = true;
                     else
                         StartCoroutine(nameof(Flash));
                 }
                 else
                 {
-                    //if (!PlayState.armorPingPlayedThisFrame && pingPlayer <= 0)
                     if (!PlayState.armorPingPlayedThisFrame)
                     {
                         PlayState.armorPingPlayedThisFrame = true;
-                        //pingPlayer = 8;
                         sfx.PlayOneShot(ping);
                     }
                     pingPlayer -= 1;
                 }
                 if (!letsPermeatingShotsBy || bulletScript.bulletType == 1)
-                    bulletScript.Despawn();
+                    bulletsToDespawn.Add(bullet);
             }
+            while (bulletsToDespawn.Count > 0)
+            {
+                intersectingBullets.RemoveAt(0);
+                bulletsToDespawn[0].GetComponent<Bullet>().Despawn();
+                bulletsToDespawn.RemoveAt(0);
+            }
+            if (killFlag)
+                Kill();
         }
 
         if (intersectingBullets.Count == 0)
@@ -145,7 +158,7 @@ public class Enemy : MonoBehaviour
         box.enabled = false;
         sprite.enabled = false;
         for (int i = Random.Range(1, 4); i > 0; i--)
-            PlayState.RequestExplosion(1, new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+            PlayState.RequestExplosion(2, new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
                 Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)));
     }
 }

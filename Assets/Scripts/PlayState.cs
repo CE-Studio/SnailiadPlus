@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class PlayState
 {
@@ -40,10 +41,12 @@ public class PlayState
     public static Player playerScript = player.GetComponent<Player>();
     public static GameObject cam = GameObject.Find("View");
     public static GameObject screenCover = GameObject.Find("View/Cover");
+    public static GameObject groundLayer = GameObject.Find("Grid/Ground");
     public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");
     public static GameObject fg1Layer = GameObject.Find("Grid/Foreground");
     public static GameObject bgLayer = GameObject.Find("Grid/Background");
     public static GameObject skyLayer = GameObject.Find("Grid/Sky");
+    public static GameObject specialLayer = GameObject.Find("Grid/Special");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
     public static GameObject achievement = GameObject.Find("View/Achievement Panel");
     public static GameObject explosionPool = GameObject.Find("Explosion Pool");
@@ -186,6 +189,21 @@ public class PlayState
         }
         currentArea = area;
         currentSubzone = subzone;
+    }
+
+    public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false)
+    {
+        Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x + 0.5f), Mathf.Floor(tilePos.y + 0.5f));
+        bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
+        if (!result && checkForEnemyCollide)
+        {
+            TileBase spTile = specialLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0));
+            if (spTile != null)
+                if (spTile.name == "Tilesheet_376")
+                    result = true;
+            
+        }
+        return result;
     }
 
     public static void RunItemPopup(string item)

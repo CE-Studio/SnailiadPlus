@@ -14,7 +14,7 @@ public class Floatspike : Enemy
         defense = 59;
         maxHealth = 5;
         health = 5;
-        letsPermeatingShotsBy = false;
+        letsPermeatingShotsBy = true;
 
         time = Random.Range(0, 100) * 0.01f;
     }

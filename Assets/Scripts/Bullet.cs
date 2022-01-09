@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     public BoxCollider2D box;
 
     public GameObject player;
+    public GameObject cam;
 
     private float diagOffsetX = 0.75f;
     private float diagOffsetY = 0.65f;
@@ -29,6 +30,7 @@ public class Bullet : MonoBehaviour
         box.enabled = false;
 
         player = GameObject.FindWithTag("Player");
+        cam = GameObject.Find("View");
     }
 
     void FixedUpdate()
@@ -82,6 +84,16 @@ public class Bullet : MonoBehaviour
             if (lifeTimer > 3)
             {
                 Despawn();
+            }
+            else
+            {
+                if (transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
+                    transform.position.x < cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
+                    transform.position.y > cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
+                    transform.position.y < cam.transform.position.y + 7.5f + (box.size.y * 0.5f))
+                    box.enabled = true;
+                else
+                    box.enabled = false;
             }
         }
         else

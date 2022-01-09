@@ -7,6 +7,7 @@ public class BreakableBlock : MonoBehaviour
 {
     public int requiredWeapon;
     public bool isSilent;
+    private bool hasBeenHit;
     public BoxCollider2D box;
     public AudioSource sfx;
     public AudioClip expl1;
@@ -45,6 +46,17 @@ public class BreakableBlock : MonoBehaviour
             fg2Tile = maps[2].GetTile(tilePos);
     }
 
+    private void Update()
+    {
+        if (transform.position.x > PlayState.cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
+            transform.position.x < PlayState.cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
+            transform.position.y > PlayState.cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
+            transform.position.y < PlayState.cam.transform.position.y + 7.5f + (box.size.y * 0.5f) && !hasBeenHit)
+            box.enabled = true;
+        else
+            box.enabled = false;
+    }
+
     public void Instantiate(int type, bool silent)
     {
         requiredWeapon = type;
@@ -73,6 +85,7 @@ public class BreakableBlock : MonoBehaviour
                 maps[1].SetTile(tilePos, null);
                 maps[2].SetTile(tilePos, null);
                 box.enabled = false;
+                hasBeenHit = true;
                 if (!PlayState.explodePlayedThisFrame)
                 {
                     int i = Random.Range(1, 5);
