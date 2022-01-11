@@ -8,8 +8,14 @@ using UnityEngine.Tilemaps;
 public class PlayState
 {
     public static string gameState = "Game"; // Can be "Game", "Pause", or "Dialogue" as of now
-    
-    public static AudioSource mus = GameObject.Find("View/Music").GetComponent<AudioSource>();
+
+    public static Transform musicParent = GameObject.Find("View/Music Parent").transform;
+    public static List<AudioSource> musicSourceArray = new List<AudioSource>();
+    public static AudioSource mus1; //= GameObject.Find("View/Music1").GetComponent<AudioSource>();
+    public static AudioSource mus2; //= GameObject.Find("View/Music2").GetComponent<AudioSource>();
+    public static AudioSource activeMus; //= mus1;
+    public static bool musFlag = false;
+    public static bool playingMusic = false;
     public static int musicVol = 1;
     public static float playbackTime;
     public static string area;
@@ -34,6 +40,14 @@ public class PlayState
             (AudioClip)Resources.Load("Sounds/Music/TestZone")
         }
     };
+    public static float[][] musicLoopOffsets = new float[][]
+    {
+        new float[] // Snail Town
+        {
+            0,           // End-of-intro loop point (in seconds)
+            40.5067125f  // End time (in seconds)
+        }
+    };
     public static int currentArea = -1;
     public static int currentSubzone = -1;
 
@@ -53,8 +67,6 @@ public class PlayState
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
-    public static bool hasRainbowWave = false;
-    public static bool hasGravitySnail = false;
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
@@ -164,28 +176,39 @@ public class PlayState
         switch (intendedArea)
         {
             case "Test Zone":
-                mus.clip = snailTown;
+                mus1.clip = snailTown;
                 break;
             default:
-                mus.clip = snailTown;
+                mus1.clip = snailTown;
                 break;
         }
-        mus.Play();
+        mus1.Play();
     }
 
     public static void PlayAreaSong(int area, int subzone)
     {
         if (area == currentArea && subzone != currentSubzone)
         {
-            float playTime = mus.time;
-            mus.clip = areaMusic[area][subzone];
-            mus.Play();
-            mus.time = playTime;
+            //float playTime = (musFlag ? mus2 : mus1).time;
+            //(musFlag ? mus1 : mus2).clip = areaMusic[area][subzone];
+            //(musFlag ? mus1 : mus2).Play();
+            //(musFlag ? mus1 : mus2).time = playTime;
+            //activeMus = musFlag ? mus1 : mus2;
+            //musFlag = !musFlag;
+            //mus1.Pause();
+            //mus1.clip = areaMusic[area][subzone];
+            //mus1.UnPause();
+            playerScript.UpdateMusic(area, subzone);
         }
         else if (area != currentArea)
         {
-            mus.clip = areaMusic[area][subzone];
-            mus.Play();
+            //musFlag = false;
+            //mus1.volume = 1;
+            //mus2.volume = 0;
+            //mus2.Stop();
+            //mus1.clip = areaMusic[area][subzone];
+            //mus1.Play();
+            playerScript.UpdateMusic(area, subzone, true);
         }
         currentArea = area;
         currentSubzone = subzone;
@@ -193,7 +216,7 @@ public class PlayState
 
     public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false)
     {
-        Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x + 0.5f), Mathf.Floor(tilePos.y + 0.5f));
+        Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
         bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
         if (!result && checkForEnemyCollide)
         {
@@ -201,17 +224,16 @@ public class PlayState
             if (spTile != null)
                 if (spTile.name == "Tilesheet_376")
                     result = true;
-            
         }
         return result;
     }
 
     public static void RunItemPopup(string item)
     {
-        playbackTime = mus.time;
-        mus.Stop();
-        areaMus = mus.clip;
-        mus.PlayOneShot(majorItemJingle);
+        playbackTime = activeMus.time;
+        mus1.Stop();
+        areaMus = activeMus.clip;
+        mus1.PlayOneShot(majorItemJingle);
         List<string> text = new List<string>();
         List<Color32> colors = new List<Color32>();
         switch (item)

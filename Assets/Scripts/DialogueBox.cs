@@ -262,10 +262,10 @@ public class DialogueBox : MonoBehaviour
             }
             if (boxState == 3 && type == 1)
             {
-                PlayState.mus.clip = PlayState.areaMus;
-                PlayState.mus.time = PlayState.playbackTime;
-                PlayState.mus.volume = 0;
-                PlayState.mus.Play();
+                PlayState.activeMus.clip = PlayState.areaMus;
+                PlayState.activeMus.time = PlayState.playbackTime;
+                PlayState.activeMus.volume = 0;
+                PlayState.activeMus.Play();
                 PlayState.gameState = "Game";
                 StartCoroutine(nameof(ReturnMusicVol));
             }
@@ -274,9 +274,9 @@ public class DialogueBox : MonoBehaviour
 
     public IEnumerator ReturnMusicVol()
     {
-        while (PlayState.mus.volume < 1)
+        while (PlayState.activeMus.volume < 1)
         {
-            PlayState.mus.volume += 0.025f * PlayState.musicVol;
+            PlayState.activeMus.volume += 0.025f * PlayState.musicVol;
             yield return new WaitForFixedUpdate();
         }
     }

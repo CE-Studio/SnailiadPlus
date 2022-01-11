@@ -8,6 +8,7 @@ public class Spikey1 : Enemy
     public const int DIR_WALL_LEFT = 1;
     public const int DIR_WALL_RIGHT = 2;
     public const int DIR_CEILING = 3;
+    public const float SPEED = 0.03f;
 
     public bool rotation; // Assuming the spikey is tracking the inner edge of a ring, false for clockwise and true for counter-clockwise
     public int direction;
@@ -44,7 +45,23 @@ public class Spikey1 : Enemy
 
     void FixedUpdate()
     {
-        
+        Vector2 dirToMove = Vector2.zero;
+        switch (direction)
+        {
+            case DIR_FLOOR:
+                dirToMove = rotation ? Vector2.right : Vector2.left;
+                break;
+            case DIR_WALL_RIGHT:
+                dirToMove = rotation ? Vector2.up : Vector2.down;
+                break;
+            case DIR_CEILING:
+                dirToMove = rotation ? Vector2.left : Vector2.right;
+                break;
+            case DIR_WALL_LEFT:
+                dirToMove = rotation ? Vector2.down : Vector2.up;
+                break;
+        }
+        transform.position = new Vector2(transform.position.x + (dirToMove.x * SPEED), transform.position.y + (dirToMove.y * SPEED));
     }
 
     private void SwapDir(int dir)

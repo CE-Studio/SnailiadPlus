@@ -5,48 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const int DIR_FLOOR = 0;
-    //public const int DIR_WALL = 1;
-    //public const int DIR_CEILING = 2;
-    //public const float HITBOX_SIZEX = 1.467508f;
-    //public const float HITBOX_SIZEY = 0.8745056f;
-    //public const float HITBOX_SIZEX_SHELL = 0.8421245f;
-    //public const float HITBOX_OFFSETX = 0f;
-    //public const float HITBOX_OFFSETY = -0.560989f;
-    //public const float HITBOX_OFFSETX_SHELL = -0.186518f;
-    //public const float RUNSPEED_NORMAL = 8;
-    //public const float JUMPPOWER_NORMAL = 22;
-    //public const float GRAVITY = 1f;
-    //public const float TERMINAL_VELOCITY = -0.66f;
-    //public const float RAINBOW_WAVE_COOLDOWN = 0.15f;
-    //
     private bool inShell = false;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
-    //private bool _relativeLeft = false;
-    //private bool _relativeRight = false;
-    //private bool _relativeUp = false;
-    //private bool _relativeDown = false;
-    //private bool _justPressedLeft = false;
-    //private bool _justPressedRight = false;
-    //private bool _justPressedUp = false;
-    //private bool _justPressedDown = false;
-    //private bool _holdingLeft = false;
-    //private bool _holdingRight = false;
-    //private bool _holdingUp = false;
-    //private bool _holdingDown = false;
-    //private Vector2 _velocity = new Vector2(0, 0);
-    //private bool _onSurface = false;
-    //private bool _surfacedLastFrame = false;
-    //private bool _justJumped = false;
-    //private bool _holdingJump = false;
-    //private bool _justLeftShell = false;
-    //private float _lastVcheckHitX = 0f;
-    //private float _lastV2checkHitX = 0f;
-    //private bool _justGrabbedWall = false;
-    //private bool _readyToRoundCorner = false;
-    //private int bulletPointer = 0;
-    //private float fireCooldown = 0;
     public int selectedWeapon = 0;
     public int health = 12;
     public int maxHealth = 12;
@@ -59,13 +21,9 @@ public class Player : MonoBehaviour
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AudioSource sfx;
-    //public AudioClip shell;
-    //public AudioClip jump;
     public AudioClip hurt;
     public AudioClip die;
-    //public AudioClip shootRWave;
     public GameObject bulletPool;
-    //public GameObject iconRWave;
     public Sprite blank;
     public Sprite iconPeaDeselected;
     public Sprite iconPeaSelected;
@@ -100,6 +58,8 @@ public class Player : MonoBehaviour
     public GameObject weaponIcon2;
     public GameObject weaponIcon3;
     public SpriteRenderer[] weaponIcons;
+
+    public double nextLoopEvent;
 
     // FPS stuff
     int frameCount = 0;
@@ -172,6 +132,24 @@ public class Player : MonoBehaviour
                 ChangeActiveWeapon(1);
             else if (Input.GetKeyDown(KeyCode.Alpha3) && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
                 ChangeActiveWeapon(2);
+
+            // Music looping
+            if (!PlayState.playingMusic)
+                return;
+
+            double time = AudioSettings.dspTime;
+
+            if (time + 1 > nextLoopEvent)
+            {
+                for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
+                {
+                    PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
+                    PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
+                    PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
+                }
+                nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
+                PlayState.musFlag = !PlayState.musFlag;
+            }
         }
     }
 
@@ -219,6 +197,48 @@ public class Player : MonoBehaviour
             PlayState.currentTime[1] -= 60;
             PlayState.currentTime[1] += 1;
         }
+    }
+
+    public void UpdateMusic(int area, int subzone, bool resetAudioSources = false)
+    {
+        if (resetAudioSources)
+        {
+            while (PlayState.musicParent.childCount > 0)
+                Destroy(PlayState.musicParent.GetChild(0));
+
+            for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    GameObject newSource = new GameObject();
+                    newSource.transform.parent = PlayState.musicParent;
+                    newSource.name = "Music Source " + (j + 1) + " (Subzone " + i + ")";
+                    newSource.AddComponent<AudioSource>();
+                    PlayState.musicSourceArray.Add(newSource.GetComponent<AudioSource>());
+                    if (j == 0)
+                    {
+                        newSource.GetComponent<AudioSource>().clip = PlayState.areaMusic[area][i];
+                        newSource.GetComponent<AudioSource>().Play();
+                    }
+                }
+            }
+
+            nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
+        }
+        for (int i = 0; i * 2 < PlayState.musicParent.childCount; i++)
+        {
+            if (i == subzone)
+            {
+                PlayState.musicSourceArray[i * 2].volume = PlayState.musicVol;
+                PlayState.musicSourceArray[i * 2 + 1].volume = PlayState.musicVol;
+            }
+            else
+            {
+                PlayState.musicSourceArray[i * 2].volume = 0;
+                PlayState.musicSourceArray[i * 2 + 1].volume = 0;
+            }
+        }
+        PlayState.playingMusic = true;
     }
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
