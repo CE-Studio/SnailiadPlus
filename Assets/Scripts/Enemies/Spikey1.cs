@@ -22,6 +22,8 @@ public class Spikey1 : Enemy
     private RaycastHit2D groundCheck;
 
     public Animator anim;
+    public Sprite spriteCW;
+    public Sprite spritwCCW;
     
     void Awake()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const int DIR_FLOOR = 0;
-    private bool inShell = false;
+    //private bool inShell = false;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     public GameObject weaponIcon2;
     public GameObject weaponIcon3;
     public SpriteRenderer[] weaponIcons;
+
+    public Snaily playerScriptSnaily;
 
     public double nextLoopEvent;
 
@@ -418,7 +420,7 @@ public class Player : MonoBehaviour
         sfx.PlayOneShot(hurt);
         UpdateHearts();
         currentSurface = DIR_FLOOR;
-        inShell = false;
+        ExitShell();
         float timer = 0;
         while (timer < 1)
         {
@@ -620,6 +622,7 @@ public class Player : MonoBehaviour
 
     IEnumerator DieAndRespawn()
     {
+        ExitShell();
         health = 0;
         UpdateHearts();
         inDeathCutscene = true;
@@ -675,7 +678,23 @@ public class Player : MonoBehaviour
         if (newAnim != currentAnim)
         {
             currentAnim = newAnim;
-            anim.Play(newAnim, 0, 0);
+            switch (PlayState.currentCharacter)
+            {
+                case "Snaily":
+                    playerScriptSnaily.anim.Play(newAnim, 0, 0);
+                    break;
+            }
+        }
+    }
+
+    public void ExitShell()
+    {
+        switch (PlayState.currentCharacter)
+        {
+            case "Snaily":
+                if (playerScriptSnaily.shelled)
+                    playerScriptSnaily.ToggleShell();
+                break;
         }
     }
 }

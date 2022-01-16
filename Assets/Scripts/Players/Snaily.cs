@@ -24,7 +24,7 @@ public class Snaily : MonoBehaviour
     private Vector2 velocity = new Vector2(0, 0);
     private int gravityDir = DIR_FLOOR;
     public bool grounded = false;
-    private bool shelled = false;
+    public bool shelled = false;
     private float speedMod = 1;
     private float jumpMod = 1;
     private float gravityMod = 1;
@@ -83,6 +83,7 @@ public class Snaily : MonoBehaviour
         WEAPON_COOLDOWNS[5] = 0.085f;
 
         PlayState.currentCharacter = "Snaily";
+        player.playerScriptSnaily = this;
     }
 
     // This function is called once per frame
@@ -1152,7 +1153,7 @@ public class Snaily : MonoBehaviour
     }
 
     // This function is called whenever a shelled character asks to enter/exit their shell
-    private void ToggleShell()
+    public void ToggleShell()
     {
         if (shelled)
         {

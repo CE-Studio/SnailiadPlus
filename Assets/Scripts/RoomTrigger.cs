@@ -299,6 +299,7 @@ public class RoomTrigger : MonoBehaviour
                             EnemyCollideBlock.GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
                             EnemyCollideBlock.layer = 9;
                             EnemyCollideBlock.name = "Enemy-Collidable Tile";
+                            Physics2D.IgnoreCollision(EnemyCollideBlock.GetComponent<BoxCollider2D>(), PlayState.player.GetComponent<BoxCollider2D>(), true);
                         }
                     }
                 }
