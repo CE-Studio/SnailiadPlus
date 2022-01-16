@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public List<int> resistances;
     public bool letsPermeatingShotsBy;
     public bool stunInvulnerability = false;
+    public string elementType; // Currently supports "ice" and "fire"
 
     public BoxCollider2D box;
     public Rigidbody2D rb;

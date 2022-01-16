@@ -295,6 +295,7 @@ public class RoomTrigger : MonoBehaviour
                             EnemyCollideBlock.transform.parent = transform;
                             EnemyCollideBlock.transform.position = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
                             EnemyCollideBlock.AddComponent<BoxCollider2D>();
+                            EnemyCollideBlock.GetComponent<BoxCollider2D>().isTrigger = true;
                             EnemyCollideBlock.GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
                             EnemyCollideBlock.layer = 9;
                             EnemyCollideBlock.name = "Enemy-Collidable Tile";
