@@ -29,6 +29,8 @@ public class PlayState
     public static float parallaxBgMod = 0;
     public static float parallaxSkyMod = 0;
     public static int thisExplosionID = 0;
+    public static bool isTalking = false;
+    public static bool hasJumped = false;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
@@ -262,6 +264,7 @@ public class PlayState
 
     public static void CloseDialogue()
     {
+        isTalking = false;
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 

@@ -62,6 +62,8 @@ public class RoomTrigger : MonoBehaviour
             PlayState.parallaxBgMod = parallaxBackgroundModifier;
             PlayState.parallaxSkyMod = parallaxSkyModifier;
             PlayState.PlayAreaSong(areaID, areaSubzone);
+            PlayState.CloseDialogue();
+            PlayState.isTalking = false;
 
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;

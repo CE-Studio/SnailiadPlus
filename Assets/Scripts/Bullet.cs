@@ -47,10 +47,10 @@ public class Bullet : MonoBehaviour
                         velocity = velocity - 0.0125f;
                         break;
                     case 3:
-                        velocity = Mathf.Clamp(velocity + 0.04f, 0, 0.75f);
+                        velocity = velocity + 0.04f;
                         break;
                     default:
-                        velocity = Mathf.Clamp(velocity + 0.04f, 0, 0.75f);
+                        velocity = velocity + 0.04f;
                         break;
                 }
                 switch (direction)

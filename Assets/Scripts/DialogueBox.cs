@@ -130,7 +130,7 @@ public class DialogueBox : MonoBehaviour
                     boxState = 1;
                     dialogueType = type;
                     playSound = true;
-                    yield return new WaitForSeconds(0.25f);
+                    yield return new WaitForSeconds(0.075f);
                     if (type == 3)
                     {
                         portrait.SetActive(true);

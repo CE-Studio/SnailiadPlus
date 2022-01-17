@@ -81,15 +81,10 @@ public class Spikey1 : Enemy
             else
             {
                 velocity = 0;
-                transform.position = new Vector2(transform.position.x, Mathf.Floor(transform.position.y - groundCheck.distance) + 0.5f);
+                transform.position = new Vector2(transform.position.x, Mathf.Floor(transform.position.y - groundCheck.distance + (box.size.y * 0.5f)) + 0.5f);
                 SwapDir(DIR_FLOOR);
                 isFalling = false;
             }
-        }
-        else if (hCast.collider != null)
-        {
-            transform.position = new Vector2(Mathf.Floor(transform.position.x) + 0.5f, Mathf.Floor(transform.position.y) + 0.5f);
-            Turn(rotation);
         }
         else if (vCast.collider == null && gracePeriod == 0)
         {
@@ -97,6 +92,11 @@ public class Spikey1 : Enemy
             Turn(!rotation);
             if (!CheckFrontBottomCorner())
                 isFalling = true;
+        }
+        else if (hCast.collider != null)
+        {
+            transform.position = new Vector2(Mathf.Floor(transform.position.x) + 0.5f, Mathf.Floor(transform.position.y) + 0.5f);
+            Turn(rotation);
         }
         else if (vCast.collider != null || (gracePeriod != 0 && CheckFrontBottomCorner()))
         {

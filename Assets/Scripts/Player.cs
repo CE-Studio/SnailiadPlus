@@ -127,6 +127,10 @@ public class Player : MonoBehaviour
                 }
             }
 
+            // Marking the "has jumped" flag for Snail NPC 01's dialogue
+            if (Input.GetAxisRaw("Jump") == 1)
+                PlayState.hasJumped = true;
+
             // Weapon swapping
             if (Input.GetKeyDown(KeyCode.Alpha1) && PlayState.CheckForItem(0))
                 ChangeActiveWeapon(0);

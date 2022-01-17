@@ -22,6 +22,8 @@ public class Door : MonoBehaviour
 
     public AudioClip open;
     public AudioClip close;
+
+    public Sprite[] editorSprites;
     
     void Start()
     {

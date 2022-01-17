@@ -24,6 +24,8 @@ public class BreakableBlock : MonoBehaviour
     
     void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = false;
+
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
 

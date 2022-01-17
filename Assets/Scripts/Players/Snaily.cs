@@ -352,8 +352,6 @@ public class Snaily : MonoBehaviour
                             Input.GetAxisRaw("Strafe") == 0 &&
                             !holdingShell && !PlayState.paralyzed)
                         {
-                            if (!shelled)
-                                sfx.PlayOneShot(shell);
                             ToggleShell();
                             holdingShell = true;
                         }
@@ -580,8 +578,6 @@ public class Snaily : MonoBehaviour
                             Input.GetAxisRaw("Strafe") == 0 &&
                             !holdingShell && !PlayState.paralyzed)
                         {
-                            if (!shelled)
-                                sfx.PlayOneShot(shell);
                             ToggleShell();
                             holdingShell = true;
                         }
@@ -808,8 +804,6 @@ public class Snaily : MonoBehaviour
                             Input.GetAxisRaw("Strafe") == 0 &&
                             !holdingShell && !PlayState.paralyzed)
                         {
-                            if (!shelled)
-                                sfx.PlayOneShot(shell);
                             ToggleShell();
                             holdingShell = true;
                         }
@@ -1027,8 +1021,6 @@ public class Snaily : MonoBehaviour
                             Input.GetAxisRaw("Strafe") == 0 &&
                             !holdingShell && !PlayState.paralyzed)
                         {
-                            if (!shelled)
-                                sfx.PlayOneShot(shell);
                             ToggleShell();
                             holdingShell = true;
                         }
