@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingOrder: -51
   m_Sprite: {fileID: -7876630773137754357, guid: 2bd7f000ac1998c44a589f64f101f806,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.972549, g: 0.9647059, b: 0.972549, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -155,7 +155,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -51
   m_Sprite: {fileID: 524857812515485558, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9882353, g: 0.627451, b: 0.28235295, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -238,7 +238,7 @@ SpriteRenderer:
   m_SortingOrder: -51
   m_Sprite: {fileID: -4457213049971740677, guid: 2bd7f000ac1998c44a589f64f101f806,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.53333336, b: 0.5803922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -301,10 +301,13 @@ MonoBehaviour:
   ID: 0
   upsideDown: 0
   chatting: 0
+  needsSpace: 0
   buttonDown: 0
   playerName: 
+  playerFullName: 
+  playerSpecies: 
   colors: []
-  colorTable: {fileID: 0}
+  colorTable: {fileID: 2800000, guid: ffefcfd9c00ba7f46bf409dc7e7e15b5, type: 3}
   npcSpriteSheet:
   - {fileID: 3862513801865770124, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   - {fileID: -7705112838881874201, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
@@ -349,8 +352,10 @@ MonoBehaviour:
   - {fileID: -8566299241727231145, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   - {fileID: 7107475878791808953, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   parts: []
+  anim: {fileID: 0}
   speechBubble: {fileID: 0}
-  player: {fileID: 0}
+  origin: {x: 0, y: 0}
+  velocity: 0
 --- !u!212 &450049468564987500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -577,7 +582,7 @@ SpriteRenderer:
   m_SortingOrder: -51
   m_Sprite: {fileID: -6987079263087656721, guid: 2bd7f000ac1998c44a589f64f101f806,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.972549, g: 0.9647059, b: 0.972549, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

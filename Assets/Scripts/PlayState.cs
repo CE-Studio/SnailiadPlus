@@ -121,21 +121,21 @@ public class PlayState
 
     public static int[] itemCollection = new int[]
     {
-        0,  // Peashooter
-        0,  // Boomerang
-        0,  // Rainbow Wave
-        0,  // Devastator
-        0,  // High Jump          Wall Grab
-        0,  // Shell Shield       Shelmet
-        0,  // Rapid Fire         Backfire
-        0,  // Ice Snail
-        0,  // Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
-        0,  // Full-Metal Snail
-        0,  // Gravity Shock
-        0,  // Super Secret Boomerang
-        0,  // Debug Rainbow Wave
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // Heart Containers
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // Helix Fragments
+        0,  //  0 - Peashooter
+        0,  //  1 - Boomerang
+        0,  //  2 - Rainbow Wave
+        0,  //  3 - Devastator
+        0,  //  4 - High Jump          Wall Grab
+        0,  //  5 - Shell Shield       Shelmet
+        0,  //  6 - Rapid Fire         Backfire
+        0,  //  7 - Ice Snail
+        0,  //  8 - Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
+        0,  //  9 - Full-Metal Snail
+        0,  // 10 - Gravity Shock
+        0,  // 11 - Super Secret Boomerang
+        0,  // 12 - Debug Rainbow Wave
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 13-23 - Heart Containers
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // 24-53 - Helix Fragments
     };
 
     public static int[] bossStates = new int[]
