@@ -93,6 +93,7 @@ public class NPC : MonoBehaviour
     public virtual void OnEnable()
     {
         nexted = 0;
+        chatting = false;
     }
 
     public virtual void FixedUpdate()
