@@ -25,7 +25,6 @@ public class DialogueBox : MonoBehaviour
     private Vector2 pointer = Vector2.zero;          // This pointer points to what letter of page of text it's looking at
     private bool buttonDown = false;
     private bool active = false;
-    private bool readyToTalk = true;
     private bool playSound = true;
     private bool forcedClosed = false;
     private Vector2 roomTextOrigin;
@@ -119,15 +118,8 @@ public class DialogueBox : MonoBehaviour
         else
             roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
 
-        //while (!readyToTalk)
-        //{
-        //    Debug.Log(Random.Range(1, 10000));
-        //    yield return new WaitForEndOfFrame();
-        //}
         if (!active)
             return;
-        //active = true;
-        readyToTalk = false;
         forcedClosed = false;
         switch (boxState)
         // Case 0 = dialogue box opens
@@ -140,8 +132,6 @@ public class DialogueBox : MonoBehaviour
                 anim.Play("Dialogue open");
                 boxState = 1;
                 playSound = true;
-                //yield return new WaitForSeconds(0.075f);
-                //timer = 0.075f;
                 if (dialogueType == 3)
                 {
                     portrait.SetActive(true);
@@ -196,45 +186,6 @@ public class DialogueBox : MonoBehaviour
                 }
                 else
                 {
-                    //for (int i = 0; i < textList[(int)pointer.x].Length; i++)
-                    //{
-                    //    if (forcedClosed)
-                    //    {
-                    //        break;
-                    //    }
-                    //    dialogueText.text += textList[(int)pointer.x][i];
-                    //    dialogueShadow.text = dialogueText.text;
-                    //    if (textList[(int)pointer.x][i] != ' ' && playSound)
-                    //    {
-                    //        switch (currentSpeaker % 4)
-                    //        {
-                    //            case 0:
-                    //                sfx.PlayOneShot(dialogue0);
-                    //                break;
-                    //            case 1:
-                    //                sfx.PlayOneShot(dialogue1);
-                    //                break;
-                    //            case 2:
-                    //                sfx.PlayOneShot(dialogue2);
-                    //                break;
-                    //            case 3:
-                    //                sfx.PlayOneShot(dialogue3);
-                    //                break;
-                    //        }
-                    //    }
-                    //    playSound = !playSound;
-                    //    if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-                    //    {
-                    //        buttonDown = false;
-                    //    }
-                    //    if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && dialogueType == 3)
-                    //    {
-                    //        buttonDown = true;
-                    //        dialogueText.text = textList[(int)pointer.x];
-                    //        dialogueShadow.text = textList[(int)pointer.x];
-                    //        break;
-                    //    }
-                    //}
                     if (boxOpenAnimComplete)
                     {
                         if (pointer.y < textList[(int)pointer.x].Length)
@@ -336,7 +287,6 @@ public class DialogueBox : MonoBehaviour
             PlayState.gameState = "Game";
             StartCoroutine(nameof(ReturnMusicVol));
         }
-        readyToTalk = true;
     }
 
     public void RunBox(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
@@ -352,192 +302,7 @@ public class DialogueBox : MonoBehaviour
         left = facingLeft;
 
         active = true;
-        //IEnumerator cor = Box(type, speaker, text, colors, stateList, facingLeft);
-        //StartCoroutine(cor);
     }
-
-    //public IEnumerator Box(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
-    //{
-    //    while (!readyToTalk)
-    //    {
-    //        Debug.Log(Random.Range(1, 10000));
-    //        yield return new WaitForEndOfFrame();
-    //    }
-    //    Debug.Log("We're in");
-    //    active = true;
-    //    readyToTalk = false;
-    //    forcedClosed = false;
-    //    while (active)
-    //    {
-    //        switch (boxState)
-    //        // Case 0 = dialogue box opens
-    //        // Case 1 = initalization of text
-    //        // Case 2 = waiting for a button press to advance text
-    //        // Case 3 = dialogue box closes
-    //        // Case 4 = static box for single-page dialogue
-    //        {
-    //            case 0:
-    //                anim.Play("Dialogue open");
-    //                boxState = 1;
-    //                dialogueType = type;
-    //                playSound = true;
-    //                yield return new WaitForSeconds(0.075f);
-    //                if (type == 3)
-    //                {
-    //                    portrait.SetActive(true);
-    //                }
-    //                portraitPos = 1;
-    //                break;
-    //            case 1:
-    //                if (type == 3)
-    //                {
-    //                    if (stateList[pointer] != 0)
-    //                    {
-    //                        for (int i = 0; i < portraitParts.Count - 1; i++)
-    //                            portraitParts[i].color = colors[(i + 1) * stateList[pointer] - 1];
-    //                        for (int i = 0; i < portraitParts.Count - 1; i++)
-    //                        {
-    //                            portraitParts[i].enabled = true;
-    //                            if (facingLeft)
-    //                                portraitParts[i].flipX = true;
-    //                            else
-    //                                portraitParts[i].flipX = false;
-    //                        }
-    //                        portraitParts[5].enabled = false;
-    //                    }
-    //                    else if (stateList[pointer] == 0)
-    //                    {
-    //                        for (int i = 0; i < portraitParts.Count - 1; i++)
-    //                            portraitParts[i].enabled = false;
-    //                        portraitParts[5].enabled = true;
-    //                        if (facingLeft)
-    //                            portraitParts[5].flipX = false;
-    //                        else
-    //                            portraitParts[5].flipX = true;
-    //                    }
-    //                }
-    //
-    //                if (type == 1)
-    //                {
-    //                    dialogueText.text = text[pointer];
-    //                    dialogueShadow.text = text[pointer];
-    //                    pointer++;
-    //                    boxState = 2;
-    //                    if (pointer == 1)
-    //                    {
-    //                        yield return new WaitForSeconds(4);
-    //                    }
-    //                    else
-    //                    {
-    //                        yield return new WaitForEndOfFrame();
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    for (int i = 0; i < text[pointer].Length; i++)
-    //                    {
-    //                        if (forcedClosed)
-    //                        {
-    //                            break;
-    //                        }
-    //                        dialogueText.text += text[pointer][i];
-    //                        dialogueShadow.text = dialogueText.text;
-    //                        if (text[pointer][i] != ' ' && playSound)
-    //                        {
-    //                            switch (speaker % 4)
-    //                            {
-    //                                case 0:
-    //                                    sfx.PlayOneShot(dialogue0);
-    //                                    break;
-    //                                case 1:
-    //                                    sfx.PlayOneShot(dialogue1);
-    //                                    break;
-    //                                case 2:
-    //                                    sfx.PlayOneShot(dialogue2);
-    //                                    break;
-    //                                case 3:
-    //                                    sfx.PlayOneShot(dialogue3);
-    //                                    break;
-    //                            }
-    //                        }
-    //                        playSound = !playSound;
-    //                        if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-    //                        {
-    //                            buttonDown = false;
-    //                        }
-    //                        if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && type == 3)
-    //                        {
-    //                            buttonDown = true;
-    //                            dialogueText.text = text[pointer];
-    //                            dialogueShadow.text = text[pointer];
-    //                            break;
-    //                        }
-    //                        yield return new WaitForFixedUpdate();
-    //                    }
-    //                    if (type == 2)
-    //                    {
-    //                        boxState = 4;
-    //                    }
-    //                    else if (type == 3)
-    //                    {
-    //                        pointer++;
-    //                        boxState = 2;
-    //                    }
-    //                }
-    //                yield return new WaitForEndOfFrame();
-    //                break;
-    //            case 2:
-    //                anim.Play("Dialogue continue", 0, 0);
-    //                if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-    //                {
-    //                    buttonDown = false;
-    //                }
-    //                if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
-    //                {
-    //                    buttonDown = true;
-    //                    anim.Play("Dialogue hold", 0, 0);
-    //                    if (pointer == text.Count)
-    //                    {
-    //                        boxState = 3;
-    //                        yield return new WaitForEndOfFrame();
-    //                    }
-    //                    else
-    //                    {
-    //                        if (type == 3)
-    //                        {
-    //                            dialogueText.text = "";
-    //                            dialogueShadow.text = "";
-    //                        }
-    //                        boxState = 1;
-    //                        yield return new WaitForEndOfFrame();
-    //                    }
-    //                }
-    //                yield return new WaitForEndOfFrame();
-    //                break;
-    //            case 3:
-    //                CloseBox();
-    //                yield return new WaitForEndOfFrame();
-    //                break;
-    //            case 4:
-    //                yield return new WaitForEndOfFrame();
-    //                break;
-    //            default:
-    //                yield return new WaitForEndOfFrame();
-    //                break;
-    //        }
-    //        if (boxState == 3 && type == 1)
-    //        {
-    //            PlayState.activeMus.clip = PlayState.areaMus;
-    //            PlayState.activeMus.time = PlayState.playbackTime;
-    //            PlayState.activeMus.volume = 0;
-    //            PlayState.activeMus.Play();
-    //            PlayState.gameState = "Game";
-    //            StartCoroutine(nameof(ReturnMusicVol));
-    //        }
-    //    }
-    //    readyToTalk = true;
-    //    Debug.Log("Fallen out");
-    //}
 
     public IEnumerator ReturnMusicVol()
     {

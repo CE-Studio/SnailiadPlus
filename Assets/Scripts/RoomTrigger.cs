@@ -77,6 +77,8 @@ public class RoomTrigger : MonoBehaviour
                 }
             }
 
+            string newRoomName = "";
+
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
@@ -114,34 +116,20 @@ public class RoomTrigger : MonoBehaviour
                         break;
 
                     case "Fake Boundary":
-                        FakeRoomBorder border = child.GetComponent<FakeRoomBorder>();
-                        GameObject cam = GameObject.Find("View");
-                        if (!border.direction)
+                        string thisRoomName = child.parent.name;
+                        if (thisRoomName.Contains("/"))
                         {
-                            PlayState.camTempBufferTruePos.y = child.transform.position.y;
-                            if (border.workingDirections >= 2 && cam.transform.position.y > child.transform.position.y)
+                            FakeRoomBorder childScript = child.GetComponent<FakeRoomBorder>();
+                            int stringHalf = 0;
+                            if ((childScript.direction && childScript.initialPosRelative.x == 1) || (!childScript.direction && childScript.initialPosRelative.y == 1))
+                                stringHalf = 1;
+                            string splitString = thisRoomName.Split('/')[stringHalf];
+                            foreach (char character in splitString)
                             {
-                                PlayState.camTempBuffersY.x = PlayState.camCenter.y + (PlayState.camBoundaryBuffers.y * 2) - PlayState.camTempBufferTruePos.y;
-                                PlayState.posRelativeToTempBuffers.y = 1;
-                            }
-                            if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.y < child.transform.position.y)
-                            {
-                                PlayState.camTempBuffersY.y = PlayState.camCenter.y - (PlayState.camBoundaryBuffers.y * 2) + PlayState.camTempBufferTruePos.y;
-                                PlayState.posRelativeToTempBuffers.y = -1;
-                            }
-                        }
-                        else
-                        {
-                            PlayState.camTempBufferTruePos.x = child.transform.position.x;
-                            if (border.workingDirections >= 2 && cam.transform.position.x > child.transform.position.x)
-                            {
-                                PlayState.camTempBuffersX.x = PlayState.camCenter.x + (PlayState.camBoundaryBuffers.x * 2) - PlayState.camTempBufferTruePos.x;
-                                PlayState.posRelativeToTempBuffers.x = 1;
-                            }
-                            if ((border.workingDirections == 1 || border.workingDirections == 3) && cam.transform.position.x < child.transform.position.x)
-                            {
-                                PlayState.camTempBuffersX.y = PlayState.camCenter.x - (PlayState.camBoundaryBuffers.x * 2) + PlayState.camTempBufferTruePos.x;
-                                PlayState.posRelativeToTempBuffers.x = -1;
+                                if (character == '|')
+                                    newRoomName += "\n";
+                                else
+                                    newRoomName += character;
                             }
                         }
                         break;
@@ -153,13 +141,15 @@ public class RoomTrigger : MonoBehaviour
                 }
             }
 
-            string newRoomName = "";
-            foreach (char character in transform.name)
+            if (newRoomName == "")
             {
-                if (character == '|')
-                    newRoomName += "\n";
-                else
-                    newRoomName += character;
+                foreach (char character in transform.name)
+                {
+                    if (character == '|')
+                        newRoomName += "\n";
+                    else
+                        newRoomName += character;
+                }
             }
             roomNameText.text = newRoomName;
             roomNameShadow.text = newRoomName;
