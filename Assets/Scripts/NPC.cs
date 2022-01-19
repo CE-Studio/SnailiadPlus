@@ -264,6 +264,10 @@ public class NPC : MonoBehaviour
                             textToSend.Add("It\'s so cozy in here!  I just\nlove my little underground\nhome!");
                         break;
 
+                    case 10:
+                        textToSend.Add("Oh, " + playerFullName + "!  My heart\nwill forever belong to you!\n             <3\n");
+                        break;
+
                     case 14:
                         if (PlayState.helixCount < 15)
                             textToSend.Add("Hey, " + playerName + "!  Keep an eye out\nfor \"Helix Fragments\".  They\nlook like spinning white shells!");

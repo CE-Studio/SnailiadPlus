@@ -367,9 +367,9 @@ public class Player : MonoBehaviour
     {
         if (hearts.transform.childCount != 0)
         {
-            for (int i = hearts.transform.childCount; i > -1; i--)
+            for (int i = hearts.transform.childCount - 1; i > -1; i--)
             {
-                Destroy(hearts.transform.GetChild(i));
+                Destroy(hearts.transform.GetChild(i).gameObject);
             }
         }
         for (int i = 0; i < maxHealth * 0.25f; i++)

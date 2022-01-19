@@ -34,6 +34,11 @@ public class Item : MonoBehaviour
             anim.Play("Helix Fragment", 0, 0);
             box.size = new Vector2(0.95f, 0.95f);
         }
+        else if (itemID >= PlayState.OFFSET_HEARTS)
+        {
+            anim.Play("Heart Container", 0, 0);
+            box.size = new Vector2(1.95f, 1.95f);
+        }
         else
         {
             switch (itemID)
@@ -69,6 +74,11 @@ public class Item : MonoBehaviour
         {
             anim.Play("Helix Fragment", 0, 0);
             box.size = new Vector2(0.95f, 0.95f);
+        }
+        else if (itemID >= PlayState.OFFSET_HEARTS)
+        {
+            anim.Play("Heart Container", 0, 0);
+            box.size = new Vector2(1.95f, 1.95f);
         }
         else
         {
@@ -106,7 +116,12 @@ public class Item : MonoBehaviour
             if (itemID >= PlayState.OFFSET_FRAGMENTS)
                 PlayState.helixCount++;
             else if (itemID >= PlayState.OFFSET_HEARTS)
+            {
                 PlayState.heartCount++;
+                PlayState.playerScript.maxHealth += 4;
+                PlayState.playerScript.health = PlayState.playerScript.maxHealth;
+                PlayState.playerScript.RenderNewHearts();
+            }
             if (isSuperUnique)
                 sfx.PlayOneShot(majorJingle);
             else
@@ -168,16 +183,16 @@ public class Item : MonoBehaviour
             switch (player.GetComponent<Player>().gravityDir)
             {
                 case 0:
-                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.75f));
+                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.75f) + 0.25f);
                     break;
                 case 1:
-                    transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.75f), player.transform.position.y);
+                    transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.75f) + 0.25f, player.transform.position.y);
                     break;
                 case 2:
-                    transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.75f), player.transform.position.y);
+                    transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.75f) - 0.25f, player.transform.position.y);
                     break;
                 case 3:
-                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.75f));
+                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.75f) - 0.25f);
                     break;
             }
             yield return new WaitForEndOfFrame();
