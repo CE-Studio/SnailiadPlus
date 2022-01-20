@@ -78,7 +78,7 @@ public class PlayState
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
 
-    public static Vector2 respawnCoords = new Vector2(6, 8.5f);
+    public static Vector2 respawnCoords = new Vector2(84, 88.5f);
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
     public static TextMesh fpsText = GameObject.Find("View/FPS Text").GetComponent<TextMesh>();
