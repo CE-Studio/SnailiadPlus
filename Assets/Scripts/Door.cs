@@ -164,7 +164,7 @@ public class Door : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            if (!locked && ((collision.GetComponent<Bullet>().bulletType >= doorWeapon && doorWeapon != 3) || (collision.GetComponent<Bullet>().bulletType >= 4 && doorWeapon == 3)))
+            if (!locked && ((collision.GetComponent<Bullet>().bulletType > doorWeapon && doorWeapon != 3) || (collision.GetComponent<Bullet>().bulletType >= 4 && doorWeapon == 3)))
             {
                 SetState0();
             }
