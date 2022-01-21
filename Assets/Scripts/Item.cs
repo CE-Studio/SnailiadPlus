@@ -105,13 +105,17 @@ public class Item : MonoBehaviour
     public void CheckIfCollected()
     {
         if (PlayState.itemCollection[itemID] == 1)
+        {
+            collected = true;
             SetDeactivated();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            collected = true;
             PlayState.AddItem(itemID);
             if (itemID >= PlayState.OFFSET_FRAGMENTS)
                 PlayState.helixCount++;

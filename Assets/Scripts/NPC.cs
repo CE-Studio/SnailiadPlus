@@ -257,6 +257,13 @@ public class NPC : MonoBehaviour
                             textToSend.Add("Snail Town is safe again,\nthanks to you, " + playerName + "!");
                         break;
 
+                    case 8:
+                        if (PlayState.IsTileSolid(new Vector2(transform.position.x + 8.5f, transform.position.y)))
+                            textToSend.Add("There\'s something funny about\nthat tree...");
+                        else
+                            textToSend.Add("I knew there was something\nweird about that tree!!");
+                        break;
+
                     case 9:
                         if (PlayState.itemPercentage < 100)
                             textToSend.Add("The other snails live in houses,\nbut I like it here in the dirt.\nIsn\'t it nice in here?");
@@ -265,7 +272,18 @@ public class NPC : MonoBehaviour
                         break;
 
                     case 10:
-                        textToSend.Add("Oh, " + playerFullName + "!  My heart\nwill forever belong to you!\n             <3\n");
+                        textToSend.Add("Oh, " + playerFullName + "!  My heart\nwill forever belong to you!\n             <3");
+                        break;
+
+                    case 12:
+                        if (!transform.parent.Find("Item").GetComponent<Item>().collected)
+                            textToSend.Add("Heya, " + playerName + "! I filled the heart\ncontainer over there with some\nfresh slime! Enjoy!!");
+                        else
+                            textToSend.Add("Isn\'t breaking blocks fun!?");
+                        break;
+
+                    case 13:
+                        textToSend.Add("Wow!  It looks like you\'ve\nfound " + PlayState.GetItemPercentage() + "% of the items in this\ngame!  Nice going, " + playerName + "!");
                         break;
 
                     case 14:
@@ -345,6 +363,23 @@ public class NPC : MonoBehaviour
                             textToSend.Add("Hey, " + playerName + "! If you had a\nboomerang, you could break\nall sorts of walls!");
                         else
                             textToSend.Add("Up, up, down, down, left,\nright...  Wait, never mind,\nthat\'s for some other game.");
+                        break;
+
+                    case 22:
+                        if (PlayState.GetItemPercentage() < 100)
+                            textToSend.Add("I are Cave Snail!\nThorgle Borgle!!!!");
+                        else
+                            textToSend.Add("Thorgle Borgle!!!!!!!");
+                        PlayState.talkedToCaveSnail = true;
+                        break;
+
+                    case 23:
+                        if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
+                            textToSend.Add("Cave Snail scares me!\nI\'m staying over here!");
+                        else if (PlayState.GetItemPercentage() < 60)
+                            textToSend.Add("Hey, if you get stuck, just hit\nESCAPE and load your game from\ntown!  You won\'t lose any items!");
+                        else
+                            textToSend.Add("Do you think Cave Snail\nis single?");
                         break;
 
                     case 25:
@@ -431,6 +466,10 @@ public class NPC : MonoBehaviour
                 break;
             case 4:
                 if (!PlayState.IsTileSolid(new Vector2(transform.position.x - 2.5f, transform.position.y)) && nexted == 0)
+                    Next();
+                break;
+            case 8:
+                if (!PlayState.IsTileSolid(new Vector2(transform.position.x + 8.5f, transform.position.y)) && nexted == 0)
                     Next();
                 break;
             case 16:

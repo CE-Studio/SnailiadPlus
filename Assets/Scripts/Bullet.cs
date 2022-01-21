@@ -47,10 +47,10 @@ public class Bullet : MonoBehaviour
                         velocity = velocity - 0.0125f;
                         break;
                     case 3:
-                        velocity = velocity + 0.04f;
+                        velocity = velocity + 0.035f;
                         break;
                     default:
-                        velocity = velocity + 0.04f;
+                        velocity = velocity + 0.035f;
                         break;
                 }
                 switch (direction)
@@ -147,7 +147,7 @@ public class Bullet : MonoBehaviour
                 break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
-                velocity = 0;
+                velocity = 0.025f;
                 damage = 30;
                 break;
         }

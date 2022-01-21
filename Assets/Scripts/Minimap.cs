@@ -7,6 +7,7 @@ public class Minimap : MonoBehaviour
     public GameObject player;
     public GameObject minimap;
 
+    private int currentCellID;
     private int lastCellID;
     private Vector2 origin = new Vector2(0.5f, 0.5f);
 
@@ -49,25 +50,26 @@ public class Minimap : MonoBehaviour
             -Mathf.Round((origin.x + player.transform.position.x - 1 + 13) / 26) * 0.5f + 0.25f,
             -Mathf.Round((origin.y + player.transform.position.y - 1 + 8) / 16) * 0.5f + 0.25f
             );
-        if (CurrentCellID() >= 0 && CurrentCellID() < currentMap.Length && !PlayState.playerScript.inDeathCutscene)
+        currentCellID = CurrentCellID();
+        if (currentCellID >= 0 && currentCellID < currentMap.Length && !PlayState.playerScript.inDeathCutscene)
         {
-            if (currentMap[CurrentCellID()] == 0 || currentMap[CurrentCellID()] == 2)
-                currentMap[CurrentCellID()]++;
+            if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2)
+                currentMap[currentCellID]++;
         }
-        if (lastCellID != CurrentCellID())
+        if (lastCellID != currentCellID)
         {
             for (int i = 0; i < masks.Length; i++)
             {
-                if (CurrentCellID() + maskIDoffsets[i] >= 0 && CurrentCellID() + maskIDoffsets[i] < currentMap.Length)
+                if (currentCellID + maskIDoffsets[i] >= 0 && currentCellID + maskIDoffsets[i] < currentMap.Length)
                 {
-                    if (currentMap[CurrentCellID() + maskIDoffsets[i]] == 1 || currentMap[CurrentCellID() + maskIDoffsets[i]] == 3)
+                    if (currentMap[currentCellID + maskIDoffsets[i]] == 1 || currentMap[currentCellID + maskIDoffsets[i]] == 3)
                         masks[i].SetActive(false);
                     else
                         masks[i].SetActive(true);
                 }
             }
         }
-        lastCellID = CurrentCellID();
+        lastCellID = currentCellID;
     }
 
     private int CurrentCellID()
