@@ -209,8 +209,10 @@ public class Player : MonoBehaviour
     {
         if (resetAudioSources)
         {
-            while (PlayState.musicParent.childCount > 0)
-                Destroy(PlayState.musicParent.GetChild(0));
+            //while (PlayState.musicParent.childCount > 0)
+            //    Destroy(PlayState.musicParent.GetChild(0));
+            for (int i = PlayState.musicParent.childCount - 1; i >= 0; i--)
+                Destroy(PlayState.musicParent.GetChild(i).gameObject);
 
             for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
             {

@@ -40,6 +40,10 @@ public class PlayState
         {
             (AudioClip)Resources.Load("Sounds/Music/SnailTown"),
             (AudioClip)Resources.Load("Sounds/Music/TestZone")
+        },
+        new AudioClip[]
+        {
+            (AudioClip)Resources.Load("Sounds/Music/MareCarelia")
         }
     };
     public static float[][] musicLoopOffsets = new float[][]
@@ -48,6 +52,11 @@ public class PlayState
         {
             0,           // End-of-intro loop point (in seconds)
             40.5067125f  // End time (in seconds)
+        },
+        new float[] // Mare Carelia
+        {
+            0,
+            41.154264f
         }
     };
     public static int currentArea = -1;
