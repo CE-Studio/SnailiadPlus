@@ -382,6 +382,13 @@ public class NPC : MonoBehaviour
                             textToSend.Add("Do you think Cave Snail\nis single?");
                         break;
 
+                    case 24:
+                        if (!transform.parent.Find("Item").GetComponent<Item>().collected)
+                            textToSend.Add("Take this Helix Fragment!\nLegend says it is but one\npiece of Iris, the Godsnail!");
+                        else
+                            textToSend.Add(playerName + ", legend says the\nShrine of Iris is somewhere\nvery close to Snail Town!!");
+                        break;
+
                     case 25:
                         if (PlayState.CheckForItem("Peashooter"))
                             textToSend.Add("Have you tried hitting \"M\"\nyet?  It makes the map big!  Oh,\nand hit \"ESC\" for the menu!");
