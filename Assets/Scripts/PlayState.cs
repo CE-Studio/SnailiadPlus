@@ -31,6 +31,7 @@ public class PlayState
     public static int thisExplosionID = 0;
     public static bool isTalking = false;
     public static bool hasJumped = false;
+    public static Vector2 positionOfLastRoom = Vector2.zero;
 
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
@@ -75,6 +76,7 @@ public class PlayState
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
     public static GameObject achievement = GameObject.Find("View/Achievement Panel");
     public static GameObject explosionPool = GameObject.Find("Explosion Pool");
+    public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
 
     public static bool paralyzed = false;
     public static bool isArmed = false;

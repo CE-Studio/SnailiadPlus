@@ -209,13 +209,22 @@ public class Player : MonoBehaviour
     {
         if (resetAudioSources)
         {
-            //while (PlayState.musicParent.childCount > 0)
-            //    Destroy(PlayState.musicParent.GetChild(0));
-            for (int i = PlayState.musicParent.childCount - 1; i >= 0; i--)
-                Destroy(PlayState.musicParent.GetChild(i).gameObject);
+            Debug.Log("flag1");
+            PlayState.musicSourceArray.Clear();
+            //for (int i = PlayState.musicParent.childCount - 1; i >= 0; i--)
+            //{
+            //    GameObject obj = PlayState.musicParent.GetChild(i).gameObject;
+            //    PlayState.musicSourceArray.RemoveAt(i);
+            //    GameObject.Destroy(obj);
+            //}
+            foreach (Transform obj in PlayState.musicParent.transform)
+                Destroy(obj.gameObject);
+            Debug.Log("flag2");
+            Debug.Log(PlayState.musicSourceArray.Count);
 
             for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
             {
+                Debug.Log("flag3");
                 for (int j = 0; j < 2; j++)
                 {
                     GameObject newSource = new GameObject();
@@ -229,12 +238,18 @@ public class Player : MonoBehaviour
                         newSource.GetComponent<AudioSource>().Play();
                     }
                 }
+                Debug.Log(PlayState.musicSourceArray.Count);
+                Debug.Log("flag4");
             }
+            Debug.Log("flag5");
 
             nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
         }
-        for (int i = 0; i * 2 < PlayState.musicParent.childCount; i++)
+        Debug.Log("flag6");
+        Debug.Log(PlayState.musicSourceArray.Count);
+        for (int i = 0; i * 2 < PlayState.musicSourceArray.Count; i++)
         {
+            Debug.Log(PlayState.musicParent.childCount);
             if (i == subzone)
             {
                 PlayState.musicSourceArray[i * 2].volume = PlayState.musicVol;
@@ -246,6 +261,7 @@ public class Player : MonoBehaviour
                 PlayState.musicSourceArray[i * 2 + 1].volume = 0;
             }
         }
+        Debug.Log("flag8");
         PlayState.playingMusic = true;
     }
 

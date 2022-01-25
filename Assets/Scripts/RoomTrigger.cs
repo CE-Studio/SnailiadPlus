@@ -67,14 +67,14 @@ public class RoomTrigger : MonoBehaviour
 
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;
-            foreach (Transform trigger in transform.parent)
+            Vector2 thisTriggerPos = new Vector2(areaID, transform.GetSiblingIndex());
+            if (thisTriggerPos != PlayState.positionOfLastRoom)
             {
-                if (!trigger.GetComponent<Collider2D>().enabled && trigger.name != transform.name)
-                {
-                    trigger.GetComponent<Collider2D>().enabled = true;
-                    trigger.GetComponent<RoomTrigger>().active = true;
-                    trigger.GetComponent<RoomTrigger>().DespawnEverything();
-                }
+                Transform previousTrigger = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+                previousTrigger.GetComponent<Collider2D>().enabled = true;
+                previousTrigger.GetComponent<RoomTrigger>().active = true;
+                previousTrigger.GetComponent<RoomTrigger>().DespawnEverything();
+                PlayState.positionOfLastRoom = thisTriggerPos;
             }
 
             string newRoomName = "";
