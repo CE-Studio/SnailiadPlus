@@ -65,7 +65,10 @@ public class Item : MonoBehaviour
 
     void Update()
     {
-        
+        if (PlayState.gameState == "Game")
+            anim.speed = 1;
+        else
+            anim.speed = 0;
     }
 
     public void SetAnim()
@@ -200,7 +203,8 @@ public class Item : MonoBehaviour
                     break;
             }
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            if (PlayState.gameState == "Game")
+                timer += Time.deltaTime;
         }
         SetDeactivated();
     }

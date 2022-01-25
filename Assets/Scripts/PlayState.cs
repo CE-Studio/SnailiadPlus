@@ -7,7 +7,9 @@ using UnityEngine.Tilemaps;
 
 public class PlayState
 {
-    public static string gameState = "Game"; // Can be "Game", "Pause", or "Dialogue" as of now
+    public static string gameState = "Game"; // Can be "Game", "Menu", "Pause", or "Dialogue" as of now
+
+    public static bool isMenuOpen = false;
 
     public static Transform musicParent = GameObject.Find("View/Music Parent").transform;
     public static List<AudioSource> musicSourceArray = new List<AudioSource>();
@@ -77,6 +79,7 @@ public class PlayState
     public static GameObject achievement = GameObject.Find("View/Achievement Panel");
     public static GameObject explosionPool = GameObject.Find("Explosion Pool");
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
+    public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
@@ -288,27 +291,27 @@ public class PlayState
                 break;
             case "Room Transition":
                 screenCover.GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, 200);
-                player.GetComponent<Player>().ExecuteCoverCommand(type);
+                playerScript.ExecuteCoverCommand(type);
                 break;
             case "Death Transition":
-                player.GetComponent<Player>().ExecuteCoverCommand(type);
+                playerScript.ExecuteCoverCommand(type);
                 break;
         }
     }
 
     public static void FlashItemText(string item)
     {
-        player.GetComponent<Player>().FlashItemText(item);
+        playerScript.FlashItemText(item);
     }
 
     public static void FlashCollectionText()
     {
-        player.GetComponent<Player>().FlashCollectionText();
+        playerScript.FlashCollectionText();
     }
 
     public static void FlashSaveText()
     {
-        player.GetComponent<Player>().FlashSaveText();
+        playerScript.FlashSaveText();
     }
 
     public static void RequestExplosion(int size, Vector2 position)
@@ -556,7 +559,7 @@ public class PlayState
             data.saveCoords = respawnCoords;
             data.character = currentCharacter;
             data.items = itemCollection;
-            data.weapon = player.GetComponent<Player>().selectedWeapon;
+            data.weapon = playerScript.selectedWeapon;
             data.bossStates = bossStates;
             data.NPCVars = new int[]
             {

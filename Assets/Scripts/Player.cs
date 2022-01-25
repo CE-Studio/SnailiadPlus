@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const int DIR_FLOOR = 0;
-    //private bool inShell = false;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
@@ -73,6 +72,11 @@ public class Player : MonoBehaviour
     int pingTimer = 0;
     int explodeTimer = 0;
 
+    // Area name text
+    float areaTextTimer = 0;
+    int lastAreaID = -1;
+    TextMesh[] areaText;
+
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()
     {
@@ -100,6 +104,12 @@ public class Player : MonoBehaviour
         PlayState.AssignProperCollectibleIDs();
 
         StartCoroutine("DebugKeys");
+
+        areaText = new TextMesh[]
+        {
+            GameObject.Find("View/Area Name Text/Text").GetComponent<TextMesh>(),
+            GameObject.Find("View/Area Name Text/Shadow").GetComponent<TextMesh>()
+        };
     }
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
@@ -107,6 +117,8 @@ public class Player : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
+            anim.speed = 1;
+
             // These are only here to make sure they're called once, before anything else that needs it
             if (PlayState.armorPingPlayedThisFrame)
             {
@@ -139,6 +151,66 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Alpha3) && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
                 ChangeActiveWeapon(2);
 
+            // Area name text
+            if (lastAreaID != PlayState.currentArea)
+            {
+                lastAreaID = PlayState.currentArea;
+                string areaName = "???";
+                switch (lastAreaID)
+                {
+                    case 0:
+                        areaName = "Snail Town";
+                        break;
+                    case 1:
+                        areaName = "Mare Carelia";
+                        break;
+                    case 2:
+                        areaName = "Spiralis Silere";
+                        break;
+                    case 3:
+                        areaName = "Amastrida Abyssus";
+                        break;
+                    case 4:
+                        areaName = "Lux Lirata";
+                        break;
+                    case 5:
+                        if (PlayState.hasSeenIris)
+                            areaName = "Shrine of Iris";
+                        break;
+                    case 6:
+                        areaName = "Shrine of Iris";
+                        break;
+                    case 7:
+                        areaName = "Boss Rush";
+                        break;
+                }
+                if (areaName != areaText[0].text)
+                    areaTextTimer = 0;
+                areaText[0].text = areaName;
+                areaText[1].text = areaName;
+            }
+            areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
+            if (areaTextTimer < 0.5f)
+            {
+                areaText[0].color = new Color32(255, 255, 255, (byte)Mathf.Round(Mathf.Lerp(0, 255, areaTextTimer * 2)));
+                areaText[1].color = new Color32(0, 0, 0, (byte)Mathf.Round(Mathf.Lerp(0, 255, areaTextTimer * 2)));
+            }
+            else if (areaTextTimer < 3.5f)
+            {
+                areaText[0].color = new Color32(255, 255, 255, 255);
+                areaText[1].color = new Color32(0, 0, 0, 255);
+            }
+            else if (areaTextTimer < 4)
+            {
+                areaText[0].color = new Color32(255, 255, 255, (byte)Mathf.Round(Mathf.Lerp(255, 0, (areaTextTimer - 3.5f) * 2)));
+                areaText[1].color = new Color32(0, 0, 0, (byte)Mathf.Round(Mathf.Lerp(255, 0, (areaTextTimer - 3.5f) * 2)));
+            }
+            else
+            {
+                areaText[0].color = new Color32(255, 255, 255, 0);
+                areaText[1].color = new Color32(0, 0, 0, 0);
+            }
+
             // Music looping
             if (!PlayState.playingMusic)
                 return;
@@ -157,6 +229,8 @@ public class Player : MonoBehaviour
                 PlayState.musFlag = !PlayState.musFlag;
             }
         }
+        else
+            anim.speed = 0;
     }
 
     void LateUpdate()
@@ -209,22 +283,12 @@ public class Player : MonoBehaviour
     {
         if (resetAudioSources)
         {
-            Debug.Log("flag1");
             PlayState.musicSourceArray.Clear();
-            //for (int i = PlayState.musicParent.childCount - 1; i >= 0; i--)
-            //{
-            //    GameObject obj = PlayState.musicParent.GetChild(i).gameObject;
-            //    PlayState.musicSourceArray.RemoveAt(i);
-            //    GameObject.Destroy(obj);
-            //}
             foreach (Transform obj in PlayState.musicParent.transform)
                 Destroy(obj.gameObject);
-            Debug.Log("flag2");
-            Debug.Log(PlayState.musicSourceArray.Count);
 
             for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
             {
-                Debug.Log("flag3");
                 for (int j = 0; j < 2; j++)
                 {
                     GameObject newSource = new GameObject();
@@ -238,18 +302,12 @@ public class Player : MonoBehaviour
                         newSource.GetComponent<AudioSource>().Play();
                     }
                 }
-                Debug.Log(PlayState.musicSourceArray.Count);
-                Debug.Log("flag4");
             }
-            Debug.Log("flag5");
 
             nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
         }
-        Debug.Log("flag6");
-        Debug.Log(PlayState.musicSourceArray.Count);
         for (int i = 0; i * 2 < PlayState.musicSourceArray.Count; i++)
         {
-            Debug.Log(PlayState.musicParent.childCount);
             if (i == subzone)
             {
                 PlayState.musicSourceArray[i * 2].volume = PlayState.musicVol;
@@ -261,7 +319,6 @@ public class Player : MonoBehaviour
                 PlayState.musicSourceArray[i * 2 + 1].volume = 0;
             }
         }
-        Debug.Log("flag8");
         PlayState.playingMusic = true;
     }
 

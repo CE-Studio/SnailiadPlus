@@ -47,10 +47,10 @@ public class Bullet : MonoBehaviour
                         velocity = velocity - 0.0125f;
                         break;
                     case 3:
-                        velocity = velocity + 0.035f;
+                        velocity = velocity + 0.03f;
                         break;
                     default:
-                        velocity = velocity + 0.035f;
+                        velocity = velocity + 0.03f;
                         break;
                 }
                 switch (direction)

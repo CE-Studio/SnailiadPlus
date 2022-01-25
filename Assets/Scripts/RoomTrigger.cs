@@ -52,7 +52,7 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && active)
+        if (collision.CompareTag("Player") && active && PlayState.gameState == "Game")
         {
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
