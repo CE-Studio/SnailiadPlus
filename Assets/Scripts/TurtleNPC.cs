@@ -15,26 +15,32 @@ public class TurtleNPC : NPC
 
     public override void Update()
     {
-        if (PlayState.player.transform.position.x < transform.position.x)
+        if (PlayState.gameState == "Game")
         {
-            sprite.flipX = true;
+            anim.speed = 1;
+            if (PlayState.player.transform.position.x < transform.position.x)
+            {
+                sprite.flipX = true;
+            }
+            else
+            {
+                sprite.flipX = false;
+            }
+
+            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 3 && !chatting)
+            {
+                List<string> textToSend = new List<string>();
+                textToSend.Add("After this game is over, I\'m\ngoing to get some pizza!!\n");
+                chatting = true;
+                PlayState.OpenDialogue(2, 52, textToSend);
+            }
+            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 5 && chatting)
+            {
+                chatting = false;
+                PlayState.CloseDialogue();
+            }
         }
         else
-        {
-            sprite.flipX = false;
-        }
-
-        if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 3 && !chatting)
-        {
-            List<string> textToSend = new List<string>();
-            textToSend.Add("After this game is over, I\'m\ngoing to get some pizza!!\n");
-            chatting = true;
-            PlayState.OpenDialogue(2, 52, textToSend);
-        }
-        else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 5 && chatting)
-        {
-            chatting = false;
-            PlayState.CloseDialogue();
-        }
+            anim.speed = 0;
     }
 }

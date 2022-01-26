@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class PlayState
 {
-    public static string gameState = "Game"; // Can be "Game", "Menu", "Pause", or "Dialogue" as of now
+    public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", or "Dialogue" as of now
 
     public static bool isMenuOpen = false;
 
