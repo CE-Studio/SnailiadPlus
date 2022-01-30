@@ -65,227 +65,230 @@ public class DialogueBox : MonoBehaviour
 
     void Update()
     {
-        timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
-
-        if (dialogueType != 3)
+        if (PlayState.gameState == "Game")
         {
-            if (player.transform.position.y > cam.transform.position.y + 0.125f || forceDownPosition)
+            timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
+
+            if (dialogueType != 3)
             {
-                if (active)
-                    camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
-                else
-                    camPos = -4.5f;
-            }
-            else
-            {
-                if (active)
-                    camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
-                else
-                    camPos = 4.5f;
-            }
-        }
-        else
-        {
-            camPos = -4.5f;
-        }
-
-        if (dialogueType != 1)
-        {
-            transform.localPosition = new Vector2(0, camPos);
-        }
-        else
-        {
-            transform.localPosition = Vector2.zero;
-        }
-
-        portrait.transform.localPosition = new Vector2(-10, portraitPos);
-        portraitPos = Mathf.Lerp(portraitPos, 3, 7 * Time.deltaTime);
-
-        if (dialogueType == 2 && boxState == 0)
-        {
-            if (player.transform.position.y > cam.transform.position.y + 0.125f)
-            {
-                camPos = transform.localPosition.y - 4.5f;
-            }
-            else
-            {
-                camPos = transform.localPosition.y + 4.5f;
-            }
-        }
-
-        if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + 0.125f)
-            roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x + 5, 8 * Time.deltaTime), roomTextOrigin.y);
-        else
-            roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
-
-        if (!active)
-            return;
-        forcedClosed = false;
-        switch (boxState)
-        // Case 0 = dialogue box opens
-        // Case 1 = initalization of text
-        // Case 2 = waiting for a button press to advance text
-        // Case 3 = dialogue box closes
-        // Case 4 = static box for single-page dialogue
-        {
-            case 0:
-                anim.Play("Dialogue open");
-                boxState = 1;
-                playSound = true;
-                if (dialogueType == 3)
+                if (player.transform.position.y > cam.transform.position.y + 0.125f || forceDownPosition)
                 {
-                    portrait.SetActive(true);
-                    buttonDown = true;
+                    if (active)
+                        camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
+                    else
+                        camPos = -4.5f;
                 }
-                portraitPos = 1;
-                break;
-            case 1:
-                if (dialogueType == 3)
+                else
                 {
-                    if (states[(int)pointer.x] != 0)
+                    if (active)
+                        camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
+                    else
+                        camPos = 4.5f;
+                }
+            }
+            else
+            {
+                camPos = -4.5f;
+            }
+
+            if (dialogueType != 1)
+            {
+                transform.localPosition = new Vector2(0, camPos);
+            }
+            else
+            {
+                transform.localPosition = Vector2.zero;
+            }
+
+            portrait.transform.localPosition = new Vector2(-10, portraitPos);
+            portraitPos = Mathf.Lerp(portraitPos, 3, 7 * Time.deltaTime);
+
+            if (dialogueType == 2 && boxState == 0)
+            {
+                if (player.transform.position.y > cam.transform.position.y + 0.125f)
+                {
+                    camPos = transform.localPosition.y - 4.5f;
+                }
+                else
+                {
+                    camPos = transform.localPosition.y + 4.5f;
+                }
+            }
+
+            if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + 0.125f)
+                roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x + 5, 8 * Time.deltaTime), roomTextOrigin.y);
+            else
+                roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
+
+            if (!active)
+                return;
+            forcedClosed = false;
+            switch (boxState)
+            // Case 0 = dialogue box opens
+            // Case 1 = initalization of text
+            // Case 2 = waiting for a button press to advance text
+            // Case 3 = dialogue box closes
+            // Case 4 = static box for single-page dialogue
+            {
+                case 0:
+                    anim.Play("Dialogue open");
+                    boxState = 1;
+                    playSound = true;
+                    if (dialogueType == 3)
                     {
-                        for (int i = 0; i < portraitParts.Count - 1; i++)
-                            portraitParts[i].color = portraitColors[(i + 1) * states[(int)pointer.x] - 1];
-                        for (int i = 0; i < portraitParts.Count - 1; i++)
+                        portrait.SetActive(true);
+                        buttonDown = true;
+                    }
+                    portraitPos = 1;
+                    break;
+                case 1:
+                    if (dialogueType == 3)
+                    {
+                        if (states[(int)pointer.x] != 0)
                         {
-                            portraitParts[i].enabled = true;
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                                portraitParts[i].color = portraitColors[(i + 1) * states[(int)pointer.x] - 1];
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                            {
+                                portraitParts[i].enabled = true;
+                                if (left)
+                                    portraitParts[i].flipX = true;
+                                else
+                                    portraitParts[i].flipX = false;
+                            }
+                            portraitParts[5].enabled = false;
+                        }
+                        else if (states[(int)pointer.x] == 0)
+                        {
+                            UpdatePlayerPortrait();
+                            for (int i = 0; i < portraitParts.Count - 1; i++)
+                                portraitParts[i].enabled = false;
+                            portraitParts[5].enabled = true;
                             if (left)
-                                portraitParts[i].flipX = true;
+                                portraitParts[5].flipX = false;
                             else
-                                portraitParts[i].flipX = false;
+                                portraitParts[5].flipX = true;
                         }
-                        portraitParts[5].enabled = false;
                     }
-                    else if (states[(int)pointer.x] == 0)
-                    {
-                        UpdatePlayerPortrait();
-                        for (int i = 0; i < portraitParts.Count - 1; i++)
-                            portraitParts[i].enabled = false;
-                        portraitParts[5].enabled = true;
-                        if (left)
-                            portraitParts[5].flipX = false;
-                        else
-                            portraitParts[5].flipX = true;
-                    }
-                }
 
-                if (dialogueType == 1)
-                {
-                    dialogueText.text = textList[(int)pointer.x];
-                    dialogueShadow.text = textList[(int)pointer.x];
-                    pointer.x++;
-                    boxState = 2;
-                    if (pointer.x == 1)
+                    if (dialogueType == 1)
                     {
-                        //yield return new WaitForSeconds(4);
-                    }
-                    else
-                    {
-                        //yield return new WaitForEndOfFrame();
-                    }
-                }
-                else
-                {
-                    if (boxOpenAnimComplete)
-                    {
-                        if (pointer.y < textList[(int)pointer.x].Length)
+                        dialogueText.text = textList[(int)pointer.x];
+                        dialogueShadow.text = textList[(int)pointer.x];
+                        pointer.x++;
+                        boxState = 2;
+                        if (pointer.x == 1)
                         {
-                            if (forcedClosed)
-                                break;
-                            if (timer == 0)
-                            {
-                                dialogueText.text += textList[(int)pointer.x][(int)pointer.y];
-                                dialogueShadow.text = dialogueText.text;
-                                if (textList[(int)pointer.x][(int)pointer.y] != ' ' && playSound)
-                                {
-                                    switch (currentSpeaker % 4)
-                                    {
-                                        case 0:
-                                            sfx.PlayOneShot(dialogue0);
-                                            break;
-                                        case 1:
-                                            sfx.PlayOneShot(dialogue1);
-                                            break;
-                                        case 2:
-                                            sfx.PlayOneShot(dialogue2);
-                                            break;
-                                        case 3:
-                                            sfx.PlayOneShot(dialogue3);
-                                            break;
-                                    }
-                                }
-                                playSound = !playSound;
-                                pointer.y++;
-                                timer = 0.02f;
-                            }
-                            if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-                                buttonDown = false;
-                            if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && dialogueType == 3)
-                            {
-                                buttonDown = true;
-                                dialogueText.text = textList[(int)pointer.x];
-                                dialogueShadow.text = dialogueText.text;
-                                pointer.y = textList[(int)pointer.x].Length;
-                                break;
-                            }
+                            //yield return new WaitForSeconds(4);
                         }
                         else
                         {
-                            if (dialogueType == 2)
-                            {
-                                boxState = 4;
-                            }
-                            else if (dialogueType == 3)
-                            {
-                                pointer.x++;
-                                pointer.y = 0;
-                                boxState = 2;
-                            }
+                            //yield return new WaitForEndOfFrame();
                         }
-                    }
-                }
-                break;
-            case 2:
-                anim.Play("Dialogue continue", 0, 0);
-                if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-                {
-                    buttonDown = false;
-                }
-                if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
-                {
-                    buttonDown = true;
-                    anim.Play("Dialogue hold", 0, 0);
-                    if (pointer.x == textList.Count)
-                    {
-                        boxState = 3;
                     }
                     else
                     {
-                        if (dialogueType == 3)
+                        if (boxOpenAnimComplete)
                         {
-                            dialogueText.text = "";
-                            dialogueShadow.text = "";
+                            if (pointer.y < textList[(int)pointer.x].Length)
+                            {
+                                if (forcedClosed)
+                                    break;
+                                if (timer == 0)
+                                {
+                                    dialogueText.text += textList[(int)pointer.x][(int)pointer.y];
+                                    dialogueShadow.text = dialogueText.text;
+                                    if (textList[(int)pointer.x][(int)pointer.y] != ' ' && playSound)
+                                    {
+                                        switch (currentSpeaker % 4)
+                                        {
+                                            case 0:
+                                                sfx.PlayOneShot(dialogue0);
+                                                break;
+                                            case 1:
+                                                sfx.PlayOneShot(dialogue1);
+                                                break;
+                                            case 2:
+                                                sfx.PlayOneShot(dialogue2);
+                                                break;
+                                            case 3:
+                                                sfx.PlayOneShot(dialogue3);
+                                                break;
+                                        }
+                                    }
+                                    playSound = !playSound;
+                                    pointer.y++;
+                                    timer = 0.02f;
+                                }
+                                if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
+                                    buttonDown = false;
+                                if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && dialogueType == 3)
+                                {
+                                    buttonDown = true;
+                                    dialogueText.text = textList[(int)pointer.x];
+                                    dialogueShadow.text = dialogueText.text;
+                                    pointer.y = textList[(int)pointer.x].Length;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (dialogueType == 2)
+                                {
+                                    boxState = 4;
+                                }
+                                else if (dialogueType == 3)
+                                {
+                                    pointer.x++;
+                                    pointer.y = 0;
+                                    boxState = 2;
+                                }
+                            }
                         }
-                        boxState = 1;
                     }
-                }
-                break;
-            case 3:
-                CloseBox();
-                break;
-            case 4:
-                break;
-            default:
-                break;
-        }
-        if (boxState == 3 && dialogueType == 1)
-        {
-            PlayState.activeMus.clip = PlayState.areaMus;
-            PlayState.activeMus.time = PlayState.playbackTime;
-            PlayState.activeMus.volume = 0;
-            PlayState.activeMus.Play();
-            PlayState.gameState = "Game";
-            StartCoroutine(nameof(ReturnMusicVol));
+                    break;
+                case 2:
+                    anim.Play("Dialogue continue", 0, 0);
+                    if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
+                    {
+                        buttonDown = false;
+                    }
+                    if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
+                    {
+                        buttonDown = true;
+                        anim.Play("Dialogue hold", 0, 0);
+                        if (pointer.x == textList.Count)
+                        {
+                            boxState = 3;
+                        }
+                        else
+                        {
+                            if (dialogueType == 3)
+                            {
+                                dialogueText.text = "";
+                                dialogueShadow.text = "";
+                            }
+                            boxState = 1;
+                        }
+                    }
+                    break;
+                case 3:
+                    CloseBox();
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
+            if (boxState == 3 && dialogueType == 1)
+            {
+                PlayState.activeMus.clip = PlayState.areaMus;
+                PlayState.activeMus.time = PlayState.playbackTime;
+                PlayState.activeMus.volume = 0;
+                PlayState.activeMus.Play();
+                PlayState.gameState = "Game";
+                StartCoroutine(nameof(ReturnMusicVol));
+            }
         }
     }
 

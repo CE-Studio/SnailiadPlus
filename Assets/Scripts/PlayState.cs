@@ -49,7 +49,7 @@ public class PlayState
             (AudioClip)Resources.Load("Sounds/Music/MareCarelia")
         }
     };
-    public static float[][] musicLoopOffsets = new float[][]
+    public static readonly float[][] musicLoopOffsets = new float[][]
     {
         new float[] // Snail Town
         {
@@ -81,6 +81,20 @@ public class PlayState
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
 
+    public static GameObject[] TogglableHUDElements = new GameObject[]
+    {
+        GameObject.Find("View/Minimap Panel"),
+        GameObject.Find("View/Hearts"),
+        GameObject.Find("View/Debug Keypress Indicators"),
+        GameObject.Find("View/Weapon Icons"),
+        GameObject.Find("View/Game Saved Text"),
+        GameObject.Find("View/Area Name Text"),
+        GameObject.Find("View/Item Get Text"),
+        GameObject.Find("View/Item Percentage Text"),
+        GameObject.Find("View/FPS Text"),
+        GameObject.Find("View/Dialogue Box")
+    };
+
     public static bool paralyzed = false;
     public static bool isArmed = false;
 
@@ -95,8 +109,8 @@ public class PlayState
     public static Vector2 respawnCoords = new Vector2(84, 88.5f);
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
-    public static TextMesh fpsText = GameObject.Find("View/FPS Text").GetComponent<TextMesh>();
-    public static TextMesh fpsShadow = GameObject.Find("View/FPS Shadow").GetComponent<TextMesh>();
+    public static TextMesh fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
+    public static TextMesh fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
 
     public static int currentProfile = 1;
     public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
@@ -107,7 +121,7 @@ public class PlayState
     public static int heartCount;
     public static int itemPercentage;
 
-    public static int[] defaultMinimapState = new int[]
+    public static readonly int[] defaultMinimapState = new int[]
     {
         0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -242,6 +256,12 @@ public class PlayState
                     result = true;
         }
         return result;
+    }
+
+    public static void ToggleHUD(bool state)
+    {
+        foreach (GameObject element in TogglableHUDElements)
+            element.SetActive(state);
     }
 
     public static void RunItemPopup(string item)

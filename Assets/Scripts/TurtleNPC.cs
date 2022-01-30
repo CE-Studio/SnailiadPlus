@@ -11,6 +11,7 @@ public class TurtleNPC : NPC
         playerName = "Snaily";
 
         sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     public override void Update()

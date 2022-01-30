@@ -21,7 +21,10 @@ public class SavePoint : MonoBehaviour
 
     void Update()
     {
-        
+        if (PlayState.gameState == "Game")
+            anim.speed = 1;
+        else
+            anim.speed = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

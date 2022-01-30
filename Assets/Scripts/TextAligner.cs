@@ -23,7 +23,7 @@ public class TextAligner : MonoBehaviour
         transform.localPosition = originalPos;
         transform.position = new Vector2(
             Mathf.Round((transform.position.x + posOffset.x) * 16) * 0.0625f - 0.01f,
-            Mathf.Round((transform.position.y + posOffset.y) * 16) * 0.0625f - 0.01f
+            Mathf.Round((transform.position.y + posOffset.y) * 16) * 0.0625f
             );
     }
 }
