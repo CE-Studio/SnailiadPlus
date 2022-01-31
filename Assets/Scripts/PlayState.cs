@@ -112,7 +112,7 @@ public class PlayState
     public static TextMesh fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
     public static TextMesh fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
 
-    public static int currentProfile = 1;
+    public static int currentProfile = -1;
     public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
     public static string currentCharacter = "";
     public static float[] currentTime = new float[] { 0, 0, 0 };
@@ -176,7 +176,52 @@ public class PlayState
 
     public static int[] achievementStates = new int[]
     {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        0, //  0 - First of Four
+        0, //  1 - Stinky Toe
+        0, //  2 - Gravity Battle
+        0, //  3 - Victory
+        0, //  4 - Scout
+        0, //  5 - Explorer
+        0, //  6 - Happy Ending
+        0, //  7 - Treasure Hunter
+        0, //  8 - Homeless
+        0, //  9 - Top Floor
+        0, // 10 - Mansion
+        0, // 11 - Just Renting
+        0, // 12 - Attic Dweller
+        0, // 13 - Speedrunner
+        0, // 14 - The Gauntlet
+        0, // 15 - Pilgrim
+        0, // 16 - Snelk Hunter A
+        0, // 17 - Snelk Hunter B
+        0, // 18 - Super Secret
+        0, // 19 - Counter-Snail
+        0, // 20 - Birds in the Maze Room
+        0, // 21 - Where are we, Snaily?
+        0  // 22 - Omega Snail
+    };
+
+    public static float[][] savedTimes = new float[][]
+    {
+        new float[] { 0, 0, 0 }, // Snaily Normal
+        new float[] { 0, 0, 0 }, // Snaily Insane
+        new float[] { 0, 0, 0 }, // Snaily 100%
+        new float[] { 0, 0, 0 }, // Sluggy Normal
+        new float[] { 0, 0, 0 }, // Sluggy Insane
+        new float[] { 0, 0, 0 }, // Sluggy 100%
+        new float[] { 0, 0, 0 }, // Upside Normal
+        new float[] { 0, 0, 0 }, // Upside Insane
+        new float[] { 0, 0, 0 }, // Upside 100%
+        new float[] { 0, 0, 0 }, // Leggy  Normal
+        new float[] { 0, 0, 0 }, // Leggy  Insane
+        new float[] { 0, 0, 0 }, // Leggy  100%
+        new float[] { 0, 0, 0 }, // Blobby Normal
+        new float[] { 0, 0, 0 }, // Blobby Insane
+        new float[] { 0, 0, 0 }, // Blobby 100%
+        new float[] { 0, 0, 0 }, // Leechy Normal
+        new float[] { 0, 0, 0 }, // Leechy Insane
+        new float[] { 0, 0, 0 }, // Leechy 100%
+        new float[] { 0, 0, 0 }  // Boss Rush
     };
 
     public const byte OFFSET_HEARTS = 13;
@@ -197,7 +242,14 @@ public class PlayState
         public int weapon;
         public int[] bossStates;
         public int[] NPCVars;
+        public int percentage;
+    }
+
+    [Serializable]
+    public struct RecordData
+    {
         public int[] achievements;
+        public float[][] times;
     }
 
     public static void GetNewRoom(string intendedArea)
@@ -586,7 +638,7 @@ public class PlayState
                 hasSeenIris ? 1 : 0,
                 talkedToCaveSnail ? 1 : 0
             };
-            data.achievements = achievementStates;
+            data.percentage = GetItemPercentage();
             string saveData = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("SaveGameData" + currentProfile, saveData);
             PlayerPrefs.Save();
@@ -595,10 +647,66 @@ public class PlayState
         {
 
         }
+        else if (dataType == "records")
+        {
+            RecordData data = new RecordData();
+            data.achievements = achievementStates;
+            data.times = savedTimes;
+            string saveData = JsonUtility.ToJson(data);
+            PlayerPrefs.SetString("RecordData", saveData);
+        }
         else
         {
             Debug.Log("Invalid save type!");
         }
+    }
+
+    public static void WriteSave(GameSaveData copyData, int profileToCopyTo)
+    {
+        PlayerPrefs.SetString("SaveGameData" + profileToCopyTo, JsonUtility.ToJson(copyData));
+    }
+
+    public static GameSaveData LoadGame(int profile, bool mode = false)
+    {
+        if (PlayerPrefs.HasKey("SaveGameData" + profile))
+        {
+            GameSaveData loadedSave = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString("SaveGameData" + profile));
+            if (mode)
+            {
+                // Applying saved data
+            }
+            return loadedSave;
+        }
+        else
+        {
+            GameSaveData nullData = new GameSaveData { };
+            nullData.profile = -1;
+            return nullData;
+        }    
+    }
+
+    public static void LoadRecords()
+    {
+        if (PlayerPrefs.HasKey("RecordData"))
+        {
+            RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
+            achievementStates = data.achievements;
+            savedTimes = data.times;
+        }
+    }
+
+    public static bool HasTime(int ID = -1)
+    {
+        float[] blankTime = new float[] { 0, 0, 0 };
+        bool foundTimes = false;
+        if (ID == -1)
+        {
+            foreach (float[] selectedTime in savedTimes)
+                foundTimes = selectedTime == blankTime;
+            return foundTimes;
+        }
+        else
+            return savedTimes[ID] != blankTime;
     }
 
     public static void QueueAchievementPopup(string achID)

@@ -37,6 +37,7 @@ public class SavePoint : MonoBehaviour
                 PlayState.FlashSaveText();
                 PlayState.respawnCoords = transform.position;
                 PlayState.WriteSave("game");
+                PlayState.WriteSave("records");
             }
         }
     }
