@@ -50,6 +50,11 @@ public class Door : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        sfx.volume = PlayState.gameOptions[0] * 0.1f;
+    }
+
     public void SetClosedSprite()
     {
         PlayAnim("hold");

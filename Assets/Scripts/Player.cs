@@ -211,6 +211,8 @@ public class Player : MonoBehaviour
                 areaText[1].color = new Color32(0, 0, 0, 0);
             }
 
+            sfx.volume = PlayState.gameOptions[0] * 0.1f;
+
             // Music looping
             if (!PlayState.playingMusic)
                 return;
@@ -231,6 +233,9 @@ public class Player : MonoBehaviour
         }
         else
             anim.speed = 0;
+
+        foreach (AudioSource source in PlayState.musicSourceArray)
+            source.volume = PlayState.gameOptions[1] * 0.1f;
     }
 
     void LateUpdate()

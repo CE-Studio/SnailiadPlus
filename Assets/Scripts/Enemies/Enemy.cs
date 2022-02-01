@@ -111,6 +111,8 @@ public class Enemy : MonoBehaviour
         {
             pingPlayer = 0;
         }
+
+        sfx.volume = PlayState.gameOptions[0] * 0.1f;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)

@@ -57,6 +57,8 @@ public class BreakableBlock : MonoBehaviour
             box.enabled = true;
         else
             box.enabled = false;
+
+        sfx.volume = PlayState.gameOptions[0] * 0.1f;
     }
 
     public void Instantiate(int type, bool silent)

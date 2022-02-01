@@ -22,7 +22,10 @@ public class SavePoint : MonoBehaviour
     void Update()
     {
         if (PlayState.gameState == "Game")
+        {
             anim.speed = 1;
+            sfx.volume = PlayState.gameOptions[0] * 0.1f;
+        }
         else
             anim.speed = 0;
     }

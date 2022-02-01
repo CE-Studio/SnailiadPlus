@@ -224,6 +224,27 @@ public class PlayState
         new float[] { 0, 0, 0 }  // Boss Rush
     };
 
+    public static int[] gameOptions = new int[]
+    {
+        10, //  0 - Sound volume (0-10)
+        10, //  1 - Music volume (0-10)
+        1,  //  2 - Window resolution (0, 1, 2, or 3 (plus 1) for each zoom level)
+        1,  //  3 - Minimap display (0 = hidden, 1 = only minimap, 2 = minimap and room names)
+        1,  //  4 - Display bottom keys (boolean)
+        0,  //  5 - Display keymap (boolean)
+        0,  //  6 - Time display (boolean)
+        0,  //  7 - FPS counter (boolean)
+        0,  //  8 - Shoot mode (boolean)
+        0,  //  9 - Texture pack ID (any positive int, 0 for default)
+        0   // 10 - Music pack ID (any positive int, 0 for default)
+    };
+
+    [Serializable]
+    public struct OptionData
+    {
+        public int[] options;
+    }
+
     public const byte OFFSET_HEARTS = 13;
     public const byte OFFSET_FRAGMENTS = 24;
 
@@ -645,7 +666,11 @@ public class PlayState
         }
         else if (dataType == "options")
         {
-
+            OptionData data = new OptionData();
+            data.options = gameOptions;
+            string saveData = JsonUtility.ToJson(data);
+            PlayerPrefs.SetString("OptionData", saveData);
+            PlayerPrefs.Save();
         }
         else if (dataType == "records")
         {
@@ -654,6 +679,7 @@ public class PlayState
             data.times = savedTimes;
             string saveData = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("RecordData", saveData);
+            PlayerPrefs.Save();
         }
         else
         {
@@ -664,6 +690,7 @@ public class PlayState
     public static void WriteSave(GameSaveData copyData, int profileToCopyTo)
     {
         PlayerPrefs.SetString("SaveGameData" + profileToCopyTo, JsonUtility.ToJson(copyData));
+        PlayerPrefs.Save();
     }
 
     public static GameSaveData LoadGame(int profile, bool mode = false)
@@ -692,6 +719,15 @@ public class PlayState
             RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
             achievementStates = data.achievements;
             savedTimes = data.times;
+        }
+    }
+
+    public static void LoadOptions()
+    {
+        if (PlayerPrefs.HasKey("OptionData"))
+        {
+            OptionData data = JsonUtility.FromJson<OptionData>(PlayerPrefs.GetString("OptionData"));
+            gameOptions = data.options;
         }
     }
 

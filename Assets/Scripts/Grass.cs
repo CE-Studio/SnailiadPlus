@@ -40,6 +40,7 @@ public class Grass : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
+            sfx.volume = PlayState.gameOptions[0] * 0.1f;
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
         }
         if (active && timer == 0)
