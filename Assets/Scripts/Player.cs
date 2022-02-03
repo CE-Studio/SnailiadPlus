@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     public Sprite keyIdle;
     public Sprite keyPressed;
     public Sprite keyHeld;
+    public List<SpriteRenderer> keySprites = new List<SpriteRenderer>();
 
     public GameObject weaponIcon1;
     public GameObject weaponIcon2;
@@ -103,6 +104,13 @@ public class Player : MonoBehaviour
 
         PlayState.AssignProperCollectibleIDs();
 
+        keySprites.Add(debugUp.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugDown.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugLeft.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugRight.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugJump.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugShoot.GetComponent<SpriteRenderer>());
+        keySprites.Add(debugStrafe.GetComponent<SpriteRenderer>());
         StartCoroutine("DebugKeys");
 
         areaText = new TextMesh[]
@@ -118,6 +126,9 @@ public class Player : MonoBehaviour
         if (PlayState.gameState == "Game")
         {
             anim.speed = 1;
+
+            // HUD toggling
+            
 
             // These are only here to make sure they're called once, before anything else that needs it
             if (PlayState.armorPingPlayedThisFrame)
@@ -140,15 +151,15 @@ public class Player : MonoBehaviour
             }
 
             // Marking the "has jumped" flag for Snail NPC 01's dialogue
-            if (Input.GetAxisRaw("Jump") == 1)
+            if (Control.JumpHold())
                 PlayState.hasJumped = true;
 
             // Weapon swapping
-            if (Input.GetKeyDown(KeyCode.Alpha1) && PlayState.CheckForItem(0))
+            if (Control.Weapon1() && PlayState.CheckForItem(0))
                 ChangeActiveWeapon(0);
-            else if (Input.GetKeyDown(KeyCode.Alpha2) && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
+            else if (Control.Weapon2() && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
                 ChangeActiveWeapon(1);
-            else if (Input.GetKeyDown(KeyCode.Alpha3) && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
+            else if (Control.Weapon3() && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
                 ChangeActiveWeapon(2);
 
             // Area name text
@@ -348,62 +359,16 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1)
-            {
-                debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
-                debugRight.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            }
-            else if (Input.GetAxisRaw("Horizontal") == -1)
-            {
-                debugLeft.GetComponent<SpriteRenderer>().sprite = keyHeld;
-                debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
-            else
-            {
-                debugLeft.GetComponent<SpriteRenderer>().sprite = keyIdle;
-                debugRight.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
+            foreach (SpriteRenderer key in keySprites)
+                key.gameObject.SetActive(PlayState.gameOptions[5] == 1);
 
-            if (Input.GetAxisRaw("Vertical") == 1)
-            {
-                debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
-                debugUp.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            }
-            else if (Input.GetAxisRaw("Vertical") == -1)
-            {
-                debugDown.GetComponent<SpriteRenderer>().sprite = keyHeld;
-                debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
-            else
-            {
-                debugDown.GetComponent<SpriteRenderer>().sprite = keyIdle;
-                debugUp.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
-
-            if (Input.GetAxisRaw("Jump") == 1)
-            {
-                debugJump.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            }
-            else
-            {
-                debugJump.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
-            if (Input.GetAxisRaw("Shoot") == 1)
-            {
-                debugShoot.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            }
-            else
-            {
-                debugShoot.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
-            if (Input.GetAxisRaw("Strafe") == 1)
-            {
-                debugStrafe.GetComponent<SpriteRenderer>().sprite = keyHeld;
-            }
-            else
-            {
-                debugStrafe.GetComponent<SpriteRenderer>().sprite = keyIdle;
-            }
+            keySprites[0].sprite = Control.UpHold() ? keyHeld : keyIdle;
+            keySprites[1].sprite = Control.DownHold() ? keyHeld : keyIdle;
+            keySprites[2].sprite = Control.LeftHold() ? keyHeld : keyIdle;
+            keySprites[3].sprite = Control.RightHold() ? keyHeld : keyIdle;
+            keySprites[4].sprite = Control.JumpHold() ? keyHeld : keyIdle;
+            keySprites[5].sprite = Control.ShootHold() ? keyHeld : keyIdle;
+            keySprites[6].sprite = Control.StrafeHold() ? keyHeld : keyIdle;
 
             yield return new WaitForEndOfFrame();
         }

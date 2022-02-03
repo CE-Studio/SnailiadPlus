@@ -245,6 +245,12 @@ public class PlayState
         public int[] options;
     }
 
+    [Serializable]
+    public struct ControlData
+    {
+        public KeyCode[] controls;
+    }
+
     public const byte OFFSET_HEARTS = 13;
     public const byte OFFSET_FRAGMENTS = 24;
 
@@ -292,25 +298,10 @@ public class PlayState
     {
         if (area == currentArea && subzone != currentSubzone)
         {
-            //float playTime = (musFlag ? mus2 : mus1).time;
-            //(musFlag ? mus1 : mus2).clip = areaMusic[area][subzone];
-            //(musFlag ? mus1 : mus2).Play();
-            //(musFlag ? mus1 : mus2).time = playTime;
-            //activeMus = musFlag ? mus1 : mus2;
-            //musFlag = !musFlag;
-            //mus1.Pause();
-            //mus1.clip = areaMusic[area][subzone];
-            //mus1.UnPause();
             playerScript.UpdateMusic(area, subzone);
         }
         else if (area != currentArea)
         {
-            //musFlag = false;
-            //mus1.volume = 1;
-            //mus2.volume = 0;
-            //mus2.Stop();
-            //mus1.clip = areaMusic[area][subzone];
-            //mus1.Play();
             playerScript.UpdateMusic(area, subzone, true);
         }
         currentArea = area;
@@ -681,6 +672,14 @@ public class PlayState
             PlayerPrefs.SetString("RecordData", saveData);
             PlayerPrefs.Save();
         }
+        else if (dataType == "controls")
+        {
+            ControlData data = new ControlData();
+            data.controls = Control.inputs;
+            string saveData = JsonUtility.ToJson(data);
+            PlayerPrefs.SetString("ControlData", saveData);
+            PlayerPrefs.Save();
+        }
         else
         {
             Debug.Log("Invalid save type!");
@@ -728,6 +727,15 @@ public class PlayState
         {
             OptionData data = JsonUtility.FromJson<OptionData>(PlayerPrefs.GetString("OptionData"));
             gameOptions = data.options;
+        }
+    }
+
+    public static void LoadControls()
+    {
+        if (PlayerPrefs.HasKey("ControlData"))
+        {
+            ControlData data = JsonUtility.FromJson<ControlData>(PlayerPrefs.GetString("ControlData"));
+            Control.inputs = data.controls;
         }
     }
 

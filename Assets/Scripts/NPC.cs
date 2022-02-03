@@ -428,7 +428,7 @@ public class NPC : MonoBehaviour
                     if (textToSend.Count > 1)
                     {
                         speechBubble.GetComponent<SpriteRenderer>().enabled = true;
-                        if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
+                        if (Control.SpeakPress())// && !buttonDown)
                         {
                             chatting = true;
                             PlayState.isTalking = true;
@@ -458,14 +458,14 @@ public class NPC : MonoBehaviour
                 speechBubble.GetComponent<SpriteRenderer>().enabled = false;
             }
 
-            if (Input.GetAxisRaw("Speak") == 1)
-            {
-                buttonDown = true;
-            }
-            else
-            {
-                buttonDown = false;
-            }
+            //if (Input.GetAxisRaw("Speak") == 1)
+            //{
+            //    buttonDown = true;
+            //}
+            //else
+            //{
+            //    buttonDown = false;
+            //}
 
             switch (ID)
             {

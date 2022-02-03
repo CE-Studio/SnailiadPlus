@@ -20,6 +20,8 @@ public class MainMenu : MonoBehaviour
     private List<MenuOption> currentOptions = new List<MenuOption>();
     private DestinationDelegate backPage;
     private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0 };
+    private int controlScreen = 0;
+    private bool isRebinding = false;
 
     private const float LIST_CENTER_Y = -2.5f;
     private const float LIST_OPTION_SPACING = 1.25f;
@@ -56,6 +58,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         PlayState.LoadOptions();
+        PlayState.LoadControls();
         Screen.SetResolution(400 * (PlayState.gameOptions[2] + 1), 240 * (PlayState.gameOptions[2] + 1), false);
 
         PlayState.LoadRecords();
@@ -178,53 +181,50 @@ public class MainMenu : MonoBehaviour
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
             music.volume = PlayState.gameOptions[1] * 0.1f;
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (!isRebinding)
             {
-                bool nextDown = Input.GetAxisRaw("Vertical") == -1;
-                int intendedSelection = selectedOption + (nextDown ? 1 : -1);
-                if (intendedSelection >= currentOptions.Count)
-                    intendedSelection = 0;
-                else if (intendedSelection < 0)
-                    intendedSelection = currentOptions.Count - 1;
-                while (!currentOptions[intendedSelection].selectable)
+                if (Control.UpPress() || Control.DownPress())
                 {
-                    intendedSelection += nextDown ? 1 : -1;
+                    bool nextDown = Control.AxisY() == -1;
+                    int intendedSelection = selectedOption + (nextDown ? 1 : -1);
                     if (intendedSelection >= currentOptions.Count)
                         intendedSelection = 0;
                     else if (intendedSelection < 0)
                         intendedSelection = currentOptions.Count - 1;
+                    while (!currentOptions[intendedSelection].selectable)
+                    {
+                        intendedSelection += nextDown ? 1 : -1;
+                        if (intendedSelection >= currentOptions.Count)
+                            intendedSelection = 0;
+                        else if (intendedSelection < 0)
+                            intendedSelection = currentOptions.Count - 1;
+                    }
+                    if (intendedSelection != selectedOption)
+                        sfx.PlayOneShot(beep1);
+                    selectedOption = intendedSelection;
+                    GetNewSnailOffset();
                 }
-                if (intendedSelection != selectedOption)
-                    sfx.PlayOneShot(beep1);
-                selectedOption = intendedSelection;
-                GetNewSnailOffset();
-            }
 
-            selector[0].transform.localPosition = new Vector2(0,
-                Mathf.Lerp(selector[0].transform.localPosition.y,
-                currentOptions[selectedOption].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
-            selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
-            selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (backPage != null)
+                if (Control.Pause())
                 {
-                    backPage();
-                    sfx.PlayOneShot(beep2);
+                    if (backPage != null)
+                    {
+                        backPage();
+                        sfx.PlayOneShot(beep2);
+                    }
                 }
-            }
-            else if (Input.GetKeyDown(KeyCode.Z))
-            {
-                if (currentOptions[selectedOption].menuParam != null)
+                else if (Control.JumpPress())
                 {
-                    for (int i = 0; i < currentOptions[selectedOption].menuParam.Length; i += 2)
-                        menuVarFlags[currentOptions[selectedOption].menuParam[i]] = currentOptions[selectedOption].menuParam[i + 1];
-                }
-                if (currentOptions[selectedOption].destinationPage != null)
-                {
-                    currentOptions[selectedOption].destinationPage();
-                    sfx.PlayOneShot(beep2);
+                    if (currentOptions[selectedOption].menuParam != null)
+                    {
+                        for (int i = 0; i < currentOptions[selectedOption].menuParam.Length; i += 2)
+                            menuVarFlags[currentOptions[selectedOption].menuParam[i]] = currentOptions[selectedOption].menuParam[i + 1];
+                    }
+                    if (currentOptions[selectedOption].destinationPage != null)
+                    {
+                        currentOptions[selectedOption].destinationPage();
+                        sfx.PlayOneShot(beep2);
+                    }
                 }
             }
 
@@ -239,13 +239,13 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                ChangeOptionText(option, "Difficulty: Easy");
+                                AddToOptionText(option, "Easy");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Difficulty: Normal");
+                                AddToOptionText(option, "Normal");
                                 break;
                             case 2:
-                                ChangeOptionText(option, "Difficulty: Insane");
+                                AddToOptionText(option, "Insane");
                                 break;
                         }
                         break;
@@ -254,22 +254,22 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[1])
                         {
                             case 0:
-                                ChangeOptionText(option, "Character: Snaily");
+                                AddToOptionText(option, "Snaily");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Character: Sluggy");
+                                AddToOptionText(option, "Sluggy");
                                 break;
                             case 2:
-                                ChangeOptionText(option, "Character: Upside");
+                                AddToOptionText(option, "Upside");
                                 break;
                             case 3:
-                                ChangeOptionText(option, "Character: Leggy");
+                                AddToOptionText(option, "Leggy");
                                 break;
                             case 4:
-                                ChangeOptionText(option, "Character: Blobby");
+                                AddToOptionText(option, "Blobby");
                                 break;
                             case 5:
-                                ChangeOptionText(option, "Character: Leechy");
+                                AddToOptionText(option, "Leechy");
                                 break;
                         }
                         break;
@@ -278,10 +278,10 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[2])
                         {
                             case 0:
-                                ChangeOptionText(option, "Randomized: No");
+                                AddToOptionText(option, "No");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Randomized: Yes");
+                                AddToOptionText(option, "Yes");
                                 break;
                         }
                         break;
@@ -290,22 +290,22 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                ChangeOptionText(option, "Shooting: Normal");
+                                AddToOptionText(option, "Normal");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Shooting: Toggle");
+                                AddToOptionText(option, "Toggle");
                                 break;
                         }
                         PlayState.gameOptions[8] = menuVarFlags[0];
                         break;
                     case "Sound volume: ":
                         TestForArrowAdjust(option, 0, 10);
-                        ChangeOptionText(option, "Sound volume: " + menuVarFlags[0]);
+                        AddToOptionText(option, menuVarFlags[0].ToString());
                         PlayState.gameOptions[0] = menuVarFlags[0];
                         break;
                     case "Music volume: ":
                         TestForArrowAdjust(option, 1, 10);
-                        ChangeOptionText(option, "Music volume: " + menuVarFlags[1]);
+                        AddToOptionText(option, menuVarFlags[1].ToString());
                         PlayState.gameOptions[1] = menuVarFlags[1];
                         break;
                     case "Window resolution: ":
@@ -313,19 +313,19 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                ChangeOptionText(option, "Window resolution: 1x");
+                                AddToOptionText(option, "1x");
                                 Screen.SetResolution(400, 240, false);
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Window resolution: 2x");
+                                AddToOptionText(option, "2x");
                                 Screen.SetResolution(800, 480, false);
                                 break;
                             case 2:
-                                ChangeOptionText(option, "Window resolution: 3x");
+                                AddToOptionText(option, "3x");
                                 Screen.SetResolution(1200, 720, false);
                                 break;
                             case 3:
-                                ChangeOptionText(option, "Window resolution: 4x");
+                                AddToOptionText(option, "4x");
                                 Screen.SetResolution(1600, 960, false);
                                 break;
                         }
@@ -336,13 +336,13 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[1])
                         {
                             case 0:
-                                ChangeOptionText(option, "Minimap display: hide");
+                                AddToOptionText(option, "hide");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Minimap display: only map");
+                                AddToOptionText(option, "only map");
                                 break;
                             case 2:
-                                ChangeOptionText(option, "Minimap display: show");
+                                AddToOptionText(option, "show");
                                 break;
                         }
                         PlayState.gameOptions[3] = menuVarFlags[1];
@@ -352,10 +352,10 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[2])
                         {
                             case 0:
-                                ChangeOptionText(option, "Bottom keys: hide");
+                                AddToOptionText(option, "hide");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Bottom keys: show");
+                                AddToOptionText(option, "show");
                                 break;
                         }
                         PlayState.gameOptions[4] = menuVarFlags[2];
@@ -365,10 +365,10 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[3])
                         {
                             case 0:
-                                ChangeOptionText(option, "Reactive key displays: hide");
+                                AddToOptionText(option, "hide");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Reactive key displays: show");
+                                AddToOptionText(option, "show");
                                 break;
                         }
                         PlayState.gameOptions[5] = menuVarFlags[3];
@@ -378,10 +378,10 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[4])
                         {
                             case 0:
-                                ChangeOptionText(option, "Game time: hide");
+                                AddToOptionText(option, "hide");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "Game time: show");
+                                AddToOptionText(option, "show");
                                 break;
                         }
                         PlayState.gameOptions[6] = menuVarFlags[4];
@@ -391,13 +391,73 @@ public class MainMenu : MonoBehaviour
                         switch (menuVarFlags[5])
                         {
                             case 0:
-                                ChangeOptionText(option, "FPS counter: hide");
+                                AddToOptionText(option, "hide");
                                 break;
                             case 1:
-                                ChangeOptionText(option, "FPS counter: show");
+                                AddToOptionText(option, "show");
                                 break;
                         }
                         PlayState.gameOptions[7] = menuVarFlags[5];
+                        break;
+                    case "Jump:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(12) : Control.ParseKeyName(4));
+                        break;
+                    case "Shoot:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(13) : Control.ParseKeyName(5));
+                        break;
+                    case "Strafe:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(14) : Control.ParseKeyName(6));
+                        break;
+                    case "Speak:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(15) : Control.ParseKeyName(7));
+                        break;
+                    case "Move up:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(10) : Control.ParseKeyName(2));
+                        break;
+                    case "Move left:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(8) : Control.ParseKeyName(0));
+                        break;
+                    case "Move right:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(9) : Control.ParseKeyName(1));
+                        break;
+                    case "Move down:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(11) : Control.ParseKeyName(3));
+                        break;
+                    case "Weapon one:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(16));
+                        break;
+                    case "Weapon two:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(17));
+                        break;
+                    case "Weapon three:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(18));
+                        break;
+                    case "Next weapon:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(19));
+                        break;
+                    case "Prev weapon:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(20));
+                        break;
+                    case "Open minimap:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(21));
+                        break;
+                    case "Open menu:   ":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseKeyName(22));
                         break;
                 }
             }
@@ -405,17 +465,26 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        selector[0].transform.localPosition = new Vector2(0,
+                Mathf.Lerp(selector[0].transform.localPosition.y,
+                currentOptions[selectedOption].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
+        selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
+        selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
+    }
+
     public void TestForArrowAdjust(MenuOption option, int varSlot, int max)
     {
         if (selectedOption == currentOptions.IndexOf(option))
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Control.LeftPress())
         {
             menuVarFlags[varSlot]--;
             if (menuVarFlags[varSlot] < 0)
                 menuVarFlags[varSlot] = max;
             sfx.PlayOneShot(beep1);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Control.RightPress())
         {
             menuVarFlags[varSlot]++;
             if (menuVarFlags[varSlot] > max)
@@ -424,10 +493,40 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void ChangeOptionText(MenuOption option, string text)
+    public void TestForRebind()
     {
-        option.textParts[0].text = text;
-        option.textParts[1].text = text;
+        StartCoroutine(RebindKey(menuVarFlags[0]));
+    }
+
+    public IEnumerator RebindKey(int controlID)
+    {
+        while (Control.JumpHold())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        float timer = 0;
+        isRebinding = true;
+        while (timer < 3 && isRebinding)
+        {
+            AddToOptionText(currentOptions[selectedOption], timer < 1 ? "." : (timer < 2 ? ".." : "..."));
+            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKey(key))
+                {
+                    Control.inputs[controlID] = key;
+                    isRebinding = false;
+                }
+            }
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
+        isRebinding = false;
+    }
+
+    public void AddToOptionText(MenuOption option, string text)
+    {
+        option.textParts[0].text = option.optionText + text;
+        option.textParts[1].text = option.optionText + text;
     }
 
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
@@ -710,6 +809,7 @@ public class MainMenu : MonoBehaviour
     public void OptionsScreen()
     {
         ClearOptions();
+        menuVarFlags[0] = PlayState.gameOptions[8];
         AddOption("Sound options", true, SoundOptions, new int[] { 0, PlayState.gameOptions[0], 1, PlayState.gameOptions[1] });
         AddOption("Display options", true, DisplayOptions, new int[]
         {
@@ -717,7 +817,7 @@ public class MainMenu : MonoBehaviour
             2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
             4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7]
         });
-        AddOption("Set controls", true);
+        AddOption("Set controls", true, ControlMain);
         AddOption("Shooting: ", true);
         AddOption("Texture/Music packs", true);
         AddOption("Erase record data", true, RecordEraseConfirm);
@@ -751,6 +851,109 @@ public class MainMenu : MonoBehaviour
         AddOption("Back to options", true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
+    }
+
+    public void ControlMain()
+    {
+        ClearOptions();
+        AddOption("Control set 1", true, Controls1);
+        AddOption("Control set 2", true, Controls2);
+        AddOption("Miscellaneous", true, Controls3);
+        AddOption("", false);
+        AddOption("Reset all to defaults", true, ResetControls);
+        AddOption("", false);
+        AddOption("Back to options", true, SaveControls);
+        ForceSelect(0);
+        backPage = SaveControls;
+    }
+
+    public void Controls1()
+    {
+        ClearOptions();
+        controlScreen = 1;
+        AddOption("Jump:   ", true, TestForRebind, new int[] { 0, 4 });
+        AddOption("Shoot:   ", true, TestForRebind, new int[] { 0, 5 });
+        AddOption("Strafe:   ", true, TestForRebind, new int[] { 0, 6 });
+        AddOption("Speak:   ", true, TestForRebind, new int[] { 0, 7 });
+        AddOption("Move up:   ", true, TestForRebind, new int[] { 0, 2 });
+        AddOption("Move left:   ", true, TestForRebind, new int[] { 0, 0 });
+        AddOption("Move down:   ", true, TestForRebind, new int[] { 0, 3 });
+        AddOption("Move right:   ", true, TestForRebind, new int[] { 0, 1 });
+        AddOption("Back", true, ControlMain);
+        ForceSelect(0);
+        backPage = ControlMain;
+    }
+
+    public void Controls2()
+    {
+        ClearOptions();
+        controlScreen = 2;
+        AddOption("Jump:   ", true, TestForRebind, new int[] { 0, 12 });
+        AddOption("Shoot:   ", true, TestForRebind, new int[] { 0, 13 });
+        AddOption("Strafe:   ", true, TestForRebind, new int[] { 0, 14 });
+        AddOption("Speak:   ", true, TestForRebind, new int[] { 0, 15 });
+        AddOption("Move up:   ", true, TestForRebind, new int[] { 0, 10 });
+        AddOption("Move left:   ", true, TestForRebind, new int[] { 0, 8 });
+        AddOption("Move down:   ", true, TestForRebind, new int[] { 0, 11 });
+        AddOption("Move right:   ", true, TestForRebind, new int[] { 0, 9 });
+        AddOption("Back", true, ControlMain);
+        ForceSelect(0);
+        backPage = ControlMain;
+    }
+
+    public void Controls3()
+    {
+        ClearOptions();
+        controlScreen = 3;
+        AddOption("Weapon one:   ", true, TestForRebind, new int[] { 0, 16 });
+        AddOption("Weapon two:   ", true, TestForRebind, new int[] { 0, 17 });
+        AddOption("Weapon three:   ", true, TestForRebind, new int[] { 0, 18 });
+        AddOption("Next weapon:   ", true, TestForRebind, new int[] { 0, 19 });
+        AddOption("Prev weapon:   ", true, TestForRebind, new int[] { 0, 20 });
+        AddOption("Open minimap:   ", true, TestForRebind, new int[] { 0, 21 });
+        AddOption("Open menu:   ", true, TestForRebind, new int[] { 0, 22 });
+        AddOption("", false);
+        AddOption("Back to control menu", true, ControlMain);
+        ForceSelect(0);
+        backPage = ControlMain;
+    }
+
+    public void ResetControls()
+    {
+        Control.inputs = new KeyCode[]
+        {
+            KeyCode.LeftArrow,
+            KeyCode.RightArrow,
+            KeyCode.UpArrow,
+            KeyCode.DownArrow,
+            KeyCode.Z,
+            KeyCode.X,
+            KeyCode.C,
+            KeyCode.C,
+            KeyCode.A,
+            KeyCode.D,
+            KeyCode.W,
+            KeyCode.S,
+            KeyCode.K,
+            KeyCode.J,
+            KeyCode.H,
+            KeyCode.H,
+            KeyCode.Alpha1,
+            KeyCode.Alpha2,
+            KeyCode.Alpha3,
+            KeyCode.Plus,
+            KeyCode.Equals,
+            KeyCode.M,
+            KeyCode.Escape
+        };
+        SaveControls();
+    }
+
+    public void SaveControls()
+    {
+        PlayState.WriteSave("controls");
+        controlScreen = 0;
+        OptionsScreen();
     }
 
     public void RecordEraseConfirm()

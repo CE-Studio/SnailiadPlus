@@ -222,9 +222,9 @@ public class DialogueBox : MonoBehaviour
                                     pointer.y++;
                                     timer = 0.02f;
                                 }
-                                if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
+                                if (!Control.SpeakHold() && buttonDown)
                                     buttonDown = false;
-                                if (Input.GetAxisRaw("Speak") == 1 && !buttonDown && dialogueType == 3)
+                                if (Control.SpeakPress() && !buttonDown && dialogueType == 3)
                                 {
                                     buttonDown = true;
                                     dialogueText.text = textList[(int)pointer.x];
@@ -251,11 +251,11 @@ public class DialogueBox : MonoBehaviour
                     break;
                 case 2:
                     anim.Play("Dialogue continue", 0, 0);
-                    if (Input.GetAxisRaw("Speak") == 0 && buttonDown)
-                    {
-                        buttonDown = false;
-                    }
-                    if (Input.GetAxisRaw("Speak") == 1 && !buttonDown)
+                    //if (!Control.SpeakHold() && buttonDown)
+                    //{
+                    //    buttonDown = false;
+                    //}
+                    if (Control.SpeakPress())// && !buttonDown)
                     {
                         buttonDown = true;
                         anim.Play("Dialogue hold", 0, 0);
