@@ -244,9 +244,6 @@ public class Player : MonoBehaviour
         }
         else
             anim.speed = 0;
-
-        foreach (AudioSource source in PlayState.musicSourceArray)
-            source.volume = PlayState.gameOptions[1] * 0.1f;
     }
 
     void LateUpdate()

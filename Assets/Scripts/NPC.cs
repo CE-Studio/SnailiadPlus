@@ -166,7 +166,8 @@ public class NPC : MonoBehaviour
                     {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Hi, " + playerName + "!!  Why don\'t you try\nclimbing up the walls?\n    Just hold \"UP\" and \"RIGHT\".");
+                                textToSend.Add("Hi, " + playerName + "!!  Why don\'t you try\nclimbing up the walls?\n    Just hold \"" +
+                                    Control.ParseKeyName(2) + "\" and \"" + Control.ParseKeyName(1) + "\".");
                             else if (!PlayState.CheckForItem("Boomerang"))
                                 textToSend.Add("Oh, nice pea shooter!  I heard\nyou can shoot a blue door open\nwith one of those!");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
@@ -181,7 +182,7 @@ public class NPC : MonoBehaviour
 
                         case 1:
                             if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Hiya, " + playerName + "!  Did you know you\ncan jump?  Just press \"Z\"!");
+                                textToSend.Add("Hiya, " + playerName + "!  Did you know you\ncan jump?  Just press \"" + Control.ParseKeyName(4) + "\"!");
                             else if (!PlayState.CheckForItem("Peashooter"))
                                 textToSend.Add(playerName + ", some snails are missing!\nDo you think you could go look\nfor them?  I\'m getting worried!");
                             else if (PlayState.GetItemPercentage() < 100)
@@ -357,9 +358,9 @@ public class NPC : MonoBehaviour
 
                         case 18:
                             if (PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Don\'t forget!\nPress \"X\" to shoot your\nweapon at stuff!!");
+                                textToSend.Add("Don\'t forget!\nPress \"" + Control.ParseKeyName(5) + "\" to shoot your\nweapon at stuff!!");
                             else
-                                textToSend.Add("You found the super secret\nboomerang!  Way to go!\nPress \"X\" to shoot with it!");
+                                textToSend.Add("You found the super secret\nboomerang!  Way to go!\nPress \"" + Control.ParseKeyName(5) + "\" to shoot with it!");
                             break;
 
                         case 19:
@@ -394,10 +395,9 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 25:
-                            if (PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Have you tried hitting \"M\"\nyet?  It makes the map big!  Oh,\nand hit \"ESC\" for the menu!");
-                            else if (PlayState.GetItemPercentage() < 60)
-                                textToSend.Add(playerName + ", if you need to see the\ncontrols again, just press \"F1\"!\nBy the way, try hitting \"M\"!");
+                            if (!PlayState.CheckForItem("Peashooter"))
+                                textToSend.Add("Have you tried hitting \"" + Control.ParseKeyName(21) +
+                                    "\"\nyet?  It makes the map big!  Oh,\nand hit \"" + Control.ParseKeyName(22) + "\" for the menu!");
                             else
                                 textToSend.Add("Hey " + playerName + ", I\'m hungry!  Know\nany good plants around town?");
                             break;

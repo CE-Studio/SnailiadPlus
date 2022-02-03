@@ -61,8 +61,9 @@ public class MainMenu : MonoBehaviour
         PlayState.LoadControls();
         Screen.SetResolution(400 * (PlayState.gameOptions[2] + 1), 240 * (PlayState.gameOptions[2] + 1), false);
 
-        PlayState.LoadRecords();
+        //PlayState.LoadRecords();
 
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         cam = PlayState.cam.transform;
         music = GetComponent<AudioSource>();
         selector = new GameObject[]
@@ -463,15 +464,46 @@ public class MainMenu : MonoBehaviour
             }
             GetNewSnailOffset();
         }
+
+        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause" && PlayState.isMenuOpen)
+        {
+            PlayState.isMenuOpen = false;
+            ClearOptions();
+            selector[0].SetActive(false);
+            music.Stop();
+        }
     }
 
     private void LateUpdate()
     {
-        selector[0].transform.localPosition = new Vector2(0,
-                Mathf.Lerp(selector[0].transform.localPosition.y,
-                currentOptions[selectedOption].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
-        selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
-        selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
+        if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
+        {
+            selector[0].transform.localPosition = new Vector2(0,
+                    Mathf.Lerp(selector[0].transform.localPosition.y,
+                    currentOptions[selectedOption].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
+            selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
+            selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
+        }
+    }
+
+    public string CharacterIDToName(int ID)
+    {
+        switch (ID)
+        {
+            default:
+            case 0:
+                return "Snaily";
+            case 1:
+                return "Sluggy";
+            case 2:
+                return "Upside";
+            case 3:
+                return "Leggy";
+            case 4:
+                return "Blobby";
+            case 5:
+                return "Leechy";
+        }
     }
 
     public void TestForArrowAdjust(MenuOption option, int varSlot, int max)
@@ -642,7 +674,7 @@ public class MainMenu : MonoBehaviour
                 AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             }
             else
-                AddOption("Empty profile", true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0 });
+                AddOption("Empty profile", true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
         }
         AddOption("", false);
         AddOption("Copy game", true, CopyData);
@@ -664,9 +696,38 @@ public class MainMenu : MonoBehaviour
             AddOption("Randomized: ", true);
         }
         AddOption("", false);
+        AddOption("Start new game", true, StartNewSave);
         AddOption("Back to profile selection", true, ProfileScreen);
         ForceSelect(2);
         backPage = ProfileScreen;
+    }
+
+    public void StartNewSave()
+    {
+        PlayState.currentProfile = menuVarFlags[3];
+        PlayState.currentDifficulty = menuVarFlags[0];
+        PlayState.currentTime = new float[] { 0, 0, 0 };
+        PlayState.respawnCoords = PlayState.WORLD_SPAWN;
+        PlayState.currentCharacter = CharacterIDToName(menuVarFlags[1]);
+        PlayState.itemCollection = new int[]
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0
+        };
+        PlayState.playerScript.selectedWeapon = 0;
+        PlayState.bossStates = new int[] { 1, 1, 1, 1 };
+        PlayState.hasSeenIris = false;
+        PlayState.talkedToCaveSnail = false;
+        PlayState.WriteSave("game");
+
+        PlayState.player.transform.position = PlayState.WORLD_SPAWN;
+        PlayState.gameState = "Game";
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
+        PlayState.ToggleHUD(true);
     }
 
     public void PickSpawn()
@@ -675,12 +736,21 @@ public class MainMenu : MonoBehaviour
         AddOption("Okay, where would you", false);
         AddOption("like to start from?", false);
         AddOption("", false);
-        AddOption("Start from save point", true);
-        AddOption("Start from Snail Town", true);
+        AddOption("Start from save point", true, LoadAndSpawn, new int[] { 1, 0 });
+        AddOption("Start from Snail Town", true, LoadAndSpawn, new int[] { 1, 1 });
         AddOption("", false);
         AddOption("Back to profile selection", true, ProfileScreen);
         ForceSelect(3);
         backPage = ProfileScreen;
+    }
+
+    public void LoadAndSpawn()
+    {
+        PlayState.LoadGame(menuVarFlags[0], true);
+        PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
+        PlayState.gameState = "Game";
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
+        PlayState.ToggleHUD(true);
     }
 
     public void CopyData()

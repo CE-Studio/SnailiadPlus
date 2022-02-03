@@ -308,7 +308,7 @@ public class Snaily : MonoBehaviour
                                 transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
                                 UpdateBoxcasts();
                             }
-                            if (Control.JumpPress() && grounded && !holdingJump && boxU.distance > 0.95f && !PlayState.paralyzed)
+                            if (Control.JumpHold() && grounded && !holdingJump && boxU.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
                                     ToggleShell();
@@ -332,7 +332,7 @@ public class Snaily : MonoBehaviour
                                 ToggleShell();
                                 holdingShell = true;
                             }
-                            else if (!holdingShell && Control.DownPress())
+                            else if (!holdingShell && Control.DownHold())
                                 holdingShell = true;
                             if (holdingShell && !Control.DownHold())
                                 holdingShell = false;
@@ -526,7 +526,7 @@ public class Snaily : MonoBehaviour
                                 transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
                                 UpdateBoxcasts();
                             }
-                            if (Control.JumpPress() && grounded && !holdingJump && boxR.distance > 0.95f && !PlayState.paralyzed)
+                            if (Control.JumpHold() && grounded && !holdingJump && boxR.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
                                     ToggleShell();
@@ -558,7 +558,7 @@ public class Snaily : MonoBehaviour
                                 ToggleShell();
                                 holdingShell = true;
                             }
-                            else if (!holdingShell && Control.LeftPress())
+                            else if (!holdingShell && Control.LeftHold())
                                 holdingShell = true;
                             if (holdingShell && !Control.LeftHold())
                                 holdingShell = false;
@@ -752,7 +752,7 @@ public class Snaily : MonoBehaviour
                                 transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
                                 UpdateBoxcasts();
                             }
-                            if (Control.JumpPress() && grounded && !holdingJump && boxL.distance > 0.95f && !PlayState.paralyzed)
+                            if (Control.JumpHold() && grounded && !holdingJump && boxL.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
                                     ToggleShell();
@@ -768,7 +768,7 @@ public class Snaily : MonoBehaviour
                                 }
                                 sfx.PlayOneShot(jump);
                             }
-                            if (Control.JumpPress() && !holdingJump)
+                            if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
                             else if (!Control.JumpHold() && holdingJump)
                                 holdingJump = false;
@@ -784,7 +784,7 @@ public class Snaily : MonoBehaviour
                                 ToggleShell();
                                 holdingShell = true;
                             }
-                            else if (!holdingShell && Control.RightPress())
+                            else if (!holdingShell && Control.RightHold())
                                 holdingShell = true;
                             if (holdingShell && !Control.RightHold())
                                 holdingShell = false;
@@ -971,7 +971,7 @@ public class Snaily : MonoBehaviour
                                 transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
                                 UpdateBoxcasts();
                             }
-                            if (Control.JumpPress() && grounded && !holdingJump && boxD.distance > 0.95f && !PlayState.paralyzed)
+                            if (Control.JumpHold() && grounded && !holdingJump && boxD.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
                                     ToggleShell();
@@ -985,7 +985,7 @@ public class Snaily : MonoBehaviour
                                 }
                                 sfx.PlayOneShot(jump);
                             }
-                            if (Control.JumpPress() && !holdingJump)
+                            if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
                             else if (!Control.JumpHold() && holdingJump)
                                 holdingJump = false;
@@ -1001,7 +1001,7 @@ public class Snaily : MonoBehaviour
                                 ToggleShell();
                                 holdingShell = true;
                             }
-                            else if (!holdingShell && Control.UpPress())
+                            else if (!holdingShell && Control.UpHold())
                                 holdingShell = true;
                             if (holdingShell && !Control.UpHold())
                                 holdingShell = false;

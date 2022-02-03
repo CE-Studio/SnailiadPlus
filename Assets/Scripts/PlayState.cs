@@ -106,6 +106,7 @@ public class PlayState
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
 
+    public static readonly Vector2 WORLD_SPAWN = new Vector2(84, 88.5f);
     public static Vector2 respawnCoords = new Vector2(84, 88.5f);
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
@@ -699,7 +700,16 @@ public class PlayState
             GameSaveData loadedSave = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString("SaveGameData" + profile));
             if (mode)
             {
-                // Applying saved data
+                currentProfile = loadedSave.profile;
+                currentDifficulty = loadedSave.difficulty;
+                currentTime = loadedSave.gameTime;
+                respawnCoords = loadedSave.saveCoords;
+                currentCharacter = loadedSave.character;
+                itemCollection = loadedSave.items;
+                playerScript.selectedWeapon = loadedSave.weapon;
+                bossStates = loadedSave.bossStates;
+                hasSeenIris = loadedSave.NPCVars[0] == 1;
+                talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
             }
             return loadedSave;
         }
@@ -717,7 +727,33 @@ public class PlayState
         {
             RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
             achievementStates = data.achievements;
-            savedTimes = data.times;
+            if (data.times != null)
+                savedTimes = data.times;
+            else
+            {
+                savedTimes = new float[][]
+                {
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 },
+                    new float[] { 0, 0, 0 }
+                };
+            }
         }
     }
 
