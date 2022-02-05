@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public Animator anim;
     public SpriteRenderer sprite;
     public BoxCollider2D box;
+    public Rigidbody2D rb;
     public AudioSource sfx;
     public AudioClip hurt;
     public AudioClip die;
@@ -86,6 +87,7 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
 
         weaponIcons = new SpriteRenderer[]
         {
@@ -125,10 +127,9 @@ public class Player : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
-            anim.speed = 1;
+            rb.WakeUp();
 
-            // HUD toggling
-            
+            anim.speed = 1;
 
             // These are only here to make sure they're called once, before anything else that needs it
             if (PlayState.armorPingPlayedThisFrame)
@@ -251,22 +252,25 @@ public class Player : MonoBehaviour
 
     void LateUpdate()
     {
-        PlayState.fg2Layer.transform.localPosition = new Vector2(
-            Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg2Mod * 16) * 0.0625f,
-            Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg2Mod * 16) * 0.0625f
-            );
-        PlayState.fg1Layer.transform.localPosition = new Vector2(
-            Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg1Mod * 16) * 0.0625f,
-            Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg1Mod * 16) * 0.0625f
-            );
-        PlayState.bgLayer.transform.localPosition = new Vector2(
-            Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxBgMod * 16) * 0.0625f,
-            Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxBgMod * 16) * 0.0625f
-            );
-        PlayState.skyLayer.transform.localPosition = new Vector2(
-            Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxSkyMod * 16) * 0.0625f,
-            Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxSkyMod * 16) * 0.0625f
-            );
+        if (PlayState.gameState == "Game")
+        {
+            PlayState.fg2Layer.transform.localPosition = new Vector2(
+                Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg2Mod * 16) * 0.0625f,
+                Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg2Mod * 16) * 0.0625f
+                );
+            PlayState.fg1Layer.transform.localPosition = new Vector2(
+                Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg1Mod * 16) * 0.0625f,
+                Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg1Mod * 16) * 0.0625f
+                );
+            PlayState.bgLayer.transform.localPosition = new Vector2(
+                Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxBgMod * 16) * 0.0625f,
+                Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxBgMod * 16) * 0.0625f
+                );
+            PlayState.skyLayer.transform.localPosition = new Vector2(
+                Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxSkyMod * 16) * 0.0625f,
+                Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxSkyMod * 16) * 0.0625f
+                );
+        }
 
         // FPS calculator
         frameCount++;

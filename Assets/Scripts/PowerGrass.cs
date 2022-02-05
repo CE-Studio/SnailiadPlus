@@ -44,12 +44,12 @@ public class PowerGrass : MonoBehaviour
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
         }
-        if (sprite.enabled && timer == 0)
-        {
-            box.enabled = true;
-            player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.0001f);
-            // Because otherwise Snaily stops eating after three or four bites unless you move
-        }
+        //if (sprite.enabled && timer == 0)
+        //{
+        //    box.enabled = true;
+        //    player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.0001f);
+        //    // Because otherwise Snaily stops eating after three or four bites unless you move
+        //}
     }
 
     public void ToggleActive(bool state)
@@ -74,24 +74,25 @@ public class PowerGrass : MonoBehaviour
         ToggleActive(true);
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            box.enabled = false;
-            sfx.PlayOneShot(bite);
-            bitesRemaining--;
-            if (bitesRemaining == 0)
+            if (timer == 0)
             {
-                sprite.enabled = false;
+                sfx.PlayOneShot(bite);
+                bitesRemaining--;
+                if (bitesRemaining == 0)
+                {
+                    sprite.enabled = false;
+                    box.enabled = false;
+                }
+                else
+                    timer = biteTimeout;
+                collision.GetComponent<Player>().health = Mathf.Clamp(collision.GetComponent<Player>().health + healthPerBite, 0, collision.GetComponent<Player>().maxHealth);
+                collision.GetComponent<Player>().UpdateHearts();
+                StartCoroutine(nameof(NomText));
             }
-            else
-            {
-                timer = biteTimeout;
-            }
-            collision.GetComponent<Player>().health = Mathf.Clamp(collision.GetComponent<Player>().health + healthPerBite, 0, collision.GetComponent<Player>().maxHealth);
-            collision.GetComponent<Player>().UpdateHearts();
-            StartCoroutine(nameof(NomText));
         }
     }
 

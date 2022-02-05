@@ -339,7 +339,7 @@ public class NPC : MonoBehaviour
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                             {
                                 if (playerName == "Leechy")
-                                    textToSend.Add("If you ever get hurt, defeat\nenemies!  As a leech, you can\nearn red heath orbs off them!");
+                                    textToSend.Add("If you ever get hurt, defeat\nenemies!  As a leech, you can\nearn pink heath orbs off them!");
                                 else
                                     textToSend.Add("If you ever get hurt, eat some\nplants!  You need to eat well\nto stay fit and healthy!");
                             }
