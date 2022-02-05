@@ -68,7 +68,7 @@ public class PlayState
     public static GameObject player = GameObject.Find("Player");
     public static Player playerScript = player.GetComponent<Player>();
     public static GameObject cam = GameObject.Find("View");
-    public static GameObject screenCover = GameObject.Find("View/Cover");
+    public static SpriteRenderer screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
     public static GameObject groundLayer = GameObject.Find("Grid/Ground");
     public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");
     public static GameObject fg1Layer = GameObject.Find("Grid/Foreground");
@@ -271,6 +271,7 @@ public class PlayState
         public int[] bossStates;
         public int[] NPCVars;
         public int percentage;
+        public int[] exploredMap;
     }
 
     [Serializable]
@@ -326,7 +327,20 @@ public class PlayState
     public static void ToggleHUD(bool state)
     {
         foreach (GameObject element in TogglableHUDElements)
+        {
             element.SetActive(state);
+            if (state)
+            {
+                if (element.name == "Dialogue Box" && isTalking)
+                    element.GetComponent<DialogueBox>().anim.Play("Dialogue hold", 0, 0);
+                if (element.name == "Weapon Icons")
+                {
+                    playerScript.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
+                    playerScript.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
+                    playerScript.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
+                }
+            }
+        }
     }
 
     public static void RunItemPopup(string item)
@@ -367,19 +381,22 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 
-    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0)
+    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0)
     {
         switch (type)
         {
             default:
-                screenCover.GetComponent<SpriteRenderer>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
+                screenCover.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
                 break;
             case "Room Transition":
-                screenCover.GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, 200);
+                screenCover.color = new Color32(0, 0, 0, 200);
                 playerScript.ExecuteCoverCommand(type);
                 break;
             case "Death Transition":
                 playerScript.ExecuteCoverCommand(type);
+                break;
+            case "Custom Fade":
+                playerScript.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime);
                 break;
         }
     }
@@ -637,6 +654,7 @@ public class PlayState
             // - Selected weapon
             // - Boss states
             // - NPC variables
+            // - Explored map
             GameSaveData data = new GameSaveData();
             data.profile = currentProfile;
             data.difficulty = currentDifficulty;
@@ -652,6 +670,7 @@ public class PlayState
                 talkedToCaveSnail ? 1 : 0
             };
             data.percentage = GetItemPercentage();
+            data.exploredMap = minimap.transform.parent.GetComponent<Minimap>().currentMap;
             string saveData = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("SaveGameData" + currentProfile, saveData);
             PlayerPrefs.Save();
@@ -710,6 +729,7 @@ public class PlayState
                 bossStates = loadedSave.bossStates;
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
+                minimap.transform.parent.GetComponent<Minimap>().currentMap = loadedSave.exploredMap;
             }
             return loadedSave;
         }

@@ -115,6 +115,12 @@ public class Item : MonoBehaviour
             collected = true;
             SetDeactivated();
         }
+        else
+        {
+            collected = false;
+            box.enabled = true;
+            sprite.enabled = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

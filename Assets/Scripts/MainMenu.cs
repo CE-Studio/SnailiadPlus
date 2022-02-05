@@ -465,12 +465,27 @@ public class MainMenu : MonoBehaviour
             GetNewSnailOffset();
         }
 
-        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause" && PlayState.isMenuOpen)
+        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause")
         {
-            PlayState.isMenuOpen = false;
-            ClearOptions();
-            selector[0].SetActive(false);
-            music.Stop();
+            if (PlayState.isMenuOpen)
+            {
+                PlayState.isMenuOpen = false;
+                ClearOptions();
+                selector[0].SetActive(false);
+                music.Stop();
+                PlayState.screenCover.sortingOrder = 999;
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f);
+            }
+            if (!PlayState.isMenuOpen && Control.Pause())
+            {
+                PlayState.isMenuOpen = true;
+                PlayState.ToggleHUD(false);
+                selector[0].SetActive(true);
+                PlayState.gameState = "Pause";
+                PlayState.screenCover.sortingOrder = 0;
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
+                PageMain();
+            }
         }
     }
 
@@ -609,16 +624,16 @@ public class MainMenu : MonoBehaviour
     public void GetNewSnailOffset()
     {
         Bounds textBounds = currentOptions[selectedOption].optionObject.transform.GetChild(0).GetComponent<MeshRenderer>().bounds;
-        selectSnailOffset = textBounds.max.x + 1;
+        selectSnailOffset = textBounds.max.x - textBounds.center.x + 1.5f;
     }
 
     public void ForceSelect(int optionNum)
     {
         selectedOption = optionNum;
-        selector[0].transform.position = new Vector2(0, currentOptions[optionNum].optionObject.transform.position.y + SELECT_SNAIL_VERTICAL_OFFSET);
+        selector[0].transform.localPosition = new Vector2(0, currentOptions[optionNum].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET);
         GetNewSnailOffset();
-        selector[1].transform.position = new Vector2(-selectSnailOffset, 0);
-        selector[2].transform.position = new Vector2(selectSnailOffset, 0);
+        selector[1].transform.localPosition = new Vector2(-selectSnailOffset, 0);
+        selector[2].transform.localPosition = new Vector2(selectSnailOffset, 0);
     }
 
     public void PageMain()
@@ -627,7 +642,7 @@ public class MainMenu : MonoBehaviour
         bool returnAvailable = false;
         if (PlayState.gameState == "Pause")
         {
-            AddOption("Return to game", true);
+            AddOption("Return to game", true, Unpause);
             returnAvailable = true;
         }
         //AddOption("New game", true);
@@ -647,12 +662,17 @@ public class MainMenu : MonoBehaviour
         AddOption("Credits", true, CreditsPage1);
         if (PlayState.HasTime())
             AddOption("Records", true);
-        AddOption("Quit", true, QuitConfirm);
         if (returnAvailable)
-            ForceSelect(2);
+        {
+            AddOption("Back to main menu", true, MenuReturnConfirm);
+            backPage = Unpause;
+        }
         else
-            ForceSelect(0);
-        backPage = QuitConfirm;
+        {
+            AddOption("Quit", true, QuitConfirm);
+            backPage = QuitConfirm;
+        }
+        ForceSelect(0);
     }
 
     public void ProfileScreen()
@@ -670,7 +690,12 @@ public class MainMenu : MonoBehaviour
                 time += data.gameTime[1] + ":";
                 if (data.gameTime[2] < 10)
                     time += "0";
-                time += Mathf.Round(data.gameTime[2] * 100) * 0.01f;
+                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
+                if (seconds.Length == 4)
+                    time += seconds.Substring(0, 2);
+                else
+                    time += "0" + seconds[0];
+                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
                 AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             }
             else
@@ -704,6 +729,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewSave()
     {
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfile = menuVarFlags[3];
         PlayState.currentDifficulty = menuVarFlags[0];
         PlayState.currentTime = new float[] { 0, 0, 0 };
@@ -722,7 +748,16 @@ public class MainMenu : MonoBehaviour
         PlayState.bossStates = new int[] { 1, 1, 1, 1 };
         PlayState.hasSeenIris = false;
         PlayState.talkedToCaveSnail = false;
+        PlayState.minimap.transform.parent.GetComponent<Minimap>().currentMap = PlayState.defaultMinimapState;
         PlayState.WriteSave("game");
+
+        if (PlayState.gameState == "Pause")
+        {
+            Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+            lastRoom.GetComponent<Collider2D>().enabled = true;
+            lastRoom.GetComponent<RoomTrigger>().active = true;
+            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+        }
 
         PlayState.player.transform.position = PlayState.WORLD_SPAWN;
         PlayState.gameState = "Game";
@@ -746,11 +781,85 @@ public class MainMenu : MonoBehaviour
 
     public void LoadAndSpawn()
     {
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.LoadGame(menuVarFlags[0], true);
         PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
+
+        if (PlayState.gameState == "Pause")
+        {
+            Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+            lastRoom.GetComponent<Collider2D>().enabled = true;
+            lastRoom.GetComponent<RoomTrigger>().active = true;
+            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+        }
+
         PlayState.gameState = "Game";
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
+
+        PlayState.player.GetComponent<Snaily>().enabled = false;
+        //PlayState.player.GetComponent<Sluggy>().enabled = false;
+        //PlayState.player.GetComponent<Upside>().enabled = false;
+        //PlayState.player.GetComponent<Leggy>().enabled = false;
+        //PlayState.player.GetComponent<Blobby>().enabled = false;
+        //PlayState.player.GetComponent<Leechy>().enabled = false;
+        switch (PlayState.currentCharacter)
+        {
+            default:
+            case "Snaily":
+                PlayState.player.GetComponent<Snaily>().enabled = true;
+                PlayState.player.GetComponent<Snaily>().holdingJump = true;
+                break;
+            //case "Sluggy":
+            //    PlayState.player.GetComponent<Sluggy>().enabled = true;
+            //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
+            //    break;
+            //case "Snaily":
+            //    PlayState.player.GetComponent<Upside>().enabled = true;
+            //    PlayState.player.GetComponent<Upside>().holdingJump = true;
+            //    break;
+            //case "Snaily":
+            //    PlayState.player.GetComponent<Leggy>().enabled = true;
+            //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
+            //    break;
+            //case "Snaily":
+            //    PlayState.player.GetComponent<Blobby>().enabled = true;
+            //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
+            //    break;
+            //case "Snaily":
+            //    PlayState.player.GetComponent<Leechy>().enabled = true;
+            //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
+            //    break;
+        }
+    }
+
+    public void Unpause()
+    {
+        PlayState.gameState = "Game";
+        PlayState.ToggleHUD(true);
+
+        switch (PlayState.currentCharacter)
+        {
+            default:
+            case "Snaily":
+                PlayState.player.GetComponent<Snaily>().holdingJump = true;
+                break;
+                //case "Sluggy":
+                //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
+                //    break;
+                //case "Upside":
+                //    PlayState.player.GetComponent<Upside>().holdingJump = true;
+                //    break;
+                //case "Leggy":
+                //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
+                //    break;
+                //case "Blobby":
+                //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
+                //    break;
+                //case "Leechy":
+                //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
+                //    break;
+        }
     }
 
     public void CopyData()
@@ -768,7 +877,12 @@ public class MainMenu : MonoBehaviour
                 time += data.gameTime[1] + ":";
                 if (data.gameTime[2] < 10)
                     time += "0";
-                time += Mathf.Round(data.gameTime[2] * 100) * 0.01f;
+                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
+                if (seconds.Length == 4)
+                    time += seconds.Substring(0, 2);
+                else
+                    time += "0" + seconds[0];
+                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
                 AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
             }
             else
@@ -797,7 +911,12 @@ public class MainMenu : MonoBehaviour
                 time += data.gameTime[1] + ":";
                 if (data.gameTime[2] < 10)
                     time += "0";
-                time += Mathf.Round(data.gameTime[2] * 100) * 0.01f;
+                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
+                if (seconds.Length == 4)
+                    time += seconds.Substring(0, 2);
+                else
+                    time += "0" + seconds[0];
+                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
                 AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + time + " / " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
                     menuVarFlags[0] != i, CopyConfirm, new int[] { 1, i });
             }
@@ -845,7 +964,12 @@ public class MainMenu : MonoBehaviour
                 time += data.gameTime[1] + ":";
                 if (data.gameTime[2] < 10)
                     time += "0";
-                time += Mathf.Round(data.gameTime[2] * 100) * 0.01f;
+                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
+                if (seconds.Length == 4)
+                    time += seconds.Substring(0, 1);
+                else
+                    time += seconds[0];
+                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, seconds.Length == 4 ? 3 : 2);
                 AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
             }
             else
@@ -1145,6 +1269,47 @@ public class MainMenu : MonoBehaviour
         AddOption("Back to main menu", true, PageMain);
         ForceSelect(6);
         backPage = PageMain;
+    }
+
+    public void MenuReturnConfirm()
+    {
+        ClearOptions();
+        AddOption("Really return to menu?", false);
+        AddOption("", false);
+        AddOption("Save and quit", true, SaveQuit);
+        AddOption("Quit without saving", true, ReturnToMenu);
+        AddOption("Back to pause menu", true, PageMain);
+        ForceSelect(2);
+        backPage = PageMain;
+    }
+
+    public void SaveQuit()
+    {
+        PlayState.WriteSave("game");
+        ReturnToMenu();
+    }
+
+    public void ReturnToMenu()
+    {
+        PlayState.gameState = "Menu";
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
+        cam.position = panPoints[0];
+        PageMain();
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
+        PlayState.playerScript.StopMusic();
+
+        PlayState.skyLayer.transform.localPosition = Vector2.zero;
+        PlayState.bgLayer.transform.localPosition = Vector2.zero;
+        PlayState.fg1Layer.transform.localPosition = Vector2.zero;
+        PlayState.fg2Layer.transform.localPosition = Vector2.zero;
+        Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+        lastRoom.GetComponent<Collider2D>().enabled = true;
+        lastRoom.GetComponent<RoomTrigger>().active = true;
+        lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+        PlayState.currentArea = -1;
+        PlayState.currentSubzone = -1;
+
+        music.Play();
     }
 
     public void QuitConfirm()

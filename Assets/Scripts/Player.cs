@@ -223,27 +223,30 @@ public class Player : MonoBehaviour
             }
 
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
-
-            // Music looping
-            if (!PlayState.playingMusic)
-                return;
-
-            double time = AudioSettings.dspTime;
-
-            if (time + 1 > nextLoopEvent)
-            {
-                for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
-                {
-                    PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
-                    PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
-                    PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
-                }
-                nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
-                PlayState.musFlag = !PlayState.musFlag;
-            }
         }
         else
             anim.speed = 0;
+
+        // Music
+        foreach (AudioSource audio in PlayState.musicSourceArray)
+            audio.volume = PlayState.gameOptions[1] * 0.1f;
+
+        if (!PlayState.playingMusic)
+            return;
+
+        double time = AudioSettings.dspTime;
+
+        if (time + 1 > nextLoopEvent)
+        {
+            for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
+            {
+                PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
+                PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
+                PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
+            }
+            nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
+            PlayState.musFlag = !PlayState.musFlag;
+        }
     }
 
     void LateUpdate()
@@ -323,16 +326,24 @@ public class Player : MonoBehaviour
         {
             if (i == subzone)
             {
-                PlayState.musicSourceArray[i * 2].volume = PlayState.musicVol;
-                PlayState.musicSourceArray[i * 2 + 1].volume = PlayState.musicVol;
+                PlayState.musicSourceArray[i * 2].mute = false;
+                PlayState.musicSourceArray[i * 2 + 1].mute = false;
             }
             else
             {
-                PlayState.musicSourceArray[i * 2].volume = 0;
-                PlayState.musicSourceArray[i * 2 + 1].volume = 0;
+                PlayState.musicSourceArray[i * 2].mute = true;
+                PlayState.musicSourceArray[i * 2 + 1].mute = true;
             }
         }
         PlayState.playingMusic = true;
+    }
+
+    public void StopMusic()
+    {
+        PlayState.playingMusic = false;
+        PlayState.musicSourceArray.Clear();
+        foreach (Transform obj in PlayState.musicParent.transform)
+            Destroy(obj.gameObject);
     }
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
@@ -349,6 +360,19 @@ public class Player : MonoBehaviour
             weaponIcons[1].sprite = iconBoomSelected;
         else
             weaponIcons[0].sprite = iconPeaSelected;
+    }
+
+    public void ChangeWeaponIconSprite(int weaponID, int state)
+    {
+        weaponIcons[weaponID].enabled = state != 0;
+        Sprite icon = null;
+        if (weaponID == 0)
+            icon = state == 2 ? iconPeaSelected : iconPeaDeselected;
+        else if (weaponID == 1)
+            icon = state == 2 ? iconBoomSelected : iconBoomDeselected;
+        else if (weaponID == 2)
+            icon = state == 2 ? iconWaveSelected : iconWaveDeselected;
+        weaponIcons[weaponID].sprite = icon;
     }
 
     // This coroutine here is meant to display the keypress indicators intended for debugging purposes
@@ -371,7 +395,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ExecuteCoverCommand(string type)
+    public void ExecuteCoverCommand(string type, byte r = 0, byte g = 0, byte b = 0, byte a = 0, float maxTime = 0)
     {
         switch (type)
         {
@@ -381,11 +405,15 @@ public class Player : MonoBehaviour
             case "Death Transition":
                 StartCoroutine(nameof(CoverDeathTransition));
                 break;
+            case "Custom Fade":
+                StartCoroutine(CoverCustomFade(r, g, b, a, maxTime));
+                break;
         }
     }
+
     public IEnumerator CoverRoomTransition()
     {
-        SpriteRenderer sprite = PlayState.screenCover.GetComponent<SpriteRenderer>();
+        SpriteRenderer sprite = PlayState.screenCover;
         while (sprite.color.a > 0)
         {
             yield return new WaitForFixedUpdate();
@@ -395,12 +423,28 @@ public class Player : MonoBehaviour
 
     public IEnumerator CoverDeathTransition()
     {
-        SpriteRenderer sprite = PlayState.screenCover.GetComponent<SpriteRenderer>();
+        SpriteRenderer sprite = PlayState.screenCover;
         float timer = 0;
         while (sprite.color.a < 1)
         {
             yield return new WaitForFixedUpdate();
             sprite.color = new Color32(0, 64, 127, (byte)Mathf.Lerp(0, 255, timer * 2));
+            timer += Time.fixedDeltaTime;
+        }
+    }
+
+    public IEnumerator CoverCustomFade(byte r, byte g, byte b, byte a, float maxTime)
+    {
+        SpriteRenderer sprite = PlayState.screenCover;
+        float timer = 0;
+        Color32 startColor = sprite.color;
+        while (timer < maxTime)
+        {
+            yield return new WaitForFixedUpdate();
+            sprite.color = new Color32((byte)Mathf.Lerp(startColor.r, r, timer / maxTime),
+                (byte)Mathf.Lerp(startColor.g, g, timer / maxTime),
+                (byte)Mathf.Lerp(startColor.b, b, timer / maxTime),
+                (byte)Mathf.Lerp(startColor.a, a, timer / maxTime));
             timer += Time.fixedDeltaTime;
         }
     }

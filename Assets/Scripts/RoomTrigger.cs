@@ -185,7 +185,7 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    private void DespawnEverything()
+    public void DespawnEverything()
     {
         foreach (Transform child in transform)
         {

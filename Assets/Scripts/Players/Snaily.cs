@@ -30,7 +30,7 @@ public class Snaily : MonoBehaviour
     private float gravityMod = 1;
     private bool facingLeft = false;
     private bool facingDown = false;
-    private bool holdingJump = false;
+    public bool holdingJump = false;
     private bool holdingShell = false;
     private bool axisFlag = false;
     private bool againstWallFlag = false;

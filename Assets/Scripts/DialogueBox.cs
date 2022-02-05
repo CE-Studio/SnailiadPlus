@@ -6,6 +6,7 @@ public class DialogueBox : MonoBehaviour
 {
     public Animator anim;
     public AudioSource sfx;
+    public SpriteRenderer sprite;
 
     public GameObject cam;
     public GameObject player;
@@ -46,6 +47,7 @@ public class DialogueBox : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         sfx = GetComponent<AudioSource>();
+        sprite = GetComponent<SpriteRenderer>();
         cam = transform.parent.gameObject;
         portrait = transform.Find("Portrait").gameObject;
         portrait.SetActive(false);
@@ -379,5 +381,15 @@ public class DialogueBox : MonoBehaviour
     public void MarkOpenAnimComplete()
     {
         boxOpenAnimComplete = true;
+    }
+
+    public void ToggleSpriteOn()
+    {
+        sprite.enabled = true;
+    }
+
+    public void ToggleSpriteOff()
+    {
+        sprite.enabled = false;
     }
 }
