@@ -5,6 +5,20 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public bool isActive = false;
+    public Animator anim;
+
+    public void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+
+    public void Update()
+    {
+        if (PlayState.gameState == "Game")
+            anim.speed = 1;
+        else
+            anim.speed = 0;
+    }
 
     public void ResetExpl()
     {

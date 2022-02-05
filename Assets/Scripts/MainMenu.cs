@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviour
     private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
     private bool isRebinding = false;
+    private bool pauseButtonDown = false;
 
     private const float LIST_CENTER_Y = -2.5f;
     private const float LIST_OPTION_SPACING = 1.25f;
@@ -476,7 +477,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.screenCover.sortingOrder = 999;
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f);
             }
-            if (!PlayState.isMenuOpen && Control.Pause())
+            if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown)
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);
@@ -486,6 +487,8 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
                 PageMain();
             }
+            if (pauseButtonDown && !Control.Pause())
+                pauseButtonDown = false;
         }
     }
 
@@ -611,6 +614,20 @@ public class MainMenu : MonoBehaviour
             element.SetActive(state);
     }
 
+    public string ConvertTimeToString(float[] gameTime)
+    {
+        string time = gameTime[0] + ":";
+        if (gameTime[1] < 10)
+            time += "0";
+        time += gameTime[1] + ":";
+        int seconds = Mathf.RoundToInt(gameTime[2] * 100);
+        bool lessThanTen = seconds < 1000;
+        bool lessThanOne = seconds < 100;
+        time += (lessThanOne ? "00" : (lessThanTen ? "0" + seconds.ToString()[0] : seconds.ToString().Substring(0, 2))) + "." +
+            seconds.ToString().Substring(lessThanOne ? 0 : (lessThanTen ? 1 : 2), 2);
+        return time;
+    }
+
     public void ClearOptions()
     {
         foreach (MenuOption option in currentOptions)
@@ -683,21 +700,7 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
-            {
-                string time = data.gameTime[0] + ":";
-                if (data.gameTime[1] < 10)
-                    time += "0";
-                time += data.gameTime[1] + ":";
-                if (data.gameTime[2] < 10)
-                    time += "0";
-                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
-                if (seconds.Length == 4)
-                    time += seconds.Substring(0, 2);
-                else
-                    time += "0" + seconds[0];
-                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
-                AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
-            }
+                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             else
                 AddOption("Empty profile", true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
         }
@@ -837,6 +840,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.gameState = "Game";
         PlayState.ToggleHUD(true);
+        pauseButtonDown = true;
 
         switch (PlayState.currentCharacter)
         {
@@ -870,21 +874,7 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
-            {
-                string time = data.gameTime[0] + ":";
-                if (data.gameTime[1] < 10)
-                    time += "0";
-                time += data.gameTime[1] + ":";
-                if (data.gameTime[2] < 10)
-                    time += "0";
-                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
-                if (seconds.Length == 4)
-                    time += seconds.Substring(0, 2);
-                else
-                    time += "0" + seconds[0];
-                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
-                AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
-            }
+                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
             else
                 AddOption("Empty profile", false);
         }
@@ -904,22 +894,8 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
-            {
-                string time = data.gameTime[0] + ":";
-                if (data.gameTime[1] < 10)
-                    time += "0";
-                time += data.gameTime[1] + ":";
-                if (data.gameTime[2] < 10)
-                    time += "0";
-                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
-                if (seconds.Length == 4)
-                    time += seconds.Substring(0, 2);
-                else
-                    time += "0" + seconds[0];
-                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, 2);
-                AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + time + " / " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
-                    menuVarFlags[0] != i, CopyConfirm, new int[] { 1, i });
-            }
+                AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%" +
+                    (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i, CopyConfirm, new int[] { 1, i });
             else
                 AddOption("Empty profile", true, CopyConfirm, new int[] { 1, i });
         }
