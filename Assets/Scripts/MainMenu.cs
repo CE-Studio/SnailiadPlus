@@ -56,6 +56,11 @@ public class MainMenu : MonoBehaviour
 
     public GameObject[] menuHUDElements;
 
+    public readonly int[] letterPixelWidths = new int[]
+    {
+        28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24
+    };
+
     void Start()
     {
         PlayState.LoadOptions();
@@ -79,8 +84,12 @@ public class MainMenu : MonoBehaviour
 
         menuHUDElements = new GameObject[]
         {
-            selector[0]
+            selector[0],
+            GameObject.Find("Version Text")
         };
+
+        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Version " + Application.version;
+        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Version " + Application.version;
     }
 
     void Update()
@@ -177,6 +186,8 @@ public class MainMenu : MonoBehaviour
                     }
                 }
             }
+            else
+                cam.transform.position = panPoints[0];
         }
         if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
         {
@@ -582,7 +593,10 @@ public class MainMenu : MonoBehaviour
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
     {
         foreach (Transform entry in transform)
-            entry.localPosition = new Vector2(0, entry.transform.localPosition.y + (LIST_OPTION_SPACING * 0.5f));
+        {
+            if (entry.name.Contains("Text Object"))
+                entry.localPosition = new Vector2(0, entry.transform.localPosition.y + (LIST_OPTION_SPACING * 0.5f));
+        }
 
         MenuOption option = new MenuOption();
         option.optionText = text;
