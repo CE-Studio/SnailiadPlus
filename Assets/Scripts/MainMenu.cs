@@ -31,6 +31,7 @@ public class MainMenu : MonoBehaviour
     private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
     private const float LETTER_SPAWN_Y = 5;
     private const float LETTER_SPAWN_TIME = 0.25f;
+    private const string SAVE_FILE_PREFIX = "SnailySave";
 
     private int selectedOption = 0;
     private float selectSnailOffset = 0;
@@ -495,7 +496,7 @@ public class MainMenu : MonoBehaviour
                     case "Select a slot: ":
                         TestForArrowAdjust(option, 0, 9);
                         AddToOptionText(option, (menuVarFlags[0] + 1).ToString() +
-                            (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json") ? " (full)" : " (empty)"));
+                            (File.Exists(Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json") ? " (full)" : " (empty)"));
                         break;
                 }
             }
@@ -1319,7 +1320,7 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         bool fileFound = false;
-        if (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json"))
+        if (File.Exists(Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
             fileFound = true;
             AddOption("Overwrite JSON save in slot " + (menuVarFlags[0] + 1) + "?", false);
@@ -1338,7 +1339,7 @@ public class MainMenu : MonoBehaviour
 
     public void WriteDataToFile()
     {
-        string dataPath = Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json";
+        string dataPath = Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
 
         CollectiveData fullData = new CollectiveData();
 
@@ -1399,7 +1400,7 @@ public class MainMenu : MonoBehaviour
     public void ImportConfirm()
     {
         ClearOptions();
-        if (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json"))
+        if (File.Exists(Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
             AddOption("Import data from slot " + (menuVarFlags[0] + 1) + "? This will", false);
             AddOption("overwrite *ALL* existing data!!", false);
@@ -1421,7 +1422,7 @@ public class MainMenu : MonoBehaviour
 
     public void ReadDataFromFile()
     {
-        string dataPath = Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json";
+        string dataPath = Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
 
         CollectiveData fullData = JsonUtility.FromJson<CollectiveData>(File.ReadAllText(dataPath));
 
