@@ -6,7 +6,12 @@ MonoImporter:
   defaultReferences:
   - cam: {instanceID: 0}
   - music: {instanceID: 0}
+  - sfx: {instanceID: 0}
+  - beep1: {instanceID: 0}
+  - beep2: {instanceID: 0}
   - textObject: {fileID: 977608639687929179, guid: 52342dc87988d204fb1573b101947443,
+      type: 3}
+  - titleLetter: {fileID: 1221628049815796803, guid: 12a7c9cc74a21d4499c3e98087bfd1cc,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}

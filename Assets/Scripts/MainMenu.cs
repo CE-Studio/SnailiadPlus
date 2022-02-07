@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class MainMenu : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class MainMenu : MonoBehaviour
     private const float LIST_OPTION_SPACING = 1.25f;
     private float currentSpawnY = LIST_CENTER_Y;
     private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
+    private const float LETTER_SPAWN_Y = 5;
+    private const float LETTER_SPAWN_TIME = 0.25f;
 
     private int selectedOption = 0;
     private float selectSnailOffset = 0;
@@ -52,14 +55,27 @@ public class MainMenu : MonoBehaviour
     public AudioClip beep1;
     public AudioClip beep2;
     public GameObject textObject;
+    public GameObject titleLetter;
     public GameObject[] selector;
 
     public GameObject[] menuHUDElements;
 
     public readonly int[] letterPixelWidths = new int[]
     {
-        28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24
+        28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24, 12
+    //  A   B   C   D   E   F   G   H   I  J   K   L  M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z
     };
+
+    [Serializable]
+    public struct CollectiveData
+    {
+        public PlayState.GameSaveData profile1;
+        public PlayState.GameSaveData profile2;
+        public PlayState.GameSaveData profile3;
+        public PlayState.OptionData options;
+        public PlayState.ControlData controls;
+        public PlayState.RecordData records;
+    }
 
     void Start()
     {
@@ -90,6 +106,8 @@ public class MainMenu : MonoBehaviour
 
         menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Version " + Application.version;
         menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Version " + Application.version;
+
+        StartCoroutine(nameof(CreateTitle));
     }
 
     void Update()
@@ -223,7 +241,8 @@ public class MainMenu : MonoBehaviour
                     if (backPage != null)
                     {
                         backPage();
-                        sfx.PlayOneShot(beep2);
+                        if (sfx.gameObject.activeInHierarchy)
+                            sfx.PlayOneShot(beep2);
                     }
                 }
                 else if (Control.JumpPress())
@@ -236,7 +255,8 @@ public class MainMenu : MonoBehaviour
                     if (currentOptions[selectedOption].destinationPage != null)
                     {
                         currentOptions[selectedOption].destinationPage();
-                        sfx.PlayOneShot(beep2);
+                        if (sfx.gameObject.activeInHierarchy)
+                            sfx.PlayOneShot(beep2);
                     }
                 }
             }
@@ -472,6 +492,11 @@ public class MainMenu : MonoBehaviour
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(22));
                         break;
+                    case "Select a slot: ":
+                        TestForArrowAdjust(option, 0, 9);
+                        AddToOptionText(option, (menuVarFlags[0] + 1).ToString() +
+                            (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json") ? " (full)" : " (empty)"));
+                        break;
                 }
             }
             GetNewSnailOffset();
@@ -483,20 +508,21 @@ public class MainMenu : MonoBehaviour
             {
                 PlayState.isMenuOpen = false;
                 ClearOptions();
-                selector[0].SetActive(false);
                 music.Stop();
                 PlayState.screenCover.sortingOrder = 999;
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f);
+                ToggleHUD(false);
             }
             if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown)
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);
-                selector[0].SetActive(true);
+                ToggleHUD(true);
                 PlayState.gameState = "Pause";
                 PlayState.screenCover.sortingOrder = 0;
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
                 PageMain();
+                StartCoroutine(nameof(CreateTitle));
             }
             if (pauseButtonDown && !Control.Pause())
                 pauseButtonDown = false;
@@ -625,7 +651,14 @@ public class MainMenu : MonoBehaviour
     public void ToggleHUD(bool state)
     {
         foreach (GameObject element in menuHUDElements)
+        {
             element.SetActive(state);
+        }
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            if (!state && transform.GetChild(i).name.Contains("Title Letter"))
+                Destroy(transform.GetChild(i).gameObject);
+        }
     }
 
     public string ConvertTimeToString(float[] gameTime)
@@ -665,6 +698,106 @@ public class MainMenu : MonoBehaviour
         GetNewSnailOffset();
         selector[1].transform.localPosition = new Vector2(-selectSnailOffset, 0);
         selector[2].transform.localPosition = new Vector2(selectSnailOffset, 0);
+    }
+
+    public IEnumerator CreateTitle()
+    {
+        string title = "Snailiad";
+        int titleLength = 0;
+        for (int i = 0; i < title.Length; i++)
+        {
+            titleLength += letterPixelWidths[LetterToNumber(title[i])];
+            if (i != title.Length - 1)
+                titleLength += 4;
+        }
+        float letterSpawnX = (-(titleLength * 0.5f) + (letterPixelWidths[LetterToNumber(title[0])] * 0.5f)) * 0.0625f + 0.25f;
+        float timer = LETTER_SPAWN_TIME;
+        int letterID = 0;
+        bool doneSpawning = false;
+
+        while (!doneSpawning && PlayState.gameState != "Game")
+        {
+            if (timer >= LETTER_SPAWN_TIME && letterID < title.Length)
+            {
+                GameObject newLetter = Instantiate(titleLetter);
+                newLetter.transform.parent = transform;
+                newLetter.transform.localPosition = new Vector2(letterSpawnX, LETTER_SPAWN_Y);
+                TitleLetter letterScript = newLetter.GetComponent<TitleLetter>();
+                letterScript.SetLetter(title[letterID]);
+                letterScript.localFinalPos = newLetter.transform.localPosition;
+                letterScript.readyToAnimate = true;
+                timer -= LETTER_SPAWN_TIME;
+                letterID++;
+                if (letterID >= title.Length)
+                    doneSpawning = true;
+                else
+                    letterSpawnX += (letterPixelWidths[LetterToNumber(title[letterID - 1])] + 4) * 0.0625f;
+            }
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public int LetterToNumber(char letter)
+    {
+        switch (char.ToLower(letter))
+        {
+            default:
+            case 'a':
+                return 0;
+            case 'b':
+                return 1;
+            case 'c':
+                return 2;
+            case 'd':
+                return 3;
+            case 'e':
+                return 4;
+            case 'f':
+                return 5;
+            case 'g':
+                return 6;
+            case 'h':
+                return 7;
+            case 'i':
+                return 8;
+            case 'j':
+                return 9;
+            case 'k':
+                return 10;
+            case 'l':
+                return 11;
+            case 'm':
+                return 12;
+            case 'n':
+                return 13;
+            case 'o':
+                return 14;
+            case 'p':
+                return 15;
+            case 'q':
+                return 16;
+            case 'r':
+                return 17;
+            case 's':
+                return 18;
+            case 't':
+                return 19;
+            case 'u':
+                return 20;
+            case 'v':
+                return 21;
+            case 'w':
+                return 22;
+            case 'x':
+                return 23;
+            case 'y':
+                return 24;
+            case 'z':
+                return 25;
+            case ' ':
+                return 26;
+        }
     }
 
     public void PageMain()
@@ -854,6 +987,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.gameState = "Game";
         PlayState.ToggleHUD(true);
+        ToggleHUD(false);
         pauseButtonDown = true;
 
         switch (PlayState.currentCharacter)
@@ -1005,6 +1139,8 @@ public class MainMenu : MonoBehaviour
         AddOption("Shooting: ", true);
         AddOption("Texture/Music packs", true);
         AddOption("Erase record data", true, RecordEraseConfirm);
+        if (PlayState.gameState == "Menu")
+            AddOption("Import/export all data", true, ImportExportData);
         AddOption("", false);
         AddOption("Back to main menu", true, PageMain);
         ForceSelect(0);
@@ -1097,7 +1233,7 @@ public class MainMenu : MonoBehaviour
         AddOption("Open minimap:   ", true, TestForRebind, new int[] { 0, 21 });
         AddOption("Open menu:   ", true, TestForRebind, new int[] { 0, 22 });
         AddOption("", false);
-        AddOption("Back to control menu", true, ControlMain);
+        AddOption("Back", true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
     }
@@ -1155,6 +1291,163 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("RecordData");
         OptionsScreen();
+    }
+
+    public void ImportExportData()
+    {
+        ClearOptions();
+        AddOption("Export data to JSON", true, ExportSelect, new int[] { 0, 0 });
+        AddOption("Import data from JSON", true, ImportSelect, new int[] { 0, 0 });
+        AddOption("", false);
+        AddOption("Back to options", true, OptionsScreen);
+        ForceSelect(0);
+        backPage = OptionsScreen;
+    }
+
+    public void ExportSelect()
+    {
+        ClearOptions();
+        AddOption("Select a slot: ", true);
+        AddOption("", false);
+        AddOption("Confirm", true, ExportConfirm);
+        AddOption("Back to options", true, OptionsScreen);
+        ForceSelect(0);
+        backPage = ImportExportData;
+    }
+
+    public void ExportConfirm()
+    {
+        ClearOptions();
+        bool fileFound = false;
+        if (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json"))
+        {
+            fileFound = true;
+            AddOption("Overwrite JSON save in slot " + (menuVarFlags[0] + 1) + "?", false);
+        }
+        else
+        {
+            AddOption("Write all saved data to a", false);
+            AddOption("JSON file in slot " + (menuVarFlags[0] + 1) + "?", false);
+        }
+        AddOption("", false);
+        AddOption("Yeah, write it!", true, WriteDataToFile);
+        AddOption("No, I changed my mind", true, ImportExportData);
+        ForceSelect(fileFound ? 4 : 3);
+        backPage = ImportExportData;
+    }
+
+    public void WriteDataToFile()
+    {
+        string dataPath = Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json";
+
+        CollectiveData fullData = new CollectiveData();
+
+        fullData.profile1 = PlayState.LoadGame(1);
+        fullData.profile2 = PlayState.LoadGame(2);
+        fullData.profile3 = PlayState.LoadGame(3);
+
+        PlayState.OptionData optionDataForCollective = new PlayState.OptionData();
+        optionDataForCollective.options = PlayState.gameOptions;
+        fullData.options = optionDataForCollective;
+
+        PlayState.ControlData controlDataForCollective = new PlayState.ControlData();
+        controlDataForCollective.controls = Control.inputs;
+        fullData.controls = controlDataForCollective;
+
+        PlayState.RecordData recordDataForCollective = new PlayState.RecordData();
+        recordDataForCollective.achievements = PlayState.achievementStates;
+        recordDataForCollective.times = PlayState.savedTimes;
+        fullData.records = recordDataForCollective;
+
+        File.WriteAllText(dataPath, JsonUtility.ToJson(fullData));
+
+        ClearOptions();
+        AddOption("Success! Your new JSON", false);
+        AddOption("can be found at:", false);
+
+        string currentText = "";
+        int j = 32;
+        for (int i = 0; i < dataPath.Length; i++)
+        {
+            currentText += dataPath[i];
+            j--;
+            if (j == 0 || i == dataPath.Length - 1)
+            {
+                AddOption(currentText, false);
+                j = 32;
+                currentText = "";
+            }
+        }
+
+        AddOption("", false);
+        AddOption("Yay!!", true, ImportExportData);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = ImportExportData;
+    }
+
+    public void ImportSelect()
+    {
+        ClearOptions();
+        AddOption("Select a slot: ", true);
+        AddOption("", false);
+        AddOption("Confirm", true, ImportConfirm);
+        AddOption("Back to options", true, OptionsScreen);
+        ForceSelect(0);
+        backPage = ImportExportData;
+    }
+
+    public void ImportConfirm()
+    {
+        ClearOptions();
+        if (File.Exists(Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json"))
+        {
+            AddOption("Import data from slot " + (menuVarFlags[0] + 1) + "? This will", false);
+            AddOption("overwrite *ALL* existing data!!", false);
+            AddOption("", false);
+            AddOption("Yes, import away!", true, ReadDataFromFile);
+            AddOption("No way! Let me keep my data!", true, ImportExportData);
+            ForceSelect(4);
+            backPage = ImportExportData;
+        }
+        else
+        {
+            AddOption("There\'s no data in slot " + (menuVarFlags[0] + 1) + "!", false);
+            AddOption("", false);
+            AddOption("Whoops!! Go back", true, ImportExportData);
+            ForceSelect(2);
+            backPage = ImportExportData;
+        }
+    }
+
+    public void ReadDataFromFile()
+    {
+        string dataPath = Application.persistentDataPath + "/SnailySave_" + (menuVarFlags[0] + 1) + ".json";
+
+        CollectiveData fullData = JsonUtility.FromJson<CollectiveData>(File.ReadAllText(dataPath));
+
+        PlayerPrefs.SetString("SaveGameData1", JsonUtility.ToJson(fullData.profile1));
+        PlayerPrefs.Save();
+        PlayerPrefs.SetString("SaveGameData2", JsonUtility.ToJson(fullData.profile2));
+        PlayerPrefs.Save();
+        PlayerPrefs.SetString("SaveGameData3", JsonUtility.ToJson(fullData.profile2));
+        PlayerPrefs.Save();
+        PlayerPrefs.SetString("OptionData", JsonUtility.ToJson(fullData.options));
+        PlayerPrefs.Save();
+        PlayerPrefs.SetString("ControlData", JsonUtility.ToJson(fullData.controls));
+        PlayerPrefs.Save();
+        PlayerPrefs.SetString("RecordData", JsonUtility.ToJson(fullData.records));
+        PlayerPrefs.Save();
+
+        PlayState.LoadOptions();
+        PlayState.LoadControls();
+        //PlayState.LoadRecords();
+
+        ClearOptions();
+        AddOption("Success! Data has been loaded", false);
+        AddOption("", false);
+        AddOption("Awesome!", true, ImportExportData);
+        ForceSelect(2);
+        backPage = ImportExportData;
     }
 
     public void SaveOptions()
