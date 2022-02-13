@@ -106,8 +106,8 @@ public class PlayState
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
 
-    public static readonly Vector2 WORLD_SPAWN = new Vector2(84, 88.5f);
-    public static Vector2 respawnCoords = new Vector2(84, 88.5f);
+    public static readonly Vector2 WORLD_SPAWN = new Vector2(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
+    public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
     public static TextMesh fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
@@ -386,6 +386,7 @@ public class PlayState
         switch (type)
         {
             default:
+            case "Solid Color":
                 screenCover.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
                 break;
             case "Room Transition":

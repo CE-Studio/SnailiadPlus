@@ -9,7 +9,9 @@ public class TitleLetter : MonoBehaviour
     public Animator anim;
     public Vector2 localFinalPos;
     public bool readyToAnimate = false;
-    private float animTimer = 0;
+    private float animTimer = -2.5f;
+
+    private const float X_SCALE = 80;
 
     void Awake()
     {
@@ -21,15 +23,14 @@ public class TitleLetter : MonoBehaviour
     {
         if (readyToAnimate)
         {
-            if (animTimer < 1)
-                transform.localPosition = new Vector2(Mathf.SmoothStep(localFinalPos.x + 10, localFinalPos.x - 5, animTimer), localFinalPos.y);
-            else if (animTimer < 2)
-                transform.localPosition = new Vector2(Mathf.SmoothStep(localFinalPos.x - 5, localFinalPos.x + 2, animTimer - 1), localFinalPos.y);
-            else if (animTimer < 3)
-                transform.localPosition = new Vector2(Mathf.SmoothStep(localFinalPos.x + 2, localFinalPos.x, animTimer - 2), localFinalPos.y);
-            animTimer += Time.deltaTime;
-            if (animTimer >= 3)
+            if (animTimer < 0)
             {
+                transform.localPosition = new Vector2(localFinalPos.x + (-Mathf.Sin(-animTimer * Mathf.PI) * animTimer * X_SCALE) * 0.0625f, localFinalPos.y);
+                animTimer += Time.deltaTime;
+            }
+            else
+            {
+                transform.localPosition = localFinalPos;
                 readyToAnimate = false;
                 PlayAnim("Normal");
             }

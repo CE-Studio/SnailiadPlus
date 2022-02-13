@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
     private int controlScreen = 0;
     private bool isRebinding = false;
     private bool pauseButtonDown = false;
+    private bool fadingToIntro = false;
 
     private const float LIST_CENTER_Y = -2.5f;
     private const float LIST_OPTION_SPACING = 1.25f;
@@ -213,7 +214,7 @@ public class MainMenu : MonoBehaviour
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
             music.volume = PlayState.gameOptions[1] * 0.1f;
 
-            if (!isRebinding)
+            if (!isRebinding && !fadingToIntro)
             {
                 if (Control.UpPress() || Control.DownPress())
                 {
@@ -521,6 +522,7 @@ public class MainMenu : MonoBehaviour
                 ToggleHUD(true);
                 PlayState.gameState = "Pause";
                 PlayState.screenCover.sortingOrder = 0;
+                PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
                 PageMain();
                 StartCoroutine(nameof(CreateTitle));
@@ -671,8 +673,11 @@ public class MainMenu : MonoBehaviour
         int seconds = Mathf.RoundToInt(gameTime[2] * 100);
         bool lessThanTen = seconds < 1000;
         bool lessThanOne = seconds < 100;
-        time += (lessThanOne ? "00" : (lessThanTen ? "0" + seconds.ToString()[0] : seconds.ToString().Substring(0, 2))) + "." +
-            seconds.ToString().Substring(lessThanOne ? 0 : (lessThanTen ? 1 : 2), 2);
+        if (seconds == 0)
+            time += "00.00";
+        else
+            time += (lessThanOne ? "00" : (lessThanTen ? "0" + seconds.ToString()[0] : seconds.ToString().Substring(0, 2))) + "." +
+                seconds.ToString().Substring(lessThanOne ? 0 : (lessThanTen ? 1 : 2), 2);
         return time;
     }
 
@@ -801,6 +806,62 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
+    {
+        fadingToIntro = true;
+        PlayState.screenCover.sortingOrder = 1001;
+        PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);
+        PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 1);
+        yield return new WaitForSeconds(1);
+
+        if (runIntro)
+        {
+
+        }
+
+        PlayState.screenCover.sortingOrder = 999;
+        PlayState.player.transform.position = spawnPos;
+        PlayState.gameState = "Game";
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
+        PlayState.ToggleHUD(true);
+        fadingToIntro = false;
+
+        PlayState.player.GetComponent<Snaily>().enabled = false;
+        //PlayState.player.GetComponent<Sluggy>().enabled = false;
+        //PlayState.player.GetComponent<Upside>().enabled = false;
+        //PlayState.player.GetComponent<Leggy>().enabled = false;
+        //PlayState.player.GetComponent<Blobby>().enabled = false;
+        //PlayState.player.GetComponent<Leechy>().enabled = false;
+        switch (runIntro ? CharacterIDToName(menuVarFlags[1]) : PlayState.currentCharacter)
+        {
+            default:
+            case "Snaily":
+                PlayState.player.GetComponent<Snaily>().enabled = true;
+                PlayState.player.GetComponent<Snaily>().holdingJump = true;
+                break;
+                //case "Sluggy":
+                //    PlayState.player.GetComponent<Sluggy>().enabled = true;
+                //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
+                //    break;
+                //case "Snaily":
+                //    PlayState.player.GetComponent<Upside>().enabled = true;
+                //    PlayState.player.GetComponent<Upside>().holdingJump = true;
+                //    break;
+                //case "Snaily":
+                //    PlayState.player.GetComponent<Leggy>().enabled = true;
+                //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
+                //    break;
+                //case "Snaily":
+                //    PlayState.player.GetComponent<Blobby>().enabled = true;
+                //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
+                //    break;
+                //case "Snaily":
+                //    PlayState.player.GetComponent<Leechy>().enabled = true;
+                //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
+                //    break;
+        }
+    }
+
     public void PageMain()
     {
         ClearOptions();
@@ -910,10 +971,11 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        PlayState.player.transform.position = PlayState.WORLD_SPAWN;
-        PlayState.gameState = "Game";
-        PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
-        PlayState.ToggleHUD(true);
+        //PlayState.player.transform.position = PlayState.WORLD_SPAWN;
+        //PlayState.gameState = "Game";
+        //PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
+        //PlayState.ToggleHUD(true);
+        StartCoroutine(LoadFade(PlayState.WORLD_SPAWN, true));
     }
 
     public void PickSpawn()
@@ -934,7 +996,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.LoadGame(menuVarFlags[0], true);
-        PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
+        //PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
 
         if (PlayState.gameState == "Pause")
         {
@@ -944,44 +1006,45 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        PlayState.gameState = "Game";
-        PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
-        PlayState.ToggleHUD(true);
+        //PlayState.gameState = "Game";
+        //PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
+        //PlayState.ToggleHUD(true);
 
-        PlayState.player.GetComponent<Snaily>().enabled = false;
+        //PlayState.player.GetComponent<Snaily>().enabled = false;
         //PlayState.player.GetComponent<Sluggy>().enabled = false;
         //PlayState.player.GetComponent<Upside>().enabled = false;
         //PlayState.player.GetComponent<Leggy>().enabled = false;
         //PlayState.player.GetComponent<Blobby>().enabled = false;
         //PlayState.player.GetComponent<Leechy>().enabled = false;
-        switch (PlayState.currentCharacter)
-        {
-            default:
-            case "Snaily":
-                PlayState.player.GetComponent<Snaily>().enabled = true;
-                PlayState.player.GetComponent<Snaily>().holdingJump = true;
-                break;
-            //case "Sluggy":
-            //    PlayState.player.GetComponent<Sluggy>().enabled = true;
-            //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-            //    break;
-            //case "Snaily":
-            //    PlayState.player.GetComponent<Upside>().enabled = true;
-            //    PlayState.player.GetComponent<Upside>().holdingJump = true;
-            //    break;
-            //case "Snaily":
-            //    PlayState.player.GetComponent<Leggy>().enabled = true;
-            //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
-            //    break;
-            //case "Snaily":
-            //    PlayState.player.GetComponent<Blobby>().enabled = true;
-            //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
-            //    break;
-            //case "Snaily":
-            //    PlayState.player.GetComponent<Leechy>().enabled = true;
-            //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
-            //    break;
-        }
+        //switch (PlayState.currentCharacter)
+        //{
+        //    default:
+        //    case "Snaily":
+        //        PlayState.player.GetComponent<Snaily>().enabled = true;
+        //        PlayState.player.GetComponent<Snaily>().holdingJump = true;
+        //        break;
+        //    case "Sluggy":
+        //        PlayState.player.GetComponent<Sluggy>().enabled = true;
+        //        PlayState.player.GetComponent<Sluggy>().holdingJump = true;
+        //        break;
+        //    case "Snaily":
+        //        PlayState.player.GetComponent<Upside>().enabled = true;
+        //        PlayState.player.GetComponent<Upside>().holdingJump = true;
+        //        break;
+        //    case "Snaily":
+        //        PlayState.player.GetComponent<Leggy>().enabled = true;
+        //        PlayState.player.GetComponent<Leggy>().holdingJump = true;
+        //        break;
+        //    case "Snaily":
+        //        PlayState.player.GetComponent<Blobby>().enabled = true;
+        //        PlayState.player.GetComponent<Blobby>().holdingJump = true;
+        //        break;
+        //    case "Snaily":
+        //        PlayState.player.GetComponent<Leechy>().enabled = true;
+        //        PlayState.player.GetComponent<Leechy>().holdingJump = true;
+        //        break;
+        //}
+        StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords));
     }
 
     public void Unpause()

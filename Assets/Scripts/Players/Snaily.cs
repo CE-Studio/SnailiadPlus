@@ -153,14 +153,27 @@ public class Snaily : MonoBehaviour
                             // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
                             if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
                             {
+                                if (shelled)
+                                {
+                                    if (Control.AxisX() == (facingLeft ? 1 : -1))
+                                        transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
+                                    if (grounded)
+                                        ToggleShell();
+                                    float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
+                                    if (distance < box.size.x * 0.5f)
+                                    {
+                                        transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
+                                            (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
+                                        UpdateBoxcasts();
+                                    }
+                                }
                                 SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                if (shelled && grounded)
-                                    ToggleShell();
                                 float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                                 if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                                 {
                                     againstWallFlag = true;
-                                    velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
+                                    velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
+                                        runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
                                     // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                                     // we check to see if climbing is possible in either direction and switch the character's gravity state
                                     if ((boxD.distance + boxU.distance) >= 1)
@@ -189,7 +202,7 @@ public class Snaily : MonoBehaviour
                                                     transform.position.x + (facingLeft ? boxCorrection : -boxCorrection),
                                                     transform.position.y - adjustment
                                                     );
-                                                SwapDir((Control.UpHold()) ? DIR_CEILING : DIR_FLOOR);
+                                                SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
                                                 gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                                                 grounded = true;
                                                 return;
@@ -329,7 +342,20 @@ public class Snaily : MonoBehaviour
                                 !Control.StrafeHold() &&
                                 !holdingShell && !PlayState.paralyzed)
                             {
-                                ToggleShell();
+                                if (!shelled)
+                                    ToggleShell();
+                                else
+                                {
+                                    if (boxL.distance < 0.3375f && boxR.distance < 0.3375f)
+                                        break;
+                                    if (boxL.distance > 0.3375f && boxR.distance < 0.3375f)
+                                        transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                            transform.position.y);
+                                    else if (boxL.distance < 0.3375f && boxR.distance > 0.3375f)
+                                        transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                            transform.position.y);
+                                    ToggleShell();
+                                }
                                 holdingShell = true;
                             }
                             else if (!holdingShell && Control.DownHold())
@@ -351,14 +377,27 @@ public class Snaily : MonoBehaviour
                             // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
                             if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
                             {
+                                if (shelled)
+                                {
+                                    if (Control.AxisX() == (facingDown ? 1 : -1))
+                                        transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
+                                    if (grounded)
+                                        ToggleShell();
+                                    float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
+                                    if (distance < box.size.y * 0.5f)
+                                    {
+                                        transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
+                                            (boxD.point.y < transform.position.y ? 1 : -1));
+                                        UpdateBoxcasts();
+                                    }
+                                }
                                 SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                                if (shelled && grounded)
-                                    ToggleShell();
                                 float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                                 if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                                 {
                                     againstWallFlag = true;
-                                    velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
+                                    velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
+                                        runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
                                     // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                                     // we check to see if climbing is possible in either direction and switch the character's gravity state
                                     if ((boxL.distance + boxR.distance) >= 1)
@@ -492,6 +531,9 @@ public class Snaily : MonoBehaviour
                                             if (Control.LeftHold())
                                                 holdingShell = true;
                                             transform.position = new Vector2(transform.position.x + 0.0625f, transform.position.y);
+                                            UpdateBoxcasts();
+                                            if (boxL.distance == 0)
+                                                transform.position = new Vector2(transform.position.x - 0.3125f, transform.position.y);
                                             return;
                                         }
                                         else if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !player.stunned)
@@ -555,7 +597,20 @@ public class Snaily : MonoBehaviour
                                 !Control.StrafeHold() &&
                                 !holdingShell && !PlayState.paralyzed)
                             {
-                                ToggleShell();
+                                if (!shelled)
+                                    ToggleShell();
+                                else
+                                {
+                                    if (boxD.distance < 0.3375f && boxU.distance < 0.3375f)
+                                        break;
+                                    if (boxD.distance > 0.3375f && boxU.distance < 0.3375f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y -
+                                            (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                    else if (boxD.distance < 0.3375f && boxU.distance > 0.3375f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y +
+                                            (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
+                                    ToggleShell();
+                                }
                                 holdingShell = true;
                             }
                             else if (!holdingShell && Control.LeftHold())
@@ -577,14 +632,27 @@ public class Snaily : MonoBehaviour
                             // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
                             if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
                             {
+                                if (shelled)
+                                {
+                                    if (Control.AxisX() == (facingDown ? 1 : -1))
+                                        transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
+                                    if (grounded)
+                                        ToggleShell();
+                                    float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
+                                    if (distance < box.size.y * 0.5f)
+                                    {
+                                        transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
+                                            (boxD.point.y < transform.position.y ? 1 : -1));
+                                        UpdateBoxcasts();
+                                    }
+                                }
                                 SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                                if (shelled && grounded)
-                                    ToggleShell();
                                 float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                                 if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                                 {
                                     againstWallFlag = true;
-                                    velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) : runSpeedValue - (runSpeedValue - boxU.distance);
+                                    velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
+                                        runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
                                     // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                                     // we check to see if climbing is possible in either direction and switch the character's gravity state
                                     if ((boxL.distance + boxR.distance) >= 1)
@@ -716,6 +784,9 @@ public class Snaily : MonoBehaviour
                                         if (Control.RightHold())
                                             holdingShell = true;
                                         transform.position = new Vector2(transform.position.x - 0.0625f, transform.position.y);
+                                        UpdateBoxcasts();
+                                        if (boxL.distance == 0)
+                                            transform.position = new Vector2(transform.position.x + 0.3125f, transform.position.y);
                                         return;
                                     }
                                     else if (boxCorner.distance <= 0.0125f)
@@ -781,7 +852,20 @@ public class Snaily : MonoBehaviour
                                 !Control.StrafeHold() &&
                                 !holdingShell && !PlayState.paralyzed)
                             {
-                                ToggleShell();
+                                if (!shelled)
+                                    ToggleShell();
+                                else
+                                {
+                                    if (boxD.distance < 0.3375f && boxU.distance < 0.3375f)
+                                        break;
+                                    if (boxD.distance > 0.3375f && boxU.distance < 0.3375f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y -
+                                            (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                    else if (boxD.distance < 0.3375f && boxU.distance > 0.3375f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y +
+                                            (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
+                                    ToggleShell();
+                                }
                                 holdingShell = true;
                             }
                             else if (!holdingShell && Control.RightHold())
@@ -803,14 +887,27 @@ public class Snaily : MonoBehaviour
                             // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
                             if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
                             {
+                                if (shelled)
+                                {
+                                    if (Control.AxisX() == (facingLeft ? 1 : -1))
+                                        transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
+                                    if (grounded)
+                                        ToggleShell();
+                                    float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
+                                    if (distance < box.size.x * 0.5f)
+                                    {
+                                        transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
+                                            (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
+                                        UpdateBoxcasts();
+                                    }
+                                }
                                 SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                if (shelled && grounded)
-                                    ToggleShell();
                                 float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
                                 if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                                 {
                                     againstWallFlag = true;
-                                    velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) : runSpeedValue - (runSpeedValue - boxR.distance);
+                                    velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
+                                        runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
                                     // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                                     // we check to see if climbing is possible in either direction and switch the character's gravity state
                                     if ((boxD.distance + boxU.distance) >= 1)
@@ -998,7 +1095,20 @@ public class Snaily : MonoBehaviour
                                 !Control.StrafeHold() &&
                                 !holdingShell && !PlayState.paralyzed)
                             {
-                                ToggleShell();
+                                if (!shelled)
+                                    ToggleShell();
+                                else
+                                {
+                                    if (boxL.distance < 0.3375f && boxR.distance < 0.3375f)
+                                        break;
+                                    if (boxL.distance > 0.3375f && boxR.distance < 0.3375f)
+                                        transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                            transform.position.y);
+                                    else if (boxL.distance < 0.3375f && boxR.distance > 0.3375f)
+                                        transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                            transform.position.y);
+                                    ToggleShell();
+                                }
                                 holdingShell = true;
                             }
                             else if (!holdingShell && Control.UpHold())
