@@ -449,6 +449,8 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     SwitchSurfaceAxis();
                                     gravityDir = DIR_FLOOR;
+                                    if (Control.DownHold())
+                                        holdingShell = true;
                                 }
                                 else
                                 {
@@ -528,7 +530,7 @@ public class Snaily : MonoBehaviour
                                             SwapDir(DIR_FLOOR);
                                             SwitchSurfaceAxis();
                                             gravityDir = DIR_FLOOR;
-                                            if (Control.LeftHold())
+                                            if (Control.LeftHold() || Control.DownHold())
                                                 holdingShell = true;
                                             transform.position = new Vector2(transform.position.x + 0.0625f, transform.position.y);
                                             UpdateBoxcasts();
@@ -581,6 +583,8 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     SwitchSurfaceAxis();
                                     gravityDir = DIR_FLOOR;
+                                    if (Control.DownHold())
+                                        holdingShell = true;
                                 }
                                 sfx.PlayOneShot(jump);
                             }
@@ -704,6 +708,8 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     SwitchSurfaceAxis();
                                     gravityDir = DIR_FLOOR;
+                                    if (Control.DownHold())
+                                        holdingShell = true;
                                 }
                                 else
                                 {
@@ -781,7 +787,7 @@ public class Snaily : MonoBehaviour
                                         SwapDir(DIR_FLOOR);
                                         SwitchSurfaceAxis();
                                         gravityDir = DIR_FLOOR;
-                                        if (Control.RightHold())
+                                        if (Control.RightHold() || Control.DownHold())
                                             holdingShell = true;
                                         transform.position = new Vector2(transform.position.x - 0.0625f, transform.position.y);
                                         UpdateBoxcasts();
@@ -836,6 +842,8 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     SwitchSurfaceAxis();
                                     gravityDir = DIR_FLOOR;
+                                    if (Control.DownHold())
+                                        holdingShell = true;
                                 }
                                 sfx.PlayOneShot(jump);
                             }
@@ -957,6 +965,8 @@ public class Snaily : MonoBehaviour
                                 {
                                     SwapDir(DIR_FLOOR);
                                     gravityDir = DIR_FLOOR;
+                                    if (Control.DownHold())
+                                        holdingShell = true;
                                 }
                                 else
                                 {
@@ -1035,6 +1045,8 @@ public class Snaily : MonoBehaviour
                                         {
                                             SwapDir(DIR_FLOOR);
                                             gravityDir = DIR_FLOOR;
+                                            if (Control.DownHold())
+                                                holdingShell = true;
                                         }
                                         else if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !player.stunned)
                                         {
