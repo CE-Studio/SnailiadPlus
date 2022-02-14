@@ -92,6 +92,7 @@ public class PlayState
         GameObject.Find("View/Item Get Text"),
         GameObject.Find("View/Item Percentage Text"),
         GameObject.Find("View/FPS Text"),
+        GameObject.Find("View/Time Text"),
         GameObject.Find("View/Dialogue Box")
     };
 
@@ -112,6 +113,8 @@ public class PlayState
 
     public static TextMesh fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
     public static TextMesh fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
+    public static TextMesh timeText = GameObject.Find("View/Time Text/Text").GetComponent<TextMesh>();
+    public static TextMesh timeShadow = GameObject.Find("View/Time Text/Shadow").GetComponent<TextMesh>();
 
     public static int currentProfile = -1;
     public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
@@ -237,7 +240,8 @@ public class PlayState
         0,  //  7 - FPS counter (boolean)
         0,  //  8 - Shoot mode (boolean)
         0,  //  9 - Texture pack ID (any positive int, 0 for default)
-        0   // 10 - Music pack ID (any positive int, 0 for default)
+        0,  // 10 - Music pack ID (any positive int, 0 for default)
+        5   // 11 - Particle settings (0-5)
     };
 
     [Serializable]
@@ -419,28 +423,31 @@ public class PlayState
 
     public static void RequestExplosion(int size, Vector2 position)
     {
-        if (!explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive)
+        if ((gameOptions[11] != 0 && size <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && size > 4))
         {
-            explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive = true;
-            explosionPool.transform.GetChild(thisExplosionID).position = position;
-            switch (size)
+            if (!explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive)
             {
-                case 1:
-                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
-                    break;
-                case 2:
-                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion small", 0, 0);
-                    break;
-                case 3:
-                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion big", 0, 0);
-                    break;
-                case 4:
-                    explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
-                    break;
+                explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive = true;
+                explosionPool.transform.GetChild(thisExplosionID).position = position;
+                switch (size)
+                {
+                    case 1:
+                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
+                        break;
+                    case 2:
+                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion small", 0, 0);
+                        break;
+                    case 3:
+                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion big", 0, 0);
+                        break;
+                    case 4:
+                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
+                        break;
+                }
+                thisExplosionID++;
+                if (thisExplosionID >= explosionPool.transform.childCount)
+                    thisExplosionID = 0;
             }
-            thisExplosionID++;
-            if (thisExplosionID >= explosionPool.transform.childCount)
-                thisExplosionID = 0;
         }
     }
 
@@ -731,6 +738,21 @@ public class PlayState
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
                 minimap.transform.parent.GetComponent<Minimap>().currentMap = loadedSave.exploredMap;
+                for (int i = 0; i < loadedSave.items.Length; i++)
+                {
+                    if (loadedSave.items[i] == 1)
+                    {
+                        if (i >= OFFSET_FRAGMENTS)
+                            helixCount++;
+                        else if (i >= OFFSET_HEARTS)
+                        {
+                            heartCount++;
+                            playerScript.maxHealth += 4;
+                            playerScript.health += 4;
+                        }
+                    }
+                }
+                playerScript.RenderNewHearts();
             }
             return loadedSave;
         }
@@ -747,9 +769,13 @@ public class PlayState
         if (PlayerPrefs.HasKey("RecordData"))
         {
             RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
-            achievementStates = data.achievements;
+            for (int i = 0; i < data.achievements.Length; i++)
+                achievementStates[i] = data.achievements[i];
             if (data.times != null)
-                savedTimes = data.times;
+            {
+                for (int i = 0; i < data.times.Length; i++)
+                    savedTimes[i] = data.times[i];
+            }
             else
             {
                 savedTimes = new float[][]
@@ -783,7 +809,8 @@ public class PlayState
         if (PlayerPrefs.HasKey("OptionData"))
         {
             OptionData data = JsonUtility.FromJson<OptionData>(PlayerPrefs.GetString("OptionData"));
-            gameOptions = data.options;
+            for (int i = 0; i < data.options.Length; i++)
+                gameOptions[i] = data.options[i];
         }
     }
 
@@ -792,7 +819,8 @@ public class PlayState
         if (PlayerPrefs.HasKey("ControlData"))
         {
             ControlData data = JsonUtility.FromJson<ControlData>(PlayerPrefs.GetString("ControlData"));
-            Control.inputs = data.controls;
+            for (int i = 0; i < data.controls.Length; i++)
+                Control.inputs[i] = data.controls[i];
         }
     }
 

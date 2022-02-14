@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     private List<MenuOption> currentOptions = new List<MenuOption>();
     private DestinationDelegate backPage;
-    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0 };
+    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
     private bool isRebinding = false;
     private bool pauseButtonDown = false;
@@ -106,8 +106,8 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Version Text")
         };
 
-        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Version " + Application.version;
-        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Version " + Application.version;
+        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
+        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
 
         StartCoroutine(nameof(CreateTitle));
     }
@@ -433,6 +433,31 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         PlayState.gameOptions[7] = menuVarFlags[5];
+                        break;
+                    case "Particles: ":
+                        TestForArrowAdjust(option, 6, 5);
+                        switch (menuVarFlags[6])
+                        {
+                            case 0:
+                                AddToOptionText(option, "none");
+                                break;
+                            case 1:
+                                AddToOptionText(option, "environments only");
+                                break;
+                            case 2:
+                                AddToOptionText(option, "entities only (Flash)");
+                                break;
+                            case 3:
+                                AddToOptionText(option, "entities only (all)");
+                                break;
+                            case 4:
+                                AddToOptionText(option, "Flash");
+                                break;
+                            case 5:
+                                AddToOptionText(option, "all");
+                                break;
+                        }
+                        PlayState.gameOptions[11] = menuVarFlags[6];
                         break;
                     case "Jump:   ":
                         if (!isRebinding)
@@ -995,7 +1020,8 @@ public class MainMenu : MonoBehaviour
     public void LoadAndSpawn()
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
-        PlayState.LoadGame(menuVarFlags[0], true);
+        if (menuVarFlags[0] != PlayState.currentProfile)
+            PlayState.LoadGame(menuVarFlags[0], true);
         //PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
 
         if (PlayState.gameState == "Pause")
@@ -1197,7 +1223,8 @@ public class MainMenu : MonoBehaviour
         {
             0, PlayState.gameOptions[2], 1, PlayState.gameOptions[3],
             2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
-            4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7]
+            4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7],
+            6, PlayState.gameOptions[11]
         });
         AddOption("Set controls", true, ControlMain);
         AddOption("Shooting: ", true);
@@ -1231,6 +1258,7 @@ public class MainMenu : MonoBehaviour
         AddOption("Reactive key displays: ", true);
         AddOption("Game time: ", true);
         AddOption("FPS counter: ", true);
+        AddOption("Particles: ", true);
         AddOption("", false);
         AddOption("Back to options", true, SaveOptions);
         ForceSelect(0);

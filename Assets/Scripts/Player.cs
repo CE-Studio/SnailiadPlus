@@ -273,6 +273,14 @@ public class Player : MonoBehaviour
         }
 
         // FPS calculator
+        if (PlayState.gameState == "Game")
+        {
+            PlayState.TogglableHUDElements[8].SetActive(PlayState.gameOptions[7] == 1);
+            PlayState.fpsText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.5f : -12.5f,
+                PlayState.gameOptions[6] == 1 ? -6.815f : -7.315f);
+            PlayState.fpsShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f,
+                PlayState.gameOptions[6] == 1 ? -6.8775f : -7.3775f);
+        }
         frameCount++;
         dt += Time.deltaTime;
         if (dt > 1 / updateRate)
@@ -286,7 +294,12 @@ public class Player : MonoBehaviour
 
         // Game time counter
         if (PlayState.gameState == "Game")
+        {
             PlayState.currentTime[2] += Time.deltaTime;
+            PlayState.TogglableHUDElements[9].SetActive(PlayState.gameOptions[6] == 1);
+            PlayState.timeText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.5f : -12.5f, -7.315f);
+            PlayState.timeShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f, -7.3775f);
+        }
         if (PlayState.currentTime[2] >= 60)
         {
             PlayState.currentTime[2] -= 60;
@@ -295,8 +308,13 @@ public class Player : MonoBehaviour
         if (PlayState.currentTime[1] >= 60)
         {
             PlayState.currentTime[1] -= 60;
-            PlayState.currentTime[1] += 1;
+            PlayState.currentTime[0] += 1;
         }
+        string hourInt = PlayState.currentTime[0] < 10 ? "0" + PlayState.currentTime[0] : (PlayState.currentTime[0] == 0 ? "00" : PlayState.currentTime[0].ToString());
+        string minuteInt = PlayState.currentTime[1] < 10 ? "0" + PlayState.currentTime[1] : (PlayState.currentTime[1] == 0 ? "00" : PlayState.currentTime[1].ToString());
+        string secondsInt = (Mathf.RoundToInt(PlayState.currentTime[2] * 100) + 10000).ToString();
+        PlayState.timeText.text = hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
+        PlayState.timeShadow.text = hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
     }
 
     public void UpdateMusic(int area, int subzone, bool resetAudioSources = false)
