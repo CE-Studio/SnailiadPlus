@@ -93,7 +93,8 @@ public class PlayState
         GameObject.Find("View/Item Percentage Text"),
         GameObject.Find("View/FPS Text"),
         GameObject.Find("View/Time Text"),
-        GameObject.Find("View/Dialogue Box")
+        GameObject.Find("View/Dialogue Box"),
+        GameObject.Find("View/Bottom Keys")
     };
 
     public static bool paralyzed = false;
@@ -115,6 +116,10 @@ public class PlayState
     public static TextMesh fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
     public static TextMesh timeText = GameObject.Find("View/Time Text/Text").GetComponent<TextMesh>();
     public static TextMesh timeShadow = GameObject.Find("View/Time Text/Shadow").GetComponent<TextMesh>();
+    public static TextMesh pauseText = GameObject.Find("View/Bottom Keys/Pause Key/Text").GetComponent<TextMesh>();
+    public static TextMesh pauseShadow = GameObject.Find("View/Bottom Keys/Pause Key/Shadow").GetComponent<TextMesh>();
+    public static TextMesh mapText = GameObject.Find("View/Bottom Keys/Map Key/Text").GetComponent<TextMesh>();
+    public static TextMesh mapShadow = GameObject.Find("View/Bottom Keys/Map Key/Shadow").GetComponent<TextMesh>();
 
     public static int currentProfile = -1;
     public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
@@ -234,7 +239,7 @@ public class PlayState
         10, //  1 - Music volume (0-10)
         1,  //  2 - Window resolution (0, 1, 2, or 3 (plus 1) for each zoom level)
         1,  //  3 - Minimap display (0 = hidden, 1 = only minimap, 2 = minimap and room names)
-        1,  //  4 - Display bottom keys (boolean)
+        2,  //  4 - Display bottom keys (0 = hidden, 1 = only weapon icons, 2 = all)
         0,  //  5 - Display keymap (boolean)
         0,  //  6 - Time display (boolean)
         0,  //  7 - FPS counter (boolean)

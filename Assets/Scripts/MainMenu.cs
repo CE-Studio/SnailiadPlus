@@ -216,9 +216,9 @@ public class MainMenu : MonoBehaviour
 
             if (!isRebinding && !fadingToIntro)
             {
-                if (Control.UpPress() || Control.DownPress())
+                if (Control.UpPress(1) || Control.DownPress(1))
                 {
-                    bool nextDown = Control.AxisY() == -1;
+                    bool nextDown = Control.AxisY(1) == -1;
                     int intendedSelection = selectedOption + (nextDown ? 1 : -1);
                     if (intendedSelection >= currentOptions.Count)
                         intendedSelection = 0;
@@ -247,7 +247,7 @@ public class MainMenu : MonoBehaviour
                             sfx.PlayOneShot(beep2);
                     }
                 }
-                else if (Control.JumpPress())
+                else if (Control.JumpPress(1))
                 {
                     if (currentOptions[selectedOption].menuParam != null)
                     {
@@ -383,13 +383,16 @@ public class MainMenu : MonoBehaviour
                         PlayState.gameOptions[3] = menuVarFlags[1];
                         break;
                     case "Bottom keys: ":
-                        TestForArrowAdjust(option, 2, 1);
+                        TestForArrowAdjust(option, 2, 2);
                         switch (menuVarFlags[2])
                         {
                             case 0:
                                 AddToOptionText(option, "hide");
                                 break;
                             case 1:
+                                AddToOptionText(option, "weapons only");
+                                break;
+                            case 2:
                                 AddToOptionText(option, "show");
                                 break;
                         }
@@ -592,14 +595,14 @@ public class MainMenu : MonoBehaviour
     public void TestForArrowAdjust(MenuOption option, int varSlot, int max)
     {
         if (selectedOption == currentOptions.IndexOf(option))
-        if (Control.LeftPress())
+        if (Control.LeftPress(1))
         {
             menuVarFlags[varSlot]--;
             if (menuVarFlags[varSlot] < 0)
                 menuVarFlags[varSlot] = max;
             sfx.PlayOneShot(beep1);
         }
-        else if (Control.RightPress())
+        else if (Control.RightPress(1))
         {
             menuVarFlags[varSlot]++;
             if (menuVarFlags[varSlot] > max)
@@ -615,7 +618,7 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator RebindKey(int controlID)
     {
-        while (Control.JumpHold())
+        while (Control.JumpHold(1))
         {
             yield return new WaitForEndOfFrame();
         }

@@ -272,14 +272,29 @@ public class Player : MonoBehaviour
                 );
         }
 
+        // Update bottom keys
+        if (PlayState.gameState == "Game")
+        {
+            PlayState.TogglableHUDElements[11].SetActive(PlayState.gameOptions[4] == 2);
+            PlayState.TogglableHUDElements[3].SetActive(PlayState.gameOptions[4] >= 1);
+            PlayState.pauseText.gameObject.transform.localPosition = new Vector2(-12.4375f, -7.3775f + (PlayState.gameOptions[5] == 1 ? 2 : (
+                PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
+            PlayState.pauseShadow.gameObject.transform.localPosition = new Vector2(-12.375f, -7.44f + (PlayState.gameOptions[5] == 1 ? 2 : (
+                PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
+            PlayState.pauseText.text = Control.ParseKeyName(Control.inputs[22], true);
+            PlayState.pauseShadow.text = Control.ParseKeyName(Control.inputs[22], true);
+            PlayState.mapText.text = Control.ParseKeyName(Control.inputs[21], true);
+            PlayState.mapShadow.text = Control.ParseKeyName(Control.inputs[21], true);
+        }
+
         // FPS calculator
         if (PlayState.gameState == "Game")
         {
             PlayState.TogglableHUDElements[8].SetActive(PlayState.gameOptions[7] == 1);
-            PlayState.fpsText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.5f : -12.5f,
-                PlayState.gameOptions[6] == 1 ? -6.815f : -7.315f);
-            PlayState.fpsShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f,
+            PlayState.fpsText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f,
                 PlayState.gameOptions[6] == 1 ? -6.8775f : -7.3775f);
+            PlayState.fpsShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f,
+                PlayState.gameOptions[6] == 1 ? -6.94f : -7.44f);
         }
         frameCount++;
         dt += Time.deltaTime;
@@ -297,8 +312,8 @@ public class Player : MonoBehaviour
         {
             PlayState.currentTime[2] += Time.deltaTime;
             PlayState.TogglableHUDElements[9].SetActive(PlayState.gameOptions[6] == 1);
-            PlayState.timeText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.5f : -12.5f, -7.315f);
-            PlayState.timeShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f, -7.3775f);
+            PlayState.timeText.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f, -7.3775f);
+            PlayState.timeShadow.gameObject.transform.localPosition = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f, -7.44f);
         }
         if (PlayState.currentTime[2] >= 60)
         {

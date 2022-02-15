@@ -31,93 +31,221 @@ public class Control
         KeyCode.Escape      // 22 - Pause
     };
 
-    public static int AxisX()
+    public static int AxisX(int player = 0)
     {
-        return 0 + (RightHold() ? 1 : 0) - (LeftHold() ? 1 : 0);
+        return 0 + (RightHold(player) ? 1 : 0) - (LeftHold(player) ? 1 : 0);
     }
-    public static int AxisY()
+    public static int AxisY(int player = 0)
     {
-        return 0 + (UpHold() ? 1 : 0) - (DownHold() ? 1 : 0);
-    }
-
-    public static bool LeftPress()
-    {
-        return Input.GetKeyDown(inputs[0]) || Input.GetKeyDown(inputs[8]);
+        return 0 + (UpHold(player) ? 1 : 0) - (DownHold(player) ? 1 : 0);
     }
 
-    public static bool LeftHold()
+    public static bool LeftPress(int player = 0)
     {
-        return Input.GetKey(inputs[0]) || Input.GetKey(inputs[8]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[0]) || Input.GetKeyDown(inputs[8]);
+            case 1:
+                return Input.GetKeyDown(inputs[0]);
+            case 2:
+                return Input.GetKeyDown(inputs[8]);
+        }
     }
 
-    public static bool RightPress()
+    public static bool LeftHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[1]) || Input.GetKeyDown(inputs[9]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[0]) || Input.GetKey(inputs[8]);
+            case 1:
+                return Input.GetKey(inputs[0]);
+            case 2:
+                return Input.GetKey(inputs[8]);
+        }
     }
 
-    public static bool RightHold()
+    public static bool RightPress(int player = 0)
     {
-        return Input.GetKey(inputs[1]) || Input.GetKey(inputs[9]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[1]) || Input.GetKeyDown(inputs[9]);
+            case 1:
+                return Input.GetKeyDown(inputs[1]);
+            case 2:
+                return Input.GetKeyDown(inputs[9]);
+        }
     }
 
-    public static bool UpPress()
+    public static bool RightHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[2]) || Input.GetKeyDown(inputs[10]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[1]) || Input.GetKey(inputs[9]);
+            case 1:
+                return Input.GetKey(inputs[1]);
+            case 2:
+                return Input.GetKey(inputs[9]);
+        }
     }
 
-    public static bool UpHold()
+    public static bool UpPress(int player = 0)
     {
-        return Input.GetKey(inputs[2]) || Input.GetKey(inputs[10]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[2]) || Input.GetKeyDown(inputs[10]);
+            case 1:
+                return Input.GetKeyDown(inputs[2]);
+            case 2:
+                return Input.GetKeyDown(inputs[10]);
+        }
     }
 
-    public static bool DownPress()
+    public static bool UpHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[3]) || Input.GetKeyDown(inputs[11]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[2]) || Input.GetKey(inputs[10]);
+            case 1:
+                return Input.GetKey(inputs[2]);
+            case 2:
+                return Input.GetKey(inputs[10]);
+        }
     }
 
-    public static bool DownHold()
+    public static bool DownPress(int player = 0)
     {
-        return Input.GetKey(inputs[3]) || Input.GetKey(inputs[11]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[3]) || Input.GetKeyDown(inputs[11]);
+            case 1:
+                return Input.GetKeyDown(inputs[3]);
+            case 2:
+                return Input.GetKeyDown(inputs[11]);
+        }
     }
 
-    public static bool JumpPress()
+    public static bool DownHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[4]) || Input.GetKeyDown(inputs[12]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[3]) || Input.GetKey(inputs[11]);
+            case 1:
+                return Input.GetKey(inputs[3]);
+            case 2:
+                return Input.GetKey(inputs[11]);
+        }
     }
 
-    public static bool JumpHold()
+    public static bool JumpPress(int player = 0)
     {
-        return Input.GetKey(inputs[4]) || Input.GetKey(inputs[12]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[4]) || Input.GetKeyDown(inputs[12]);
+            case 1:
+                return Input.GetKeyDown(inputs[4]);
+            case 2:
+                return Input.GetKeyDown(inputs[12]);
+        }
     }
 
-    public static bool ShootPress()
+    public static bool JumpHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[5]) || Input.GetKeyDown(inputs[13]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[4]) || Input.GetKey(inputs[12]);
+            case 1:
+                return Input.GetKey(inputs[4]);
+            case 2:
+                return Input.GetKey(inputs[12]);
+        }
     }
 
-    public static bool ShootHold()
+    public static bool ShootPress(int player = 0)
     {
-        return Input.GetKey(inputs[5]) || Input.GetKey(inputs[13]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[5]) || Input.GetKeyDown(inputs[13]);
+            case 1:
+                return Input.GetKeyDown(inputs[5]);
+            case 2:
+                return Input.GetKeyDown(inputs[13]);
+        }
     }
 
-    public static bool StrafePress()
+    public static bool ShootHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[6]) || Input.GetKeyDown(inputs[14]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[5]) || Input.GetKey(inputs[13]);
+            case 1:
+                return Input.GetKey(inputs[5]);
+            case 2:
+                return Input.GetKey(inputs[13]);
+        }
     }
 
-    public static bool StrafeHold()
+    public static bool StrafePress(int player = 0)
     {
-        return Input.GetKey(inputs[6]) || Input.GetKey(inputs[14]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[6]) || Input.GetKeyDown(inputs[14]);
+            case 1:
+                return Input.GetKeyDown(inputs[6]);
+            case 2:
+                return Input.GetKeyDown(inputs[14]);
+        }
     }
 
-    public static bool SpeakPress()
+    public static bool StrafeHold(int player = 0)
     {
-        return Input.GetKeyDown(inputs[7]) || Input.GetKeyDown(inputs[15]);
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[6]) || Input.GetKey(inputs[14]);
+            case 1:
+                return Input.GetKey(inputs[6]);
+            case 2:
+                return Input.GetKey(inputs[14]);
+        }
     }
 
-    public static bool SpeakHold()
+    public static bool SpeakPress(int player = 0)
     {
-        return Input.GetKey(inputs[7]) || Input.GetKey(inputs[15]);
+        switch (player)
+        {
+            default:
+                return Input.GetKeyDown(inputs[7]) || Input.GetKeyDown(inputs[15]);
+            case 1:
+                return Input.GetKeyDown(inputs[7]);
+            case 2:
+                return Input.GetKeyDown(inputs[15]);
+        }
+    }
+
+    public static bool SpeakHold(int player = 0)
+    {
+        switch (player)
+        {
+            default:
+                return Input.GetKey(inputs[7]) || Input.GetKey(inputs[15]);
+            case 1:
+                return Input.GetKey(inputs[7]);
+            case 2:
+                return Input.GetKey(inputs[15]);
+        }
     }
 
     public static bool Weapon1()
@@ -160,46 +288,54 @@ public class Control
         return ParseKeyName(inputs[keyID]);
     }
 
-    public static string ParseKeyName(KeyCode key)
+    public static string ParseKeyName(KeyCode key, bool shortForm = false)
     {
         switch (key)
         {
             default:
                 return key.ToString();
+            case KeyCode.Backspace:
+                return shortForm ? "BKSP" : "Backspace";
+            case KeyCode.Delete:
+                return shortForm ? "DEL" : "Delete";
+            case KeyCode.Return:
+                return shortForm ? "RTRN" : "Return";
+            case KeyCode.Escape:
+                return shortForm ? "ESC" : "Escape";
             case KeyCode.Keypad0:
-                return "Keypad 0";
+                return shortForm ? "KP0" : "Keypad 0";
             case KeyCode.Keypad1:
-                return "Keypad 1";
+                return shortForm ? "KP1" : "Keypad 1";
             case KeyCode.Keypad2:
-                return "Keypad 2";
+                return shortForm ? "KP2" : "Keypad 2";
             case KeyCode.Keypad3:
-                return "Keypad 3";
+                return shortForm ? "KP3" : "Keypad 3";
             case KeyCode.Keypad4:
-                return "Keypad 4";
+                return shortForm ? "KP4" : "Keypad 4";
             case KeyCode.Keypad5:
-                return "Keypad 5";
+                return shortForm ? "KP5" : "Keypad 5";
             case KeyCode.Keypad6:
-                return "Keypad 6";
+                return shortForm ? "KP6" : "Keypad 6";
             case KeyCode.Keypad7:
-                return "Keypad 7";
+                return shortForm ? "KP7" : "Keypad 7";
             case KeyCode.Keypad8:
-                return "Keypad 8";
+                return shortForm ? "KP8" : "Keypad 8";
             case KeyCode.Keypad9:
-                return "Keypad 9";
+                return shortForm ? "KP9" : "Keypad 9";
             case KeyCode.KeypadPeriod:
-                return "Keypad .";
+                return shortForm ? "KP." : "Keypad .";
             case KeyCode.KeypadDivide:
-                return "Keypad /";
+                return shortForm ? "KP/" : "Keypad /";
             case KeyCode.KeypadMultiply:
-                return "Keypad *";
+                return shortForm ? "KP*" : "Keypad *";
             case KeyCode.KeypadMinus:
-                return "Keypad -";
+                return shortForm ? "KP-" : "Keypad -";
             case KeyCode.KeypadPlus:
-                return "Keypad +";
+                return shortForm ? "KP+" : "Keypad +";
             case KeyCode.KeypadEnter:
-                return "Keypad enter";
+                return shortForm ? "KP RTRN" : "Keypad enter";
             case KeyCode.KeypadEquals:
-                return "Keypad =";
+                return shortForm ? "KP=" : "Keypad =";
             case KeyCode.UpArrow:
                 return "Up";
             case KeyCode.DownArrow:
@@ -209,9 +345,9 @@ public class Control
             case KeyCode.LeftArrow:
                 return "Left";
             case KeyCode.PageUp:
-                return "Page up";
+                return shortForm ? "PGUP" : "Page up";
             case KeyCode.PageDown:
-                return "Page down";
+                return shortForm ? "PGDN" : "Page down";
             case KeyCode.Alpha0:
                 return "0";
             case KeyCode.Alpha1:
@@ -255,31 +391,31 @@ public class Control
             case KeyCode.BackQuote:
                 return "`";
             case KeyCode.LeftShift:
-                return "Left shift";
+                return shortForm ? "LSHFT" : "Left shift";
             case KeyCode.RightShift:
-                return "Right shift";
+                return shortForm ? "RSHFT" : "Right shift";
             case KeyCode.LeftControl:
-                return "Left ctrl";
+                return shortForm ? "LCTRL" : "Left ctrl";
             case KeyCode.RightControl:
-                return "Right ctrl";
+                return shortForm ? "RCTRL" : "Right ctrl";
             case KeyCode.LeftAlt:
-                return "Left alt";
+                return shortForm ? "LALT" : "Left alt";
             case KeyCode.RightAlt:
-                return "Right alt";
+                return shortForm ? "RALT" : "Right alt";
             case KeyCode.LeftWindows:
-                return "Left windows";
+                return shortForm ? "LWNDW" : "Left windows";
             case KeyCode.RightWindows:
-                return "Right windows";
+                return shortForm ? "RWNDW" : "Right windows";
             case KeyCode.LeftCommand:
-                return "Left cmnd";
+                return shortForm ? "LCMD" : "Left cmnd";
             case KeyCode.RightCommand:
-                return "Right cmnd";
+                return shortForm ? "RCMD" : "Right cmnd";
             case KeyCode.Mouse0:
-                return "Left mouse";
+                return shortForm ? "LMB" : "Left mouse";
             case KeyCode.Mouse1:
-                return "Right mouse";
+                return shortForm ? "RMB" : "Right mouse";
             case KeyCode.Mouse2:
-                return "Middle mouse";
+                return shortForm ? "MMB" : "Middle mouse";
         }
     }
 
