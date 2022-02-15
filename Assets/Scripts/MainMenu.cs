@@ -58,6 +58,7 @@ public class MainMenu : MonoBehaviour
     public AudioClip beep2;
     public GameObject textObject;
     public GameObject titleLetter;
+    public GameObject titlePlus;
     public GameObject[] selector;
 
     public GameObject[] menuHUDElements;
@@ -736,7 +737,7 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator CreateTitle()
     {
-        string title = "Snailiad";
+        string title = "Snailiad ";
         int titleLength = 0;
         for (int i = 0; i < title.Length; i++)
         {
@@ -770,6 +771,11 @@ public class MainMenu : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        yield return new WaitForSeconds(2);
+        GameObject plus = Instantiate(titlePlus);
+        plus.transform.parent = transform;
+        plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.5f);
+        yield return new WaitForEndOfFrame();
     }
 
     public int LetterToNumber(char letter)
@@ -839,8 +845,8 @@ public class MainMenu : MonoBehaviour
         fadingToIntro = true;
         PlayState.screenCover.sortingOrder = 1001;
         PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);
-        PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 1);
-        yield return new WaitForSeconds(1);
+        PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         if (runIntro)
         {
@@ -999,10 +1005,6 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        //PlayState.player.transform.position = PlayState.WORLD_SPAWN;
-        //PlayState.gameState = "Game";
-        //PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
-        //PlayState.ToggleHUD(true);
         StartCoroutine(LoadFade(PlayState.WORLD_SPAWN, true));
     }
 
@@ -1025,7 +1027,6 @@ public class MainMenu : MonoBehaviour
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         if (menuVarFlags[0] != PlayState.currentProfile)
             PlayState.LoadGame(menuVarFlags[0], true);
-        //PlayState.player.transform.position = menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords;
 
         if (PlayState.gameState == "Pause")
         {
@@ -1035,44 +1036,6 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        //PlayState.gameState = "Game";
-        //PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
-        //PlayState.ToggleHUD(true);
-
-        //PlayState.player.GetComponent<Snaily>().enabled = false;
-        //PlayState.player.GetComponent<Sluggy>().enabled = false;
-        //PlayState.player.GetComponent<Upside>().enabled = false;
-        //PlayState.player.GetComponent<Leggy>().enabled = false;
-        //PlayState.player.GetComponent<Blobby>().enabled = false;
-        //PlayState.player.GetComponent<Leechy>().enabled = false;
-        //switch (PlayState.currentCharacter)
-        //{
-        //    default:
-        //    case "Snaily":
-        //        PlayState.player.GetComponent<Snaily>().enabled = true;
-        //        PlayState.player.GetComponent<Snaily>().holdingJump = true;
-        //        break;
-        //    case "Sluggy":
-        //        PlayState.player.GetComponent<Sluggy>().enabled = true;
-        //        PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-        //        break;
-        //    case "Snaily":
-        //        PlayState.player.GetComponent<Upside>().enabled = true;
-        //        PlayState.player.GetComponent<Upside>().holdingJump = true;
-        //        break;
-        //    case "Snaily":
-        //        PlayState.player.GetComponent<Leggy>().enabled = true;
-        //        PlayState.player.GetComponent<Leggy>().holdingJump = true;
-        //        break;
-        //    case "Snaily":
-        //        PlayState.player.GetComponent<Blobby>().enabled = true;
-        //        PlayState.player.GetComponent<Blobby>().holdingJump = true;
-        //        break;
-        //    case "Snaily":
-        //        PlayState.player.GetComponent<Leechy>().enabled = true;
-        //        PlayState.player.GetComponent<Leechy>().holdingJump = true;
-        //        break;
-        //}
         StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords));
     }
 
