@@ -688,7 +688,7 @@ public class MainMenu : MonoBehaviour
         }
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            if (!state && transform.GetChild(i).name.Contains("Title Letter"))
+            if (!state && (transform.GetChild(i).name.Contains("Title Letter") || transform.GetChild(i).name.Contains("Title Plus")))
                 Destroy(transform.GetChild(i).gameObject);
         }
     }
@@ -772,9 +772,12 @@ public class MainMenu : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(2);
-        GameObject plus = Instantiate(titlePlus);
-        plus.transform.parent = transform;
-        plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.5f);
+        if (PlayState.isMenuOpen)
+        {
+            GameObject plus = Instantiate(titlePlus);
+            plus.transform.parent = transform;
+            plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.5f);
+        }
         yield return new WaitForEndOfFrame();
     }
 
@@ -1546,10 +1549,10 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption("Remake created by", false);
-        AddOption("Epsilon the Dragon", false);
+        AddOption("", false);
+        AddOption("Jamie Lamey (Epsilon the Dragon)", false);
         AddOption("with Auriplane\'s permission", false);
         AddOption("under the Unity engine", false);
-        AddOption("", false);
         AddOption("", false);
         AddOption("Next page", true, CreditsPage4);
         ForceSelect(6);

@@ -26,11 +26,11 @@ public class PlayState
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
     public static bool explodePlayedThisFrame = false;
-    public static float parallaxFg2Mod = 0;
-    public static float parallaxFg1Mod = 0;
-    public static float parallaxBgMod = 0;
-    public static float parallaxSkyMod = 0;
-    public static int thisExplosionID = 0;
+    public static Vector2 parallaxFg2Mod = Vector2.zero;
+    public static Vector2 parallaxFg1Mod = Vector2.zero;
+    public static Vector2 parallaxBgMod = Vector2.zero;
+    public static Vector2 parallaxSkyMod = Vector2.zero;
+    public static int thisParticleID = 0;
     public static bool isTalking = false;
     public static bool hasJumped = false;
     public static Vector2 positionOfLastRoom = Vector2.zero;
@@ -77,7 +77,7 @@ public class PlayState
     public static GameObject specialLayer = GameObject.Find("Grid/Special");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
     public static GameObject achievement = GameObject.Find("View/Achievement Panel");
-    public static GameObject explosionPool = GameObject.Find("Explosion Pool");
+    public static GameObject particlePool = GameObject.Find("Particle Pool");
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
 
@@ -426,33 +426,47 @@ public class PlayState
         playerScript.FlashSaveText();
     }
 
-    public static void RequestExplosion(int size, Vector2 position)
+    public static void RequestParticle(Vector2 position, string type, int value)
     {
-        if ((gameOptions[11] != 0 && size <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && size > 4))
+        bool increment = true;
+        switch (type.ToLower())
         {
-            if (!explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive)
-            {
-                explosionPool.transform.GetChild(thisExplosionID).GetComponent<Explosion>().isActive = true;
-                explosionPool.transform.GetChild(thisExplosionID).position = position;
-                switch (size)
+            default:
+                increment = false;
+                break;
+            case "explosion":
+                if ((gameOptions[11] > 1 && value <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && value > 4))
                 {
-                    case 1:
-                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
-                        break;
-                    case 2:
-                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion small", 0, 0);
-                        break;
-                    case 3:
-                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion big", 0, 0);
-                        break;
-                    case 4:
-                        explosionPool.transform.GetChild(thisExplosionID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
-                        break;
+                    if (!particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().isActive)
+                    {
+                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().isActive = true;
+                        particlePool.transform.GetChild(thisParticleID).position = position;
+                        switch (value)
+                        {
+                            case 1:
+                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
+                                break;
+                            case 2:
+                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion small", 0, 0);
+                                break;
+                            case 3:
+                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion big", 0, 0);
+                                break;
+                            case 4:
+                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
+                                break;
+                        }
+                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().extCounter = value;
+                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().type = "explosion";
+                    }
                 }
-                thisExplosionID++;
-                if (thisExplosionID >= explosionPool.transform.childCount)
-                    thisExplosionID = 0;
-            }
+                break;
+        }
+        if (increment)
+        {
+            thisParticleID++;
+            if (thisParticleID >= particlePool.transform.childCount)
+                thisParticleID = 0;
         }
     }
 

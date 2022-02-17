@@ -93,7 +93,8 @@ public class Grass : MonoBehaviour
                     timer = biteTimeout;
                 collision.GetComponent<Player>().health = Mathf.Clamp(collision.GetComponent<Player>().health + healthPerBite, 0, collision.GetComponent<Player>().maxHealth);
                 collision.GetComponent<Player>().UpdateHearts();
-                StartCoroutine(nameof(NomText));
+                if (PlayState.gameOptions[11] > 1)
+                    StartCoroutine(nameof(NomText));
             }
         }
     }

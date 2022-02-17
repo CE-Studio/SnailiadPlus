@@ -94,10 +94,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   box: {fileID: 0}
   active: 1
-  parallaxForeground2Modifier: 0
-  parallaxForeground1Modifier: 0
-  parallaxBackgroundModifier: 0
-  parallaxSkyModifier: 0
+  parallaxForeground2Modifier: {x: 0, y: 0}
+  parallaxForeground1Modifier: {x: 0, y: 0}
+  parallaxBackgroundModifier: {x: 0, y: 0}
+  parallaxSkyModifier: {x: 0, y: 0}
+  areaID: 0
+  areaSubzone: 0
   roomNameText: {fileID: 0}
   roomNameShadow: {fileID: 0}
   bg: {fileID: 0}

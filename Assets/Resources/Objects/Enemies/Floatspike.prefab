@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28404413206069153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -145,14 +146,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  maxHealth: 0
   attack: 0
   defense: 0
-  resistances: []
+  resistances: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  elementType: 
   box: {fileID: 0}
   rb: {fileID: 0}
   sprite: {fileID: 0}
   sfx: {fileID: 0}
   ping: {fileID: 0}
+  hit: []
+  die: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!82 &28404413206069163
 AudioSource:
   m_ObjectHideFlags: 0

@@ -8,10 +8,10 @@ public class RoomTrigger : MonoBehaviour
     public BoxCollider2D box;
     public bool active = true;
 
-    public float parallaxForeground2Modifier = 0;
-    public float parallaxForeground1Modifier = 0;
-    public float parallaxBackgroundModifier = 0;
-    public float parallaxSkyModifier = 0;
+    public Vector2 parallaxForeground2Modifier = Vector2.zero;
+    public Vector2 parallaxForeground1Modifier = Vector2.zero;
+    public Vector2 parallaxBackgroundModifier = Vector2.zero;
+    public Vector2 parallaxSkyModifier = Vector2.zero;
 
     public int areaID = 0;
     // 0 = Snail Town
@@ -23,6 +23,22 @@ public class RoomTrigger : MonoBehaviour
     // 6 = Shrine of Iris
     // 7 = Boss Rush
     public int areaSubzone = 0;
+
+    public Vector2[] waterLevel = new Vector2[] { };
+
+    public string[] environmentalEffects = new string[] { };
+    // Supported effects
+    //
+    // - bubble
+    // - star
+    // - snow
+    // - rain
+    // - thunder
+    // - dark
+    // - fog
+    // - heat
+    private List<float> effectVars = new List<float>();
+    private bool initializedEffects = false;
 
     public TextMesh roomNameText;
     public TextMesh roomNameShadow;
@@ -47,7 +63,20 @@ public class RoomTrigger : MonoBehaviour
 
     void Update()
     {
-        
+        if (active)
+        {
+            foreach (string effect in environmentalEffects)
+            {
+                switch (effect.ToLower())
+                {
+                    default:
+                        break;
+                    case "bubble":
+                        break;
+                }
+            }
+        }
+        initializedEffects = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -156,23 +185,6 @@ public class RoomTrigger : MonoBehaviour
 
             CheckSpecialLayer();
 
-            //if ((PlayState.player.GetComponent<Player>().gravityDir == 1 || PlayState.player.GetComponent<Player>().gravityDir == 2) && !PlayState.player.GetComponent<Player>().facingDown)
-            //{
-            //    PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y + 0.125f);
-            //}
-            //else if (PlayState.player.GetComponent<Player>().gravityDir == 1 || PlayState.player.GetComponent<Player>().gravityDir == 2)
-            //{
-            //    PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y - 0.125f);
-            //}
-            //else if (PlayState.player.GetComponent<Player>().facingLeft)
-            //{
-            //    PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x - 0.125f, PlayState.player.transform.position.y);
-            //}
-            //else
-            //{
-            //    PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + 0.125f, PlayState.player.transform.position.y);
-            //}
-
             box.enabled = false;
         }
     }
@@ -182,6 +194,7 @@ public class RoomTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             active = false;
+            initializedEffects = false;
         }
     }
 

@@ -161,7 +161,7 @@ public class Enemy : MonoBehaviour
         box.enabled = false;
         sprite.enabled = false;
         for (int i = Random.Range(1, 4); i > 0; i--)
-            PlayState.RequestExplosion(2, new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)));
+            PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", 2);
     }
 }

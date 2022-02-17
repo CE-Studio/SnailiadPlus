@@ -324,7 +324,17 @@ public class Snaily : MonoBehaviour
                             if (Control.JumpHold() && grounded && !holdingJump && boxU.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
+                                {
+                                    if (boxL.distance < 0.4f && boxR.distance < 0.4f)
+                                        break;
+                                    if (boxL.distance > 0.4f && boxR.distance < 0.4f)
+                                        transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                            transform.position.y);
+                                    else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
+                                        transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                            transform.position.y);
                                     ToggleShell();
+                                }
                                 grounded = false;
                                 velocity.y = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
                                 sfx.PlayOneShot(jump);
@@ -346,12 +356,12 @@ public class Snaily : MonoBehaviour
                                     ToggleShell();
                                 else
                                 {
-                                    if (boxL.distance < 0.3375f && boxR.distance < 0.3375f)
+                                    if (boxL.distance < 0.4f && boxR.distance < 0.4f)
                                         break;
-                                    if (boxL.distance > 0.3375f && boxR.distance < 0.3375f)
+                                    if (boxL.distance > 0.4f && boxR.distance < 0.4f)
                                         transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
                                             transform.position.y);
-                                    else if (boxL.distance < 0.3375f && boxR.distance > 0.3375f)
+                                    else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
                                         transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
                                             transform.position.y);
                                     ToggleShell();
@@ -573,7 +583,17 @@ public class Snaily : MonoBehaviour
                             if (Control.JumpHold() && grounded && !holdingJump && boxR.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
+                                {
+                                    if (boxD.distance < 0.4f && boxU.distance < 0.4f)
+                                        break;
+                                    if (boxD.distance > 0.4f && boxU.distance < 0.4f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y -
+                                            (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                    else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y +
+                                            (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
                                     ToggleShell();
+                                }
                                 grounded = false;
                                 if (PlayState.CheckForItem("Gravity Snail"))
                                     velocity.x = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
@@ -605,12 +625,12 @@ public class Snaily : MonoBehaviour
                                     ToggleShell();
                                 else
                                 {
-                                    if (boxD.distance < 0.3375f && boxU.distance < 0.3375f)
+                                    if (boxD.distance < 0.4f && boxU.distance < 0.4f)
                                         break;
-                                    if (boxD.distance > 0.3375f && boxU.distance < 0.3375f)
+                                    if (boxD.distance > 0.4f && boxU.distance < 0.4f)
                                         transform.position = new Vector2(transform.position.x, transform.position.y -
                                             (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                    else if (boxD.distance < 0.3375f && boxU.distance > 0.3375f)
+                                    else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
                                         transform.position = new Vector2(transform.position.x, transform.position.y +
                                             (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
                                     ToggleShell();
@@ -832,7 +852,17 @@ public class Snaily : MonoBehaviour
                             if (Control.JumpHold() && grounded && !holdingJump && boxL.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
+                                {
+                                    if (boxD.distance < 0.4f && boxU.distance < 0.4f)
+                                        break;
+                                    if (boxD.distance > 0.4f && boxU.distance < 0.4f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y -
+                                            (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                    else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
+                                        transform.position = new Vector2(transform.position.x, transform.position.y +
+                                            (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
                                     ToggleShell();
+                                }
                                 grounded = false;
                                 if (PlayState.CheckForItem("Gravity Snail"))
                                     velocity.x = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
@@ -864,12 +894,12 @@ public class Snaily : MonoBehaviour
                                     ToggleShell();
                                 else
                                 {
-                                    if (boxD.distance < 0.3375f && boxU.distance < 0.3375f)
+                                    if (boxD.distance < 0.4f && boxU.distance < 0.4f)
                                         break;
-                                    if (boxD.distance > 0.3375f && boxU.distance < 0.3375f)
+                                    if (boxD.distance > 0.4f && boxU.distance < 0.4f)
                                         transform.position = new Vector2(transform.position.x, transform.position.y -
                                             (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                    else if (boxD.distance < 0.3375f && boxU.distance > 0.3375f)
+                                    else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
                                         transform.position = new Vector2(transform.position.x, transform.position.y +
                                             (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
                                     ToggleShell();
@@ -1083,7 +1113,17 @@ public class Snaily : MonoBehaviour
                             if (Control.JumpHold() && grounded && !holdingJump && boxD.distance > 0.95f && !PlayState.paralyzed)
                             {
                                 if (shelled)
+                                {
+                                    if (boxL.distance < 0.4f && boxR.distance < 0.4f)
+                                        break;
+                                    if (boxL.distance > 0.4f && boxR.distance < 0.4f)
+                                        transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                            transform.position.y);
+                                    else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
+                                        transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                            transform.position.y);
                                     ToggleShell();
+                                }
                                 grounded = false;
                                 if (PlayState.CheckForItem("Gravity Snail"))
                                     velocity.y = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
@@ -1111,12 +1151,12 @@ public class Snaily : MonoBehaviour
                                     ToggleShell();
                                 else
                                 {
-                                    if (boxL.distance < 0.3375f && boxR.distance < 0.3375f)
+                                    if (boxL.distance < 0.4f && boxR.distance < 0.4f)
                                         break;
-                                    if (boxL.distance > 0.3375f && boxR.distance < 0.3375f)
+                                    if (boxL.distance > 0.4f && boxR.distance < 0.4f)
                                         transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
                                             transform.position.y);
-                                    else if (boxL.distance < 0.3375f && boxR.distance > 0.3375f)
+                                    else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
                                         transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
                                             transform.position.y);
                                     ToggleShell();
