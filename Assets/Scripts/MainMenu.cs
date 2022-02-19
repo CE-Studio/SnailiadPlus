@@ -771,6 +771,8 @@ public class MainMenu : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        if (PlayState.gameState == "Game")
+            yield break;
         yield return new WaitForSeconds(2);
         if (PlayState.isMenuOpen)
         {

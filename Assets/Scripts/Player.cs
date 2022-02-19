@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private string currentAnim = "";
     public bool inDeathCutscene = false;
     public int gravityDir = 0;
+    public bool underwater = false;
 
     public Animator anim;
     public SpriteRenderer sprite;

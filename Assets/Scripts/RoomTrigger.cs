@@ -63,8 +63,9 @@ public class RoomTrigger : MonoBehaviour
 
     void Update()
     {
-        if (active)
+        if (!active)
         {
+            int effectVarIndex = 0;
             foreach (string effect in environmentalEffects)
             {
                 switch (effect.ToLower())
@@ -72,17 +73,76 @@ public class RoomTrigger : MonoBehaviour
                     default:
                         break;
                     case "bubble":
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
+                                bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
+                                Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
+                                PlayState.RequestParticle(truePos, "bubble", transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y);
+                            }
+                            effectVars.Add(Random.Range(0f, 1f) * 12);
+                        }
+                        else
+                        {
+                            if (effectVars[effectVarIndex] <= 0)
+                            {
+                                Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
+                                bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
+                                Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
+                                PlayState.RequestParticle(truePos, "bubble", transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y);
+                                effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
+                            }
+                            else
+                                effectVars[effectVarIndex] -= Time.deltaTime;
+                        }
                         break;
                 }
+                effectVarIndex++;
             }
+
+            if (waterLevel.Length > 0)
+            {
+                float playerY = PlayState.player.transform.position.y;
+                float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
+                    waterLevel[WaterPoint(PlayState.player.transform.position.x - transform.position.x - (box.size.x * 0.5f))].y;
+                Debug.Log(playerY + ", " + waterY);
+                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
+                {
+                    PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash");
+                    PlayState.playerScript.underwater = !PlayState.playerScript.underwater;
+                }
+            }
+            else
+                PlayState.playerScript.underwater = false;
+
+            initializedEffects = true;
         }
-        initializedEffects = true;
+    }
+
+    private int WaterPoint(float x)
+    {
+        bool foundPointLeftOf = false;
+        int waterPoint = waterLevel.Length - 1;
+        while (!foundPointLeftOf && waterPoint != -1)
+        {
+            if (x > waterLevel[waterPoint].x)
+                foundPointLeftOf = true;
+            else
+                waterPoint--;
+        }
+        if (waterPoint == -1)
+            waterPoint = 0;
+        return waterPoint;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && active && PlayState.gameState == "Game")
         {
+            PlayState.ResetAllParticles();
+            effectVars.Clear();
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);
             PlayState.ScreenFlash("Room Transition", 0, 0, 0, 0);
@@ -118,21 +178,17 @@ public class RoomTrigger : MonoBehaviour
 
                     case "Door":
                         if (Vector2.Distance(collision.transform.position, child.transform.position) < 2)
-                        {
                             child.GetComponent<Door>().SetState1();
-                        }
                         else
-                        {
                             child.GetComponent<Door>().SetState2();
-                        }
                         break;
 
                     case "Grass":
-                                child.GetComponent<Grass>().Spawn();
-                                break;
-                            case "Power Grass":
-                                child.GetComponent<PowerGrass>().Spawn();
-                                break;
+                        child.GetComponent<Grass>().Spawn();
+                        break;
+                    case "Power Grass":
+                        child.GetComponent<PowerGrass>().Spawn();
+                        break;
 
                     case "Save Point":
                         if (child.GetComponent<SavePoint>().hasBeenActivated)
@@ -194,12 +250,12 @@ public class RoomTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             active = false;
-            initializedEffects = false;
         }
     }
 
     public void DespawnEverything()
     {
+        initializedEffects = false;
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);

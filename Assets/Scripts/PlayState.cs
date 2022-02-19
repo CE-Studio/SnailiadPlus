@@ -426,47 +426,94 @@ public class PlayState
         playerScript.FlashSaveText();
     }
 
-    public static void RequestParticle(Vector2 position, string type, int value)
+    public static void RequestParticle(Vector2 position, string type, float value = 0)
     {
-        bool increment = true;
-        switch (type.ToLower())
+        bool found = false;
+        if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
         {
-            default:
-                increment = false;
-                break;
-            case "explosion":
-                if ((gameOptions[11] > 1 && value <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && value > 4))
-                {
-                    if (!particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().isActive)
+            int i = 0;
+            while (i < particlePool.transform.childCount - 1 && !found)
+            {
+                thisParticleID++;
+                if (thisParticleID >= particlePool.transform.childCount)
+                    thisParticleID = 0;
+                if (!particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
+                    found = true;
+                i++;
+            }
+        }
+        else
+            found = true;
+
+        if (found)
+        {
+            Transform particleObject = particlePool.transform.GetChild(thisParticleID);
+            particleObject.gameObject.SetActive(true);
+            Particle particleScript = particleObject.GetComponent<Particle>();
+            Animator particleAnim = particleObject.GetComponent<Animator>();
+            SpriteRenderer particleSprite = particleObject.GetComponent<SpriteRenderer>();
+            ParticleSpriteCollection particleSprites = particleScript.sprites;
+
+            switch (type.ToLower())
+            {
+                default:
+                    break;
+                case "explosion":
+                    if ((gameOptions[11] > 1 && value <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && value > 4))
                     {
-                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().isActive = true;
-                        particlePool.transform.GetChild(thisParticleID).position = position;
+                        particleAnim.enabled = true;
                         switch (value)
                         {
                             case 1:
-                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion tiny", 0, 0);
+                                particleAnim.Play("Explosion tiny", 0, 0);
                                 break;
                             case 2:
-                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion small", 0, 0);
+                                particleAnim.Play("Explosion small", 0, 0);
                                 break;
                             case 3:
-                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion big", 0, 0);
+                                particleAnim.Play("Explosion big", 0, 0);
                                 break;
                             case 4:
-                                particlePool.transform.GetChild(thisParticleID).GetComponent<Animator>().Play("Explosion huge", 0, 0);
+                                particleAnim.Play("Explosion huge", 0, 0);
                                 break;
                         }
-                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().extCounter = value;
-                        particlePool.transform.GetChild(thisParticleID).GetComponent<Particle>().type = "explosion";
+                        particleScript.vars[0] = value;
                     }
-                }
-                break;
-        }
-        if (increment)
-        {
+                    break;
+                case "bubble":
+                    if (gameOptions[11] > 1)
+                    {
+                        particleSprite.sprite = particleSprites.bubble[UnityEngine.Random.Range(0, 8)];
+                        particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
+                        particleScript.vars[1] = position.x;                                      // Origin X
+                        particleScript.vars[2] = value - 0.25f;                                   // Water level above the bubble's spawn
+                        particleScript.vars[3] = 4 + UnityEngine.Random.Range(0f, 1f) * 0.0625f;  // Rise speed
+                    }
+                    break;
+                case "splash":
+                    if (gameOptions[11] == 3 || gameOptions[11] == 5)
+                    {
+                        particleAnim.enabled = true;
+                        particleAnim.Play("Splash", 0, 0);
+                    }
+                    break;
+            }
+
+            particleObject.position = position;
+            particleScript.type = type;
             thisParticleID++;
             if (thisParticleID >= particlePool.transform.childCount)
                 thisParticleID = 0;
+        }
+    }
+
+    public static void ResetAllParticles()
+    {
+        foreach (Transform particle in particlePool.transform)
+        {
+            Particle particleScript = particle.GetComponent<Particle>();
+            if (particle.gameObject.activeSelf)
+                particleScript.ResetParticle();
         }
     }
 
