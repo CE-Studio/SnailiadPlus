@@ -4,4 +4,4 @@ A Unity engine port of a 2011 Flash game called Snailiad, with hopes for modding
 Currently in heavy WIP, no release estimation.
 
 ## Compiling
-You should be able to use an up-to-date version of Unity in order to compile this.
+The current Unity version used for this is `2020.3.15f2`, which is recommended to use for compiling.
