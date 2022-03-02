@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using System.IO;
 
 public class PlayState
 {
@@ -11,11 +12,35 @@ public class PlayState
 
     public static bool isMenuOpen = false;
 
+    [Serializable]
+    public struct AnimationData
+    {
+        public string name;
+        public float framerate;
+        public int[] frames;
+        public bool loop;
+        public int loopStartFrame;
+    }
+
+    public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
+    public static AnimationData[] animationLibrary;
+    //public static Sprite blankTexture = (Sprite)Resources.Load("Images/Blank");
+
+    public struct AnimationController
+    {
+        public AnimationData currentAnim;
+        public string animSpriteName;
+        public int currentFrame;
+        public float animTimer;
+        public float timerResetVal;
+    }
+
     public static Transform musicParent = GameObject.Find("View/Music Parent").transform;
     public static List<AudioSource> musicSourceArray = new List<AudioSource>();
     public static AudioSource mus1; //= GameObject.Find("View/Music1").GetComponent<AudioSource>();
     public static AudioSource mus2; //= GameObject.Find("View/Music2").GetComponent<AudioSource>();
     public static AudioSource activeMus; //= mus1;
+    public static AudioSource globalSFX = GameObject.Find("View/Global SFX Source").GetComponent<AudioSource>();
     public static bool musFlag = false;
     public static bool playingMusic = false;
     public static int musicVol = 1;
@@ -290,6 +315,50 @@ public class PlayState
         public float[][] times;
     }
 
+    public static Sprite BlankTexture()
+    {
+        return playerScript.blank;
+    }
+
+    public static AnimationData GetAnim(string name)
+    {
+        AnimationData foundData = new AnimationData();
+        foundData.name = "NoAnim";
+        int i = 0;
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
+        {
+            if (animationLibrary[i].name == name)
+                foundData = animationLibrary[i];
+            i++;
+        }
+        return foundData;
+    }
+
+    public static AnimationData GetAnim(int ID)
+    {
+        return animationLibrary[ID];
+    }
+
+    public static int GetAnimID(string name)
+    {
+        AnimationData foundData = new AnimationData();
+        foundData.name = "NoAnim";
+        int i = 0;
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
+        {
+            if (animationLibrary[i].name == name)
+                foundData = animationLibrary[i];
+            else
+                i++;
+        }
+        return i;
+    }
+
+    public static Sprite GetSprite(string name, int ID)
+    {
+        return textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
+    }
+
     public static void GetNewRoom(string intendedArea)
     {
         area = intendedArea;
@@ -426,7 +495,20 @@ public class PlayState
         playerScript.FlashSaveText();
     }
 
-    public static void RequestParticle(Vector2 position, string type, float value = 0)
+    public static void RequestParticle(Vector2 position, string type)
+    {
+        RequestParticle(position, type, 0, false);
+    }
+    public static void RequestParticle(Vector2 position, string type, float value)
+    {
+        RequestParticle(position, type, value, false);
+    }
+    public static void RequestParticle(Vector2 position, string type, bool playSound)
+    {
+        RequestParticle(position, type, 0, playSound);
+    }
+
+    public static void RequestParticle(Vector2 position, string type, float value, bool playSound)
     {
         bool found = false;
         if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
@@ -493,14 +575,17 @@ public class PlayState
                 case "splash":
                     if (gameOptions[11] == 3 || gameOptions[11] == 5)
                     {
-                        particleAnim.enabled = true;
-                        particleAnim.Play("Splash", 0, 0);
+                        //particleAnim.enabled = true;
+                        //particleAnim.Play("Splash", 0, 0);
+                        particleScript.SetAnim("splash");
                     }
                     break;
             }
 
             particleObject.position = position;
             particleScript.type = type;
+            if (playSound)
+                particleScript.PlaySound();
             thisParticleID++;
             if (thisParticleID >= particlePool.transform.childCount)
                 thisParticleID = 0;
@@ -907,5 +992,15 @@ public class PlayState
     public static void QueueAchievementPopup(string achID)
     {
         achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
+    }
+
+    public struct AnimationLibrary
+    {
+        public AnimationData[] animArray;
+    }
+    public static void LoadNewAnimationLibrary(string path)
+    {
+        AnimationLibrary newLibrary = JsonUtility.FromJson<AnimationLibrary>(File.ReadAllText(path));
+        animationLibrary = newLibrary.animArray;
     }
 }

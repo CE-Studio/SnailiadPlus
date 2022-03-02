@@ -1,0 +1,59 @@
+{
+    "animArray": [
+        {
+            "name": "Door_horiz_blue_close",
+            "framerate": 6.0,
+            "frames": [
+                13,
+                12,
+                11,
+                10,
+                9,
+                7
+            ],
+            "loop": false,
+            "loopStartFrame": 0
+        },
+        {
+            "name": "Door_horiz_blue_hold",
+            "framerate": 6.0,
+            "frames": [
+                7
+            ],
+            "loop": false,
+            "loopStartFrame": 0
+        },
+        {
+            "name": "Door_horiz_blue_open",
+            "framerate": 5.0,
+            "frames": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                -1
+            ],
+            "loop": false,
+            "loopStartFrame": 0
+        },
+        {
+            "name": "Splash",
+            "framerate": 24.0,
+            "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+				5,
+				6,
+				7,
+				8,
+                -1
+            ],
+            "loop": false,
+            "loopStartFrame": 0
+        }
+    ]
+}

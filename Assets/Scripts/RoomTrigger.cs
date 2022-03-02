@@ -107,7 +107,7 @@ public class RoomTrigger : MonoBehaviour
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
                     waterLevel[WaterPoint(PlayState.player.transform.position.x - transform.position.x - (box.size.x * 0.5f))].y;
-                Debug.Log(playerY + ", " + waterY);
+                //Debug.Log(playerY + ", " + waterY);
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
                     PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash");

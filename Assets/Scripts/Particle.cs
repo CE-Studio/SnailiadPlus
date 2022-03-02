@@ -11,12 +11,17 @@ public class Particle : MonoBehaviour
     public float[] vars = new float[] { 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
+    public Dictionary<string, int> animIDTable = new Dictionary<string, int>();
+    private PlayState.AnimationController animCon;
+
     public void Start()
     {
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         anim.enabled = false;
         gameObject.SetActive(false);
+
+        animIDTable.Add("Splash", PlayState.GetAnimID("Splash"));
     }
 
     public void Update()
@@ -37,10 +42,79 @@ public class Particle : MonoBehaviour
                             ResetParticle();
                         break;
                 }
+
+                // Temp conditional
+                if (type == "splash")
+                {
+                    if (!(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
+                    {
+                        animCon.animTimer -= Time.deltaTime;
+                        while (animCon.animTimer <= 0 && !(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
+                        {
+                            animCon.currentFrame++;
+                            if (animCon.currentFrame != animCon.currentAnim.frames.Length - 1)
+                            {
+                                sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
+                                animCon.animTimer += animCon.timerResetVal;
+                            }
+                            else
+                            {
+                                if (animCon.currentAnim.loop)
+                                {
+                                    animCon.currentFrame = animCon.currentAnim.loopStartFrame;
+                                    sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
+                                    animCon.animTimer += animCon.timerResetVal;
+                                }
+                            }
+                        }
+                    }
+                    else
+                        ResetParticle();
+                }
             }
         }
         else
             anim.speed = 0;
+    }
+
+    public void SetAnim(string animType)
+    {
+        switch (animType)
+        {
+            default:
+                PlayState.AnimationData nullAnim = new PlayState.AnimationData();
+                nullAnim.name = "NoAnim";
+                nullAnim.framerate = 0;
+                nullAnim.frames = new int[] { -1 };
+                nullAnim.loop = false;
+                nullAnim.loopStartFrame = 0;
+
+                animCon.currentAnim = nullAnim;
+                break;
+            case "splash":
+                animCon.currentAnim = PlayState.GetAnim(animIDTable["Splash"]);
+                animCon.animSpriteName = "Particles/Splash";
+                break;
+        }
+        animCon.currentFrame = 0;
+        animCon.timerResetVal = animCon.currentAnim.name == "NoAnim" ? 0 : 1 / animCon.currentAnim.framerate;
+        animCon.animTimer = animCon.timerResetVal;
+
+        if (animCon.currentFrame != -1)
+            sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, 0);
+        else
+            sprite.sprite = PlayState.BlankTexture();
+    }
+
+    public void PlaySound()
+    {
+        switch (type)
+        {
+            default:
+                break;
+            case "explosion":
+                break;
+        }
     }
 
     public void ResetParticle()

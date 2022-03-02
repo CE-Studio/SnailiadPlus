@@ -8,4 +8,5 @@ public class ParticleSpriteCollection : ScriptableObject
     public Sprite blank;
     public Sprite[] bubble;
     public Sprite[] star;
+    public Sprite[] splash;
 }

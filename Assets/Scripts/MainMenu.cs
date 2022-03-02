@@ -82,6 +82,17 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        //CreateNewLibrary();
+        if (!Directory.Exists(Application.persistentDataPath + "/Saves"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
+        if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/TexturePacks");
+        if (!Directory.Exists(Application.persistentDataPath + "/MusicPacks"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/MusicPacks");
+
+        PlayState.textureLibrary.BuildDefaultLibrary();
+        PlayState.textureLibrary.BuildDefaultAnimLibrary();
+
         PlayState.LoadOptions();
         PlayState.LoadControls();
         Screen.SetResolution(400 * (PlayState.gameOptions[2] + 1), 240 * (PlayState.gameOptions[2] + 1), false);
@@ -112,6 +123,26 @@ public class MainMenu : MonoBehaviour
 
         StartCoroutine(nameof(CreateTitle));
     }
+
+    //void CreateNewLibrary()
+    //{
+    //    PlayState.AnimationLibrary newAnimLibrary = new PlayState.AnimationLibrary();
+    //    PlayState.AnimationData newAnimData = new PlayState.AnimationData();
+    //    newAnimData.name = "NewAnim_test_doThing";
+    //    newAnimData.framerate = 5;
+    //    newAnimData.frames = new int[] { 0, 1, 2, 3, 2, 1, 0 };
+    //    newAnimData.loop = true;
+    //    newAnimData.loopStartFrame = 0;
+    //    PlayState.AnimationData[] newDataArray = new PlayState.AnimationData[]
+    //    {
+    //        newAnimData,
+    //        newAnimData,
+    //        newAnimData
+    //    };
+    //    newAnimLibrary.animArray = newDataArray;
+    //    string dataPath = Application.persistentDataPath + "/TestAnimList.json";
+    //    File.WriteAllText(dataPath, JsonUtility.ToJson(newAnimLibrary, true));
+    //}
 
     void Update()
     {
@@ -1199,7 +1230,7 @@ public class MainMenu : MonoBehaviour
         });
         AddOption("Set controls", true, ControlMain);
         AddOption("Shooting: ", true);
-        AddOption("Texture/Music packs", true);
+        AddOption("Asset packs", true, AssetPackMenu);
         AddOption("Erase record data", true, RecordEraseConfirm);
         if (PlayState.gameState == "Menu")
             AddOption("Import/export all data", true, ImportExportData);
@@ -1339,6 +1370,47 @@ public class MainMenu : MonoBehaviour
         OptionsScreen();
     }
 
+    public void AssetPackMenu()
+    {
+        ClearOptions();
+        AddOption("Texture packs", true);
+        AddOption("Music packs", true);
+        AddOption("", false);
+        AddOption("Get asset pack path", true, ReturnAssetPath);
+        AddOption("", false);
+        AddOption("Back to options", true, OptionsScreen);
+        ForceSelect(0);
+        backPage = OptionsScreen;
+    }
+
+    public void ReturnAssetPath()
+    {
+        string dataPath = Application.persistentDataPath + "/";
+
+        ClearOptions();
+        AddOption("Your asset folders can be", false);
+        AddOption("found at:", false);
+
+        string currentText = "";
+        int j = 32;
+        for (int i = 0; i < dataPath.Length; i++)
+        {
+            currentText += dataPath[i];
+            j--;
+            if (j == 0 || i == dataPath.Length - 1)
+            {
+                AddOption(currentText, false);
+                j = 32;
+                currentText = "";
+            }
+        }
+
+        AddOption("", false);
+        AddOption("Sounds good!", true, AssetPackMenu);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = AssetPackMenu;
+    }
+
     public void RecordEraseConfirm()
     {
         ClearOptions();
@@ -1381,11 +1453,10 @@ public class MainMenu : MonoBehaviour
     public void ExportConfirm()
     {
         ClearOptions();
-        bool fileFound = false;
         if (File.Exists(Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
-            fileFound = true;
             AddOption("Overwrite JSON save in slot " + (menuVarFlags[0] + 1) + "?", false);
+            AddOption("", false);
         }
         else
         {
@@ -1395,7 +1466,7 @@ public class MainMenu : MonoBehaviour
         AddOption("", false);
         AddOption("Yeah, write it!", true, WriteDataToFile);
         AddOption("No, I changed my mind", true, ImportExportData);
-        ForceSelect(fileFound ? 4 : 3);
+        ForceSelect(4);
         backPage = ImportExportData;
     }
 
@@ -1462,7 +1533,7 @@ public class MainMenu : MonoBehaviour
     public void ImportConfirm()
     {
         ClearOptions();
-        if (File.Exists(Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
+        if (File.Exists(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
             AddOption("Import data from slot " + (menuVarFlags[0] + 1) + "? This will", false);
             AddOption("overwrite *ALL* existing data!!", false);
@@ -1484,7 +1555,7 @@ public class MainMenu : MonoBehaviour
 
     public void ReadDataFromFile()
     {
-        string dataPath = Application.persistentDataPath + "/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
+        string dataPath = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
 
         CollectiveData fullData = JsonUtility.FromJson<CollectiveData>(File.ReadAllText(dataPath));
 
@@ -1594,9 +1665,9 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         AddOption("Remake special thanks", false);
         AddOption("", false);
-        AddOption("Clarence112, my boyfriend", false);
-        AddOption("(Emotional support, superior code", false);
-        AddOption("knowledge, code assistance)", false);
+        AddOption("goldguy40 (Some additional", false);
+        AddOption("tilemap tiles)", false);
+        AddOption("", false);
         AddOption("", false);
         AddOption("Next page", true, CreditsPage7);
         ForceSelect(6);
@@ -1604,6 +1675,20 @@ public class MainMenu : MonoBehaviour
     }
 
     public void CreditsPage7()
+    {
+        ClearOptions();
+        AddOption("Remake special thanks", false);
+        AddOption("", false);
+        AddOption("Clarence112, my boyfriend", false);
+        AddOption("(Emotional support, superior code", false);
+        AddOption("knowledge, code assistance)", false);
+        AddOption("", false);
+        AddOption("Next page", true, CreditsPage8);
+        ForceSelect(6);
+        backPage = PageMain;
+    }
+
+    public void CreditsPage8()
     {
         ClearOptions();
         AddOption("Remake special thanks", false);
