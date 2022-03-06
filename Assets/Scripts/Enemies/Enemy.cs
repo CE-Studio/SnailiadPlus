@@ -149,7 +149,8 @@ public class Enemy : MonoBehaviour
     {
         sprite.material.SetFloat("_FlashAmount", 0.75f);
         stunInvulnerability = true;
-        sfx.PlayOneShot(hit[Random.Range(1, 4)]);
+        //sfx.PlayOneShot(hit[Random.Range(1, 4)]);
+        PlayState.PlaySound("Explode" + Random.Range(1, 5));
         yield return new WaitForSeconds(0.025f);
         sprite.material.SetFloat("_FlashAmount", 0);
         stunInvulnerability = false;
@@ -157,11 +158,12 @@ public class Enemy : MonoBehaviour
 
     public virtual void Kill()
     {
-        sfx.PlayOneShot(die);
+        //sfx.PlayOneShot(die);
+        PlayState.PlaySound("EnemyKilled1");
         box.enabled = false;
         sprite.enabled = false;
         for (int i = Random.Range(1, 4); i > 0; i--)
             PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", 2);
+                Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 2 });
     }
 }

@@ -24,7 +24,7 @@ public class PlayState
 
     public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
     public static AnimationData[] animationLibrary;
-    //public static Sprite blankTexture = (Sprite)Resources.Load("Images/Blank");
+    public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
 
     public struct AnimationController
     {
@@ -271,7 +271,8 @@ public class PlayState
         0,  //  8 - Shoot mode (boolean)
         0,  //  9 - Texture pack ID (any positive int, 0 for default)
         0,  // 10 - Music pack ID (any positive int, 0 for default)
-        5   // 11 - Particle settings (0-5)
+        5,  // 11 - Particle settings (0-5)
+        0   // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
     };
 
     [Serializable]
@@ -357,6 +358,20 @@ public class PlayState
     public static Sprite GetSprite(string name, int ID)
     {
         return textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
+    }
+
+    public static AudioClip GetSound(string name)
+    {
+        return soundLibrary.library[soundLibrary.soundDict[name]];
+    }
+
+    public static void PlaySound(string name)
+    {
+        globalSFX.PlayOneShot(GetSound(name));
+    }
+    public static void PlaySound(AudioClip clip)
+    {
+        globalSFX.PlayOneShot(clip);
     }
 
     public static void GetNewRoom(string intendedArea)
@@ -497,18 +512,18 @@ public class PlayState
 
     public static void RequestParticle(Vector2 position, string type)
     {
-        RequestParticle(position, type, 0, false);
+        RequestParticle(position, type, new float[] { 0 }, false);
     }
-    public static void RequestParticle(Vector2 position, string type, float value)
+    public static void RequestParticle(Vector2 position, string type, float[] values)
     {
-        RequestParticle(position, type, value, false);
+        RequestParticle(position, type, values, false);
     }
     public static void RequestParticle(Vector2 position, string type, bool playSound)
     {
-        RequestParticle(position, type, 0, playSound);
+        RequestParticle(position, type, new float[] { 0 }, playSound);
     }
 
-    public static void RequestParticle(Vector2 position, string type, float value, bool playSound)
+    public static void RequestParticle(Vector2 position, string type, float[] values, bool playSound)
     {
         bool found = false;
         if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
@@ -536,15 +551,21 @@ public class PlayState
             SpriteRenderer particleSprite = particleObject.GetComponent<SpriteRenderer>();
             ParticleSpriteCollection particleSprites = particleScript.sprites;
 
+            bool activateParticle = false;
+
             switch (type.ToLower())
             {
                 default:
                     break;
                 case "explosion":
-                    if ((gameOptions[11] > 1 && value <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && value > 4))
+                    // Values:
+                    // 0 = Size
+
+                    if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
                     {
+                        activateParticle = true;
                         particleAnim.enabled = true;
-                        switch (value)
+                        switch (values[0])
                         {
                             case 1:
                                 particleAnim.Play("Explosion tiny", 0, 0);
@@ -559,36 +580,44 @@ public class PlayState
                                 particleAnim.Play("Explosion huge", 0, 0);
                                 break;
                         }
-                        particleScript.vars[0] = value;
+                        particleScript.vars[0] = values[0];
                     }
                     break;
                 case "bubble":
+                    // Values:
+                    // 0 = Water level
+                    // 1 = Boolean to initialize particle with random velocity or not
+
                     if (gameOptions[11] > 1)
                     {
-                        particleSprite.sprite = particleSprites.bubble[UnityEngine.Random.Range(0, 8)];
+                        activateParticle = true;
+                        particleScript.SetAnim("bubble");
                         particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
                         particleScript.vars[1] = position.x;                                      // Origin X
-                        particleScript.vars[2] = value - 0.25f;                                   // Water level above the bubble's spawn
+                        particleScript.vars[2] = values[0] - 0.25f;                               // Water level above the bubble's spawn
                         particleScript.vars[3] = 4 + UnityEngine.Random.Range(0f, 1f) * 0.0625f;  // Rise speed
+                        particleScript.vars[4] = values[1];                                       // Randomize initial velocity
                     }
                     break;
                 case "splash":
                     if (gameOptions[11] == 3 || gameOptions[11] == 5)
                     {
-                        //particleAnim.enabled = true;
-                        //particleAnim.Play("Splash", 0, 0);
+                        activateParticle = true;
                         particleScript.SetAnim("splash");
                     }
                     break;
             }
 
-            particleObject.position = position;
-            particleScript.type = type;
-            if (playSound)
-                particleScript.PlaySound();
-            thisParticleID++;
-            if (thisParticleID >= particlePool.transform.childCount)
-                thisParticleID = 0;
+            if (activateParticle)
+            {
+                particleObject.position = position;
+                particleScript.type = type;
+                if (playSound)
+                    particleScript.PlaySound();
+                thisParticleID++;
+                if (thisParticleID >= particlePool.transform.childCount)
+                    thisParticleID = 0;
+            }
         }
     }
 

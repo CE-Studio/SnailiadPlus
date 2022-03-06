@@ -5,4 +5,5 @@ using UnityEngine;
 public class LibraryManager : MonoBehaviour
 {
     public TextureLibrary textureLibrary;
+    public SoundLibrary soundLibrary;
 }

@@ -21,6 +21,11 @@ public class Particle : MonoBehaviour
         anim.enabled = false;
         gameObject.SetActive(false);
 
+        animIDTable.Add("Bubble", PlayState.GetAnimID("Bubble"));
+        animIDTable.Add("Explosion_1", PlayState.GetAnimID("Explosion_1"));
+        animIDTable.Add("Explosion_2", PlayState.GetAnimID("Explosion_2"));
+        animIDTable.Add("Explosion_3", PlayState.GetAnimID("Explosion_3"));
+        animIDTable.Add("Explosion_4", PlayState.GetAnimID("Explosion_4"));
         animIDTable.Add("Splash", PlayState.GetAnimID("Splash"));
     }
 
@@ -43,8 +48,7 @@ public class Particle : MonoBehaviour
                         break;
                 }
 
-                // Temp conditional
-                if (type == "splash")
+                if (animCon.currentAnim.framerate != 0)
                 {
                     if (!(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
                     {
@@ -91,19 +95,26 @@ public class Particle : MonoBehaviour
 
                 animCon.currentAnim = nullAnim;
                 break;
+            case "bubble":
+                animCon.currentAnim = PlayState.GetAnim(animIDTable["Bubble"]);
+                sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, animCon.currentAnim.frames.Length));
+                break;
             case "splash":
                 animCon.currentAnim = PlayState.GetAnim(animIDTable["Splash"]);
                 animCon.animSpriteName = "Particles/Splash";
                 break;
         }
-        animCon.currentFrame = 0;
-        animCon.timerResetVal = animCon.currentAnim.name == "NoAnim" ? 0 : 1 / animCon.currentAnim.framerate;
-        animCon.animTimer = animCon.timerResetVal;
+        if (animCon.currentAnim.framerate != 0)
+        {
+            animCon.currentFrame = 0;
+            animCon.timerResetVal = animCon.currentAnim.name == "NoAnim" ? 0 : 1 / animCon.currentAnim.framerate;
+            animCon.animTimer = animCon.timerResetVal;
 
-        if (animCon.currentFrame != -1)
-            sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, 0);
-        else
-            sprite.sprite = PlayState.BlankTexture();
+            if (animCon.currentFrame != -1)
+                sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, 0);
+            else
+                sprite.sprite = PlayState.BlankTexture();
+        }
     }
 
     public void PlaySound()
@@ -113,6 +124,10 @@ public class Particle : MonoBehaviour
             default:
                 break;
             case "explosion":
+                PlayState.PlaySound("Explode" + Random.Range(1, 5));
+                break;
+            case "splash":
+                PlayState.PlaySound("Splash");
                 break;
         }
     }

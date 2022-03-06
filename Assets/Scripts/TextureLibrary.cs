@@ -22,6 +22,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/Boomerang",
         "Bullets/RainbowWave",
 
+        "Entities/BreakableIcons",
         "Entities/Floatspike1",
         "Entities/Grass",
         "Entities/PixelPeople",
@@ -95,10 +96,11 @@ public class TextureLibrary : ScriptableObject
             //Unpack((Texture2D)Resources.Load("Images/CEStudioLogo2022"), 594, 1188, "General_StudioLogo_"),
             //Unpack((Texture2D)Resources.Load("Images/Tilesheet"), 16, 16, "General_Tileset_"),
             Unpack((Texture2D)Resources.Load("Images/TitleFont"), 32, 56, "General_TitleFont_"),
-            
+
             Unpack((Texture2D)Resources.Load("Images/Bullets/Boomerang"), 16, 16, "Bullet_Boomerang_"),
             Unpack((Texture2D)Resources.Load("Images/Bullets/RainbowWave"), 32, 32, "Bullet_RainbowWave_"),
-            
+
+            Unpack((Texture2D)Resources.Load("Images/Entities/BreakableIcons"), 16, 16, "Entity_BreakableIcons_"),
             Unpack((Texture2D)Resources.Load("Images/Entities/Floatspike1"), 16, 16, "Entity_Floatspike1_"),
             Unpack((Texture2D)Resources.Load("Images/Entities/Grass"), 16, 16, "Entity_Grass_"),
             Unpack((Texture2D)Resources.Load("Images/Entities/PixelPeople"), 18, 32, "Entity_PixelPeople_"),

@@ -9,6 +9,7 @@ public class BreakableBlock : MonoBehaviour
     public bool isSilent;
     private bool hasBeenHit;
     public BoxCollider2D box;
+    public SpriteRenderer sprite;
     public AudioSource sfx;
     public AudioClip expl1;
     public AudioClip expl2;
@@ -22,12 +23,13 @@ public class BreakableBlock : MonoBehaviour
     public List<Tilemap> maps = new List<Tilemap>();
     public Vector3Int tilePos;
     
-    void Start()
+    void Awake()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
-
         box = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
         sfx = GetComponent<AudioSource>();
+
+        sprite.sprite = PlayState.BlankTexture();
 
         expl1 = (AudioClip)Resources.Load("Sounds/Sfx/Explode1");
         expl2 = (AudioClip)Resources.Load("Sounds/Sfx/Explode2");
@@ -65,6 +67,7 @@ public class BreakableBlock : MonoBehaviour
     {
         requiredWeapon = type;
         isSilent = silent;
+        sprite.sprite = PlayState.BlankTexture();
     }
 
     public void Despawn()
@@ -92,31 +95,26 @@ public class BreakableBlock : MonoBehaviour
                 hasBeenHit = true;
                 if (!PlayState.explodePlayedThisFrame)
                 {
-                    int i = Random.Range(1, 5);
-                    switch (i)
-                    {
-                        case 1:
-                            sfx.PlayOneShot(expl1);
-                            break;
-                        case 2:
-                            sfx.PlayOneShot(expl2);
-                            break;
-                        case 3:
-                            sfx.PlayOneShot(expl3);
-                            break;
-                        case 4:
-                            sfx.PlayOneShot(expl4);
-                            break;
-                    }
+                    PlayState.PlaySound("Explode" + Random.Range(1, 5));
                     PlayState.explodePlayedThisFrame = true;
                 }
                 for (int i = 0; i < 4; i++)
-                    PlayState.RequestParticle(new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f)), "explosion", 2);
+                    PlayState.RequestParticle(new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f)), "explosion", new float[] { 2 });
             }
-            else if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+            else
             {
-                sfx.PlayOneShot(ping);
-                PlayState.armorPingPlayedThisFrame = true;
+                if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+                {
+                    PlayState.PlaySound("Ping");
+                    PlayState.armorPingPlayedThisFrame = true;
+                }
+                if ((PlayState.gameOptions[12] == 1 && !isSilent && collision.GetComponent<Bullet>().bulletType != 1) ||
+                    (PlayState.gameOptions[12] == 2 && collision.GetComponent<Bullet>().bulletType != 1) ||
+                    (PlayState.gameOptions[12] == 3 && !isSilent) || PlayState.gameOptions[12] == 4)
+                {
+                    if (sprite.sprite == PlayState.BlankTexture())
+                        sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", requiredWeapon - 1);
+                }
             }
         }
     }

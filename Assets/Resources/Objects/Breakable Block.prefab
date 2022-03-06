@@ -197,6 +197,7 @@ MonoBehaviour:
   requiredWeapon: 0
   isSilent: 0
   box: {fileID: 0}
+  sprite: {fileID: 0}
   sfx: {fileID: 0}
   expl1: {fileID: 0}
   expl2: {fileID: 0}

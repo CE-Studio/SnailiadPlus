@@ -229,6 +229,9 @@ public class Player : MonoBehaviour
         else
             anim.speed = 0;
 
+        // Audiosource volume control
+        PlayState.globalSFX.volume = PlayState.gameOptions[0] * 0.1f;
+
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)
             audio.volume = PlayState.gameOptions[1] * 0.1f;

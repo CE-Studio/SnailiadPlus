@@ -87,11 +87,14 @@ public class MainMenu : MonoBehaviour
             Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
         if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TexturePacks");
+        if (!Directory.Exists(Application.persistentDataPath + "/SoundPacks"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/SoundPacks");
         if (!Directory.Exists(Application.persistentDataPath + "/MusicPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/MusicPacks");
 
         PlayState.textureLibrary.BuildDefaultLibrary();
         PlayState.textureLibrary.BuildDefaultAnimLibrary();
+        PlayState.soundLibrary.BuildDefaultLibrary();
 
         PlayState.LoadOptions();
         PlayState.LoadControls();
@@ -364,6 +367,28 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         PlayState.gameOptions[8] = menuVarFlags[0];
+                        break;
+                    case "Show breakables: ":
+                        TestForArrowAdjust(option, 1, 4);
+                        switch (menuVarFlags[1])
+                        {
+                            case 0:
+                                AddToOptionText(option, "off");
+                                break;
+                            case 1:
+                                AddToOptionText(option, "obvious, piercing");
+                                break;
+                            case 2:
+                                AddToOptionText(option, "obvious, any shot");
+                                break;
+                            case 3:
+                                AddToOptionText(option, "all, piercing");
+                                break;
+                            case 4:
+                                AddToOptionText(option, "all, any shot");
+                                break;
+                        }
+                        PlayState.gameOptions[12] = menuVarFlags[1];
                         break;
                     case "Sound volume: ":
                         TestForArrowAdjust(option, 0, 10);
@@ -954,7 +979,7 @@ public class MainMenu : MonoBehaviour
             AddOption("Boss rush", true);
         AddOption("Multiplayer", true);
         AddOption("", false);
-        AddOption("Options", true, OptionsScreen, new int[] { 0, PlayState.gameOptions[8] });
+        AddOption("Options", true, OptionsScreen);
         AddOption("Credits", true, CreditsPage1);
         if (PlayState.HasTime())
             AddOption("Records", true);
@@ -1229,7 +1254,7 @@ public class MainMenu : MonoBehaviour
             6, PlayState.gameOptions[11]
         });
         AddOption("Set controls", true, ControlMain);
-        AddOption("Shooting: ", true);
+        AddOption("Gameplay options", true, GameplayScreen, new int[] { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12] });
         AddOption("Asset packs", true, AssetPackMenu);
         AddOption("Erase record data", true, RecordEraseConfirm);
         if (PlayState.gameState == "Menu")
@@ -1370,10 +1395,22 @@ public class MainMenu : MonoBehaviour
         OptionsScreen();
     }
 
+    public void GameplayScreen()
+    {
+        ClearOptions();
+        AddOption("Shooting: ", true);
+        AddOption("Show breakables: ", true);
+        AddOption("", false);
+        AddOption("Back to options", true, OptionsScreen);
+        ForceSelect(0);
+        backPage = OptionsScreen;
+    }
+
     public void AssetPackMenu()
     {
         ClearOptions();
         AddOption("Texture packs", true);
+        AddOption("Sound packs", true);
         AddOption("Music packs", true);
         AddOption("", false);
         AddOption("Get asset pack path", true, ReturnAssetPath);

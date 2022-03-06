@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 151c6c8e6d84d3c41a02ed8b0d88b35e, type: 3}
-  m_Name: Texture Library
+  m_Name: 
   m_EditorClassIdentifier: 
   referenceList:
   - AchievementIcons
@@ -18,11 +18,10 @@ MonoBehaviour:
   - MapTiles
   - MenuPlus
   - SavePoint
-  - CEStudioLogo2022
-  - Tilesheet
   - TitleFont
   - Bullets/Boomerang
   - Bullets/RainbowWave
+  - Entities/BreakableIcons
   - Entities/Floatspike1
   - Entities/Grass
   - Entities/PixelPeople
@@ -41,10 +40,10 @@ MonoBehaviour:
   - Particles/Splash
   - Particles/Star
   - UI/AchievementPanel
-  - UI/DebugKeys
+  - UI/DebugKey
   - UI/DialogueBox
   - UI/DialogueIcon2
-  - UI/DialoguePortraits
+  - UI/DialoguePortrait
   - UI/Heart
   - UI/Minimap
   - UI/MinimapIcons

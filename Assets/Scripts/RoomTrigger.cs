@@ -80,7 +80,7 @@ public class RoomTrigger : MonoBehaviour
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
-                                PlayState.RequestParticle(truePos, "bubble", transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y);
+                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y });
                             }
                             effectVars.Add(Random.Range(0f, 1f) * 12);
                         }
@@ -91,7 +91,7 @@ public class RoomTrigger : MonoBehaviour
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
-                                PlayState.RequestParticle(truePos, "bubble", transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y);
+                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y });
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
                             }
                             else
@@ -110,7 +110,7 @@ public class RoomTrigger : MonoBehaviour
                 //Debug.Log(playerY + ", " + waterY);
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
-                    PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash");
+                    PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
                     PlayState.playerScript.underwater = !PlayState.playerScript.underwater;
                 }
             }
@@ -343,10 +343,10 @@ public class RoomTrigger : MonoBehaviour
                             switch (i)
                             {
                                 case 0:
-                                    Breakable.GetComponent<SpriteRenderer>().sortingOrder = -100;
+                                    Breakable.GetComponent<SpriteRenderer>().sortingOrder = -99;
                                     break;
                                 case 1:
-                                    Breakable.GetComponent<SpriteRenderer>().sortingOrder = -20;
+                                    Breakable.GetComponent<SpriteRenderer>().sortingOrder = -19;
                                     break;
                             }
                         }
