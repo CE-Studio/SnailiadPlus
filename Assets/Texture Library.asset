@@ -44,6 +44,7 @@ MonoBehaviour:
   - UI/DialogueBox
   - UI/DialogueIcon2
   - UI/DialoguePortrait
+  - UI/FontSprites
   - UI/Heart
   - UI/Minimap
   - UI/MinimapIcons

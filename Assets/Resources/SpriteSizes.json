@@ -1,0 +1,204 @@
+{
+    "sizeArray": [
+        {
+            "name": "AchievementIcons",
+            "width": 50,
+            "height": 50
+        },
+		{
+            "name": "Door",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "MapTiles",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "MenuPlus",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "SavePoint",
+            "width": 32,
+            "height": 48
+        },
+		{
+            "name": "TitleFont",
+            "width": 32,
+            "height": 56
+        },
+		
+		{
+            "name": "Bullets/Boomerang",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Bullets/RainbowWave",
+            "width": 32,
+            "height": 32
+        },
+		
+		{
+            "name": "Entities/BreakableIcons",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Floatspike1",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Grass",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/PixelPeople",
+            "width": 18,
+            "height": 32
+        },
+		{
+            "name": "Entities/PowerGrass",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/PowerNom",
+            "width": 16,
+            "height": 5
+        },
+		{
+            "name": "Entities/SnailNpc",
+            "width": 32,
+            "height": 18
+        },
+		{
+            "name": "Entities/SnailNpcColor",
+            "width": 7,
+            "height": 52
+        },
+		{
+            "name": "Entities/Spikey1",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/TurtleNpc",
+            "width": 32,
+            "height": 16
+        },
+		{
+            "name": "AchievementIcons",
+            "width": 50,
+            "height": 50
+        },
+		
+		{
+            "name": "Items/Boomerang",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/HeartContainer",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/HelixFragment",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Items/RainbowWave",
+            "width": 32,
+            "height": 32
+        },
+		
+		{
+            "name": "Particles/Bubble",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "Particles/Explosion",
+            "width": 64,
+            "height": 64
+        },
+		{
+            "name": "Particles/Splash",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Particles/Star",
+            "width": 16,
+            "height": 16
+        },
+		
+		{
+            "name": "UI/AchievementPanel",
+            "width": 128,
+            "height": 64
+        },
+		{
+            "name": "UI/DebugKey",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "UI/DialogueBox",
+            "width": 368,
+            "height": 64
+        },
+		{
+            "name": "UI/DialogueIcon2",
+            "width": 16,
+            "height": 8
+        },
+		{
+            "name": "UI/DialoguePortrait",
+            "width": 32,
+            "height": 32
+        },
+		{
+			"name": "UI/FontSprites",
+			"width": 16,
+			"height": 16
+		},
+		{
+            "name": "UI/Heart",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "UI/Minimap",
+            "width": 208,
+            "height": 176
+        },
+		{
+            "name": "UI/MinimapIcons",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "UI/MinimapMask",
+            "width": 400,
+            "height": 240
+        },
+		{
+            "name": "UI/MinimapPanel",
+            "width": 56,
+            "height": 40
+        },
+		{
+            "name": "UI/WeaponIcons",
+            "width": 8,
+            "height": 8
+        }
+    ]
+}

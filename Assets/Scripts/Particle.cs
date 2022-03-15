@@ -9,9 +9,9 @@ public class Particle : MonoBehaviour
     public SpriteRenderer sprite;
     public string type = "";
     public float[] vars = new float[] { 0, 0, 0, 0, 0 };
+    private float[] internalVars = new float[] { 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
-    public Dictionary<string, int> animIDTable = new Dictionary<string, int>();
     private PlayState.AnimationController animCon;
 
     public void Start()
@@ -20,13 +20,6 @@ public class Particle : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim.enabled = false;
         gameObject.SetActive(false);
-
-        animIDTable.Add("Bubble", PlayState.GetAnimID("Bubble"));
-        animIDTable.Add("Explosion_1", PlayState.GetAnimID("Explosion_1"));
-        animIDTable.Add("Explosion_2", PlayState.GetAnimID("Explosion_2"));
-        animIDTable.Add("Explosion_3", PlayState.GetAnimID("Explosion_3"));
-        animIDTable.Add("Explosion_4", PlayState.GetAnimID("Explosion_4"));
-        animIDTable.Add("Splash", PlayState.GetAnimID("Splash"));
     }
 
     public void Update()
@@ -41,6 +34,18 @@ public class Particle : MonoBehaviour
                     default:
                         break;
                     case "bubble":
+                        if (vars[4] == 1)
+                        {
+                            if (internalVars[0] == 0 && internalVars[1] == 0)
+                            {
+                                internalVars[0] = Random.Range(-4f, 4f);
+                                internalVars[1] = Random.Range(-12f, -3f) * Mathf.Abs(PlayState.playerScript.velocity.y);
+                            }
+                            transform.position = new Vector2(transform.position.x, transform.position.y + (internalVars[1] * Time.deltaTime));
+                            vars[1] += internalVars[0] * Time.deltaTime;
+                            internalVars[0] = Mathf.Lerp(internalVars[0], 0, 2f * Time.deltaTime);
+                            internalVars[1] = Mathf.Lerp(internalVars[1], 0, 2f * Time.deltaTime);
+                        }
                         vars[0] += Time.deltaTime;
                         transform.position = new Vector2(vars[1] + 2 * Mathf.Sin(vars[0] / 1.2f) * 0.0625f, transform.position.y + vars[3] * Time.deltaTime * 0.25f);
                         if (transform.position.y > vars[2])
@@ -96,11 +101,18 @@ public class Particle : MonoBehaviour
                 animCon.currentAnim = nullAnim;
                 break;
             case "bubble":
-                animCon.currentAnim = PlayState.GetAnim(animIDTable["Bubble"]);
+                animCon.currentAnim = PlayState.GetAnim("Bubble");
                 sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, animCon.currentAnim.frames.Length));
                 break;
+            case "explosion":
+                animCon.currentAnim = PlayState.GetAnim("Explosion_" + vars[0]);
+                animCon.animSpriteName = "Particles/Explosion";
+                break;
+            case "nom":
+                animCon.currentAnim = PlayState.GetAnim("Nom");
+                break;
             case "splash":
-                animCon.currentAnim = PlayState.GetAnim(animIDTable["Splash"]);
+                animCon.currentAnim = PlayState.GetAnim("Splash");
                 animCon.animSpriteName = "Particles/Splash";
                 break;
         }
@@ -141,6 +153,8 @@ public class Particle : MonoBehaviour
         sprite.flipY = false;
         for (int i = 0; i < vars.Length; i++)
             vars[i] = 0;
+        for (int i = 0; i < internalVars.Length; i++)
+            internalVars[i] = 0;
         gameObject.SetActive(false);
     }
 }

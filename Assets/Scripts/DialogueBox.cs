@@ -20,10 +20,17 @@ public class DialogueBox : MonoBehaviour
     public AudioClip dialogue2;
     public AudioClip dialogue3;
 
+    public GameObject letter;
+
+    public int[] charWidths;
+
     private float camPos = 0;
     private float portraitPos = 0;
     private int boxState = 0;
     private Vector2 pointer = Vector2.zero;          // This pointer points to what letter of page of text it's looking at
+    private Vector2 posPointerOrigin = new Vector2(-10.6875f, 1.125f);
+    private Vector2 posPointer;
+    private const int MAX_LINE_WIDTH = 246;
     private bool buttonDown = false;
     private bool active = false;
     private bool playSound = true;
@@ -40,7 +47,11 @@ public class DialogueBox : MonoBehaviour
     private List<int> states = new List<int>();
     private bool left = false;
 
+    private float currentTimerMax = 0.02f;
     private float timer = 0;
+    private int currentSound = 0;
+    private Vector2 currentColor = new Vector2(3, 12);
+    private string currentEffect = "None";
     public bool boxOpenAnimComplete = false;
     
     void Start()
@@ -63,6 +74,8 @@ public class DialogueBox : MonoBehaviour
         portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
         portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
         portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
+
+        charWidths = PlayState.GetAnim("TextWidth").frames;
     }
 
     void Update()
@@ -144,6 +157,10 @@ public class DialogueBox : MonoBehaviour
                         buttonDown = true;
                     }
                     portraitPos = 1;
+                    currentTimerMax = 0.02f;
+                    currentSound = 0;
+                    currentColor = new Vector2(3, 12);
+                    currentEffect = "None";
                     break;
                 case 1:
                     if (dialogueType == 3)
@@ -200,29 +217,83 @@ public class DialogueBox : MonoBehaviour
                                     break;
                                 if (timer == 0)
                                 {
-                                    dialogueText.text += textList[(int)pointer.x][(int)pointer.y];
-                                    dialogueShadow.text = dialogueText.text;
-                                    if (textList[(int)pointer.x][(int)pointer.y] != ' ' && playSound)
+                                    //dialogueText.text += textList[(int)pointer.x][(int)pointer.y];
+                                    //dialogueShadow.text = dialogueText.text;
+
+                                    char thisChar = textList[(int)pointer.x][(int)pointer.y];
+                                    bool advanceChar = true;
+                                    
+                                    while (thisChar == '{')
                                     {
-                                        switch (currentSpeaker % 4)
+                                        string command = "";
+                                        for (float i = pointer.y + 1; textList[(int)pointer.x][(int)i] != '}' && i < textList[(int)pointer.x].Length; i++)
+                                            command += textList[(int)pointer.x][(int)i];
+                                        if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}' && command.Contains("|"))
                                         {
-                                            case 0:
-                                                sfx.PlayOneShot(dialogue0);
-                                                break;
-                                            case 1:
-                                                sfx.PlayOneShot(dialogue1);
-                                                break;
-                                            case 2:
-                                                sfx.PlayOneShot(dialogue2);
-                                                break;
-                                            case 3:
-                                                sfx.PlayOneShot(dialogue3);
-                                                break;
+                                            string[] args = command.Split('|');
+                                            switch (args[0].ToLower())
+                                            {
+                                                case "nl":    // New line
+                                                    posPointer = new Vector2(posPointerOrigin.x, posPointer.y - 1.125f);
+                                                    break;
+                                                case "eff":   // Effect
+                                                    currentEffect = args[1];
+                                                    break;
+                                                case "spd":   // Speed
+                                                    currentTimerMax = float.Parse(args[1]);
+                                                    break;
+                                                case "sfx":   // Speaker sound
+                                                    currentSpeaker = int.Parse(args[1]);
+                                                    break;
+                                                case "col":   // Color
+                                                    currentColor = new Vector2(int.Parse(args[1].Substring(0, 2)), int.Parse(args[1].Substring(2, 2)));
+                                                    break;
+                                                case "p":     // Pause
+                                                    timer = float.Parse(args[1]);
+                                                    advanceChar = false;
+                                                    break;
+                                            }
+                                            pointer.y += command.Length + 2;
+                                            thisChar = textList[(int)pointer.x][(int)pointer.y];
                                         }
+                                        else
+                                            break;
                                     }
-                                    playSound = !playSound;
-                                    pointer.y++;
-                                    timer = 0.02f;
+                                    if (advanceChar)
+                                    {
+                                        GameObject newLetter = Instantiate(letter);
+                                        newLetter.transform.parent = transform;
+                                        newLetter.transform.localPosition = posPointer;
+                                        FontObject newLetterScript = newLetter.GetComponent<FontObject>();
+                                        newLetterScript.Create(thisChar, 3, currentEffect, currentColor);
+                                        int addedWidth = (charWidths[newLetterScript.ID] + 1) * 2;
+                                        posPointer.x += addedWidth * 0.0625f;
+
+                                        if (currentTimerMax < 0.04f)
+                                            playSound = !playSound;
+                                        else
+                                            playSound = true;
+                                        if (thisChar != ' ' && playSound)
+                                        {
+                                            switch (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound)
+                                            {
+                                                case 1:
+                                                    sfx.PlayOneShot(dialogue0);
+                                                    break;
+                                                case 2:
+                                                    sfx.PlayOneShot(dialogue1);
+                                                    break;
+                                                case 3:
+                                                    sfx.PlayOneShot(dialogue2);
+                                                    break;
+                                                case 4:
+                                                    sfx.PlayOneShot(dialogue3);
+                                                    break;
+                                            }
+                                        }
+                                        pointer.y++;
+                                        timer = currentTimerMax;
+                                    }
                                 }
                                 if (!Control.SpeakHold() && buttonDown)
                                     buttonDown = false;
@@ -326,6 +397,7 @@ public class DialogueBox : MonoBehaviour
             forceDownPosition = true;
         forcedClosed = true;
         pointer = Vector2.zero;
+        posPointer = posPointerOrigin;
         dialogueText.text = "";
         dialogueShadow.text = "";
         anim.Play("Dialogue close", 0, 0);
@@ -334,6 +406,11 @@ public class DialogueBox : MonoBehaviour
         dialogueType = 0;
         boxOpenAnimComplete = false;
         active = false;
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            if (transform.GetChild(i).name.Contains("Font Object"))
+                Destroy(transform.GetChild(i).gameObject);
+        }
     }
 
     private void UpdatePlayerPortrait()

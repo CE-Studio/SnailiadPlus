@@ -53,9 +53,6 @@ public class MainMenu : MonoBehaviour
     private bool isMoving = true;
 
     public AudioSource music;
-    public AudioSource sfx;
-    public AudioClip beep1;
-    public AudioClip beep2;
     public GameObject textObject;
     public GameObject titleLetter;
     public GameObject titlePlus;
@@ -92,6 +89,7 @@ public class MainMenu : MonoBehaviour
         if (!Directory.Exists(Application.persistentDataPath + "/MusicPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/MusicPacks");
 
+        PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
         PlayState.textureLibrary.BuildDefaultLibrary();
         PlayState.textureLibrary.BuildDefaultAnimLibrary();
         PlayState.soundLibrary.BuildDefaultLibrary();
@@ -111,9 +109,6 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Selection Pointer/Left Snaily"),
             GameObject.Find("Selection Pointer/Right Snaily")
         };
-        sfx = selector[0].GetComponent<AudioSource>();
-        beep1 = (AudioClip)Resources.Load("Sounds/Sfx/MenuBeep1");
-        beep2 = (AudioClip)Resources.Load("Sounds/Sfx/MenuBeep2");
 
         menuHUDElements = new GameObject[]
         {
@@ -246,7 +241,6 @@ public class MainMenu : MonoBehaviour
         }
         if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
         {
-            sfx.volume = PlayState.gameOptions[0] * 0.1f;
             music.volume = PlayState.gameOptions[1] * 0.1f;
 
             if (!isRebinding && !fadingToIntro)
@@ -268,7 +262,7 @@ public class MainMenu : MonoBehaviour
                             intendedSelection = currentOptions.Count - 1;
                     }
                     if (intendedSelection != selectedOption)
-                        sfx.PlayOneShot(beep1);
+                        PlayState.PlaySound("MenuBeep1");
                     selectedOption = intendedSelection;
                     GetNewSnailOffset();
                 }
@@ -278,8 +272,7 @@ public class MainMenu : MonoBehaviour
                     if (backPage != null)
                     {
                         backPage();
-                        if (sfx.gameObject.activeInHierarchy)
-                            sfx.PlayOneShot(beep2);
+                        PlayState.PlaySound("MenuBeep2");
                     }
                 }
                 else if (Control.JumpPress(1))
@@ -292,8 +285,7 @@ public class MainMenu : MonoBehaviour
                     if (currentOptions[selectedOption].destinationPage != null)
                     {
                         currentOptions[selectedOption].destinationPage();
-                        if (sfx.gameObject.activeInHierarchy)
-                            sfx.PlayOneShot(beep2);
+                        PlayState.PlaySound("MenuBeep2");
                     }
                 }
             }
@@ -657,14 +649,14 @@ public class MainMenu : MonoBehaviour
             menuVarFlags[varSlot]--;
             if (menuVarFlags[varSlot] < 0)
                 menuVarFlags[varSlot] = max;
-            sfx.PlayOneShot(beep1);
+            PlayState.PlaySound("MenuBeep1");
         }
         else if (Control.RightPress(1))
         {
             menuVarFlags[varSlot]++;
             if (menuVarFlags[varSlot] > max)
                 menuVarFlags[varSlot] = 0;
-            sfx.PlayOneShot(beep1);
+            PlayState.PlaySound("MenuBeep1");
         }
     }
 
@@ -1160,7 +1152,7 @@ public class MainMenu : MonoBehaviour
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
                 AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%" +
-                    (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i, CopyConfirm, new int[] { 1, i });
+                    (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
             else
                 AddOption("Empty profile", true, CopyConfirm, new int[] { 1, i });
         }
@@ -1199,19 +1191,7 @@ public class MainMenu : MonoBehaviour
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
             {
-                string time = data.gameTime[0] + ":";
-                if (data.gameTime[1] < 10)
-                    time += "0";
-                time += data.gameTime[1] + ":";
-                if (data.gameTime[2] < 10)
-                    time += "0";
-                string seconds = Mathf.RoundToInt(data.gameTime[2] * 100).ToString();
-                if (seconds.Length == 4)
-                    time += seconds.Substring(0, 1);
-                else
-                    time += seconds[0];
-                time += "." + seconds.Substring(seconds.Length == 4 ? 2 : 1, seconds.Length == 4 ? 3 : 2);
-                AddOption(i + " / " + data.character + " / " + time + " / " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
+                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
             }
             else
                 AddOption("Empty profile", false);

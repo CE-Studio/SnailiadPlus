@@ -80,7 +80,7 @@ public class RoomTrigger : MonoBehaviour
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
-                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y });
+                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                             }
                             effectVars.Add(Random.Range(0f, 1f) * 12);
                         }
@@ -91,11 +91,14 @@ public class RoomTrigger : MonoBehaviour
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
-                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y });
+                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
                             }
                             else
-                                effectVars[effectVarIndex] -= Time.deltaTime;
+                            {
+                                if (PlayState.gameState == "Game")
+                                    effectVars[effectVarIndex] -= Time.deltaTime;
+                            }
                         }
                         break;
                 }
@@ -107,10 +110,14 @@ public class RoomTrigger : MonoBehaviour
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
                     waterLevel[WaterPoint(PlayState.player.transform.position.x - transform.position.x - (box.size.x * 0.5f))].y;
-                //Debug.Log(playerY + ", " + waterY);
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
                     PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
+                    if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+                    {
+                        for (int i = Random.Range(2, 8); i > 0; i--)
+                            PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
+                    }
                     PlayState.playerScript.underwater = !PlayState.playerScript.underwater;
                 }
             }

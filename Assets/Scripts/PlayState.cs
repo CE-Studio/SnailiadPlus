@@ -22,9 +22,20 @@ public class PlayState
         public int loopStartFrame;
     }
 
+    [Serializable]
+    public struct SpriteFrameSize
+    {
+        public string name;
+        public int width;
+        public int height;
+    }
+
     public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
     public static AnimationData[] animationLibrary;
+    public static SpriteFrameSize[] spriteSizeLibrary;
     public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
+
+    public static int[] charWidths;
 
     public struct AnimationController
     {
@@ -271,7 +282,7 @@ public class PlayState
         0,  //  8 - Shoot mode (boolean)
         0,  //  9 - Texture pack ID (any positive int, 0 for default)
         0,  // 10 - Music pack ID (any positive int, 0 for default)
-        5,  // 11 - Particle settings (0-5)
+        5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
         0   // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
     };
 
@@ -548,8 +559,6 @@ public class PlayState
             particleObject.gameObject.SetActive(true);
             Particle particleScript = particleObject.GetComponent<Particle>();
             Animator particleAnim = particleObject.GetComponent<Animator>();
-            SpriteRenderer particleSprite = particleObject.GetComponent<SpriteRenderer>();
-            ParticleSpriteCollection particleSprites = particleScript.sprites;
 
             bool activateParticle = false;
 
@@ -564,23 +573,24 @@ public class PlayState
                     if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
                     {
                         activateParticle = true;
-                        particleAnim.enabled = true;
-                        switch (values[0])
-                        {
-                            case 1:
-                                particleAnim.Play("Explosion tiny", 0, 0);
-                                break;
-                            case 2:
-                                particleAnim.Play("Explosion small", 0, 0);
-                                break;
-                            case 3:
-                                particleAnim.Play("Explosion big", 0, 0);
-                                break;
-                            case 4:
-                                particleAnim.Play("Explosion huge", 0, 0);
-                                break;
-                        }
+                        //particleAnim.enabled = true;
+                        //switch (values[0])
+                        //{
+                        //    case 1:
+                        //        particleAnim.Play("Explosion tiny", 0, 0);
+                        //        break;
+                        //    case 2:
+                        //        particleAnim.Play("Explosion small", 0, 0);
+                        //        break;
+                        //    case 3:
+                        //        particleAnim.Play("Explosion big", 0, 0);
+                        //        break;
+                        //    case 4:
+                        //        particleAnim.Play("Explosion huge", 0, 0);
+                        //        break;
+                        //}
                         particleScript.vars[0] = values[0];
+                        particleScript.SetAnim("explosion");
                     }
                     break;
                 case "bubble":
@@ -600,7 +610,7 @@ public class PlayState
                     }
                     break;
                 case "splash":
-                    if (gameOptions[11] == 3 || gameOptions[11] == 5)
+                    if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
                     {
                         activateParticle = true;
                         particleScript.SetAnim("splash");
@@ -896,6 +906,7 @@ public class PlayState
 
     public static void WriteSave(GameSaveData copyData, int profileToCopyTo)
     {
+        copyData.profile = profileToCopyTo;
         PlayerPrefs.SetString("SaveGameData" + profileToCopyTo, JsonUtility.ToJson(copyData));
         PlayerPrefs.Save();
     }
@@ -1031,5 +1042,15 @@ public class PlayState
     {
         AnimationLibrary newLibrary = JsonUtility.FromJson<AnimationLibrary>(File.ReadAllText(path));
         animationLibrary = newLibrary.animArray;
+    }
+
+    public struct SpriteSizeLibrary
+    {
+        public SpriteFrameSize[] sizeArray;
+    }
+    public static void LoadNewSpriteSizeLibrary(string path)
+    {
+        SpriteSizeLibrary newLibrary = JsonUtility.FromJson<SpriteSizeLibrary>(File.ReadAllText(path));
+        spriteSizeLibrary = newLibrary.sizeArray;
     }
 }

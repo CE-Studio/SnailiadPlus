@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public bool inDeathCutscene = false;
     public int gravityDir = 0;
     public bool underwater = false;
+    public Vector2 velocity = Vector2.zero;
 
     public Animator anim;
     public SpriteRenderer sprite;

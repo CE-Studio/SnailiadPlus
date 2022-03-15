@@ -89,7 +89,7 @@ public class Snaily : MonoBehaviour
     // This function is called once per frame
     void Update()
     {
-        
+        player.velocity = velocity;
     }
 
     // This function is called once every 0.02 seconds (50 time a second) regardless of framerate. Unity requires all physics calculations to be
