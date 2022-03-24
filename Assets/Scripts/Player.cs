@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
             return;
 
         double time = AudioSettings.dspTime;
-
+        
         if (time + 1 > nextLoopEvent)
         {
             //for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
@@ -256,7 +256,8 @@ public class Player : MonoBehaviour
                 source.time = PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
                 source.PlayScheduled(nextLoopEvent);
             }
-            nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
+            //nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
+            nextLoopEvent += PlayState.musicLibrary.library[PlayState.currentArea + 1][0].length - PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
             PlayState.musFlag = !PlayState.musFlag;
         }
     }
@@ -416,6 +417,7 @@ public class Player : MonoBehaviour
         {
             if (resetFlag >= 1) // Change song
             {
+                PlayState.musFlag = false;
                 for (int i = 0; i < PlayState.musicParent.childCount; i++)
                 {
                     foreach (Transform source in PlayState.musicParent.GetChild(i))
@@ -433,6 +435,7 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
+                nextLoopEvent = AudioSettings.dspTime + PlayState.musicLibrary.library[area + 1][0].length;
             }
             for (int i = 0; i * 2 < PlayState.musicParent.GetChild(area).childCount; i++)
             {
@@ -454,9 +457,11 @@ public class Player : MonoBehaviour
     public void StopMusic()
     {
         PlayState.playingMusic = false;
-        PlayState.musicSourceArray.Clear();
-        foreach (Transform obj in PlayState.musicParent.transform)
-            Destroy(obj.gameObject);
+        //PlayState.musicSourceArray.Clear();
+        //foreach (Transform obj in PlayState.musicParent.transform)
+        //    Destroy(obj.gameObject);
+        foreach (AudioSource source in PlayState.musicSourceArray)
+            source.Stop();
     }
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
