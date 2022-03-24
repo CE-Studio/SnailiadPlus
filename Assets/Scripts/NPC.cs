@@ -219,7 +219,7 @@ public class NPC : MonoBehaviour
 
                         case 3:
                             if (!PlayState.CheckForItem(8))
-                                textToSend.Add("I wonder why I can\'t crawl on{nl|}ceiling corners...  {p|0.25}Do you think{nl|}I\'ll ever be able to, {p|0.125}" + playerName + "?");
+                                textToSend.Add("I wonder why I can\'t crawl on{nl|}ceiling corners...  {p|0.25}Do you think{nl|}I\'ll ever be able to, " + playerName + "?");
                             else if (!PlayState.CheckForItem("Full-Metal Snail"))
                                 textToSend.Add("Oh, my, {p|0.125}you\'re a {col|0204}gravity " + playerSpecies + "{col|0312}!{p|0.25}{nl|}You must be really good at{nl|}crawling around ceilings!!");
                             else
@@ -413,9 +413,9 @@ public class NPC : MonoBehaviour
                             AddNPCColors(ID);
                             textToSend.Add("Hey there, " + playerName + "!! {p|0.25}I see you{nl|}figured out how to start a{nl|}multi-page conversation!");
                             portraitStateList.Add(1);
-                            textToSend.Add("The hope is this talk should go{nl|}100% smoothly. {0.125}What do you{nl|}think?");
+                            textToSend.Add("The hope is this talk should go{nl|}100% smoothly. {p|0.125}What do you{nl|}think?");
                             portraitStateList.Add(1);
-                            textToSend.Add("Impressive! {0.25}I do hope that\'s my{nl|}portrait showing right now, {0.125}if it{nl|}even is there.");
+                            textToSend.Add("Impressive! {p|0.25}I do hope that\'s my{nl|}portrait showing right now, {p|0.125}if it{nl|}even is there.");
                             portraitStateList.Add(0);
                             textToSend.Add("I\'m here to test multiple things,{nl|}it seems!");
                             portraitStateList.Add(1);

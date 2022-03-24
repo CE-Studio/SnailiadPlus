@@ -246,17 +246,12 @@ public class Player : MonoBehaviour
         
         if (time + 1 > nextLoopEvent)
         {
-            //for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
             for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicParent.GetChild(PlayState.currentArea).childCount; i += 2)
             {
-                //PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
-                //PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
-                //PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
                 AudioSource source = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i).GetComponent<AudioSource>();
                 source.time = PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
                 source.PlayScheduled(nextLoopEvent);
             }
-            //nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
             nextLoopEvent += PlayState.musicLibrary.library[PlayState.currentArea + 1][0].length - PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
             PlayState.musFlag = !PlayState.musFlag;
         }

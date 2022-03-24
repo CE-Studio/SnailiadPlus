@@ -178,6 +178,7 @@ public class DialogueBox : MonoBehaviour
                                     portraitParts[i].flipX = false;
                             }
                             portraitParts[5].enabled = false;
+                            currentSound = 0;
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
@@ -189,6 +190,23 @@ public class DialogueBox : MonoBehaviour
                                 portraitParts[5].flipX = false;
                             else
                                 portraitParts[5].flipX = true;
+                            switch (PlayState.currentCharacter)
+                            {
+                                case "Snaily":
+                                case "Leggy":
+                                    currentSound = 1;
+                                    break;
+                                case "Upside":
+                                case "Blobby":
+                                    currentSound = 2;
+                                    break;
+                                case "Leechy":
+                                    currentSound = 3;
+                                    break;
+                                case "Sluggy":
+                                    currentSound = 4;
+                                    break;
+                            }
                         }
                     }
 
@@ -342,6 +360,12 @@ public class DialogueBox : MonoBehaviour
                             {
                                 dialogueText.text = "";
                                 dialogueShadow.text = "";
+                                for (int i = transform.childCount - 1; i >= 0; i--)
+                                {
+                                    if (transform.GetChild(i).name.Contains("Font Object"))
+                                        Destroy(transform.GetChild(i).gameObject);
+                                }
+                                posPointer = posPointerOrigin;
                             }
                             boxState = 1;
                         }

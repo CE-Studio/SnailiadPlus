@@ -31,7 +31,7 @@ public class TurtleNPC : NPC
             if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 3 && !chatting)
             {
                 List<string> textToSend = new List<string>();
-                textToSend.Add("After this game is over, I\'m\ngoing to get some pizza!!\n");
+                textToSend.Add("After this game is over, {p|0.125}I\'m{nl|}going to get some pizza!!");
                 chatting = true;
                 PlayState.OpenDialogue(2, 52, textToSend);
             }
