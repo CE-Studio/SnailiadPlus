@@ -27,18 +27,18 @@ public class Player : MonoBehaviour
     public AudioClip die;
     public GameObject bulletPool;
     public Sprite blank;
-    public Sprite iconPeaDeselected;
-    public Sprite iconPeaSelected;
-    public Sprite iconBoomDeselected;
-    public Sprite iconBoomSelected;
-    public Sprite iconWaveDeselected;
-    public Sprite iconWaveSelected;
+    //public Sprite iconPeaDeselected;
+    //public Sprite iconPeaSelected;
+    //public Sprite iconBoomDeselected;
+    //public Sprite iconBoomSelected;
+    //public Sprite iconWaveDeselected;
+    //public Sprite iconWaveSelected;
     public GameObject hearts;
-    public Sprite heart0;
-    public Sprite heart1;
-    public Sprite heart2;
-    public Sprite heart3;
-    public Sprite heart4;
+    //public Sprite heart0;
+    //public Sprite heart1;
+    //public Sprite heart2;
+    //public Sprite heart3;
+    //public Sprite heart4;
     public GameObject itemTextGroup;
     public GameObject itemPercentageGroup;
     public GameObject gameSaveGroup;
@@ -52,9 +52,9 @@ public class Player : MonoBehaviour
     public GameObject debugJump;
     public GameObject debugShoot;
     public GameObject debugStrafe;
-    public Sprite keyIdle;
-    public Sprite keyPressed;
-    public Sprite keyHeld;
+    //public Sprite keyIdle;
+    //public Sprite keyPressed;
+    //public Sprite keyHeld;
     public List<SpriteRenderer> keySprites = new List<SpriteRenderer>();
 
     public GameObject weaponIcon1;
@@ -99,9 +99,9 @@ public class Player : MonoBehaviour
         };
         foreach (SpriteRenderer sprite in weaponIcons)
             sprite.enabled = false;
-        weaponIcons[0].sprite = iconPeaDeselected;
-        weaponIcons[1].sprite = iconBoomDeselected;
-        weaponIcons[2].sprite = iconWaveDeselected;
+        weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
+        weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
+        weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
 
         RenderNewHearts();
         UpdateHearts();
@@ -122,6 +122,8 @@ public class Player : MonoBehaviour
             GameObject.Find("View/Area Name Text/Text").GetComponent<TextMesh>(),
             GameObject.Find("View/Area Name Text/Shadow").GetComponent<TextMesh>()
         };
+
+        UpdateMusic(-1, -1, 3);
     }
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
@@ -244,11 +246,15 @@ public class Player : MonoBehaviour
 
         if (time + 1 > nextLoopEvent)
         {
-            for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
+            //for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicSourceArray.Count; i += 2)
+            for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicParent.GetChild(PlayState.currentArea).childCount; i += 2)
             {
-                PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
-                PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
-                PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
+                //PlayState.musicSourceArray[i].clip = PlayState.areaMusic[PlayState.currentArea][(int)Mathf.Floor(i * 0.5f)];
+                //PlayState.musicSourceArray[i].time = PlayState.musicLoopOffsets[PlayState.currentArea][0];
+                //PlayState.musicSourceArray[i].PlayScheduled(nextLoopEvent);
+                AudioSource source = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i).GetComponent<AudioSource>();
+                source.time = PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
+                source.PlayScheduled(nextLoopEvent);
             }
             nextLoopEvent += PlayState.musicLoopOffsets[PlayState.currentArea][1];
             PlayState.musFlag = !PlayState.musFlag;
@@ -337,47 +343,112 @@ public class Player : MonoBehaviour
         PlayState.timeShadow.text = hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
     }
 
-    public void UpdateMusic(int area, int subzone, bool resetAudioSources = false)
+    public void UpdateMusic(int area, int subzone, int resetFlag = 0)
     {
-        if (resetAudioSources)
+        //if (resetAudioSources)
+        //{
+        //    PlayState.musicSourceArray.Clear();
+        //    foreach (Transform obj in PlayState.musicParent.transform)
+        //        Destroy(obj.gameObject);
+        //
+        //    for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
+        //    {
+        //        for (int j = 0; j < 2; j++)
+        //        {
+        //            GameObject newSource = new GameObject();
+        //            newSource.transform.parent = PlayState.musicParent;
+        //            newSource.name = "Music Source " + (j + 1) + " (Subzone " + i + ")";
+        //            newSource.AddComponent<AudioSource>();
+        //            PlayState.musicSourceArray.Add(newSource.GetComponent<AudioSource>());
+        //            if (j == 0)
+        //            {
+        //                //newSource.GetComponent<AudioSource>().clip = PlayState.areaMusic[area][i];
+        //                newSource.GetComponent<AudioSource>().clip = PlayState.musicLibrary.library[area + 1][i];
+        //                newSource.GetComponent<AudioSource>().Play();
+        //            }
+        //        }
+        //    }
+        //
+        //    //nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
+        //    nextLoopEvent = AudioSettings.dspTime + PlayState.musicSourceArray[0].clip.length;
+        //}
+        //for (int i = 0; i * 2 < PlayState.musicSourceArray.Count; i++)
+        //{
+        //    if (i == subzone)
+        //    {
+        //        PlayState.musicSourceArray[i * 2].mute = false;
+        //        PlayState.musicSourceArray[i * 2 + 1].mute = false;
+        //    }
+        //    else
+        //    {
+        //        PlayState.musicSourceArray[i * 2].mute = true;
+        //        PlayState.musicSourceArray[i * 2 + 1].mute = true;
+        //    }
+        //}
+        //PlayState.playingMusic = true;
+        if (resetFlag >= 2) // Hard reset array and play
         {
             PlayState.musicSourceArray.Clear();
             foreach (Transform obj in PlayState.musicParent.transform)
                 Destroy(obj.gameObject);
 
-            for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
+            for (int i = 0; i < PlayState.musicLibrary.library.Length - 1; i++)
             {
-                for (int j = 0; j < 2; j++)
+                GameObject newSourceParent = new GameObject();
+                newSourceParent.transform.parent = PlayState.musicParent;
+                newSourceParent.name = "Area " + i + " music group";
+                for (int j = 0; j < PlayState.musicLibrary.library[i + 1].Length; j++)
                 {
-                    GameObject newSource = new GameObject();
-                    newSource.transform.parent = PlayState.musicParent;
-                    newSource.name = "Music Source " + (j + 1) + " (Subzone " + i + ")";
-                    newSource.AddComponent<AudioSource>();
-                    PlayState.musicSourceArray.Add(newSource.GetComponent<AudioSource>());
-                    if (j == 0)
+                    for (int k = 0; k < 2; k++)
                     {
-                        newSource.GetComponent<AudioSource>().clip = PlayState.areaMusic[area][i];
-                        newSource.GetComponent<AudioSource>().Play();
+                        GameObject newSource = new GameObject();
+                        newSource.transform.parent = newSourceParent.transform;
+                        newSource.name = "Subzone " + j + " source " + (k + 1);
+                        newSource.AddComponent<AudioSource>();
+                        AudioSource newSourceComponent = newSource.GetComponent<AudioSource>();
+                        newSourceComponent.clip = PlayState.musicLibrary.library[i + 1][j];
+                        PlayState.musicSourceArray.Add(newSourceComponent);
                     }
                 }
             }
-
-            nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
         }
-        for (int i = 0; i * 2 < PlayState.musicSourceArray.Count; i++)
+        if (resetFlag != 3) // Hard reset array only
         {
-            if (i == subzone)
+            if (resetFlag >= 1) // Change song
             {
-                PlayState.musicSourceArray[i * 2].mute = false;
-                PlayState.musicSourceArray[i * 2 + 1].mute = false;
+                for (int i = 0; i < PlayState.musicParent.childCount; i++)
+                {
+                    foreach (Transform source in PlayState.musicParent.GetChild(i))
+                    {
+                        AudioSource sourceComponent = source.GetComponent<AudioSource>();
+                        sourceComponent.time = 0;
+                        sourceComponent.mute = true;
+                        string[] sourceName = source.name.Split(' ');
+                        if (i == area)
+                        {
+                            if (int.Parse(sourceName[1]) == subzone)
+                                sourceComponent.mute = false;
+                            if (int.Parse(sourceName[3]) == 1)
+                                sourceComponent.Play();
+                        }
+                    }
+                }
             }
-            else
+            for (int i = 0; i * 2 < PlayState.musicParent.GetChild(area).childCount; i++)
             {
-                PlayState.musicSourceArray[i * 2].mute = true;
-                PlayState.musicSourceArray[i * 2 + 1].mute = true;
+                if (i == subzone)
+                {
+                    PlayState.musicParent.GetChild(area).GetChild(i * 2).GetComponent<AudioSource>().mute = false;
+                    PlayState.musicParent.GetChild(area).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = false;
+                }
+                else
+                {
+                    PlayState.musicParent.GetChild(area).GetChild(i * 2).GetComponent<AudioSource>().mute = true;
+                    PlayState.musicParent.GetChild(area).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = true;
+                }
             }
+            PlayState.playingMusic = true;
         }
-        PlayState.playingMusic = true;
     }
 
     public void StopMusic()
@@ -390,18 +461,18 @@ public class Player : MonoBehaviour
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
     {
-        weaponIcons[0].sprite = iconPeaDeselected;
-        weaponIcons[1].sprite = iconBoomDeselected;
-        weaponIcons[2].sprite = iconWaveDeselected;
+        weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
+        weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
+        weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
         selectedWeapon = weaponID + 1;
         if (activateThisWeapon)
             weaponIcons[weaponID].enabled = true;
         if (weaponID == 2)
-            weaponIcons[2].sprite = iconWaveSelected;
+            weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 5);
         else if (weaponID == 1)
-            weaponIcons[1].sprite = iconBoomSelected;
+            weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 4);
         else
-            weaponIcons[0].sprite = iconPeaSelected;
+            weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 3);
     }
 
     public void ChangeWeaponIconSprite(int weaponID, int state)
@@ -409,11 +480,11 @@ public class Player : MonoBehaviour
         weaponIcons[weaponID].enabled = state != 0;
         Sprite icon = null;
         if (weaponID == 0)
-            icon = state == 2 ? iconPeaSelected : iconPeaDeselected;
+            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 3) : PlayState.GetSprite("UI/WeaponIcons", 0);
         else if (weaponID == 1)
-            icon = state == 2 ? iconBoomSelected : iconBoomDeselected;
+            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 4) : PlayState.GetSprite("UI/WeaponIcons", 1);
         else if (weaponID == 2)
-            icon = state == 2 ? iconWaveSelected : iconWaveDeselected;
+            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 5) : PlayState.GetSprite("UI/WeaponIcons", 2);
         weaponIcons[weaponID].sprite = icon;
     }
 
@@ -425,13 +496,13 @@ public class Player : MonoBehaviour
             foreach (SpriteRenderer key in keySprites)
                 key.gameObject.SetActive(PlayState.gameOptions[5] == 1);
 
-            keySprites[0].sprite = Control.UpHold() ? keyHeld : keyIdle;
-            keySprites[1].sprite = Control.DownHold() ? keyHeld : keyIdle;
-            keySprites[2].sprite = Control.LeftHold() ? keyHeld : keyIdle;
-            keySprites[3].sprite = Control.RightHold() ? keyHeld : keyIdle;
-            keySprites[4].sprite = Control.JumpHold() ? keyHeld : keyIdle;
-            keySprites[5].sprite = Control.ShootHold() ? keyHeld : keyIdle;
-            keySprites[6].sprite = Control.StrafeHold() ? keyHeld : keyIdle;
+            keySprites[0].sprite = Control.UpHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[1].sprite = Control.DownHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[2].sprite = Control.LeftHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[3].sprite = Control.RightHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[4].sprite = Control.JumpHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[5].sprite = Control.ShootHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            keySprites[6].sprite = Control.StrafeHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
 
             yield return new WaitForEndOfFrame();
         }
@@ -506,7 +577,7 @@ public class Player : MonoBehaviour
             NewHeart.transform.parent = hearts.transform;
             NewHeart.transform.localPosition = new Vector3(-12 + (0.5f * (i % 7)), 7 - (0.5f * ((i / 7) % 7)), 0);
             NewHeart.AddComponent<SpriteRenderer>();
-            NewHeart.GetComponent<SpriteRenderer>().sprite = heart4;
+            NewHeart.GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 4);
             NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
@@ -522,22 +593,22 @@ public class Player : MonoBehaviour
                 switch (health - totalOfPreviousHearts)
                 {
                     case 1:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = heart1;
+                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 1);
                         break;
                     case 2:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = heart2;
+                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 2);
                         break;
                     case 3:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = heart3;
+                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 3);
                         break;
                     default:
                         if (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0)
                         {
-                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = heart4;
+                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 4);
                         }
                         else
                         {
-                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = heart0;
+                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 0);
                         }
                         break;
                 }

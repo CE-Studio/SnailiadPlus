@@ -93,6 +93,8 @@ public class MainMenu : MonoBehaviour
         PlayState.textureLibrary.BuildDefaultLibrary();
         PlayState.textureLibrary.BuildDefaultAnimLibrary();
         PlayState.soundLibrary.BuildDefaultLibrary();
+        PlayState.musicLibrary.BuildDefaultLibrary();
+        PlayState.musicLibrary.BuildDefaultOffsetLibrary();
 
         PlayState.LoadOptions();
         PlayState.LoadControls();

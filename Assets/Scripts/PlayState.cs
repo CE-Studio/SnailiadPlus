@@ -30,10 +30,19 @@ public class PlayState
         public int height;
     }
 
+    [Serializable]
+    public struct MusicLoopOffset
+    {
+        public string name;
+        public float offset;
+    }
+
     public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
     public static AnimationData[] animationLibrary;
     public static SpriteFrameSize[] spriteSizeLibrary;
     public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
+    public static MusicLibrary musicLibrary = GameObject.Find("View").GetComponent<LibraryManager>().musicLibrary;
+    public static MusicLoopOffset[] musicLoopOffsetLibrary;
 
     public static int[] charWidths;
 
@@ -243,7 +252,8 @@ public class PlayState
         0, // 19 - Counter-Snail
         0, // 20 - Birds in the Maze Room
         0, // 21 - Where are we, Snaily?
-        0  // 22 - Omega Snail
+        0, // 22 - Omega Snail
+        0  // 23 - How did you get up here?
     };
 
     public static float[][] savedTimes = new float[][]
@@ -408,7 +418,7 @@ public class PlayState
         }
         else if (area != currentArea)
         {
-            playerScript.UpdateMusic(area, subzone, true);
+            playerScript.UpdateMusic(area, subzone, 1);
         }
         currentArea = area;
         currentSubzone = subzone;
@@ -1052,5 +1062,15 @@ public class PlayState
     {
         SpriteSizeLibrary newLibrary = JsonUtility.FromJson<SpriteSizeLibrary>(File.ReadAllText(path));
         spriteSizeLibrary = newLibrary.sizeArray;
+    }
+
+    public struct MusicOffsetLibrary
+    {
+        public MusicLoopOffset[] offsetArray;
+    }
+    public static void LoadNewMusicOffsetLibrary(string path)
+    {
+        MusicOffsetLibrary newLibrary = JsonUtility.FromJson<MusicOffsetLibrary>(File.ReadAllText(path));
+        musicLoopOffsetLibrary = newLibrary.offsetArray;
     }
 }

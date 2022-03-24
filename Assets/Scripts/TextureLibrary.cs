@@ -57,16 +57,16 @@ public class TextureLibrary : ScriptableObject
         "UI/WeaponIcons"
     };
 
-    public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight)//, string spriteName)
+    public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight)
     {
         Texture2D newTexture = new Texture2D((int)texture.rect.width, (int)texture.rect.height);
         newTexture.SetPixels(texture.texture.GetPixels((int)texture.textureRect.x, (int)texture.textureRect.y,
             (int)texture.textureRect.width, (int)texture.textureRect.height));
         newTexture.Apply();
-        return Unpack(newTexture, sliceWidth, sliceHeight);//, spriteName);
+        return Unpack(newTexture, sliceWidth, sliceHeight);
     }
 
-    public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight)//, string spriteName)
+    public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight)
     {
         //Debug.Log(texture);
         List<Sprite> unpackedArray = new List<Sprite>();
@@ -76,7 +76,6 @@ public class TextureLibrary : ScriptableObject
             for (int j = 0; j < texture.width; j += sliceWidth)
             {
                 Sprite newSprite = Sprite.Create(texture, new Rect(j, i, sliceWidth, sliceHeight), new Vector2(0.5f, 0.5f), 16);
-                //newSprite.name = spriteName + (spriteName[spriteName.Length - 1] == '_' ? "" : "_") + counter;
                 unpackedArray.Add(newSprite);
                 counter++;
             }
@@ -100,53 +99,6 @@ public class TextureLibrary : ScriptableObject
 
     public void BuildDefaultLibrary()
     {
-        //library = new Sprite[][]
-        //{
-        //    Unpack((Texture2D)Resources.Load("Images/AchievementIcons"), 50, 50, "General_AchievementIcons_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Door"), 48, 48, "General_Door_"),
-        //    Unpack((Texture2D)Resources.Load("Images/MapTiles"), 8, 8, "General_MapTiles_"),
-        //    Unpack((Texture2D)Resources.Load("Images/MenuPlus"), 32, 32, "General_MenuPlus_"),
-        //    Unpack((Texture2D)Resources.Load("Images/SavePoint"), 32, 48, "General_SavePoint_"),
-        //    //Unpack((Texture2D)Resources.Load("Images/CEStudioLogo2022"), 594, 1188, "General_StudioLogo_"),
-        //    //Unpack((Texture2D)Resources.Load("Images/Tilesheet"), 16, 16, "General_Tileset_"),
-        //    Unpack((Texture2D)Resources.Load("Images/TitleFont"), 32, 56, "General_TitleFont_"),
-        //
-        //    Unpack((Texture2D)Resources.Load("Images/Bullets/Boomerang"), 16, 16, "Bullet_Boomerang_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Bullets/RainbowWave"), 32, 32, "Bullet_RainbowWave_"),
-        //
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/BreakableIcons"), 16, 16, "Entity_BreakableIcons_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/Floatspike1"), 16, 16, "Entity_Floatspike1_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/Grass"), 16, 16, "Entity_Grass_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/PixelPeople"), 18, 32, "Entity_PixelPeople_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/PowerGrass"), 16, 16, "Entity_PowerGrass_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/PowerNom"), 16, 4, "Entity_PowerNom_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/SnailNpc"), 32, 18, "Entity_SnailNpc_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/SnailNpcColor"), 7, 52, "Entity_SnailNpcColor_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/Spikey1"), 16, 16, "Entity_Spikey1_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Entities/TurtleNpc"), 32, 16, "Entity_TurtleNpc_"),
-        //    
-        //    Unpack((Texture2D)Resources.Load("Images/Items/Boomerang"), 32, 32, "Item_Boomerang_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Items/HeartContainer"), 32, 32, "Item_RainbowWave_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Items/HelixFragment"), 16, 16, "Item_HelixFragment_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Items/RainbowWave"), 32, 32, "Item_RainbowWave_"),
-        //    
-        //    Unpack((Texture2D)Resources.Load("Images/Particles/Bubble"), 8, 8, "Particle_Bubble_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Particles/Explosion"), 64, 64, "Particle_Explosion_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Particles/Splash"), 16, 16, "Particle_Splash_"),
-        //    Unpack((Texture2D)Resources.Load("Images/Particles/Star"), 16, 16, "Particle_Star_"),
-        //    
-        //    Unpack((Texture2D)Resources.Load("Images/UI/AchievementPanel"), 128, 64, "UI_AchievementPanel_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/DebugKey"), 8, 8, "UI_DebugKeys_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/DialogueBox"), 368, 64, "UI_DialogueBox_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/DialogueIcon2"), 16, 8, "UI_DialogueIcon_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/DialoguePortrait"), 32, 32, "UI_DialoguePortraits_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/Heart"), 8, 8, "UI_Heart_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/Minimap"), 208, 176, "UI_Minimap_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/MinimapIcons"), 8, 8, "UI_MinimapIcons_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/MinimapMask"), 400, 240, "UI_MinimapMask_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/MinimapPanel"), 56, 40, "UI_MinimapPanel_"),
-        //    Unpack((Texture2D)Resources.Load("Images/UI/WeaponIcons"), 8, 8, "UI_WeaponIcons_")
-        //};
         List<Sprite[]> newLibrary = new List<Sprite[]>();
         for (int i = 0; i < referenceList.Length; i++)
         {

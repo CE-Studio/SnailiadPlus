@@ -40,6 +40,7 @@ public class AchievementPanel : MonoBehaviour
     // 21 - maze  (Birds in the Maze Room)
     // 22 - where (Where are we, Snaily?)
     // 23 - omega (Omega Snail)
+    // 24 - rando (How did you get up here?)
     public bool runningPopup = false;
     
     public void Start()
@@ -76,142 +77,148 @@ public class AchievementPanel : MonoBehaviour
         switch (currentAchievement)
         {
             case "fo4":
-                sprite.sprite = achIconArray[0];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 0);
                 text.text = "First of\nFour";
                 shadow.text = "First of\nFour";
                 PlayState.achievementStates[0] = 1;
                 break;
             case "stink":
-                sprite.sprite = achIconArray[1];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 1);
                 text.text = "Stinky Toe";
                 shadow.text = "Stinky Toe";
                 PlayState.achievementStates[1] = 1;
                 break;
             case "grav":
-                sprite.sprite = achIconArray[2];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 2);
                 text.text = "Gravity\nBattle";
                 shadow.text = "Gravity\nBattle";
                 PlayState.achievementStates[2] = 1;
                 break;
             case "vict":
-                sprite.sprite = achIconArray[3];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 3);
                 text.text = "Victory";
                 shadow.text = "Victory";
                 PlayState.achievementStates[3] = 1;
                 break;
             case "scout":
-                sprite.sprite = achIconArray[4];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 4);
                 text.text = "Scout";
                 shadow.text = "Scout";
                 PlayState.achievementStates[4] = 1;
                 break;
             case "expl":
-                sprite.sprite = achIconArray[5];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 5);
                 text.text = "Explorer";
                 shadow.text = "Explorer";
                 PlayState.achievementStates[5] = 1;
                 break;
             case "happy":
-                sprite.sprite = achIconArray[6];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 6);
                 text.text = "Happy\nEnding";
                 shadow.text = "Happy\nEnding";
                 PlayState.achievementStates[6] = 1;
                 break;
             case "hunt":
-                sprite.sprite = achIconArray[7];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 7);
                 text.text = "Treasure\nHunter";
                 shadow.text = "Treasure\nHunter";
                 PlayState.achievementStates[7] = 1;
                 break;
             case "hless":
-                sprite.sprite = achIconArray[8];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 8);
                 text.text = "Homeless";
                 shadow.text = "Homeless";
                 PlayState.achievementStates[8] = 1;
                 break;
             case "topfl":
-                sprite.sprite = achIconArray[9];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 9);
                 text.text = "Top Floor";
                 shadow.text = "Top Floor";
                 PlayState.achievementStates[9] = 1;
                 break;
             case "mnsn":
-                sprite.sprite = achIconArray[10];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 10);
                 text.text = "Mansion";
                 shadow.text = "Mansion";
                 PlayState.achievementStates[10] = 1;
                 break;
             case "rent":
-                sprite.sprite = achIconArray[11];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 11);
                 text.text = "Just\nRenting";
                 shadow.text = "Just\nRenting";
                 PlayState.achievementStates[11] = 1;
                 break;
             case "attic":
-                sprite.sprite = achIconArray[12];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 12);
                 text.text = "Attic\nDweller";
                 shadow.text = "Attic\nDweller";
                 PlayState.achievementStates[12] = 1;
                 break;
             case "speed":
-                sprite.sprite = achIconArray[13];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 13);
                 text.text = "Speedrunner";
                 shadow.text = "Speedrunner";
                 PlayState.achievementStates[13] = 1;
                 break;
             case "gaunt":
-                sprite.sprite = achIconArray[14];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 14);
                 text.text = "The\nGauntlet";
                 shadow.text = "The\nGauntlet";
                 PlayState.achievementStates[14] = 1;
                 break;
             case "plgrm":
-                sprite.sprite = achIconArray[15];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 15);
                 text.text = "Pilgrim";
                 shadow.text = "Pilgrim";
                 PlayState.achievementStates[15] = 1;
                 break;
             case "snlka":
-                sprite.sprite = achIconArray[16];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 16);
                 text.text = "Snelk\nHunter A";
                 shadow.text = "Snelk\nHunter A";
                 PlayState.achievementStates[16] = 1;
                 break;
             case "snlkb":
-                sprite.sprite = achIconArray[17];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 17);
                 text.text = "Snelk\nHunter B";
                 shadow.text = "Snelk\nHunter B";
                 PlayState.achievementStates[17] = 1;
                 break;
             case "secrt":
-                sprite.sprite = achIconArray[18];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 18);
                 text.text = "Super\nSecret";
                 shadow.text = "Super\nSecret";
                 PlayState.achievementStates[18] = 1;
                 break;
             case "count":
-                sprite.sprite = achIconArray[19];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 19);
                 text.text = "Counter-\nSnail";
                 shadow.text = "Counter-\nSnail";
                 PlayState.achievementStates[19] = 1;
                 break;
             case "maze":
-                sprite.sprite = achIconArray[20];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 20);
                 text.text = "Birds in the\nMaze Room";
                 shadow.text = "Birds in the\nMaze Room";
                 PlayState.achievementStates[20] = 1;
                 break;
             case "where":
-                sprite.sprite = achIconArray[21];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 21);
                 text.text = "Where are\nwe, Snaily?";
                 shadow.text = "Where are\nwe, Snaily?";
                 PlayState.achievementStates[21] = 1;
                 break;
             case "omega":
-                sprite.sprite = achIconArray[22];
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 22);
                 text.text = "Omega Snail";
                 shadow.text = "Omega Snail";
                 PlayState.achievementStates[22] = 1;
+                break;
+            case "rando":
+                sprite.sprite = PlayState.GetSprite("AchievementIcons", 23);
+                text.text = "How did you get up here?";
+                shadow.text = "How did you get up here?";
+                PlayState.achievementStates[23] = 1;
                 break;
             default:
                 popupQueue.RemoveAt(0);
