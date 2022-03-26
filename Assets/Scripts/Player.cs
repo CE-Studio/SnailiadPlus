@@ -425,8 +425,12 @@ public class Player : MonoBehaviour
                         {
                             if (int.Parse(sourceName[1]) == subzone)
                                 sourceComponent.mute = false;
+                            else
+                                sourceComponent.mute = true;
                             if (int.Parse(sourceName[3]) == 1)
                                 sourceComponent.Play();
+                            else
+                                sourceComponent.Stop();
                         }
                     }
                 }

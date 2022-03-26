@@ -57,16 +57,16 @@ public class TextureLibrary : ScriptableObject
         "UI/WeaponIcons"
     };
 
-    public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight)
+    public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight, string name)
     {
         Texture2D newTexture = new Texture2D((int)texture.rect.width, (int)texture.rect.height);
         newTexture.SetPixels(texture.texture.GetPixels((int)texture.textureRect.x, (int)texture.textureRect.y,
             (int)texture.textureRect.width, (int)texture.textureRect.height));
         newTexture.Apply();
-        return Unpack(newTexture, sliceWidth, sliceHeight);
+        return Unpack(newTexture, sliceWidth, sliceHeight, name);
     }
 
-    public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight)
+    public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight, string name)
     {
         //Debug.Log(texture);
         List<Sprite> unpackedArray = new List<Sprite>();
@@ -76,6 +76,7 @@ public class TextureLibrary : ScriptableObject
             for (int j = 0; j < texture.width; j += sliceWidth)
             {
                 Sprite newSprite = Sprite.Create(texture, new Rect(j, i, sliceWidth, sliceHeight), new Vector2(0.5f, 0.5f), 16);
+                newSprite.name = name + " " + counter;
                 unpackedArray.Add(newSprite);
                 counter++;
             }
@@ -105,7 +106,7 @@ public class TextureLibrary : ScriptableObject
             Vector2 thisSize = GetSpriteSize(referenceList[i]);
             if (thisSize == Vector2.zero)
                 thisSize = new Vector2(16, 16);
-            newLibrary.Add(Unpack((Texture2D)Resources.Load("Images/" + referenceList[i]), (int)thisSize.x, (int)thisSize.y));
+            newLibrary.Add(Unpack((Texture2D)Resources.Load("Images/" + referenceList[i]), (int)thisSize.x, (int)thisSize.y, referenceList[i]));
         }
         library = newLibrary.ToArray();
         GetNewTextWidths();

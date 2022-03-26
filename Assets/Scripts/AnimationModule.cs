@@ -37,7 +37,8 @@ public class AnimationModule : MonoBehaviour
                         currentFrame++;
                         if (currentFrame != currentAnim.frames.Length - 1)
                         {
-                            sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() : PlayState.GetSprite(currentAnim.spriteName, currentFrame);
+                            sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() :
+                                PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                             animTimer += timerMax;
                         }
                         else
@@ -45,7 +46,8 @@ public class AnimationModule : MonoBehaviour
                             if (currentAnim.loop)
                             {
                                 currentFrame = currentAnim.loopStartFrame;
-                                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() : PlayState.GetSprite(currentAnim.spriteName, currentFrame);
+                                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() :
+                                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                                 animTimer += timerMax;
                             }
                         }
@@ -77,7 +79,7 @@ public class AnimationModule : MonoBehaviour
 
             timerMax = 1 / currentAnim.framerate;
             animTimer = timerMax;
-            sprite.sprite = PlayState.GetSprite(currentAnim.spriteName, 0);
+            sprite.sprite = PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[0]);
             currentFrame = 0;
             speed = newSpeed;
             isPlaying = true;

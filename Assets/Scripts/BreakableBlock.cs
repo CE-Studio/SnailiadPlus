@@ -98,7 +98,7 @@ public class BreakableBlock : MonoBehaviour
                     PlayState.PlaySound("Explode" + Random.Range(1, 5));
                     PlayState.explodePlayedThisFrame = true;
                 }
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 2; i++)
                     PlayState.RequestParticle(new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f)), "explosion", new float[] { 2 });
             }
             else

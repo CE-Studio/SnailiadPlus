@@ -25,14 +25,14 @@ public class Particle : MonoBehaviour
         gameObject.SetActive(false);
 
         anim.Add("Bubble");
-        anim.Add("Explosion_1");
-        anim.Add("Explosion_2");
-        anim.Add("Explosion_3");
-        anim.Add("Explosion_4");
-        anim.Add("Explosion_5");
-        anim.Add("Explosion_6");
-        anim.Add("Explosion_7");
-        anim.Add("Explosion_8");
+        anim.Add("Explosion_tiny");
+        anim.Add("Explosion_small");
+        anim.Add("Explosion_big");
+        anim.Add("Explosion_huge");
+        anim.Add("Explosion_white_small");
+        anim.Add("Explosion_white_big");
+        anim.Add("Explosion_rainbow_small");
+        anim.Add("Explosion_rainbow_big");
         anim.Add("Nom");
         anim.Add("Splash");
     }
@@ -132,7 +132,20 @@ public class Particle : MonoBehaviour
             case "explosion":
                 //animCon.currentAnim = PlayState.GetAnim("Explosion_" + vars[0]);
                 //animCon.animSpriteName = "Particles/Explosion";
-                anim.Play("Explosion_" + vars[0].ToString());
+                var suffix = vars[0] switch
+                {
+                    1 => "tiny",
+                    2 => "small",
+                    3 => "big",
+                    4 => "huge",
+                    5 => "white_small",
+                    6 => "white_big",
+                    7 => "rainbow_small",
+                    8 => "rainbow_big",
+                    _ => "small"
+                };
+                anim.Play("Explosion_" + suffix);
+                Debug.Log("Explosion_" + suffix);
                 break;
             case "nom":
                 //animCon.currentAnim = PlayState.GetAnim("Nom");

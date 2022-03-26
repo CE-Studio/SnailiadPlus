@@ -445,7 +445,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_1",
+			"name": "Explosion_tiny",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -460,7 +460,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_2",
+			"name": "Explosion_small",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -475,7 +475,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_3",
+			"name": "Explosion_big",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -490,7 +490,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_4",
+			"name": "Explosion_huge",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -505,7 +505,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_5",
+			"name": "Explosion_white_small",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -520,7 +520,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_6",
+			"name": "Explosion_white_big",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -535,7 +535,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_7",
+			"name": "Explosion_rainbow_small",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
@@ -550,7 +550,7 @@
 			"loopStartFrame": 0
 		},
 		{
-			"name": "Explosion_8",
+			"name": "Explosion_rainbow_big",
 			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
