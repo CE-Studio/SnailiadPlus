@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 888462057991462520}
   - component: {fileID: 888462057991462521}
   - component: {fileID: 3235101564392001519}
+  - component: {fileID: 7586706451294441863}
   m_Layer: 0
   m_Name: Particle
   m_TagString: Untagged
@@ -93,7 +94,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888462057991462468}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3276ebb7495107e428048141b99b26d7, type: 2}
   m_CullingMode: 0
@@ -127,3 +128,27 @@ MonoBehaviour:
   - 0
   - 0
   sprites: {fileID: 11400000, guid: 4d7843af8ec0d8f46b38437ca601fbac, type: 2}
+--- !u!114 &7586706451294441863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888462057991462468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+  speed: 1
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0

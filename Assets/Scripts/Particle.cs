@@ -5,7 +5,8 @@ using UnityEngine;
 public class Particle : MonoBehaviour
 {
     public bool isActive = false;
-    public Animator anim;
+    //public Animator anim;
+    public AnimationModule anim;
     public SpriteRenderer sprite;
     public string type = "";
     public float[] vars = new float[] { 0, 0, 0, 0, 0 };
@@ -16,17 +17,33 @@ public class Particle : MonoBehaviour
 
     public void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
-        anim.enabled = false;
+        //anim.enabled = false;
+        anim.blankOnNonLoopEnd = true;
         gameObject.SetActive(false);
+
+        anim.Add("Bubble");
+        anim.Add("Explosion_1");
+        anim.Add("Explosion_2");
+        anim.Add("Explosion_3");
+        anim.Add("Explosion_4");
+        anim.Add("Explosion_5");
+        anim.Add("Explosion_6");
+        anim.Add("Explosion_7");
+        anim.Add("Explosion_8");
+        anim.Add("Nom");
+        anim.Add("Splash");
     }
 
     public void Update()
     {
         if (PlayState.gameState == "Game")
         {
-            anim.speed = 1;
+            //anim.speed = 1;
+            if (!anim.isPlaying)
+                anim.Resume();
             if (gameObject.activeSelf)
             {
                 switch (type)
@@ -53,41 +70,48 @@ public class Particle : MonoBehaviour
                         break;
                 }
 
-                if (animCon.currentAnim.framerate != 0)
-                {
-                    if (!(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
-                    {
-                        animCon.animTimer -= Time.deltaTime;
-                        while (animCon.animTimer <= 0 && !(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
-                        {
-                            animCon.currentFrame++;
-                            if (animCon.currentFrame != animCon.currentAnim.frames.Length - 1)
-                            {
-                                sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
-                                animCon.animTimer += animCon.timerResetVal;
-                            }
-                            else
-                            {
-                                if (animCon.currentAnim.loop)
-                                {
-                                    animCon.currentFrame = animCon.currentAnim.loopStartFrame;
-                                    sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
-                                    animCon.animTimer += animCon.timerResetVal;
-                                }
-                            }
-                        }
-                    }
-                    else
-                        ResetParticle();
-                }
+                //if (animCon.currentAnim.framerate != 0)
+                //{
+                //    if (!(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
+                //    {
+                //        animCon.animTimer -= Time.deltaTime;
+                //        while (animCon.animTimer <= 0 && !(animCon.currentFrame == animCon.currentAnim.frames.Length - 1 && !animCon.currentAnim.loop))
+                //        {
+                //            animCon.currentFrame++;
+                //            if (animCon.currentFrame != animCon.currentAnim.frames.Length - 1)
+                //            {
+                //                sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
+                //                animCon.animTimer += animCon.timerResetVal;
+                //            }
+                //            else
+                //            {
+                //                if (animCon.currentAnim.loop)
+                //                {
+                //                    animCon.currentFrame = animCon.currentAnim.loopStartFrame;
+                //                    sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, animCon.currentFrame);
+                //                    animCon.animTimer += animCon.timerResetVal;
+                //                }
+                //            }
+                //        }
+                //    }
+                //    else
+                //        ResetParticle();
+                //}
+                if (!anim.isPlaying && isActive && !(type == "bubble"))
+                    ResetParticle();
             }
         }
         else
-            anim.speed = 0;
+        {
+            if (anim.isPlaying)
+                anim.Pause();
+        }
+            //anim.speed = 0;
     }
 
     public void SetAnim(string animType)
     {
+        isActive = true;
         switch (animType)
         {
             default:
@@ -101,19 +125,23 @@ public class Particle : MonoBehaviour
                 animCon.currentAnim = nullAnim;
                 break;
             case "bubble":
-                animCon.currentAnim = PlayState.GetAnim("Bubble");
-                sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, animCon.currentAnim.frames.Length));
+                //animCon.currentAnim = PlayState.GetAnim("Bubble");
+                //sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, animCon.currentAnim.frames.Length));
+                sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, PlayState.GetAnim("Bubble").frames.Length));
                 break;
             case "explosion":
-                animCon.currentAnim = PlayState.GetAnim("Explosion_" + vars[0]);
-                animCon.animSpriteName = "Particles/Explosion";
+                //animCon.currentAnim = PlayState.GetAnim("Explosion_" + vars[0]);
+                //animCon.animSpriteName = "Particles/Explosion";
+                anim.Play("Explosion_" + vars[0].ToString());
                 break;
             case "nom":
-                animCon.currentAnim = PlayState.GetAnim("Nom");
+                //animCon.currentAnim = PlayState.GetAnim("Nom");
+                anim.Play("Nom");
                 break;
             case "splash":
-                animCon.currentAnim = PlayState.GetAnim("Splash");
-                animCon.animSpriteName = "Particles/Splash";
+                //animCon.currentAnim = PlayState.GetAnim("Splash");
+                //animCon.animSpriteName = "Particles/Splash";
+                anim.Play("Splash");
                 break;
         }
         if (animCon.currentAnim.framerate != 0)
@@ -146,8 +174,9 @@ public class Particle : MonoBehaviour
 
     public void ResetParticle()
     {
+        isActive = false;
         transform.position = Vector2.zero;
-        anim.enabled = false;
+        anim.Stop(true);
         sprite.sprite = sprites.blank;
         sprite.flipX = false;
         sprite.flipY = false;

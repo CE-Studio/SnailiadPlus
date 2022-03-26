@@ -2,6 +2,7 @@
     "animArray": [
         {
             "name": "Door_horiz_blue_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 13,
@@ -16,6 +17,7 @@
         },
         {
             "name": "Door_horiz_blue_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 7
@@ -25,6 +27,7 @@
         },
         {
             "name": "Door_horiz_blue_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 9,
@@ -39,6 +42,7 @@
         },
         {
             "name": "Door_horiz_green_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 55,
@@ -53,6 +57,7 @@
         },
         {
             "name": "Door_horiz_green_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 49
@@ -62,6 +67,7 @@
         },
         {
             "name": "Door_horiz_green_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 51,
@@ -76,6 +82,7 @@
         },
         {
             "name": "Door_horiz_locked_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 69,
@@ -90,6 +97,7 @@
         },
         {
             "name": "Door_horiz_locked_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 63
@@ -99,6 +107,7 @@
         },
         {
             "name": "Door_horiz_locked_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 65,
@@ -113,6 +122,7 @@
         },
         {
             "name": "Door_horiz_purple_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 20,
@@ -127,6 +137,7 @@
         },
         {
             "name": "Door_horiz_purple_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 14
@@ -136,6 +147,7 @@
         },
         {
             "name": "Door_horiz_purple_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 16,
@@ -150,6 +162,7 @@
         },
         {
             "name": "Door_horiz_red_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 41,
@@ -164,6 +177,7 @@
         },
         {
             "name": "Door_horiz_red_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 35
@@ -173,6 +187,7 @@
         },
         {
             "name": "Door_horiz_red_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 37,
@@ -187,6 +202,7 @@
         },
         {
             "name": "Door_vert_blue_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 83,
@@ -200,7 +216,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_blue_hold",
+            "name": "Door_vert_blue_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 77
@@ -209,7 +226,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_blue_open",
+            "name": "Door_vert_blue_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 79,
@@ -223,7 +241,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_green_close",
+            "name": "Door_vert_green_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 125,
@@ -237,7 +256,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_green_hold",
+            "name": "Door_vert_green_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 119
@@ -246,7 +266,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_green_open",
+            "name": "Door_vert_green_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 121,
@@ -260,7 +281,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_locked_close",
+            "name": "Door_vert_locked_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 139,
@@ -274,7 +296,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_locked_hold",
+            "name": "Door_vert_locked_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 133
@@ -283,7 +306,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_locked_open",
+            "name": "Door_vert_locked_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 135,
@@ -297,7 +321,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_purple_close",
+            "name": "Door_vert_purple_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 90,
@@ -311,7 +336,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_purple_hold",
+            "name": "Door_vert_purple_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 84
@@ -320,7 +346,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_purple_open",
+            "name": "Door_vert_purple_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 86,
@@ -334,7 +361,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_red_close",
+            "name": "Door_vert_red_close",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 111,
@@ -348,7 +376,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_red_hold",
+            "name": "Door_vert_red_hold",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 105
@@ -357,7 +386,8 @@
             "loopStartFrame": 0
         },
         {
-            "name": "Door_horiz_red_open",
+            "name": "Door_vert_red_open",
+			"spriteName": "Door",
             "framerate": 6.0,
             "frames": [
                 107,
@@ -372,6 +402,7 @@
         },
 		{
 			"name": "Save_active",
+			"spriteName": "SavePoint",
 			"framerate": 3,
 			"frames": [
 				4,
@@ -384,6 +415,7 @@
 		},
 		{
 			"name": "Save_inactive",
+			"spriteName": "SavePoint",
 			"framerate": 3,
 			"frames": [
 				0,
@@ -397,6 +429,7 @@
 		
 		{
 			"name": "Bubble",
+			"spriteName": "Particles/Bubble",
 			"framerate": 0.0,
 			"frames": [
 				0,
@@ -413,6 +446,7 @@
 		},
 		{
 			"name": "Explosion_1",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				0,
@@ -427,6 +461,7 @@
 		},
 		{
 			"name": "Explosion_2",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				5,
@@ -441,6 +476,7 @@
 		},
 		{
 			"name": "Explosion_3",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				10,
@@ -455,6 +491,7 @@
 		},
 		{
 			"name": "Explosion_4",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				15,
@@ -469,6 +506,7 @@
 		},
 		{
 			"name": "Explosion_5",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				20,
@@ -483,6 +521,7 @@
 		},
 		{
 			"name": "Explosion_6",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				25,
@@ -497,6 +536,7 @@
 		},
 		{
 			"name": "Explosion_7",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				30,
@@ -511,6 +551,7 @@
 		},
 		{
 			"name": "Explosion_8",
+			"spriteName": "Particles/Explosion",
 			"framerate": 16.0,
 			"frames": [
 				35,
@@ -525,6 +566,7 @@
 		},
 		{
 			"name": "Nom",
+			"spriteName": "Particles/Nom",
 			"framerate": 5.0,
 			"frames": [
 				0,
@@ -538,6 +580,7 @@
 		},
         {
             "name": "Splash",
+			"spriteName": "Particles/Splash",
             "framerate": 24.0,
             "frames": [
                 0,
@@ -557,6 +600,7 @@
 		
 		{
 			"name": "TextWidth",
+			"spriteName": "UI/FontSprites",
 			"framerate": 0.0,
 			"frames": [
 				1,

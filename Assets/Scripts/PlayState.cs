@@ -16,6 +16,7 @@ public class PlayState
     public struct AnimationData
     {
         public string name;
+        public string spriteName;
         public float framerate;
         public int[] frames;
         public bool loop;
