@@ -9,6 +9,7 @@ public class AnimationModule : MonoBehaviour
     public PlayState.AnimationData currentAnim;
     public float speed = 1;
     public Dictionary<string, PlayState.AnimationData> animList = new Dictionary<string, PlayState.AnimationData>();
+    public List<string> listKeys = new List<string>();
     public bool stopAtBlankFrame = false;
     public bool blankOnNonLoopEnd = false;
     
@@ -67,7 +68,10 @@ public class AnimationModule : MonoBehaviour
         if (newAnim.name == "NoAnim")
             Debug.Log("Animation \"" + animName + "\" does not exist! (Did you misspell it, or reference the wrong prefix?)");
         else
+        {
             animList.Add(newAnim.name, newAnim);
+            listKeys.Add(newAnim.name);
+        }
     }
 
     public void Play(string animName, float newSpeed = 1)
@@ -105,5 +109,29 @@ public class AnimationModule : MonoBehaviour
         currentAnimName = "";
         if (setBlank)
             sprite.sprite = PlayState.BlankTexture();
+    }
+
+    public void ResetToStart()
+    {
+        if (currentAnimName != "")
+        {
+            currentFrame = 0;
+            animTimer = timerMax;
+            sprite.sprite = PlayState.GetSprite(currentAnimName, currentAnim.frames[0]);
+        }
+    }
+
+    public void ReloadList()
+    {
+        Dictionary<string, PlayState.AnimationData> newDict = new Dictionary<string, PlayState.AnimationData>();
+        for (int i = 0; i < animList.Count; i++)
+        {
+            PlayState.AnimationData newAnim = PlayState.GetAnim(listKeys[i]);
+            if (newAnim.name != "NoAnim")
+                newDict.Add(listKeys[i], PlayState.GetAnim(listKeys[i]));
+            else
+                newDict.Add(listKeys[i], animList[listKeys[i]]);
+        }
+        animList = newDict;
     }
 }

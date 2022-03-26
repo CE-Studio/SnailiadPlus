@@ -47,7 +47,8 @@ public class Grass : MonoBehaviour
         {
             if (!sprite.enabled)
             {
-                sfx.PlayOneShot(regrow);
+                //sfx.PlayOneShot(regrow);
+                PlayState.PlaySound("GrassGrow");
                 sprite.enabled = true;
                 bitesRemaining = totalBites;
             }
@@ -82,7 +83,8 @@ public class Grass : MonoBehaviour
         {
             if (timer == 0)
             {
-                sfx.PlayOneShot(bite);
+                //sfx.PlayOneShot(bite);
+                PlayState.PlaySound("EatGrass");
                 bitesRemaining--;
                 if (bitesRemaining == 0)
                 {
