@@ -270,6 +270,9 @@ public class DialogueBox : MonoBehaviour
                                                     timer = float.Parse(args[1]);
                                                     advanceChar = false;
                                                     break;
+                                                default:
+                                                    Debug.LogWarning("Unknown command prefix \"" + args[0].ToLower() + "\".");
+                                                    break;
                                             }
                                             pointer.y += command.Length + 2;
                                             thisChar = textList[(int)pointer.x][(int)pointer.y];

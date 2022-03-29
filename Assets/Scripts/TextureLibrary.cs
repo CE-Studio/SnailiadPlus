@@ -27,7 +27,6 @@ public class TextureLibrary : ScriptableObject
         "Entities/Grass",
         "Entities/PixelPeople",
         "Entities/PowerGrass",
-        "Entities/PowerNom",
         "Entities/SnailNpc",
         "Entities/SnailNpcColor",
         "Entities/Spikey1",
@@ -40,6 +39,7 @@ public class TextureLibrary : ScriptableObject
 
         "Particles/Bubble",
         "Particles/Explosion",
+        "Particles/Nom",
         "Particles/Splash",
         "Particles/Star",
 

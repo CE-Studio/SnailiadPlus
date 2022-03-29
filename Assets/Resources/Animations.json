@@ -13,7 +13,8 @@
                 7
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_blue_hold",
@@ -23,7 +24,8 @@
                 7
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_blue_open",
@@ -38,7 +40,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_green_close",
@@ -53,7 +56,8 @@
                 49
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_green_hold",
@@ -63,7 +67,8 @@
                 49
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_green_open",
@@ -78,7 +83,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_locked_close",
@@ -93,7 +99,8 @@
                 63
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_locked_hold",
@@ -103,7 +110,8 @@
                 63
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_locked_open",
@@ -118,7 +126,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_purple_close",
@@ -133,7 +142,8 @@
                 14
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_purple_hold",
@@ -143,7 +153,8 @@
                 14
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_purple_open",
@@ -158,7 +169,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_red_close",
@@ -173,7 +185,8 @@
                 35
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_red_hold",
@@ -183,7 +196,8 @@
                 35
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_horiz_red_open",
@@ -198,7 +212,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_blue_close",
@@ -213,7 +228,8 @@
                 77
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_blue_hold",
@@ -223,7 +239,8 @@
                 77
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_blue_open",
@@ -238,7 +255,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_green_close",
@@ -253,7 +271,8 @@
                 119
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_green_hold",
@@ -263,7 +282,8 @@
                 119
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_green_open",
@@ -278,7 +298,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_locked_close",
@@ -293,7 +314,8 @@
                 133
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_locked_hold",
@@ -303,7 +325,8 @@
                 133
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_locked_open",
@@ -318,7 +341,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_purple_close",
@@ -333,7 +357,8 @@
                 84
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_purple_hold",
@@ -343,7 +368,8 @@
                 84
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_purple_open",
@@ -358,7 +384,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_red_close",
@@ -373,7 +400,8 @@
                 105
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_red_hold",
@@ -383,7 +411,8 @@
                 105
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
         {
             "name": "Door_vert_red_open",
@@ -398,12 +427,13 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
 		{
 			"name": "Save_active",
 			"spriteName": "SavePoint",
-			"framerate": 3,
+			"framerate": 3.0,
 			"frames": [
 				4,
 				5,
@@ -411,12 +441,13 @@
 				7
 			],
 			"loop": true,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Save_inactive",
 			"spriteName": "SavePoint",
-			"framerate": 3,
+			"framerate": 3.0,
 			"frames": [
 				0,
 				1,
@@ -424,7 +455,31 @@
 				3
 			],
 			"loop": true,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
+		{
+			"name": "Grass_idle",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Grass_eaten",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		
 		{
@@ -442,7 +497,8 @@
 				7
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Explosion_tiny",
@@ -457,7 +513,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_small",
@@ -472,7 +529,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_big",
@@ -487,7 +545,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_huge",
@@ -502,7 +561,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_white_small",
@@ -517,7 +577,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_white_big",
@@ -532,7 +593,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_rainbow_small",
@@ -547,7 +609,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_rainbow_big",
@@ -562,7 +625,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Nom",
@@ -576,7 +640,8 @@
 				-1
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
         {
             "name": "Splash",
@@ -595,7 +660,8 @@
                 -1
             ],
             "loop": false,
-            "loopStartFrame": 0
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
         },
 		
 		{
@@ -700,7 +766,8 @@
 				5
 			],
 			"loop": false,
-			"loopStartFrame": 0
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		}
     ]
 }

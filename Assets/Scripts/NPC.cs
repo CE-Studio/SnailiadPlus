@@ -380,9 +380,9 @@ public class NPC : MonoBehaviour
 
                         case 23:
                             if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
-                                textToSend.Add("{col|0204}Cave Snail {col|0312}scares me!{nl|}{p|0.25}I\'m staying over here!");
+                                textToSend.Add("{col|0200}Cave Snail {col|0312}scares me!{nl|}{p|0.25}I\'m staying over here!");
                             else if (PlayState.GetItemPercentage() < 60)
-                                textToSend.Add("Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl|}{col|0309}ESCAPE {col|0312}and load your game from{nl|}town!  {col|0.125}You won\'t lose any items!");
+                                textToSend.Add("Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl|}{col|0309}ESCAPE {col|0312}and load your game from{nl|}town!  {p|0.125}You won\'t lose any items!");
                             else
                                 textToSend.Add("Do you think {col|0204}Cave Snail{nl|}{col|0312}is single?");
                             break;

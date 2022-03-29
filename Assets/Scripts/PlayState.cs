@@ -21,6 +21,7 @@ public class PlayState
         public int[] frames;
         public bool loop;
         public int loopStartFrame;
+        public bool randomizeStartFrame;
     }
 
     [Serializable]
@@ -39,22 +40,13 @@ public class PlayState
     }
 
     public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
-    public static AnimationData[] animationLibrary;
-    public static SpriteFrameSize[] spriteSizeLibrary;
+    public static AnimationData[] animationLibrary = new AnimationData[0];
+    public static SpriteFrameSize[] spriteSizeLibrary = new SpriteFrameSize[0];
     public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
     public static MusicLibrary musicLibrary = GameObject.Find("View").GetComponent<LibraryManager>().musicLibrary;
-    public static MusicLoopOffset[] musicLoopOffsetLibrary;
+    public static MusicLoopOffset[] musicLoopOffsetLibrary = new MusicLoopOffset[0];
 
     public static int[] charWidths;
-
-    public struct AnimationController
-    {
-        public AnimationData currentAnim;
-        public string animSpriteName;
-        public int currentFrame;
-        public float animTimer;
-        public float timerResetVal;
-    }
 
     public static Transform musicParent = GameObject.Find("View/Music Parent").transform;
     public static List<AudioSource> musicSourceArray = new List<AudioSource>();
@@ -343,10 +335,17 @@ public class PlayState
         return playerScript.blank;
     }
 
+    public static Sprite MissingTexture()
+    {
+        return playerScript.missing;
+    }
+
     public static AnimationData GetAnim(string name)
     {
-        AnimationData foundData = new AnimationData();
-        foundData.name = "NoAnim";
+        AnimationData foundData = new AnimationData
+        {
+            name = "NoAnim"
+        };
         int i = 0;
         while (foundData.name == "NoAnim" && i < animationLibrary.Length)
         {
@@ -364,8 +363,10 @@ public class PlayState
 
     public static int GetAnimID(string name)
     {
-        AnimationData foundData = new AnimationData();
-        foundData.name = "NoAnim";
+        AnimationData foundData = new AnimationData
+        {
+            name = "NoAnim"
+        };
         int i = 0;
         while (foundData.name == "NoAnim" && i < animationLibrary.Length)
         {
@@ -379,7 +380,21 @@ public class PlayState
 
     public static Sprite GetSprite(string name, int ID)
     {
-        return textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
+        Sprite newSprite = MissingTexture();
+        int i = 0;
+        bool found = false;
+        while (i < textureLibrary.referenceList.Length && !found)
+        {
+            if (textureLibrary.referenceList[i] == name)
+                found = true;
+            i++;
+        }
+        if (found)
+        {
+            if (ID < textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)].Length)
+                newSprite = textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
+        }
+        return newSprite;
     }
 
     public static AudioClip GetSound(string name)
@@ -569,9 +584,8 @@ public class PlayState
             Transform particleObject = particlePool.transform.GetChild(thisParticleID);
             particleObject.gameObject.SetActive(true);
             Particle particleScript = particleObject.GetComponent<Particle>();
-            Animator particleAnim = particleObject.GetComponent<Animator>();
 
-            bool activateParticle = false;
+            bool activateParticle = true;
 
             switch (type.ToLower())
             {
@@ -601,7 +615,6 @@ public class PlayState
                         //        break;
                         //}
                         particleScript.vars[0] = values[0];
-                        particleScript.SetAnim("explosion");
                     }
                     break;
                 case "bubble":
@@ -612,7 +625,6 @@ public class PlayState
                     if (gameOptions[11] > 1)
                     {
                         activateParticle = true;
-                        particleScript.SetAnim("bubble");
                         particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
                         particleScript.vars[1] = position.x;                                      // Origin X
                         particleScript.vars[2] = values[0] - 0.25f;                               // Water level above the bubble's spawn
@@ -622,9 +634,16 @@ public class PlayState
                     break;
                 case "splash":
                     if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
+                        activateParticle = true;
+                    break;
+                case "nom":
+                    // Values:
+                    // 0 = Start Y
+
+                    if (gameOptions[11] > 1)
                     {
                         activateParticle = true;
-                        particleScript.SetAnim("splash");
+                        particleScript.vars[0] = position.y;
                     }
                     break;
             }
@@ -633,6 +652,7 @@ public class PlayState
             {
                 particleObject.position = position;
                 particleScript.type = type;
+                particleScript.SetAnim(type);
                 if (playSound)
                     particleScript.PlaySound();
                 thisParticleID++;

@@ -68,11 +68,6 @@
             "height": 16
         },
 		{
-            "name": "Entities/PowerNom",
-            "width": 16,
-            "height": 5
-        },
-		{
             "name": "Entities/SnailNpc",
             "width": 32,
             "height": 18
@@ -129,6 +124,11 @@
             "width": 64,
             "height": 64
         },
+		{
+			"name": "Particles/Nom",
+			"width": 16,
+			"height": 4
+		},
 		{
             "name": "Particles/Splash",
             "width": 16,

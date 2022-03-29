@@ -12,8 +12,6 @@ public class Particle : MonoBehaviour
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
-    private PlayState.AnimationController animCon;
-
     public void Start()
     {
         anim = GetComponent<AnimationModule>();
@@ -64,6 +62,10 @@ public class Particle : MonoBehaviour
                         if (transform.position.y > vars[2])
                             ResetParticle();
                         break;
+                    case "nom":
+                        internalVars[0] += Time.deltaTime;
+                        transform.position = new Vector2(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
+                        break;
                 }
 
                 if (!anim.isPlaying && isActive && !(type == "bubble"))
@@ -89,11 +91,9 @@ public class Particle : MonoBehaviour
                 nullAnim.frames = new int[] { -1 };
                 nullAnim.loop = false;
                 nullAnim.loopStartFrame = 0;
-
-                animCon.currentAnim = nullAnim;
                 break;
             case "bubble":
-                sprite.sprite = PlayState.GetSprite("Particles/Bubble", Random.Range(0, PlayState.GetAnim("Bubble").frames.Length));
+                anim.Play("Bubble");
                 break;
             case "explosion":
                 var suffix = vars[0] switch
@@ -116,17 +116,6 @@ public class Particle : MonoBehaviour
             case "splash":
                 anim.Play("Splash");
                 break;
-        }
-        if (animCon.currentAnim.framerate != 0)
-        {
-            animCon.currentFrame = 0;
-            animCon.timerResetVal = animCon.currentAnim.name == "NoAnim" ? 0 : 1 / animCon.currentAnim.framerate;
-            animCon.animTimer = animCon.timerResetVal;
-
-            if (animCon.currentFrame != -1)
-                sprite.sprite = PlayState.GetSprite(animCon.animSpriteName, 0);
-            else
-                sprite.sprite = PlayState.BlankTexture();
         }
     }
 

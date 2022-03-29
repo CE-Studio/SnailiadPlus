@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public AudioClip die;
     public GameObject bulletPool;
     public Sprite blank;
+    public Sprite missing;
     //public Sprite iconPeaDeselected;
     //public Sprite iconPeaSelected;
     //public Sprite iconBoomDeselected;

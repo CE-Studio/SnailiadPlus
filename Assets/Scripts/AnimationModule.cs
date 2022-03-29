@@ -36,7 +36,7 @@ public class AnimationModule : MonoBehaviour
                     while (animTimer <= 0 && !(currentFrame == currentAnim.frames.Length - 1 && !currentAnim.loop))
                     {
                         currentFrame++;
-                        if (currentFrame != currentAnim.frames.Length - 1)
+                        if (currentFrame != currentAnim.frames.Length)
                         {
                             sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() :
                                 PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
@@ -51,8 +51,11 @@ public class AnimationModule : MonoBehaviour
                                     PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                                 animTimer += timerMax;
                             }
+                            else
+                                Stop();
                         }
-                        if (currentAnim.frames[currentFrame] == -1 && stopAtBlankFrame)
+                        //Debug.Log(currentFrame + "/" + (currentAnim.frames.Length - 1));
+                        if (isPlaying && currentAnim.frames[currentFrame] == -1 && stopAtBlankFrame)
                             Stop();
                     }
                 }
@@ -66,7 +69,7 @@ public class AnimationModule : MonoBehaviour
     {
         PlayState.AnimationData newAnim = PlayState.GetAnim(animName);
         if (newAnim.name == "NoAnim")
-            Debug.Log("Animation \"" + animName + "\" does not exist! (Did you misspell it, or reference the wrong prefix?)");
+            Debug.LogWarning("Animation \"" + animName + "\" does not exist! (Did you misspell it, or reference the wrong prefix?)");
         else
         {
             animList.Add(newAnim.name, newAnim);
@@ -83,13 +86,13 @@ public class AnimationModule : MonoBehaviour
 
             timerMax = 1 / currentAnim.framerate;
             animTimer = timerMax;
-            sprite.sprite = PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[0]);
-            currentFrame = 0;
+            currentFrame = currentAnim.randomizeStartFrame ? Random.Range(0, currentAnim.frames.Length) : 0;
+            sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture() : PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
             speed = newSpeed;
             isPlaying = true;
         }
         else
-            Debug.Log("Animation \"" + animName + "\" is not present in this module's animation list.");
+            Debug.LogWarning("Animation \"" + animName + "\" is not present in this module's animation list.");
     }
 
     public void Pause()
@@ -133,5 +136,18 @@ public class AnimationModule : MonoBehaviour
                 newDict.Add(listKeys[i], animList[listKeys[i]]);
         }
         animList = newDict;
+    }
+
+    public void SetSpeed(float newSpeed = 1)
+    {
+        speed = newSpeed;
+    }
+
+    public void PrintAllAnims()
+    {
+        string output = "";
+        foreach (PlayState.AnimationData animData in PlayState.animationLibrary)
+            output += "" + animData.name + ", ";
+        Debug.Log(output);
     }
 }
