@@ -31,6 +31,33 @@ public class Control
         KeyCode.Escape      // 22 - Pause
     };
 
+    public static KeyCode[] defaultInputs = new KeyCode[]
+    {
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.Z,
+        KeyCode.X,
+        KeyCode.C,
+        KeyCode.C,
+        KeyCode.A,
+        KeyCode.D,
+        KeyCode.W,
+        KeyCode.S,
+        KeyCode.K,
+        KeyCode.J,
+        KeyCode.H,
+        KeyCode.H,
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Equals,
+        KeyCode.Minus,
+        KeyCode.M,
+        KeyCode.Escape
+    };
+
     public static int AxisX(int player = 0)
     {
         return 0 + (RightHold(player) ? 1 : 0) - (LeftHold(player) ? 1 : 0);

@@ -249,6 +249,8 @@ public class PlayState
         0  // 23 - How did you get up here?
     };
 
+    public static int[] achievementDefault = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
     public static float[][] savedTimes = new float[][]
     {
         new float[] { 0, 0, 0 }, // Snaily Normal
@@ -272,6 +274,29 @@ public class PlayState
         new float[] { 0, 0, 0 }  // Boss Rush
     };
 
+    public static float[][] timeDefault = new float[][]
+    {
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 },
+        new float[] { 0, 0, 0 }
+    };
+
     public static int[] gameOptions = new int[]
     {
         10, //  0 - Sound volume (0-10)
@@ -288,6 +313,8 @@ public class PlayState
         5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
         0   // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
     };
+
+    public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
 
     [Serializable]
     public struct OptionData
@@ -306,6 +333,9 @@ public class PlayState
 
     public static bool hasSeenIris;
     public static bool talkedToCaveSnail;
+    public static int[] NPCvarDefault = new int[] { 0, 0 };
+
+    public const string SAVE_FILE_PREFIX = "SnailySave";
 
     [Serializable]
     public struct GameSaveData
@@ -329,6 +359,19 @@ public class PlayState
         public int[] achievements;
         public float[][] times;
     }
+
+    [Serializable]
+    public struct CollectiveData
+    {
+        public string version;
+        public GameSaveData profile1;
+        public GameSaveData profile2;
+        public GameSaveData profile3;
+        public OptionData options;
+        public ControlData controls;
+        public RecordData records;
+    }
+    public static CollectiveData gameData = new CollectiveData();
 
     public static Sprite BlankTexture()
     {
@@ -873,80 +916,89 @@ public class PlayState
     {
         if (dataType == "game")
         {
-            // Save data is stored in the following order:
-            // - Profile beign played on
-            // - Difficulty being played on
-            // - Game time, saved as hours, minutes, and seconds + hundredths
-            // - World position of the player's last save point, individually saved as two floats
-            // - Current campaign character
-            // - Item list
-            // - Selected weapon
-            // - Boss states
-            // - NPC variables
-            // - Explored map
-            GameSaveData data = new GameSaveData();
-            data.profile = currentProfile;
-            data.difficulty = currentDifficulty;
-            data.gameTime = currentTime;
-            data.saveCoords = respawnCoords;
-            data.character = currentCharacter;
-            data.items = itemCollection;
-            data.weapon = playerScript.selectedWeapon;
-            data.bossStates = bossStates;
-            data.NPCVars = new int[]
+            GameSaveData data = new GameSaveData
             {
-                hasSeenIris ? 1 : 0,
-                talkedToCaveSnail ? 1 : 0
+                profile = currentProfile,
+                difficulty = currentDifficulty,
+                gameTime = currentTime,
+                saveCoords = respawnCoords,
+                character = currentCharacter,
+                items = itemCollection,
+                weapon = playerScript.selectedWeapon,
+                bossStates = bossStates,
+                NPCVars = new int[]
+                {
+                    hasSeenIris ? 1 : 0,
+                    talkedToCaveSnail ? 1 : 0
+                },
+                percentage = GetItemPercentage(),
+                exploredMap = minimap.transform.parent.GetComponent<Minimap>().currentMap
             };
-            data.percentage = GetItemPercentage();
-            data.exploredMap = minimap.transform.parent.GetComponent<Minimap>().currentMap;
-            string saveData = JsonUtility.ToJson(data);
-            PlayerPrefs.SetString("SaveGameData" + currentProfile, saveData);
-            PlayerPrefs.Save();
+            switch (currentProfile)
+            {
+                case 1:
+                    gameData.profile1 = data;
+                    break;
+                case 2:
+                    gameData.profile2 = data;
+                    break;
+                case 3:
+                    gameData.profile3 = data;
+                    break;
+            }
         }
         else if (dataType == "options")
         {
-            OptionData data = new OptionData();
-            data.options = gameOptions;
-            string saveData = JsonUtility.ToJson(data);
-            PlayerPrefs.SetString("OptionData", saveData);
-            PlayerPrefs.Save();
+            gameData.options = new OptionData
+            {
+                options = gameOptions
+            };
         }
         else if (dataType == "records")
         {
-            RecordData data = new RecordData();
-            data.achievements = achievementStates;
-            data.times = savedTimes;
-            string saveData = JsonUtility.ToJson(data);
-            PlayerPrefs.SetString("RecordData", saveData);
-            PlayerPrefs.Save();
+            gameData.records = new RecordData
+            {
+                achievements = achievementStates,
+                times = savedTimes
+            };
         }
         else if (dataType == "controls")
         {
-            ControlData data = new ControlData();
-            data.controls = Control.inputs;
-            string saveData = JsonUtility.ToJson(data);
-            PlayerPrefs.SetString("ControlData", saveData);
-            PlayerPrefs.Save();
+            gameData.controls = new ControlData
+            {
+                controls = Control.inputs
+            };
         }
-        else
+        else if (dataType != "" || dataType != " ")
         {
-            Debug.Log("Invalid save type!");
+            Debug.LogWarning("Invalid save type \"" + dataType + "\"");
         }
+        gameData.version = Application.version;
+        File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(gameData));
     }
 
     public static void WriteSave(GameSaveData copyData, int profileToCopyTo)
     {
         copyData.profile = profileToCopyTo;
-        PlayerPrefs.SetString("SaveGameData" + profileToCopyTo, JsonUtility.ToJson(copyData));
-        PlayerPrefs.Save();
+        switch (profileToCopyTo)
+        {
+            case 1:
+                gameData.profile1 = copyData;
+                break;
+            case 2:
+                gameData.profile2 = copyData;
+                break;
+            case 3:
+                gameData.profile3 = copyData;
+                break;
+        }
     }
 
     public static GameSaveData LoadGame(int profile, bool mode = false)
     {
-        if (PlayerPrefs.HasKey("SaveGameData" + profile))
+        if ((profile == 1 && gameData.profile1.profile == 1) || (profile == 2 && gameData.profile2.profile == 2) || (profile == 3 && gameData.profile3.profile == 3))
         {
-            GameSaveData loadedSave = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString("SaveGameData" + profile));
+            GameSaveData loadedSave = profile == 1 ? gameData.profile1 : (profile == 2 ? gameData.profile2 : gameData.profile3);
             if (mode)
             {
                 currentProfile = loadedSave.profile;
@@ -980,69 +1032,104 @@ public class PlayState
         }
         else
         {
-            GameSaveData nullData = new GameSaveData { };
-            nullData.profile = -1;
+            GameSaveData nullData = new GameSaveData
+            {
+                profile = -1
+            };
             return nullData;
-        }    
+        }
+    }
+
+    public static void EraseGame(int profile)
+    {
+        switch (profile)
+        {
+            case 1:
+                gameData.profile1 = new GameSaveData { profile = -1 };
+                break;
+            case 2:
+                gameData.profile2 = new GameSaveData { profile = -1 };
+                break;
+            case 3:
+                gameData.profile3 = new GameSaveData { profile = -1 };
+                break;
+        }
+        WriteSave("");
     }
 
     public static void LoadRecords()
     {
-        if (PlayerPrefs.HasKey("RecordData"))
+        //if (PlayerPrefs.HasKey("RecordData"))
+        //{
+        //    RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
+        //    for (int i = 0; i < data.achievements.Length; i++)
+        //        achievementStates[i] = data.achievements[i];
+        //    if (data.times != null)
+        //    {
+        //        for (int i = 0; i < data.times.Length; i++)
+        //            savedTimes[i] = data.times[i];
+        //    }
+        //    else
+        //    {
+        //        savedTimes = new float[][]
+        //        {
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 },
+        //            new float[] { 0, 0, 0 }
+        //        };
+        //    }
+        //}
+        if (achievementStates.Length == gameData.records.achievements.Length)
+            achievementStates = gameData.records.achievements;
+        else
         {
-            RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
-            for (int i = 0; i < data.achievements.Length; i++)
-                achievementStates[i] = data.achievements[i];
-            if (data.times != null)
-            {
-                for (int i = 0; i < data.times.Length; i++)
-                    savedTimes[i] = data.times[i];
-            }
-            else
-            {
-                savedTimes = new float[][]
-                {
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 },
-                    new float[] { 0, 0, 0 }
-                };
-            }
+            for (int i = 0; i < gameData.records.achievements.Length; i++)
+                achievementStates[i] = gameData.records.achievements[i];
+        }
+        if (savedTimes.Length == gameData.records.times.Length)
+            savedTimes = gameData.records.times;
+        else
+        {
+            for (int i = 0; i < gameData.records.times.Length; i++)
+                savedTimes[i] = gameData.records.times[i];
         }
     }
 
     public static void LoadOptions()
     {
-        if (PlayerPrefs.HasKey("OptionData"))
+        if (gameOptions.Length == gameData.options.options.Length)
+            gameOptions = gameData.options.options;
+        else
         {
-            OptionData data = JsonUtility.FromJson<OptionData>(PlayerPrefs.GetString("OptionData"));
-            for (int i = 0; i < data.options.Length; i++)
-                gameOptions[i] = data.options[i];
+            for (int i = 0; i < gameData.options.options.Length; i++)
+                gameOptions[i] = gameData.options.options[i];
         }
     }
 
     public static void LoadControls()
     {
-        if (PlayerPrefs.HasKey("ControlData"))
+        if (Control.inputs.Length == gameData.controls.controls.Length)
+            Control.inputs = gameData.controls.controls;
+        else
         {
-            ControlData data = JsonUtility.FromJson<ControlData>(PlayerPrefs.GetString("ControlData"));
-            for (int i = 0; i < data.controls.Length; i++)
-                Control.inputs[i] = data.controls[i];
+            for (int i = 0; i < gameData.controls.controls.Length; i++)
+                Control.inputs[i] = gameData.controls.controls[i];
         }
     }
 
