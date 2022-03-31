@@ -1685,7 +1685,7 @@ public class MainMenu : MonoBehaviour
     {
         for (int i = 1; i < 4; i++)
         {
-            PlayState.GameSaveData newProfile;
+            PlayState.GameSaveData newProfile = new PlayState.GameSaveData();
             var oldProfile = i == 1 ? tempDataSlot.profile1 : (i == 2 ? tempDataSlot.profile2 : tempDataSlot.profile3);
 
             if (oldProfile.profile == -1)

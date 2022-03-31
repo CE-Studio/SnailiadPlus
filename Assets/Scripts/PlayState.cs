@@ -12,6 +12,8 @@ public class PlayState
 
     public static bool isMenuOpen = false;
 
+    public static readonly bool debugMode = true;
+
     [Serializable]
     public struct AnimationData
     {
@@ -338,8 +340,8 @@ public class PlayState
     public const string SAVE_FILE_PREFIX = "SnailySave";
 
     [Serializable]
-    public struct GameSaveData
-    {
+    public struct GameSaveData {
+
         public int profile;
         public int difficulty;
         public float[] gameTime;
@@ -916,16 +918,15 @@ public class PlayState
     {
         if (dataType == "game")
         {
-            GameSaveData data = new GameSaveData
-            {
+            GameSaveData data = new GameSaveData {
                 profile = currentProfile,
                 difficulty = currentDifficulty,
-                gameTime = currentTime,
+                gameTime = (float[])currentTime.Clone(),
                 saveCoords = respawnCoords,
                 character = currentCharacter,
-                items = itemCollection,
+                items = (int[])itemCollection.Clone(),
                 weapon = playerScript.selectedWeapon,
-                bossStates = bossStates,
+                bossStates = (int[])bossStates.Clone(),
                 NPCVars = new int[]
                 {
                     hasSeenIris ? 1 : 0,
