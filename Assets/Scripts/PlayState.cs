@@ -912,7 +912,7 @@ public class PlayState
         return Mathf.FloorToInt(((float)itemsFound / (float)itemCollection.Length) * 100);
     }
 
-    public static void WriteSave(string dataType)
+    public static void WriteSave(string dataType = "")
     {
         if (dataType == "game")
         {
@@ -969,7 +969,7 @@ public class PlayState
                 controls = Control.inputs
             };
         }
-        else if (dataType != "" || dataType != " ")
+        else if (!(dataType == "" || dataType == " "))
         {
             Debug.LogWarning("Invalid save type \"" + dataType + "\"");
         }
@@ -992,6 +992,7 @@ public class PlayState
                 gameData.profile3 = copyData;
                 break;
         }
+        WriteSave();
     }
 
     public static GameSaveData LoadGame(int profile, bool mode = false)
@@ -1054,7 +1055,7 @@ public class PlayState
                 gameData.profile3 = new GameSaveData { profile = -1 };
                 break;
         }
-        WriteSave("");
+        WriteSave();
     }
 
     public static void LoadRecords()

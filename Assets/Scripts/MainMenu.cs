@@ -844,11 +844,12 @@ public class MainMenu : MonoBehaviour
         if (PlayState.gameState == "Game")
             yield break;
         yield return new WaitForSeconds(2);
-        if (PlayState.isMenuOpen)
+        if (PlayState.isMenuOpen && transform.Find("Title Plus") == null)
         {
             GameObject plus = Instantiate(titlePlus);
+            plus.name = "Title Plus";
             plus.transform.parent = transform;
-            plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.5f);
+            plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.0625f);
         }
         yield return new WaitForEndOfFrame();
     }
@@ -1016,7 +1017,7 @@ public class MainMenu : MonoBehaviour
         AddOption("Select a profile", false);
         for (int i = 1; i <= 3; i++)
         {
-            PlayState.GameSaveData data = PlayState.LoadGame(i);
+            PlayState.GameSaveData data = PlayState.LoadGame(i, false);
             if (data.profile != -1)
                 AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             else

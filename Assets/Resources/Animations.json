@@ -481,6 +481,28 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "PowerGrass_idle",
+			"spriteName": "Entities/PowerGrass",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "PowerGrass_eaten",
+			"spriteName": "Entities/PowerGrass",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
 		
 		{
 			"name": "Bubble",

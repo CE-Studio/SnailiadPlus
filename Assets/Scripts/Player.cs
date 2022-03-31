@@ -342,47 +342,6 @@ public class Player : MonoBehaviour
 
     public void UpdateMusic(int area, int subzone, int resetFlag = 0)
     {
-        //if (resetAudioSources)
-        //{
-        //    PlayState.musicSourceArray.Clear();
-        //    foreach (Transform obj in PlayState.musicParent.transform)
-        //        Destroy(obj.gameObject);
-        //
-        //    for (int i = 0; i < PlayState.areaMusic[area].Length; i++)
-        //    {
-        //        for (int j = 0; j < 2; j++)
-        //        {
-        //            GameObject newSource = new GameObject();
-        //            newSource.transform.parent = PlayState.musicParent;
-        //            newSource.name = "Music Source " + (j + 1) + " (Subzone " + i + ")";
-        //            newSource.AddComponent<AudioSource>();
-        //            PlayState.musicSourceArray.Add(newSource.GetComponent<AudioSource>());
-        //            if (j == 0)
-        //            {
-        //                //newSource.GetComponent<AudioSource>().clip = PlayState.areaMusic[area][i];
-        //                newSource.GetComponent<AudioSource>().clip = PlayState.musicLibrary.library[area + 1][i];
-        //                newSource.GetComponent<AudioSource>().Play();
-        //            }
-        //        }
-        //    }
-        //
-        //    //nextLoopEvent = AudioSettings.dspTime + PlayState.musicLoopOffsets[area][1];
-        //    nextLoopEvent = AudioSettings.dspTime + PlayState.musicSourceArray[0].clip.length;
-        //}
-        //for (int i = 0; i * 2 < PlayState.musicSourceArray.Count; i++)
-        //{
-        //    if (i == subzone)
-        //    {
-        //        PlayState.musicSourceArray[i * 2].mute = false;
-        //        PlayState.musicSourceArray[i * 2 + 1].mute = false;
-        //    }
-        //    else
-        //    {
-        //        PlayState.musicSourceArray[i * 2].mute = true;
-        //        PlayState.musicSourceArray[i * 2 + 1].mute = true;
-        //    }
-        //}
-        //PlayState.playingMusic = true;
         if (resetFlag >= 2) // Hard reset array and play
         {
             PlayState.musicSourceArray.Clear();

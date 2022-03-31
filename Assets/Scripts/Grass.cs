@@ -16,24 +16,13 @@ public class Grass : MonoBehaviour
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AnimationModule anim;
-    public AudioSource sfx;
-    public AudioClip bite;
-    public AudioClip regrow;
-
-    public Sprite nom0;
-    public Sprite nom1;
-    public Sprite nom2;
-    public Sprite nom3;
     
     public void Start()
     {
         bitesRemaining = totalBites;
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
-        sfx = GetComponent<AudioSource>();
         anim = GetComponent<AnimationModule>();
-        bite = (AudioClip)Resources.Load("Sounds/Sfx/EatGrass");
-        regrow = (AudioClip)Resources.Load("Sounds/Sfx/GrassGrow");
         anim.Add("Grass_idle");
         anim.Add("Grass_eaten");
 
@@ -44,15 +33,14 @@ public class Grass : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
-            sfx.volume = PlayState.gameOptions[0] * 0.1f;
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
         }
         if (active && timer == 0)
         {
-            if (!sprite.enabled)
+            if (bitesRemaining == 0)
             {
                 PlayState.PlaySound("GrassGrow");
-                sprite.enabled = true;
+                anim.Play("Grass_idle");
                 bitesRemaining = totalBites;
             }
         }
@@ -66,9 +54,7 @@ public class Grass : MonoBehaviour
     public void Spawn()
     {
         bitesRemaining = totalBites;
-        sprite.enabled = true;
         box.enabled = true;
-        sfx.enabled = true;
         timer = 0;
         if (transform.childCount > 0)
         {
