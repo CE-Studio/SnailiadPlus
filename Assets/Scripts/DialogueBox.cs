@@ -39,6 +39,7 @@ public class DialogueBox : MonoBehaviour
     private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
     public Sprite[] playerPortraits;
     private bool forceDownPosition;
+    private float posVar;
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
@@ -91,17 +92,18 @@ public class DialogueBox : MonoBehaviour
                 if (player.transform.position.y > cam.transform.position.y + 0.125f || forceDownPosition)
                 {
                     if (active)
-                        camPos = Mathf.Lerp(transform.localPosition.y, -4.5f, 7 * Time.deltaTime);
+                        posVar = Mathf.Lerp(posVar, 1, 7 * Time.deltaTime);
                     else
-                        camPos = -4.5f;
+                        posVar = 1;
                 }
                 else
                 {
                     if (active)
-                        camPos = Mathf.Lerp(transform.localPosition.y, 4.5f, 7 * Time.deltaTime);
+                        posVar = Mathf.Lerp(posVar, 0, 7 * Time.deltaTime);
                     else
-                        camPos = 4.5f;
+                        posVar = 0;
                 }
+                camPos = posVar > 0.5f ? Mathf.Lerp(-8.5f, -4.5f, (posVar - 0.5f) * 2) : Mathf.Lerp(4.5f, 8.5f, posVar * 2);
             }
             else
             {

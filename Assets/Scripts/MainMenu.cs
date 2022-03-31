@@ -780,6 +780,24 @@ public class MainMenu : MonoBehaviour
         return time;
     }
 
+    public string ConvertDifficultyToString(int difficulty)
+    {
+        string output = "";
+        switch (difficulty)
+        {
+            case 0:
+                output = "Easy";
+                break;
+            case 1:
+                output = "Normal";
+                break;
+            case 2:
+                output = "Insane";
+                break;
+        }
+        return output;
+    }
+
     public void ClearOptions()
     {
         foreach (MenuOption option in currentOptions)
@@ -1019,7 +1037,8 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i, false);
             if (data.profile != -1)
-                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                    " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             else
                 AddOption("Empty profile", true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
         }

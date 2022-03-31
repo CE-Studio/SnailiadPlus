@@ -162,7 +162,7 @@ public class PlayState
     public static TextMesh mapShadow = GameObject.Find("View/Bottom Keys/Map Key/Shadow").GetComponent<TextMesh>();
 
     public static int currentProfile = -1;
-    public static int currentDifficulty = 1; // 1 = Easy, 2 = Normal, 3 = Insane
+    public static int currentDifficulty = 1; // 0 = Easy, 1 = Normal, 2 = Insane
     public static string currentCharacter = "";
     public static float[] currentTime = new float[] { 0, 0, 0 };
 
@@ -340,7 +340,8 @@ public class PlayState
     public const string SAVE_FILE_PREFIX = "SnailySave";
 
     [Serializable]
-    public struct GameSaveData {
+    public struct GameSaveData
+    {
 
         public int profile;
         public int difficulty;
@@ -918,7 +919,8 @@ public class PlayState
     {
         if (dataType == "game")
         {
-            GameSaveData data = new GameSaveData {
+            GameSaveData data = new GameSaveData
+            {
                 profile = currentProfile,
                 difficulty = currentDifficulty,
                 gameTime = (float[])currentTime.Clone(),
@@ -933,7 +935,7 @@ public class PlayState
                     talkedToCaveSnail ? 1 : 0
                 },
                 percentage = GetItemPercentage(),
-                exploredMap = minimap.transform.parent.GetComponent<Minimap>().currentMap
+                exploredMap = (int[])minimap.transform.parent.GetComponent<Minimap>().currentMap.Clone()
             };
             switch (currentProfile)
             {
@@ -1005,15 +1007,15 @@ public class PlayState
             {
                 currentProfile = loadedSave.profile;
                 currentDifficulty = loadedSave.difficulty;
-                currentTime = loadedSave.gameTime;
+                currentTime = (float[])loadedSave.gameTime.Clone();
                 respawnCoords = loadedSave.saveCoords;
                 currentCharacter = loadedSave.character;
-                itemCollection = loadedSave.items;
+                itemCollection = (int[])loadedSave.items.Clone();
                 playerScript.selectedWeapon = loadedSave.weapon;
-                bossStates = loadedSave.bossStates;
+                bossStates = (int[])loadedSave.bossStates.Clone();
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
-                minimap.transform.parent.GetComponent<Minimap>().currentMap = loadedSave.exploredMap;
+                minimap.transform.parent.GetComponent<Minimap>().currentMap = (int[])loadedSave.exploredMap.Clone();
                 for (int i = 0; i < loadedSave.items.Length; i++)
                 {
                     if (loadedSave.items[i] == 1)

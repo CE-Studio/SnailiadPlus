@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const int DIR_FLOOR = 0;
+    public const int DIR_WALL_LEFT = 1;
+    public const int DIR_WALL_RIGHT = 2;
+    public const int DIR_CEILING = 3;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
@@ -586,8 +589,12 @@ public class Player : MonoBehaviour
         stunned = true;
         sfx.PlayOneShot(hurt);
         UpdateHearts();
-        currentSurface = DIR_FLOOR;
-        ExitShell();
+        //if (currentSurface == DIR_WALL_LEFT || currentSurface == DIR_WALL_RIGHT)
+        //{
+        //
+        //}
+        //currentSurface = DIR_FLOOR;
+        //ExitShell();
         float timer = 0;
         while (timer < 1)
         {

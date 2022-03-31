@@ -107,25 +107,30 @@ public class Snaily : MonoBehaviour
             // Next, we decrease the fire cooldown
             fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
             // Then, we check to see if Snaily has been stunned and this script has not been made aware
-            if (player.stunned && gravityDir != DIR_FLOOR && grounded && !PlayState.CheckForItem("Gravity Snail"))
+            if (player.stunned)
             {
-                switch (gravityDir)
+                if (shelled)
+                    ToggleShell();
+                if (gravityDir != DIR_FLOOR && grounded && !PlayState.CheckForItem("Gravity Snail"))
                 {
-                    case DIR_WALL_LEFT:
-                    case DIR_WALL_RIGHT:
-                        SwapDir(DIR_FLOOR);
-                        SwitchSurfaceAxis();
-                        transform.position = new Vector2(transform.position.x + ((box.size.x - box.size.y) * 0.5f * (facingLeft ? 1 : -1)), transform.position.y);
-                        gravityDir = DIR_FLOOR;
-                        grounded = false;
-                        break;
-                    case DIR_CEILING:
-                        grounded = false;
-                        gravityDir = DIR_FLOOR;
-                        SwapDir(DIR_FLOOR);
-                        break;
+                    switch (gravityDir)
+                    {
+                        case DIR_WALL_LEFT:
+                        case DIR_WALL_RIGHT:
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            transform.position = new Vector2(transform.position.x + ((box.size.x - box.size.y) * 0.5f * (facingLeft ? 1 : -1)), transform.position.y);
+                            gravityDir = DIR_FLOOR;
+                            grounded = false;
+                            break;
+                        case DIR_CEILING:
+                            grounded = false;
+                            gravityDir = DIR_FLOOR;
+                            SwapDir(DIR_FLOOR);
+                            break;
+                    }
+                    return;
                 }
-                return;
             }
             // We reset the flag marking if Snaily is airborne and shoving their face into a wall
             againstWallFlag = false;
