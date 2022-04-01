@@ -687,6 +687,206 @@
         },
 		
 		{
+			"name": "Dialogue_square",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_square_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_round",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_round_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_angle",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_angle_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_loud",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_loud_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_bevel",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				16,
+				17,
+				18,
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_bevel_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_outline",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				20,
+				21,
+				22,
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_outline_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_cloud",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_cloud_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_panel",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				28,
+				29,
+				30,
+				31
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_panel_close",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 60.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "TextWidth",
 			"spriteName": "UI/FontSprites",
 			"framerate": 0.0,
@@ -788,6 +988,18 @@
 				5
 			],
 			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "TitleSelector_Snaily",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		}

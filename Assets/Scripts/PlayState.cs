@@ -75,6 +75,8 @@ public class PlayState
     public static bool hasJumped = false;
     public static Vector2 positionOfLastRoom = Vector2.zero;
 
+    public static Texture2D palette = (Texture2D)Resources.Load("Images/Palette");
+
     public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
     public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
     public static AudioClip[][] areaMusic = new AudioClip[][]
@@ -450,11 +452,19 @@ public class PlayState
 
     public static void PlaySound(string name)
     {
-        globalSFX.PlayOneShot(GetSound(name));
+        if (GetSound(name) != null)
+            globalSFX.PlayOneShot(GetSound(name));
+        else
+            Debug.LogWarning("Audioclip \"" + name + "\" does not exist!");
     }
     public static void PlaySound(AudioClip clip)
     {
         globalSFX.PlayOneShot(clip);
+    }
+
+    public static Color32 GetColor(string ID)
+    {
+        return palette.GetPixel(int.Parse(ID.Substring(0, 2)), int.Parse(ID.Substring(2, 2)));
     }
 
     public static void GetNewRoom(string intendedArea)
@@ -507,8 +517,8 @@ public class PlayState
             element.SetActive(state);
             if (state)
             {
-                if (element.name == "Dialogue Box" && isTalking)
-                    element.GetComponent<DialogueBox>().anim.Play("Dialogue hold", 0, 0);
+                //if (element.name == "Dialogue Box" && isTalking)
+                //    element.GetComponent<DialogueBox>().anim.Play("Dialogue hold", 0, 0);
                 if (element.name == "Weapon Icons")
                 {
                     playerScript.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
@@ -543,12 +553,12 @@ public class PlayState
             colors.Add(new Color32(0, 0, 0, 0));
         }
         gameState = "Dialogue";
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, colors);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005", colors);
     }
 
-    public static void OpenDialogue(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
+    public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, colors, stateList, facingLeft);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, shape, boxColor, colors, stateList, facingLeft);
     }
 
     public static void CloseDialogue()

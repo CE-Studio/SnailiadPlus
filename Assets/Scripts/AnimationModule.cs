@@ -19,7 +19,7 @@ public class AnimationModule : MonoBehaviour
 
     private SpriteRenderer sprite;
 
-    void Start()
+    void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -149,5 +149,10 @@ public class AnimationModule : MonoBehaviour
         foreach (PlayState.AnimationData animData in PlayState.animationLibrary)
             output += "" + animData.name + ", ";
         Debug.Log(output);
+    }
+
+    public int GetCurrentFrame()
+    {
+        return currentFrame;
     }
 }

@@ -6,28 +6,13 @@ public class SavePoint : MonoBehaviour
 {
     public bool hasBeenActivated = false;
 
-    public Animator anim;
-    public AudioSource sfx;
-    public AudioClip saveSfx;
-
-    public 
+    public AnimationModule anim;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
-        sfx = GetComponent<AudioSource>();
-        saveSfx = (AudioClip)Resources.Load("Sounds/Sfx/Save");
-    }
-
-    void Update()
-    {
-        sfx.volume = PlayState.gameOptions[0] * 0.1f;
-        if (PlayState.gameState == "Game")
-        {
-            anim.speed = 1;
-        }
-        else
-            anim.speed = 0;
+        anim = GetComponent<AnimationModule>();
+        anim.Add("Save_inactive");
+        anim.Add("Save_active");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,13 +33,11 @@ public class SavePoint : MonoBehaviour
     public void ToggleActiveState()
     {
         if (hasBeenActivated)
-        {
-            anim.Play("Save inactive", 0, 0);
-        }
+            anim.Play("Save_inactive");
         else
         {
-            sfx.PlayOneShot(saveSfx);
-            anim.Play("Save active", 0, 0);
+            PlayState.PlaySound("Save");
+            anim.Play("Save_active");
         }
         hasBeenActivated = !hasBeenActivated;
     }

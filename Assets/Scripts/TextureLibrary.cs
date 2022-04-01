@@ -14,6 +14,7 @@ public class TextureLibrary : ScriptableObject
         "Door",
         "MapTiles",
         "MenuPlus",
+        "Player",
         "SavePoint",
         //"CEStudioLogo2022",
         //"Tilesheet",

@@ -159,6 +159,8 @@ public class NPC : MonoBehaviour
             {
                 if (!PlayState.isTalking)
                 {
+                    int boxShape = 0;
+                    string boxColor = "0005";
                     List<string> textToSend = new List<string>();
                     portraitColors.Clear();
                     portraitStateList.Clear();
@@ -433,14 +435,14 @@ public class NPC : MonoBehaviour
                             chatting = true;
                             PlayState.isTalking = true;
                             PlayState.paralyzed = true;
-                            PlayState.OpenDialogue(3, ID, textToSend, portraitColors, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
+                            PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitColors, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
                         }
                     }
                     else
                     {
                         chatting = true;
                         PlayState.isTalking = true;
-                        PlayState.OpenDialogue(2, ID, textToSend);
+                        PlayState.OpenDialogue(2, ID, textToSend, boxShape, boxColor);
                     }
                 }
                 else

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DialogueBox : MonoBehaviour
 {
-    public Animator anim;
+    //public Animator anim;
+    public AnimationModule anim;
     public AudioSource sfx;
     public SpriteRenderer sprite;
 
@@ -15,10 +16,10 @@ public class DialogueBox : MonoBehaviour
     public TextMesh dialogueShadow;
     public Transform roomText;
 
-    public AudioClip dialogue0;
-    public AudioClip dialogue1;
-    public AudioClip dialogue2;
-    public AudioClip dialogue3;
+    //public AudioClip dialogue0;
+    //public AudioClip dialogue1;
+    //public AudioClip dialogue2;
+    //public AudioClip dialogue3;
 
     public GameObject letter;
 
@@ -43,10 +44,13 @@ public class DialogueBox : MonoBehaviour
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
+    private int currentShape = 0;
     private List<string> textList = new List<string>();
     private List<Color32> portraitColors = new List<Color32>();
     private List<int> states = new List<int>();
     private bool left = false;
+    private const float INITIALIZATION_MAX = 0.027f;
+    private float initializationCooldown;
 
     private float currentTimerMax = 0.02f;
     private float timer = 0;
@@ -54,10 +58,23 @@ public class DialogueBox : MonoBehaviour
     private Vector2 currentColor = new Vector2(3, 12);
     private string currentEffect = "None";
     public bool boxOpenAnimComplete = false;
+
+    private string[] boxShapeIDs = new string[]
+    {
+        "square",
+        "round",
+        "angle",
+        "loud",
+        "bevel",
+        "outline",
+        "cloud",
+        "panel"
+    };
     
     void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         sfx = GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>();
         cam = transform.parent.gameObject;
@@ -75,6 +92,23 @@ public class DialogueBox : MonoBehaviour
         portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
         portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
         portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
+
+        anim.Add("Dialogue_square");
+        anim.Add("Dialogue_square_close");
+        anim.Add("Dialogue_round");
+        anim.Add("Dialogue_round_close");
+        anim.Add("Dialogue_angle");
+        anim.Add("Dialogue_angle_close");
+        anim.Add("Dialogue_loud");
+        anim.Add("Dialogue_loud_close");
+        anim.Add("Dialogue_bevel");
+        anim.Add("Dialogue_bevel_close");
+        anim.Add("Dialogue_outline");
+        anim.Add("Dialogue_outline_close");
+        anim.Add("Dialogue_cloud");
+        anim.Add("Dialogue_cloud_close");
+        anim.Add("Dialogue_panel");
+        anim.Add("Dialogue_panel_close");
 
         charWidths = PlayState.GetAnim("TextWidth").frames;
     }
@@ -150,7 +184,7 @@ public class DialogueBox : MonoBehaviour
             // Case 4 = static box for single-page dialogue
             {
                 case 0:
-                    anim.Play("Dialogue open");
+                    anim.Play("Dialogue_" + boxShapeIDs[currentShape]);
                     boxState = 1;
                     playSound = true;
                     if (dialogueType == 3)
@@ -163,8 +197,13 @@ public class DialogueBox : MonoBehaviour
                     currentSound = 0;
                     currentColor = new Vector2(3, 12);
                     currentEffect = "None";
+                    initializationCooldown = INITIALIZATION_MAX;
                     break;
                 case 1:
+                    if (initializationCooldown == 0)
+                        MarkOpenAnimComplete();
+                    else
+                        initializationCooldown = Mathf.Clamp(initializationCooldown - Time.deltaTime, 0, Mathf.Infinity);
                     if (dialogueType == 3)
                     {
                         if (states[(int)pointer.x] != 0)
@@ -301,16 +340,16 @@ public class DialogueBox : MonoBehaviour
                                             switch (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound)
                                             {
                                                 case 1:
-                                                    sfx.PlayOneShot(dialogue0);
+                                                    PlayState.PlaySound("Dialogue0");
                                                     break;
                                                 case 2:
-                                                    sfx.PlayOneShot(dialogue1);
+                                                    PlayState.PlaySound("Dialogue1");
                                                     break;
                                                 case 3:
-                                                    sfx.PlayOneShot(dialogue2);
+                                                    PlayState.PlaySound("Dialogue2");
                                                     break;
                                                 case 4:
-                                                    sfx.PlayOneShot(dialogue3);
+                                                    PlayState.PlaySound("Dialogue3");
                                                     break;
                                             }
                                         }
@@ -346,7 +385,7 @@ public class DialogueBox : MonoBehaviour
                     }
                     break;
                 case 2:
-                    anim.Play("Dialogue continue", 0, 0);
+                    //anim.Play("Dialogue continue", 0, 0);
                     //if (!Control.SpeakHold() && buttonDown)
                     //{
                     //    buttonDown = false;
@@ -354,7 +393,7 @@ public class DialogueBox : MonoBehaviour
                     if (Control.SpeakPress())// && !buttonDown)
                     {
                         buttonDown = true;
-                        anim.Play("Dialogue hold", 0, 0);
+                        //anim.Play("Dialogue hold", 0, 0);
                         if (pointer.x == textList.Count)
                         {
                             boxState = 3;
@@ -396,13 +435,15 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    public void RunBox(int type, int speaker, List<string> text, List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
+    public void RunBox(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
         pointer = Vector2.zero;
 
         dialogueType = type;
         currentSpeaker = speaker;
+        currentShape = shape;
+        sprite.color = PlayState.GetColor(boxColor);
         textList = text;
         portraitColors = colors;
         states = stateList;
@@ -429,7 +470,8 @@ public class DialogueBox : MonoBehaviour
         posPointer = posPointerOrigin;
         dialogueText.text = "";
         dialogueShadow.text = "";
-        anim.Play("Dialogue close", 0, 0);
+        //anim.Play("Dialogue close", 0, 0);
+        anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_close");
         portrait.SetActive(false);
         PlayState.paralyzed = false;
         dialogueType = 0;

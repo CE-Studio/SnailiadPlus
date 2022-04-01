@@ -148,6 +148,10 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Selection Pointer/Left Snaily"),
             GameObject.Find("Selection Pointer/Right Snaily")
         };
+        selector[1].GetComponent<AnimationModule>().Add("TitleSelector_Snaily");
+        selector[2].GetComponent<AnimationModule>().Add("TitleSelector_Snaily");
+        selector[1].GetComponent<AnimationModule>().Play("TitleSelector_Snaily");
+        selector[2].GetComponent<AnimationModule>().Play("TitleSelector_Snaily");
 
         menuHUDElements = new GameObject[]
         {
@@ -182,6 +186,7 @@ public class MainMenu : MonoBehaviour
                 i++;
             selectedOption = i;
             GetNewSnailOffset();
+            selector[1].GetComponent<AnimationModule>().Play("TitleSelector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
         }
         if (PlayState.gameState == "Menu")
         {

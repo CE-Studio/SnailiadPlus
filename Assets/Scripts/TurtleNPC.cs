@@ -33,7 +33,7 @@ public class TurtleNPC : NPC
                 List<string> textToSend = new List<string>();
                 textToSend.Add("After this game is over, {p|0.125}I\'m{nl|}going to get some pizza!!");
                 chatting = true;
-                PlayState.OpenDialogue(2, 52, textToSend);
+                PlayState.OpenDialogue(2, 52, textToSend, 1);
             }
             else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 5 && chatting)
             {

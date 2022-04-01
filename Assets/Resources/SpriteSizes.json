@@ -21,6 +21,11 @@
             "height": 32
         },
 		{
+			"name": "Player",
+			"width": 32,
+			"height": 32
+		},
+		{
             "name": "SavePoint",
             "width": 32,
             "height": 48
