@@ -887,6 +887,133 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Minimap",
+			"spriteName": "UI/Minimap",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_panel",
+			"spriteName": "UI/MinimapPanel",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_mask",
+			"spriteName": "UI/MinimapMask",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_blank",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_playerNormal",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				2,
+				1,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_playerHighlight",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 2.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_itemNormal",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_itemCollected",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_save",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_boss",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Minimap_icon_unknown",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "TextWidth",
 			"spriteName": "UI/FontSprites",
 			"framerate": 0.0,

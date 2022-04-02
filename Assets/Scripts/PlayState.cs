@@ -118,6 +118,7 @@ public class PlayState
     public static GameObject skyLayer = GameObject.Find("Grid/Sky");
     public static GameObject specialLayer = GameObject.Find("Grid/Special");
     public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
+    public static Minimap minimapScript = minimap.transform.parent.GetComponent<Minimap>();
     public static GameObject achievement = GameObject.Find("View/Achievement Panel");
     public static GameObject particlePool = GameObject.Find("Particle Pool");
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
@@ -197,6 +198,7 @@ public class PlayState
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
+    public static readonly Vector2 minimapSize = new Vector2(26, 22);
 
     public static int[] itemCollection = new int[]
     {
@@ -378,9 +380,9 @@ public class PlayState
     }
     public static CollectiveData gameData = new CollectiveData();
 
-    public static Sprite BlankTexture()
+    public static Sprite BlankTexture(bool useSmallBlank = false)
     {
-        return playerScript.blank;
+        return useSmallBlank ? playerScript.smallBlank : playerScript.blank;
     }
 
     public static Sprite MissingTexture()
@@ -925,6 +927,13 @@ public class PlayState
         return Mathf.FloorToInt(((float)itemsFound / (float)itemCollection.Length) * 100);
     }
 
+    public static void SetMapTile(Vector2 pos, bool state)
+    {
+        int currentCellState = minimapScript.currentMap[Mathf.RoundToInt((minimapSize.x * pos.y) + pos.x + 1)];
+        minimapScript.currentMap[Mathf.RoundToInt((minimapSize.x * pos.y) + pos.x + 1)] = currentCellState > 1 ? (state ? 3 : 2) : (state ? 1 : 0);
+        minimapScript.RefreshMap();
+    }
+
     public static void WriteSave(string dataType = "")
     {
         if (dataType == "game")
@@ -945,7 +954,7 @@ public class PlayState
                     talkedToCaveSnail ? 1 : 0
                 },
                 percentage = GetItemPercentage(),
-                exploredMap = (int[])minimap.transform.parent.GetComponent<Minimap>().currentMap.Clone()
+                exploredMap = (int[])minimapScript.currentMap.Clone()
             };
             switch (currentProfile)
             {
@@ -1025,7 +1034,7 @@ public class PlayState
                 bossStates = (int[])loadedSave.bossStates.Clone();
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
-                minimap.transform.parent.GetComponent<Minimap>().currentMap = (int[])loadedSave.exploredMap.Clone();
+                minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
                 for (int i = 0; i < loadedSave.items.Length; i++)
                 {
                     if (loadedSave.items[i] == 1)

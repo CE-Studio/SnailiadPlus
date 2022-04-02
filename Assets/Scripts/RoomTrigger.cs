@@ -40,6 +40,13 @@ public class RoomTrigger : MonoBehaviour
     private List<float> effectVars = new List<float>();
     private bool initializedEffects = false;
 
+    public struct RoomCommand
+    {
+        public string name;
+        public string[] args;
+    };
+    public string[] roomCommands = new string[] { };
+
     public TextMesh roomNameText;
     public TextMesh roomNameShadow;
 
@@ -249,6 +256,21 @@ public class RoomTrigger : MonoBehaviour
             CheckSpecialLayer();
 
             box.enabled = false;
+
+            for (int i = 0; i < roomCommands.Length; i++)
+            {
+                string[] command = roomCommands[i].ToLower().Replace(" ", "").Split(',');
+                switch (command[0])
+                {
+                    default:
+                        Debug.LogWarning("Unknown room command \"" + command[0] + "\"");
+                        break;
+                    case "setmaptile":
+                        Vector2 mapPos = new Vector2(int.Parse(command[1]), int.Parse(command[2]));
+                        PlayState.SetMapTile(mapPos, bool.Parse(command[3]));
+                        break;
+                }
+            }
         }
     }
 

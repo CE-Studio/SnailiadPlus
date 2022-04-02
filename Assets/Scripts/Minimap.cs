@@ -6,6 +6,7 @@ public class Minimap : MonoBehaviour
 {
     public GameObject player;
     public GameObject minimap;
+    public AnimationModule[] anims;
 
     private int currentCellID;
     private int lastCellID;
@@ -25,7 +26,7 @@ public class Minimap : MonoBehaviour
 
     void Start()
     {
-        currentMap = PlayState.defaultMinimapState;
+        currentMap = (int[])PlayState.defaultMinimapState.Clone();
 
         masks = new GameObject[]
         {
@@ -42,6 +43,31 @@ public class Minimap : MonoBehaviour
             transform.GetChild(1).GetChild(30).gameObject, transform.GetChild(1).GetChild(31).gameObject, transform.GetChild(1).GetChild(32).gameObject,
             transform.GetChild(1).GetChild(33).gameObject, transform.GetChild(1).GetChild(34).gameObject
         };
+
+        List<AnimationModule> newAnimList = new List<AnimationModule>();
+        newAnimList.Add(GetComponent<AnimationModule>());
+        newAnimList.Add(transform.Find("Minimap").GetComponent<AnimationModule>());
+        newAnimList.Add(transform.Find("Minimap Mask").GetComponent<AnimationModule>());
+        newAnimList.Add(transform.Find("Icons").Find("Player").GetComponent<AnimationModule>());
+        foreach (GameObject mask in masks)
+            newAnimList.Add(mask.GetComponent<AnimationModule>());
+        anims = newAnimList.ToArray();
+
+        anims[0].Add("Minimap_panel");
+        anims[1].Add("Minimap");
+        anims[2].Add("Minimap_mask");
+        anims[3].Add("Minimap_icon_playerNormal");
+        anims[3].Add("Minimap_icon_playerHighlight");
+        for (int i = 4; i < anims.Length; i++)
+        {
+            anims[i].Add("Minimap_icon_blank");
+            anims[i].Add("Minimap_icon_itemNormal");
+            anims[i].Add("Minimap_icon_itemCollected");
+            anims[i].Add("Minimap_icon_save");
+            anims[i].Add("Minimap_icon_boss");
+            anims[i].Add("Minimap_icon_unknown");
+        }
+        anims[3].Play("Minimap_icon_playerNormal");
     }
 
     void Update()
@@ -57,18 +83,7 @@ public class Minimap : MonoBehaviour
                 currentMap[currentCellID]++;
         }
         if (lastCellID != currentCellID)
-        {
-            for (int i = 0; i < masks.Length; i++)
-            {
-                if (currentCellID + maskIDoffsets[i] >= 0 && currentCellID + maskIDoffsets[i] < currentMap.Length)
-                {
-                    if (currentMap[currentCellID + maskIDoffsets[i]] == 1 || currentMap[currentCellID + maskIDoffsets[i]] == 3)
-                        masks[i].SetActive(false);
-                    else
-                        masks[i].SetActive(true);
-                }
-            }
-        }
+            RefreshMap();
         lastCellID = currentCellID;
     }
 
@@ -76,5 +91,41 @@ public class Minimap : MonoBehaviour
     {
         return Mathf.RoundToInt(Mathf.Abs((minimap.transform.localPosition.x - 6.5f - (origin.x * 0.5f)) * 2) +
             (Mathf.Abs(minimap.transform.localPosition.y + 5.5f - (origin.y * 0.5f)) * 2) * 26);
+    }
+
+    public void RefreshMap()
+    {
+        for (int i = 0; i < masks.Length; i++)
+        {
+            if (currentCellID + maskIDoffsets[i] >= 0 && currentCellID + maskIDoffsets[i] < currentMap.Length)
+            {
+                if (currentMap[currentCellID + maskIDoffsets[i]] == 1 || currentMap[currentCellID + maskIDoffsets[i]] == 3)
+                //masks[i].SetActive(false);
+                {
+                    masks[i].GetComponent<SpriteMask>().enabled = false;
+                    anims[i + 4].Play("Minimap_icon_blank", true);
+                }
+                else
+                //masks[i].SetActive(true);
+                {
+                    masks[i].GetComponent<SpriteMask>().enabled = true;
+                    anims[i + 4].Play("Minimap_icon_blank", true);
+                }
+            }
+        }
+    }
+
+    public void RefreshAnims()
+    {
+        foreach (AnimationModule anim in anims)
+        {
+            string animName = anim.name;
+            bool animPlaying = anim.isPlaying;
+            if (animPlaying)
+                anim.Stop();
+            anim.ReloadList();
+            if (animPlaying)
+                anim.Play(animName);
+        }
     }
 }
