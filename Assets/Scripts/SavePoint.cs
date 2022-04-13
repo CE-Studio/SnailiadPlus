@@ -13,6 +13,7 @@ public class SavePoint : MonoBehaviour
         anim = GetComponent<AnimationModule>();
         anim.Add("Save_inactive");
         anim.Add("Save_active");
+        anim.Play("Save_inactive");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

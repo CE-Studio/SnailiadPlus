@@ -148,10 +148,10 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Selection Pointer/Left Snaily"),
             GameObject.Find("Selection Pointer/Right Snaily")
         };
-        selector[1].GetComponent<AnimationModule>().Add("TitleSelector_Snaily");
-        selector[2].GetComponent<AnimationModule>().Add("TitleSelector_Snaily");
-        selector[1].GetComponent<AnimationModule>().Play("TitleSelector_Snaily");
-        selector[2].GetComponent<AnimationModule>().Play("TitleSelector_Snaily");
+        selector[1].GetComponent<AnimationModule>().Add("Title_selector_Snaily");
+        selector[2].GetComponent<AnimationModule>().Add("Title_selector_Snaily");
+        selector[1].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
+        selector[2].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
 
         menuHUDElements = new GameObject[]
         {
@@ -186,7 +186,8 @@ public class MainMenu : MonoBehaviour
                 i++;
             selectedOption = i;
             GetNewSnailOffset();
-            selector[1].GetComponent<AnimationModule>().Play("TitleSelector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
+            selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
+            selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
         }
         if (PlayState.gameState == "Menu")
         {
@@ -873,6 +874,9 @@ public class MainMenu : MonoBehaviour
             plus.name = "Title Plus";
             plus.transform.parent = transform;
             plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.0625f);
+            AnimationModule plusAnim = plus.GetComponent<AnimationModule>();
+            plusAnim.Add("Title_plus");
+            plusAnim.Play("Title_plus");
         }
         yield return new WaitForEndOfFrame();
     }

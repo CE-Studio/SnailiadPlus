@@ -687,6 +687,53 @@
         },
 		
 		{
+			"name": "AchievementPanel_open",
+			"spriteName": "UI/AchievementPanel",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "AchievementPanel_hold",
+			"spriteName": "UI/AchievementPanel",
+			"framerate": 16.0,
+			"frames": [
+				6,
+				7,
+				8,
+				9
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "AchievementPanel_close",
+			"spriteName": "UI/AchievementPanel",
+			"framerate": 24.0,
+			"frames": [
+				5,
+				4,
+				3,
+				2,
+				1,
+				0,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Dialogue_square",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
@@ -881,6 +928,61 @@
 			"framerate": 60.0,
 			"frames": [
 				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart0",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart1",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart2",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart3",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart4",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				4
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -1119,7 +1221,443 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "TitleSelector_Snaily",
+			"name": "Title_letter_A",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_B",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_C",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_D",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_E",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_F",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_G",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_H",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_I",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_J",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_K",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_L",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_M",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_N",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_O",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_P",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_Q",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_R",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_S",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				18
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_T",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_U",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				20
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_V",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				21
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_W",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				22
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_X",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_Y",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				24
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letter_Z",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				25
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letterFlash_intro",
+			"spriteName": "TitleFont",
+			"framerate": 30.0,
+			"frames": [
+				310,
+				207,
+				102,
+				306,
+				312,
+				301,
+				211,
+				202
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letterFlash_hold",
+			"spriteName": "TitleFont",
+			"framerate": 10.0,
+			"frames": [
+				310,
+				306,
+				312,
+				306,
+				310
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_letterWidths",
+			"spriteName": "TitleFont",
+			"framerate": 0.0,
+			"frames": [
+				28,
+				28,
+				24,
+				28,
+				24,
+				24,
+				28,
+				24,
+				6,
+				24,
+				24,
+				6,
+				32,
+				24,
+				28,
+				28,
+				28,
+				24,
+				25,
+				24,
+				28,
+				24,
+				32,
+				32,
+				28,
+				25,
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_plus",
+			"spriteName": "MenuPlus",
+			"framerate": 16.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69
+			],
+			"loop": true,
+			"loopStartFrame": 17,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Snaily",
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [

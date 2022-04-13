@@ -545,7 +545,14 @@ public class Player : MonoBehaviour
             NewHeart.transform.parent = hearts.transform;
             NewHeart.transform.localPosition = new Vector3(-12 + (0.5f * (i % 7)), 7 - (0.5f * ((i / 7) % 7)), 0);
             NewHeart.AddComponent<SpriteRenderer>();
-            NewHeart.GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 4);
+            NewHeart.AddComponent<AnimationModule>();
+            AnimationModule heartAnim = NewHeart.GetComponent<AnimationModule>();
+            heartAnim.Add("Heart0");
+            heartAnim.Add("Heart1");
+            heartAnim.Add("Heart2");
+            heartAnim.Add("Heart3");
+            heartAnim.Add("Heart4");
+            heartAnim.Play("Heart4");
             NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
@@ -561,23 +568,19 @@ public class Player : MonoBehaviour
                 switch (health - totalOfPreviousHearts)
                 {
                     case 1:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 1);
+                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart1");
                         break;
                     case 2:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 2);
+                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart2");
                         break;
                     case 3:
-                        hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 3);
+                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart3");
                         break;
                     default:
                         if (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0)
-                        {
-                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 4);
-                        }
+                            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart4");
                         else
-                        {
-                            hearts.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = PlayState.GetSprite("UI/Heart", 0);
-                        }
+                            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart0");
                         break;
                 }
                 totalOfPreviousHearts += 4;

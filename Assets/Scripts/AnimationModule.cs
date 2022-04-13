@@ -84,6 +84,8 @@ public class AnimationModule : MonoBehaviour
     }
     public void Play(string animName, float newSpeed = 1, bool useSmallBlank = false)
     {
+        if (sprite == null)
+            sprite = GetComponent<SpriteRenderer>();
         smallBlank = useSmallBlank;
         if (animList.ContainsKey(animName))
         {

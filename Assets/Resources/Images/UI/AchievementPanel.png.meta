@@ -162,7 +162,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 256
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -181,9 +181,9 @@ TextureImporter:
       name: AchievementPanel_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 256
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -204,7 +204,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 192
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -223,9 +223,9 @@ TextureImporter:
       name: AchievementPanel_3
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 192
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -246,7 +246,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 128
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -265,9 +265,9 @@ TextureImporter:
       name: AchievementPanel_5
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 128
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -288,7 +288,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -307,9 +307,9 @@ TextureImporter:
       name: AchievementPanel_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 64
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -330,7 +330,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -349,9 +349,9 @@ TextureImporter:
       name: AchievementPanel_9
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 0
-        width: 128
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
