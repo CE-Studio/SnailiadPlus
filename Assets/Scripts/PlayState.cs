@@ -466,7 +466,7 @@ public class PlayState
 
     public static Color32 GetColor(string ID)
     {
-        return palette.GetPixel(int.Parse(ID.Substring(0, 2)), int.Parse(ID.Substring(2, 2)));
+        return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
     }
 
     public static void GetNewRoom(string intendedArea)

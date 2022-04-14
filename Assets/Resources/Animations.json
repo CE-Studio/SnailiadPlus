@@ -1511,13 +1511,13 @@
 			"spriteName": "TitleFont",
 			"framerate": 30.0,
 			"frames": [
-				310,
+				309,
 				207,
 				102,
 				306,
-				312,
+				12,
 				301,
-				211,
+				111,
 				202
 			],
 			"loop": true,
@@ -1529,11 +1529,11 @@
 			"spriteName": "TitleFont",
 			"framerate": 10.0,
 			"frames": [
-				310,
+				309,
 				306,
-				312,
+				12,
 				306,
-				310
+				309
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -1579,7 +1579,7 @@
 		{
 			"name": "Title_plus",
 			"spriteName": "MenuPlus",
-			"framerate": 16.0,
+			"framerate": 24.0,
 			"frames": [
 				0,
 				1,

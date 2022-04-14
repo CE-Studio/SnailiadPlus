@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class TitleLetter : MonoBehaviour
 {
-    public Sprite[] letters = new Sprite[26];
     public SpriteRenderer sprite;
-    public Animator anim;
+    public AnimationModule anim;
+    public AnimationModule colorAnim;
     public Vector2 localFinalPos;
     public bool readyToAnimate = false;
+    public char letter = ' ';
     private float animTimer = -2.5f;
 
     private const float X_SCALE = 80;
@@ -16,7 +17,12 @@ public class TitleLetter : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
+        colorAnim = transform.GetChild(0).GetComponent<AnimationModule>();
+        colorAnim.updateSprite = false;
+        colorAnim.Add("Title_letterFlash_intro");
+        colorAnim.Add("Title_letterFlash_hold");
+        colorAnim.Play("Title_letterFlash_intro");
     }
 
     void Update()
@@ -32,132 +38,38 @@ public class TitleLetter : MonoBehaviour
             {
                 transform.localPosition = localFinalPos;
                 readyToAnimate = false;
-                PlayAnim("Normal");
+                PlayAnim(true, "Title_letterFlash_hold");
             }
         }
+        int currentColorInt = colorAnim.GetCurrentFrameValue();
+        string currentColorString = (currentColorInt < 1000 ? "0" : "") + (currentColorInt < 100 ? "0" : "") + (currentColorInt < 10 ? "0" : "") + currentColorInt;
+        sprite.color = PlayState.GetColor(currentColorString);
     }
 
-    public void PlayAnim(string animName)
+    public void PlayAnim(bool mode, string animName = "")
     {
-        anim.Play(animName, 0, 0);
-    }
-
-    public void SetLetter(char letter)
-    {
-        switch (char.ToLower(letter))
+        if (mode) // Color
         {
-            case 'a':
-                sprite.sprite = letters[0];
-                break;
-            case 'b':
-                sprite.sprite = letters[1];
-                break;
-            case 'c':
-                sprite.sprite = letters[2];
-                break;
-            case 'd':
-                sprite.sprite = letters[3];
-                break;
-            case 'e':
-                sprite.sprite = letters[4];
-                break;
-            case 'f':
-                sprite.sprite = letters[5];
-                break;
-            case 'g':
-                sprite.sprite = letters[6];
-                break;
-            case 'h':
-                sprite.sprite = letters[7];
-                break;
-            case 'i':
-                sprite.sprite = letters[8];
-                break;
-            case 'j':
-                sprite.sprite = letters[9];
-                break;
-            case 'k':
-                sprite.sprite = letters[10];
-                break;
-            case 'l':
-                sprite.sprite = letters[11];
-                break;
-            case 'm':
-                sprite.sprite = letters[12];
-                break;
-            case 'n':
-                sprite.sprite = letters[13];
-                break;
-            case 'o':
-                sprite.sprite = letters[14];
-                break;
-            case 'p':
-                sprite.sprite = letters[15];
-                break;
-            case 'q':
-                sprite.sprite = letters[16];
-                break;
-            case 'r':
-                sprite.sprite = letters[17];
-                break;
-            case 's':
-                sprite.sprite = letters[18];
-                break;
-            case 't':
-                sprite.sprite = letters[19];
-                break;
-            case 'u':
-                sprite.sprite = letters[20];
-                break;
-            case 'v':
-                sprite.sprite = letters[21];
-                break;
-            case 'w':
-                sprite.sprite = letters[22];
-                break;
-            case 'x':
-                sprite.sprite = letters[23];
-                break;
-            case 'y':
-                sprite.sprite = letters[24];
-                break;
-            case 'z':
-                sprite.sprite = letters[25];
-                break;
-            case ' ':
-                sprite.enabled = false;
-                break;
+            colorAnim.Play(animName);
+        }
+        else // Letter
+        {
+            string newAnimName = "Title_letter_" + letter;
+            anim.Add(newAnimName);
+            anim.Play(newAnimName);
         }
     }
 
-    public void SetColor(int colorID)
+    public void SetLetter(char newLetter)
     {
-        switch (colorID)
+        letter = newLetter;
+        if (letter == ' ')
+            sprite.sprite = PlayState.BlankTexture();
+        else
         {
-            case 0:
-                sprite.color = new Color32(255, 219, 117, 255);
-                break;
-            case 1:
-                sprite.color = new Color32(88, 216, 88, 255);
-                break;
-            case 2:
-                sprite.color = new Color32(104, 72, 252, 255);
-                break;
-            case 3:
-                sprite.color = new Color32(176, 240, 216, 255);
-                break;
-            case 4:
-                sprite.color = new Color32(200, 192, 192, 255);
-                break;
-            case 5:
-                sprite.color = new Color32(252, 184, 252, 255);
-                break;
-            case 6:
-                sprite.color = new Color32(252, 56, 0, 255);
-                break;
-            case 7:
-                sprite.color = new Color32(156, 120, 252, 255);
-                break;
+            string animName = "Title_letter_" + letter.ToString().ToUpper();
+            anim.Add(animName);
+            anim.Play(animName);
         }
     }
 }

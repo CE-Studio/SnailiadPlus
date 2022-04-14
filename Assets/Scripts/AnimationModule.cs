@@ -12,6 +12,7 @@ public class AnimationModule : MonoBehaviour
     public List<string> listKeys = new List<string>();
     public bool stopAtBlankFrame = false;
     public bool blankOnNonLoopEnd = false;
+    public bool updateSprite = true;
     
     private float animTimer = 0;
     private float timerMax = 0;
@@ -39,8 +40,9 @@ public class AnimationModule : MonoBehaviour
                         currentFrame++;
                         if (currentFrame != currentAnim.frames.Length)
                         {
-                            sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
-                                PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                            if (updateSprite)
+                                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
+                                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                             animTimer += timerMax;
                         }
                         else
@@ -48,8 +50,9 @@ public class AnimationModule : MonoBehaviour
                             if (currentAnim.loop)
                             {
                                 currentFrame = currentAnim.loopStartFrame;
-                                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
-                                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                                if (updateSprite)
+                                    sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
+                                        PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                                 animTimer += timerMax;
                             }
                             else
@@ -95,8 +98,9 @@ public class AnimationModule : MonoBehaviour
             timerMax = 1 / currentAnim.framerate;
             animTimer = timerMax;
             currentFrame = currentAnim.randomizeStartFrame ? Random.Range(0, currentAnim.frames.Length) : 0;
-            sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
-                PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+            if (updateSprite)
+                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
+                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
             speed = newSpeed;
             isPlaying = true;
         }
@@ -129,7 +133,9 @@ public class AnimationModule : MonoBehaviour
         {
             currentFrame = 0;
             animTimer = timerMax;
-            sprite.sprite = PlayState.GetSprite(currentAnimName, currentAnim.frames[0]);
+            if (updateSprite)
+                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
+                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[0]);
         }
     }
 
@@ -163,6 +169,11 @@ public class AnimationModule : MonoBehaviour
     public int GetCurrentFrame()
     {
         return currentFrame;
+    }
+
+    public int GetCurrentFrameValue()
+    {
+        return currentAnim.frames[currentFrame];
     }
 
     public void SetBlankSize(bool set)

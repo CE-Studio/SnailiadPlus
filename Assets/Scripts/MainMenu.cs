@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     private float currentSpawnY = LIST_CENTER_Y;
     private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
     private const float LETTER_SPAWN_Y = 5;
-    private const float LETTER_SPAWN_TIME = 0.25f;
+    private const float LETTER_SPAWN_TIME = Mathf.PI / 11;
 
     private int selectedOption = 0;
     private float selectSnailOffset = 0;
@@ -648,22 +648,15 @@ public class MainMenu : MonoBehaviour
 
     public string CharacterIDToName(int ID)
     {
-        switch (ID)
+        return ID switch
         {
-            default:
-            case 0:
-                return "Snaily";
-            case 1:
-                return "Sluggy";
-            case 2:
-                return "Upside";
-            case 3:
-                return "Leggy";
-            case 4:
-                return "Blobby";
-            case 5:
-                return "Leechy";
-        }
+            1 => "Sluggy",
+            2 => "Upside",
+            3 => "Leggy",
+            4 => "Blobby",
+            5 => "Leechy",
+            _ => "Snaily",
+        };
     }
 
     public void TestForArrowAdjust(MenuOption option, int varSlot, int max)
@@ -729,11 +722,13 @@ public class MainMenu : MonoBehaviour
                 entry.localPosition = new Vector2(0, entry.transform.localPosition.y + (LIST_OPTION_SPACING * 0.5f));
         }
 
-        MenuOption option = new MenuOption();
-        option.optionText = text;
-        option.optionID = currentOptions.Count;
-        option.selectable = isSelectable;
-        option.destinationPage = destination;
+        MenuOption option = new MenuOption
+        {
+            optionText = text,
+            optionID = currentOptions.Count,
+            selectable = isSelectable,
+            destinationPage = destination
+        };
 
         GameObject newText = Instantiate(textObject);
         newText.transform.parent = transform;
@@ -833,6 +828,9 @@ public class MainMenu : MonoBehaviour
     {
         string title = "Snailiad ";
         int titleLength = 0;
+        PlayState.AnimationData letterWidthData = PlayState.GetAnim("Title_letterWidths");
+        for (int i = 0; i < letterWidthData.frames.Length; i++)
+            letterPixelWidths[i] = letterWidthData.frames[i];
         for (int i = 0; i < title.Length; i++)
         {
             titleLength += letterPixelWidths[LetterToNumber(title[i])];
@@ -883,64 +881,36 @@ public class MainMenu : MonoBehaviour
 
     public int LetterToNumber(char letter)
     {
-        switch (char.ToLower(letter))
+        return char.ToLower(letter) switch
         {
-            default:
-            case 'a':
-                return 0;
-            case 'b':
-                return 1;
-            case 'c':
-                return 2;
-            case 'd':
-                return 3;
-            case 'e':
-                return 4;
-            case 'f':
-                return 5;
-            case 'g':
-                return 6;
-            case 'h':
-                return 7;
-            case 'i':
-                return 8;
-            case 'j':
-                return 9;
-            case 'k':
-                return 10;
-            case 'l':
-                return 11;
-            case 'm':
-                return 12;
-            case 'n':
-                return 13;
-            case 'o':
-                return 14;
-            case 'p':
-                return 15;
-            case 'q':
-                return 16;
-            case 'r':
-                return 17;
-            case 's':
-                return 18;
-            case 't':
-                return 19;
-            case 'u':
-                return 20;
-            case 'v':
-                return 21;
-            case 'w':
-                return 22;
-            case 'x':
-                return 23;
-            case 'y':
-                return 24;
-            case 'z':
-                return 25;
-            case ' ':
-                return 26;
-        }
+            'b' => 1,
+            'c' => 2,
+            'd' => 3,
+            'e' => 4,
+            'f' => 5,
+            'g' => 6,
+            'h' => 7,
+            'i' => 8,
+            'j' => 9,
+            'k' => 10,
+            'l' => 11,
+            'm' => 12,
+            'n' => 13,
+            'o' => 14,
+            'p' => 15,
+            'q' => 16,
+            'r' => 17,
+            's' => 18,
+            't' => 19,
+            'u' => 20,
+            'v' => 21,
+            'w' => 22,
+            'x' => 23,
+            'y' => 24,
+            'z' => 25,
+            ' ' => 26,
+            _ => 0,
+        };
     }
 
     public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
