@@ -482,6 +482,55 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "NPC_idle",
+			"spriteName": "Entities/SnailNpc",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_shell",
+			"spriteName": "Entities/SnailNpc",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_sleep",
+			"spriteName": "Entities/SnailNpc",
+			"framerate": 2.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_turtle",
+			"spriteName": "Entities/TurtleNpc",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				2,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "PowerGrass_idle",
 			"spriteName": "Entities/PowerGrass",
 			"framerate": 0.0,

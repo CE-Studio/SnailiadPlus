@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class TurtleNPC : NPC
 {
-    public SpriteRenderer sprite;
-    
     public override void Awake()
     {
         playerName = "Snaily";
 
         sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
+        anim.Add("NPC_turtle");
+        anim.Play("NPC_turtle");
     }
 
     public override void Update()
     {
         if (PlayState.gameState == "Game")
         {
-            anim.speed = 1;
             if (PlayState.player.transform.position.x < transform.position.x)
             {
                 sprite.flipX = true;
@@ -41,7 +40,5 @@ public class TurtleNPC : NPC
                 PlayState.CloseDialogue();
             }
         }
-        else
-            anim.speed = 0;
     }
 }

@@ -236,6 +236,7 @@ public class RoomTrigger : MonoBehaviour
                     case "NPC":
                         child.transform.localPosition = child.GetComponent<NPC>().origin;
                         child.GetComponent<NPC>().velocity = 0;
+                        child.GetComponent<NPC>().Spawn();
                         break;
                 }
             }

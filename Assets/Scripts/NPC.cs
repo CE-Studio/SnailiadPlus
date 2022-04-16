@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,9 +22,11 @@ public class NPC : MonoBehaviour
     private List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
     public Sprite[] npcSpriteSheet;
+    public Sprite[] sprites;
 
     public List<SpriteRenderer> parts = new List<SpriteRenderer>();
-    public Animator anim;
+    public SpriteRenderer sprite;
+    public AnimationModule anim;
     public GameObject speechBubble;
 
     public Vector2 origin;
@@ -49,7 +52,7 @@ public class NPC : MonoBehaviour
                 break;
         }
 
-        colorTable = (Texture2D)Resources.Load("Images/Entities/SnailNpcColor");
+        //colorTable = (Texture2D)Resources.Load("Images/Entities/SnailNpcColor");
 
         parts.Add(transform.GetComponent<SpriteRenderer>());
         parts.Add(transform.GetChild(0).GetComponent<SpriteRenderer>());
@@ -58,14 +61,17 @@ public class NPC : MonoBehaviour
         parts.Add(transform.GetChild(3).GetComponent<SpriteRenderer>());
         speechBubble = transform.Find("Speech bubble").gameObject;
 
-        parts[0].color = colorTable.GetPixel(0, ID);
-        parts[1].color = colorTable.GetPixel(1, ID);
-        parts[2].color = colorTable.GetPixel(2, ID);
-        parts[3].color = colorTable.GetPixel(3, ID);
-        parts[4].color = colorTable.GetPixel(4, ID);
+        //parts[0].color = colorTable.GetPixel(0, ID);
+        //parts[1].color = colorTable.GetPixel(1, ID);
+        //parts[2].color = colorTable.GetPixel(2, ID);
+        //parts[3].color = colorTable.GetPixel(3, ID);
+        //parts[4].color = colorTable.GetPixel(4, ID);
 
-        anim = GetComponent<Animator>();
-        anim.Play("NPC base", 0, 0);
+        //CreateNewSprites();
+        sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<AnimationModule>();
+        anim.updateSprite = false;
+        //anim.Play("NPC_idle");
 
         if (upsideDown)
         {
@@ -94,6 +100,20 @@ public class NPC : MonoBehaviour
     {
         nexted = 0;
         chatting = false;
+        //CreateNewSprites();
+        //anim.Play("NPC_idle");
+    }
+
+    public virtual void Spawn()
+    {
+        if (sprites.Length == 0)
+        {
+            CreateNewSprites();
+            anim.Add("NPC_idle");
+            anim.Add("NPC_shell");
+            anim.Add("NPC_sleep");
+        }
+        anim.Play("NPC_idle");
     }
 
     public virtual void FixedUpdate()
@@ -140,7 +160,8 @@ public class NPC : MonoBehaviour
     {
         if (PlayState.gameState == "Game")
         {
-            anim.speed = 1;
+            if (anim.isPlaying)
+                sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 
             if (PlayState.player.transform.position.x < transform.position.x)
             {
@@ -491,17 +512,48 @@ public class NPC : MonoBehaviour
                     break;
             }
         }
-        else
-            anim.speed = 0;
+    }
+
+    private void CreateNewSprites()
+    {
+        if (colorTable == null)
+            colorTable = PlayState.GetSprite("Entities/SnailNpcColor", 0).texture;
+        Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+        for (int i = 0; i < colorTable.width; i++)
+        {
+            referenceColors.Add(colorTable.GetPixel(i, 0), i);
+        }
+        List<Sprite> newSprites = new List<Sprite>();
+
+        for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++)
+        {
+            Sprite oldSprite = PlayState.GetSprite("Entities/SnailNpc", i);
+            Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+            Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
+                (int)oldSprite.textureRect.y,
+                (int)oldSprite.textureRect.width,
+                (int)oldSprite.textureRect.height);
+            for (int j = 0; j < pixels.Length; j++)
+            {
+                if (referenceColors.ContainsKey(pixels[j]))
+                    pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], ID + 1);
+            }
+            newSprite.SetPixels(pixels);
+            newSprite.Apply();
+
+            newSprites.Add(Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
+        }
+
+        sprites = newSprites.ToArray();
     }
 
     private void AddNPCColors(int inputID)
     {
-        portraitColors.Add(colorTable.GetPixel(0, inputID));
-        portraitColors.Add(colorTable.GetPixel(1, inputID));
-        portraitColors.Add(colorTable.GetPixel(2, inputID));
-        portraitColors.Add(colorTable.GetPixel(3, inputID));
-        portraitColors.Add(colorTable.GetPixel(4, inputID));
+        //portraitColors.Add(colorTable.GetPixel(0, inputID));
+        //portraitColors.Add(colorTable.GetPixel(1, inputID));
+        //portraitColors.Add(colorTable.GetPixel(2, inputID));
+        //portraitColors.Add(colorTable.GetPixel(3, inputID));
+        //portraitColors.Add(colorTable.GetPixel(4, inputID));
     }
 
     public void ChangeSprite(int spriteID)

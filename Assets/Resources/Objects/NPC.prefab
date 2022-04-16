@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9137358957039542331
 Transform:
   m_ObjectHideFlags: 0
@@ -73,14 +73,14 @@ SpriteRenderer:
   m_SortingOrder: -51
   m_Sprite: {fileID: -7876630773137754357, guid: 2bd7f000ac1998c44a589f64f101f806,
     type: 3}
-  m_Color: {r: 0.972549, g: 0.9647059, b: 0.972549, a: 0}
+  m_Color: {r: 0, g: 0, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &450049466855156432
@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &450049466855156433
 Transform:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &450049466883736131
@@ -181,7 +181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &450049466883736128
 Transform:
   m_ObjectHideFlags: 0
@@ -245,7 +245,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &450049468564987502
@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 450049468564987501}
   - component: {fileID: 450049468564987500}
   - component: {fileID: 450049468564987499}
+  - component: {fileID: 6771732126236493506}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -307,7 +308,6 @@ MonoBehaviour:
   playerFullName: 
   playerSpecies: 
   colors: []
-  colorTable: {fileID: 2800000, guid: ffefcfd9c00ba7f46bf409dc7e7e15b5, type: 3}
   npcSpriteSheet:
   - {fileID: 3862513801865770124, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   - {fileID: -7705112838881874201, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
@@ -351,7 +351,9 @@ MonoBehaviour:
   - {fileID: -3938111629178055236, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   - {fileID: -8566299241727231145, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
   - {fileID: 7107475878791808953, guid: 2bd7f000ac1998c44a589f64f101f806, type: 3}
+  sprites: []
   parts: []
+  sprite: {fileID: 0}
   anim: {fileID: 0}
   speechBubble: {fileID: 0}
   origin: {x: 0, y: 0}
@@ -398,11 +400,11 @@ SpriteRenderer:
   m_SortingOrder: -51
   m_Sprite: {fileID: 3862513801865770124, guid: 2bd7f000ac1998c44a589f64f101f806,
     type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 2, y: 1.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -416,7 +418,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450049468564987502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7822c0f2f69544f45a67d51f913bd171, type: 2}
   m_CullingMode: 0
@@ -427,6 +429,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6771732126236493506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450049468564987502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+    randomizeStartFrame: 0
+  speed: 1
+  listKeys: []
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0
+  updateSprite: 1
 --- !u!1 &450049468616689347
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7802258495450091002
 Transform:
   m_ObjectHideFlags: 0
@@ -589,6 +618,6 @@ SpriteRenderer:
   m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

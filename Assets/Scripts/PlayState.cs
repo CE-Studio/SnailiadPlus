@@ -406,6 +406,14 @@ public class PlayState
         return foundData;
     }
 
+    public static void PrintAllAnims()
+    {
+        string output = "";
+        for (int i = 0; i < animationLibrary.Length; i++)
+            output += animationLibrary[i].name + "\n";
+        Debug.Log(output);
+    }
+
     public static AnimationData GetAnim(int ID)
     {
         return animationLibrary[ID];

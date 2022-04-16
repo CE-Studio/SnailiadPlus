@@ -73,7 +73,7 @@ public class AnimationModule : MonoBehaviour
     {
         PlayState.AnimationData newAnim = PlayState.GetAnim(animName);
         if (newAnim.name == "NoAnim")
-            Debug.LogWarning("Animation \"" + animName + "\" does not exist! (Did you misspell it, or reference the wrong prefix?)");
+            Debug.LogWarning("Animation \"" + animName + "\" does not exist! (Did you misspell it?)");
         else
         {
             animList.Add(newAnim.name, newAnim);

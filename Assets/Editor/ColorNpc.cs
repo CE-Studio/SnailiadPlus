@@ -21,13 +21,13 @@ public class ColorNpc : Editor
         npcParts.Add(npcObject.GetChild(3).GetComponent<SpriteRenderer>());
     }
 
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-        npcParts[0].color = script.colorTable.GetPixel(0, script.ID);
-        npcParts[1].color = script.colorTable.GetPixel(1, script.ID);
-        npcParts[2].color = script.colorTable.GetPixel(2, script.ID);
-        npcParts[3].color = script.colorTable.GetPixel(3, script.ID);
-        npcParts[4].color = script.colorTable.GetPixel(4, script.ID);
-    }
+    //public override void OnInspectorGUI()
+    //{
+    //    DrawDefaultInspector();
+    //    npcParts[0].color = script.colorTable.GetPixel(0, script.ID + 1);
+    //    npcParts[1].color = script.colorTable.GetPixel(1, script.ID + 1);
+    //    npcParts[2].color = script.colorTable.GetPixel(2, script.ID + 1);
+    //    npcParts[3].color = script.colorTable.GetPixel(3, script.ID + 1);
+    //    npcParts[4].color = script.colorTable.GetPixel(4, script.ID + 1);
+    //}
 }
