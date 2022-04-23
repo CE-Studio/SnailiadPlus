@@ -1,0 +1,1079 @@
+{
+	"textArray": [
+		{
+			"name": "menu_title",
+			"text": "Snailiad+",
+			"value": 0
+		},
+		{
+			"name": "menu_version_header",
+			"text": "Engine version",
+			"value": 0
+		},
+		{
+			"name": "menu_version_developer",
+			"text": "DEV",
+			"value": 0
+		},
+		{
+			"name": "menu_version_demo",
+			"text": "DEMO",
+			"value": 0
+		},
+		{
+			"name": "menu_version_release",
+			"text": "RELEASE",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_return",
+			"text": "Return to game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_profile",
+			"text": "Select profile",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_bossRush",
+			"text": "Boss rush",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_multiplayer",
+			"text": "Multiplayer",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_options",
+			"text": "Options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_credits",
+			"text": "Credits",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_records",
+			"text": "Records",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_returnTo",
+			"text": "Back to main menu",
+			"value": 0
+		},
+		{
+			"name": "menu_option_main_quit",
+			"text": "Quit",
+			"value": 0
+		},
+		{
+			"name": "menu_option_profile_header",
+			"text": "Select a profile",
+			"value": 0
+		},
+		{
+			"name": "menu_option_profile_empty",
+			"text": "Empty profile",
+			"value": 0
+		},
+		{
+			"name": "menu_option_profile_copy",
+			"text": "Copy profile",
+			"value": 0
+		},
+		{
+			"name": "menu_option_profile_erase",
+			"text": "Erase profile",
+			"value": 0
+		},
+		{
+			"name": "menu_option_profile_returnTo",
+			"text": "Back to profile selection",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_header",
+			"text": "Game options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_difficulty",
+			"text": "Difficulty",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_character",
+			"text": "Character",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_randomized",
+			"text": "Randomized",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_confirm",
+			"text": "Start new game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_loadGame_header1",
+			"text": "Okay, where would you",
+			"value": 0
+		},
+		{
+			"name": "menu_option_loadGame_header2",
+			"text": "like to start from?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_loadGame_save",
+			"text": "Start from save point",
+			"value": 0
+		},
+		{
+			"name": "menu_option_loadGame_spawn",
+			"text": "Start from Snail Town",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_header1",
+			"text": "Okay, copy from which profile?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_header2",
+			"text": "Copy to which profile?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_cancel",
+			"text": "Cancel",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_header3",
+			"text": "Copy file #1 to _ slot #2?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_empty",
+			"text": "empty",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_full",
+			"text": "used",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_confirm",
+			"text": "Yes, copy it!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_cancelConfirm",
+			"text": "No, I changed my mind",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_header1",
+			"text": "Okay, erase which profile?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_cancel",
+			"text": "Cancel",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_header2",
+			"text": "Really erase file #?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_confirm",
+			"text": "Yes, I want to start over!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_copyGame_cancelConfirm",
+			"text": "No way, I like my game!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_sound",
+			"text": "Sound options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_display",
+			"text": "Display options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_controls",
+			"text": "Set controls",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_gameplay",
+			"text": "Gameplay options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_assets",
+			"text": "Asset packs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_eraseRecords",
+			"text": "Erase record data",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_importExport",
+			"text": "Import/export all data",
+			"value": 0
+		},
+		{
+			"name": "menu_option_options_returnTo",
+			"text": "Back to options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_sound_soundVol",
+			"text": "Sound volume",
+			"value": 0
+		},
+		{
+			"name": "menu_option_sound_musicVol",
+			"text": "Music volume",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_resolution",
+			"text": "Window resolution",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_minimap",
+			"text": "Minimap display",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_bottomKeys",
+			"text": "Bottom keys",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_keymap",
+			"text": "Real-time keymap",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_gameTime",
+			"text": "Game time",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_fps",
+			"text": "FPS display",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_particles",
+			"text": "Particles",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_control1",
+			"text": "Control set 1",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_control2",
+			"text": "Control set 2",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_controlMisc",
+			"text": "Miscellaneous",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_default",
+			"text": "Reset all to defaults",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_jump",
+			"text": "Jump",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_shoot",
+			"text": "Shoot",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_strafe",
+			"text": "Strafe",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_speak",
+			"text": "Speak",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_up",
+			"text": "Move up",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_left",
+			"text": "Move left",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_right",
+			"text": "Move right",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_down",
+			"text": "Move down",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_weapon1",
+			"text": "Weapon one",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_weapon2",
+			"text": "Weapon two",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_weapon3",
+			"text": "Weapon three",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_weaponNext",
+			"text": "Next weapon",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_weaponPrev",
+			"text": "Prev weapon",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_map",
+			"text": "Open map",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_menu",
+			"text": "Open menu",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_return",
+			"text": "Back",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gameplay_shooting",
+			"text": "Shooting",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gameplay_breakables",
+			"text": "Show breakables",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_texture",
+			"text": "Texture packs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_sound",
+			"text": "Sound packs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_music",
+			"text": "Music packs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_text",
+			"text": "Text packs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_path",
+			"text": "Get asset pack path",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetPath_header1",
+			"text": "Your asset folders can be",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetPath_header2",
+			"text": "found at:",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetPath_confirm",
+			"text": "Sounds good!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_achievements",
+			"text": "Erase achievements",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_times",
+			"text": "Erase times",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_all",
+			"text": "Erase both",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_header",
+			"text": "Are you sure??",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_confirm",
+			"text": "Yes, erase everything!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_recordErase_return",
+			"text": "No way, I like my game!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_export",
+			"text": "Export data to JSON",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_import",
+			"text": "Import data from JSON",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_selectSlot",
+			"text": "Select a slot",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_slotEmpty",
+			"text": "(empty)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_slotFull",
+			"text": "(full)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_importExport_confirm",
+			"text": "Confirm",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_header1",
+			"text": "Overwrite JSON save in slot #?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_header2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_header3",
+			"text": "Write all save data to a",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_header4",
+			"text": "JSON file in slot #?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_confirm",
+			"text": "Yeah, write it!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_return",
+			"text": "No, I chanced my mind",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_success1",
+			"text": "Success! Your new JSON",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_success2",
+			"text": "can be found at:",
+			"value": 0
+		},
+		{
+			"name": "menu_option_export_success_confirm",
+			"text": "Yay!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_header1",
+			"text": "Import data from slot #? This will",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_header2",
+			"text": "overwrite *ALL* existing data!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_confirm",
+			"text": "Yes, import away!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_return",
+			"text": "No way! Let me keep my data!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_empty",
+			"text": "There's no data in slot #!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_empty_return",
+			"text": "Whoops!! Go back",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_success",
+			"text": "Success! Data has been loaded",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_success_confirm",
+			"text": "Awesome!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched1",
+			"text": "Uh oh!! You seem to be",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched2",
+			"text": "importing a save from _",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched_newer",
+			"text": "a newer",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched_older",
+			"text": "an older",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched3",
+			"text": "version of the game.  Some",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched4",
+			"text": "features may be lost, missing,",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched5",
+			"text": "or broken.  Continue anyway?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched_confirm",
+			"text": "Yes, import away!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_import_mismatched_return",
+			"text": "No way, go back!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_1-1",
+			"text": "Snailiad - A Snaily Game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_1-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_1-3",
+			"text": "Original Flash version by",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_1-4",
+			"text": "Crystal Jacobs (Auriplane) and",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_1-5",
+			"text": "sponsored by Newgrounds",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_2-1",
+			"text": "Flash release special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_2-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_2-3",
+			"text": "Adamatomic (Flixel)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_2-4",
+			"text": "Newstarshipsmell (Testing)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_2-5",
+			"text": "xdanond (Additional art)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_3-1",
+			"text": "Remake created by",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_3-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_3-3",
+			"text": "Jamie Lamey (Epsilon the Dragon)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_3-4",
+			"text": "with Auriplane's permission",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_3-5",
+			"text": "under the Unity engine",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_4-1",
+			"text": "Remake special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_4-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_4-3",
+			"text": "Broomietunes (Additional songs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_4-4",
+			"text": "and built-in music pack)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_4-5",
+			"text": "NegativeBreak (Built-in sprite pack)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_5-1",
+			"text": "Remake special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_5-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_5-3",
+			"text": "Nat the Chicken (QA, testing)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_5-4",
+			"text": "Zettex (Extra characters)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_5-5",
+			"text": "Minervo Ionni (Another character)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_6-1",
+			"text": "Remake special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_6-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_6-3",
+			"text": "goldguy40 (Some additional",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_6-4",
+			"text": "tilemap tiles)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_6-5",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_7-1",
+			"text": "Remake special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_7-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_7-3",
+			"text": "Clarence112, my boyfriend",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_7-4",
+			"text": "(Emotional support, superior code",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_7-5",
+			"text": "knowledge, development assistance)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_8-1",
+			"text": "Remake special thanks",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_8-2",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_8-3",
+			"text": "The official Snaily Discord",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_8-4",
+			"text": "(Testing, feedback, ideas, and",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_8-5",
+			"text": "generally being super cool people)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_credits_next",
+			"text": "Next page",
+			"value": 0
+		},
+		{
+			"name": "menu_option_return_header",
+			"text": "Really return to menu?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_return_confirmSave",
+			"text": "Save and quit",
+			"value": 0
+		},
+		{
+			"name": "menu_option_return_confirmNoSave",
+			"text": "Quit without saving",
+			"value": 0
+		},
+		{
+			"name": "menu_option_return_cancel",
+			"text": "Back to pause menu",
+			"value": 0
+		},
+		{
+			"name": "menu_option_quit_header",
+			"text": "Really quit?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_quit_confirm",
+			"text": "Yeah, I'm done playing for now",
+			"value": 0
+		},
+		{
+			"name": "menu_option_quit_return",
+			"text": "No way! I'm not done yet!",
+			"value": 0
+		},
+		{
+			"name": "difficulty_easy",
+			"text": "Easy",
+			"value": 0
+		},
+		{
+			"name": "difficulty_normal",
+			"text": "Normal",
+			"value": 0
+		},
+		{
+			"name": "difficulty_insane",
+			"text": "Insane",
+			"value": 0
+		},
+		{
+			"name": "char_snaily",
+			"text": "Snaily",
+			"value": 0
+		},
+		{
+			"name": "species_snaily",
+			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "char_sluggy",
+			"text": "Sluggy",
+			"value": 0
+		},
+		{
+			"name": "species_sluggy",
+			"text": "Slug",
+			"value": 0
+		},
+		{
+			"name": "char_upside",
+			"text": "Upside",
+			"value": 0
+		},
+		{
+			"name": "species_upside",
+			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "char_leggy",
+			"text": "Leggy",
+			"value": 0
+		},
+		{
+			"name": "species_leggy",
+			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "char_blobby",
+			"text": "Blobby",
+			"value": 0
+		},
+		{
+			"name": "species_blobby",
+			"text": "Blob",
+			"value": 0
+		},
+		{
+			"name": "char_leechy",
+			"text": "Leechy",
+			"value": 0
+		},
+		{
+			"name": "species_leechy",
+			"text": "Leech",
+			"value": 1
+		},
+		{
+			"name": "menu_add_generic_yes",
+			"text": "yes",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_no",
+			"text": "no",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_show",
+			"text": "show",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_hide",
+			"text": "hide",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_on",
+			"text": "on",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_off",
+			"text": "off",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_true",
+			"text": "true",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_false",
+			"text": "false",
+			"value": 0
+		},
+		{
+			"name": "menu_add_shooting_normal",
+			"text": "normal",
+			"value": 0
+		},
+		{
+			"name": "menu_add_shooting_toggle",
+			"text": "toggle",
+			"value": 0
+		},
+		{
+			"name": "menu_add_breakables1",
+			"text": "obvious, piercing",
+			"value": 0
+		},
+		{
+			"name": "menu_add_breakables2",
+			"text": "obvious, any shot",
+			"value": 0
+		},
+		{
+			"name": "menu_add_breakables3",
+			"text": "all, piercing",
+			"value": 0
+		},
+		{
+			"name": "menu_add_breakables4",
+			"text": "all, any shot",
+			"value": 0
+		},
+		{
+			"name": "menu_add_resolution_1x",
+			"text": "1x",
+			"value": 0
+		},
+		{
+			"name": "menu_add_resolution_2x",
+			"text": "2x",
+			"value": 0
+		},
+		{
+			"name": "menu_add_resolution_3x",
+			"text": "3x",
+			"value": 0
+		},
+		{
+			"name": "menu_add_resolution_4x",
+			"text": "4x",
+			"value": 0
+		},
+		{
+			"name": "menu_add_mapOnly",
+			"text": "only map",
+			"value": 0
+		},
+		{
+			"name": "menu_add_bottomKeyWeaponOnly",
+			"text": "weapons only",
+			"value": 0
+		},
+		{
+			"name": "menu_add_particles1",
+			"text": "environments only",
+			"value": 0
+		},
+		{
+			"name": "menu_add_particles2",
+			"text": "entities only (Flash)",
+			"value": 0
+		},
+		{
+			"name": "menu_add_particles3",
+			"text": "entities only (all)",
+			"value": 0
+		},
+		{
+			"name": "menu_add_particles4",
+			"text": "Flash",
+			"value": 0
+		},
+		{
+			"name": "menu_add_particles5",
+			"text": "all",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		}
+	]
+}

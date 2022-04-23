@@ -125,6 +125,8 @@ public class MainMenu : MonoBehaviour
             Directory.CreateDirectory(Application.persistentDataPath + "/SoundPacks");
         if (!Directory.Exists(Application.persistentDataPath + "/MusicPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/MusicPacks");
+        if (!Directory.Exists(Application.persistentDataPath + "/TextPacks"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/TextPacks");
 
         PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
         PlayState.textureLibrary.BuildDefaultLibrary();
@@ -132,6 +134,7 @@ public class MainMenu : MonoBehaviour
         PlayState.soundLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultOffsetLibrary();
+        PlayState.textLibrary.BuildDefaultLibrary();
 
         PlayState.LoadOptions();
         PlayState.LoadControls();
@@ -159,8 +162,13 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Version Text")
         };
 
-        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
-        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
+        //menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
+        //menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
+        string[] version = Application.version.Split(' ');
+        string versionText = PlayState.GetText("menu_version_header") + "\n" + (version[0].ToLower() == "release" ? PlayState.GetText("menu_version_release") :
+            (version[0].ToLower() == "demo" ? PlayState.GetText("menu_version_demo") : PlayState.GetText("menu_version_developer"))) + " " + version[1];
+        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = versionText;
+        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
 
         StartCoroutine(nameof(CreateTitle));
     }
@@ -650,12 +658,12 @@ public class MainMenu : MonoBehaviour
     {
         return ID switch
         {
-            1 => "Sluggy",
-            2 => "Upside",
-            3 => "Leggy",
-            4 => "Blobby",
-            5 => "Leechy",
-            _ => "Snaily",
+            1 => PlayState.GetText("char_sluggy"),
+            2 => PlayState.GetText("char_upside"),
+            3 => PlayState.GetText("char_leggy"),
+            4 => PlayState.GetText("char_blobby"),
+            5 => PlayState.GetText("char_leechy"),
+            _ => PlayState.GetText("char_snaily"),
         };
     }
 
@@ -746,7 +754,7 @@ public class MainMenu : MonoBehaviour
         if (paramChange != null)
             option.menuParam = paramChange;
 
-        option.textParts[0].color = option.selectable ? new Color32(252, 252, 252, 255) : new Color32(252, 216, 132, 255);
+        option.textParts[0].color = option.selectable ? PlayState.GetColor("0312") : PlayState.GetColor("0309");
 
         currentOptions.Add(option);
     }
@@ -787,13 +795,13 @@ public class MainMenu : MonoBehaviour
         switch (difficulty)
         {
             case 0:
-                output = "Easy";
+                output = PlayState.GetText("difficulty_easy");
                 break;
             case 1:
-                output = "Normal";
+                output = PlayState.GetText("difficulty_normal");
                 break;
             case 2:
-                output = "Insane";
+                output = PlayState.GetText("difficulty_insane");
                 break;
         }
         return output;
@@ -826,7 +834,7 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator CreateTitle()
     {
-        string title = "Snailiad ";
+        string title = PlayState.GetText("menu_title");
         int titleLength = 0;
         PlayState.AnimationData letterWidthData = PlayState.GetAnim("Title_letterWidths");
         for (int i = 0; i < letterWidthData.frames.Length; i++)
@@ -837,7 +845,7 @@ public class MainMenu : MonoBehaviour
             if (i != title.Length - 1)
                 titleLength += 4;
         }
-        float letterSpawnX = (-(titleLength * 0.5f) + (letterPixelWidths[LetterToNumber(title[0])] * 0.5f)) * 0.0625f + 0.25f;
+        float letterSpawnX = (-(titleLength * 0.5f) + (letterPixelWidths[LetterToNumber(title[0])] * 0.5f)) * 0.0625f;// + 0.25f;
         float timer = LETTER_SPAWN_TIME;
         int letterID = 0;
         bool doneSpawning = false;
@@ -866,7 +874,7 @@ public class MainMenu : MonoBehaviour
         if (PlayState.gameState == "Game")
             yield break;
         yield return new WaitForSeconds(2);
-        if (PlayState.isMenuOpen && transform.Find("Title Plus") == null)
+        if (PlayState.isMenuOpen && transform.Find("Title Plus") == null && title[title.Length - 1] == '+')
         {
             GameObject plus = Instantiate(titlePlus);
             plus.name = "Title Plus";
@@ -883,6 +891,7 @@ public class MainMenu : MonoBehaviour
     {
         return char.ToLower(letter) switch
         {
+            'a' => 0,
             'b' => 1,
             'c' => 2,
             'd' => 3,
@@ -908,8 +917,7 @@ public class MainMenu : MonoBehaviour
             'x' => 23,
             'y' => 24,
             'z' => 25,
-            ' ' => 26,
-            _ => 0,
+            _ => 26
         };
     }
 
@@ -975,7 +983,7 @@ public class MainMenu : MonoBehaviour
         bool returnAvailable = false;
         if (PlayState.gameState == "Pause")
         {
-            AddOption("Return to game", true, Unpause);
+            AddOption(PlayState.GetText("menu_option_main_return"), true, Unpause);
             returnAvailable = true;
         }
         //AddOption("New game", true);
@@ -986,23 +994,23 @@ public class MainMenu : MonoBehaviour
         //AddOption("Credits", true);
         //AddOption("Records", true);
         //AddOption("Gallery", true);
-        AddOption("Select profile", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.achievementStates[6] == 1)
-            AddOption("Boss rush", true);
-        AddOption("Multiplayer", true);
+            AddOption(PlayState.GetText("menu_option_main_bossRush"), true);
+        AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
-        AddOption("Options", true, OptionsScreen);
-        AddOption("Credits", true, CreditsPage1);
+        AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_main_credits"), true, CreditsPage1);
         if (PlayState.HasTime())
-            AddOption("Records", true);
+            AddOption(PlayState.GetText("menu_option_records"), true);
         if (returnAvailable)
         {
-            AddOption("Back to main menu", true, MenuReturnConfirm);
+            AddOption(PlayState.GetText("menu_option_main_returnTo"), true, MenuReturnConfirm);
             backPage = Unpause;
         }
         else
         {
-            AddOption("Quit", true, QuitConfirm);
+            AddOption(PlayState.GetText("menu_option_main_quit"), true, QuitConfirm);
             backPage = QuitConfirm;
         }
         ForceSelect(0);
@@ -1011,7 +1019,7 @@ public class MainMenu : MonoBehaviour
     public void ProfileScreen()
     {
         ClearOptions();
-        AddOption("Select a profile", false);
+        AddOption(PlayState.GetText("menu_option_profile_header"), false);
         for (int i = 1; i <= 3; i++)
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i, false);
@@ -1019,12 +1027,12 @@ public class MainMenu : MonoBehaviour
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
                     " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
             else
-                AddOption("Empty profile", true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
         }
         AddOption("", false);
-        AddOption("Copy game", true, CopyData);
-        AddOption("Erase game", true, EraseData);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_profile_copy"), true, CopyData);
+        AddOption(PlayState.GetText("menu_option_profile_erase"), true, EraseData);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(1);
         backPage = PageMain;
     }
@@ -1032,17 +1040,17 @@ public class MainMenu : MonoBehaviour
     public void StartNewGame()
     {
         ClearOptions();
-        AddOption("Game options", false);
+        AddOption(PlayState.GetText("menu_option_newGame_header"), false);
         AddOption("", false);
-        AddOption("Difficulty: ", true);
+        AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true);
         if (PlayState.achievementStates[14] == 1)
         {
-            AddOption("Character: ", true);
-            AddOption("Randomized: ", true);
+            AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true);
+            AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true);
         }
         AddOption("", false);
-        AddOption("Start new game", true, StartNewSave);
-        AddOption("Back to profile selection", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_newGame_confirm"), true, StartNewSave);
+        AddOption(PlayState.GetText("menu_option_profile_returnTo"), true, ProfileScreen);
         ForceSelect(2);
         backPage = ProfileScreen;
     }
@@ -1085,13 +1093,13 @@ public class MainMenu : MonoBehaviour
     public void PickSpawn()
     {
         ClearOptions();
-        AddOption("Okay, where would you", false);
-        AddOption("like to start from?", false);
+        AddOption(PlayState.GetText("menu_option_loadGame_header1"), false);
+        AddOption(PlayState.GetText("menu_option_loadGame_header2"), false);
         AddOption("", false);
-        AddOption("Start from save point", true, LoadAndSpawn, new int[] { 1, 0 });
-        AddOption("Start from Snail Town", true, LoadAndSpawn, new int[] { 1, 1 });
+        AddOption(PlayState.GetText("menu_option_loadGame_save"), true, LoadAndSpawn, new int[] { 1, 0 });
+        AddOption(PlayState.GetText("menu_option_loadGame_spawn"), true, LoadAndSpawn, new int[] { 1, 1 });
         AddOption("", false);
-        AddOption("Back to profile selection", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_profile_returnTo"), true, ProfileScreen);
         ForceSelect(3);
         backPage = ProfileScreen;
     }
@@ -1147,19 +1155,19 @@ public class MainMenu : MonoBehaviour
     public void CopyData()
     {
         ClearOptions();
-        AddOption("Okay, copy from which profile?", false);
+        AddOption(PlayState.GetText("menu_option_copyGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
                 AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
             else
-                AddOption("Empty profile", false);
+                AddOption(PlayState.GetText("menu_option_profile_empty"), false);
         }
         AddOption("", false);
-        AddOption("Cancel", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_copyGame_cancel"), true, ProfileScreen);
         AddOption("", false);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(5);
         backPage = ProfileScreen;
     }
@@ -1167,7 +1175,7 @@ public class MainMenu : MonoBehaviour
     public void CopyData2()
     {
         ClearOptions();
-        AddOption("Copy to which profile?", false);
+        AddOption(PlayState.GetText("menu_option_copyGame_header2"), false);
         for (int i = 1; i <= 3; i++)
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
@@ -1175,12 +1183,12 @@ public class MainMenu : MonoBehaviour
                 AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%" +
                     (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
             else
-                AddOption("Empty profile", true, CopyConfirm, new int[] { 1, i });
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
         }
         AddOption("", false);
-        AddOption("Cancel", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_copyGame_cancel"), true, ProfileScreen);
         AddOption("", false);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(5);
         backPage = ProfileScreen;
     }
@@ -1189,10 +1197,11 @@ public class MainMenu : MonoBehaviour
     {
         bool isChosenSlotEmpty = PlayState.LoadGame(menuVarFlags[1]).profile == -1;
         ClearOptions();
-        AddOption("Copy file " + menuVarFlags[0] + " to " + (isChosenSlotEmpty ? "empty" : "used") + " slot " + menuVarFlags[1] + "?", false);
+        AddOption(PlayState.GetText("menu_option_copyGame_header3").Replace("#1", menuVarFlags[0].ToString()).Replace("#2", menuVarFlags[1].ToString()).Replace("_",
+            isChosenSlotEmpty ? PlayState.GetText("menu_option_copyGame_empty") : PlayState.GetText("menu_option_copyGame_full")), false);
         AddOption("", false);
-        AddOption("Yes, copy it!", true, ActuallyCopyData);
-        AddOption("No, I changed my mind", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_copyGame_confirm"), true, ActuallyCopyData);
+        AddOption(PlayState.GetText("menu_option_copyGame_cancelConfirm"), true, ProfileScreen);
         ForceSelect(3);
         backPage = ProfileScreen;
     }
@@ -1206,21 +1215,22 @@ public class MainMenu : MonoBehaviour
     public void EraseData()
     {
         ClearOptions();
-        AddOption("Okay, erase which profile?", false);
+        AddOption(PlayState.GetText("menu_option_eraseGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
             {
-                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
+                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%",
+                    PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
             }
             else
                 AddOption("Empty profile", false);
         }
         AddOption("", false);
-        AddOption("Cancel", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_eraseGame_cancel"), true, ProfileScreen);
         AddOption("", false);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(5);
         backPage = ProfileScreen;
     }
@@ -1228,10 +1238,10 @@ public class MainMenu : MonoBehaviour
     public void ConfirmErase()
     {
         ClearOptions();
-        AddOption("Really erase file " + menuVarFlags[0] + "?", false);
+        AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
         AddOption("", false);
-        AddOption("Yes, I want to start over!", true, ActuallyEraseData);
-        AddOption("No way, I like my game!", true, ProfileScreen);
+        AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, ActuallyEraseData);
+        AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
         ForceSelect(3);
         backPage = ProfileScreen;
     }
@@ -1246,22 +1256,22 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         menuVarFlags[0] = PlayState.gameOptions[8];
-        AddOption("Sound options", true, SoundOptions, new int[] { 0, PlayState.gameOptions[0], 1, PlayState.gameOptions[1] });
-        AddOption("Display options", true, DisplayOptions, new int[]
+        AddOption(PlayState.GetText("menu_option_options_sound"), true, SoundOptions, new int[] { 0, PlayState.gameOptions[0], 1, PlayState.gameOptions[1] });
+        AddOption(PlayState.GetText("menu_option_options_display"), true, DisplayOptions, new int[]
         {
             0, PlayState.gameOptions[2], 1, PlayState.gameOptions[3],
             2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
             4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7],
             6, PlayState.gameOptions[11]
         });
-        AddOption("Set controls", true, ControlMain);
-        AddOption("Gameplay options", true, GameplayScreen, new int[] { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12] });
-        AddOption("Asset packs", true, AssetPackMenu);
-        AddOption("Erase record data", true, RecordEraseSelect);
+        AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[] { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12] });
+        AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
+        AddOption(PlayState.GetText("menu_option_options_eraseRecords"), true, RecordEraseSelect);
         if (PlayState.gameState == "Menu")
-            AddOption("Import/export all data", true, ImportExportData);
+            AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
         AddOption("", false);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(0);
         backPage = PageMain;
     }
@@ -1269,10 +1279,10 @@ public class MainMenu : MonoBehaviour
     public void SoundOptions()
     {
         ClearOptions();
-        AddOption("Sound volume: ", true);
-        AddOption("Music volume: ", true);
+        AddOption(PlayState.GetText("menu_option_sound_soundVol") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_sound_musicVol") + ": ", true);
         AddOption("", false);
-        AddOption("Back to options", true, SaveOptions);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
     }
@@ -1280,15 +1290,15 @@ public class MainMenu : MonoBehaviour
     public void DisplayOptions()
     {
         ClearOptions();
-        AddOption("Window resolution: ", true);
-        AddOption("Minimap display: ", true);
-        AddOption("Bottom keys: ");
-        AddOption("Reactive key displays: ", true);
-        AddOption("Game time: ", true);
-        AddOption("FPS counter: ", true);
-        AddOption("Particles: ", true);
+        AddOption(PlayState.GetText("menu_option_display_resolution") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_minimap") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_bottomKeys") + ": ");
+        AddOption(PlayState.GetText("menu_option_display_keymap") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true);
         AddOption("", false);
-        AddOption("Back to options", true, SaveOptions);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
     }
@@ -1296,13 +1306,13 @@ public class MainMenu : MonoBehaviour
     public void ControlMain()
     {
         ClearOptions();
-        AddOption("Control set 1", true, Controls1);
-        AddOption("Control set 2", true, Controls2);
-        AddOption("Miscellaneous", true, Controls3);
+        AddOption(PlayState.GetText("menu_option_controls_control1"), true, Controls1);
+        AddOption(PlayState.GetText("menu_option_controls_control2"), true, Controls2);
+        AddOption(PlayState.GetText("menu_option_controls_controlMisc"), true, Controls3);
         AddOption("", false);
-        AddOption("Reset all to defaults", true, ResetControls);
+        AddOption(PlayState.GetText("menu_option_controls_default"), true, ResetControls);
         AddOption("", false);
-        AddOption("Back to options", true, SaveControls);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveControls);
         ForceSelect(0);
         backPage = SaveControls;
     }
@@ -1311,15 +1321,15 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 1;
-        AddOption("Jump:   ", true, TestForRebind, new int[] { 0, 4 });
-        AddOption("Shoot:   ", true, TestForRebind, new int[] { 0, 5 });
-        AddOption("Strafe:   ", true, TestForRebind, new int[] { 0, 6 });
-        AddOption("Speak:   ", true, TestForRebind, new int[] { 0, 7 });
-        AddOption("Move up:   ", true, TestForRebind, new int[] { 0, 2 });
-        AddOption("Move left:   ", true, TestForRebind, new int[] { 0, 0 });
-        AddOption("Move down:   ", true, TestForRebind, new int[] { 0, 3 });
-        AddOption("Move right:   ", true, TestForRebind, new int[] { 0, 1 });
-        AddOption("Back", true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 4 });
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 5 });
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 6 });
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 7 });
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2 });
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0 });
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3 });
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1 });
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
     }
@@ -1328,15 +1338,15 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 2;
-        AddOption("Jump:   ", true, TestForRebind, new int[] { 0, 12 });
-        AddOption("Shoot:   ", true, TestForRebind, new int[] { 0, 13 });
-        AddOption("Strafe:   ", true, TestForRebind, new int[] { 0, 14 });
-        AddOption("Speak:   ", true, TestForRebind, new int[] { 0, 15 });
-        AddOption("Move up:   ", true, TestForRebind, new int[] { 0, 10 });
-        AddOption("Move left:   ", true, TestForRebind, new int[] { 0, 8 });
-        AddOption("Move down:   ", true, TestForRebind, new int[] { 0, 11 });
-        AddOption("Move right:   ", true, TestForRebind, new int[] { 0, 9 });
-        AddOption("Back", true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 12 });
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 13 });
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 14 });
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 15 });
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 10 });
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8 });
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11 });
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9 });
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
     }
@@ -1345,15 +1355,15 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 3;
-        AddOption("Weapon one:   ", true, TestForRebind, new int[] { 0, 16 });
-        AddOption("Weapon two:   ", true, TestForRebind, new int[] { 0, 17 });
-        AddOption("Weapon three:   ", true, TestForRebind, new int[] { 0, 18 });
-        AddOption("Next weapon:   ", true, TestForRebind, new int[] { 0, 19 });
-        AddOption("Prev weapon:   ", true, TestForRebind, new int[] { 0, 20 });
-        AddOption("Open minimap:   ", true, TestForRebind, new int[] { 0, 21 });
-        AddOption("Open menu:   ", true, TestForRebind, new int[] { 0, 22 });
+        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16 });
+        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17 });
+        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18 });
+        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19 });
+        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20 });
+        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21 });
+        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22 });
         AddOption("", false);
-        AddOption("Back", true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
     }
@@ -1374,10 +1384,10 @@ public class MainMenu : MonoBehaviour
     public void GameplayScreen()
     {
         ClearOptions();
-        AddOption("Shooting: ", true);
-        AddOption("Show breakables: ", true);
+        AddOption(PlayState.GetText("menu_option_gameplay_shooting") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true);
         AddOption("", false);
-        AddOption("Back to options", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
         backPage = OptionsScreen;
     }
@@ -1385,13 +1395,14 @@ public class MainMenu : MonoBehaviour
     public void AssetPackMenu()
     {
         ClearOptions();
-        AddOption("Texture packs", true);
-        AddOption("Sound packs", true);
-        AddOption("Music packs", true);
+        AddOption(PlayState.GetText("menu_option_assets_texture"), true);
+        AddOption(PlayState.GetText("menu_option_assets_sound"), true);
+        AddOption(PlayState.GetText("menu_option_assets_music"), true);
+        AddOption(PlayState.GetText("menu_option_assets_text"), true);
         AddOption("", false);
-        AddOption("Get asset pack path", true, ReturnAssetPath);
+        AddOption(PlayState.GetText("menu_option_assets_path"), true, ReturnAssetPath);
         AddOption("", false);
-        AddOption("Back to options", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
         backPage = OptionsScreen;
     }
@@ -1401,8 +1412,8 @@ public class MainMenu : MonoBehaviour
         string dataPath = Application.persistentDataPath + "/";
 
         ClearOptions();
-        AddOption("Your asset folders can be", false);
-        AddOption("found at:", false);
+        AddOption(PlayState.GetText("menu_option_assetPath_header1"), false);
+        AddOption(PlayState.GetText("menu_option_assetPath_header2"), false);
 
         string currentText = "";
         int j = 32;
@@ -1419,7 +1430,7 @@ public class MainMenu : MonoBehaviour
         }
 
         AddOption("", false);
-        AddOption("Sounds good!", true, AssetPackMenu);
+        AddOption(PlayState.GetText("menu_option_assetPath_confirm"), true, AssetPackMenu);
         ForceSelect(currentOptions.Count - 1);
         backPage = AssetPackMenu;
     }
@@ -1427,11 +1438,11 @@ public class MainMenu : MonoBehaviour
     public void RecordEraseSelect()
     {
         ClearOptions();
-        AddOption("Erase achievements", true, AchievementEraseConfirm);
-        AddOption("Erase times", true, TimeEraseConfirm);
-        AddOption("Erase both", true, RecordEraseConfirm);
+        AddOption(PlayState.GetText("menu_option_recordErase_achievements"), true, AchievementEraseConfirm);
+        AddOption(PlayState.GetText("menu_option_recordErase_times"), true, TimeEraseConfirm);
+        AddOption(PlayState.GetText("menu_option_recordErase_all"), true, RecordEraseConfirm);
         AddOption("", false);
-        AddOption("Back to options", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(4);
         backPage = OptionsScreen;
     }
@@ -1439,10 +1450,10 @@ public class MainMenu : MonoBehaviour
     public void AchievementEraseConfirm()
     {
         ClearOptions();
-        AddOption("Are you sure??", false);
+        AddOption(PlayState.GetText("menu_option_recordErase_header"), false);
         AddOption("", false);
-        AddOption("Yes, erase everything!", true, EraseAchievements);
-        AddOption("No way, I like my game!", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_recordErase_confirm"), true, EraseAchievements);
+        AddOption(PlayState.GetText("menu_option_recordErase_return"), true, OptionsScreen);
         ForceSelect(3);
         backPage = OptionsScreen;
     }
@@ -1457,10 +1468,10 @@ public class MainMenu : MonoBehaviour
     public void TimeEraseConfirm()
     {
         ClearOptions();
-        AddOption("Are you sure??", false);
+        AddOption(PlayState.GetText("menu_option_recordErase_header"), false);
         AddOption("", false);
-        AddOption("Yes, erase everything!", true, EraseTimes);
-        AddOption("No way, I like my game!", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_recordErase_confirm"), true, EraseTimes);
+        AddOption(PlayState.GetText("menu_option_recordErase_return"), true, OptionsScreen);
         ForceSelect(3);
         backPage = OptionsScreen;
     }
@@ -1475,10 +1486,10 @@ public class MainMenu : MonoBehaviour
     public void RecordEraseConfirm()
     {
         ClearOptions();
-        AddOption("Are you sure??", false);
+        AddOption(PlayState.GetText("menu_option_recordErase_header"), false);
         AddOption("", false);
-        AddOption("Yes, erase everything!", true, EraseRecords);
-        AddOption("No way, I like my game!", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_recordErase_confirm"), true, EraseRecords);
+        AddOption(PlayState.GetText("menu_option_recordErase_return"), true, OptionsScreen);
         ForceSelect(3);
         backPage = OptionsScreen;
     }
@@ -1498,10 +1509,10 @@ public class MainMenu : MonoBehaviour
         if (PlayState.currentProfile == -1)
         {
             ClearOptions();
-            AddOption("Export data to JSON", true, ExportSelect, new int[] { 0, 0 });
-            AddOption("Import data from JSON", true, ImportSelect, new int[] { 0, 0 });
+            AddOption(PlayState.GetText("menu_option_importExport_export"), true, ExportSelect, new int[] { 0, 0 });
+            AddOption(PlayState.GetText("menu_option_importExport_import"), true, ImportSelect, new int[] { 0, 0 });
             AddOption("", false);
-            AddOption("Back to options", true, OptionsScreen);
+            AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
             ForceSelect(0);
             backPage = OptionsScreen;
         }
@@ -1521,10 +1532,10 @@ public class MainMenu : MonoBehaviour
     public void ExportSelect()
     {
         ClearOptions();
-        AddOption("Select a slot: ", true);
+        AddOption(PlayState.GetText("menu_option_importExport_selectSlot") + ": ", true);
         AddOption("", false);
-        AddOption("Confirm", true, ExportConfirm);
-        AddOption("Back to options", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_importExport_confirm"), true, ExportConfirm);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
         backPage = ImportExportData;
     }
@@ -1534,8 +1545,8 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         if (File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
-            AddOption("Overwrite JSON save in slot " + (menuVarFlags[0] + 1) + "?", false);
-            AddOption("", false);
+            AddOption(PlayState.GetText("menu_option_export_header1").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
+            AddOption(PlayState.GetText("menu_option_export_header2").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
         }
         else
         {
@@ -1728,6 +1739,12 @@ public class MainMenu : MonoBehaviour
             newTimes[i] = tempDataSlot.records.times[i];
         PlayState.gameData.records.times = newTimes;
         //PlayState.LoadRecords();
+        ClearOptions();
+        AddOption("Success! Data has been loaded", false);
+        AddOption("", false);
+        AddOption("Awesome!", true, ImportExportData);
+        ForceSelect(2);
+        backPage = ImportExportData;
     }
 
     public void ClearTempAndReturn()

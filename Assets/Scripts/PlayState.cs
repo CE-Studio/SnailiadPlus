@@ -41,12 +41,21 @@ public class PlayState
         public float offset;
     }
 
+    [Serializable]
+    public struct TextDict
+    {
+        public string name;
+        public string text;
+        public int value;
+    }
+
     public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
     public static AnimationData[] animationLibrary = new AnimationData[0];
     public static SpriteFrameSize[] spriteSizeLibrary = new SpriteFrameSize[0];
     public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
     public static MusicLibrary musicLibrary = GameObject.Find("View").GetComponent<LibraryManager>().musicLibrary;
     public static MusicLoopOffset[] musicLoopOffsetLibrary = new MusicLoopOffset[0];
+    public static TextLibrary textLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textLibrary;
 
     public static int[] charWidths;
 
@@ -475,6 +484,51 @@ public class PlayState
     public static Color32 GetColor(string ID)
     {
         return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
+    }
+
+    public static string GetText(string ID)
+    {
+        int i = 0;
+        bool found = false;
+        while (i < textLibrary.library.Length && !found)
+        {
+            if (textLibrary.library[i].name == ID)
+                return textLibrary.library[i].text;
+            i++;
+        }
+        //return "Text with ID \"" + ID + "\" not found";
+        return ID;
+    }
+
+    public static TextDict GetTextInfo(string ID)
+    {
+        int i = 0;
+        bool found = false;
+        while (i < textLibrary.library.Length && !found)
+        {
+            if (textLibrary.library[i].name == ID)
+                return textLibrary.library[i];
+            i++;
+        }
+        return new TextDict
+        {
+            name = "missing",
+            text = "Text with ID \"" + ID + "\" not found",
+            value = 0
+        };
+    }
+
+    public static string GetIDFromText(string text)
+    {
+        int i = 0;
+        bool found = false;
+        while (i < textLibrary.library.Length && !found)
+        {
+            if (textLibrary.library[i].text == text)
+                return textLibrary.library[i].name;
+            i++;
+        }
+        return "ID with text \"" + text + "\" not found";
     }
 
     public static void GetNewRoom(string intendedArea)

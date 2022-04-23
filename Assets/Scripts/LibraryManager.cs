@@ -7,4 +7,5 @@ public class LibraryManager : MonoBehaviour
     public TextureLibrary textureLibrary;
     public SoundLibrary soundLibrary;
     public MusicLibrary musicLibrary;
+    public TextLibrary textLibrary;
 }

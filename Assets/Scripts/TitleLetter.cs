@@ -14,6 +14,11 @@ public class TitleLetter : MonoBehaviour
 
     private const float X_SCALE = 80;
 
+    private List<char> acceptedLetters = new List<char>
+    {
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    };
+
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -62,8 +67,8 @@ public class TitleLetter : MonoBehaviour
 
     public void SetLetter(char newLetter)
     {
-        letter = newLetter;
-        if (letter == ' ')
+        letter = newLetter.ToString().ToLower().ToCharArray()[0];
+        if (!acceptedLetters.Contains(letter))
             sprite.sprite = PlayState.BlankTexture();
         else
         {
