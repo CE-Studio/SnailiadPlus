@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     public struct MenuOption
     {
         public string optionText;
+        public string varType;
         public int optionID;
         public bool selectable;
         public DestinationDelegate destinationPage;
@@ -325,286 +326,288 @@ public class MainMenu : MonoBehaviour
 
             foreach (MenuOption option in currentOptions)
             {
-                switch (option.optionText)
+                switch (option.varType)
                 {
                     default:
+                        if (option.varType != "none")
+                            Debug.LogWarning("Menu option variable type \"" + option.varType + "\" is not recognized");
                         break;
-                    case "Difficulty: ":
+                    case "difficulty":
                         TestForArrowAdjust(option, 0, PlayState.achievementStates[14] == 1 ? 2 : 1);
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                AddToOptionText(option, "Easy");
+                                AddToOptionText(option, PlayState.GetText("difficulty_easy"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "Normal");
+                                AddToOptionText(option, PlayState.GetText("difficulty_normal"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "Insane");
+                                AddToOptionText(option, PlayState.GetText("difficulty_insane"));
                                 break;
                         }
                         break;
-                    case "Character: ":
+                    case "character":
                         TestForArrowAdjust(option, 1, 5);
                         switch (menuVarFlags[1])
                         {
                             case 0:
-                                AddToOptionText(option, "Snaily");
+                                AddToOptionText(option, PlayState.GetText("char_snaily"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "Sluggy");
+                                AddToOptionText(option, PlayState.GetText("char_sluggy"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "Upside");
+                                AddToOptionText(option, PlayState.GetText("char_upside"));
                                 break;
                             case 3:
-                                AddToOptionText(option, "Leggy");
+                                AddToOptionText(option, PlayState.GetText("char_leggy"));
                                 break;
                             case 4:
-                                AddToOptionText(option, "Blobby");
+                                AddToOptionText(option, PlayState.GetText("char_blobby"));
                                 break;
                             case 5:
-                                AddToOptionText(option, "Leechy");
+                                AddToOptionText(option, PlayState.GetText("char_leechy"));
                                 break;
                         }
                         break;
-                    case "Randomized: ":
+                    case "isRandomized":
                         TestForArrowAdjust(option, 2, 1);
                         switch (menuVarFlags[2])
                         {
                             case 0:
-                                AddToOptionText(option, "No");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_no"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "Yes");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_yes"));
                                 break;
                         }
                         break;
-                    case "Shooting: ":
+                    case "shooting":
                         TestForArrowAdjust(option, 0, 1);
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                AddToOptionText(option, "Normal");
+                                AddToOptionText(option, PlayState.GetText("menu_add_shooting_normal"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "Toggle");
+                                AddToOptionText(option, PlayState.GetText("menu_add_shooting_toggle"));
                                 break;
                         }
                         PlayState.gameOptions[8] = menuVarFlags[0];
                         break;
-                    case "Show breakables: ":
+                    case "showBreakables":
                         TestForArrowAdjust(option, 1, 4);
                         switch (menuVarFlags[1])
                         {
                             case 0:
-                                AddToOptionText(option, "off");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "obvious, piercing");
+                                AddToOptionText(option, PlayState.GetText("menu_add_breakables1"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "obvious, any shot");
+                                AddToOptionText(option, PlayState.GetText("menu_add_breakables2"));
                                 break;
                             case 3:
-                                AddToOptionText(option, "all, piercing");
+                                AddToOptionText(option, PlayState.GetText("menu_add_breakables3"));
                                 break;
                             case 4:
-                                AddToOptionText(option, "all, any shot");
+                                AddToOptionText(option, PlayState.GetText("menu_add_breakables4"));
                                 break;
                         }
                         PlayState.gameOptions[12] = menuVarFlags[1];
                         break;
-                    case "Sound volume: ":
+                    case "soundVolume":
                         TestForArrowAdjust(option, 0, 10);
                         AddToOptionText(option, menuVarFlags[0].ToString());
                         PlayState.gameOptions[0] = menuVarFlags[0];
                         break;
-                    case "Music volume: ":
+                    case "musicVolume":
                         TestForArrowAdjust(option, 1, 10);
                         AddToOptionText(option, menuVarFlags[1].ToString());
                         PlayState.gameOptions[1] = menuVarFlags[1];
                         break;
-                    case "Window resolution: ":
+                    case "resolution":
                         TestForArrowAdjust(option, 0, 3);
                         switch (menuVarFlags[0])
                         {
                             case 0:
-                                AddToOptionText(option, "1x");
+                                AddToOptionText(option, PlayState.GetText("menu_add_resolution_1x"));
                                 Screen.SetResolution(400, 240, false);
                                 break;
                             case 1:
-                                AddToOptionText(option, "2x");
+                                AddToOptionText(option, PlayState.GetText("menu_add_resolution_2x"));
                                 Screen.SetResolution(800, 480, false);
                                 break;
                             case 2:
-                                AddToOptionText(option, "3x");
+                                AddToOptionText(option, PlayState.GetText("menu_add_resolution_3x"));
                                 Screen.SetResolution(1200, 720, false);
                                 break;
                             case 3:
-                                AddToOptionText(option, "4x");
+                                AddToOptionText(option, PlayState.GetText("menu_add_resolution_4x"));
                                 Screen.SetResolution(1600, 960, false);
                                 break;
                         }
                         PlayState.gameOptions[2] = menuVarFlags[0];
                         break;
-                    case "Minimap display: ":
+                    case "minimap":
                         TestForArrowAdjust(option, 1, 2);
                         switch (menuVarFlags[1])
                         {
                             case 0:
-                                AddToOptionText(option, "hide");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "only map");
+                                AddToOptionText(option, PlayState.GetText("menu_add_mapOnly"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "show");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
                         PlayState.gameOptions[3] = menuVarFlags[1];
                         break;
-                    case "Bottom keys: ":
+                    case "bottomKeys":
                         TestForArrowAdjust(option, 2, 2);
                         switch (menuVarFlags[2])
                         {
                             case 0:
-                                AddToOptionText(option, "hide");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "weapons only");
+                                AddToOptionText(option, PlayState.GetText("menu_add_bottomKeyWeaponOnly"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "show");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
                         PlayState.gameOptions[4] = menuVarFlags[2];
                         break;
-                    case "Reactive key displays: ":
+                    case "keymap":
                         TestForArrowAdjust(option, 3, 1);
                         switch (menuVarFlags[3])
                         {
                             case 0:
-                                AddToOptionText(option, "hide");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "show");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
                         PlayState.gameOptions[5] = menuVarFlags[3];
                         break;
-                    case "Game time: ":
+                    case "gameTime":
                         TestForArrowAdjust(option, 4, 1);
                         switch (menuVarFlags[4])
                         {
                             case 0:
-                                AddToOptionText(option, "hide");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "show");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
                         PlayState.gameOptions[6] = menuVarFlags[4];
                         break;
-                    case "FPS counter: ":
+                    case "fps":
                         TestForArrowAdjust(option, 5, 1);
                         switch (menuVarFlags[5])
                         {
                             case 0:
-                                AddToOptionText(option, "hide");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "show");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
                         PlayState.gameOptions[7] = menuVarFlags[5];
                         break;
-                    case "Particles: ":
+                    case "particles":
                         TestForArrowAdjust(option, 6, 5);
                         switch (menuVarFlags[6])
                         {
                             case 0:
-                                AddToOptionText(option, "none");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_none"));
                                 break;
                             case 1:
-                                AddToOptionText(option, "environments only");
+                                AddToOptionText(option, PlayState.GetText("menu_add_particles1"));
                                 break;
                             case 2:
-                                AddToOptionText(option, "entities only (Flash)");
+                                AddToOptionText(option, PlayState.GetText("menu_add_particles2"));
                                 break;
                             case 3:
-                                AddToOptionText(option, "entities only (all)");
+                                AddToOptionText(option, PlayState.GetText("menu_add_particles3"));
                                 break;
                             case 4:
-                                AddToOptionText(option, "Flash");
+                                AddToOptionText(option, PlayState.GetText("menu_add_particles4"));
                                 break;
                             case 5:
-                                AddToOptionText(option, "all");
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_all"));
                                 break;
                         }
                         PlayState.gameOptions[11] = menuVarFlags[6];
                         break;
-                    case "Jump:   ":
+                    case "control_jump":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(12) : Control.ParseKeyName(4));
                         break;
-                    case "Shoot:   ":
+                    case "control_shoot":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(13) : Control.ParseKeyName(5));
                         break;
-                    case "Strafe:   ":
+                    case "control_strafe":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(14) : Control.ParseKeyName(6));
                         break;
-                    case "Speak:   ":
+                    case "control_speak":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(15) : Control.ParseKeyName(7));
                         break;
-                    case "Move up:   ":
+                    case "control_up":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(10) : Control.ParseKeyName(2));
                         break;
-                    case "Move left:   ":
+                    case "control_left":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(8) : Control.ParseKeyName(0));
                         break;
-                    case "Move right:   ":
+                    case "control_right":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(9) : Control.ParseKeyName(1));
                         break;
-                    case "Move down:   ":
+                    case "control_down":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(11) : Control.ParseKeyName(3));
                         break;
-                    case "Weapon one:   ":
+                    case "control_weapon1":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(16));
                         break;
-                    case "Weapon two:   ":
+                    case "control_weapon2":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(17));
                         break;
-                    case "Weapon three:   ":
+                    case "control_weapon3":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(18));
                         break;
-                    case "Next weapon:   ":
+                    case "control_weaponNext":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(19));
                         break;
-                    case "Prev weapon:   ":
+                    case "control_weaponPrev":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(20));
                         break;
-                    case "Open minimap:   ":
+                    case "control_map":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(21));
                         break;
-                    case "Open menu:   ":
+                    case "control_menu":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(22));
                         break;
-                    case "Select a slot: ":
+                    case "slot":
                         TestForArrowAdjust(option, 0, 9);
                         AddToOptionText(option, (menuVarFlags[0] + 1).ToString() +
                             (File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json") ? " (full)" : " (empty)"));
@@ -658,12 +661,12 @@ public class MainMenu : MonoBehaviour
     {
         return ID switch
         {
-            1 => PlayState.GetText("char_sluggy"),
-            2 => PlayState.GetText("char_upside"),
-            3 => PlayState.GetText("char_leggy"),
-            4 => PlayState.GetText("char_blobby"),
-            5 => PlayState.GetText("char_leechy"),
-            _ => PlayState.GetText("char_snaily"),
+            1 => "Sluggy",
+            2 => "Upside",
+            3 => "Leggy",
+            4 => "Blobby",
+            5 => "Leechy",
+            _ => "Snaily",
         };
     }
 
@@ -722,7 +725,27 @@ public class MainMenu : MonoBehaviour
         option.textParts[1].text = (option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : "");
     }
 
+    public void AddOption(string text = "", bool isSelectable = true)
+    {
+        AddOption(text, isSelectable, null, null, "none");
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null)
+    {
+        AddOption(text, isSelectable, destination, null, "none");
+    }
+    public void AddOption(string text = "", bool isSelectable = true, string variable = "none")
+    {
+        AddOption(text, isSelectable, null, null, variable);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, string variable = "none")
+    {
+        AddOption(text, isSelectable, destination, null, variable);
+    }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
+    {
+        AddOption(text, isSelectable, destination, paramChange, "none");
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null, string variable = "none")
     {
         foreach (Transform entry in transform)
         {
@@ -735,7 +758,8 @@ public class MainMenu : MonoBehaviour
             optionText = text,
             optionID = currentOptions.Count,
             selectable = isSelectable,
-            destinationPage = destination
+            destinationPage = destination,
+            varType = variable
         };
 
         GameObject newText = Instantiate(textObject);
@@ -1042,11 +1066,11 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_newGame_header"), false);
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true, "difficulty");
         if (PlayState.achievementStates[14] == 1)
         {
-            AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true);
-            AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true);
+            AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true, "character");
+            AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true, "isRandomized");
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_newGame_confirm"), true, StartNewSave);
@@ -1279,8 +1303,8 @@ public class MainMenu : MonoBehaviour
     public void SoundOptions()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_sound_soundVol") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_sound_musicVol") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_sound_soundVol") + ": ", true, "soundVolume");
+        AddOption(PlayState.GetText("menu_option_sound_musicVol") + ": ", true, "musicVolume");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
@@ -1290,13 +1314,13 @@ public class MainMenu : MonoBehaviour
     public void DisplayOptions()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_display_resolution") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_display_minimap") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_display_bottomKeys") + ": ");
-        AddOption(PlayState.GetText("menu_option_display_keymap") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_display_resolution") + ": ", true, "resolution");
+        AddOption(PlayState.GetText("menu_option_display_minimap") + ": ", true, "minimap");
+        AddOption(PlayState.GetText("menu_option_display_bottomKeys") + ": ", true, "bottomKeys");
+        AddOption(PlayState.GetText("menu_option_display_keymap") + ": ", true, "keymap");
+        AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true, "gameTime");
+        AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true, "fps");
+        AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true, "particles");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
@@ -1321,14 +1345,14 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 1;
-        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 4 });
-        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 5 });
-        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 6 });
-        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 7 });
-        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2 });
-        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0 });
-        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3 });
-        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1 });
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 4 }, "control_jump");
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 5 }, "control_shoot");
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 6 }, "control_strafe");
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 7 }, "control_speak");
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2 }, "control_up");
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0 }, "control_left");
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3 }, "control_down");
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1 }, "control_right");
         AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
@@ -1338,15 +1362,15 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 2;
-        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 12 });
-        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 13 });
-        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 14 });
-        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 15 });
-        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 10 });
-        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8 });
-        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11 });
-        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9 });
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 12 }, "control_jump");
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 13 }, "control_shoot");
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 14 }, "control_strafe");
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 15 }, "control_speak");
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 10 },  "control_up");
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8 }, "control_left");
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11 }, "control_down");
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9 }, "control_right");
+AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
         backPage = ControlMain;
     }
@@ -1355,13 +1379,13 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         controlScreen = 3;
-        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16 });
-        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17 });
-        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18 });
-        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19 });
-        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20 });
-        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21 });
-        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22 });
+        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16 }, "control_weapon1");
+        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17 }, "control_weapon2");
+        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18 }, "control_weapon3");
+        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19 }, "control_weaponNext");
+        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20 }, "control_weaponPrev");
+        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21 }, "control_map");
+        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22 }, "control_menu");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ForceSelect(0);
@@ -1384,8 +1408,8 @@ public class MainMenu : MonoBehaviour
     public void GameplayScreen()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_gameplay_shooting") + ": ", true);
-        AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_gameplay_shooting") + ": ", true, "shooting");
+        AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true, "showBreakables");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
@@ -1532,7 +1556,7 @@ public class MainMenu : MonoBehaviour
     public void ExportSelect()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_importExport_selectSlot") + ": ", true);
+        AddOption(PlayState.GetText("menu_option_importExport_selectSlot") + ": ", true, "slot");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_importExport_confirm"), true, ExportConfirm);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
@@ -1550,12 +1574,12 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            AddOption("Write all saved data to a", false);
-            AddOption("JSON file in slot " + (menuVarFlags[0] + 1) + "?", false);
+            AddOption(PlayState.GetText("menu_option_export_header3").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
+            AddOption(PlayState.GetText("menu_option_export_header4").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
         }
         AddOption("", false);
-        AddOption("Yeah, write it!", true, WriteDataToFile);
-        AddOption("No, I changed my mind", true, ImportExportData);
+        AddOption(PlayState.GetText("menu_option_export_confirm"), true, WriteDataToFile);
+        AddOption(PlayState.GetText("menu_option_export_return"), true, ImportExportData);
         ForceSelect(4);
         backPage = ImportExportData;
     }
@@ -1586,8 +1610,8 @@ public class MainMenu : MonoBehaviour
         File.WriteAllText(dataPath, JsonUtility.ToJson(fullData));
 
         ClearOptions();
-        AddOption("Success! Your new JSON", false);
-        AddOption("can be found at:", false);
+        AddOption(PlayState.GetText("menu_option_export_success1"), false);
+        AddOption(PlayState.GetText("menu_option_export_success2"), false);
 
         string currentText = "";
         int j = 32;
@@ -1604,7 +1628,7 @@ public class MainMenu : MonoBehaviour
         }
 
         AddOption("", false);
-        AddOption("Yay!!", true, ImportExportData);
+        AddOption(PlayState.GetText("menu_option_export_success_confirm"), true, ImportExportData);
         ForceSelect(currentOptions.Count - 1);
         backPage = ImportExportData;
     }
@@ -1612,10 +1636,10 @@ public class MainMenu : MonoBehaviour
     public void ImportSelect()
     {
         ClearOptions();
-        AddOption("Select a slot: ", true);
+        AddOption(PlayState.GetText("menu_option_importExport_selectSlot") + ": ", true, "slot");
         AddOption("", false);
-        AddOption("Confirm", true, ImportConfirm);
-        AddOption("Back to options", true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_importExport_confirm"), true, ImportConfirm);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
         backPage = ImportExportData;
     }
@@ -1625,19 +1649,19 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         if (File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json"))
         {
-            AddOption("Import data from slot " + (menuVarFlags[0] + 1) + "? This will", false);
-            AddOption("overwrite *ALL* existing data!!", false);
+            AddOption(PlayState.GetText("menu_option_import_header1").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
+            AddOption(PlayState.GetText("menu_option_import_header2").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
             AddOption("", false);
-            AddOption("Yes, import away!", true, ReadDataFromFile);
-            AddOption("No way! Let me keep my data!", true, ImportExportData);
+            AddOption(PlayState.GetText("menu_option_import_confirm"), true, ReadDataFromFile);
+            AddOption(PlayState.GetText("menu_option_import_return"), true, ImportExportData);
             ForceSelect(4);
             backPage = ImportExportData;
         }
         else
         {
-            AddOption("There\'s no data in slot " + (menuVarFlags[0] + 1) + "!", false);
+            AddOption(PlayState.GetText("menu_option_import_empty").Replace("#", (menuVarFlags[0] + 1).ToString()), false);
             AddOption("", false);
-            AddOption("Whoops!! Go back", true, ImportExportData);
+            AddOption(PlayState.GetText("menu_option_import_empty_return"), true, ImportExportData);
             ForceSelect(2);
             backPage = ImportExportData;
         }
@@ -1657,9 +1681,9 @@ public class MainMenu : MonoBehaviour
             //PlayState.LoadRecords();
 
             ClearOptions();
-            AddOption("Success! Data has been loaded", false);
+            AddOption(PlayState.GetText("menu_option_import_success"), false);
             AddOption("", false);
-            AddOption("Awesome!", true, ImportExportData);
+            AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
             ForceSelect(2);
             backPage = ImportExportData;
         }
@@ -1677,15 +1701,16 @@ public class MainMenu : MonoBehaviour
     PlayState.CollectiveData tempDataSlot;
     public void ConfirmMismatchedImport(bool isNewer)
     {
+        string add = isNewer ? PlayState.GetText("menu_option_import_mismatched_newer") : PlayState.GetText("menu_option_import_mismatched_older");
         ClearOptions();
-        AddOption("Uh oh!!  You seem to be", false);
-        AddOption("importing a save from " + (isNewer ? "a newer" : "an older"), false);
-        AddOption("version of the game.  Some", false);
-        AddOption("features may be lost, missing,", false);
-        AddOption("or broken.  Continue anyway?", false);
+        AddOption(PlayState.GetText("menu_option_import_mismatched1").Replace("_", add), false);
+        AddOption(PlayState.GetText("menu_option_import_mismatched2").Replace("_", add), false);
+        AddOption(PlayState.GetText("menu_option_import_mismatched3").Replace("_", add), false);
+        AddOption(PlayState.GetText("menu_option_import_mismatched4").Replace("_", add), false);
+        AddOption(PlayState.GetText("menu_option_import_mismatched5").Replace("_", add), false);
         AddOption("", false);
-        AddOption("Yes, import away!", true, ImportMismatched);
-        AddOption("No way, go back!", true, ClearTempAndReturn);
+        AddOption(PlayState.GetText("menu_option_import_mismatched_confirm"), true, ImportMismatched);
+        AddOption(PlayState.GetText("menu_option_import_mismatched_return"), true, ClearTempAndReturn);
         ForceSelect(6);
         backPage = ClearTempAndReturn;
     }
@@ -1740,9 +1765,9 @@ public class MainMenu : MonoBehaviour
         PlayState.gameData.records.times = newTimes;
         //PlayState.LoadRecords();
         ClearOptions();
-        AddOption("Success! Data has been loaded", false);
+        AddOption(PlayState.GetText("menu_option_import_success"), false);
         AddOption("", false);
-        AddOption("Awesome!", true, ImportExportData);
+        AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
         ForceSelect(2);
         backPage = ImportExportData;
     }
@@ -1762,13 +1787,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage1()
     {
         ClearOptions();
-        AddOption("Snailiad - A Snaily Game", false);
+        AddOption(PlayState.GetText("menu_option_credits_1-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_1-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_1-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_1-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_1-5"), false);
         AddOption("", false);
-        AddOption("Original Flash version by", false);
-        AddOption("Crystal Jacobs (Auriplane) and", false);
-        AddOption("sponsored by Newgrounds", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage2);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage2);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1776,13 +1801,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage2()
     {
         ClearOptions();
-        AddOption("Flash release special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_2-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_2-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_2-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_2-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_2-5"), false);
         AddOption("", false);
-        AddOption("Adamatomic (Flixel)", false);
-        AddOption("Newstarshipsmell (Testing)", false);
-        AddOption("xdanond (Additional art)", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage3);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage3);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1790,13 +1815,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage3()
     {
         ClearOptions();
-        AddOption("Remake created by", false);
+        AddOption(PlayState.GetText("menu_option_credits_3-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_3-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_3-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_3-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_3-5"), false);
         AddOption("", false);
-        AddOption("Jamie Lamey (Epsilon the Dragon)", false);
-        AddOption("with Auriplane\'s permission", false);
-        AddOption("under the Unity engine", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage4);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage4);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1804,13 +1829,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage4()
     {
         ClearOptions();
-        AddOption("Remake special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_4-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_4-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_4-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_4-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_4-5"), false);
         AddOption("", false);
-        AddOption("Broomietunes (Additional songs", false);
-        AddOption("and built-in music pack)", false);
-        AddOption("NegativeBread (Built-in sprite pack)", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage5);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage5);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1818,13 +1843,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage5()
     {
         ClearOptions();
-        AddOption("Remake special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_5-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_5-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_5-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_5-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_5-5"), false);
         AddOption("", false);
-        AddOption("Nat the Chicken (QA, testing)", false);
-        AddOption("Zettex (Extra characters)", false);
-        AddOption("Minervo Ionni (Another character)", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage6);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage6);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1832,13 +1857,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage6()
     {
         ClearOptions();
-        AddOption("Remake special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_6-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_6-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_6-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_6-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_6-5"), false);
         AddOption("", false);
-        AddOption("goldguy40 (Some additional", false);
-        AddOption("tilemap tiles)", false);
-        AddOption("", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage7);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage7);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1846,13 +1871,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage7()
     {
         ClearOptions();
-        AddOption("Remake special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_7-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_7-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_7-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_7-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_7-5"), false);
         AddOption("", false);
-        AddOption("Clarence112, my boyfriend", false);
-        AddOption("(Emotional support, superior code", false);
-        AddOption("knowledge, development assistance)", false);
-        AddOption("", false);
-        AddOption("Next page", true, CreditsPage8);
+        AddOption(PlayState.GetText("menu_option_credits_next"), true, CreditsPage8);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1860,13 +1885,13 @@ public class MainMenu : MonoBehaviour
     public void CreditsPage8()
     {
         ClearOptions();
-        AddOption("Remake special thanks", false);
+        AddOption(PlayState.GetText("menu_option_credits_8-1"), false);
+        AddOption(PlayState.GetText("menu_option_credits_8-2"), false);
+        AddOption(PlayState.GetText("menu_option_credits_8-3"), false);
+        AddOption(PlayState.GetText("menu_option_credits_8-4"), false);
+        AddOption(PlayState.GetText("menu_option_credits_8-5"), false);
         AddOption("", false);
-        AddOption("The official Snaily Discord", false);
-        AddOption("(Testing, feedback, ideas, and", false);
-        AddOption("generally being super cool people)", false);
-        AddOption("", false);
-        AddOption("Back to main menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -1874,11 +1899,11 @@ public class MainMenu : MonoBehaviour
     public void MenuReturnConfirm()
     {
         ClearOptions();
-        AddOption("Really return to menu?", false);
+        AddOption(PlayState.GetText("menu_option_return_header"), false);
         AddOption("", false);
-        AddOption("Save and quit", true, SaveQuit);
-        AddOption("Quit without saving", true, ReturnToMenu);
-        AddOption("Back to pause menu", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_return_confirmSave"), true, SaveQuit);
+        AddOption(PlayState.GetText("menu_option_return_confirmNoSave"), true, ReturnToMenu);
+        AddOption(PlayState.GetText("menu_option_return_cancel"), true, PageMain);
         ForceSelect(2);
         backPage = PageMain;
     }
@@ -1916,10 +1941,10 @@ public class MainMenu : MonoBehaviour
     public void QuitConfirm()
     {
         ClearOptions();
-        AddOption("Really quit?", false);
+        AddOption(PlayState.GetText("menu_option_quit_header"), false);
         AddOption("", false);
-        AddOption("Yeah, I\'m done playing for now", true, QuitGame);
-        AddOption("No way! I\'m not done yet!", true, PageMain);
+        AddOption(PlayState.GetText("menu_option_quit_confirm"), true, QuitGame);
+        AddOption(PlayState.GetText("menu_option_quit_return"), true, PageMain);
         ForceSelect(3);
         backPage = PageMain;
     }

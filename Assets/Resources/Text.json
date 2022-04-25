@@ -986,6 +986,16 @@
 			"value": 0
 		},
 		{
+			"name": "menu_add_generic_none",
+			"text": "none",
+			"value": 0
+		},
+		{
+			"name": "menu_add_generic_all",
+			"text": "all",
+			"value": 0
+		},
+		{
 			"name": "menu_add_shooting_normal",
 			"text": "normal",
 			"value": 0
@@ -1063,11 +1073,6 @@
 		{
 			"name": "menu_add_particles4",
 			"text": "Flash",
-			"value": 0
-		},
-		{
-			"name": "menu_add_particles5",
-			"text": "all",
 			"value": 0
 		},
 		{
