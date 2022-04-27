@@ -201,7 +201,7 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_copyGame_cancelConfirm",
+			"name": "menu_option_eraseGame_cancelConfirm",
 			"text": "No way, I like my game!",
 			"value": 0
 		},
@@ -1073,6 +1073,351 @@
 		{
 			"name": "menu_add_particles4",
 			"text": "Flash",
+			"value": 0
+		},
+		{
+			"name": "hud_collectedItemPercentage",
+			"text": "Item collection #% complete!  Game saved.",
+			"value": 0
+		},
+		{
+			"name": "hud_gameSaved",
+			"text": "Game saved.",
+			"value": 0
+		},
+		{
+			"name": "hud_achievement",
+			"text": "Achievement!!",
+			"value": 0
+		},
+		{
+			"name": "area_00",
+			"text": "Snail Town",
+			"value": 0
+		},
+		{
+			"name": "area_01",
+			"text": "Mare Carelia",
+			"value": 0
+		},
+		{
+			"name": "area_02",
+			"text": "Spiralis Silere",
+			"value": 0
+		},
+		{
+			"name": "area_03",
+			"text": "Amastrida Abyssus",
+			"value": 0
+		},
+		{
+			"name": "area_04",
+			"text": "Lux Lirata",
+			"value": 0
+		},
+		{
+			"name": "area_05",
+			"text": "Shrine of Iris",
+			"value": 0
+		},
+		{
+			"name": "area_?",
+			"text": "???",
+			"value": 0
+		},
+		{
+			"name": "area_bossRush",
+			"text": "Boss Rush",
+			"value": 0
+		},
+		{
+			"name": "item_peashooter",
+			"text": "Peashooter",
+			"value": 0
+		},
+		{
+			"name": "item_boomerang",
+			"text": "Boomerang",
+			"value": 0
+		},
+		{
+			"name": "item_rainbowWave",
+			"text": "Rainbow Wave",
+			"value": 0
+		},
+		{
+			"name": "item_devastator",
+			"text": "Devastator",
+			"value": 0
+		},
+		{
+			"name": "item_highJump",
+			"text": "High Jump",
+			"value": 0
+		},
+		{
+			"name": "item_wallGrab",
+			"text": "Wall Grab",
+			"value": 0
+		},
+		{
+			"name": "item_shellShield",
+			"text": "Shell Shield",
+			"value": 0
+		},
+		{
+			"name": "item_shelmet",
+			"text": "Shelmet",
+			"value": 0
+		},
+		{
+			"name": "item_rapidFire",
+			"text": "Rapid Fire",
+			"value": 0
+		},
+		{
+			"name": "item_backfire",
+			"text": "Backfire",
+			"value": 0
+		},
+		{
+			"name": "item_iceSnail",
+			"text": "Ice _",
+			"value": 0
+		},
+		{
+			"name": "item_gravitySnail",
+			"text": "Gravity _",
+			"value": 0
+		},
+		{
+			"name": "item_magneticFoot",
+			"text": "Magnetic Foot",
+			"value": 0
+		},
+		{
+			"name": "item_corkscrewJump",
+			"text": "Corkscrew Jump",
+			"value": 0
+		},
+		{
+			"name": "item_angelJump",
+			"text": "Angel Jump",
+			"value": 0
+		},
+		{
+			"name": "item_fullMetalSnail_generic",
+			"text": "Full-Metal _",
+			"value": 0
+		},
+		{
+			"name": "item_fullMetalSnail_noShell",
+			"text": "Full-Power _",
+			"value": 0
+		},
+		{
+			"name": "item_gravityShock",
+			"text": "Gravity Shock",
+			"value": 0
+		},
+		{
+			"name": "item_boomerang_secret",
+			"text": "Super Secret Boomerang",
+			"value": 0
+		},
+		{
+			"name": "item_rainbowWave_secret",
+			"text": "Debug Rainbow Wave",
+			"value": 0
+		},
+		{
+			"name": "item_heartContainer",
+			"text": "Heart Container #_",
+			"value": 0
+		},
+		{
+			"name": "item_helixFragment",
+			"text": "Helix Fragment #_",
+			"value": 0
+		},
+		{
+			"name": "boss_shellbreaker",
+			"text": "Shellbreaker",
+			"value": 0
+		},
+		{
+			"name": "boss_shellbreaker_rush",
+			"text": "Super Shellbreaker",
+			"value": 0
+		},
+		{
+			"name": "boss_stompy",
+			"text": "Stompy",
+			"value": 0
+		},
+		{
+			"name": "boss_stompy_rush",
+			"text": "Vis Vires",
+			"value": 0
+		},
+		{
+			"name": "boss_spaceBox",
+			"text": "Space Box",
+			"value": 0
+		},
+		{
+			"name": "boss_spaceBox_rush",
+			"text": "Time Cube",
+			"value": 0
+		},
+		{
+			"name": "boss_moonSnail",
+			"text": "Moon Snail",
+			"value": 0
+		},
+		{
+			"name": "boss_moonSnail_phase2",
+			"text": "Giga Snail",
+			"value": 0
+		},
+		{
+			"name": "boss_moonSnail_rush",
+			"text": "Sun Snail",
+			"value": 0
+		},
+		{
+			"name": "enemy_spikey",
+			"text": "Spikey",
+			"value": 0
+		},
+		{
+			"name": "enemy_floatspike",
+			"text": "Floatspike",
+			"value": 0
+		},
+		{
+			"name": "room_00_townMain",
+			"text": "Snail Town|Plaza",
+			"value": 0
+		},
+		{
+			"name": "room_00_townSave",
+			"text": "Town Save|Tunnel",
+			"value": 0
+		},
+		{
+			"name": "room_00_underCave",
+			"text": "Runner's Path",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveRight1",
+			"text": "Tree Tunnel",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveRight2",
+			"text": "Suspicious|Tree",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveLeft1",
+			"text": "Parallel Paths",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveLeft2",
+			"text": "Brick Wall",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveLeft3",
+			"text": "Upper|Amastrida|Access",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveLeft4",
+			"text": "Digging Grounds",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveLeft5",
+			"text": "Lower|Amastrida|Access",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveDown1",
+			"text": "Cave Snail's|Cave",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveDown2",
+			"text": "Root Cave",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveDown3",
+			"text": "Fragment|Cave",
+			"value": 0
+		},
+		{
+			"name": "room_00_loveAlcove",
+			"text": "Love Snail's|Alcove",
+			"value": 0
+		},
+		{
+			"name": "room_00_greenSecret1",
+			"text": "Block Zone",
+			"value": 0
+		},
+		{
+			"name": "room_00_greenSecret2",
+			"text": "Percentage|Snail's Hidey|Hole",
+			"value": 0
+		},
+		{
+			"name": "room_00_ssb",
+			"text": "Super Secret|Alcove",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveUp1",
+			"text": "Leggy Snail's|Tunnel",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveUp2",
+			"text": "Town|Overtunnel",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveUp3",
+			"text": "Runner's|Cutacross",
+			"value": 0
+		},
+		{
+			"name": "room_00_caveUp4",
+			"text": "Upper Town|Entrance",
+			"value": 0
+		},
+		{
+			"name": "room_00_angle",
+			"text": "Angle Path,|Town-Side",
+			"value": 0
+		},
+		{
+			"name": "room_00_testLarge",
+			"text": "Testing Plaza",
+			"value": 0
+		},
+		{
+			"name": "room_00_test",
+			"text": "Original|Testing Room",
+			"value": 0
+		},
+		{
+			"name": "room_01_entrance",
+			"text": "Quest's|Start Lake",
 			"value": 0
 		},
 		{

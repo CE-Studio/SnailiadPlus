@@ -243,7 +243,7 @@ public class RoomTrigger : MonoBehaviour
 
             if (newRoomName == "")
             {
-                foreach (char character in transform.name)
+                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name))
                 {
                     if (character == '|')
                         newRoomName += "\n";
