@@ -1184,7 +1184,8 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
-                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                    " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
             else
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
         }
@@ -1204,8 +1205,8 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
-                AddOption((menuVarFlags[0] == i ? "> " : "") + i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%" +
-                    (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
+                AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                    " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
             else
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
         }
@@ -1245,8 +1246,8 @@ public class MainMenu : MonoBehaviour
             PlayState.GameSaveData data = PlayState.LoadGame(i);
             if (data.profile != -1)
             {
-                AddOption(i + " / " + data.character + " / " + ConvertTimeToString(data.gameTime) + " / " + data.percentage + "%",
-                    PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                    " | " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
             }
             else
                 AddOption("Empty profile", false);

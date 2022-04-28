@@ -189,8 +189,7 @@ public class NPC : MonoBehaviour
                     {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Hi, " + playerName + "!!  {p|0.25}Why don\'t you try{nl|}climbing up the walls?{nl|}    {p|0.25}Just {col|0309}hold \"" +
-                                    Control.ParseKeyName(2) + "\" and \"" + Control.ParseKeyName(1) + "\"{col|0312}.");
+                                textToSend.Add("Hi, " + playerName + "!!  {p|0.25}Why don\'t you try{nl|}climbing up the walls?{nl|}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.");
                             else if (!PlayState.CheckForItem("Boomerang"))
                                 textToSend.Add("Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl|}you can shoot a {col|0104}blue door {col|0312}open{nl|}with one of those!");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
@@ -205,7 +204,7 @@ public class NPC : MonoBehaviour
 
                         case 1:
                             if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Hiya, " + playerName + "!  {p|0.125}Did you know you{nl|}can jump?  {p|0.125}Just {col|0309}press \"" + Control.ParseKeyName(4) + "\"{col|0312}!");
+                                textToSend.Add("Hiya, " + playerName + "!  {p|0.125}Did you know you{nl|}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!");
                             else if (!PlayState.CheckForItem("Peashooter"))
                                 textToSend.Add(playerName + ", {p|0.125}some snails are missing!{p|0.25}{nl|}Do you think you could go look{nl|}for them?  {p|0.25}I\'m getting worried!");
                             else if (PlayState.GetItemPercentage() < 100)
@@ -381,9 +380,9 @@ public class NPC : MonoBehaviour
 
                         case 18:
                             if (PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Don\'t forget!{p|0.25}{nl|}Press {col|0309}\"" + Control.ParseKeyName(5) + "\" {col|0312}to shoot your{nl|}weapon at stuff!!");
+                                textToSend.Add("Don\'t forget!{p|0.25}{nl|}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot your{nl|}weapon at stuff!!");
                             else
-                                textToSend.Add("You found the {eff|Wave}super secret{nl|}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl|}Press {col|0309}\"" + Control.ParseKeyName(5) + "\" {col|0312}to shoot with it!");
+                                textToSend.Add("You found the {eff|Wave}super secret{nl|}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl|}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!");
                             break;
 
                         case 19:
@@ -419,8 +418,7 @@ public class NPC : MonoBehaviour
 
                         case 25:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Have you tried hitting {col|0309}\"" + Control.ParseKeyName(21) +
-                                    "\"{col|0312}{nl|}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl|}{p|0.125}and hit {col|0309}\"" + Control.ParseKeyName(22) + "\" {col|0312}for the menu!");
+                                textToSend.Add("Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl|}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl|}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!");
                             else
                                 textToSend.Add("Hey " + playerName + ", {p|0.125}I\'m hungry!  {p|0.25}Know{nl|}any good plants around town?");
                             break;

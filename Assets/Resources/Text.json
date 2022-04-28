@@ -1086,6 +1086,11 @@
 			"value": 0
 		},
 		{
+			"name": "hud_fps",
+			"text": "FPS",
+			"value": 0
+		},
+		{
 			"name": "hud_achievement",
 			"text": "Achievement!!",
 			"value": 0
@@ -1116,7 +1121,7 @@
 			"value": 0
 		},
 		{
-			"name": "area_05",
+			"name": "area_iris",
 			"text": "Shrine of Iris",
 			"value": 0
 		},
@@ -1418,6 +1423,426 @@
 		{
 			"name": "room_01_entrance",
 			"text": "Quest's|Start Lake",
+			"value": 0
+		},
+		{
+			"name": "npc_0_default_0",
+			"text": "I hope the next game has more{nl|}weapons.  {p|0.25}This game could have{nl|}used a {eff|Wave}flame whip!",
+			"value": 0
+		},
+		{
+			"name": "npc_0_explainWallClimb_0",
+			"text": "Hi, _P_!!  {p|0.25}Why don't you try{nl|}climbing up the walls?{nl|}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.",
+			"value": 0
+		},
+		{
+			"name": "npc_0_explainPeashooter_0",
+			"text": "Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl|}you can shoot a {col|0104}blue door {col|0312}open{nl|}with one of those!",
+			"value": 0
+		},
+		{
+			"name": "npc_0_explainBoomerang_0",
+			"text": "Wow, a boomerang!  {p|0.125}You could{nl|}break a {col|0201}pink door {col|0312}open with{nl|}just one of those!",
+			"value": 0
+		},
+		{
+			"name": "npc_0_explainRainbowWave_0",
+			"text": "Is that a rainbow wave!?  {p|0.25}Well,{nl|}then!  {p|0.25}You can open a {col|0111}red door{col|0312}{nl|}with one of those!",
+			"value": 0
+		},
+		{
+			"name": "npc_0_explainDevastator_0",
+			"text": "{sfx|1}A {eff|Shake}devastator!?  {eff|None}{sfx|0}{p|0.4}That opens up{nl|}{col|0207}green doors!  {p|0.25}{col|0312}It also upgrades{nl|}all three weapons!  Wow!!",
+			"value": 0
+		}
+		{
+			"name": "npc_1_default_0",
+			"text": "_P_, {p|0.125}you missed it!  {p|0.25}I made a{nl|}delicious pizza, {p|0.125}and I ate the{nl|}whole {p|0.125}thing!!!  {p|0.3}{sfx|2}{eff|Wave}{spd|0.04}Om nom nom!",
+			"value": 0
+		},
+		{
+			"name": "npc_1_promptJump_0",
+			"text": "Hiya, _P_!  {p|0.125}Did you know you{nl|}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!",
+			"value": 0
+		},
+		{
+			"name": "npc_1_promptStory_0",
+			"text": "_P_, {p|0.125}some snails are missing!{p|0.25}{nl|}Do you think you could go look{nl|}for them?  {p|0.25}I'm getting worried!",
+			"value": 0
+		},
+		{
+			"name": "npc_1_smallTalk_0",
+			"text": "I have a goal in life.  {p|0.25}One day,{nl|}I will eat a pizza.  {p|0.4}I mean it!!{p|0.4}{spd|0.06}{nl|}Just you watch, {p|0.0625}_P_!!",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
+			"value": 0
+		},
+		{
+			"name": "",
+			"text": "",
 			"value": 0
 		},
 		{

@@ -1266,4 +1266,10 @@ public class PlayState
         MusicOffsetLibrary newLibrary = JsonUtility.FromJson<MusicOffsetLibrary>(File.ReadAllText(path));
         musicLoopOffsetLibrary = newLibrary.offsetArray;
     }
+
+    public static void AdjustHUDText()
+    {
+        TogglableHUDElements[4].transform.GetChild(0).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
+        TogglableHUDElements[4].transform.GetChild(1).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
+    }
 }

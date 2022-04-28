@@ -176,33 +176,33 @@ public class Player : MonoBehaviour
             if (lastAreaID != PlayState.currentArea)
             {
                 lastAreaID = PlayState.currentArea;
-                string areaName = "???";
+                string areaName = PlayState.GetText("area_?");
                 switch (lastAreaID)
                 {
                     case 0:
-                        areaName = "Snail Town";
+                        areaName = PlayState.GetText("area_00");
                         break;
                     case 1:
-                        areaName = "Mare Carelia";
+                        areaName = PlayState.GetText("area_01");
                         break;
                     case 2:
-                        areaName = "Spiralis Silere";
+                        areaName = PlayState.GetText("area_02");
                         break;
                     case 3:
-                        areaName = "Amastrida Abyssus";
+                        areaName = PlayState.GetText("area_03");
                         break;
                     case 4:
-                        areaName = "Lux Lirata";
+                        areaName = PlayState.GetText("area_04");
                         break;
                     case 5:
                         if (PlayState.hasSeenIris)
-                            areaName = "Shrine of Iris";
+                            areaName = PlayState.GetText("area_iris");
                         break;
                     case 6:
-                        areaName = "Shrine of Iris";
+                        areaName = PlayState.GetText("area_iris");
                         break;
                     case 7:
-                        areaName = "Boss Rush";
+                        areaName = PlayState.GetText("area_bossRush");
                         break;
                 }
                 if (areaName != areaText[0].text)
@@ -316,8 +316,8 @@ public class Player : MonoBehaviour
             frameCount = 0;
             dt -= 1 / updateRate;
         }
-        PlayState.fpsText.text = "" + Mathf.Round(fps) + "FPS";
-        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + "FPS";
+        PlayState.fpsText.text = "" + Mathf.Round(fps) + PlayState.GetText("hud_fps");
+        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + PlayState.GetText("hud_fps");
 
         // Game time counter
         if (PlayState.gameState == "Game")
@@ -683,7 +683,7 @@ public class Player : MonoBehaviour
                 break;
             case "collection":
                 SetTextAlpha("collection", 255);
-                SetTextDisplayed("collection", "Item collection " + PlayState.GetItemPercentage() + "% complete!  Game saved.");
+                SetTextDisplayed("collection", PlayState.GetText("hud_collectedItemPercentage").Replace("#", PlayState.GetItemPercentage().ToString()));
                 while (timer < 2)
                 {
                     if (colorCooldown <= 0)

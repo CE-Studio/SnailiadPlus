@@ -171,15 +171,59 @@ public class Item : MonoBehaviour
     public void FlashItemText()
     {
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            PlayState.FlashItemText("Helix Fragment #" + PlayState.helixCount);
+            PlayState.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.helixCount.ToString()));
         else if (itemID >= PlayState.OFFSET_HEARTS)
-            PlayState.FlashItemText("Heart Container #" + PlayState.heartCount);
-        else if (itemID == PlayState.TranslateItemNameToID("Super Secret Boomerang"))
-            PlayState.FlashItemText("Boomerang");
-        else if (itemID == PlayState.TranslateItemNameToID("Debug Rainbow Wave"))
-            PlayState.FlashItemText("Rainbow Wave");
+            PlayState.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
+        //else if (itemID == PlayState.TranslateItemNameToID("Super Secret Boomerang"))
+        //    PlayState.FlashItemText("Boomerang");
+        //else if (itemID == PlayState.TranslateItemNameToID("Debug Rainbow Wave"))
+        //    PlayState.FlashItemText("Rainbow Wave");
         else
-            PlayState.FlashItemText(itemType);
+            PlayState.FlashItemText(ConvertToTextID(itemType));
+    }
+
+    private string ConvertToTextID(string item)
+    {
+        string output = "";
+        string buffer = "item_";
+        string species = PlayState.GetText("species_" + PlayState.currentCharacter.ToLower());
+        switch (item)
+        {
+            default:
+                for (int i = 0; i < item.Length; i++)
+                {
+                    if (item[i] == ' ')
+                    {
+                        i++;
+                        if (i < item.Length)
+                            buffer += item[i].ToString().ToUpper();
+                    }
+                    else
+                        buffer += item[i].ToString().ToLower();
+                }
+                output = PlayState.GetText(buffer);
+                break;
+            case "Ice Snail":
+                output = PlayState.GetText("item_iceSnail").Replace("_", species);
+                break;
+            case "Gravity Snail":
+                output = PlayState.GetText("item_gravitySnail").Replace("_", species);
+                break;
+            case "Full-Metal Snail":
+                if (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Blobby" || PlayState.currentCharacter == "Leechy")
+                    buffer += "fullMetalSnail_noShell";
+                else
+                    buffer += "fullMetalSnail_generic";
+                output = PlayState.GetText(buffer).Replace("_", species);
+                break;
+            case "Super Secret Boomerang":
+                output = PlayState.GetText("item_boomerang_secret");
+                break;
+            case "Debug Rainbow Wave":
+                output = PlayState.GetText("item_rainbowWave_secret");
+                break;
+        }
+        return output;
     }
 
     public void SetDeactivated()

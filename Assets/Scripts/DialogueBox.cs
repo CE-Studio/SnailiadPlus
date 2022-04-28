@@ -311,6 +311,10 @@ public class DialogueBox : MonoBehaviour
                                                     timer = float.Parse(args[1]);
                                                     advanceChar = false;
                                                     break;
+                                                case "ctrl":  // Parse keybind to string
+                                                    textList[(int)pointer.x] = textList[(int)pointer.x].Insert((int)pointer.y + command.Length + 2,
+                                                        Control.ParseKeyName(int.Parse(args[1])));
+                                                    break;
                                                 default:
                                                     Debug.LogWarning("Unknown command prefix \"" + args[0].ToLower() + "\".");
                                                     break;

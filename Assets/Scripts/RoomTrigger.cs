@@ -223,7 +223,7 @@ public class RoomTrigger : MonoBehaviour
                             if ((childScript.direction && childScript.initialPosRelative.x == 1) || (!childScript.direction && childScript.initialPosRelative.y == 1))
                                 stringHalf = 1;
                             string splitString = thisRoomName.Split('/')[stringHalf];
-                            foreach (char character in splitString)
+                            foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString))
                             {
                                 if (character == '|')
                                     newRoomName += "\n";
