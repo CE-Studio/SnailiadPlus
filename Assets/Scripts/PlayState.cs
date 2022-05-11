@@ -445,7 +445,7 @@ public class PlayState
         return i;
     }
 
-    public static Sprite GetSprite(string name, int ID)
+    public static Sprite GetSprite(string name, int ID = 0)
     {
         Sprite newSprite = MissingTexture();
         int i = 0;

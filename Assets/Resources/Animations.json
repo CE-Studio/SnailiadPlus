@@ -983,6 +983,314 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Dialogue_portrait_frame",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_snail",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_upsideDownSnail",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_turtle",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Snaily0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Snaily1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Snaily2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Snaily3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Sluggy0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Sluggy1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Sluggy2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Sluggy3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Upside0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Upside1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Upside2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Upside3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leggy0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leggy1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leggy2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				18
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leggy3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				19
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Blobby0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				20
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Blobby1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				21
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Blobby2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				22
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Blobby3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				23
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leechy0",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				24
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leechy1",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				25
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leechy2",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				26
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_Leechy3",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				27
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Heart0",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
@@ -1715,6 +2023,17 @@
 			],
 			"loop": true,
 			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "",
+			"spriteName": "",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": false,
 			"randomizeStartFrame": false
 		}
     ]

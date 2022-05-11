@@ -36,6 +36,8 @@ public class NPC : MonoBehaviour
     private const float GRAVITY = 1.35f;
     private const float TERMINAL_VELOCITY = -0.66f;
 
+    private List<string> textToSend = new List<string>();
+
     public virtual void Awake()
     {
         switch (PlayState.currentCharacter)
@@ -182,270 +184,274 @@ public class NPC : MonoBehaviour
                 {
                     int boxShape = 0;
                     string boxColor = "0005";
-                    List<string> textToSend = new List<string>();
+                    textToSend.Clear();
                     portraitColors.Clear();
                     portraitStateList.Clear();
                     switch (ID)
                     {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Hi, " + playerName + "!!  {p|0.25}Why don\'t you try{nl|}climbing up the walls?{nl|}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.");
+                                AddText("explainWallClimb");
                             else if (!PlayState.CheckForItem("Boomerang"))
-                                textToSend.Add("Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl|}you can shoot a {col|0104}blue door {col|0312}open{nl|}with one of those!");
+                                AddText("explainPeashooter");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
-                                textToSend.Add("Wow, a boomerang!  {p|0.125}You could{nl|}break a {col|0201}pink door {col|0312}open with{nl|}just one of those!");
+                                AddText("explainBoomerang");
                             else if (!PlayState.CheckForItem("Devastator"))
-                                textToSend.Add("Is that a rainbow wave!?  {p|0.25}Well,{nl|}then!  {p|0.25}You can open a {col|0111}red door{col|0312}{nl|}with one of those!");
+                                AddText("explainRainbowWave");
                             else if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("{sfx|1}A {eff|Shake}devastator!?  {eff|None}{sfx|0}{p|0.4}That opens up{nl|}{col|0207}green doors!  {p|0.25}{col|0312}It also upgrades{nl|}all three weapons!  Wow!!");
+                                AddText("explainDevastator");
                             else
-                                textToSend.Add("I hope the next game has more{nl|}weapons.  {p|0.25}This game could have{nl|}used a {eff|Wave}flame whip!");
+                                AddText("default");
                             break;
 
                         case 1:
+                            nexted = 1;
                             if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Hiya, " + playerName + "!  {p|0.125}Did you know you{nl|}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!");
+                            {
+                                nexted = 0;
+                                AddText("promptJump");
+                            }
                             else if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add(playerName + ", {p|0.125}some snails are missing!{p|0.25}{nl|}Do you think you could go look{nl|}for them?  {p|0.25}I\'m getting worried!");
+                                AddText("promptStory");
                             else if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("I have a goal in life.  {p|0.25}One day,{nl|}I will eat a pizza.  {p|0.4}I mean it!!{p|0.4}{spd|0.06}{nl|}Just you watch, {p|0.0625}" + playerName + "!!");
+                                AddText("smallTalk");
                             else
-                                textToSend.Add(playerName + ", {p|0.125}you missed it!  {p|0.25}I made a{nl|}delicious pizza, {p|0.125}and I ate the{nl|}whole {p|0.125}thing!!!  {p|0.3}{sfx|2}{eff|Wave}{spd|0.04}Om nom nom!");
+                                AddText("default");
                             break;
 
                         case 2:
-                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang"))
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you finding a weapon{nl|}somewhere under the water!");
+                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                AddText("predictPeashooter");
                             else if (!PlayState.CheckBossState(0) && !PlayState.CheckBossState(1))
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading to the upper{nl|}right part of the map!!");
+                                AddText("predictShellbreaker");
                             else if (!PlayState.CheckForItem("Boomerang"))
-                                textToSend.Add("{col|0303}I can see the past, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you forgot to grab the{nl|}boomerang after Shellbreaker!");
+                                AddText("predictBoomerang");
                             else if (!PlayState.CheckBossState(1))
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading to the lower{nl|}right part of the map!!");
+                                AddText("predictStompy");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
-                                textToSend.Add("{col|0303}I can see the past, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you forgot to grab the{nl|}rainbow wave after Stompy!");
+                                AddText("predictRainbowWave");
                             else if (!PlayState.CheckBossState(2))
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading to the lower{nl|}left part of the map!!");
+                                AddText("predictSpaceBox");
                             else if (!PlayState.CheckForItem(6))
-                                textToSend.Add("{col|0303}I can see the past, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you forgot to grab the{nl|}rapid fire before Space Box!");
+                                AddText("predictRapidFire");
                             else if (!PlayState.CheckBossState(3))
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading to the upper{nl|}left part of the map!!");
+                                AddText("predictMoonSnail");
                             else if (PlayState.helixCount < 30)
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading all over the{nl|}map, finding little shells!");
+                                AddText("predictHelixFragments");
                             else if (!PlayState.hasSeenIris)
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you heading precisely two{nl|}screens to the left of here!!");
+                                AddText("predictIris");
                             else
-                                textToSend.Add("{col|0303}I can see the future, " + playerName + "!{col|0312}{p|0.3}{nl|}I see you having 18,000,000{nl|}baby " +
-                                    playerSpecies + (playerSpecies == "Leech" ? "e" : "") + "s!!  {p|0.25}{eff|Wave}Congratulations!!");
+                                AddText("default");
                             break;
 
                         case 3:
                             if (!PlayState.CheckForItem(8))
-                                textToSend.Add("I wonder why I can\'t crawl on{nl|}ceiling corners...  {p|0.25}Do you think{nl|}I\'ll ever be able to, " + playerName + "?");
+                                AddText("cantCorner");
                             else if (!PlayState.CheckForItem("Full-Metal Snail"))
-                                textToSend.Add("Oh, my, {p|0.125}you\'re a {col|0204}gravity " + playerSpecies + "{col|0312}!{p|0.25}{nl|}You must be really good at{nl|}crawling around ceilings!!");
+                                AddText("admireGravity");
                             else
-                                textToSend.Add("Oh, my, {p|0.125}you\'re a {col|0301}full metal{nl|}" + playerSpecies + "{col|0312}!{p|0.25} You must be really good{nl|}at crawling around ceilings!!");
+                                AddText("default");
                             break;
 
                         case 4:
                             if (PlayState.IsTileSolid(new Vector2(transform.position.x - 2.5f, transform.position.y)))
-                                textToSend.Add("I wish I had some way to break{nl|}green blocks.  {p|0.125}Those suckers{nl|}are always getting in my way!!");
+                                AddText("greenBlock");
                             else
-                                textToSend.Add("{eff|Wave}Whew!  {eff|None}{p|0.25}Thanks, " + playerName + "!  {p|0.125}I think{nl|}those blocks were planning to{nl|}attack!!  {p|0.125}You saved the day!!");
+                                AddText("default");
                             break;
 
                         case 5:
                             if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("There\'s a lot of secrets{nl|}in and around Snail Town.{p|0.25}{nl|}Have you found them all?");
+                                AddText("secrets");
                             else
-                                textToSend.Add("They say {col|0311}Boss Rush {col|0312}is the{nl|}true test of snail skill.{p|0.3}{nl|}{spd|0.04}But what about slug skill?");
+                                AddText("default");
                             break;
 
                         case 6:
                             if (PlayState.CheckForItem(4) || PlayState.CheckForItem(8))
-                                textToSend.Add("Don\'t you think it\'s weird that{nl|}we all live in treehouses?");
+                                AddText("treehouses");
                             else
-                                textToSend.Add("Hey " + playerName + ", {p|0.125}how\'d you get up{nl|}here?  {p|0.4}And how do I get down?");
+                                AddText("default");
                             break;
 
                         case 7:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Are you leaving town, " + playerName + "?{p|0.25}{nl|}Well,{p|0.125} be careful!  {p|0.25}Make sure{nl|}you {col|0206}save your game often{col|0312}!!");
+                                AddText("save");
                             else if (!PlayState.CheckForItem(1))
-                                textToSend.Add("Hey, " + playerName + "!  {p|0.25}Where\'d you get{nl|}the pea shooter?");
+                                AddText("peashooter");
                             else if (!PlayState.CheckForItem(2))
-                                textToSend.Add("Ooh, {p|0.125}boomerangs!  {p|0.25}If I had{nl|}those, {p|0.125}I\'d try breaking the{nl|}ceiling over the save spot!");
+                                AddText("boomerang");
                             else if (!PlayState.CheckForItem(3))
-                                textToSend.Add("Rainbows are so pretty!{nl|}{p|0.125}Don\'t you think so, " + playerName + "?");
+                                AddText("rainbowWave");
                             else if (PlayState.CheckBossState(3))
-                                textToSend.Add("I\'m scared, " + playerName + "!{p|0.25}{nl|}Is Moon Snail going to take{nl|}me away like the others?");
+                                AddText("scared");
                             else
-                                textToSend.Add("Snail Town is safe again,{p|0.125}{nl|}thanks to you, {p|0.125}" + playerName + "!");
+                                AddText("default");
                             break;
 
                         case 8:
                             if (PlayState.IsTileSolid(new Vector2(transform.position.x + 8.5f, transform.position.y)))
-                                textToSend.Add("There\'s something funny about{nl|}that tree...");
+                                AddText("suspicious");
                             else
-                                textToSend.Add("I {p|0.125}{eff|Shake}knew {p|0.125}{eff|None}there was something{nl|}weird about that tree!!");
+                                AddText("default");
                             break;
 
                         case 9:
                             if (PlayState.itemPercentage < 100)
-                                textToSend.Add("The other snails live in houses,{p|0.125}{nl|}but I like it here in the dirt.{p|0.25}{nl|}Isn\'t it nice in here?");
+                                AddText("dirtHome");
                             else
-                                textToSend.Add("It\'s so cozy in here!  {p|0.25}I just{nl|}{p|0.125}{eff|Wave}{spd|0.06}love {p|0.125}{eff|None}{spd|0.02}my little underground{nl|}home!");
+                                AddText("default");
                             break;
 
                         case 10:
-                            textToSend.Add("{spd|0.05}Oh, {p|0.125}" + playerFullName + "!  {p|0.25}{spd|0.02}My heart{nl|}will forever belong to you!{nl|}             {col|0201}{eff|Wave}<3");
+                            AddText("default");
                             break;
 
                         case 12:
                             if (!transform.parent.Find("Item").GetComponent<Item>().collected)
-                                textToSend.Add("Heya, " + playerName + "! {p|0.125}I filled the heart{nl|}container over there with some{nl|}fresh slime! {p|0.25}Enjoy!!");
+                                AddText("funBlocks");
                             else
-                                textToSend.Add("Isn\'t breaking blocks {eff|Wave}fun!?");
+                                AddText("default");
                             break;
 
                         case 13:
-                            textToSend.Add("{eff|Wave}Wow!  {eff|None}{p|0.25}It looks like you\'ve{nl|}found {col|0302}" + PlayState.GetItemPercentage() + "% {col|0312}of the items in this{nl|}game!  {p|0.25}Nice going, " + playerName + "!");
+                            AddText("default");
                             break;
 
                         case 14:
                             if (PlayState.helixCount < 15)
-                                textToSend.Add("Hey, " + playerName + "!  {p|0.25}Keep an eye out{nl|}for {col|0302}\"Helix Fragments\"{col|0312}.  {p|0.25}They{nl|}look like spinning white shells!");
+                                AddText("helixFragments");
                             else if (PlayState.helixCount < 30 || !PlayState.hasSeenIris)
-                                textToSend.Add("They say that the {col|0302}Shrine of{nl|}Iris {col|0312}is not located on any map!");
+                                AddText("shrine");
                             else
-                                textToSend.Add("Wow, " + playerName + "!  {p|0.125}You\'re pretty good{nl|}at finding secrets!  {p|0.25}Maybe you{nl|}should become a detective!");
+                                AddText("default");
                             break;
 
                         case 15:
                             if (PlayState.GetItemPercentage() < 20)
-                                textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me give you a{nl|}hint: {p|0.125}Come back to town after{nl|}each area to find secret items!");
+                                AddText("hintSecret");
                             else if (PlayState.GetItemPercentage() < 40)
                             {
                                 switch (playerName)
                                 {
                                     case "Snaily":
-                                    case "Upside":
-                                        textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me give you a{nl|}little hint: {p|0.125}A shell can fit{nl|}where a snail cannot!");
+                                        AddText("hintSnaily");
                                         break;
                                     case "Sluggy":
-                                        textToSend.Add("Hi, " + playerName + "!  {p|0.125}Here\'s a li\'l hint:{p|0.125}{nl|}Slugs may be more fragile than{nl|}snails, {p|0.125}but they\'re also faster!");
+                                        AddText("hintSluggy");
+                                        break;
+                                    case "Upside":
+                                        AddText("hintUpside");
                                         break;
                                     case "Leggy":
-                                        textToSend.Add("Hi, " + playerName + "!  {p|0.125}Here's a tip: {p|0.125}It may{nl|}look too big, {p|0.125}but your shell{nl|}can fit in places ours can!");
+                                        AddText("hintLeggy");
                                         break;
                                     case "Blobby":
-                                        textToSend.Add("Hi, " + playerName + "!  {p|0.125}Here's a little tip:{p|0.125}{nl|}You can still jump after a side{nl|}hop!  {p|0.125}It\'s called \"Coyote Time\"!!");
+                                        AddText("hintBlobby");
                                         break;
                                     case "Leechy":
-                                        textToSend.Add("Hi, " + playerName + "!  {p|0.125}Here\'s a li\'l hint:{p|0.125}{nl|}Leeches may be more fragile than{nl|}snails, {p|0.125}but they\'re also faster!");
+                                        AddText("hintLeechy");
                                         break;
                                 }
                             }
                             else if (PlayState.GetItemPercentage() < 60)
-                                textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me give you a{nl|}hint: {p|0.125}Sometimes, you\'ll miss a{nl|}secret if you cling to a wall!");
+                                AddText("hintMissedSecret");
                             else if (PlayState.GetItemPercentage() < 80)
-                                textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me give you a{nl|}hint: {p|0.125}You can find the \"high{nl|}jump\" before any other item!");
+                                AddText("hintEarlyHighJump");
                             else if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me tell you a{nl|}secret: {p|0.125}There\'s a boomerang{nl|}somewhere in Snail Town!");
+                                AddText("hintSSB");
                             else
-                                textToSend.Add("Hi, " + playerName + "!  {p|0.125}Let me tell you a{nl|}secret: {p|0.125}there\'s a secret{nl|}somewhere in the main menu!");
+                                AddText("default");
                             break;
 
                         case 16:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                             {
                                 if (playerName == "Leechy")
-                                    textToSend.Add("If you ever get hurt, {p|0.125}defeat{nl|}enemies!  {p|0.25}As a leech, {p|0.125}you can{nl|}earn {col|0201}pink heath orbs {col|0312}off them!");
+                                    AddText("healTipLeechy");
                                 else
-                                    textToSend.Add("If you ever get hurt, {p|0.125}{col|0207}eat some{nl|}plants{col|0312}!  {p|0.25}You need to eat well{nl|}to stay fit and healthy!");
+                                    AddText("healTipGeneric");
                             }
                             else if (transform.localPosition.y > origin.y - 21)
-                                textToSend.Add("I want to go for a ride!!!");
+                                AddText("ride");
                             else
-                                textToSend.Add("{eff|Wave}{sfx|2}{spd|0.05}WHEEEE!!  {p|0.125}{eff|None}{sfx|0}{spd|0.02}That was fun,{nl|}" + playerName + "!  {p|0.125}Let\'s do it again!!");
+                                AddText("default");
                             break;
 
                         case 17:
                             if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("There\'s a hidden room under the{nl|}path into town.  {p|0.25}I don\'t know{nl|}how to get in yet, though...");
+                                AddText("secret");
                             else
-                                textToSend.Add("They call me {col|0209}upside-down snail{col|0312},{p|0.25}{nl|}but I think everyone else is{nl|}upside down!");
+                                AddText("default");
                             break;
 
                         case 18:
                             if (PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Don\'t forget!{p|0.25}{nl|}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot your{nl|}weapon at stuff!!");
+                                AddText("remindShoot");
                             else
-                                textToSend.Add("You found the {eff|Wave}super secret{nl|}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl|}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!");
+                                AddText("default");
                             break;
 
                         case 19:
                             if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                                textToSend.Add("Hey, " + playerName + "! {p|0.25}If you had a{nl|}boomerang, {p|0.125}you could break{nl|}all sorts of walls!");
+                                AddText("boomerang");
                             else
-                                textToSend.Add("{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl|}{spd|0.06}right...  {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl|}that\'s for some other game.");
+                                AddText("default");
                             break;
 
                         case 22:
                             if (PlayState.GetItemPercentage() < 100)
-                                textToSend.Add("I are {col|0200}Cave Snail{col|0312}!{nl|}{p|0.25}{eff|Shake}Thorgle Borgle!!!!");
+                                AddText("thorgleBorgle");
                             else
-                                textToSend.Add("{eff|Shake}Thorgle Borgle!!!!!!!");
+                                AddText("default");
                             PlayState.talkedToCaveSnail = true;
                             break;
 
                         case 23:
                             if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
-                                textToSend.Add("{col|0200}Cave Snail {col|0312}scares me!{nl|}{p|0.25}I\'m staying over here!");
+                                AddText("caveSnail");
                             else if (PlayState.GetItemPercentage() < 60)
-                                textToSend.Add("Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl|}{col|0309}ESCAPE {col|0312}and load your game from{nl|}town!  {p|0.125}You won\'t lose any items!");
+                                AddText("loadGame");
                             else
-                                textToSend.Add("Do you think {col|0204}Cave Snail{nl|}{col|0312}is single?");
+                                AddText("default");
                             break;
 
                         case 24:
                             if (!transform.parent.Find("Item").GetComponent<Item>().collected)
-                                textToSend.Add("Take this {col|0302}Helix Fragment{col|0312}!{nl|}{p|0.25}Legend says it is but one{nl|}piece of {col|0302}Iris, the Godsnail{col|0312}!");
+                                AddText("offerHelixFragment");
                             else
-                                textToSend.Add(playerName + ", {p|0.125}legend says the{nl|}{col|0302}Shrine of Iris {col|0312}is somewhere{nl|}very close to Snail Town!!");
+                                AddText("default");
                             break;
 
                         case 25:
                             if (!PlayState.CheckForItem("Peashooter"))
-                                textToSend.Add("Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl|}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl|}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!");
+                                AddText("explainMap");
                             else
-                                textToSend.Add("Hey " + playerName + ", {p|0.125}I\'m hungry!  {p|0.25}Know{nl|}any good plants around town?");
+                                AddText("default");
                             break;
 
                         case 50:
                             if (PlayState.CheckForItem("Debug Rainbow Wave"))
-                                textToSend.Add("{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, " + playerName + "!!{p|0.25}{nl|}I\'d love one too, {p|0.125}but I don\'t{nl|}have a jump button.");
+                                AddText("admireRainbowWave");
                             else
-                                textToSend.Add("Oh, {p|0.125}hey, " + playerName + "! {p|0.25}I'm here to test{nl|}single-page dialogue!!");
+                                AddText("default");
                             break;
 
                         case 51:
-                            AddNPCColors(ID);
-                            textToSend.Add("Hey there, " + playerName + "!! {p|0.25}I see you{nl|}figured out how to start a{nl|}multi-page conversation!");
-                            portraitStateList.Add(1);
-                            textToSend.Add("The hope is this talk should go{nl|}100% smoothly. {p|0.125}What do you{nl|}think?");
-                            portraitStateList.Add(1);
-                            textToSend.Add("Impressive! {p|0.25}I do hope that\'s my{nl|}portrait showing right now, {p|0.125}if it{nl|}even is there.");
-                            portraitStateList.Add(0);
-                            textToSend.Add("I\'m here to test multiple things,{nl|}it seems!");
-                            portraitStateList.Add(1);
+                            AddText("default");
                             break;
 
                         default:
-                            textToSend.Add("Hey " + playerName + "!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #" + ID + ", {p|0.125}don\'t have any{nl|}dialogue to offer.  {p|0.25}Sorry!!");
                             break;
                     }
+                    if (textToSend.Count == 0)
+                        textToSend.Add(PlayState.GetText("npc_?"
+                            .Replace("##", PlayState.GetItemPercentage().ToString())
+                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{ID}", ID.ToString())));
                     if (textToSend.Count > 1)
                     {
                         speechBubble.GetComponent<SpriteRenderer>().enabled = true;
@@ -512,10 +518,36 @@ public class NPC : MonoBehaviour
         }
     }
 
+    private void AddText(string textID)
+    {
+        bool locatedAll = false;
+        int i = 0;
+        while (!locatedAll)
+        {
+            string fullID = "npc_" + ID.ToString() + "_" + textID + "_" + i;
+            string newText = PlayState.GetText(fullID);
+            if (newText != fullID)
+            {
+                string finalText = newText
+                    .Replace("##", PlayState.GetItemPercentage().ToString())
+                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{ID}", ID.ToString());
+                textToSend.Add(finalText);
+                portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
+            }
+            else
+                locatedAll = true;
+            i++;
+        }
+    }
+
     private void CreateNewSprites()
     {
         if (colorTable == null)
-            colorTable = PlayState.GetSprite("Entities/SnailNpcColor", 0).texture;
+            colorTable = PlayState.GetSprite("Entities/SnailNpcColor").texture;
         Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
         for (int i = 0; i < colorTable.width; i++)
         {

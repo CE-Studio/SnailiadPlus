@@ -37,10 +37,18 @@ public class DialogueBox : MonoBehaviour
     private bool playSound = true;
     private bool forcedClosed = false;
     private Vector2 roomTextOrigin;
-    private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
+    //private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
     public Sprite[] playerPortraits;
     private bool forceDownPosition;
     private float posVar;
+
+    private SpriteRenderer portraitFrame;
+    private AnimationModule portraitFrameAnim;
+    private SpriteRenderer portraitChar;
+    private AnimationModule portraitCharAnim;
+    //private List<Sprite> coloredSprites = new List<Sprite>();
+    //private Dictionary<int, int> spriteReferences = new Dictionary<int, int>();
+    private Dictionary<int, Sprite> colorizedSprites = new Dictionary<int, Sprite>();
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
@@ -86,12 +94,17 @@ public class DialogueBox : MonoBehaviour
         roomText = GameObject.Find("View/Minimap Panel/Room Name Parent").transform;
         roomTextOrigin = roomText.localPosition;
 
-        portraitParts.Add(portrait.transform.GetChild(0).GetComponent<SpriteRenderer>());
-        portraitParts.Add(portrait.transform.GetChild(1).GetComponent<SpriteRenderer>());
-        portraitParts.Add(portrait.transform.GetChild(2).GetComponent<SpriteRenderer>());
-        portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
-        portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
-        portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(0).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(1).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(2).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
+        //portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
+        portraitFrame = portrait.GetComponent<SpriteRenderer>();
+        portraitFrameAnim = portrait.GetComponent<AnimationModule>();
+        portraitChar = portrait.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        portraitCharAnim = portrait.transform.GetChild(0).GetComponent<AnimationModule>();
+        portraitFrame.color = PlayState.GetColor("0006");
 
         anim.Add("Dialogue_square");
         anim.Add("Dialogue_square_close");
@@ -109,6 +122,22 @@ public class DialogueBox : MonoBehaviour
         anim.Add("Dialogue_cloud_close");
         anim.Add("Dialogue_panel");
         anim.Add("Dialogue_panel_close");
+
+        portraitFrameAnim.Add("Dialogue_portrait_frame");
+        portraitFrameAnim.Play("Dialogue_portrait_frame");
+        portraitCharAnim.Add("Dialogue_portrait_snail");
+        portraitCharAnim.Add("Dialogue_portrait_upsideDownSnail");
+        portraitCharAnim.Add("Dialogue_portrait_turtle");
+        for (int i = 0; i <= 3; i++)
+        {
+            portraitCharAnim.Add("Dialogue_portrait_Snaily" + i);
+            portraitCharAnim.Add("Dialogue_portrait_Sluggy" + i);
+            portraitCharAnim.Add("Dialogue_portrait_Upside" + i);
+            portraitCharAnim.Add("Dialogue_portrait_Leggy" + i);
+            portraitCharAnim.Add("Dialogue_portrait_Blobby" + i);
+            portraitCharAnim.Add("Dialogue_portrait_Leechy" + i);
+        }
+        GenerateColorizedPortraitSprites();
 
         charWidths = PlayState.GetAnim("TextWidth").frames;
     }
@@ -142,6 +171,9 @@ public class DialogueBox : MonoBehaviour
             else
             {
                 camPos = -4.5f;
+                if (portraitCharAnim.isPlaying && (portraitCharAnim.currentAnimName == "Dialogue_portrait_snail" ||
+                    portraitCharAnim.currentAnimName == "Dialogue_portrait_upsideDownSnail" || portraitCharAnim.currentAnimName == "Dialogue_portrait_snail"))
+                    portraitChar.sprite = colorizedSprites[portraitCharAnim.GetCurrentFrameValue()];
             }
 
             if (dialogueType != 1)
@@ -208,36 +240,50 @@ public class DialogueBox : MonoBehaviour
                     {
                         if (states[(int)pointer.x] != 0)
                         {
-                            for (int i = 0; i < portraitParts.Count - 1; i++)
-                                portraitParts[i].color = portraitColors[(i + 1) * states[(int)pointer.x] - 1];
-                            for (int i = 0; i < portraitParts.Count - 1; i++)
-                            {
-                                portraitParts[i].enabled = true;
-                                if (left)
-                                    portraitParts[i].flipX = true;
-                                else
-                                    portraitParts[i].flipX = false;
-                            }
-                            portraitParts[5].enabled = false;
+                            //for (int i = 0; i < portraitParts.Count - 1; i++)
+                            //    portraitParts[i].color = portraitColors[(i + 1) * states[(int)pointer.x] - 1];
+                            //for (int i = 0; i < portraitParts.Count - 1; i++)
+                            //{
+                            //    portraitParts[i].enabled = true;
+                            //    if (left)
+                            //        portraitParts[i].flipX = true;
+                            //    else
+                            //        portraitParts[i].flipX = false;
+                            //}
+                            //portraitParts[5].enabled = false;
+                            UpdatePortrait("npc", 0);
+                            if (left)
+                                portraitChar.flipX = true;
+                            else
+                                portraitChar.flipX = false;
                             currentSound = 0;
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
-                            UpdatePlayerPortrait();
-                            for (int i = 0; i < portraitParts.Count - 1; i++)
-                                portraitParts[i].enabled = false;
-                            portraitParts[5].enabled = true;
+                            //UpdatePlayerPortrait();
+                            //for (int i = 0; i < portraitParts.Count - 1; i++)
+                            //    portraitParts[i].enabled = false;
+                            //portraitParts[5].enabled = true;
+                            //if (left)
+                            //    portraitParts[5].flipX = false;
+                            //else
+                            //    portraitParts[5].flipX = true;
+                            UpdatePortrait(PlayState.currentCharacter, PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
                             if (left)
-                                portraitParts[5].flipX = false;
+                                portraitChar.flipX = false;
                             else
-                                portraitParts[5].flipX = true;
+                                portraitChar.flipX = true;
                             switch (PlayState.currentCharacter)
                             {
                                 case "Snaily":
+                                    currentSound = 1;
+                                    break;
                                 case "Leggy":
                                     currentSound = 1;
                                     break;
                                 case "Upside":
+                                    currentSound = 2;
+                                    break;
                                 case "Blobby":
                                     currentSound = 2;
                                     break;
@@ -287,9 +333,13 @@ public class DialogueBox : MonoBehaviour
                                         string command = "";
                                         for (float i = pointer.y + 1; textList[(int)pointer.x][(int)i] != '}' && i < textList[(int)pointer.x].Length; i++)
                                             command += textList[(int)pointer.x][(int)i];
-                                        if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}' && command.Contains("|"))
+                                        if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}')
                                         {
-                                            string[] args = command.Split('|');
+                                            string[] args;
+                                            if (command.Contains("|"))
+                                                args = command.Split('|');
+                                            else
+                                                args = new string[] { command };
                                             switch (args[0].ToLower())
                                             {
                                                 case "nl":    // New line
@@ -488,41 +538,182 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    private void UpdatePlayerPortrait()
+    private void GenerateColorizedPortraitSprites()
     {
-        int portraitID = 0;
+        int[] baseSprites = new int[] { 1, 2 };
+        Texture2D colorTable = PlayState.GetSprite("Entities/SnailNpcColor").texture;
+        Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+        for (int i = 0; i < colorTable.width; i++)
+            referenceColors.Add(colorTable.GetPixel(i, 0), i);
 
-        if (PlayState.CheckForItem(9))
-            portraitID = 3;
-        else if (PlayState.CheckForItem(8))
-            portraitID = 2;
-        else if (PlayState.CheckForItem(7))
-            portraitID = 1;
-
-        switch (PlayState.currentCharacter)
+        for (int i = 0; i < baseSprites.Length; i++)
         {
-            default:
-            case "Snaily":
-                portraitID += 0;
-                break;
-            case "Sluggy":
-                portraitID += 4;
-                break;
-            case "Upside":
-                portraitID += 8;
-                break;
-            case "Leggy":
-                portraitID += 12;
-                break;
-            case "Blobby":
-                portraitID += 16;
-                break;
-            case "Leechy":
-                portraitID += 20;
-                break;
+            Sprite oldSprite = PlayState.GetSprite("UI/DialoguePortrait", baseSprites[i]);
+            if (oldSprite.name != "Missing")
+            {
+                Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+                Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
+                    (int)oldSprite.textureRect.y,
+                    (int)oldSprite.textureRect.width,
+                    (int)oldSprite.textureRect.height);   // Ok clearly this isn't working. Maybe try copying the NPC version to PlayState as Colorize(Sprite sprite, string table)?
+                for (int j = 0; j < pixels.Length; j++)
+                {
+                    if (referenceColors.ContainsKey(pixels[j]))
+                        pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], currentSpeaker + 1);
+                }
+                newSprite.SetPixels(pixels);
+                colorizedSprites.Add(baseSprites[i], Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
+            }
+            else
+                colorizedSprites.Add(baseSprites[i], oldSprite);
         }
+    }
 
-        portraitParts[5].sprite = playerPortraits[portraitID];
+    //private void UpdatePlayerPortrait()
+    //{
+    //    int portraitID = 0;
+    //
+    //    if (PlayState.CheckForItem(9))
+    //        portraitID = 3;
+    //    else if (PlayState.CheckForItem(8))
+    //        portraitID = 2;
+    //    else if (PlayState.CheckForItem(7))
+    //        portraitID = 1;
+    //
+    //    switch (PlayState.currentCharacter)
+    //    {
+    //        default:
+    //        case "Snaily":
+    //            portraitID += 0;
+    //            break;
+    //        case "Sluggy":
+    //            portraitID += 4;
+    //            break;
+    //        case "Upside":
+    //            portraitID += 8;
+    //            break;
+    //        case "Leggy":
+    //            portraitID += 12;
+    //            break;
+    //        case "Blobby":
+    //            portraitID += 16;
+    //            break;
+    //        case "Leechy":
+    //            portraitID += 20;
+    //            break;
+    //    }
+    //
+    //    portraitParts[5].sprite = playerPortraits[portraitID];
+    //}
+    private void UpdatePortrait(string state, int value)
+    {
+        PlayState.AnimationData currentAnim = PlayState.GetAnim("Dialogue_portrait_" + (state.ToLower() == "npc" ?
+            (value == 2 ? "turtle" : (value == 1 ? "upsideDownSnail" : "snail")) : state[0].ToString().ToUpper() + state.Substring(1, state.Length - 1).ToLower() + value));
+
+        //coloredSprites.Clear();
+        //spriteReferences.Clear();
+        if (state.ToLower() == "npc" && (value == 0 || value == 1))
+        {
+            portraitCharAnim.updateSprite = false;
+            //if (colorTable == null)
+            //colorTable = PlayState.GetSprite("Entities/SnailNpcColor", 0).texture;
+            //Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+            //for (int i = 0; i < colorTable.width; i++)
+            //{
+            //    referenceColors.Add(colorTable.GetPixel(i, 0), i);
+            //}
+            //List<Sprite> newSprites = new List<Sprite>();
+            //
+            //for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++)
+            //{
+            //    Sprite oldSprite = PlayState.GetSprite("Entities/SnailNpc", i);
+            //    Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+            //    Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
+            //        (int)oldSprite.textureRect.y,
+            //        (int)oldSprite.textureRect.width,
+            //        (int)oldSprite.textureRect.height);
+            //    for (int j = 0; j < pixels.Length; j++)
+            //    {
+            //        if (referenceColors.ContainsKey(pixels[j]))
+            //            pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], ID + 1);
+            //    }
+            //    newSprite.SetPixels(pixels);
+            //    newSprite.Apply();
+            //
+            //    newSprites.Add(Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
+            //}
+            //
+            //sprites = newSprites.ToArray();
+            //Texture2D colorTable = PlayState.GetSprite("Entities/SnailNpcColor").texture;
+            //Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+            //for (int i = 0; i < colorTable.width; i++)
+            //    referenceColors.Add(colorTable.GetPixel(i, 0), i);
+            //for (int i = 0; i < currentAnim.frames.Length; i++)
+            //{
+            //    if (!spriteReferences.ContainsKey(currentAnim.frames[i]))
+            //    {
+            //        Sprite oldSprite = PlayState.GetSprite("UI/DialoguePortrait", currentAnim.frames[i]);
+            //        Debug.Log(oldSprite.name);
+            //        if (oldSprite.name != "Missing")
+            //        {
+            //            Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+            //            Debug.Log(oldSprite.rect.width * oldSprite.rect.height);
+            //            Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
+            //                (int)oldSprite.textureRect.y,
+            //                (int)oldSprite.textureRect.width,
+            //                (int)oldSprite.textureRect.height);
+            //            Debug.Log(pixels.Length);
+            //            //Color32[] pixels = oldSprite.texture.GetPixels32();
+            //            for (int j = 0; j < pixels.Length; j++)
+            //            {
+            //                if (referenceColors.ContainsKey(pixels[j]))
+            //                    pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], currentSpeaker + 1);
+            //            }
+            //            newSprite.SetPixels(pixels);
+            //            coloredSprites.Add(Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
+            //        }
+            //        else
+            //            coloredSprites.Add(oldSprite);
+            //        spriteReferences.Add(currentAnim.frames[i], spriteReferences.Count);
+            //    }
+            //}
+        }
+        else
+            portraitCharAnim.updateSprite = true;
+        portraitCharAnim.Play(currentAnim.name);
+
+        if (state == "npc")
+            portraitFrame.color = PlayState.GetColor("0005");
+        else
+        {
+            switch (PlayState.currentCharacter)
+            {
+                case "Snaily":
+                    currentSound = 1;
+                    portraitFrame.color = PlayState.GetColor("0005");
+                    break;
+                case "Leggy":
+                    currentSound = 1;
+                    portraitFrame.color = PlayState.GetColor("0106");
+                    break;
+                case "Upside":
+                    currentSound = 2;
+                    portraitFrame.color = PlayState.GetColor("0110");
+                    break;
+                case "Blobby":
+                    currentSound = 2;
+                    portraitFrame.color = PlayState.GetColor("0100");
+                    break;
+                case "Leechy":
+                    currentSound = 3;
+                    portraitFrame.color = PlayState.GetColor("0313");
+                    break;
+                case "Sluggy":
+                    currentSound = 4;
+                    portraitFrame.color = PlayState.GetColor("0006");
+                    break;
+            }
+        }
     }
 
     public void DeactivateForceDown()

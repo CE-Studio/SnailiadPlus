@@ -891,8 +891,18 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_snaily",
+			"text": "Snaily Snail",
+			"value": 0
+		},
+		{
 			"name": "species_snaily",
 			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "species_plural_snaily",
+			"text": "Snails",
 			"value": 0
 		},
 		{
@@ -901,8 +911,18 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_sluggy",
+			"text": "Sluggy Slug",
+			"value": 0
+		},
+		{
 			"name": "species_sluggy",
 			"text": "Slug",
+			"value": 0
+		},
+		{
+			"name": "species_plural_sluggy",
+			"text": "Slugs",
 			"value": 0
 		},
 		{
@@ -911,8 +931,18 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_upside",
+			"text": "Upside Snail",
+			"value": 0
+		},
+		{
 			"name": "species_upside",
 			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "species_plural_upside",
+			"text": "Snails",
 			"value": 0
 		},
 		{
@@ -921,8 +951,18 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_leggy",
+			"text": "Leggy Snail",
+			"value": 0
+		},
+		{
 			"name": "species_leggy",
 			"text": "Snail",
+			"value": 0
+		},
+		{
+			"name": "species_plural_leggy",
+			"text": "Snails",
 			"value": 0
 		},
 		{
@@ -931,8 +971,18 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_blobby",
+			"text": "Blobby Blob",
+			"value": 0
+		},
+		{
 			"name": "species_blobby",
 			"text": "Blob",
+			"value": 0
+		},
+		{
+			"name": "species_plural_blobby",
+			"text": "Blobs",
 			"value": 0
 		},
 		{
@@ -941,9 +991,19 @@
 			"value": 0
 		},
 		{
+			"name": "char_full_leechy",
+			"text": "Leechy Leech",
+			"value": 0
+		},
+		{
 			"name": "species_leechy",
 			"text": "Leech",
-			"value": 1
+			"value": 0
+		},
+		{
+			"name": "species_plural_leechy",
+			"text": "Leeches",
+			"value": 0
 		},
 		{
 			"name": "menu_add_generic_yes",
@@ -1426,404 +1486,424 @@
 			"value": 0
 		},
 		{
+			"name": "npc_?",
+			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
+			"value": 1
+		},
+		{
 			"name": "npc_0_default_0",
-			"text": "I hope the next game has more{nl|}weapons.  {p|0.25}This game could have{nl|}used a {eff|Wave}flame whip!",
-			"value": 0
+			"text": "I hope the next game has more{nl}weapons.  {p|0.25}This game could have{nl}used a {eff|Wave}flame whip!",
+			"value": 1
 		},
 		{
 			"name": "npc_0_explainWallClimb_0",
-			"text": "Hi, _P_!!  {p|0.25}Why don't you try{nl|}climbing up the walls?{nl|}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.",
-			"value": 0
+			"text": "Hi, {P}!!  {p|0.25}Why don't you try{nl}climbing up the walls?{nl}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.",
+			"value": 1
 		},
 		{
 			"name": "npc_0_explainPeashooter_0",
-			"text": "Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl|}you can shoot a {col|0104}blue door {col|0312}open{nl|}with one of those!",
-			"value": 0
+			"text": "Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl}you can shoot a {col|0104}blue door {col|0312}open{nl}with one of those!",
+			"value": 1
 		},
 		{
 			"name": "npc_0_explainBoomerang_0",
-			"text": "Wow, a boomerang!  {p|0.125}You could{nl|}break a {col|0201}pink door {col|0312}open with{nl|}just one of those!",
-			"value": 0
+			"text": "Wow, a boomerang!  {p|0.125}You could{nl}break a {col|0201}pink door {col|0312}open with{nl}just one of those!",
+			"value": 1
 		},
 		{
 			"name": "npc_0_explainRainbowWave_0",
-			"text": "Is that a rainbow wave!?  {p|0.25}Well,{nl|}then!  {p|0.25}You can open a {col|0111}red door{col|0312}{nl|}with one of those!",
-			"value": 0
+			"text": "Is that a rainbow wave!?  {p|0.25}Well,{nl}then!  {p|0.25}You can open a {col|0111}red door{col|0312}{nl}with one of those!",
+			"value": 1
 		},
 		{
 			"name": "npc_0_explainDevastator_0",
-			"text": "{sfx|1}A {eff|Shake}devastator!?  {eff|None}{sfx|0}{p|0.4}That opens up{nl|}{col|0207}green doors!  {p|0.25}{col|0312}It also upgrades{nl|}all three weapons!  Wow!!",
-			"value": 0
-		}
+			"text": "{sfx|1}A {eff|Shake}devastator!?  {eff|None}{sfx|0}{p|0.4}That opens up{nl}{col|0207}green doors!  {p|0.25}{col|0312}It also upgrades{nl}all three weapons!  Wow!!",
+			"value": 1
+		},
 		{
 			"name": "npc_1_default_0",
-			"text": "_P_, {p|0.125}you missed it!  {p|0.25}I made a{nl|}delicious pizza, {p|0.125}and I ate the{nl|}whole {p|0.125}thing!!!  {p|0.3}{sfx|2}{eff|Wave}{spd|0.04}Om nom nom!",
-			"value": 0
+			"text": "{P}, {p|0.125}you missed it!  {p|0.25}I made a{nl}delicious pizza, {p|0.125}and I ate the{nl}whole {p|0.125}thing!!!  {p|0.3}{sfx|2}{eff|Wave}{spd|0.04}Om nom nom!",
+			"value": 1
 		},
 		{
 			"name": "npc_1_promptJump_0",
-			"text": "Hiya, _P_!  {p|0.125}Did you know you{nl|}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!",
-			"value": 0
+			"text": "Hiya, {P}!  {p|0.125}Did you know you{nl}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!",
+			"value": 1
 		},
 		{
 			"name": "npc_1_promptStory_0",
-			"text": "_P_, {p|0.125}some snails are missing!{p|0.25}{nl|}Do you think you could go look{nl|}for them?  {p|0.25}I'm getting worried!",
-			"value": 0
+			"text": "{P}, {p|0.125}some snails are missing!{p|0.25}{nl}Do you think you could go look{nl}for them?  {p|0.25}I'm getting worried!",
+			"value": 1
 		},
 		{
 			"name": "npc_1_smallTalk_0",
-			"text": "I have a goal in life.  {p|0.25}One day,{nl|}I will eat a pizza.  {p|0.4}I mean it!!{p|0.4}{spd|0.06}{nl|}Just you watch, {p|0.0625}_P_!!",
-			"value": 0
+			"text": "I have a goal in life.  {p|0.25}One day,{nl}I will eat a pizza.  {p|0.4}I mean it!!{p|0.4}{spd|0.06}{nl}Just you watch, {p|0.0625}{P}!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_default_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you having 18,000,000{nl}baby {SS}!!  {p|0.25}{eff|Wave}Congratulations!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictPeashooter_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you finding a weapon{nl}somewhere under the water!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictShellbreaker_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading to the upper{nl}right part of the map!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictBoomerang_0",
+			"text": "{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot to grab the{nl}boomerang after Shellbreaker!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictStompy_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading to the lower{nl}right part of the map!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictRainbowWave_0",
+			"text": "{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot to grab the{nl}rainbow wave after Stompy!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictSpaceBox_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading to the lower{nl}left part of the map!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictRapidFire_0",
+			"text": "{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot to grab the{nl}rapid fire before Space Box!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictMoonSnail_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading to the upper{nl}left part of the map!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictHelixFragments_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading all over the{nl}map, finding little shells!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_2_predictIris_0",
+			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading precisely two{nl}screens to the left of here!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_3_default_0",
+			"text": "Oh, my, {p|0.125}you're a {col|0301}full metal{nl}{S}{col|0312}!{p|0.25} You must be really good{nl}at crawling around ceilings!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_3_cantCorner_0",
+			"text": "I wonder why I can't crawl on{nl}ceiling corners...  {p|0.25}Do you think{nl}I'll ever be able to, {P}?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_3_admireGravity_0",
+			"text": "Oh, my, {p|0.125}you're a {col|0204}gravity {S}{col|0312}!{p|0.25}{nl}You must be really good at{nl}crawling around ceilings!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_4_default_0",
+			"text": "{eff|Wave}Whew!  {eff|None}{p|0.25}Thanks, {P}!  {p|0.125}I think{nl}those blocks were planning to{nl}attack!!  {p|0.125}You saved the day!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_4_greenBlock_0",
+			"text": "I wish I had some way to break{nl}green blocks.  {p|0.125}Those suckers{nl}are always getting in my way!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_5_default_0",
+			"text": "They say {col|0311}Boss Rush {col|0312}is the{nl}true test of snail skill.{p|0.3}{nl}{spd|0.04}But what about slug skill?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_5_secrets_0",
+			"text": "There's a lot of secrets{nl}in and around Snail Town.{p|0.25}{nl}Have you found them all?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_6_default_0",
+			"text": "Hey {P}, {p|0.125}how'd you get up{nl}here?  {p|0.4}And how do I get down?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_6_treehouses_0",
+			"text": "Don't you think it's weird that{nl}we all live in treehouses?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_default_0",
+			"text": "Snail Town is safe again,{p|0.125}{nl}thanks to you, {p|0.125}{P}!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_save_0",
+			"text": "Are you leaving town, {P}?{p|0.25}{nl}Well,{p|0.125} be careful!  {p|0.25}Make sure{nl}you {col|0206}save your game often{col|0312}!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_peashooter_0",
+			"text": "Hey, {P}!  {p|0.25}Where'd you get{nl}the pea shooter?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_boomerang_0",
+			"text": "Ooh, {p|0.125}boomerangs!  {p|0.25}If I had{nl}those, {p|0.125}I'd try breaking the{nl}ceiling over the save spot!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_rainbowWave_0",
+			"text": "Rainbows are so pretty!{nl}{p|0.125}Don't you think so, {P}?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_7_scared_0",
+			"text": "I'm scared, {P}!{p|0.25}{nl}Is Moon Snail going to take{nl}me away like the others?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_8_default_0",
+			"text": "I {p|0.125}{eff|Shake}knew {p|0.125}{eff|None}there was something{nl}weird about that tree!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_8_suspicious_0",
+			"text": "There's something funny about{nl}that tree...",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_9_default_0",
+			"text": "It's so cozy in here!  {p|0.25}I just{nl}{p|0.125}{eff|Wave}{spd|0.06}love {p|0.125}{eff|None}{spd|0.02}my little underground{nl}home!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_9_dirtHome_0",
+			"text": "The other snails live in houses,{p|0.125}{nl}but I like it here in the dirt.{p|0.25}{nl}Isn't it nice in here?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_10_default_0",
+			"text": "{spd|0.05}Oh, {p|0.125}{P}!  {p|0.25}{spd|0.02}My heart{nl}will forever belong to you!{nl}             {col|0201}{eff|Wave}<3",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_12_default_0",
+			"text": "Isn't breaking blocks {eff|Wave}fun!?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_12_funBlocks_0",
+			"text": "Heya, {P}! {p|0.125}I filled the heart{nl}container over there with some{nl}fresh slime! {p|0.25}Enjoy!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_13_default_0",
+			"text": "{eff|Wave}Wow!  {eff|None}{p|0.25}It looks like you've{nl}found {col|0302}##% {col|0312}of the items in this{nl}game!  {p|0.25}Nice going, {P}!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_14_default_0",
+			"text": "Wow, {P}!  {p|0.125}You're pretty good{nl}at finding secrets!  {p|0.25}Maybe you{nl}should become a detective!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_14_helixFragments_0",
+			"text": "Hey, {P}!  {p|0.25}Keep an eye out{nl}for {col|0302}\"Helix Fragments\"{col|0312}.  {p|0.25}They{nl}look like spinning white shells!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_14_shrine_0",
+			"text": "They say that the {col|0302}Shrine of{nl}Iris {col|0312}is not located on any map!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_default_0",
+			"text": "Hi, {P}!  {p|0.125}Let me tell you a{nl}secret: {p|0.125}there's a secret{nl}somewhere in the main menu!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintSecret_0",
+			"text": "Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}Come back to town after{nl}each area to find secret items!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintSnaily_0",
+			"text": "Hi, {P}!  {p|0.125}Let me give you a{nl}little hint: {p|0.125}A shell can fit{nl}where a snail cannot!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintSluggy_0",
+			"text": "Hi, {P}!  {p|0.125}Here's a li'l hint:{p|0.125}{nl}{SS} may be more fragile than{nl}snails, {p|0.125}but they're also faster!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintUpside_0",
+			"text": "Hi, {P}!  {p|0.125}Let me give you a{nl}little hint: {p|0.125}A shell can fit{nl}where a snail cannot!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintLeggy_0",
+			"text": "Hi, {P}!  {p|0.125}Here's a tip: {p|0.125}It may{nl}look too big, {p|0.125}but your shell{n}can fit in places ours can!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintBlobby_0",
+			"text": "Hi, {P}!  {p|0.125}Here's a little tip:{p|0.125}{nl}You can still jump after a side{nl}hop!  {p|0.125}It's called \"Coyote Time\"!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintLeechy_0",
+			"text": "Hi, {P}!  {p|0.125}Here's a li'l hint:{p|0.125}{nl}{SS} may be more fragile than{nl}snails, {p|0.125}but they're also faster!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintMissedSecret_0",
+			"text": "Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}Sometimes, you'll miss a{nl}secret if you cling to a wall!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintEarlyHighJump_0",
+			"text": "Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}You can find the \"high{nl}jump\" before any other item!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_15_hintSSB_0",
+			"text": "Hi, {P}!  {p|0.125}Let me tell you a{nl}secret: {p|0.125}There's a boomerang{nl}somewhere in Snail Town!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_16_default_0",
+			"text": "{eff|Wave}{sfx|2}{spd|0.05}WHEEEE!!  {p|0.125}{eff|None}{sfx|0}{spd|0.02}That was fun,{nl}{P}!  {p|0.125}Let's do it again!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_16_healTipGeneric_0",
+			"text": "If you ever get hurt, {p|0.125}{col|0207}eat some{nl}plants{col|0312}!  {p|0.25}You need to eat well{nl}to stay fit and healthy!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_16_healTipLeechy_0",
+			"text": "If you ever get hurt, {p|0.125}defeat{nl}enemies!  {p|0.25}As a leech, {p|0.125}you can{nl}earn {col|0201}pink heath orbs {col|0312}off them!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_16_ride_0",
+			"text": "I want to go for a ride!!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_17_default_0",
+			"text": "They call me {col|0209}upside-down snail{col|0312},{p|0.25}{nl}but I think everyone else is{nl}upside down!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_17_secret_0",
+			"text": "There's a hidden room under the{nl}path into town.  {p|0.25}I don't know{nl}how to get in yet, though...",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_18_default_0",
+			"text": "You found the {eff|Wave}super secret{nl}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_18_remindShoot_0",
+			"text": "Don't forget!{p|0.25}{nl}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot your{nl}weapon at stuff!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_19_default_0",
+			"text": "{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl}{spd|0.06}right...  {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl}that's for some other game.",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_19_boomerang_0",
+			"text": "Hey, {P}! {p|0.25}If you had a{nl}boomerang, {p|0.125}you could break{nl}all sorts of walls!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_22_default_0",
+			"text": "{eff|Shake}Thorgle Borgle!!!!!!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_22_thorgleBorgle_0",
+			"text": "I are {col|0200}Cave Snail{col|0312}!{nl}{p|0.25}{eff|Shake}Thorgle Borgle!!!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_23_default_0",
+			"text": "Do you think {col|0204}Cave Snail{nl}{col|0312}is single?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_23_caveSnail_0",
+			"text": "{col|0200}Cave Snail {col|0312}scares me!{nl}{p|0.25}I'm staying over here!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_23_loadGame_0",
+			"text": "Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl}{col|0309}{ctrl|22} {col|0312}and load your game from{nl}town!  {p|0.125}You won't lose any items!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_24_default_0",
+			"text": "{P}, {p|0.125}legend says the{nl}{col|0302}Shrine of Iris {col|0312}is somewhere{nl}very close to Snail Town!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_24_offerHelixFragment_0",
+			"text": "Take this {col|0302}Helix Fragment{col|0312}!{nl}{p|0.25}Legend says it is but one{nl}piece of {col|0302}Iris, the Godsnail{col|0312}!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_25_default_0",
+			"text": "Hey {P}, {p|0.125}I'm hungry!  {p|0.25}Know{nl}any good plants around town?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_25_explainMap_0",
+			"text": "Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_50_default_0",
+			"text": "Oh, {p|0.125}hey, {P}! {p|0.25}I'm here to test{nl}single-page dialogue!!",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
-			"value": 0
+			"name": "npc_50_admireRainbowWave_0",
+			"text": "{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, {P}!!{p|0.25}{nl}I'd love one too, {p|0.125}but I don't{nl}have a jump button.",
+			"value": 1
+		},
+		{
+			"name": "npc_51_default_0",
+			"text": "Hey there, {P}!! {p|0.25}I see you{nl}figured out how to start a{nl}multi-page conversation!",
+			"value": 1
+		},
+		{
+			"name": "npc_51_default_1",
+			"text": "The hope is this talk should go{nl}100% smoothly. {p|0.125}What do you{nl}think?",
+			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
+			"name": "npc_51_default_2",
+			"text": "Impressive! {p|0.25}I do hope that's my{nl}portrait showing right now, {p|0.125}if it{nl}even is there.",
 			"value": 0
+		},
+		{
+			"name": "npc_51_default_3",
+			"text": "I'm here to test multiple things,{nl}it seems!",
+			"value": 1
 		},
 		{
 			"name": "",
