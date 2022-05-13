@@ -783,13 +783,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_square",
+			"name": "Dialogue_square_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				0,
 				1,
 				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_square",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				3
 			],
 			"loop": false,
@@ -808,13 +819,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_round",
+			"name": "Dialogue_round_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				4,
 				5,
 				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_round",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				7
 			],
 			"loop": false,
@@ -833,13 +855,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_angle",
+			"name": "Dialogue_angle_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				8,
 				9,
 				10,
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_angle",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				11
 			],
 			"loop": false,
@@ -858,13 +891,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_loud",
+			"name": "Dialogue_loud_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				12,
 				13,
 				14,
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_loud",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				15
 			],
 			"loop": false,
@@ -883,13 +927,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_bevel",
+			"name": "Dialogue_bevel_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				16,
 				17,
 				18,
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_bevel",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				19
 			],
 			"loop": false,
@@ -908,13 +963,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_outline",
+			"name": "Dialogue_outline_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				20,
 				21,
 				22,
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_outline",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				23
 			],
 			"loop": false,
@@ -933,13 +999,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_cloud",
+			"name": "Dialogue_cloud_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				24,
 				25,
 				26,
+				27
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_cloud",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				27
 			],
 			"loop": false,
@@ -958,13 +1035,24 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Dialogue_panel",
+			"name": "Dialogue_panel_open",
 			"spriteName": "UI/DialogueBox",
 			"framerate": 60.0,
 			"frames": [
 				28,
 				29,
 				30,
+				31
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_panel",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
 				31
 			],
 			"loop": false,
@@ -1021,6 +1109,18 @@
 			"framerate": 0.0,
 			"frames": [
 				3
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_portrait_colorize",
+			"spriteName": "UI/DialoguePortrait",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				2
 			],
 			"loop": false,
 			"loopStartFrame": false,
@@ -1285,6 +1385,38 @@
 			"framerate": 0.0,
 			"frames": [
 				27
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_characterColors",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
+				5,
+				6,
+				110,
+				105,
+				1,
+				313
+			],
+			"loop": false,
+			"loopStartFrame": false,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Dialogue_characterShapes",
+			"spriteName": "UI/DialogueBox",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				0,
+				0,
+				1,
+				0
 			],
 			"loop": false,
 			"loopStartFrame": false,

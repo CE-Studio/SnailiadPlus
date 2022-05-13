@@ -531,6 +531,39 @@ public class PlayState
         return "ID with text \"" + text + "\" not found";
     }
 
+    public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue)
+    {
+        Texture2D colorTable = GetSprite(table).texture;
+        Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+        for (int i = 0; i < colorTable.width; i++)
+        {
+            referenceColors.Add(colorTable.GetPixel(i, 0), i);
+        }
+
+        Sprite oldSprite = GetSprite(sprite, spriteNum);
+        Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+        Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
+            (int)oldSprite.textureRect.y,
+            (int)oldSprite.textureRect.width,
+            (int)oldSprite.textureRect.height);
+        for (int j = 0; j < pixels.Length; j++)
+        {
+            if (pixels[j].r == 0.9960785f && pixels[j].g == 0.9960785f && pixels[j].b == 0.9960785f)
+                pixels[j] = new Color(0, 0, 0, 0);
+            else if (referenceColors.ContainsKey(pixels[j]))
+                pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], tableValue + 1);
+        }
+        newSprite.SetPixels(pixels);
+        newSprite.Apply();
+
+        return Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16);
+    }
+
+    public static string ParseColorCodeToString(int colorData)
+    {
+        return "" + (colorData < 1000 ? "0" : "") + (colorData < 100 ? "0" : "") + (colorData < 100 ? "0" : "") + colorData.ToString();
+    }
+
     public static void GetNewRoom(string intendedArea)
     {
         area = intendedArea;

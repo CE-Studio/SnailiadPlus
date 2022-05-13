@@ -49,6 +49,7 @@ public class DialogueBox : MonoBehaviour
     //private List<Sprite> coloredSprites = new List<Sprite>();
     //private Dictionary<int, int> spriteReferences = new Dictionary<int, int>();
     private Dictionary<int, Sprite> colorizedSprites = new Dictionary<int, Sprite>();
+    private string currentFrameColor = "0005";
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
@@ -106,22 +107,12 @@ public class DialogueBox : MonoBehaviour
         portraitCharAnim = portrait.transform.GetChild(0).GetComponent<AnimationModule>();
         portraitFrame.color = PlayState.GetColor("0006");
 
-        anim.Add("Dialogue_square");
-        anim.Add("Dialogue_square_close");
-        anim.Add("Dialogue_round");
-        anim.Add("Dialogue_round_close");
-        anim.Add("Dialogue_angle");
-        anim.Add("Dialogue_angle_close");
-        anim.Add("Dialogue_loud");
-        anim.Add("Dialogue_loud_close");
-        anim.Add("Dialogue_bevel");
-        anim.Add("Dialogue_bevel_close");
-        anim.Add("Dialogue_outline");
-        anim.Add("Dialogue_outline_close");
-        anim.Add("Dialogue_cloud");
-        anim.Add("Dialogue_cloud_close");
-        anim.Add("Dialogue_panel");
-        anim.Add("Dialogue_panel_close");
+        for (int i = 0; i < boxShapeIDs.Length; i++)
+        {
+            anim.Add("Dialogue_" + boxShapeIDs[i] + "_open");
+            anim.Add("Dialogue_" + boxShapeIDs[i]);
+            anim.Add("Dialogue_" + boxShapeIDs[i] + "_close");
+        }
 
         portraitFrameAnim.Add("Dialogue_portrait_frame");
         portraitFrameAnim.Play("Dialogue_portrait_frame");
@@ -137,7 +128,6 @@ public class DialogueBox : MonoBehaviour
             portraitCharAnim.Add("Dialogue_portrait_Blobby" + i);
             portraitCharAnim.Add("Dialogue_portrait_Leechy" + i);
         }
-        GenerateColorizedPortraitSprites();
 
         charWidths = PlayState.GetAnim("TextWidth").frames;
     }
@@ -216,13 +206,14 @@ public class DialogueBox : MonoBehaviour
             // Case 4 = static box for single-page dialogue
             {
                 case 0:
-                    anim.Play("Dialogue_" + boxShapeIDs[currentShape]);
+                    anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_open");
                     boxState = 1;
                     playSound = true;
                     if (dialogueType == 3)
                     {
                         portrait.SetActive(true);
                         buttonDown = true;
+                        GenerateColorizedPortraitSprites();
                     }
                     portraitPos = 1;
                     currentTimerMax = 0.02f;
@@ -240,17 +231,6 @@ public class DialogueBox : MonoBehaviour
                     {
                         if (states[(int)pointer.x] != 0)
                         {
-                            //for (int i = 0; i < portraitParts.Count - 1; i++)
-                            //    portraitParts[i].color = portraitColors[(i + 1) * states[(int)pointer.x] - 1];
-                            //for (int i = 0; i < portraitParts.Count - 1; i++)
-                            //{
-                            //    portraitParts[i].enabled = true;
-                            //    if (left)
-                            //        portraitParts[i].flipX = true;
-                            //    else
-                            //        portraitParts[i].flipX = false;
-                            //}
-                            //portraitParts[5].enabled = false;
                             UpdatePortrait("npc", 0);
                             if (left)
                                 portraitChar.flipX = true;
@@ -260,14 +240,6 @@ public class DialogueBox : MonoBehaviour
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
-                            //UpdatePlayerPortrait();
-                            //for (int i = 0; i < portraitParts.Count - 1; i++)
-                            //    portraitParts[i].enabled = false;
-                            //portraitParts[5].enabled = true;
-                            //if (left)
-                            //    portraitParts[5].flipX = false;
-                            //else
-                            //    portraitParts[5].flipX = true;
                             UpdatePortrait(PlayState.currentCharacter, PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
                             if (left)
                                 portraitChar.flipX = false;
@@ -303,14 +275,6 @@ public class DialogueBox : MonoBehaviour
                         dialogueShadow.text = textList[(int)pointer.x];
                         pointer.x++;
                         boxState = 2;
-                        if (pointer.x == 1)
-                        {
-                            //yield return new WaitForSeconds(4);
-                        }
-                        else
-                        {
-                            //yield return new WaitForEndOfFrame();
-                        }
                     }
                     else
                     {
@@ -322,103 +286,20 @@ public class DialogueBox : MonoBehaviour
                                     break;
                                 if (timer == 0)
                                 {
-                                    //dialogueText.text += textList[(int)pointer.x][(int)pointer.y];
-                                    //dialogueShadow.text = dialogueText.text;
-
-                                    char thisChar = textList[(int)pointer.x][(int)pointer.y];
-                                    bool advanceChar = true;
-                                    
-                                    while (thisChar == '{')
-                                    {
-                                        string command = "";
-                                        for (float i = pointer.y + 1; textList[(int)pointer.x][(int)i] != '}' && i < textList[(int)pointer.x].Length; i++)
-                                            command += textList[(int)pointer.x][(int)i];
-                                        if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}')
-                                        {
-                                            string[] args;
-                                            if (command.Contains("|"))
-                                                args = command.Split('|');
-                                            else
-                                                args = new string[] { command };
-                                            switch (args[0].ToLower())
-                                            {
-                                                case "nl":    // New line
-                                                    posPointer = new Vector2(posPointerOrigin.x, posPointer.y - 1.125f);
-                                                    break;
-                                                case "eff":   // Effect
-                                                    currentEffect = args[1];
-                                                    break;
-                                                case "spd":   // Speed
-                                                    currentTimerMax = float.Parse(args[1]);
-                                                    break;
-                                                case "sfx":   // Speaker sound
-                                                    currentSpeaker = int.Parse(args[1]);
-                                                    break;
-                                                case "col":   // Color
-                                                    currentColor = new Vector2(int.Parse(args[1].Substring(0, 2)), int.Parse(args[1].Substring(2, 2)));
-                                                    break;
-                                                case "p":     // Pause
-                                                    timer = float.Parse(args[1]);
-                                                    advanceChar = false;
-                                                    break;
-                                                case "ctrl":  // Parse keybind to string
-                                                    textList[(int)pointer.x] = textList[(int)pointer.x].Insert((int)pointer.y + command.Length + 2,
-                                                        Control.ParseKeyName(int.Parse(args[1])));
-                                                    break;
-                                                default:
-                                                    Debug.LogWarning("Unknown command prefix \"" + args[0].ToLower() + "\".");
-                                                    break;
-                                            }
-                                            pointer.y += command.Length + 2;
-                                            thisChar = textList[(int)pointer.x][(int)pointer.y];
-                                        }
-                                        else
-                                            break;
-                                    }
-                                    if (advanceChar)
-                                    {
-                                        GameObject newLetter = Instantiate(letter);
-                                        newLetter.transform.parent = transform;
-                                        newLetter.transform.localPosition = posPointer;
-                                        FontObject newLetterScript = newLetter.GetComponent<FontObject>();
-                                        newLetterScript.Create(thisChar, 3, currentEffect, currentColor);
-                                        int addedWidth = (charWidths[newLetterScript.ID] + 1) * 2;
-                                        posPointer.x += addedWidth * 0.0625f;
-
-                                        if (currentTimerMax < 0.04f)
-                                            playSound = !playSound;
-                                        else
-                                            playSound = true;
-                                        if (thisChar != ' ' && playSound)
-                                        {
-                                            switch (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound)
-                                            {
-                                                case 1:
-                                                    PlayState.PlaySound("Dialogue0");
-                                                    break;
-                                                case 2:
-                                                    PlayState.PlaySound("Dialogue1");
-                                                    break;
-                                                case 3:
-                                                    PlayState.PlaySound("Dialogue2");
-                                                    break;
-                                                case 4:
-                                                    PlayState.PlaySound("Dialogue3");
-                                                    break;
-                                            }
-                                        }
-                                        pointer.y++;
-                                        timer = currentTimerMax;
-                                    }
+                                    ParseNextChar();
                                 }
                                 if (!Control.SpeakHold() && buttonDown)
                                     buttonDown = false;
                                 if (Control.SpeakPress() && !buttonDown && dialogueType == 3)
                                 {
                                     buttonDown = true;
-                                    dialogueText.text = textList[(int)pointer.x];
-                                    dialogueShadow.text = dialogueText.text;
-                                    pointer.y = textList[(int)pointer.x].Length;
+                                    //dialogueText.text = textList[(int)pointer.x];
+                                    //dialogueShadow.text = dialogueText.text;
+                                    //pointer.y = textList[(int)pointer.x].Length;
+                                    while (pointer.y < textList[(int)pointer.x].Length)
+                                    {
+                                        ParseNextChar(true);
+                                    }
                                     break;
                                 }
                             }
@@ -439,15 +320,9 @@ public class DialogueBox : MonoBehaviour
                     }
                     break;
                 case 2:
-                    //anim.Play("Dialogue continue", 0, 0);
-                    //if (!Control.SpeakHold() && buttonDown)
-                    //{
-                    //    buttonDown = false;
-                    //}
-                    if (Control.SpeakPress())// && !buttonDown)
+                    if (Control.SpeakPress())
                     {
                         buttonDown = true;
-                        //anim.Play("Dialogue hold", 0, 0);
                         if (pointer.x == textList.Count)
                         {
                             boxState = 3;
@@ -489,6 +364,97 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
+    private void ParseNextChar(bool mute = false)
+    {
+        char thisChar = textList[(int)pointer.x][(int)pointer.y];
+        bool advanceChar = true;
+
+        while (thisChar == '{')
+        {
+            string command = "";
+            for (float i = pointer.y + 1; textList[(int)pointer.x][(int)i] != '}' && i < textList[(int)pointer.x].Length; i++)
+                command += textList[(int)pointer.x][(int)i];
+            if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}')
+            {
+                string[] args;
+                if (command.Contains("|"))
+                    args = command.Split('|');
+                else
+                    args = new string[] { command };
+                switch (args[0].ToLower())
+                {
+                    case "nl":    // New line
+                        posPointer = new Vector2(posPointerOrigin.x, posPointer.y - 1.125f);
+                        break;
+                    case "eff":   // Effect
+                        currentEffect = args[1];
+                        break;
+                    case "spd":   // Speed
+                        currentTimerMax = float.Parse(args[1]);
+                        break;
+                    case "sfx":   // Speaker sound
+                        currentSpeaker = int.Parse(args[1]);
+                        break;
+                    case "col":   // Color
+                        currentColor = new Vector2(int.Parse(args[1].Substring(0, 2)), int.Parse(args[1].Substring(2, 2)));
+                        break;
+                    case "p":     // Pause
+                        timer = float.Parse(args[1]);
+                        advanceChar = false;
+                        break;
+                    case "ctrl":  // Parse keybind to string
+                        textList[(int)pointer.x] = textList[(int)pointer.x].Insert((int)pointer.y + command.Length + 2,
+                            Control.ParseKeyName(int.Parse(args[1])));
+                        break;
+                    default:
+                        Debug.LogWarning("Unknown command prefix \"" + args[0].ToLower() + "\".");
+                        break;
+                }
+                pointer.y += command.Length + 2;
+                thisChar = textList[(int)pointer.x][(int)pointer.y];
+            }
+            else
+                break;
+        }
+        if (advanceChar)
+        {
+            GameObject newLetter = Instantiate(letter);
+            newLetter.transform.parent = transform;
+            newLetter.transform.localPosition = posPointer;
+            FontObject newLetterScript = newLetter.GetComponent<FontObject>();
+            newLetterScript.Create(thisChar, 3, currentEffect, currentColor);
+            int addedWidth = (charWidths[newLetterScript.ID] + 1) * 2;
+            posPointer.x += addedWidth * 0.0625f;
+
+            if (mute)
+                playSound = false;
+            else if (currentTimerMax < 0.04f)
+                playSound = !playSound;
+            else
+                playSound = true;
+            if (thisChar != ' ' && playSound)
+            {
+                switch (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound)
+                {
+                    case 1:
+                        PlayState.PlaySound("Dialogue0");
+                        break;
+                    case 2:
+                        PlayState.PlaySound("Dialogue1");
+                        break;
+                    case 3:
+                        PlayState.PlaySound("Dialogue2");
+                        break;
+                    case 4:
+                        PlayState.PlaySound("Dialogue3");
+                        break;
+                }
+            }
+            pointer.y++;
+            timer = currentTimerMax;
+        }
+    }
+
     public void RunBox(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
@@ -498,6 +464,7 @@ public class DialogueBox : MonoBehaviour
         currentSpeaker = speaker;
         currentShape = shape;
         sprite.color = PlayState.GetColor(boxColor);
+        currentFrameColor = boxColor;
         textList = text;
         portraitColors = colors;
         states = stateList;
@@ -524,7 +491,6 @@ public class DialogueBox : MonoBehaviour
         posPointer = posPointerOrigin;
         dialogueText.text = "";
         dialogueShadow.text = "";
-        //anim.Play("Dialogue close", 0, 0);
         anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_close");
         portrait.SetActive(false);
         PlayState.paralyzed = false;
@@ -540,179 +506,68 @@ public class DialogueBox : MonoBehaviour
 
     private void GenerateColorizedPortraitSprites()
     {
-        int[] baseSprites = new int[] { 1, 2 };
-        Texture2D colorTable = PlayState.GetSprite("Entities/SnailNpcColor").texture;
-        Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
-        for (int i = 0; i < colorTable.width; i++)
-            referenceColors.Add(colorTable.GetPixel(i, 0), i);
-
+        colorizedSprites.Clear();
+        int[] baseSprites = PlayState.GetAnim("Dialogue_portrait_colorize").frames;
         for (int i = 0; i < baseSprites.Length; i++)
         {
-            Sprite oldSprite = PlayState.GetSprite("UI/DialoguePortrait", baseSprites[i]);
-            if (oldSprite.name != "Missing")
-            {
-                Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
-                Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
-                    (int)oldSprite.textureRect.y,
-                    (int)oldSprite.textureRect.width,
-                    (int)oldSprite.textureRect.height);   // Ok clearly this isn't working. Maybe try copying the NPC version to PlayState as Colorize(Sprite sprite, string table)?
-                for (int j = 0; j < pixels.Length; j++)
-                {
-                    if (referenceColors.ContainsKey(pixels[j]))
-                        pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], currentSpeaker + 1);
-                }
-                newSprite.SetPixels(pixels);
-                colorizedSprites.Add(baseSprites[i], Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
-            }
-            else
-                colorizedSprites.Add(baseSprites[i], oldSprite);
+            colorizedSprites.Add(baseSprites[i], PlayState.Colorize("UI/DialoguePortrait", baseSprites[i], "Entities/SnailNpcColor", currentSpeaker));
         }
     }
 
-    //private void UpdatePlayerPortrait()
-    //{
-    //    int portraitID = 0;
-    //
-    //    if (PlayState.CheckForItem(9))
-    //        portraitID = 3;
-    //    else if (PlayState.CheckForItem(8))
-    //        portraitID = 2;
-    //    else if (PlayState.CheckForItem(7))
-    //        portraitID = 1;
-    //
-    //    switch (PlayState.currentCharacter)
-    //    {
-    //        default:
-    //        case "Snaily":
-    //            portraitID += 0;
-    //            break;
-    //        case "Sluggy":
-    //            portraitID += 4;
-    //            break;
-    //        case "Upside":
-    //            portraitID += 8;
-    //            break;
-    //        case "Leggy":
-    //            portraitID += 12;
-    //            break;
-    //        case "Blobby":
-    //            portraitID += 16;
-    //            break;
-    //        case "Leechy":
-    //            portraitID += 20;
-    //            break;
-    //    }
-    //
-    //    portraitParts[5].sprite = playerPortraits[portraitID];
-    //}
     private void UpdatePortrait(string state, int value)
     {
         PlayState.AnimationData currentAnim = PlayState.GetAnim("Dialogue_portrait_" + (state.ToLower() == "npc" ?
             (value == 2 ? "turtle" : (value == 1 ? "upsideDownSnail" : "snail")) : state[0].ToString().ToUpper() + state.Substring(1, state.Length - 1).ToLower() + value));
 
-        //coloredSprites.Clear();
-        //spriteReferences.Clear();
         if (state.ToLower() == "npc" && (value == 0 || value == 1))
-        {
             portraitCharAnim.updateSprite = false;
-            //if (colorTable == null)
-            //colorTable = PlayState.GetSprite("Entities/SnailNpcColor", 0).texture;
-            //Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
-            //for (int i = 0; i < colorTable.width; i++)
-            //{
-            //    referenceColors.Add(colorTable.GetPixel(i, 0), i);
-            //}
-            //List<Sprite> newSprites = new List<Sprite>();
-            //
-            //for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++)
-            //{
-            //    Sprite oldSprite = PlayState.GetSprite("Entities/SnailNpc", i);
-            //    Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
-            //    Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
-            //        (int)oldSprite.textureRect.y,
-            //        (int)oldSprite.textureRect.width,
-            //        (int)oldSprite.textureRect.height);
-            //    for (int j = 0; j < pixels.Length; j++)
-            //    {
-            //        if (referenceColors.ContainsKey(pixels[j]))
-            //            pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], ID + 1);
-            //    }
-            //    newSprite.SetPixels(pixels);
-            //    newSprite.Apply();
-            //
-            //    newSprites.Add(Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
-            //}
-            //
-            //sprites = newSprites.ToArray();
-            //Texture2D colorTable = PlayState.GetSprite("Entities/SnailNpcColor").texture;
-            //Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
-            //for (int i = 0; i < colorTable.width; i++)
-            //    referenceColors.Add(colorTable.GetPixel(i, 0), i);
-            //for (int i = 0; i < currentAnim.frames.Length; i++)
-            //{
-            //    if (!spriteReferences.ContainsKey(currentAnim.frames[i]))
-            //    {
-            //        Sprite oldSprite = PlayState.GetSprite("UI/DialoguePortrait", currentAnim.frames[i]);
-            //        Debug.Log(oldSprite.name);
-            //        if (oldSprite.name != "Missing")
-            //        {
-            //            Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
-            //            Debug.Log(oldSprite.rect.width * oldSprite.rect.height);
-            //            Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
-            //                (int)oldSprite.textureRect.y,
-            //                (int)oldSprite.textureRect.width,
-            //                (int)oldSprite.textureRect.height);
-            //            Debug.Log(pixels.Length);
-            //            //Color32[] pixels = oldSprite.texture.GetPixels32();
-            //            for (int j = 0; j < pixels.Length; j++)
-            //            {
-            //                if (referenceColors.ContainsKey(pixels[j]))
-            //                    pixels[j] = colorTable.GetPixel(referenceColors[pixels[j]], currentSpeaker + 1);
-            //            }
-            //            newSprite.SetPixels(pixels);
-            //            coloredSprites.Add(Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16));
-            //        }
-            //        else
-            //            coloredSprites.Add(oldSprite);
-            //        spriteReferences.Add(currentAnim.frames[i], spriteReferences.Count);
-            //    }
-            //}
-        }
         else
             portraitCharAnim.updateSprite = true;
         portraitCharAnim.Play(currentAnim.name);
 
         if (state == "npc")
-            portraitFrame.color = PlayState.GetColor("0005");
+        {
+            sprite.color = PlayState.GetColor(currentFrameColor);
+            portraitFrame.color = PlayState.GetColor(currentFrameColor);
+            if (anim.currentAnimName != "Dialogue_" + boxShapeIDs[currentShape] && anim.currentAnimName != "Dialogue_" + boxShapeIDs[currentShape] + "_open")
+                anim.Play("Dialogue_" + boxShapeIDs[currentShape]);
+        }
         else
         {
+            int[] colorList = PlayState.GetAnim("Dialogue_characterColors").frames;
+            int[] shapeList = PlayState.GetAnim("Dialogue_characterShapes").frames;
+            int charID = 0;
             switch (PlayState.currentCharacter)
             {
                 case "Snaily":
                     currentSound = 1;
-                    portraitFrame.color = PlayState.GetColor("0005");
+                    charID = 0;
                     break;
                 case "Leggy":
                     currentSound = 1;
-                    portraitFrame.color = PlayState.GetColor("0106");
+                    charID = 3;
                     break;
                 case "Upside":
                     currentSound = 2;
-                    portraitFrame.color = PlayState.GetColor("0110");
+                    charID = 2;
                     break;
                 case "Blobby":
                     currentSound = 2;
-                    portraitFrame.color = PlayState.GetColor("0100");
+                    charID = 4;
                     break;
                 case "Leechy":
                     currentSound = 3;
-                    portraitFrame.color = PlayState.GetColor("0313");
+                    charID = 5;
                     break;
                 case "Sluggy":
                     currentSound = 4;
-                    portraitFrame.color = PlayState.GetColor("0006");
+                    charID = 1;
                     break;
             }
+            sprite.color = PlayState.GetColor(PlayState.ParseColorCodeToString(colorList[charID]));
+            portraitFrame.color = PlayState.GetColor(PlayState.ParseColorCodeToString(colorList[charID]));
+            if (anim.currentAnimName != "Dialogue_" + boxShapeIDs[shapeList[charID]] && anim.currentAnimName != "Dialogue_" + boxShapeIDs[currentShape] + "_open")
+                anim.Play("Dialogue_" + boxShapeIDs[shapeList[charID]]);
         }
     }
 
