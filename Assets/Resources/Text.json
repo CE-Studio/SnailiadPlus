@@ -401,6 +401,11 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_gameplay_secretTiles",
+			"text": "Show secret map tiles",
+			"value": 0
+		},
+		{
 			"name": "menu_option_assets_texture",
 			"text": "Texture packs",
 			"value": 0
@@ -727,7 +732,7 @@
 		},
 		{
 			"name": "menu_option_credits_4-5",
-			"text": "NegativeBreak (Built-in sprite pack)",
+			"text": "NegativeBread (Built-in sprite pack)",
 			"value": 0
 		},
 		{
@@ -1906,8 +1911,8 @@
 			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
+			"name": "npc_turtle_default_0",
+			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
 			"value": 0
 		},
 		{

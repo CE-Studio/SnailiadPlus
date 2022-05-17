@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Minimap : MonoBehaviour
 {
-    public GameObject player;
+    //public GameObject player;
     public GameObject minimap;
     public AnimationModule[] anims;
 
     private int currentCellID;
     private int lastCellID;
-    private Vector2 origin = new Vector2(0.5f, 0.5f);
 
     private GameObject[] masks = new GameObject[] { };
     private int[] maskIDoffsets = new int[]
@@ -73,10 +72,10 @@ public class Minimap : MonoBehaviour
     void Update()
     {
         minimap.transform.localPosition = new Vector2(
-            -Mathf.Round((origin.x + player.transform.position.x - 1 + 13) / 26) * 0.5f + 0.25f,
-            -Mathf.Round((origin.y + player.transform.position.y - 1 + 8) / 16) * 0.5f + 0.25f
+            -Mathf.Round((PlayState.WORLD_ORIGIN.x + PlayState.player.transform.position.x - 1 + (PlayState.ROOM_SIZE.x * 0.5f)) / PlayState.ROOM_SIZE.x) * 0.5f + 0.25f,
+            -Mathf.Round((PlayState.WORLD_ORIGIN.y + PlayState.player.transform.position.y - 1 + (PlayState.ROOM_SIZE.y * 0.5f)) / PlayState.ROOM_SIZE.y) * 0.5f + 0.25f
             );
-        currentCellID = CurrentCellID();
+        currentCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
         if (currentCellID >= 0 && currentCellID < currentMap.Length && !PlayState.playerScript.inDeathCutscene)
         {
             if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2)
@@ -87,32 +86,56 @@ public class Minimap : MonoBehaviour
         lastCellID = currentCellID;
     }
 
-    private int CurrentCellID()
-    {
-        return Mathf.RoundToInt(Mathf.Abs((minimap.transform.localPosition.x - 6.5f - (origin.x * 0.5f)) * 2) +
-            (Mathf.Abs(minimap.transform.localPosition.y + 5.5f - (origin.y * 0.5f)) * 2) * 26);
-    }
+    //private int CurrentCellID()
+    //{
+    //    Vector2 mapPos = PlayState.WorldPosToMapPos(PlayState.player.transform.position);
+    //    return Mathf.RoundToInt(mapPos.y * PlayState.WORLD_SIZE.x + mapPos.x);
+    //}
 
     public void RefreshMap()
     {
         for (int i = 0; i < masks.Length; i++)
         {
-            if (currentCellID + maskIDoffsets[i] >= 0 && currentCellID + maskIDoffsets[i] < currentMap.Length)
+            int thisMaskID = currentCellID + maskIDoffsets[i];
+            if (thisMaskID >= 0 && thisMaskID < currentMap.Length)
             {
-                if (currentMap[currentCellID + maskIDoffsets[i]] == 1 || currentMap[currentCellID + maskIDoffsets[i]] == 3)
-                //masks[i].SetActive(false);
+                if (currentMap[thisMaskID] == 1 || (currentMap[thisMaskID] == 3 && PlayState.gameOptions[13] == 1))
                 {
                     masks[i].GetComponent<SpriteMask>().enabled = false;
-                    anims[i + 4].Play("Minimap_icon_blank", true);
+                    if (PlayState.bossLocations.Contains(thisMaskID))
+                    {
+                        anims[i + 4].Play("Minimap_icon_boss", true);
+                        UpdatePlayerIcon("Minimap_icon_playerHighlight", thisMaskID == currentCellID);
+                    }
+                    else if (PlayState.saveLocations.Contains(thisMaskID))
+                    {
+                        anims[i + 4].Play("Minimap_icon_save", true);
+                        UpdatePlayerIcon("Minimap_icon_playerHighlight", thisMaskID == currentCellID);
+                    }
+                    else if (PlayState.itemLocations.Contains(thisMaskID))
+                    {
+                        anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                        UpdatePlayerIcon("Minimap_icon_playerHighlight", thisMaskID == currentCellID);
+                    }
+                    else
+                    {
+                        anims[i + 4].Play("Minimap_icon_blank", true);
+                        UpdatePlayerIcon("Minimap_icon_playerNormal", thisMaskID == currentCellID);
+                    }
                 }
                 else
-                //masks[i].SetActive(true);
                 {
                     masks[i].GetComponent<SpriteMask>().enabled = true;
                     anims[i + 4].Play("Minimap_icon_blank", true);
                 }
             }
         }
+    }
+
+    private void UpdatePlayerIcon(string state, bool confirm)
+    {
+        if (anims[3].currentAnimName != state && confirm)
+            anims[3].Play(state);
     }
 
     public void RefreshAnims()

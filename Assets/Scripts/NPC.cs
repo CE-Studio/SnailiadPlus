@@ -12,22 +12,20 @@ public class NPC : MonoBehaviour
     public bool buttonDown = false;
     private int nexted = 0;
 
-    public string playerName;
-    public string playerFullName;
-    public string playerSpecies;
-
     public List<Color32> colors = new List<Color32>();
 
-    private List<Color32> portraitColors = new List<Color32>();
-    private List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
+    public List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
     public Sprite[] npcSpriteSheet;
     public Sprite[] sprites;
 
-    public List<SpriteRenderer> parts = new List<SpriteRenderer>();
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public GameObject speechBubble;
+    public SpriteRenderer speechBubbleSprite;
+    public AnimationModule speechBubbleAnim;
+
+    public bool bubbleState = false;
 
     public Vector2 origin;
 
@@ -36,53 +34,25 @@ public class NPC : MonoBehaviour
     private const float GRAVITY = 1.35f;
     private const float TERMINAL_VELOCITY = -0.66f;
 
-    private List<string> textToSend = new List<string>();
+    public List<string> textToSend = new List<string>();
 
     public virtual void Awake()
     {
-        switch (PlayState.currentCharacter)
-        {
-            case "Snaily":
-                playerName = "Snaily";
-                playerFullName = "Snaily Snail";
-                playerSpecies = "snail";
-                break;
-            default:
-                playerName = "Snaily";
-                playerFullName = "Snaily Snail";
-                playerSpecies = "snail";
-                break;
-        }
-
-        //colorTable = (Texture2D)Resources.Load("Images/Entities/SnailNpcColor");
-
-        parts.Add(transform.GetComponent<SpriteRenderer>());
-        parts.Add(transform.GetChild(0).GetComponent<SpriteRenderer>());
-        parts.Add(transform.GetChild(1).GetComponent<SpriteRenderer>());
-        parts.Add(transform.GetChild(2).GetComponent<SpriteRenderer>());
-        parts.Add(transform.GetChild(3).GetComponent<SpriteRenderer>());
         speechBubble = transform.Find("Speech bubble").gameObject;
+        speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
+        speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
 
-        //parts[0].color = colorTable.GetPixel(0, ID);
-        //parts[1].color = colorTable.GetPixel(1, ID);
-        //parts[2].color = colorTable.GetPixel(2, ID);
-        //parts[3].color = colorTable.GetPixel(3, ID);
-        //parts[4].color = colorTable.GetPixel(4, ID);
-
-        //CreateNewSprites();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
         anim.updateSprite = false;
-        //anim.Play("NPC_idle");
 
         if (upsideDown)
         {
-            for (int j = 0; j < parts.Count; j++)
-                parts[j].flipY = true;
-            speechBubble.GetComponent<SpriteRenderer>().flipY = true;
+            sprite.flipY = true;
+            speechBubbleSprite.flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
-        speechBubble.GetComponent<SpriteRenderer>().enabled = false;
+        speechBubbleSprite.enabled = false;
 
         origin = transform.localPosition;
 
@@ -102,8 +72,7 @@ public class NPC : MonoBehaviour
     {
         nexted = 0;
         chatting = false;
-        //CreateNewSprites();
-        //anim.Play("NPC_idle");
+        speechBubbleSprite.enabled = false;
     }
 
     public virtual void Spawn()
@@ -167,15 +136,13 @@ public class NPC : MonoBehaviour
 
             if (PlayState.player.transform.position.x < transform.position.x)
             {
-                for (int i = 0; i < parts.Count; i++)
-                    parts[i].flipX = true;
-                speechBubble.GetComponent<SpriteRenderer>().flipX = false;
+                sprite.flipX = true;
+                speechBubbleSprite.flipX = false;
             }
             else
             {
-                for (int i = 0; i < parts.Count; i++)
-                    parts[i].flipX = false;
-                speechBubble.GetComponent<SpriteRenderer>().flipX = true;
+                sprite.flipX = false;
+                speechBubbleSprite.flipX = true;
             }
 
             if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace)
@@ -185,7 +152,6 @@ public class NPC : MonoBehaviour
                     int boxShape = 0;
                     string boxColor = "0005";
                     textToSend.Clear();
-                    portraitColors.Clear();
                     portraitStateList.Clear();
                     switch (ID)
                     {
@@ -332,7 +298,7 @@ public class NPC : MonoBehaviour
                                 AddText("hintSecret");
                             else if (PlayState.GetItemPercentage() < 40)
                             {
-                                switch (playerName)
+                                switch (PlayState.currentCharacter)
                                 {
                                     case "Snaily":
                                         AddText("hintSnaily");
@@ -367,7 +333,7 @@ public class NPC : MonoBehaviour
                         case 16:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                             {
-                                if (playerName == "Leechy")
+                                if (PlayState.currentCharacter == "Leechy")
                                     AddText("healTipLeechy");
                                 else
                                     AddText("healTipGeneric");
@@ -454,13 +420,15 @@ public class NPC : MonoBehaviour
                             .Replace("{ID}", ID.ToString())));
                     if (textToSend.Count > 1)
                     {
-                        speechBubble.GetComponent<SpriteRenderer>().enabled = true;
-                        if (Control.SpeakPress())// && !buttonDown)
+                        if (!speechBubbleSprite.enabled)
+                            speechBubbleSprite.enabled = true;
+                        ToggleBubble(true);
+                        if (Control.SpeakPress())
                         {
                             chatting = true;
                             PlayState.isTalking = true;
                             PlayState.paralyzed = true;
-                            PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitColors, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
+                            PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
                         }
                     }
                     else
@@ -482,7 +450,7 @@ public class NPC : MonoBehaviour
                 needsSpace = false;
             else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed))
             {
-                speechBubble.GetComponent<SpriteRenderer>().enabled = false;
+                ToggleBubble(false);
             }
 
             switch (ID)
@@ -509,7 +477,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void AddText(string textID)
+    public virtual void AddText(string textID)
     {
         bool locatedAll = false;
         int i = 0;
@@ -547,16 +515,30 @@ public class NPC : MonoBehaviour
         sprites = newSprites.ToArray();
     }
 
-    public void ChangeSprite(int spriteID)
-    {
-        for (int i = 0; i < parts.Count; i++)
-            parts[i].sprite = npcSpriteSheet[(6 * i) + spriteID];
-    }
-
     public void Next()
     {
         nexted++;
         PlayState.CloseDialogue();
         chatting = false;
+    }
+
+    public void ToggleBubble(bool state)
+    {
+        if (speechBubbleAnim.animList.Count == 0)
+        {
+            speechBubbleAnim.Add("NPC_bubble_open");
+            speechBubbleAnim.Add("NPC_bubble_close");
+        }
+        if (state && !bubbleState)
+        {
+            speechBubbleSprite.enabled = true;
+            speechBubbleAnim.Play("NPC_bubble_open");
+            bubbleState = true;
+        }
+        else if (!state && bubbleState)
+        {
+            speechBubbleAnim.Play("NPC_bubble_close");
+            bubbleState = false;
+        }
     }
 }

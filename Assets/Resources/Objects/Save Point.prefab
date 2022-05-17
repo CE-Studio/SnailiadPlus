@@ -147,8 +147,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasBeenActivated: 0
   anim: {fileID: 0}
-  sfx: {fileID: 0}
-  saveSfx: {fileID: 0}
 --- !u!82 &2149538186525140836
 AudioSource:
   m_ObjectHideFlags: 0
@@ -271,3 +269,4 @@ MonoBehaviour:
   listKeys: []
   stopAtBlankFrame: 0
   blankOnNonLoopEnd: 0
+  updateSprite: 1

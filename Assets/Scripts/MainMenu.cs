@@ -163,8 +163,6 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Version Text")
         };
 
-        //menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
-        //menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = "Engine ver.\n" + Application.version;
         string[] version = Application.version.Split(' ');
         string versionText = PlayState.GetText("menu_version_header") + "\n" + (version[0].ToLower() == "release" ? PlayState.GetText("menu_version_release") :
             (version[0].ToLower() == "demo" ? PlayState.GetText("menu_version_demo") : PlayState.GetText("menu_version_developer"))) + " " + version[1];
@@ -417,6 +415,19 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         PlayState.gameOptions[12] = menuVarFlags[1];
+                        break;
+                    case "secretTiles":
+                        TestForArrowAdjust(option, 2, 1);
+                        switch (menuVarFlags[2])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_hide"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
+                                break;
+                        }
+                        PlayState.gameOptions[13] = menuVarFlags[2];
                         break;
                     case "soundVolume":
                         TestForArrowAdjust(option, 0, 10);
@@ -963,6 +974,8 @@ public class MainMenu : MonoBehaviour
         PlayState.gameState = "Game";
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
+        PlayState.BuildMapMarkerArrays();
+        PlayState.minimapScript.RefreshMap();
         fadingToIntro = false;
 
         PlayState.player.GetComponent<Snaily>().enabled = false;
@@ -1151,6 +1164,7 @@ public class MainMenu : MonoBehaviour
         PlayState.ToggleHUD(true);
         ToggleHUD(false);
         pauseButtonDown = true;
+        PlayState.minimapScript.RefreshMap();
 
         switch (PlayState.currentCharacter)
         {
@@ -1290,8 +1304,12 @@ public class MainMenu : MonoBehaviour
             6, PlayState.gameOptions[11]
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
-        AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[] { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12] });
-        AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
+        AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
+            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13] });
+        if (PlayState.gameState == "Menu")
+            AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
+        else
+            AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_eraseRecords"), true, RecordEraseSelect);
         if (PlayState.gameState == "Menu")
             AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
@@ -1411,6 +1429,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_gameplay_shooting") + ": ", true, "shooting");
         AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true, "showBreakables");
+        AddOption(PlayState.GetText("menu_option_gameplay_secretTiles") + ": ", true, "secretTiles");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);

@@ -55,7 +55,6 @@ public class DialogueBox : MonoBehaviour
     private int currentSpeaker = 0;
     private int currentShape = 0;
     private List<string> textList = new List<string>();
-    private List<Color32> portraitColors = new List<Color32>();
     private List<int> states = new List<int>();
     private bool left = false;
     private const float INITIALIZATION_MAX = 0.027f;
@@ -455,7 +454,7 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    public void RunBox(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
+    public void RunBox(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
         pointer = Vector2.zero;
@@ -466,7 +465,6 @@ public class DialogueBox : MonoBehaviour
         sprite.color = PlayState.GetColor(boxColor);
         currentFrameColor = boxColor;
         textList = text;
-        portraitColors = colors;
         states = stateList;
         left = facingLeft;
 

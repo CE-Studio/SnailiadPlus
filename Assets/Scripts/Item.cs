@@ -114,6 +114,9 @@ public class Item : MonoBehaviour
         {
             collected = true;
             SetDeactivated();
+            if (PlayState.itemLocations.Contains(PlayState.WorldPosToMapGridID(transform.position)))
+                PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
+            PlayState.minimapScript.RefreshMap();
         }
         else
         {
@@ -128,6 +131,9 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collected = true;
+            if (PlayState.itemLocations.Contains(PlayState.WorldPosToMapGridID(transform.position)))
+                PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
+            PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
             if (itemID >= PlayState.OFFSET_FRAGMENTS)
                 PlayState.helixCount++;

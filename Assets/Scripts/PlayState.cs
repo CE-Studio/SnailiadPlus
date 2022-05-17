@@ -160,7 +160,10 @@ public class PlayState
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
 
+    public static readonly Vector2 WORLD_ORIGIN = new Vector2(0.5f, 0.5f); // The exact center of the chartable map
+    public static readonly Vector2 WORLD_SIZE = new Vector2(26, 22); // The number of screens wide and tall the world is
     public static readonly Vector2 WORLD_SPAWN = new Vector2(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
+    public static readonly Vector2 ROOM_SIZE = new Vector2(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene = SceneManager.GetActiveScene();
 
@@ -207,7 +210,10 @@ public class PlayState
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
-    public static readonly Vector2 minimapSize = new Vector2(26, 22);
+    public static List<int> saveLocations = new List<int>();
+    public static List<int> bossLocations = new List<int>();
+    public static List<int> itemLocations = new List<int>();
+    public static Dictionary<int, string> playerMarkerLocations = new Dictionary<int, string>();
 
     public static int[] itemCollection = new int[]
     {
@@ -326,7 +332,8 @@ public class PlayState
         0,  //  9 - Texture pack ID (any positive int, 0 for default)
         0,  // 10 - Music pack ID (any positive int, 0 for default)
         5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
-        0   // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
+        0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
+        0   // 13 - Secret tile visibility (boolean)
     };
 
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
@@ -564,6 +571,43 @@ public class PlayState
         return "" + (colorData < 1000 ? "0" : "") + (colorData < 100 ? "0" : "") + (colorData < 100 ? "0" : "") + colorData.ToString();
     }
 
+    public static Vector2 WorldPosToMapPos(Vector2 worldPos)
+    {
+        Vector2 topLeftCorner = new Vector2(WORLD_ORIGIN.x - (WORLD_SIZE.x * ROOM_SIZE.x * 0.5f), WORLD_ORIGIN.y + (WORLD_SIZE.y * ROOM_SIZE.y * 0.5f));
+        return new Vector2(Mathf.Floor(Mathf.Abs(topLeftCorner.x - worldPos.x) / ROOM_SIZE.x), Mathf.Floor(Mathf.Abs(topLeftCorner.y - worldPos.y) / ROOM_SIZE.y));
+    }
+
+    public static int WorldPosToMapGridID(Vector2 worldPos)
+    {
+        Vector2 mapPos = WorldPosToMapPos(worldPos);
+        return Mathf.RoundToInt(mapPos.y * WORLD_SIZE.x + mapPos.x);
+    }
+
+    public static void BuildMapMarkerArrays()
+    {
+        saveLocations.Clear();
+        bossLocations.Clear();
+        itemLocations.Clear();
+        foreach (Transform area in roomTriggerParent.transform)
+        {
+            foreach (Transform room in area)
+            {
+                foreach (Transform entity in room)
+                {
+                    if (entity.tag == "SavePoint")
+                        saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                    if (entity.tag == "Boss")
+                        bossLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                    if (entity.tag == "Item")
+                    {
+                        if (!entity.GetComponent<Item>().collected)
+                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                    }
+                }
+            }
+        }
+    }
+
     public static void GetNewRoom(string intendedArea)
     {
         area = intendedArea;
@@ -614,8 +658,6 @@ public class PlayState
             element.SetActive(state);
             if (state)
             {
-                //if (element.name == "Dialogue Box" && isTalking)
-                //    element.GetComponent<DialogueBox>().anim.Play("Dialogue hold", 0, 0);
                 if (element.name == "Weapon Icons")
                 {
                     playerScript.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
@@ -636,11 +678,8 @@ public class PlayState
         List<Color32> colors = new List<Color32>();
         switch (item)
         {
-            case "Rainbow Wave":
-                text.Add("Rainbow Wave acquired!!");
-                //text.Add("Your strongest weapon, reduced\nto a peashooter by Iris\' need\nto sustain herself");
-                //text.Add("Hang on... don\'t you already\nhave this?  Well, uh... welcome\nto the testing zone!!  _@_V");
-                text.Add("There's other text here, but it\ncontains some spoilers that I\nwanted to hide. Sorry!!");
+            default:
+                text.Add("skibidi bop mm dada");
                 break;
         }
         for (int i = 0; i < text.Count; i++)
@@ -650,12 +689,12 @@ public class PlayState
             colors.Add(new Color32(0, 0, 0, 0));
         }
         gameState = "Dialogue";
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005", colors);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005");
     }
 
-    public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<Color32> colors = null, List<int> stateList = null, bool facingLeft = false)
+    public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false)
     {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, shape, boxColor, colors, stateList, facingLeft);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, shape, boxColor, stateList, facingLeft);
     }
 
     public static void CloseDialogue()
@@ -1024,8 +1063,8 @@ public class PlayState
 
     public static void SetMapTile(Vector2 pos, bool state)
     {
-        int currentCellState = minimapScript.currentMap[Mathf.RoundToInt((minimapSize.x * pos.y) + pos.x + 1)];
-        minimapScript.currentMap[Mathf.RoundToInt((minimapSize.x * pos.y) + pos.x + 1)] = currentCellState > 1 ? (state ? 3 : 2) : (state ? 1 : 0);
+        int currentCellState = minimapScript.currentMap[Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x)];
+        minimapScript.currentMap[Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x)] = currentCellState > 1 ? (state ? 3 : 2) : (state ? 1 : 0);
         minimapScript.RefreshMap();
     }
 
