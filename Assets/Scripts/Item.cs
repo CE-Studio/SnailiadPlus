@@ -114,7 +114,7 @@ public class Item : MonoBehaviour
         {
             collected = true;
             SetDeactivated();
-            if (PlayState.itemLocations.Contains(PlayState.WorldPosToMapGridID(transform.position)))
+            if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
         }
@@ -123,6 +123,9 @@ public class Item : MonoBehaviour
             collected = false;
             box.enabled = true;
             sprite.enabled = true;
+            if (PlayState.itemLocations.ContainsValue(itemID))
+                PlayState.itemLocations.Remove(itemID);
+            PlayState.minimapScript.RefreshMap();
         }
     }
 
@@ -131,7 +134,7 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collected = true;
-            if (PlayState.itemLocations.Contains(PlayState.WorldPosToMapGridID(transform.position)))
+            if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);

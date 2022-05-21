@@ -958,6 +958,17 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
     {
+        if (PlayState.currentArea != -1)
+        {
+            Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+            lastRoom.GetComponent<Collider2D>().enabled = true;
+            lastRoom.GetComponent<RoomTrigger>().active = true;
+            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+            PlayState.currentArea = -1;
+            PlayState.currentSubzone = -1;
+            PlayState.currentProfile = -1;
+        }
+
         fadingToIntro = true;
         PlayState.screenCover.sortingOrder = 1001;
         PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);

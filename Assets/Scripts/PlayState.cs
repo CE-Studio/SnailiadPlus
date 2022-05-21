@@ -212,7 +212,7 @@ public class PlayState
     };
     public static List<int> saveLocations = new List<int>();
     public static List<int> bossLocations = new List<int>();
-    public static List<int> itemLocations = new List<int>();
+    public static Dictionary<int, int> itemLocations = new Dictionary<int, int>();
     public static Dictionary<int, string> playerMarkerLocations = new Dictionary<int, string>();
 
     public static int[] itemCollection = new int[]
@@ -601,7 +601,7 @@ public class PlayState
                     if (entity.tag == "Item")
                     {
                         if (!entity.GetComponent<Item>().collected)
-                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
                     }
                 }
             }
