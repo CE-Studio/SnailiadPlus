@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6864266448237264807}
   - component: {fileID: 6864266448237264805}
   - component: {fileID: 7242476331730200637}
+  - component: {fileID: 5508389706238201944}
   m_Layer: 0
   m_Name: Item
   m_TagString: Item
@@ -51,6 +52,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,7 +96,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6864266448237264795}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: cfb0d521234e21f4eb619a5c9878f0b2, type: 2}
   m_CullingMode: 0
@@ -164,12 +166,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ebce6b2f18b724d89bd69876674cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: Rainbow Wave
   countedInPercentage: 0
   collected: 0
   itemID: 0
+  isSuperUnique: 0
+  originPos: {x: 0, y: 0}
   anim: {fileID: 0}
   box: {fileID: 0}
+  sprite: {fileID: 0}
   sfx: {fileID: 0}
   minorJingle: {fileID: 8300000, guid: 93063938bc8abfe4f87c9518424a927c, type: 3}
   majorJingle: {fileID: 8300000, guid: 009b7ff378eb74042a39b9359f8246b4, type: 3}
@@ -269,3 +273,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5508389706238201944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864266448237264795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+    randomizeStartFrame: 0
+  speed: 1
+  listKeys: []
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0
+  updateSprite: 1

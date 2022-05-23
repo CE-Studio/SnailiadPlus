@@ -14,27 +14,27 @@ public class Door : MonoBehaviour
     //  2 = closed upon spawn
     //  3 = closed after entrance through
 
-    public Animator anim;
+    public AnimationModule anim;
     public SpriteRenderer sprite;
-    public AudioSource sfx;
+    //public AudioSource sfx;
     public BoxCollider2D box;
     public GameObject player;
 
-    public AudioClip open;
-    public AudioClip close;
+    //public AudioClip open;
+    //public AudioClip close;
 
     public Sprite[] editorSprites;
     
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
-        sfx = GetComponent<AudioSource>();
+        //sfx = GetComponent<AudioSource>();
         player = GameObject.FindWithTag("Player");
 
-        open = (AudioClip)Resources.Load("Sounds/Sfx/DoorOpen");
-        close = (AudioClip)Resources.Load("Sounds/Sfx/DoorClose");
+        //open = (AudioClip)Resources.Load("Sounds/Sfx/DoorOpen");
+        //close = (AudioClip)Resources.Load("Sounds/Sfx/DoorClose");
 
         if (direction == 1 || direction == 3)
         {
@@ -48,12 +48,24 @@ public class Door : MonoBehaviour
         {
             sprite.flipX = true;
         }
+
+        string[] doorDirs = new string[] { "horiz", "vert" };
+        string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
+        string[] doorStates = new string[] { "open", "hold", "close" };
+        for (int i = 0; i < doorDirs.Length; i++)
+        {
+            for (int j = 0; j < doorColors.Length; j++)
+            {
+                for (int k = 0; k < doorStates.Length; k++)
+                    anim.Add("Door_" + doorDirs[i] + "_" + doorColors[j] + "_" + doorStates[k]);
+            }
+        }
     }
 
-    void Update()
-    {
-        sfx.volume = PlayState.gameOptions[0] * 0.1f;
-    }
+    //void Update()
+    //{
+    //    sfx.volume = PlayState.gameOptions[0] * 0.1f;
+    //}
 
     public void SetClosedSprite()
     {
@@ -62,60 +74,67 @@ public class Door : MonoBehaviour
 
     public void PlayAnim(string animType)
     {
-        string animToPlay = "Base Layer.";
-        if (direction == 1 || direction == 3)
-            animToPlay += "V ";
-        else
-            animToPlay += "H ";
-        if (locked)
-            animToPlay += "Locked ";
+        if (animType == "blank")
+            sprite.enabled = false;
         else
         {
-            switch (doorWeapon)
+            sprite.enabled = true;
+            string animToPlay = "Door_";
+            if (direction == 1 || direction == 3)
+                animToPlay += "vert_";
+            else
+                animToPlay += "horiz_";
+            if (locked)
+                animToPlay += "locked_";
+            else
             {
-                case 0:
-                    animToPlay += "Blue ";
-                    break;
-                case 1:
-                    animToPlay += "Purple ";
-                    break;
-                case 2:
-                    animToPlay += "Red ";
-                    break;
-                case 3:
-                    animToPlay += "Green ";
-                    break;
+                switch (doorWeapon)
+                {
+                    case 0:
+                        animToPlay += "blue_";
+                        break;
+                    case 1:
+                        animToPlay += "purple_";
+                        break;
+                    case 2:
+                        animToPlay += "red_";
+                        break;
+                    case 3:
+                        animToPlay += "green_";
+                        break;
+                }
             }
+            //switch (animType)
+            //{
+            //    case "hold":
+            //        if (PlayState.colorblindMode)
+            //            animToPlay += "Hold2";
+            //        else
+            //            animToPlay += "Hold";
+            //        break;
+            //    case "open":
+            //        if (PlayState.colorblindMode)
+            //            animToPlay += "Open2";
+            //        else
+            //            animToPlay += "Open";
+            //        break;
+            //    case "close":
+            //        if (PlayState.colorblindMode)
+            //            animToPlay += "Close2";
+            //        else
+            //            animToPlay += "Close";
+            //        break;
+            //}
+            anim.Play(animToPlay + animType);
         }
-        switch (animType)
-        {
-            case "hold":
-                if (PlayState.colorblindMode)
-                    animToPlay += "Hold2";
-                else
-                    animToPlay += "Hold";
-                break;
-            case "open":
-                if (PlayState.colorblindMode)
-                    animToPlay += "Open2";
-                else
-                    animToPlay += "Open";
-                break;
-            case "close":
-                if (PlayState.colorblindMode)
-                    animToPlay += "Close2";
-                else
-                    animToPlay += "Close";
-                break;
-        }
-        anim.Play(animToPlay, 0, 0);
     }
 
     // State 0 is for doors that are opened from being shot
     public void SetState0()
     {
         PlayAnim("open");
-        sfx.PlayOneShot(open);
+        //sfx.PlayOneShot(open);
+        PlayState.PlaySound("DoorOpen");
         box.enabled = false;
     }
 
@@ -141,7 +160,8 @@ public class Door : MonoBehaviour
         box.enabled = true;
         sprite.enabled = true;
         PlayAnim("close");
-        sfx.PlayOneShot(close);
+        //sfx.PlayOneShot(close);
+        PlayState.PlaySound("DoorClose");
     }
 
     public void SetStateDespawn()
@@ -176,13 +196,13 @@ public class Door : MonoBehaviour
         }
     }
 
-    public void FlipHit()
-    {
-        anim.SetBool("hit", false);
-    }
-
-    public void FlipUnlock()
-    {
-        anim.SetBool("playUnlock", false);
-    }
+    //public void FlipHit()
+    //{
+    //    anim.SetBool("hit", false);
+    //}
+    //
+    //public void FlipUnlock()
+    //{
+    //    anim.SetBool("playUnlock", false);
+    //}
 }

@@ -628,7 +628,7 @@ public class MainMenu : MonoBehaviour
             GetNewSnailOffset();
         }
 
-        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause")
+        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause" && PlayState.gameState != "Map" && PlayState.gameState != "Debug")
         {
             if (PlayState.isMenuOpen)
             {
@@ -1034,14 +1034,6 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_main_return"), true, Unpause);
             returnAvailable = true;
         }
-        //AddOption("New game", true);
-        //AddOption("Load game", true);
-        //AddOption("Boss rush", true);
-        //AddOption("", false);
-        //AddOption("Options", true);
-        //AddOption("Credits", true);
-        //AddOption("Records", true);
-        //AddOption("Gallery", true);
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.achievementStates[6] == 1)
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true);

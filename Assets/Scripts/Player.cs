@@ -32,18 +32,7 @@ public class Player : MonoBehaviour
     public Sprite blank;
     public Sprite smallBlank;
     public Sprite missing;
-    //public Sprite iconPeaDeselected;
-    //public Sprite iconPeaSelected;
-    //public Sprite iconBoomDeselected;
-    //public Sprite iconBoomSelected;
-    //public Sprite iconWaveDeselected;
-    //public Sprite iconWaveSelected;
     public GameObject hearts;
-    //public Sprite heart0;
-    //public Sprite heart1;
-    //public Sprite heart2;
-    //public Sprite heart3;
-    //public Sprite heart4;
     public GameObject itemTextGroup;
     public GameObject itemPercentageGroup;
     public GameObject gameSaveGroup;
@@ -57,9 +46,6 @@ public class Player : MonoBehaviour
     public GameObject debugJump;
     public GameObject debugShoot;
     public GameObject debugStrafe;
-    //public Sprite keyIdle;
-    //public Sprite keyPressed;
-    //public Sprite keyHeld;
     public List<SpriteRenderer> keySprites = new List<SpriteRenderer>();
 
     public GameObject weaponIcon1;

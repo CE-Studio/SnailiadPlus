@@ -156,9 +156,9 @@ public class NPC : MonoBehaviour
                     switch (ID)
                     {
                         case 0:
-                            if (!PlayState.CheckForItem("Peashooter"))
+                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainWallClimb");
-                            else if (!PlayState.CheckForItem("Boomerang"))
+                            else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainPeashooter");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
                                 AddText("explainBoomerang");
@@ -188,19 +188,19 @@ public class NPC : MonoBehaviour
                         case 2:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("predictPeashooter");
-                            else if (!PlayState.CheckBossState(0) && !PlayState.CheckBossState(1))
+                            else if (PlayState.IsBossAlive(0) && PlayState.IsBossAlive(1))
                                 AddText("predictShellbreaker");
-                            else if (!PlayState.CheckForItem("Boomerang"))
+                            else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("predictBoomerang");
-                            else if (!PlayState.CheckBossState(1))
+                            else if (PlayState.IsBossAlive(1))
                                 AddText("predictStompy");
                             else if (!PlayState.CheckForItem("Rainbow Wave"))
                                 AddText("predictRainbowWave");
-                            else if (!PlayState.CheckBossState(2))
+                            else if (PlayState.IsBossAlive(2))
                                 AddText("predictSpaceBox");
                             else if (!PlayState.CheckForItem(6))
                                 AddText("predictRapidFire");
-                            else if (!PlayState.CheckBossState(3))
+                            else if (PlayState.IsBossAlive(3))
                                 AddText("predictMoonSnail");
                             else if (PlayState.helixCount < 30)
                                 AddText("predictHelixFragments");
@@ -249,7 +249,7 @@ public class NPC : MonoBehaviour
                                 AddText("boomerang");
                             else if (!PlayState.CheckForItem(3))
                                 AddText("rainbowWave");
-                            else if (PlayState.CheckBossState(3))
+                            else if (PlayState.IsBossAlive(3))
                                 AddText("scared");
                             else
                                 AddText("default");

@@ -3,7 +3,7 @@
         {
             "name": "Door_horiz_blue_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 13,
                 12,
@@ -19,7 +19,7 @@
         {
             "name": "Door_horiz_blue_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 7
             ],
@@ -30,7 +30,7 @@
         {
             "name": "Door_horiz_blue_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 9,
                 10,
@@ -46,7 +46,7 @@
         {
             "name": "Door_horiz_green_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 55,
                 54,
@@ -62,7 +62,7 @@
         {
             "name": "Door_horiz_green_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 49
             ],
@@ -73,7 +73,7 @@
         {
             "name": "Door_horiz_green_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 51,
                 52,
@@ -89,7 +89,7 @@
         {
             "name": "Door_horiz_locked_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 69,
                 68,
@@ -105,7 +105,7 @@
         {
             "name": "Door_horiz_locked_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 63
             ],
@@ -116,7 +116,7 @@
         {
             "name": "Door_horiz_locked_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 65,
                 66,
@@ -132,7 +132,7 @@
         {
             "name": "Door_horiz_purple_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 20,
                 19,
@@ -148,7 +148,7 @@
         {
             "name": "Door_horiz_purple_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 14
             ],
@@ -159,7 +159,7 @@
         {
             "name": "Door_horiz_purple_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 16,
                 17,
@@ -175,7 +175,7 @@
         {
             "name": "Door_horiz_red_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 41,
                 40,
@@ -191,7 +191,7 @@
         {
             "name": "Door_horiz_red_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 35
             ],
@@ -202,7 +202,7 @@
         {
             "name": "Door_horiz_red_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 37,
                 38,
@@ -218,7 +218,7 @@
         {
             "name": "Door_vert_blue_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 83,
                 82,
@@ -234,7 +234,7 @@
         {
             "name": "Door_vert_blue_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 77
             ],
@@ -245,7 +245,7 @@
         {
             "name": "Door_vert_blue_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 79,
                 80,
@@ -261,7 +261,7 @@
         {
             "name": "Door_vert_green_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 125,
                 124,
@@ -277,7 +277,7 @@
         {
             "name": "Door_vert_green_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 119
             ],
@@ -288,7 +288,7 @@
         {
             "name": "Door_vert_green_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 121,
                 122,
@@ -304,7 +304,7 @@
         {
             "name": "Door_vert_locked_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 139,
                 138,
@@ -320,7 +320,7 @@
         {
             "name": "Door_vert_locked_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 133
             ],
@@ -331,7 +331,7 @@
         {
             "name": "Door_vert_locked_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 135,
                 136,
@@ -347,7 +347,7 @@
         {
             "name": "Door_vert_purple_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 90,
                 89,
@@ -363,7 +363,7 @@
         {
             "name": "Door_vert_purple_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 84
             ],
@@ -374,7 +374,7 @@
         {
             "name": "Door_vert_purple_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 86,
                 87,
@@ -390,7 +390,7 @@
         {
             "name": "Door_vert_red_close",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 111,
                 110,
@@ -406,7 +406,7 @@
         {
             "name": "Door_vert_red_hold",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 105
             ],
@@ -417,7 +417,7 @@
         {
             "name": "Door_vert_red_open",
 			"spriteName": "Door",
-            "framerate": 6.0,
+            "framerate": 30.0,
             "frames": [
                 107,
                 108,
@@ -478,6 +478,104 @@
 				-1
 			],
 			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_boomerang",
+			"spriteName": "Items/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_rainbowWave",
+			"spriteName": "Items/RainbowWave",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_helixFragment",
+			"spriteName": "Items/HelixFragment",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_heartContainer",
+			"spriteName": "Items/HeartContainer",
+			"framerate": 3.7,
+			"frames": [
+				2,
+				2,
+				1,
+				1,
+				0,
+				0,
+				0,
+				1,
+				1,
+				2,
+				2,
+				3,
+				3,
+				4,
+				4,
+				4,
+				3,
+				3
+			],
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -1445,6 +1543,32 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "GenericSelector_8",
+			"spriteName": "UI/GenericHighlightBox",
+			"framerate": 2.0,
+			"frames": [
+				0,
+				1,
+				2,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "GenericSelector_16",
+			"spriteName": "UI/GenericHighlightBox",
+			"framerate": 2.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Heart0",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
@@ -2187,7 +2311,7 @@
 				0
 			],
 			"loop": false,
-			"loopStartFrame": false,
+			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		}
     ]

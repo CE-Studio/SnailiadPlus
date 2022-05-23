@@ -1827,7 +1827,7 @@
 		},
 		{
 			"name": "npc_19_default_0",
-			"text": "{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl}{spd|0.06}right...  {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl}that's for some other game.",
+			"text": "{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl}{spd|0.03}right...  {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl}that's for some other game.",
 			"value": 1
 		},
 		{

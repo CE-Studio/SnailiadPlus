@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
 
     public Vector2 originPos;
 
-    public Animator anim;
+    public AnimationModule anim;
     public BoxCollider2D box;
     public SpriteRenderer sprite;
     public AudioSource sfx;
@@ -22,21 +22,26 @@ public class Item : MonoBehaviour
     
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         box = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         sfx = GetComponent<AudioSource>();
+
+        anim.Add("Item_boomerang");
+        anim.Add("Item_rainbowWave");
+        anim.Add("Item_helixFragment");
+        anim.Add("Item_heartContainer");
 
         originPos = transform.localPosition;
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
-            anim.Play("Helix Fragment", 0, 0);
+            anim.Play("Item_helixFragment");
             box.size = new Vector2(0.95f, 0.95f);
         }
         else if (itemID >= PlayState.OFFSET_HEARTS)
         {
-            anim.Play("Heart Container", 0, 0);
+            anim.Play("Item_heartContainer");
             box.size = new Vector2(1.95f, 1.95f);
         }
         else
@@ -45,16 +50,16 @@ public class Item : MonoBehaviour
             {
                 case 1:
                 case 11:
-                    anim.Play("Boomerang", 0, 0);
+                    anim.Play("Item_boomerang");
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 case 2:
                 case 12:
-                    anim.Play("Rainbow Wave", 0, 0);
+                    anim.Play("Item_rainbowWave");
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 default:
-                    anim.Play("Helix Fragment", 0, 0);
+                    anim.Play("Item_helixFragment");
                     box.size = new Vector2(0.95f, 0.95f);
                     break;
             }
@@ -78,12 +83,12 @@ public class Item : MonoBehaviour
     {
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
-            anim.Play("Helix Fragment", 0, 0);
+            anim.Play("Item_helixFragment");
             box.size = new Vector2(0.95f, 0.95f);
         }
         else if (itemID >= PlayState.OFFSET_HEARTS)
         {
-            anim.Play("Heart Container", 0, 0);
+            anim.Play("Item_heartContainer");
             box.size = new Vector2(1.95f, 1.95f);
         }
         else
@@ -92,16 +97,16 @@ public class Item : MonoBehaviour
             {
                 case 1:
                 case 11:
-                    anim.Play("Boomerang", 0, 0);
+                    anim.Play("Item_boomerang");
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 case 2:
                 case 12:
-                    anim.Play("Rainbow Wave", 0, 0);
+                    anim.Play("Item_rainbowWave");
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 default:
-                    anim.Play("Helix Fragment", 0, 0);
+                    anim.Play("Item_helixFragment");
                     box.size = new Vector2(0.95f, 0.95f);
                     break;
             }
@@ -114,9 +119,6 @@ public class Item : MonoBehaviour
         {
             collected = true;
             SetDeactivated();
-            if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
-                PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
-            PlayState.minimapScript.RefreshMap();
         }
         else
         {

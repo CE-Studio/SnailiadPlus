@@ -8,7 +8,7 @@ using System.IO;
 
 public class PlayState
 {
-    public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", or "Dialogue" as of now
+    public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", "Map", "Debug", or "Dialogue" as of now
 
     public static bool isMenuOpen = false;
 
@@ -790,22 +790,6 @@ public class PlayState
                     if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
                     {
                         activateParticle = true;
-                        //particleAnim.enabled = true;
-                        //switch (values[0])
-                        //{
-                        //    case 1:
-                        //        particleAnim.Play("Explosion tiny", 0, 0);
-                        //        break;
-                        //    case 2:
-                        //        particleAnim.Play("Explosion small", 0, 0);
-                        //        break;
-                        //    case 3:
-                        //        particleAnim.Play("Explosion big", 0, 0);
-                        //        break;
-                        //    case 4:
-                        //        particleAnim.Play("Explosion huge", 0, 0);
-                        //        break;
-                        //}
                         particleScript.vars[0] = values[0];
                     }
                     break;
@@ -864,7 +848,7 @@ public class PlayState
         }
     }
 
-    public static bool CheckBossState(int bossID)
+    public static bool IsBossAlive(int bossID)
     {
         return bossStates[bossID] == 1;
     }

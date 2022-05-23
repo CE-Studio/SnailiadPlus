@@ -45,11 +45,13 @@ public class TextureLibrary : ScriptableObject
         "Particles/Star",
 
         "UI/AchievementPanel",
+        "UI/DebugIcons",
         "UI/DebugKey",
         "UI/DialogueBox",
         "UI/DialogueIcon2",
         "UI/DialoguePortrait",
         "UI/FontSprites",
+        "UI/GenericHighlightBox",
         "UI/Heart",
         "UI/Minimap",
         "UI/MinimapIcons",
