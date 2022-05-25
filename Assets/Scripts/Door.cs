@@ -16,12 +16,8 @@ public class Door : MonoBehaviour
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
-    //public AudioSource sfx;
     public BoxCollider2D box;
     public GameObject player;
-
-    //public AudioClip open;
-    //public AudioClip close;
 
     public Sprite[] editorSprites;
     
@@ -30,11 +26,7 @@ public class Door : MonoBehaviour
         anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
-        //sfx = GetComponent<AudioSource>();
         player = GameObject.FindWithTag("Player");
-
-        //open = (AudioClip)Resources.Load("Sounds/Sfx/DoorOpen");
-        //close = (AudioClip)Resources.Load("Sounds/Sfx/DoorClose");
 
         if (direction == 1 || direction == 3)
         {
@@ -61,11 +53,6 @@ public class Door : MonoBehaviour
             }
         }
     }
-
-    //void Update()
-    //{
-    //    sfx.volume = PlayState.gameOptions[0] * 0.1f;
-    //}
 
     public void SetClosedSprite()
     {
@@ -104,27 +91,6 @@ public class Door : MonoBehaviour
                         break;
                 }
             }
-            //switch (animType)
-            //{
-            //    case "hold":
-            //        if (PlayState.colorblindMode)
-            //            animToPlay += "Hold2";
-            //        else
-            //            animToPlay += "Hold";
-            //        break;
-            //    case "open":
-            //        if (PlayState.colorblindMode)
-            //            animToPlay += "Open2";
-            //        else
-            //            animToPlay += "Open";
-            //        break;
-            //    case "close":
-            //        if (PlayState.colorblindMode)
-            //            animToPlay += "Close2";
-            //        else
-            //            animToPlay += "Close";
-            //        break;
-            //}
             anim.Play(animToPlay + animType);
         }
     }
@@ -133,7 +99,6 @@ public class Door : MonoBehaviour
     public void SetState0()
     {
         PlayAnim("open");
-        //sfx.PlayOneShot(open);
         PlayState.PlaySound("DoorOpen");
         box.enabled = false;
     }
@@ -160,7 +125,6 @@ public class Door : MonoBehaviour
         box.enabled = true;
         sprite.enabled = true;
         PlayAnim("close");
-        //sfx.PlayOneShot(close);
         PlayState.PlaySound("DoorClose");
     }
 
@@ -195,14 +159,4 @@ public class Door : MonoBehaviour
             }
         }
     }
-
-    //public void FlipHit()
-    //{
-    //    anim.SetBool("hit", false);
-    //}
-    //
-    //public void FlipUnlock()
-    //{
-    //    anim.SetBool("playUnlock", false);
-    //}
 }

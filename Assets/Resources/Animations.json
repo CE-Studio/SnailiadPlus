@@ -460,6 +460,278 @@
 		},
 		
 		{
+			"name": "Bullet_boomerang_N",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_NE",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_E",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_SE",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_S",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_SW",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_W",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_boomerang_NW",
+			"spriteName": "Bullets/Boomerang",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_N",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				0,
+				8,
+				16,
+				24,
+				32,
+				40
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_NE",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				1,
+				9,
+				17,
+				25,
+				33,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_E",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				2,
+				10,
+				18,
+				26,
+				34,
+				42
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_SE",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				3,
+				11,
+				19,
+				27,
+				35,
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_S",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				4,
+				12,
+				20,
+				28,
+				36,
+				44
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_SW",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				5,
+				13,
+				21,
+				29,
+				37,
+				45
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_W",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				6,
+				14,
+				22,
+				30,
+				38,
+				46
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_rainbowWave_NW",
+			"spriteName": "Bullets/RainbowWave",
+			"framerate": 14.0,
+			"frames": [
+				7,
+				15,
+				23,
+				31,
+				39,
+				47
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Grass_idle",
 			"spriteName": "Entities/Grass",
 			"framerate": 0.0,
@@ -669,6 +941,74 @@
 				-1
 			],
 			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
+		{
+			"name": "Enemy_floatspike_black",
+			"spriteName": "Entities/Floatspike1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_spikey_blue_down",
+			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_spikey_blue_right",
+			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_spikey_blue_up",
+			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_spikey_blue_left",
+			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},

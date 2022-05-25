@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4603764067751896027}
   - component: {fileID: 4603764067751896020}
   - component: {fileID: 4603764067751896025}
+  - component: {fileID: 949159906838974637}
   m_Layer: 10
   m_Name: Blue Spikey
   m_TagString: Enemy
@@ -121,7 +122,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4603764067751896023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 68c17ab8a0c9d88499f2edae9e874ff1, type: 2}
   m_CullingMode: 0
@@ -268,3 +269,30 @@ MonoBehaviour:
     type: 3}
   spritwCCW: {fileID: -7332039115924284815, guid: 20b8333f7b68c3144b66a35102550787,
     type: 3}
+--- !u!114 &949159906838974637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603764067751896023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+    randomizeStartFrame: 0
+  speed: 1
+  listKeys: []
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0
+  updateSprite: 1

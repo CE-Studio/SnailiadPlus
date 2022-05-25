@@ -126,6 +126,13 @@ public class Player : MonoBehaviour
 
             anim.speed = 1;
 
+            // Noclip!!!
+            if (PlayState.noclipMode)
+            {
+                transform.position = new Vector2(transform.position.x + (10 * Control.AxisX() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime),
+                    transform.position.y + (10 * Control.AxisY() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime));
+            }
+
             // These are only here to make sure they're called once, before anything else that needs it
             if (PlayState.armorPingPlayedThisFrame)
             {

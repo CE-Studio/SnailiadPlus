@@ -12,25 +12,33 @@ public class Bullet : MonoBehaviour
     public int damage;
 
     public SpriteRenderer sprite;
-    public Animator anim;
+    public AnimationModule anim;
     public BoxCollider2D box;
 
     public GameObject player;
     public GameObject cam;
 
-    private float diagOffsetX = 0.75f;
-    private float diagOffsetY = 0.65f;
+    private readonly float diagOffsetX = 0.75f;
+    private readonly float diagOffsetY = 0.65f;
     
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         sprite.enabled = false;
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         box = GetComponent<BoxCollider2D>();
         box.enabled = false;
 
         player = GameObject.FindWithTag("Player");
         cam = GameObject.Find("View");
+
+        string[] bulletTypes = new string[] { "boomerang", "rainbowWave" };
+        string[] directions = new string[] { "NW", "N", "NE", "E", "SE", "S", "SW", "W" };
+        for (int i = 0; i < bulletTypes.Length; i++)
+        {
+            for (int j = 0; j < directions.Length; j++)
+                anim.Add("Bullet_" + bulletTypes[i] + "_" + directions[j]);
+        }
     }
 
     void FixedUpdate()
@@ -44,13 +52,13 @@ public class Bullet : MonoBehaviour
                 switch (bulletType)
                 {
                     case 2:
-                        velocity = velocity - 0.0125f;
+                        velocity -= 0.0125f;
                         break;
                     case 3:
-                        velocity = velocity + 0.03f;
+                        velocity += 0.03f;
                         break;
                     default:
-                        velocity = velocity + 0.03f;
+                        velocity += 0.03f;
                         break;
                 }
                 switch (direction)
@@ -157,78 +165,47 @@ public class Bullet : MonoBehaviour
 
     void PlayAnim()
     {
-        string animToPlay = "";
+        string animToPlay = "Bullet_";
         switch (bulletType)
         {
             case 2:
-                animToPlay += "Boomerang";
-                sprite.flipX = false;
-                sprite.flipY = false;
+                animToPlay += "boomerang_";
                 break;
             case 3:
-                animToPlay += "Rainbow Wave ";
+                animToPlay += "rainbowWave_";
                 break;
             default:
-                animToPlay += "Rainbow Wave ";
+                animToPlay += "rainbowWave_";
                 break;
         }
-        if (bulletType == 3)
+        switch (direction)
         {
-            switch (direction)
-            {
-                case 0:
-                    animToPlay += "diagonal";
-                    sprite.flipX = true;
-                    sprite.flipY = false;
-                    break;
-                case 1:
-                    animToPlay += "vertical";
-                    sprite.flipX = false;
-                    sprite.flipY = false;
-                    break;
-                case 2:
-                    animToPlay += "diagonal";
-                    sprite.flipX = false;
-                    sprite.flipY = false;
-                    break;
-                case 3:
-                    animToPlay += "horizontal";
-                    sprite.flipX = true;
-                    sprite.flipY = false;
-                    break;
-                case 4:
-                    animToPlay += "horizontal";
-                    sprite.flipX = false;
-                    sprite.flipY = false;
-                    break;
-                case 5:
-                    animToPlay += "diagonal";
-                    sprite.flipX = true;
-                    sprite.flipY = true;
-                    break;
-                case 6:
-                    animToPlay += "vertical";
-                    sprite.flipX = false;
-                    sprite.flipY = true;
-                    break;
-                case 7:
-                    animToPlay += "diagonal";
-                    sprite.flipX = false;
-                    sprite.flipY = true;
-                    break;
-            }
-        }
-        float startTime = 0;
-        switch (bulletType)
-        {
+            case 0:
+                animToPlay += "NW";
+                break;
+            case 1:
+                animToPlay += "N";
+                break;
             case 2:
-                startTime = Random.Range(1, 9) * 0.125f;
+                animToPlay += "NE";
                 break;
             case 3:
-                startTime = Random.Range(1, 7) * 0.16f;
+                animToPlay += "W";
+                break;
+            case 4:
+                animToPlay += "E";
+                break;
+            case 5:
+                animToPlay += "SW";
+                break;
+            case 6:
+                animToPlay += "S";
+                break;
+            case 7:
+                animToPlay += "SE";
                 break;
         }
-        anim.Play(animToPlay, 0, startTime);
+        anim.Play(animToPlay);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

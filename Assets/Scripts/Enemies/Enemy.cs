@@ -16,11 +16,8 @@ public class Enemy : MonoBehaviour
     public BoxCollider2D box;
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
-    public AudioSource sfx;
+    public AnimationModule anim;
 
-    public AudioClip ping;
-    public AudioClip[] hit;
-    public AudioClip die;
     private int pingPlayer = 0;
 
     public List<float> spawnConditions;
@@ -34,17 +31,7 @@ public class Enemy : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        sfx = GetComponent<AudioSource>();
-
-        ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
-        hit = new AudioClip[]
-        {
-            (AudioClip)Resources.Load("Sounds/Sfx/Explode1"),
-            (AudioClip)Resources.Load("Sounds/Sfx/Explode2"),
-            (AudioClip)Resources.Load("Sounds/Sfx/Explode3"),
-            (AudioClip)Resources.Load("Sounds/Sfx/Explode4")
-        };
-        die = (AudioClip)Resources.Load("Sounds/Sfx/EnemyKilled1");
+        anim = GetComponent<AnimationModule>();
 
         origin = transform.localPosition;
 
@@ -90,7 +77,8 @@ public class Enemy : MonoBehaviour
                     if (!PlayState.armorPingPlayedThisFrame)
                     {
                         PlayState.armorPingPlayedThisFrame = true;
-                        sfx.PlayOneShot(ping);
+                        //sfx.PlayOneShot(ping);
+                        PlayState.PlaySound("Ping");
                     }
                     pingPlayer -= 1;
                 }
@@ -112,7 +100,7 @@ public class Enemy : MonoBehaviour
             pingPlayer = 0;
         }
 
-        sfx.volume = PlayState.gameOptions[0] * 0.1f;
+        //sfx.volume = PlayState.gameOptions[0] * 0.1f;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)

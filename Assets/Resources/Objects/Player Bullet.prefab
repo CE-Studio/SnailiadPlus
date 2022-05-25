@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 423748727204277678}
   - component: {fileID: 5139962494398767513}
   - component: {fileID: 1479374291}
+  - component: {fileID: 5978164261602695543}
   m_Layer: 0
   m_Name: Player Bullet
   m_TagString: PlayerBullet
@@ -75,15 +76,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -15
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 271825379710869633, guid: f77bf667318552040bf63fffc3dbdb24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &423748727204277680
@@ -94,7 +95,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423748727204277682}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a5c376dda79ecd8498cbb2a9e5ca3ec7, type: 2}
   m_CullingMode: 0
@@ -117,8 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382c65c5a4c6bf14089af96be2d96845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 
-  bulletTypeInt: 0
+  bulletType: 0
   direction: 0
   isActive: 0
   damage: 0
@@ -126,6 +126,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   box: {fileID: 0}
   player: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!61 &5139962494398767513
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,8 +144,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -173,3 +174,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5978164261602695543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423748727204277682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+    randomizeStartFrame: 0
+  speed: 1
+  listKeys: []
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0
+  updateSprite: 1

@@ -144,6 +144,8 @@ public class DebugMenu : MonoBehaviour
                         switch (button.label)
                         {
                             default:
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.itemCollection[int.Parse(typeParts[1])] = PlayState.itemCollection[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                                 button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                             case "heartContainer":
@@ -155,11 +157,57 @@ public class DebugMenu : MonoBehaviour
                         }
                         break;
                     case "boss":
+                        if (Control.JumpPress() && button.label == currentSelected)
+                            PlayState.bossStates[int.Parse(typeParts[1])] = PlayState.bossStates[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                         button.sprite.sprite = GetSprite(PlayState.IsBossAlive(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                         break;
                     case "player":
+                        switch (PlayState.currentCharacter)
+                        {
+                            case "Snaily":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[0]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Sluggy";
+                                break;
+                            case "Sluggy":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[1]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Upside";
+                                break;
+                            case "Upside":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[2]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Leggy";
+                                break;
+                            case "Leggy":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[3]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Blobby";
+                                break;
+                            case "Blobby":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[4]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Leechy";
+                                break;
+                            case "Leechy":
+                                button.sprite.sprite = GetSprite(button.spriteIndeces[5]);
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.currentCharacter = "Snaily";
+                                break;
+                        }
                         break;
                     case "option":
+                        switch (button.label)
+                        {
+                            default:
+                                button.sprite.sprite = GetSprite(0);
+                                break;
+                            case "noclip":
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.noclipMode = !PlayState.noclipMode;
+                                button.sprite.sprite = PlayState.noclipMode ? GetSprite(1) : GetSprite(0);
+                                break;
+                        }
                         break;
                 }
             }

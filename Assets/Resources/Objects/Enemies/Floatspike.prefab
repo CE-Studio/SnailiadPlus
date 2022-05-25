@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 28404413206069152}
   - component: {fileID: 28404413206069156}
   - component: {fileID: 28404413206069163}
+  - component: {fileID: 7660922948908530929}
   m_Layer: 10
   m_Name: Floatspike
   m_TagString: Enemy
@@ -261,3 +262,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7660922948908530929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28404413206069153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554519c59c56d9141ba5a2af6593aadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  currentAnimName: 
+  currentAnim:
+    name: 
+    spriteName: 
+    framerate: 0
+    frames: 
+    loop: 0
+    loopStartFrame: 0
+    randomizeStartFrame: 0
+  speed: 1
+  listKeys: []
+  stopAtBlankFrame: 0
+  blankOnNonLoopEnd: 0
+  updateSprite: 1

@@ -21,7 +21,6 @@ public class Spikey1 : Enemy
     private RaycastHit2D vCast;
     private RaycastHit2D groundCheck;
 
-    public Animator anim;
     public Sprite spriteCW;
     public Sprite spritwCCW;
     
@@ -34,8 +33,6 @@ public class Spikey1 : Enemy
         maxHealth = 70;
         health = 70;
         letsPermeatingShotsBy = true;
-
-        anim = GetComponent<Animator>();
 
         if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y - 1), true))
             spawnConditions.Add(DIR_FLOOR);
@@ -57,6 +54,8 @@ public class Spikey1 : Enemy
             Mathf.Infinity,
             Mathf.Infinity
             );
+
+        gameObject.SetActive(false);
     }
 
     public override void OnEnable()
@@ -70,7 +69,6 @@ public class Spikey1 : Enemy
     {
         if (PlayState.gameState == "Game")
         {
-            anim.speed = 1;
             if (gracePeriod != 0)
                 gracePeriod = Mathf.Clamp(gracePeriod - SPEED, 0, 1);
 
@@ -127,32 +125,42 @@ public class Spikey1 : Enemy
             }
             AdjustGroundChecks();
         }
-        else
-            anim.speed = 0;
     }
 
     private void SwapDir(int dir)
     {
+        CheckForAnims();
         switch (dir)
         {
             case DIR_FLOOR:
                 direction = DIR_FLOOR;
-                anim.Play("Spikey1 down", 0, 0);
+                anim.Play("Enemy_spikey_blue_down");
                 break;
             case DIR_WALL_LEFT:
                 direction = DIR_WALL_LEFT;
-                anim.Play("Spikey1 left", 0, 0);
+                anim.Play("Enemy_spikey_blue_left");
                 break;
             case DIR_WALL_RIGHT:
                 direction = DIR_WALL_RIGHT;
-                anim.Play("Spikey1 right", 0, 0);
+                anim.Play("Enemy_spikey_blue_right");
                 break;
             case DIR_CEILING:
                 direction = DIR_CEILING;
-                anim.Play("Spikey1 up", 0, 0);
+                anim.Play("Enemy_spikey_blue_up");
                 break;
         }
         AdjustGroundChecks();
+    }
+
+    private void CheckForAnims()
+    {
+        if (anim.animList.Count == 0)
+        {
+            anim.Add("Enemy_spikey_blue_down");
+            anim.Add("Enemy_spikey_blue_right");
+            anim.Add("Enemy_spikey_blue_up");
+            anim.Add("Enemy_spikey_blue_left");
+        }
     }
 
     // Each spikey checks the tile directly in front of it and the relative ground tile diagonally backward

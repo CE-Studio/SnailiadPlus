@@ -12,7 +12,7 @@ public class PlayState
 
     public static bool isMenuOpen = false;
 
-    public static readonly bool debugMode = true;
+    public static bool noclipMode = false;
 
     [Serializable]
     public struct AnimationData

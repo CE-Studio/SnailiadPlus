@@ -89,14 +89,15 @@ public class Snaily : MonoBehaviour
     // This function is called once per frame
     void Update()
     {
-        player.velocity = velocity;
+        if (!PlayState.noclipMode)
+            player.velocity = velocity;
     }
 
     // This function is called once every 0.02 seconds (50 time a second) regardless of framerate. Unity requires all physics calculations to be
     // run in this function, so it's where I put movement code as it utilizes boxcasts
     void FixedUpdate()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == "Game" && !PlayState.noclipMode)
         {
             // To start things off, we mark our current position as the last position we took. Same with our hitbox size
             // Among other things, this is used to test for ground when we're airborne

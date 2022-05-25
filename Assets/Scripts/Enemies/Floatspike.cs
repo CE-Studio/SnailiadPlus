@@ -17,12 +17,17 @@ public class Floatspike : Enemy
         letsPermeatingShotsBy = true;
 
         time = Random.Range(0, 100) * 0.01f;
+
+        gameObject.SetActive(false);
     }
 
     public override void OnEnable()
     {
         base.OnEnable();
         time = Random.Range(0, 100) * 0.01f;
+        if (anim.animList.Count == 0)
+            anim.Add("Enemy_floatspike_black");
+        anim.Play("Enemy_floatspike_black");
     }
 
     void Update()
