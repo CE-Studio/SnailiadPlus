@@ -43,7 +43,6 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        anim.speed = 1;
         if (PlayState.gameState == "Game")
         {
             if (isActive)
@@ -103,10 +102,6 @@ public class Bullet : MonoBehaviour
                 else
                     box.enabled = false;
             }
-        }
-        else
-        {
-            anim.speed = 0;
         }
     }
 

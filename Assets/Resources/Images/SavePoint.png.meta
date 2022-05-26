@@ -26,6 +26,18 @@ TextureImporter:
   - first:
       213: -1074704772147787669
     second: SavePoint_7
+  - first:
+      213: 9124003437161353755
+    second: SavePoint_8
+  - first:
+      213: 8173252566043752458
+    second: SavePoint_9
+  - first:
+      213: 1556396352468909699
+    second: SavePoint_10
+  - first:
+      213: -5360194071656579103
+    second: SavePoint_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -155,7 +167,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -176,7 +188,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -197,7 +209,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -218,7 +230,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -238,8 +250,8 @@ TextureImporter:
       name: SavePoint_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 0
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -259,8 +271,8 @@ TextureImporter:
       name: SavePoint_5
       rect:
         serializedVersion: 2
-        x: 160
-        y: 0
+        x: 32
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -280,8 +292,8 @@ TextureImporter:
       name: SavePoint_6
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
+        x: 64
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -301,8 +313,8 @@ TextureImporter:
       name: SavePoint_7
       rect:
         serializedVersion: 2
-        x: 224
-        y: 0
+        x: 96
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -314,6 +326,90 @@ TextureImporter:
       bones: []
       spriteID: b68c6b924b1e511f0800000000000000
       internalID: -1074704772147787669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SavePoint_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b121279f8c8fe9e70800000000000000
+      internalID: 9124003437161353755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SavePoint_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a087692b7e93d6170800000000000000
+      internalID: 8173252566043752458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SavePoint_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38e7f968c3e699510800000000000000
+      internalID: 1556396352468909699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SavePoint_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ef31cf24e3cc95b0800000000000000
+      internalID: -5360194071656579103
       vertices: []
       indices: 
       edges: []

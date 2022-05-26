@@ -1787,7 +1787,7 @@
 		},
 		{
 			"name": "npc_16_default_0",
-			"text": "{eff|Wave}{sfx|2}{spd|0.05}WHEEEE!!  {p|0.125}{eff|None}{sfx|0}{spd|0.02}That was fun,{nl}{P}!  {p|0.125}Let's do it again!!",
+			"text": "{eff|Wave}{sfx|1}{spd|0.05}WHEEEE!!  {p|0.125}{eff|None}{sfx|0}{spd|0.02}That was fun,{nl}{P}!  {p|0.125}Let's do it again!!",
 			"value": 1
 		},
 		{

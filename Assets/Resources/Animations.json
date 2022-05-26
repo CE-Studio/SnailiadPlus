@@ -1,6 +1,1586 @@
 {
     "animArray": [
+		{
+			"name": "Player_Snaily_data",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
         {
+			"name": "Player_Snaily0_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily0_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Snaily1_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				19
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				19
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				19
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				19
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily1_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Snaily2_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily2_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				35,
+				34,
+				33,
+				32
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Snaily3_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_right_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_left_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_down_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_up_shell",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Snaily3_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				47,
+				46,
+				45,
+				44
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		
+		{
             "name": "Door_horiz_blue_close",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -453,6 +2033,20 @@
 				1,
 				2,
 				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_last",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -2640,6 +4234,17 @@
 				1
 			],
 			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "",
+			"spriteName": "",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},

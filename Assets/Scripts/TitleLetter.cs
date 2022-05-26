@@ -23,8 +23,10 @@ public class TitleLetter : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
+        anim.pauseOnMenu = false;
         colorAnim = transform.GetChild(0).GetComponent<AnimationModule>();
         colorAnim.updateSprite = false;
+        colorAnim.pauseOnMenu = false;
         colorAnim.Add("Title_letterFlash_intro");
         colorAnim.Add("Title_letterFlash_hold");
         colorAnim.Play("Title_letterFlash_intro");

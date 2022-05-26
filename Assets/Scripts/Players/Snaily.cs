@@ -47,13 +47,9 @@ public class Snaily : MonoBehaviour
 
     public BoxCollider2D box;
     public SpriteRenderer sprite;
-    public Animator anim;
-    public AudioSource sfx;
+    public AnimationModule anim;
 
-    public AudioClip shell;
-    public AudioClip jump;
-    public AudioClip fireBoomerang;
-    public AudioClip fireRainbow;
+    private bool[] animData;
 
     public LayerMask playerCollide;
 
@@ -64,15 +60,14 @@ public class Snaily : MonoBehaviour
     {
         box = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        sfx = GetComponent<AudioSource>();
+        anim = GetComponent<AnimationModule>();
         player = GetComponent<Player>();
         playerCollide = LayerMask.GetMask("PlayerCollide");
 
-        shell = (AudioClip)Resources.Load("Sounds/Sfx/Shell");
-        jump = (AudioClip)Resources.Load("Sounds/Sfx/Jump");
-        fireBoomerang = (AudioClip)Resources.Load("Sounds/Sfx/ShotBoomerang");
-        fireRainbow = (AudioClip)Resources.Load("Sounds/Sfx/ShotRainbow");
+        int[] tempData = PlayState.GetAnim("Player_Snaily_data").frames;
+        animData = new bool[tempData.Length];
+        for (int i = 0; i < tempData.Length; i++)
+            animData[i] = tempData[i] == 1;
 
         // Weapon cooldowns; first three are without Rapid Fire, last three are with
         WEAPON_COOLDOWNS[0] = 0.085f;
@@ -84,6 +79,20 @@ public class Snaily : MonoBehaviour
 
         PlayState.currentCharacter = "Snaily";
         player.playerScriptSnaily = this;
+
+        string[] animDirections = new string[] { "floor_right", "floor_left", "ceiling_right", "ceiling_left", "wallR_down", "wallR_up", "wallL_down", "wallL_up" };
+        string[] animStates = new string[] { "idle", "move", "shell", "air" };
+        for (int i = 0; i <= 3; i++)
+        {
+            for (int j = 0; j < animDirections.Length; j++)
+            {
+                for (int k = 0; k < animStates.Length; k++)
+                {
+                    anim.Add("Player_Snaily" + i + "_" + animDirections[j] + "_" + animStates[k]);
+                }
+            }
+            anim.Add("Player_Snaily" + i + "_die");
+        }
     }
 
     // This function is called once per frame
@@ -343,7 +352,7 @@ public class Snaily : MonoBehaviour
                                 }
                                 grounded = false;
                                 velocity.y = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
-                                sfx.PlayOneShot(jump);
+                                PlayState.PlaySound("Jump");
                             }
                             if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
@@ -612,7 +621,7 @@ public class Snaily : MonoBehaviour
                                     if (Control.DownHold())
                                         holdingShell = true;
                                 }
-                                sfx.PlayOneShot(jump);
+                                PlayState.PlaySound("Jump");
                             }
                             if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
@@ -881,7 +890,7 @@ public class Snaily : MonoBehaviour
                                     if (Control.DownHold())
                                         holdingShell = true;
                                 }
-                                sfx.PlayOneShot(jump);
+                                PlayState.PlaySound("Jump");
                             }
                             if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
@@ -1138,7 +1147,7 @@ public class Snaily : MonoBehaviour
                                     SwapDir(DIR_FLOOR);
                                     gravityDir = DIR_FLOOR;
                                 }
-                                sfx.PlayOneShot(jump);
+                                PlayState.PlaySound("Jump");
                             }
                             if (Control.JumpHold() && !holdingJump)
                                 holdingJump = true;
@@ -1187,6 +1196,107 @@ public class Snaily : MonoBehaviour
         }
     }
 
+    // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
+    private void LateUpdate()
+    {
+        /*\
+         *   ANIMATION DATA VALUES
+         * 0 - Update animation on move
+         * 1 - Update animation on turnaround
+         * 2 - Update animation when off ground
+         * 3 - Flip X on ground
+         * 4 - Flip X on ceiling
+         * 5 - Flip X on left wall
+         * 6 - Flip Y on right wall
+         * 7 - Flip Y on left wall
+         * 8 - Flip Y on ceiling 
+        \*/
+        string currentState = "Player_Snaily";
+        currentState += (PlayState.CheckForItem("Full-Metal Snail") ? 3 : (PlayState.CheckForItem("Gravity Snail") ? 2 : (PlayState.CheckForItem("Ice Snail") ? 1 : 0))) + "_";
+        if (player.inDeathCutscene)
+        {
+            anim.Play(currentState + "die");
+            return;
+        }
+        
+        sprite.flipX = false;
+        sprite.flipY = false;
+
+        if (gravityDir == DIR_WALL_LEFT)
+        {
+            if (animData[5])
+                sprite.flipX = true;
+            if (animData[1])
+                currentState += "wallR_";
+            else
+                currentState += "wallL_";
+
+            if (!facingDown && animData[7])
+                sprite.flipY = true;
+            if (!facingDown && animData[1])
+                currentState += "down_";
+            else if (!facingDown)
+                currentState += "up_";
+            else
+                currentState += "down_";
+        }
+        else if (gravityDir == DIR_WALL_RIGHT)
+        {
+            currentState += "wallR_";
+            if (!facingDown && animData[6])
+                sprite.flipY = true;
+            if (!facingDown && animData[1])
+                currentState += "down_";
+            else if (!facingDown)
+                currentState += "up_";
+            else
+                currentState += "down_";
+        }
+        else if (gravityDir == DIR_CEILING)
+        {
+            if (animData[8])
+                sprite.flipY = true;
+            if (animData[1])
+                currentState += "floor_";
+            else
+                currentState += "ceiling_";
+
+            if (facingLeft && animData[4])
+                sprite.flipX = true;
+            if (facingLeft && animData[1])
+                currentState += "right_";
+            else if (facingLeft)
+                currentState += "left_";
+            else
+                currentState += "right_";
+        }
+        else
+        {
+            currentState += "floor_";
+            if (facingLeft && animData[3])
+                sprite.flipX = true;
+            if (facingLeft && animData[1])
+                currentState += "right_";
+            else if (facingLeft)
+                currentState += "left_";
+            else
+                currentState += "right_";
+        }
+
+        if (shelled)
+            currentState += "shell";
+        else if (!grounded && animData[2])
+            currentState += "air";
+        else if ((((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && Control.AxisY() != 0) ||
+            ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && Control.AxisY() != 0)) && animData[0])
+            currentState += "move";
+        else
+            currentState += "idle";
+
+        if (currentState != anim.currentAnimName)
+            anim.Play(currentState);
+    }
+
     // This function is used to reset all five boxcasts the player character uses for ground checks. It's called once per
     // FixedUpdate() call automatically plus any additional resets needed, for instance, after a gravity change
     private void UpdateBoxcasts()
@@ -1233,11 +1343,11 @@ public class Snaily : MonoBehaviour
             );
 
         Vector2 cornerTestDir;
-        if (GetDirName() == "CEILING")
+        if (gravityDir == DIR_CEILING)
             cornerTestDir = Vector2.up;
-        else if (GetDirName() == "LEFT WALL")
+        else if (gravityDir == DIR_WALL_LEFT)
             cornerTestDir = Vector2.left;
-        else if (GetDirName() == "RIGHT WALL")
+        else if (gravityDir == DIR_WALL_RIGHT)
             cornerTestDir = Vector2.right;
         else
             cornerTestDir = Vector2.down;
@@ -1262,19 +1372,15 @@ public class Snaily : MonoBehaviour
         {
             case DIR_FLOOR:
                 facingDown = true;
-                sprite.flipY = false;
                 break;
             case DIR_WALL_LEFT:
                 facingLeft = true;
-                sprite.flipX = true;
                 break;
             case DIR_WALL_RIGHT:
                 facingLeft = false;
-                sprite.flipX = false;
                 break;
             case DIR_CEILING:
                 facingDown = false;
-                sprite.flipY = true;
                 break;
         }
     }
@@ -1282,10 +1388,6 @@ public class Snaily : MonoBehaviour
     // This function is used to swap the player character between the ground/ceiling state and the wall state and vice versa
     private void SwitchSurfaceAxis()
     {
-        if (!axisFlag)
-            PlayAnim("wall");
-        else
-            PlayAnim("floor");
         axisFlag = !axisFlag;
         box.size = new Vector2(box.size.y, box.size.x);
     }
@@ -1300,7 +1402,6 @@ public class Snaily : MonoBehaviour
                 box.size = new Vector2(HITBOX_Y, HITBOX_X);
             else
                 box.size = new Vector2(HITBOX_X, HITBOX_Y);
-            PlayAnim("idle");
         }
         else
         {
@@ -1320,77 +1421,10 @@ public class Snaily : MonoBehaviour
                     box.offset = new Vector2(-HITBOX_SHELL_OFFSET, 0);
                 box.size = new Vector2(HITBOX_SHELL_X, HITBOX_SHELL_Y);
             }
-            sfx.PlayOneShot(shell);
-            PlayAnim("shell");
+            PlayState.PlaySound("Shell");
         }
         shelled = !shelled;
         UpdateBoxcasts();
-    }
-
-    // This function acts as an animation manager, converting a string into an animation name
-    private void PlayAnim(string action)
-    {
-        string animName = "";
-        animName += "Normal ";
-        switch (action)
-        {
-            case "wall":
-                animName += "wall ";
-                if (shelled)
-                    animName += "shell";
-                else
-                    animName += "idle";
-                break;
-            case "floor":
-                animName += "floor ";
-                if (shelled)
-                    animName += "shell";
-                else
-                    animName += "idle";
-                break;
-            case "shell":
-                if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-                    animName += "wall ";
-                else
-                    animName += "floor ";
-                animName += "shell";
-                break;
-            case "idle":
-                if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-                    animName += "wall ";
-                else
-                    animName += "floor ";
-                animName += "idle";
-                break;
-            case "die":
-                animName += "die";
-                break;
-            default:
-                return;
-        }
-        anim.Play(animName, 0, 0);
-    }
-
-    // This function returns a string version of the current gravity direction, formatted in a different manner to the variable names
-    private string GetDirName()
-    {
-        string name = "";
-        switch (gravityDir)
-        {
-            case 0:
-                name = "FLOOR";
-                break;
-            case 1:
-                name = "LEFT WALL";
-                break;
-            case 2:
-                name = "RIGHT WALL";
-                break;
-            case 3:
-                name = "CEILING";
-                break;
-        }
-        return name;
     }
 
     // This function handles activation of projectiles when the player presses either shoot button
@@ -1462,17 +1496,17 @@ public class Snaily : MonoBehaviour
                     bulletID = 0;
                 fireCooldown = WEAPON_COOLDOWNS[type - 1];
                 if (type == 6)
-                    sfx.PlayOneShot(fireRainbow);
+                    PlayState.PlaySound("ShotRainbow");
                 else if (type == 5)
-                    sfx.PlayOneShot(fireRainbow);
+                    PlayState.PlaySound("ShotRainbow");
                 else if (type == 4)
-                    sfx.PlayOneShot(fireRainbow);
+                    PlayState.PlaySound("ShotRainbow");
                 else if (type == 3)
-                    sfx.PlayOneShot(fireRainbow);
+                    PlayState.PlaySound("ShotRainbow");
                 else if (type == 2)
-                    sfx.PlayOneShot(fireBoomerang);
+                    PlayState.PlaySound("ShotBoomerang");
                 else
-                    sfx.PlayOneShot(fireRainbow);
+                    PlayState.PlaySound("ShotRainbow");
             }
         }
     }

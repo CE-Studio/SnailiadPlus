@@ -68,17 +68,6 @@ public class Item : MonoBehaviour
         itemType = PlayState.TranslateIDToItemName(itemID);
     }
 
-    void Update()
-    {
-        if (PlayState.gameState == "Game")
-        {
-            anim.speed = 1;
-            sfx.volume = PlayState.gameOptions[0] * 0.1f;
-        }
-        else
-            anim.speed = 0;
-    }
-
     public void SetAnim()
     {
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
@@ -150,9 +139,9 @@ public class Item : MonoBehaviour
                 PlayState.playerScript.RenderNewHearts();
             }
             if (isSuperUnique)
-                sfx.PlayOneShot(majorJingle);
+                PlayState.PlayMusic(0, "MajorItemJingle");
             else
-                sfx.PlayOneShot(minorJingle);
+                PlayState.PlayMusic(0, "MinorItemJingle");
             switch (itemID)
             {
                 case 1:
@@ -185,17 +174,13 @@ public class Item : MonoBehaviour
             PlayState.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.helixCount.ToString()));
         else if (itemID >= PlayState.OFFSET_HEARTS)
             PlayState.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
-        //else if (itemID == PlayState.TranslateItemNameToID("Super Secret Boomerang"))
-        //    PlayState.FlashItemText("Boomerang");
-        //else if (itemID == PlayState.TranslateItemNameToID("Debug Rainbow Wave"))
-        //    PlayState.FlashItemText("Rainbow Wave");
         else
             PlayState.FlashItemText(ConvertToTextID(itemType));
     }
 
     private string ConvertToTextID(string item)
     {
-        string output = "";
+        string output;
         string buffer = "item_";
         string species = PlayState.GetText("species_" + PlayState.currentCharacter.ToLower());
         switch (item)

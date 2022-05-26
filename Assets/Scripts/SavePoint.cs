@@ -13,6 +13,7 @@ public class SavePoint : MonoBehaviour
         anim = GetComponent<AnimationModule>();
         anim.Add("Save_inactive");
         anim.Add("Save_active");
+        anim.Add("Save_last");
         anim.Play("Save_inactive");
     }
 
@@ -34,7 +35,12 @@ public class SavePoint : MonoBehaviour
     public void ToggleActiveState()
     {
         if (hasBeenActivated)
-            anim.Play("Save_inactive");
+        {
+            if (PlayState.respawnCoords == new Vector2(transform.position.x, transform.position.y))
+                anim.Play("Save_last");
+            else
+                anim.Play("Save_inactive");
+        }
         else
         {
             PlayState.PlaySound("Save");

@@ -476,6 +476,11 @@ public class PlayState
         return soundLibrary.library[soundLibrary.soundDict[name]];
     }
 
+    public static AudioClip GetMusic(int groupIndex, string name)
+    {
+        return musicLibrary.library[groupIndex][Array.IndexOf(musicLibrary.library[groupIndex], name)];
+    }
+
     public static void PlaySound(string name)
     {
         if (GetSound(name) != null)
@@ -486,6 +491,14 @@ public class PlayState
     public static void PlaySound(AudioClip clip)
     {
         globalSFX.PlayOneShot(clip);
+    }
+
+    public static void PlayMusic(int groupIndex, string name)
+    {
+        if (GetMusic(groupIndex, name) != null)
+            globalSFX.PlayOneShot(GetMusic(groupIndex, name));
+        else
+            Debug.LogWarning("Audipclip \"" + name + "\" does not exist!");
     }
 
     public static Color32 GetColor(string ID)
@@ -503,7 +516,6 @@ public class PlayState
                 return textLibrary.library[i].text;
             i++;
         }
-        //return "Text with ID \"" + ID + "\" not found";
         return ID;
     }
 
@@ -594,11 +606,11 @@ public class PlayState
             {
                 foreach (Transform entity in room)
                 {
-                    if (entity.tag == "SavePoint")
+                    if (entity.CompareTag("SavePoint"))
                         saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
-                    if (entity.tag == "Boss")
-                        bossLocations.Add(WorldPosToMapGridID(entity.transform.position));
-                    if (entity.tag == "Item")
+                    //if (entity.CompareTag("Boss"))
+                    //    bossLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                    if (entity.CompareTag("Item"))
                     {
                         if (!entity.GetComponent<Item>().collected)
                             itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
@@ -606,21 +618,6 @@ public class PlayState
                 }
             }
         }
-    }
-
-    public static void GetNewRoom(string intendedArea)
-    {
-        area = intendedArea;
-        switch (intendedArea)
-        {
-            case "Test Zone":
-                mus1.clip = snailTown;
-                break;
-            default:
-                mus1.clip = snailTown;
-                break;
-        }
-        mus1.Play();
     }
 
     public static void PlayAreaSong(int area, int subzone)

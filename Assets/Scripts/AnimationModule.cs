@@ -7,16 +7,18 @@ public class AnimationModule : MonoBehaviour
     public bool isPlaying = false;
     public string currentAnimName = "";
     public PlayState.AnimationData currentAnim;
-    public float speed = 1;
     public Dictionary<string, PlayState.AnimationData> animList = new Dictionary<string, PlayState.AnimationData>();
     public List<string> listKeys = new List<string>();
     public bool stopAtBlankFrame = false;
     public bool blankOnNonLoopEnd = false;
     public bool updateSprite = true;
+    public bool pauseOnMenu = true;
     
     private float animTimer = 0;
     private float timerMax = 0;
     private int currentFrame = 0;
+    private float speed = 1;
+    private float lastNonZeroSpeed = 1;
     private bool smallBlank = false;
 
     private SpriteRenderer sprite;
@@ -28,43 +30,49 @@ public class AnimationModule : MonoBehaviour
 
     void Update()
     {
-        if (isPlaying)
+        if (PlayState.gameState != "Game" && pauseOnMenu)
+            speed = 0;
+        else
         {
-            if (currentAnim.framerate != 0)
+            speed = lastNonZeroSpeed;
+            if (isPlaying)
             {
-                if (!(currentFrame == currentAnim.frames.Length - 1 && !currentAnim.loop))
+                if (currentAnim.framerate != 0)
                 {
-                    animTimer -= Time.deltaTime * speed;
-                    while (animTimer <= 0 && !(currentFrame == currentAnim.frames.Length - 1 && !currentAnim.loop))
+                    if (!(currentFrame == currentAnim.frames.Length - 1 && !currentAnim.loop))
                     {
-                        currentFrame++;
-                        if (currentFrame != currentAnim.frames.Length)
+                        animTimer -= Time.deltaTime * speed;
+                        while (animTimer <= 0 && !(currentFrame == currentAnim.frames.Length - 1 && !currentAnim.loop))
                         {
-                            if (updateSprite)
-                                sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
-                                    PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                            animTimer += timerMax;
-                        }
-                        else
-                        {
-                            if (currentAnim.loop)
+                            currentFrame++;
+                            if (currentFrame != currentAnim.frames.Length)
                             {
-                                currentFrame = currentAnim.loopStartFrame;
                                 if (updateSprite)
                                     sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                         PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                                 animTimer += timerMax;
                             }
                             else
+                            {
+                                if (currentAnim.loop)
+                                {
+                                    currentFrame = currentAnim.loopStartFrame;
+                                    if (updateSprite)
+                                        sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
+                                            PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                                    animTimer += timerMax;
+                                }
+                                else
+                                    Stop();
+                            }
+                            //Debug.Log(currentFrame + "/" + (currentAnim.frames.Length - 1));
+                            if (isPlaying && currentAnim.frames[currentFrame] == -1 && stopAtBlankFrame)
                                 Stop();
                         }
-                        //Debug.Log(currentFrame + "/" + (currentAnim.frames.Length - 1));
-                        if (isPlaying && currentAnim.frames[currentFrame] == -1 && stopAtBlankFrame)
-                            Stop();
                     }
+                    else
+                        Stop(blankOnNonLoopEnd);
                 }
-                else
-                    Stop(blankOnNonLoopEnd);
             }
         }
     }
@@ -156,6 +164,7 @@ public class AnimationModule : MonoBehaviour
     public void SetSpeed(float newSpeed = 1)
     {
         speed = newSpeed;
+        lastNonZeroSpeed = newSpeed;
     }
 
     public void PrintAllAnims()

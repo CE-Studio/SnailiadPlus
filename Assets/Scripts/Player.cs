@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public int health = 12;
     public int maxHealth = 12;
     public bool stunned = false;
-    private string currentAnim = "";
     public bool inDeathCutscene = false;
     public int gravityDir = 0;
     public bool underwater = false;
@@ -586,12 +585,6 @@ public class Player : MonoBehaviour
         stunned = true;
         sfx.PlayOneShot(hurt);
         UpdateHearts();
-        //if (currentSurface == DIR_WALL_LEFT || currentSurface == DIR_WALL_RIGHT)
-        //{
-        //
-        //}
-        //currentSurface = DIR_FLOOR;
-        //ExitShell();
         float timer = 0;
         while (timer < 1)
         {
@@ -800,7 +793,6 @@ public class Player : MonoBehaviour
         box.enabled = false;
         PlayState.paralyzed = true;
         sfx.PlayOneShot(die);
-        PlayAnim("die");
         float timer = 0;
         bool hasStartedTransition = false;
         Vector3 fallDir = new Vector3(0.125f, 0.35f, 0);
@@ -822,7 +814,6 @@ public class Player : MonoBehaviour
         transform.position = PlayState.respawnCoords;
         inDeathCutscene = false;
         box.enabled = true;
-        PlayAnim("idle");
         PlayState.paralyzed = false;
         health = maxHealth;
         UpdateHearts();
@@ -833,29 +824,6 @@ public class Player : MonoBehaviour
     public void Die()
     {
         StartCoroutine(nameof(DieAndRespawn));
-    }
-
-    public void PlayAnim(string state)
-    {
-        string newAnim = "Normal ";
-        if (state != "die")
-        {
-            if (currentSurface == 1)
-                newAnim += "wall ";
-            else
-                newAnim += "floor ";
-        }
-        newAnim += state;
-        if (newAnim != currentAnim)
-        {
-            currentAnim = newAnim;
-            switch (PlayState.currentCharacter)
-            {
-                case "Snaily":
-                    playerScriptSnaily.anim.Play(newAnim, 0, 0);
-                    break;
-            }
-        }
     }
 
     public void ExitShell()
