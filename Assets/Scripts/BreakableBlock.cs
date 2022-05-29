@@ -92,6 +92,7 @@ public class BreakableBlock : MonoBehaviour
                 maps[1].SetTile(tilePos, null);
                 maps[2].SetTile(tilePos, null);
                 box.enabled = false;
+                sprite.sprite = PlayState.BlankTexture();
                 hasBeenHit = true;
                 if (!PlayState.explodePlayedThisFrame)
                 {

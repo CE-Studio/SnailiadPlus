@@ -205,6 +205,7 @@ public class RoomTrigger : MonoBehaviour
                         break;
 
                     case "Save Point":
+                        child.GetComponent<SavePoint>().Spawn();
                         if (child.GetComponent<SavePoint>().hasBeenActivated)
                             child.GetComponent<SavePoint>().ToggleActiveState();
                         break;

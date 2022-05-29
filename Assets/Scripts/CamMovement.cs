@@ -14,12 +14,14 @@ public class CamMovement : MonoBehaviour
             Vector2 camBoundsY = new Vector2(
                 PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x,
                 PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y);
+            float xDif = camBoundsX.y - camBoundsX.x;
+            float yDif = camBoundsY.y - camBoundsY.x;
 
             if (PlayState.gameState == "Game")
             {
                 transform.position = new Vector2(
-                    Mathf.Clamp(Mathf.Lerp(transform.position.x, PlayState.player.transform.position.x, 0.1f), camBoundsX.x, camBoundsX.y),
-                    Mathf.Clamp(Mathf.Lerp(transform.position.y, PlayState.player.transform.position.y, 0.1f), camBoundsY.x, camBoundsY.y));
+                    xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, PlayState.player.transform.position.x, 0.1f), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
+                    yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, PlayState.player.transform.position.y, 0.1f), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
             }
 
             Debug.DrawLine(

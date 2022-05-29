@@ -80,6 +80,9 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        PlayState.screenCover.sortingOrder = 1001;
+        PlayState.ScreenFlash("Solid Color", 0, 0, 0, 255);
+        
         if (!Directory.Exists(Application.persistentDataPath + "/Saves"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
         if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"))
@@ -172,6 +175,7 @@ public class MainMenu : MonoBehaviour
         menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
 
         StartCoroutine(nameof(CreateTitle));
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
     }
 
     void Update()

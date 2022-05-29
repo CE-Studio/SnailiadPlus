@@ -53,6 +53,7 @@ public class TextureLibrary : ScriptableObject
         "UI/FontSprites",
         "UI/GenericHighlightBox",
         "UI/Heart",
+        "UI/LoadingIcon",
         "UI/Minimap",
         "UI/MinimapIcons",
         "UI/MinimapMask",

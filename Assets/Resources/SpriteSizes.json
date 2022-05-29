@@ -191,6 +191,11 @@
             "height": 8
         },
 		{
+            "name": "UI/LoadingIcon",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "UI/Minimap",
             "width": 208,
             "height": 176

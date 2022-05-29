@@ -3558,6 +3558,24 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Loading",
+			"spriteName": "UI/LoadingIcon",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Minimap",
 			"spriteName": "UI/Minimap",
 			"framerate": 0.0,
