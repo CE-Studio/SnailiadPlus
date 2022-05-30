@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "Texture Library", menuName = "Scriptable Objects/Texture Library", order = 1)]
 public class TextureLibrary : ScriptableObject
@@ -17,7 +19,7 @@ public class TextureLibrary : ScriptableObject
         "Player",
         "SavePoint",
         //"CEStudioLogo2022",
-        //"Tilesheet",
+        "Tilesheet",
         "TitleFont",
 
         "Bullets/Boomerang",
@@ -108,11 +110,16 @@ public class TextureLibrary : ScriptableObject
         for (int i = 0; i < referenceList.Length; i++)
         {
             Vector2 thisSize = GetSpriteSize(referenceList[i]);
-            if (thisSize == Vector2.zero)
+            if (thisSize == Vector2.zero || thisSize.x < 0 || thisSize.y < 0)
                 thisSize = new Vector2(16, 16);
             newLibrary.Add(Unpack((Texture2D)Resources.Load("Images/" + referenceList[i]), (int)thisSize.x, (int)thisSize.y, referenceList[i]));
         }
         library = newLibrary.ToArray();
+        //TileBase[] allTiles = (TileBase[])Resources.LoadAll("Images/Tilesheet Images", typeof(TileBase));
+        //for (int i = 0; i < library[Array.IndexOf(referenceList, "Tilesheet")].Length; i++)
+        //{
+        //    allTiles[i].GetTileData();
+        //}
         GetNewTextWidths();
     }
 

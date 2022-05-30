@@ -31,6 +31,11 @@
             "height": 48
         },
 		{
+            "name": "Tilesheet",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "TitleFont",
             "width": 32,
             "height": 56
