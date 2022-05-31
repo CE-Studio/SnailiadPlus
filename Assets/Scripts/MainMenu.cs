@@ -38,6 +38,8 @@ public class MainMenu : MonoBehaviour
     private int selectedOption = 0;
     private float selectSnailOffset = 0;
 
+    private bool preloading = true;
+
     public Transform cam;
     public Vector2[] panPoints = new Vector2[] // Points in world space that the main menu camera should pan over; set only one point for a static cam
     {
@@ -82,7 +84,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.screenCover.sortingOrder = 1001;
         PlayState.ScreenFlash("Solid Color", 0, 0, 0, 255);
-        
+
         if (!Directory.Exists(Application.persistentDataPath + "/Saves"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
         if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"))
@@ -135,10 +137,14 @@ public class MainMenu : MonoBehaviour
         PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
         PlayState.textureLibrary.BuildDefaultLibrary();
         PlayState.textureLibrary.BuildDefaultAnimLibrary();
+        PlayState.textureLibrary.BuildDefaultTilemap();
         PlayState.soundLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultOffsetLibrary();
         PlayState.textLibrary.BuildDefaultLibrary();
+
+        PlayState.loadingIcon.GetComponent<AnimationModule>().Add("Loading");
+        PlayState.loadingIcon.GetComponent<AnimationModule>().Play("Loading");
 
         PlayState.LoadOptions();
         PlayState.LoadControls();
@@ -176,13 +182,15 @@ public class MainMenu : MonoBehaviour
 
         StartCoroutine(nameof(CreateTitle));
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
+        PlayState.loadingIcon.SetActive(false);
+        preloading = false;
     }
 
     void Update()
     {
         if ((PlayState.gameState == "Menu" || PlayState.gameState == "Pause") && !PlayState.isMenuOpen)
         {
-            if (PlayState.gameState == "Menu")
+            if (PlayState.gameState == "Menu" && !preloading)
             {
                 music.Play();
                 music.volume = PlayState.gameOptions[1] * 0.1f;

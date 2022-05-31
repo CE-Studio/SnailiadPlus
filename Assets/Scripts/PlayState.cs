@@ -132,6 +132,7 @@ public class PlayState
     public static GameObject particlePool = GameObject.Find("Particle Pool");
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
+    public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
 
     public static GameObject[] TogglableHUDElements = new GameObject[]
     {

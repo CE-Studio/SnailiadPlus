@@ -74,7 +74,6 @@ public class TextureLibrary : ScriptableObject
 
     public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight, string name)
     {
-        //Debug.Log(texture);
         List<Sprite> unpackedArray = new List<Sprite>();
         int counter = 0;
         for (int i = texture.height - sliceHeight; i >= 0; i -= sliceHeight)
@@ -112,14 +111,10 @@ public class TextureLibrary : ScriptableObject
             Vector2 thisSize = GetSpriteSize(referenceList[i]);
             if (thisSize == Vector2.zero || thisSize.x < 0 || thisSize.y < 0)
                 thisSize = new Vector2(16, 16);
+            Debug.Log(referenceList[i]);
             newLibrary.Add(Unpack((Texture2D)Resources.Load("Images/" + referenceList[i]), (int)thisSize.x, (int)thisSize.y, referenceList[i]));
         }
         library = newLibrary.ToArray();
-        //TileBase[] allTiles = (TileBase[])Resources.LoadAll("Images/Tilesheet Images", typeof(TileBase));
-        //for (int i = 0; i < library[Array.IndexOf(referenceList, "Tilesheet")].Length; i++)
-        //{
-        //    allTiles[i].GetTileData();
-        //}
         GetNewTextWidths();
     }
 
@@ -135,6 +130,40 @@ public class TextureLibrary : ScriptableObject
         TextAsset sizeJson = Resources.Load<TextAsset>("SpriteSizes");
         PlayState.SpriteSizeLibrary newLibrary = JsonUtility.FromJson<PlayState.SpriteSizeLibrary>(sizeJson.text);
         PlayState.spriteSizeLibrary = newLibrary.sizeArray;
+    }
+
+    public void BuildDefaultTilemap()
+    {
+        foreach (Transform layer in GameObject.Find("Grid").transform)
+        {
+            if (layer.name != "Special")
+            {
+                Tilemap map = layer.GetComponent<Tilemap>();
+                List<int> swappedIDs = new List<int>();
+                for (int y = 0; y < map.size.y; y++)
+                {
+                    for (int x = 0; x < map.size.x; x++)
+                    {
+                        Vector3Int worldPos = new Vector3Int(Mathf.RoundToInt(map.origin.x - (map.size.x * 0.5f) + x), Mathf.RoundToInt(map.origin.y - (map.size.y * 0.5f) + y), 0);
+                        if (map.GetSprite(worldPos) != null)
+                        {
+                            Sprite tileSprite = map.GetSprite(worldPos);
+                            Debug.Log(tileSprite.name);
+                            int spriteID = int.Parse(tileSprite.name.Split('_')[1]);
+                            if (!swappedIDs.Contains(spriteID))
+                            {
+                                TileBase tile = map.GetTile(worldPos);
+                                Tile newTile = CreateInstance<Tile>();
+                                Debug.Log(PlayState.GetSprite("Tilesheet", spriteID).name);
+                                newTile.sprite = PlayState.GetSprite("Tilesheet", spriteID);
+                                map.SwapTile(tile, newTile);
+                                swappedIDs.Add(spriteID);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void BuildLibrary(string folderPath = null)
