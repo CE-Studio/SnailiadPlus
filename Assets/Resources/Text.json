@@ -402,7 +402,7 @@
 		},
 		{
 			"name": "menu_option_gameplay_secretTiles",
-			"text": "Show secret map tiles",
+			"text": "Secret map tiles",
 			"value": 0
 		},
 		{
@@ -428,6 +428,81 @@
 		{
 			"name": "menu_option_assets_path",
 			"text": "Get asset pack path",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assets_returnTo",
+			"text": "Back to pack selection",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetSelect_noPack1",
+			"text": "You don't seem to have any",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetSelect_noPack2",
+			"text": "packs here.  :(",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetSelect_defaultPack",
+			"text": "Default pack",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetSelect_next",
+			"text": "Next page",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetSelect_prev",
+			"text": "Previous page",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_defaultInfo1",
+			"text": "The default look of the game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_defaultInfo2",
+			"text": "Made by: auriplane, xdanond,",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_defaultInfo3",
+			"text": "and Epsilon",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_noInfo",
+			"text": "No info given",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_version",
+			"text": "Pack ver. #1, game ver. #2",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_author",
+			"text": "Made by: _",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_confirm",
+			"text": "Apply this asset pack?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_yes",
+			"text": "Yeah!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_no",
+			"text": "Not today",
 			"value": 0
 		},
 		{

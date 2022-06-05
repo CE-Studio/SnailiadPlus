@@ -1326,4 +1326,18 @@ public class PlayState
         TogglableHUDElements[4].transform.GetChild(0).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
         TogglableHUDElements[4].transform.GetChild(1).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
     }
+
+    public static void ToggleLoadingIcon(bool state)
+    {
+        if (state)
+        {
+            loadingIcon.SetActive(true);
+            loadingIcon.GetComponent<AnimationModule>().Play("Loading");
+        }
+        else
+        {
+            loadingIcon.GetComponent<AnimationModule>().Stop();
+            loadingIcon.SetActive(false);
+        }
+    }
 }

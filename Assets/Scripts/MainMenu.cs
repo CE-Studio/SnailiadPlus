@@ -1457,16 +1457,164 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
     public void AssetPackMenu()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_assets_texture"), true);
-        AddOption(PlayState.GetText("menu_option_assets_sound"), true);
-        AddOption(PlayState.GetText("menu_option_assets_music"), true);
-        AddOption(PlayState.GetText("menu_option_assets_text"), true);
+        AddOption(PlayState.GetText("menu_option_assets_texture"), true, AssetPackSelection, new int[] { 0, 1, 1, 0, 6, 0 });
+        AddOption(PlayState.GetText("menu_option_assets_sound"), true, AssetPackSelection, new int[] { 0, 2, 1, 0, 6, 0 });
+        AddOption(PlayState.GetText("menu_option_assets_music"), true, AssetPackSelection, new int[] { 0, 3, 1, 0, 6, 0 });
+        AddOption(PlayState.GetText("menu_option_assets_text"), true, AssetPackSelection, new int[] { 0, 4, 1, 0, 6, 0 });
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_assets_path"), true, ReturnAssetPath);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);
         backPage = OptionsScreen;
+    }
+
+    public void AssetPackSelection()
+    {
+        ClearOptions();
+        string path = Application.persistentDataPath + menuVarFlags[0] switch
+        {
+            2 => "/SoundPacks/",
+            3 => "/MusicPacks/",
+            4 => "/TextPacks/",
+            _ => "/TexturePacks/"
+        };
+        string[] entries = Directory.GetDirectories(path);
+        if (entries.Length == 0)
+        {
+            AddOption(PlayState.GetText("menu_option_assetSelect_noPack1"), false);
+            AddOption(PlayState.GetText("menu_option_assetSelect_noPack2"), false);
+            AddOption("", false);
+            AddOption(PlayState.GetText("menu_option_assets_returnTo"), true, AssetPackMenu);
+            ForceSelect(3);
+            backPage = AssetPackMenu;
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (menuVarFlags[1] + i < entries.Length)
+                {
+                    string[] packTitleParts = entries[menuVarFlags[1] + i].Split('/');
+                    string packTitle = packTitleParts[packTitleParts.Length - 1];
+                    AddOption(packTitle, true, ConfirmAssetPack, new int[] { 2, menuVarFlags[1] + i });
+                }
+                else
+                    AddOption("", false);
+            }
+            AddOption(PlayState.GetText("menu_option_assetSelect_defaultPack"), true, ConfirmAssetPack, new int[] { 2, -1 });
+            AddOption(PlayState.GetText("menu_option_assetSelect_next"), menuVarFlags[1] + 5 < entries.Length, AssetPackSelection, new int[] { 1, menuVarFlags[1] + 5, 6, 7 });
+            AddOption(PlayState.GetText("menu_option_assetSelect_prev"), menuVarFlags[1] - 5 >= 0, AssetPackSelection, new int[] { 1, menuVarFlags[1] - 5, 6, 8 });
+            AddOption(PlayState.GetText("menu_option_assets_returnTo"), true, AssetPackMenu);
+            ForceSelect(menuVarFlags[6]);
+            backPage = AssetPackMenu;
+        }
+    }
+
+    public void ConfirmAssetPack()
+    {
+        if (menuVarFlags[2] == -1)
+        {
+            ClearOptions();
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo1"), false);
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo2"), false);
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo3"), false);
+        }
+        else
+        {
+            string path = Application.persistentDataPath + menuVarFlags[0] switch
+            {
+                2 => "/SoundPacks/",
+                3 => "/MusicPacks/",
+                4 => "/TextPacks/",
+                _ => "/TexturePacks/"
+            };
+            string[] entries = Directory.GetDirectories(path);
+            string[] packTitleParts = entries[menuVarFlags[2]].Split('/');
+            string packTitle = packTitleParts[packTitleParts.Length - 1];
+
+            string[] packInfo = new string[3];
+            if (File.Exists(entries[menuVarFlags[2]] + "/Info.txt"))
+            {
+                string[] infoText = File.ReadAllLines(entries[menuVarFlags[2]] + "/Info.txt");
+                packInfo[0] = infoText[1];
+                packInfo[1] = infoText[3];
+                packInfo[2] = infoText[5];
+            }
+
+            ClearOptions();
+            AddOption(packTitle, false);
+            AddOption(packInfo[0] == null ? PlayState.GetText("menu_option_assetConfirm_noInfo") : PlayState.GetText("menu_option_assetConfirm_author").Replace("_", packInfo[0]), false);
+            AddOption(packInfo[0] == null ? "" : PlayState.GetText("menu_option_assetConfirm_version").Replace("#1", packInfo[1]).Replace("#2", packInfo[2]), false);
+        }
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_assetConfirm_confirm"), false);
+        AddOption(PlayState.GetText("menu_option_assetConfirm_yes"), true, ApplyAssetPack);
+        AddOption(PlayState.GetText("menu_option_assetConfirm_no"), true, AssetPackSelection);
+        ForceSelect(6);
+        backPage = AssetPackSelection;
+    }
+
+    public void ApplyAssetPack()
+    {
+        PlayState.ToggleLoadingIcon(true);
+        string packType = menuVarFlags[0] switch
+        {
+            2 => "Sound",
+            3 => "Music",
+            4 => "Text",
+            _ => "Texture"
+        };
+        if (menuVarFlags[2] == -1)
+        {
+            switch (packType)
+            {
+                default:
+                case "Texture":
+                    PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
+                    PlayState.textureLibrary.BuildDefaultAnimLibrary();
+                    PlayState.textureLibrary.BuildDefaultLibrary();
+                    selector[1].GetComponent<AnimationModule>().ReloadList();
+                    selector[1].GetComponent<AnimationModule>().ResetToStart();
+                    selector[2].GetComponent<AnimationModule>().ReloadList();
+                    selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    break;
+                case "Sound":
+                    break;
+                case "Music":
+                    break;
+                case "Text":
+                    break;
+            }
+        }
+        else
+        {
+            string path = Application.persistentDataPath + "/" + packType + "Packs/";
+            string[] entries = Directory.GetDirectories(path);
+            string packPath = entries[menuVarFlags[2]].Replace('\\', '/');
+
+            switch (packType)
+            {
+                default:
+                case "Texture":
+                    PlayState.textureLibrary.BuildSpriteSizeLibrary(packPath + "/SpriteSizes.json");
+                    PlayState.textureLibrary.BuildAnimationLibrary(packPath + "/Animations.json");
+                    PlayState.textureLibrary.BuildLibrary(packPath);
+                    selector[1].GetComponent<AnimationModule>().ReloadList();
+                    selector[1].GetComponent<AnimationModule>().ResetToStart();
+                    selector[2].GetComponent<AnimationModule>().ReloadList();
+                    selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    break;
+                case "Sound":
+                    break;
+                case "Music":
+                    break;
+                case "Text":
+                    break;
+            }
+        }
+        PlayState.ToggleLoadingIcon(false);
+        AssetPackMenu();
     }
 
     public void ReturnAssetPath()

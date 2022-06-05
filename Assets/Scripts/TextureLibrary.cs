@@ -18,7 +18,6 @@ public class TextureLibrary : ScriptableObject
         "MenuPlus",
         "Player",
         "SavePoint",
-        //"CEStudioLogo2022",
         "Tilesheet",
         "TitleFont",
 
@@ -76,14 +75,29 @@ public class TextureLibrary : ScriptableObject
     {
         List<Sprite> unpackedArray = new List<Sprite>();
         int counter = 0;
-        for (int i = texture.height - sliceHeight; i >= 0; i -= sliceHeight)
+        if (texture.name == "Tilesheet")
         {
-            for (int j = 0; j < texture.width; j += sliceWidth)
+            Tile[] tiles = Resources.LoadAll<Tile>("Images/Tilesheet images");
+            for (int i = 0; i < tiles.Length; i++)
             {
-                Sprite newSprite = Sprite.Create(texture, new Rect(j, i, sliceWidth, sliceHeight), new Vector2(0.5f, 0.5f), 16);
-                newSprite.name = name + " " + counter;
+                Sprite oldSprite = Resources.Load<Tile>("Images/Tilesheet images/Tilesheet_" + i).sprite;
+                Sprite newSprite = Sprite.Create(texture, oldSprite.textureRect, new Vector2(0.5f, 0.5f), 16);
+                newSprite.name = oldSprite.name;
                 unpackedArray.Add(newSprite);
                 counter++;
+            }
+        }
+        else
+        {
+            for (int i = texture.height - sliceHeight; i >= 0; i -= sliceHeight)
+            {
+                for (int j = 0; j < texture.width; j += sliceWidth)
+                {
+                    Sprite newSprite = Sprite.Create(texture, new Rect(j, i, sliceWidth, sliceHeight), new Vector2(0.5f, 0.5f), 16);
+                    newSprite.name = name + " " + counter;
+                    unpackedArray.Add(newSprite);
+                    counter++;
+                }
             }
         }
         Sprite[] finalArray = unpackedArray.ToArray();
@@ -111,7 +125,6 @@ public class TextureLibrary : ScriptableObject
             Vector2 thisSize = GetSpriteSize(referenceList[i]);
             if (thisSize == Vector2.zero || thisSize.x < 0 || thisSize.y < 0)
                 thisSize = new Vector2(16, 16);
-            Debug.Log(referenceList[i]);
             newLibrary.Add(Unpack((Texture2D)Resources.Load("Images/" + referenceList[i]), (int)thisSize.x, (int)thisSize.y, referenceList[i]));
         }
         library = newLibrary.ToArray();
@@ -148,14 +161,13 @@ public class TextureLibrary : ScriptableObject
                         if (map.GetSprite(worldPos) != null)
                         {
                             Sprite tileSprite = map.GetSprite(worldPos);
-                            Debug.Log(tileSprite.name);
-                            int spriteID = int.Parse(tileSprite.name.Split('_')[1]);
+                            int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
                             if (!swappedIDs.Contains(spriteID))
                             {
                                 TileBase tile = map.GetTile(worldPos);
                                 Tile newTile = CreateInstance<Tile>();
-                                Debug.Log(PlayState.GetSprite("Tilesheet", spriteID).name);
                                 newTile.sprite = PlayState.GetSprite("Tilesheet", spriteID);
+                                newTile.name = "Tilesheet_" + spriteID;
                                 map.SwapTile(tile, newTile);
                                 swappedIDs.Add(spriteID);
                             }
@@ -171,7 +183,33 @@ public class TextureLibrary : ScriptableObject
         BuildDefaultLibrary();
         if (folderPath != null)
         {
+            string[] tempArray = Directory.GetDirectories(folderPath);
+            string[] directories = new string[tempArray.Length + 1];
+            directories[0] = folderPath;
+            for (int i = 0; i < tempArray.Length; i++)
+                directories[i + 1] = tempArray[i].Replace('\\', '/');
 
+            foreach (string directory in directories)
+            {
+                string[] spriteFiles = Directory.GetFiles(directory);
+                foreach (string file in spriteFiles)
+                {
+                    if (file.Substring(file.Length - 3, 3).ToLower() == "png")
+                    {
+                        string fileName = file.Replace('\\', '/').Substring(folderPath.Length + 1, file.Length - folderPath.Length - 1).Split('.')[0];
+                        if (inReferenceList(fileName))
+                        {
+                            byte[] rawSpriteData = File.ReadAllBytes(file);
+                            Texture2D newTexture = new Texture2D(128, 1);
+                            newTexture.LoadImage(rawSpriteData);
+                            Vector2 thisSize = GetSpriteSize(fileName);
+                            if (thisSize == Vector2.zero || thisSize.x < 0 || thisSize.y < 0)
+                                thisSize = new Vector2(16, 16);
+                            library[Array.IndexOf(referenceList, fileName)] = Unpack(newTexture, (int)thisSize.x, (int)thisSize.y, fileName);
+                        }
+                    }
+                }
+            }
         }
         GetNewTextWidths();
     }
@@ -226,5 +264,18 @@ public class TextureLibrary : ScriptableObject
         }
         newWidths.Add(10);
         PlayState.charWidths = newWidths.ToArray();
+    }
+
+    private bool inReferenceList(string input)
+    {
+        int index = 0;
+        bool found = false;
+        while (index < referenceList.Length && !found)
+        {
+            if (referenceList[index] == input)
+                found = true;
+            index++;
+        }
+        return found;
     }
 }

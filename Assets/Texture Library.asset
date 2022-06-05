@@ -19,6 +19,7 @@ MonoBehaviour:
   - MenuPlus
   - Player
   - SavePoint
+  - Tilesheet
   - TitleFont
   - Bullets/Boomerang
   - Bullets/RainbowWave
