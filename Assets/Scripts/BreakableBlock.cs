@@ -10,12 +10,6 @@ public class BreakableBlock : MonoBehaviour
     private bool hasBeenHit;
     public BoxCollider2D box;
     public SpriteRenderer sprite;
-    public AudioSource sfx;
-    public AudioClip expl1;
-    public AudioClip expl2;
-    public AudioClip expl3;
-    public AudioClip expl4;
-    public AudioClip ping;
 
     public TileBase gTile = null;
     public TileBase fgTile = null;
@@ -27,15 +21,8 @@ public class BreakableBlock : MonoBehaviour
     {
         box = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
-        sfx = GetComponent<AudioSource>();
 
         sprite.sprite = PlayState.BlankTexture();
-
-        expl1 = (AudioClip)Resources.Load("Sounds/Sfx/Explode1");
-        expl2 = (AudioClip)Resources.Load("Sounds/Sfx/Explode2");
-        expl3 = (AudioClip)Resources.Load("Sounds/Sfx/Explode3");
-        expl4 = (AudioClip)Resources.Load("Sounds/Sfx/Explode4");
-        ping = (AudioClip)Resources.Load("Sounds/Sfx/Ping");
 
         maps.Add(GameObject.Find("Grid/Ground").GetComponent<Tilemap>());
         maps.Add(GameObject.Find("Grid/Foreground").GetComponent<Tilemap>());
@@ -59,8 +46,6 @@ public class BreakableBlock : MonoBehaviour
             box.enabled = true;
         else
             box.enabled = false;
-
-        sfx.volume = PlayState.gameOptions[0] * 0.1f;
     }
 
     public void Instantiate(int type, bool silent)

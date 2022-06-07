@@ -8,15 +8,16 @@ public class TitleLetter : MonoBehaviour
     public AnimationModule anim;
     public AnimationModule colorAnim;
     public Vector2 localFinalPos;
-    public bool readyToAnimate = false;
+    public bool intro = true;
     public char letter = ' ';
     private float animTimer = -2.5f;
+    private float startOffset = 0;
 
     private const float X_SCALE = 80;
 
-    private List<char> acceptedLetters = new List<char>
+    private readonly List<char> acceptedLetters = new List<char>
     {
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '+'
     };
 
     void Awake()
@@ -29,13 +30,25 @@ public class TitleLetter : MonoBehaviour
         colorAnim.pauseOnMenu = false;
         colorAnim.Add("Title_letterFlash_intro");
         colorAnim.Add("Title_letterFlash_hold");
-        colorAnim.Play("Title_letterFlash_intro");
+    }
+
+    public void Create(char newLetter, Vector2 finalPos, float animOffset)
+    {
+        transform.parent = PlayState.mainMenu.transform;
+        SetLetter(newLetter);
+        localFinalPos = finalPos;
+        startOffset = animOffset;
     }
 
     void Update()
     {
-        if (readyToAnimate)
+        if (startOffset == 0 && letter != '+' && intro)
         {
+            if (!colorAnim.isPlaying)
+            {
+                sprite.enabled = true;
+                colorAnim.Play("Title_letterFlash_intro");
+            }
             if (animTimer < 0)
             {
                 transform.localPosition = new Vector2(localFinalPos.x + (-Mathf.Sin(-animTimer * Mathf.PI) * animTimer * X_SCALE) * 0.0625f, localFinalPos.y);
@@ -44,26 +57,30 @@ public class TitleLetter : MonoBehaviour
             else
             {
                 transform.localPosition = localFinalPos;
-                readyToAnimate = false;
-                PlayAnim(true, "Title_letterFlash_hold");
+                intro = false;
+                colorAnim.Play("Title_letterFlash_hold");
             }
         }
-        int currentColorInt = colorAnim.GetCurrentFrameValue();
-        string currentColorString = (currentColorInt < 1000 ? "0" : "") + (currentColorInt < 100 ? "0" : "") + (currentColorInt < 10 ? "0" : "") + currentColorInt;
-        sprite.color = PlayState.GetColor(currentColorString);
-    }
-
-    public void PlayAnim(bool mode, string animName = "")
-    {
-        if (mode) // Color
+        else if (startOffset == 0 && letter == '+')
         {
-            colorAnim.Play(animName);
+            if (!anim.isPlaying)
+            {
+                sprite.enabled = true;
+                anim.Play("Title_plus");
+            }
+            transform.localPosition = localFinalPos;
         }
-        else // Letter
+        else if (startOffset != 0)
         {
-            string newAnimName = "Title_letter_" + letter;
-            anim.Add(newAnimName);
-            anim.Play(newAnimName);
+            sprite.enabled = false;
+            startOffset = Mathf.Clamp(startOffset - Time.deltaTime, 0, Mathf.Infinity);
+        }
+
+        if (colorAnim.isPlaying)
+        {
+            int currentColorInt = colorAnim.GetCurrentFrameValue();
+            string currentColorString = (currentColorInt < 1000 ? "0" : "") + (currentColorInt < 100 ? "0" : "") + (currentColorInt < 10 ? "0" : "") + currentColorInt;
+            sprite.color = PlayState.GetColor(currentColorString);
         }
     }
 
@@ -74,9 +91,14 @@ public class TitleLetter : MonoBehaviour
             sprite.sprite = PlayState.BlankTexture();
         else
         {
-            string animName = "Title_letter_" + letter.ToString().ToUpper();
+            string animName;
+            if (letter == '+')
+                animName = "Title_plus";
+            else
+                animName = "Title_letter_" + letter.ToString().ToUpper();
             anim.Add(animName);
-            anim.Play(animName);
+            if (animName != "Title_plus")
+                anim.Play(animName);
         }
     }
 }

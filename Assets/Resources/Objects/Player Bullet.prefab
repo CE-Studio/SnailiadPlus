@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 423748727204277681}
   - component: {fileID: 423748727204277679}
-  - component: {fileID: 423748727204277680}
   - component: {fileID: 423748727204277678}
   - component: {fileID: 5139962494398767513}
   - component: {fileID: 1479374291}
@@ -88,25 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &423748727204277680
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423748727204277682}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a5c376dda79ecd8498cbb2a9e5ca3ec7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &423748727204277678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,8 +177,8 @@ MonoBehaviour:
     loop: 0
     loopStartFrame: 0
     randomizeStartFrame: 0
-  speed: 1
   listKeys: []
   stopAtBlankFrame: 0
   blankOnNonLoopEnd: 0
   updateSprite: 1
+  pauseOnMenu: 1

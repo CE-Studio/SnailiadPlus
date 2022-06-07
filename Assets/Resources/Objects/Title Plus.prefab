@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2993922094836015574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -317.75, y: 174.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,7 +105,8 @@ MonoBehaviour:
     loop: 0
     loopStartFrame: 0
     randomizeStartFrame: 0
-  speed: 1
   listKeys: []
   stopAtBlankFrame: 0
   blankOnNonLoopEnd: 0
+  updateSprite: 1
+  pauseOnMenu: 1

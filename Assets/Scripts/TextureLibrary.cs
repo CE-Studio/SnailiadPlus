@@ -145,7 +145,7 @@ public class TextureLibrary : ScriptableObject
         PlayState.spriteSizeLibrary = newLibrary.sizeArray;
     }
 
-    public void BuildDefaultTilemap()
+    public void BuildTilemap()
     {
         foreach (Transform layer in GameObject.Find("Grid").transform)
         {
@@ -197,7 +197,7 @@ public class TextureLibrary : ScriptableObject
                     if (file.Substring(file.Length - 3, 3).ToLower() == "png")
                     {
                         string fileName = file.Replace('\\', '/').Substring(folderPath.Length + 1, file.Length - folderPath.Length - 1).Split('.')[0];
-                        if (inReferenceList(fileName))
+                        if (InReferenceList(fileName))
                         {
                             byte[] rawSpriteData = File.ReadAllBytes(file);
                             Texture2D newTexture = new Texture2D(128, 1);
@@ -266,7 +266,7 @@ public class TextureLibrary : ScriptableObject
         PlayState.charWidths = newWidths.ToArray();
     }
 
-    private bool inReferenceList(string input)
+    private bool InReferenceList(string input)
     {
         int index = 0;
         bool found = false;

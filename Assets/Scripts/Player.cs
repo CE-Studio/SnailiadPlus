@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Player : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour
     public bool underwater = false;
     public Vector2 velocity = Vector2.zero;
 
-    public Animator anim;
+    public AnimationModule anim;
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public Rigidbody2D rb;
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // All this does is set Snaily's components to simpler variables that can be more easily called
-        anim = GetComponent<Animator>();
+        anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         sfx = GetComponent<AudioSource>();
@@ -122,8 +124,6 @@ public class Player : MonoBehaviour
         if (PlayState.gameState == "Game")
         {
             rb.WakeUp();
-
-            anim.speed = 1;
 
             // Noclip!!!
             if (PlayState.noclipMode)
@@ -226,8 +226,6 @@ public class Player : MonoBehaviour
 
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
         }
-        else
-            anim.speed = 0;
 
         // Audiosource volume control
         PlayState.globalSFX.volume = PlayState.gameOptions[0] * 0.1f;
@@ -338,6 +336,10 @@ public class Player : MonoBehaviour
 
     public void UpdateMusic(int area, int subzone, int resetFlag = 0)
     {
+        // resetFlag = 0  -  nothing
+        // resetFlag = 1  -  change song
+        // resetFlag = 2  -  rebuild array and change song
+        // resetFlag = 3  -  rebuild array
         if (resetFlag >= 2) // Hard reset array and play
         {
             PlayState.musicSourceArray.Clear();
@@ -835,5 +837,57 @@ public class Player : MonoBehaviour
                     playerScriptSnaily.ToggleShell();
                 break;
         }
+    }
+
+    public void LoadClip(string path, string name, Vector2 location)
+    {
+        StartCoroutine(LoadClipCoroutine(path, name, location));
+    }
+    public IEnumerator LoadClipCoroutine(string path, string name, Vector2 location)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + UnityWebRequest.EscapeURL(path), AudioType.OGGVORBIS))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                AudioClip newSound = DownloadHandlerAudioClip.GetContent(www);
+                newSound.name = name;
+                if (location.x == -1 && location.y == -1)
+                    PlayState.soundLibrary.library[Array.IndexOf(PlayState.soundLibrary.referenceList, name)] = newSound;
+                else
+                    PlayState.musicLibrary.library[(int)location.x][(int)location.y] = newSound;
+                PlayState.importJobs--;
+            }
+        }
+    }
+
+    public void WaitForImportJobCompletion(bool startMenuMusic = false)
+    {
+        if (!PlayState.paralyzed)
+        {
+            PlayState.paralyzed = true;
+            StartCoroutine(WaitForJobCompletionCoroutine(startMenuMusic));
+        }
+    }
+    public IEnumerator WaitForJobCompletionCoroutine(bool startMenuMusic)
+    {
+        while (PlayState.importJobs > 0)
+            yield return null;
+
+        PlayState.importJobs = 0;
+        PlayState.paralyzed = false;
+        if (startMenuMusic)
+        {
+            UpdateMusic(-1, -1, 3);
+            PlayState.mainMenu.GetComponent<MainMenu>().music.clip = PlayState.GetMusic(0, 0);// "TitleSong");
+            PlayState.mainMenu.GetComponent<MainMenu>().music.Play();
+        }
+        PlayState.ToggleLoadingIcon(false);
+        PlayState.mainMenu.GetComponent<MainMenu>().AssetPackMenu();
     }
 }

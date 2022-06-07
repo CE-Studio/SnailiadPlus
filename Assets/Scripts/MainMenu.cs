@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviour
     public Transform cam;
     public Vector2[] panPoints = new Vector2[] // Points in world space that the main menu camera should pan over; set only one point for a static cam
     {
-        new Vector2(0.5f, 0.5f)
+        new Vector2(0.5f, 0.5f),
     };
     public float panSpeed = 0.15f; // The speed at which the camera should pan
     public float stopTime = 3; // The time the camera spends at each point
@@ -61,12 +61,22 @@ public class MainMenu : MonoBehaviour
     public GameObject titlePlus;
     public GameObject[] selector;
 
+    public List<GameObject> letters = new List<GameObject>();
+
     public GameObject[] menuHUDElements;
 
-    public readonly int[] letterPixelWidths = new int[]
+    //public int[] letterPixelWidths = new int[]
+    //{
+    //    28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24, 12
+    ////  A   B   C   D   E   F   G   H   I  J   K   L  M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z
+    //};
+    private readonly string acceptedChars = "abcdefghijklmnopqrstuvwxyz +";
+    public Dictionary<char, int> letterPixelWidths = new Dictionary<char, int>
     {
-        28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24, 12
-    //  A   B   C   D   E   F   G   H   I  J   K   L  M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z
+        { 'a', 28 }, { 'b', 28 }, { 'c', 24 }, { 'd', 28 }, { 'e', 24 }, { 'f', 24 }, { 'g', 28 }, { 'h', 24 },
+        { 'i', 6 }, { 'j', 24 }, { 'k', 24 }, { 'l', 6 }, { 'm', 32 }, { 'n', 24 }, { 'o', 28 }, { 'p', 28 },
+        { 'q', 28 }, { 'r', 24 }, { 's', 25 }, { 't', 24 }, { 'u', 28 }, { 'v', 24 }, { 'w', 32 }, { 'x', 28 },
+        { 'y', 24 }, { 'z', 24 }, { ' ', 12 }, { '+', 24 }
     };
 
     [Serializable]
@@ -137,7 +147,7 @@ public class MainMenu : MonoBehaviour
         PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
         PlayState.textureLibrary.BuildDefaultLibrary();
         PlayState.textureLibrary.BuildDefaultAnimLibrary();
-        PlayState.textureLibrary.BuildDefaultTilemap();
+        PlayState.textureLibrary.BuildTilemap();
         PlayState.soundLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultLibrary();
         PlayState.musicLibrary.BuildDefaultOffsetLibrary();
@@ -180,7 +190,7 @@ public class MainMenu : MonoBehaviour
         menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = versionText;
         menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
 
-        StartCoroutine(nameof(CreateTitle));
+        CreateTitle();
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
         PlayState.loadingIcon.SetActive(false);
         preloading = false;
@@ -283,13 +293,13 @@ public class MainMenu : MonoBehaviour
                 }
             }
             else
-                cam.transform.position = panPoints[0];
+                cam.position = panPoints[0];
         }
         if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
         {
             music.volume = PlayState.gameOptions[1] * 0.1f;
 
-            if (!isRebinding && !fadingToIntro)
+            if (!isRebinding && !fadingToIntro && !PlayState.paralyzed)
             {
                 if (Control.UpPress(1) || Control.DownPress(1))
                 {
@@ -663,7 +673,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
                 PageMain();
-                StartCoroutine(nameof(CreateTitle));
+                CreateTitle();
             }
             if (pauseButtonDown && !Control.Pause())
                 pauseButtonDown = false;
@@ -881,94 +891,40 @@ public class MainMenu : MonoBehaviour
         selector[2].transform.localPosition = new Vector2(selectSnailOffset, 0);
     }
 
-    public IEnumerator CreateTitle()
+    public void GetNewLetterPixelWidths()
     {
-        string title = PlayState.GetText("menu_title");
-        int titleLength = 0;
-        PlayState.AnimationData letterWidthData = PlayState.GetAnim("Title_letterWidths");
-        for (int i = 0; i < letterWidthData.frames.Length; i++)
-            letterPixelWidths[i] = letterWidthData.frames[i];
-        for (int i = 0; i < title.Length; i++)
-        {
-            titleLength += letterPixelWidths[LetterToNumber(title[i])];
-            if (i != title.Length - 1)
-                titleLength += 4;
-        }
-        float letterSpawnX = (-(titleLength * 0.5f) + (letterPixelWidths[LetterToNumber(title[0])] * 0.5f)) * 0.0625f;// + 0.25f;
-        float timer = LETTER_SPAWN_TIME;
-        int letterID = 0;
-        bool doneSpawning = false;
-
-        while (!doneSpawning && PlayState.gameState != "Game")
-        {
-            if (timer >= LETTER_SPAWN_TIME && letterID < title.Length)
-            {
-                GameObject newLetter = Instantiate(titleLetter);
-                newLetter.transform.parent = transform;
-                newLetter.transform.localPosition = new Vector2(letterSpawnX, LETTER_SPAWN_Y);
-                TitleLetter letterScript = newLetter.GetComponent<TitleLetter>();
-                letterScript.SetLetter(title[letterID]);
-                letterScript.localFinalPos = newLetter.transform.localPosition;
-                letterScript.readyToAnimate = true;
-                timer -= LETTER_SPAWN_TIME;
-                letterID++;
-                if (letterID >= title.Length)
-                    doneSpawning = true;
-                else
-                    letterSpawnX += (letterPixelWidths[LetterToNumber(title[letterID - 1])] + 4) * 0.0625f;
-            }
-            timer += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        if (PlayState.gameState == "Game")
-            yield break;
-        yield return new WaitForSeconds(2);
-        if (PlayState.isMenuOpen && transform.Find("Title Plus") == null && title[title.Length - 1] == '+')
-        {
-            GameObject plus = Instantiate(titlePlus);
-            plus.name = "Title Plus";
-            plus.transform.parent = transform;
-            plus.transform.localPosition = new Vector2(letterSpawnX - 0.25f, LETTER_SPAWN_Y + 0.0625f);
-            AnimationModule plusAnim = plus.GetComponent<AnimationModule>();
-            plusAnim.pauseOnMenu = false;
-            plusAnim.Add("Title_plus");
-            plusAnim.Play("Title_plus");
-        }
-        yield return new WaitForEndOfFrame();
+        int[] newWidths = PlayState.GetAnim("Title_letterWidths").frames;
+        Dictionary<char, int> newDict = new Dictionary<char, int>();
+        for (int i = 0; i < acceptedChars.Length; i++)
+            newDict.Add(acceptedChars[i], newWidths[i]);
+        letterPixelWidths = newDict;
     }
 
-    public int LetterToNumber(char letter)
+    public void CreateTitle()
     {
-        return char.ToLower(letter) switch
+        for (int i = letters.Count - 1; i >= 0; i--)
+            Destroy(letters[i]);
+
+        string title = PlayState.GetText("menu_title").ToLower();
+        GetNewLetterPixelWidths();
+        int titleLength = 0;
+        for (int i = 0; i < title.Length; i++)
+            titleLength += letterPixelWidths[title[i]] + (i != title.Length - 1 ? 4 : 0);
+        float letterSpawnX = (-(titleLength * 0.5f) + (letterPixelWidths[title[0]] * 0.5f)) * 0.0625f;
+        float currentDelay = 0;
+
+        for (int i = 0; i < title.Length; i++)
         {
-            'a' => 0,
-            'b' => 1,
-            'c' => 2,
-            'd' => 3,
-            'e' => 4,
-            'f' => 5,
-            'g' => 6,
-            'h' => 7,
-            'i' => 8,
-            'j' => 9,
-            'k' => 10,
-            'l' => 11,
-            'm' => 12,
-            'n' => 13,
-            'o' => 14,
-            'p' => 15,
-            'q' => 16,
-            'r' => 17,
-            's' => 18,
-            't' => 19,
-            'u' => 20,
-            'v' => 21,
-            'w' => 22,
-            'x' => 23,
-            'y' => 24,
-            'z' => 25,
-            _ => 26
-        };
+            if (title[i] != ' ')
+            {
+                GameObject newLetter = Instantiate(titleLetter);
+                newLetter.GetComponent<TitleLetter>().Create(title[i], new Vector2(letterSpawnX + (title[i] == '+' ? -0.25f : 0),
+                    LETTER_SPAWN_Y + (title[i] == '+' ? 0.0625f : 0)), currentDelay + (title[i] == '+' ? 2 : 0));
+                currentDelay += LETTER_SPAWN_TIME;
+                letters.Add(newLetter);
+            }
+            letterSpawnX += (letterPixelWidths[title[i]] + 4) * 0.0625f;
+        }
     }
 
     public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
@@ -1516,9 +1472,11 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         if (menuVarFlags[2] == -1)
         {
             ClearOptions();
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo1"), false);
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo2"), false);
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo3"), false);
+            string insert = (menuVarFlags[0] == 2 || menuVarFlags[0] == 3) ?
+                PlayState.GetText("menu_option_assetConfirm_defaultInfo_audio") : PlayState.GetText("menu_option_assetConfirm_defaultInfo_video");
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo1").Replace("_", insert), false);
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo2").Replace("_", insert), false);
+            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo3").Replace("_", insert), false);
         }
         else
         {
@@ -1574,16 +1532,28 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
                     PlayState.textureLibrary.BuildDefaultAnimLibrary();
                     PlayState.textureLibrary.BuildDefaultLibrary();
+                    PlayState.textureLibrary.BuildTilemap();
                     selector[1].GetComponent<AnimationModule>().ReloadList();
                     selector[1].GetComponent<AnimationModule>().ResetToStart();
                     selector[2].GetComponent<AnimationModule>().ReloadList();
                     selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    CreateTitle();
                     break;
                 case "Sound":
+                    PlayState.soundLibrary.BuildDefaultLibrary();
                     break;
                 case "Music":
+                    music.Stop();
+                    PlayState.musicLibrary.BuildDefaultOffsetLibrary();
+                    PlayState.musicLibrary.BuildDefaultLibrary();
+                    music.clip = PlayState.GetMusic(0, 0);
+                    music.Play();
+                    PlayState.ToggleLoadingIcon(false);
+                    AssetPackMenu();
                     break;
                 case "Text":
+                    PlayState.textLibrary.BuildDefaultLibrary();
+                    CreateTitle();
                     break;
             }
         }
@@ -1604,17 +1574,27 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     selector[1].GetComponent<AnimationModule>().ResetToStart();
                     selector[2].GetComponent<AnimationModule>().ReloadList();
                     selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    CreateTitle();
                     break;
                 case "Sound":
+                    PlayState.soundLibrary.BuildLibrary(packPath);
                     break;
                 case "Music":
+                    music.Stop();
+                    PlayState.musicLibrary.BuildOffsetLibrary(packPath + "/MusicLoopOffsets.json");
+                    PlayState.musicLibrary.BuildLibrary(packPath);
                     break;
                 case "Text":
+                    PlayState.textLibrary.BuildLibrary(packPath + "/Text.json");
+                    CreateTitle();
                     break;
             }
         }
-        PlayState.ToggleLoadingIcon(false);
-        AssetPackMenu();
+        if (packType == "Texture" || packType == "Text")
+        {
+            PlayState.ToggleLoadingIcon(false);
+            AssetPackMenu();
+        }
     }
 
     public void ReturnAssetPath()

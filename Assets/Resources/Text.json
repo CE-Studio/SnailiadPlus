@@ -462,7 +462,7 @@
 		},
 		{
 			"name": "menu_option_assetConfirm_defaultInfo1",
-			"text": "The default look of the game",
+			"text": "The default _ of the game",
 			"value": 0
 		},
 		{
@@ -473,6 +473,16 @@
 		{
 			"name": "menu_option_assetConfirm_defaultInfo3",
 			"text": "and Epsilon",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_defaultInfo_video",
+			"text": "look",
+			"value": 0
+		},
+		{
+			"name": "menu_option_assetConfirm_defaultInfo_audio",
+			"text": "sound",
 			"value": 0
 		},
 		{

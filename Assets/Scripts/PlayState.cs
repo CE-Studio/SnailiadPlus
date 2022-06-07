@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
-using System.IO;
 
 public class PlayState
 {
@@ -83,6 +83,8 @@ public class PlayState
     public static bool isTalking = false;
     public static bool hasJumped = false;
     public static Vector2 positionOfLastRoom = Vector2.zero;
+
+    public static int importJobs = 0;
 
     public static Texture2D palette = (Texture2D)Resources.Load("Images/Palette");
 
@@ -480,6 +482,10 @@ public class PlayState
     public static AudioClip GetMusic(int groupIndex, string name)
     {
         return musicLibrary.library[groupIndex][Array.IndexOf(musicLibrary.library[groupIndex], name)];
+    }
+    public static AudioClip GetMusic(int groupIndex, int songIndex)
+    {
+        return musicLibrary.library[groupIndex][songIndex];
     }
 
     public static void PlaySound(string name)
