@@ -241,13 +241,16 @@ public class Player : MonoBehaviour
         
         if (time + 1 > nextLoopEvent)
         {
+            float loadMakeupOffset = 0;
             for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicParent.GetChild(PlayState.currentArea).childCount; i += 2)
             {
                 AudioSource source = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i).GetComponent<AudioSource>();
+                AudioSource altSource = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i + (PlayState.musFlag ? 1 : -1)).GetComponent<AudioSource>();
                 source.time = PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
-                source.PlayScheduled(nextLoopEvent);
+                loadMakeupOffset = Mathf.Clamp(altSource.clip.length - altSource.time - 1, 0, Mathf.Infinity);
+                source.PlayScheduled(nextLoopEvent + loadMakeupOffset);
             }
-            nextLoopEvent += PlayState.musicLibrary.library[PlayState.currentArea + 1][0].length - PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
+            nextLoopEvent += PlayState.musicLibrary.library[PlayState.currentArea + 1][0].length - PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset + loadMakeupOffset;
             PlayState.musFlag = !PlayState.musFlag;
         }
     }
@@ -340,7 +343,7 @@ public class Player : MonoBehaviour
         // resetFlag = 1  -  change song
         // resetFlag = 2  -  rebuild array and change song
         // resetFlag = 3  -  rebuild array
-        if (resetFlag >= 2) // Hard reset array and play
+        if (resetFlag >= 2) // Hard reset array
         {
             PlayState.musicSourceArray.Clear();
             foreach (Transform obj in PlayState.musicParent.transform)
@@ -365,10 +368,12 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+
+            StartCoroutine(nameof(LoadAllMusic));
         }
-        if (resetFlag != 3) // Hard reset array only
+        if (resetFlag != 3) // Change song
         {
-            if (resetFlag >= 1) // Change song
+            if (resetFlag >= 1)
             {
                 PlayState.musFlag = false;
                 for (int i = 0; i < PlayState.musicParent.childCount; i++)
@@ -408,6 +413,35 @@ public class Player : MonoBehaviour
                 }
             }
             PlayState.playingMusic = true;
+        }
+    }
+
+    public IEnumerator LoadAllMusic()
+    {
+        foreach (AudioSource source in PlayState.musicSourceArray)
+        {
+            source.mute = true;
+            source.Play();
+        }
+        int numberPlaying = 0;
+        while (numberPlaying < PlayState.musicSourceArray.Count)
+        {
+            foreach (AudioSource source in PlayState.musicSourceArray)
+                if (source.isPlaying)
+                    numberPlaying++;
+            yield return null;
+        }
+        while (numberPlaying > 0)
+        {
+            foreach (AudioSource source in PlayState.musicSourceArray)
+            {
+                if (source.isPlaying)
+                {
+                    numberPlaying--;
+                    source.Stop();
+                }
+            }
+            yield return null;
         }
     }
 
