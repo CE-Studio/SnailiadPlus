@@ -15,32 +15,33 @@ public class AchievementPanel : MonoBehaviour
 
     public List<string> popupQueue = new List<string>();
     public string currentAchievement;
-    // All achievement IDs sent to and handled by this script are abbreviated or simplified in some way
-    //
-    //  1 - fo4   (First of Four)
-    //  2 - stink (Stinky Toe)
-    //  3 - grav  (Gravity Battle)
-    //  4 - vict  (Victory)
-    //  5 - scout (Scout)
-    //  6 - expl  (Explorer)
-    //  7 - happy (Happy Ending)
-    //  8 - hunt  (Treasure Hunter)
-    //  9 - hless (Homeless)
-    // 10 - topfl (Top Floor)
-    // 11 - mnsn  (Mansion)
-    // 12 - rent  (Just Renting)
-    // 13 - attic (Attic Dweller)
-    // 14 - speed (Speedrunner)
-    // 15 - gaunt (The Gauntlet)
-    // 16 - plgrm (Pilgrim)
-    // 17 - snlka (Snelk Hunter A)
-    // 18 - snlkb (Snelk Hunter B)
-    // 19 - secrt (Super Secret)
-    // 20 - count (Counter-Snail)
-    // 21 - maze  (Birds in the Maze Room)
-    // 22 - where (Where are we, Snaily?)
-    // 23 - omega (Omega Snail)
-    // 24 - rando (How did you get up here?)
+    public Dictionary<string, int> achievementIDs = new Dictionary<string, int>
+    {
+        { "fo4", 1 },    // "First of Four"            (Beat Shellbreaker)
+        { "stink", 2 },  // "Stinky Toe"               (Beat Stompy)
+        { "grav", 3 },   // "Gravity Battle"           (Beat Space Box)
+        { "vict", 4 },   // "Victory"                  (Beat Moon Snail)
+        { "scout", 5 },  // "Scout"                    (Beat Moon Snail without a Full-Metal item)
+        { "expl", 6 },   // "Explorer"                 (Find 100% of the map)
+        { "happy", 7 },  // "Happy Ending"             (Return Sun Snail's light)
+        { "hunt", 8 },   // "Treasure Hunter"          (Find 100% of all items)
+        { "hless", 9 },  // "Homeless"                 (Beat the game as Sluggy)
+        { "topfl", 10 }, // "Top Floor"                (Beat the game as Upside)
+        { "mnsn", 11 },  // "Mansion"                  (Beat the game as Leggy)
+        { "rent", 12 },  // "Just Renting"             (Beat the game as Blobby)
+        { "attic", 13 }, // "Attic Dweller"            (Beat the game as Leechy)
+        { "speed", 14 }, // "Speedrunner"              (Beat the game in under thirty minutes)
+        { "gaunt", 15 }, // "The Gauntlet"             (Beat the Boss Rush)
+        { "plgrm", 16 }, // "Pilgrim"                  (Find the Shrine of Iris)
+        { "snlka", 17 }, // "Snelk Hunter A"           (Find the first secret snelk room)
+        { "snlkb", 18 }, // "Snelk Hunter B"           (Find the second secret snelk room)
+        { "secrt", 19 }, // "Super Secret"             (Find the Super Secret Boomerang)
+        { "count", 20 }, // "Counter Snail"            (Find the remake test rooms)
+        { "maze", 21 },  // "Birds in the Maze Room"   (Find them)
+        { "where", 22 }, // "Where are we, Snaily?"    (Find the original test rooms)
+        { "omega", 23 }, // "Omega Snail"              (Beat the game on insane difficulty)
+        { "rando", 24 }  // "How did you get up here?" (Beat the game on a randomized seed)
+    };
     public bool runningPopup = false;
     private int runState = 0;
     private float openTime = 0;
@@ -68,7 +69,12 @@ public class AchievementPanel : MonoBehaviour
     private void Update()
     {
         if (popupQueue.Count != 0 && runState == 0)
-            OpenBox();
+        {
+            if (PlayState.achievementStates[achievementIDs[popupQueue[0]] - 1] == 0)
+                OpenBox();
+            else
+                popupQueue.RemoveAt(0);
+        }
         if (!anim.isPlaying && runState == 1)
             RunPopup(popupQueue[0]);
         if (runState == 2)
@@ -85,7 +91,7 @@ public class AchievementPanel : MonoBehaviour
     private void OpenBox()
     {
         runState = 1;
-        sfx.PlayOneShot(jingle);
+        PlayState.PlayMusic(0, 3);
         runningPopup = true;
         anim.Play("AchievementPanel_open");
     }

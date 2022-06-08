@@ -1576,6 +1576,16 @@
 			"value": 0
 		},
 		{
+			"name": "room_01_entranceSecret",
+			"text": "Discombobulatory|Alcove",
+			"value": 0
+		},
+		{
+			"name": "room_01_tower1",
+			"text": "Not Brinstar",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -1963,6 +1973,31 @@
 		{
 			"name": "npc_25_explainMap_0",
 			"text": "Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!",
+			"value": 1
+		},
+		{
+			"name": "npc_43_cantCorner_0",
+			"text": "I can't seem to crawl around{nl}these corners! {p|0.3}I wonder if{nl}I'll ever be able to do it...",
+			"value": 1
+		},
+		{
+			"name": "npc_43_upside_0",
+			"text": "Hey, {P}, {p|0.2}how do you manage{nl}to fall up?? {p|0.4}You're not even a{nl}Gravity Snail!! {p|0.4}{eff|Shake}How do you do it?!",
+			"value": 1
+		},
+		{
+			"name": "npc_43_leggy_0",
+			"text": "You're so lucky, {P}! {p|0.2}You don't{nl}have to deal with corners!!{nl}{p|0.6}{spd|0.25}...{spd|0.02}How do you flip though?",
+			"value": 1
+		},
+		{
+			"name": "npc_43_blobby_0",
+			"text": "Hey, {P}! {p|0.2}How do you treat{nl}corners? {p|0.3}Can you crawl like us?{nl}{p|0.4}I wanna know more about blobs!!",
+			"value": 1
+		},
+		{
+			"name": "npc_43_default_0",
+			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
 			"value": 1
 		},
 		{

@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public int gravityDir = 0;
     public bool underwater = false;
     public Vector2 velocity = Vector2.zero;
+    public bool grounded;
+    public bool shelled;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -107,7 +109,7 @@ public class Player : MonoBehaviour
         keySprites.Add(debugJump.GetComponent<SpriteRenderer>());
         keySprites.Add(debugShoot.GetComponent<SpriteRenderer>());
         keySprites.Add(debugStrafe.GetComponent<SpriteRenderer>());
-        StartCoroutine("DebugKeys");
+        StartCoroutine(nameof(DebugKeys));
 
         areaText = new TextMesh[]
         {

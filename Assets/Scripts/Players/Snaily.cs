@@ -148,6 +148,8 @@ public class Snaily : MonoBehaviour
             player.gravityDir = gravityDir;
             player.facingLeft = facingLeft;
             player.facingDown = facingDown;
+            player.grounded = grounded;
+            player.shelled = shelled;
 
             // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
             // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
@@ -1390,6 +1392,7 @@ public class Snaily : MonoBehaviour
     {
         axisFlag = !axisFlag;
         box.size = new Vector2(box.size.y, box.size.x);
+        box.offset = new Vector2(Mathf.Abs(box.offset.y) * (facingLeft ? 1 : -1), Mathf.Abs(box.offset.x) * (facingDown ? 1 : -1));
     }
 
     // This function is called whenever a shelled character asks to enter/exit their shell

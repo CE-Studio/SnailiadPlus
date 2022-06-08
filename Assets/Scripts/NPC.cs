@@ -396,6 +396,19 @@ public class NPC : MonoBehaviour
                                 AddText("default");
                             break;
 
+                        case 43:
+                            if (!PlayState.CheckForItem("Gravity Snail"))
+                                AddText("cantCorner");
+                            else if (PlayState.currentCharacter == "Upside")
+                                AddText("upside");
+                            else if (PlayState.currentCharacter == "Leggy")
+                                AddText("leggy");
+                            else if (PlayState.currentCharacter == "Blobby")
+                                AddText("blobby");
+                            else
+                                AddText("default");
+                            break;
+
                         case 50:
                             if (PlayState.CheckForItem("Debug Rainbow Wave"))
                                 AddText("admireRainbowWave");

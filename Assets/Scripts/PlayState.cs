@@ -507,6 +507,10 @@ public class PlayState
         else
             Debug.LogWarning("Audipclip \"" + name + "\" does not exist!");
     }
+    public static void PlayMusic(int groupIndex, int songIndex)
+    {
+        globalSFX.PlayOneShot(GetMusic(groupIndex, songIndex));
+    }
 
     public static Color32 GetColor(string ID)
     {

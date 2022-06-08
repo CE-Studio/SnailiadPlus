@@ -1714,12 +1714,12 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                20,
-                19,
-                18,
-                17,
-                16,
-                14
+                27,
+                26,
+                25,
+                24,
+                23,
+                21
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -1730,7 +1730,7 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                14
+                21
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -1741,11 +1741,11 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                16,
-                17,
-                18,
-                19,
-                20,
+                23,
+                24,
+                25,
+                26,
+                27,
                 -1
             ],
             "loop": false,
@@ -1929,12 +1929,12 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                90,
-                89,
-                88,
-                87,
-                86,
-                84
+                97,
+                96,
+                95,
+                94,
+                93,
+                91
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -1945,7 +1945,7 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                84
+                91
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -1956,11 +1956,11 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
-                86,
-                87,
-                88,
-                89,
-                90,
+                94,
+                95,
+                96,
+                97,
+                98,
                 -1
             ],
             "loop": false,

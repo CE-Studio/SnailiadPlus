@@ -139,9 +139,9 @@ public class Item : MonoBehaviour
                 PlayState.playerScript.RenderNewHearts();
             }
             if (isSuperUnique)
-                PlayState.PlayMusic(0, "MajorItemJingle");
+                PlayState.PlayMusic(0, 2);
             else
-                PlayState.PlayMusic(0, "MinorItemJingle");
+                PlayState.PlayMusic(0, 1);
             switch (itemID)
             {
                 case 1:
@@ -233,24 +233,31 @@ public class Item : MonoBehaviour
     {
         box.enabled = false;
         float timer = 0;
-        GameObject player = GameObject.Find("Player");
         while (timer < 2)
         {
-            switch (player.GetComponent<Player>().gravityDir)
+            //switch (player.GetComponent<Player>().gravityDir)
+            //{
+            //    case 0:
+            //        transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.75f) + 0.25f);
+            //        break;
+            //    case 1:
+            //        transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.75f) + 0.25f, player.transform.position.y);
+            //        break;
+            //    case 2:
+            //        transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.75f) - 0.25f, player.transform.position.y);
+            //        break;
+            //    case 3:
+            //        transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.75f) - 0.25f);
+            //        break;
+            //}
+            Vector2 targetPos = PlayState.playerScript.gravityDir switch
             {
-                case 0:
-                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.75f) + 0.25f);
-                    break;
-                case 1:
-                    transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.75f) + 0.25f, player.transform.position.y);
-                    break;
-                case 2:
-                    transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.75f) - 0.25f, player.transform.position.y);
-                    break;
-                case 3:
-                    transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.75f) - 0.25f);
-                    break;
-            }
+                1 => new Vector2(PlayState.player.transform.position.x + (box.size.y * 0.75f) + 0.25f, PlayState.player.transform.position.y),
+                2 => new Vector2(PlayState.player.transform.position.x - (box.size.y * 0.75f) - 0.25f, PlayState.player.transform.position.y),
+                3 => new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y - (box.size.y * 0.75f) - 0.25f),
+                _ => new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y + (box.size.y * 0.75f) + 0.25f)
+            };
+            transform.position = Vector2.Lerp(transform.position, targetPos, 15 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
             if (PlayState.gameState == "Game")
                 timer += Time.deltaTime;
