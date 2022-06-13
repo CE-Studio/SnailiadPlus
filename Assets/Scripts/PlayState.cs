@@ -136,6 +136,15 @@ public class PlayState
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
     public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
 
+    public struct RoomEntity
+    {
+        public GameObject obj;
+        public string name;
+        public string tag;
+        public Vector2 pos;
+        public int[] spawnData;
+    }
+
     public static GameObject[] TogglableHUDElements = new GameObject[]
     {
         GameObject.Find("View/Minimap Panel"),
@@ -336,7 +345,8 @@ public class PlayState
         0,  // 10 - Music pack ID (any positive int, 0 for default)
         5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
         0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
-        0   // 13 - Secret tile visibility (boolean)
+        0,  // 13 - Secret tile visibility (boolean)
+        2   // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
     };
 
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
@@ -623,7 +633,7 @@ public class PlayState
                     //    bossLocations.Add(WorldPosToMapGridID(entity.transform.position));
                     if (entity.CompareTag("Item"))
                     {
-                        if (!entity.GetComponent<Item>().collected)
+                        //if (!entity.GetComponent<Item>().collected)
                             itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
                     }
                 }

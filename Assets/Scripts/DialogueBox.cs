@@ -37,7 +37,6 @@ public class DialogueBox : MonoBehaviour
     private bool playSound = true;
     private bool forcedClosed = false;
     private Vector2 roomTextOrigin;
-    //private List<SpriteRenderer> portraitParts = new List<SpriteRenderer>();
     public Sprite[] playerPortraits;
     private bool forceDownPosition;
     private float posVar;
@@ -46,8 +45,6 @@ public class DialogueBox : MonoBehaviour
     private AnimationModule portraitFrameAnim;
     private SpriteRenderer portraitChar;
     private AnimationModule portraitCharAnim;
-    //private List<Sprite> coloredSprites = new List<Sprite>();
-    //private Dictionary<int, int> spriteReferences = new Dictionary<int, int>();
     private Dictionary<int, Sprite> colorizedSprites = new Dictionary<int, Sprite>();
     private string currentFrameColor = "0005";
 
@@ -81,7 +78,6 @@ public class DialogueBox : MonoBehaviour
     
     void Start()
     {
-        //anim = GetComponent<Animator>();
         anim = GetComponent<AnimationModule>();
         sfx = GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>();
@@ -94,12 +90,6 @@ public class DialogueBox : MonoBehaviour
         roomText = GameObject.Find("View/Minimap Panel/Room Name Parent").transform;
         roomTextOrigin = roomText.localPosition;
 
-        //portraitParts.Add(portrait.transform.GetChild(0).GetComponent<SpriteRenderer>());
-        //portraitParts.Add(portrait.transform.GetChild(1).GetComponent<SpriteRenderer>());
-        //portraitParts.Add(portrait.transform.GetChild(2).GetComponent<SpriteRenderer>());
-        //portraitParts.Add(portrait.transform.GetChild(3).GetComponent<SpriteRenderer>());
-        //portraitParts.Add(portrait.transform.GetChild(4).GetComponent<SpriteRenderer>());
-        //portraitParts.Add(portrait.transform.GetChild(5).GetComponent<SpriteRenderer>());
         portraitFrame = portrait.GetComponent<SpriteRenderer>();
         portraitFrameAnim = portrait.GetComponent<AnimationModule>();
         portraitChar = portrait.transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -427,7 +417,7 @@ public class DialogueBox : MonoBehaviour
 
             if (mute)
                 playSound = false;
-            else if (currentTimerMax < 0.04f)
+            else if (currentTimerMax < 0.04f && Application.targetFrameRate > 60)
                 playSound = !playSound;
             else
                 playSound = true;

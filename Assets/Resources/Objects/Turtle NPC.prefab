@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3733980378195090407}
   - component: {fileID: 4824545346993276689}
   - component: {fileID: 5168637265548876998}
-  - component: {fileID: 4190453074915743300}
   - component: {fileID: 7076351576822303682}
   m_Layer: 0
   m_Name: Turtle NPC
@@ -53,6 +52,7 @@ MonoBehaviour:
   needsSpace: 0
   buttonDown: 0
   colors: []
+  portraitStateList: 
   colorTable: {fileID: 0}
   npcSpriteSheet: []
   sprites: []
@@ -61,8 +61,10 @@ MonoBehaviour:
   speechBubble: {fileID: 0}
   speechBubbleSprite: {fileID: 0}
   speechBubbleAnim: {fileID: 0}
+  bubbleState: 0
   origin: {x: 0, y: 0}
   velocity: 0
+  textToSend: []
 --- !u!212 &5168637265548876998
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -115,25 +117,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4190453074915743300
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086137813825377748}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7822c0f2f69544f45a67d51f913bd171, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7076351576822303682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,11 +139,11 @@ MonoBehaviour:
     loop: 0
     loopStartFrame: 0
     randomizeStartFrame: 0
-  speed: 1
   listKeys: []
   stopAtBlankFrame: 0
   blankOnNonLoopEnd: 0
   updateSprite: 1
+  pauseOnMenu: 1
 --- !u!1 &8609702439621369131
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,8 +249,8 @@ MonoBehaviour:
     loop: 0
     loopStartFrame: 0
     randomizeStartFrame: 0
-  speed: 1
   listKeys: []
   stopAtBlankFrame: 0
   blankOnNonLoopEnd: 0
   updateSprite: 1
+  pauseOnMenu: 1

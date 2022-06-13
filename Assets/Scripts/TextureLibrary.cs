@@ -24,6 +24,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/Boomerang",
         "Bullets/RainbowWave",
 
+        "Entities/Blob",
         "Entities/BreakableIcons",
         "Entities/Floatspike1",
         "Entities/Grass",

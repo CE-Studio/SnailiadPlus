@@ -38,53 +38,58 @@ public class NPC : MonoBehaviour
 
     public virtual void Awake()
     {
-        speechBubble = transform.Find("Speech bubble").gameObject;
-        speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
-        speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
+        if (PlayState.gameState == "Game")
+        {
+            speechBubble = transform.Find("Speech bubble").gameObject;
+            speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
+            speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
 
-        sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<AnimationModule>();
-        anim.updateSprite = false;
+            sprite = GetComponent<SpriteRenderer>();
+            anim = GetComponent<AnimationModule>();
+            anim.updateSprite = false;
 
+            nexted = 0;
+            chatting = false;
+            speechBubbleSprite.enabled = false;
+
+            origin = transform.localPosition;
+
+            groundCheck = Physics2D.BoxCast(
+                transform.position,
+                new Vector2(1.467508f, 0.82375f),
+                0,
+                upsideDown ? Vector2.up : Vector2.down,
+                Mathf.Infinity,
+                LayerMask.GetMask("PlayerCollide"),
+                Mathf.Infinity,
+                Mathf.Infinity
+                );
+        }
+    }
+
+    public virtual void OnEnable()
+    {
+        //nexted = 0;
+        //chatting = false;
+        //speechBubbleSprite.enabled = false;
+    }
+
+    public virtual void Spawn(int[] spawnData)
+    {
+        ID = spawnData[0];
+        upsideDown = spawnData[1] == 1;
+
+        CreateNewSprites();
+        anim.Add("NPC_idle");
+        anim.Add("NPC_shell");
+        anim.Add("NPC_sleep");
+        anim.Play("NPC_idle");
         if (upsideDown)
         {
             sprite.flipY = true;
             speechBubbleSprite.flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
-        speechBubbleSprite.enabled = false;
-
-        origin = transform.localPosition;
-
-        groundCheck = Physics2D.BoxCast(
-            transform.position,
-            new Vector2(1.467508f, 0.82375f),
-            0,
-            upsideDown ? Vector2.up : Vector2.down,
-            Mathf.Infinity,
-            LayerMask.GetMask("PlayerCollide"),
-            Mathf.Infinity,
-            Mathf.Infinity
-            );
-    }
-
-    public virtual void OnEnable()
-    {
-        nexted = 0;
-        chatting = false;
-        speechBubbleSprite.enabled = false;
-    }
-
-    public virtual void Spawn()
-    {
-        if (sprites.Length == 0)
-        {
-            CreateNewSprites();
-            anim.Add("NPC_idle");
-            anim.Add("NPC_shell");
-            anim.Add("NPC_sleep");
-        }
-        anim.Play("NPC_idle");
     }
 
     public virtual void FixedUpdate()

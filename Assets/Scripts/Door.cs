@@ -21,37 +21,52 @@ public class Door : MonoBehaviour
 
     public Sprite[] editorSprites;
     
-    void Start()
+    void Awake()
     {
-        anim = GetComponent<AnimationModule>();
-        sprite = GetComponent<SpriteRenderer>();
-        box = GetComponent<BoxCollider2D>();
-        player = GameObject.FindWithTag("Player");
-
-        if (direction == 1 || direction == 3)
+        if (PlayState.gameState == "Game")
         {
-            box.size = new Vector2(3, 1);
-            if (direction == 3)
+            anim = GetComponent<AnimationModule>();
+            sprite = GetComponent<SpriteRenderer>();
+            box = GetComponent<BoxCollider2D>();
+            player = GameObject.FindWithTag("Player");
+
+            if (direction == 1 || direction == 3)
             {
-                sprite.flipY = true;
+                box.size = new Vector2(3, 1);
+                if (direction == 3)
+                {
+                    sprite.flipY = true;
+                }
+            }
+            else if (direction == 2)
+            {
+                sprite.flipX = true;
+            }
+
+            string[] doorDirs = new string[] { "horiz", "vert" };
+            string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
+            string[] doorStates = new string[] { "open", "hold", "close" };
+            for (int i = 0; i < doorDirs.Length; i++)
+            {
+                for (int j = 0; j < doorColors.Length; j++)
+                {
+                    for (int k = 0; k < doorStates.Length; k++)
+                        anim.Add("Door_" + doorDirs[i] + "_" + doorColors[j] + "_" + doorStates[k]);
+                }
             }
         }
-        else if (direction == 2)
-        {
-            sprite.flipX = true;
-        }
+    }
 
-        string[] doorDirs = new string[] { "horiz", "vert" };
-        string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
-        string[] doorStates = new string[] { "open", "hold", "close" };
-        for (int i = 0; i < doorDirs.Length; i++)
-        {
-            for (int j = 0; j < doorColors.Length; j++)
-            {
-                for (int k = 0; k < doorStates.Length; k++)
-                    anim.Add("Door_" + doorDirs[i] + "_" + doorColors[j] + "_" + doorStates[k]);
-            }
-        }
+    public void Spawn(int[] spawnData)
+    {
+        doorWeapon = spawnData[0];
+        locked = spawnData[1] == 1;
+        direction = spawnData[2];
+
+        if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 2)
+            SetState1();
+        else
+            SetState2();
     }
 
     public void SetClosedSprite()

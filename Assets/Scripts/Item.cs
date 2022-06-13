@@ -22,62 +22,35 @@ public class Item : MonoBehaviour
     
     void Start()
     {
-        anim = GetComponent<AnimationModule>();
-        box = GetComponent<BoxCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        sfx = GetComponent<AudioSource>();
-
-        anim.Add("Item_boomerang");
-        anim.Add("Item_rainbowWave");
-        anim.Add("Item_helixFragment");
-        anim.Add("Item_heartContainer");
-
-        originPos = transform.localPosition;
-
-        if (itemID >= PlayState.OFFSET_FRAGMENTS)
+        if (PlayState.gameState == "Game")
         {
-            anim.Play("Item_helixFragment");
-            box.size = new Vector2(0.95f, 0.95f);
-        }
-        else if (itemID >= PlayState.OFFSET_HEARTS)
-        {
-            anim.Play("Item_heartContainer");
-            box.size = new Vector2(1.95f, 1.95f);
-        }
-        else
-        {
-            switch (itemID)
-            {
-                case 1:
-                case 11:
-                    anim.Play("Item_boomerang");
-                    box.size = new Vector2(1.25f, 1.825f);
-                    break;
-                case 2:
-                case 12:
-                    anim.Play("Item_rainbowWave");
-                    box.size = new Vector2(1.25f, 1.825f);
-                    break;
-                default:
-                    anim.Play("Item_helixFragment");
-                    box.size = new Vector2(0.95f, 0.95f);
-                    break;
-            }
-        }
+            anim = GetComponent<AnimationModule>();
+            box = GetComponent<BoxCollider2D>();
+            sprite = GetComponent<SpriteRenderer>();
+            sfx = GetComponent<AudioSource>();
 
-        itemType = PlayState.TranslateIDToItemName(itemID);
+            originPos = transform.localPosition;
+
+            itemType = PlayState.TranslateIDToItemName(itemID);
+        }
     }
 
     public void SetAnim()
     {
+        anim.Add("Item_boomerang");
+        anim.Add("Item_rainbowWave");
+        anim.Add("Item_helixFragment");
+        anim.Add("Item_heartContainer");
+        string animName = "";
+
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
-            anim.Play("Item_helixFragment");
+            animName = "Item_helixFragment";
             box.size = new Vector2(0.95f, 0.95f);
         }
         else if (itemID >= PlayState.OFFSET_HEARTS)
         {
-            anim.Play("Item_heartContainer");
+            animName = "Item_heartContainer";
             box.size = new Vector2(1.95f, 1.95f);
         }
         else
@@ -86,20 +59,23 @@ public class Item : MonoBehaviour
             {
                 case 1:
                 case 11:
-                    anim.Play("Item_boomerang");
+                    animName = "Item_boomerang";
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 case 2:
                 case 12:
-                    anim.Play("Item_rainbowWave");
+                    animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 default:
-                    anim.Play("Item_helixFragment");
+                    animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
                     break;
             }
         }
+
+        anim.Add(animName);
+        anim.Play(animName);
     }
 
     public void CheckIfCollected()
@@ -114,8 +90,8 @@ public class Item : MonoBehaviour
             collected = false;
             box.enabled = true;
             sprite.enabled = true;
-            if (PlayState.itemLocations.ContainsValue(itemID))
-                PlayState.itemLocations.Remove(itemID);
+            //if (PlayState.itemLocations.ContainsValue(itemID))
+            //    PlayState.itemLocations.Remove(itemID);
             PlayState.minimapScript.RefreshMap();
         }
     }
@@ -235,21 +211,6 @@ public class Item : MonoBehaviour
         float timer = 0;
         while (timer < 2)
         {
-            //switch (player.GetComponent<Player>().gravityDir)
-            //{
-            //    case 0:
-            //        transform.position = new Vector2(player.transform.position.x, player.transform.position.y + (box.size.y * 0.75f) + 0.25f);
-            //        break;
-            //    case 1:
-            //        transform.position = new Vector2(player.transform.position.x + (box.size.y * 0.75f) + 0.25f, player.transform.position.y);
-            //        break;
-            //    case 2:
-            //        transform.position = new Vector2(player.transform.position.x - (box.size.y * 0.75f) - 0.25f, player.transform.position.y);
-            //        break;
-            //    case 3:
-            //        transform.position = new Vector2(player.transform.position.x, player.transform.position.y - (box.size.y * 0.75f) - 0.25f);
-            //        break;
-            //}
             Vector2 targetPos = PlayState.playerScript.gravityDir switch
             {
                 1 => new Vector2(PlayState.player.transform.position.x + (box.size.y * 0.75f) + 0.25f, PlayState.player.transform.position.y),

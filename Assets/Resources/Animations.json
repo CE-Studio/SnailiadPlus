@@ -2540,6 +2540,238 @@
 		},
 		
 		{
+			"name": "Enemy_blob1_normal",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob1_jump",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob1_quiver",
+			"spriteName": "Entities/Blob",
+			"framerate": 12.0,
+			"frames": [
+				1,
+				2,
+				3,
+				0,
+				1,
+				2,
+				3,
+				0,
+				1,
+				1,
+				2,
+				2,
+				3,
+				3,
+				0,
+				0,
+				1,
+				1,
+				1,
+				2,
+				2,
+				2,
+				3,
+				3,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob2_normal",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob2_jump",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob2_quiver",
+			"spriteName": "Entities/Blob",
+			"framerate": 12.0,
+			"frames": [
+				5,
+				6,
+				7,
+				4,
+				5,
+				6,
+				7,
+				4,
+				5,
+				5,
+				6,
+				6,
+				7,
+				7,
+				4,
+				4,
+				5,
+				5,
+				5,
+				6,
+				6,
+				6,
+				7,
+				7,
+				7,
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob3_normal",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob3_jump",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob3_quiver",
+			"spriteName": "Entities/Blob",
+			"framerate": 12.0,
+			"frames": [
+				9,
+				10,
+				11,
+				8,
+				9,
+				10,
+				11,
+				8,
+				9,
+				9,
+				10,
+				10,
+				11,
+				11,
+				8,
+				8,
+				9,
+				9,
+				9,
+				10,
+				10,
+				10,
+				11,
+				11,
+				11,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob4_normal",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob4_jump",
+			"spriteName": "Entities/Blob",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_blob4_quiver",
+			"spriteName": "Entities/Blob",
+			"framerate": 12.0,
+			"frames": [
+				13,
+				14,
+				15,
+				12,
+				13,
+				14,
+				15,
+				12,
+				13,
+				13,
+				14,
+				14,
+				15,
+				15,
+				12,
+				12,
+				13,
+				13,
+				13,
+				14,
+				14,
+				14,
+				15,
+				15,
+				15,
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_floatspike_black",
 			"spriteName": "Entities/Floatspike1",
 			"framerate": 0.0,

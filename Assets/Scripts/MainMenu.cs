@@ -178,6 +178,15 @@ public class MainMenu : MonoBehaviour
         selector[1].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
         selector[2].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
 
+        PlayState.AssignProperCollectibleIDs();
+        PlayState.BuildMapMarkerArrays();
+
+        foreach (Transform area in PlayState.roomTriggerParent.transform)
+        {
+            foreach (Transform room in area)
+                room.GetComponent<RoomTrigger>().MoveEntitiesToInternalList();
+        }
+
         menuHUDElements = new GameObject[]
         {
             selector[0],
@@ -202,8 +211,8 @@ public class MainMenu : MonoBehaviour
         {
             if (PlayState.gameState == "Menu" && !preloading)
             {
-                music.Play();
                 music.volume = PlayState.gameOptions[1] * 0.1f;
+                music.Play();
             }
             PlayState.isMenuOpen = true;
             PlayState.ToggleHUD(false);
@@ -298,6 +307,7 @@ public class MainMenu : MonoBehaviour
         if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
         {
             music.volume = PlayState.gameOptions[1] * 0.1f;
+            Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
 
             if (!isRebinding && !fadingToIntro && !PlayState.paralyzed)
             {
@@ -452,6 +462,25 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         PlayState.gameOptions[13] = menuVarFlags[2];
+                        break;
+                    case "frameLimit":
+                        TestForArrowAdjust(option, 3, 3);
+                        switch (menuVarFlags[3])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_frameLimit_none"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_frameLimit_30"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_frameLimit_60"));
+                                break;
+                            case 3:
+                                AddToOptionText(option, PlayState.GetText("menu_add_frameLimit_120"));
+                                break;
+                        }
+                        PlayState.gameOptions[14] = menuVarFlags[3];
                         break;
                     case "soundVolume":
                         TestForArrowAdjust(option, 0, 10);
@@ -956,7 +985,6 @@ public class MainMenu : MonoBehaviour
         PlayState.gameState = "Game";
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
-        PlayState.BuildMapMarkerArrays();
         PlayState.minimapScript.RefreshMap();
         fadingToIntro = false;
 
@@ -1279,7 +1307,7 @@ public class MainMenu : MonoBehaviour
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
-            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13] });
+            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13], 3, PlayState.gameOptions[14] });
         if (PlayState.gameState == "Menu")
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
@@ -1404,6 +1432,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_gameplay_shooting") + ": ", true, "shooting");
         AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true, "showBreakables");
         AddOption(PlayState.GetText("menu_option_gameplay_secretTiles") + ": ", true, "secretTiles");
+        AddOption(PlayState.GetText("menu_option_gameplay_frameLimit") + ": ", true, "frameLimit");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);

@@ -152,4 +152,10 @@ public class Enemy : MonoBehaviour
             PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
                 Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 2 });
     }
+
+    public bool OnScreen()
+    {
+        return Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(PlayState.cam.transform.position.x, 0)) - (box.size.x * 0.5f) < 12.5f &&
+            Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, PlayState.cam.transform.position.y)) - (box.size.y * 0.5f) < 7.5f;
+    }
 }

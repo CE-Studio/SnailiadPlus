@@ -145,7 +145,10 @@ public class DebugMenu : MonoBehaviour
                         {
                             default:
                                 if (Control.JumpPress() && button.label == currentSelected)
+                                {
                                     PlayState.itemCollection[int.Parse(typeParts[1])] = PlayState.itemCollection[int.Parse(typeParts[1])] == 0 ? 1 : 0;
+                                    PlayState.minimapScript.RefreshMap();
+                                }
                                 button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                             case "heartContainer":

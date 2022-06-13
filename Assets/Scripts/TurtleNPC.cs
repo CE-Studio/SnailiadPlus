@@ -17,8 +17,10 @@ public class TurtleNPC : NPC
         speechBubbleSprite.enabled = false;
     }
 
-    public override void Spawn()
+    public override void Spawn(int[] spawnData)
     {
+        upsideDown = spawnData[1] == 1;
+
         if (anim.animList.Count == 0)
             anim.Add("NPC_turtle");
         anim.Play("NPC_turtle");

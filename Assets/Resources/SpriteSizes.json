@@ -53,6 +53,11 @@
         },
 		
 		{
+            "name": "Entities/Blob",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/BreakableIcons",
             "width": 16,
             "height": 16

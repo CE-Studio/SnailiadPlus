@@ -406,6 +406,11 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_gameplay_frameLimit",
+			"text": "Frame limiter",
+			"value": 0
+		},
+		{
 			"name": "menu_option_assets_texture",
 			"text": "Texture packs",
 			"value": 0
@@ -1173,6 +1178,26 @@
 		{
 			"name": "menu_add_breakables4",
 			"text": "all, any shot",
+			"value": 0
+		},
+		{
+			"name": "menu_add_frameLimit_none",
+			"text": "Unlimited",
+			"value": 0
+		},
+		{
+			"name": "menu_add_frameLimit_30",
+			"text": "30FPS",
+			"value": 0
+		},
+		{
+			"name": "menu_add_frameLimit_60",
+			"text": "60FPS",
+			"value": 0
+		},
+		{
+			"name": "menu_add_frameLimit_120",
+			"text": "120FPS",
 			"value": 0
 		},
 		{

@@ -100,8 +100,6 @@ public class Player : MonoBehaviour
         RenderNewHearts();
         UpdateHearts();
 
-        PlayState.AssignProperCollectibleIDs();
-
         keySprites.Add(debugUp.GetComponent<SpriteRenderer>());
         keySprites.Add(debugDown.GetComponent<SpriteRenderer>());
         keySprites.Add(debugLeft.GetComponent<SpriteRenderer>());
@@ -311,8 +309,8 @@ public class Player : MonoBehaviour
             frameCount = 0;
             dt -= 1 / updateRate;
         }
-        PlayState.fpsText.text = "" + Mathf.Round(fps) + PlayState.GetText("hud_fps");
-        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + PlayState.GetText("hud_fps");
+        PlayState.fpsText.text = "" + Mathf.Round(fps) + (PlayState.gameOptions[14] != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
+        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + (PlayState.gameOptions[14] != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
 
         // Game time counter
         if (PlayState.gameState == "Game")
