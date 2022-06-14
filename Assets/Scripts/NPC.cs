@@ -38,40 +38,33 @@ public class NPC : MonoBehaviour
 
     public virtual void Awake()
     {
-        if (PlayState.gameState == "Game")
-        {
-            speechBubble = transform.Find("Speech bubble").gameObject;
-            speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
-            speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
+        if (PlayState.gameState != "Game")
+            return;
+        
+        speechBubble = transform.Find("Speech bubble").gameObject;
+        speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
+        speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
 
-            sprite = GetComponent<SpriteRenderer>();
-            anim = GetComponent<AnimationModule>();
-            anim.updateSprite = false;
+        sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<AnimationModule>();
+        anim.updateSprite = false;
 
-            nexted = 0;
-            chatting = false;
-            speechBubbleSprite.enabled = false;
+        nexted = 0;
+        chatting = false;
+        speechBubbleSprite.enabled = false;
 
-            origin = transform.localPosition;
+        origin = transform.localPosition;
 
-            groundCheck = Physics2D.BoxCast(
-                transform.position,
-                new Vector2(1.467508f, 0.82375f),
-                0,
-                upsideDown ? Vector2.up : Vector2.down,
-                Mathf.Infinity,
-                LayerMask.GetMask("PlayerCollide"),
-                Mathf.Infinity,
-                Mathf.Infinity
-                );
-        }
-    }
-
-    public virtual void OnEnable()
-    {
-        //nexted = 0;
-        //chatting = false;
-        //speechBubbleSprite.enabled = false;
+        groundCheck = Physics2D.BoxCast(
+            transform.position,
+            new Vector2(1.467508f, 0.82375f),
+            0,
+            upsideDown ? Vector2.up : Vector2.down,
+            Mathf.Infinity,
+            LayerMask.GetMask("PlayerCollide"),
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
     }
 
     public virtual void Spawn(int[] spawnData)

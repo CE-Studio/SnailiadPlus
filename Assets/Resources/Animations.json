@@ -2794,7 +2794,7 @@
 			],
 			"loop": true,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": false
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_spikey_blue_right",
@@ -2808,7 +2808,7 @@
 			],
 			"loop": true,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": false
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_spikey_blue_up",
@@ -2822,7 +2822,7 @@
 			],
 			"loop": true,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": false
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_spikey_blue_left",
@@ -2836,7 +2836,7 @@
 			],
 			"loop": true,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": false
+			"randomizeStartFrame": true
 		},
 		
 		{

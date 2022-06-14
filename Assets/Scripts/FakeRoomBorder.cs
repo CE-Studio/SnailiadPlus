@@ -13,8 +13,11 @@ public class FakeRoomBorder : MonoBehaviour
     private const float BUFFER_HORIZ = 13;
     private const float BUFFER_VERT = 8;
 
-    private void OnEnable()
+    public void Spawn(int[] spawnData)
     {
+        direction = spawnData[0] == 1;
+        workingDirections = spawnData[1];
+
         isActive = true;
         initialPosRelative = new Vector2(PlayState.player.transform.position.x > transform.position.x ? 1 : -1,
             PlayState.player.transform.position.y > transform.position.y ? 1 : -1);

@@ -20,7 +20,7 @@ public class Item : MonoBehaviour
     public AudioClip minorJingle;
     public AudioClip majorJingle;
     
-    void Start()
+    void Awake()
     {
         if (PlayState.gameState == "Game")
         {
@@ -35,13 +35,15 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void SetAnim()
+    public void Spawn(int[] spawnData)
     {
-        anim.Add("Item_boomerang");
-        anim.Add("Item_rainbowWave");
-        anim.Add("Item_helixFragment");
-        anim.Add("Item_heartContainer");
-        string animName = "";
+        //anim.Add("Item_boomerang");
+        //anim.Add("Item_rainbowWave");
+        //anim.Add("Item_helixFragment");
+        //anim.Add("Item_heartContainer");
+        itemID = spawnData[0];
+
+        string animName;
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {

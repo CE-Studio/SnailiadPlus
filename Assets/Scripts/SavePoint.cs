@@ -8,16 +8,13 @@ public class SavePoint : MonoBehaviour
 
     public AnimationModule anim;
 
-    void Start()
+    public void Spawn()
     {
         anim = GetComponent<AnimationModule>();
         anim.Add("Save_inactive");
         anim.Add("Save_active");
         anim.Add("Save_last");
-    }
 
-    public void Spawn()
-    {
         if (PlayState.respawnCoords == new Vector2(transform.position.x, transform.position.y))
             anim.Play("Save_last");
         else
@@ -30,22 +27,14 @@ public class SavePoint : MonoBehaviour
         {
             if (!hasBeenActivated)
             {
-                ToggleActiveState();
+                hasBeenActivated = true;
+                PlayState.PlaySound("Save");
+                anim.Play("Save_active");
                 PlayState.FlashSaveText();
                 PlayState.respawnCoords = transform.position;
                 PlayState.WriteSave("game");
                 PlayState.WriteSave("records");
             }
         }
-    }
-
-    public void ToggleActiveState()
-    {
-        if (!hasBeenActivated)
-        {
-            PlayState.PlaySound("Save");
-            anim.Play("Save_active");
-        }
-        hasBeenActivated = !hasBeenActivated;
     }
 }

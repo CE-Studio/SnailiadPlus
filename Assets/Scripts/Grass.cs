@@ -19,14 +19,18 @@ public class Grass : MonoBehaviour
     
     public void Start()
     {
-        bitesRemaining = totalBites;
-        sprite = GetComponent<SpriteRenderer>();
-        box = GetComponent<BoxCollider2D>();
-        anim = GetComponent<AnimationModule>();
-        anim.Add("Grass_idle");
-        anim.Add("Grass_eaten");
+        if (PlayState.gameState == "Game")
+        {
+            bitesRemaining = totalBites;
+            sprite = GetComponent<SpriteRenderer>();
+            box = GetComponent<BoxCollider2D>();
+            anim = GetComponent<AnimationModule>();
+            anim.Add("Grass_idle");
+            anim.Add("Grass_eaten");
+            anim.Play("Grass_idle");
 
-        Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
     }
 
     public void Update()

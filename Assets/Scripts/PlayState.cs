@@ -138,7 +138,6 @@ public class PlayState
 
     public struct RoomEntity
     {
-        public GameObject obj;
         public string name;
         public string tag;
         public Vector2 pos;

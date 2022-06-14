@@ -128,17 +128,29 @@ public class Player : MonoBehaviour
             // Noclip!!!
             if (PlayState.noclipMode)
             {
-                transform.position = new Vector2(transform.position.x + (10 * Control.AxisX() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime),
-                    transform.position.y + (10 * Control.AxisY() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime));
+                if (Control.ShootHold())
+                {
+                    if (Control.UpPress())
+                        transform.position = new Vector2(transform.position.x, transform.position.y + 16);
+                    if (Control.DownPress())
+                        transform.position = new Vector2(transform.position.x, transform.position.y - 16);
+                    if (Control.LeftPress())
+                        transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                    if (Control.RightPress())
+                        transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                }
+                else
+                    transform.position = new Vector2(transform.position.x + (10 * Control.AxisX() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime),
+                        transform.position.y + (10 * Control.AxisY() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime));
             }
 
             // These are only here to make sure they're called once, before anything else that needs it
             if (PlayState.armorPingPlayedThisFrame)
             {
-                pingTimer++;
-                if (pingTimer >= 7)
+                pingTimer--;
+                if (pingTimer <= 0)
                 {
-                    pingTimer = 0;
+                    pingTimer = Application.targetFrameRate switch { 30 => 1, 60 => 2, 120 => 4, _ => 8 };
                     PlayState.armorPingPlayedThisFrame = false;
                 }
             }
@@ -624,12 +636,20 @@ public class Player : MonoBehaviour
         float timer = 0;
         while (timer < 1)
         {
-            sprite.enabled = !sprite.enabled;
-            timer += 0.02f;
+            if (PlayState.gameState == "Game")
+            {
+                sprite.enabled = !sprite.enabled;
+                timer += 0.02f;
+            }
+            else if (PlayState.gameState == "Menu")
+                timer = 1;
             yield return new WaitForFixedUpdate();
         }
-        sprite.enabled = true;
-        stunned = false;
+        if (PlayState.gameState != "Menu")
+        {
+            sprite.enabled = true;
+            stunned = false;
+        }
     }
 
     public void BecomeStunned()

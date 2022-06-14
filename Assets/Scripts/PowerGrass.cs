@@ -20,14 +20,18 @@ public class PowerGrass : MonoBehaviour
 
     public void Start()
     {
-        bitesRemaining = totalBites;
-        sprite = GetComponent<SpriteRenderer>();
-        box = GetComponent<BoxCollider2D>();
-        anim = GetComponent<AnimationModule>();
-        anim.Add("PowerGrass_idle");
-        anim.Add("PowerGrass_eaten");
+        if (PlayState.gameState == "Game")
+        {
+            bitesRemaining = totalBites;
+            sprite = GetComponent<SpriteRenderer>();
+            box = GetComponent<BoxCollider2D>();
+            anim = GetComponent<AnimationModule>();
+            anim.Add("PowerGrass_idle");
+            anim.Add("PowerGrass_eaten");
+            anim.Play("PowerGrass_idle");
 
-        Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
     }
 
     void Update()
@@ -41,23 +45,6 @@ public class PowerGrass : MonoBehaviour
     public void ToggleActive(bool state)
     {
         active = state;
-    }
-
-    public void Spawn()
-    {
-        bitesRemaining = totalBites;
-        sprite.enabled = true;
-        box.enabled = true;
-        timer = 0;
-        if (transform.childCount > 0)
-        {
-            for (int i = transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-        }
-        ToggleActive(true);
-        anim.Play("PowerGrass_idle");
     }
 
     public void OnTriggerStay2D(Collider2D collision)

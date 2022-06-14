@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
     public AnimationModule anim;
+    public SpriteMask mask;
 
     private int pingPlayer = 0;
 
@@ -26,24 +27,30 @@ public class Enemy : MonoBehaviour
     private List<GameObject> intersectingBullets = new List<GameObject>();
     public LayerMask enemyCollide;
     
-    public virtual void Begin()
+    public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> res = null)
     {
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        mask = gameObject.AddComponent<SpriteMask>();
+        BuildMask();
         anim = GetComponent<AnimationModule>();
+        anim.updateMask = true;
 
         origin = transform.localPosition;
 
         enemyCollide = LayerMask.GetMask("PlayerCollide", "EnemyCollide");
-    }
 
-    public virtual void OnEnable()
-    {
-        transform.localPosition = origin;
-        box.enabled = true;
-        sprite.enabled = true;
-        health = maxHealth;
+        health = hp;
+        maxHealth = hp;
+        attack = atk;
+        defense = def;
+        resistances = res;
+        letsPermeatingShotsBy = piercable;
+        box.size = hitboxSize;
+
+        if (resistances == null)
+            resistances = new List<int> { -1 };
     }
 
     private void LateUpdate()
@@ -77,7 +84,6 @@ public class Enemy : MonoBehaviour
                     if (!PlayState.armorPingPlayedThisFrame)
                     {
                         PlayState.armorPingPlayedThisFrame = true;
-                        //sfx.PlayOneShot(ping);
                         PlayState.PlaySound("Ping");
                     }
                     pingPlayer -= 1;
@@ -99,8 +105,6 @@ public class Enemy : MonoBehaviour
         {
             pingPlayer = 0;
         }
-
-        //sfx.volume = PlayState.gameOptions[0] * 0.1f;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -135,11 +139,13 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator Flash()
     {
-        sprite.material.SetFloat("_FlashAmount", 1f);
+        //sprite.material.SetFloat("_FlashAmount", 1f);
+        mask.enabled = true;
         stunInvulnerability = true;
         PlayState.PlaySound("Explode" + Random.Range(1, 5));
         yield return new WaitForSeconds(0.025f);
-        sprite.material.SetFloat("_FlashAmount", 0);
+        //sprite.material.SetFloat("_FlashAmount", 0);
+        mask.enabled = false;
         stunInvulnerability = false;
     }
 
@@ -157,5 +163,13 @@ public class Enemy : MonoBehaviour
     {
         return Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(PlayState.cam.transform.position.x, 0)) - (box.size.x * 0.5f) < 12.5f &&
             Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, PlayState.cam.transform.position.y)) - (box.size.y * 0.5f) < 7.5f;
+    }
+
+    private void BuildMask()
+    {
+        mask.isCustomRangeActive = true;
+        mask.frontSortingOrder = -2;
+        mask.backSortingOrder = -3;
+        mask.enabled = false;
     }
 }

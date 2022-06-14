@@ -14,6 +14,7 @@ public class AnimationModule : MonoBehaviour
     public bool blankOnNonLoopEnd = false;
     public bool updateSprite = true;
     public bool pauseOnMenu = true;
+    public bool updateMask = false;
     
     private float animTimer = 0;
     private float timerMax = 0;
@@ -23,10 +24,13 @@ public class AnimationModule : MonoBehaviour
     private bool smallBlank = false;
 
     private SpriteRenderer sprite;
+    private SpriteMask mask;
 
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
+        if (TryGetComponent(out SpriteMask newMask))
+            mask = newMask;
     }
 
     void Update()
@@ -36,6 +40,9 @@ public class AnimationModule : MonoBehaviour
         else
         {
             speed = lastNonZeroSpeed;
+            if (updateMask && mask == null)
+                if (TryGetComponent(out SpriteMask newMask))
+                    mask = newMask;
             if (isPlaying)
             {
                 if (currentAnim.framerate != 0)
@@ -49,8 +56,12 @@ public class AnimationModule : MonoBehaviour
                             if (currentFrame != currentAnim.frames.Length)
                             {
                                 if (updateSprite)
+                                {
                                     sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                         PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                                    if (updateMask && mask != null)
+                                        mask.sprite = sprite.sprite;
+                                }
                                 animTimer += timerMax;
                             }
                             else
@@ -59,8 +70,12 @@ public class AnimationModule : MonoBehaviour
                                 {
                                     currentFrame = currentAnim.loopStartFrame;
                                     if (updateSprite)
+                                    {
                                         sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                             PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                                        if (updateMask && mask != null)
+                                            mask.sprite = sprite.sprite;
+                                    }
                                     animTimer += timerMax;
                                 }
                                 else
@@ -108,8 +123,12 @@ public class AnimationModule : MonoBehaviour
             animTimer = timerMax;
             currentFrame = currentAnim.randomizeStartFrame ? Random.Range(0, currentAnim.frames.Length) : 0;
             if (updateSprite)
+            {
                 sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                     PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
+                if (updateMask && mask != null)
+                    mask.sprite = sprite.sprite;
+            }
             speed = newSpeed;
             isPlaying = true;
         }

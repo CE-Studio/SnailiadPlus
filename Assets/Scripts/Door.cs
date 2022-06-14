@@ -30,19 +30,6 @@ public class Door : MonoBehaviour
             box = GetComponent<BoxCollider2D>();
             player = GameObject.FindWithTag("Player");
 
-            if (direction == 1 || direction == 3)
-            {
-                box.size = new Vector2(3, 1);
-                if (direction == 3)
-                {
-                    sprite.flipY = true;
-                }
-            }
-            else if (direction == 2)
-            {
-                sprite.flipX = true;
-            }
-
             string[] doorDirs = new string[] { "horiz", "vert" };
             string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
             string[] doorStates = new string[] { "open", "hold", "close" };
@@ -67,6 +54,19 @@ public class Door : MonoBehaviour
             SetState1();
         else
             SetState2();
+
+        if (direction == 1 || direction == 3)
+        {
+            box.size = new Vector2(3, 1);
+            if (direction == 3)
+            {
+                sprite.flipY = true;
+            }
+        }
+        else if (direction == 2)
+        {
+            sprite.flipX = true;
+        }
     }
 
     public void SetClosedSprite()

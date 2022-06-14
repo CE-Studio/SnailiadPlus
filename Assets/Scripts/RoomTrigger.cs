@@ -438,6 +438,22 @@ public class RoomTrigger : MonoBehaviour
                     {
                         default:
                             break;
+                        case 4:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blob"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 11:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 12:
+                            GameObject reversedBlueSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
+                            reversedBlueSpikey.GetComponent<Spikey1>().rotation = true;
+                            break;
+                        case 27:
+                            Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 30:
+                            Instantiate(Resources.Load<GameObject>("Objects/Power Grass"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 72:
                             for (int i = 0; i <= 1; i++)
                             {
@@ -471,6 +487,9 @@ public class RoomTrigger : MonoBehaviour
                             box.size = new Vector2(1, 1);
                             Physics2D.IgnoreCollision(box, PlayState.player.GetComponent<BoxCollider2D>(), true);
                             break;
+                        case 389:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 439:
                             for (int i = 0; i <= 1; i++)
                             {
@@ -500,7 +519,6 @@ public class RoomTrigger : MonoBehaviour
                 objName = objName.Substring(0, objName.Length - tempArray[tempArray.Length - 1].Length - 1);
             }
 
-            newEntity.obj = obj;
             newEntity.name = obj.name;
             newEntity.tag = obj.tag;
             newEntity.pos = obj.transform.position;
@@ -550,17 +568,16 @@ public class RoomTrigger : MonoBehaviour
                 case "Door":
                     newObject.GetComponent<Door>().Spawn(entity.spawnData);
                     break;
-                case "Fake boundary":
-                    newObject.GetComponent<FakeRoomBorder>().direction = entity.spawnData[0] == 1;
-                    newObject.GetComponent<FakeRoomBorder>().workingDirections = entity.spawnData[1];
+                case "Fake Boundary":
+                    newObject.GetComponent<FakeRoomBorder>().Spawn(entity.spawnData);
                     if (roomNameText.text.Contains("/"))
                     {
                         string name = roomNameText.text;
-                        FakeRoomBorder childScript = newObject.GetComponent<FakeRoomBorder>();
-                        int stringHalf = 0;
-                        if ((childScript.direction && childScript.initialPosRelative.x == 1) || (!childScript.direction && childScript.initialPosRelative.y == 1))
-                            stringHalf = 1;
-                        string splitString = name.Split('/')[stringHalf];
+                        int charOffset = areaID >= 100 ? 6 + areaID.ToString().Length : 8;
+                        name = name.Substring(charOffset, name.Length - charOffset);
+                        FakeRoomBorder script = newObject.GetComponent<FakeRoomBorder>();
+                        string splitString = name.Split('/')[((script.direction && script.initialPosRelative.x == 1) || (!script.direction && script.initialPosRelative.y == 1)) ? 1 : 0];
+                        name = "";
                         foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString))
                         {
                             if (character == '|')
@@ -573,16 +590,16 @@ public class RoomTrigger : MonoBehaviour
                     }
                     break;
                 case "Item":
-                    if (PlayState.itemCollection[entity.spawnData[0]] == 1)
-                    {
-                        newObject.GetComponent<Item>().itemID = entity.spawnData[0];
-                        newObject.GetComponent<Item>().SetAnim();
-                    }
+                    if (PlayState.itemCollection[entity.spawnData[0]] == 0)
+                        newObject.GetComponent<Item>().Spawn(entity.spawnData);
                     else
                         Destroy(newObject);
                     break;
                 case "NPC":
                     newObject.GetComponent<NPC>().Spawn(entity.spawnData);
+                    break;
+                case "Save Point":
+                    newObject.GetComponent<SavePoint>().Spawn();
                     break;
             }
         }
