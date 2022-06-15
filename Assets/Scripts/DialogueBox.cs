@@ -282,9 +282,6 @@ public class DialogueBox : MonoBehaviour
                                 if (Control.SpeakPress() && !buttonDown && dialogueType == 3)
                                 {
                                     buttonDown = true;
-                                    //dialogueText.text = textList[(int)pointer.x];
-                                    //dialogueShadow.text = dialogueText.text;
-                                    //pointer.y = textList[(int)pointer.x].Length;
                                     while (pointer.y < textList[(int)pointer.x].Length)
                                     {
                                         ParseNextChar(true);

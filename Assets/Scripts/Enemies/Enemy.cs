@@ -47,7 +47,8 @@ public class Enemy : MonoBehaviour
         defense = def;
         resistances = res;
         letsPermeatingShotsBy = piercable;
-        box.size = hitboxSize;
+        if (box != null)
+            box.size = hitboxSize;
 
         if (resistances == null)
             resistances = new List<int> { -1 };
@@ -94,7 +95,7 @@ public class Enemy : MonoBehaviour
             while (bulletsToDespawn.Count > 0)
             {
                 intersectingBullets.RemoveAt(0);
-                bulletsToDespawn[0].GetComponent<Bullet>().Despawn();
+                bulletsToDespawn[0].GetComponent<Bullet>().Despawn(true);
                 bulletsToDespawn.RemoveAt(0);
             }
             if (killFlag)
@@ -139,13 +140,12 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator Flash()
     {
-        //sprite.material.SetFloat("_FlashAmount", 1f);
         mask.enabled = true;
         stunInvulnerability = true;
         PlayState.PlaySound("Explode" + Random.Range(1, 5));
-        yield return new WaitForSeconds(0.025f);
-        //sprite.material.SetFloat("_FlashAmount", 0);
+        yield return new WaitForSeconds(0.0125f);
         mask.enabled = false;
+        yield return new WaitForSeconds(0.0125f);
         stunInvulnerability = false;
     }
 
@@ -161,8 +161,9 @@ public class Enemy : MonoBehaviour
 
     public bool OnScreen()
     {
-        return Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(PlayState.cam.transform.position.x, 0)) - (box.size.x * 0.5f) < 12.5f &&
-            Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, PlayState.cam.transform.position.y)) - (box.size.y * 0.5f) < 7.5f;
+        float boxAdjust = box != null ? box.size.x * 0.5f : 8;
+        return Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(PlayState.cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
+            Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, PlayState.cam.transform.position.y)) - boxAdjust < 7.5f;
     }
 
     private void BuildMask()

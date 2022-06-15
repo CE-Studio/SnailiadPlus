@@ -1312,7 +1312,7 @@
 		},
 		{
 			"name": "item_peashooter",
-			"text": "Peashooter",
+			"text": "Pea Shooter",
 			"value": 0
 		},
 		{
@@ -1611,6 +1611,16 @@
 			"value": 0
 		},
 		{
+			"name": "room_01_hub1",
+			"text": "Seabed Caves",
+			"value": 0
+		},
+		{
+			"name": "room_01_peashooter",
+			"text": "Fine Dining",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -1817,7 +1827,17 @@
 		},
 		{
 			"name": "npc_10_default_0",
-			"text": "{spd|0.05}Oh, {p|0.125}{P}!  {p|0.25}{spd|0.02}My heart{nl}will forever belong to you!{nl}             {col|0201}{eff|Wave}<3",
+			"text": "{spd|0.05}Oh, {p|0.125}{PF}!  {p|0.25}{spd|0.02}My heart{nl}will forever belong to you!{nl}             {col|0201}{eff|Wave}<3",
+			"value": 1
+		},
+		{
+			"name": "npc_11_default_0",
+			"text": "Don't forget!{nl}{p|0.15}Press {col|0309}\"{ctrl|5}\" {col|0312} to shoot your{nl}weapon at stuff!!",
+			"value": 1
+		},
+		{
+			"name": "npc_11_explainPeashooter_0",
+			"text": "{P}, {p|0.125}it's dangerous to go{nl}alone!  {p|0.15}Take this Pea Shooter!{nl}{p|0.3}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!!",
 			"value": 1
 		},
 		{

@@ -460,9 +460,6 @@ public class Player : MonoBehaviour
     public void StopMusic()
     {
         PlayState.playingMusic = false;
-        //PlayState.musicSourceArray.Clear();
-        //foreach (Transform obj in PlayState.musicParent.transform)
-        //    Destroy(obj.gameObject);
         foreach (AudioSource source in PlayState.musicSourceArray)
             source.Stop();
     }
@@ -472,15 +469,16 @@ public class Player : MonoBehaviour
         weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
         weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
         weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
-        selectedWeapon = weaponID + 1;
+        if (weaponID + 1 > selectedWeapon)
+            selectedWeapon = weaponID + 1;
         if (activateThisWeapon)
             weaponIcons[weaponID].enabled = true;
         if (weaponID == 2)
-            weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 5);
+            weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 5 : 2);
         else if (weaponID == 1)
-            weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 4);
+            weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 4 : 1);
         else
-            weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 3);
+            weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 3 : 0);
     }
 
     public void ChangeWeaponIconSprite(int weaponID, int state)

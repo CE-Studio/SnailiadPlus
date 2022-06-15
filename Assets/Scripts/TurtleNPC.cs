@@ -19,11 +19,17 @@ public class TurtleNPC : NPC
 
     public override void Spawn(int[] spawnData)
     {
-        upsideDown = spawnData[1] == 1;
+        upsideDown = spawnData[0] == 1;
 
-        if (anim.animList.Count == 0)
-            anim.Add("NPC_turtle");
+        anim.Add("NPC_turtle");
         anim.Play("NPC_turtle");
+
+        if (upsideDown)
+        {
+            sprite.flipY = true;
+            speechBubbleSprite.flipY = true;
+            speechBubble.transform.localPosition = new Vector2(0, -0.75f);
+        }
     }
 
     public override void Update()

@@ -10,6 +10,1345 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b30b544016eb1ff4c867f14d95d126e6, type: 3}
-  m_Name: Text library
+  m_Name: 
   m_EditorClassIdentifier: 
-  textDict: []
+  library:
+  - name: menu_title
+    text: Snailiad+
+    value: 0
+  - name: menu_version_header
+    text: Engine version
+    value: 0
+  - name: menu_version_developer
+    text: DEV
+    value: 0
+  - name: menu_version_demo
+    text: DEMO
+    value: 0
+  - name: menu_version_release
+    text: RELEASE
+    value: 0
+  - name: menu_option_main_return
+    text: Return to game
+    value: 0
+  - name: menu_option_main_profile
+    text: Select profile
+    value: 0
+  - name: menu_option_main_bossRush
+    text: Boss rush
+    value: 0
+  - name: menu_option_main_multiplayer
+    text: Multiplayer
+    value: 0
+  - name: menu_option_main_options
+    text: Options
+    value: 0
+  - name: menu_option_main_credits
+    text: Credits
+    value: 0
+  - name: menu_option_main_records
+    text: Records
+    value: 0
+  - name: menu_option_main_returnTo
+    text: Back to main menu
+    value: 0
+  - name: menu_option_main_quit
+    text: Quit
+    value: 0
+  - name: menu_option_profile_header
+    text: Select a profile
+    value: 0
+  - name: menu_option_profile_empty
+    text: Empty profile
+    value: 0
+  - name: menu_option_profile_copy
+    text: Copy profile
+    value: 0
+  - name: menu_option_profile_erase
+    text: Erase profile
+    value: 0
+  - name: menu_option_profile_returnTo
+    text: Back to profile selection
+    value: 0
+  - name: menu_option_newGame_header
+    text: Game options
+    value: 0
+  - name: menu_option_newGame_difficulty
+    text: Difficulty
+    value: 0
+  - name: menu_option_newGame_character
+    text: Character
+    value: 0
+  - name: menu_option_newGame_randomized
+    text: Randomized
+    value: 0
+  - name: menu_option_newGame_confirm
+    text: Start new game
+    value: 0
+  - name: menu_option_loadGame_header1
+    text: Okay, where would you
+    value: 0
+  - name: menu_option_loadGame_header2
+    text: like to start from?
+    value: 0
+  - name: menu_option_loadGame_save
+    text: Start from save point
+    value: 0
+  - name: menu_option_loadGame_spawn
+    text: Start from Snail Town
+    value: 0
+  - name: menu_option_copyGame_header1
+    text: Okay, copy from which profile?
+    value: 0
+  - name: menu_option_copyGame_header2
+    text: Copy to which profile?
+    value: 0
+  - name: menu_option_copyGame_cancel
+    text: Cancel
+    value: 0
+  - name: menu_option_copyGame_header3
+    text: Copy file #1 to _ slot #2?
+    value: 0
+  - name: menu_option_copyGame_empty
+    text: empty
+    value: 0
+  - name: menu_option_copyGame_full
+    text: used
+    value: 0
+  - name: menu_option_copyGame_confirm
+    text: Yes, copy it!
+    value: 0
+  - name: menu_option_copyGame_cancelConfirm
+    text: No, I changed my mind
+    value: 0
+  - name: menu_option_eraseGame_header1
+    text: Okay, erase which profile?
+    value: 0
+  - name: menu_option_eraseGame_cancel
+    text: Cancel
+    value: 0
+  - name: menu_option_eraseGame_header2
+    text: Really erase file #?
+    value: 0
+  - name: menu_option_eraseGame_confirm
+    text: Yes, I want to start over!
+    value: 0
+  - name: menu_option_eraseGame_cancelConfirm
+    text: No way, I like my game!
+    value: 0
+  - name: menu_option_options_sound
+    text: Sound options
+    value: 0
+  - name: menu_option_options_display
+    text: Display options
+    value: 0
+  - name: menu_option_options_controls
+    text: Set controls
+    value: 0
+  - name: menu_option_options_gameplay
+    text: Gameplay options
+    value: 0
+  - name: menu_option_options_assets
+    text: Asset packs
+    value: 0
+  - name: menu_option_options_eraseRecords
+    text: Erase record data
+    value: 0
+  - name: menu_option_options_importExport
+    text: Import/export all data
+    value: 0
+  - name: menu_option_options_returnTo
+    text: Back to options
+    value: 0
+  - name: menu_option_sound_soundVol
+    text: Sound volume
+    value: 0
+  - name: menu_option_sound_musicVol
+    text: Music volume
+    value: 0
+  - name: menu_option_display_resolution
+    text: Window resolution
+    value: 0
+  - name: menu_option_display_minimap
+    text: Minimap display
+    value: 0
+  - name: menu_option_display_bottomKeys
+    text: Bottom keys
+    value: 0
+  - name: menu_option_display_keymap
+    text: Real-time keymap
+    value: 0
+  - name: menu_option_display_gameTime
+    text: Game time
+    value: 0
+  - name: menu_option_display_fps
+    text: FPS display
+    value: 0
+  - name: menu_option_display_particles
+    text: Particles
+    value: 0
+  - name: menu_option_controls_control1
+    text: Control set 1
+    value: 0
+  - name: menu_option_controls_control2
+    text: Control set 2
+    value: 0
+  - name: menu_option_controls_controlMisc
+    text: Miscellaneous
+    value: 0
+  - name: menu_option_controls_default
+    text: Reset all to defaults
+    value: 0
+  - name: menu_option_controls_jump
+    text: Jump
+    value: 0
+  - name: menu_option_controls_shoot
+    text: Shoot
+    value: 0
+  - name: menu_option_controls_strafe
+    text: Strafe
+    value: 0
+  - name: menu_option_controls_speak
+    text: Speak
+    value: 0
+  - name: menu_option_controls_up
+    text: Move up
+    value: 0
+  - name: menu_option_controls_left
+    text: Move left
+    value: 0
+  - name: menu_option_controls_right
+    text: Move right
+    value: 0
+  - name: menu_option_controls_down
+    text: Move down
+    value: 0
+  - name: menu_option_controls_weapon1
+    text: Weapon one
+    value: 0
+  - name: menu_option_controls_weapon2
+    text: Weapon two
+    value: 0
+  - name: menu_option_controls_weapon3
+    text: Weapon three
+    value: 0
+  - name: menu_option_controls_weaponNext
+    text: Next weapon
+    value: 0
+  - name: menu_option_controls_weaponPrev
+    text: Prev weapon
+    value: 0
+  - name: menu_option_controls_map
+    text: Open map
+    value: 0
+  - name: menu_option_controls_menu
+    text: Open menu
+    value: 0
+  - name: menu_option_controls_return
+    text: Back
+    value: 0
+  - name: menu_option_gameplay_shooting
+    text: Shooting
+    value: 0
+  - name: menu_option_gameplay_breakables
+    text: Show breakables
+    value: 0
+  - name: menu_option_gameplay_secretTiles
+    text: Secret map tiles
+    value: 0
+  - name: menu_option_gameplay_frameLimit
+    text: Frame limiter
+    value: 0
+  - name: menu_option_assets_texture
+    text: Texture packs
+    value: 0
+  - name: menu_option_assets_sound
+    text: Sound packs
+    value: 0
+  - name: menu_option_assets_music
+    text: Music packs
+    value: 0
+  - name: menu_option_assets_text
+    text: Text packs
+    value: 0
+  - name: menu_option_assets_path
+    text: Get asset pack path
+    value: 0
+  - name: menu_option_assets_returnTo
+    text: Back to pack selection
+    value: 0
+  - name: menu_option_assetSelect_noPack1
+    text: You don't seem to have any
+    value: 0
+  - name: menu_option_assetSelect_noPack2
+    text: packs here.  :(
+    value: 0
+  - name: menu_option_assetSelect_defaultPack
+    text: Default pack
+    value: 0
+  - name: menu_option_assetSelect_next
+    text: Next page
+    value: 0
+  - name: menu_option_assetSelect_prev
+    text: Previous page
+    value: 0
+  - name: menu_option_assetConfirm_defaultInfo1
+    text: The default _ of the game
+    value: 0
+  - name: menu_option_assetConfirm_defaultInfo2
+    text: 'Made by: auriplane, xdanond,'
+    value: 0
+  - name: menu_option_assetConfirm_defaultInfo3
+    text: and Epsilon
+    value: 0
+  - name: menu_option_assetConfirm_defaultInfo_video
+    text: look
+    value: 0
+  - name: menu_option_assetConfirm_defaultInfo_audio
+    text: sound
+    value: 0
+  - name: menu_option_assetConfirm_noInfo
+    text: No info given
+    value: 0
+  - name: menu_option_assetConfirm_version
+    text: Pack ver. #1, game ver. #2
+    value: 0
+  - name: menu_option_assetConfirm_author
+    text: 'Made by: _'
+    value: 0
+  - name: menu_option_assetConfirm_confirm
+    text: Apply this asset pack?
+    value: 0
+  - name: menu_option_assetConfirm_yes
+    text: Yeah!!
+    value: 0
+  - name: menu_option_assetConfirm_no
+    text: Not today
+    value: 0
+  - name: menu_option_assetPath_header1
+    text: Your asset folders can be
+    value: 0
+  - name: menu_option_assetPath_header2
+    text: 'found at:'
+    value: 0
+  - name: menu_option_assetPath_confirm
+    text: Sounds good!
+    value: 0
+  - name: menu_option_recordErase_achievements
+    text: Erase achievements
+    value: 0
+  - name: menu_option_recordErase_times
+    text: Erase times
+    value: 0
+  - name: menu_option_recordErase_all
+    text: Erase both
+    value: 0
+  - name: menu_option_recordErase_header
+    text: Are you sure??
+    value: 0
+  - name: menu_option_recordErase_confirm
+    text: Yes, erase everything!
+    value: 0
+  - name: menu_option_recordErase_return
+    text: No way, I like my game!
+    value: 0
+  - name: menu_option_importExport_export
+    text: Export data to JSON
+    value: 0
+  - name: menu_option_importExport_import
+    text: Import data from JSON
+    value: 0
+  - name: menu_option_importExport_selectSlot
+    text: Select a slot
+    value: 0
+  - name: menu_option_importExport_slotEmpty
+    text: (empty)
+    value: 0
+  - name: menu_option_importExport_slotFull
+    text: (full)
+    value: 0
+  - name: menu_option_importExport_confirm
+    text: Confirm
+    value: 0
+  - name: menu_option_export_header1
+    text: Overwrite JSON save in slot #?
+    value: 0
+  - name: menu_option_export_header2
+    text: 
+    value: 0
+  - name: menu_option_export_header3
+    text: Write all save data to a
+    value: 0
+  - name: menu_option_export_header4
+    text: JSON file in slot #?
+    value: 0
+  - name: menu_option_export_confirm
+    text: Yeah, write it!
+    value: 0
+  - name: menu_option_export_return
+    text: No, I chanced my mind
+    value: 0
+  - name: menu_option_export_success1
+    text: Success! Your new JSON
+    value: 0
+  - name: menu_option_export_success2
+    text: 'can be found at:'
+    value: 0
+  - name: menu_option_export_success_confirm
+    text: Yay!!
+    value: 0
+  - name: menu_option_import_header1
+    text: Import data from slot #? This will
+    value: 0
+  - name: menu_option_import_header2
+    text: overwrite *ALL* existing data!!
+    value: 0
+  - name: menu_option_import_confirm
+    text: Yes, import away!
+    value: 0
+  - name: menu_option_import_return
+    text: No way! Let me keep my data!
+    value: 0
+  - name: menu_option_import_empty
+    text: There's no data in slot #!
+    value: 0
+  - name: menu_option_import_empty_return
+    text: Whoops!! Go back
+    value: 0
+  - name: menu_option_import_success
+    text: Success! Data has been loaded
+    value: 0
+  - name: menu_option_import_success_confirm
+    text: Awesome!!
+    value: 0
+  - name: menu_option_import_mismatched1
+    text: Uh oh!! You seem to be
+    value: 0
+  - name: menu_option_import_mismatched2
+    text: importing a save from _
+    value: 0
+  - name: menu_option_import_mismatched_newer
+    text: a newer
+    value: 0
+  - name: menu_option_import_mismatched_older
+    text: an older
+    value: 0
+  - name: menu_option_import_mismatched3
+    text: version of the game.  Some
+    value: 0
+  - name: menu_option_import_mismatched4
+    text: features may be lost, missing,
+    value: 0
+  - name: menu_option_import_mismatched5
+    text: or broken.  Continue anyway?
+    value: 0
+  - name: menu_option_import_mismatched_confirm
+    text: Yes, import away!
+    value: 0
+  - name: menu_option_import_mismatched_return
+    text: No way, go back!
+    value: 0
+  - name: menu_option_credits_1-1
+    text: Snailiad - A Snaily Game
+    value: 0
+  - name: menu_option_credits_1-2
+    text: 
+    value: 0
+  - name: menu_option_credits_1-3
+    text: Original Flash version by
+    value: 0
+  - name: menu_option_credits_1-4
+    text: Crystal Jacobs (Auriplane) and
+    value: 0
+  - name: menu_option_credits_1-5
+    text: sponsored by Newgrounds
+    value: 0
+  - name: menu_option_credits_2-1
+    text: Flash release special thanks
+    value: 0
+  - name: menu_option_credits_2-2
+    text: 
+    value: 0
+  - name: menu_option_credits_2-3
+    text: Adamatomic (Flixel)
+    value: 0
+  - name: menu_option_credits_2-4
+    text: Newstarshipsmell (Testing)
+    value: 0
+  - name: menu_option_credits_2-5
+    text: xdanond (Additional art)
+    value: 0
+  - name: menu_option_credits_3-1
+    text: Remake created by
+    value: 0
+  - name: menu_option_credits_3-2
+    text: 
+    value: 0
+  - name: menu_option_credits_3-3
+    text: Jamie Lamey (Epsilon the Dragon)
+    value: 0
+  - name: menu_option_credits_3-4
+    text: with Auriplane's permission
+    value: 0
+  - name: menu_option_credits_3-5
+    text: under the Unity engine
+    value: 0
+  - name: menu_option_credits_4-1
+    text: Remake special thanks
+    value: 0
+  - name: menu_option_credits_4-2
+    text: 
+    value: 0
+  - name: menu_option_credits_4-3
+    text: Broomietunes (Additional songs
+    value: 0
+  - name: menu_option_credits_4-4
+    text: and built-in music pack)
+    value: 0
+  - name: menu_option_credits_4-5
+    text: NegativeBread (Built-in sprite pack)
+    value: 0
+  - name: menu_option_credits_5-1
+    text: Remake special thanks
+    value: 0
+  - name: menu_option_credits_5-2
+    text: 
+    value: 0
+  - name: menu_option_credits_5-3
+    text: Nat the Chicken (QA, testing)
+    value: 0
+  - name: menu_option_credits_5-4
+    text: Zettex (Extra characters)
+    value: 0
+  - name: menu_option_credits_5-5
+    text: Minervo Ionni (Another character)
+    value: 0
+  - name: menu_option_credits_6-1
+    text: Remake special thanks
+    value: 0
+  - name: menu_option_credits_6-2
+    text: 
+    value: 0
+  - name: menu_option_credits_6-3
+    text: goldguy40 (Some additional
+    value: 0
+  - name: menu_option_credits_6-4
+    text: tilemap tiles)
+    value: 0
+  - name: menu_option_credits_6-5
+    text: 
+    value: 0
+  - name: menu_option_credits_7-1
+    text: Remake special thanks
+    value: 0
+  - name: menu_option_credits_7-2
+    text: 
+    value: 0
+  - name: menu_option_credits_7-3
+    text: Clarence112, my boyfriend
+    value: 0
+  - name: menu_option_credits_7-4
+    text: (Emotional support, superior code
+    value: 0
+  - name: menu_option_credits_7-5
+    text: knowledge, development assistance)
+    value: 0
+  - name: menu_option_credits_8-1
+    text: Remake special thanks
+    value: 0
+  - name: menu_option_credits_8-2
+    text: 
+    value: 0
+  - name: menu_option_credits_8-3
+    text: The official Snaily Discord
+    value: 0
+  - name: menu_option_credits_8-4
+    text: (Testing, feedback, ideas, and
+    value: 0
+  - name: menu_option_credits_8-5
+    text: generally being super cool people)
+    value: 0
+  - name: menu_option_credits_next
+    text: Next page
+    value: 0
+  - name: menu_option_return_header
+    text: Really return to menu?
+    value: 0
+  - name: menu_option_return_confirmSave
+    text: Save and quit
+    value: 0
+  - name: menu_option_return_confirmNoSave
+    text: Quit without saving
+    value: 0
+  - name: menu_option_return_cancel
+    text: Back to pause menu
+    value: 0
+  - name: menu_option_quit_header
+    text: Really quit?
+    value: 0
+  - name: menu_option_quit_confirm
+    text: Yeah, I'm done playing for now
+    value: 0
+  - name: menu_option_quit_return
+    text: No way! I'm not done yet!
+    value: 0
+  - name: difficulty_easy
+    text: Easy
+    value: 0
+  - name: difficulty_normal
+    text: Normal
+    value: 0
+  - name: difficulty_insane
+    text: Insane
+    value: 0
+  - name: char_snaily
+    text: Snaily
+    value: 0
+  - name: char_full_snaily
+    text: Snaily Snail
+    value: 0
+  - name: species_snaily
+    text: Snail
+    value: 0
+  - name: species_plural_snaily
+    text: Snails
+    value: 0
+  - name: char_sluggy
+    text: Sluggy
+    value: 0
+  - name: char_full_sluggy
+    text: Sluggy Slug
+    value: 0
+  - name: species_sluggy
+    text: Slug
+    value: 0
+  - name: species_plural_sluggy
+    text: Slugs
+    value: 0
+  - name: char_upside
+    text: Upside
+    value: 0
+  - name: char_full_upside
+    text: Upside Snail
+    value: 0
+  - name: species_upside
+    text: Snail
+    value: 0
+  - name: species_plural_upside
+    text: Snails
+    value: 0
+  - name: char_leggy
+    text: Leggy
+    value: 0
+  - name: char_full_leggy
+    text: Leggy Snail
+    value: 0
+  - name: species_leggy
+    text: Snail
+    value: 0
+  - name: species_plural_leggy
+    text: Snails
+    value: 0
+  - name: char_blobby
+    text: Blobby
+    value: 0
+  - name: char_full_blobby
+    text: Blobby Blob
+    value: 0
+  - name: species_blobby
+    text: Blob
+    value: 0
+  - name: species_plural_blobby
+    text: Blobs
+    value: 0
+  - name: char_leechy
+    text: Leechy
+    value: 0
+  - name: char_full_leechy
+    text: Leechy Leech
+    value: 0
+  - name: species_leechy
+    text: Leech
+    value: 0
+  - name: species_plural_leechy
+    text: Leeches
+    value: 0
+  - name: menu_add_generic_yes
+    text: yes
+    value: 0
+  - name: menu_add_generic_no
+    text: no
+    value: 0
+  - name: menu_add_generic_show
+    text: show
+    value: 0
+  - name: menu_add_generic_hide
+    text: hide
+    value: 0
+  - name: menu_add_generic_on
+    text: on
+    value: 0
+  - name: menu_add_generic_off
+    text: off
+    value: 0
+  - name: menu_add_generic_true
+    text: true
+    value: 0
+  - name: menu_add_generic_false
+    text: false
+    value: 0
+  - name: menu_add_generic_none
+    text: none
+    value: 0
+  - name: menu_add_generic_all
+    text: all
+    value: 0
+  - name: menu_add_shooting_normal
+    text: normal
+    value: 0
+  - name: menu_add_shooting_toggle
+    text: toggle
+    value: 0
+  - name: menu_add_breakables1
+    text: obvious, piercing
+    value: 0
+  - name: menu_add_breakables2
+    text: obvious, any shot
+    value: 0
+  - name: menu_add_breakables3
+    text: all, piercing
+    value: 0
+  - name: menu_add_breakables4
+    text: all, any shot
+    value: 0
+  - name: menu_add_frameLimit_none
+    text: Unlimited
+    value: 0
+  - name: menu_add_frameLimit_30
+    text: 30FPS
+    value: 0
+  - name: menu_add_frameLimit_60
+    text: 60FPS
+    value: 0
+  - name: menu_add_frameLimit_120
+    text: 120FPS
+    value: 0
+  - name: menu_add_resolution_1x
+    text: 1x
+    value: 0
+  - name: menu_add_resolution_2x
+    text: 2x
+    value: 0
+  - name: menu_add_resolution_3x
+    text: 3x
+    value: 0
+  - name: menu_add_resolution_4x
+    text: 4x
+    value: 0
+  - name: menu_add_mapOnly
+    text: only map
+    value: 0
+  - name: menu_add_bottomKeyWeaponOnly
+    text: weapons only
+    value: 0
+  - name: menu_add_particles1
+    text: environments only
+    value: 0
+  - name: menu_add_particles2
+    text: entities only (Flash)
+    value: 0
+  - name: menu_add_particles3
+    text: entities only (all)
+    value: 0
+  - name: menu_add_particles4
+    text: Flash
+    value: 0
+  - name: hud_collectedItemPercentage
+    text: Item collection #% complete!  Game saved.
+    value: 0
+  - name: hud_gameSaved
+    text: Game saved.
+    value: 0
+  - name: hud_fps
+    text: FPS
+    value: 0
+  - name: hud_achievement
+    text: Achievement!!
+    value: 0
+  - name: area_00
+    text: Snail Town
+    value: 0
+  - name: area_01
+    text: Mare Carelia
+    value: 0
+  - name: area_02
+    text: Spiralis Silere
+    value: 0
+  - name: area_03
+    text: Amastrida Abyssus
+    value: 0
+  - name: area_04
+    text: Lux Lirata
+    value: 0
+  - name: area_iris
+    text: Shrine of Iris
+    value: 0
+  - name: area_?
+    text: ???
+    value: 0
+  - name: area_bossRush
+    text: Boss Rush
+    value: 0
+  - name: item_peashooter
+    text: Pea Shooter
+    value: 0
+  - name: item_boomerang
+    text: Boomerang
+    value: 0
+  - name: item_rainbowWave
+    text: Rainbow Wave
+    value: 0
+  - name: item_devastator
+    text: Devastator
+    value: 0
+  - name: item_highJump
+    text: High Jump
+    value: 0
+  - name: item_wallGrab
+    text: Wall Grab
+    value: 0
+  - name: item_shellShield
+    text: Shell Shield
+    value: 0
+  - name: item_shelmet
+    text: Shelmet
+    value: 0
+  - name: item_rapidFire
+    text: Rapid Fire
+    value: 0
+  - name: item_backfire
+    text: Backfire
+    value: 0
+  - name: item_iceSnail
+    text: Ice _
+    value: 0
+  - name: item_gravitySnail
+    text: Gravity _
+    value: 0
+  - name: item_magneticFoot
+    text: Magnetic Foot
+    value: 0
+  - name: item_corkscrewJump
+    text: Corkscrew Jump
+    value: 0
+  - name: item_angelJump
+    text: Angel Jump
+    value: 0
+  - name: item_fullMetalSnail_generic
+    text: Full-Metal _
+    value: 0
+  - name: item_fullMetalSnail_noShell
+    text: Full-Power _
+    value: 0
+  - name: item_gravityShock
+    text: Gravity Shock
+    value: 0
+  - name: item_boomerang_secret
+    text: Super Secret Boomerang
+    value: 0
+  - name: item_rainbowWave_secret
+    text: Debug Rainbow Wave
+    value: 0
+  - name: item_heartContainer
+    text: Heart Container #_
+    value: 0
+  - name: item_helixFragment
+    text: Helix Fragment #_
+    value: 0
+  - name: boss_shellbreaker
+    text: Shellbreaker
+    value: 0
+  - name: boss_shellbreaker_rush
+    text: Super Shellbreaker
+    value: 0
+  - name: boss_stompy
+    text: Stompy
+    value: 0
+  - name: boss_stompy_rush
+    text: Vis Vires
+    value: 0
+  - name: boss_spaceBox
+    text: Space Box
+    value: 0
+  - name: boss_spaceBox_rush
+    text: Time Cube
+    value: 0
+  - name: boss_moonSnail
+    text: Moon Snail
+    value: 0
+  - name: boss_moonSnail_phase2
+    text: Giga Snail
+    value: 0
+  - name: boss_moonSnail_rush
+    text: Sun Snail
+    value: 0
+  - name: enemy_spikey
+    text: Spikey
+    value: 0
+  - name: enemy_floatspike
+    text: Floatspike
+    value: 0
+  - name: room_00_townMain
+    text: Snail Town|Plaza
+    value: 0
+  - name: room_00_townSave
+    text: Town Save|Tunnel
+    value: 0
+  - name: room_00_underCave
+    text: Runner's Path
+    value: 0
+  - name: room_00_caveRight1
+    text: Tree Tunnel
+    value: 0
+  - name: room_00_caveRight2
+    text: Suspicious|Tree
+    value: 0
+  - name: room_00_caveLeft1
+    text: Parallel Paths
+    value: 0
+  - name: room_00_caveLeft2
+    text: Brick Wall
+    value: 0
+  - name: room_00_caveLeft3
+    text: Upper|Amastrida|Access
+    value: 0
+  - name: room_00_caveLeft4
+    text: Digging Grounds
+    value: 0
+  - name: room_00_caveLeft5
+    text: Lower|Amastrida|Access
+    value: 0
+  - name: room_00_caveDown1
+    text: Cave Snail's|Cave
+    value: 0
+  - name: room_00_caveDown2
+    text: Root Cave
+    value: 0
+  - name: room_00_caveDown3
+    text: Fragment|Cave
+    value: 0
+  - name: room_00_loveAlcove
+    text: Love Snail's|Alcove
+    value: 0
+  - name: room_00_greenSecret1
+    text: Anger|Management|Room
+    value: 0
+  - name: room_00_greenSecret2
+    text: Percentage|Snail's Hidey|Hole
+    value: 0
+  - name: room_00_ssb
+    text: Super Secret|Alcove
+    value: 0
+  - name: room_00_caveUp1
+    text: Leggy Snail's|Tunnel
+    value: 0
+  - name: room_00_caveUp2
+    text: Town|Overtunnel
+    value: 0
+  - name: room_00_caveUp3
+    text: Runner's|Cutacross
+    value: 0
+  - name: room_00_caveUp4
+    text: Upper Town|Entrance
+    value: 0
+  - name: room_00_angle
+    text: Angle Path,|Town-Side
+    value: 0
+  - name: room_00_testLarge
+    text: Testing Plaza
+    value: 0
+  - name: room_00_test
+    text: Original|Testing Room
+    value: 0
+  - name: room_01_entrance
+    text: Quest's|Start Lake
+    value: 0
+  - name: room_01_entranceSecret
+    text: Discombobulatory|Alcove
+    value: 0
+  - name: room_01_tower1
+    text: Not Brinstar
+    value: 0
+  - name: room_01_hub1
+    text: Seabed Caves
+    value: 0
+  - name: room_01_peashooter
+    text: Fine Dining
+    value: 0
+  - name: npc_?
+    text: Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't
+      have any{nl|}dialogue to offer.  {p|0.25}Sorry!!
+    value: 1
+  - name: npc_0_default_0
+    text: I hope the next game has more{nl}weapons.  {p|0.25}This game could have{nl}used
+      a {eff|Wave}flame whip!
+    value: 1
+  - name: npc_0_explainWallClimb_0
+    text: Hi, {P}!!  {p|0.25}Why don't you try{nl}climbing up the walls?{nl}    {p|0.25}Just
+      {col|0309}hold "{ctrl|2}" and "{ctrl|1}"{col|0312}.
+    value: 1
+  - name: npc_0_explainPeashooter_0
+    text: Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl}you can shoot a {col|0104}blue
+      door {col|0312}open{nl}with one of those!
+    value: 1
+  - name: npc_0_explainBoomerang_0
+    text: Wow, a boomerang!  {p|0.125}You could{nl}break a {col|0201}pink door {col|0312}open
+      with{nl}just one of those!
+    value: 1
+  - name: npc_0_explainRainbowWave_0
+    text: Is that a rainbow wave!?  {p|0.25}Well,{nl}then!  {p|0.25}You can open
+      a {col|0111}red door{col|0312}{nl}with one of those!
+    value: 1
+  - name: npc_0_explainDevastator_0
+    text: '{sfx|1}A {eff|Shake}devastator!?  {eff|None}{sfx|0}{p|0.4}That opens up{nl}{col|0207}green
+      doors!  {p|0.25}{col|0312}It also upgrades{nl}all three weapons!  Wow!!'
+    value: 1
+  - name: npc_1_default_0
+    text: '{P}, {p|0.125}you missed it!  {p|0.25}I made a{nl}delicious pizza, {p|0.125}and
+      I ate the{nl}whole {p|0.125}thing!!!  {p|0.3}{sfx|2}{eff|Wave}{spd|0.04}Om
+      nom nom!'
+    value: 1
+  - name: npc_1_promptJump_0
+    text: Hiya, {P}!  {p|0.125}Did you know you{nl}can jump?  {p|0.125}Just {col|0309}press
+      "{ctrl|4}"{col|0312}!
+    value: 1
+  - name: npc_1_promptStory_0
+    text: '{P}, {p|0.125}some snails are missing!{p|0.25}{nl}Do you think you could
+      go look{nl}for them?  {p|0.25}I''m getting worried!'
+    value: 1
+  - name: npc_1_smallTalk_0
+    text: I have a goal in life.  {p|0.25}One day,{nl}I will eat a pizza.  {p|0.4}I
+      mean it!!{p|0.4}{spd|0.06}{nl}Just you watch, {p|0.0625}{P}!!
+    value: 1
+  - name: npc_2_default_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you having
+      18,000,000{nl}baby {SS}!!  {p|0.25}{eff|Wave}Congratulations!!'
+    value: 1
+  - name: npc_2_predictPeashooter_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you finding
+      a weapon{nl}somewhere under the water!'
+    value: 1
+  - name: npc_2_predictShellbreaker_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      to the upper{nl}right part of the map!!'
+    value: 1
+  - name: npc_2_predictBoomerang_0
+    text: '{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot
+      to grab the{nl}boomerang after Shellbreaker!'
+    value: 1
+  - name: npc_2_predictStompy_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      to the lower{nl}right part of the map!!'
+    value: 1
+  - name: npc_2_predictRainbowWave_0
+    text: '{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot
+      to grab the{nl}rainbow wave after Stompy!'
+    value: 1
+  - name: npc_2_predictSpaceBox_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      to the lower{nl}left part of the map!!'
+    value: 1
+  - name: npc_2_predictRapidFire_0
+    text: '{col|0303}I can see the past, {P}!{col|0312}{p|0.3}{nl}I see you forgot
+      to grab the{nl}rapid fire before Space Box!'
+    value: 1
+  - name: npc_2_predictMoonSnail_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      to the upper{nl}left part of the map!!'
+    value: 1
+  - name: npc_2_predictHelixFragments_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      all over the{nl}map, finding little shells!'
+    value: 1
+  - name: npc_2_predictIris_0
+    text: '{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading
+      precisely two{nl}screens to the left of here!!'
+    value: 1
+  - name: npc_3_default_0
+    text: Oh, my, {p|0.125}you're a {col|0301}full metal{nl}{S}{col|0312}!{p|0.25}
+      You must be really good{nl}at crawling around ceilings!!
+    value: 1
+  - name: npc_3_cantCorner_0
+    text: I wonder why I can't crawl on{nl}ceiling corners...  {p|0.25}Do you think{nl}I'll
+      ever be able to, {P}?
+    value: 1
+  - name: npc_3_admireGravity_0
+    text: Oh, my, {p|0.125}you're a {col|0204}gravity {S}{col|0312}!{p|0.25}{nl}You
+      must be really good at{nl}crawling around ceilings!!
+    value: 1
+  - name: npc_4_default_0
+    text: '{eff|Wave}Whew!  {eff|None}{p|0.25}Thanks, {P}!  {p|0.125}I think{nl}those
+      blocks were planning to{nl}attack!!  {p|0.125}You saved the day!!'
+    value: 1
+  - name: npc_4_greenBlock_0
+    text: I wish I had some way to break{nl}green blocks.  {p|0.125}Those suckers{nl}are
+      always getting in my way!!
+    value: 1
+  - name: npc_5_default_0
+    text: They say {col|0311}Boss Rush {col|0312}is the{nl}true test of snail skill.{p|0.3}{nl}{spd|0.04}But
+      what about slug skill?
+    value: 1
+  - name: npc_5_secrets_0
+    text: There's a lot of secrets{nl}in and around Snail Town.{p|0.25}{nl}Have you
+      found them all?
+    value: 1
+  - name: npc_6_default_0
+    text: Hey {P}, {p|0.125}how'd you get up{nl}here?  {p|0.4}And how do I get down?
+    value: 1
+  - name: npc_6_treehouses_0
+    text: Don't you think it's weird that{nl}we all live in treehouses?
+    value: 1
+  - name: npc_7_default_0
+    text: Snail Town is safe again,{p|0.125}{nl}thanks to you, {p|0.125}{P}!
+    value: 1
+  - name: npc_7_save_0
+    text: Are you leaving town, {P}?{p|0.25}{nl}Well,{p|0.125} be careful!  {p|0.25}Make
+      sure{nl}you {col|0206}save your game often{col|0312}!!
+    value: 1
+  - name: npc_7_peashooter_0
+    text: Hey, {P}!  {p|0.25}Where'd you get{nl}the pea shooter?
+    value: 1
+  - name: npc_7_boomerang_0
+    text: Ooh, {p|0.125}boomerangs!  {p|0.25}If I had{nl}those, {p|0.125}I'd try
+      breaking the{nl}ceiling over the save spot!
+    value: 1
+  - name: npc_7_rainbowWave_0
+    text: Rainbows are so pretty!{nl}{p|0.125}Don't you think so, {P}?
+    value: 1
+  - name: npc_7_scared_0
+    text: I'm scared, {P}!{p|0.25}{nl}Is Moon Snail going to take{nl}me away like
+      the others?
+    value: 1
+  - name: npc_8_default_0
+    text: I {p|0.125}{eff|Shake}knew {p|0.125}{eff|None}there was something{nl}weird
+      about that tree!!
+    value: 1
+  - name: npc_8_suspicious_0
+    text: There's something funny about{nl}that tree...
+    value: 1
+  - name: npc_9_default_0
+    text: It's so cozy in here!  {p|0.25}I just{nl}{p|0.125}{eff|Wave}{spd|0.06}love
+      {p|0.125}{eff|None}{spd|0.02}my little underground{nl}home!
+    value: 1
+  - name: npc_9_dirtHome_0
+    text: The other snails live in houses,{p|0.125}{nl}but I like it here in the
+      dirt.{p|0.25}{nl}Isn't it nice in here?
+    value: 1
+  - name: npc_10_default_0
+    text: '{spd|0.05}Oh, {p|0.125}{PF}!  {p|0.25}{spd|0.02}My heart{nl}will forever
+      belong to you!{nl}             {col|0201}{eff|Wave}<3'
+    value: 1
+  - name: npc_11_default_0
+    text: Don't forget!{nl}{p|0.15}Press {col|0309}"{ctrl|5}" {col|0312} to shoot
+      your{nl}weapon at stuff!!
+    value: 1
+  - name: npc_11_explainPeashooter_0
+    text: '{P}, {p|0.125}it''s dangerous to go{nl}alone!  {p|0.15}Take this Pea Shooter!{nl}{p|0.3}Press
+      {col|0309}"{ctrl|5}" {col|0312}to shoot with it!!'
+    value: 1
+  - name: npc_12_default_0
+    text: Isn't breaking blocks {eff|Wave}fun!?
+    value: 1
+  - name: npc_12_funBlocks_0
+    text: Heya, {P}! {p|0.125}I filled the heart{nl}container over there with some{nl}fresh
+      slime! {p|0.25}Enjoy!!
+    value: 1
+  - name: npc_13_default_0
+    text: '{eff|Wave}Wow!  {eff|None}{p|0.25}It looks like you''ve{nl}found {col|0302}##%
+      {col|0312}of the items in this{nl}game!  {p|0.25}Nice going, {P}!'
+    value: 1
+  - name: npc_14_default_0
+    text: Wow, {P}!  {p|0.125}You're pretty good{nl}at finding secrets!  {p|0.25}Maybe
+      you{nl}should become a detective!
+    value: 1
+  - name: npc_14_helixFragments_0
+    text: Hey, {P}!  {p|0.25}Keep an eye out{nl}for {col|0302}"Helix Fragments"{col|0312}. 
+      {p|0.25}They{nl}look like spinning white shells!
+    value: 1
+  - name: npc_14_shrine_0
+    text: They say that the {col|0302}Shrine of{nl}Iris {col|0312}is not located
+      on any map!
+    value: 1
+  - name: npc_15_default_0
+    text: 'Hi, {P}!  {p|0.125}Let me tell you a{nl}secret: {p|0.125}there''s a secret{nl}somewhere
+      in the main menu!'
+    value: 1
+  - name: npc_15_hintSecret_0
+    text: 'Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}Come back to town
+      after{nl}each area to find secret items!'
+    value: 1
+  - name: npc_15_hintSnaily_0
+    text: 'Hi, {P}!  {p|0.125}Let me give you a{nl}little hint: {p|0.125}A shell
+      can fit{nl}where a snail cannot!'
+    value: 1
+  - name: npc_15_hintSluggy_0
+    text: Hi, {P}!  {p|0.125}Here's a li'l hint:{p|0.125}{nl}{SS} may be more fragile
+      than{nl}snails, {p|0.125}but they're also faster!
+    value: 1
+  - name: npc_15_hintUpside_0
+    text: 'Hi, {P}!  {p|0.125}Let me give you a{nl}little hint: {p|0.125}A shell
+      can fit{nl}where a snail cannot!'
+    value: 1
+  - name: npc_15_hintLeggy_0
+    text: 'Hi, {P}!  {p|0.125}Here''s a tip: {p|0.125}It may{nl}look too big, {p|0.125}but
+      your shell{n}can fit in places ours can!'
+    value: 1
+  - name: npc_15_hintBlobby_0
+    text: Hi, {P}!  {p|0.125}Here's a little tip:{p|0.125}{nl}You can still jump
+      after a side{nl}hop!  {p|0.125}It's called "Coyote Time"!!
+    value: 1
+  - name: npc_15_hintLeechy_0
+    text: Hi, {P}!  {p|0.125}Here's a li'l hint:{p|0.125}{nl}{SS} may be more fragile
+      than{nl}snails, {p|0.125}but they're also faster!
+    value: 1
+  - name: npc_15_hintMissedSecret_0
+    text: 'Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}Sometimes, you''ll
+      miss a{nl}secret if you cling to a wall!'
+    value: 1
+  - name: npc_15_hintEarlyHighJump_0
+    text: 'Hi, {P}!  {p|0.125}Let me give you a{nl}hint: {p|0.125}You can find the
+      "high{nl}jump" before any other item!'
+    value: 1
+  - name: npc_15_hintSSB_0
+    text: 'Hi, {P}!  {p|0.125}Let me tell you a{nl}secret: {p|0.125}There''s a boomerang{nl}somewhere
+      in Snail Town!'
+    value: 1
+  - name: npc_16_default_0
+    text: '{eff|Wave}{sfx|1}{spd|0.05}WHEEEE!!  {p|0.125}{eff|None}{sfx|0}{spd|0.02}That
+      was fun,{nl}{P}!  {p|0.125}Let''s do it again!!'
+    value: 1
+  - name: npc_16_healTipGeneric_0
+    text: If you ever get hurt, {p|0.125}{col|0207}eat some{nl}plants{col|0312}! 
+      {p|0.25}You need to eat well{nl}to stay fit and healthy!
+    value: 1
+  - name: npc_16_healTipLeechy_0
+    text: If you ever get hurt, {p|0.125}defeat{nl}enemies!  {p|0.25}As a leech,
+      {p|0.125}you can{nl}earn {col|0201}pink heath orbs {col|0312}off them!
+    value: 1
+  - name: npc_16_ride_0
+    text: I want to go for a ride!!!
+    value: 1
+  - name: npc_17_default_0
+    text: They call me {col|0209}upside-down snail{col|0312},{p|0.25}{nl}but I think
+      everyone else is{nl}upside down!
+    value: 1
+  - name: npc_17_secret_0
+    text: There's a hidden room under the{nl}path into town.  {p|0.25}I don't know{nl}how
+      to get in yet, though...
+    value: 1
+  - name: npc_18_default_0
+    text: You found the {eff|Wave}super secret{nl}boomerang!  {eff|None}{p|0.125}Way
+      to go!{p|0.25}{nl}Press {col|0309}"{ctrl|5}" {col|0312}to shoot with it!
+    value: 1
+  - name: npc_18_remindShoot_0
+    text: Don't forget!{p|0.25}{nl}Press {col|0309}"{ctrl|5}" {col|0312}to shoot
+      your{nl}weapon at stuff!!
+    value: 1
+  - name: npc_19_default_0
+    text: '{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl}{spd|0.03}right... 
+      {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl}that''s for
+      some other game.'
+    value: 1
+  - name: npc_19_boomerang_0
+    text: Hey, {P}! {p|0.25}If you had a{nl}boomerang, {p|0.125}you could break{nl}all
+      sorts of walls!
+    value: 1
+  - name: npc_22_default_0
+    text: '{eff|Shake}Thorgle Borgle!!!!!!!'
+    value: 1
+  - name: npc_22_thorgleBorgle_0
+    text: I are {col|0200}Cave Snail{col|0312}!{nl}{p|0.25}{eff|Shake}Thorgle Borgle!!!!
+    value: 1
+  - name: npc_23_default_0
+    text: Do you think {col|0204}Cave Snail{nl}{col|0312}is single?
+    value: 1
+  - name: npc_23_caveSnail_0
+    text: '{col|0200}Cave Snail {col|0312}scares me!{nl}{p|0.25}I''m staying over
+      here!'
+    value: 1
+  - name: npc_23_loadGame_0
+    text: Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl}{col|0309}{ctrl|22}
+      {col|0312}and load your game from{nl}town!  {p|0.125}You won't lose any items!
+    value: 1
+  - name: npc_24_default_0
+    text: '{P}, {p|0.125}legend says the{nl}{col|0302}Shrine of Iris {col|0312}is
+      somewhere{nl}very close to Snail Town!!'
+    value: 1
+  - name: npc_24_offerHelixFragment_0
+    text: Take this {col|0302}Helix Fragment{col|0312}!{nl}{p|0.25}Legend says it
+      is but one{nl}piece of {col|0302}Iris, the Godsnail{col|0312}!
+    value: 1
+  - name: npc_25_default_0
+    text: Hey {P}, {p|0.125}I'm hungry!  {p|0.25}Know{nl}any good plants around town?
+    value: 1
+  - name: npc_25_explainMap_0
+    text: Have you tried hitting {col|0309}"{ctrl|21}"{col|0312}{nl}yet?  {p|0.25}It
+      makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}"{ctrl|22}" {col|0312}for
+      the menu!
+    value: 1
+  - name: npc_43_cantCorner_0
+    text: I can't seem to crawl around{nl}these corners! {p|0.3}I wonder if{nl}I'll
+      ever be able to do it...
+    value: 1
+  - name: npc_43_upside_0
+    text: Hey, {P}, {p|0.2}how do you manage{nl}to fall up?? {p|0.4}You're not even
+      a{nl}Gravity Snail!! {p|0.4}{eff|Shake}How do you do it?!
+    value: 1
+  - name: npc_43_leggy_0
+    text: You're so lucky, {P}! {p|0.2}You don't{nl}have to deal with corners!!{nl}{p|0.6}{spd|0.25}...{spd|0.02}How
+      do you flip though?
+    value: 1
+  - name: npc_43_blobby_0
+    text: Hey, {P}! {p|0.2}How do you treat{nl}corners? {p|0.3}Can you crawl like
+      us?{nl}{p|0.4}I wanna know more about blobs!!
+    value: 1
+  - name: npc_43_default_0
+    text: Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I
+      wish I were a Gravity Snail!
+    value: 1
+  - name: npc_50_default_0
+    text: Oh, {p|0.125}hey, {P}! {p|0.25}I'm here to test{nl}single-page dialogue!!
+    value: 1
+  - name: npc_50_admireRainbowWave_0
+    text: '{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, {P}!!{p|0.25}{nl}I''d
+      love one too, {p|0.125}but I don''t{nl}have a jump button.'
+    value: 1
+  - name: npc_51_default_0
+    text: Hey there, {P}!! {p|0.25}I see you{nl}figured out how to start a{nl}multi-page
+      conversation!
+    value: 1
+  - name: npc_51_default_1
+    text: The hope is this talk should go{nl}100% smoothly. {p|0.125}What do you{nl}think?
+    value: 1
+  - name: npc_51_default_2
+    text: Impressive! {p|0.25}I do hope that's my{nl}portrait showing right now,
+      {p|0.125}if it{nl}even is there.
+    value: 0
+  - name: npc_51_default_3
+    text: I'm here to test multiple things,{nl}it seems!
+    value: 1
+  - name: npc_turtle_default_0
+    text: After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!
+    value: 0
+  - name: 
+    text: 
+    value: 0
+  - name: 
+    text: 
+    value: 0
+  - name: 
+    text: 
+    value: 0
+  - name: 
+    text: 
+    value: 0

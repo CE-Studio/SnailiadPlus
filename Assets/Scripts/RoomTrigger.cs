@@ -118,7 +118,7 @@ public class RoomTrigger : MonoBehaviour
             {
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
-                    waterLevel[WaterPoint(PlayState.player.transform.position.x - transform.position.x - (box.size.x * 0.5f))].y;
+                    waterLevel[WaterPoint(PlayState.player.transform.position.x)].y;
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
                     PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
@@ -140,10 +140,11 @@ public class RoomTrigger : MonoBehaviour
     private int WaterPoint(float x)
     {
         bool foundPointLeftOf = false;
+        float relativeX = x - transform.position.x + (box.size.x * 0.5f);
         int waterPoint = waterLevel.Length - 1;
         while (!foundPointLeftOf && waterPoint != -1)
         {
-            if (x > waterLevel[waterPoint].x)
+            if (relativeX > waterLevel[waterPoint].x)
                 foundPointLeftOf = true;
             else
                 waterPoint--;
@@ -203,66 +204,6 @@ public class RoomTrigger : MonoBehaviour
 
             string newRoomName = "";
 
-            //foreach (Transform child in transform)
-            //{
-            //    child.gameObject.SetActive(true);
-            //    switch (child.name)
-            //    {
-            //        default:
-            //            break;
-            //
-            //        case "Door":
-            //            if (Vector2.Distance(collision.transform.position, child.transform.position) < 2)
-            //                child.GetComponent<Door>().SetState1();
-            //            else
-            //                child.GetComponent<Door>().SetState2();
-            //            break;
-            //
-            //        case "Grass":
-            //            child.GetComponent<Grass>().Spawn();
-            //            break;
-            //        case "Power Grass":
-            //            child.GetComponent<PowerGrass>().Spawn();
-            //            break;
-            //
-            //        case "Save Point":
-            //            child.GetComponent<SavePoint>().Spawn();
-            //            if (child.GetComponent<SavePoint>().hasBeenActivated)
-            //                child.GetComponent<SavePoint>().ToggleActiveState();
-            //            break;
-            //
-            //        case "Item":
-            //            child.GetComponent<Item>().SetAnim();
-            //            child.GetComponent<Item>().CheckIfCollected();
-            //            break;
-            //
-            //        case "Fake Boundary":
-            //            string thisRoomName = child.parent.name;
-            //            if (thisRoomName.Contains("/"))
-            //            {
-            //                FakeRoomBorder childScript = child.GetComponent<FakeRoomBorder>();
-            //                int stringHalf = 0;
-            //                if ((childScript.direction && childScript.initialPosRelative.x == 1) || (!childScript.direction && childScript.initialPosRelative.y == 1))
-            //                    stringHalf = 1;
-            //                string splitString = thisRoomName.Split('/')[stringHalf];
-            //                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString))
-            //                {
-            //                    if (character == '|')
-            //                        newRoomName += "\n";
-            //                    else
-            //                        newRoomName += character;
-            //                }
-            //            }
-            //            break;
-            //
-            //        case "NPC":
-            //            child.transform.localPosition = child.GetComponent<NPC>().origin;
-            //            child.GetComponent<NPC>().velocity = 0;
-            //            child.GetComponent<NPC>().Spawn();
-            //            break;
-            //    }
-            //}
-
             if (newRoomName == "")
             {
                 foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name))
@@ -309,40 +250,6 @@ public class RoomTrigger : MonoBehaviour
     public void DespawnEverything()
     {
         initializedEffects = false;
-        //foreach (Transform child in transform)
-        //{
-        //    child.gameObject.SetActive(false);
-        //    if (child.name == "Door")
-        //    {
-        //        child.GetComponent<Door>().SetStateDespawn();
-        //    }
-        //    else if (child.name.Contains("Grass"))
-        //    {
-        //        switch (child.name)
-        //        {
-        //            default:
-        //                break;
-        //            case "Grass":
-        //                child.GetComponent<Grass>().ToggleActive(false);
-        //                break;
-        //            case "Power Grass":
-        //                child.GetComponent<PowerGrass>().ToggleActive(false);
-        //                break;
-        //        }
-        //    }
-        //    else if (child.name.Contains("Breakable Block"))
-        //    {
-        //        child.GetComponent<BreakableBlock>().Despawn();
-        //    }
-        //    else if (child.name == "Enemy-Collidable Tile")
-        //    {
-        //        Destroy(child.gameObject);
-        //    }
-        //    else if (child.name == "Item")
-        //    {
-        //        child.transform.localPosition = child.GetComponent<Item>().originPos;
-        //    }
-        //}
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             if (transform.GetChild(i).name == "Breakable Block")
@@ -364,67 +271,7 @@ public class RoomTrigger : MonoBehaviour
     {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
-        //for (int i = 0; i <= 1; i++)
-        //{
-        //    for (int x = -limitX; x <= limitX; x++)
-        //    {
-        //        for (int y = -limitY; y <= limitY; y++)
-        //        {
-        //            Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
-        //            TileBase currentTile = specialMap.GetTile(tilePos);
-        //            Sprite currentTileSprite = specialMap.GetSprite(tilePos);
-        //            if (currentTile != null)
-        //            {
-        //                if (currentTileSprite.name == "Tilesheet_72" || currentTileSprite.name == "Tilesheet_73" || currentTileSprite.name == "Tilesheet_74" || currentTileSprite.name == "Tilesheet_439")
-        //                {
-        //                    int weaponType = 0;
-        //                    bool isSilent = false;
-        //                    switch (currentTileSprite.name)
-        //                    {
-        //                        case "Tilesheet_72":
-        //                            weaponType = 2;
-        //                            break;
-        //                        case "Tilesheet_73":
-        //                            weaponType = 3;
-        //                            break;
-        //                        case "Tilesheet_74":
-        //                            weaponType = 4;
-        //                            break;
-        //                        case "Tilesheet_439":
-        //                            weaponType = 4;
-        //                            isSilent = true;
-        //                            break;
-        //                    }
-        //
-        //                    GameObject Breakable = Instantiate(breakableBlock, new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f), Quaternion.identity);
-        //                    Breakable.transform.parent = transform;
-        //                    Breakable.GetComponent<BreakableBlock>().Instantiate(weaponType, isSilent);
-        //                    switch (i)
-        //                    {
-        //                        case 0:
-        //                            Breakable.GetComponent<SpriteRenderer>().sortingOrder = -99;
-        //                            break;
-        //                        case 1:
-        //                            Breakable.GetComponent<SpriteRenderer>().sortingOrder = -19;
-        //                            break;
-        //                    }
-        //                }
-        //                else if (currentTileSprite.name == "Tilesheet_376")
-        //                {
-        //                    GameObject EnemyCollideBlock = new GameObject();
-        //                    EnemyCollideBlock.transform.parent = transform;
-        //                    EnemyCollideBlock.transform.position = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
-        //                    EnemyCollideBlock.AddComponent<BoxCollider2D>();
-        //                    EnemyCollideBlock.GetComponent<BoxCollider2D>().isTrigger = true;
-        //                    EnemyCollideBlock.GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
-        //                    EnemyCollideBlock.layer = 9;
-        //                    EnemyCollideBlock.name = "Enemy-Collidable Tile";
-        //                    Physics2D.IgnoreCollision(EnemyCollideBlock.GetComponent<BoxCollider2D>(), PlayState.player.GetComponent<BoxCollider2D>(), true);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+
         for (int x = -limitX; x <= limitX; x++)
         {
             for (int y = -limitY; y <= limitY; y++)
@@ -498,6 +345,14 @@ public class RoomTrigger : MonoBehaviour
                                 breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
                             }
                             break;
+                        case 445:
+                            GameObject babyfishGreen = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
+                            babyfishGreen.GetComponent<Babyfish>().AssignType(0);
+                            break;
+                        case 446:
+                            GameObject babyfishPink = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
+                            babyfishPink.GetComponent<Babyfish>().AssignType(1);
+                            break;
                     }
                 }
             }
@@ -544,6 +399,9 @@ public class RoomTrigger : MonoBehaviour
                 case "NPC":
                     newConditions.Add(obj.GetComponent<NPC>().ID);
                     newConditions.Add(obj.GetComponent<NPC>().upsideDown ? 1 : 0);
+                    break;
+                case "Turtle NPC":
+                    newConditions.Add(obj.GetComponent<TurtleNPC>().upsideDown ? 1 : 0);
                     break;
             }
             newEntity.spawnData = newConditions.ToArray();
@@ -600,6 +458,9 @@ public class RoomTrigger : MonoBehaviour
                     break;
                 case "Save Point":
                     newObject.GetComponent<SavePoint>().Spawn();
+                    break;
+                case "Turtle NPC":
+                    newObject.GetComponent<TurtleNPC>().Spawn(entity.spawnData);
                     break;
             }
         }

@@ -271,6 +271,13 @@ public class NPC : MonoBehaviour
                             AddText("default");
                             break;
 
+                        case 11:
+                            if (!PlayState.CheckForItem("Peashooter"))
+                                AddText("explainPeashooter");
+                            else
+                                AddText("default");
+                            break;
+
                         case 12:
                             if (!transform.parent.Find("Item").GetComponent<Item>().collected)
                                 AddText("funBlocks");

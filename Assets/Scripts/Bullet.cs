@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         cam = GameObject.Find("View");
 
-        string[] bulletTypes = new string[] { "boomerang", "rainbowWave" };
+        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave" };
         string[] directions = new string[] { "NW", "N", "NE", "E", "SE", "S", "SW", "W" };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
@@ -43,66 +43,66 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState != "Game")
+            return;
+        if (isActive)
         {
-            if (isActive)
+            lifeTimer += Time.fixedDeltaTime;
+            switch (bulletType)
             {
-                lifeTimer += Time.fixedDeltaTime;
-                switch (bulletType)
-                {
-                    case 2:
-                        velocity -= 0.0125f;
-                        break;
-                    case 3:
-                        velocity += 0.03f;
-                        break;
-                    default:
-                        velocity += 0.03f;
-                        break;
-                }
-                switch (direction)
-                {
-                    case 0:
-                        MoveNW();
-                        break;
-                    case 1:
-                        MoveN();
-                        break;
-                    case 2:
-                        MoveNE();
-                        break;
-                    case 3:
-                        MoveW();
-                        break;
-                    case 4:
-                        MoveE();
-                        break;
-                    case 5:
-                        MoveSW();
-                        break;
-                    case 6:
-                        MoveS();
-                        break;
-                    case 7:
-                        MoveSE();
-                        break;
-                }
+                case 1:
+                    break;
+                case 2:
+                    velocity -= 0.0125f;
+                    break;
+                case 3:
+                    velocity += 0.03f;
+                    break;
+                default:
+                    velocity += 0.03f;
+                    break;
             }
-            if (lifeTimer > 3)
+            switch (direction)
             {
-                Despawn();
-            }
-            else
-            {
-                if (transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
-                    transform.position.x < cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
-                    transform.position.y > cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
-                    transform.position.y < cam.transform.position.y + 7.5f + (box.size.y * 0.5f))
-                    box.enabled = true;
-                else
-                    box.enabled = false;
+                case 0:
+                    MoveNW();
+                    break;
+                case 1:
+                    MoveN();
+                    break;
+                case 2:
+                    MoveNE();
+                    break;
+                case 3:
+                    MoveW();
+                    break;
+                case 4:
+                    MoveE();
+                    break;
+                case 5:
+                    MoveSW();
+                    break;
+                case 6:
+                    MoveS();
+                    break;
+                case 7:
+                    MoveSE();
+                    break;
             }
         }
+        if (lifeTimer > 3)
+            Despawn();
+        else
+        {
+            if (!(transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
+                transform.position.x < cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
+                transform.position.y > cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
+                transform.position.y < cam.transform.position.y + 7.5f + (box.size.y * 0.5f)))
+                Despawn();
+        }
+
+        if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
+            Despawn();
     }
 
     public void Shoot(int type, int dir)
@@ -143,6 +143,11 @@ public class Bullet : MonoBehaviour
         bulletType = type;
         switch (type)
         {
+            case 1:
+                box.size = new Vector2(0.45f, 0.45f);
+                velocity = 0.45f;
+                damage = 10;
+                break;
             case 2:
                 box.size = new Vector2(0.9f, 0.9f);
                 velocity = 0.415f;
@@ -163,6 +168,9 @@ public class Bullet : MonoBehaviour
         string animToPlay = "Bullet_";
         switch (bulletType)
         {
+            case 1:
+                animToPlay += "peashooter_";
+                break;
             case 2:
                 animToPlay += "boomerang_";
                 break;
@@ -207,17 +215,26 @@ public class Bullet : MonoBehaviour
     {
         if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide")) && bulletType == 1)
         {
-            Despawn();
+            Despawn(true);
         }
     }
 
-    public void Despawn()
+    public void Despawn(bool loudly = false)
     {
-        isActive = false;
-        sprite.enabled = false;
-        box.enabled = false;
-        lifeTimer = 0;
-        transform.position = Vector2.zero;
+        if (isActive)
+        {
+            if (bulletType == 1 && loudly)
+            {
+                PlayState.PlaySound("ShotHit");
+                PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.125f, transform.position.x + 0.125f),
+                    Random.Range(transform.position.y - 0.125f, transform.position.y + 0.125f)), "explosion", new float[] { 1 });
+            }
+            isActive = false;
+            sprite.enabled = false;
+            box.enabled = false;
+            lifeTimer = 0;
+            transform.position = Vector2.zero;
+        }
     }
 
     private void MoveNW()

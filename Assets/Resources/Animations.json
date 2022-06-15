@@ -2054,6 +2054,94 @@
 		},
 		
 		{
+			"name": "Bullet_peashooter_N",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_NE",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_E",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_SE",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_S",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_SW",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_W",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_peashooter_NW",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Bullet_boomerang_N",
 			"spriteName": "Bullets/Boomerang",
 			"framerate": 22.0,
@@ -2348,6 +2436,20 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_peashooter",
+			"spriteName": "Items/Peashooter",
+			"framerate": 11.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_boomerang",
 			"spriteName": "Items/Boomerang",
 			"framerate": 22.0,
@@ -2487,8 +2589,8 @@
 			"frames": [
 				0,
 				1,
-				2,
-				1
+				0,
+				2
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -2539,6 +2641,86 @@
 			"randomizeStartFrame": false
 		},
 		
+		{
+			"name": "Enemy_babyfish1_normal",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_babyfish1_swim",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 12.0,
+			"frames": [
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				0,
+				1,
+				1,
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_babyfish2_normal",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_babyfish2_swim",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 12.0,
+			"frames": [
+				2,
+				3,
+				2,
+				3,
+				2,
+				3,
+				2,
+				2,
+				3,
+				3,
+				2,
+				2,
+				2,
+				3,
+				3,
+				3,
+				3,
+				3,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
 		{
 			"name": "Enemy_blob1_normal",
 			"spriteName": "Entities/Blob",

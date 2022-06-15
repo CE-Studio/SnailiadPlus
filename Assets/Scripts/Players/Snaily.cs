@@ -1498,18 +1498,19 @@ public class Snaily : MonoBehaviour
                 if (bulletID >= player.bulletPool.transform.childCount)
                     bulletID = 0;
                 fireCooldown = WEAPON_COOLDOWNS[type - 1];
-                if (type == 6)
-                    PlayState.PlaySound("ShotRainbow");
-                else if (type == 5)
-                    PlayState.PlaySound("ShotRainbow");
-                else if (type == 4)
-                    PlayState.PlaySound("ShotRainbow");
-                else if (type == 3)
-                    PlayState.PlaySound("ShotRainbow");
-                else if (type == 2)
-                    PlayState.PlaySound("ShotBoomerang");
-                else
-                    PlayState.PlaySound("ShotRainbow");
+                //if (type == 6)
+                //    PlayState.PlaySound("ShotRainbow");
+                //else if (type == 5)
+                //    PlayState.PlaySound("ShotRainbow");
+                //else if (type == 4)
+                //    PlayState.PlaySound("ShotRainbow");
+                //else if (type == 3)
+                //    PlayState.PlaySound("ShotRainbow");
+                //else if (type == 2)
+                //    PlayState.PlaySound("ShotBoomerang");
+                //else
+                //    PlayState.PlaySound("ShotRainbow");
+                PlayState.PlaySound(type switch { 2 => "ShotBoomerang", 3 => "ShotRainbow", 4 => "ShotRainbow", 5 => "ShotRainbow", 6 => "ShotRainbow", _ => "ShotPeashooter", });
             }
         }
     }

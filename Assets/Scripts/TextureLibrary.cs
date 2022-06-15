@@ -22,8 +22,10 @@ public class TextureLibrary : ScriptableObject
         "TitleFont",
 
         "Bullets/Boomerang",
+        "Bullets/Peashooter",
         "Bullets/RainbowWave",
 
+        "Entities/Babyfish",
         "Entities/Blob",
         "Entities/BreakableIcons",
         "Entities/Floatspike1",
@@ -38,6 +40,7 @@ public class TextureLibrary : ScriptableObject
         "Items/Boomerang",
         "Items/HeartContainer",
         "Items/HelixFragment",
+        "Items/Peashooter",
         "Items/RainbowWave",
 
         "Particles/Bubble",

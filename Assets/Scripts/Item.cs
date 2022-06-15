@@ -37,10 +37,6 @@ public class Item : MonoBehaviour
 
     public void Spawn(int[] spawnData)
     {
-        //anim.Add("Item_boomerang");
-        //anim.Add("Item_rainbowWave");
-        //anim.Add("Item_helixFragment");
-        //anim.Add("Item_heartContainer");
         itemID = spawnData[0];
 
         string animName;
@@ -59,6 +55,10 @@ public class Item : MonoBehaviour
         {
             switch (itemID)
             {
+                case 0:
+                    animName = "Item_peashooter";
+                    box.size = new Vector2(1.825f, 1.825f);
+                    break;
                 case 1:
                 case 11:
                     animName = "Item_boomerang";
@@ -78,24 +78,6 @@ public class Item : MonoBehaviour
 
         anim.Add(animName);
         anim.Play(animName);
-    }
-
-    public void CheckIfCollected()
-    {
-        if (PlayState.itemCollection[itemID] == 1)
-        {
-            collected = true;
-            SetDeactivated();
-        }
-        else
-        {
-            collected = false;
-            box.enabled = true;
-            sprite.enabled = true;
-            //if (PlayState.itemLocations.ContainsValue(itemID))
-            //    PlayState.itemLocations.Remove(itemID);
-            PlayState.minimapScript.RefreshMap();
-        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -122,10 +104,15 @@ public class Item : MonoBehaviour
                 PlayState.PlayMusic(0, 1);
             switch (itemID)
             {
+                case 0:
+                    PlayState.isArmed = true;
+                    PlayState.playerScript.selectedWeapon = 1;
+                    PlayState.playerScript.ChangeActiveWeapon(0, true);
+                    break;
                 case 1:
                 case 11:
                     PlayState.isArmed = true;
-                    collision.GetComponent<Player>().selectedWeapon = 2;
+                    PlayState.playerScript.selectedWeapon = 2;
                     PlayState.playerScript.ChangeActiveWeapon(1, true);
                     if (itemID == 11)
                         PlayState.QueueAchievementPopup("secrt");
@@ -133,7 +120,7 @@ public class Item : MonoBehaviour
                 case 2:
                 case 12:
                     PlayState.isArmed = true;
-                    collision.GetComponent<Player>().selectedWeapon = 3;
+                    PlayState.playerScript.selectedWeapon = 3;
                     PlayState.playerScript.ChangeActiveWeapon(2, true);
                     break;
                 default:
