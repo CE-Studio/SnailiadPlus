@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2a91826c17f3e4a41b0d87a68712a24a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - CW: {fileID: -8819211636233541232, guid: 20b8333f7b68c3144b66a35102550787, type: 3}
+  - CCW: {fileID: 2749396700646641, guid: 20b8333f7b68c3144b66a35102550787, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

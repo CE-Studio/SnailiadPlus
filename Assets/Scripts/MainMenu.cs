@@ -40,6 +40,8 @@ public class MainMenu : MonoBehaviour
 
     private bool preloading = true;
 
+    private string tempPackNameBuffer;
+
     public Transform cam;
     public Vector2[] panPoints = new Vector2[] // Points in world space that the main menu camera should pan over; set only one point for a static cam
     {
@@ -86,6 +88,7 @@ public class MainMenu : MonoBehaviour
         public PlayState.GameSaveData profile2;
         public PlayState.GameSaveData profile3;
         public PlayState.OptionData options;
+        public PlayState.PackData packs;
         public PlayState.ControlData controls;
         public PlayState.RecordData records;
     }
@@ -122,6 +125,10 @@ public class MainMenu : MonoBehaviour
                 {
                     options = PlayState.optionsDefault
                 },
+                packs = new PlayState.PackData
+                {
+                    packs = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" }
+                },
                 records = new PlayState.RecordData
                 {
                     achievements = PlayState.achievementDefault,
@@ -144,14 +151,7 @@ public class MainMenu : MonoBehaviour
         if (!Directory.Exists(Application.persistentDataPath + "/TextPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TextPacks");
 
-        PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
-        PlayState.textureLibrary.BuildDefaultLibrary();
-        PlayState.textureLibrary.BuildDefaultAnimLibrary();
-        PlayState.textureLibrary.BuildTilemap();
-        PlayState.soundLibrary.BuildDefaultLibrary();
-        PlayState.musicLibrary.BuildDefaultLibrary();
-        PlayState.musicLibrary.BuildDefaultOffsetLibrary();
-        PlayState.textLibrary.BuildDefaultLibrary();
+        PlayState.LoadPacks();
 
         PlayState.loadingIcon.GetComponent<AnimationModule>().Add("Loading");
         PlayState.loadingIcon.GetComponent<AnimationModule>().Play("Loading");
@@ -429,7 +429,7 @@ public class MainMenu : MonoBehaviour
                         PlayState.gameOptions[8] = menuVarFlags[0];
                         break;
                     case "showBreakables":
-                        TestForArrowAdjust(option, 1, 4);
+                        TestForArrowAdjust(option, 1, 2);
                         switch (menuVarFlags[1])
                         {
                             case 0:
@@ -440,12 +440,6 @@ public class MainMenu : MonoBehaviour
                                 break;
                             case 2:
                                 AddToOptionText(option, PlayState.GetText("menu_add_breakables2"));
-                                break;
-                            case 3:
-                                AddToOptionText(option, PlayState.GetText("menu_add_breakables3"));
-                                break;
-                            case 4:
-                                AddToOptionText(option, PlayState.GetText("menu_add_breakables4"));
                                 break;
                         }
                         PlayState.gameOptions[12] = menuVarFlags[1];
@@ -986,6 +980,7 @@ public class MainMenu : MonoBehaviour
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
+        PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         fadingToIntro = false;
 
         PlayState.player.GetComponent<Snaily>().enabled = false;
@@ -1530,6 +1525,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
             }
 
             ClearOptions();
+            tempPackNameBuffer = packTitle;
             AddOption(packTitle, false);
             AddOption(packInfo[0] == null ? PlayState.GetText("menu_option_assetConfirm_noInfo") : PlayState.GetText("menu_option_assetConfirm_author").Replace("_", packInfo[0]), false);
             AddOption(packInfo[0] == null ? "" : PlayState.GetText("menu_option_assetConfirm_version").Replace("#1", packInfo[1]).Replace("#2", packInfo[2]), false);
@@ -1552,6 +1548,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
             4 => "Text",
             _ => "Texture"
         };
+        PlayState.currentPacks[menuVarFlags[0] - 1] = menuVarFlags[2] == -1 ? "DEFAULT" : tempPackNameBuffer;
         if (menuVarFlags[2] == -1)
         {
             switch (packType)
@@ -1577,8 +1574,6 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     PlayState.musicLibrary.BuildDefaultLibrary();
                     music.clip = PlayState.GetMusic(0, 0);
                     music.Play();
-                    PlayState.ToggleLoadingIcon(false);
-                    AssetPackMenu();
                     break;
                 case "Text":
                     PlayState.textLibrary.BuildDefaultLibrary();
@@ -1619,11 +1614,9 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     break;
             }
         }
-        if (packType == "Texture" || packType == "Text")
-        {
-            PlayState.ToggleLoadingIcon(false);
-            AssetPackMenu();
-        }
+        PlayState.WriteSave("packs");
+        PlayState.ToggleLoadingIcon(false);
+        AssetPackMenu();
     }
 
     public void ReturnAssetPath()
@@ -1715,7 +1708,6 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
 
     public void EraseRecords()
     {
-        //PlayerPrefs.DeleteKey("RecordData");
         PlayState.gameData.records.achievements = PlayState.achievementDefault;
         PlayState.gameData.records.times = PlayState.timeDefault;
         PlayState.achievementStates = PlayState.achievementDefault;
@@ -1783,23 +1775,18 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
     {
         string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
 
-        CollectiveData fullData = new CollectiveData();
+        CollectiveData fullData = new CollectiveData { profile1 = PlayState.LoadGame(1), profile2 = PlayState.LoadGame(2), profile3 = PlayState.LoadGame(3) };
 
-        fullData.profile1 = PlayState.LoadGame(1);
-        fullData.profile2 = PlayState.LoadGame(2);
-        fullData.profile3 = PlayState.LoadGame(3);
-
-        PlayState.OptionData optionDataForCollective = new PlayState.OptionData();
-        optionDataForCollective.options = PlayState.gameOptions;
+        PlayState.OptionData optionDataForCollective = new PlayState.OptionData { options = PlayState.gameOptions  };
         fullData.options = optionDataForCollective;
 
-        PlayState.ControlData controlDataForCollective = new PlayState.ControlData();
-        controlDataForCollective.controls = Control.inputs;
+        PlayState.PackData packDataForCollective = new PlayState.PackData { packs = PlayState.currentPacks };
+        fullData.packs = packDataForCollective;
+
+        PlayState.ControlData controlDataForCollective = new PlayState.ControlData { controls = Control.inputs };
         fullData.controls = controlDataForCollective;
 
-        PlayState.RecordData recordDataForCollective = new PlayState.RecordData();
-        recordDataForCollective.achievements = PlayState.achievementStates;
-        recordDataForCollective.times = PlayState.savedTimes;
+        PlayState.RecordData recordDataForCollective = new PlayState.RecordData { achievements = PlayState.achievementStates, times = PlayState.savedTimes  };
         fullData.records = recordDataForCollective;
 
         File.WriteAllText(dataPath, JsonUtility.ToJson(fullData));
@@ -1872,6 +1859,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         {
             PlayState.gameData = fullData;
             PlayState.LoadOptions();
+            PlayState.LoadPacks();
             PlayState.LoadControls();
             //PlayState.LoadRecords();
 

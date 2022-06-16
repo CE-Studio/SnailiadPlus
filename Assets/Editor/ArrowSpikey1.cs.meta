@@ -3,7 +3,9 @@ guid: 143301fe60e21b749a2bbead852f855a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CW: {fileID: -1490441807187021714, guid: 20b8333f7b68c3144b66a35102550787, type: 3}
+  - CCW: {fileID: -7332039115924284815, guid: 20b8333f7b68c3144b66a35102550787, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

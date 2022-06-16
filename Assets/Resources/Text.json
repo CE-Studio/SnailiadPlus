@@ -1162,22 +1162,12 @@
 		},
 		{
 			"name": "menu_add_breakables1",
-			"text": "obvious, piercing",
+			"text": "obvious",
 			"value": 0
 		},
 		{
 			"name": "menu_add_breakables2",
-			"text": "obvious, any shot",
-			"value": 0
-		},
-		{
-			"name": "menu_add_breakables3",
-			"text": "all, piercing",
-			"value": 0
-		},
-		{
-			"name": "menu_add_breakables4",
-			"text": "all, any shot",
+			"text": "all",
 			"value": 0
 		},
 		{
@@ -1618,6 +1608,26 @@
 		{
 			"name": "room_01_peashooter",
 			"text": "Fine Dining",
+			"value": 0
+		},
+		{
+			"name": "room_01_eac",
+			"text": "Efficiently|Aggregated|Corners",
+			"value": 0
+		},
+		{
+			"name": "room_01_blockSnail",
+			"text": "Monument of|Greatness",
+			"value": 0
+		},
+		{
+			"name": "room_01_bigLake",
+			"text": "Spring Lake",
+			"value": 0
+		},
+		{
+			"name": "room_01_tower2",
+			"text": "Frost Tower",
 			"value": 0
 		},
 		{

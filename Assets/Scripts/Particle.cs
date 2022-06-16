@@ -59,7 +59,7 @@ public class Particle : MonoBehaviour
                         }
                         vars[0] += Time.deltaTime;
                         transform.position = new Vector2(vars[1] + 2 * Mathf.Sin(vars[0] / 1.2f) * 0.0625f, transform.position.y + vars[3] * Time.deltaTime * 0.25f);
-                        if (transform.position.y > vars[2])
+                        if (transform.position.y > vars[2] - 0.25f)
                             ResetParticle();
                         break;
                     case "nom":

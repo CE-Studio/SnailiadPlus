@@ -10,7 +10,6 @@ public class Grass : MonoBehaviour
     public float regrowTimeout = 15f;
 
     public int bitesRemaining;
-    public bool active = false;
     public float timer = 0;
 
     public SpriteRenderer sprite;
@@ -19,56 +18,33 @@ public class Grass : MonoBehaviour
     
     public void Start()
     {
-        if (PlayState.gameState == "Game")
-        {
-            bitesRemaining = totalBites;
-            sprite = GetComponent<SpriteRenderer>();
-            box = GetComponent<BoxCollider2D>();
-            anim = GetComponent<AnimationModule>();
-            anim.Add("Grass_idle");
-            anim.Add("Grass_eaten");
-            anim.Play("Grass_idle");
+        if (PlayState.gameState != "Game")
+            return;
 
-            Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        }
+        sprite = GetComponent<SpriteRenderer>();
+        box = GetComponent<BoxCollider2D>();
+        anim = GetComponent<AnimationModule>();
+        anim.Add("Grass_idle");
+        anim.Add("Grass_eaten");
+        anim.Play("Grass_idle");
+
+        Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
+        bitesRemaining = totalBites;
+        timer = 0;
     }
 
     public void Update()
     {
         if (PlayState.gameState == "Game")
-        {
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
-        }
-        if (active && timer == 0)
-        {
-            if (bitesRemaining == 0)
-            {
-                PlayState.PlaySound("GrassGrow");
-                anim.Play("Grass_idle");
-                bitesRemaining = totalBites;
-            }
-        }
-    }
 
-    public void ToggleActive(bool state)
-    {
-        active = state;
-    }
-
-    public void Spawn()
-    {
-        bitesRemaining = totalBites;
-        box.enabled = true;
-        timer = 0;
-        if (transform.childCount > 0)
+        if (timer == 0 && bitesRemaining == 0)
         {
-            for (int i = transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
+            PlayState.PlaySound("GrassGrow");
+            anim.Play("Grass_idle");
+            bitesRemaining = totalBites;
         }
-        ToggleActive(true);
-        anim.Play("Grass_idle");
     }
 
     public void OnTriggerStay2D(Collider2D collision)

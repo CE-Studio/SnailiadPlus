@@ -156,10 +156,10 @@ public class Player : MonoBehaviour
             }
             if (PlayState.explodePlayedThisFrame)
             {
-                explodeTimer++;
-                if (explodeTimer >= 7)
+                explodeTimer--;
+                if (explodeTimer <= 0)
                 {
-                    explodeTimer = 0;
+                    explodeTimer = Application.targetFrameRate switch { 30 => 1, 60 => 2, 120 => 4, _ => 8 };
                     PlayState.explodePlayedThisFrame = false;
                 }
             }
@@ -171,9 +171,9 @@ public class Player : MonoBehaviour
             // Weapon swapping
             if (Control.Weapon1() && PlayState.CheckForItem(0))
                 ChangeActiveWeapon(0);
-            else if (Control.Weapon2() && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
+            if (Control.Weapon2() && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
                 ChangeActiveWeapon(1);
-            else if (Control.Weapon3() && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
+            if (Control.Weapon3() && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
                 ChangeActiveWeapon(2);
 
             // Area name text
@@ -469,7 +469,7 @@ public class Player : MonoBehaviour
         weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
         weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
         weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
-        if (weaponID + 1 > selectedWeapon)
+        if ((weaponID + 1 > selectedWeapon && activateThisWeapon) || !activateThisWeapon)
             selectedWeapon = weaponID + 1;
         if (activateThisWeapon)
             weaponIcons[weaponID].enabled = true;
@@ -936,10 +936,9 @@ public class Player : MonoBehaviour
         if (startMenuMusic)
         {
             UpdateMusic(-1, -1, 3);
-            PlayState.mainMenu.GetComponent<MainMenu>().music.clip = PlayState.GetMusic(0, 0);// "TitleSong");
+            PlayState.mainMenu.GetComponent<MainMenu>().music.clip = PlayState.GetMusic(0, 0);
             PlayState.mainMenu.GetComponent<MainMenu>().music.Play();
         }
         PlayState.ToggleLoadingIcon(false);
-        PlayState.mainMenu.GetComponent<MainMenu>().AssetPackMenu();
     }
 }

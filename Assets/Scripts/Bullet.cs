@@ -90,19 +90,13 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-        if (lifeTimer > 3)
-            Despawn();
-        else
-        {
-            if (!(transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
+        if (lifeTimer > 3 || !(transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
                 transform.position.x < cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
                 transform.position.y > cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
                 transform.position.y < cam.transform.position.y + 7.5f + (box.size.y * 0.5f)))
-                Despawn();
-        }
-
-        if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
             Despawn();
+        if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
+            Despawn(true);
     }
 
     public void Shoot(int type, int dir)
@@ -144,7 +138,7 @@ public class Bullet : MonoBehaviour
         switch (type)
         {
             case 1:
-                box.size = new Vector2(0.45f, 0.45f);
+                box.size = new Vector2(0.25f, 0.25f);
                 velocity = 0.45f;
                 damage = 10;
                 break;
@@ -213,7 +207,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("EnemyCollide")) && bulletType == 1)
+        if (collision.CompareTag("PlayerCollide") && bulletType == 1)
         {
             Despawn(true);
         }
@@ -226,8 +220,8 @@ public class Bullet : MonoBehaviour
             if (bulletType == 1 && loudly)
             {
                 PlayState.PlaySound("ShotHit");
-                PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.125f, transform.position.x + 0.125f),
-                    Random.Range(transform.position.y - 0.125f, transform.position.y + 0.125f)), "explosion", new float[] { 1 });
+                PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.25f, transform.position.x + 0.25f),
+                    Random.Range(transform.position.y - 0.25f, transform.position.y + 0.25f)), "explosion", new float[] { 1 });
             }
             isActive = false;
             sprite.enabled = false;

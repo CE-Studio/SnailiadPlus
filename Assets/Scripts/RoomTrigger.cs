@@ -252,9 +252,10 @@ public class RoomTrigger : MonoBehaviour
         initializedEffects = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            if (transform.GetChild(i).name == "Breakable Block")
+            if (transform.GetChild(i).name.Contains("Breakable Block"))
                 transform.GetChild(i).GetComponent<BreakableBlock>().Despawn();
-            Destroy(transform.GetChild(i).gameObject);
+            else
+                Destroy(transform.GetChild(i).gameObject);
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++)
@@ -288,12 +289,22 @@ public class RoomTrigger : MonoBehaviour
                         case 4:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blob"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 5:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blub"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 11:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
                             break;
                         case 12:
                             GameObject reversedBlueSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
                             reversedBlueSpikey.GetComponent<Spikey1>().rotation = true;
+                            break;
+                        case 13:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Orange Spikey"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 14:
+                            GameObject reversedOrangeSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Orange Spikey"), worldPos, Quaternion.identity, transform);
+                            reversedOrangeSpikey.GetComponent<Spikey2>().rotation = true;
                             break;
                         case 27:
                             Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);

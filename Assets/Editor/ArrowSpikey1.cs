@@ -8,6 +8,8 @@ public class ArrowSpikey1 : Editor
 {
     Spikey1 enemyScript;
     SpriteRenderer sprite;
+    public Sprite CW;
+    public Sprite CCW;
 
     private void OnEnable()
     {
@@ -18,9 +20,6 @@ public class ArrowSpikey1 : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        if (enemyScript.rotation)
-            sprite.sprite = enemyScript.spritwCCW;
-        else
-            sprite.sprite = enemyScript.spriteCW;
+        sprite.sprite = enemyScript.rotation ? CCW : CW;
     }
 }

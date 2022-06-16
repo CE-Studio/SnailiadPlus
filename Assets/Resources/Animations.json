@@ -2414,6 +2414,18 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Bullet_enemy_peashooter",
+			"spriteName": "Bullets/Peashooter",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
+		{
 			"name": "Grass_idle",
 			"spriteName": "Entities/Grass",
 			"framerate": 0.0,
@@ -3009,6 +3021,62 @@
 		{
 			"name": "Enemy_spikey_blue_left",
 			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spikey_orange_down",
+			"spriteName": "Entities/Spikey2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spikey_orange_right",
+			"spriteName": "Entities/Spikey2",
+			"framerate": 6.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spikey_orange_up",
+			"spriteName": "Entities/Spikey2",
+			"framerate": 6.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spikey_orange_left",
+			"spriteName": "Entities/Spikey2",
 			"framerate": 6.0,
 			"frames": [
 				12,

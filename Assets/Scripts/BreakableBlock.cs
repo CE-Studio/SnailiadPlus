@@ -89,17 +89,18 @@ public class BreakableBlock : MonoBehaviour
             }
             else
             {
-                if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+                if (collision.GetComponent<Bullet>().bulletType != 1)
                 {
-                    PlayState.PlaySound("Ping");
-                    PlayState.armorPingPlayedThisFrame = true;
-                }
-                if ((PlayState.gameOptions[12] == 1 && !isSilent && collision.GetComponent<Bullet>().bulletType != 1) ||
-                    (PlayState.gameOptions[12] == 2 && collision.GetComponent<Bullet>().bulletType != 1) ||
-                    (PlayState.gameOptions[12] == 3 && !isSilent) || PlayState.gameOptions[12] == 4)
-                {
-                    if (sprite.sprite == PlayState.BlankTexture())
-                        sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", requiredWeapon - 1);
+                    if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+                    {
+                        PlayState.PlaySound("Ping");
+                        PlayState.armorPingPlayedThisFrame = true;
+                    }
+                    if ((PlayState.gameOptions[12] == 1 && !isSilent) || (PlayState.gameOptions[12] == 2 && isSilent))
+                    {
+                        if (sprite.sprite == PlayState.BlankTexture())
+                            sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", requiredWeapon - 1);
+                    }
                 }
             }
         }

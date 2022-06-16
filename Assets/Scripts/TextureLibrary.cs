@@ -22,6 +22,7 @@ public class TextureLibrary : ScriptableObject
         "TitleFont",
 
         "Bullets/Boomerang",
+        "Bullets/EnemyDonut",
         "Bullets/Peashooter",
         "Bullets/RainbowWave",
 
@@ -35,6 +36,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/SnailNpc",
         "Entities/SnailNpcColor",
         "Entities/Spikey1",
+        "Entities/Spikey2",
         "Entities/TurtleNpc",
 
         "Items/Boomerang",

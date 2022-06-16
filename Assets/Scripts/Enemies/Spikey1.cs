@@ -20,9 +20,6 @@ public class Spikey1 : Enemy
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
     private RaycastHit2D groundCheck;
-
-    public Sprite spriteCW;
-    public Sprite spritwCCW;
     
     private void Awake()
     {
@@ -30,12 +27,6 @@ public class Spikey1 : Enemy
             return;
 
         Spawn(70, 2, 0, true, new Vector2(0.95f, 0.95f));
-        box.size = new Vector2(0.95f, 0.95f);
-        attack = 2;
-        defense = 0;
-        maxHealth = 70;
-        health = 70;
-        letsPermeatingShotsBy = true;
 
         anim.Add("Enemy_spikey_blue_down");
         anim.Add("Enemy_spikey_blue_right");

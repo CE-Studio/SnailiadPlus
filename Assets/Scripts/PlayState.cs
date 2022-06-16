@@ -83,6 +83,7 @@ public class PlayState
     public static bool isTalking = false;
     public static bool hasJumped = false;
     public static Vector2 positionOfLastRoom = Vector2.zero;
+    public static int enemyBulletPointer = 0;
 
     public static int importJobs = 0;
 
@@ -135,6 +136,7 @@ public class PlayState
     public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
     public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
+    public static GameObject enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
 
     public struct RoomEntity
     {
@@ -343,7 +345,7 @@ public class PlayState
         0,  //  9 - Texture pack ID (any positive int, 0 for default)
         0,  // 10 - Music pack ID (any positive int, 0 for default)
         5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
-        0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious on permeating hit, 2 = all on permeating hit, 3 = obvious on any hit, 4 = all on any hit)
+        0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious, 2 = all)
         0,  // 13 - Secret tile visibility (boolean)
         2   // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
     };
@@ -354,6 +356,20 @@ public class PlayState
     public struct OptionData
     {
         public int[] options;
+    }
+
+    public static string[] currentPacks = new string[]
+    {
+        "DEFAULT", // Texture
+        "DEFAULT", // Sound
+        "DEFAULT", // Music
+        "DEFAULT"  // Text
+    };
+
+    [Serializable]
+    public struct PackData
+    {
+        public string[] packs;
     }
 
     [Serializable]
@@ -403,6 +419,7 @@ public class PlayState
         public GameSaveData profile2;
         public GameSaveData profile3;
         public OptionData options;
+        public PackData packs;
         public ControlData controls;
         public RecordData records;
     }
@@ -1111,6 +1128,13 @@ public class PlayState
                 options = gameOptions
             };
         }
+        else if (dataType == "packs")
+        {
+            gameData.packs = new PackData
+            {
+                packs = currentPacks
+            };
+        }
         else if (dataType == "records")
         {
             gameData.records = new RecordData
@@ -1280,6 +1304,67 @@ public class PlayState
         }
     }
 
+    public static void LoadPacks()
+    {
+        if (currentPacks.Length == gameData.packs.packs.Length)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
+                if (gameData.packs.packs[i] != "DEFAULT")
+                {
+                    string path = Application.persistentDataPath + "/" + packType + "Packs/" + gameData.packs.packs[i];
+                    if (Directory.Exists(path))
+                    {
+                        switch (packType)
+                        {
+                            case "Texture":
+                                textureLibrary.BuildSpriteSizeLibrary(path + "/SpriteSizes.json");
+                                textureLibrary.BuildAnimationLibrary(path + "/Animations.json");
+                                textureLibrary.BuildLibrary(path);
+                                textureLibrary.BuildTilemap();
+                                break;
+                            case "Sound":
+                                soundLibrary.BuildLibrary(path);
+                                break;
+                            case "Music":
+                                musicLibrary.BuildOffsetLibrary(path + "/MusicLoopOffsets.json");
+                                musicLibrary.BuildLibrary(path);
+                                break;
+                            case "Text":
+                                textLibrary.BuildLibrary(path + "/Text.json");
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    switch (packType)
+                    {
+                        case "Texture":
+                            textureLibrary.BuildDefaultSpriteSizeLibrary();
+                            textureLibrary.BuildDefaultLibrary();
+                            textureLibrary.BuildDefaultAnimLibrary();
+                            textureLibrary.BuildTilemap();
+                            break;
+                        case "Sound":
+                            soundLibrary.BuildDefaultLibrary();
+                            break;
+                        case "Music":
+                            musicLibrary.BuildDefaultLibrary();
+                            musicLibrary.BuildDefaultOffsetLibrary();
+                            break;
+                        case "Text":
+                            textLibrary.BuildDefaultLibrary();
+                            break;
+                    }
+                }
+            }
+        }
+        else
+            currentPacks = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" };
+    }
+
     public static void LoadControls()
     {
         if (Control.inputs.Length == gameData.controls.controls.Length)
@@ -1358,5 +1443,19 @@ public class PlayState
             loadingIcon.GetComponent<AnimationModule>().Stop();
             loadingIcon.SetActive(false);
         }
+    }
+
+    public static void ShootEnemyBullet(Vector2 newOrigin, int type, Vector2 direction, float newSpeed)
+    {
+        if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive)
+        {
+            enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, direction, newSpeed);
+            enemyBulletPointer = (enemyBulletPointer + 1) % enemyBulletPool.transform.childCount;
+        }
+    }
+
+    public static Vector2 DirectionBetween(Vector2 a, Vector2 b)
+    {
+        return (b - a).normalized;
     }
 }
