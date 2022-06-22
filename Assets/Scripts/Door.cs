@@ -6,13 +6,10 @@ public class Door : MonoBehaviour
 {
     public int doorWeapon;
     public bool locked;
+    public int bossLock;
     public int direction;
-    public int state;
-    // -1 = despawned
-    //  0 = opened from shot
-    //  1 = opened from entrance through
-    //  2 = closed upon spawn
-    //  3 = closed after entrance through
+    private bool openAfterBossDefeat = false;
+    private float bossUnlockDelay = 3.5f;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -47,8 +44,9 @@ public class Door : MonoBehaviour
     public void Spawn(int[] spawnData)
     {
         doorWeapon = spawnData[0];
-        locked = spawnData[1] == 1;
-        direction = spawnData[2];
+        locked = spawnData[1] == 1 && PlayState.IsBossAlive(spawnData[2]);
+        bossLock = spawnData[2];
+        direction = spawnData[3];
 
         if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 2)
             SetState1();
@@ -66,6 +64,19 @@ public class Door : MonoBehaviour
         else if (direction == 2)
         {
             sprite.flipX = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (locked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat)
+        {
+            bossUnlockDelay -= Time.deltaTime;
+            if (bossUnlockDelay < 0)
+            {
+                SetState0();
+                openAfterBossDefeat = true;
+            }
         }
     }
 

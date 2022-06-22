@@ -18,8 +18,7 @@ public class Bullet : MonoBehaviour
     public GameObject player;
     public GameObject cam;
 
-    private readonly float diagOffsetX = 0.75f;
-    private readonly float diagOffsetY = 0.65f;
+    private readonly Vector2 diagonalAim = new Vector2(Mathf.Cos(40 * Mathf.Deg2Rad), Mathf.Sin(40 * Mathf.Deg2Rad));
     
     void Start()
     {
@@ -233,7 +232,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNW()
     {
-        transform.position = new Vector2(transform.position.x + (-diagOffsetX * velocity), transform.position.y + (diagOffsetY * velocity));
+        transform.position = new Vector2(transform.position.x + (-diagonalAim.x * velocity), transform.position.y + (diagonalAim.y * velocity));
     }
 
     private void MoveN()
@@ -243,7 +242,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveNE()
     {
-        transform.position = new Vector2(transform.position.x + (diagOffsetX * velocity), transform.position.y + (diagOffsetY * velocity));
+        transform.position = new Vector2(transform.position.x + (diagonalAim.x * velocity), transform.position.y + (diagonalAim.y * velocity));
     }
 
     private void MoveW()
@@ -258,7 +257,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveSW()
     {
-        transform.position = new Vector2(transform.position.x + (-diagOffsetX * velocity), transform.position.y + (-diagOffsetY * velocity));
+        transform.position = new Vector2(transform.position.x + (-diagonalAim.x * velocity), transform.position.y + (-diagonalAim.y * velocity));
     }
 
     private void MoveS()
@@ -268,6 +267,6 @@ public class Bullet : MonoBehaviour
 
     private void MoveSE()
     {
-        transform.position = new Vector2(transform.position.x + (diagOffsetX * velocity), transform.position.y + (-diagOffsetY * velocity));
+        transform.position = new Vector2(transform.position.x + (diagonalAim.x * velocity), transform.position.y + (-diagonalAim.y * velocity));
     }
 }

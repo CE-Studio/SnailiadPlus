@@ -28,9 +28,6 @@ public class Player : MonoBehaviour
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public Rigidbody2D rb;
-    public AudioSource sfx;
-    public AudioClip hurt;
-    public AudioClip die;
     public GameObject bulletPool;
     public Sprite blank;
     public Sprite smallBlank;
@@ -82,7 +79,6 @@ public class Player : MonoBehaviour
         anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
-        sfx = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
 
         weaponIcons = new SpriteRenderer[]
@@ -235,8 +231,6 @@ public class Player : MonoBehaviour
                 areaText[0].color = new Color32(255, 255, 255, 0);
                 areaText[1].color = new Color32(0, 0, 0, 0);
             }
-
-            sfx.volume = PlayState.gameOptions[0] * 0.1f;
         }
 
         // Audiosource volume control
@@ -626,33 +620,45 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator StunTimer()
+    public void HitFor(int damage)
     {
+        if (stunned || inDeathCutscene)
+            return;
+
+        if (health - damage <= 0)
+            StartCoroutine(nameof(DieAndRespawn));
+        else
+            StartCoroutine(StunTimer(damage));
+    }
+
+    public IEnumerator StunTimer(int damage)
+    {
+        if (shelled && PlayState.CheckForItem("Shell Shield"))
+            PlayState.PlaySound("Ping");
+        else
+        {
+            health = Mathf.RoundToInt(Mathf.Clamp(health - damage, 0, Mathf.Infinity));
+            UpdateHearts();
+            PlayState.PlaySound("Hurt");
+        }
         stunned = true;
-        sfx.PlayOneShot(hurt);
-        UpdateHearts();
         float timer = 0;
         while (timer < 1)
         {
             if (PlayState.gameState == "Game")
             {
                 sprite.enabled = !sprite.enabled;
-                timer += 0.02f;
+                timer += Time.deltaTime;
             }
             else if (PlayState.gameState == "Menu")
                 timer = 1;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
         if (PlayState.gameState != "Menu")
         {
             sprite.enabled = true;
             stunned = false;
         }
-    }
-
-    public void BecomeStunned()
-    {
-        StartCoroutine(nameof(StunTimer));
     }
 
     public void FlashItemText(string itemName)
@@ -846,7 +852,7 @@ public class Player : MonoBehaviour
         inDeathCutscene = true;
         box.enabled = false;
         PlayState.paralyzed = true;
-        sfx.PlayOneShot(die);
+        PlayState.PlaySound("Death");
         float timer = 0;
         bool hasStartedTransition = false;
         Vector3 fallDir = new Vector3(0.125f, 0.35f, 0);
@@ -865,6 +871,13 @@ public class Player : MonoBehaviour
             }
         }
         yield return new WaitForEndOfFrame();
+        if (PlayState.positionOfLastRoom == PlayState.positionOfLastSave)
+        {
+            Transform deathLocation = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+            deathLocation.GetComponent<Collider2D>().enabled = true;
+            deathLocation.GetComponent<RoomTrigger>().active = true;
+            deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
+        }
         transform.position = PlayState.respawnCoords;
         inDeathCutscene = false;
         box.enabled = true;
@@ -873,11 +886,6 @@ public class Player : MonoBehaviour
         UpdateHearts();
         yield return new WaitForEndOfFrame();
         PlayState.ScreenFlash("Room Transition");
-    }
-
-    public void Die()
-    {
-        StartCoroutine(nameof(DieAndRespawn));
     }
 
     public void ExitShell()

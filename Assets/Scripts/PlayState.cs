@@ -83,6 +83,7 @@ public class PlayState
     public static bool isTalking = false;
     public static bool hasJumped = false;
     public static Vector2 positionOfLastRoom = Vector2.zero;
+    public static Vector2 positionOfLastSave = Vector2.zero;
     public static int enemyBulletPointer = 0;
 
     public static int importJobs = 0;
@@ -103,19 +104,19 @@ public class PlayState
             (AudioClip)Resources.Load("Sounds/Music/MareCarelia")
         }
     };
-    public static readonly float[][] musicLoopOffsets = new float[][]
-    {
-        new float[] // Snail Town
-        {
-            0,           // End-of-intro loop point (in seconds)
-            40.5067125f  // End time (in seconds)
-        },
-        new float[] // Mare Carelia
-        {
-            0,
-            41.154264f
-        }
-    };
+    //public static readonly float[][] musicLoopOffsets = new float[][]
+    //{
+    //    new float[] // Snail Town
+    //    {
+    //        0,           // End-of-intro loop point (in seconds)
+    //        40.5067125f  // End time (in seconds)
+    //    },
+    //    new float[] // Mare Carelia
+    //    {
+    //        0,
+    //        41.154264f
+    //    }
+    //};
     public static int currentArea = -1;
     public static int currentSubzone = -1;
 
@@ -1071,12 +1072,21 @@ public class PlayState
     public static int GetItemPercentage()
     {
         int itemsFound = 0;
-        foreach (int itemStatus in itemCollection)
+        int totalCount = 0;
+        for (int i = 0; i < itemCollection.Length; i++)
         {
-            if (itemStatus == 1)
-                itemsFound++;
+            if (!((currentCharacter == "Sluggy" || currentCharacter == "Leechy") && i == 5))
+            {
+                totalCount++;
+                itemsFound += itemCollection[i] == 1 ? 1 : 0;
+            }
         }
-        return Mathf.FloorToInt(((float)itemsFound / (float)itemCollection.Length) * 100);
+        //foreach (int itemStatus in itemCollection)
+        //{
+        //    if (itemStatus == 1)
+        //        itemsFound++;
+        //}
+        return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
     }
 
     public static void SetMapTile(Vector2 pos, bool state)

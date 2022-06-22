@@ -68,6 +68,11 @@
 			"height": 10
 		},
 		{
+			"name": "Entities/Bat",
+			"width": 32,
+			"height": 16
+		},
+		{
             "name": "Entities/Blob",
             "width": 16,
             "height": 16
@@ -78,12 +83,27 @@
             "height": 16
         },
 		{
+            "name": "Entities/Chirpy1",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Chirpy2",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/Floatspike1",
             "width": 16,
             "height": 16
         },
 		{
             "name": "Entities/Grass",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/IceSpike",
             "width": 16,
             "height": 16
         },
@@ -150,6 +170,16 @@
         },
 		{
             "name": "Items/RainbowWave",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/ShellShield",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/Shelmet",
             "width": 32,
             "height": 32
         },

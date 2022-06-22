@@ -7,6 +7,7 @@ public class RoomTrigger : MonoBehaviour
 {
     public BoxCollider2D box;
     public bool active = true;
+    private float initializationBuffer = 0;
 
     public Vector2 parallaxForeground2Modifier = Vector2.zero;
     public Vector2 parallaxForeground1Modifier = Vector2.zero;
@@ -74,6 +75,9 @@ public class RoomTrigger : MonoBehaviour
     {
         if (!active)
         {
+            if (initializationBuffer > 0)
+                initializationBuffer -= Time.deltaTime;
+
             int effectVarIndex = 0;
             foreach (string effect in environmentalEffects)
             {
@@ -121,11 +125,14 @@ public class RoomTrigger : MonoBehaviour
                     waterLevel[WaterPoint(PlayState.player.transform.position.x)].y;
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
-                    PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
-                    if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+                    if (initializationBuffer <= 0)
                     {
-                        for (int i = Random.Range(2, 8); i > 0; i--)
-                            PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
+                        PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
+                        if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+                        {
+                            for (int i = Random.Range(2, 8); i > 0; i--)
+                                PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
+                        }
                     }
                     PlayState.playerScript.underwater = !PlayState.playerScript.underwater;
                 }
@@ -193,6 +200,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;
             Vector2 thisTriggerPos = new Vector2(areaID, transform.GetSiblingIndex());
+            initializationBuffer = 0.25f;
             if (thisTriggerPos != PlayState.positionOfLastRoom)
             {
                 Transform previousTrigger = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
@@ -292,18 +300,24 @@ public class RoomTrigger : MonoBehaviour
                         case 5:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blub"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 7:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (blue)"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 10:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (blue) Generator"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 11:
-                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (blue)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 12:
-                            GameObject reversedBlueSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Blue Spikey"), worldPos, Quaternion.identity, transform);
+                            GameObject reversedBlueSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (blue)"), worldPos, Quaternion.identity, transform);
                             reversedBlueSpikey.GetComponent<Spikey1>().rotation = true;
                             break;
                         case 13:
-                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Orange Spikey"), worldPos, Quaternion.identity, transform);
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (orange)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 14:
-                            GameObject reversedOrangeSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Orange Spikey"), worldPos, Quaternion.identity, transform);
+                            GameObject reversedOrangeSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (orange)"), worldPos, Quaternion.identity, transform);
                             reversedOrangeSpikey.GetComponent<Spikey2>().rotation = true;
                             break;
                         case 27:
@@ -345,8 +359,30 @@ public class RoomTrigger : MonoBehaviour
                             box.size = new Vector2(1, 1);
                             Physics2D.IgnoreCollision(box, PlayState.player.GetComponent<BoxCollider2D>(), true);
                             break;
+                        case 377:
+                            GameObject iceSpikeDown = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
+                            iceSpikeDown.GetComponent<IceSpike>().Spawn(0);
+                            break;
+                        case 378:
+                            GameObject iceSpikeUp = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
+                            iceSpikeUp.GetComponent<IceSpike>().Spawn(2);
+                            break;
+                        case 379:
+                            GameObject iceSpikeLeft = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
+                            iceSpikeLeft.GetComponent<IceSpike>().Spawn(1);
+                            break;
+                        case 380:
+                            GameObject iceSpikeRight = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
+                            iceSpikeRight.GetComponent<IceSpike>().Spawn(3);
+                            break;
                         case 389:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 397:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (aqua)"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 414:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
                         case 439:
                             for (int i = 0; i <= 1; i++)
@@ -363,6 +399,9 @@ public class RoomTrigger : MonoBehaviour
                         case 446:
                             GameObject babyfishPink = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
                             babyfishPink.GetComponent<Babyfish>().AssignType(1);
+                            break;
+                        case 451:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (aqua) Generator"), worldPos, Quaternion.identity, transform);
                             break;
                     }
                 }
@@ -398,6 +437,7 @@ public class RoomTrigger : MonoBehaviour
                 case "Door":
                     newConditions.Add(obj.GetComponent<Door>().doorWeapon);
                     newConditions.Add(obj.GetComponent<Door>().locked ? 1 : 0);
+                    newConditions.Add(obj.GetComponent<Door>().bossLock);
                     newConditions.Add(obj.GetComponent<Door>().direction);
                     break;
                 case "Fake Boundary":

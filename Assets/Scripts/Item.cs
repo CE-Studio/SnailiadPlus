@@ -69,6 +69,18 @@ public class Item : MonoBehaviour
                     animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
+                case 5:
+                    if (PlayState.currentCharacter == "Blobby")
+                    {
+                        animName = "Item_shelmet";
+                        box.size = new Vector2(1.45f, 1.825f);
+                    }
+                    else
+                    {
+                        animName = "Item_shellShield";
+                        box.size = new Vector2(1.45f, 1.675f);
+                    }
+                    break;
                 default:
                     animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
@@ -171,7 +183,9 @@ public class Item : MonoBehaviour
                 output = PlayState.GetText("item_gravitySnail").Replace("_", species);
                 break;
             case "Full-Metal Snail":
-                if (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Blobby" || PlayState.currentCharacter == "Leechy")
+                if (PlayState.currentCharacter == "Blobby")
+                    buffer += "fullMetalSnail_blob";
+                else if (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy")
                     buffer += "fullMetalSnail_noShell";
                 else
                     buffer += "fullMetalSnail_generic";

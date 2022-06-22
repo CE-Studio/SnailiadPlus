@@ -27,10 +27,14 @@ public class TextureLibrary : ScriptableObject
         "Bullets/RainbowWave",
 
         "Entities/Babyfish",
+        "Entities/Bat",
         "Entities/Blob",
         "Entities/BreakableIcons",
+        "Entities/Chirpy1",
+        "Entities/Chirpy2",
         "Entities/Floatspike1",
         "Entities/Grass",
+        "Entities/IceSpike",
         "Entities/PixelPeople",
         "Entities/PowerGrass",
         "Entities/SnailNpc",
@@ -44,6 +48,8 @@ public class TextureLibrary : ScriptableObject
         "Items/HelixFragment",
         "Items/Peashooter",
         "Items/RainbowWave",
+        "Items/ShellShield",
+        "Items/Shelmet",
 
         "Particles/Bubble",
         "Particles/Explosion",

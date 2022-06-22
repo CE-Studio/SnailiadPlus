@@ -14,6 +14,7 @@ public class SoundLibrary : ScriptableObject
 
     public string[] referenceList = new string[]
     {
+        "Chirp",
         "Death",
         "Dialogue0",
         "Dialogue1",

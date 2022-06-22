@@ -2448,6 +2448,29 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "PowerGrass_eaten",
+			"spriteName": "Entities/PowerGrass",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "PowerGrass_eaten",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
+		{
 			"name": "Item_peashooter",
 			"spriteName": "Items/Peashooter",
 			"framerate": 11.0,
@@ -2514,6 +2537,44 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_shellShield",
+			"spriteName": "Items/ShellShield",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				1,
+				1,
+				1,
+				2,
+				2,
+				3,
+				3,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_shelmet",
+			"spriteName": "Items/Shelmet",
+			"framerate": 16.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_helixFragment",
 			"spriteName": "Items/HelixFragment",
 			"framerate": 24.0,
@@ -2559,6 +2620,7 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		
 		{
 			"name": "NPC_idle",
 			"spriteName": "Entities/SnailNpc",
@@ -2730,6 +2792,29 @@
 				2
 			],
 			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_bat_idle",
+			"spriteName": "Entities/Bat",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_bat_fly",
+			"spriteName": "Entities/Bat",
+			"framerate": 6.0,
+			"frames": [
+				1,
+				2
+			],
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -2966,6 +3051,52 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_chirpy1_up",
+			"spriteName": "Entities/Chirpy1",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_chirpy1_down",
+			"spriteName": "Entities/Chirpy1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_chirpy2_up",
+			"spriteName": "Entities/Chirpy2",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_chirpy2_down",
+			"spriteName": "Entities/Chirpy2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_floatspike_black",
 			"spriteName": "Entities/Floatspike1",
 			"framerate": 0.0,
@@ -3087,6 +3218,50 @@
 			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_iceSpike_down",
+			"spriteName": "Entities/IceSpike",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Hazard_iceSpike_left",
+			"spriteName": "Entities/IceSpike",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Hazard_iceSpike_up",
+			"spriteName": "Entities/IceSpike",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Hazard_iceSpike_right",
+			"spriteName": "Entities/IceSpike",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		
 		{

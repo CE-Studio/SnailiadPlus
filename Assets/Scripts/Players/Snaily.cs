@@ -1398,6 +1398,8 @@ public class Snaily : MonoBehaviour
     // This function is called whenever a shelled character asks to enter/exit their shell
     public void ToggleShell()
     {
+        if (player.stunned && !shelled)
+            return;
         if (shelled)
         {
             box.offset = Vector2.zero;

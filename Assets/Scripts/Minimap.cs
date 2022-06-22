@@ -12,7 +12,7 @@ public class Minimap : MonoBehaviour
     private int lastCellID;
 
     private GameObject[] masks = new GameObject[] { };
-    private int[] maskIDoffsets = new int[]
+    private readonly int[] maskIDoffsets = new int[]
     {
         -55, -54, -53, -52, -51, -50, -49,
         -29, -28, -27, -26, -25, -24, -23,
@@ -110,6 +110,11 @@ public class Minimap : MonoBehaviour
                     masks[i].GetComponent<SpriteMask>().enabled = true;
                     anims[i + 4].Play("Minimap_icon_blank", true);
                 }
+            }
+            else
+            {
+                masks[i].GetComponent<SpriteMask>().enabled = true;
+                anims[i + 4].Play("Minimap_icon_blank", true);
             }
         }
     }

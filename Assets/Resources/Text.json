@@ -1386,6 +1386,11 @@
 			"value": 0
 		},
 		{
+			"name": "item_fullMetalSnail_blob",
+			"text": "Non-Newtonian _",
+			"value": 0
+		},
+		{
 			"name": "item_gravityShock",
 			"text": "Gravity Shock",
 			"value": 0
@@ -1628,6 +1633,71 @@
 		{
 			"name": "room_01_tower2",
 			"text": "Frost Tower",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave1",
+			"text": "Heart of the|Sea",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave2",
+			"text": "Daily helping|of calcium",
+			"value": 0
+		},
+		{
+			"name": "room_01_hub2",
+			"text": "Rocky Peaks",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave3",
+			"text": "Dig, Snaily, Dig",
+			"value": 0
+		},
+		{
+			"name": "room_01_snowSave",
+			"text": "Chilly Checkpoint",
+			"value": 0
+		},
+		{
+			"name": "room_01_iceHall",
+			"text": "Frozen River",
+			"value": 0
+		},
+		{
+			"name": "room_01_tower3",
+			"text": "Still Not|Brinstar",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave4",
+			"text": "Skywatcher's|Cave",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave5",
+			"text": "Skywatcher's|Tunnel",
+			"value": 0
+		},
+		{
+			"name": "room_01_cave6",
+			"text": "Skywatcher's|Loot",
+			"value": 0
+		},
+		{
+			"name": "room_01_hub3",
+			"text": "Dirt Diode",
+			"value": 0
+		},
+		{
+			"name": "room_01_angle",
+			"text": "Angle Path,|Carelia-Side",
+			"value": 0
+		},
+		{
+			"name": "room_01_hub4",
+			"text": "The Summit",
 			"value": 0
 		},
 		{
@@ -1986,6 +2056,21 @@
 			"value": 1
 		},
 		{
+			"name": "npc_20_default_0",
+			"text": "{P}!!  {p|0.25}{eff|wave}Yay!!",
+			"value": 1
+		},
+		{
+			"name": "npc_20_secret_0",
+			"text": "There's some kind of secret{nl}passage to the right, {p|0.1}but I'm{nl}not sure how to get through...",
+			"value": 1
+		},
+		{
+			"name": "npc_20_findSnails_0",
+			"text": "I hope you can find all the{nl}other snails!  {p|0.2}They're not all{nl}as brave as me, you know!!",
+			"value": 1
+		},
+		{
 			"name": "npc_22_default_0",
 			"text": "{eff|Shake}Thorgle Borgle!!!!!!!",
 			"value": 1
@@ -2028,6 +2113,41 @@
 		{
 			"name": "npc_25_explainMap_0",
 			"text": "Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!",
+			"value": 1
+		},
+		{
+			"name": "npc_26_default_0",
+			"text": "With this \"Shell Shield\", {p|0.1}you{nl}won't take any damage when you{nl}hide in your shell!",
+			"value": 1
+		},
+		{
+			"name": "npc_26_blobby_0",
+			"text": "Take this \"Shelmet\"! {p|0.25}You{nl}can hide in it to avoid{nl}taking damage!",
+			"value": 1
+		},
+		{
+			"name": "npc_41_default_0",
+			"text": "{PF}, you came{nl}back!!  {p|0.15}{eff|wave}Yay!!",
+			"value": 1
+		},
+		{
+			"name": "npc_41_warnAboutSB_0",
+			"text": "Watch out, {P}!!{nl}{p|0.25}A {col|0200}fierce monster {col|0312}is hiding{nl}in the next room!!",
+			"value": 1
+		},
+		{
+			"name": "npc_41_greyDoor_0",
+			"text": "Oh hey, {p|0.15}that {col|0112}grey door {col|0312}below{nl}and to the left opened up!{nl}{p|0.3}I wonder what's inside?",
+			"value": 1
+		},
+		{
+			"name": "npc_41_babySnails_0",
+			"text": "Good luck, {P}!  {p|0.15}I'll wait{nl}here for you!!  {p|0.25}Let's have lots{nl}of baby snails later, okay?",
+			"value": 1
+		},
+		{
+			"name": "npc_41_goodLuck_0",
+			"text": "Good luck, {P}!",
 			"value": 1
 		},
 		{

@@ -76,7 +76,13 @@ public class NPC : MonoBehaviour
         anim.Add("NPC_idle");
         anim.Add("NPC_shell");
         anim.Add("NPC_sleep");
-        anim.Play("NPC_idle");
+        if (ID == 26 && (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy"))
+        {
+            anim.Play("NPC_sleep");
+            sprite.flipX = PlayState.player.transform.position.x < transform.position.x;
+        }
+        else
+            anim.Play("NPC_idle");
         if (upsideDown)
         {
             sprite.flipY = true;
@@ -132,7 +138,7 @@ public class NPC : MonoBehaviour
             if (anim.isPlaying)
                 sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 
-            if (PlayState.player.transform.position.x < transform.position.x)
+            if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
             {
                 sprite.flipX = true;
                 speechBubbleSprite.flipX = false;
@@ -151,6 +157,7 @@ public class NPC : MonoBehaviour
                     string boxColor = "0005";
                     textToSend.Clear();
                     portraitStateList.Clear();
+                    bool intentionallyEmpty = false;
                     switch (ID)
                     {
                         case 0:
@@ -158,7 +165,7 @@ public class NPC : MonoBehaviour
                                 AddText("explainWallClimb");
                             else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainPeashooter");
-                            else if (!PlayState.CheckForItem("Rainbow Wave"))
+                            else if (!PlayState.CheckForItem("Rainbow Wave") && !PlayState.CheckForItem("Debug Rainbow Wave"))
                                 AddText("explainBoomerang");
                             else if (!PlayState.CheckForItem("Devastator"))
                                 AddText("explainRainbowWave");
@@ -370,6 +377,15 @@ public class NPC : MonoBehaviour
                                 AddText("default");
                             break;
 
+                        case 20:
+                            if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                AddText("secret");
+                            else if (PlayState.GetItemPercentage() < 100)
+                                AddText("findSnails");
+                            else
+                                AddText("default");
+                            break;
+
                         case 22:
                             if (PlayState.GetItemPercentage() < 100)
                                 AddText("thorgleBorgle");
@@ -401,6 +417,26 @@ public class NPC : MonoBehaviour
                                 AddText("default");
                             break;
 
+                        case 26:
+                            if (PlayState.currentCharacter == "Blobby")
+                                AddText("blobby");
+                            else if (PlayState.currentCharacter == "Snaily" || PlayState.currentCharacter == "Upside" || PlayState.currentCharacter == "Leggy")
+                                AddText("default");
+                            else
+                                intentionallyEmpty = true;
+                            break;
+
+                        case 41:
+                            if (PlayState.IsBossAlive(0))
+                                AddText("warnAboutSB");
+                            else if (!PlayState.CheckForItem("Boomerang"))
+                                AddText("greyDoor");
+                            else if (PlayState.IsBossAlive(3))
+                                AddText(PlayState.currentCharacter switch { "Snaily" => "babySnails", "Upside" => "babySnails", _ => "goodLuck" });
+                            else
+                                AddText("default");
+                            break;
+
                         case 43:
                             if (!PlayState.CheckForItem("Gravity Snail"))
                                 AddText("cantCorner");
@@ -428,6 +464,8 @@ public class NPC : MonoBehaviour
                         default:
                             break;
                     }
+                    if (intentionallyEmpty)
+                        return;
                     if (textToSend.Count == 0)
                         textToSend.Add(PlayState.GetText("npc_?"
                             .Replace("##", PlayState.GetItemPercentage().ToString())

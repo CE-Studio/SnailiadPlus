@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour
     public int maxHealth;
     public int attack;
     public int defense;
-    public List<int> resistances;
+    public List<int> weaknesses;  // Enemies take double damage from bullet types in this list
+    public List<int> resistances; // Enemies take half damage from bullet types in this list
+    public List<int> immunities;  // Enemies resist all damage from bullet types in this list
     public bool letsPermeatingShotsBy;
     public bool stunInvulnerability = false;
     public string elementType; // Currently supports "ice" and "fire"
@@ -27,7 +29,7 @@ public class Enemy : MonoBehaviour
     private List<GameObject> intersectingBullets = new List<GameObject>();
     public LayerMask enemyCollide;
     
-    public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> res = null)
+    public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -45,36 +47,37 @@ public class Enemy : MonoBehaviour
         maxHealth = hp;
         attack = atk;
         defense = def;
+        weaknesses = wea;
         resistances = res;
+        immunities = imm;
         letsPermeatingShotsBy = piercable;
         if (box != null)
             box.size = hitboxSize;
 
+        if (weaknesses == null)
+            weaknesses = new List<int> { -1 };
         if (resistances == null)
             resistances = new List<int> { -1 };
+        if (immunities == null)
+            immunities = new List<int> { -1 };
     }
 
     private void LateUpdate()
     {
         if (intersectingPlayer && !PlayState.playerScript.stunned)
-        {
-            PlayState.playerScript.health = Mathf.RoundToInt(Mathf.Clamp(PlayState.playerScript.health - attack, 0, Mathf.Infinity));
-            if (PlayState.playerScript.health <= 0)
-                PlayState.playerScript.Die();
-            else
-                PlayState.playerScript.BecomeStunned();
-        }
+            PlayState.playerScript.HitFor(attack);
 
-        if (!stunInvulnerability)
+        if (!stunInvulnerability && OnScreen())
         {
             List<GameObject> bulletsToDespawn = new List<GameObject>();
             bool killFlag = false;
             foreach (GameObject bullet in intersectingBullets)
             {
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
-                if (!resistances.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
+                if (!immunities.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
                 {
-                    health -= bulletScript.damage - defense;
+                    health -= Mathf.FloorToInt((bulletScript.damage - defense) *
+                        (weaknesses.Contains(bulletScript.bulletType) ? 2 : 1) * (resistances.Contains(bulletScript.bulletType) ? 0.5f : 1));
                     if (health <= 0)
                         killFlag = true;
                     else

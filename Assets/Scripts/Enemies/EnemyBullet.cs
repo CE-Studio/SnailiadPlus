@@ -76,17 +76,9 @@ public class EnemyBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerCollide") && bulletType == 0)
-        {
             Despawn();
-        }
         else if (collision.CompareTag("Player") && !PlayState.playerScript.stunned)
-        {
-            PlayState.playerScript.health = Mathf.RoundToInt(Mathf.Clamp(PlayState.playerScript.health - damage, 0, Mathf.Infinity));
-            if (PlayState.playerScript.health <= 0)
-                PlayState.playerScript.Die();
-            else
-                PlayState.playerScript.BecomeStunned();
-        }
+            PlayState.playerScript.HitFor(damage);
     }
 
     public void Despawn()

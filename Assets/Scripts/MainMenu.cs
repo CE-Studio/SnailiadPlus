@@ -996,26 +996,28 @@ public class MainMenu : MonoBehaviour
                 PlayState.player.GetComponent<Snaily>().enabled = true;
                 PlayState.player.GetComponent<Snaily>().holdingJump = true;
                 break;
-                //case "Sluggy":
+                case "Sluggy":
                 //    PlayState.player.GetComponent<Sluggy>().enabled = true;
                 //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-                //    break;
-                //case "Snaily":
+                    PlayState.itemCollection[5] = 1;
+                    break;
+                case "Upside":
                 //    PlayState.player.GetComponent<Upside>().enabled = true;
                 //    PlayState.player.GetComponent<Upside>().holdingJump = true;
-                //    break;
-                //case "Snaily":
+                    break;
+                case "Leggy":
                 //    PlayState.player.GetComponent<Leggy>().enabled = true;
                 //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
-                //    break;
-                //case "Snaily":
+                    break;
+                case "Blobby":
                 //    PlayState.player.GetComponent<Blobby>().enabled = true;
                 //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
-                //    break;
-                //case "Snaily":
+                    break;
+                case "Leechy":
                 //    PlayState.player.GetComponent<Leechy>().enabled = true;
                 //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
-                //    break;
+                    PlayState.itemCollection[5] = 1;
+                    break;
         }
     }
 

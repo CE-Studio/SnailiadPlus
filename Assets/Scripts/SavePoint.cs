@@ -32,6 +32,7 @@ public class SavePoint : MonoBehaviour
                 anim.Play("Save_active");
                 PlayState.FlashSaveText();
                 PlayState.respawnCoords = transform.position;
+                PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
                 PlayState.WriteSave("game");
                 PlayState.WriteSave("records");
             }
