@@ -2716,6 +2716,171 @@
 		},
 		
 		{
+			"name": "Boss_shellbreaker_normal1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_normal2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_normal3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_fire1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_fire2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_fire3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_normal1",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_normal2",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_normal3",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_fire1",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_fire2",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_eyes_fire3",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_hand_1",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_hand_2",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_hand_3",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_babyfish1_normal",
 			"spriteName": "Entities/Babyfish",
 			"framerate": 0.0,
@@ -3488,6 +3653,87 @@
 				1,
 				0,
 				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_frame_idle",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_frame_hit",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_frame_despawn",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_bar_idle",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_bar_hit",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_bar_despawn",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "BossBar_data",
+			"spriteName": "UI/BossHealthBar",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				-124,
+				248,
+				1
 			],
 			"loop": false,
 			"loopStartFrame": 0,

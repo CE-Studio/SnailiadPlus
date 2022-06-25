@@ -78,6 +78,21 @@
             "height": 16
         },
 		{
+            "name": "Entities/Boss1",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Boss1Eyes",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Boss1Hand",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Entities/BreakableIcons",
             "width": 16,
             "height": 16
@@ -214,6 +229,11 @@
             "name": "UI/AchievementPanel",
             "width": 80,
             "height": 64
+        },
+		{
+            "name": "UI/BossHealthBar",
+            "width": 256,
+            "height": 16
         },
 		{
 			"name": "UI/DebugIcons",

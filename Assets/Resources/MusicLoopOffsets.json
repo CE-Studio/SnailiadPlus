@@ -1,6 +1,22 @@
 {
 	"offsetArray": [
 		{
+			"name": "Boss 1",
+			"offset": 0.0
+		},
+		{
+			"name": "Boss 2",
+			"offset": 0.0
+		},
+		{
+			"name": "Boss 3",
+			"offset": 0.0
+		},
+		{
+			"name": "Boss 4",
+			"offset": 0.0
+		},
+		{
 			"name": "Snail Town",
 			"offset": 0.0
 		},

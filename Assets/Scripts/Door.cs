@@ -161,7 +161,7 @@ public class Door : MonoBehaviour
 
     private IEnumerator WaitForClose()
     {
-        while (Vector2.Distance(transform.position, player.transform.position) < 4 && gameObject.activeSelf)
+        while (Vector2.Distance(transform.position, player.transform.position) < 4 && gameObject.activeSelf && !PlayState.inBossFight)
         {
             yield return new WaitForEndOfFrame();
         }

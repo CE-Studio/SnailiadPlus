@@ -104,19 +104,6 @@ public class PlayState
             (AudioClip)Resources.Load("Sounds/Music/MareCarelia")
         }
     };
-    //public static readonly float[][] musicLoopOffsets = new float[][]
-    //{
-    //    new float[] // Snail Town
-    //    {
-    //        0,           // End-of-intro loop point (in seconds)
-    //        40.5067125f  // End time (in seconds)
-    //    },
-    //    new float[] // Mare Carelia
-    //    {
-    //        0,
-    //        41.154264f
-    //    }
-    //};
     public static int currentArea = -1;
     public static int currentSubzone = -1;
 
@@ -149,22 +136,24 @@ public class PlayState
 
     public static GameObject[] TogglableHUDElements = new GameObject[]
     {
-        GameObject.Find("View/Minimap Panel"),
-        GameObject.Find("View/Hearts"),
-        GameObject.Find("View/Debug Keypress Indicators"),
-        GameObject.Find("View/Weapon Icons"),
-        GameObject.Find("View/Game Saved Text"),
-        GameObject.Find("View/Area Name Text"),
-        GameObject.Find("View/Item Get Text"),
-        GameObject.Find("View/Item Percentage Text"),
-        GameObject.Find("View/FPS Text"),
-        GameObject.Find("View/Time Text"),
-        GameObject.Find("View/Dialogue Box"),
-        GameObject.Find("View/Bottom Keys")
+        GameObject.Find("View/Minimap Panel"),             //  0
+        GameObject.Find("View/Hearts"),                    //  1
+        GameObject.Find("View/Debug Keypress Indicators"), //  2
+        GameObject.Find("View/Weapon Icons"),              //  3
+        GameObject.Find("View/Game Saved Text"),           //  4
+        GameObject.Find("View/Area Name Text"),            //  5
+        GameObject.Find("View/Item Get Text"),             //  6
+        GameObject.Find("View/Item Percentage Text"),      //  7
+        GameObject.Find("View/FPS Text"),                  //  8
+        GameObject.Find("View/Time Text"),                 //  9
+        GameObject.Find("View/Dialogue Box"),              // 10
+        GameObject.Find("View/Bottom Keys"),               // 11
+        GameObject.Find("View/Boss Health Bar")            // 12
     };
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
+    public static bool inBossFight = false;
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
@@ -699,6 +688,10 @@ public class PlayState
                     playerScript.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
                     playerScript.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
                 }
+                if (element.name == "Minimap Panel")
+                    element.SetActive(!inBossFight);
+                if (element.name == "Boss Health Bar")
+                    element.SetActive(true);
             }
         }
     }
@@ -1467,5 +1460,33 @@ public class PlayState
     public static Vector2 DirectionBetween(Vector2 a, Vector2 b)
     {
         return (b - a).normalized;
+    }
+
+    public static void SetCamFocus(Transform point)
+    {
+        cam.GetComponent<CamMovement>().focusPoint = point;
+    }
+
+    public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false)
+    {
+        inBossFight = state;
+        TogglableHUDElements[0].SetActive(!state);
+        if (!state && snapDespawnBar)
+        {
+            TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
+            TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else if (!state && !snapDespawnBar)
+        {
+            TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
+            TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
+        }
+        if (currentArea != 7)
+        {
+            if (state)
+                playerScript.UpdateMusic(musicID, 0, 1);
+            else
+                playerScript.UpdateMusic(currentArea, currentSubzone, 1);
+        }
     }
 }

@@ -59,6 +59,7 @@ public class PowerGrass : MonoBehaviour
                 {
                     box.enabled = false;
                     anim.Play("PowerGrass_eaten");
+                    sprite.enabled = false;
                 }
                 else
                     timer = biteTimeout;

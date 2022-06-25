@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CamMovement : MonoBehaviour
 {
+    public Transform focusPoint;
+
     void FixedUpdate()
     {
         if (PlayState.gameState != "Menu")
@@ -20,8 +22,8 @@ public class CamMovement : MonoBehaviour
             if (PlayState.gameState == "Game")
             {
                 transform.position = new Vector2(
-                    xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, PlayState.player.transform.position.x, 0.1f), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
-                    yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, PlayState.player.transform.position.y, 0.1f), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
+                    xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, focusPoint.position.x, 0.1f), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
+                    yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, focusPoint.position.y, 0.1f), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
             }
 
             Debug.DrawLine(

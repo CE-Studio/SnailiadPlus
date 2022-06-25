@@ -164,7 +164,10 @@ public class MainMenu : MonoBehaviour
 
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         cam = PlayState.cam.transform;
+        PlayState.SetCamFocus(PlayState.player.transform);
         music = GetComponent<AudioSource>();
+        PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
+        PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         selector = new GameObject[]
         {
             GameObject.Find("Selection Pointer"),
@@ -981,6 +984,7 @@ public class MainMenu : MonoBehaviour
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
         PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        PlayState.ToggleBossfightState(false, 0, true);
         fadingToIntro = false;
 
         PlayState.player.GetComponent<Snaily>().enabled = false;

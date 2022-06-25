@@ -29,6 +29,9 @@ public class TextureLibrary : ScriptableObject
         "Entities/Babyfish",
         "Entities/Bat",
         "Entities/Blob",
+        "Entities/Boss1",
+        "Entities/Boss1Eyes",
+        "Entities/Boss1Hand",
         "Entities/BreakableIcons",
         "Entities/Chirpy1",
         "Entities/Chirpy2",
@@ -58,6 +61,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Star",
 
         "UI/AchievementPanel",
+        "UI/BossHealthBar",
         "UI/DebugIcons",
         "UI/DebugKey",
         "UI/DialogueBox",

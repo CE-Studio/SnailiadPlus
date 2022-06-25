@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
     public Snaily playerScriptSnaily;
 
     public double nextLoopEvent;
+    private int offsetID;
 
     // FPS stuff
     int frameCount = 0;
@@ -71,6 +72,8 @@ public class Player : MonoBehaviour
     float areaTextTimer = 0;
     int lastAreaID = -1;
     TextMesh[] areaText;
+    public string currentBossName = "";
+    bool flashedBossName = false;
 
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()
@@ -210,6 +213,28 @@ public class Player : MonoBehaviour
                 areaText[0].text = areaName;
                 areaText[1].text = areaName;
             }
+            else if (currentBossName != "" && !flashedBossName)
+            {
+                areaText[0].text = currentBossName;
+                areaText[1].text = currentBossName;
+                areaTextTimer = 0;
+                flashedBossName = true;
+            }
+            else if (!PlayState.inBossFight && currentBossName != "")
+            {
+                if (currentBossName == PlayState.GetText("boss_moonSnail"))
+                {
+
+                }
+                else
+                {
+                    areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                    areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                    currentBossName = "";
+                    flashedBossName = false;
+                    areaTextTimer = 0;
+                }
+            }
             areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
             if (areaTextTimer < 0.5f)
             {
@@ -248,15 +273,15 @@ public class Player : MonoBehaviour
         if (time + 1 > nextLoopEvent)
         {
             float loadMakeupOffset = 0;
-            for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicParent.GetChild(PlayState.currentArea).childCount; i += 2)
+            for (int i = 0 + (PlayState.musFlag ? 0 : 1); i < PlayState.musicParent.GetChild(offsetID).childCount; i += 2)
             {
-                AudioSource source = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i).GetComponent<AudioSource>();
-                AudioSource altSource = PlayState.musicParent.GetChild(PlayState.currentArea).GetChild(i + (PlayState.musFlag ? 1 : -1)).GetComponent<AudioSource>();
-                source.time = PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset;
+                AudioSource source = PlayState.musicParent.GetChild(offsetID).GetChild(i).GetComponent<AudioSource>();
+                AudioSource altSource = PlayState.musicParent.GetChild(offsetID).GetChild(i + (PlayState.musFlag ? 1 : -1)).GetComponent<AudioSource>();
+                source.time = PlayState.musicLoopOffsetLibrary[offsetID].offset;
                 loadMakeupOffset = Mathf.Clamp(altSource.clip.length - altSource.time - 1, 0, Mathf.Infinity);
                 source.PlayScheduled(nextLoopEvent + loadMakeupOffset);
             }
-            nextLoopEvent += PlayState.musicLibrary.library[PlayState.currentArea + 1][0].length - PlayState.musicLoopOffsetLibrary[PlayState.currentArea].offset + loadMakeupOffset;
+            nextLoopEvent += PlayState.musicLibrary.library[offsetID + 1][0].length - PlayState.musicLoopOffsetLibrary[offsetID].offset + loadMakeupOffset;
             PlayState.musFlag = !PlayState.musFlag;
         }
     }
@@ -359,7 +384,8 @@ public class Player : MonoBehaviour
             {
                 GameObject newSourceParent = new GameObject();
                 newSourceParent.transform.parent = PlayState.musicParent;
-                newSourceParent.name = "Area " + i + " music group";
+                newSourceParent.name = (i < PlayState.musicLibrary.areaThemeOffset - 1) ? "Auxillary group " + i
+                    : "Area " + (i - PlayState.musicLibrary.areaThemeOffset + 1) + " music group";
                 for (int j = 0; j < PlayState.musicLibrary.library[i + 1].Length; j++)
                 {
                     for (int k = 0; k < 2; k++)
@@ -379,6 +405,7 @@ public class Player : MonoBehaviour
         }
         if (resetFlag != 3) // Change song
         {
+            offsetID = area + PlayState.musicLibrary.areaThemeOffset - 1;
             if (resetFlag >= 1)
             {
                 PlayState.musFlag = false;
@@ -390,7 +417,7 @@ public class Player : MonoBehaviour
                         sourceComponent.time = 0;
                         sourceComponent.mute = true;
                         string[] sourceName = source.name.Split(' ');
-                        if (i == area)
+                        if (i == offsetID)
                         {
                             if (int.Parse(sourceName[1]) == subzone)
                                 sourceComponent.mute = false;
@@ -403,19 +430,19 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
-                nextLoopEvent = AudioSettings.dspTime + PlayState.musicLibrary.library[area + 1][0].length;
+                nextLoopEvent = AudioSettings.dspTime + PlayState.musicLibrary.library[offsetID + 1][0].length;
             }
-            for (int i = 0; i * 2 < PlayState.musicParent.GetChild(area).childCount; i++)
+            for (int i = 0; i * 2 < PlayState.musicParent.GetChild(offsetID).childCount; i++)
             {
                 if (i == subzone)
                 {
-                    PlayState.musicParent.GetChild(area).GetChild(i * 2).GetComponent<AudioSource>().mute = false;
-                    PlayState.musicParent.GetChild(area).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = false;
+                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = false;
+                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = false;
                 }
                 else
                 {
-                    PlayState.musicParent.GetChild(area).GetChild(i * 2).GetComponent<AudioSource>().mute = true;
-                    PlayState.musicParent.GetChild(area).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = true;
+                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = true;
+                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = true;
                 }
             }
             PlayState.playingMusic = true;
@@ -878,6 +905,7 @@ public class Player : MonoBehaviour
             deathLocation.GetComponent<RoomTrigger>().active = true;
             deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
         }
+        PlayState.ToggleBossfightState(false, 0, true);
         transform.position = PlayState.respawnCoords;
         inDeathCutscene = false;
         box.enabled = true;

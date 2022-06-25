@@ -28,6 +28,8 @@ MonoBehaviour:
   - Entities/Babyfish
   - Entities/Bat
   - Entities/Blob
+  - Entities/Boss1
+  - Entities/Boss1Eyes
   - Entities/BreakableIcons
   - Entities/Chirpy1
   - Entities/Chirpy2
@@ -54,6 +56,7 @@ MonoBehaviour:
   - Particles/Splash
   - Particles/Star
   - UI/AchievementPanel
+  - UI/BossHealthBar
   - UI/DebugIcons
   - UI/DebugKey
   - UI/DialogueBox

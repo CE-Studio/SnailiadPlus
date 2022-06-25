@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sound Library
   m_EditorClassIdentifier: 
   library:
+  - {fileID: 8300000, guid: cfa105eaedf81aa49be768660328b539, type: 3}
   - {fileID: 8300000, guid: 5fc3789c4a47c214883e667438b8bf95, type: 3}
   - {fileID: 8300000, guid: 2d51383e8ac72ff4582a885fe27cf668, type: 3}
   - {fileID: 8300000, guid: 884caa321890a3443b907f7c698b01e9, type: 3}
@@ -44,6 +45,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 366fb1c4d522a164abf166b5e0db46e2, type: 3}
   - {fileID: 8300000, guid: 615a6b2d651c84a49b3b1ecbe4af9a27, type: 3}
   referenceList:
+  - BossHPBleep
   - Chirp
   - Death
   - Dialogue0

@@ -320,6 +320,9 @@ public class RoomTrigger : MonoBehaviour
                             GameObject reversedOrangeSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (orange)"), worldPos, Quaternion.identity, transform);
                             reversedOrangeSpikey.GetComponent<Spikey2>().rotation = true;
                             break;
+                        case 23:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Shellbreaker"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 27:
                             Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);
                             break;

@@ -1461,6 +1461,11 @@
 			"value": 0
 		},
 		{
+			"name": "boss_defeated",
+			"text": "_ defeated!",
+			"value": 0
+		},
+		{
 			"name": "enemy_spikey",
 			"text": "Spikey",
 			"value": 0
@@ -1698,6 +1703,11 @@
 		{
 			"name": "room_01_hub4",
 			"text": "The Summit",
+			"value": 0
+		},
+		{
+			"name": "room_01_shellbreaker",
+			"text": "Hi I'm Boss #1",
 			"value": 0
 		},
 		{

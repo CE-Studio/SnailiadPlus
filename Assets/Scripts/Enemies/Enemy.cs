@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
             immunities = new List<int> { -1 };
     }
 
-    private void LateUpdate()
+    public virtual void LateUpdate()
     {
         if (intersectingPlayer && !PlayState.playerScript.stunned)
             PlayState.playerScript.HitFor(attack);
@@ -141,7 +141,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator Flash()
+    public virtual IEnumerator Flash()
     {
         mask.enabled = true;
         stunInvulnerability = true;

@@ -19,6 +19,22 @@ public class MusicLibrary : ScriptableObject
         },
         new string[]
         {
+            "Boss1"
+        },
+        new string[]
+        {
+            "Boss2"
+        },
+        new string[]
+        {
+            "Boss3"
+        },
+        new string[]
+        {
+            "Boss4"
+        },
+        new string[]
+        {
             "SnailTown",
             "TestZone"
         },
@@ -27,6 +43,7 @@ public class MusicLibrary : ScriptableObject
             "MareCarelia"
         }
     };
+    public int areaThemeOffset = 5;
 
     public void BuildDefaultLibrary()
     {
