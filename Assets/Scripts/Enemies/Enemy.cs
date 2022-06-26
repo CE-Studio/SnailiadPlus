@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public List<int> immunities;  // Enemies resist all damage from bullet types in this list
     public bool letsPermeatingShotsBy;
     public bool stunInvulnerability = false;
+    public bool makeSoundOnPing = true;
     public string elementType; // Currently supports "ice" and "fire"
 
     public BoxCollider2D box;
@@ -85,7 +86,7 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    if (!PlayState.armorPingPlayedThisFrame)
+                    if (!PlayState.armorPingPlayedThisFrame && makeSoundOnPing)
                     {
                         PlayState.armorPingPlayedThisFrame = true;
                         PlayState.PlaySound("Ping");

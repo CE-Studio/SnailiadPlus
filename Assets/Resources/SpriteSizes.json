@@ -47,6 +47,11 @@
             "height": 16
         },
 		{
+            "name": "Bullets/EnemyBoomerangBlue",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Bullets/EnemyDonut",
             "width": 24,
             "height": 24
@@ -140,7 +145,7 @@
 		{
             "name": "Entities/SnailNpcColor",
             "width": 7,
-            "height": 53
+            "height": 54
         },
 		{
             "name": "Entities/Spikey1",

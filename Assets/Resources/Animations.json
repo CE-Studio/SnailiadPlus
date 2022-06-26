@@ -1956,11 +1956,11 @@
 			"spriteName": "Door",
             "framerate": 30.0,
             "frames": [
+                93,
                 94,
                 95,
                 96,
                 97,
-                98,
                 -1
             ],
             "loop": false,
@@ -2424,6 +2424,150 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "Bullet_enemy_boomerang1_N",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_NE",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_E",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_SE",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_S",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_SW",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_W",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang1_NW",
+			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Grass_idle",
@@ -2849,7 +2993,7 @@
 		},
 		{
 			"name": "Boss_shellbreaker_hand_1",
-			"spriteName": "Entities/Boss1Eyes",
+			"spriteName": "Entities/Boss1Hand",
 			"framerate": 0.0,
 			"frames": [
 				5
@@ -2860,7 +3004,7 @@
 		},
 		{
 			"name": "Boss_shellbreaker_hand_2",
-			"spriteName": "Entities/Boss1Eyes",
+			"spriteName": "Entities/Boss1Hand",
 			"framerate": 0.0,
 			"frames": [
 				5
@@ -2871,7 +3015,7 @@
 		},
 		{
 			"name": "Boss_shellbreaker_hand_3",
-			"spriteName": "Entities/Boss1Eyes",
+			"spriteName": "Entities/Boss1Hand",
 			"framerate": 0.0,
 			"frames": [
 				5
@@ -3685,7 +3829,7 @@
 			"spriteName": "UI/BossHealthBar",
 			"framerate": 0.0,
 			"frames": [
-				0
+				-1
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -3718,7 +3862,7 @@
 			"spriteName": "UI/BossHealthBar",
 			"framerate": 0.0,
 			"frames": [
-				1
+				-1
 			],
 			"loop": false,
 			"loopStartFrame": 0,

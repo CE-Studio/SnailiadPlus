@@ -1711,6 +1711,21 @@
 			"value": 0
 		},
 		{
+			"name": "room_01_boomerang",
+			"text": "Signature|Croissants",
+			"value": 0
+		},
+		{
+			"name": "room_01_towerHub",
+			"text": "Transition|Tower",
+			"value": 0
+		},
+		{
+			"name": "room_01_transitionSave",
+			"text": "Transition|Checkpoint",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2081,6 +2096,16 @@
 			"value": 1
 		},
 		{
+			"name": "npc_21_default_0",
+			"text": "By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing keys{nl}like \"{ctrl|16}\" and \"{ctrl|17}\"{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_21_boomerang_0",
+			"text": "Yay, {P}, it's you!! {nl}{p|0.2}Take this boomerang and break{nl}some walls open!!",
+			"value": 1
+		},
+		{
 			"name": "npc_22_default_0",
 			"text": "{eff|Shake}Thorgle Borgle!!!!!!!",
 			"value": 1
@@ -2093,6 +2118,11 @@
 		{
 			"name": "npc_23_default_0",
 			"text": "Do you think {col|0204}Cave Snail{nl}{col|0312}is single?",
+			"value": 1
+		},
+		{
+			"name": "npc_23_noHighJump_0",
+			"text": "I know why you're here, {P}.{nl}{p|0.25}Unfortunately, {p|0.1}there's no High{nl}Jump in this demo.",
 			"value": 1
 		},
 		{
@@ -2147,7 +2177,7 @@
 		},
 		{
 			"name": "npc_41_greyDoor_0",
-			"text": "Oh hey, {p|0.15}that {col|0112}grey door {col|0312}below{nl}and to the left opened up!{nl}{p|0.3}I wonder what's inside?",
+			"text": "Oh hey, {p|0.15}that {col|0212}grey door {col|0312}below{nl}and to the left opened up!{nl}{p|0.3}I wonder what's inside?",
 			"value": 1
 		},
 		{
@@ -2183,6 +2213,26 @@
 		{
 			"name": "npc_43_default_0",
 			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
+			"value": 1
+		},
+		{
+			"name": "npc_48_default_0",
+			"text": "{P}, you made it!  {p|0.15}Welcome{nl}to the end of the demo!",
+			"value": 1
+		},
+		{
+			"name": "npc_48_default_1",
+			"text": "Sorry there wasn't more.{nl}{p|0.1}I hope what's here was{nl}enjoyable!",
+			"value": 1
+		},
+		{
+			"name": "npc_48_default_2",
+			"text": "Be sure to write what you{nl}think in the feedback and{nl}bug report thread!",
+			"value": 1
+		},
+		{
+			"name": "npc_48_default_3",
+			"text": "In the meantime, {p|0.1}we'll see{nl}you in the next demo!{nl}{p|0.4}       _@_V !!",
 			"value": 1
 		},
 		{

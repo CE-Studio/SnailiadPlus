@@ -40,6 +40,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b91b5ef257a91b6408516552437fb83b, type: 3}
   - {fileID: 8300000, guid: 9e02dacb0ab01b847bee5870ece648e3, type: 3}
   - {fileID: 8300000, guid: d2e9bfbc3edfbb64ab76271e52d9edab, type: 3}
+  - {fileID: 8300000, guid: 934fd6b903b69914a90e1b2b9346d162, type: 3}
   - {fileID: 8300000, guid: 7c3cf0eed7aef6d489e5cff0489214f7, type: 3}
   - {fileID: 8300000, guid: a5927ee6e28d97f4e886a9d7b625d778, type: 3}
   - {fileID: 8300000, guid: 366fb1c4d522a164abf166b5e0db46e2, type: 3}
@@ -72,6 +73,7 @@ MonoBehaviour:
   - Save
   - Shell
   - ShotBoomerang
+  - ShotBoomerangDev
   - ShotHit
   - ShotRainbow
   - ShotPeashooter

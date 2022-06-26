@@ -12,10 +12,13 @@ public class EnemyBullet : MonoBehaviour
     private float lifeTimer;
     public int damage;
     public float maxLifetime;
+    private float initialSpeed;
 
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public BoxCollider2D box;
+
+    private readonly string[] compassDirs = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
     
     void Start()
     {
@@ -24,6 +27,8 @@ public class EnemyBullet : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
 
         anim.Add("Bullet_enemy_peashooter");
+        foreach (string dir in compassDirs)
+            anim.Add("Bullet_enemy_boomerang1_" + dir);
 
         sprite.enabled = false;
         box.enabled = false;
@@ -43,6 +48,11 @@ public class EnemyBullet : MonoBehaviour
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
+                case 1:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
+                        transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
+                    speed -= initialSpeed * 1.5f * Time.fixedDeltaTime;
+                    break;
             }
             if (lifeTimer > maxLifetime)
                 Despawn();
@@ -61,6 +71,7 @@ public class EnemyBullet : MonoBehaviour
         direction = newDirection;
 
         bulletType = type;
+        initialSpeed = speed;
         switch (type)
         {
             case 0:
@@ -69,6 +80,13 @@ public class EnemyBullet : MonoBehaviour
                 maxLifetime = 3.6f;
                 box.size = new Vector2(0.25f, 0.25f);
                 PlayState.PlaySound("ShotPeashooter");
+                break;
+            case 1:
+                anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(newDirection));
+                damage = 2;
+                maxLifetime = 4f;
+                box.size = new Vector2(1.5f, 1.5f);
+                PlayState.PlaySound("ShotBoomerangDev");
                 break;
         }
     }
@@ -91,5 +109,32 @@ public class EnemyBullet : MonoBehaviour
             lifeTimer = 0;
             transform.position = Vector2.zero;
         }
+    }
+
+    private string VectorToCompass(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(Vector2.up, dir);
+        while (angle < 0)
+            angle += 360;
+        while (angle > 360)
+            angle -= 360;
+        if (angle > 337.5f)
+            return "N";
+        else if (angle > 292.5f)
+            return "NE";
+        else if (angle > 247.5f)
+            return "E";
+        else if (angle > 202.5f)
+            return "SE";
+        else if (angle > 157.5f)
+            return "S";
+        else if (angle > 112.5f)
+            return "SW";
+        else if (angle > 67.5f)
+            return "W";
+        else if (angle > 22.5f)
+            return "NW";
+        else
+            return "N";
     }
 }

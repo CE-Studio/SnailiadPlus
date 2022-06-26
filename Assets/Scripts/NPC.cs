@@ -386,6 +386,13 @@ public class NPC : MonoBehaviour
                                 AddText("default");
                             break;
 
+                        case 21:
+                            if (!PlayState.CheckForItem("Boomerang"))
+                                AddText("boomerang");
+                            else
+                                AddText("default");
+                            break;
+
                         case 22:
                             if (PlayState.GetItemPercentage() < 100)
                                 AddText("thorgleBorgle");
@@ -395,7 +402,9 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 23:
-                            if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
+                            if (PlayState.GetItemPercentage() == 0)
+                                AddText("noHighJump");
+                            else if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
                                 AddText("caveSnail");
                             else if (PlayState.GetItemPercentage() < 60)
                                 AddText("loadGame");
@@ -450,6 +459,10 @@ public class NPC : MonoBehaviour
                                 AddText("default");
                             break;
 
+                        case 48:
+                            AddText("default");
+                            break;
+
                         case 50:
                             if (PlayState.CheckForItem("Debug Rainbow Wave"))
                                 AddText("admireRainbowWave");
@@ -462,6 +475,7 @@ public class NPC : MonoBehaviour
                             break;
 
                         default:
+                            AddText("?");
                             break;
                     }
                     if (intentionallyEmpty)
@@ -535,27 +549,41 @@ public class NPC : MonoBehaviour
 
     public virtual void AddText(string textID)
     {
-        bool locatedAll = false;
-        int i = 0;
-        while (!locatedAll)
+        if (textID == "?")
         {
-            string fullID = "npc_" + ID.ToString() + "_" + textID + "_" + i;
-            string newText = PlayState.GetText(fullID);
-            if (newText != fullID)
-            {
-                string finalText = newText
+            textToSend.Add(PlayState.GetText("npc_?")
                     .Replace("##", PlayState.GetItemPercentage().ToString())
                     .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{ID}", ID.ToString());
-                textToSend.Add(finalText);
-                portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
+                    .Replace("{ID}", ID.ToString()));
+            portraitStateList.Add(PlayState.GetTextInfo("npc_?").value);
+        }
+        else
+        {
+            bool locatedAll = false;
+            int i = 0;
+            while (!locatedAll)
+            {
+                string fullID = "npc_" + ID.ToString() + "_" + textID + "_" + i;
+                string newText = PlayState.GetText(fullID);
+                if (newText != fullID)
+                {
+                    string finalText = newText
+                        .Replace("##", PlayState.GetItemPercentage().ToString())
+                        .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
+                        .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
+                        .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
+                        .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                        .Replace("{ID}", ID.ToString());
+                    textToSend.Add(finalText);
+                    portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
+                }
+                else
+                    locatedAll = true;
+                i++;
             }
-            else
-                locatedAll = true;
-            i++;
         }
     }
 

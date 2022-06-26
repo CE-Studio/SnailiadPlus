@@ -866,6 +866,11 @@ public class PlayState
         }
     }
 
+    public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly)
+    {
+        playerScript.RequestQueuedExplosion(pos, lifeTime, size, loudly);
+    }
+
     public static void ResetAllParticles()
     {
         foreach (Transform particle in particlePool.transform)
@@ -1448,13 +1453,20 @@ public class PlayState
         }
     }
 
-    public static void ShootEnemyBullet(Vector2 newOrigin, int type, Vector2 direction, float newSpeed)
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed)
     {
+        return ShootEnemyBullet(newOrigin, type, Quaternion.Euler(0, 0, angle) * Vector2.up, newSpeed);
+    }
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, Vector2 direction, float newSpeed)
+    {
+        bool hasShot = false;
         if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive)
         {
             enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, direction, newSpeed);
             enemyBulletPointer = (enemyBulletPointer + 1) % enemyBulletPool.transform.childCount;
+            hasShot = true;
         }
+        return hasShot;
     }
 
     public static Vector2 DirectionBetween(Vector2 a, Vector2 b)
@@ -1475,11 +1487,13 @@ public class PlayState
         {
             TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            playerScript.displayDefeatText = false;
         }
         else if (!state && !snapDespawnBar)
         {
             TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
+            playerScript.displayDefeatText = true;
         }
         if (currentArea != 7)
         {

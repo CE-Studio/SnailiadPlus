@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
     TextMesh[] areaText;
     public string currentBossName = "";
     bool flashedBossName = false;
+    public bool displayDefeatText = false;
 
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()
@@ -228,11 +229,14 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
-                    areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                    if (displayDefeatText)
+                    {
+                        areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                        areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                        areaTextTimer = 0;
+                    }
                     currentBossName = "";
                     flashedBossName = false;
-                    areaTextTimer = 0;
                 }
             }
             areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
@@ -976,5 +980,12 @@ public class Player : MonoBehaviour
             PlayState.mainMenu.GetComponent<MainMenu>().music.Play();
         }
         PlayState.ToggleLoadingIcon(false);
+    }
+
+    public void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly)
+    {
+        GameObject queuedExplosion = Instantiate(Resources.Load<GameObject>("Objects/Queued Explosion"), pos, Quaternion.identity,
+            PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y).transform);
+        queuedExplosion.GetComponent<QueuedExplosion>().Spawn(lifeTime, size, loudly);
     }
 }

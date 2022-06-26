@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8152207305442590213}
   - component: {fileID: 6165979959818775615}
   - component: {fileID: 3442676895367746638}
+  - component: {fileID: 3018325197413616428}
   m_Layer: 10
   m_Name: Shellbreaker Hand
   m_TagString: Enemy
@@ -139,3 +140,35 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!114 &3018325197413616428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8847964752526268850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a61ce3d3f1c7ce4e94fb02612f46ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  elementType: 
+  box: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0

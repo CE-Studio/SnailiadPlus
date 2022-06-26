@@ -22,6 +22,7 @@ public class TextureLibrary : ScriptableObject
         "TitleFont",
 
         "Bullets/Boomerang",
+        "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyDonut",
         "Bullets/Peashooter",
         "Bullets/RainbowWave",

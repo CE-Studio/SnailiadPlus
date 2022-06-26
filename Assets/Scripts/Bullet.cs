@@ -216,11 +216,42 @@ public class Bullet : MonoBehaviour
     {
         if (isActive)
         {
-            if (bulletType == 1 && loudly)
+            if (loudly)
             {
                 PlayState.PlaySound("ShotHit");
-                PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.25f, transform.position.x + 0.25f),
-                    Random.Range(transform.position.y - 0.25f, transform.position.y + 0.25f)), "explosion", new float[] { 1 });
+                switch (bulletType)
+                {
+                    case 1:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.25f, transform.position.x + 0.25f),
+                            Random.Range(transform.position.y - 0.25f, transform.position.y + 0.25f)), "explosion", new float[] { 1 });
+                        break;
+                    case 2:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        break;
+                    case 3:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 7 });
+                        break;
+                    case 4:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        break;
+                    case 5:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 6 });
+                        break;
+                    case 6:
+                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 8 });
+                        break;
+                }
             }
             isActive = false;
             sprite.enabled = false;
