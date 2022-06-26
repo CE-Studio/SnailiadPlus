@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public bool facingLeft = false;
     public bool facingDown = false;
     public int selectedWeapon = 0;
+    public bool armed;
     public int health = 12;
     public int maxHealth = 12;
     public bool stunned = false;
@@ -124,6 +125,13 @@ public class Player : MonoBehaviour
         if (PlayState.gameState == "Game")
         {
             rb.WakeUp();
+
+            // Making sure we have weapons
+            int[] weaponIDs = new int[] { 0, 1, 2, 11, 12 };
+            armed = false;
+            foreach (int weapon in weaponIDs)
+                if (PlayState.CheckForItem(weapon))
+                    armed = true;
 
             // Noclip!!!
             if (PlayState.noclipMode)

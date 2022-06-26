@@ -1435,7 +1435,7 @@ public class Snaily : MonoBehaviour
     // This function handles activation of projectiles when the player presses either shoot button
     private void Shoot()
     {
-        if (fireCooldown == 0 && player.selectedWeapon != 0)
+        if (fireCooldown == 0 && player.armed)
         {
             Vector2 inputDir = new Vector2(Control.AxisX(), Control.AxisY());
             int type = player.selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
