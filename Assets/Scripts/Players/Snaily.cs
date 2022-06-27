@@ -1192,7 +1192,33 @@ public class Snaily : MonoBehaviour
             if ((Control.ShootHold() || Control.StrafeHold()) && !PlayState.paralyzed)
             {
                 if (shelled)
+                {
+                    if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+                    {
+                        if (!(boxD.distance < 0.4f && boxU.distance < 0.4f))
+                        {
+                            if (boxD.distance > 0.4f && boxU.distance < 0.4f)
+                                transform.position = new Vector2(transform.position.x, transform.position.y -
+                                    (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                            else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
+                                transform.position = new Vector2(transform.position.x, transform.position.y +
+                                    (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
+                        }
+                    }
+                    else
+                    {
+                        if (!(boxL.distance < 0.4f && boxR.distance < 0.4f))
+                        {
+                            if (boxL.distance > 0.4f && boxR.distance < 0.4f)
+                                transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                    transform.position.y);
+                            else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
+                                transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                    transform.position.y);
+                        }
+                    }
                     ToggleShell();
+                }
                 Shoot();
             }
         }
