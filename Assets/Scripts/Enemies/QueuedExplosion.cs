@@ -7,6 +7,7 @@ public class QueuedExplosion : MonoBehaviour
     float lifeTime = 0;
     int size = 0;
     bool makeNoise = false;
+    private int soundTimeout = 0;
 
     public void Spawn(float life, int s, bool loud)
     {
@@ -40,12 +41,14 @@ public class QueuedExplosion : MonoBehaviour
         GenerateExplosions(3, 3.75f, 2);
         if (Random.Range(0, 21) > 17)
             GenerateExplosions(3, 8.125f, 1);
-        if (makeNoise)
+        soundTimeout--;
+        if (soundTimeout < 0 && makeNoise)
         {
-            if (Random.Range(0f, 1f) > 0.2f)
+            if (Random.Range(0f, 1f) > 0.4f)
                 PlayState.PlaySound("Explode" + Random.Range(1, 5).ToString());
-            if (Random.Range(0f, 1f) > 0.2f)
+            if (Random.Range(0f, 1f) > 0.4f)
                 PlayState.PlaySound("EnemyKilled" + Random.Range(1, 4).ToString());
+            soundTimeout = Application.targetFrameRate switch { 30 => 0, 60 => 1, 120 => 3, _ => 7 };
         }
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private string itemType;
     public bool countedInPercentage;
     public bool collected;
     public int itemID;
@@ -30,8 +29,6 @@ public class Item : MonoBehaviour
             sfx = GetComponent<AudioSource>();
 
             originPos = transform.localPosition;
-
-            itemType = PlayState.TranslateIDToItemName(itemID);
         }
     }
 
@@ -152,53 +149,40 @@ public class Item : MonoBehaviour
         else if (itemID >= PlayState.OFFSET_HEARTS)
             PlayState.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
         else
-            PlayState.FlashItemText(ConvertToTextID(itemType));
+            PlayState.FlashItemText(IDToName());
     }
 
-    private string ConvertToTextID(string item)
+    private string IDToName()
     {
-        string output;
-        string buffer = "item_";
         string species = PlayState.GetText("species_" + PlayState.currentCharacter.ToLower());
-        switch (item)
+        return itemID switch
         {
-            default:
-                for (int i = 0; i < item.Length; i++)
-                {
-                    if (item[i] == ' ')
-                    {
-                        i++;
-                        if (i < item.Length)
-                            buffer += item[i].ToString().ToUpper();
-                    }
-                    else
-                        buffer += item[i].ToString().ToLower();
-                }
-                output = PlayState.GetText(buffer);
-                break;
-            case "Ice Snail":
-                output = PlayState.GetText("item_iceSnail").Replace("_", species);
-                break;
-            case "Gravity Snail":
-                output = PlayState.GetText("item_gravitySnail").Replace("_", species);
-                break;
-            case "Full-Metal Snail":
-                if (PlayState.currentCharacter == "Blobby")
-                    buffer += "fullMetalSnail_blob";
-                else if (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy")
-                    buffer += "fullMetalSnail_noShell";
-                else
-                    buffer += "fullMetalSnail_generic";
-                output = PlayState.GetText(buffer).Replace("_", species);
-                break;
-            case "Super Secret Boomerang":
-                output = PlayState.GetText("item_boomerang_secret");
-                break;
-            case "Debug Rainbow Wave":
-                output = PlayState.GetText("item_rainbowWave_secret");
-                break;
-        }
-        return output;
+            1 => PlayState.GetText("item_boomerang"),
+            2 => PlayState.GetText("item_rainbowWave"),
+            3 => PlayState.GetText("item_devastator"),
+            4 => PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_wallGrab" : "item_highJump"),
+            5 => PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_shelmet" : "item_shellShield"),
+            6 => PlayState.GetText(PlayState.currentCharacter == "Leechy" ? "item_backfire" : "item_rapidFire"),
+            7 => PlayState.GetText("item_iceSnail").Replace("_", species),
+            8 => (PlayState.currentCharacter switch
+            {
+                "Upside" => "item_magneticFoot",
+                "Leggy" => "item_corkscrewJump",
+                "Blobby" => "item_angelJump",
+                _ => "item_gravitySnail"
+            }).Replace("_", species),
+            9 => (PlayState.currentCharacter switch
+            {
+                "Sluggy" => "item_fullMetalSnail_noShell",
+                "Blobby" => "item_fullMetalSnail_blob",
+                "Leechy" => "item_fullMetalSnail_noShell",
+                _ => "item_fullMetalSnail_generic"
+            }).Replace("_", species),
+            10 => PlayState.GetText("item_gravityShock"),
+            11 => PlayState.GetText("item_boomerang_secret"),
+            12 => PlayState.GetText("item_rainbowWave_secret"),
+            _ => PlayState.GetText("item_peashooter"),
+        };
     }
 
     public void SetDeactivated()

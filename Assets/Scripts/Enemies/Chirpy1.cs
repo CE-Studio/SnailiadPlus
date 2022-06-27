@@ -33,7 +33,7 @@ public class Chirpy1 : Enemy
     {
         if (PlayState.gameState != "Game")
             return;
-        if ((OnScreen() || !spawnedViaGenerator) && !active)
+        if ((OnScreen() || spawnedViaGenerator) && !active)
         {
             active = true;
             PlayState.PlaySound("Chirp");

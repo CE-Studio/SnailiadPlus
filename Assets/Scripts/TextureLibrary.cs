@@ -183,7 +183,11 @@ public class TextureLibrary : ScriptableObject
                             {
                                 TileBase tile = map.GetTile(worldPos);
                                 Tile newTile = CreateInstance<Tile>();
-                                newTile.sprite = PlayState.GetSprite("Tilesheet", spriteID);
+                                Sprite newSprite = PlayState.GetSprite("Tilesheet", spriteID);
+                                newSprite.OverridePhysicsShape(new List<Vector2[]> {
+                                    new Vector2[] { new Vector2(0, 0), new Vector2(0, 16), new Vector2(16, 16), new Vector2(16, 0) }
+                                    });
+                                newTile.sprite = newSprite;
                                 newTile.name = "Tilesheet_" + spriteID;
                                 map.SwapTile(tile, newTile);
                                 swappedIDs.Add(spriteID);
