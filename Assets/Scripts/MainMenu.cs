@@ -985,6 +985,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         PlayState.ToggleBossfightState(false, 0, true);
+        SetTextComponentOrigins();
         fadingToIntro = false;
 
         PlayState.player.GetComponent<Snaily>().enabled = false;
@@ -1023,6 +1024,22 @@ public class MainMenu : MonoBehaviour
                     PlayState.itemCollection[5] = 1;
                     break;
         }
+    }
+
+    public void SetTextComponentOrigins()
+    {
+        PlayState.pauseText.GetComponent<TextAligner>().originalPos = new Vector2(-12.4375f, -7.3775f + (PlayState.gameOptions[5] == 1 ? 2 : (
+            PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
+        PlayState.pauseShadow.GetComponent<TextAligner>().originalPos = new Vector2(-12.375f, -7.44f + (PlayState.gameOptions[5] == 1 ? 2 : (
+            PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
+
+        PlayState.fpsText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f,
+            PlayState.gameOptions[6] == 1 ? -6.8775f : -7.3775f);
+        PlayState.fpsShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f,
+            PlayState.gameOptions[6] == 1 ? -6.94f : -7.44f);
+
+        PlayState.timeText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f, -7.3775f);
+        PlayState.timeShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f, -7.44f);
     }
 
     public void PageMain()
@@ -1168,6 +1185,7 @@ public class MainMenu : MonoBehaviour
         ToggleHUD(false);
         pauseButtonDown = true;
         PlayState.minimapScript.RefreshMap();
+        SetTextComponentOrigins();
 
         switch (PlayState.currentCharacter)
         {
