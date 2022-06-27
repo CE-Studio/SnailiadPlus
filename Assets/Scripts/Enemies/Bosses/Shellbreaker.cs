@@ -167,4 +167,10 @@ public class Shellbreaker : Boss
                 handAnim.Play("Boss_shellbreaker_hand_" + lifeState);
         }
     }
+
+    public override void Kill()
+    {
+        PlayState.QueueAchievementPopup("fo4");
+        base.Kill();
+    }
 }
