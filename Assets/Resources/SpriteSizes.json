@@ -306,6 +306,11 @@
             "height": 40
         },
 		{
+            "name": "UI/Subscreen",
+            "width": 400,
+            "height": 240
+        },
+		{
             "name": "UI/WeaponIcons",
             "width": 8,
             "height": 8

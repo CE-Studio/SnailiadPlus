@@ -134,7 +134,7 @@ public class RoomTrigger : MonoBehaviour
                                 PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
                         }
                     }
-                    PlayState.playerScript.underwater = !PlayState.playerScript.underwater;
+                    PlayState.playerScript.underwater = playerY < waterY;
                 }
             }
             else

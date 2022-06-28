@@ -66,6 +66,11 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_sub_returnTo",
+			"text": "Back to menu",
+			"value": 0
+		},
+		{
 			"name": "menu_option_main_quit",
 			"text": "Quit",
 			"value": 0
@@ -1622,7 +1627,7 @@
 		},
 		{
 			"name": "room_01_eac",
-			"text": "Efficiently|Aggregated|Corners",
+			"text": "The Maze Room",
 			"value": 0
 		},
 		{

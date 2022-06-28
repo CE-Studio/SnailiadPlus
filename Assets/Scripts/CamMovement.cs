@@ -23,18 +23,18 @@ public class CamMovement : MonoBehaviour
             {
                 bool inBoundsX = ((camBoundsX.x <= (focusPoint.position.x + 13.5f)) && ((focusPoint.position.x - 13.5f) <= camBoundsX.y));
                 bool inBoundsY = ((camBoundsY.x <= (focusPoint.position.y + 8.5f)) && ((focusPoint.position.y - 8.5f) <= camBoundsY.y));
-                if (inBoundsX && inBoundsY) 
-                {
-                    transform.position = new Vector2(
-                        xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, focusPoint.position.x, 0.1f), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
-                        yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, focusPoint.position.y, 0.1f), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
-                } 
-                else 
+                if (!(inBoundsX && inBoundsY) && !PlayState.playerScript.inDeathCutscene)
                 {
                     transform.position = new Vector2(
                         Mathf.Lerp(transform.position.x, focusPoint.position.x, 0.1f),
                         Mathf.Lerp(transform.position.y, focusPoint.position.y, 0.1f));
                 }
+                else
+                {
+                    transform.position = new Vector2(
+                        xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, focusPoint.position.x, 0.1f), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
+                        yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, focusPoint.position.y, 0.1f), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
+                } 
             }
 
             Debug.DrawLine(

@@ -4750,6 +4750,83 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Minimap_icon_marker",
+			"spriteName": "UI/MinimapIcons",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_snaily",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_sluggy",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_upside",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_leggy",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_blobby",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Subscreen_leechy",
+			"spriteName": "UI/Subscreen",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "TextWidth",
 			"spriteName": "UI/FontSprites",
 			"framerate": 0.0,

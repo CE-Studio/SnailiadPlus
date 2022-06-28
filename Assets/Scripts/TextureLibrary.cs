@@ -76,6 +76,7 @@ public class TextureLibrary : ScriptableObject
         "UI/MinimapIcons",
         "UI/MinimapMask",
         "UI/MinimapPanel",
+        "UI/Subscreen",
         "UI/WeaponIcons"
     };
 

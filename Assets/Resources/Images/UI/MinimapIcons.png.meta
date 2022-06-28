@@ -35,6 +35,9 @@ TextureImporter:
   - first:
       213: 2162297048870004091
     second: MinimapIcons_10
+  - first:
+      213: -4642852148832821020
+    second: MinimapIcons_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -386,6 +389,27 @@ TextureImporter:
       bones: []
       spriteID: b75a5c8a5b5020e10800000000000000
       internalID: 2162297048870004091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinimapIcons_11
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e0292cc196419fb0800000000000000
+      internalID: -4642852148832821020
       vertices: []
       indices: 
       edges: []

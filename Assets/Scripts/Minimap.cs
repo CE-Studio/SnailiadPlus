@@ -12,6 +12,7 @@ public class Minimap : MonoBehaviour
     private int lastCellID;
 
     private GameObject[] masks = new GameObject[] { };
+    private SpriteRenderer[] sprites = new SpriteRenderer[] { };
     private readonly int[] maskIDoffsets = new int[]
     {
         -55, -54, -53, -52, -51, -50, -49,
@@ -23,15 +24,23 @@ public class Minimap : MonoBehaviour
 
     public int[] currentMap = new int[] { };
 
+    private int currentMarkerColor = 0;
+    private List<SpriteRenderer> cellsWithMarkers;
+
     void Start()
     {
         currentMap = (int[])PlayState.defaultMinimapState.Clone();
 
         Transform maskParent = transform.Find("Room Masks");
         List<GameObject> newMaskList = new List<GameObject>();
+        List<SpriteRenderer> newSpriteList = new List<SpriteRenderer>();
         for (int i = 0; i < maskIDoffsets.Length; i++)
+        {
             newMaskList.Add(maskParent.GetChild(i).gameObject);
+            newSpriteList.Add(maskParent.GetChild(i).GetComponent<SpriteRenderer>());
+        }
         masks = newMaskList.ToArray();
+        sprites = newSpriteList.ToArray();
 
         List<AnimationModule> newAnimList = new List<AnimationModule>();
         newAnimList.Add(GetComponent<AnimationModule>());
@@ -55,6 +64,7 @@ public class Minimap : MonoBehaviour
             anims[i].Add("Minimap_icon_save");
             anims[i].Add("Minimap_icon_boss");
             anims[i].Add("Minimap_icon_unknown");
+            anims[i].Add("Minimap_icon_marker");
         }
         anims[3].Play("Minimap_icon_playerNormal");
     }
@@ -74,10 +84,23 @@ public class Minimap : MonoBehaviour
         if (lastCellID != currentCellID)
             RefreshMap();
         lastCellID = currentCellID;
+
+        foreach (SpriteRenderer thisSprite in cellsWithMarkers)
+        {
+            thisSprite.color = currentMarkerColor switch
+            {
+                1 => PlayState.GetColor("0309"),
+                2 => PlayState.GetColor("0304"),
+                3 => PlayState.GetColor("0206"),
+                _ => PlayState.GetColor("0012")
+            };
+        }
+        currentMarkerColor = (currentMarkerColor + 1) % 4;
     }
 
     public void RefreshMap()
     {
+        cellsWithMarkers.Clear();
         for (int i = 0; i < masks.Length; i++)
         {
             int thisMaskID = currentCellID + maskIDoffsets[i];
@@ -87,7 +110,13 @@ public class Minimap : MonoBehaviour
                 {
                     bool highlightPlayerTile = true;
                     masks[i].GetComponent<SpriteMask>().enabled = false;
-                    if (PlayState.bossLocations.Contains(thisMaskID))
+                    sprites[i].color = PlayState.GetColor("0312");
+                    if (PlayState.playerMarkerLocations.ContainsKey(thisMaskID))
+                    {
+                        cellsWithMarkers.Add(sprites[i]);
+                        anims[i + 4].Play("Minimap_icon_marker", true);
+                    }
+                    else if (PlayState.bossLocations.Contains(thisMaskID))
                         anims[i + 4].Play("Minimap_icon_boss", true);
                     else if (PlayState.saveLocations.Contains(thisMaskID))
                         anims[i + 4].Play("Minimap_icon_save", true);

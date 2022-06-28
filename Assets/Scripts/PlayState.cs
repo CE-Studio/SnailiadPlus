@@ -125,6 +125,7 @@ public class PlayState
     public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
     public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
     public static GameObject enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
+    public static GameObject subscreen = GameObject.Find("View/Subscreen");
 
     public struct RoomEntity
     {

@@ -59,7 +59,6 @@ public class AchievementPanel : MonoBehaviour
         anim.Add("AchievementPanel_hold");
         anim.Add("AchievementPanel_close");
 
-        //CloseAchievement();
         text.text = "";
         shadow.text = "";
         sprite.enabled = false;

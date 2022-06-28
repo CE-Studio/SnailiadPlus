@@ -344,7 +344,7 @@ public class MainMenu : MonoBehaviour
                         PlayState.PlaySound("MenuBeep2");
                     }
                 }
-                else if (Control.JumpPress(1))
+                else if (Control.JumpPress(1) || Input.GetKeyDown(KeyCode.Return))
                 {
                     if (currentOptions[selectedOption].menuParam != null)
                     {
@@ -757,7 +757,7 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator RebindKey(int controlID)
     {
-        while (Control.JumpHold(1))
+        while (Control.JumpHold(1) && Control.Generic(KeyCode.Return))
         {
             yield return new WaitForEndOfFrame();
         }
@@ -1089,7 +1089,7 @@ public class MainMenu : MonoBehaviour
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_profile_copy"), true, CopyData);
         AddOption(PlayState.GetText("menu_option_profile_erase"), true, EraseData);
-        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfile != -1 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(1);
         backPage = PageMain;
     }
@@ -1335,7 +1335,7 @@ public class MainMenu : MonoBehaviour
         if (PlayState.gameState == "Menu")
             AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfile != -1 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(0);
         backPage = PageMain;
     }

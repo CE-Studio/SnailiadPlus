@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DialogueBox : MonoBehaviour
 {
-    //public Animator anim;
     public AnimationModule anim;
     public AudioSource sfx;
     public SpriteRenderer sprite;
@@ -15,11 +14,6 @@ public class DialogueBox : MonoBehaviour
     public TextMesh dialogueText;
     public TextMesh dialogueShadow;
     public Transform roomText;
-
-    //public AudioClip dialogue0;
-    //public AudioClip dialogue1;
-    //public AudioClip dialogue2;
-    //public AudioClip dialogue3;
 
     public GameObject letter;
 

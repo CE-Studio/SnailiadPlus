@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public bool isActive;
     private float lifeTimer;
     private float velocity;
+    private float initialVelocity;
     public int damage;
 
     public SpriteRenderer sprite;
@@ -52,7 +53,7 @@ public class Bullet : MonoBehaviour
                 case 1:
                     break;
                 case 2:
-                    velocity -= 0.0125f;
+                    velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime;
                     break;
                 case 3:
                     velocity += 0.03f;
@@ -153,54 +154,31 @@ public class Bullet : MonoBehaviour
                 break;
         }
         direction = dir;
+        initialVelocity = velocity;
         PlayAnim();
     }
 
     void PlayAnim()
     {
         string animToPlay = "Bullet_";
-        switch (bulletType)
+        animToPlay += bulletType switch
         {
-            case 1:
-                animToPlay += "peashooter_";
-                break;
-            case 2:
-                animToPlay += "boomerang_";
-                break;
-            case 3:
-                animToPlay += "rainbowWave_";
-                break;
-            default:
-                animToPlay += "rainbowWave_";
-                break;
-        }
-        switch (direction)
+            1 => "peashooter_",
+            2 => "boomerang_",
+            3 => "rainbowWave_",
+            _ => "rainbowWave_",
+        };
+        animToPlay += direction switch
         {
-            case 0:
-                animToPlay += "NW";
-                break;
-            case 1:
-                animToPlay += "N";
-                break;
-            case 2:
-                animToPlay += "NE";
-                break;
-            case 3:
-                animToPlay += "W";
-                break;
-            case 4:
-                animToPlay += "E";
-                break;
-            case 5:
-                animToPlay += "SW";
-                break;
-            case 6:
-                animToPlay += "S";
-                break;
-            case 7:
-                animToPlay += "SE";
-                break;
-        }
+            1 => "N",
+            2 => "NE",
+            3 => "W",
+            4 => "E",
+            5 => "SW",
+            6 => "S",
+            7 => "SE",
+            _ => "NW"
+        };
         anim.Play(animToPlay);
     }
 

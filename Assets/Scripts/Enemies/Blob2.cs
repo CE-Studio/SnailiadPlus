@@ -20,7 +20,7 @@ public class Blob2 : Enemy
         if (PlayState.gameState != "Game")
             return;
 
-        Spawn(270, 10, 2, true, new Vector2(0.95f, 0.95f));
+        Spawn(270, 10, 2, true, new Vector2(0.95f, 0.95f), new List<int>(), new List<int>(), new List<int> { 1 });
 
         anim.Add("Enemy_blob2_normal");
         anim.Add("Enemy_blob2_jump");
