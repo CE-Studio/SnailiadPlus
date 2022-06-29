@@ -24,8 +24,8 @@ public class Minimap : MonoBehaviour
 
     public int[] currentMap = new int[] { };
 
-    private int currentMarkerColor = 0;
-    private List<SpriteRenderer> cellsWithMarkers;
+    private float currentMarkerColor = 0;
+    private List<SpriteRenderer> cellsWithMarkers = new List<SpriteRenderer>();
 
     void Start()
     {
@@ -87,7 +87,7 @@ public class Minimap : MonoBehaviour
 
         foreach (SpriteRenderer thisSprite in cellsWithMarkers)
         {
-            thisSprite.color = currentMarkerColor switch
+            thisSprite.color = Mathf.FloorToInt(currentMarkerColor * 8) switch
             {
                 1 => PlayState.GetColor("0309"),
                 2 => PlayState.GetColor("0304"),
@@ -95,7 +95,9 @@ public class Minimap : MonoBehaviour
                 _ => PlayState.GetColor("0012")
             };
         }
-        currentMarkerColor = (currentMarkerColor + 1) % 4;
+        currentMarkerColor += Time.deltaTime;
+        if (currentMarkerColor > 0.5f)
+            currentMarkerColor -= 0.5f;
     }
 
     public void RefreshMap()
@@ -125,7 +127,10 @@ public class Minimap : MonoBehaviour
                         if (PlayState.itemCollection[PlayState.itemLocations[thisMaskID]] == 0)
                             anims[i + 4].Play("Minimap_icon_itemNormal", true);
                         else
+                        {
+                            anims[i + 4].Play("Minimap_icon_itemCollected", true);
                             highlightPlayerTile = false;
+                        }
                     }
                     else
                     {
@@ -138,6 +143,11 @@ public class Minimap : MonoBehaviour
                 {
                     masks[i].GetComponent<SpriteMask>().enabled = true;
                     anims[i + 4].Play("Minimap_icon_blank", true);
+                    if (PlayState.playerMarkerLocations.ContainsKey(thisMaskID))
+                    {
+                        cellsWithMarkers.Add(sprites[i]);
+                        anims[i + 4].Play("Minimap_icon_marker", true);
+                    }
                 }
             }
             else

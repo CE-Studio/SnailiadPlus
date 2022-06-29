@@ -56,7 +56,7 @@ public class Bullet : MonoBehaviour
                     velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime;
                     break;
                 case 3:
-                    velocity += 0.03f;
+                    velocity += initialVelocity * 18f * Time.fixedDeltaTime;
                     break;
                 default:
                     velocity += 0.03f;
@@ -139,17 +139,17 @@ public class Bullet : MonoBehaviour
         {
             case 1:
                 box.size = new Vector2(0.25f, 0.25f);
-                velocity = 0.45f;
+                velocity = 0.3855f;
                 damage = 10;
                 break;
             case 2:
                 box.size = new Vector2(0.9f, 0.9f);
-                velocity = 0.415f;
+                velocity = 0.34375f;
                 damage = 20;
                 break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
-                velocity = 0.025f;
+                velocity = 0.0625f;
                 damage = 30;
                 break;
         }
