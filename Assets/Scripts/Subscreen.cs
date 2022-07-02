@@ -99,7 +99,7 @@ public class Subscreen : MonoBehaviour
             PlayState.gameState = "Map";
             PlayState.ToggleHUD(false);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
             PlayState.screenCover.sortingOrder = 0;
             buttonDown = true;
             anim.Play("Subscreen_" + PlayState.currentCharacter.ToLower());
@@ -162,7 +162,7 @@ public class Subscreen : MonoBehaviour
                 isSelecting = false;
                 selectorAnim.Stop(true);
                 cellSelector.SetActive(false);
-                PlayState.PlaySound("MenuBeep1");
+                PlayState.PlaySound("MenuBeep2");
             }
             if (isSelecting && !buttonDown)
             {

@@ -200,12 +200,22 @@ public class Snaily : MonoBehaviour
                                     {
                                         if (Control.UpHold() || (Control.DownHold() && !grounded))
                                         {
+                                            if (shelled)
+                                            {
+                                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
+                                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                                        transform.position.y);
+                                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
+                                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                                        transform.position.y);
+                                                ToggleShell();
+                                            }
+
                                             transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
                                             float boxCorrection = (box.size.y - box.size.x) * 0.5f;
                                             float ceilDis = boxU.distance - boxCorrection;
                                             float floorDis = boxD.distance - boxCorrection;
                                             SwitchSurfaceAxis();
-                                            UpdateBoxcasts();
                                             float adjustment = 0;
                                             if (grounded)
                                                 adjustment = boxCorrection;
@@ -311,7 +321,6 @@ public class Snaily : MonoBehaviour
                                     {
                                         SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                         SwitchSurfaceAxis();
-                                        UpdateBoxcasts();
                                         RaycastHit2D wallTester = Physics2D.Raycast(
                                             new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y - 0.75f),
                                             facingLeft ? Vector2.left : Vector2.right,
@@ -434,12 +443,22 @@ public class Snaily : MonoBehaviour
                                     {
                                         if (Control.RightHold() || (Control.LeftHold() && !grounded))
                                         {
+                                            if (shelled)
+                                            {
+                                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
+                                                    transform.position = new Vector2(transform.position.x, transform.position.y -
+                                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
+                                                    transform.position = new Vector2(transform.position.x, transform.position.y +
+                                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
+                                                ToggleShell();
+                                            }
+
                                             transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
                                             float boxCorrection = (box.size.x - box.size.y) * 0.5f;
                                             float ceilDis = boxR.distance - boxCorrection;
                                             float floorDis = boxL.distance - boxCorrection;
                                             SwitchSurfaceAxis();
-                                            UpdateBoxcasts();
                                             float adjustment = 0;
                                             if (grounded)
                                                 adjustment = boxCorrection;
@@ -561,7 +580,6 @@ public class Snaily : MonoBehaviour
                                         if (Control.LeftHold() || Control.DownHold())
                                             holdingShell = true;
                                         transform.position = new Vector2(transform.position.x + 0.0625f, transform.position.y);
-                                        UpdateBoxcasts();
                                         if (boxL.distance == 0)
                                             transform.position = new Vector2(transform.position.x - 0.3125f, transform.position.y);
                                         return;
@@ -570,7 +588,6 @@ public class Snaily : MonoBehaviour
                                     {
                                         SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
                                         SwitchSurfaceAxis();
-                                        UpdateBoxcasts();
                                         RaycastHit2D wallTester = Physics2D.Raycast(
                                             new Vector2(transform.position.x - 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
                                             facingDown ? Vector2.down : Vector2.up,
@@ -703,12 +720,22 @@ public class Snaily : MonoBehaviour
                                     {
                                         if (Control.LeftHold() || (Control.RightHold() && !grounded))
                                         {
+                                            if (shelled)
+                                            {
+                                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
+                                                    transform.position = new Vector2(transform.position.x, transform.position.y -
+                                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
+                                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
+                                                    transform.position = new Vector2(transform.position.x, transform.position.y +
+                                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
+                                                ToggleShell();
+                                            }
+
                                             transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
                                             float boxCorrection = (box.size.x - box.size.y) * 0.5f;
                                             float ceilDis = boxL.distance - boxCorrection;
                                             float floorDis = boxR.distance - boxCorrection;
                                             SwitchSurfaceAxis();
-                                            UpdateBoxcasts();
                                             float adjustment = 0;
                                             if (grounded)
                                                 adjustment = -boxCorrection;
@@ -828,7 +855,6 @@ public class Snaily : MonoBehaviour
                                     if (Control.RightHold() || Control.DownHold())
                                         holdingShell = true;
                                     transform.position = new Vector2(transform.position.x - 0.0625f, transform.position.y);
-                                    UpdateBoxcasts();
                                     if (boxL.distance == 0)
                                         transform.position = new Vector2(transform.position.x + 0.3125f, transform.position.y);
                                     return;
@@ -839,7 +865,6 @@ public class Snaily : MonoBehaviour
                                     {
                                         SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
                                         SwitchSurfaceAxis();
-                                        UpdateBoxcasts();
                                         RaycastHit2D wallTester = Physics2D.Raycast(
                                             new Vector2(transform.position.x + 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
                                             facingDown ? Vector2.down : Vector2.up,
@@ -972,12 +997,22 @@ public class Snaily : MonoBehaviour
                                     {
                                         if (Control.DownHold() || (Control.UpHold() && !grounded))
                                         {
+                                            if (shelled)
+                                            {
+                                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
+                                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                                        transform.position.y);
+                                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
+                                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                                        transform.position.y);
+                                                ToggleShell();
+                                            }
+
                                             transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
                                             float boxCorrection = (box.size.y - box.size.x) * 0.5f;
                                             float ceilDis = boxD.distance - boxCorrection;
                                             float floorDis = boxU.distance - boxCorrection;
                                             SwitchSurfaceAxis();
-                                            UpdateBoxcasts();
                                             float adjustment = 0;
                                             if (grounded)
                                                 adjustment = -boxCorrection;
@@ -1100,7 +1135,6 @@ public class Snaily : MonoBehaviour
                                     {
                                         SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                         SwitchSurfaceAxis();
-                                        UpdateBoxcasts();
                                         RaycastHit2D wallTester = Physics2D.Raycast(
                                             new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y + 0.75f),
                                             facingLeft ? Vector2.left : Vector2.right,
@@ -1419,6 +1453,7 @@ public class Snaily : MonoBehaviour
         axisFlag = !axisFlag;
         box.size = new Vector2(box.size.y, box.size.x);
         box.offset = new Vector2(Mathf.Abs(box.offset.y) * (facingLeft ? 1 : -1), Mathf.Abs(box.offset.x) * (facingDown ? 1 : -1));
+        UpdateBoxcasts();
     }
 
     // This function is called whenever a shelled character asks to enter/exit their shell

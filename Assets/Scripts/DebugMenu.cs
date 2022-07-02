@@ -88,7 +88,7 @@ public class DebugMenu : MonoBehaviour
                 obj.SetActive(true);
             PlayState.ToggleHUD(false);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
             PlayState.screenCover.sortingOrder = 0;
             buttonDown = true;
             currentSelected = "peashooter";

@@ -697,7 +697,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.gameState = "Pause";
                 PlayState.screenCover.sortingOrder = 0;
                 PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 75, 0.25f);
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
                 PageMain();
                 CreateTitle();
             }
