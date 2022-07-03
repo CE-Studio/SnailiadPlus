@@ -23,6 +23,8 @@ public class Subscreen : MonoBehaviour
     AnimationModule playerAnim;
     AnimationModule selectorAnim;
 
+    List<TextMesh> texts = new List<TextMesh>();
+
     void Start()
     {
         transform.localPosition = new Vector2(0, -15);
@@ -73,8 +75,8 @@ public class Subscreen : MonoBehaviour
                 cellMask.sprite = PlayState.BlankTexture(true);
                 cellMask.alphaCutoff = 0;
                 cellMask.isCustomRangeActive = true;
-                cellMask.frontSortingOrder = 3;
-                cellMask.backSortingOrder = 1;
+                cellMask.frontSortingOrder = 2;
+                cellMask.backSortingOrder = 0;
                 AnimationModule cellAnim = newCell.AddComponent<AnimationModule>();
                 cellAnim.Add("Minimap_icon_blank");
                 cellAnim.Add("Minimap_icon_itemNormal");
@@ -89,6 +91,12 @@ public class Subscreen : MonoBehaviour
                 cellID++;
             }
         }
+
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            texts.Add(transform.GetChild(i).GetChild(0).GetComponent<TextMesh>());
+            texts.Add(transform.GetChild(i).GetChild(1).GetComponent<TextMesh>());
+        }
     }
 
     void Update()
@@ -98,12 +106,14 @@ public class Subscreen : MonoBehaviour
             menuOpen = true;
             PlayState.gameState = "Map";
             PlayState.ToggleHUD(false);
+            PlayState.TogglableHUDElements[1].SetActive(true);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
-            PlayState.screenCover.sortingOrder = 0;
+            PlayState.screenCover.sortingOrder = -2;
             buttonDown = true;
             anim.Play("Subscreen_" + PlayState.currentCharacter.ToLower());
             UpdateCells();
+            UpdateText();
         }
         if (!buttonDown && PlayState.gameState == "Map" && !isSelecting && (Control.Pause() || Control.Map()))
         {
@@ -248,5 +258,91 @@ public class Subscreen : MonoBehaviour
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerHighlight");
         else
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerNormal");
+    }
+
+    private void UpdateText()
+    {
+        for (int i = 0; i < texts.Count; i += 2)
+        {
+            string newText = "";
+            string shell = PlayState.currentCharacter == "Sluggy" ? PlayState.GetText("species_sluggy") : (PlayState.currentCharacter == "Blobby" ?
+                PlayState.GetText("species_blobby") : (PlayState.currentCharacter == "Leechy" ? PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell")));
+            bool hasShell = shell == PlayState.GetText("subscreen_shell");
+            switch (Mathf.RoundToInt(i * 0.5f))
+            {
+                case 0:
+                    newText = PlayState.GetText("subscreen_header_name");
+                    break;
+                case 1:
+                    newText = PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower());
+                    break;
+                case 2:
+                    newText = PlayState.GetText("subscreen_header_weapon");
+                    break;
+                case 3:
+                    if (PlayState.CheckForItem("Peashooter"))
+                        newText = PlayState.GetText("item_peashooter");
+                    break;
+                case 4:
+                    if (PlayState.CheckForItem("Boomerang") || PlayState.CheckForItem("Super Secret Boomerang"))
+                        newText = PlayState.GetText("item_boomerang");
+                    break;
+                case 5:
+                    if (PlayState.CheckForItem("Rainbow Wave") || PlayState.CheckForItem("Debug Rainbow Wave"))
+                        newText = PlayState.GetText("item_rainbowWave");
+                    break;
+                case 6:
+                    newText = PlayState.GetText("subscreen_header_shell");
+                    break;
+                case 7:
+                    newText = PlayState.GetText("subscreen_shellNormal").Replace("_", PlayState.currentCharacter == "Sluggy" ? PlayState.GetText("species_sluggy") :
+                        (PlayState.currentCharacter == "Blobby" ? PlayState.GetText("species_blobby") : (PlayState.currentCharacter == "Leechy" ?
+                        PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell"))));
+                    break;
+                case 8:
+                    if (PlayState.CheckForItem("Ice Snail") || PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                        newText = PlayState.GetText("item_iceSnail").Replace("_", shell);
+                    break;
+                case 9:
+                    if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                        newText = PlayState.GetText(PlayState.currentCharacter switch {
+                            "Upside" => "item_magneticFoot",
+                            "Leggy" => "item_corkscrewJump",
+                            "Blobby" => "item_angelJump",
+                            _ => "item_gravitySnail"
+                        }).Replace("_", shell);
+                    break;
+                case 10:
+                    if (PlayState.CheckForItem("Full-Metal Snail"))
+                        newText = PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentCharacter == "Blobby" ?
+                            "item_fullMetalSnail_blob" : "item_fullMetalSnail_noShell")).Replace("_", shell);
+                    break;
+                case 11:
+                    newText = PlayState.GetText("subscreen_header_ability");
+                    break;
+                case 12:
+                    if (PlayState.CheckForItem("Shell Shield") && !(PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy"))
+                        newText = PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_shelmet" : "item_shellShield");
+                    break;
+                case 13:
+                    if (PlayState.CheckForItem("High Jump"))
+                        newText = PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_wallGrab" : "item_highJump");
+                    break;
+                case 14:
+                    if (PlayState.CheckForItem("Rapid Fire"))
+                        newText = PlayState.GetText(PlayState.currentCharacter == "Leechy" ? "item_backfire" : "item_rapidFire");
+                    break;
+                case 15:
+                    if (PlayState.CheckForItem("Devastator"))
+                        newText = PlayState.GetText("item_devastator");
+                    break;
+                case 16:
+                    if (PlayState.CheckForItem("Gravity Shock"))
+                        newText = PlayState.GetText("item_gravityShock");
+                    break;
+            }
+            texts[i].text = newText;
+            texts[i + 1].text = newText;
+        }
     }
 }

@@ -99,7 +99,7 @@ public class Spikey2 : Enemy
         else if (startTimeout < 0 && stopped)
         {
             stopped = false;
-            if (OnScreen())
+            if (PlayState.OnScreen(transform.position, box))
                 PlayState.ShootEnemyBullet(transform.position, 0, PlayState.DirectionBetween(transform.position, PlayState.player.transform.position), 5);
             stopTimeout = STOP_TIMEOUT;
             startTimeout = START_TIMEOUT + STOP_TIMEOUT;

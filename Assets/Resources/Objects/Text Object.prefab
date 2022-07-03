@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2451968422559157210}
+  - component: {fileID: 2734545066658868956}
   m_Layer: 0
   m_Name: Text Object
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2734545066658868956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977608639687929179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5ec315ff32f5546908990f1f4de1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1101127294674665654
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b7bc8e977987549956f92d0a9d8510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPos: {x: 0, y: 0}
+  posOffset: {x: 0, y: 0}
 --- !u!1 &4996652570715515980
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,3 +263,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b7bc8e977987549956f92d0a9d8510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPos: {x: 0, y: 0}
+  posOffset: {x: 0, y: 0}

@@ -33,7 +33,7 @@ public class Chirpy1 : Enemy
     {
         if (PlayState.gameState != "Game")
             return;
-        if ((OnScreen() || spawnedViaGenerator) && !active)
+        if ((PlayState.OnScreen(transform.position, box) || spawnedViaGenerator) && !active)
         {
             active = true;
             PlayState.PlaySound("Chirp");
@@ -54,7 +54,7 @@ public class Chirpy1 : Enemy
                 anim.Play("Enemy_chirpy1_up");
             }
         }
-        if (lifeTimer < 0 && !OnScreen())
+        if (lifeTimer < 0 && !PlayState.OnScreen(transform.position, box))
             Destroy(gameObject);
     }
 }

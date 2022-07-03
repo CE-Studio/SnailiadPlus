@@ -460,7 +460,12 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 48:
-                            AddText("default");
+                            if (nexted == 0)
+                                AddText("greet");
+                            else if (nexted == 1)
+                                AddText("scream");
+                            else
+                                AddText("default");
                             break;
 
                         case 50:
@@ -541,6 +546,12 @@ public class NPC : MonoBehaviour
                     break;
                 case 16:
                     if (transform.localPosition.y < origin.y - 21 && nexted == 0)
+                        Next();
+                    break;
+                case 48:
+                    if (transform.localPosition.y < origin.y - 2 && nexted == 0)
+                        Next();
+                    if (transform.localPosition.y < origin.y - 35 && nexted == 1)
                         Next();
                     break;
             }

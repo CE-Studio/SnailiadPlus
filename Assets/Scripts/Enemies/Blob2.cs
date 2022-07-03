@@ -63,7 +63,7 @@ public class Blob2 : Enemy
         else
             transform.position = new Vector2(transform.position.x + (velocity.x * Time.deltaTime), transform.position.y);
 
-        if (OnScreen())
+        if (PlayState.OnScreen(transform.position, box))
         {
             hopTimeout -= Time.deltaTime;
             if (hopTimeout <= 0)

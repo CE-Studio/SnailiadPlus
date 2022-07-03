@@ -23,7 +23,7 @@ public class Bat : Enemy
         if (PlayState.gameState != "Game")
             return;
 
-        if (OnScreen() && !active && Mathf.Abs(PlayState.player.transform.position.x - transform.position.x) < REACT_DISTANCE)
+        if (PlayState.OnScreen(transform.position, box) && !active && Mathf.Abs(PlayState.player.transform.position.x - transform.position.x) < REACT_DISTANCE)
         {
             active = true;
             anim.Play("Enemy_bat_fly");
@@ -35,7 +35,7 @@ public class Bat : Enemy
         {
             transform.position = new Vector2(transform.position.x + velocity.x * Time.deltaTime, transform.position.y + velocity.y * Time.deltaTime);
             velocity.y += SPEED * 2 * Time.deltaTime;
-            if (!OnScreen())
+            if (!PlayState.OnScreen(transform.position, box))
                 Destroy(gameObject);
         }
     }

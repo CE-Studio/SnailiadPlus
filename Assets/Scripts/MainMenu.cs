@@ -187,7 +187,10 @@ public class MainMenu : MonoBehaviour
         foreach (Transform area in PlayState.roomTriggerParent.transform)
         {
             foreach (Transform room in area)
+            {
                 room.GetComponent<RoomTrigger>().MoveEntitiesToInternalList();
+                room.GetComponent<RoomTrigger>().LogBreakables();
+            }
         }
 
         menuHUDElements = new GameObject[]

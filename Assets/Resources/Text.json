@@ -1266,6 +1266,36 @@
 			"value": 0
 		},
 		{
+			"name": "subscreen_header_name",
+			"text": "Name",
+			"value": 0
+		},
+		{
+			"name": "subscreen_header_weapon",
+			"text": "Weapon",
+			"value": 0
+		},
+		{
+			"name": "subscreen_header_shell",
+			"text": "Shell",
+			"value": 0
+		},
+		{
+			"name": "subscreen_header_ability",
+			"text": "Ability",
+			"value": 0
+		},
+		{
+			"name": "subscreen_shellNormal",
+			"text": "Normal _",
+			"value": 0
+		},
+		{
+			"name": "subscreen_shell",
+			"text": "shell",
+			"value": 0
+		},
+		{
 			"name": "area_00",
 			"text": "Snail Town",
 			"value": 0
@@ -2177,7 +2207,7 @@
 		},
 		{
 			"name": "npc_41_default_0",
-			"text": "{PF}, you came{nl}back!!  {p|0.15}{eff|wave}Yay!!",
+			"text": "{PF}, you came{nl}back!!  {p|0.15}{eff|Wave}Yay!!",
 			"value": 1
 		},
 		{
@@ -2226,23 +2256,18 @@
 			"value": 1
 		},
 		{
+			"name": "npc_48_greet_0",
+			"text": "Hey, {P}, what's up?",
+			"value": 1
+		},
+		{
+			"name": "npc_48_scream_0",
+			"text": "{eff|Shake}{sfx|3}{spd|0.01}YEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE",
+			"value": 1
+		},
+		{
 			"name": "npc_48_default_0",
-			"text": "{P}, you made it!  {p|0.15}Welcome{nl}to the end of the demo!",
-			"value": 1
-		},
-		{
-			"name": "npc_48_default_1",
-			"text": "Sorry there wasn't more.{nl}{p|0.1}I hope what's here was{nl}enjoyable!",
-			"value": 1
-		},
-		{
-			"name": "npc_48_default_2",
-			"text": "Be sure to write what you{nl}think in the feedback and{nl}bug report thread!",
-			"value": 1
-		},
-		{
-			"name": "npc_48_default_3",
-			"text": "In the meantime, {p|0.1}we'll see{nl}you in the next demo!{nl}{p|0.4}       _@_V !!",
+			"text": "{eff|Wave}Whew!!  {eff|None}{p|0.25}That was scary!!",
 			"value": 1
 		},
 		{

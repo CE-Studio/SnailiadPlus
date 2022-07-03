@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(Door))]
+[CanEditMultipleObjects]
 public class EditorViewDoor : Editor
 {
     Door script;

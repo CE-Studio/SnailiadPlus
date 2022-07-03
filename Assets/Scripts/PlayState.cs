@@ -134,6 +134,13 @@ public class PlayState
         public Vector2 pos;
         public int[] spawnData;
     }
+    public struct Breakable
+    {
+        public Vector2 pos;
+        public int[] tiles;
+        public int weaponLevel;
+        public bool isSilent;
+    }
 
     public static GameObject[] TogglableHUDElements = new GameObject[]
     {
@@ -1503,5 +1510,12 @@ public class PlayState
             else
                 playerScript.UpdateMusic(currentArea, currentSubzone, 1);
         }
+    }
+
+    public static bool OnScreen(Vector2 position, BoxCollider2D box)
+    {
+        float boxAdjust = box != null ? box.size.x * 0.5f : 8;
+        return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
+            Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
     }
 }

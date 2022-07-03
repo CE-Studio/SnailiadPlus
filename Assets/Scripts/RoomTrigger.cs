@@ -40,6 +40,7 @@ public class RoomTrigger : MonoBehaviour
     // - heat
     private List<float> effectVars = new List<float>();
     private bool initializedEffects = false;
+    private float splashTimeout = 0;
 
     public struct RoomCommand
     {
@@ -57,8 +58,9 @@ public class RoomTrigger : MonoBehaviour
     public GameObject breakableBlock;
 
     public PlayState.RoomEntity[] preplacedEntities;
+    public PlayState.Breakable[] breakables;
     
-    void Start()
+    void Awake()
     {
         box = GetComponent<BoxCollider2D>();
         roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
@@ -77,6 +79,7 @@ public class RoomTrigger : MonoBehaviour
         {
             if (initializationBuffer > 0)
                 initializationBuffer -= Time.deltaTime;
+            splashTimeout = Mathf.Clamp(splashTimeout - Time.deltaTime, 0, Mathf.Infinity);
 
             int effectVarIndex = 0;
             foreach (string effect in environmentalEffects)
@@ -125,7 +128,7 @@ public class RoomTrigger : MonoBehaviour
                     waterLevel[WaterPoint(PlayState.player.transform.position.x)].y;
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
                 {
-                    if (initializationBuffer <= 0)
+                    if (initializationBuffer <= 0 && splashTimeout <= 0)
                     {
                         PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
                         if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
@@ -135,6 +138,7 @@ public class RoomTrigger : MonoBehaviour
                         }
                     }
                     PlayState.playerScript.underwater = playerY < waterY;
+                    splashTimeout = 0.125f;
                 }
             }
             else
@@ -260,9 +264,9 @@ public class RoomTrigger : MonoBehaviour
         initializedEffects = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            if (transform.GetChild(i).name.Contains("Breakable Block"))
-                transform.GetChild(i).GetComponent<BreakableBlock>().Despawn();
-            else
+            //if (transform.GetChild(i).name.Contains("Breakable Block"))
+            //    transform.GetChild(i).GetComponent<BreakableBlock>().Despawn();
+            //else
                 Destroy(transform.GetChild(i).gameObject);
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
@@ -329,30 +333,30 @@ public class RoomTrigger : MonoBehaviour
                         case 30:
                             Instantiate(Resources.Load<GameObject>("Objects/Power Grass"), worldPos, Quaternion.identity, transform);
                             break;
-                        case 72:
-                            for (int i = 0; i <= 1; i++)
-                            {
-                                GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                                breakable.GetComponent<BreakableBlock>().Instantiate(2, false);
-                                breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                            }
-                            break;
-                        case 73:
-                            for (int i = 0; i <= 1; i++)
-                            {
-                                GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                                breakable.GetComponent<BreakableBlock>().Instantiate(3, false);
-                                breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                            }
-                            break;
-                        case 74:
-                            for (int i = 0; i <= 1; i++)
-                            {
-                                GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                                breakable.GetComponent<BreakableBlock>().Instantiate(4, false);
-                                breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                            }
-                            break;
+                        //case 72:
+                        //    for (int i = 0; i <= 1; i++)
+                        //    {
+                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
+                        //        breakable.GetComponent<BreakableBlock>().Instantiate(2, false);
+                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
+                        //    }
+                        //    break;
+                        //case 73:
+                        //    for (int i = 0; i <= 1; i++)
+                        //    {
+                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
+                        //        breakable.GetComponent<BreakableBlock>().Instantiate(3, false);
+                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
+                        //    }
+                        //    break;
+                        //case 74:
+                        //    for (int i = 0; i <= 1; i++)
+                        //    {
+                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
+                        //        breakable.GetComponent<BreakableBlock>().Instantiate(4, false);
+                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
+                        //    }
+                        //    break;
                         case 376:
                             GameObject block = new GameObject { name = "Enemy-Collidable Tile", layer = 9 };
                             block.transform.parent = transform;
@@ -387,14 +391,14 @@ public class RoomTrigger : MonoBehaviour
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
-                        case 439:
-                            for (int i = 0; i <= 1; i++)
-                            {
-                                GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                                breakable.GetComponent<BreakableBlock>().Instantiate(4, true);
-                                breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                            }
-                            break;
+                        //case 439:
+                        //    for (int i = 0; i <= 1; i++)
+                        //    {
+                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
+                        //        breakable.GetComponent<BreakableBlock>().Instantiate(4, true);
+                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
+                        //    }
+                        //    break;
                         case 445:
                             GameObject babyfishGreen = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
                             babyfishGreen.GetComponent<Babyfish>().AssignType(0);
@@ -467,8 +471,80 @@ public class RoomTrigger : MonoBehaviour
         preplacedEntities = newList.ToArray();
     }
 
+    public void LogBreakables()
+    {
+        int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
+        int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
+        List<PlayState.Breakable> newBreakableList = new List<PlayState.Breakable>();
+
+        for (int x = -limitX; x <= limitX; x++)
+        {
+            for (int y = -limitY; y <= limitY; y++)
+            {
+                Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
+                Vector2 worldPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
+                TileBase currentTile = specialMap.GetTile(tilePos);
+                if (currentTile != null)
+                {
+                    PlayState.Breakable newBreakable = new PlayState.Breakable
+                    {
+                        pos = worldPos,
+                        weaponLevel = 2,
+                        isSilent = false
+                    };
+
+                    bool isBreakableTileHere = true;
+                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1]))
+                    {
+                        default:
+                            isBreakableTileHere = false;
+                            break;
+                        case 72:
+                            newBreakable.weaponLevel = 2;
+                            break;
+                        case 73:
+                            newBreakable.weaponLevel = 3;
+                            break;
+                        case 74:
+                            newBreakable.weaponLevel = 4;
+                            break;
+                        case 439:
+                            newBreakable.weaponLevel = 4;
+                            newBreakable.isSilent = true;
+                            break;
+                    }
+
+                    newBreakable.tiles = new int[]
+                    {
+                        PlayState.groundLayer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
+                        int.Parse(PlayState.groundLayer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1,
+                        PlayState.fg1Layer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
+                        int.Parse(PlayState.fg1Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1,
+                        PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
+                        int.Parse(PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1
+                    };
+
+                    if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere)
+                    {
+                        newBreakableList.Add(newBreakable);
+                        PlayState.groundLayer.GetComponent<Tilemap>().SetTile(tilePos, null);
+                        PlayState.fg1Layer.GetComponent<Tilemap>().SetTile(tilePos, null);
+                        PlayState.fg2Layer.GetComponent<Tilemap>().SetTile(tilePos, null);
+                    }
+                }
+            }
+        }
+
+        breakables = newBreakableList.ToArray();
+    }
+
     public void SpawnFromInternalList()
     {
+        foreach (PlayState.Breakable thisBreakable in breakables)
+        {
+            GameObject breakable = Instantiate(breakableBlock, transform);
+            breakable.GetComponent<BreakableBlock>().Instantiate(thisBreakable);
+        }
         foreach (PlayState.RoomEntity entity in preplacedEntities)
         {
             GameObject newObject = Instantiate(CheckResourcesFor(entity.name, entity.tag), entity.pos, Quaternion.identity, transform);

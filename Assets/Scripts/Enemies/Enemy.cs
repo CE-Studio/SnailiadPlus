@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         if (intersectingPlayer && !PlayState.playerScript.stunned)
             PlayState.playerScript.HitFor(attack);
 
-        if (!stunInvulnerability && OnScreen())
+        if (!stunInvulnerability && PlayState.OnScreen(transform.position, box))
         {
             List<GameObject> bulletsToDespawn = new List<GameObject>();
             bool killFlag = false;
@@ -160,13 +160,6 @@ public class Enemy : MonoBehaviour
             PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
                 Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 2 });
         Destroy(gameObject);
-    }
-
-    public bool OnScreen()
-    {
-        float boxAdjust = box != null ? box.size.x * 0.5f : 8;
-        return Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(PlayState.cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
-            Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, PlayState.cam.transform.position.y)) - boxAdjust < 7.5f;
     }
 
     private void BuildMask()

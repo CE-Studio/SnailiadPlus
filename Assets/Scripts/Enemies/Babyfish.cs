@@ -55,7 +55,7 @@ public class Babyfish : Enemy
             Mathf.Infinity
             );
 
-        if (OnScreen())
+        if (PlayState.OnScreen(transform.position, box))
         {
             moveTimeout -= Time.deltaTime;
             if (moveTimeout < 0)
