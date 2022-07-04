@@ -201,6 +201,21 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_eraseGame_header3",
+			"text": "Careful!! Erasing the profile you're",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_header4",
+			"text": "using will boot you back to the",
+			"value": 0
+		},
+		{
+			"name": "menu_option_eraseGame_header5",
+			"text": "main menu!!",
+			"value": 0
+		},
+		{
 			"name": "menu_option_eraseGame_confirm",
 			"text": "Yes, I want to start over!",
 			"value": 0
@@ -1293,6 +1308,26 @@
 		{
 			"name": "subscreen_shell",
 			"text": "shell",
+			"value": 0
+		},
+		{
+			"name": "subscreen_markers",
+			"text": "Press \"_\" to\nset markers",
+			"value": 0
+		},
+		{
+			"name": "subscreen_mapRate",
+			"text": "Map\n##%",
+			"value": 0
+		},
+		{
+			"name": "subscreen_itemRate",
+			"text": "Items\n##%",
+			"value": 0
+		},
+		{
+			"name": "subscreen_time",
+			"text": "Time\n_",
 			"value": 0
 		},
 		{

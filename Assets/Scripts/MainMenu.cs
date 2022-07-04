@@ -1136,7 +1136,7 @@ public class MainMenu : MonoBehaviour
         PlayState.bossStates = new int[] { 1, 1, 1, 1 };
         PlayState.hasSeenIris = false;
         PlayState.talkedToCaveSnail = false;
-        PlayState.minimap.transform.parent.GetComponent<Minimap>().currentMap = PlayState.defaultMinimapState;
+        PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
         PlayState.WriteSave("game");
 
         if (PlayState.gameState == "Pause")
@@ -1285,7 +1285,7 @@ public class MainMenu : MonoBehaviour
             if (data.profile != -1)
             {
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-                    " | " + data.percentage + "%", PlayState.currentProfile != i, ConfirmErase, new int[] { 0, i });
+                    " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
             }
             else
                 AddOption("Empty profile", false);
@@ -1301,11 +1301,25 @@ public class MainMenu : MonoBehaviour
     public void ConfirmErase()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
-        AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, ActuallyEraseData);
-        AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
-        ForceSelect(3);
+        if (PlayState.currentProfile == menuVarFlags[0])
+        {
+            AddOption(PlayState.GetText("menu_option_eraseGame_header3").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption(PlayState.GetText("menu_option_eraseGame_header4").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption(PlayState.GetText("menu_option_eraseGame_header5").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption("", false);
+            AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, EraseAndBoot);
+            AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
+            ForceSelect(6);
+        }
+        else
+        {
+            AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption("", false);
+            AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, ActuallyEraseData);
+            AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
+            ForceSelect(3);
+        }
         backPage = ProfileScreen;
     }
 
@@ -1313,6 +1327,12 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.EraseGame(menuVarFlags[0]);
         ProfileScreen();
+    }
+
+    public void EraseAndBoot()
+    {
+        PlayState.EraseGame(menuVarFlags[0]);
+        ReturnToMenu();
     }
 
     public void OptionsScreen()
@@ -1625,6 +1645,8 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     selector[1].GetComponent<AnimationModule>().ResetToStart();
                     selector[2].GetComponent<AnimationModule>().ReloadList();
                     selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    PlayState.minimapScript.RefreshAnims();
+                    PlayState.subscreenScript.RefreshAnims();
                     CreateTitle();
                     break;
                 case "Sound":

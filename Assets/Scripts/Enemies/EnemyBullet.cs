@@ -54,7 +54,7 @@ public class EnemyBullet : MonoBehaviour
                     speed -= initialSpeed * 1.5f * Time.fixedDeltaTime;
                     break;
             }
-            if (lifeTimer > maxLifetime)
+            if (lifeTimer > maxLifetime && !PlayState.OnScreen(transform.position, box))
                 Despawn();
         }
     }

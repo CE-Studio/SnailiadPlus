@@ -103,7 +103,7 @@ public class Item : MonoBehaviour
             else if (itemID >= PlayState.OFFSET_HEARTS)
             {
                 PlayState.heartCount++;
-                PlayState.playerScript.maxHealth += 4;
+                PlayState.playerScript.maxHealth += PlayState.playerScript.hpPerHeart[PlayState.currentDifficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.playerScript.RenderNewHearts();
             }

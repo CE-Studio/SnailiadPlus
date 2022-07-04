@@ -126,6 +126,7 @@ public class PlayState
     public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
     public static GameObject enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
     public static GameObject subscreen = GameObject.Find("View/Subscreen");
+    public static Subscreen subscreenScript = subscreen.GetComponent<Subscreen>();
 
     public struct RoomEntity
     {
@@ -198,28 +199,28 @@ public class PlayState
 
     public static readonly int[] defaultMinimapState = new int[]
     {
-        0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        -1,  0,  0, -1, -1,  2,  0, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        -1, -1,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+        -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  0,  0, -1,  0, -1, -1, -1,  0,  2,  2,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0, -1,  0, -1,  0, -1, -1, -1, -1, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0,  0, -1,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0,  0,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1,  0, -1, -1, -1, -1, -1, -1,
+        -1,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1,  0, -1, -1, -1, -1, -1, -1,
+        -1,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1,
+         0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  2,  0, -1, -1, -1, -1, -1, -1,
+         0, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1,
+         0,  0, -1,  0, -1, -1, -1, -1, -1, -1, -1,  0, -1,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1,
+         0, -1, -1,  0, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1,
+         0, -1, -1,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0, -1, -1, -1,  0,  0, -1, -1, -1, -1, -1,
+         0, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0, -1, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0,  0, -1, -1, -1, -1, -1
     };
     public static List<int> saveLocations = new List<int>();
     public static List<int> bossLocations = new List<int>();
@@ -1075,6 +1076,22 @@ public class PlayState
         return name;
     }
 
+    public static int GetMapPercentage()
+    {
+        int explored = 0;
+        int total = 0;
+        foreach (int i in minimapScript.currentMap)
+        {
+            if (i != -1)
+            {
+                total++;
+                if (i == 1)
+                    explored++;
+            }
+        }
+        return Mathf.FloorToInt(((float)explored / (float)total) * 100);
+    }
+
     public static int GetItemPercentage()
     {
         int itemsFound = 0;
@@ -1087,12 +1104,15 @@ public class PlayState
                 itemsFound += itemCollection[i] == 1 ? 1 : 0;
             }
         }
-        //foreach (int itemStatus in itemCollection)
-        //{
-        //    if (itemStatus == 1)
-        //        itemsFound++;
-        //}
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
+    }
+
+    public static string GetTimeString()
+    {
+        string hourInt = currentTime[0] < 10 ? "0" + currentTime[0] : (currentTime[0] == 0 ? "00" : currentTime[0].ToString());
+        string minuteInt = currentTime[1] < 10 ? "0" + currentTime[1] : (currentTime[1] == 0 ? "00" : currentTime[1].ToString());
+        string secondsInt = (Mathf.RoundToInt(currentTime[2] * 100) + 10000).ToString();
+        return hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
     }
 
     public static void SetMapTile(Vector2 pos, bool state)
@@ -1210,6 +1230,7 @@ public class PlayState
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
                 minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
+                playerScript.maxHealth = playerScript.hpPerHeart[currentDifficulty] * 3;
                 for (int i = 0; i < loadedSave.items.Length; i++)
                 {
                     if (loadedSave.items[i] == 1)
@@ -1219,11 +1240,11 @@ public class PlayState
                         else if (i >= OFFSET_HEARTS)
                         {
                             heartCount++;
-                            playerScript.maxHealth += 4;
-                            playerScript.health += 4;
+                            playerScript.maxHealth += playerScript.hpPerHeart[currentDifficulty];
                         }
                     }
                 }
+                playerScript.health = playerScript.maxHealth;
                 playerScript.RenderNewHearts();
             }
             return loadedSave;
@@ -1311,18 +1332,52 @@ public class PlayState
 
     public static void LoadOptions()
     {
-        if (gameOptions.Length == gameData.options.options.Length)
-            gameOptions = gameData.options.options;
-        else
+        bool load = true;
+        try
         {
-            for (int i = 0; i < gameData.options.options.Length; i++)
-                gameOptions[i] = gameData.options.options[i];
+            int i = gameData.options.options.Length;
+        }
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable CS0168 // Variable is declared but never used
+        catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        {
+            load = false;
+        }
+
+        if (load)
+        {
+            if (gameOptions.Length == gameData.options.options.Length)
+                gameOptions = gameData.options.options;
+            else
+            {
+                for (int i = 0; i < gameData.options.options.Length; i++)
+                    gameOptions[i] = gameData.options.options[i];
+            }
         }
     }
 
     public static void LoadPacks()
     {
-        if (currentPacks.Length == gameData.packs.packs.Length)
+        bool loadNewPacks = true;
+        try
+        {
+            string pack1 = gameData.packs.packs[0];
+            string pack2 = gameData.packs.packs[1];
+            string pack3 = gameData.packs.packs[2];
+            string pack4 = gameData.packs.packs[3];
+        }
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable CS0168 // Variable is declared but never used
+        catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        {
+            loadNewPacks = false;
+        }
+
+        if (currentPacks.Length == gameData.packs.packs.Length && loadNewPacks)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -1383,12 +1438,29 @@ public class PlayState
 
     public static void LoadControls()
     {
-        if (Control.inputs.Length == gameData.controls.controls.Length)
-            Control.inputs = gameData.controls.controls;
-        else
+        bool load = true;
+        try
         {
-            for (int i = 0; i < gameData.controls.controls.Length; i++)
-                Control.inputs[i] = gameData.controls.controls[i];
+            int i = gameData.controls.controls.Length;
+        }
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable CS0168 // Variable is declared but never used
+        catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        {
+            load = false;
+        }
+
+        if (load)
+        {
+            if (Control.inputs.Length == gameData.controls.controls.Length)
+                Control.inputs = gameData.controls.controls;
+            else
+            {
+                for (int i = 0; i < gameData.controls.controls.Length; i++)
+                    Control.inputs[i] = gameData.controls.controls[i];
+            }
         }
     }
 

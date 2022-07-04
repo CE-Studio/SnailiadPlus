@@ -74,6 +74,8 @@ public class BreakableBlock : MonoBehaviour
                         }
                     }
                 }
+                else
+                    collision.GetComponent<Bullet>().Despawn(PlayState.OnScreen(collision.transform.position, collision.GetComponent<BoxCollider2D>()));
             }
             hasBeenHit = true;
         }

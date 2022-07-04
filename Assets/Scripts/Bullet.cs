@@ -90,13 +90,10 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-        if (lifeTimer > 3 || !(transform.position.x > cam.transform.position.x - 12.5f - (box.size.x * 0.5f) &&
-                transform.position.x < cam.transform.position.x + 12.5f + (box.size.x * 0.5f) &&
-                transform.position.y > cam.transform.position.y - 7.5f - (box.size.y * 0.5f) &&
-                transform.position.y < cam.transform.position.y + 7.5f + (box.size.y * 0.5f)))
+        if (lifeTimer > 3 && !PlayState.OnScreen(transform.position, box))
             Despawn();
         if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
-            Despawn(true);
+            Despawn(PlayState.OnScreen(transform.position, box));
     }
 
     public void Shoot(int type, int dir)

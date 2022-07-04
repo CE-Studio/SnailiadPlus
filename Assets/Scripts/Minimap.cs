@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Minimap : MonoBehaviour
 {
-    //public GameObject player;
     public GameObject minimap;
     public AnimationModule[] anims;
 
@@ -17,9 +16,9 @@ public class Minimap : MonoBehaviour
     {
         -55, -54, -53, -52, -51, -50, -49,
         -29, -28, -27, -26, -25, -24, -23,
-        -3, -2, -1, 0, 1, 2, 3,
-        23, 24, 25, 26, 27, 28, 29,
-        49, 50, 51, 52, 53, 54, 55
+         -3,  -2,  -1,   0,   1,   2,   3,
+         23,  24,  25,  26,  27,  28,  29,
+         49,  50,  51,  52,  53,  54,  55
     };
 
     public int[] currentMap = new int[] { };

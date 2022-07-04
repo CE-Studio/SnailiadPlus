@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grass : MonoBehaviour
 {
-    public int totalBites = 3;
+    public int[] totalBites;
     public int healthPerBite = 1;
     public float biteTimeout = 0.22f;
     public float regrowTimeout = 15f;
@@ -21,6 +21,8 @@ public class Grass : MonoBehaviour
         if (PlayState.gameState != "Game")
             return;
 
+        totalBites = new int[] { 6, 3, 1 };
+
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         anim = GetComponent<AnimationModule>();
@@ -30,7 +32,7 @@ public class Grass : MonoBehaviour
 
         Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
-        bitesRemaining = totalBites;
+        bitesRemaining = totalBites[PlayState.currentDifficulty];
         timer = 0;
     }
 
@@ -43,7 +45,7 @@ public class Grass : MonoBehaviour
         {
             PlayState.PlaySound("GrassGrow");
             anim.Play("Grass_idle");
-            bitesRemaining = totalBites;
+            bitesRemaining = totalBites[PlayState.currentDifficulty];
         }
     }
 

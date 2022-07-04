@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool armed;
     public int health = 12;
     public int maxHealth = 12;
+    public readonly int[] hpPerHeart = new int[] { 8, 4, 2 };
     public bool stunned = false;
     public bool inDeathCutscene = false;
     public int gravityDir = 0;
@@ -366,11 +367,8 @@ public class Player : MonoBehaviour
             PlayState.currentTime[1] -= 60;
             PlayState.currentTime[0] += 1;
         }
-        string hourInt = PlayState.currentTime[0] < 10 ? "0" + PlayState.currentTime[0] : (PlayState.currentTime[0] == 0 ? "00" : PlayState.currentTime[0].ToString());
-        string minuteInt = PlayState.currentTime[1] < 10 ? "0" + PlayState.currentTime[1] : (PlayState.currentTime[1] == 0 ? "00" : PlayState.currentTime[1].ToString());
-        string secondsInt = (Mathf.RoundToInt(PlayState.currentTime[2] * 100) + 10000).ToString();
-        PlayState.timeText.text = hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
-        PlayState.timeShadow.text = hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
+        PlayState.timeText.text = PlayState.GetTimeString();
+        PlayState.timeShadow.text = PlayState.GetTimeString();
     }
 
     public void UpdateMusic(int area, int subzone, int resetFlag = 0)
@@ -603,7 +601,7 @@ public class Player : MonoBehaviour
                 Destroy(hearts.transform.GetChild(i).gameObject);
             }
         }
-        for (int i = 0; i < maxHealth * 0.25f; i++)
+        for (int i = 0; i < maxHealth * (PlayState.currentDifficulty == 2 ? 0.5f : (PlayState.currentDifficulty == 1 ? 0.25f : 0.125f)); i++)
         {
             GameObject NewHeart = new GameObject();
             NewHeart.transform.parent = hearts.transform;
@@ -611,12 +609,13 @@ public class Player : MonoBehaviour
             NewHeart.AddComponent<SpriteRenderer>();
             NewHeart.AddComponent<AnimationModule>();
             AnimationModule heartAnim = NewHeart.GetComponent<AnimationModule>();
-            heartAnim.Add("Heart0");
-            heartAnim.Add("Heart1");
-            heartAnim.Add("Heart2");
-            heartAnim.Add("Heart3");
-            heartAnim.Add("Heart4");
-            heartAnim.Play("Heart4");
+            for (int j = 0; j <= 8; j++)
+                heartAnim.Add("Heart_easy_" + j);
+            for (int j = 0; j <= 4; j++)
+                heartAnim.Add("Heart_normal_" + j);
+            for (int j = 0; j <= 2; j++)
+                heartAnim.Add("Heart_insane_" + j);
+            heartAnim.Play(PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"));
             NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
@@ -629,25 +628,38 @@ public class Player : MonoBehaviour
             int totalOfPreviousHearts = 0;
             for (int i = 0; i < hearts.transform.childCount; i++)
             {
-                switch (health - totalOfPreviousHearts)
-                {
-                    case 1:
-                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart1");
-                        break;
-                    case 2:
-                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart2");
-                        break;
-                    case 3:
-                        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart3");
-                        break;
-                    default:
-                        if (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0)
-                            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart4");
-                        else
-                            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart0");
-                        break;
-                }
-                totalOfPreviousHearts += 4;
+                //switch (health - totalOfPreviousHearts)
+                //{
+                //    case 1:
+                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart1");
+                //        break;
+                //    case 2:
+                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart2");
+                //        break;
+                //    case 3:
+                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart3");
+                //        break;
+                //    default:
+                //        if (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0)
+                //            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart4");
+                //        else
+                //            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart0");
+                //        break;
+                //}
+                hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play((health - totalOfPreviousHearts) switch {
+                        1 => PlayState.currentDifficulty == 2 ? "Heart_insane_1" : (PlayState.currentDifficulty == 1 ? "Heart_normal_1" : "Heart_easy_1"),
+                        2 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_2" : "Heart_easy_2"),
+                        3 => PlayState.currentDifficulty == 1 ? "Heart_normal_3" : "Heart_easy_3",
+                        4 => PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_4",
+                        5 => "Heart_easy_5",
+                        6 => "Heart_easy_6",
+                        7 => "Heart_easy_7",
+                        8 => "Heart_easy_8",
+                        _ => (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0) ? (PlayState.currentDifficulty == 2 ?
+                        "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8")) : (PlayState.currentDifficulty == 2 ?
+                        "Heart_insane_0" : (PlayState.currentDifficulty == 1 ? "Heart_normal_0" : "Heart_easy_0"))
+                    });
+                totalOfPreviousHearts += hpPerHeart[PlayState.currentDifficulty];
             }
         }
     }

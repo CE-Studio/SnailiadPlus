@@ -2592,7 +2592,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "PowerGrass_eaten",
+			"name": "PowerGrass_idle",
 			"spriteName": "Entities/PowerGrass",
 			"framerate": 0.0,
 			"frames": [
@@ -2828,28 +2828,6 @@
 		{
 			"name": "NPC_bubble_close",
 			"spriteName": "UI/DialogueIcon2",
-			"framerate": 0.0,
-			"frames": [
-				-1
-			],
-			"loop": false,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "PowerGrass_idle",
-			"spriteName": "Entities/PowerGrass",
-			"framerate": 0.0,
-			"frames": [
-				0
-			],
-			"loop": false,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "PowerGrass_eaten",
-			"spriteName": "Entities/PowerGrass",
 			"framerate": 0.0,
 			"frames": [
 				-1
@@ -4550,7 +4528,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Heart0",
+			"name": "Heart_easy_0",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
 			"frames": [
@@ -4561,7 +4539,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Heart1",
+			"name": "Heart_easy_1",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
 			"frames": [
@@ -4572,7 +4550,18 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Heart2",
+			"name": "Heart_easy_2",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_easy_3",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
 			"frames": [
@@ -4583,7 +4572,18 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Heart3",
+			"name": "Heart_easy_4",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_easy_5",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
 			"frames": [
@@ -4594,7 +4594,117 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Heart4",
+			"name": "Heart_easy_6",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_easy_7",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_easy_8",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_normal_0",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_normal_1",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_normal_2",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_normal_3",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_normal_4",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_insane_0",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_insane_1",
+			"spriteName": "UI/Heart",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Heart_insane_2",
 			"spriteName": "UI/Heart",
 			"framerate": 0.0,
 			"frames": [
