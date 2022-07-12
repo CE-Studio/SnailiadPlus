@@ -85,6 +85,7 @@ public class PlayState
     public static Vector2 positionOfLastRoom = Vector2.zero;
     public static Vector2 positionOfLastSave = Vector2.zero;
     public static int enemyBulletPointer = 0;
+    public static List<Vector2> breakablePositions = new List<Vector2>();
 
     public static int importJobs = 0;
 
@@ -458,6 +459,16 @@ public class PlayState
         Debug.Log(output);
     }
 
+    public static void RefreshPoolAnims()
+    {
+        foreach (Transform obj in particlePool.transform)
+            obj.GetComponent<AnimationModule>().ReloadList();
+        foreach (Transform obj in playerScript.bulletPool.transform)
+            obj.GetComponent<AnimationModule>().ReloadList();
+        foreach (Transform obj in enemyBulletPool.transform)
+            obj.GetComponent<AnimationModule>().ReloadList();
+    }
+
     public static AnimationData GetAnim(int ID)
     {
         return animationLibrary[ID];
@@ -672,16 +683,21 @@ public class PlayState
 
     public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false)
     {
-        Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
-        bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
-        if (!result && checkForEnemyCollide)
+        if (breakablePositions.Contains(new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y))))
+            return true;
+        else
         {
-            TileBase spTile = specialLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0));
-            if (spTile != null)
-                if (spTile.name == "Tilesheet_376")
-                    result = true;
+            Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
+            bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
+            if (!result && checkForEnemyCollide)
+            {
+                TileBase spTile = specialLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0));
+                if (spTile != null)
+                    if (spTile.name == "Tilesheet_376")
+                        result = true;
+            }
+            return result;
         }
-        return result;
     }
 
     public static void ToggleHUD(bool state)
@@ -814,21 +830,11 @@ public class PlayState
             particleObject.gameObject.SetActive(true);
             Particle particleScript = particleObject.GetComponent<Particle>();
 
-            bool activateParticle = true;
+            bool activateParticle = false;
 
             switch (type.ToLower())
             {
                 default:
-                    break;
-                case "explosion":
-                    // Values:
-                    // 0 = Size
-
-                    if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
-                    {
-                        activateParticle = true;
-                        particleScript.vars[0] = values[0];
-                    }
                     break;
                 case "bubble":
                     // Values:
@@ -845,9 +851,15 @@ public class PlayState
                         particleScript.vars[4] = values[1];                                       // Randomize initial velocity
                     }
                     break;
-                case "splash":
-                    if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
+                case "explosion":
+                    // Values:
+                    // 0 = Size
+
+                    if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
+                    {
                         activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                    }
                     break;
                 case "nom":
                     // Values:
@@ -858,6 +870,14 @@ public class PlayState
                         activateParticle = true;
                         particleScript.vars[0] = position.y;
                     }
+                    break;
+                case "smoke":
+                    if (gameOptions[11] > 1)
+                        activateParticle = true;
+                    break;
+                case "splash":
+                    if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
+                        activateParticle = true;
                     break;
             }
 

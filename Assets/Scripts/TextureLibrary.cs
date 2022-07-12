@@ -58,6 +58,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Bubble",
         "Particles/Explosion",
         "Particles/Nom",
+        "Particles/Smoke",
         "Particles/Splash",
         "Particles/Star",
 

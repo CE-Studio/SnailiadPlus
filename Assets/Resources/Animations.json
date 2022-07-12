@@ -3713,6 +3713,19 @@
 			"randomizeStartFrame": false
 		},
         {
+            "name": "Smoke",
+			"spriteName": "Particles/Smoke",
+            "framerate": 3.0,
+            "frames": [
+                0,
+                1,
+                2
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
             "name": "Splash",
 			"spriteName": "Particles/Splash",
             "framerate": 24.0,

@@ -29,6 +29,7 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
         anim.Add("Nom");
+        anim.Add("Smoke");
         anim.Add("Splash");
     }
 
@@ -85,12 +86,6 @@ public class Particle : MonoBehaviour
         switch (animType)
         {
             default:
-                PlayState.AnimationData nullAnim = new PlayState.AnimationData();
-                nullAnim.name = "NoAnim";
-                nullAnim.framerate = 0;
-                nullAnim.frames = new int[] { -1 };
-                nullAnim.loop = false;
-                nullAnim.loopStartFrame = 0;
                 break;
             case "bubble":
                 anim.Play("Bubble");
@@ -113,10 +108,17 @@ public class Particle : MonoBehaviour
             case "nom":
                 anim.Play("Nom");
                 break;
+            case "smoke":
+                anim.Play("Smoke");
+                break;
             case "splash":
                 anim.Play("Splash");
                 break;
         }
+        sprite.sortingOrder = animType switch
+        {
+            _ => -15
+        };
     }
 
     public void PlaySound()

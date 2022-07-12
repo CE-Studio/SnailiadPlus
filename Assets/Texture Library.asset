@@ -55,6 +55,7 @@ MonoBehaviour:
   - Particles/Bubble
   - Particles/Explosion
   - Particles/Nom
+  - Particles/Smoke
   - Particles/Splash
   - Particles/Star
   - UI/AchievementPanel

@@ -1647,6 +1647,8 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
                     selector[2].GetComponent<AnimationModule>().ResetToStart();
                     PlayState.minimapScript.RefreshAnims();
                     PlayState.subscreenScript.RefreshAnims();
+                    PlayState.RefreshPoolAnims();
+                    PlayState.player.GetComponent<AnimationModule>().ReloadList();
                     CreateTitle();
                     break;
                 case "Sound":

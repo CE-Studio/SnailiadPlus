@@ -15,7 +15,7 @@ public class SavePoint : MonoBehaviour
         anim.Add("Save_active");
         anim.Add("Save_last");
 
-        if (PlayState.respawnCoords == new Vector2(transform.position.x, transform.position.y))
+        if (PlayState.respawnCoords == new Vector2(transform.position.x, transform.position.y + 0.5f))
             anim.Play("Save_last");
         else
             anim.Play("Save_inactive");

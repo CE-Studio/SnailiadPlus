@@ -229,6 +229,7 @@ public class RoomTrigger : MonoBehaviour
             roomNameText.text = newRoomName;
             roomNameShadow.text = newRoomName;
 
+            PlayState.breakablePositions.Clear();
             CheckSpecialLayer();
             SpawnFromInternalList();
 
@@ -333,30 +334,9 @@ public class RoomTrigger : MonoBehaviour
                         case 30:
                             Instantiate(Resources.Load<GameObject>("Objects/Power Grass"), worldPos, Quaternion.identity, transform);
                             break;
-                        //case 72:
-                        //    for (int i = 0; i <= 1; i++)
-                        //    {
-                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                        //        breakable.GetComponent<BreakableBlock>().Instantiate(2, false);
-                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                        //    }
-                        //    break;
-                        //case 73:
-                        //    for (int i = 0; i <= 1; i++)
-                        //    {
-                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                        //        breakable.GetComponent<BreakableBlock>().Instantiate(3, false);
-                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                        //    }
-                        //    break;
-                        //case 74:
-                        //    for (int i = 0; i <= 1; i++)
-                        //    {
-                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                        //        breakable.GetComponent<BreakableBlock>().Instantiate(4, false);
-                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                        //    }
-                        //    break;
+                        case 31:
+                            PlayState.RequestParticle(worldPos, "smoke");
+                            break;
                         case 376:
                             GameObject block = new GameObject { name = "Enemy-Collidable Tile", layer = 9 };
                             block.transform.parent = transform;
@@ -391,14 +371,6 @@ public class RoomTrigger : MonoBehaviour
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
-                        //case 439:
-                        //    for (int i = 0; i <= 1; i++)
-                        //    {
-                        //        GameObject breakable = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
-                        //        breakable.GetComponent<BreakableBlock>().Instantiate(4, true);
-                        //        breakable.GetComponent<SpriteRenderer>().sortingOrder = i == 1 ? -19 : -99;
-                        //    }
-                        //    break;
                         case 445:
                             GameObject babyfishGreen = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
                             babyfishGreen.GetComponent<Babyfish>().AssignType(0);

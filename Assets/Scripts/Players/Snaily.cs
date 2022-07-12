@@ -42,6 +42,7 @@ public class Snaily : MonoBehaviour
     private RaycastHit2D boxU;
     private RaycastHit2D boxD;
     private RaycastHit2D boxCorner;
+    private RaycastHit2D boxCenter;
     private Vector2 lastPosition;
     private Vector2 lastSize;
 
@@ -1255,6 +1256,19 @@ public class Snaily : MonoBehaviour
                 }
                 Shoot();
             }
+
+            // Here we just make sure that the player isn't clipping inside any ground. If they are, we find the closest non-solid tile and move the player there,
+            // with some minor adjustments in one direction or another based on the player's current gravity and if they're in their shell or not
+            if (boxCenter.collider != null)
+            {
+                transform.position = new Vector2(
+                    Mathf.Floor(transform.position.x) + 0.5f + (((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) ?
+                    (shelled ? 0.03125f : 0.53125f) : 0) * (facingLeft ? 1 : -1)),
+                    Mathf.Floor(transform.position.y) + 0.5f + (((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ?
+                    (shelled ? 0.03125f : 0.53125f) : 0) * (facingDown ? 1 : -1))
+                    );
+                UpdateBoxcasts();
+            }
         }
     }
 
@@ -1399,6 +1413,16 @@ public class Snaily : MonoBehaviour
             0,
             Vector2.down,
             Mathf.Infinity,
+            playerCollide,
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
+        boxCenter = Physics2D.BoxCast(
+            transform.position,
+            new Vector2(box.size.x - 0.06625f, box.size.y - 0.0625f),
+            0,
+            Vector2.up,
+            0,
             playerCollide,
             Mathf.Infinity,
             Mathf.Infinity
