@@ -2196,11 +2196,6 @@
 			"value": 1
 		},
 		{
-			"name": "npc_23_noHighJump_0",
-			"text": "I know why you're here, {P}.{nl}{p|0.25}Unfortunately, {p|0.1}there's no High{nl}Jump in this demo.",
-			"value": 1
-		},
-		{
 			"name": "npc_23_caveSnail_0",
 			"text": "{col|0200}Cave Snail {col|0312}scares me!{nl}{p|0.25}I'm staying over here!",
 			"value": 1

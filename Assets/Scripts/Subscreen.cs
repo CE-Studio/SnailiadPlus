@@ -171,9 +171,15 @@ public class Subscreen : MonoBehaviour
                 if (isSelecting)
                 {
                     if (PlayState.playerMarkerLocations.ContainsKey(currentlySelectedCell))
+                    {
                         PlayState.playerMarkerLocations.Remove(currentlySelectedCell);
+                        PlayState.minimapScript.currentMap[currentlySelectedCell] -= 10;
+                    }
                     else
+                    {
                         PlayState.playerMarkerLocations.Add(currentlySelectedCell, "placeholder for multiplayer name");
+                        PlayState.minimapScript.currentMap[currentlySelectedCell] += 10;
+                    }
                     UpdateCells();
                 }
                 else
@@ -235,7 +241,8 @@ public class Subscreen : MonoBehaviour
         cellsWithMarkers.Clear();
         for (int i = 0; i < cells.Count; i++)
         {
-            if (PlayState.minimapScript.currentMap[i] == 0 || PlayState.minimapScript.currentMap[i] == 2)
+            int thisCellValue = (PlayState.minimapScript.currentMap[i] < 10) ? PlayState.minimapScript.currentMap[i] : (PlayState.minimapScript.currentMap[i] - 10);
+            if (thisCellValue == 0 || thisCellValue == 2)
             {
                 cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
                 if (PlayState.playerMarkerLocations.ContainsKey(i))

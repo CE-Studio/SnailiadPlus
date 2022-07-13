@@ -402,9 +402,7 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 23:
-                            if (PlayState.GetItemPercentage() == 0)
-                                AddText("noHighJump");
-                            else if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
+                            if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
                                 AddText("caveSnail");
                             else if (PlayState.GetItemPercentage() < 60)
                                 AddText("loadGame");

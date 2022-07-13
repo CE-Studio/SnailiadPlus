@@ -636,6 +636,14 @@ public class PlayState
         return new Vector2(Mathf.Floor(Mathf.Abs(topLeftCorner.x - worldPos.x) / ROOM_SIZE.x), Mathf.Floor(Mathf.Abs(topLeftCorner.y - worldPos.y) / ROOM_SIZE.y));
     }
 
+    public static int WorldPosToMapGridID(Vector3 worldPos)
+    {
+        return WorldPosToMapGridID(new Vector2(worldPos.x, worldPos.y));
+    }
+    public static int WorldPosToMapGridID(Vector3Int worldPos)
+    {
+        return WorldPosToMapGridID(new Vector2(worldPos.x, worldPos.y));
+    }
     public static int WorldPosToMapGridID(Vector2 worldPos)
     {
         Vector2 mapPos = WorldPosToMapPos(worldPos);
@@ -655,16 +663,36 @@ public class PlayState
                 {
                     if (entity.CompareTag("SavePoint"))
                         saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
-                    //if (entity.CompareTag("Boss"))
-                    //    bossLocations.Add(WorldPosToMapGridID(entity.transform.position));
                     if (entity.CompareTag("Item"))
-                    {
-                        //if (!entity.GetComponent<Item>().collected)
-                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
-                    }
+                        itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
                 }
             }
         }
+
+        Tilemap spMap = specialLayer.GetComponent<Tilemap>();
+        for (int y = 0; y < spMap.size.y; y++)
+        {
+            for (int x = 0; x < spMap.size.x; x++)
+            {
+                List<int> bossTileIDs = new List<int> { 23, 24, 25, 26 };
+                Vector3Int worldPos = new Vector3Int(Mathf.RoundToInt(spMap.origin.x - (spMap.size.x * 0.5f) + x), Mathf.RoundToInt(spMap.origin.y - (spMap.size.y * 0.5f) + y), 0);
+                Sprite tileSprite = spMap.GetSprite(worldPos);
+                if (tileSprite != null)
+                {
+                    int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
+                    if (bossTileIDs.Contains(spriteID))
+                        bossLocations.Add(WorldPosToMapGridID(worldPos));
+                }
+            }
+        }
+    }
+
+    public static void BuildPlayerMarkerArray()
+    {
+        playerMarkerLocations.Clear();
+        for (int i = 0; i < minimapScript.currentMap.Length; i++)
+            if (minimapScript.currentMap[i] >= 10)
+                playerMarkerLocations.Add(i, "placeholder for multiplayer name");
     }
 
     public static void PlayAreaSong(int area, int subzone)
@@ -1137,8 +1165,17 @@ public class PlayState
 
     public static void SetMapTile(Vector2 pos, bool state)
     {
-        int currentCellState = minimapScript.currentMap[Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x)];
-        minimapScript.currentMap[Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x)] = currentCellState > 1 ? (state ? 3 : 2) : (state ? 1 : 0);
+        int cellID = Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x);
+        int currentCellState = minimapScript.currentMap[cellID];
+        bool marked = false;
+        if (currentCellState >= 10)
+        {
+            currentCellState -= 10;
+            marked = true;
+        }
+        minimapScript.currentMap[cellID] = currentCellState > 1 ? (state ? 3 : 2) : (state ? 1 : 0);
+        if (marked)
+            minimapScript.currentMap[cellID] += 10;
         minimapScript.RefreshMap();
     }
 
@@ -1251,6 +1288,8 @@ public class PlayState
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
                 minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
                 playerScript.maxHealth = playerScript.hpPerHeart[currentDifficulty] * 3;
+                helixCount = 0;
+                heartCount = 0;
                 for (int i = 0; i < loadedSave.items.Length; i++)
                 {
                     if (loadedSave.items[i] == 1)

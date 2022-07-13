@@ -77,7 +77,7 @@ public class Minimap : MonoBehaviour
         currentCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
         if (currentCellID >= 0 && currentCellID < currentMap.Length && !PlayState.playerScript.inDeathCutscene)
         {
-            if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2)
+            if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2 || currentMap[currentCellID] == 10 || currentMap[currentCellID] == 12)
                 currentMap[currentCellID]++;
         }
         if (lastCellID != currentCellID)
@@ -107,7 +107,8 @@ public class Minimap : MonoBehaviour
             int thisMaskID = currentCellID + maskIDoffsets[i];
             if (thisMaskID >= 0 && thisMaskID < currentMap.Length)
             {
-                if (currentMap[thisMaskID] == 1 || (currentMap[thisMaskID] == 3 && PlayState.gameOptions[13] == 1))
+                int thisCellValue = (currentMap[thisMaskID] < 10) ? currentMap[thisMaskID] : (currentMap[thisMaskID] - 10);
+                if (thisCellValue == 1 || thisCellValue == 11 || ((thisCellValue == 3 || thisCellValue == 13) && PlayState.gameOptions[13] == 1))
                 {
                     bool highlightPlayerTile = true;
                     masks[i].GetComponent<SpriteMask>().enabled = false;

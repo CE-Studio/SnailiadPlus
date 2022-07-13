@@ -67,11 +67,6 @@ public class MainMenu : MonoBehaviour
 
     public GameObject[] menuHUDElements;
 
-    //public int[] letterPixelWidths = new int[]
-    //{
-    //    28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 24, 12
-    ////  A   B   C   D   E   F   G   H   I  J   K   L  M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z
-    //};
     private readonly string acceptedChars = "abcdefghijklmnopqrstuvwxyz +";
     public Dictionary<char, int> letterPixelWidths = new Dictionary<char, int>
     {
@@ -966,7 +961,6 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
             PlayState.currentArea = -1;
             PlayState.currentSubzone = -1;
-            PlayState.currentProfile = -1;
         }
 
         fadingToIntro = true;
@@ -986,6 +980,7 @@ public class MainMenu : MonoBehaviour
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
+        PlayState.BuildPlayerMarkerArray();
         PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         PlayState.ToggleBossfightState(false, 0, true);
         SetTextComponentOrigins();
