@@ -5,9 +5,13 @@ using UnityEngine;
 public class Snaily : MonoBehaviour
 {
     public const float RUNSPEED_NORMAL = 8;
+    public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
     public const float JUMPPOWER_NORMAL = 26;
+    public readonly float[] JUMPPOWER = new float[] { 26, 26, 26, 26, 57.5f, 57.5f, 57.5f, 57.5f };
     public const float GRAVITY = 1.35f;
+    public readonly float[] GRAVITY_new = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
     public const float TERMINAL_VELOCITY = -0.66f;
+    public readonly float[] TERMINAL_VELOCITY_new = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
     public const float HITBOX_X = 1.467508f;
     public const float HITBOX_Y = 0.96f;
     public const float HITBOX_SHELL_X = 0.75f;
@@ -157,6 +161,9 @@ public class Snaily : MonoBehaviour
         // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
         if (!player.inDeathCutscene)
         {
+            int readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
+            int readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
+
             switch (gravityDir)
             {
                 case DIR_FLOOR:
@@ -187,7 +194,7 @@ public class Snaily : MonoBehaviour
                                 }
                             }
                             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                            float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
+                            float runSpeedValue = RUNSPEED[readIDSpeed] * speedMod * Time.fixedDeltaTime;
                             if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                             {
                                 againstWallFlag = true;
@@ -204,10 +211,10 @@ public class Snaily : MonoBehaviour
                                             if (shelled)
                                             {
                                                 if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                                    transform.position = new Vector2(transform.position.x - (0.58125f - boxR.distance - (facingLeft ? 0.25f : 0)),
                                                         transform.position.y);
                                                 else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                                    transform.position = new Vector2(transform.position.x + (0.58125f - boxL.distance - (facingLeft ? 0 : 0.25f)),
                                                         transform.position.y);
                                                 ToggleShell();
                                             }
@@ -234,6 +241,8 @@ public class Snaily : MonoBehaviour
                                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
                                             gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                                             grounded = true;
+                                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                                            UpdateBoxcasts();
                                             return;
                                         }
                                     }
@@ -249,7 +258,7 @@ public class Snaily : MonoBehaviour
                         if (!grounded)
                         {
                             bool pokedCeiling = false;
-                            velocity.y = Mathf.Clamp(velocity.y - GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
+                            velocity.y = Mathf.Clamp(velocity.y - GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY_new[readIDSpeed], Mathf.Infinity);
                             if (boxD.distance != 0 && boxU.distance != 0)
                             {
                                 if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
@@ -292,7 +301,7 @@ public class Snaily : MonoBehaviour
                                     if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
                                     {
                                         transform.position = new Vector2(
-                                            transform.position.x + ((facingLeft ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime),
+                                            transform.position.x + ((facingLeft ? -RUNSPEED[readIDSpeed] : RUNSPEED[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
                                             Mathf.Floor(transform.position.y) + 0.5f);
                                         i = 8;
                                     }
@@ -364,7 +373,7 @@ public class Snaily : MonoBehaviour
                                 ToggleShell();
                             }
                             grounded = false;
-                            velocity.y = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                            velocity.y = JUMPPOWER[readIDJump] * jumpMod * Time.deltaTime;
                             PlayState.PlaySound("Jump");
                         }
                         if (Control.JumpHold() && !holdingJump)
@@ -430,7 +439,7 @@ public class Snaily : MonoBehaviour
                                 }
                             }
                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                            float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
+                            float runSpeedValue = RUNSPEED[readIDSpeed] * speedMod * Time.fixedDeltaTime;
                             if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                             {
                                 againstWallFlag = true;
@@ -477,6 +486,8 @@ public class Snaily : MonoBehaviour
                                             SwapDir((Control.RightHold()) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                             gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
                                             grounded = true;
+                                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                                            UpdateBoxcasts();
                                             return;
                                         }
                                     }
@@ -503,7 +514,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x - GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY, Mathf.Infinity);
+                                velocity.x = Mathf.Clamp(velocity.x - GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY_new[readIDSpeed], Mathf.Infinity);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -547,7 +558,7 @@ public class Snaily : MonoBehaviour
                                         {
                                             transform.position = new Vector2(
                                                 Mathf.Floor(transform.position.x) + 0.5f,
-                                                transform.position.y + ((facingDown ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime));
+                                                transform.position.y + ((facingDown ? -RUNSPEED[readIDSpeed] : RUNSPEED[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
                                             i = 8;
                                         }
                                     }
@@ -632,7 +643,7 @@ public class Snaily : MonoBehaviour
                             }
                             grounded = false;
                             if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.x = JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                                velocity.x = JUMPPOWER[readIDJump] * jumpMod * Time.deltaTime;
                             else
                             {
                                 transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
@@ -707,7 +718,7 @@ public class Snaily : MonoBehaviour
                                 }
                             }
                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                            float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
+                            float runSpeedValue = RUNSPEED[readIDSpeed] * speedMod * Time.fixedDeltaTime;
                             if ((facingDown ? boxD : boxU).distance < runSpeedValue)
                             {
                                 againstWallFlag = true;
@@ -754,6 +765,8 @@ public class Snaily : MonoBehaviour
                                             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                                             gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
                                             grounded = true;
+                                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                                            UpdateBoxcasts();
                                             return;
                                         }
                                     }
@@ -780,7 +793,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
+                                velocity.x = Mathf.Clamp(velocity.x + GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY_new[readIDSpeed]);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -824,7 +837,7 @@ public class Snaily : MonoBehaviour
                                         {
                                             transform.position = new Vector2(
                                                 Mathf.Floor(transform.position.x) + 0.5f,
-                                                transform.position.y + ((facingDown ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime));
+                                                transform.position.y + ((facingDown ? -RUNSPEED[readIDSpeed] : RUNSPEED[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
                                             i = 8;
                                         }
                                     }
@@ -909,7 +922,7 @@ public class Snaily : MonoBehaviour
                             }
                             grounded = false;
                             if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.x = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                                velocity.x = -JUMPPOWER[readIDJump] * jumpMod * Time.deltaTime;
                             else
                             {
                                 transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
@@ -984,7 +997,7 @@ public class Snaily : MonoBehaviour
                                 }
                             }
                             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                            float runSpeedValue = RUNSPEED_NORMAL * speedMod * Time.fixedDeltaTime;
+                            float runSpeedValue = RUNSPEED[readIDSpeed] * speedMod * Time.fixedDeltaTime;
                             if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
                             {
                                 againstWallFlag = true;
@@ -1001,10 +1014,10 @@ public class Snaily : MonoBehaviour
                                             if (shelled)
                                             {
                                                 if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                                                    transform.position = new Vector2(transform.position.x - (0.58125f - boxR.distance - (facingLeft ? 0.25f : 0)),
                                                         transform.position.y);
                                                 else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                                                    transform.position = new Vector2(transform.position.x + (0.58125f - boxL.distance - (facingLeft ? 0 : 0.25f)),
                                                         transform.position.y);
                                                 ToggleShell();
                                             }
@@ -1031,6 +1044,8 @@ public class Snaily : MonoBehaviour
                                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
                                             gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                                             grounded = true;
+                                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                                            UpdateBoxcasts();
                                             return;
                                         }
                                     }
@@ -1055,7 +1070,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.y = Mathf.Clamp(velocity.y + GRAVITY * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY);
+                                velocity.y = Mathf.Clamp(velocity.y + GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY_new[readIDSpeed]);
                                 if (boxD.distance != 0 && boxU.distance != 0)
                                 {
                                     if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
@@ -1098,7 +1113,7 @@ public class Snaily : MonoBehaviour
                                         if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
                                         {
                                             transform.position = new Vector2(
-                                                transform.position.x + ((facingLeft ? -RUNSPEED_NORMAL : RUNSPEED_NORMAL) * speedMod * Time.fixedDeltaTime),
+                                                transform.position.x + ((facingLeft ? -RUNSPEED[readIDSpeed] : RUNSPEED[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
                                                 Mathf.Floor(transform.position.y) + 0.5f);
                                             i = 8;
                                         }
@@ -1179,7 +1194,7 @@ public class Snaily : MonoBehaviour
                             }
                             grounded = false;
                             if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.y = -JUMPPOWER_NORMAL * jumpMod * Time.deltaTime;
+                                velocity.y = -JUMPPOWER[readIDJump] * jumpMod * Time.deltaTime;
                             else
                             {
                                 SwapDir(DIR_FLOOR);
@@ -1257,18 +1272,33 @@ public class Snaily : MonoBehaviour
                 Shoot();
             }
 
-            // Here we just make sure that the player isn't clipping inside any ground. If they are, we find the closest non-solid tile and move the player there,
-            // with some minor adjustments in one direction or another based on the player's current gravity and if they're in their shell or not
-            if (boxCenter.collider != null)
-            {
-                transform.position = new Vector2(
-                    Mathf.Floor(transform.position.x) + 0.5f + (((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) ?
-                    (shelled ? 0.03125f : 0.53125f) : 0) * (facingLeft ? 1 : -1)),
-                    Mathf.Floor(transform.position.y) + 0.5f + (((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ?
-                    (shelled ? 0.03125f : 0.53125f) : 0) * (facingDown ? 1 : -1))
-                    );
-                UpdateBoxcasts();
-            }
+            //// Here we just make sure that the player isn't clipping inside any ground. If they are, we find the closest non-solid tile and move the player there,
+            //// with some minor adjustments in one direction or another based on the player's current gravity and if they're in their shell or not
+            //if (boxCenter.collider != null)
+            //{
+            //    //transform.position = new Vector2(
+            //    //    Mathf.Floor(transform.position.x) + 0.5f + (((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) ?
+            //    //    (shelled ? 0.03125f : 0.53125f) : 0) * (facingLeft ? 1 : -1)),
+            //    //    Mathf.Floor(transform.position.y) + 0.5f + (((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ?
+            //    //    (shelled ? 0.03125f : 0.53125f) : 0) * (facingDown ? 1 : -1))
+            //    //    );
+            //    Vector2 center = new Vector2(1, 1);
+            //    Vector2 tweakDir = Vector2.zero;
+            //    if (PlayState.IsTileSolid(transform.position))
+            //    {
+            //        
+            //    }
+            //
+            //    if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+            //    {
+            //
+            //    }
+            //    else
+            //    {
+            //        
+            //    }
+            //    UpdateBoxcasts();
+            //}
         }
     }
 
