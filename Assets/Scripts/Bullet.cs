@@ -103,7 +103,13 @@ public class Bullet : MonoBehaviour
         box.enabled = true;
         transform.position = new Vector2(
             player.transform.position.x + player.GetComponent<Player>().box.offset.x,
-            player.transform.position.y + player.GetComponent<Player>().box.offset.y);
+            player.transform.position.y + player.GetComponent<Player>().box.offset.y) + PlayState.playerScript.gravityDir switch
+            {
+                1 => new Vector2(-0.0625f, 0),
+                2 => new Vector2(0.0625f, 0),
+                3 => new Vector2(0, 0.0625f),
+                _ => new Vector2(0, -0.0625f)
+            };
         switch (dir)
         {
             case 0:

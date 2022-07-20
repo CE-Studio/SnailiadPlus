@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Snaily : MonoBehaviour
 {
-    public const float RUNSPEED_NORMAL = 8;
+    //public const float RUNSPEED_NORMAL = 8;
     public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
-    public const float JUMPPOWER_NORMAL = 26;
+    //public const float JUMPPOWER_NORMAL = 26;
     public readonly float[] JUMPPOWER = new float[] { 26, 26, 26, 26, 57.5f, 57.5f, 57.5f, 57.5f };
-    public const float GRAVITY = 1.35f;
-    public readonly float[] GRAVITY_new = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
-    public const float TERMINAL_VELOCITY = -0.66f;
-    public readonly float[] TERMINAL_VELOCITY_new = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
+    //public const float GRAVITY = 1.35f;
+    public readonly float[] GRAVITY = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
+    //public const float TERMINAL_VELOCITY = -0.66f;
+    public readonly float[] TERMINAL_VELOCITY = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
     public const float HITBOX_X = 1.467508f;
     public const float HITBOX_Y = 0.96f;
     public const float HITBOX_SHELL_X = 0.75f;
@@ -46,7 +46,6 @@ public class Snaily : MonoBehaviour
     private RaycastHit2D boxU;
     private RaycastHit2D boxD;
     private RaycastHit2D boxCorner;
-    private RaycastHit2D boxCenter;
     private Vector2 lastPosition;
     private Vector2 lastSize;
 
@@ -258,7 +257,7 @@ public class Snaily : MonoBehaviour
                         if (!grounded)
                         {
                             bool pokedCeiling = false;
-                            velocity.y = Mathf.Clamp(velocity.y - GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY_new[readIDSpeed], Mathf.Infinity);
+                            velocity.y = Mathf.Clamp(velocity.y - GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
                             if (boxD.distance != 0 && boxU.distance != 0)
                             {
                                 if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
@@ -514,7 +513,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x - GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY_new[readIDSpeed], Mathf.Infinity);
+                                velocity.x = Mathf.Clamp(velocity.x - GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -793,7 +792,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x + GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY_new[readIDSpeed]);
+                                velocity.x = Mathf.Clamp(velocity.x + GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -1070,7 +1069,7 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.y = Mathf.Clamp(velocity.y + GRAVITY_new[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY_new[readIDSpeed]);
+                                velocity.y = Mathf.Clamp(velocity.y + GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
                                 if (boxD.distance != 0 && boxU.distance != 0)
                                 {
                                     if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
@@ -1271,34 +1270,6 @@ public class Snaily : MonoBehaviour
                 }
                 Shoot();
             }
-
-            //// Here we just make sure that the player isn't clipping inside any ground. If they are, we find the closest non-solid tile and move the player there,
-            //// with some minor adjustments in one direction or another based on the player's current gravity and if they're in their shell or not
-            //if (boxCenter.collider != null)
-            //{
-            //    //transform.position = new Vector2(
-            //    //    Mathf.Floor(transform.position.x) + 0.5f + (((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) ?
-            //    //    (shelled ? 0.03125f : 0.53125f) : 0) * (facingLeft ? 1 : -1)),
-            //    //    Mathf.Floor(transform.position.y) + 0.5f + (((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ?
-            //    //    (shelled ? 0.03125f : 0.53125f) : 0) * (facingDown ? 1 : -1))
-            //    //    );
-            //    Vector2 center = new Vector2(1, 1);
-            //    Vector2 tweakDir = Vector2.zero;
-            //    if (PlayState.IsTileSolid(transform.position))
-            //    {
-            //        
-            //    }
-            //
-            //    if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-            //    {
-            //
-            //    }
-            //    else
-            //    {
-            //        
-            //    }
-            //    UpdateBoxcasts();
-            //}
         }
     }
 
@@ -1443,16 +1414,6 @@ public class Snaily : MonoBehaviour
             0,
             Vector2.down,
             Mathf.Infinity,
-            playerCollide,
-            Mathf.Infinity,
-            Mathf.Infinity
-            );
-        boxCenter = Physics2D.BoxCast(
-            transform.position,
-            new Vector2(box.size.x - 0.06625f, box.size.y - 0.0625f),
-            0,
-            Vector2.up,
-            0,
             playerCollide,
             Mathf.Infinity,
             Mathf.Infinity

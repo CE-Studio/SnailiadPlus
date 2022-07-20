@@ -9,6 +9,8 @@ public class FakeBorderHighlighter : Editor
     FakeRoomBorder borderScript;
     GameObject borderObject;
 
+    private const float WIDTH = 5;
+
     void OnEnable()
     {
         borderScript = (FakeRoomBorder)target;
@@ -17,7 +19,7 @@ public class FakeBorderHighlighter : Editor
 
     void OnSceneGUI()
     {
-        if (borderObject.transform.parent.tag == "RoomTrigger")
+        if (borderObject.transform.parent.CompareTag("RoomTrigger"))
         {
             Handles.color = Color.yellow;
             if (borderScript.direction)
@@ -25,19 +27,19 @@ public class FakeBorderHighlighter : Editor
                 Handles.DrawLine(
                     new Vector2(borderObject.transform.position.x, borderObject.transform.position.y + (borderObject.transform.parent.GetComponent<BoxCollider2D>().size.y * 0.5f)),
                     new Vector2(borderObject.transform.position.x, borderObject.transform.position.y - (borderObject.transform.parent.GetComponent<BoxCollider2D>().size.y * 0.5f)),
-                    3
+                    WIDTH
                     );
                 if (borderScript.workingDirections >= 2)
                 {
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x + 2.5f, borderObject.transform.position.y),
                         new Vector2(borderObject.transform.position.x + 1.25f, borderObject.transform.position.y + 3),
-                        3
+                        WIDTH
                         );
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x + 2.5f, borderObject.transform.position.y),
                         new Vector2(borderObject.transform.position.x + 1.25f, borderObject.transform.position.y - 3),
-                        3
+                        WIDTH
                         );
                 }
                 if (borderScript.workingDirections == 1 || borderScript.workingDirections == 3)
@@ -45,12 +47,12 @@ public class FakeBorderHighlighter : Editor
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x - 2.5f, borderObject.transform.position.y),
                         new Vector2(borderObject.transform.position.x - 1.25f, borderObject.transform.position.y + 3),
-                        3
+                        WIDTH
                         );
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x - 2.5f, borderObject.transform.position.y),
                         new Vector2(borderObject.transform.position.x - 1.25f, borderObject.transform.position.y - 3),
-                        3
+                        WIDTH
                         );
                 }
             }
@@ -59,35 +61,43 @@ public class FakeBorderHighlighter : Editor
                 Handles.DrawLine(
                     new Vector2(borderObject.transform.position.x + (borderObject.transform.parent.GetComponent<BoxCollider2D>().size.x * 0.5f), borderObject.transform.position.y),
                     new Vector2(borderObject.transform.position.x - (borderObject.transform.parent.GetComponent<BoxCollider2D>().size.x * 0.5f), borderObject.transform.position.y),
-                    3
+                    WIDTH
                     );
                 if (borderScript.workingDirections >= 2)
                 {
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x, borderObject.transform.position.y + 2.5f),
                         new Vector2(borderObject.transform.position.x + 3, borderObject.transform.position.y + 1.25f),
-                        3
+                        WIDTH
                         );
                     Handles.DrawLine(
-                        new Vector2(borderObject.transform.position.x, borderObject.transform.position.y - 2.5f),
-                        new Vector2(borderObject.transform.position.x + 3, borderObject.transform.position.y - 1.25f),
-                        3
+                        new Vector2(borderObject.transform.position.x, borderObject.transform.position.y + 2.5f),
+                        new Vector2(borderObject.transform.position.x - 3, borderObject.transform.position.y + 1.25f),
+                        WIDTH
                         );
                 }
                 if (borderScript.workingDirections == 1 || borderScript.workingDirections == 3)
                 {
                     Handles.DrawLine(
-                        new Vector2(borderObject.transform.position.x, borderObject.transform.position.y + 2.5f),
-                        new Vector2(borderObject.transform.position.x - 3, borderObject.transform.position.y + 1.25f),
-                        3
+                        new Vector2(borderObject.transform.position.x, borderObject.transform.position.y - 2.5f),
+                        new Vector2(borderObject.transform.position.x + 3, borderObject.transform.position.y - 1.25f),
+                        WIDTH
                         );
                     Handles.DrawLine(
                         new Vector2(borderObject.transform.position.x, borderObject.transform.position.y - 2.5f),
                         new Vector2(borderObject.transform.position.x - 3, borderObject.transform.position.y - 1.25f),
-                        3
+                        WIDTH
                         );
                 }
             }
         }
+    }
+
+    public override void OnInspectorGUI()
+    {
+        EditorUtility.SetDirty(target);
+        borderScript.direction = EditorGUILayout.Popup("Direction", borderScript.direction ? 1 : 0, new string[] { "Stop camera vertically", "Stop camera horizontally" }) == 1;
+        borderScript.workingDirections = EditorGUILayout.Popup("Function from: ", borderScript.workingDirections - 1,
+            new string[] { borderScript.direction ? "Left of" : "Below", borderScript.direction ? "Right of" : "Above", "Both directions" }) + 1;
     }
 }

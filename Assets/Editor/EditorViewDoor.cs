@@ -18,7 +18,7 @@ public class EditorViewDoor : Editor
 
     public override void OnInspectorGUI()
     {
-        //DrawDefaultInspector();
+        EditorUtility.SetDirty(target);
         script.doorWeapon = EditorGUILayout.Popup("Required weapon: ", script.doorWeapon, new string[] { "Peashooter", "Boomerang", "Rainbow Wave", "Devastator" });
         script.locked = EditorGUILayout.Toggle("Is this door locked?", script.locked);
         script.bossLock = EditorGUILayout.Popup("Required boss: ", script.bossLock, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });

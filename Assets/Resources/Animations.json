@@ -3384,6 +3384,140 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_fireball1_data",
+			"spriteName": "Entities/Fireball",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_fireball1_up",
+			"spriteName": "Entities/Fireball",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball1_left",
+			"spriteName": "Entities/Fireball",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball1_down",
+			"spriteName": "Entities/Fireball",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball1_right",
+			"spriteName": "Entities/Fireball",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball2_data",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_fireball2_up",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball2_left",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball2_down",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_fireball2_right",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Enemy_floatspike_black",
 			"spriteName": "Entities/Floatspike1",
 			"framerate": 0.0,
@@ -3550,6 +3684,62 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "Hazard_muck_0",
+			"spriteName": "Entities/Muck",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_muck_1",
+			"spriteName": "Entities/Muck",
+			"framerate": 4.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_muck_2",
+			"spriteName": "Entities/Muck",
+			"framerate": 4.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_muck_3",
+			"spriteName": "Entities/Muck",
+			"framerate": 4.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Bubble",
@@ -3572,7 +3762,7 @@
 		{
 			"name": "Explosion_tiny",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				0,
 				1,
@@ -3588,7 +3778,7 @@
 		{
 			"name": "Explosion_small",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				5,
 				6,
@@ -3604,7 +3794,7 @@
 		{
 			"name": "Explosion_big",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				10,
 				11,
@@ -3620,7 +3810,7 @@
 		{
 			"name": "Explosion_huge",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				15,
 				16,
@@ -3636,7 +3826,7 @@
 		{
 			"name": "Explosion_white_small",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				20,
 				21,
@@ -3652,7 +3842,7 @@
 		{
 			"name": "Explosion_white_big",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				25,
 				26,
@@ -3668,7 +3858,7 @@
 		{
 			"name": "Explosion_rainbow_small",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				30,
 				31,
@@ -3684,7 +3874,7 @@
 		{
 			"name": "Explosion_rainbow_big",
 			"spriteName": "Particles/Explosion",
-			"framerate": 16.0,
+			"framerate": 30.0,
 			"frames": [
 				35,
 				36,

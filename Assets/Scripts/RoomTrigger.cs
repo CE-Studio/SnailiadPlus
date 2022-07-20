@@ -247,6 +247,9 @@ public class RoomTrigger : MonoBehaviour
                         Vector2 mapPos = new Vector2(int.Parse(command[1]), int.Parse(command[2]));
                         PlayState.SetMapTile(mapPos, bool.Parse(command[3]));
                         break;
+                    case "achievement":
+                        PlayState.QueueAchievementPopup(roomCommands[1]);
+                        break;
                 }
             }
         }
@@ -325,6 +328,20 @@ public class RoomTrigger : MonoBehaviour
                             GameObject reversedOrangeSpikey = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spikey (orange)"), worldPos, Quaternion.identity, transform);
                             reversedOrangeSpikey.GetComponent<Spikey2>().rotation = true;
                             break;
+                        case 15:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Fireball"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 16:
+                            GameObject reversedFireball = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Fireball"), worldPos, Quaternion.identity, transform);
+                            reversedFireball.GetComponent<Fireball1>().rotation = true;
+                            break;
+                        case 17:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Iceball"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 18:
+                            GameObject reversedIceball = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Iceball"), worldPos, Quaternion.identity, transform);
+                            reversedIceball.GetComponent<Fireball2>().rotation = true;
+                            break;
                         case 23:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Shellbreaker"), worldPos, Quaternion.identity, transform);
                             break;
@@ -361,6 +378,9 @@ public class RoomTrigger : MonoBehaviour
                         case 380:
                             GameObject iceSpikeRight = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
                             iceSpikeRight.GetComponent<IceSpike>().Spawn(3);
+                            break;
+                        case 386:
+                            Instantiate(Resources.Load<GameObject>("Objects/Hazards/Muck"), worldPos, Quaternion.identity, transform);
                             break;
                         case 389:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike"), worldPos, Quaternion.identity, transform);
@@ -536,17 +556,9 @@ public class RoomTrigger : MonoBehaviour
                         int charOffset = areaID >= 100 ? 6 + areaID.ToString().Length : 8;
                         name = name.Substring(charOffset, name.Length - charOffset);
                         FakeRoomBorder script = newObject.GetComponent<FakeRoomBorder>();
-                        string splitString = name.Split('/')[((script.direction && script.initialPosRelative.x == 1) || (!script.direction && script.initialPosRelative.y == 1)) ? 1 : 0];
-                        name = "";
-                        foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString))
-                        {
-                            if (character == '|')
-                                name += "\n";
-                            else
-                                name += character;
-                        }
-                        roomNameText.text = name;
-                        roomNameShadow.text = name;
+                        string[] splitString = name.Split('/');
+                        script.downLeftRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[0]).Replace("|", "\n");
+                        script.upRightRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[1]).Replace("|", "\n");
                     }
                     break;
                 case "Item":

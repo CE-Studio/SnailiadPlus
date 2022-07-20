@@ -1801,6 +1801,36 @@
 			"value": 0
 		},
 		{
+			"name": "room_02_entrance",
+			"text": "Tiled Entryway",
+			"value": 0
+		},
+		{
+			"name": "room_02_hub1",
+			"text": "Pitfall Plaza",
+			"value": 0
+		},
+		{
+			"name": "room_02_towerHub",
+			"text": "Perpendicular|Path",
+			"value": 0
+		},
+		{
+			"name": "room_02_connectionVert",
+			"text": "Could Use An|Elevator",
+			"value": 0
+		},
+		{
+			"name": "room_02_blockTower",
+			"text": "Tile Tower",
+			"value": 0
+		},
+		{
+			"name": "room_02_snelk",
+			"text": "Squared Snelks",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2236,6 +2266,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_35_default_0",
+			"text": "{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!",
+			"value": 1
+		},
+		{
 			"name": "npc_41_default_0",
 			"text": "{PF}, you came{nl}back!!  {p|0.15}{eff|Wave}Yay!!",
 			"value": 1
@@ -2302,31 +2337,36 @@
 		},
 		{
 			"name": "npc_50_default_0",
-			"text": "Oh, {p|0.125}hey, {P}! {p|0.25}I'm here to test{nl}single-page dialogue!!",
-			"value": 1
-		},
-		{
-			"name": "npc_50_admireRainbowWave_0",
-			"text": "{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, {P}!!{p|0.25}{nl}I'd love one too, {p|0.125}but I don't{nl}have a jump button.",
+			"text": "Have you tried {col|0309}hitting the{nl}\"{ctrl|6}\" key{col|0312} yet?  {p|0.15}It lets you{nl}shoot while holding still!",
 			"value": 1
 		},
 		{
 			"name": "npc_51_default_0",
+			"text": "Oh, {p|0.125}hey, {P}! {p|0.25}I'm here to test{nl}single-page dialogue!!",
+			"value": 1
+		},
+		{
+			"name": "npc_51_admireRainbowWave_0",
+			"text": "{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, {P}!!{p|0.25}{nl}I'd love one too, {p|0.125}but I don't{nl}have a jump button.",
+			"value": 1
+		},
+		{
+			"name": "npc_52_default_0",
 			"text": "Hey there, {P}!! {p|0.25}I see you{nl}figured out how to start a{nl}multi-page conversation!",
 			"value": 1
 		},
 		{
-			"name": "npc_51_default_1",
+			"name": "npc_52_default_1",
 			"text": "The hope is this talk should go{nl}100% smoothly. {p|0.125}What do you{nl}think?",
 			"value": 1
 		},
 		{
-			"name": "npc_51_default_2",
+			"name": "npc_52_default_2",
 			"text": "Impressive! {p|0.25}I do hope that's my{nl}portrait showing right now, {p|0.125}if it{nl}even is there.",
 			"value": 0
 		},
 		{
-			"name": "npc_51_default_3",
+			"name": "npc_52_default_3",
 			"text": "I'm here to test multiple things,{nl}it seems!",
 			"value": 1
 		},

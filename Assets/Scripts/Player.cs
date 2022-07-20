@@ -628,36 +628,18 @@ public class Player : MonoBehaviour
             int totalOfPreviousHearts = 0;
             for (int i = 0; i < hearts.transform.childCount; i++)
             {
-                //switch (health - totalOfPreviousHearts)
-                //{
-                //    case 1:
-                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart1");
-                //        break;
-                //    case 2:
-                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart2");
-                //        break;
-                //    case 3:
-                //        hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart3");
-                //        break;
-                //    default:
-                //        if (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0)
-                //            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart4");
-                //        else
-                //            hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play("Heart0");
-                //        break;
-                //}
                 hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play((health - totalOfPreviousHearts) switch {
                         1 => PlayState.currentDifficulty == 2 ? "Heart_insane_1" : (PlayState.currentDifficulty == 1 ? "Heart_normal_1" : "Heart_easy_1"),
                         2 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_2" : "Heart_easy_2"),
-                        3 => PlayState.currentDifficulty == 1 ? "Heart_normal_3" : "Heart_easy_3",
-                        4 => PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_4",
-                        5 => "Heart_easy_5",
-                        6 => "Heart_easy_6",
-                        7 => "Heart_easy_7",
-                        8 => "Heart_easy_8",
-                        _ => (Mathf.Sign(health - totalOfPreviousHearts) == 1 && (health - totalOfPreviousHearts) != 0) ? (PlayState.currentDifficulty == 2 ?
-                        "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8")) : (PlayState.currentDifficulty == 2 ?
-                        "Heart_insane_0" : (PlayState.currentDifficulty == 1 ? "Heart_normal_0" : "Heart_easy_0"))
+                        3 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_3" : "Heart_easy_3"),
+                        4 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_4"),
+                        5 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_5"),
+                        6 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_6"),
+                        7 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_7"),
+                        8 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"),
+                        _ => ((health - totalOfPreviousHearts) > 0) ?
+                        (PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8")) :
+                        (PlayState.currentDifficulty == 2 ? "Heart_insane_0" : (PlayState.currentDifficulty == 1 ? "Heart_normal_0" : "Heart_easy_0"))
                     });
                 totalOfPreviousHearts += hpPerHeart[PlayState.currentDifficulty];
             }

@@ -953,6 +953,44 @@ public class PlayState
         return itemCollection[TranslateItemNameToID(itemName)] == 1;
     }
 
+    public static bool CheckShellLevel(int level)
+    {
+        bool meetsLevel;
+        if (currentDifficulty == 2)
+        {
+            switch (level)
+            {
+                default:
+                case 1:
+                    meetsLevel = CheckForItem(7);
+                    break;
+                case 2:
+                    meetsLevel = CheckForItem(8);
+                    break;
+                case 3:
+                    meetsLevel = CheckForItem(9);
+                    break;
+            }
+        }
+        else
+        {
+            switch (level)
+            {
+                default:
+                case 1:
+                    meetsLevel = CheckForItem(7) || CheckForItem(8) || CheckForItem(9);
+                    break;
+                case 2:
+                    meetsLevel = CheckForItem(8) || CheckForItem(9);
+                    break;
+                case 3:
+                    meetsLevel = CheckForItem(9);
+                    break;
+            }
+        }
+        return meetsLevel;
+    }
+
     public static void AddItem(int itemID)
     {
         itemCollection[itemID] = 1;

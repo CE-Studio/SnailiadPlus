@@ -113,6 +113,16 @@
             "height": 16
         },
 		{
+            "name": "Entities/Fireball",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Fireball2",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/Floatspike1",
             "width": 16,
             "height": 16
@@ -124,6 +134,11 @@
         },
 		{
             "name": "Entities/IceSpike",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Muck",
             "width": 16,
             "height": 16
         },

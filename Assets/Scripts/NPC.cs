@@ -31,8 +31,8 @@ public class NPC : MonoBehaviour
 
     private RaycastHit2D groundCheck;
     public float velocity;
-    private const float GRAVITY = 1.35f;
-    private const float TERMINAL_VELOCITY = -0.66f;
+    private const float GRAVITY = 1.25f;
+    private const float TERMINAL_VELOCITY = -0.5208f;
 
     public List<string> textToSend = new List<string>();
 
@@ -433,6 +433,10 @@ public class NPC : MonoBehaviour
                                 intentionallyEmpty = true;
                             break;
 
+                        case 35:
+                            AddText("default");
+                            break;
+
                         case 41:
                             if (PlayState.IsBossAlive(0))
                                 AddText("warnAboutSB");
@@ -467,13 +471,17 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 50:
+                            AddText("default");
+                            break;
+
+                        case 51:
                             if (PlayState.CheckForItem("Debug Rainbow Wave"))
                                 AddText("admireRainbowWave");
                             else
                                 AddText("default");
                             break;
 
-                        case 51:
+                        case 52:
                             AddText("default");
                             break;
 

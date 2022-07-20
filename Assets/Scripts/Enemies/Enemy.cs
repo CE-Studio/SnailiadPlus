@@ -66,7 +66,13 @@ public class Enemy : MonoBehaviour
     public virtual void LateUpdate()
     {
         if (intersectingPlayer && !PlayState.playerScript.stunned)
-            PlayState.playerScript.HitFor(attack);
+        {
+            bool canHit = true;
+            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1)) || (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
+                canHit = false;
+            if (canHit)
+                PlayState.playerScript.HitFor(attack);
+        }
 
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, box))
         {

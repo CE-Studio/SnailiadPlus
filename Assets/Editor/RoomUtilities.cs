@@ -12,6 +12,7 @@ public class RoomUtilities : Editor
 
     public override void OnInspectorGUI()
     {
+        EditorUtility.SetDirty(target);
         RoomTrigger room = (RoomTrigger)target;
         Vector2 boxPos = room.transform.position;
         Vector2 boxSize = room.GetComponent<BoxCollider2D>().size;

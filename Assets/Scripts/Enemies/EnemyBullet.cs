@@ -93,7 +93,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerCollide") && bulletType == 0)
+        if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("BreakableBlock")) && bulletType == 0)
             Despawn();
         else if (collision.CompareTag("Player") && !PlayState.playerScript.stunned)
             PlayState.playerScript.HitFor(damage);
