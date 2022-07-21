@@ -3529,6 +3529,28 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_snelk_jump",
+			"spriteName": "Entities/Snelk",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_snelk_sleep",
+			"spriteName": "Entities/Snelk",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_spikey_blue_down",
 			"spriteName": "Entities/Spikey1",
 			"framerate": 6.0,

@@ -45,6 +45,7 @@ public class SoundLibrary : ScriptableObject
         "ShotHit",
         "ShotRainbow",
         "ShotPeashooter",
+        "Snelk",
         "Splash"
     };
 

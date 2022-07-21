@@ -44,6 +44,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7c3cf0eed7aef6d489e5cff0489214f7, type: 3}
   - {fileID: 8300000, guid: a5927ee6e28d97f4e886a9d7b625d778, type: 3}
   - {fileID: 8300000, guid: 366fb1c4d522a164abf166b5e0db46e2, type: 3}
+  - {fileID: 8300000, guid: 949453bc04cb8fd4aa914cd7c9cb654e, type: 3}
   - {fileID: 8300000, guid: 615a6b2d651c84a49b3b1ecbe4af9a27, type: 3}
   referenceList:
   - BossHPBleep
@@ -77,4 +78,5 @@ MonoBehaviour:
   - ShotHit
   - ShotRainbow
   - ShotPeashooter
+  - Snelk
   - Splash

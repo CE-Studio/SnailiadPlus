@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public bool stunInvulnerability = false;
     public bool makeSoundOnPing = true;
     public string elementType; // Currently supports "ice" and "fire"
+    public bool invulnerable = false;
+    public bool canDamage = true;
 
     public BoxCollider2D box;
     public Rigidbody2D rb;
@@ -28,6 +30,7 @@ public class Enemy : MonoBehaviour
     public Vector2 origin;
     private bool intersectingPlayer = false;
     private List<GameObject> intersectingBullets = new List<GameObject>();
+    public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
     public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> wea = null, List<int> res = null, List<int> imm = null)
@@ -42,6 +45,7 @@ public class Enemy : MonoBehaviour
 
         origin = transform.localPosition;
 
+        playerCollide = LayerMask.GetMask("PlayerCollide");
         enemyCollide = LayerMask.GetMask("PlayerCollide", "EnemyCollide");
 
         health = hp;
@@ -65,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void LateUpdate()
     {
-        if (intersectingPlayer && !PlayState.playerScript.stunned)
+        if (intersectingPlayer && !PlayState.playerScript.stunned && canDamage)
         {
             bool canHit = true;
             if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1)) || (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
@@ -74,7 +78,7 @@ public class Enemy : MonoBehaviour
                 PlayState.playerScript.HitFor(attack);
         }
 
-        if (!stunInvulnerability && PlayState.OnScreen(transform.position, box))
+        if (!stunInvulnerability && PlayState.OnScreen(transform.position, box) && !invulnerable)
         {
             List<GameObject> bulletsToDespawn = new List<GameObject>();
             bool killFlag = false;

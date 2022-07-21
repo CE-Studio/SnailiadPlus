@@ -248,7 +248,7 @@ public class RoomTrigger : MonoBehaviour
                         PlayState.SetMapTile(mapPos, bool.Parse(command[3]));
                         break;
                     case "achievement":
-                        PlayState.QueueAchievementPopup(roomCommands[1]);
+                        PlayState.QueueAchievementPopup(command[1]);
                         break;
                 }
             }
@@ -391,6 +391,13 @@ public class RoomTrigger : MonoBehaviour
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 424:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 425:
+                            GameObject runningSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
+                            runningSnelk.GetComponent<Snelk>().SetState(1);
+                            break;
                         case 445:
                             GameObject babyfishGreen = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);
                             babyfishGreen.GetComponent<Babyfish>().AssignType(0);
@@ -401,6 +408,10 @@ public class RoomTrigger : MonoBehaviour
                             break;
                         case 451:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (aqua) Generator"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 452:
+                            GameObject sleepingSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
+                            sleepingSnelk.GetComponent<Snelk>().SetState(2);
                             break;
                     }
                 }

@@ -101,8 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorWeapon: 0
   locked: 0
+  bossLock: 0
   direction: 0
-  state: 0
   anim: {fileID: 0}
   sprite: {fileID: 0}
   box: {fileID: 0}
@@ -192,3 +192,4 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0

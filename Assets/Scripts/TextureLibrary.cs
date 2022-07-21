@@ -46,6 +46,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/PowerGrass",
         "Entities/SnailNpc",
         "Entities/SnailNpcColor",
+        "Entities/Snelk",
         "Entities/Spikey1",
         "Entities/Spikey2",
         "Entities/TurtleNpc",
