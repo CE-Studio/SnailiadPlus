@@ -31,6 +31,7 @@ public class Particle : MonoBehaviour
         anim.Add("Nom");
         anim.Add("Smoke");
         anim.Add("Splash");
+        anim.Add("Zzz");
     }
 
     public void Update()
@@ -113,6 +114,9 @@ public class Particle : MonoBehaviour
                 break;
             case "splash":
                 anim.Play("Splash");
+                break;
+            case "zzz":
+                anim.Play("Zzz");
                 break;
         }
         sprite.sortingOrder = animType switch

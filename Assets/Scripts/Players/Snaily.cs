@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Snaily : MonoBehaviour
 {
-    //public const float RUNSPEED_NORMAL = 8;
     public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
-    //public const float JUMPPOWER_NORMAL = 26;
     public readonly float[] JUMPPOWER = new float[] { 26, 26, 26, 26, 57.5f, 57.5f, 57.5f, 57.5f };
-    //public const float GRAVITY = 1.35f;
     public readonly float[] GRAVITY = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
-    //public const float TERMINAL_VELOCITY = -0.66f;
     public readonly float[] TERMINAL_VELOCITY = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
     public const float HITBOX_X = 1.467508f;
     public const float HITBOX_Y = 0.96f;
@@ -22,6 +18,7 @@ public class Snaily : MonoBehaviour
     public const int DIR_WALL_RIGHT = 2;
     public const int DIR_CEILING = 3;
     public const float FALLSPEED_MOD = 2.5f;
+    public const float SLEEP_TIMER_MAX = 30f;
     
     public float[] WEAPON_COOLDOWNS = new float[6];
 
@@ -40,6 +37,8 @@ public class Snaily : MonoBehaviour
     private bool againstWallFlag = false;
     private float fireCooldown = 0;
     private int bulletID = 0;
+    private float sleepTimer = 30f;
+    private bool isSleeping = false;
 
     private RaycastHit2D boxL;
     private RaycastHit2D boxR;
@@ -58,6 +57,7 @@ public class Snaily : MonoBehaviour
     public LayerMask playerCollide;
 
     public Player player;
+    public Particle zzz;
 
     // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
     void Start()
@@ -104,6 +104,34 @@ public class Snaily : MonoBehaviour
     {
         if (!PlayState.noclipMode)
             player.velocity = velocity;
+
+        // Sleep code! Don't do anything for thirty seconds and Snaily takes a nap!
+        if (PlayState.gameState == "Game")
+        {
+            if (Control.AxisX() != 0 || Control.AxisY() != 0 || Control.JumpHold() || Control.ShootHold() || Control.StrafeHold() || Control.SpeakHold() || player.stunned)
+            {
+                sleepTimer = SLEEP_TIMER_MAX;
+                isSleeping = false;
+                if (zzz != null)
+                {
+                    zzz.ResetParticle();
+                    zzz = null;
+                }
+            }
+            else
+            {
+                sleepTimer = Mathf.Clamp(sleepTimer - Time.deltaTime, 0, SLEEP_TIMER_MAX);
+                if (sleepTimer == 0 && !isSleeping)
+                {
+                    if (!shelled)
+                        ToggleShell();
+                    zzz = PlayState.RequestParticle(new Vector2(transform.position.x + 0.75f, transform.position.y), "zzz");
+                    isSleeping = true;
+                }
+            }
+            if (zzz != null)
+                zzz.transform.position = new Vector2(transform.position.x + 0.75f, transform.position.y);
+        }
     }
 
     // This function is called once every 0.02 seconds (50 time a second) regardless of framerate. Unity requires all physics calculations to be

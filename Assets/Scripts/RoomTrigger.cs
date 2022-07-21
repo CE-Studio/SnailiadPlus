@@ -311,6 +311,9 @@ public class RoomTrigger : MonoBehaviour
                         case 7:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (blue)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 9:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Kitty (gray)"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 10:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (blue) Generator"), worldPos, Quaternion.identity, transform);
                             break;

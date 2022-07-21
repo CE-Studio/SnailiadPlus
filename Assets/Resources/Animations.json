@@ -3957,6 +3957,18 @@
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
+        {
+            "name": "Zzz",
+			"spriteName": "Particles/Zzz",
+            "framerate": 2.0,
+            "frames": [
+                0,
+                1
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
 		
 		{
 			"name": "AchievementPanel_open",

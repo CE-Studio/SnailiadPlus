@@ -249,6 +249,11 @@
             "width": 16,
             "height": 16
         },
+		{
+            "name": "Particles/Zzz",
+            "width": 16,
+            "height": 16
+        },
 		
 		{
             "name": "UI/AchievementPanel",

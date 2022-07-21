@@ -40,6 +40,8 @@ MonoBehaviour:
   - Entities/Floatspike1
   - Entities/Grass
   - Entities/IceSpike
+  - Entities/Kitty
+  - Entities/Kitty2
   - Entities/Muck
   - Entities/PixelPeople
   - Entities/PowerGrass
@@ -62,6 +64,7 @@ MonoBehaviour:
   - Particles/Smoke
   - Particles/Splash
   - Particles/Star
+  - Particles/Zzz
   - UI/AchievementPanel
   - UI/BossHealthBar
   - UI/DebugIcons

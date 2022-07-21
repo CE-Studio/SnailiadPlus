@@ -58,7 +58,7 @@ public class DialogueBox : MonoBehaviour
     private string currentEffect = "None";
     public bool boxOpenAnimComplete = false;
 
-    private string[] boxShapeIDs = new string[]
+    private readonly string[] boxShapeIDs = new string[]
     {
         "square",
         "round",
@@ -125,7 +125,7 @@ public class DialogueBox : MonoBehaviour
 
             if (dialogueType != 3)
             {
-                if (player.transform.position.y > cam.transform.position.y + 0.125f || forceDownPosition)
+                if (player.transform.position.y > cam.transform.position.y + 1f || forceDownPosition)
                 {
                     if (active)
                         posVar = Mathf.Lerp(posVar, 1, 7 * Time.deltaTime);
@@ -449,6 +449,7 @@ public class DialogueBox : MonoBehaviour
         states = stateList;
         left = facingLeft;
 
+        forceDownPosition = type == 3;
         active = true;
     }
 
@@ -463,8 +464,7 @@ public class DialogueBox : MonoBehaviour
 
     public void CloseBox()
     {
-        if (dialogueType == 3)
-            forceDownPosition = true;
+        forceDownPosition = dialogueType == 3;
         forcedClosed = true;
         pointer = Vector2.zero;
         posPointer = posPointerOrigin;

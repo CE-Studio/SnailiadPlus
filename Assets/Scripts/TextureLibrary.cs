@@ -41,6 +41,8 @@ public class TextureLibrary : ScriptableObject
         "Entities/Floatspike1",
         "Entities/Grass",
         "Entities/IceSpike",
+        "Entities/Kitty",
+        "Entities/Kitty2",
         "Entities/Muck",
         "Entities/PixelPeople",
         "Entities/PowerGrass",
@@ -65,6 +67,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Smoke",
         "Particles/Splash",
         "Particles/Star",
+        "Particles/Zzz",
 
         "UI/AchievementPanel",
         "UI/BossHealthBar",

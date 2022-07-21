@@ -6,6 +6,7 @@ public class Snelk : Enemy
 {
     public int state; // 0 = default, 1 = run from player, 2 = sleeping
     public float spawnChance = 1;
+    public Particle zzz;
 
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
@@ -91,6 +92,9 @@ public class Snelk : Enemy
                 transform.position = new Vector2(transform.position.x, transform.position.y + 1);
             }
         }
+
+        if (zzz != null)
+            zzz.transform.position = new Vector2(transform.position.x + 1, transform.position.y + 0.25f);
     }
 
     public void SetState(int newState)
@@ -101,16 +105,25 @@ public class Snelk : Enemy
             case 0:
                 anim.Play("Enemy_snelk_jump");
                 if (state == 2)
+                {
                     PlayState.PlaySound("Snelk");
+                    zzz.ResetParticle();
+                    zzz = null;
+                }
                 break;
             case 1:
                 anim.Play("Enemy_snelk_jump");
                 if (state == 2)
+                {
                     PlayState.PlaySound("Snelk");
+                    zzz.ResetParticle();
+                    zzz = null;
+                }
                 break;
             case 2:
                 sprite.flipX = Random.Range(0, 2) == 1;
                 anim.Play("Enemy_snelk_sleep");
+                zzz = PlayState.RequestParticle(new Vector2(transform.position.x + 1, transform.position.y + 0.25f), "zzz");
                 break;
         }
         state = newState;

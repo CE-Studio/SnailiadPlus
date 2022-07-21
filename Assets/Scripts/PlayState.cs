@@ -820,21 +820,22 @@ public class PlayState
         playerScript.FlashSaveText();
     }
 
-    public static void RequestParticle(Vector2 position, string type)
+    public static Particle RequestParticle(Vector2 position, string type)
     {
-        RequestParticle(position, type, new float[] { 0 }, false);
+        return RequestParticle(position, type, new float[] { 0 }, false);
     }
-    public static void RequestParticle(Vector2 position, string type, float[] values)
+    public static Particle RequestParticle(Vector2 position, string type, float[] values)
     {
-        RequestParticle(position, type, values, false);
+        return RequestParticle(position, type, values, false);
     }
-    public static void RequestParticle(Vector2 position, string type, bool playSound)
+    public static Particle RequestParticle(Vector2 position, string type, bool playSound)
     {
-        RequestParticle(position, type, new float[] { 0 }, playSound);
+        return RequestParticle(position, type, new float[] { 0 }, playSound);
     }
 
-    public static void RequestParticle(Vector2 position, string type, float[] values, bool playSound)
+    public static Particle RequestParticle(Vector2 position, string type, float[] values, bool playSound)
     {
+        Particle selectedParticle = null;
         bool found = false;
         if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
         {
@@ -907,10 +908,15 @@ public class PlayState
                     if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
                         activateParticle = true;
                     break;
+                case "zzz":
+                    if (gameOptions[11] > 1)
+                        activateParticle = true;
+                    break;
             }
 
             if (activateParticle)
             {
+                selectedParticle = particleScript;
                 particleObject.position = position;
                 particleScript.type = type;
                 particleScript.SetAnim(type);
@@ -921,6 +927,7 @@ public class PlayState
                     thisParticleID = 0;
             }
         }
+        return selectedParticle;
     }
 
     public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly)
@@ -958,35 +965,21 @@ public class PlayState
         bool meetsLevel;
         if (currentDifficulty == 2)
         {
-            switch (level)
+            meetsLevel = level switch
             {
-                default:
-                case 1:
-                    meetsLevel = CheckForItem(7);
-                    break;
-                case 2:
-                    meetsLevel = CheckForItem(8);
-                    break;
-                case 3:
-                    meetsLevel = CheckForItem(9);
-                    break;
-            }
+                2 => CheckForItem(8),
+                3 => CheckForItem(9),
+                _ => CheckForItem(7),
+            };
         }
         else
         {
-            switch (level)
+            meetsLevel = level switch
             {
-                default:
-                case 1:
-                    meetsLevel = CheckForItem(7) || CheckForItem(8) || CheckForItem(9);
-                    break;
-                case 2:
-                    meetsLevel = CheckForItem(8) || CheckForItem(9);
-                    break;
-                case 3:
-                    meetsLevel = CheckForItem(9);
-                    break;
-            }
+                2 => CheckForItem(8) || CheckForItem(9),
+                3 => CheckForItem(9),
+                _ => CheckForItem(7) || CheckForItem(8) || CheckForItem(9),
+            };
         }
         return meetsLevel;
     }
