@@ -8,6 +8,8 @@ using UnityEngine.Tilemaps;
 
 public class PlayState
 {
+    public const float TAU = Mathf.PI * 2;
+
     public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", "Map", "Debug", or "Dialogue" as of now
 
     public static bool isMenuOpen = false;
@@ -246,6 +248,8 @@ public class PlayState
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 13-23 - Heart Containers
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // 24-53 - Helix Fragments
     };
+
+    public static bool[][] itemData = new bool[][] { };
 
     public static int[] bossStates = new int[]
     {
@@ -546,6 +550,16 @@ public class PlayState
     public static void PlayMusic(int groupIndex, int songIndex)
     {
         globalSFX.PlayOneShot(GetMusic(groupIndex, songIndex));
+    }
+
+    public static void MuteMusic()
+    {
+        playerScript.musicMuted = true;
+    }
+
+    public static void FadeMusicBackIn()
+    {
+        playerScript.musicMuted = false;
     }
 
     public static Color32 GetColor(string ID)
@@ -862,7 +876,7 @@ public class PlayState
             bool activateParticle = false;
 
             switch (type.ToLower())
-            {
+            { // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
                 default:
                     break;
                 case "bubble":
@@ -870,7 +884,7 @@ public class PlayState
                     // 0 = Water level
                     // 1 = Boolean to initialize particle with random velocity or not
 
-                    if (gameOptions[11] > 1)
+                    if (gameOptions[11] == 1 || gameOptions[11] >= 4)
                     {
                         activateParticle = true;
                         particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
@@ -879,6 +893,10 @@ public class PlayState
                         particleScript.vars[3] = 4 + UnityEngine.Random.Range(0f, 1f) * 0.0625f;  // Rise speed
                         particleScript.vars[4] = values[1];                                       // Randomize initial velocity
                     }
+                    break;
+                case "dust":
+                    if (gameOptions[11] > 1)
+                        activateParticle = true;
                     break;
                 case "explosion":
                     // Values:
@@ -901,18 +919,36 @@ public class PlayState
                     }
                     break;
                 case "smoke":
-                    if (gameOptions[11] > 1)
+                    if (gameOptions[11] == 1 || gameOptions[11] >= 4)
                         activateParticle = true;
+                    break;
+                case "snow":
+                    if (gameOptions[11] == 1 || gameOptions[11] >= 4)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = 1.875f + UnityEngine.Random.Range(0f, 1f) * 3.75f;  // Downward velocity
+                        particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * Mathf.PI * 2;    // Sine loop start
+                    }
                     break;
                 case "splash":
                     if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
                         activateParticle = true;
                     break;
+                case "transformation":
+                    // Values:
+                    // 0 = Type
+
+                    if (gameOptions[11] == 3 || gameOptions[11] == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                    }
+                    break;
                 case "zzz":
                     if (gameOptions[11] > 1)
                         activateParticle = true;
                     break;
-            }
+            } // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
 
             if (activateParticle)
             {
@@ -982,6 +1018,11 @@ public class PlayState
             };
         }
         return meetsLevel;
+    }
+
+    public static int GetShellLevel()
+    {
+        return CheckForItem(9) ? 3 : (CheckForItem(8) ? 2 : (CheckForItem(7) ? 1 : 0));
     }
 
     public static void AddItem(int itemID)
@@ -1175,13 +1216,19 @@ public class PlayState
     {
         int itemsFound = 0;
         int totalCount = 0;
+        int charCheck = currentCharacter switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
         for (int i = 0; i < itemCollection.Length; i++)
         {
-            if (!((currentCharacter == "Sluggy" || currentCharacter == "Leechy") && i == 5))
+            if (itemData[i] != null)
             {
-                totalCount++;
-                itemsFound += itemCollection[i] == 1 ? 1 : 0;
+                if (itemData[i][currentDifficulty] && itemData[i][charCheck])
+                {
+                    totalCount++;
+                    itemsFound += itemCollection[i] == 1 ? 1 : 0;
+                }
             }
+            else
+                totalCount++;
         }
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
     }

@@ -982,6 +982,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
         PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.ToggleBossfightState(false, 0, true);
         SetTextComponentOrigins();
         fadingToIntro = false;
@@ -1002,7 +1003,6 @@ public class MainMenu : MonoBehaviour
                 case "Sluggy":
                 //    PlayState.player.GetComponent<Sluggy>().enabled = true;
                 //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-                    PlayState.itemCollection[5] = 1;
                     break;
                 case "Upside":
                 //    PlayState.player.GetComponent<Upside>().enabled = true;

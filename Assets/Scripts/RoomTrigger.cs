@@ -117,6 +117,17 @@ public class RoomTrigger : MonoBehaviour
                             }
                         }
                         break;
+                    case "snow":
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 60; i++)
+                            {
+                                Vector2 snowPos = new Vector2(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
+                                    Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
+                                PlayState.RequestParticle(snowPos, "snow");
+                            }
+                        }
+                        break;
                 }
                 effectVarIndex++;
             }
@@ -267,12 +278,7 @@ public class RoomTrigger : MonoBehaviour
     {
         initializedEffects = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            //if (transform.GetChild(i).name.Contains("Breakable Block"))
-            //    transform.GetChild(i).GetComponent<BreakableBlock>().Despawn();
-            //else
-                Destroy(transform.GetChild(i).gameObject);
-        }
+            Destroy(transform.GetChild(i).gameObject);
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++)
         {
@@ -310,6 +316,9 @@ public class RoomTrigger : MonoBehaviour
                             break;
                         case 7:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (blue)"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 8:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Kitty (orange)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 9:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Kitty (gray)"), worldPos, Quaternion.identity, transform);
@@ -458,7 +467,29 @@ public class RoomTrigger : MonoBehaviour
                     newConditions.Add(obj.GetComponent<FakeRoomBorder>().workingDirections);
                     break;
                 case "Item":
-                    newConditions.Add(obj.GetComponent<Item>().itemID);
+                    Item script = obj.GetComponent<Item>();
+
+                    newConditions.Add(script.itemID);
+                    newConditions.Add(script.isSuperUnique ? 1 : 0);
+                    for (int j = 0; j < 3; j++)
+                        newConditions.Add(script.difficultiesPresentIn[j] ? 1 : 0);
+                    for (int j = 0; j < 6; j++)
+                        newConditions.Add(script.charactersPresentFor[j] ? 1 : 0);
+
+                    if (PlayState.itemData.Length == 0)
+                        PlayState.itemData = new bool[PlayState.itemCollection.Length][];
+                    PlayState.itemData[script.itemID] = new bool[]
+                    {
+                        script.difficultiesPresentIn[0],
+                        script.difficultiesPresentIn[1],
+                        script.difficultiesPresentIn[2],
+                        script.charactersPresentFor[0],
+                        script.charactersPresentFor[1],
+                        script.charactersPresentFor[2],
+                        script.charactersPresentFor[3],
+                        script.charactersPresentFor[4],
+                        script.charactersPresentFor[5]
+                    };
                     break;
                 case "NPC":
                     newConditions.Add(obj.GetComponent<NPC>().ID);
@@ -576,7 +607,9 @@ public class RoomTrigger : MonoBehaviour
                     }
                     break;
                 case "Item":
-                    if (PlayState.itemCollection[entity.spawnData[0]] == 0)
+                    int thisID = newObject.GetComponent<Item>().itemID;
+                    int charCheck = PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
+                    if (PlayState.itemCollection[entity.spawnData[0]] == 0 || !PlayState.itemData[thisID][PlayState.currentDifficulty] || !PlayState.itemData[thisID][charCheck])
                         newObject.GetComponent<Item>().Spawn(entity.spawnData);
                     else
                         Destroy(newObject);

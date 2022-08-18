@@ -433,7 +433,16 @@ public class NPC : MonoBehaviour
                                 intentionallyEmpty = true;
                             break;
 
+                        case 29:
+                            boxColor = "0002";
+                            if (PlayState.currentDifficulty == 2)
+                                AddText("insane");
+                            else
+                                AddText("default");
+                            break;
+
                         case 35:
+                            boxColor = "0002";
                             AddText("default");
                             break;
 

@@ -26,7 +26,7 @@ public class Hazard : MonoBehaviour
     {
         if (intersectingPlayer && !PlayState.playerScript.stunned)
         {
-            if (protectionRequired == 0 || (protectionRequired != 0 &&
+            if (protectionRequired == 0 || (protectionRequired == 1 && PlayState.currentDifficulty == 2) || (protectionRequired != 0 &&
                 !PlayState.CheckForItem(protectionRequired switch { 3 => "Full-Metal Snail", 2 => "Gravity Snail", _ => "Ice Snail" })))
                 PlayState.playerScript.HitFor(damage);
         }

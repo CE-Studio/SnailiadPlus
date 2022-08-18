@@ -20,6 +20,7 @@ public class Particle : MonoBehaviour
         gameObject.SetActive(false);
 
         anim.Add("Bubble");
+        anim.Add("Dust");
         anim.Add("Explosion_tiny");
         anim.Add("Explosion_small");
         anim.Add("Explosion_big");
@@ -30,7 +31,17 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_rainbow_big");
         anim.Add("Nom");
         anim.Add("Smoke");
+        anim.Add("Snow1");
+        anim.Add("Snow2");
+        anim.Add("Snow3");
+        anim.Add("Snow4");
         anim.Add("Splash");
+        anim.Add("Transformation_ice");
+        anim.Add("Transformation_gravity");
+        anim.Add("Transformation_fullMetal");
+        anim.Add("Transformation_magnet");
+        anim.Add("Transformation_corkscrew");
+        anim.Add("Transformation_angel");
         anim.Add("Zzz");
     }
 
@@ -68,6 +79,21 @@ public class Particle : MonoBehaviour
                         internalVars[0] += Time.deltaTime;
                         transform.position = new Vector2(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
                         break;
+                    case "snow":
+                        transform.position = new Vector2(transform.position.x + (Mathf.Sin(vars[1] * 4) - 1) * 2.5f * Time.deltaTime,
+                            transform.position.y - vars[0] * Time.deltaTime);
+                        vars[1] += Time.deltaTime;
+                        if (vars[1] > Mathf.PI * 2)
+                            vars[1] -= Mathf.PI * 2;
+                        while (transform.position.x < PlayState.cam.transform.position.x - 13)
+                            transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                        while (transform.position.x > PlayState.cam.transform.position.x + 13)
+                            transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                        while (transform.position.y < PlayState.cam.transform.position.y - 8)
+                            transform.position = new Vector2(transform.position.x, transform.position.y + 16);
+                        while (transform.position.y > PlayState.cam.transform.position.y + 8)
+                            transform.position = new Vector2(transform.position.x, transform.position.y - 16);
+                        break;
                 }
 
                 if (!anim.isPlaying && isActive && !(type == "bubble"))
@@ -91,8 +117,11 @@ public class Particle : MonoBehaviour
             case "bubble":
                 anim.Play("Bubble");
                 break;
+            case "dust":
+                anim.Play("Dust");
+                break;
             case "explosion":
-                var suffix = vars[0] switch
+                anim.Play("Explosion_" + vars[0] switch
                 {
                     1 => "tiny",
                     2 => "small",
@@ -103,8 +132,7 @@ public class Particle : MonoBehaviour
                     7 => "rainbow_small",
                     8 => "rainbow_big",
                     _ => "small"
-                };
-                anim.Play("Explosion_" + suffix);
+                });
                 break;
             case "nom":
                 anim.Play("Nom");
@@ -112,8 +140,23 @@ public class Particle : MonoBehaviour
             case "smoke":
                 anim.Play("Smoke");
                 break;
+            case "snow":
+                anim.Play("Snow" + Random.Range(1, 5).ToString());
+                break;
             case "splash":
                 anim.Play("Splash");
+                break;
+            case "transformation":
+                anim.Play("Transformation_" + vars[0] switch
+                {
+                    1 => "ice",
+                    2 => "gravity",
+                    3 => "fullMetal",
+                    4 => "magnet",
+                    5 => "corkscrew",
+                    6 => "angel",
+                    _ => "ice"
+                });
                 break;
             case "zzz":
                 anim.Play("Zzz");
@@ -121,6 +164,7 @@ public class Particle : MonoBehaviour
         }
         sprite.sortingOrder = animType switch
         {
+            "transformation" => -51,
             _ => -15
         };
     }

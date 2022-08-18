@@ -1831,6 +1831,31 @@
 			"value": 0
 		},
 		{
+			"name": "room_02_kitty",
+			"text": "The Catcave",
+			"value": 0
+		},
+		{
+			"name": "room_02_shortcut",
+			"text": "The Vents",
+			"value": 0
+		},
+		{
+			"name": "room_02_icePath",
+			"text": "Chilly Descent",
+			"value": 0
+		},
+		{
+			"name": "room_02_iceSnailEntry",
+			"text": "Bit Drafty|In Here",
+			"value": 0
+		},
+		{
+			"name": "room_02_iceSnail",
+			"text": "Frost Shrine",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2263,6 +2288,16 @@
 		{
 			"name": "npc_26_blobby_0",
 			"text": "Take this \"Shelmet\"! {p|0.25}You{nl}can hide in it to avoid{nl}taking damage!",
+			"value": 1
+		},
+		{
+			"name": "npc_29_default_0",
+			"text": "Don't worry about me, {P}!{nl}{p|0.25}I'm an {col|0305}Ice Snail{col|0312}, {p|0.15}so these ice{nl}guys and icicles can't hurt me!",
+			"value": 1
+		},
+		{
+			"name": "npc_29_insane_0",
+			"text": "Oh, no!! {p|0.2}{P}!! {p|0.2}The \"{col|0305}Ice Snail{col|0312}\"{nl}power-up is missing on insane{nl}mode! {p|0.25}Good luck without it!!",
 			"value": 1
 		},
 		{

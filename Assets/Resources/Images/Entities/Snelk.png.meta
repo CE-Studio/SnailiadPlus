@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: -7901923479491677872
     second: Snelk_1
+  - first:
+      213: 2952563143439598881
+    second: Snelk_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -137,11 +140,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 24
+        y: 48
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -158,6 +161,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 24
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 051749a267ab65290800000000000000
+      internalID: -7901923479491677872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snelk_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 24
         height: 24
@@ -168,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 051749a267ab65290800000000000000
-      internalID: -7901923479491677872
+      spriteID: 125c0ad198c99f820800000000000000
+      internalID: 2952563143439598881
       vertices: []
       indices: 
       edges: []

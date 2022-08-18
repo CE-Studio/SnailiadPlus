@@ -436,6 +436,8 @@ public class Snaily : MonoBehaviour
                             holdingShell = true;
                         if (holdingShell && !Control.DownHold())
                             holdingShell = false;
+                        if (PlayState.IsTileSolid(transform.position))
+                            transform.position = new Vector2(transform.position.x, transform.position.y + 1);
                     }
                     break;
                 case DIR_WALL_LEFT:
@@ -715,6 +717,8 @@ public class Snaily : MonoBehaviour
                             holdingShell = true;
                         if (holdingShell && !Control.LeftHold())
                             holdingShell = false;
+                        if (PlayState.IsTileSolid(transform.position))
+                            transform.position = new Vector2(transform.position.x - 1, transform.position.y);
                     }
                     break;
                 case DIR_WALL_RIGHT:
@@ -994,6 +998,8 @@ public class Snaily : MonoBehaviour
                             holdingShell = true;
                         if (holdingShell && !Control.RightHold())
                             holdingShell = false;
+                        if (PlayState.IsTileSolid(transform.position))
+                            transform.position = new Vector2(transform.position.x + 1, transform.position.y);
                     }
                     break;
                 case DIR_CEILING:
@@ -1262,6 +1268,8 @@ public class Snaily : MonoBehaviour
                             holdingShell = true;
                         if (holdingShell && !Control.UpHold())
                             holdingShell = false;
+                        if (PlayState.IsTileSolid(transform.position))
+                            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
                     }
                     break;
             }
@@ -1316,8 +1324,7 @@ public class Snaily : MonoBehaviour
          * 7 - Flip Y on left wall
          * 8 - Flip Y on ceiling 
         \*/
-        string currentState = "Player_Snaily";
-        currentState += (PlayState.CheckForItem("Full-Metal Snail") ? 3 : (PlayState.CheckForItem("Gravity Snail") ? 2 : (PlayState.CheckForItem("Ice Snail") ? 1 : 0))) + "_";
+        string currentState = "Player_Snaily" + player.shellStateBuffer + "_";
         if (player.inDeathCutscene)
         {
             anim.Play(currentState + "die");

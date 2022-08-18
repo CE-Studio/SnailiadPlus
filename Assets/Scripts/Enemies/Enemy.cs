@@ -38,10 +38,8 @@ public class Enemy : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        mask = gameObject.AddComponent<SpriteMask>();
-        BuildMask();
         anim = GetComponent<AnimationModule>();
-        anim.updateMask = true;
+        BuildMask();
 
         origin = transform.localPosition;
 
@@ -72,7 +70,8 @@ public class Enemy : MonoBehaviour
         if (intersectingPlayer && !PlayState.playerScript.stunned && canDamage)
         {
             bool canHit = true;
-            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1)) || (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
+            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1) && PlayState.currentDifficulty != 2) ||
+                (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
                 canHit = false;
             if (canHit)
                 PlayState.playerScript.HitFor(attack);
@@ -174,6 +173,11 @@ public class Enemy : MonoBehaviour
 
     private void BuildMask()
     {
+        GameObject child = new GameObject("Mask Object");
+        child.transform.parent = transform;
+        child.transform.localPosition = Vector2.zero;
+        mask = child.AddComponent<SpriteMask>();
+        anim.AddMask(mask);
         mask.isCustomRangeActive = true;
         mask.frontSortingOrder = -2;
         mask.backSortingOrder = -3;

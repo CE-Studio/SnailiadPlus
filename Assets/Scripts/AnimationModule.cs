@@ -29,8 +29,8 @@ public class AnimationModule : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        if (TryGetComponent(out SpriteMask newMask))
-            mask = newMask;
+        //if (GameObject.Find("Mask Object") != null)
+        //    mask = GameObject.Find("Mask Object").GetComponent<SpriteMask>();
     }
 
     void Update()
@@ -40,9 +40,9 @@ public class AnimationModule : MonoBehaviour
         else
         {
             speed = lastNonZeroSpeed;
-            if (updateMask && mask == null)
-                if (TryGetComponent(out SpriteMask newMask))
-                    mask = newMask;
+            //if (updateMask && mask == null)
+            //    if (GameObject.Find("Mask Object") != null && mask == null)
+            //        mask = GameObject.Find("Mask Object").GetComponent<SpriteMask>();
             if (isPlaying)
             {
                 if (currentAnim.framerate != 0)
@@ -81,7 +81,6 @@ public class AnimationModule : MonoBehaviour
                                 else
                                     Stop();
                             }
-                            //Debug.Log(currentFrame + "/" + (currentAnim.frames.Length - 1));
                             if (isPlaying && currentAnim.frames[currentFrame] == -1 && stopAtBlankFrame)
                                 Stop();
                         }
@@ -127,7 +126,10 @@ public class AnimationModule : MonoBehaviour
                 sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                     PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
                 if (updateMask && mask != null)
+                {
                     mask.sprite = sprite.sprite;
+                    mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
+                }
             }
             speed = newSpeed;
             isPlaying = true;
@@ -208,5 +210,11 @@ public class AnimationModule : MonoBehaviour
     public void SetBlankSize(bool set)
     {
         smallBlank = set;
+    }
+
+    public void AddMask(SpriteMask newMask)
+    {
+        updateMask = true;
+        mask = newMask;
     }
 }

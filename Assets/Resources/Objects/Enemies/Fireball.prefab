@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5184853335162502069}
   - component: {fileID: 5358877183956050766}
   - component: {fileID: -8799282113298759841}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fireball
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,6 +163,8 @@ MonoBehaviour:
   stunInvulnerability: 0
   makeSoundOnPing: 1
   elementType: 
+  invulnerable: 0
+  canDamage: 1
   box: {fileID: 0}
   rb: {fileID: 0}
   sprite: {fileID: 0}
@@ -170,6 +172,9 @@ MonoBehaviour:
   mask: {fileID: 0}
   spawnConditions: []
   origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
   enemyCollide:
     serializedVersion: 2
     m_Bits: 0

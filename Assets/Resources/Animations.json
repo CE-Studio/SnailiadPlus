@@ -2719,6 +2719,20 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_iceSnail",
+			"spriteName": "Items/IceSnail",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_helixFragment",
 			"spriteName": "Items/HelixFragment",
 			"framerate": 24.0,
@@ -3529,6 +3543,94 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_kitty1_idle",
+			"spriteName": "Entities/Kitty",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty1_jump",
+			"spriteName": "Entities/Kitty",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty1_fall",
+			"spriteName": "Entities/Kitty",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty1_shoot",
+			"spriteName": "Entities/Kitty",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty2_idle",
+			"spriteName": "Entities/Kitty2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty2_jump",
+			"spriteName": "Entities/Kitty2",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty2_fall",
+			"spriteName": "Entities/Kitty2",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_kitty2_shoot",
+			"spriteName": "Entities/Kitty2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_snelk_jump",
 			"spriteName": "Entities/Snelk",
 			"framerate": 0.0,
@@ -3542,11 +3644,12 @@
 		{
 			"name": "Enemy_snelk_sleep",
 			"spriteName": "Entities/Snelk",
-			"framerate": 0.0,
+			"framerate": 1.0,
 			"frames": [
-				1
+				1,
+				2
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -3782,6 +3885,24 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Dust",
+			"spriteName": "Particles/Dust",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Explosion_tiny",
 			"spriteName": "Particles/Explosion",
 			"framerate": 30.0,
@@ -3938,6 +4059,174 @@
 			"randomizeStartFrame": true
         },
         {
+            "name": "Snow1",
+			"spriteName": "Particles/Snow",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Snow2",
+			"spriteName": "Particles/Snow",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Snow3",
+			"spriteName": "Particles/Snow",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Snow4",
+			"spriteName": "Particles/Snow",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
             "name": "Splash",
 			"spriteName": "Particles/Splash",
             "framerate": 24.0,
@@ -3952,6 +4241,162 @@
 				7,
 				8,
                 -1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_ice",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                0,
+                1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				-1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_gravity",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                15,
+                16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				-1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_fullMetal",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                30,
+                31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				-1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_magnet",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                45,
+                46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				-1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_corkscrew",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                60,
+                61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				-1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Transformation_angel",
+			"spriteName": "Particles/Transformation",
+            "framerate": 24.0,
+            "frames": [
+                75,
+                76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				-1
             ],
             "loop": false,
             "loopStartFrame": 0,

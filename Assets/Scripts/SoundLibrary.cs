@@ -46,7 +46,8 @@ public class SoundLibrary : ScriptableObject
         "ShotRainbow",
         "ShotPeashooter",
         "Snelk",
-        "Splash"
+        "Splash",
+        "Transformation"
     };
 
     public void BuildDictionary()

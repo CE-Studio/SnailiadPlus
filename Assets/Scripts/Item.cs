@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public bool countedInPercentage;
+    public bool countedInPercentage = true;
     public bool collected;
-    public int itemID;
-    public bool isSuperUnique;
+    public int itemID = -1;
+    public bool isSuperUnique = false;
+    public bool[] difficultiesPresentIn = new bool[] { true, true, true };
+    public bool[] charactersPresentFor = new bool[] { true, true, true, true, true, true };
 
     public Vector2 originPos;
 
@@ -29,12 +31,32 @@ public class Item : MonoBehaviour
             sfx = GetComponent<AudioSource>();
 
             originPos = transform.localPosition;
+
+            if (!difficultiesPresentIn[PlayState.currentDifficulty] || !charactersPresentFor[PlayState.currentCharacter switch
+            {
+                "Snaily" => 0,
+                "Sluggy" => 1,
+                "Upside" => 2,
+                "Leggy" => 3,
+                "Blobby" => 4,
+                "Leechy" => 5,
+                _ => 0
+            }])
+            {
+                PlayState.itemCollection[itemID] = -1;
+                Destroy(gameObject);
+            }
         }
     }
 
     public void Spawn(int[] spawnData)
     {
         itemID = spawnData[0];
+        isSuperUnique = spawnData[1] == 1;
+        for (int i = 2; i < 5; i++)
+            difficultiesPresentIn[i - 2] = spawnData[i] == 1;
+        for (int i = 5; i < 11; i++)
+            charactersPresentFor[i - 5] = spawnData[i] == 1;
 
         string animName;
 
@@ -78,6 +100,10 @@ public class Item : MonoBehaviour
                         box.size = new Vector2(1.45f, 1.675f);
                     }
                     break;
+                case 7:
+                    animName = "Item_iceSnail";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 default:
                     animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
@@ -108,7 +134,11 @@ public class Item : MonoBehaviour
                 PlayState.playerScript.RenderNewHearts();
             }
             if (isSuperUnique)
+            {
+                PlayState.MuteMusic();
                 PlayState.PlayMusic(0, 2);
+                PlayState.paralyzed = true;
+            }
             else
                 PlayState.PlayMusic(0, 1);
             switch (itemID)
@@ -131,6 +161,12 @@ public class Item : MonoBehaviour
                     PlayState.isArmed = true;
                     PlayState.playerScript.selectedWeapon = 3;
                     PlayState.playerScript.ChangeActiveWeapon(2, true);
+                    break;
+                case 7:
+                    if (isSuperUnique)
+                        PlayState.playerScript.RunDustRing(1);
+                    else
+                        PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
                     break;
                 default:
                     break;
@@ -196,6 +232,8 @@ public class Item : MonoBehaviour
     {
         box.enabled = false;
         float timer = 0;
+        float jingleTime = PlayState.GetMusic(0, 2).length + 0.5f;
+        bool musicMuted = isSuperUnique;
         while (timer < 2)
         {
             Vector2 targetPos = PlayState.playerScript.gravityDir switch
@@ -209,7 +247,25 @@ public class Item : MonoBehaviour
             yield return new WaitForEndOfFrame();
             if (PlayState.gameState == "Game")
                 timer += Time.deltaTime;
+            if (musicMuted && timer >= jingleTime)
+            {
+                musicMuted = false;
+                PlayState.FadeMusicBackIn();
+                PlayState.paralyzed = false;
+            }
         }
         SetDeactivated();
+        while (musicMuted && timer <= jingleTime)
+        {
+            yield return new WaitForEndOfFrame();
+            if (PlayState.gameState == "Game")
+                timer += Time.deltaTime;
+        }
+        if (musicMuted)
+        {
+            musicMuted = false;
+            PlayState.FadeMusicBackIn();
+            PlayState.paralyzed = false;
+        }
     }
 }

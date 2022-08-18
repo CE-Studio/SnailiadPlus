@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public Vector2 velocity = Vector2.zero;
     public bool grounded;
     public bool shelled;
+    public int shellStateBuffer = 0;
+    public float shellAnimTimer = 0f;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
 
     public double nextLoopEvent;
     private int offsetID;
+    public bool musicMuted = false;
 
     // FPS stuff
     int frameCount = 0;
@@ -279,7 +282,7 @@ public class Player : MonoBehaviour
 
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)
-            audio.volume = PlayState.gameOptions[1] * 0.1f;
+            audio.volume = musicMuted ? 0 : Mathf.Lerp(audio.volume, PlayState.gameOptions[1] * 0.1f, 5 * Time.deltaTime);
 
         if (!PlayState.playingMusic)
             return;
@@ -486,6 +489,83 @@ public class Player : MonoBehaviour
         PlayState.playingMusic = false;
         foreach (AudioSource source in PlayState.musicSourceArray)
             source.Stop();
+    }
+
+    public void RunDustRing(int tfType = -1)
+    {
+        StartCoroutine(DustRing(tfType));
+    }
+
+    private IEnumerator DustRing(int tfType)
+    {
+        List<Particle> dustRing = new List<Particle>();
+        float spinSpeed = Mathf.PI * 2;
+        int particleCount = 16;
+        int repeatCount = 0;
+        float radius = 14.625f;
+        float inwardSpeed = 0.09375f;
+        float spinMod = 0f;
+        float radiusMod = radius;
+
+        if (shellAnimTimer == 0)
+        {
+            if (!(PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+                shellStateBuffer = PlayState.GetShellLevel();
+            for (int i = 0; i < particleCount; i++)
+            {
+                Vector2 thisDustPos = new Vector2(
+                    transform.position.x + (Mathf.Sin((i / particleCount) * PlayState.TAU) * radius),
+                    transform.position.y + (Mathf.Cos((i / particleCount) * PlayState.TAU) * radius)
+                    );
+                dustRing.Add(PlayState.RequestParticle(thisDustPos, "dust"));
+            }
+        }
+        while (repeatCount >= 0)
+        {
+            for (int i = 0; i < dustRing.Count; i++)
+            {
+                float thisCurve = PlayState.TAU / dustRing.Count * i + spinMod * spinSpeed;
+                dustRing[i].transform.position = new Vector2(
+                    transform.position.x + Mathf.Cos(thisCurve) * radiusMod,
+                    transform.position.y - Mathf.Sin(thisCurve) * radiusMod
+                    );
+            }
+            spinMod += Time.deltaTime;
+            spinMod = spinMod > PlayState.TAU ? spinMod - PlayState.TAU : spinMod;
+            radiusMod -= inwardSpeed;
+            if (radiusMod <= 0)
+            {
+                repeatCount--;
+                if (repeatCount < 0)
+                {
+                    for (int i = 0; i < dustRing.Count; i++)
+                        dustRing[i].ResetParticle();
+                }
+                else
+                    radiusMod = radius;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        if (tfType != -1 && (PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+        {
+            shellStateBuffer = tfType;
+            PlayState.RequestParticle(transform.position, "transformation", new float[]
+            {
+                tfType switch
+                {
+                    2 => PlayState.currentCharacter switch
+                    {
+                        "Upside" => 3,
+                        "Leggy" => 4,
+                        "Blobby" => 5,
+                        _ => 1
+                    },
+                    3 => 2,
+                    _ => 0
+                }
+            });
+            PlayState.PlaySound("Transformation");
+        }
     }
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
