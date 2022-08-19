@@ -100,9 +100,12 @@ MonoBehaviour:
   parallaxSkyModifier: {x: 0, y: 0}
   areaID: 0
   areaSubzone: 0
+  waterLevel: []
+  environmentalEffects: []
+  roomCommands: []
   roomNameText: {fileID: 0}
   roomNameShadow: {fileID: 0}
   bg: {fileID: 0}
   fg: {fileID: 0}
-  breakableMap: {fileID: 0}
+  specialMap: {fileID: 0}
   breakableBlock: {fileID: 0}

@@ -354,6 +354,9 @@ public class RoomTrigger : MonoBehaviour
                             GameObject reversedIceball = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Iceball"), worldPos, Quaternion.identity, transform);
                             reversedIceball.GetComponent<Fireball2>().rotation = true;
                             break;
+                        case 19:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Ghost Dandelion Generator"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 23:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Shellbreaker"), worldPos, Quaternion.identity, transform);
                             break;
@@ -394,8 +397,11 @@ public class RoomTrigger : MonoBehaviour
                         case 386:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Muck"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 387:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Ghost Dandelion"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 389:
-                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike"), worldPos, Quaternion.identity, transform);
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike (black)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 397:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (aqua)"), worldPos, Quaternion.identity, transform);

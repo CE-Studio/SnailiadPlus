@@ -130,7 +130,8 @@ public class Snaily : MonoBehaviour
                 }
             }
             if (zzz != null)
-                zzz.transform.position = new Vector2(transform.position.x + 0.75f, transform.position.y);
+                zzz.transform.position = new Vector2(transform.position.x + 0.75f + ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && facingLeft ? 0.25f : 0),
+                    transform.position.y + ((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && facingDown ? 0.25f : 0));
         }
     }
 

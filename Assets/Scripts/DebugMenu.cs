@@ -148,6 +148,7 @@ public class DebugMenu : MonoBehaviour
                                 {
                                     PlayState.itemCollection[int.Parse(typeParts[1])] = PlayState.itemCollection[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                                     PlayState.minimapScript.RefreshMap();
+                                    PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
                                 }
                                 button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;

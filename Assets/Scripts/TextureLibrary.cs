@@ -36,6 +36,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/BreakableIcons",
         "Entities/Chirpy1",
         "Entities/Chirpy2",
+        "Entities/Dandelion",
         "Entities/Fireball",
         "Entities/Fireball2",
         "Entities/Floatspike1",

@@ -532,7 +532,7 @@ public class Player : MonoBehaviour
             }
             spinMod += Time.deltaTime;
             spinMod = spinMod > PlayState.TAU ? spinMod - PlayState.TAU : spinMod;
-            radiusMod -= inwardSpeed;
+            radiusMod -= inwardSpeed * 60 * Time.deltaTime;
             if (radiusMod <= 0)
             {
                 repeatCount--;

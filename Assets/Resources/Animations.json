@@ -3398,6 +3398,28 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_dandelion_left",
+			"spriteName": "Entities/Dandelion",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_dandelion_right",
+			"spriteName": "Entities/Dandelion",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_fireball1_data",
 			"spriteName": "Entities/Fireball",
 			"framerate": 0.0,

@@ -9,6 +9,8 @@ using UnityEngine.Tilemaps;
 public class PlayState
 {
     public const float TAU = Mathf.PI * 2;
+    public const float PI_OVER_TWO = Mathf.PI * 0.5f;
+    public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
 
     public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", "Map", "Debug", or "Dialogue" as of now
 

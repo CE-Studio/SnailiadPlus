@@ -1856,6 +1856,21 @@
 			"value": 0
 		},
 		{
+			"name": "room_02_iceSpikeItem",
+			"text": "Sweater|Required",
+			"value": 0
+		},
+		{
+			"name": "room_02_tilePath",
+			"text": "Swampy Steps",
+			"value": 0
+		},
+		{
+			"name": "room_02_ghostFork",
+			"text": "Dance of the|Dandelions",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
