@@ -5,7 +5,7 @@ using UnityEngine;
 public class Snaily : MonoBehaviour
 {
     public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
-    public readonly float[] JUMPPOWER = new float[] { 26, 26, 26, 26, 57.5f, 57.5f, 57.5f, 57.5f };
+    public readonly float[] JUMPPOWER = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
     public readonly float[] GRAVITY = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
     public readonly float[] TERMINAL_VELOCITY = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
     public const float HITBOX_X = 1.467508f;
@@ -286,7 +286,10 @@ public class Snaily : MonoBehaviour
                         if (!grounded)
                         {
                             bool pokedCeiling = false;
-                            velocity.y = Mathf.Clamp(velocity.y - GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
+                            velocity.y -= GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                            if (velocity.y > 0 && !holdingJump)
+                                velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                            velocity.y = Mathf.Clamp(velocity.y, TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
                             if (boxD.distance != 0 && boxU.distance != 0)
                             {
                                 if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
@@ -544,7 +547,10 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x - GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x > 0) ? FALLSPEED_MOD : 1), TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
+                                velocity.x -= GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                                if (velocity.x > 0 && !holdingJump)
+                                    velocity.x = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                                velocity.x = Mathf.Clamp(velocity.x, TERMINAL_VELOCITY[readIDSpeed], Mathf.Infinity);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -825,7 +831,10 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.x = Mathf.Clamp(velocity.x + GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.x < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
+                                velocity.x += GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                                if (velocity.x < 0 && !holdingJump)
+                                    velocity.x = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                                velocity.x = Mathf.Clamp(velocity.x, -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
                                 if (boxL.distance != 0 && boxR.distance != 0)
                                 {
                                     if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
@@ -1104,7 +1113,10 @@ public class Snaily : MonoBehaviour
                             else
                             {
                                 bool pokedCeiling = false;
-                                velocity.y = Mathf.Clamp(velocity.y + GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime * ((!holdingJump && velocity.y < 0) ? FALLSPEED_MOD : 1), -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
+                                velocity.y += GRAVITY[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                                if (velocity.y < 0 && !holdingJump)
+                                    velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                                velocity.y = Mathf.Clamp(velocity.x, -Mathf.Infinity, -TERMINAL_VELOCITY[readIDSpeed]);
                                 if (boxD.distance != 0 && boxU.distance != 0)
                                 {
                                     if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)

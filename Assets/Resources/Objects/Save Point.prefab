@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -49
+  m_SortingOrder: -20
   m_Sprite: {fileID: 3485538886809574342, guid: 88c2cd9d982936442a60406d16d3a804,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -153,3 +153,4 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0

@@ -88,6 +88,13 @@ public class Item : MonoBehaviour
                     animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
+                case 4:
+                    if (PlayState.currentCharacter == "Blobby")
+                        animName = "Item_wallGrab";
+                    else
+                        animName = "Item_highJump";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 case 5:
                     if (PlayState.currentCharacter == "Blobby")
                     {

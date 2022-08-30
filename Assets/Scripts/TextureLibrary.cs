@@ -57,11 +57,13 @@ public class TextureLibrary : ScriptableObject
         "Items/Boomerang",
         "Items/HeartContainer",
         "Items/HelixFragment",
+        "Items/HighJump",
         "Items/IceSnail",
         "Items/Peashooter",
         "Items/RainbowWave",
         "Items/ShellShield",
         "Items/Shelmet",
+        "Items/WallGrab",
 
         "Particles/Bubble",
         "Particles/Dust",

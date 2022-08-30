@@ -145,10 +145,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ebce6b2f18b724d89bd69876674cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countedInPercentage: 0
+  countedInPercentage: 1
   collected: 0
   itemID: 0
   isSuperUnique: 0
+  difficultiesPresentIn: 010101
+  charactersPresentFor: 010101010101
   originPos: {x: 0, y: 0}
   anim: {fileID: 0}
   box: {fileID: 0}
@@ -183,3 +185,4 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0

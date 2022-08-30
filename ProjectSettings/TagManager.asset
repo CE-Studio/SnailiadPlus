@@ -15,6 +15,7 @@ TagManager:
   - SavePoint
   - EnemyBullet
   - Hazard
+  - CutsceneTrigger
   layers:
   - Default
   - TransparentFX

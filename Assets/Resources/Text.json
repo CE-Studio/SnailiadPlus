@@ -1666,6 +1666,11 @@
 			"value": 0
 		},
 		{
+			"name": "room_00_testHall",
+			"text": "Testing Theater",
+			"value": 0
+		},
+		{
 			"name": "room_01_entrance",
 			"text": "Quest's|Start Lake",
 			"value": 0
@@ -1868,6 +1873,51 @@
 		{
 			"name": "room_02_ghostFork",
 			"text": "Dance of the|Dandelions",
+			"value": 0
+		},
+		{
+			"name": "room_02_snowTunnel",
+			"text": "A Secret to|Snowbody",
+			"value": 0
+		},
+		{
+			"name": "room_02_devilblob",
+			"text": "Devil's Alcove",
+			"value": 0
+		},
+		{
+			"name": "room_02_pathToIceTower",
+			"text": "Safety Save",
+			"value": 0
+		},
+		{
+			"name": "room_02_iceTower",
+			"text": "The Ice Tower",
+			"value": 0
+		},
+		{
+			"name": "room_02_labyrinth",
+			"text": "The Labyrinth",
+			"value": 0
+		},
+		{
+			"name": "room_02_rainbowHelix",
+			"text": "Sneaky, Sneaky",
+			"value": 0
+		},
+		{
+			"name": "room_02_angryBlock",
+			"text": "Realm of the|Angry Pink Block",
+			"value": 0
+		},
+		{
+			"name": "room_02_bossSave",
+			"text": "Leave your Shoes|in the Hall",
+			"value": 0
+		},
+		{
+			"name": "room_02_stompy",
+			"text": "Tippy-Tap Tunnel",
 			"value": 0
 		},
 		{
@@ -2306,18 +2356,43 @@
 			"value": 1
 		},
 		{
+			"name": "npc_27_default_0",
+			"text": "Watch out, {P}!  {p|0.25}Without the{nl}\"{col|0305}Ice {S}{col|0312}\" power, {p|0.15}the area{nl}ahead will be too difficult!",
+			"value": 1
+		},
+		{
+			"name": "npc_27_icyPlayer_0",
+			"text": "Oh, {P}, {p|0.15}you're an {col|0305}Ice {S}{col|0312}!{nl}{p|0.25}That means the icicles in the{nl}room ahead won't hurt you!",
+			"value": 1
+		},
+		{
+			"name": "npc_27_powerfulPlayer_0",
+			"text": "Hey, {P}!  {p|0.15}You came{nl}back to visit!!  {p|0.2}{eff|Wave}Yay!!",
+			"value": 1
+		},
+		{
 			"name": "npc_29_default_0",
 			"text": "Don't worry about me, {P}!{nl}{p|0.25}I'm an {col|0305}Ice Snail{col|0312}, {p|0.15}so these ice{nl}guys and icicles can't hurt me!",
 			"value": 1
 		},
 		{
 			"name": "npc_29_insane_0",
-			"text": "Oh, no!! {p|0.2}{P}!! {p|0.2}The \"{col|0305}Ice Snail{col|0312}\"{nl}power-up is missing on insane{nl}mode! {p|0.25}Good luck without it!!",
+			"text": "Oh, no!! {p|0.2}{P}!! {p|0.2}The \"{col|0305}Ice {S}{col|0312}\"{nl}power-up is missing on insane{nl}mode! {p|0.25}Good luck without it!!",
 			"value": 1
 		},
 		{
 			"name": "npc_35_default_0",
 			"text": "{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!",
+			"value": 1
+		},
+		{
+			"name": "npc_40_default_0",
+			"text": "{eff|Wave}Wow!!  {eff|None}{p|0.2}You defeated the evil{nl}monster??  {p|0.2}You're my hero,{nl}{PF}!!",
+			"value": 1
+		},
+		{
+			"name": "npc_40_warnAboutStompy_0",
+			"text": "Be careful, {P}!!  {p|0.25}I've heard{nl}some {eff|Shake}{spd|0.06}scary stuff {eff|None}{spd|0.02}happening in{nl}the next room!!",
 			"value": 1
 		},
 		{

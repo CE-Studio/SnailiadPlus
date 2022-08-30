@@ -2568,6 +2568,20 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
 		},
+		{
+			"name": "Bullet_enemy_donut_rotary",
+			"spriteName": "Bullets/EnemyDonut",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Grass_idle",
@@ -2675,6 +2689,34 @@
 				21,
 				22,
 				23
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_highJump",
+			"spriteName": "Items/HighJump",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_wallGrab",
+			"spriteName": "Items/WallGrab",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
 			],
 			"loop": true,
 			"loopStartFrame": 0,

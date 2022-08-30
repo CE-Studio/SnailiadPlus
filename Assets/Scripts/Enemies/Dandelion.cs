@@ -21,6 +21,9 @@ public class Dandelion : Enemy
 
     private void Update()
     {
+        if (PlayState.gameState != "Game" || box == null)
+            return;
+
         theta += Time.deltaTime;
         transform.position = new Vector2(originX + WAVE_DISTANCE * Mathf.Sin(theta * WAVE_SPEED), transform.position.y + RISE_SPEED * Time.deltaTime);
         if (theta > PlayState.PI_OVER_TWO && theta <= PlayState.THREE_PI_OVER_TWO && anim.currentAnimName != "Enemy_dandelion_right")

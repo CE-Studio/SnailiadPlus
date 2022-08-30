@@ -13,6 +13,10 @@ public class EnemyBullet : MonoBehaviour
     public int damage;
     public float maxLifetime;
     private float initialSpeed;
+    private float radius_velocity;
+    private float theta_velocity;
+    private float theta_offset;
+    private bool despawnOffscreen;
 
     public SpriteRenderer sprite;
     public AnimationModule anim;
@@ -29,6 +33,7 @@ public class EnemyBullet : MonoBehaviour
         anim.Add("Bullet_enemy_peashooter");
         foreach (string dir in compassDirs)
             anim.Add("Bullet_enemy_boomerang1_" + dir);
+        anim.Add("Bullet_enemy_donut_rotary");
 
         sprite.enabled = false;
         box.enabled = false;
@@ -44,22 +49,28 @@ public class EnemyBullet : MonoBehaviour
             lifeTimer += Time.fixedDeltaTime;
             switch (bulletType)
             {
-                case 0:
+                case 0: // Pea
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
-                case 1:
+                case 1: // Devastator Boomerang (blue)
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     speed -= initialSpeed * 1.5f * Time.fixedDeltaTime;
                     break;
+                case 2: // Rotary donut
+                    transform.position = new Vector2(
+                        origin.x + radius_velocity * lifeTimer * Mathf.Cos(lifeTimer * theta_velocity + theta_offset),
+                        origin.y - radius_velocity * lifeTimer * Mathf.Sin(lifeTimer * theta_velocity + theta_offset)
+                        );
+                    break;
             }
-            if (lifeTimer > maxLifetime && !PlayState.OnScreen(transform.position, box))
+            if ((!despawnOffscreen && lifeTimer > maxLifetime && !PlayState.OnScreen(transform.position, box)) || (despawnOffscreen && !PlayState.OnScreen(transform.position, box)))
                 Despawn();
         }
     }
 
-    public void Shoot(Vector2 newOrigin, int type, Vector2 newDirection, float newSpeed)
+    public void Shoot(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true)
     {
         sprite.enabled = true;
         box.enabled = true;
@@ -67,8 +78,6 @@ public class EnemyBullet : MonoBehaviour
 
         origin = newOrigin;
         transform.position = newOrigin;
-        speed = newSpeed;
-        direction = newDirection;
 
         bulletType = type;
         initialSpeed = speed;
@@ -79,14 +88,34 @@ public class EnemyBullet : MonoBehaviour
                 damage = 2;
                 maxLifetime = 3.6f;
                 box.size = new Vector2(0.25f, 0.25f);
-                PlayState.PlaySound("ShotPeashooter");
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = false;
+                if (playSound)
+                    PlayState.PlaySound("ShotPeashooter");
                 break;
             case 1:
-                anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(newDirection));
+                anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 4f;
                 box.size = new Vector2(1.5f, 1.5f);
-                PlayState.PlaySound("ShotBoomerangDev");
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = false;
+                if (playSound)
+                    PlayState.PlaySound("ShotBoomerangDev");
+                break;
+            case 2:
+                anim.Play("Bullet_enemy_donut_rotary");
+                damage = 2;
+                maxLifetime = 3f;
+                box.size = new Vector2(1.45f, 1.45f);
+                radius_velocity = dirVelVars[0];
+                theta_velocity = dirVelVars[1];
+                theta_offset = dirVelVars[2];
+                despawnOffscreen = true;
+                if (playSound)
+                    PlayState.PlaySound("ShotEnemyDonut");
                 break;
         }
     }

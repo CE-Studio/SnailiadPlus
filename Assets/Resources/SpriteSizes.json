@@ -170,7 +170,7 @@
 		{
             "name": "Entities/SnailNpcColor",
             "width": 7,
-            "height": 54
+            "height": 55
         },
 		{
             "name": "Entities/Snelk",
@@ -214,6 +214,11 @@
             "height": 16
         },
 		{
+            "name": "Items/HighJump",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Items/IceSnail",
             "width": 32,
             "height": 32
@@ -235,6 +240,11 @@
         },
 		{
             "name": "Items/Shelmet",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/WallGrab",
             "width": 32,
             "height": 32
         },

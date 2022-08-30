@@ -52,6 +52,9 @@ MonoBehaviour:
   - name: menu_option_main_returnTo
     text: Back to main menu
     value: 0
+  - name: menu_option_sub_returnTo
+    text: Back to menu
+    value: 0
   - name: menu_option_main_quit
     text: Quit
     value: 0
@@ -129,6 +132,15 @@ MonoBehaviour:
     value: 0
   - name: menu_option_eraseGame_header2
     text: Really erase file #?
+    value: 0
+  - name: menu_option_eraseGame_header3
+    text: Careful!! Erasing the profile you're
+    value: 0
+  - name: menu_option_eraseGame_header4
+    text: using will boot you back to the
+    value: 0
+  - name: menu_option_eraseGame_header5
+    text: main menu!!
     value: 0
   - name: menu_option_eraseGame_confirm
     text: Yes, I want to start over!
@@ -710,16 +722,10 @@ MonoBehaviour:
     text: toggle
     value: 0
   - name: menu_add_breakables1
-    text: obvious, piercing
+    text: obvious
     value: 0
   - name: menu_add_breakables2
-    text: obvious, any shot
-    value: 0
-  - name: menu_add_breakables3
-    text: all, piercing
-    value: 0
-  - name: menu_add_breakables4
-    text: all, any shot
+    text: all
     value: 0
   - name: menu_add_frameLimit_none
     text: Unlimited
@@ -774,6 +780,44 @@ MonoBehaviour:
     value: 0
   - name: hud_achievement
     text: Achievement!!
+    value: 0
+  - name: subscreen_header_name
+    text: Name
+    value: 0
+  - name: subscreen_header_weapon
+    text: Weapon
+    value: 0
+  - name: subscreen_header_shell
+    text: Shell
+    value: 0
+  - name: subscreen_header_ability
+    text: Ability
+    value: 0
+  - name: subscreen_shellNormal
+    text: Normal _
+    value: 0
+  - name: subscreen_shell
+    text: shell
+    value: 0
+  - name: subscreen_markers
+    text: 'Press "_" to
+
+      set markers'
+    value: 0
+  - name: subscreen_mapRate
+    text: 'Map
+
+      ##%'
+    value: 0
+  - name: subscreen_itemRate
+    text: 'Items
+
+      ##%'
+    value: 0
+  - name: subscreen_time
+    text: 'Time
+
+      _'
     value: 0
   - name: area_00
     text: Snail Town
@@ -850,6 +894,9 @@ MonoBehaviour:
   - name: item_fullMetalSnail_noShell
     text: Full-Power _
     value: 0
+  - name: item_fullMetalSnail_blob
+    text: Non-Newtonian _
+    value: 0
   - name: item_gravityShock
     text: Gravity Shock
     value: 0
@@ -891,6 +938,9 @@ MonoBehaviour:
     value: 0
   - name: boss_moonSnail_rush
     text: Sun Snail
+    value: 0
+  - name: boss_defeated
+    text: _ defeated!
     value: 0
   - name: enemy_spikey
     text: Spikey
@@ -984,6 +1034,126 @@ MonoBehaviour:
     value: 0
   - name: room_01_peashooter
     text: Fine Dining
+    value: 0
+  - name: room_01_cornerTransition
+    text: Roadblock ahead
+    value: 0
+  - name: room_01_eac
+    text: The Maze Room
+    value: 0
+  - name: room_01_blockSnail
+    text: Monument of|Greatness
+    value: 0
+  - name: room_01_bigLake
+    text: Spring Lake
+    value: 0
+  - name: room_01_tower2
+    text: Frost Tower
+    value: 0
+  - name: room_01_cave1
+    text: Heart of the|Sea
+    value: 0
+  - name: room_01_cave2
+    text: Daily helping|of calcium
+    value: 0
+  - name: room_01_hub2
+    text: Rocky Peaks
+    value: 0
+  - name: room_01_cave3
+    text: Dig, Snaily, Dig
+    value: 0
+  - name: room_01_snowSave
+    text: Chilly Checkpoint
+    value: 0
+  - name: room_01_iceHall
+    text: Frozen River
+    value: 0
+  - name: room_01_tower3
+    text: Still Not|Brinstar
+    value: 0
+  - name: room_01_cave4
+    text: Skywatcher's|Cave
+    value: 0
+  - name: room_01_cave5
+    text: Skywatcher's|Tunnel
+    value: 0
+  - name: room_01_cave6
+    text: Skywatcher's|Loot
+    value: 0
+  - name: room_01_hub3
+    text: Dirt Diode
+    value: 0
+  - name: room_01_angle
+    text: Angle Path,|Carelia-Side
+    value: 0
+  - name: room_01_hub4
+    text: The Summit
+    value: 0
+  - name: room_01_shellbreaker
+    text: Hi I'm Boss #1
+    value: 0
+  - name: room_01_boomerang
+    text: Signature|Croissants
+    value: 0
+  - name: room_01_towerHub
+    text: Transition|Tower
+    value: 0
+  - name: room_01_transitionSave
+    text: Transition|Checkpoint
+    value: 0
+  - name: room_02_entrance
+    text: Tiled Entryway
+    value: 0
+  - name: room_02_hub1
+    text: Pitfall Plaza
+    value: 0
+  - name: room_02_towerHub
+    text: Perpendicular|Path
+    value: 0
+  - name: room_02_connectionVert
+    text: Could Use An|Elevator
+    value: 0
+  - name: room_02_blockTower
+    text: Tile Tower
+    value: 0
+  - name: room_02_snelk
+    text: Squared Snelks
+    value: 0
+  - name: room_02_kitty
+    text: The Catcave
+    value: 0
+  - name: room_02_shortcut
+    text: The Vents
+    value: 0
+  - name: room_02_icePath
+    text: Chilly Descent
+    value: 0
+  - name: room_02_iceSnailEntry
+    text: Bit Drafty|In Here
+    value: 0
+  - name: room_02_iceSnail
+    text: Frost Shrine
+    value: 0
+  - name: room_02_iceSpikeItem
+    text: Sweater|Required
+    value: 0
+  - name: room_02_tilePath
+    text: Swampy Steps
+    value: 0
+  - name: room_02_ghostFork
+    text: Dance of the|Dandelions
+    value: 0
+  - name: room_02_snowTunnel
+    text: A Secret to|Snowbody
+    value: 0
+  - name: room_02_devilblob
+    text: Devil's Alcove
+    value: 0
+  - name: room_02_pathToIceTower
+    text: Safety Save
+    value: 0
+  - name: room_02_iceTower
+    text: The Ice Tower
     value: 0
   - name: npc_?
     text: Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't
@@ -1263,6 +1433,25 @@ MonoBehaviour:
     text: Hey, {P}! {p|0.25}If you had a{nl}boomerang, {p|0.125}you could break{nl}all
       sorts of walls!
     value: 1
+  - name: npc_20_default_0
+    text: '{P}!!  {p|0.25}{eff|wave}Yay!!'
+    value: 1
+  - name: npc_20_secret_0
+    text: There's some kind of secret{nl}passage to the right, {p|0.1}but I'm{nl}not
+      sure how to get through...
+    value: 1
+  - name: npc_20_findSnails_0
+    text: I hope you can find all the{nl}other snails!  {p|0.2}They're not all{nl}as
+      brave as me, you know!!
+    value: 1
+  - name: npc_21_default_0
+    text: By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing keys{nl}like
+      "{ctrl|16}" and "{ctrl|17}"{col|0312}!
+    value: 1
+  - name: npc_21_boomerang_0
+    text: Yay, {P}, it's you!! {nl}{p|0.2}Take this boomerang and break{nl}some walls
+      open!!
+    value: 1
   - name: npc_22_default_0
     text: '{eff|Shake}Thorgle Borgle!!!!!!!'
     value: 1
@@ -1296,6 +1485,54 @@ MonoBehaviour:
       makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}"{ctrl|22}" {col|0312}for
       the menu!
     value: 1
+  - name: npc_26_default_0
+    text: With this "Shell Shield", {p|0.1}you{nl}won't take any damage when you{nl}hide
+      in your shell!
+    value: 1
+  - name: npc_26_blobby_0
+    text: Take this "Shelmet"! {p|0.25}You{nl}can hide in it to avoid{nl}taking damage!
+    value: 1
+  - name: npc_27_default_0
+    text: Watch out, {P}!  {p|0.25}Without the{nl}"{col|0305}Ice {S}{col|0312}" power,
+      {p|0.15}the area{nl}ahead will be too difficult!
+    value: 1
+  - name: npc_27_icyPlayer_0
+    text: Oh, {P}, {p|0.15}you're an {col|0305}Ice {S}{col|0312}!{nl}{p|0.25}That
+      means the icicles in the{nl}room ahead won't hurt you!
+    value: 1
+  - name: npc_27_powerfulPlayer_0
+    text: Hey, {P}!  {p|0.15}You came{nl}back to visit!!  {p|0.2}{eff|Wave}Yay!!
+    value: 1
+  - name: npc_29_default_0
+    text: Don't worry about me, {P}!{nl}{p|0.25}I'm an {col|0305}Ice Snail{col|0312},
+      {p|0.15}so these ice{nl}guys and icicles can't hurt me!
+    value: 1
+  - name: npc_29_insane_0
+    text: Oh, no!! {p|0.2}{P}!! {p|0.2}The "{col|0305}Ice {S}{col|0312}"{nl}power-up
+      is missing on insane{nl}mode! {p|0.25}Good luck without it!!
+    value: 1
+  - name: npc_35_default_0
+    text: '{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of
+      {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!'
+    value: 1
+  - name: npc_41_default_0
+    text: '{PF}, you came{nl}back!!  {p|0.15}{eff|Wave}Yay!!'
+    value: 1
+  - name: npc_41_warnAboutSB_0
+    text: Watch out, {P}!!{nl}{p|0.25}A {col|0200}fierce monster {col|0312}is hiding{nl}in
+      the next room!!
+    value: 1
+  - name: npc_41_greyDoor_0
+    text: Oh hey, {p|0.15}that {col|0212}grey door {col|0312}below{nl}and to the
+      left opened up!{nl}{p|0.3}I wonder what's inside?
+    value: 1
+  - name: npc_41_babySnails_0
+    text: Good luck, {P}!  {p|0.15}I'll wait{nl}here for you!!  {p|0.25}Let's have
+      lots{nl}of baby snails later, okay?
+    value: 1
+  - name: npc_41_goodLuck_0
+    text: Good luck, {P}!
+    value: 1
   - name: npc_43_cantCorner_0
     text: I can't seem to crawl around{nl}these corners! {p|0.3}I wonder if{nl}I'll
       ever be able to do it...
@@ -1316,25 +1553,38 @@ MonoBehaviour:
     text: Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I
       wish I were a Gravity Snail!
     value: 1
+  - name: npc_48_greet_0
+    text: Hey, {P}, what's up?
+    value: 1
+  - name: npc_48_scream_0
+    text: '{eff|Shake}{sfx|3}{spd|0.01}YEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE'
+    value: 1
+  - name: npc_48_default_0
+    text: '{eff|Wave}Whew!!  {eff|None}{p|0.25}That was scary!!'
+    value: 1
   - name: npc_50_default_0
+    text: Have you tried {col|0309}hitting the{nl}"{ctrl|6}" key{col|0312} yet? 
+      {p|0.15}It lets you{nl}shoot while holding still!
+    value: 1
+  - name: npc_51_default_0
     text: Oh, {p|0.125}hey, {P}! {p|0.25}I'm here to test{nl}single-page dialogue!!
     value: 1
-  - name: npc_50_admireRainbowWave_0
+  - name: npc_51_admireRainbowWave_0
     text: '{eff|Wave}Woah!!  {p|0.25}{eff|None}Nice Rainbow Wave, {P}!!{p|0.25}{nl}I''d
       love one too, {p|0.125}but I don''t{nl}have a jump button.'
     value: 1
-  - name: npc_51_default_0
+  - name: npc_52_default_0
     text: Hey there, {P}!! {p|0.25}I see you{nl}figured out how to start a{nl}multi-page
       conversation!
     value: 1
-  - name: npc_51_default_1
+  - name: npc_52_default_1
     text: The hope is this talk should go{nl}100% smoothly. {p|0.125}What do you{nl}think?
     value: 1
-  - name: npc_51_default_2
+  - name: npc_52_default_2
     text: Impressive! {p|0.25}I do hope that's my{nl}portrait showing right now,
       {p|0.125}if it{nl}even is there.
     value: 0
-  - name: npc_51_default_3
+  - name: npc_52_default_3
     text: I'm here to test multiple things,{nl}it seems!
     value: 1
   - name: npc_turtle_default_0

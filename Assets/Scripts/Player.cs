@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
                         transform.position.y + (10 * Control.AxisY() * (Control.JumpHold() ? 2.5f : 1) * Time.deltaTime));
                 box.enabled = false;
             }
-            else
+            else if (!inDeathCutscene)
                 box.enabled = true;
 
             // These are only here to make sure they're called once, before anything else that needs it
@@ -279,6 +279,7 @@ public class Player : MonoBehaviour
 
         // Audiosource volume control
         PlayState.globalSFX.volume = PlayState.gameOptions[0] * 0.1f;
+        PlayState.globalMusic.volume = PlayState.gameOptions[1] * 0.1f;
 
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)

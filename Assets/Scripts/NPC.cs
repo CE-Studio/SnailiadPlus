@@ -433,6 +433,15 @@ public class NPC : MonoBehaviour
                                 intentionallyEmpty = true;
                             break;
 
+                        case 27:
+                            if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                                AddText("powerfulPlayer");
+                            else if (PlayState.CheckForItem("Ice Snail"))
+                                AddText("icyPlayer");
+                            else
+                                AddText("default");
+                            break;
+
                         case 29:
                             boxColor = "0002";
                             if (PlayState.currentDifficulty == 2)
@@ -444,6 +453,13 @@ public class NPC : MonoBehaviour
                         case 35:
                             boxColor = "0002";
                             AddText("default");
+                            break;
+
+                        case 40:
+                            if (PlayState.IsBossAlive(2))
+                                AddText("warnAboutStompy");
+                            else
+                                AddText("default");
                             break;
 
                         case 41:
@@ -501,13 +517,13 @@ public class NPC : MonoBehaviour
                     if (intentionallyEmpty)
                         return;
                     if (textToSend.Count == 0)
-                        textToSend.Add(PlayState.GetText("npc_?"
+                        textToSend.Add(PlayState.GetText("npc_?")
                             .Replace("##", PlayState.GetItemPercentage().ToString())
                             .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
                             .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
                             .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
                             .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{ID}", ID.ToString())));
+                            .Replace("{ID}", ID.ToString()));
                     if (textToSend.Count > 1)
                     {
                         if (!speechBubbleSprite.enabled)

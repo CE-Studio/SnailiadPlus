@@ -69,6 +69,7 @@ public class PlayState
     public static AudioSource mus2; //= GameObject.Find("View/Music2").GetComponent<AudioSource>();
     public static AudioSource activeMus; //= mus1;
     public static AudioSource globalSFX = GameObject.Find("View/Global SFX Source").GetComponent<AudioSource>();
+    public static AudioSource globalMusic = GameObject.Find("View/Global Music Source").GetComponent<AudioSource>();
     public static bool musFlag = false;
     public static bool playingMusic = false;
     public static int musicVol = 1;
@@ -545,13 +546,13 @@ public class PlayState
     public static void PlayMusic(int groupIndex, string name)
     {
         if (GetMusic(groupIndex, name) != null)
-            globalSFX.PlayOneShot(GetMusic(groupIndex, name));
+            globalMusic.PlayOneShot(GetMusic(groupIndex, name));
         else
             Debug.LogWarning("Audipclip \"" + name + "\" does not exist!");
     }
     public static void PlayMusic(int groupIndex, int songIndex)
     {
-        globalSFX.PlayOneShot(GetMusic(groupIndex, songIndex));
+        globalMusic.PlayOneShot(GetMusic(groupIndex, songIndex));
     }
 
     public static void MuteMusic()
@@ -1672,16 +1673,17 @@ public class PlayState
         }
     }
 
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed)
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed, bool playSound = true)
     {
-        return ShootEnemyBullet(newOrigin, type, Quaternion.Euler(0, 0, angle) * Vector2.up, newSpeed);
+        Vector2 newAngle = Quaternion.Euler(0, 0, angle) * Vector2.up;
+        return ShootEnemyBullet(newOrigin, type, new float[] { newSpeed, newAngle.x, newAngle.y }, playSound);
     }
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, Vector2 direction, float newSpeed)
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true)
     {
         bool hasShot = false;
         if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive)
         {
-            enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, direction, newSpeed);
+            enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, dirVelVars, playSound);
             enemyBulletPointer = (enemyBulletPointer + 1) % enemyBulletPool.transform.childCount;
             hasShot = true;
         }
@@ -1728,5 +1730,14 @@ public class PlayState
         float boxAdjust = box != null ? box.size.x * 0.5f : 8;
         return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
             Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
+    }
+
+    public static float Integrate(float num, float target, float speed, float elapsed, float threshold = 0.1f)
+    {
+        float scale = Mathf.Pow(0.1f, speed);
+        num = num * Mathf.Pow(scale, elapsed) + target * (1 - Mathf.Pow(scale, elapsed));
+        if (Mathf.Abs(num - target) < threshold)
+            num = target;
+        return num;
     }
 }
