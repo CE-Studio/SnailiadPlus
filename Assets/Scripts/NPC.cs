@@ -94,7 +94,7 @@ public class NPC : MonoBehaviour
     public virtual void FixedUpdate()
     {
         if (groundCheck.distance != 0 && groundCheck.distance > 0.01f)
-            {
+        {
             if (upsideDown)
                 velocity = Mathf.Clamp(velocity + GRAVITY * Time.fixedDeltaTime, -Mathf.Infinity, -TERMINAL_VELOCITY);
             else

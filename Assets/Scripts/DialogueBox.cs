@@ -207,7 +207,7 @@ public class DialogueBox : MonoBehaviour
                     break;
                 case 1:
                     if (initializationCooldown == 0)
-                        MarkOpenAnimComplete();
+                        boxOpenAnimComplete = true;
                     else
                         initializationCooldown = Mathf.Clamp(initializationCooldown - Time.deltaTime, 0, Mathf.Infinity);
                     if (dialogueType == 3)
@@ -373,7 +373,7 @@ public class DialogueBox : MonoBehaviour
                         currentTimerMax = float.Parse(args[1]);
                         break;
                     case "sfx":   // Speaker sound
-                        currentSpeaker = int.Parse(args[1]);
+                        currentSound = int.Parse(args[1]);
                         break;
                     case "col":   // Color
                         currentColor = new Vector2(int.Parse(args[1].Substring(0, 2)), int.Parse(args[1].Substring(2, 2)));
@@ -455,9 +455,9 @@ public class DialogueBox : MonoBehaviour
 
     public IEnumerator ReturnMusicVol()
     {
-        while (PlayState.activeMus.volume < 1)
+        while (PlayState.activeMus.volume < 0.1f * PlayState.gameOptions[1])
         {
-            PlayState.activeMus.volume += 0.025f * PlayState.musicVol;
+            PlayState.activeMus.volume += 0.025f * PlayState.gameOptions[1];
             yield return new WaitForFixedUpdate();
         }
     }
@@ -550,23 +550,17 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    public void DeactivateForceDown()
+    public void StallCutsceneDialogue(CutsceneController cutscene)
     {
-        forceDownPosition = false;
+        StartCoroutine(StallCutsceneDialogueCoroutine(cutscene));
     }
-
-    public void MarkOpenAnimComplete()
+    private IEnumerator StallCutsceneDialogueCoroutine(CutsceneController cutscene)
     {
-        boxOpenAnimComplete = true;
-    }
-
-    public void ToggleSpriteOn()
-    {
-        sprite.enabled = true;
-    }
-
-    public void ToggleSpriteOff()
-    {
-        sprite.enabled = false;
+        while (boxState != 4)
+            yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(2f);
+        if (boxState == 4)
+            CloseBox();
+        cutscene.EndActionRemote();
     }
 }

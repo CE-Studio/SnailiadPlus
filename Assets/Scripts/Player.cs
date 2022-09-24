@@ -619,7 +619,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ExecuteCoverCommand(string type, byte r = 0, byte g = 0, byte b = 0, byte a = 0, float maxTime = 0)
+    public void ExecuteCoverCommand(string type, byte r = 0, byte g = 0, byte b = 0, byte a = 0, float maxTime = 0, int sortingOrder = 1001)
     {
         switch (type)
         {
@@ -630,7 +630,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(nameof(CoverDeathTransition));
                 break;
             case "Custom Fade":
-                StartCoroutine(CoverCustomFade(r, g, b, a, maxTime));
+                StartCoroutine(CoverCustomFade(r, g, b, a, maxTime, sortingOrder));
                 break;
         }
     }
@@ -657,9 +657,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator CoverCustomFade(byte r, byte g, byte b, byte a, float maxTime)
+    public IEnumerator CoverCustomFade(byte r, byte g, byte b, byte a, float maxTime, int sortingOrder)
     {
         SpriteRenderer sprite = PlayState.screenCover;
+        sprite.sortingOrder = sortingOrder;
         float timer = 0;
         Color32 startColor = sprite.color;
         while (timer < maxTime)
@@ -1063,5 +1064,45 @@ public class Player : MonoBehaviour
         GameObject queuedExplosion = Instantiate(Resources.Load<GameObject>("Objects/Queued Explosion"), pos, Quaternion.identity,
             PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y).transform);
         queuedExplosion.GetComponent<QueuedExplosion>().Spawn(lifeTime, size, loudly);
+    }
+
+    public void ScreenShake(List<float> intensities, List<float> times)
+    {
+        if (PlayState.gameOptions[15] == 1)
+            StartCoroutine(ScreenShakeCoroutine(intensities, times));
+    }
+    public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times)
+    {
+        if ((times.Count - intensities.Count == 1) || (times.Count == intensities.Count))
+        {
+            if (times.Count == intensities.Count + 1)
+                intensities.Add(0);
+            for (int i = 0; i < intensities.Count; i++)
+                intensities[i] = Mathf.Clamp(intensities[i], 0, Mathf.Infinity);
+            for (int i = 0; i < times.Count; i++)
+                times[i] = Mathf.Clamp(times[i], 0, Mathf.Infinity);
+
+            float intensity;
+            float time = 0;
+            int index = 0;
+            while (index < times.Count)
+            {
+                time += 0;
+                if (time >= times[index])
+                {
+                    time = 0;
+                    index++;
+                }
+                if (index < times.Count)
+                {
+                    intensity = Mathf.Lerp(index == 0 ? 0 : intensities[index - 1], intensities[index], time / times[index]);
+                    PlayState.camShakeOffset += new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                }
+                yield return new WaitForEndOfFrame();
+                PlayState.camShakeOffset = Vector2.zero;
+            }
+        }
+        else
+            Debug.Log("Unable to parse screen shake command. Expected time count - intensity count difference of 0 or 1, but got " + (times.Count - intensities.Count));
     }
 }

@@ -288,6 +288,7 @@ public class RoomTrigger : MonoBehaviour
             }
             pool.transform.GetChild(i).transform.position = Vector2.zero;
         }
+        PlayState.ReplaceAllTempTiles();
     }
 
     private void CheckSpecialLayer()
@@ -465,6 +466,29 @@ public class RoomTrigger : MonoBehaviour
                 default:
                     newConditions.Add(0);
                     break;
+                case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
+                    List<string> newCutsceneData = new List<string>
+                    {
+                        obj.GetComponent<CutsceneController>().sceneScript,
+                        PlayState.cutsceneData.Count.ToString(),
+                        obj.GetComponent<CutsceneController>().triggerActive ? "true" : "false",
+                        obj.GetComponent<BoxCollider2D>().size.x.ToString(),
+                        obj.GetComponent<BoxCollider2D>().size.y.ToString()
+                    };
+                    for (int j = 0; j < obj.GetComponent<CutsceneController>().actors.Count; j++)
+                    {
+                        int npcNum = 0;
+                        int thisNpcNum = obj.GetComponent<CutsceneController>().actors[j].transform.GetSiblingIndex();
+                        for (int k = 0; k < thisNpcNum; k++)
+                        {
+                            if (transform.GetChild(k).CompareTag("NPC"))
+                                npcNum++;
+                        }
+                        newCutsceneData.Add(npcNum.ToString());
+                    }
+                    PlayState.cutsceneData.Add(newCutsceneData.ToArray());
+                    newConditions.Add(PlayState.cutsceneData.Count - 1);
+                    break;
                 case "Door":
                     newConditions.Add(obj.GetComponent<Door>().doorWeapon);
                     newConditions.Add(obj.GetComponent<Door>().locked ? 1 : 0);
@@ -591,6 +615,8 @@ public class RoomTrigger : MonoBehaviour
             GameObject breakable = Instantiate(breakableBlock, transform);
             breakable.GetComponent<BreakableBlock>().Instantiate(thisBreakable);
         }
+        List<CutsceneController> cutscenes = new List<CutsceneController>();
+        List<int> cutsceneIDs = new List<int>();
         foreach (PlayState.RoomEntity entity in preplacedEntities)
         {
             GameObject newObject = Instantiate(CheckResourcesFor(entity.name, entity.tag), entity.pos, Quaternion.identity, transform);
@@ -598,6 +624,20 @@ public class RoomTrigger : MonoBehaviour
             switch (newObject.name)
             {
                 default:
+                    break;
+                case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
+                    string[] thisData = PlayState.cutsceneData[entity.spawnData[0]];
+                    if (PlayState.cutscenesToNotSpawn.Contains(int.Parse(thisData[1])))
+                    {
+                        Destroy(newObject);
+                        break;
+                    }
+                    newObject.GetComponent<CutsceneController>().sceneScript = thisData[0];
+                    newObject.GetComponent<CutsceneController>().cutsceneID = int.Parse(thisData[1]);
+                    newObject.GetComponent<CutsceneController>().triggerActive = thisData[2] == "true";
+                    newObject.GetComponent<CutsceneController>().GetComponent<BoxCollider2D>().size = new Vector2(float.Parse(thisData[3]), float.Parse(thisData[4]));
+                    cutscenes.Add(newObject.GetComponent<CutsceneController>());
+                    cutsceneIDs.Add(entity.spawnData[0]);
                     break;
                 case "Door":
                     newObject.GetComponent<Door>().Spawn(entity.spawnData);
@@ -633,6 +673,25 @@ public class RoomTrigger : MonoBehaviour
                     newObject.GetComponent<TurtleNPC>().Spawn(entity.spawnData);
                     break;
             }
+        }
+        for (int i = 0; i < cutscenes.Count; i++)
+        {
+            string[] thisCutsceneData = PlayState.cutsceneData[cutsceneIDs[i]];
+            for (int j = 5; j < thisCutsceneData.Length; j++)
+            {
+                int desiredID = int.Parse(thisCutsceneData[j]);
+                int foundNPCs = -1;
+                int currentChildIndex = 0;
+                while (foundNPCs < desiredID)
+                {
+                    if (transform.GetChild(currentChildIndex).CompareTag("NPC"))
+                        foundNPCs++;
+                    if (foundNPCs != desiredID)
+                        currentChildIndex++;
+                }
+                cutscenes[i].actors.Add(transform.GetChild(currentChildIndex).GetComponent<NPC>());
+            }
+            cutscenes[i].Spawn();
         }
     }
 

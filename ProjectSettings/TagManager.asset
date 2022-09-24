@@ -16,6 +16,7 @@ TagManager:
   - EnemyBullet
   - Hazard
   - CutsceneTrigger
+  - NPC
   layers:
   - Default
   - TransparentFX

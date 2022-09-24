@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     private List<MenuOption> currentOptions = new List<MenuOption>();
     private DestinationDelegate backPage;
-    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
     private bool isRebinding = false;
     private bool pauseButtonDown = false;
@@ -606,6 +606,19 @@ public class MainMenu : MonoBehaviour
                         }
                         PlayState.gameOptions[11] = menuVarFlags[6];
                         break;
+                    case "screenShake":
+                        TestForArrowAdjust(option, 7, 1);
+                        switch (menuVarFlags[7])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                break;
+                        }
+                        PlayState.gameOptions[15] = menuVarFlags[7];
+                        break;
                     case "control_jump":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(12) : Control.ParseKeyName(4));
@@ -683,8 +696,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.isMenuOpen = false;
                 ClearOptions();
                 music.Stop();
-                PlayState.screenCover.sortingOrder = 999;
-                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f);
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
                 ToggleHUD(false);
             }
             if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown)
@@ -693,9 +705,8 @@ public class MainMenu : MonoBehaviour
                 PlayState.ToggleHUD(false);
                 ToggleHUD(true);
                 PlayState.gameState = "Pause";
-                PlayState.screenCover.sortingOrder = 0;
                 PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0);
                 PageMain();
                 CreateTitle();
             }
@@ -1340,7 +1351,7 @@ public class MainMenu : MonoBehaviour
             0, PlayState.gameOptions[2], 1, PlayState.gameOptions[3],
             2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
             4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7],
-            6, PlayState.gameOptions[11]
+            6, PlayState.gameOptions[11], 7, PlayState.gameOptions[15]
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
@@ -1379,7 +1390,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true, "gameTime");
         AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true, "fps");
         AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true, "particles");
-        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_display_screenShake") + ": ", true, "screenShake");
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
@@ -2146,7 +2157,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
     public void ReturnToMenu()
     {
         PlayState.gameState = "Menu";
-        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0);
         cam.position = panPoints[0];
         PageMain();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;

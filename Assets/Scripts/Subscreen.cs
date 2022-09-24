@@ -122,8 +122,7 @@ public class Subscreen : MonoBehaviour
             PlayState.TogglableHUDElements[1].SetActive(true);
             PlayState.TogglableHUDElements[3].SetActive(true);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f);
-            PlayState.screenCover.sortingOrder = -2;
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, -2);
             buttonDown = true;
             anim.Play("Subscreen_" + PlayState.currentCharacter.ToLower());
             helixAnim.Play("Item_helixFragment");
@@ -135,8 +134,7 @@ public class Subscreen : MonoBehaviour
             menuOpen = false;
             PlayState.gameState = "Game";
             PlayState.ToggleHUD(true);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f);
-            PlayState.screenCover.sortingOrder = 999;
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
             buttonDown = true;
             PlayState.minimapScript.RefreshMap();
         }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7076351576822303682}
   m_Layer: 0
   m_Name: Turtle NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0
 --- !u!1 &8609702439621369131
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,3 +255,4 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0

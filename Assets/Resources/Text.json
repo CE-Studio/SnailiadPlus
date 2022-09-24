@@ -292,7 +292,7 @@
 		},
 		{
 			"name": "menu_option_display_keymap",
-			"text": "Real-time keymap",
+			"text": "Input display",
 			"value": 0
 		},
 		{
@@ -308,6 +308,11 @@
 		{
 			"name": "menu_option_display_particles",
 			"text": "Particles",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_screenShake",
+			"text": "Screen shake",
 			"value": 0
 		},
 		{

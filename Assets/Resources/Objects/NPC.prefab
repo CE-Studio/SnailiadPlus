@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6771732126236493506}
   m_Layer: 0
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,6 +186,7 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0
 --- !u!1 &450049468616689347
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,3 +297,4 @@ MonoBehaviour:
   blankOnNonLoopEnd: 0
   updateSprite: 1
   pauseOnMenu: 1
+  updateMask: 0

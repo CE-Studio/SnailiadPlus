@@ -91,6 +91,7 @@ public class PlayState
     public static Vector2 positionOfLastSave = Vector2.zero;
     public static int enemyBulletPointer = 0;
     public static List<Vector2> breakablePositions = new List<Vector2>();
+    public static List<int> tempTiles = new List<int>(); // x, y, layer, original tile ID
 
     public static int importJobs = 0;
 
@@ -177,6 +178,8 @@ public class PlayState
     public static Vector2 camTempBuffersY;
     public static Vector2 posRelativeToTempBuffers;
     public static Vector2 camTempBufferTruePos;
+    public static Vector2 camCutsceneOffset;
+    public static Vector2 camShakeOffset;
 
     public static readonly Vector2 WORLD_ORIGIN = new Vector2(0.5f, 0.5f); // The exact center of the chartable map
     public static readonly Vector2 WORLD_SIZE = new Vector2(26, 22); // The number of screens wide and tall the world is
@@ -209,7 +212,7 @@ public class PlayState
         -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         -1, -1,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
         -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
-         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  0,  0,  0,  0,  0, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0, -1, -1, -1, -1,
         -1,  0,  0,  0,  0,  0,  0,  0, -1,  0, -1, -1, -1,  0,  2,  2,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
         -1,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0, -1,  0, -1,  0, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -354,7 +357,8 @@ public class PlayState
         5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
         0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious, 2 = all)
         0,  // 13 - Secret tile visibility (boolean)
-        2   // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
+        2,  // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
+        1   // 15 - Screen shake (boolean)
     };
 
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
@@ -392,6 +396,9 @@ public class PlayState
     public static bool talkedToCaveSnail;
     public static int[] NPCvarDefault = new int[] { 0, 0 };
 
+    public static List<string[]> cutsceneData = new List<string[]>();
+    public static List<int> cutscenesToNotSpawn = new List<int> { };
+
     public const string SAVE_FILE_PREFIX = "SnailySave";
 
     [Serializable]
@@ -409,6 +416,7 @@ public class PlayState
         public int[] NPCVars;
         public int percentage;
         public int[] exploredMap;
+        public int[] cutsceneStates;
     }
 
     [Serializable]
@@ -712,6 +720,37 @@ public class PlayState
                 playerMarkerLocations.Add(i, "placeholder for multiplayer name");
     }
 
+    public static void ReplaceAllTempTiles() // x, y, layer, original tile ID
+    {
+        while (tempTiles.Count > 0)
+        {
+            Vector3Int position = new Vector3Int(tempTiles[0], tempTiles[1], 0);
+            Tilemap map = tempTiles[2] switch
+            {
+                0 => specialLayer.GetComponent<Tilemap>(),
+                1 => fg2Layer.GetComponent<Tilemap>(),
+                2 => fg1Layer.GetComponent<Tilemap>(),
+                3 => groundLayer.GetComponent<Tilemap>(),
+                4 => bgLayer.GetComponent<Tilemap>(),
+                5 => skyLayer.GetComponent<Tilemap>(),
+                _ => specialLayer.GetComponent<Tilemap>()
+            };
+            if (tempTiles[3] == -1)
+                map.SetTile(position, null);
+            else
+            {
+                Tile newTile = ScriptableObject.CreateInstance<Tile>();
+                Sprite newSprite = PlayState.GetSprite("Tilesheet", tempTiles[3]);
+                newSprite.OverridePhysicsShape(new List<Vector2[]> {
+                    new Vector2[] { new Vector2(0, 0), new Vector2(0, 16), new Vector2(16, 16), new Vector2(16, 0) }
+                    });
+                newTile.sprite = newSprite;
+                newTile.name = "Tilesheet_" + tempTiles[3];
+                map.SetTile(position, newTile);
+            }
+        }
+    }
+
     public static void PlayAreaSong(int area, int subzone)
     {
         if (area == currentArea && subzone != currentSubzone)
@@ -801,7 +840,12 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 
-    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0)
+    public static void StallDialogueContinuous(CutsceneController cutscene)
+    {
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialogue(cutscene);
+    }
+
+    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001)
     {
         switch (type)
         {
@@ -817,7 +861,7 @@ public class PlayState
                 playerScript.ExecuteCoverCommand(type);
                 break;
             case "Custom Fade":
-                playerScript.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime);
+                playerScript.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, sortingOrder);
                 break;
         }
     }
@@ -1280,7 +1324,8 @@ public class PlayState
                     talkedToCaveSnail ? 1 : 0
                 },
                 percentage = GetItemPercentage(),
-                exploredMap = (int[])minimapScript.currentMap.Clone()
+                exploredMap = (int[])minimapScript.currentMap.Clone(),
+                cutsceneStates = cutscenesToNotSpawn.ToArray()
             };
             switch (currentProfile)
             {
@@ -1368,6 +1413,7 @@ public class PlayState
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
                 minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
+                cutscenesToNotSpawn = new List<int>(loadedSave.cutsceneStates);
                 playerScript.maxHealth = playerScript.hpPerHeart[currentDifficulty] * 3;
                 helixCount = 0;
                 heartCount = 0;
@@ -1695,9 +1741,14 @@ public class PlayState
         return (b - a).normalized;
     }
 
-    public static void SetCamFocus(Transform point)
+    public static void SetCamFocus(Transform point = null)
     {
         cam.GetComponent<CamMovement>().focusPoint = point;
+    }
+
+    public static void SetCamSpeed(float speed = 0.1f)
+    {
+        cam.GetComponent<CamMovement>().camSpeed = speed;
     }
 
     public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false)
@@ -1739,5 +1790,10 @@ public class PlayState
         if (Mathf.Abs(num - target) < threshold)
             num = target;
         return num;
+    }
+
+    public static void ScreenShake(List<float> intensities, List<float> times)
+    {
+        playerScript.ScreenShake(intensities, times);
     }
 }
