@@ -35,17 +35,12 @@ public class CutsceneController : MonoBehaviour
     };
     private List<BatchedDialogue> batchedDialogue = new List<BatchedDialogue>();
 
-    void Awake()
-    {
-        box = GetComponent<BoxCollider2D>();
-        lines = sceneScript.ToLower().Split('\n');
-        Debug.Log(lines.Length);
-        BatchDialogue();
-    }
-
     public void Spawn()
     {
+        box = GetComponent<BoxCollider2D>();
         box.enabled = triggerActive;
+        lines = sceneScript.Split('\n');
+        BatchDialogue();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -67,7 +62,7 @@ public class CutsceneController : MonoBehaviour
 
     private IEnumerator MainLoop()
     {
-        Debug.Log("Beginning a cutscene with " + lines.Length.ToString() + " lines");
+        PlayState.cutsceneActive = true;
         while (lineNum < lines.Length && !endFlag)
         {
             string[] tokens = lines[lineNum].Split(' ');
@@ -151,7 +146,21 @@ public class CutsceneController : MonoBehaviour
                     case "loop": // X = count, Y = loop start line number, Z = delay
                         TryForToken(tokens, index + 1, out string loopCount);
                         TryForToken(tokens, index + 2, out string loopDelay);
-                        loopDepth.Add(new Vector3(ParseInt(loopCount), lineNum, ParseFloat(loopDelay)));
+                        loopDepth.Add(new Vector3(ParseInt(loopCount), lineNum + 1, ParseFloat(loopDelay)));
+                        break;
+                    case "endloop":
+                        if (loopDepth.Count != 0) // X = count, Y = loop start line number, Z = delay
+                        {
+                            Vector3 thisData = loopDepth[loopDepth.Count - 1];
+                            thisData.x--;
+                            if (thisData.z != 0)
+                                yield return new WaitForSeconds(thisData.z);
+                            lineNum = (int)thisData.y;
+                            if (thisData.x == 1)
+                                loopDepth.RemoveAt(loopDepth.Count - 1);
+                            else
+                                loopDepth[loopDepth.Count - 1] = thisData;
+                        }
                         break;
                     default:
                         parseThisCommand = true;
@@ -170,13 +179,14 @@ public class CutsceneController : MonoBehaviour
             }
             else
             {
-                yield return new WaitForSecondsRealtime(mainDelay);
+                yield return new WaitForSeconds(mainDelay);
                 mainDelay = 0;
             }
         }
         PlayState.SetCamFocus(PlayState.player.transform);
         PlayState.camCutsceneOffset = Vector2.zero;
         PlayState.paralyzed = false;
+        PlayState.cutsceneActive = false;
         isActive = false;
     }
 
@@ -188,15 +198,6 @@ public class CutsceneController : MonoBehaviour
     private bool IsFloat(string token, out float result)
     {
         return float.TryParse(token, out result);
-    }
-
-    private Transform ParseActor(string token)
-    {
-        if (token == "player")
-            return PlayState.player.transform;
-        if (IsInt(token, out int actorID))
-            return actors[actorID].transform;
-        return actors[int.Parse(token.Substring(5, token.Length - 5))].transform;
     }
 
     private bool TryForToken(string[] tokens, int target, out string result)
@@ -211,6 +212,15 @@ public class CutsceneController : MonoBehaviour
             result = "null";
             return false;
         }
+    }
+
+    private Transform ParseActor(string token)
+    {
+        if (token == "player")
+            return PlayState.player.transform;
+        if (IsInt(token, out int actorID))
+            return actors[actorID].transform;
+        return actors[int.Parse(token.Substring(5, token.Length - 5))].transform;
     }
 
     private int ParseInt(string input)
@@ -396,7 +406,12 @@ public class CutsceneController : MonoBehaviour
 
                 string lastType = "";
 
-                newBatch.dialogue.Add(tokens[num + 1]);
+                newBatch.dialogue.Add(PlayState.GetText(tokens[num + 1])
+                    .Replace("##", PlayState.GetItemPercentage().ToString())
+                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower())));
                 num += 2;
                 while (num < tokens.Length)
                 {
@@ -490,8 +505,10 @@ public class CutsceneController : MonoBehaviour
     private IEnumerator ParseCommand(float delay, string[] tokens, int thisTokenNum)
     {
         bool endActionHere = true;
+        Debug.Log("beginning command with delay " + delay.ToString());
         if (delay != 0)
-            yield return new WaitForSecondsRealtime(delay);
+            yield return new WaitForSeconds(delay);
+        Debug.Log("delay" + delay.ToString() + " finished");
         switch (tokens[thisTokenNum])
         {
             case "move":
@@ -573,22 +590,25 @@ public class CutsceneController : MonoBehaviour
                         break;
                     case 3: // Tile count and speed
                         float distanceCoveredMove = 0;
-                        while (distanceCoveredMove < tileCountMove)
+                        int dirModMove = (directionMove == "left" || directionMove == "down") ? -1 : 1;
+                        while (distanceCoveredMove < Mathf.Abs(tileCountMove))
                         {
-                            if (FindWall(actorMove, directionMove, speedMove, out float distanceMove))
-                            {
-                                if (jumpPowerMove != 0 && actorScriptMove.velocity == 0)
-                                    actorScriptMove.velocity = actorScriptMove.upsideDown ? -jumpPowerMove : jumpPowerMove;
-                                actorMove.position += new Vector3(verticalMove ? 0 : distanceMove, verticalMove ? distanceMove : 0, 0);
-                                distanceCoveredMove += distanceMove;
-                            }
-                            else
-                            {
-                                actorMove.position += new Vector3(verticalMove ? 0 : speedMove * Time.deltaTime, verticalMove ? speedMove * Time.deltaTime : 0, 0);
+                            //if (FindWall(actorMove, directionMove, speedMove, out float distanceMove))
+                            //{
+                            //    if (jumpPowerMove != 0 && actorScriptMove.velocity == 0)
+                            //        actorScriptMove.velocity = actorScriptMove.upsideDown ? -jumpPowerMove : jumpPowerMove;
+                            //    actorMove.position += new Vector3(verticalMove ? 0 : distanceMove * dirModMove, verticalMove ? distanceMove * dirModMove : 0, 0);
+                            //    distanceCoveredMove += distanceMove;
+                            //}
+                            //else
+                            //{
+                                actorMove.position += new Vector3(verticalMove ? 0 : speedMove * Time.deltaTime * dirModMove, verticalMove ? speedMove * Time.deltaTime * dirModMove : 0, 0);
                                 distanceCoveredMove += speedMove * Time.deltaTime;
-                            }
+                            //    Debug.Log(speedMove * Time.deltaTime);
+                            //}
                             if (jumpContinuouslyMove && actorScriptMove.velocity == 0)
                                 actorScriptMove.velocity = actorScriptMove.upsideDown ? -jumpPowerMove : jumpPowerMove;
+                            yield return new WaitForEndOfFrame();
                         }
                         break;
                     case 5: // Tile count and time
@@ -621,7 +641,8 @@ public class CutsceneController : MonoBehaviour
                 {
                     NPC actorScriptJump = ParseActor(actorJump).GetComponent<NPC>();
                     float clampedPowerJump = Mathf.Abs(ParseFloat(powerJump));
-                    actorScriptJump.velocity = actorScriptJump.upsideDown ? -clampedPowerJump : clampedPowerJump;
+                    actorScriptJump.transform.position = new Vector2(actorScriptJump.transform.position.x, actorScriptJump.transform.position.y + (0.0625f * (actorScriptJump.upsideDown ? -1 : 1)));
+                    actorScriptJump.velocity = (actorScriptJump.upsideDown ? -clampedPowerJump : clampedPowerJump) * Time.deltaTime;
                 }
                 break;
 
@@ -636,10 +657,15 @@ public class CutsceneController : MonoBehaviour
             case "face":
                 if (TryForToken(tokens, thisTokenNum + 1, out string actorFace) && TryForToken(tokens, thisTokenNum + 2, out string directionFace))
                 {
-                    if (directionFace == "left" || directionFace == "right")
-                        ParseActor(actorFace).GetComponent<SpriteRenderer>().flipX = directionFace == "right";
+                    if (actorFace == "player")
+                        PlayState.playerScript.gravityDir = directionFace switch { "left" => 1, "right" => 2, "up" => 3, _ => 0 };
                     else
-                        ParseActor(actorFace).GetComponent<SpriteRenderer>().flipY = directionFace == "up";
+                    {
+                        if (directionFace == "left" || directionFace == "right")
+                            ParseActor(actorFace).GetComponent<SpriteRenderer>().flipX = directionFace == "right";
+                        else
+                            ParseActor(actorFace).GetComponent<SpriteRenderer>().flipY = directionFace == "up";
+                    }
                 }
                 break;
 
@@ -682,12 +708,20 @@ public class CutsceneController : MonoBehaviour
                 }
                 else
                 {
-                    BatchedDialogue newDialogue = new BatchedDialogue { dialogue = new List<string>() };
+                    BatchedDialogue newDialogue = new BatchedDialogue { dialogue = new List<string>(), speaker = 0, shape = 0, sound = 0, color = "0005" };
                     string parseType = "";
-                    for (int parseIndex = 1; thisTokenNum + parseIndex < tokens.Length; parseIndex++)
+                    float lingerTime = 0;
+                    for (int parseIndex = 2; thisTokenNum + parseIndex < tokens.Length; parseIndex++)
                     {
-                        if (parseIndex == 1)
-                            newDialogue.dialogue.Add(tokens[thisTokenNum + parseIndex]);
+                        if (parseIndex == 2)
+                            lingerTime = ParseFloat(tokens[thisTokenNum + parseIndex]);
+                        else if (parseIndex == 3)
+                            newDialogue.dialogue.Add(PlayState.GetText(tokens[thisTokenNum + parseIndex])
+                                .Replace("##", PlayState.GetItemPercentage().ToString())
+                                .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
+                                .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
+                                .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
+                                .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower())));
                         else
                         {
                             if (tokens[thisTokenNum + parseIndex] == "as" || tokens[thisTokenNum + parseIndex] == "box" || tokens[thisTokenNum + parseIndex] == "sound")
@@ -714,9 +748,9 @@ public class CutsceneController : MonoBehaviour
                             }
                         }
                     }
-                    PlayState.OpenDialogue(2, newDialogue.speaker, newDialogue.dialogue, newDialogue.shape, newDialogue.color );
+                    PlayState.OpenDialogue(2, newDialogue.speaker, newDialogue.dialogue, newDialogue.shape, newDialogue.color);
+                    PlayState.StallDialogueContinuous(this, lingerTime);
                 }
-                PlayState.StallDialogueContinuous(this);
                 endActionHere = false;
                 break;
 
@@ -806,18 +840,6 @@ public class CutsceneController : MonoBehaviour
                 break;
 
             case "endloop":
-                if (loopDepth.Count != 0) // X = count, Y = loop start line number, Z = delay
-                {
-                    Vector3 thisData = loopDepth[loopDepth.Count - 1];
-                    thisData.x--;
-                    if (thisData.z != 0)
-                        yield return new WaitForSeconds(thisData.z);
-                    lineNum = (int)thisData.y;
-                    if (thisData.x == 0)
-                        loopDepth.RemoveAt(loopDepth.Count - 1);
-                    else
-                        loopDepth[loopDepth.Count - 1] = thisData;
-                }
                 break;
 
             case "wait":

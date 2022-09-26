@@ -92,6 +92,7 @@ public class PlayState
     public static int enemyBulletPointer = 0;
     public static List<Vector2> breakablePositions = new List<Vector2>();
     public static List<int> tempTiles = new List<int>(); // x, y, layer, original tile ID
+    public static bool cutsceneActive = false;
 
     public static int importJobs = 0;
 
@@ -840,9 +841,9 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 
-    public static void StallDialogueContinuous(CutsceneController cutscene)
+    public static void StallDialogueContinuous(CutsceneController cutscene, float lingerTime)
     {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialogue(cutscene);
+        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialogue(cutscene, lingerTime);
     }
 
     public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001)

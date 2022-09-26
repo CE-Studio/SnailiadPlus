@@ -93,6 +93,16 @@ public class NPC : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
+        groundCheck = Physics2D.BoxCast(
+            transform.position,
+            new Vector2(1, 0.98f),
+            0,
+            velocity > 0 ? Vector2.up : Vector2.down,
+            Mathf.Infinity,
+            LayerMask.GetMask("PlayerCollide"),
+            Mathf.Infinity,
+            Mathf.Infinity
+            );
         if (groundCheck.distance != 0 && groundCheck.distance > 0.01f)
         {
             if (upsideDown)
@@ -104,7 +114,7 @@ public class NPC : MonoBehaviour
             {
                 RaycastHit2D groundCheckRay = Physics2D.Raycast(
                     new Vector2(groundCheck.point.x, transform.position.y + (upsideDown ? 0.5f : -0.5f)),
-                    upsideDown ? Vector2.up : Vector2.down,
+                    velocity > 0 ? Vector2.up : Vector2.down,
                     Mathf.Infinity,
                     LayerMask.GetMask("PlayerCollide"),
                     Mathf.Infinity,
@@ -119,16 +129,6 @@ public class NPC : MonoBehaviour
         }
         else
             velocity = 0;
-        groundCheck = Physics2D.BoxCast(
-            transform.position,
-            new Vector2(1, 0.98f),
-            0,
-            upsideDown ? Vector2.up : Vector2.down,
-            Mathf.Infinity,
-            LayerMask.GetMask("PlayerCollide"),
-            Mathf.Infinity,
-            Mathf.Infinity
-            );
     }
 
     public virtual void Update()
@@ -138,15 +138,18 @@ public class NPC : MonoBehaviour
             if (anim.isPlaying)
                 sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 
-            if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
+            if (!PlayState.cutsceneActive)
             {
-                sprite.flipX = true;
-                speechBubbleSprite.flipX = false;
-            }
-            else
-            {
-                sprite.flipX = false;
-                speechBubbleSprite.flipX = true;
+                if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
+                {
+                    sprite.flipX = true;
+                    speechBubbleSprite.flipX = false;
+                }
+                else
+                {
+                    sprite.flipX = false;
+                    speechBubbleSprite.flipX = true;
+                }
             }
 
             if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace)

@@ -2501,6 +2501,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_53_attention",
+			"text": "{P}!  {p|0.2}Up here!!",
+			"value": 1
+		},
+		{
 			"name": "npc_turtle_default_0",
 			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
 			"value": 0

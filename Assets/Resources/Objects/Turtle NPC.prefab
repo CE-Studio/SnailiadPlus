@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4824545346993276689}
   - component: {fileID: 5168637265548876998}
   - component: {fileID: 7076351576822303682}
-  m_Layer: 0
+  - component: {fileID: 6404194655332485213}
+  m_Layer: 10
   m_Name: Turtle NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -145,6 +146,32 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!61 &6404194655332485213
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086137813825377748}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 1}
+    newSize: {x: 2, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.82, y: 0.96}
+  m_EdgeRadius: 0
 --- !u!1 &8609702439621369131
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +183,7 @@ GameObject:
   - component: {fileID: 4729239392593979471}
   - component: {fileID: 7817672718087172107}
   - component: {fileID: 2280335031269468234}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Speech bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
