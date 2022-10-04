@@ -2506,6 +2506,26 @@
 			"value": 1
 		},
 		{
+			"name": "npc_53_greeting",
+			"text": "So glad you could make it! {nl}{p|0.25}C'mon, {p|0.15}I have something to show{nl}you!!",
+			"value": 1
+		},
+		{
+			"name": "npc_53_introduce",
+			"text": "Watch the statue, {P}!  {p|0.15}I'm{nl}gonna decorate it with the flip{nl}of a switch!",
+			"value": 1
+		},
+		{
+			"name": "npc_53_celebrate",
+			"text": "{eff|Wave}{sfx|2}Ta-da!! {p|0.5}{eff|None}{sfx|0}Wasn't that cool?",
+			"value": 1
+		},
+		{
+			"name": "npc_53_default_0",
+			"text": "Y'know, {p|0.1}now that I think about{nl}it... {p|0.15}would this freeze over the{nl}rooms around us?  {p|0.2}I hope not!",
+			"value": 1
+		},
+		{
 			"name": "npc_turtle_default_0",
 			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
 			"value": 0

@@ -278,7 +278,11 @@ public class RoomTrigger : MonoBehaviour
     {
         initializedEffects = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            if (transform.GetChild(i).name == "Cutscene Controller")
+                transform.GetChild(i).GetComponent<CutsceneController>().StopAllCoroutines();
             Destroy(transform.GetChild(i).gameObject);
+        }
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++)
         {

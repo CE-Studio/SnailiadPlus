@@ -513,6 +513,10 @@ public class NPC : MonoBehaviour
                             AddText("default");
                             break;
 
+                        case 53:
+                            AddText("default");
+                            break;
+
                         default:
                             AddText("?");
                             break;

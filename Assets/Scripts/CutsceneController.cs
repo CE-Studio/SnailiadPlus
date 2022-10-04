@@ -146,7 +146,7 @@ public class CutsceneController : MonoBehaviour
                     case "loop": // X = count, Y = loop start line number, Z = delay
                         TryForToken(tokens, index + 1, out string loopCount);
                         TryForToken(tokens, index + 2, out string loopDelay);
-                        loopDepth.Add(new Vector3(ParseInt(loopCount), lineNum + 1, ParseFloat(loopDelay)));
+                        loopDepth.Add(new Vector3(ParseInt(loopCount), lineNum, ParseFloat(loopDelay)));
                         break;
                     case "endloop":
                         if (loopDepth.Count != 0) // X = count, Y = loop start line number, Z = delay
@@ -184,6 +184,7 @@ public class CutsceneController : MonoBehaviour
             }
         }
         PlayState.SetCamFocus(PlayState.player.transform);
+        PlayState.SetCamSpeed();
         PlayState.camCutsceneOffset = Vector2.zero;
         PlayState.paralyzed = false;
         PlayState.cutsceneActive = false;
@@ -376,28 +377,31 @@ public class CutsceneController : MonoBehaviour
     {
         BatchedDialogue newBatch = new BatchedDialogue { dialogue = new List<string>(), states = new List<int>() };
         int depth = 0;
+        int startIndex = -1;
+        string previousInitial = "";
 
         for (int i = 0; i < lines.Length; i++)
         {
             string[] tokens = lines[i].Split(' ');
-            int num = 0;
             bool parse = false;
+            string commandInitial = "";
 
-            TryForToken(tokens, num, out string initialToken);
-            TryForToken(tokens, num + 1, out string secondToken);
-            TryForToken(tokens, num + 2, out string thirdToken);
-            string commandInitial = initialToken;
-            if (initialToken == "dialogue" && depth == 0)
-                parse = true;
-            else if (initialToken == "with" && (secondToken == "dialogue" || thirdToken == "dialogue"))
+            ExtractCommand(tokens, out int num);
+            if (tokens[num] == "dialogue")
             {
-                parse = true;
-                commandInitial += secondToken + (thirdToken == "dialogue" ? thirdToken : "");
-                num = thirdToken == "dialogue" ? 2 : 1;
+                if (depth == 0 || tokens[0] == "with")
+                    parse = true;
+                if (tokens[num + 1] != "prompted")
+                    parse = false;
             }
-            
+            for (int j = 0; j <= num; j++)
+                commandInitial += tokens[j] + " ";
+
             if (parse)
             {
+                if (startIndex == -1)
+                    startIndex = i;
+
                 int speaker = 0;
                 int shape = 0;
                 int sound = 0;
@@ -406,13 +410,13 @@ public class CutsceneController : MonoBehaviour
 
                 string lastType = "";
 
-                newBatch.dialogue.Add(PlayState.GetText(tokens[num + 1])
+                num += 2;
+                newBatch.dialogue.Add(PlayState.GetText(tokens[num])
                     .Replace("##", PlayState.GetItemPercentage().ToString())
                     .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower())));
-                num += 2;
                 while (num < tokens.Length)
                 {
                     if (tokens[num] == "as" || tokens[num] == "box" || tokens[num] == "sound")
@@ -460,15 +464,18 @@ public class CutsceneController : MonoBehaviour
                     while (depth > 0)
                     {
                         if (depth == 1)
-                            lines[num + depth] = commandInitial + " " + batchedDialogue.Count.ToString();
+                            lines[startIndex + depth - 1] = (previousInitial == "" ? commandInitial : previousInitial) + batchedDialogue.Count.ToString();
                         else
-                            lines[depth - 1] = "nop";
+                            lines[startIndex + depth - 1] = "nop";
                         depth--;
                     }
                     batchedDialogue.Add(newBatch);
                     newBatch = new BatchedDialogue { dialogue = new List<string>(), states = new List<int>() };
                 }
+                startIndex = -1;
             }
+
+            previousInitial = commandInitial;
         }
     }
 
@@ -505,10 +512,8 @@ public class CutsceneController : MonoBehaviour
     private IEnumerator ParseCommand(float delay, string[] tokens, int thisTokenNum)
     {
         bool endActionHere = true;
-        Debug.Log("beginning command with delay " + delay.ToString());
         if (delay != 0)
             yield return new WaitForSeconds(delay);
-        Debug.Log("delay" + delay.ToString() + " finished");
         switch (tokens[thisTokenNum])
         {
             case "move":
@@ -700,11 +705,15 @@ public class CutsceneController : MonoBehaviour
                 break;
 
             case "dialogue":
+                while (PlayState.dialogueOpen)
+                    yield return new WaitForEndOfFrame();
+
                 TryForToken(tokens, thisTokenNum + 1, out string typeDialogue);
                 if (IsInt(typeDialogue, out int idDialogue))
                 {
                     BatchedDialogue thisBatch = batchedDialogue[idDialogue];
                     PlayState.OpenDialogue(3, thisBatch.speaker, thisBatch.dialogue, thisBatch.shape, thisBatch.color, thisBatch.states, thisBatch.facingLeft);
+                    PlayState.StallDialoguePrompted(this);
                 }
                 else
                 {
@@ -779,21 +788,21 @@ public class CutsceneController : MonoBehaviour
                     }
                     else if (modeCam == "move")
                     {
-                        if (TryForToken(tokens, thisTokenNum + 1, out string timeCam) && TryForToken(tokens, thisTokenNum + 2, out string xCam) &&
-                            TryForToken(tokens, thisTokenNum + 3, out string yCam) && TryForToken(tokens, thisTokenNum + 4, out string spaceCam))
+                        if (TryForToken(tokens, thisTokenNum + 2, out string timeCam) && TryForToken(tokens, thisTokenNum + 3, out string xCam) &&
+                            TryForToken(tokens, thisTokenNum + 4, out string yCam) && TryForToken(tokens, thisTokenNum + 5, out string spaceCam))
                         {
                             PlayState.camCutsceneOffset = PlayState.cam.transform.position;
                             PlayState.SetCamFocus();
-                            PlayState.SetCamSpeed(0);
+                            PlayState.SetCamSpeed(1);
                             float elapsed = 0;
                             float maxTime = ParseFloat(timeCam);
-                            Vector2 start = PlayState.cam.transform.position;
+                            Vector2 start = PlayState.camCutsceneOffset;
                             Vector2 destination = new Vector2(ParseFloat(xCam), ParseFloat(yCam));
                             if (spaceCam == "local")
                                 destination += (Vector2)PlayState.cam.transform.position;
                             else if (spaceCam != "world")
                                 destination += (Vector2)ParseActor(spaceCam).position;
-                            TryForToken(tokens, thisTokenNum + 5, out string easeType);
+                            TryForToken(tokens, thisTokenNum + 6, out string easeType);
 
                             if (easeType == "linear" || easeType == "smooth")
                             {
@@ -803,10 +812,10 @@ public class CutsceneController : MonoBehaviour
                                     switch (easeType)
                                     {
                                         case "linear":
-                                            PlayState.cam.transform.position = Vector2.Lerp(start, destination, elapsed / maxTime);
+                                            PlayState.camCutsceneOffset = Vector2.Lerp(start, destination, elapsed / maxTime);
                                             break;
                                         case "smooth":
-                                            PlayState.cam.transform.position = new Vector2(Mathf.SmoothStep(start.x, destination.x, elapsed / maxTime),
+                                            PlayState.camCutsceneOffset = new Vector2(Mathf.SmoothStep(start.x, destination.x, elapsed / maxTime),
                                                 Mathf.SmoothStep(start.y, destination.y, elapsed / maxTime));
                                             break;
                                     }
@@ -817,11 +826,11 @@ public class CutsceneController : MonoBehaviour
                             {
                                 while (Vector2.Distance(start, destination) > 0.01)
                                 {
-                                    PlayState.cam.transform.position = Vector2.Lerp(start, destination, maxTime);
+                                    PlayState.camCutsceneOffset = Vector2.Lerp(start, destination, maxTime);
                                     yield return new WaitForEndOfFrame();
                                 }
                             }
-                            PlayState.cam.transform.position = destination;
+                            PlayState.camCutsceneOffset = destination;
                         }
                     }
                 }

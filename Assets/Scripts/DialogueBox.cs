@@ -41,6 +41,7 @@ public class DialogueBox : MonoBehaviour
     private AnimationModule portraitCharAnim;
     private Dictionary<int, Sprite> colorizedSprites = new Dictionary<int, Sprite>();
     private string currentFrameColor = "0005";
+    private CutsceneController stalledCutscene = null;
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
@@ -439,6 +440,7 @@ public class DialogueBox : MonoBehaviour
     {
         boxState = 0;
         pointer = Vector2.zero;
+        PlayState.dialogueOpen = true;
 
         dialogueType = type;
         currentSpeaker = speaker;
@@ -473,6 +475,7 @@ public class DialogueBox : MonoBehaviour
         anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_close");
         portrait.SetActive(false);
         PlayState.paralyzed = false;
+        PlayState.dialogueOpen = false;
         dialogueType = 0;
         boxOpenAnimComplete = false;
         active = false;
@@ -480,6 +483,11 @@ public class DialogueBox : MonoBehaviour
         {
             if (transform.GetChild(i).name.Contains("Font Object"))
                 Destroy(transform.GetChild(i).gameObject);
+        }
+        if (stalledCutscene != null)
+        {
+            stalledCutscene.EndActionRemote();
+            stalledCutscene = null;
         }
     }
 
@@ -562,5 +570,10 @@ public class DialogueBox : MonoBehaviour
         if (boxState == 4)
             CloseBox();
         cutscene.EndActionRemote();
+    }
+
+    public void StallCutsceneDialoguePrompted(CutsceneController cutscene)
+    {
+        stalledCutscene = cutscene;
     }
 }
