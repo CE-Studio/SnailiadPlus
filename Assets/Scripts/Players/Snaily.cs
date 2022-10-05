@@ -1559,7 +1559,7 @@ public class Snaily : MonoBehaviour
     // This function handles activation of projectiles when the player presses either shoot button
     private void Shoot()
     {
-        if (fireCooldown == 0 && player.armed)
+        if (fireCooldown == 0 && player.armed && !PlayState.paralyzed)
         {
             Vector2 inputDir = new Vector2(Control.AxisX(), Control.AxisY());
             int type = player.selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
@@ -1627,5 +1627,36 @@ public class Snaily : MonoBehaviour
                 PlayState.PlaySound(type switch { 2 => "ShotBoomerang", 3 => "ShotRainbow", 4 => "ShotRainbow", 5 => "ShotRainbow", 6 => "ShotRainbow", _ => "ShotPeashooter", });
             }
         }
+    }
+
+    public void RemoteJump(float jumpPower)
+    {
+        if (gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y + (0.0625f * (gravityDir == DIR_CEILING ? -1 : 1)));
+            velocity.y = jumpPower * (gravityDir == DIR_CEILING ? -1 : 1) * Time.deltaTime;
+        }
+        else
+        {
+            transform.position = new Vector2(transform.position.x + (0.0625f * (gravityDir == DIR_WALL_RIGHT ? -1 : 1)), transform.position.y);
+            velocity.x = jumpPower * (gravityDir == DIR_WALL_RIGHT ? -1 : 1) * Time.deltaTime;
+        }
+        grounded = false;
+        UpdateBoxcasts();
+    }
+
+    public void RemoteGravity(int direction)
+    {
+        if (((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && (direction == DIR_WALL_LEFT || direction == DIR_WALL_RIGHT)) ||
+            ((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && (direction == DIR_FLOOR || direction == DIR_CEILING)))
+            SwitchSurfaceAxis();
+        if (gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING)
+            transform.position = new Vector2(transform.position.x, transform.position.y + (0.0625f * (gravityDir == DIR_CEILING ? -1 : 1)));
+        else
+            transform.position = new Vector2(transform.position.x + (0.0625f * (gravityDir == DIR_WALL_RIGHT ? -1 : 1)), transform.position.y);
+        gravityDir = direction;
+        SwapDir(direction);
+        grounded = false;
+        UpdateBoxcasts();
     }
 }

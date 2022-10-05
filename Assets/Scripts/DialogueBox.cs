@@ -474,7 +474,8 @@ public class DialogueBox : MonoBehaviour
         dialogueShadow.text = "";
         anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_close");
         portrait.SetActive(false);
-        PlayState.paralyzed = false;
+        if (!PlayState.cutsceneActive)
+            PlayState.paralyzed = false;
         PlayState.dialogueOpen = false;
         dialogueType = 0;
         boxOpenAnimComplete = false;

@@ -62,6 +62,12 @@ public class CutsceneController : MonoBehaviour
 
     private IEnumerator MainLoop()
     {
+        while (PlayState.cutsceneActive)
+        {
+            PlayState.paralyzed = true;
+            yield return new WaitForEndOfFrame();
+        }
+        PlayState.paralyzed = false;
         PlayState.cutsceneActive = true;
         while (lineNum < lines.Length && !endFlag)
         {
@@ -644,10 +650,15 @@ public class CutsceneController : MonoBehaviour
             case "jump":
                 if (TryForToken(tokens, thisTokenNum + 1, out string actorJump) && TryForToken(tokens, thisTokenNum + 2, out string powerJump))
                 {
-                    NPC actorScriptJump = ParseActor(actorJump).GetComponent<NPC>();
                     float clampedPowerJump = Mathf.Abs(ParseFloat(powerJump));
-                    actorScriptJump.transform.position = new Vector2(actorScriptJump.transform.position.x, actorScriptJump.transform.position.y + (0.0625f * (actorScriptJump.upsideDown ? -1 : 1)));
-                    actorScriptJump.velocity = (actorScriptJump.upsideDown ? -clampedPowerJump : clampedPowerJump) * Time.deltaTime;
+                    if (actorJump == "player")
+                        PlayState.playerScript.RemoteJump(clampedPowerJump);
+                    else
+                    {
+                        NPC actorScriptJump = ParseActor(actorJump).GetComponent<NPC>();
+                        actorScriptJump.transform.position = new Vector2(actorScriptJump.transform.position.x, actorScriptJump.transform.position.y + (0.0625f * (actorScriptJump.upsideDown ? -1 : 1)));
+                        actorScriptJump.velocity = (actorScriptJump.upsideDown ? -clampedPowerJump : clampedPowerJump) * Time.deltaTime;
+                    }
                 }
                 break;
 
@@ -663,7 +674,7 @@ public class CutsceneController : MonoBehaviour
                 if (TryForToken(tokens, thisTokenNum + 1, out string actorFace) && TryForToken(tokens, thisTokenNum + 2, out string directionFace))
                 {
                     if (actorFace == "player")
-                        PlayState.playerScript.gravityDir = directionFace switch { "left" => 1, "right" => 2, "up" => 3, _ => 0 };
+                        PlayState.playerScript.RemoteGravity(directionFace switch { "left" => 1, "right" => 2, "up" => 3, _ => 0 });
                     else
                     {
                         if (directionFace == "left" || directionFace == "right")
@@ -853,7 +864,6 @@ public class CutsceneController : MonoBehaviour
 
             case "wait":
                 if (TryForToken(tokens, thisTokenNum + 1, out string timeWait))
-                    //    mainDelay = ParseFloat(timeWait);
                     yield return new WaitForSeconds(ParseFloat(timeWait));
                 break;
 

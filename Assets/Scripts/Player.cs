@@ -1105,4 +1105,46 @@ public class Player : MonoBehaviour
         else
             Debug.Log("Unable to parse screen shake command. Expected time count - intensity count difference of 0 or 1, but got " + (times.Count - intensities.Count));
     }
+
+    public void RemoteJump(float jumpPower)
+    {
+        switch (PlayState.currentCharacter)
+        {
+            default:
+            case "Snaily":
+                playerScriptSnaily.RemoteJump(jumpPower);
+                break;
+            case "Sluggy":
+                break;
+            case "Upside":
+                break;
+            case "Leggy":
+                break;
+            case "Blobby":
+                break;
+            case "Leechy":
+                break;
+        }
+    }
+
+    public void RemoteGravity(int direction)
+    {
+        switch (PlayState.currentCharacter)
+        {
+            default:
+            case "Snaily":
+                playerScriptSnaily.RemoteGravity(direction);
+                break;
+            case "Sluggy":
+                break;
+            case "Upside":
+                break;
+            case "Leggy":
+                break;
+            case "Blobby":
+                break;
+            case "Leechy":
+                break;
+        }
+    }
 }
