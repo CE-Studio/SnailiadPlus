@@ -2531,6 +2531,21 @@
 			"value": 0
 		},
 		{
+			"name": "npc_54_default_0",
+			"text": "Idk how I'm saying this I'm not supposed{nl}to be talking right now.",
+			"value": 0
+		},
+		{
+			"name": "npc_55_default_0",
+			"text": "The test subject looks just{nl}like me...{p|0.5}{nl}I think I feel a connection...",
+			"value": 0
+		},
+		{
+			"name": "npc_55_second_0",
+			"text": "\"Not tile\"...{p|0.5}{nl}I'm not a tile either, am I,{nl}{P}?",
+			"value": 0
+		},
+		{
 			"name": "",
 			"text": "",
 			"value": 0

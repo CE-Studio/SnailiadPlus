@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class PlayState
-{
+public class PlayState {
     public const float TAU = Mathf.PI * 2;
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
@@ -19,8 +18,7 @@ public class PlayState
     public static bool noclipMode = false;
 
     [Serializable]
-    public struct AnimationData
-    {
+    public struct AnimationData {
         public string name;
         public string spriteName;
         public float framerate;
@@ -31,23 +29,20 @@ public class PlayState
     }
 
     [Serializable]
-    public struct SpriteFrameSize
-    {
+    public struct SpriteFrameSize {
         public string name;
         public int width;
         public int height;
     }
 
     [Serializable]
-    public struct MusicLoopOffset
-    {
+    public struct MusicLoopOffset {
         public string name;
         public float offset;
     }
 
     [Serializable]
-    public struct TextDict
-    {
+    public struct TextDict {
         public string name;
         public string text;
         public int value;
@@ -137,15 +132,15 @@ public class PlayState
     public static GameObject subscreen = GameObject.Find("View/Subscreen");
     public static Subscreen subscreenScript = subscreen.GetComponent<Subscreen>();
 
-    public struct RoomEntity
-    {
-        public string name;
-        public string tag;
-        public Vector2 pos;
-        public int[] spawnData;
-    }
-    public struct Breakable
-    {
+    //Replaced with IRoomObject
+    //public struct RoomEntity
+    //{
+    //    public string name;
+    //    public string tag;
+    //    public Vector2 pos;
+    //    public int[] spawnData;
+    //}
+    public struct Breakable {
         public Vector2 pos;
         public int[] tiles;
         public int weaponLevel;
@@ -366,8 +361,7 @@ public class PlayState
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
 
     [Serializable]
-    public struct OptionData
-    {
+    public struct OptionData {
         public int[] options;
     }
 
@@ -380,14 +374,12 @@ public class PlayState
     };
 
     [Serializable]
-    public struct PackData
-    {
+    public struct PackData {
         public string[] packs;
     }
 
     [Serializable]
-    public struct ControlData
-    {
+    public struct ControlData {
         public KeyCode[] controls;
     }
 
@@ -404,8 +396,7 @@ public class PlayState
     public const string SAVE_FILE_PREFIX = "SnailySave";
 
     [Serializable]
-    public struct GameSaveData
-    {
+    public struct GameSaveData {
 
         public int profile;
         public int difficulty;
@@ -422,15 +413,13 @@ public class PlayState
     }
 
     [Serializable]
-    public struct RecordData
-    {
+    public struct RecordData {
         public int[] achievements;
         public float[][] times;
     }
 
     [Serializable]
-    public struct CollectiveData
-    {
+    public struct CollectiveData {
         public string version;
         public GameSaveData profile1;
         public GameSaveData profile2;
@@ -442,25 +431,20 @@ public class PlayState
     }
     public static CollectiveData gameData = new CollectiveData();
 
-    public static Sprite BlankTexture(bool useSmallBlank = false)
-    {
+    public static Sprite BlankTexture(bool useSmallBlank = false) {
         return useSmallBlank ? playerScript.smallBlank : playerScript.blank;
     }
 
-    public static Sprite MissingTexture()
-    {
+    public static Sprite MissingTexture() {
         return playerScript.missing;
     }
 
-    public static AnimationData GetAnim(string name)
-    {
-        AnimationData foundData = new AnimationData
-        {
+    public static AnimationData GetAnim(string name) {
+        AnimationData foundData = new AnimationData {
             name = "NoAnim"
         };
         int i = 0;
-        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
-        {
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length) {
             if (animationLibrary[i].name == name)
                 foundData = animationLibrary[i];
             i++;
@@ -468,16 +452,14 @@ public class PlayState
         return foundData;
     }
 
-    public static void PrintAllAnims()
-    {
+    public static void PrintAllAnims() {
         string output = "";
         for (int i = 0; i < animationLibrary.Length; i++)
             output += animationLibrary[i].name + "\n";
         Debug.Log(output);
     }
 
-    public static void RefreshPoolAnims()
-    {
+    public static void RefreshPoolAnims() {
         foreach (Transform obj in particlePool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
         foreach (Transform obj in playerScript.bulletPool.transform)
@@ -486,20 +468,16 @@ public class PlayState
             obj.GetComponent<AnimationModule>().ReloadList();
     }
 
-    public static AnimationData GetAnim(int ID)
-    {
+    public static AnimationData GetAnim(int ID) {
         return animationLibrary[ID];
     }
 
-    public static int GetAnimID(string name)
-    {
-        AnimationData foundData = new AnimationData
-        {
+    public static int GetAnimID(string name) {
+        AnimationData foundData = new AnimationData {
             name = "NoAnim"
         };
         int i = 0;
-        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
-        {
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length) {
             if (animationLibrary[i].name == name)
                 foundData = animationLibrary[i];
             else
@@ -508,84 +486,69 @@ public class PlayState
         return i;
     }
 
-    public static Sprite GetSprite(string name, int ID = 0)
-    {
+    public static Sprite GetSprite(string name, int ID = 0) {
         Sprite newSprite = MissingTexture();
         int i = 0;
         bool found = false;
-        while (i < textureLibrary.referenceList.Length && !found)
-        {
+        while (i < textureLibrary.referenceList.Length && !found) {
             if (textureLibrary.referenceList[i] == name)
                 found = true;
             i++;
         }
-        if (found)
-        {
+        if (found) {
             if (ID < textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)].Length)
                 newSprite = textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
         }
         return newSprite;
     }
 
-    public static AudioClip GetSound(string name)
-    {
+    public static AudioClip GetSound(string name) {
         return soundLibrary.library[soundLibrary.soundDict[name]];
     }
 
-    public static AudioClip GetMusic(int groupIndex, string name)
-    {
+    public static AudioClip GetMusic(int groupIndex, string name) {
         return musicLibrary.library[groupIndex][Array.IndexOf(musicLibrary.library[groupIndex], name)];
     }
-    public static AudioClip GetMusic(int groupIndex, int songIndex)
-    {
+    public static AudioClip GetMusic(int groupIndex, int songIndex) {
         return musicLibrary.library[groupIndex][songIndex];
     }
 
-    public static void PlaySound(string name)
-    {
+    public static void PlaySound(string name) {
         if (GetSound(name) != null)
             globalSFX.PlayOneShot(GetSound(name));
         else
             Debug.LogWarning("Audioclip \"" + name + "\" does not exist!");
     }
-    public static void PlaySound(AudioClip clip)
-    {
+    public static void PlaySound(AudioClip clip) {
         globalSFX.PlayOneShot(clip);
     }
 
-    public static void PlayMusic(int groupIndex, string name)
-    {
+    public static void PlayMusic(int groupIndex, string name) {
         if (GetMusic(groupIndex, name) != null)
             globalMusic.PlayOneShot(GetMusic(groupIndex, name));
         else
             Debug.LogWarning("Audipclip \"" + name + "\" does not exist!");
     }
-    public static void PlayMusic(int groupIndex, int songIndex)
-    {
+    public static void PlayMusic(int groupIndex, int songIndex) {
         globalMusic.PlayOneShot(GetMusic(groupIndex, songIndex));
     }
 
-    public static void MuteMusic()
-    {
+    public static void MuteMusic() {
         playerScript.musicMuted = true;
     }
 
-    public static void FadeMusicBackIn()
-    {
+    public static void FadeMusicBackIn() {
         playerScript.musicMuted = false;
     }
 
-    public static Color32 GetColor(string ID)
-    {
+    public static Color32 GetColor(string ID) {
         return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
     }
 
-    public static string GetText(string ID)
-    {
+    public static string GetText(string ID) {
         int i = 0;
         bool found = false;
-        while (i < textLibrary.library.Length && !found)
-        {
+        while (i < textLibrary.library.Length && !found) {
             if (textLibrary.library[i].name == ID)
                 return textLibrary.library[i].text;
             i++;
@@ -593,30 +556,25 @@ public class PlayState
         return ID;
     }
 
-    public static TextDict GetTextInfo(string ID)
-    {
+    public static TextDict GetTextInfo(string ID) {
         int i = 0;
         bool found = false;
-        while (i < textLibrary.library.Length && !found)
-        {
+        while (i < textLibrary.library.Length && !found) {
             if (textLibrary.library[i].name == ID)
                 return textLibrary.library[i];
             i++;
         }
-        return new TextDict
-        {
+        return new TextDict {
             name = "missing",
             text = "Text with ID \"" + ID + "\" not found",
             value = 0
         };
     }
 
-    public static string GetIDFromText(string text)
-    {
+    public static string GetIDFromText(string text) {
         int i = 0;
         bool found = false;
-        while (i < textLibrary.library.Length && !found)
-        {
+        while (i < textLibrary.library.Length && !found) {
             if (textLibrary.library[i].text == text)
                 return textLibrary.library[i].name;
             i++;
@@ -624,12 +582,10 @@ public class PlayState
         return "ID with text \"" + text + "\" not found";
     }
 
-    public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue)
-    {
+    public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue) {
         Texture2D colorTable = GetSprite(table).texture;
         Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
-        for (int i = 0; i < colorTable.width; i++)
-        {
+        for (int i = 0; i < colorTable.width; i++) {
             referenceColors.Add(colorTable.GetPixel(i, 0), i);
         }
 
@@ -639,8 +595,7 @@ public class PlayState
             (int)oldSprite.textureRect.y,
             (int)oldSprite.textureRect.width,
             (int)oldSprite.textureRect.height);
-        for (int j = 0; j < pixels.Length; j++)
-        {
+        for (int j = 0; j < pixels.Length; j++) {
             if (pixels[j].r == 0.9960785f && pixels[j].g == 0.9960785f && pixels[j].b == 0.9960785f)
                 pixels[j] = new Color(0, 0, 0, 0);
             else if (referenceColors.ContainsKey(pixels[j]))
@@ -652,42 +607,33 @@ public class PlayState
         return Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16);
     }
 
-    public static string ParseColorCodeToString(int colorData)
-    {
+    public static string ParseColorCodeToString(int colorData) {
         return "" + (colorData < 1000 ? "0" : "") + (colorData < 100 ? "0" : "") + (colorData < 100 ? "0" : "") + colorData.ToString();
     }
 
-    public static Vector2 WorldPosToMapPos(Vector2 worldPos)
-    {
+    public static Vector2 WorldPosToMapPos(Vector2 worldPos) {
         Vector2 topLeftCorner = new Vector2(WORLD_ORIGIN.x - (WORLD_SIZE.x * ROOM_SIZE.x * 0.5f), WORLD_ORIGIN.y + (WORLD_SIZE.y * ROOM_SIZE.y * 0.5f));
         return new Vector2(Mathf.Floor(Mathf.Abs(topLeftCorner.x - worldPos.x) / ROOM_SIZE.x), Mathf.Floor(Mathf.Abs(topLeftCorner.y - worldPos.y) / ROOM_SIZE.y));
     }
 
-    public static int WorldPosToMapGridID(Vector3 worldPos)
-    {
+    public static int WorldPosToMapGridID(Vector3 worldPos) {
         return WorldPosToMapGridID(new Vector2(worldPos.x, worldPos.y));
     }
-    public static int WorldPosToMapGridID(Vector3Int worldPos)
-    {
+    public static int WorldPosToMapGridID(Vector3Int worldPos) {
         return WorldPosToMapGridID(new Vector2(worldPos.x, worldPos.y));
     }
-    public static int WorldPosToMapGridID(Vector2 worldPos)
-    {
+    public static int WorldPosToMapGridID(Vector2 worldPos) {
         Vector2 mapPos = WorldPosToMapPos(worldPos);
         return Mathf.RoundToInt(mapPos.y * WORLD_SIZE.x + mapPos.x);
     }
 
-    public static void BuildMapMarkerArrays()
-    {
+    public static void BuildMapMarkerArrays() {
         saveLocations.Clear();
         bossLocations.Clear();
         itemLocations.Clear();
-        foreach (Transform area in roomTriggerParent.transform)
-        {
-            foreach (Transform room in area)
-            {
-                foreach (Transform entity in room)
-                {
+        foreach (Transform area in roomTriggerParent.transform) {
+            foreach (Transform room in area) {
+                foreach (Transform entity in room) {
                     if (entity.CompareTag("SavePoint"))
                         saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
                     if (entity.CompareTag("Item"))
@@ -697,15 +643,12 @@ public class PlayState
         }
 
         Tilemap spMap = specialLayer.GetComponent<Tilemap>();
-        for (int y = 0; y < spMap.size.y; y++)
-        {
-            for (int x = 0; x < spMap.size.x; x++)
-            {
+        for (int y = 0; y < spMap.size.y; y++) {
+            for (int x = 0; x < spMap.size.x; x++) {
                 List<int> bossTileIDs = new List<int> { 23, 24, 25, 26 };
                 Vector3Int worldPos = new Vector3Int(Mathf.RoundToInt(spMap.origin.x - (spMap.size.x * 0.5f) + x), Mathf.RoundToInt(spMap.origin.y - (spMap.size.y * 0.5f) + y), 0);
                 Sprite tileSprite = spMap.GetSprite(worldPos);
-                if (tileSprite != null)
-                {
+                if (tileSprite != null) {
                     int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
                     if (bossTileIDs.Contains(spriteID))
                         bossLocations.Add(WorldPosToMapGridID(worldPos));
@@ -714,8 +657,7 @@ public class PlayState
         }
     }
 
-    public static void BuildPlayerMarkerArray()
-    {
+    public static void BuildPlayerMarkerArray() {
         playerMarkerLocations.Clear();
         for (int i = 0; i < minimapScript.currentMap.Length; i++)
             if (minimapScript.currentMap[i] >= 10)
@@ -724,11 +666,9 @@ public class PlayState
 
     public static void ReplaceAllTempTiles() // x, y, layer, original tile ID
     {
-        while (tempTiles.Count > 0)
-        {
+        while (tempTiles.Count > 0) {
             Vector3Int position = new Vector3Int(tempTiles[0], tempTiles[1], 0);
-            Tilemap map = tempTiles[2] switch
-            {
+            Tilemap map = tempTiles[2] switch {
                 0 => specialLayer.GetComponent<Tilemap>(),
                 1 => fg2Layer.GetComponent<Tilemap>(),
                 2 => fg1Layer.GetComponent<Tilemap>(),
@@ -739,8 +679,7 @@ public class PlayState
             };
             if (tempTiles[3] == -1)
                 map.SetTile(position, null);
-            else
-            {
+            else {
                 Tile newTile = ScriptableObject.CreateInstance<Tile>();
                 Sprite newSprite = PlayState.GetSprite("Tilesheet", tempTiles[3]);
                 newSprite.OverridePhysicsShape(new List<Vector2[]> {
@@ -753,30 +692,23 @@ public class PlayState
         }
     }
 
-    public static void PlayAreaSong(int area, int subzone)
-    {
-        if (area == currentArea && subzone != currentSubzone)
-        {
+    public static void PlayAreaSong(int area, int subzone) {
+        if (area == currentArea && subzone != currentSubzone) {
             playerScript.UpdateMusic(area, subzone);
-        }
-        else if (area != currentArea)
-        {
+        } else if (area != currentArea) {
             playerScript.UpdateMusic(area, subzone, 1);
         }
         currentArea = area;
         currentSubzone = subzone;
     }
 
-    public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false)
-    {
+    public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false) {
         if (breakablePositions.Contains(new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y))))
             return true;
-        else
-        {
+        else {
             Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
             bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
-            if (!result && checkForEnemyCollide)
-            {
+            if (!result && checkForEnemyCollide) {
                 TileBase spTile = specialLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0));
                 if (spTile != null)
                     if (spTile.name == "Tilesheet_376")
@@ -786,15 +718,11 @@ public class PlayState
         }
     }
 
-    public static void ToggleHUD(bool state)
-    {
-        foreach (GameObject element in TogglableHUDElements)
-        {
+    public static void ToggleHUD(bool state) {
+        foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);
-            if (state)
-            {
-                if (element.name == "Weapon Icons")
-                {
+            if (state) {
+                if (element.name == "Weapon Icons") {
                     playerScript.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
                     playerScript.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
                     playerScript.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
@@ -807,22 +735,19 @@ public class PlayState
         }
     }
 
-    public static void RunItemPopup(string item)
-    {
+    public static void RunItemPopup(string item) {
         playbackTime = activeMus.time;
         mus1.Stop();
         areaMus = activeMus.clip;
         mus1.PlayOneShot(majorItemJingle);
         List<string> text = new List<string>();
         List<Color32> colors = new List<Color32>();
-        switch (item)
-        {
+        switch (item) {
             default:
                 text.Add("skibidi bop mm dada");
                 break;
         }
-        for (int i = 0; i < text.Count; i++)
-        {
+        for (int i = 0; i < text.Count; i++) {
             colors.Add(new Color32(0, 0, 0, 0));
             colors.Add(new Color32(0, 0, 0, 0));
             colors.Add(new Color32(0, 0, 0, 0));
@@ -831,31 +756,25 @@ public class PlayState
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005");
     }
 
-    public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false)
-    {
+    public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false) {
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, shape, boxColor, stateList, facingLeft);
     }
 
-    public static void CloseDialogue()
-    {
+    public static void CloseDialogue() {
         isTalking = false;
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
     }
 
-    public static void StallDialogueContinuous(CutsceneController cutscene, float lingerTime)
-    {
+    public static void StallDialogueContinuous(CutsceneController cutscene, float lingerTime) {
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialogue(cutscene, lingerTime);
     }
 
-    public static void StallDialoguePrompted(CutsceneController cutscene)
-    {
+    public static void StallDialoguePrompted(CutsceneController cutscene) {
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialoguePrompted(cutscene);
     }
 
-    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001)
-    {
-        switch (type)
-        {
+    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001) {
+        switch (type) {
             default:
             case "Solid Color":
                 screenCover.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
@@ -873,43 +792,34 @@ public class PlayState
         }
     }
 
-    public static void FlashItemText(string item)
-    {
+    public static void FlashItemText(string item) {
         playerScript.FlashItemText(item);
     }
 
-    public static void FlashCollectionText()
-    {
+    public static void FlashCollectionText() {
         playerScript.FlashCollectionText();
     }
 
-    public static void FlashSaveText()
-    {
+    public static void FlashSaveText() {
         playerScript.FlashSaveText();
     }
 
-    public static Particle RequestParticle(Vector2 position, string type)
-    {
+    public static Particle RequestParticle(Vector2 position, string type) {
         return RequestParticle(position, type, new float[] { 0 }, false);
     }
-    public static Particle RequestParticle(Vector2 position, string type, float[] values)
-    {
+    public static Particle RequestParticle(Vector2 position, string type, float[] values) {
         return RequestParticle(position, type, values, false);
     }
-    public static Particle RequestParticle(Vector2 position, string type, bool playSound)
-    {
+    public static Particle RequestParticle(Vector2 position, string type, bool playSound) {
         return RequestParticle(position, type, new float[] { 0 }, playSound);
     }
 
-    public static Particle RequestParticle(Vector2 position, string type, float[] values, bool playSound)
-    {
+    public static Particle RequestParticle(Vector2 position, string type, float[] values, bool playSound) {
         Particle selectedParticle = null;
         bool found = false;
-        if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
-        {
+        if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf) {
             int i = 0;
-            while (i < particlePool.transform.childCount - 1 && !found)
-            {
+            while (i < particlePool.transform.childCount - 1 && !found) {
                 thisParticleID++;
                 if (thisParticleID >= particlePool.transform.childCount)
                     thisParticleID = 0;
@@ -917,20 +827,17 @@ public class PlayState
                     found = true;
                 i++;
             }
-        }
-        else
+        } else
             found = true;
 
-        if (found)
-        {
+        if (found) {
             Transform particleObject = particlePool.transform.GetChild(thisParticleID);
             particleObject.gameObject.SetActive(true);
             Particle particleScript = particleObject.GetComponent<Particle>();
 
             bool activateParticle = false;
 
-            switch (type.ToLower())
-            { // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
+            switch (type.ToLower()) { // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
                 default:
                     break;
                 case "bubble":
@@ -938,8 +845,7 @@ public class PlayState
                     // 0 = Water level
                     // 1 = Boolean to initialize particle with random velocity or not
 
-                    if (gameOptions[11] == 1 || gameOptions[11] >= 4)
-                    {
+                    if (gameOptions[11] == 1 || gameOptions[11] >= 4) {
                         activateParticle = true;
                         particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
                         particleScript.vars[1] = position.x;                                      // Origin X
@@ -956,8 +862,7 @@ public class PlayState
                     // Values:
                     // 0 = Size
 
-                    if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4))
-                    {
+                    if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4)) {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
                     }
@@ -966,8 +871,7 @@ public class PlayState
                     // Values:
                     // 0 = Start Y
 
-                    if (gameOptions[11] > 1)
-                    {
+                    if (gameOptions[11] > 1) {
                         activateParticle = true;
                         particleScript.vars[0] = position.y;
                     }
@@ -977,8 +881,7 @@ public class PlayState
                         activateParticle = true;
                     break;
                 case "snow":
-                    if (gameOptions[11] == 1 || gameOptions[11] >= 4)
-                    {
+                    if (gameOptions[11] == 1 || gameOptions[11] >= 4) {
                         activateParticle = true;
                         particleScript.vars[0] = 1.875f + UnityEngine.Random.Range(0f, 1f) * 3.75f;  // Downward velocity
                         particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * Mathf.PI * 2;    // Sine loop start
@@ -992,8 +895,7 @@ public class PlayState
                     // Values:
                     // 0 = Type
 
-                    if (gameOptions[11] == 3 || gameOptions[11] == 5)
-                    {
+                    if (gameOptions[11] == 3 || gameOptions[11] == 5) {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
                     }
@@ -1004,8 +906,7 @@ public class PlayState
                     break;
             } // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
 
-            if (activateParticle)
-            {
+            if (activateParticle) {
                 selectedParticle = particleScript;
                 particleObject.position = position;
                 particleScript.type = type;
@@ -1020,52 +921,40 @@ public class PlayState
         return selectedParticle;
     }
 
-    public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly)
-    {
+    public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly) {
         playerScript.RequestQueuedExplosion(pos, lifeTime, size, loudly);
     }
 
-    public static void ResetAllParticles()
-    {
-        foreach (Transform particle in particlePool.transform)
-        {
+    public static void ResetAllParticles() {
+        foreach (Transform particle in particlePool.transform) {
             Particle particleScript = particle.GetComponent<Particle>();
             if (particle.gameObject.activeSelf)
                 particleScript.ResetParticle();
         }
     }
 
-    public static bool IsBossAlive(int bossID)
-    {
+    public static bool IsBossAlive(int bossID) {
         return bossStates[bossID] == 1;
     }
 
-    public static bool CheckForItem(int itemID)
-    {
+    public static bool CheckForItem(int itemID) {
         return itemCollection[itemID] == 1;
     }
 
-    public static bool CheckForItem(string itemName)
-    {
+    public static bool CheckForItem(string itemName) {
         return itemCollection[TranslateItemNameToID(itemName)] == 1;
     }
 
-    public static bool CheckShellLevel(int level)
-    {
+    public static bool CheckShellLevel(int level) {
         bool meetsLevel;
-        if (currentDifficulty == 2)
-        {
-            meetsLevel = level switch
-            {
+        if (currentDifficulty == 2) {
+            meetsLevel = level switch {
                 2 => CheckForItem(8),
                 3 => CheckForItem(9),
                 _ => CheckForItem(7),
             };
-        }
-        else
-        {
-            meetsLevel = level switch
-            {
+        } else {
+            meetsLevel = level switch {
                 2 => CheckForItem(8) || CheckForItem(9),
                 3 => CheckForItem(9),
                 _ => CheckForItem(7) || CheckForItem(8) || CheckForItem(9),
@@ -1074,42 +963,31 @@ public class PlayState
         return meetsLevel;
     }
 
-    public static int GetShellLevel()
-    {
+    public static int GetShellLevel() {
         return CheckForItem(9) ? 3 : (CheckForItem(8) ? 2 : (CheckForItem(7) ? 1 : 0));
     }
 
-    public static void AddItem(int itemID)
-    {
+    public static void AddItem(int itemID) {
         itemCollection[itemID] = 1;
     }
 
-    public static void AddItem(string itemName)
-    {
+    public static void AddItem(string itemName) {
         itemCollection[TranslateItemNameToID(itemName)] = 1;
     }
 
-    public static void AssignProperCollectibleIDs()
-    {
+    public static void AssignProperCollectibleIDs() {
         Transform roomTriggerArray = GameObject.Find("Room Triggers").transform;
         int currentHelixCount = 0;
         int currentHeartCount = 0;
 
-        foreach (Transform area in roomTriggerArray)
-        {
-            foreach (Transform room in area)
-            {
-                foreach (Transform entity in room)
-                {
-                    if (entity.name == "Item")
-                    {
-                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS)
-                        {
+        foreach (Transform area in roomTriggerArray) {
+            foreach (Transform room in area) {
+                foreach (Transform entity in room) {
+                    if (entity.name == "Item") {
+                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS) {
                             entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + currentHelixCount;
                             currentHelixCount++;
-                        }
-                        else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS)
-                        {
+                        } else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS) {
                             entity.GetComponent<Item>().itemID = OFFSET_HEARTS + currentHeartCount;
                             currentHeartCount++;
                         }
@@ -1119,11 +997,9 @@ public class PlayState
         }
     }
 
-    public static byte TranslateItemNameToID(string itemName)
-    {
+    public static byte TranslateItemNameToID(string itemName) {
         byte id = 0;
-        switch (itemName)
-        {
+        switch (itemName) {
             case "Peashooter":
                 id = 0;
                 break;
@@ -1179,17 +1055,14 @@ public class PlayState
         return id;
     }
 
-    public static string TranslateIDToItemName(int itemID)
-    {
+    public static string TranslateIDToItemName(int itemID) {
         string name = "";
         if (itemID >= OFFSET_FRAGMENTS)
             name = "Helix Fragment";
         else if (itemID >= OFFSET_HEARTS)
             name = "Heart Container";
-        else
-        {
-            switch (itemID)
-            {
+        else {
+            switch (itemID) {
                 case 0:
                     name = "Peashooter";
                     break;
@@ -1250,14 +1123,11 @@ public class PlayState
         return name;
     }
 
-    public static int GetMapPercentage()
-    {
+    public static int GetMapPercentage() {
         int explored = 0;
         int total = 0;
-        foreach (int i in minimapScript.currentMap)
-        {
-            if (i != -1)
-            {
+        foreach (int i in minimapScript.currentMap) {
+            if (i != -1) {
                 total++;
                 if (i == 1)
                     explored++;
@@ -1266,42 +1136,34 @@ public class PlayState
         return Mathf.FloorToInt(((float)explored / (float)total) * 100);
     }
 
-    public static int GetItemPercentage()
-    {
+    public static int GetItemPercentage() {
         int itemsFound = 0;
         int totalCount = 0;
         int charCheck = currentCharacter switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
-        for (int i = 0; i < itemCollection.Length; i++)
-        {
-            if (itemData[i] != null)
-            {
-                if (itemData[i][currentDifficulty] && itemData[i][charCheck])
-                {
+        for (int i = 0; i < itemCollection.Length; i++) {
+            if (itemData[i] != null) {
+                if (itemData[i][currentDifficulty] && itemData[i][charCheck]) {
                     totalCount++;
                     itemsFound += itemCollection[i] == 1 ? 1 : 0;
                 }
-            }
-            else
+            } else
                 totalCount++;
         }
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
     }
 
-    public static string GetTimeString()
-    {
+    public static string GetTimeString() {
         string hourInt = currentTime[0] < 10 ? "0" + currentTime[0] : (currentTime[0] == 0 ? "00" : currentTime[0].ToString());
         string minuteInt = currentTime[1] < 10 ? "0" + currentTime[1] : (currentTime[1] == 0 ? "00" : currentTime[1].ToString());
         string secondsInt = (Mathf.RoundToInt(currentTime[2] * 100) + 10000).ToString();
         return hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
     }
 
-    public static void SetMapTile(Vector2 pos, bool state)
-    {
+    public static void SetMapTile(Vector2 pos, bool state) {
         int cellID = Mathf.RoundToInt((WORLD_SIZE.x * pos.y) + pos.x);
         int currentCellState = minimapScript.currentMap[cellID];
         bool marked = false;
-        if (currentCellState >= 10)
-        {
+        if (currentCellState >= 10) {
             currentCellState -= 10;
             marked = true;
         }
@@ -1311,12 +1173,9 @@ public class PlayState
         minimapScript.RefreshMap();
     }
 
-    public static void WriteSave(string dataType = "")
-    {
-        if (dataType == "game")
-        {
-            GameSaveData data = new GameSaveData
-            {
+    public static void WriteSave(string dataType = "") {
+        if (dataType == "game") {
+            GameSaveData data = new GameSaveData {
                 profile = currentProfile,
                 difficulty = currentDifficulty,
                 gameTime = (float[])currentTime.Clone(),
@@ -1334,8 +1193,7 @@ public class PlayState
                 exploredMap = (int[])minimapScript.currentMap.Clone(),
                 cutsceneStates = cutscenesToNotSpawn.ToArray()
             };
-            switch (currentProfile)
-            {
+            switch (currentProfile) {
                 case 1:
                     gameData.profile1 = data;
                     break;
@@ -1346,49 +1204,33 @@ public class PlayState
                     gameData.profile3 = data;
                     break;
             }
-        }
-        else if (dataType == "options")
-        {
-            gameData.options = new OptionData
-            {
+        } else if (dataType == "options") {
+            gameData.options = new OptionData {
                 options = gameOptions
             };
-        }
-        else if (dataType == "packs")
-        {
-            gameData.packs = new PackData
-            {
+        } else if (dataType == "packs") {
+            gameData.packs = new PackData {
                 packs = currentPacks
             };
-        }
-        else if (dataType == "records")
-        {
-            gameData.records = new RecordData
-            {
+        } else if (dataType == "records") {
+            gameData.records = new RecordData {
                 achievements = achievementStates,
                 times = savedTimes
             };
-        }
-        else if (dataType == "controls")
-        {
-            gameData.controls = new ControlData
-            {
+        } else if (dataType == "controls") {
+            gameData.controls = new ControlData {
                 controls = Control.inputs
             };
-        }
-        else if (!(dataType == "" || dataType == " "))
-        {
+        } else if (!(dataType == "" || dataType == " ")) {
             Debug.LogWarning("Invalid save type \"" + dataType + "\"");
         }
         gameData.version = Application.version;
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(gameData));
     }
 
-    public static void WriteSave(GameSaveData copyData, int profileToCopyTo)
-    {
+    public static void WriteSave(GameSaveData copyData, int profileToCopyTo) {
         copyData.profile = profileToCopyTo;
-        switch (profileToCopyTo)
-        {
+        switch (profileToCopyTo) {
             case 1:
                 gameData.profile1 = copyData;
                 break;
@@ -1402,13 +1244,10 @@ public class PlayState
         WriteSave();
     }
 
-    public static GameSaveData LoadGame(int profile, bool mode = false)
-    {
-        if ((profile == 1 && gameData.profile1.profile == 1) || (profile == 2 && gameData.profile2.profile == 2) || (profile == 3 && gameData.profile3.profile == 3))
-        {
+    public static GameSaveData LoadGame(int profile, bool mode = false) {
+        if ((profile == 1 && gameData.profile1.profile == 1) || (profile == 2 && gameData.profile2.profile == 2) || (profile == 3 && gameData.profile3.profile == 3)) {
             GameSaveData loadedSave = profile == 1 ? gameData.profile1 : (profile == 2 ? gameData.profile2 : gameData.profile3);
-            if (mode)
-            {
+            if (mode) {
                 currentProfile = loadedSave.profile;
                 currentDifficulty = loadedSave.difficulty;
                 currentTime = (float[])loadedSave.gameTime.Clone();
@@ -1424,14 +1263,11 @@ public class PlayState
                 playerScript.maxHealth = playerScript.hpPerHeart[currentDifficulty] * 3;
                 helixCount = 0;
                 heartCount = 0;
-                for (int i = 0; i < loadedSave.items.Length; i++)
-                {
-                    if (loadedSave.items[i] == 1)
-                    {
+                for (int i = 0; i < loadedSave.items.Length; i++) {
+                    if (loadedSave.items[i] == 1) {
                         if (i >= OFFSET_FRAGMENTS)
                             helixCount++;
-                        else if (i >= OFFSET_HEARTS)
-                        {
+                        else if (i >= OFFSET_HEARTS) {
                             heartCount++;
                             playerScript.maxHealth += playerScript.hpPerHeart[currentDifficulty];
                         }
@@ -1441,21 +1277,16 @@ public class PlayState
                 playerScript.RenderNewHearts();
             }
             return loadedSave;
-        }
-        else
-        {
-            GameSaveData nullData = new GameSaveData
-            {
+        } else {
+            GameSaveData nullData = new GameSaveData {
                 profile = -1
             };
             return nullData;
         }
     }
 
-    public static void EraseGame(int profile)
-    {
-        switch (profile)
-        {
+    public static void EraseGame(int profile) {
+        switch (profile) {
             case 1:
                 gameData.profile1 = new GameSaveData { profile = -1 };
                 break;
@@ -1469,8 +1300,7 @@ public class PlayState
         WriteSave();
     }
 
-    public static void LoadRecords()
-    {
+    public static void LoadRecords() {
         //if (PlayerPrefs.HasKey("RecordData"))
         //{
         //    RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
@@ -1509,25 +1339,21 @@ public class PlayState
         //}
         if (achievementStates.Length == gameData.records.achievements.Length)
             achievementStates = gameData.records.achievements;
-        else
-        {
+        else {
             for (int i = 0; i < gameData.records.achievements.Length; i++)
                 achievementStates[i] = gameData.records.achievements[i];
         }
         if (savedTimes.Length == gameData.records.times.Length)
             savedTimes = gameData.records.times;
-        else
-        {
+        else {
             for (int i = 0; i < gameData.records.times.Length; i++)
                 savedTimes[i] = gameData.records.times[i];
         }
     }
 
-    public static void LoadOptions()
-    {
+    public static void LoadOptions() {
         bool load = true;
-        try
-        {
+        try {
             int i = gameData.options.options.Length;
         }
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -1539,23 +1365,19 @@ public class PlayState
             load = false;
         }
 
-        if (load)
-        {
+        if (load) {
             if (gameOptions.Length == gameData.options.options.Length)
                 gameOptions = gameData.options.options;
-            else
-            {
+            else {
                 for (int i = 0; i < gameData.options.options.Length; i++)
                     gameOptions[i] = gameData.options.options[i];
             }
         }
     }
 
-    public static void LoadPacks()
-    {
+    public static void LoadPacks() {
         bool loadNewPacks = true;
-        try
-        {
+        try {
             string pack1 = gameData.packs.packs[0];
             string pack2 = gameData.packs.packs[1];
             string pack3 = gameData.packs.packs[2];
@@ -1570,18 +1392,13 @@ public class PlayState
             loadNewPacks = false;
         }
 
-        if (currentPacks.Length == gameData.packs.packs.Length && loadNewPacks)
-        {
-            for (int i = 0; i < 4; i++)
-            {
+        if (currentPacks.Length == gameData.packs.packs.Length && loadNewPacks) {
+            for (int i = 0; i < 4; i++) {
                 string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
-                if (gameData.packs.packs[i] != "DEFAULT")
-                {
+                if (gameData.packs.packs[i] != "DEFAULT") {
                     string path = Application.persistentDataPath + "/" + packType + "Packs/" + gameData.packs.packs[i];
-                    if (Directory.Exists(path))
-                    {
-                        switch (packType)
-                        {
+                    if (Directory.Exists(path)) {
+                        switch (packType) {
                             case "Texture":
                                 textureLibrary.BuildSpriteSizeLibrary(path + "/SpriteSizes.json");
                                 textureLibrary.BuildAnimationLibrary(path + "/Animations.json");
@@ -1600,11 +1417,8 @@ public class PlayState
                                 break;
                         }
                     }
-                }
-                else
-                {
-                    switch (packType)
-                    {
+                } else {
+                    switch (packType) {
                         case "Texture":
                             textureLibrary.BuildDefaultSpriteSizeLibrary();
                             textureLibrary.BuildDefaultLibrary();
@@ -1624,16 +1438,13 @@ public class PlayState
                     }
                 }
             }
-        }
-        else
+        } else
             currentPacks = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" };
     }
 
-    public static void LoadControls()
-    {
+    public static void LoadControls() {
         bool load = true;
-        try
-        {
+        try {
             int i = gameData.controls.controls.Length;
         }
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -1645,97 +1456,77 @@ public class PlayState
             load = false;
         }
 
-        if (load)
-        {
+        if (load) {
             if (Control.inputs.Length == gameData.controls.controls.Length)
                 Control.inputs = gameData.controls.controls;
-            else
-            {
+            else {
                 for (int i = 0; i < gameData.controls.controls.Length; i++)
                     Control.inputs[i] = gameData.controls.controls[i];
             }
         }
     }
 
-    public static bool HasTime(int ID = -1)
-    {
+    public static bool HasTime(int ID = -1) {
         float[] blankTime = new float[] { 0, 0, 0 };
         bool foundTimes = false;
-        if (ID == -1)
-        {
+        if (ID == -1) {
             foreach (float[] selectedTime in savedTimes)
                 foundTimes = selectedTime == blankTime;
             return foundTimes;
-        }
-        else
+        } else
             return savedTimes[ID] != blankTime;
     }
 
-    public static void QueueAchievementPopup(string achID)
-    {
+    public static void QueueAchievementPopup(string achID) {
         achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
     }
 
-    public struct AnimationLibrary
-    {
+    public struct AnimationLibrary {
         public AnimationData[] animArray;
     }
-    public static void LoadNewAnimationLibrary(string path)
-    {
+    public static void LoadNewAnimationLibrary(string path) {
         AnimationLibrary newLibrary = JsonUtility.FromJson<AnimationLibrary>(File.ReadAllText(path));
         animationLibrary = newLibrary.animArray;
     }
 
-    public struct SpriteSizeLibrary
-    {
+    public struct SpriteSizeLibrary {
         public SpriteFrameSize[] sizeArray;
     }
-    public static void LoadNewSpriteSizeLibrary(string path)
-    {
+    public static void LoadNewSpriteSizeLibrary(string path) {
         SpriteSizeLibrary newLibrary = JsonUtility.FromJson<SpriteSizeLibrary>(File.ReadAllText(path));
         spriteSizeLibrary = newLibrary.sizeArray;
     }
 
-    public struct MusicOffsetLibrary
-    {
+    public struct MusicOffsetLibrary {
         public MusicLoopOffset[] offsetArray;
     }
-    public static void LoadNewMusicOffsetLibrary(string path)
-    {
+    public static void LoadNewMusicOffsetLibrary(string path) {
         MusicOffsetLibrary newLibrary = JsonUtility.FromJson<MusicOffsetLibrary>(File.ReadAllText(path));
         musicLoopOffsetLibrary = newLibrary.offsetArray;
     }
 
-    public static void AdjustHUDText()
-    {
+    public static void AdjustHUDText() {
         TogglableHUDElements[4].transform.GetChild(0).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
         TogglableHUDElements[4].transform.GetChild(1).GetComponent<TextMesh>().text = GetText("hud_gameSaved");
     }
 
-    public static void ToggleLoadingIcon(bool state)
-    {
-        if (state)
-        {
+    public static void ToggleLoadingIcon(bool state) {
+        if (state) {
             loadingIcon.SetActive(true);
             loadingIcon.GetComponent<AnimationModule>().Play("Loading");
-        }
-        else
-        {
+        } else {
             loadingIcon.GetComponent<AnimationModule>().Stop();
             loadingIcon.SetActive(false);
         }
     }
 
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed, bool playSound = true)
-    {
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed, bool playSound = true) {
         Vector2 newAngle = Quaternion.Euler(0, 0, angle) * Vector2.up;
         return ShootEnemyBullet(newOrigin, type, new float[] { newSpeed, newAngle.x, newAngle.y }, playSound);
     }
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true)
-    {
+    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true) {
         bool hasShot = false;
-        if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive)
-        {
+        if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive) {
             enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, dirVelVars, playSound);
             enemyBulletPointer = (enemyBulletPointer + 1) % enemyBulletPool.transform.childCount;
             hasShot = true;
@@ -1743,39 +1534,31 @@ public class PlayState
         return hasShot;
     }
 
-    public static Vector2 DirectionBetween(Vector2 a, Vector2 b)
-    {
+    public static Vector2 DirectionBetween(Vector2 a, Vector2 b) {
         return (b - a).normalized;
     }
 
-    public static void SetCamFocus(Transform point = null)
-    {
+    public static void SetCamFocus(Transform point = null) {
         cam.GetComponent<CamMovement>().focusPoint = point;
     }
 
-    public static void SetCamSpeed(float speed = 0.1f)
-    {
+    public static void SetCamSpeed(float speed = 0.1f) {
         cam.GetComponent<CamMovement>().camSpeed = speed;
     }
 
-    public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false)
-    {
+    public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false) {
         inBossFight = state;
         TogglableHUDElements[0].SetActive(!state);
-        if (!state && snapDespawnBar)
-        {
+        if (!state && snapDespawnBar) {
             TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
             playerScript.displayDefeatText = false;
-        }
-        else if (!state && !snapDespawnBar)
-        {
+        } else if (!state && !snapDespawnBar) {
             TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
             playerScript.displayDefeatText = true;
         }
-        if (currentArea != 7)
-        {
+        if (currentArea != 7) {
             if (state)
                 playerScript.UpdateMusic(musicID, 0, 1);
             else
@@ -1783,15 +1566,13 @@ public class PlayState
         }
     }
 
-    public static bool OnScreen(Vector2 position, BoxCollider2D box)
-    {
+    public static bool OnScreen(Vector2 position, BoxCollider2D box) {
         float boxAdjust = box != null ? box.size.x * 0.5f : 8;
         return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
             Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
     }
 
-    public static float Integrate(float num, float target, float speed, float elapsed, float threshold = 0.1f)
-    {
+    public static float Integrate(float num, float target, float speed, float elapsed, float threshold = 0.1f) {
         float scale = Mathf.Pow(0.1f, speed);
         num = num * Mathf.Pow(scale, elapsed) + target * (1 - Mathf.Pow(scale, elapsed));
         if (Mathf.Abs(num - target) < threshold)
@@ -1799,8 +1580,7 @@ public class PlayState
         return num;
     }
 
-    public static void ScreenShake(List<float> intensities, List<float> times)
-    {
+    public static void ScreenShake(List<float> intensities, List<float> times) {
         playerScript.ScreenShake(intensities, times);
     }
 }

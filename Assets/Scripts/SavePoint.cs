@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SavePoint : MonoBehaviour
-{
+public class SavePoint:MonoBehaviour, IRoomObject {
     public bool hasBeenActivated = false;
 
     public AnimationModule anim;
 
-    public void Spawn()
-    {
+    public void Spawn() {
         anim = GetComponent<AnimationModule>();
         anim.Add("Save_inactive");
         anim.Add("Save_active");
@@ -21,12 +19,9 @@ public class SavePoint : MonoBehaviour
             anim.Play("Save_inactive");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (!hasBeenActivated)
-            {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
+            if (!hasBeenActivated) {
                 hasBeenActivated = true;
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active");

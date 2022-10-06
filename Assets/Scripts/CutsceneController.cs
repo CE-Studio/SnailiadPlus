@@ -62,7 +62,7 @@ public class CutsceneController : MonoBehaviour
 
     private IEnumerator MainLoop()
     {
-        while (PlayState.cutsceneActive)
+        while (PlayState.cutsceneActive) //TODO Two cutscenes waiting?
         {
             PlayState.paralyzed = true;
             yield return new WaitForEndOfFrame();
@@ -71,7 +71,7 @@ public class CutsceneController : MonoBehaviour
         PlayState.cutsceneActive = true;
         while (lineNum < lines.Length && !endFlag)
         {
-            string[] tokens = lines[lineNum].Split(' ');
+            string[] tokens = lines[lineNum].Split(' '); //TODO extra whitespace?
             float commandDelay = 0;
             if (mainDelay == 0)
             {
@@ -273,7 +273,7 @@ public class CutsceneController : MonoBehaviour
     private bool ParseIf(string[] tokens)
     {
         ExtractCommand(tokens, out int index);
-        List<string> comparators = new List<string> { "=", "==", "<", ">", "<=", "=<", ">=", "=>", "!=" };
+        List<string> comparators = new List<string> { "=", "==", "<", ">", "<=", "=<", ">=", "=>", "!=" }; //TODO own contains implementation for array?
         List<string> var1List = new List<string>();
         float var1 = 0f;
         List<string> var2List = new List<string>();
@@ -520,8 +520,7 @@ public class CutsceneController : MonoBehaviour
         bool endActionHere = true;
         if (delay != 0)
             yield return new WaitForSeconds(delay);
-        switch (tokens[thisTokenNum])
-        {
+        switch (tokens[thisTokenNum]) {
             case "move":
                 Transform actorMove = ParseActor(tokens[thisTokenNum + 1]);
                 NPC actorScriptMove = actorMove.GetComponent<NPC>();

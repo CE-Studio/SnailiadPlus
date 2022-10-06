@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b30b544016eb1ff4c867f14d95d126e6, type: 3}
-  m_Name: 
+  m_Name: Text library
   m_EditorClassIdentifier: 
   library:
   - name: menu_title
@@ -188,7 +188,7 @@ MonoBehaviour:
     text: Bottom keys
     value: 0
   - name: menu_option_display_keymap
-    text: Real-time keymap
+    text: Input display
     value: 0
   - name: menu_option_display_gameTime
     text: Game time
@@ -198,6 +198,9 @@ MonoBehaviour:
     value: 0
   - name: menu_option_display_particles
     text: Particles
+    value: 0
+  - name: menu_option_display_screenShake
+    text: Screen shake
     value: 0
   - name: menu_option_controls_control1
     text: Control set 1
@@ -1020,6 +1023,9 @@ MonoBehaviour:
   - name: room_00_test
     text: Original|Testing Room
     value: 0
+  - name: room_00_testHall
+    text: Testing Theater
+    value: 0
   - name: room_01_entrance
     text: Quest's|Start Lake
     value: 0
@@ -1154,6 +1160,21 @@ MonoBehaviour:
     value: 0
   - name: room_02_iceTower
     text: The Ice Tower
+    value: 0
+  - name: room_02_labyrinth
+    text: The Labyrinth
+    value: 0
+  - name: room_02_rainbowHelix
+    text: Sneaky, Sneaky
+    value: 0
+  - name: room_02_angryBlock
+    text: Realm of the|Angry Pink Block
+    value: 0
+  - name: room_02_bossSave
+    text: Leave your Shoes|in the Hall
+    value: 0
+  - name: room_02_stompy
+    text: Tippy-Tap Tunnel
     value: 0
   - name: npc_?
     text: Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't
@@ -1515,6 +1536,14 @@ MonoBehaviour:
     text: '{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of
       {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!'
     value: 1
+  - name: npc_40_default_0
+    text: '{eff|Wave}Wow!!  {eff|None}{p|0.2}You defeated the evil{nl}monster?? 
+      {p|0.2}You''re my hero,{nl}{PF}!!'
+    value: 1
+  - name: npc_40_warnAboutStompy_0
+    text: Be careful, {P}!!  {p|0.25}I've heard{nl}some {eff|Shake}{spd|0.06}scary
+      stuff {eff|None}{spd|0.02}happening in{nl}the next room!!
+    value: 1
   - name: npc_41_default_0
     text: '{PF}, you came{nl}back!!  {p|0.15}{eff|Wave}Yay!!'
     value: 1
@@ -1586,6 +1615,24 @@ MonoBehaviour:
     value: 0
   - name: npc_52_default_3
     text: I'm here to test multiple things,{nl}it seems!
+    value: 1
+  - name: npc_53_attention
+    text: '{P}!  {p|0.2}Up here!!'
+    value: 1
+  - name: npc_53_greeting
+    text: So glad you could make it! {nl}{p|0.25}C'mon, {p|0.15}I have something
+      to show{nl}you!!
+    value: 1
+  - name: npc_53_introduce
+    text: Watch the statue, {P}!  {p|0.15}I'm{nl}gonna decorate it with the flip{nl}of
+      a switch!
+    value: 1
+  - name: npc_53_celebrate
+    text: '{eff|Wave}{sfx|2}Ta-da!! {p|0.5}{eff|None}{sfx|0}Wasn''t that cool?'
+    value: 1
+  - name: npc_53_default_0
+    text: Y'know, {p|0.1}now that I think about{nl}it... {p|0.15}would this freeze
+      over the{nl}rooms around us?  {p|0.2}I hope not!
     value: 1
   - name: npc_turtle_default_0
     text: After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!

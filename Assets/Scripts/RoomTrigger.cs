@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class RoomTrigger : MonoBehaviour
-{
+public class RoomTrigger:MonoBehaviour {
     public BoxCollider2D box;
     public bool active = true;
     private float initializationBuffer = 0;
@@ -42,8 +41,7 @@ public class RoomTrigger : MonoBehaviour
     private bool initializedEffects = false;
     private float splashTimeout = 0;
 
-    public struct RoomCommand
-    {
+    public struct RoomCommand {
         public string name;
         public string[] args;
     };
@@ -57,11 +55,13 @@ public class RoomTrigger : MonoBehaviour
     public Tilemap specialMap;
     public GameObject breakableBlock;
 
-    public PlayState.RoomEntity[] preplacedEntities;
+    public Dictionary<string, object>[] roomContent;
+    public string[] roomContentTypes;
+    public Vector3[] roomContentPos;
+    //public PlayState.RoomEntity[] preplacedEntities;
     public PlayState.Breakable[] breakables;
-    
-    void Awake()
-    {
+
+    void Awake() {
         box = GetComponent<BoxCollider2D>();
         roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
         roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
@@ -73,55 +73,42 @@ public class RoomTrigger : MonoBehaviour
         specialMap.color = new Color32(255, 255, 255, 0);
     }
 
-    void Update()
-    {
-        if (!active)
-        {
+    void Update() {
+        if (!active) {
             if (initializationBuffer > 0)
                 initializationBuffer -= Time.deltaTime;
             splashTimeout = Mathf.Clamp(splashTimeout - Time.deltaTime, 0, Mathf.Infinity);
 
             int effectVarIndex = 0;
-            foreach (string effect in environmentalEffects)
-            {
-                switch (effect.ToLower())
-                {
+            foreach (string effect in environmentalEffects) {
+                switch (effect.ToLower()) {
                     default:
                         break;
                     case "bubble":
-                        if (!initializedEffects)
-                        {
-                            for (int i = 0; i < 8; i++)
-                            {
+                        if (!initializedEffects) {
+                            for (int i = 0; i < 8; i++) {
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
                                 PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                             }
                             effectVars.Add(Random.Range(0f, 1f) * 12);
-                        }
-                        else
-                        {
-                            if (effectVars[effectVarIndex] <= 0)
-                            {
+                        } else {
+                            if (effectVars[effectVarIndex] <= 0) {
                                 Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
                                 PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
-                            }
-                            else
-                            {
+                            } else {
                                 if (PlayState.gameState == "Game")
                                     effectVars[effectVarIndex] -= Time.deltaTime;
                             }
                         }
                         break;
                     case "snow":
-                        if (!initializedEffects)
-                        {
-                            for (int i = 0; i < 60; i++)
-                            {
+                        if (!initializedEffects) {
+                            for (int i = 0; i < 60; i++) {
                                 Vector2 snowPos = new Vector2(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
                                 PlayState.RequestParticle(snowPos, "snow");
@@ -132,18 +119,14 @@ public class RoomTrigger : MonoBehaviour
                 effectVarIndex++;
             }
 
-            if (waterLevel.Length > 0)
-            {
+            if (waterLevel.Length > 0) {
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
                     waterLevel[WaterPoint(PlayState.player.transform.position.x)].y;
-                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
-                {
-                    if (initializationBuffer <= 0 && splashTimeout <= 0)
-                    {
+                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects) {
+                    if (initializationBuffer <= 0 && splashTimeout <= 0) {
                         PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
-                        if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
-                        {
+                        if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5)) {
                             for (int i = Random.Range(2, 8); i > 0; i--)
                                 PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
                         }
@@ -151,21 +134,18 @@ public class RoomTrigger : MonoBehaviour
                     PlayState.playerScript.underwater = playerY < waterY;
                     splashTimeout = 0.125f;
                 }
-            }
-            else
+            } else
                 PlayState.playerScript.underwater = false;
 
             initializedEffects = true;
         }
     }
 
-    private int WaterPoint(float x)
-    {
+    private int WaterPoint(float x) {
         bool foundPointLeftOf = false;
         float relativeX = x - transform.position.x + (box.size.x * 0.5f);
         int waterPoint = waterLevel.Length - 1;
-        while (!foundPointLeftOf && waterPoint != -1)
-        {
+        while (!foundPointLeftOf && waterPoint != -1) {
             if (relativeX > waterLevel[waterPoint].x)
                 foundPointLeftOf = true;
             else
@@ -176,10 +156,8 @@ public class RoomTrigger : MonoBehaviour
         return waterPoint;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && active && PlayState.gameState == "Game")
-        {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Player") && active && PlayState.gameState == "Game") {
             PlayState.ResetAllParticles();
             effectVars.Clear();
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
@@ -193,11 +171,9 @@ public class RoomTrigger : MonoBehaviour
             PlayState.CloseDialogue();
             PlayState.isTalking = false;
 
-            if (!PlayState.playerScript.grounded && PlayState.playerScript.shelled)
-            {
+            if (!PlayState.playerScript.grounded && PlayState.playerScript.shelled) {
                 Vector2 playerPos = PlayState.player.transform.position;
-                switch (PlayState.playerScript.gravityDir)
-                {
+                switch (PlayState.playerScript.gravityDir) {
                     default:
                     case 0:
                     case 3:
@@ -216,8 +192,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.camTempBuffersY = Vector2.zero;
             Vector2 thisTriggerPos = new Vector2(areaID, transform.GetSiblingIndex());
             initializationBuffer = 0.25f;
-            if (thisTriggerPos != PlayState.positionOfLastRoom)
-            {
+            if (thisTriggerPos != PlayState.positionOfLastRoom) {
                 Transform previousTrigger = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
                 previousTrigger.GetComponent<Collider2D>().enabled = true;
                 previousTrigger.GetComponent<RoomTrigger>().active = true;
@@ -227,10 +202,8 @@ public class RoomTrigger : MonoBehaviour
 
             string newRoomName = "";
 
-            if (newRoomName == "")
-            {
-                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name))
-                {
+            if (newRoomName == "") {
+                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name)) {
                     if (character == '|')
                         newRoomName += "\n";
                     else
@@ -246,11 +219,9 @@ public class RoomTrigger : MonoBehaviour
 
             box.enabled = false;
 
-            for (int i = 0; i < roomCommands.Length; i++)
-            {
+            for (int i = 0; i < roomCommands.Length; i++) {
                 string[] command = roomCommands[i].ToLower().Replace(" ", "").Split(',');
-                switch (command[0])
-                {
+                switch (command[0]) {
                     default:
                         Debug.LogWarning("Unknown room command \"" + command[0] + "\"");
                         break;
@@ -266,28 +237,22 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
             active = false;
         }
     }
 
-    public void DespawnEverything()
-    {
+    public void DespawnEverything() {
         initializedEffects = false;
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
+        for (int i = transform.childCount - 1; i >= 0; i--) {
             if (transform.GetChild(i).name == "Cutscene Controller")
                 transform.GetChild(i).GetComponent<CutsceneController>().StopAllCoroutines();
             Destroy(transform.GetChild(i).gameObject);
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
-        for (int i = 0; i < pool.transform.childCount; i++)
-        {
-            if (pool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive)
-            {
+        for (int i = 0; i < pool.transform.childCount; i++) {
+            if (pool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive) {
                 pool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
             }
             pool.transform.GetChild(i).transform.position = Vector2.zero;
@@ -295,22 +260,17 @@ public class RoomTrigger : MonoBehaviour
         PlayState.ReplaceAllTempTiles();
     }
 
-    private void CheckSpecialLayer()
-    {
+    private void CheckSpecialLayer() {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
 
-        for (int x = -limitX; x <= limitX; x++)
-        {
-            for (int y = -limitY; y <= limitY; y++)
-            {
+        for (int x = -limitX; x <= limitX; x++) {
+            for (int y = -limitY; y <= limitY; y++) {
                 Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
                 Vector2 worldPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
-                if (currentTile != null)
-                {
-                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1]))
-                    {
+                if (currentTile != null) {
+                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
                         default:
                             break;
                         case 4:
@@ -445,131 +405,136 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    public void MoveEntitiesToInternalList()
-    {
-        List<PlayState.RoomEntity> newList = new List<PlayState.RoomEntity>();
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            PlayState.RoomEntity newEntity = new PlayState.RoomEntity();
-
+    public void MoveEntitiesToInternalList() {
+        List<Dictionary<string, object>> newContent = new List<Dictionary<string, object>>();
+        List<string> newTypes = new List<string>();
+        List<Vector3> newPos = new List<Vector3>();
+        for (int i = transform.childCount - 1; i >= 0; i--) {
             GameObject obj = transform.GetChild(i).gameObject;
-            string objName = obj.name.Replace("(Clone)", "");
-            if (objName[objName.Length - 1] == ')')
-            {
-                string[] tempArray = objName.Split(' ');
-                objName = objName.Substring(0, objName.Length - tempArray[tempArray.Length - 1].Length - 1);
+            IRoomObject roomObject = obj.GetComponent<IRoomObject>();
+            if (roomObject != null) {
+                newContent.Add(roomObject.save());
+                newTypes.Add(roomObject.objType);
+                newPos.Add(obj.transform.position);
             }
-
-            newEntity.name = obj.name;
-            newEntity.tag = obj.tag;
-            newEntity.pos = obj.transform.position;
-
-            List<int> newConditions = new List<int>();
-            switch (objName)
-            {
-                default:
-                    newConditions.Add(0);
-                    break;
-                case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
-                    List<string> newCutsceneData = new List<string>
-                    {
-                        obj.GetComponent<CutsceneController>().sceneScript,
-                        PlayState.cutsceneData.Count.ToString(),
-                        obj.GetComponent<CutsceneController>().triggerActive ? "true" : "false",
-                        obj.GetComponent<BoxCollider2D>().size.x.ToString(),
-                        obj.GetComponent<BoxCollider2D>().size.y.ToString()
-                    };
-                    for (int j = 0; j < obj.GetComponent<CutsceneController>().actors.Count; j++)
-                    {
-                        int npcNum = 0;
-                        int thisNpcNum = obj.GetComponent<CutsceneController>().actors[j].transform.GetSiblingIndex();
-                        for (int k = 0; k < thisNpcNum; k++)
-                        {
-                            if (transform.GetChild(k).CompareTag("NPC"))
-                                npcNum++;
-                        }
-                        newCutsceneData.Add(npcNum.ToString());
-                    }
-                    PlayState.cutsceneData.Add(newCutsceneData.ToArray());
-                    newConditions.Add(PlayState.cutsceneData.Count - 1);
-                    break;
-                case "Door":
-                    newConditions.Add(obj.GetComponent<Door>().doorWeapon);
-                    newConditions.Add(obj.GetComponent<Door>().locked ? 1 : 0);
-                    newConditions.Add(obj.GetComponent<Door>().bossLock);
-                    newConditions.Add(obj.GetComponent<Door>().direction);
-                    break;
-                case "Fake Boundary":
-                    newConditions.Add(obj.GetComponent<FakeRoomBorder>().direction ? 1 : 0);
-                    newConditions.Add(obj.GetComponent<FakeRoomBorder>().workingDirections);
-                    break;
-                case "Item":
-                    Item script = obj.GetComponent<Item>();
-
-                    newConditions.Add(script.itemID);
-                    newConditions.Add(script.isSuperUnique ? 1 : 0);
-                    for (int j = 0; j < 3; j++)
-                        newConditions.Add(script.difficultiesPresentIn[j] ? 1 : 0);
-                    for (int j = 0; j < 6; j++)
-                        newConditions.Add(script.charactersPresentFor[j] ? 1 : 0);
-
-                    if (PlayState.itemData.Length == 0)
-                        PlayState.itemData = new bool[PlayState.itemCollection.Length][];
-                    PlayState.itemData[script.itemID] = new bool[]
-                    {
-                        script.difficultiesPresentIn[0],
-                        script.difficultiesPresentIn[1],
-                        script.difficultiesPresentIn[2],
-                        script.charactersPresentFor[0],
-                        script.charactersPresentFor[1],
-                        script.charactersPresentFor[2],
-                        script.charactersPresentFor[3],
-                        script.charactersPresentFor[4],
-                        script.charactersPresentFor[5]
-                    };
-                    break;
-                case "NPC":
-                    newConditions.Add(obj.GetComponent<NPC>().ID);
-                    newConditions.Add(obj.GetComponent<NPC>().upsideDown ? 1 : 0);
-                    break;
-                case "Turtle NPC":
-                    newConditions.Add(obj.GetComponent<TurtleNPC>().upsideDown ? 1 : 0);
-                    break;
-            }
-            newEntity.spawnData = newConditions.ToArray();
-
-            newList.Add(newEntity);
-
             Destroy(obj);
         }
-        preplacedEntities = newList.ToArray();
+        roomContent = newContent.ToArray();
+        roomContentTypes = newTypes.ToArray();
+        roomContentPos = newPos.ToArray();
+        //List<PlayState.RoomEntity> newList = new List<PlayState.RoomEntity>();
+        //for (int i = transform.childCount - 1; i >= 0; i--) {
+        //    PlayState.RoomEntity newEntity = new PlayState.RoomEntity();
+        //
+        //    GameObject obj = transform.GetChild(i).gameObject;
+        //    string objName = obj.name.Replace("(Clone)", "");
+        //    if (objName[objName.Length - 1] == ')') {
+        //        string[] tempArray = objName.Split(' ');
+        //        objName = objName.Substring(0, objName.Length - tempArray[tempArray.Length - 1].Length - 1);
+        //    }
+        //
+        //    newEntity.name = obj.name;
+        //    newEntity.tag = obj.tag;
+        //    newEntity.pos = obj.transform.position;
+        //
+        //    List<int> newConditions = new List<int>();
+        //    switch (objName) {
+        //        default:
+        //            newConditions.Add(0);
+        //            break;
+        //        case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
+        //            List<string> newCutsceneData = new List<string> {
+        //                obj.GetComponent<CutsceneController>().sceneScript,
+        //                PlayState.cutsceneData.Count.ToString(),
+        //                obj.GetComponent<CutsceneController>().triggerActive ? "true" : "false",
+        //                obj.GetComponent<BoxCollider2D>().size.x.ToString(),
+        //                obj.GetComponent<BoxCollider2D>().size.y.ToString()
+        //            };
+        //            for (int j = 0; j < obj.GetComponent<CutsceneController>().actors.Count; j++) {
+        //                int npcNum = 0;
+        //                int thisNpcNum = obj.GetComponent<CutsceneController>().actors[j].transform.GetSiblingIndex();
+        //                for (int k = 0; k < thisNpcNum; k++) {
+        //                    if (transform.GetChild(k).CompareTag("NPC"))
+        //                        npcNum++;
+        //                }
+        //                newCutsceneData.Add(npcNum.ToString());
+        //            }
+        //            PlayState.cutsceneData.Add(newCutsceneData.ToArray());
+        //            newConditions.Add(PlayState.cutsceneData.Count - 1);
+        //            break;
+        //        case "Door":
+        //            newConditions.Add(obj.GetComponent<Door>().doorWeapon);
+        //            newConditions.Add(obj.GetComponent<Door>().locked ? 1 : 0);
+        //            newConditions.Add(obj.GetComponent<Door>().bossLock);
+        //            newConditions.Add(obj.GetComponent<Door>().direction);
+        //            break;
+        //        case "Fake Boundary":
+        //            newConditions.Add(obj.GetComponent<FakeRoomBorder>().direction ? 1 : 0);
+        //            newConditions.Add(obj.GetComponent<FakeRoomBorder>().workingDirections);
+        //            break;
+        //        case "Item":
+        //            Item script = obj.GetComponent<Item>();
+        //
+        //            newConditions.Add(script.itemID);
+        //            newConditions.Add(script.isSuperUnique ? 1 : 0);
+        //            for (int j = 0; j < 3; j++)
+        //                newConditions.Add(script.difficultiesPresentIn[j] ? 1 : 0);
+        //            for (int j = 0; j < 6; j++)
+        //                newConditions.Add(script.charactersPresentFor[j] ? 1 : 0);
+        //
+        //            if (PlayState.itemData.Length == 0)
+        //                PlayState.itemData = new bool[PlayState.itemCollection.Length][];
+        //            PlayState.itemData[script.itemID] = new bool[]
+        //            {
+        //                script.difficultiesPresentIn[0],
+        //                script.difficultiesPresentIn[1],
+        //                script.difficultiesPresentIn[2],
+        //                script.charactersPresentFor[0],
+        //                script.charactersPresentFor[1],
+        //                script.charactersPresentFor[2],
+        //                script.charactersPresentFor[3],
+        //                script.charactersPresentFor[4],
+        //                script.charactersPresentFor[5]
+        //            };
+        //            break;
+        //        case "NPC":
+        //            NPC thisNPC = obj.GetComponent<NPC>();
+        //            newConditions.Add(thisNPC.ID);
+        //            newConditions.Add(thisNPC.upsideDown ? 1 : 0);
+        //            newConditions.Add(thisNPC.lookMode);
+        //            break;
+        //        case "Turtle NPC":
+        //            newConditions.Add(obj.GetComponent<TurtleNPC>().upsideDown ? 1 : 0);
+        //            break;
+        //    }
+        //    newEntity.spawnData = newConditions.ToArray();
+        //
+        //    newList.Add(newEntity);
+        //
+        //    Destroy(obj);
+        //}
+        //preplacedEntities = newList.ToArray();
     }
 
-    public void LogBreakables()
-    {
+    public void LogBreakables() {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
         List<PlayState.Breakable> newBreakableList = new List<PlayState.Breakable>();
 
-        for (int x = -limitX; x <= limitX; x++)
-        {
-            for (int y = -limitY; y <= limitY; y++)
-            {
+        for (int x = -limitX; x <= limitX; x++) {
+            for (int y = -limitY; y <= limitY; y++) {
                 Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
                 Vector2 worldPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
-                if (currentTile != null)
-                {
-                    PlayState.Breakable newBreakable = new PlayState.Breakable
-                    {
+                if (currentTile != null) {
+                    PlayState.Breakable newBreakable = new PlayState.Breakable {
                         pos = worldPos,
                         weaponLevel = 2,
                         isSilent = false
                     };
 
                     bool isBreakableTileHere = true;
-                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1]))
-                    {
+                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
                         default:
                             isBreakableTileHere = false;
                             break;
@@ -598,8 +563,7 @@ public class RoomTrigger : MonoBehaviour
                         int.Parse(PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1
                     };
 
-                    if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere)
-                    {
+                    if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere) {
                         newBreakableList.Add(newBreakable);
                         PlayState.groundLayer.GetComponent<Tilemap>().SetTile(tilePos, null);
                         PlayState.fg1Layer.GetComponent<Tilemap>().SetTile(tilePos, null);
@@ -612,98 +576,94 @@ public class RoomTrigger : MonoBehaviour
         breakables = newBreakableList.ToArray();
     }
 
-    public void SpawnFromInternalList()
-    {
-        foreach (PlayState.Breakable thisBreakable in breakables)
-        {
+    public void SpawnFromInternalList() {
+        foreach (PlayState.Breakable thisBreakable in breakables) {
             GameObject breakable = Instantiate(breakableBlock, transform);
             breakable.GetComponent<BreakableBlock>().Instantiate(thisBreakable);
         }
-        List<CutsceneController> cutscenes = new List<CutsceneController>();
-        List<int> cutsceneIDs = new List<int>();
-        foreach (PlayState.RoomEntity entity in preplacedEntities)
-        {
-            GameObject newObject = Instantiate(CheckResourcesFor(entity.name, entity.tag), entity.pos, Quaternion.identity, transform);
-            newObject.name = entity.name.Replace("(Clone)", "").Trim();
-            switch (newObject.name)
-            {
-                default:
-                    break;
-                case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
-                    string[] thisData = PlayState.cutsceneData[entity.spawnData[0]];
-                    if (PlayState.cutscenesToNotSpawn.Contains(int.Parse(thisData[1])))
-                    {
-                        Destroy(newObject);
-                        break;
-                    }
-                    newObject.GetComponent<CutsceneController>().sceneScript = thisData[0];
-                    newObject.GetComponent<CutsceneController>().cutsceneID = int.Parse(thisData[1]);
-                    newObject.GetComponent<CutsceneController>().triggerActive = thisData[2] == "true";
-                    newObject.GetComponent<CutsceneController>().GetComponent<BoxCollider2D>().size = new Vector2(float.Parse(thisData[3]), float.Parse(thisData[4]));
-                    cutscenes.Add(newObject.GetComponent<CutsceneController>());
-                    cutsceneIDs.Add(entity.spawnData[0]);
-                    break;
-                case "Door":
-                    newObject.GetComponent<Door>().Spawn(entity.spawnData);
-                    break;
-                case "Fake Boundary":
-                    newObject.GetComponent<FakeRoomBorder>().Spawn(entity.spawnData);
-                    if (roomNameText.text.Contains("/"))
-                    {
-                        string name = roomNameText.text;
-                        int charOffset = areaID >= 100 ? 6 + areaID.ToString().Length : 8;
-                        name = name.Substring(charOffset, name.Length - charOffset);
-                        FakeRoomBorder script = newObject.GetComponent<FakeRoomBorder>();
-                        string[] splitString = name.Split('/');
-                        script.downLeftRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[0]).Replace("|", "\n");
-                        script.upRightRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[1]).Replace("|", "\n");
-                    }
-                    break;
-                case "Item":
-                    int thisID = newObject.GetComponent<Item>().itemID;
-                    int charCheck = PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
-                    if (PlayState.itemCollection[entity.spawnData[0]] == 0 || !PlayState.itemData[thisID][PlayState.currentDifficulty] || !PlayState.itemData[thisID][charCheck])
-                        newObject.GetComponent<Item>().Spawn(entity.spawnData);
-                    else
-                        Destroy(newObject);
-                    break;
-                case "NPC":
-                    newObject.GetComponent<NPC>().Spawn(entity.spawnData);
-                    break;
-                case "Save Point":
-                    newObject.GetComponent<SavePoint>().Spawn();
-                    break;
-                case "Turtle NPC":
-                    newObject.GetComponent<TurtleNPC>().Spawn(entity.spawnData);
-                    break;
-            }
+        for (int i = 0; i >= roomContent.Length; i++) {
+            GameObject obj = Resources.Load<GameObject>("Objects/" + roomContentTypes[i]);
+            GameObject newGameObject = Instantiate(obj, roomContentPos[i], Quaternion.identity, transform);
+            IRoomObject newRoomObject = newGameObject.GetComponent<IRoomObject>();
+            newRoomObject.load(roomContent[i]);
         }
-        for (int i = 0; i < cutscenes.Count; i++)
-        {
-            string[] thisCutsceneData = PlayState.cutsceneData[cutsceneIDs[i]];
-            for (int j = 5; j < thisCutsceneData.Length; j++)
-            {
-                int desiredID = int.Parse(thisCutsceneData[j]);
-                int foundNPCs = -1;
-                int currentChildIndex = 0;
-                while (foundNPCs < desiredID)
-                {
-                    if (transform.GetChild(currentChildIndex).CompareTag("NPC"))
-                        foundNPCs++;
-                    if (foundNPCs != desiredID)
-                        currentChildIndex++;
-                }
-                cutscenes[i].actors.Add(transform.GetChild(currentChildIndex).GetComponent<NPC>());
-            }
-            cutscenes[i].Spawn();
-        }
+        //List<CutsceneController> cutscenes = new List<CutsceneController>();
+        //List<int> cutsceneIDs = new List<int>();
+        //foreach (PlayState.RoomEntity entity in preplacedEntities) {
+        //    GameObject newObject = Instantiate(CheckResourcesFor(entity.name, entity.tag), entity.pos, Quaternion.identity, transform);
+        //    newObject.name = entity.name.Replace("(Clone)", "").Trim();
+        //    switch (newObject.name) {
+        //        default:
+        //            break;
+        //        case "Cutscene Controller": // Script, ID, trigger state, trigger size X, trigger size y, all actors
+        //            string[] thisData = PlayState.cutsceneData[entity.spawnData[0]];
+        //            if (PlayState.cutscenesToNotSpawn.Contains(int.Parse(thisData[1]))) {
+        //                Destroy(newObject);
+        //                break;
+        //            }
+        //            newObject.GetComponent<CutsceneController>().sceneScript = thisData[0];
+        //            newObject.GetComponent<CutsceneController>().cutsceneID = int.Parse(thisData[1]);
+        //            newObject.GetComponent<CutsceneController>().triggerActive = thisData[2] == "true";
+        //            newObject.GetComponent<CutsceneController>().GetComponent<BoxCollider2D>().size = new Vector2(float.Parse(thisData[3]), float.Parse(thisData[4]));
+        //            cutscenes.Add(newObject.GetComponent<CutsceneController>());
+        //            cutsceneIDs.Add(entity.spawnData[0]);
+        //            break;
+        //        case "Door":
+        //            newObject.GetComponent<Door>().Spawn(entity.spawnData);
+        //            break;
+        //        case "Fake Boundary":
+        //            newObject.GetComponent<FakeRoomBorder>().Spawn(entity.spawnData);
+        //            if (roomNameText.text.Contains("/")) {
+        //                string name = roomNameText.text;
+        //                int charOffset = areaID >= 100 ? 6 + areaID.ToString().Length : 8;
+        //                name = name.Substring(charOffset, name.Length - charOffset);
+        //                FakeRoomBorder script = newObject.GetComponent<FakeRoomBorder>();
+        //                string[] splitString = name.Split('/');
+        //                script.downLeftRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[0]).Replace("|", "\n");
+        //                script.upRightRoomName = PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + splitString[1]).Replace("|", "\n");
+        //            }
+        //            break;
+        //        case "Item":
+        //            int thisID = newObject.GetComponent<Item>().itemID;
+        //            int charCheck = PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
+        //            if (PlayState.itemCollection[entity.spawnData[0]] == 0 || !PlayState.itemData[thisID][PlayState.currentDifficulty] || !PlayState.itemData[thisID][charCheck])
+        //                newObject.GetComponent<Item>().Spawn(entity.spawnData);
+        //            else
+        //                Destroy(newObject);
+        //            break;
+        //        case "NPC":
+        //            newObject.GetComponent<NPC>().Spawn(entity.spawnData);
+        //            break;
+        //        case "Save Point":
+        //            newObject.GetComponent<SavePoint>().Spawn();
+        //            break;
+        //        case "Turtle NPC":
+        //            newObject.GetComponent<TurtleNPC>().Spawn(entity.spawnData);
+        //            break;
+        //    }
+        //}
+        //for (int i = 0; i < cutscenes.Count; i++) {
+        //    string[] thisCutsceneData = PlayState.cutsceneData[cutsceneIDs[i]];
+        //    for (int j = 5; j < thisCutsceneData.Length; j++) {
+        //        int desiredID = int.Parse(thisCutsceneData[j]);
+        //        int foundNPCs = -1;
+        //        int currentChildIndex = 0;
+        //        while (foundNPCs < desiredID) {
+        //            if (transform.GetChild(currentChildIndex).CompareTag("NPC"))
+        //                foundNPCs++;
+        //            if (foundNPCs != desiredID)
+        //                currentChildIndex++;
+        //        }
+        //        cutscenes[i].actors.Add(transform.GetChild(currentChildIndex).GetComponent<NPC>());
+        //    }
+        //    cutscenes[i].Spawn();
+        //}
     }
 
-    public GameObject CheckResourcesFor(string objName, string tag)
-    {
-        if (tag == "Enemy")
-            return Resources.Load<GameObject>("Objects/Enemies/" + objName);
-        else
-            return Resources.Load<GameObject>("Objects/" + objName);
-    }
+    //public GameObject CheckResourcesFor(string objName, string tag) {
+    //    if (tag == "Enemy")
+    //        return Resources.Load<GameObject>("Objects/Enemies/" + objName);
+    //    else
+    //        return Resources.Load<GameObject>("Objects/" + objName);
+    //}
 }

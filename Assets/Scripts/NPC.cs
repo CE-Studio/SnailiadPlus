@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
-{
+public class NPC:MonoBehaviour, IRoomObject {
     public int ID = 0;
+    public int lookMode = 0;
     public bool upsideDown = false;
     public bool chatting = false;
     public bool needsSpace = false; // On the off chance that two snails are close enough to each other to trigger simultaneously, like 06 and 17
     public bool buttonDown = false;
+    public string nameID = "pleaseNameMe";
     private int nexted = 0;
 
     public List<Color32> colors = new List<Color32>();
@@ -36,11 +37,10 @@ public class NPC : MonoBehaviour
 
     public List<string> textToSend = new List<string>();
 
-    public virtual void Awake()
-    {
+    public virtual void Awake() {
         if (PlayState.gameState != "Game")
             return;
-        
+
         speechBubble = transform.Find("Speech bubble").gameObject;
         speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
         speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
@@ -67,32 +67,28 @@ public class NPC : MonoBehaviour
             );
     }
 
-    public virtual void Spawn(int[] spawnData)
-    {
+    public virtual void Spawn(int[] spawnData) {
         ID = spawnData[0];
         upsideDown = spawnData[1] == 1;
+        lookMode = spawnData[2];
 
         CreateNewSprites();
         anim.Add("NPC_idle");
         anim.Add("NPC_shell");
         anim.Add("NPC_sleep");
-        if (ID == 26 && (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy"))
-        {
+        if (ID == 26 && (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy")) {
             anim.Play("NPC_sleep");
             sprite.flipX = PlayState.player.transform.position.x < transform.position.x;
-        }
-        else
+        } else
             anim.Play("NPC_idle");
-        if (upsideDown)
-        {
+        if (upsideDown) {
             sprite.flipY = true;
             speechBubbleSprite.flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
     }
 
-    public virtual void FixedUpdate()
-    {
+    public virtual void FixedUpdate() {
         groundCheck = Physics2D.BoxCast(
             transform.position,
             new Vector2(1, 0.98f),
@@ -103,15 +99,14 @@ public class NPC : MonoBehaviour
             Mathf.Infinity,
             Mathf.Infinity
             );
-        if (groundCheck.distance != 0 && groundCheck.distance > 0.01f)
-        {
-            if (upsideDown)
+        if (groundCheck.distance != 0 && groundCheck.distance > 0.01f) {
+            if (upsideDown) {
                 velocity = Mathf.Clamp(velocity + GRAVITY * Time.fixedDeltaTime, -Mathf.Infinity, -TERMINAL_VELOCITY);
-            else
+            } else {
                 velocity = Mathf.Clamp(velocity - GRAVITY * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity);
+            }
             bool resetVelFlag = false;
-            if (Mathf.Abs(velocity) > Mathf.Abs(groundCheck.distance))
-            {
+            if (Mathf.Abs(velocity) > Mathf.Abs(groundCheck.distance)) {
                 RaycastHit2D groundCheckRay = Physics2D.Raycast(
                     new Vector2(groundCheck.point.x, transform.position.y + (upsideDown ? 0.5f : -0.5f)),
                     velocity > 0 ? Vector2.up : Vector2.down,
@@ -126,43 +121,42 @@ public class NPC : MonoBehaviour
             transform.position = new Vector2(transform.position.x, transform.position.y + velocity);
             if (resetVelFlag)
                 velocity = 0;
-        }
-        else
+        } else {
             velocity = 0;
+        }
     }
 
-    public virtual void Update()
-    {
-        if (PlayState.gameState == "Game")
-        {
+    public virtual void Update() {
+        if (PlayState.gameState == "Game") {
             if (anim.isPlaying)
                 sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 
-            if (!PlayState.cutsceneActive)
-            {
-                if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
-                {
+            if (!PlayState.cutsceneActive) {
+                if (lookMode == 0) {
+                    if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep") {
+                        sprite.flipX = true;
+                        speechBubbleSprite.flipX = false;
+                    } else {
+                        sprite.flipX = false;
+                        speechBubbleSprite.flipX = true;
+                    }
+                } else if (lookMode == 1) {
                     sprite.flipX = true;
                     speechBubbleSprite.flipX = false;
-                }
-                else
-                {
+                } else {
                     sprite.flipX = false;
                     speechBubbleSprite.flipX = true;
                 }
             }
 
-            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace)
-            {
-                if (!PlayState.isTalking)
-                {
+            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace) {
+                if (!PlayState.isTalking) {
                     int boxShape = 0;
                     string boxColor = "0005";
                     textToSend.Clear();
                     portraitStateList.Clear();
                     bool intentionallyEmpty = false;
-                    switch (ID)
-                    {
+                    switch (ID) {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainWallClimb");
@@ -180,12 +174,10 @@ public class NPC : MonoBehaviour
 
                         case 1:
                             nexted = 1;
-                            if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                            {
+                            if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang")) {
                                 nexted = 0;
                                 AddText("promptJump");
-                            }
-                            else if (!PlayState.CheckForItem("Peashooter"))
+                            } else if (!PlayState.CheckForItem("Peashooter"))
                                 AddText("promptStory");
                             else if (PlayState.GetItemPercentage() < 100)
                                 AddText("smallTalk");
@@ -311,10 +303,8 @@ public class NPC : MonoBehaviour
                         case 15:
                             if (PlayState.GetItemPercentage() < 20)
                                 AddText("hintSecret");
-                            else if (PlayState.GetItemPercentage() < 40)
-                            {
-                                switch (PlayState.currentCharacter)
-                                {
+                            else if (PlayState.GetItemPercentage() < 40) {
+                                switch (PlayState.currentCharacter) {
                                     case "Snaily":
                                         AddText("hintSnaily");
                                         break;
@@ -334,8 +324,7 @@ public class NPC : MonoBehaviour
                                         AddText("hintLeechy");
                                         break;
                                 }
-                            }
-                            else if (PlayState.GetItemPercentage() < 60)
+                            } else if (PlayState.GetItemPercentage() < 60)
                                 AddText("hintMissedSecret");
                             else if (PlayState.GetItemPercentage() < 80)
                                 AddText("hintEarlyHighJump");
@@ -346,14 +335,12 @@ public class NPC : MonoBehaviour
                             break;
 
                         case 16:
-                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                            {
+                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang")) {
                                 if (PlayState.currentCharacter == "Leechy")
                                     AddText("healTipLeechy");
                                 else
                                     AddText("healTipGeneric");
-                            }
-                            else if (transform.localPosition.y > origin.y - 21)
+                            } else if (transform.localPosition.y > origin.y - 21)
                                 AddText("ride");
                             else
                                 AddText("default");
@@ -517,6 +504,18 @@ public class NPC : MonoBehaviour
                             AddText("default");
                             break;
 
+                        case 54:
+                            AddText("default");
+                            break;
+
+                        case 55:
+                            if (nexted == 0) {
+                                AddText("default");
+                                nexted++;
+                            } else
+                                AddText("second");
+                            break;
+
                         default:
                             AddText("?");
                             break;
@@ -531,43 +530,33 @@ public class NPC : MonoBehaviour
                             .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
                             .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
                             .Replace("{ID}", ID.ToString()));
-                    if (textToSend.Count > 1)
-                    {
+                    if (textToSend.Count > 1) {
                         if (!speechBubbleSprite.enabled)
                             speechBubbleSprite.enabled = true;
                         ToggleBubble(true);
-                        if (Control.SpeakPress())
-                        {
+                        if (Control.SpeakPress()) {
                             chatting = true;
                             PlayState.isTalking = true;
                             PlayState.paralyzed = true;
                             PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         chatting = true;
                         PlayState.isTalking = true;
                         PlayState.OpenDialogue(2, ID, textToSend, boxShape, boxColor);
                     }
-                }
-                else
+                } else
                     needsSpace = true;
-            }
-            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && chatting)
-            {
+            } else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && chatting) {
                 chatting = false;
                 PlayState.CloseDialogue();
-            }
-            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && needsSpace)
+            } else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && needsSpace)
                 needsSpace = false;
-            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed))
-            {
+            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed)) {
                 ToggleBubble(false);
             }
 
-            switch (ID)
-            {
+            switch (ID) {
                 default:
                     break;
                 case 1:
@@ -596,10 +585,8 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public virtual void AddText(string textID)
-    {
-        if (textID == "?")
-        {
+    public virtual void AddText(string textID) {
+        if (textID == "?") {
             textToSend.Add(PlayState.GetText("npc_?")
                     .Replace("##", PlayState.GetItemPercentage().ToString())
                     .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
@@ -608,17 +595,13 @@ public class NPC : MonoBehaviour
                     .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
                     .Replace("{ID}", ID.ToString()));
             portraitStateList.Add(PlayState.GetTextInfo("npc_?").value);
-        }
-        else
-        {
+        } else {
             bool locatedAll = false;
             int i = 0;
-            while (!locatedAll)
-            {
+            while (!locatedAll) {
                 string fullID = "npc_" + ID.ToString() + "_" + textID + "_" + i;
                 string newText = PlayState.GetText(fullID);
-                if (newText != fullID)
-                {
+                if (newText != fullID) {
                     string finalText = newText
                         .Replace("##", PlayState.GetItemPercentage().ToString())
                         .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
@@ -628,48 +611,39 @@ public class NPC : MonoBehaviour
                         .Replace("{ID}", ID.ToString());
                     textToSend.Add(finalText);
                     portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
-                }
-                else
+                } else
                     locatedAll = true;
                 i++;
             }
         }
     }
 
-    private void CreateNewSprites()
-    {
+    private void CreateNewSprites() {
         List<Sprite> newSprites = new List<Sprite>();
 
-        for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++)
-        {
+        for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++) {
             newSprites.Add(PlayState.Colorize("Entities/SnailNpc", i, "Entities/SnailNpcColor", ID));
         }
 
         sprites = newSprites.ToArray();
     }
 
-    public void Next()
-    {
+    public void Next() {
         nexted++;
         PlayState.CloseDialogue();
         chatting = false;
     }
 
-    public void ToggleBubble(bool state)
-    {
-        if (speechBubbleAnim.animList.Count == 0)
-        {
+    public void ToggleBubble(bool state) {
+        if (speechBubbleAnim.animList.Count == 0) {
             speechBubbleAnim.Add("NPC_bubble_open");
             speechBubbleAnim.Add("NPC_bubble_close");
         }
-        if (state && !bubbleState)
-        {
+        if (state && !bubbleState) {
             speechBubbleSprite.enabled = true;
             speechBubbleAnim.Play("NPC_bubble_open");
             bubbleState = true;
-        }
-        else if (!state && bubbleState)
-        {
+        } else if (!state && bubbleState) {
             speechBubbleAnim.Play("NPC_bubble_close");
             bubbleState = false;
         }
