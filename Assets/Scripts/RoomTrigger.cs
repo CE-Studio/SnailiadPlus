@@ -411,8 +411,9 @@ public class RoomTrigger:MonoBehaviour {
         List<Vector3> newPos = new List<Vector3>();
         for (int i = transform.childCount - 1; i >= 0; i--) {
             GameObject obj = transform.GetChild(i).gameObject;
-            IRoomObject roomObject = obj.GetComponent<IRoomObject>();
+            IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
             if (roomObject != null) {
+                print(obj.name);
                 newContent.Add(roomObject.save());
                 newTypes.Add(roomObject.objType);
                 newPos.Add(obj.transform.position);
@@ -581,7 +582,7 @@ public class RoomTrigger:MonoBehaviour {
             GameObject breakable = Instantiate(breakableBlock, transform);
             breakable.GetComponent<BreakableBlock>().Instantiate(thisBreakable);
         }
-        for (int i = 0; i >= roomContent.Length; i++) {
+        for (int i = 0; i < roomContent.Length; i++) {
             GameObject obj = Resources.Load<GameObject>("Objects/" + roomContentTypes[i]);
             GameObject newGameObject = Instantiate(obj, roomContentPos[i], Quaternion.identity, transform);
             IRoomObject newRoomObject = newGameObject.GetComponent<IRoomObject>();

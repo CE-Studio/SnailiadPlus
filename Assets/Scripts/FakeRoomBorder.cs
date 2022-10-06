@@ -29,6 +29,7 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
         Dictionary<string, object> content = new Dictionary<string, object>();
         content["direction"] = direction;
         content["workingDirections"] = workingDirections;
+        return content;
     }
 
     public void load(Dictionary<string, object> content) {

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurtleNPC:NPC {
+
+    public static readonly string myType = "Turtle NPC";
+
     public override void Awake() {
         ID = 52;
 
@@ -15,8 +18,8 @@ public class TurtleNPC:NPC {
         speechBubbleSprite.enabled = false;
     }
 
-    public override void Spawn(int[] spawnData) {
-        upsideDown = spawnData[0] == 1;
+    public override void Spawn(/*int[] spawnData*/) {
+        //upsideDown = spawnData[0] == 1;
 
         anim.Add("NPC_turtle");
         anim.Play("NPC_turtle");

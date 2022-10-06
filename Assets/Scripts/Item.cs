@@ -20,6 +20,48 @@ public class Item:MonoBehaviour, IRoomObject {
     public AudioClip minorJingle;
     public AudioClip majorJingle;
 
+    public static readonly string myType = "Item";
+
+    public string objType {
+        get {
+            return myType;
+        }
+    }
+
+    public Dictionary<string, object> save() {
+        if (PlayState.itemData.Length == 0) {
+            PlayState.itemData = new bool[PlayState.itemCollection.Length][];
+        }
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        content["countedInPercentage"] = countedInPercentage;
+        content["collected"] = collected;
+        content["itemID"] = itemID;
+        content["isSuperUnique"] = isSuperUnique;
+        content["difficultiesPresentIn"] = difficultiesPresentIn;
+        content["charactersPresentFor"] = charactersPresentFor;
+        return content;
+    }
+
+    public void load(Dictionary<string, object> content) {
+        countedInPercentage = (bool)content["countedInPercentage"];
+        collected = (bool)content["collected"];
+        itemID = (int)content["itemID"];
+        isSuperUnique = (bool)content["isSuperUnique"];
+        difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
+        charactersPresentFor = (bool[])content["charactersPresentFor"];
+
+        int charCheck = (PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 });
+        print(PlayState.itemCollection[itemID] == 0);
+        print(PlayState.itemData[itemID][PlayState.currentDifficulty]);
+        print(PlayState.itemData[itemID][charCheck]);
+        if (PlayState.itemCollection[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentDifficulty] || !PlayState.itemData[itemID][charCheck]) {
+            Spawn();
+        } else {
+            Destroy(gameObject);
+        }
+
+    }
+
     void Awake() {
         if (PlayState.gameState == "Game") {
             anim = GetComponent<AnimationModule>();
@@ -44,13 +86,13 @@ public class Item:MonoBehaviour, IRoomObject {
         }
     }
 
-    public void Spawn(int[] spawnData) {
-        itemID = spawnData[0];
-        isSuperUnique = spawnData[1] == 1;
-        for (int i = 2; i < 5; i++)
-            difficultiesPresentIn[i - 2] = spawnData[i] == 1;
-        for (int i = 5; i < 11; i++)
-            charactersPresentFor[i - 5] = spawnData[i] == 1;
+    public void Spawn(/*int[] spawnData*/) {
+        //itemID = spawnData[0];
+        //isSuperUnique = spawnData[1] == 1;
+        //for (int i = 2; i < 5; i++)
+        //    difficultiesPresentIn[i - 2] = spawnData[i] == 1;
+        //for (int i = 5; i < 11; i++)
+        //    charactersPresentFor[i - 5] = spawnData[i] == 1;
 
         string animName;
 

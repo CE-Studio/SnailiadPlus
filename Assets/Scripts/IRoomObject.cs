@@ -9,7 +9,7 @@ public interface IRoomObject {
 }
 
 /*
-public static readonly string myType = "Fake Boundary";
+public static readonly string myType = "";
 
 public string objType {
     get {

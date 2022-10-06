@@ -7,6 +7,23 @@ public class SavePoint:MonoBehaviour, IRoomObject {
 
     public AnimationModule anim;
 
+    public static readonly string myType = "Save Point";
+
+    public string objType {
+        get {
+            return myType;
+        }
+    }
+
+    public Dictionary<string, object> save() {
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        return content;
+    }
+
+    public void load(Dictionary<string, object> content) {
+        Spawn();
+    }
+
     public void Spawn() {
         anim = GetComponent<AnimationModule>();
         anim.Add("Save_inactive");

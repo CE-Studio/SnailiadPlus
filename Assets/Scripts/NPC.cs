@@ -7,35 +7,55 @@ public class NPC:MonoBehaviour, IRoomObject {
     public int ID = 0;
     public int lookMode = 0;
     public bool upsideDown = false;
+    public string nameID = "pleaseNameMe";
+
     public bool chatting = false;
     public bool needsSpace = false; // On the off chance that two snails are close enough to each other to trigger simultaneously, like 06 and 17
     public bool buttonDown = false;
-    public string nameID = "pleaseNameMe";
-    private int nexted = 0;
-
     public List<Color32> colors = new List<Color32>();
-
     public List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
     public Sprite[] npcSpriteSheet;
     public Sprite[] sprites;
-
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public GameObject speechBubble;
     public SpriteRenderer speechBubbleSprite;
     public AnimationModule speechBubbleAnim;
-
     public bool bubbleState = false;
-
     public Vector2 origin;
-
-    private RaycastHit2D groundCheck;
     public float velocity;
+    public List<string> textToSend = new List<string>();
+
+    private int nexted = 0;
+    private RaycastHit2D groundCheck;
     private const float GRAVITY = 1.25f;
     private const float TERMINAL_VELOCITY = -0.5208f;
 
-    public List<string> textToSend = new List<string>();
+    public static readonly string myType = "NPC";
+
+    public string objType {
+        get {
+            return myType;
+        }
+    }
+
+    public Dictionary<string, object> save() {
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        content["ID"] = ID;
+        content["lookMode"] = lookMode;
+        content["upsideDown"] = upsideDown;
+        content["nameID"] = nameID;
+        return content;
+    }
+
+    public void load(Dictionary<string, object> content) {
+        ID = (int)content["ID"];
+        lookMode = (int)content["lookMode"];
+        upsideDown = (bool)content["upsideDown"];
+        nameID = (string)content["nameID"];
+        Spawn();
+    }
 
     public virtual void Awake() {
         if (PlayState.gameState != "Game")
@@ -67,10 +87,10 @@ public class NPC:MonoBehaviour, IRoomObject {
             );
     }
 
-    public virtual void Spawn(int[] spawnData) {
-        ID = spawnData[0];
-        upsideDown = spawnData[1] == 1;
-        lookMode = spawnData[2];
+    public virtual void Spawn(/*int[] spawnData*/) {
+        //ID = spawnData[0];
+        //upsideDown = spawnData[1] == 1;
+        //lookMode = spawnData[2];
 
         CreateNewSprites();
         anim.Add("NPC_idle");
