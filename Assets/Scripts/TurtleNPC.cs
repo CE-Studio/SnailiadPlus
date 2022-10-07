@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TurtleNPC:NPC {
 
-    public static readonly string myType = "Turtle NPC";
-
     public override void Awake() {
+        myType = "Turtle NPC";
         ID = 52;
 
         sprite = GetComponent<SpriteRenderer>();
