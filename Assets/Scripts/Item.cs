@@ -34,17 +34,6 @@ public class Item:MonoBehaviour, IRoomObject {
             PlayState.itemData = new bool[PlayState.itemCollection.Length][];
         }
         PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
-        //{
-        //                difficultiesPresentIn[0],
-        //                difficultiesPresentIn[1],
-        //                difficultiesPresentIn[2],
-        //                charactersPresentFor[0],
-        //                charactersPresentFor[1],
-        //                charactersPresentFor[2],
-        //                charactersPresentFor[3],
-        //                charactersPresentFor[4],
-        //                charactersPresentFor[5]
-        //};
         Dictionary<string, object> content = new Dictionary<string, object>();
         content["countedInPercentage"] = countedInPercentage;
         content["collected"] = collected;
@@ -64,10 +53,6 @@ public class Item:MonoBehaviour, IRoomObject {
         charactersPresentFor = (bool[])content["charactersPresentFor"];
 
         int charCheck = (PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 });
-        //print(PlayState.itemCollection[itemID] == 0);
-        //print(PlayState.itemData.Length);
-        //print(PlayState.itemData[itemID][PlayState.currentDifficulty]);
-        //print(PlayState.itemData[itemID][charCheck]);
         if (PlayState.itemCollection[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentDifficulty] || !PlayState.itemData[itemID][charCheck]) {
             Spawn();
         } else {
@@ -100,14 +85,7 @@ public class Item:MonoBehaviour, IRoomObject {
         }
     }
 
-    public void Spawn(/*int[] spawnData*/) {
-        //itemID = spawnData[0];
-        //isSuperUnique = spawnData[1] == 1;
-        //for (int i = 2; i < 5; i++)
-        //    difficultiesPresentIn[i - 2] = spawnData[i] == 1;
-        //for (int i = 5; i < 11; i++)
-        //    charactersPresentFor[i - 5] = spawnData[i] == 1;
-
+    public void Spawn() {
         string animName;
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS) {

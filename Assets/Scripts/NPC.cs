@@ -87,11 +87,7 @@ public class NPC:MonoBehaviour, IRoomObject {
             );
     }
 
-    public virtual void Spawn(/*int[] spawnData*/) {
-        //ID = spawnData[0];
-        //upsideDown = spawnData[1] == 1;
-        //lookMode = spawnData[2];
-
+    public virtual void Spawn() {
         CreateNewSprites();
         anim.Add("NPC_idle");
         anim.Add("NPC_shell");

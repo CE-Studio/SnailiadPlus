@@ -48,7 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
+  lookMode: 0
   upsideDown: 0
+  nameID: pleaseNameMe
   chatting: 0
   needsSpace: 0
   buttonDown: 0
@@ -108,6 +110,7 @@ MonoBehaviour:
   origin: {x: 0, y: 0}
   velocity: 0
   textToSend: []
+  myType: NPC
 --- !u!212 &450049468564987500
 SpriteRenderer:
   m_ObjectHideFlags: 0
