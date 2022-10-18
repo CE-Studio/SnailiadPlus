@@ -3,11 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
-public class CutsceneManager : MonoBehaviour {
+[RequireComponent(typeof(BoxCollider2D))]
+public class CutsceneManager : MonoBehaviour, IRoomObject {
 
     public TextAsset script;
+    public bool active = true;
+
+    private BoxCollider2D trig;
 
     public static Dictionary<string, Unit> tokens;
+    [System.NonSerialized]
+    public bool ready = false;
+
+    public static readonly string myType = "Cutscene Manager";
+
+    public string objType {
+        get {
+            return myType;
+        }
+    }
+
+    public Dictionary<string, object> save() {
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        content["active"] = active;
+        return content;
+    }
+
+    public void load(Dictionary<string, object> content) {
+        active = (bool)content["active"];
+    }
+
+    public Dictionary<string, object> resave() {
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        content["active"] = active;
+        return content;
+    }
 
     public struct Unit {
         public string type;
@@ -49,15 +79,17 @@ public class CutsceneManager : MonoBehaviour {
     }
 
     void Awake() {
+        trig = GetComponent<BoxCollider2D>();
         tokens = new Dictionary<string, Unit>();
         declare("true", new Unit("costBool", true));
         declare("false", new Unit("costBool", false));
         declare("True", new Unit("costBool", true));
         declare("False", new Unit("costBool", false));
         makeCond();
+        declare("delay", new Unit(delay, 1));
     }
 
-    void Update() {
+    void verfy() {
         
     }
 }

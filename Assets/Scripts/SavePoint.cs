@@ -15,6 +15,10 @@ public class SavePoint:MonoBehaviour, IRoomObject {
         }
     }
 
+    public Dictionary<string, object> resave() {
+        return null;
+    }
+
     public Dictionary<string, object> save() {
         Dictionary<string, object> content = new Dictionary<string, object>();
         return content;

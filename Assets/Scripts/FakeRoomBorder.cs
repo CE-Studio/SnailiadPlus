@@ -17,6 +17,10 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
     private TextMesh roomNameText;
     private TextMesh roomNameShadow;
 
+    public Dictionary<string, object> resave() {
+        return null;
+    }
+
     public static readonly string myType = "Fake Boundary";
 
     public string objType {
@@ -43,10 +47,7 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
         roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
     }
 
-    public void Spawn(/*int[] spawnData*/) {
-        //direction = spawnData[0] == 1;
-        //workingDirections = spawnData[1];
-
+    public void Spawn() {
         isActive = true;
         initialPosRelative = new Vector2(PlayState.player.transform.position.x > transform.position.x ? 1 : -1,
             PlayState.player.transform.position.y > transform.position.y ? 1 : -1);

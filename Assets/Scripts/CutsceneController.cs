@@ -50,7 +50,8 @@ public class CutsceneController : MonoBehaviour
             isActive = true;
             playerIntersecting = true;
             box.enabled = false;
-            StartCoroutine(MainLoop());
+            throw new System.NotImplementedException("Please use 'CutsceneManager' instead.");
+            //StartCoroutine(MainLoop());
         }
     }
 

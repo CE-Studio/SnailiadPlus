@@ -1,0 +1,16 @@
+PLAYER.setFreeze(true, CONDITIONS.always)
+together
+    ACTOR1.translate(-5, 0, 1.5, CONDITIONS.always) #x, y, duration
+    ACTOR1.impulse(0, 3, CONDITIONS.onGround)
+    ACTOR1.lookLeft(CONDITIONS.always)
+delay(0.25)
+ACTOR1.lookRight(CONDITIONS.always)
+if(PLAYER.hasItem(4))
+    together
+        dialogue("npc_52_itemTest", ACTOR1.icon, 0)
+        loop(4)
+            ACTOR1.impulse(0, 3, CONDITIONS.onGround)
+            delay(0.15)
+else
+    dialogue("npc_52_noItem", ACTOR1.icon, 5) #You didn't define "a bit" so I just went with 5 seconds
+    ACTOR1.animate("shell", CONDITIONS.always)

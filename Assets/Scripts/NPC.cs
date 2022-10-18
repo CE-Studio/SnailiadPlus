@@ -32,6 +32,10 @@ public class NPC:MonoBehaviour, IRoomObject {
     private const float GRAVITY = 1.25f;
     private const float TERMINAL_VELOCITY = -0.5208f;
 
+    public Dictionary<string, object> resave() {
+        return null;
+    }
+
     public string myType = "NPC";
 
     public string objType {

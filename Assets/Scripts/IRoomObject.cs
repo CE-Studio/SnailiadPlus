@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IRoomObject {
     public string objType { get; }
     public Dictionary<string, object> save();
+    public Dictionary<string, object> resave();
     public void load(Dictionary<string, object> content);
 }
 
@@ -24,5 +25,9 @@ public Dictionary<string, object> save() {
 
 public void load(Dictionary<string, object> content) {
 
+}
+
+public Dictionary<string, object> resave() {
+        return null;
 }
 */

@@ -246,9 +246,17 @@ public class RoomTrigger:MonoBehaviour {
     public void DespawnEverything() {
         initializedEffects = false;
         for (int i = transform.childCount - 1; i >= 0; i--) {
-            if (transform.GetChild(i).name == "Cutscene Controller")
-                transform.GetChild(i).GetComponent<CutsceneController>().StopAllCoroutines();
-            Destroy(transform.GetChild(i).gameObject);
+            GameObject obj = transform.GetChild(i).gameObject;
+            IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
+            if (roomObject != null) {
+                Dictionary<string, object> datout = roomObject.resave();
+                if (datout != null) {
+                    foreach (KeyValuePair<string, object> h in datout) {
+                        roomContent[i][h.Key] = h.Value;
+                    }
+                }
+            }
+            Destroy(obj);
         }
         GameObject pool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < pool.transform.childCount; i++) {

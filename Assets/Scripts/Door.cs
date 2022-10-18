@@ -17,6 +17,10 @@ public class Door:MonoBehaviour, IRoomObject {
 
     public Sprite[] editorSprites;
 
+    public Dictionary<string, object> resave() {
+        return null;
+    }
+
     public static readonly string myType = "Door";
 
     public string objType {

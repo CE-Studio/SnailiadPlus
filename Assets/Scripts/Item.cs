@@ -21,6 +21,10 @@ public class Item:MonoBehaviour, IRoomObject {
     public AudioClip minorJingle;
     public AudioClip majorJingle;
 
+    public Dictionary<string, object> resave() {
+        return null;
+    }
+
     public static readonly string myType = "Item";
 
     public string objType {
