@@ -114,7 +114,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
                 e.Message + '\n' +
                 "In file \"" + script.name + "\"\n\n" +
                 e.StackTrace + "\n\n" +
-                "Cutscene aborted\nPress <Esc> to continue...";
+                "Cutscene aborted\nPress <Esc> to continue...\n";
             print(em);
             errorcontrol.text = em;
             Instantiate(Resources.Load<GameObject>("error/errorscreen"));

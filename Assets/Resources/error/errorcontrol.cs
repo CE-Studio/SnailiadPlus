@@ -11,18 +11,24 @@ public class errorcontrol : MonoBehaviour {
 
     private bool playcheck = false;
     public bool play;
+    public bool done;
 
     private float mvol = 1.0f;
     public float musicfade;
 
+    private string oldgs;
+
     void Start() {
         textbox.text = text;
+        oldgs = PlayState.gameState;
     }
 
     void Update() {
         if (play != playcheck) {
             if (play) {
                 audio.Play();
+                oldgs = PlayState.gameState;
+                PlayState.gameState = "error";
             }
             playcheck = play;
         }
@@ -31,6 +37,14 @@ public class errorcontrol : MonoBehaviour {
             musicfade = mvol;
             PlayState.fader = mvol;
             MainMenu.music.volume = mvol;
+        }
+        if (Control.Pause()) {
+            anim.SetBool("done", true);
+        }
+        if (done) {
+            PlayState.gameState = oldgs;
+            PlayState.fader = 1.0f;
+            Destroy(gameObject);
         }
     }
 }
