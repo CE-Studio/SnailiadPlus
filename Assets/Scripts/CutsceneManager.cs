@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class CutsceneManager : MonoBehaviour, IRoomObject {
+public class CutsceneManager:MonoBehaviour, IRoomObject {
 
     public TextAsset script;
     public bool active = true;
@@ -14,6 +14,10 @@ public class CutsceneManager : MonoBehaviour, IRoomObject {
     public static Dictionary<string, Unit> tokens;
     [System.NonSerialized]
     public bool ready = false;
+    [System.NonSerialized]
+    public List<sline> lines;
+    [System.NonSerialized]
+    public string[] rawlines;
 
     public static readonly string myType = "Cutscene Manager";
 
@@ -23,13 +27,21 @@ public class CutsceneManager : MonoBehaviour, IRoomObject {
         }
     }
 
+    public struct sline {
+        public string line;
+        public List<sline> indent;
+        public int indentlvl;
+    }
+
     public Dictionary<string, object> save() {
         Dictionary<string, object> content = new Dictionary<string, object>();
+        content["script"] = script;
         content["active"] = active;
         return content;
     }
 
     public void load(Dictionary<string, object> content) {
+        script = (TextAsset)content["script"];
         active = (bool)content["active"];
     }
 
@@ -89,7 +101,72 @@ public class CutsceneManager : MonoBehaviour, IRoomObject {
         declare("delay", new Unit(delay, 1));
     }
 
+    void Start() {
+        verfy();
+    }
+
     void verfy() {
-        
+        rawlines = script.text.Split(new string[] {"\r\n", "\r", "\n"}, System.StringSplitOptions.RemoveEmptyEntries);
+        lines = extract(0, 0, out _);
+    }
+
+    List<sline> extract(int lnum, int depth, out int nlnum) {
+        List<sline> extlines = new List<sline>();
+        while (lnum < (rawlines.Length - 1)) {
+            int ld = 0;
+            int pd = 0;
+            bool cw = true;
+            List<sline> content = null;
+            print(rawlines[lnum]);
+            foreach (char i in rawlines[lnum]) {
+                switch (i) {
+                    case '\t':
+                    case ' ':
+                        if (cw) {
+                            ld += 1;
+                        }
+                        break;
+                    case '(':
+                        pd += 1;
+                        cw = false;
+                        break;
+                    case ')':
+                        pd -= 1;
+                        cw = false;
+                        break;
+                    default:
+                        cw = false;
+                        break;
+                }
+            }
+            if (pd != 0) {
+                throw new System.Exception("Imbalanced parenthesis on line " + lnum);
+            }
+            if (ld > depth) {
+                print("Hold my line, I'm going in!");
+                content = extract(lnum, ld, out lnum);
+            }
+            if (ld < depth) {
+                lnum -= 1;
+                break;
+            } else {
+                sline a = new sline();
+                a.line = rawlines[lnum].Trim();
+                if (content != null) {
+                    if (extlines.Count < 1) {
+                        throw new System.Exception("Script cannot start with indented block");
+                    }
+                    sline h = extlines[extlines.Count - 1];
+                    h.indent = content;
+                    extlines[extlines.Count - 1] = h;
+                }
+                a.indentlvl = depth;
+                extlines.Add(a);
+            }
+            lnum += 1;
+        }
+        print("Recursion level ended");
+        nlnum = lnum;
+        return extlines;
     }
 }

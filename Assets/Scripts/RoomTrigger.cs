@@ -69,7 +69,7 @@ public class RoomTrigger:MonoBehaviour {
         fg = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
         specialMap = GameObject.Find("Grid/Special").GetComponent<Tilemap>();
         breakableBlock = (GameObject)Resources.Load("Objects/Breakable Block");
-        DespawnEverything();
+        MoveEntitiesToInternalList();
         specialMap.color = new Color32(255, 255, 255, 0);
     }
 
@@ -245,13 +245,14 @@ public class RoomTrigger:MonoBehaviour {
 
     public void DespawnEverything() {
         initializedEffects = false;
-        for (int i = transform.childCount - 1; i >= 0; i--) {
+        for (int i = (transform.childCount - 1); i >= 0; i--) {
             GameObject obj = transform.GetChild(i).gameObject;
             IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
             if (roomObject != null) {
                 Dictionary<string, object> datout = roomObject.resave();
                 if (datout != null) {
                     foreach (KeyValuePair<string, object> h in datout) {
+                        print(h.Key + ", " + h.Value + ", " + roomContent.Length);
                         roomContent[i][h.Key] = h.Value;
                     }
                 }
@@ -421,7 +422,6 @@ public class RoomTrigger:MonoBehaviour {
             GameObject obj = transform.GetChild(i).gameObject;
             IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
             if (roomObject != null) {
-                print(obj.name);
                 newContent.Add(roomObject.save());
                 newTypes.Add(roomObject.objType);
                 newPos.Add(obj.transform.position);
