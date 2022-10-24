@@ -106,8 +106,19 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
     }
 
     void verfy() {
-        rawlines = script.text.Split(new string[] {"\r\n", "\r", "\n"}, System.StringSplitOptions.RemoveEmptyEntries);
-        lines = extract(0, 0, out _);
+        try {
+            rawlines = script.text.Split(new string[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+            lines = extract(0, 0, out _);
+        } catch (System.Exception e) {
+            string em = "//Error!!\n\n" + 
+                e.Message + '\n' +
+                "In file \"" + script.name + "\"\n\n" +
+                e.StackTrace + "\n\n" +
+                "Cutscene aborted\nPress <Esc> to continue...";
+            print(em);
+            errorcontrol.text = em;
+            Instantiate(Resources.Load<GameObject>("error/errorscreen"));
+        }
     }
 
     List<sline> extract(int lnum, int depth, out int nlnum) {

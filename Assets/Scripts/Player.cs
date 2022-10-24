@@ -283,7 +283,7 @@ public class Player : MonoBehaviour
 
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)
-            audio.volume = musicMuted ? 0 : Mathf.Lerp(audio.volume, PlayState.gameOptions[1] * 0.1f, 5 * Time.deltaTime);
+            audio.volume = musicMuted ? 0 : Mathf.Lerp(audio.volume, (PlayState.gameOptions[1] * 0.1f) * PlayState.fader, 5 * Time.deltaTime);
 
         if (!PlayState.playingMusic)
             return;
@@ -1053,8 +1053,8 @@ public class Player : MonoBehaviour
         if (startMenuMusic)
         {
             UpdateMusic(-1, -1, 3);
-            PlayState.mainMenu.GetComponent<MainMenu>().music.clip = PlayState.GetMusic(0, 0);
-            PlayState.mainMenu.GetComponent<MainMenu>().music.Play();
+            MainMenu.music.clip = PlayState.GetMusic(0, 0);
+            MainMenu.music.Play();
         }
         PlayState.ToggleLoadingIcon(false);
     }

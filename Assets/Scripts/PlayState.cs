@@ -69,6 +69,7 @@ public class PlayState {
     public static bool playingMusic = false;
     public static int musicVol = 1;
     public static float playbackTime;
+    public static float fader = 1.0f;
     public static string area;
     public static AudioClip areaMus;
     public static bool colorblindMode = true;

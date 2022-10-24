@@ -57,7 +57,7 @@ public class MainMenu : MonoBehaviour
     private bool direction = true;
     private bool isMoving = true;
 
-    public AudioSource music;
+    public static AudioSource music;
     public GameObject textObject;
     public GameObject titleLetter;
     public GameObject titlePlus;
@@ -212,7 +212,7 @@ public class MainMenu : MonoBehaviour
         {
             if (PlayState.gameState == "Menu" && !preloading)
             {
-                music.volume = PlayState.gameOptions[1] * 0.1f;
+                music.volume = (PlayState.gameOptions[1] * 0.1f);
                 music.Play();
             }
             PlayState.isMenuOpen = true;
@@ -307,7 +307,7 @@ public class MainMenu : MonoBehaviour
         }
         if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
         {
-            music.volume = PlayState.gameOptions[1] * 0.1f;
+            music.volume = (PlayState.gameOptions[1] * 0.1f) * PlayState.fader;
             Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
 
             if (!isRebinding && !fadingToIntro && !PlayState.paralyzed)

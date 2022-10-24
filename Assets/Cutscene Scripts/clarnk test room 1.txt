@@ -1,4 +1,4 @@
-PLAYER.setFreeze(true, CONDITIONS.always)
+    PLAYER.setFreeze(true, CONDITIONS.always)
 together
     ACTOR1.translate(-5, 0, 1.5, CONDITIONS.always) #x, y, duration
     ACTOR1.impulse(0, 3, CONDITIONS.onGround)
