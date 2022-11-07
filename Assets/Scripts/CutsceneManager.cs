@@ -62,7 +62,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
             argnum = -1;
         }
 
-        public Unit(System.Func<object[], bool> o, int c) {
+        public Unit(System.Func<object[], object[]> o, int c) {
             type = "func";
             obj = o;
             argnum = c;
@@ -76,10 +76,10 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
         tokens[name] = data;
     }
 
-    public static bool delay(object[] args) {
+    public static object[] delay(object[] args) {
         float h = (float)args[0];
         Thread.Sleep((int)(h * 1000));
-        return true;
+        return new object[1] {true};
     }
 
     private static void makeCond() {
@@ -110,7 +110,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
             rawlines = script.text.Split(new string[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
             lines = extract(0, 0, out _);
         } catch (System.Exception e) {
-            string em = "//Error!!\n\n" + 
+            string em = "//Error!!\n\n" +
                 e.Message + '\n' +
                 "In file \"" + script.name + "\"\n\n" +
                 e.StackTrace + "\n\n" +
@@ -127,28 +127,49 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
             int ld = 0;
             int pd = 0;
             bool cw = true;
+            bool sn = false;
+            bool quot = false;
+            bool lo = false;
             List<sline> content = null;
             print(rawlines[lnum]);
             foreach (char i in rawlines[lnum]) {
-                switch (i) {
-                    case '\t':
-                    case ' ':
-                        if (cw) {
-                            ld += 1;
+                if (sn || lo) {
+                    sn = false;
+                } else {
+                    if (i == '\\') {
+                        sn = true;
+                    } else {
+                        switch (i) {
+                            case '\t':
+                            case ' ':
+                                if (cw) {
+                                    ld += 1;
+                                }
+                                break;
+                            case '(':
+                                if (!quot) pd += 1;
+                                cw = false;
+                                break;
+                            case ')':
+                                if (!quot) pd -= 1;
+                                cw = false;
+                                break;
+                            case '"':
+                                quot = !quot;
+                                cw = false;
+                                break;
+                            case '#':
+                                lo = true;
+                                break;
+                            default:
+                                cw = false;
+                                break;
                         }
-                        break;
-                    case '(':
-                        pd += 1;
-                        cw = false;
-                        break;
-                    case ')':
-                        pd -= 1;
-                        cw = false;
-                        break;
-                    default:
-                        cw = false;
-                        break;
+                    }
                 }
+            }
+            if (quot) {
+                throw new System.Exception("Open string on line " + lnum);
             }
             if (pd != 0) {
                 throw new System.Exception("Imbalanced parenthesis on line " + lnum);

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Player : MonoBehaviour
-{
+public class Player : MonoBehaviour, ICutsceneObject {
+    #region vars
     public const int DIR_FLOOR = 0;
     public const int DIR_WALL_LEFT = 1;
     public const int DIR_WALL_RIGHT = 2;
@@ -80,6 +80,21 @@ public class Player : MonoBehaviour
     public string currentBossName = "";
     bool flashedBossName = false;
     public bool displayDefeatText = false;
+    #endregion vars
+
+    #region cutscene
+    public void cutRegister() {
+
+    }
+
+    public void cutStart() {
+
+    }
+
+    public void cutEnd() {
+
+    }
+    #endregion cutscene
 
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
     void Start()

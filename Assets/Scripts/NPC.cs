@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC:MonoBehaviour, IRoomObject {
+public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
+    #region vars
     public int ID = 0;
     public int lookMode = 0;
     public bool upsideDown = false;
@@ -31,6 +32,21 @@ public class NPC:MonoBehaviour, IRoomObject {
     private RaycastHit2D groundCheck;
     private const float GRAVITY = 1.25f;
     private const float TERMINAL_VELOCITY = -0.5208f;
+    #endregion vars
+
+    #region cutscene
+    public void cutRegister() {
+
+    }
+
+    public void cutStart() {
+
+    }
+
+    public void cutEnd() {
+
+    }
+    #endregion cutscene
 
     public Dictionary<string, object> resave() {
         return null;
