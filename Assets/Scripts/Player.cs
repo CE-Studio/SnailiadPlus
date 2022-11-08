@@ -84,7 +84,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     #region cutscene
     public void cutRegister() {
-
+        CutsceneManager.declare("PLAYER", new CutsceneManager.Unit("dict", new Dictionary<string, CutsceneManager.Unit> {
+            {"setFreeze", new CutsceneManager.Unit(setFreeze, 2, "none")},
+        }));
     }
 
     public void cutStart() {
@@ -92,6 +94,26 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     public void cutEnd() {
+
+    }
+
+    public object[] setFreeze(object[] inputs) {
+        bool mode = (bool)inputs[0];
+        int condition = (int)inputs[1];
+        bool success = false;
+        if (condition == 0) {
+            PlayState.paralyzed = mode;
+            success = true;
+        } else if (condition == 1) {
+            if (grounded) {
+                PlayState.paralyzed = mode;
+                success = true;
+            }
+        }
+        return new object[1] { success };
+    }
+
+    public object[] impulse(object[] inputs) {
 
     }
     #endregion cutscene

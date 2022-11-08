@@ -55,17 +55,20 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
         public string type;
         public object obj;
         public int argnum;
+        public string returntype;
 
         public Unit(string t, object o) {
             type = t;
+            returntype = t;
             obj = o;
             argnum = -1;
         }
 
-        public Unit(System.Func<object[], object[]> o, int c) {
+        public Unit(System.Func<object[], object[]> o, int c, string rt) {
             type = "func";
             obj = o;
             argnum = c;
+            returntype = rt;
         }
     }
 
@@ -85,7 +88,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
     private static void makeCond() {
         Dictionary<string, Unit> hold = new Dictionary<string, Unit> {
             {"always", new Unit("constInt", 0)},
-            {"onGround", new Unit("constInt", 0)},
+            {"onGround", new Unit("constInt", 1)},
         };
         declare("CONDITIONS", new Unit("dict", hold));
     }
@@ -98,7 +101,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
         declare("True", new Unit("costBool", true));
         declare("False", new Unit("costBool", false));
         makeCond();
-        declare("delay", new Unit(delay, 1));
+        declare("delay", new Unit(delay, 1, "none"));
     }
 
     void Start() {
