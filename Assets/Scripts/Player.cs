@@ -114,7 +114,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     public object[] impulse(object[] inputs) {
-
+        Vector3 vel = new Vector3((float)inputs[0], (float)inputs[1], (float)inputs[2]);
+        int condition = (int)inputs[3];
+        bool success = false;
+        return new object[1] { success };
     }
     #endregion cutscene
 
