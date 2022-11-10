@@ -66,7 +66,7 @@ public class Item:MonoBehaviour, IRoomObject {
     }
 
     void Awake() {
-        if (PlayState.gameState == "Game") {
+        if (PlayState.gameState == PlayState.GameState.game) {
             anim = GetComponent<AnimationModule>();
             box = GetComponent<BoxCollider2D>();
             sprite = GetComponent<SpriteRenderer>();
@@ -156,9 +156,9 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.helixCount++;
             else if (itemID >= PlayState.OFFSET_HEARTS) {
                 PlayState.heartCount++;
-                PlayState.playerScript.maxHealth += PlayState.playerScript.hpPerHeart[PlayState.currentDifficulty];
+                PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentDifficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
-                PlayState.playerScript.RenderNewHearts();
+                PlayState.globalFunctions.RenderNewHearts();
             }
             if (isSuperUnique) {
                 PlayState.MuteMusic();
@@ -170,13 +170,13 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 0:
                     PlayState.isArmed = true;
                     PlayState.playerScript.selectedWeapon = 1;
-                    PlayState.playerScript.ChangeActiveWeapon(0, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(0, true);
                     break;
                 case 1:
                 case 11:
                     PlayState.isArmed = true;
                     PlayState.playerScript.selectedWeapon = 2;
-                    PlayState.playerScript.ChangeActiveWeapon(1, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(1, true);
                     if (itemID == 11)
                         PlayState.QueueAchievementPopup("secrt");
                     break;
@@ -184,13 +184,13 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 12:
                     PlayState.isArmed = true;
                     PlayState.playerScript.selectedWeapon = 3;
-                    PlayState.playerScript.ChangeActiveWeapon(2, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(2, true);
                     break;
                 case 7:
                     if (isSuperUnique)
-                        PlayState.playerScript.RunDustRing(1);
+                        PlayState.globalFunctions.RunDustRing(1);
                     else
-                        PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
+                        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
                 default:
                     break;
@@ -260,7 +260,7 @@ public class Item:MonoBehaviour, IRoomObject {
             };
             transform.position = Vector2.Lerp(transform.position, targetPos, 15 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
-            if (PlayState.gameState == "Game")
+            if (PlayState.gameState == PlayState.GameState.game)
                 timer += Time.deltaTime;
             if (musicMuted && timer >= jingleTime) {
                 musicMuted = false;
@@ -271,7 +271,7 @@ public class Item:MonoBehaviour, IRoomObject {
         SetDeactivated();
         while (musicMuted && timer <= jingleTime) {
             yield return new WaitForEndOfFrame();
-            if (PlayState.gameState == "Game")
+            if (PlayState.gameState == PlayState.GameState.game)
                 timer += Time.deltaTime;
         }
         if (musicMuted) {

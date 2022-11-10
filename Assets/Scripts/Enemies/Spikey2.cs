@@ -28,7 +28,7 @@ public class Spikey2 : Enemy
 
     private void Awake()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(PlayState.currentDifficulty == 2 ? 720 : 340, 4, 0, true, new Vector2(0.95f, 0.95f));
@@ -82,7 +82,7 @@ public class Spikey2 : Enemy
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         if (gracePeriod != 0)

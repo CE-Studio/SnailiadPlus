@@ -91,8 +91,8 @@ public class SoundLibrary : ScriptableObject
                         if (InReferenceList(fileName))
                         {
                             PlayState.importJobs++;
-                            PlayState.playerScript.WaitForImportJobCompletion();
-                            PlayState.playerScript.LoadClip(file.Replace('\\', '/'), fileName, new Vector2(-1, -1));
+                            PlayState.globalFunctions.WaitForImportJobCompletion();
+                            PlayState.globalFunctions.LoadClip(file.Replace('\\', '/'), fileName, new Vector2(-1, -1));
                         }
                     }
                 }

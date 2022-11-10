@@ -11,7 +11,7 @@ public class CamMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Menu")
+        if (PlayState.gameState != PlayState.GameState.menu)
         {
             Vector2 camBoundsX = new Vector2(
                 PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x,
@@ -23,7 +23,7 @@ public class CamMovement : MonoBehaviour
             float yDif = camBoundsY.y - camBoundsY.x;
             Vector2 focus = ((focusPoint != null) ? new Vector2(focusPoint.position.x, focusPoint.position.y) : Vector2.zero) + PlayState.camCutsceneOffset;
 
-            if (PlayState.gameState == "Game")
+            if (PlayState.gameState == PlayState.GameState.game)
             {
                 transform.position -= (Vector3)lastShakeOffset;
                 bool inBoundsX = ((camBoundsX.x <= (focus.x + 13.5f)) && ((focus.x - 13.5f) <= camBoundsX.y));

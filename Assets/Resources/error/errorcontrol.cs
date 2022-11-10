@@ -16,7 +16,7 @@ public class errorcontrol : MonoBehaviour {
     private float mvol = 1.0f;
     public float musicfade;
 
-    private string oldgs;
+    private PlayState.GameState oldgs;
 
     void Start() {
         textbox.text = text;
@@ -28,7 +28,7 @@ public class errorcontrol : MonoBehaviour {
             if (play) {
                 audio.Play();
                 oldgs = PlayState.gameState;
-                PlayState.gameState = "error";
+                PlayState.gameState = PlayState.GameState.error;
             }
             playcheck = play;
         }

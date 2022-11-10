@@ -118,7 +118,7 @@ public class DialogueBox : MonoBehaviour
 
     void Update()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == PlayState.GameState.game)
         {
             sfx.volume = PlayState.gameOptions[0] * 0.1f;
 
@@ -339,7 +339,7 @@ public class DialogueBox : MonoBehaviour
                 PlayState.activeMus.time = PlayState.playbackTime;
                 PlayState.activeMus.volume = 0;
                 PlayState.activeMus.Play();
-                PlayState.gameState = "Game";
+                PlayState.gameState = PlayState.GameState.game;
                 StartCoroutine(nameof(ReturnMusicVol));
             }
         }

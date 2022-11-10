@@ -20,7 +20,7 @@ public class Bat : Enemy
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         if (PlayState.OnScreen(transform.position, box) && !active && Mathf.Abs(PlayState.player.transform.position.x - transform.position.x) < REACT_DISTANCE)

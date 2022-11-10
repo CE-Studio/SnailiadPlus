@@ -11,7 +11,8 @@ public class PlayState {
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
 
-    public static string gameState = "Menu"; // Can be "Game", "Menu", "Pause", "Map", "Debug", or "Dialogue" as of now
+    public enum GameState { game, menu, pause, map, debug, dialogue, error }
+    public static GameState gameState = GameState.menu;
 
     public static bool isMenuOpen = false;
 
@@ -132,6 +133,8 @@ public class PlayState {
     public static GameObject enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
     public static GameObject subscreen = GameObject.Find("View/Subscreen");
     public static Subscreen subscreenScript = subscreen.GetComponent<Subscreen>();
+
+    public static GlobalFunctions globalFunctions = GameObject.Find("View").GetComponent<GlobalFunctions>();
 
     //Replaced with IRoomObject
     //public struct RoomEntity
@@ -535,11 +538,11 @@ public class PlayState {
     }
 
     public static void MuteMusic() {
-        playerScript.musicMuted = true;
+        globalFunctions.musicMuted = true;
     }
 
     public static void FadeMusicBackIn() {
-        playerScript.musicMuted = false;
+        globalFunctions.musicMuted = false;
     }
 
     public static Color32 GetColor(string ID) {
@@ -695,9 +698,9 @@ public class PlayState {
 
     public static void PlayAreaSong(int area, int subzone) {
         if (area == currentArea && subzone != currentSubzone) {
-            playerScript.UpdateMusic(area, subzone);
+            globalFunctions.UpdateMusic(area, subzone);
         } else if (area != currentArea) {
-            playerScript.UpdateMusic(area, subzone, 1);
+            globalFunctions.UpdateMusic(area, subzone, 1);
         }
         currentArea = area;
         currentSubzone = subzone;
@@ -724,9 +727,9 @@ public class PlayState {
             element.SetActive(state);
             if (state) {
                 if (element.name == "Weapon Icons") {
-                    playerScript.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
-                    playerScript.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
-                    playerScript.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
+                    globalFunctions.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
+                    globalFunctions.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
+                    globalFunctions.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
                 }
                 if (element.name == "Minimap Panel")
                     element.SetActive(!inBossFight);
@@ -753,7 +756,7 @@ public class PlayState {
             colors.Add(new Color32(0, 0, 0, 0));
             colors.Add(new Color32(0, 0, 0, 0));
         }
-        gameState = "Dialogue";
+        gameState = GameState.dialogue;
         cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005");
     }
 
@@ -782,27 +785,27 @@ public class PlayState {
                 break;
             case "Room Transition":
                 screenCover.color = new Color32(0, 0, 0, 200);
-                playerScript.ExecuteCoverCommand(type);
+                globalFunctions.ExecuteCoverCommand(type);
                 break;
             case "Death Transition":
-                playerScript.ExecuteCoverCommand(type);
+                globalFunctions.ExecuteCoverCommand(type);
                 break;
             case "Custom Fade":
-                playerScript.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, sortingOrder);
+                globalFunctions.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, sortingOrder);
                 break;
         }
     }
 
     public static void FlashItemText(string item) {
-        playerScript.FlashItemText(item);
+        globalFunctions.FlashItemText(item);
     }
 
     public static void FlashCollectionText() {
-        playerScript.FlashCollectionText();
+        globalFunctions.FlashCollectionText();
     }
 
     public static void FlashSaveText() {
-        playerScript.FlashSaveText();
+        globalFunctions.FlashSaveText();
     }
 
     public static Particle RequestParticle(Vector2 position, string type) {
@@ -923,7 +926,7 @@ public class PlayState {
     }
 
     public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly) {
-        playerScript.RequestQueuedExplosion(pos, lifeTime, size, loudly);
+        globalFunctions.RequestQueuedExplosion(pos, lifeTime, size, loudly);
     }
 
     public static void ResetAllParticles() {
@@ -1261,7 +1264,7 @@ public class PlayState {
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
                 minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
                 cutscenesToNotSpawn = new List<int>(loadedSave.cutsceneStates);
-                playerScript.maxHealth = playerScript.hpPerHeart[currentDifficulty] * 3;
+                playerScript.maxHealth = globalFunctions.hpPerHeart[currentDifficulty] * 3;
                 helixCount = 0;
                 heartCount = 0;
                 for (int i = 0; i < loadedSave.items.Length; i++) {
@@ -1270,12 +1273,12 @@ public class PlayState {
                             helixCount++;
                         else if (i >= OFFSET_HEARTS) {
                             heartCount++;
-                            playerScript.maxHealth += playerScript.hpPerHeart[currentDifficulty];
+                            playerScript.maxHealth += globalFunctions.hpPerHeart[currentDifficulty];
                         }
                     }
                 }
                 playerScript.health = playerScript.maxHealth;
-                playerScript.RenderNewHearts();
+                globalFunctions.RenderNewHearts();
             }
             return loadedSave;
         } else {
@@ -1553,17 +1556,17 @@ public class PlayState {
         if (!state && snapDespawnBar) {
             TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
-            playerScript.displayDefeatText = false;
+            globalFunctions.displayDefeatText = false;
         } else if (!state && !snapDespawnBar) {
             TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
             TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
-            playerScript.displayDefeatText = true;
+            globalFunctions.displayDefeatText = true;
         }
         if (currentArea != 7) {
             if (state)
-                playerScript.UpdateMusic(musicID, 0, 1);
+                globalFunctions.UpdateMusic(musicID, 0, 1);
             else
-                playerScript.UpdateMusic(currentArea, currentSubzone, 1);
+                globalFunctions.UpdateMusic(currentArea, currentSubzone, 1);
         }
     }
 
@@ -1582,6 +1585,6 @@ public class PlayState {
     }
 
     public static void ScreenShake(List<float> intensities, List<float> times) {
-        playerScript.ScreenShake(intensities, times);
+        globalFunctions.ScreenShake(intensities, times);
     }
 }

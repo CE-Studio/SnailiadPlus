@@ -8,7 +8,7 @@ public class Floatspike : Enemy
     
     private void Awake()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
         
         Spawn(5, 2, 59, true, new Vector2(0.95f, 0.95f));
@@ -21,7 +21,7 @@ public class Floatspike : Enemy
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         if (time >= 0.75f)

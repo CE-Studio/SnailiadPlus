@@ -92,7 +92,7 @@ public class Shellbreaker : Boss
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         lifeState = health <= maxHealth * 0.3333f ? 3 : (health <= maxHealth * 0.6667f ? 2 : 1);

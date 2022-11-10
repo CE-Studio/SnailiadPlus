@@ -78,7 +78,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
 
     public virtual void Awake() {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         speechBubble = transform.Find("Speech bubble").gameObject;
@@ -163,7 +163,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
 
     public virtual void Update() {
-        if (PlayState.gameState == "Game") {
+        if (PlayState.gameState == PlayState.GameState.game) {
             if (anim.isPlaying)
                 sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 

@@ -80,9 +80,9 @@ public class DebugMenu : MonoBehaviour
 
     private void Update()
     {
-        if (!buttonDown && PlayState.gameState == "Game" && Control.Generic(terminalKey))
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && Control.Generic(terminalKey))
         {
-            PlayState.gameState = "Debug";
+            PlayState.gameState = PlayState.GameState.debug;
             menuOpen = true;
             foreach (GameObject obj in menuObjects)
                 obj.SetActive(true);
@@ -93,9 +93,9 @@ public class DebugMenu : MonoBehaviour
             currentSelected = "peashooter";
             selector.transform.localPosition = buttonPosArray[currentSelected];
         }
-        if (!buttonDown && PlayState.gameState == "Debug" && (Control.Generic(terminalKey) || Control.Pause()))
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.debug && (Control.Generic(terminalKey) || Control.Pause()))
         {
-            PlayState.gameState = "Game";
+            PlayState.gameState = PlayState.GameState.game;
             menuOpen = false;
             foreach (GameObject obj in menuObjects)
                 obj.SetActive(false);
@@ -146,7 +146,7 @@ public class DebugMenu : MonoBehaviour
                                 {
                                     PlayState.itemCollection[int.Parse(typeParts[1])] = PlayState.itemCollection[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                                     PlayState.minimapScript.RefreshMap();
-                                    PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
+                                    PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                                 }
                                 button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;

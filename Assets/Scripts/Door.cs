@@ -47,7 +47,7 @@ public class Door:MonoBehaviour, IRoomObject {
     }
 
     void Awake() {
-        if (PlayState.gameState == "Game") {
+        if (PlayState.gameState == PlayState.GameState.game) {
             anim = GetComponent<AnimationModule>();
             sprite = GetComponent<SpriteRenderer>();
             box = GetComponent<BoxCollider2D>();

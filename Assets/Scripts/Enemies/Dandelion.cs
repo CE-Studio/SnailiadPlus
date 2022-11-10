@@ -21,7 +21,7 @@ public class Dandelion : Enemy
 
     private void Update()
     {
-        if (PlayState.gameState != "Game" || box == null)
+        if (PlayState.gameState != PlayState.GameState.game || box == null)
             return;
 
         theta += Time.deltaTime;

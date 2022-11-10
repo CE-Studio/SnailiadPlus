@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
         if (isActive)
         {

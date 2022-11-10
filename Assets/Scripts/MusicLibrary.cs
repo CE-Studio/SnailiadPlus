@@ -101,8 +101,8 @@ public class MusicLibrary : ScriptableObject
                         if (InReferenceList(fileName))
                         {
                             PlayState.importJobs++;
-                            PlayState.playerScript.WaitForImportJobCompletion(true);
-                            PlayState.playerScript.LoadClip(file.Replace('\\', '/'), fileName, GetPosInList(fileName));
+                            PlayState.globalFunctions.WaitForImportJobCompletion(true);
+                            PlayState.globalFunctions.LoadClip(file.Replace('\\', '/'), fileName, GetPosInList(fileName));
                         }
                     }
                 }

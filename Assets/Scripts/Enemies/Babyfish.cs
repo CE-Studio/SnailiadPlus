@@ -43,7 +43,7 @@ public class Babyfish : Enemy
 
     private void FixedUpdate()
     {
-        if (PlayState.gameState != "Game" || !readyToMove)
+        if (PlayState.gameState != PlayState.GameState.game || !readyToMove)
             return;
 
         wallCheck = Physics2D.Raycast(

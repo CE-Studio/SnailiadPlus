@@ -31,7 +31,7 @@ public class Chirpy1 : Enemy
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
         if ((PlayState.OnScreen(transform.position, box) || spawnedViaGenerator) && !active)
         {

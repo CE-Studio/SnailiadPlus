@@ -44,7 +44,7 @@ public class Kitty : Enemy
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Game" || box == null)
+        if (PlayState.gameState != PlayState.GameState.game || box == null)
             return;
 
         UpdateBoxcasts();

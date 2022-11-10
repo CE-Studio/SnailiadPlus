@@ -20,7 +20,7 @@ public class PowerGrass : MonoBehaviour
 
     public void Start()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == PlayState.GameState.game)
         {
             bitesRemaining = totalBites;
             sprite = GetComponent<SpriteRenderer>();
@@ -36,7 +36,7 @@ public class PowerGrass : MonoBehaviour
 
     void Update()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == PlayState.GameState.game)
         {
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
         }
@@ -62,8 +62,7 @@ public class PowerGrass : MonoBehaviour
                 }
                 else
                     timer = biteTimeout;
-                collision.GetComponent<Player>().health = Mathf.Clamp(collision.GetComponent<Player>().health + healthPerBite, 0, collision.GetComponent<Player>().maxHealth);
-                collision.GetComponent<Player>().UpdateHearts();
+                PlayState.playerScript.HitFor(-healthPerBite);
                 if (PlayState.gameOptions[11] > 1)
                     PlayState.RequestParticle(new Vector2(transform.position.x, transform.position.y + 0.25f), "nom");
             }

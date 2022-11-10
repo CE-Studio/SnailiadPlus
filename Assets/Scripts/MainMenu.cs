@@ -208,9 +208,9 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if ((PlayState.gameState == "Menu" || PlayState.gameState == "Pause") && !PlayState.isMenuOpen)
+        if ((PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause) && !PlayState.isMenuOpen)
         {
-            if (PlayState.gameState == "Menu" && !preloading)
+            if (PlayState.gameState == PlayState.GameState.menu && !preloading)
             {
                 music.volume = (PlayState.gameOptions[1] * 0.1f);
                 music.Play();
@@ -230,7 +230,7 @@ public class MainMenu : MonoBehaviour
             selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
             selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
         }
-        if (PlayState.gameState == "Menu")
+        if (PlayState.gameState == PlayState.GameState.menu)
         {
             if (panPoints.Length > 1)
             {
@@ -305,7 +305,7 @@ public class MainMenu : MonoBehaviour
             else
                 cam.position = panPoints[0];
         }
-        if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
+        if (PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause)
         {
             music.volume = (PlayState.gameOptions[1] * 0.1f) * PlayState.fader;
             Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
@@ -689,7 +689,8 @@ public class MainMenu : MonoBehaviour
             GetNewSnailOffset();
         }
 
-        if (PlayState.gameState != "Menu" && PlayState.gameState != "Pause" && PlayState.gameState != "Map" && PlayState.gameState != "Debug")
+        if (PlayState.gameState != PlayState.GameState.menu && PlayState.gameState != PlayState.GameState.pause &&
+            PlayState.gameState != PlayState.GameState.map && PlayState.gameState != PlayState.GameState.debug)
         {
             if (PlayState.isMenuOpen)
             {
@@ -699,12 +700,12 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
                 ToggleHUD(false);
             }
-            if ((!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown) && (PlayState.gameState != "error"))
+            if ((!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown) && (PlayState.gameState != PlayState.GameState.error))
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);
                 ToggleHUD(true);
-                PlayState.gameState = "Pause";
+                PlayState.gameState = PlayState.GameState.pause;
                 PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0);
                 PageMain();
@@ -717,7 +718,7 @@ public class MainMenu : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (PlayState.gameState == "Menu" || PlayState.gameState == "Pause")
+        if (PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause)
         {
             selector[0].transform.localPosition = new Vector2(0,
                     Mathf.Lerp(selector[0].transform.localPosition.y,
@@ -987,13 +988,13 @@ public class MainMenu : MonoBehaviour
 
         PlayState.screenCover.sortingOrder = 999;
         PlayState.player.transform.position = spawnPos;
-        PlayState.gameState = "Game";
+        PlayState.gameState = PlayState.GameState.game;
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
-        PlayState.playerScript.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
-        PlayState.playerScript.shellStateBuffer = PlayState.GetShellLevel();
+        PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.ToggleBossfightState(false, 0, true);
         SetTextComponentOrigins();
         fadingToIntro = false;
@@ -1055,7 +1056,7 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         bool returnAvailable = false;
-        if (PlayState.gameState == "Pause")
+        if (PlayState.gameState == PlayState.GameState.pause)
         {
             AddOption(PlayState.GetText("menu_option_main_return"), true, Unpause);
             returnAvailable = true;
@@ -1145,7 +1146,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
         PlayState.WriteSave("game");
 
-        if (PlayState.gameState == "Pause")
+        if (PlayState.gameState == PlayState.GameState.pause)
         {
             Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
             lastRoom.GetComponent<Collider2D>().enabled = true;
@@ -1176,7 +1177,7 @@ public class MainMenu : MonoBehaviour
         if (menuVarFlags[0] != PlayState.currentProfile)
             PlayState.LoadGame(menuVarFlags[0], true);
 
-        if (PlayState.gameState == "Pause")
+        if (PlayState.gameState == PlayState.GameState.pause)
         {
             Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
             lastRoom.GetComponent<Collider2D>().enabled = true;
@@ -1189,7 +1190,7 @@ public class MainMenu : MonoBehaviour
 
     public void Unpause()
     {
-        PlayState.gameState = "Game";
+        PlayState.gameState = PlayState.GameState.game;
         PlayState.ToggleHUD(true);
         ToggleHUD(false);
         pauseButtonDown = true;
@@ -1356,12 +1357,12 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
             { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13], 3, PlayState.gameOptions[14] });
-        if (PlayState.gameState == "Menu")
+        if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
             AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_eraseRecords"), true, RecordEraseSelect);
-        if (PlayState.gameState == "Menu")
+        if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
         AddOption("", false);
         AddOption(PlayState.GetText(PlayState.currentProfile != -1 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
@@ -2156,12 +2157,12 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
 
     public void ReturnToMenu()
     {
-        PlayState.gameState = "Menu";
+        PlayState.gameState = PlayState.GameState.menu;
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0);
         cam.position = panPoints[0];
         PageMain();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
-        PlayState.playerScript.StopMusic();
+        PlayState.globalFunctions.StopMusic();
 
         PlayState.skyLayer.transform.localPosition = Vector2.zero;
         PlayState.bgLayer.transform.localPosition = Vector2.zero;

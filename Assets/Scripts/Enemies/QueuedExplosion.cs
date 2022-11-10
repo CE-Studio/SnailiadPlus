@@ -19,7 +19,7 @@ public class QueuedExplosion : MonoBehaviour
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         lifeTime -= Time.deltaTime;

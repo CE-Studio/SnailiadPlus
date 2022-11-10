@@ -26,7 +26,7 @@ public class Chirpy1Generator : MonoBehaviour
 
     void Update()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         timeout -= Time.deltaTime;

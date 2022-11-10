@@ -47,7 +47,7 @@ public class Particle : MonoBehaviour
 
     public void Update()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == PlayState.GameState.game)
         {
             if (!anim.isPlaying)
                 anim.Resume();

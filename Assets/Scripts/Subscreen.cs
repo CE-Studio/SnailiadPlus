@@ -114,10 +114,10 @@ public class Subscreen : MonoBehaviour
 
     void Update()
     {
-        if (!buttonDown && PlayState.gameState == "Game" && Control.Map())
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && Control.Map())
         {
             menuOpen = true;
-            PlayState.gameState = "Map";
+            PlayState.gameState = PlayState.GameState.map;
             PlayState.ToggleHUD(false);
             PlayState.TogglableHUDElements[1].SetActive(true);
             PlayState.TogglableHUDElements[3].SetActive(true);
@@ -129,10 +129,10 @@ public class Subscreen : MonoBehaviour
             UpdateCells();
             UpdateText();
         }
-        if (!buttonDown && PlayState.gameState == "Map" && !isSelecting && (Control.Pause() || Control.Map()))
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.map && !isSelecting && (Control.Pause() || Control.Map()))
         {
             menuOpen = false;
-            PlayState.gameState = "Game";
+            PlayState.gameState = PlayState.GameState.game;
             PlayState.ToggleHUD(true);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
             buttonDown = true;

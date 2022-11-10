@@ -17,7 +17,7 @@ public class Blob2 : Enemy
 
     private void Awake()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(270, 10, 2, true, new Vector2(0.95f, 0.95f), new List<int>(), new List<int>(), new List<int> { 1 });
@@ -36,7 +36,7 @@ public class Blob2 : Enemy
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Game" || box == null)
+        if (PlayState.gameState != PlayState.GameState.game || box == null)
             return;
 
         UpdateBoxcasts();

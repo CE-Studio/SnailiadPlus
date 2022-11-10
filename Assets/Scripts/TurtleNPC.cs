@@ -29,7 +29,7 @@ public class TurtleNPC:NPC {
     }
 
     public override void Update() {
-        if (PlayState.gameState == "Game") {
+        if (PlayState.gameState == PlayState.GameState.game) {
             if (PlayState.player.transform.position.x < transform.position.x) {
                 sprite.flipX = true;
                 speechBubbleSprite.flipX = true;

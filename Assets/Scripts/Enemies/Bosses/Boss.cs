@@ -82,7 +82,7 @@ public class Boss : Enemy
     public IEnumerator RunIntro(bool focusOnMe = true)
     {
         PlayState.paralyzed = true;
-        PlayState.playerScript.UpdateMusic(-1, 0, 1);
+        PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
         PlayState.ToggleBossfightState(true, songIndeces[ID]);
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = true;
         PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
@@ -90,7 +90,7 @@ public class Boss : Enemy
         barMask.transform.localPosition = new Vector2(barPointLeft, barMask.transform.localPosition.y);
         frameAnim.Play("BossBar_frame_idle");
         box.enabled = false;
-        PlayState.playerScript.currentBossName = PlayState.GetText(
+        PlayState.globalFunctions.currentBossName = PlayState.GetText(
             "boss_" + ID switch { 1 => "stompy", 2 => "spaceBox", 3 => "moonSnail", _ => "shellbreaker" } + (PlayState.currentArea == 7 ? "_rush" : ""));
 
         int playBeep = 0;

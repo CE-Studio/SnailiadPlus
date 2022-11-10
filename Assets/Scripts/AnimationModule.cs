@@ -35,7 +35,7 @@ public class AnimationModule : MonoBehaviour
 
     void Update()
     {
-        if (PlayState.gameState != "Game" && pauseOnMenu)
+        if (PlayState.gameState != PlayState.GameState.game && pauseOnMenu)
             speed = 0;
         else
         {

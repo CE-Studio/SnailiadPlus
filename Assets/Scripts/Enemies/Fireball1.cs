@@ -24,7 +24,7 @@ public class Fireball1 : Enemy
 
     private void Awake()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(400, 3, 0, true, new Vector2(0.95f, 0.95f));
@@ -74,7 +74,7 @@ public class Fireball1 : Enemy
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         if (gracePeriod != 0)

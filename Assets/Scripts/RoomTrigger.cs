@@ -101,7 +101,7 @@ public class RoomTrigger:MonoBehaviour {
                                 PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
                             } else {
-                                if (PlayState.gameState == "Game")
+                                if (PlayState.gameState == PlayState.GameState.game)
                                     effectVars[effectVarIndex] -= Time.deltaTime;
                             }
                         }
@@ -157,7 +157,7 @@ public class RoomTrigger:MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Player") && active && PlayState.gameState == "Game") {
+        if (collision.CompareTag("Player") && active && PlayState.gameState == PlayState.GameState.game) {
             PlayState.ResetAllParticles();
             effectVars.Clear();
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);

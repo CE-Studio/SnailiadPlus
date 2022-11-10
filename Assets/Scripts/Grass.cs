@@ -18,7 +18,7 @@ public class Grass : MonoBehaviour
     
     public void Start()
     {
-        if (PlayState.gameState != "Game")
+        if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         totalBites = new int[] { 6, 3, 1 };
@@ -38,7 +38,7 @@ public class Grass : MonoBehaviour
 
     public void Update()
     {
-        if (PlayState.gameState == "Game")
+        if (PlayState.gameState == PlayState.GameState.game)
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
 
         if (timer == 0 && bitesRemaining == 0)
@@ -64,8 +64,7 @@ public class Grass : MonoBehaviour
                 }
                 else
                     timer = biteTimeout;
-                collision.GetComponent<Player>().health = Mathf.Clamp(collision.GetComponent<Player>().health + healthPerBite, 0, collision.GetComponent<Player>().maxHealth);
-                collision.GetComponent<Player>().UpdateHearts();
+                PlayState.playerScript.HitFor(-healthPerBite);
                 if (PlayState.gameOptions[11] > 1)
                     PlayState.RequestParticle(new Vector2(transform.position.x, transform.position.y + 0.25f), "nom");
             }
