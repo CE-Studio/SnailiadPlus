@@ -196,7 +196,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     break;
             }
             FlashItemText();
-            PlayState.FlashCollectionText();
+            PlayState.globalFunctions.FlashCollectionText();
             StartCoroutine(nameof(HoverOverPlayer));
             PlayState.WriteSave("game");
         }
@@ -204,11 +204,11 @@ public class Item:MonoBehaviour, IRoomObject {
 
     public void FlashItemText() {
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            PlayState.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.helixCount.ToString()));
+            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.helixCount.ToString()));
         else if (itemID >= PlayState.OFFSET_HEARTS)
-            PlayState.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
+            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
         else
-            PlayState.FlashItemText(IDToName());
+            PlayState.globalFunctions.FlashItemText(IDToName());
     }
 
     private string IDToName() {

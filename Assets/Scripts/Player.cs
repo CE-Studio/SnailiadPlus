@@ -23,58 +23,71 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public Vector2 velocity = Vector2.zero;
     public bool grounded;
     public bool shelled;
+    public bool ungroundedViaHop;
 
-    public float[] WEAPON_COOLDOWNS = new float[] { 0.085f, 0.3f, 0.17f, 0.0425f, 0.15f, 0.085f };
-
-    private float speedMod = 1;
-    private float jumpMod = 1;
-    private float gravityMod = 1;
+    public float speedMod = 1;
+    public float jumpMod = 1;
+    public float gravityMod = 1;
     public bool holdingJump = false;
-    private bool holdingShell = false;
-    private bool axisFlag = false;
-    private bool againstWallFlag = false;
-    private float fireCooldown = 0;
-    private int bulletID = 0;
-    private float sleepTimer = 30f;
-    private bool isSleeping = false;
+    public bool holdingShell = false;
+    public bool axisFlag = false;
+    public bool againstWallFlag = false;
+    public float fireCooldown = 0;
+    public int bulletID = 0;
+    public float sleepTimer = 30f;
+    public bool isSleeping = false;
+    public int readIDSpeed = 0;
+    public int readIDJump = 0;
+    public float jumpBufferCounter = 0;
+    public float coyoteTimeCounter = 0;
+    public float lastPointBeforeHop = 0;
+    public bool[] animData;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public Rigidbody2D rb;
-    public GameObject bulletPool;
-    public Sprite blank;
-    public Sprite smallBlank;
-    public Sprite missing;
 
-    private RaycastHit2D boxL;
-    private RaycastHit2D boxR;
-    private RaycastHit2D boxU;
-    private RaycastHit2D boxD;
-    private RaycastHit2D boxCorner;
-    private Vector2 lastPosition;
-    private Vector2 lastSize;
+    public RaycastHit2D boxL;
+    public RaycastHit2D boxR;
+    public RaycastHit2D boxU;
+    public RaycastHit2D boxD;
+    public RaycastHit2D boxCorner;
+    public Vector2 lastPosition;
+    public Vector2 lastSize;
 
     public LayerMask playerCollide;
 
-    public Snaily playerScriptSnaily;
+    //public Snaily playerScriptSnaily;
 
     // Movement control vars
-    private int defaultGravityDir = DIR_FLOOR;       // Determines the default direction gravity pulls the player
-    private int shellable = -1;                      // Determines if the player can retract into a shell. -1 = always, -2 = never, any item ID = item-bound
-    private int hopWhileMoving = 0;                  // Determines if the player bounces along the ground when they move. 0 = no hops, any positive int = hop power
-    private bool canRoundInnerCorners = true;        // Determines if the player can round inside corners in terrain, switching their gravity state
-    private bool canRoundOuterCorners = true;        // Determines if the player can round outside corners in terrain, switching their gravity state
-    private float[] runSpeed = new float[4];         // Contains the speed at which the player moves with each shell upgrade
-    private float[] jumpPower = new float[8];        // Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
-    private float[] gravity = new float[4];          // Contains the gravity scale with each shell upgrade
-    private float[] terminalVelocity = new float[4]; // Contains the player's terminal velocity with each shell upgrade
-    private float idleTimer = 30;                    // Determines how long the player must remain idle before playing an idle animation
-    private List<Particle> idleParticles;            // Contains every particle used in the player's idle animation so that they can be despawned easily
-    private Vector2 hitboxSize_normal;               // The size of the player's hitbox
-    private Vector2 hitboxSize_shell;                // The size of the player's hitbox while in their shell
-    private Vector2 hitboxOffset_normal;             // The offset of the player's hitbox
-    private Vector2 hitboxOffset_shell;              // the offset of the player's hitbox while in their shell
+    // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
+    public int defaultGravityDir = DIR_FLOOR; // --------------------- Determines the default direction gravity pulls the player
+    public int[] canJump = new int[] { -1 }; // -------------------- I Determines if the player can jump
+    public int[] canSwapGravity = new int[] { -1 }; // ------------- I Determines if the player can change their gravity state
+    public int[] retainGravityOnAirborne = new int[] { 8 }; // ----- I Determines whether or not player keeps their current gravity when in the air
+    public int[] canGravityJumpOpposite = new int[] { 8 }; // ------ I Determines if the player can change their gravity mid-air to the opposite direction
+    public int[] canGravityJumpAdjacent = new int[] { 8 }; // ------ I Determines if the player can change their gravity mid-air relatively left or relatively right
+    public int[] shellable = new int[] { -1 }; // ------------------ I Determines if the player can retract into a shell. Item system
+    public int[] hopWhileMoving = new int[] { -2 }; // ------------- I Determines if the player bounces along the ground when they move
+    public float hopPower; // ---------------------------------------- The power of a walking bounce
+    public int[] canRoundInnerCorners = new int[] { -1 }; // ------- I Determines if the player can round inside corners
+    public int[] canRoundOuterCorners = new int[] { -1 }; // ------- I Determines if the player can round outside corners
+    public int[] canRoundOppositeOuterCorners = new int[] { -1 }; // I Determines if the player can round outside corners opposite the default gravity
+    public float[] runSpeed = new float[4]; // ----------------------- Contains the speed at which the player moves with each shell upgrade
+    public float[] jumpPower = new float[8]; // ---------------------- Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
+    public float[] gravity = new float[4]; // ------------------------ Contains the gravity scale with each shell upgrade
+    public float[] terminalVelocity = new float[4]; // --------------- Contains the player's terminal velocity with each shell upgrade
+    public float[] weaponCooldowns = new float[6]; // ---------------- Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
+    public float idleTimer; // --------------------------------------- Determines how long the player must remain idle before playing an idle animation
+    public List<Particle> idleParticles; // -------------------------- Contains every particle used in the player's idle animation so that they can be despawned easily
+    public Vector2 hitboxSize_normal; // ----------------------------- The size of the player's hitbox
+    public Vector2 hitboxSize_shell; // ------------------------------ The size of the player's hitbox while in their shell
+    public Vector2 hitboxOffset_normal; // --------------------------- The offset of the player's hitbox
+    public Vector2 hitboxOffset_shell; // ---------------------------- The offset of the player's hitbox while in their shell
+    public float unshellAdjust ; // ---------------------------------- The amount the player's position is adjusted by when unshelling near a wall
+    public float coyoteTime; // -------------------------------------- How long after leaving the ground via falling the player is still able to jump for
+    public float jumpBuffer; // -------------------------------------- How long after pressing the jump button the player will continue to try to jump, in case of an early press
     #endregion vars
 
     #region cutscene
@@ -117,13 +130,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
     #endregion cutscene
 
     // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
-    void Start()
+    public virtual void Start()
     {
         // All this does is set Snaily's components to simpler variables that can be more easily called
         anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        playerCollide = LayerMask.GetMask("PlayerCollide");
 
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
@@ -188,11 +202,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     sleepTimer = idleTimer;
                     isSleeping = false;
-                    //if (zzz != null)
-                    //{
-                    //    zzz.ResetParticle();
-                    //    zzz = null;
-                    //}
                     foreach (Particle particle in idleParticles)
                         particle.ResetParticle();
                     idleParticles.Clear();
@@ -202,9 +211,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     sleepTimer = Mathf.Clamp(sleepTimer - Time.deltaTime, 0, idleTimer);
                     if (sleepTimer == 0 && !isSleeping)
                     {
-                        if (!shelled)
-                            ToggleShell();
-                        idleParticles.Add(PlayState.RequestParticle(new Vector2(transform.position.x + 0.75f, transform.position.y), "zzz"));
+                        IdleAnim();
                         isSleeping = true;
                     }
                 }
@@ -214,6 +221,21 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
         }
     }
+
+    public virtual void IdleAnim()
+    {
+        if (!shelled)
+            ToggleShell();
+        idleParticles.Add(PlayState.RequestParticle(new Vector2(transform.position.x + 0.75f, transform.position.y), "zzz"));
+    }
+
+    // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
+    public virtual void LateUpdate()
+    {
+        
+    }
+
+    #region Movement
 
     // This function is called once every 0.02 seconds (50 time a second) regardless of framerate. Unity requires all physics calculations to be
     // run in this function, so it's where I put movement code as it utilizes boxcasts
@@ -232,1143 +254,1388 @@ public class Player : MonoBehaviour, ICutsceneObject {
         fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
         // Then, we reset the flag marking if Snaily is airborne and shoving their face into a wall
         againstWallFlag = false;
+        // Finally, we increment the jump buffer and coyote time values if necessary
+        if (Control.JumpHold())
+            jumpBufferCounter += Time.fixedDeltaTime;
+        else
+            jumpBufferCounter = 0;
+        if (!grounded)
+            coyoteTimeCounter += Time.fixedDeltaTime;
+        else
+            coyoteTimeCounter = 0;
     
         // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
         // so that things can stay different between them if needed, like Snaily falling off walls and ceilings without Gravity Snail
         if (!inDeathCutscene)
         {
-            int readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
-            int readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
+            readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
+            readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
     
             switch (gravityDir)
             {
                 case DIR_FLOOR:
-                    // This if block's purpose is so that you can click that minus button on the left and hide it from view, just so that you don't have
-                    // to scroll quite as much if you don't want to. Cleanup, basically
-                    if (true)
-                    {
-                        // We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-                        velocity.x = 0;
-                        if (grounded)
-                            velocity.y = 0;
-    
-                        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (Control.AxisX() == (facingLeft ? 1 : -1))
-                                    transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
-                                if (grounded)
-                                    ToggleShell();
-                                float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
-                                if (distance < box.size.x * 0.5f)
-                                {
-                                    transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
-                                        (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
-                                    UpdateBoxcasts();
-                                }
-                            }
-                            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-                            if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
-                            {
-                                againstWallFlag = true;
-                                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
-                                    runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
-                                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
-                                // we check to see if climbing is possible in either direction and switch the character's gravity state
-                                if ((boxD.distance + boxU.distance) >= 1)
-                                {
-                                    if (!stunned)
-                                    {
-                                        if (Control.UpHold() || (Control.DownHold() && !grounded))
-                                        {
-                                            if (shelled)
-                                            {
-                                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x - (0.58125f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                                        transform.position.y);
-                                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x + (0.58125f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                                        transform.position.y);
-                                                ToggleShell();
-                                            }
-    
-                                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                                            float boxCorrection = (box.size.y - box.size.x) * 0.5f;
-                                            float ceilDis = boxU.distance - boxCorrection;
-                                            float floorDis = boxD.distance - boxCorrection;
-                                            SwitchSurfaceAxis();
-                                            float adjustment = 0;
-                                            if (grounded)
-                                                adjustment = boxCorrection;
-                                            else
-                                            {
-                                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                                    adjustment = -(ceilDis - (box.size.y * 0.5f));
-                                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                                    adjustment = floorDis - (box.size.y * 0.5f);
-                                            }
-                                            transform.position = new Vector2(
-                                                transform.position.x + (facingLeft ? boxCorrection : -boxCorrection),
-                                                transform.position.y - adjustment
-                                                );
-                                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                            grounded = true;
-                                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
-                                            UpdateBoxcasts();
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
-                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                            UpdateBoxcasts();
-                        }
-    
-                        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
-                        if (!grounded)
-                        {
-                            bool pokedCeiling = false;
-                            velocity.y -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
-                            if (velocity.y > 0 && !holdingJump)
-                                velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
-                            velocity.y = Mathf.Clamp(velocity.y, terminalVelocity[readIDSpeed], Mathf.Infinity);
-                            if (boxD.distance != 0 && boxU.distance != 0)
-                            {
-                                if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
-                                {
-                                    velocity.y = -boxD.distance;
-                                    grounded = true;
-                                }
-                                else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
-                                {
-                                    velocity.y = boxU.distance;
-                                    pokedCeiling = true;
-                                }
-                            }
-                            if (!againstWallFlag)
-                            {
-                                transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                            }
-                            else
-                            {
-                                // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
-                                for (int i = 0; i < 8; i++)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
-                                    RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
-                                        new Vector2(transform.position.x, transform.position.y + 0.375f),
-                                        facingLeft ? Vector2.left : Vector2.right,
-                                        Mathf.Infinity,
-                                        playerCollide,
-                                        Mathf.Infinity,
-                                        Mathf.Infinity
-                                        );
-                                    RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
-                                        new Vector2(transform.position.x, transform.position.y - 0.375f),
-                                        facingLeft ? Vector2.left : Vector2.right,
-                                        Mathf.Infinity,
-                                        playerCollide,
-                                        Mathf.Infinity,
-                                        Mathf.Infinity
-                                        );
-                                    if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
-                                    {
-                                        transform.position = new Vector2(
-                                            transform.position.x + ((facingLeft ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
-                                            Mathf.Floor(transform.position.y) + 0.5f);
-                                        i = 8;
-                                    }
-                                }
-                            }
-                            UpdateBoxcasts();
-                            if (pokedCeiling)
-                            {
-                                velocity.y = 0;
-                                if (Control.UpHold())
-                                {
-                                    gravityDir = DIR_CEILING;
-                                    SwapDir(DIR_CEILING);
-                                    grounded = true;
-                                    holdingShell = true;
-                                    return;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (boxD.distance > 0.0125f)
-                            {
-                                if (boxCorner.distance <= 0.0125f)
-                                {
-                                    if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
-                                    {
-                                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                        SwitchSurfaceAxis();
-                                        RaycastHit2D wallTester = Physics2D.Raycast(
-                                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y - 0.75f),
-                                            facingLeft ? Vector2.left : Vector2.right,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        transform.position = new Vector2(
-                                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
-                                            transform.position.y
-                                            );
-                                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                        return;
-                                    }
-                                }
-                                else
-                                    grounded = false;
-                            }
-                        }
-    
-                        // Now, let's see if we can jump
-                        if (boxD.distance == 0)
-                        {
-                            transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
-                            UpdateBoxcasts();
-                        }
-                        if (Control.JumpHold() && grounded && !holdingJump && boxU.distance > 0.95f && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (boxL.distance < 0.4f && boxR.distance < 0.4f)
-                                    break;
-                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                        transform.position.y);
-                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                        transform.position.y);
-                                ToggleShell();
-                            }
-                            grounded = false;
-                            velocity.y = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
-                            PlayState.PlaySound("Jump");
-                        }
-                        if (Control.JumpHold() && !holdingJump)
-                            holdingJump = true;
-                        else if (!Control.JumpHold() && holdingJump)
-                            holdingJump = false;
-    
-                        // Finally, we check to see if we can shell
-                        if (Control.DownHold() &&
-                            Control.AxisX() == 0 &&
-                            !Control.JumpHold() &&
-                            !Control.ShootHold() &&
-                            !Control.StrafeHold() &&
-                            !holdingShell && !PlayState.paralyzed)
-                        {
-                            if (!shelled)
-                                ToggleShell();
-                            else
-                            {
-                                if (boxL.distance < 0.4f && boxR.distance < 0.4f)
-                                    break;
-                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                        transform.position.y);
-                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                        transform.position.y);
-                                ToggleShell();
-                            }
-                            holdingShell = true;
-                        }
-                        else if (!holdingShell && Control.DownHold())
-                            holdingShell = true;
-                        if (holdingShell && !Control.DownHold())
-                            holdingShell = false;
-                        if (PlayState.IsTileSolid(transform.position))
-                            transform.position = new Vector2(transform.position.x, transform.position.y + 1);
-                    }
+                    CaseDown();
                     break;
                 case DIR_WALL_LEFT:
-                    // This if block's purpose is so that you can click that minus button on the left and hide it from view, just so that you don't have
-                    // to scroll quite as much if you don't want to. Cleanup, basically
-                    if (true)
-                    {
-                        // We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-                        velocity.y = 0;
-                        if (grounded)
-                            velocity.x = 0;
-    
-                        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (Control.AxisX() == (facingDown ? 1 : -1))
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
-                                if (grounded)
-                                    ToggleShell();
-                                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
-                                if (distance < box.size.y * 0.5f)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
-                                        (boxD.point.y < transform.position.y ? 1 : -1));
-                                    UpdateBoxcasts();
-                                }
-                            }
-                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-                            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
-                            {
-                                againstWallFlag = true;
-                                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
-                                    runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
-                                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
-                                // we check to see if climbing is possible in either direction and switch the character's gravity state
-                                if ((boxL.distance + boxR.distance) >= 1)
-                                {
-                                    if (!stunned)
-                                    {
-                                        if (Control.RightHold() || (Control.LeftHold() && !grounded))
-                                        {
-                                            if (shelled)
-                                            {
-                                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                                ToggleShell();
-                                            }
-    
-                                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                                            float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                                            float ceilDis = boxR.distance - boxCorrection;
-                                            float floorDis = boxL.distance - boxCorrection;
-                                            SwitchSurfaceAxis();
-                                            float adjustment = 0;
-                                            if (grounded)
-                                                adjustment = boxCorrection;
-                                            else
-                                            {
-                                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                                    adjustment = -(ceilDis - (box.size.y * 0.5f));
-                                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                                    adjustment = floorDis - (box.size.y * 0.5f);
-                                            }
-                                            transform.position = new Vector2(
-                                                transform.position.x - adjustment,
-                                                transform.position.y + (facingDown ? boxCorrection : -boxCorrection)
-                                                );
-                                            SwapDir((Control.RightHold()) ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                            grounded = true;
-                                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
-                                            UpdateBoxcasts();
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                velocity.y = facingDown ? -runSpeedValue : runSpeedValue;
-                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                            UpdateBoxcasts();
-                        }
-    
-                        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
-                        if (!grounded)
-                        {
-                            if (!PlayState.CheckForItem("Gravity Snail"))
-                            {
-                                transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                                SwapDir(DIR_FLOOR);
-                                SwitchSurfaceAxis();
-                                gravityDir = DIR_FLOOR;
-                                if (Control.DownHold())
-                                    holdingShell = true;
-                            }
-                            else
-                            {
-                                bool pokedCeiling = false;
-                                velocity.x -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
-                                if (velocity.x > 0 && !holdingJump)
-                                    velocity.x = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
-                                velocity.x = Mathf.Clamp(velocity.x, terminalVelocity[readIDSpeed], Mathf.Infinity);
-                                if (boxL.distance != 0 && boxR.distance != 0)
-                                {
-                                    if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
-                                    {
-                                        velocity.x = -boxL.distance;
-                                        grounded = true;
-                                    }
-                                    else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
-                                    {
-                                        velocity.x = boxR.distance;
-                                        pokedCeiling = true;
-                                    }
-                                }
-                                if (!againstWallFlag)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                                }
-                                else
-                                {
-                                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
-                                    for (int i = 0; i < 8; i++)
-                                    {
-                                        transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
-                                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
-                                            new Vector2(transform.position.x + 0.375f, transform.position.y),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
-                                            new Vector2(transform.position.x - 0.375f, transform.position.y),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
-                                        {
-                                            transform.position = new Vector2(
-                                                Mathf.Floor(transform.position.x) + 0.5f,
-                                                transform.position.y + ((facingDown ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
-                                            i = 8;
-                                        }
-                                    }
-                                }
-                                UpdateBoxcasts();
-                                if (pokedCeiling)
-                                {
-                                    velocity.x = 0;
-                                    if (Control.RightHold())
-                                    {
-                                        gravityDir = DIR_WALL_RIGHT;
-                                        SwapDir(DIR_WALL_RIGHT);
-                                        grounded = true;
-                                        holdingShell = true;
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (boxL.distance > 0.0125f)
-                            {
-                                if (boxCorner.distance <= 0.0125f)
-                                {
-                                    if (!PlayState.CheckForItem("Gravity Snail"))
-                                    {
-                                        SwapDir(DIR_FLOOR);
-                                        SwitchSurfaceAxis();
-                                        gravityDir = DIR_FLOOR;
-                                        if (Control.LeftHold() || Control.DownHold())
-                                            holdingShell = true;
-                                        transform.position = new Vector2(transform.position.x + 0.0625f, transform.position.y);
-                                        if (boxL.distance == 0)
-                                            transform.position = new Vector2(transform.position.x - 0.3125f, transform.position.y);
-                                        return;
-                                    }
-                                    else if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
-                                    {
-                                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
-                                        SwitchSurfaceAxis();
-                                        RaycastHit2D wallTester = Physics2D.Raycast(
-                                            new Vector2(transform.position.x - 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        transform.position = new Vector2(
-                                            transform.position.x,
-                                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
-                                            );
-                                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                        return;
-                                    }
-                                }
-                                else
-                                    grounded = false;
-                            }
-                        }
-    
-                        // Now, let's see if we can jump
-                        if (boxL.distance == 0)
-                        {
-                            transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
-                            UpdateBoxcasts();
-                        }
-                        if (Control.JumpHold() && grounded && !holdingJump && boxR.distance > 0.95f && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (boxD.distance < 0.4f && boxU.distance < 0.4f)
-                                    break;
-                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                ToggleShell();
-                            }
-                            grounded = false;
-                            if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.x = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
-                            else
-                            {
-                                transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                                SwapDir(DIR_FLOOR);
-                                SwitchSurfaceAxis();
-                                gravityDir = DIR_FLOOR;
-                                if (Control.DownHold())
-                                    holdingShell = true;
-                            }
-                            PlayState.PlaySound("Jump");
-                        }
-                        if (Control.JumpHold() && !holdingJump)
-                            holdingJump = true;
-                        else if (!Control.JumpHold() && holdingJump)
-                            holdingJump = false;
-    
-                        // Finally, we check to see if we can shell
-                        if (Control.AxisY() == 0 &&
-                            Control.LeftHold() &&
-                            !Control.JumpHold() &&
-                            !Control.ShootHold() &&
-                            !Control.StrafeHold() &&
-                            !holdingShell && !PlayState.paralyzed)
-                        {
-                            if (!shelled)
-                                ToggleShell();
-                            else
-                            {
-                                if (boxD.distance < 0.4f && boxU.distance < 0.4f)
-                                    break;
-                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                ToggleShell();
-                            }
-                            holdingShell = true;
-                        }
-                        else if (!holdingShell && Control.LeftHold())
-                            holdingShell = true;
-                        if (holdingShell && !Control.LeftHold())
-                            holdingShell = false;
-                        if (PlayState.IsTileSolid(transform.position))
-                            transform.position = new Vector2(transform.position.x - 1, transform.position.y);
-                    }
+                    CaseLeft();
                     break;
                 case DIR_WALL_RIGHT:
-                    // This if block's purpose is so that you can click that minus button on the left and hide it from view, just so that you don't have
-                    // to scroll quite as much if you don't want to. Cleanup, basically
-                    if (true)
-                    {
-                        // We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-                        velocity.y = 0;
-                        if (grounded)
-                            velocity.x = 0;
-    
-                        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (Control.AxisX() == (facingDown ? 1 : -1))
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
-                                if (grounded)
-                                    ToggleShell();
-                                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
-                                if (distance < box.size.y * 0.5f)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
-                                        (boxD.point.y < transform.position.y ? 1 : -1));
-                                    UpdateBoxcasts();
-                                }
-                            }
-                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-                            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
-                            {
-                                againstWallFlag = true;
-                                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
-                                    runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
-                                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
-                                // we check to see if climbing is possible in either direction and switch the character's gravity state
-                                if ((boxL.distance + boxR.distance) >= 1)
-                                {
-                                    if (!stunned)
-                                    {
-                                        if (Control.LeftHold() || (Control.RightHold() && !grounded))
-                                        {
-                                            if (shelled)
-                                            {
-                                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                                ToggleShell();
-                                            }
-    
-                                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                                            float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                                            float ceilDis = boxL.distance - boxCorrection;
-                                            float floorDis = boxR.distance - boxCorrection;
-                                            SwitchSurfaceAxis();
-                                            float adjustment = 0;
-                                            if (grounded)
-                                                adjustment = -boxCorrection;
-                                            else
-                                            {
-                                                if (ceilDis < floorDis && ceilDis < box.size.x * 0.5f)
-                                                    adjustment = ceilDis - (box.size.x * 0.5f);
-                                                else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
-                                                    adjustment = -(floorDis - (box.size.x * 0.5f));
-                                            }
-                                            transform.position = new Vector2(
-                                                transform.position.x - adjustment,
-                                                transform.position.y + (facingDown ? boxCorrection : -boxCorrection)
-                                                );
-                                            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                            grounded = true;
-                                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
-                                            UpdateBoxcasts();
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                velocity.y = facingDown ? -runSpeedValue : runSpeedValue;
-                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                            UpdateBoxcasts();
-                        }
-    
-                        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
-                        if (!grounded)
-                        {
-                            if (!PlayState.CheckForItem("Gravity Snail"))
-                            {
-                                transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                                SwapDir(DIR_FLOOR);
-                                SwitchSurfaceAxis();
-                                gravityDir = DIR_FLOOR;
-                                if (Control.DownHold())
-                                    holdingShell = true;
-                            }
-                            else
-                            {
-                                bool pokedCeiling = false;
-                                velocity.x += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
-                                if (velocity.x < 0 && !holdingJump)
-                                    velocity.x = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
-                                velocity.x = Mathf.Clamp(velocity.x, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
-                                if (boxL.distance != 0 && boxR.distance != 0)
-                                {
-                                    if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
-                                    {
-                                        velocity.x = -boxL.distance;
-                                        pokedCeiling = true;
-                                    }
-                                    else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
-                                    {
-                                        velocity.x = boxR.distance;
-                                        grounded = true;
-                                    }
-                                }
-                                if (!againstWallFlag)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                                }
-                                else
-                                {
-                                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
-                                    for (int i = 0; i < 8; i++)
-                                    {
-                                        transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
-                                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
-                                            new Vector2(transform.position.x + 0.375f, transform.position.y),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
-                                            new Vector2(transform.position.x - 0.375f, transform.position.y),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
-                                        {
-                                            transform.position = new Vector2(
-                                                Mathf.Floor(transform.position.x) + 0.5f,
-                                                transform.position.y + ((facingDown ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
-                                            i = 8;
-                                        }
-                                    }
-                                }
-                                UpdateBoxcasts();
-                                if (pokedCeiling)
-                                {
-                                    velocity.x = 0;
-                                    if (Control.LeftHold())
-                                    {
-                                        gravityDir = DIR_WALL_LEFT;
-                                        SwapDir(DIR_WALL_LEFT);
-                                        grounded = true;
-                                        holdingShell = true;
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (boxR.distance > 0.0125f)
-                            {
-                                if (!PlayState.CheckForItem("Gravity Snail"))
-                                {
-                                    SwapDir(DIR_FLOOR);
-                                    SwitchSurfaceAxis();
-                                    gravityDir = DIR_FLOOR;
-                                    if (Control.RightHold() || Control.DownHold())
-                                        holdingShell = true;
-                                    transform.position = new Vector2(transform.position.x - 0.0625f, transform.position.y);
-                                    if (boxL.distance == 0)
-                                        transform.position = new Vector2(transform.position.x + 0.3125f, transform.position.y);
-                                    return;
-                                }
-                                else if (boxCorner.distance <= 0.0125f)
-                                {
-                                    if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
-                                    {
-                                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
-                                        SwitchSurfaceAxis();
-                                        RaycastHit2D wallTester = Physics2D.Raycast(
-                                            new Vector2(transform.position.x + 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
-                                            facingDown ? Vector2.down : Vector2.up,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        transform.position = new Vector2(
-                                            transform.position.x,
-                                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
-                                            );
-                                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
-                                        return;
-                                    }
-                                }
-                                else
-                                    grounded = false;
-                            }
-                        }
-    
-                        // Now, let's see if we can jump
-                        if (boxR.distance == 0)
-                        {
-                            transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
-                            UpdateBoxcasts();
-                        }
-                        if (Control.JumpHold() && grounded && !holdingJump && boxL.distance > 0.95f && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (boxD.distance < 0.4f && boxU.distance < 0.4f)
-                                    break;
-                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                ToggleShell();
-                            }
-                            grounded = false;
-                            if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.x = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
-                            else
-                            {
-                                transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                                SwapDir(DIR_FLOOR);
-                                SwitchSurfaceAxis();
-                                gravityDir = DIR_FLOOR;
-                                if (Control.DownHold())
-                                    holdingShell = true;
-                            }
-                            PlayState.PlaySound("Jump");
-                        }
-                        if (Control.JumpHold() && !holdingJump)
-                            holdingJump = true;
-                        else if (!Control.JumpHold() && holdingJump)
-                            holdingJump = false;
-    
-                        // Finally, we check to see if we can shell
-                        if (Control.AxisY() == 0 &&
-                            Control.RightHold() &&
-                            !Control.JumpHold() &&
-                            !Control.ShootHold() &&
-                            !Control.StrafeHold() &&
-                            !holdingShell && !PlayState.paralyzed)
-                        {
-                            if (!shelled)
-                                ToggleShell();
-                            else
-                            {
-                                if (boxD.distance < 0.4f && boxU.distance < 0.4f)
-                                    break;
-                                if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y -
-                                        (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                                else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x, transform.position.y +
-                                        (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                                ToggleShell();
-                            }
-                            holdingShell = true;
-                        }
-                        else if (!holdingShell && Control.RightHold())
-                            holdingShell = true;
-                        if (holdingShell && !Control.RightHold())
-                            holdingShell = false;
-                        if (PlayState.IsTileSolid(transform.position))
-                            transform.position = new Vector2(transform.position.x + 1, transform.position.y);
-                    }
+                    CaseRight();
                     break;
                 case DIR_CEILING:
-                    // This if block's purpose is so that you can click that minus button on the left and hide it from view, just so that you don't have
-                    // to scroll quite as much if you don't want to. Cleanup, basically
-                    if (true)
-                    {
-                        // We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-                        velocity.x = 0;
-                        if (grounded)
-                            velocity.y = 0;
-    
-                        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
-                        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (Control.AxisX() == (facingLeft ? 1 : -1))
-                                    transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
-                                if (grounded)
-                                    ToggleShell();
-                                float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
-                                if (distance < box.size.x * 0.5f)
-                                {
-                                    transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
-                                        (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
-                                    UpdateBoxcasts();
-                                }
-                            }
-                            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-                            if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
-                            {
-                                againstWallFlag = true;
-                                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
-                                    runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
-                                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
-                                // we check to see if climbing is possible in either direction and switch the character's gravity state
-                                if ((boxD.distance + boxU.distance) >= 1)
-                                {
-                                    if (!stunned)
-                                    {
-                                        if (Control.DownHold() || (Control.UpHold() && !grounded))
-                                        {
-                                            if (shelled)
-                                            {
-                                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                                    transform.position = new Vector2(transform.position.x - (0.58125f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                                        transform.position.y);
-                                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                                    transform.position = new Vector2(transform.position.x + (0.58125f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                                        transform.position.y);
-                                                ToggleShell();
-                                            }
-    
-                                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                                            float boxCorrection = (box.size.y - box.size.x) * 0.5f;
-                                            float ceilDis = boxD.distance - boxCorrection;
-                                            float floorDis = boxU.distance - boxCorrection;
-                                            SwitchSurfaceAxis();
-                                            float adjustment = 0;
-                                            if (grounded)
-                                                adjustment = -boxCorrection;
-                                            else
-                                            {
-                                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                                    adjustment = ceilDis - (box.size.y * 0.5f);
-                                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                                    adjustment = -(floorDis - (box.size.y * 0.5f));
-                                            }
-                                            transform.position = new Vector2(
-                                                transform.position.x + (facingLeft ? boxCorrection : -boxCorrection),
-                                                transform.position.y - adjustment
-                                                );
-                                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
-                                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                            grounded = true;
-                                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
-                                            UpdateBoxcasts();
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
-                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-                            UpdateBoxcasts();
-                        }
-    
-                        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
-                        if (!grounded)
-                        {
-                            if (!PlayState.CheckForItem("Gravity Snail"))
-                            {
-                                SwapDir(DIR_FLOOR);
-                                gravityDir = DIR_FLOOR;
-                                if (Control.DownHold())
-                                    holdingShell = true;
-                            }
-                            else
-                            {
-                                bool pokedCeiling = false;
-                                velocity.y += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
-                                if (velocity.y < 0 && !holdingJump)
-                                    velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
-                                velocity.y = Mathf.Clamp(velocity.x, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
-                                if (boxD.distance != 0 && boxU.distance != 0)
-                                {
-                                    if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
-                                    {
-                                        velocity.y = -boxD.distance;
-                                        pokedCeiling = true;
-                                    }
-                                    else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
-                                    {
-                                        velocity.y = boxU.distance;
-                                        grounded = true;
-                                    }
-                                }
-                                if (!againstWallFlag)
-                                {
-                                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
-                                }
-                                else
-                                {
-                                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
-                                    for (int i = 0; i < 8; i++)
-                                    {
-                                        transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
-                                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
-                                            new Vector2(transform.position.x, transform.position.y + 0.375f),
-                                            facingLeft ? Vector2.left : Vector2.right,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
-                                            new Vector2(transform.position.x, transform.position.y - 0.375f),
-                                            facingLeft ? Vector2.left : Vector2.right,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
-                                        {
-                                            transform.position = new Vector2(
-                                                transform.position.x + ((facingLeft ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
-                                                Mathf.Floor(transform.position.y) + 0.5f);
-                                            i = 8;
-                                        }
-                                    }
-                                }
-                                UpdateBoxcasts();
-                                if (pokedCeiling)
-                                {
-                                    velocity.y = 0;
-                                    if (Control.DownHold())
-                                    {
-                                        gravityDir = DIR_FLOOR;
-                                        SwapDir(DIR_FLOOR);
-                                        grounded = true;
-                                        holdingShell = true;
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (boxU.distance > 0.0125f)
-                            {
-                                if (boxCorner.distance <= 0.0125f)
-                                {
-                                    if (!PlayState.CheckForItem("Gravity Snail"))
-                                    {
-                                        SwapDir(DIR_FLOOR);
-                                        gravityDir = DIR_FLOOR;
-                                        if (Control.DownHold())
-                                            holdingShell = true;
-                                    }
-                                    else if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
-                                    {
-                                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                                        SwitchSurfaceAxis();
-                                        RaycastHit2D wallTester = Physics2D.Raycast(
-                                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y + 0.75f),
-                                            facingLeft ? Vector2.left : Vector2.right,
-                                            Mathf.Infinity,
-                                            playerCollide,
-                                            Mathf.Infinity,
-                                            Mathf.Infinity
-                                            );
-                                        transform.position = new Vector2(
-                                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
-                                            transform.position.y
-                                            );
-                                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
-                                        return;
-                                    }
-                                }
-                                else
-                                    grounded = false;
-                            }
-                        }
-    
-                        // Now, let's see if we can jump
-                        if (boxU.distance == 0)
-                        {
-                            transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
-                            UpdateBoxcasts();
-                        }
-                        if (Control.JumpHold() && grounded && !holdingJump && boxD.distance > 0.95f && !PlayState.paralyzed)
-                        {
-                            if (shelled)
-                            {
-                                if (boxL.distance < 0.4f && boxR.distance < 0.4f)
-                                    break;
-                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                        transform.position.y);
-                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                        transform.position.y);
-                                ToggleShell();
-                            }
-                            grounded = false;
-                            if (PlayState.CheckForItem("Gravity Snail"))
-                                velocity.y = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
-                            else
-                            {
-                                SwapDir(DIR_FLOOR);
-                                gravityDir = DIR_FLOOR;
-                            }
-                            PlayState.PlaySound("Jump");
-                        }
-                        if (Control.JumpHold() && !holdingJump)
-                            holdingJump = true;
-                        else if (!Control.JumpHold() && holdingJump)
-                            holdingJump = false;
-    
-                        // Finally, we check to see if we can shell
-                        if (Control.UpHold() &&
-                            Control.AxisX() == 0 &&
-                            !Control.JumpHold() &&
-                            !Control.ShootHold() &&
-                            !Control.StrafeHold() &&
-                            !holdingShell && !PlayState.paralyzed)
-                        {
-                            if (!shelled)
-                                ToggleShell();
-                            else
-                            {
-                                if (boxL.distance < 0.4f && boxR.distance < 0.4f)
-                                    break;
-                                if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                        transform.position.y);
-                                else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                        transform.position.y);
-                                ToggleShell();
-                            }
-                            holdingShell = true;
-                        }
-                        else if (!holdingShell && Control.UpHold())
-                            holdingShell = true;
-                        if (holdingShell && !Control.UpHold())
-                            holdingShell = false;
-                        if (PlayState.IsTileSolid(transform.position))
-                            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
-                    }
+                    CaseUp();
                     break;
             }
     
             if ((Control.ShootHold() || Control.StrafeHold()) && !PlayState.paralyzed)
             {
                 if (shelled)
-                {
-                    if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-                    {
-                        if (!(boxD.distance < 0.4f && boxU.distance < 0.4f))
-                        {
-                            if (boxD.distance > 0.4f && boxU.distance < 0.4f)
-                                transform.position = new Vector2(transform.position.x, transform.position.y -
-                                    (0.675f - boxU.distance - (facingLeft ? 0.25f : 0)));
-                            else if (boxD.distance < 0.4f && boxU.distance > 0.4f)
-                                transform.position = new Vector2(transform.position.x, transform.position.y +
-                                    (0.675f - boxD.distance - (facingLeft ? 0 : 0.25f)));
-                        }
-                    }
-                    else
-                    {
-                        if (!(boxL.distance < 0.4f && boxR.distance < 0.4f))
-                        {
-                            if (boxL.distance > 0.4f && boxR.distance < 0.4f)
-                                transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
-                                    transform.position.y);
-                            else if (boxL.distance < 0.4f && boxR.distance > 0.4f)
-                                transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
-                                    transform.position.y);
-                        }
-                    }
                     ToggleShell();
-                }
                 Shoot();
             }
         }
     }
+
+    public virtual void CaseDown()
+    {
+        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
+        //velocity.x = 0;
+        if (grounded)
+            velocity.y = 0;
+
+        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
+        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
+        {
+            if (shelled)
+            {
+                if (Control.AxisX() == (facingLeft ? 1 : -1))
+                    transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
+                if (grounded)
+                    ToggleShell();
+                float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
+                if (distance < box.size.x * 0.5f)
+                {
+                    transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
+                        (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
+                    UpdateBoxcasts();
+                }
+            }
+            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
+            if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
+            {
+                againstWallFlag = true;
+                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
+                    runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
+                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
+                // we check to see if climbing is possible in either direction and switch the character's gravity state
+                if ((boxD.distance + boxU.distance) >= 1)
+                {
+                    if (!stunned)
+                    {
+                        if (((Control.UpHold() && !grounded) ||
+                            (Control.UpHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
+                            (Control.DownHold() && !grounded))
+                            && CheckAbility(canSwapGravity))
+                        {
+                            if (shelled)
+                                ToggleShell();
+
+                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            float boxCorrection = (box.size.y - box.size.x) * 0.5f;
+                            float ceilDis = boxU.distance - boxCorrection;
+                            float floorDis = boxD.distance - boxCorrection;
+                            SwitchSurfaceAxis();
+                            float adjustment = 0;
+                            if (grounded)
+                                adjustment = -boxCorrection;
+                            else
+                            {
+                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                    adjustment = ceilDis - (box.size.y * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                            }
+                            transform.position = new Vector2(
+                                transform.position.x + (facingLeft ? boxCorrection : -boxCorrection),
+                                transform.position.y + adjustment
+                                );
+                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
+                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                            grounded = true;
+                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                            if (box.size.x * 0.5f - 0.5f > 0)
+                                transform.position += new Vector3((box.size.x * 0.5f - 0.5f) * (facingLeft ? 1 : -1), 0, 0);
+                            UpdateBoxcasts();
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
+                if (CheckAbility(hopWhileMoving))
+                {
+                    grounded = false;
+                    ungroundedViaHop = true;
+                    velocity.y = hopPower;
+                    lastPointBeforeHop = transform.position.y;
+                }
+            }
+            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+            UpdateBoxcasts();
+        }
+
+        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
+        if (!grounded)
+        {
+            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            {
+                switch (defaultGravityDir)
+                {
+                    case DIR_WALL_LEFT:
+                        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                        SwapDir(DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.LeftHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_WALL_RIGHT:
+                        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                        SwapDir(DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.RightHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_CEILING:
+                        SwapDir(DIR_CEILING);
+                        gravityDir = DIR_CEILING;
+                        if (Control.UpHold())
+                            holdingShell = true;
+                        break;
+                }
+            }
+            else
+            {
+                bool pokedCeiling = false;
+                velocity.y -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                if (velocity.y > 0 && !holdingJump)
+                    velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                velocity.y = Mathf.Clamp(velocity.y, terminalVelocity[readIDSpeed], Mathf.Infinity);
+                if (boxD.distance != 0 && boxU.distance != 0)
+                {
+                    if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
+                    {
+                        velocity.y = boxU.distance;
+                        pokedCeiling = true;
+                    }
+                    else if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
+                    {
+                        velocity.y = -boxD.distance;
+                        grounded = true;
+                        ungroundedViaHop = false;
+                    }
+                }
+                if (!againstWallFlag)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                }
+                else
+                {
+                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                    for (int i = 0; i < 8; i++)
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
+                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                            new Vector2(transform.position.x, transform.position.y + 0.375f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                            new Vector2(transform.position.x, transform.position.y - 0.375f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                        {
+                            transform.position = new Vector2(
+                                transform.position.x + ((facingLeft ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
+                                Mathf.Floor(transform.position.y) + 0.5f);
+                            i = 8;
+                        }
+                    }
+                }
+                UpdateBoxcasts();
+                if (pokedCeiling)
+                {
+                    velocity.y = 0;
+                    if (Control.UpHold() && CheckAbility(canSwapGravity))
+                    {
+                        gravityDir = DIR_CEILING;
+                        SwapDir(DIR_CEILING);
+                        grounded = true;
+                        ungroundedViaHop = false;
+                        holdingShell = true;
+                        return;
+                    }
+                }
+                // Gravity jumping
+                if (Control.JumpHold() && !holdingJump && CheckAbility(canSwapGravity))
+                {
+                    if (CheckAbility(canGravityJumpOpposite) && ((Control.UpHold() && CheckAbility(canGravityJumpAdjacent)) || (!CheckAbility(canGravityJumpAdjacent))))
+                    {
+                        gravityDir = DIR_CEILING;
+                        SwapDir(DIR_CEILING);
+                        holdingShell = true;
+                    }
+                    else if (Control.AxisX() != 0 && CheckAbility(canGravityJumpAdjacent))
+                    {
+                        int newDir = Control.AxisX() == 1 ? DIR_WALL_RIGHT : DIR_WALL_LEFT;
+                        gravityDir = newDir;
+                        SwapDir(newDir);
+                        SwitchSurfaceAxis();
+                        holdingShell = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Suddenly in the air when we weren't last frame
+            if (boxD.distance > 0.0125f)
+            {
+                // Round an outside corner
+                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                {
+                    // Can't round corners? Fall.
+                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_CEILING)
+                    {
+                        SwapDir(DIR_CEILING);
+                        gravityDir = DIR_CEILING;
+                        if (Control.UpHold())
+                            holdingShell = true;
+                    }
+                    // CAN round corners? Round that corner, you glorious little snail, you
+                    else if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
+                    {
+                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        RaycastHit2D wallTester = Physics2D.Raycast(
+                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y - 0.75f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        transform.position = new Vector2(
+                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
+                            transform.position.y
+                            );
+                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        return;
+                    }
+                }
+                // FALL
+                else
+                    grounded = false;
+            }
+        }
+
+        // Now, let's see if we can jump
+        if (boxD.distance == 0)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
+            UpdateBoxcasts();
+        }
+        if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.y > lastPointBeforeHop)))
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && boxU.distance > 0.95f && !PlayState.paralyzed)
+        {
+            if (shelled)
+                ToggleShell();
+            grounded = false;
+            if (gravityDir != defaultGravityDir)
+            {
+                if (CheckAbility(retainGravityOnAirborne))
+                    velocity.y = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+                else
+                {
+                    switch (defaultGravityDir)
+                    {
+                        case DIR_WALL_LEFT:
+                            transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                            SwapDir(DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.LeftHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_WALL_RIGHT:
+                            transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                            SwapDir(DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.RightHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_FLOOR:
+                            SwapDir(DIR_FLOOR);
+                            gravityDir = DIR_FLOOR;
+                            if (Control.DownHold())
+                                holdingShell = true;
+                            break;
+                    }
+                }
+            }
+            else
+                velocity.y = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+            PlayState.PlaySound("Jump");
+        }
+        if (Control.JumpHold() && !holdingJump)
+            holdingJump = true;
+        else if (!Control.JumpHold() && holdingJump)
+            holdingJump = false;
+
+        // Finally, we check to see if we can shell
+        if (Control.DownHold() &&
+            Control.AxisX() == 0 &&
+            !Control.JumpHold() &&
+            !Control.ShootHold() &&
+            !Control.StrafeHold() &&
+            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+        {
+            ToggleShell();
+            holdingShell = true;
+        }
+        else if (!holdingShell && Control.DownHold())
+            holdingShell = true;
+        if (holdingShell && !Control.DownHold())
+            holdingShell = false;
+        if (PlayState.IsTileSolid(transform.position))
+            transform.position = new Vector2(transform.position.x, transform.position.y + 1);
+    }
+
+    public virtual void CaseLeft()
+    {
+        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
+        //velocity.y = 0;
+        if (grounded)
+            velocity.x = 0;
+
+        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
+        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
+        {
+            if (shelled)
+            {
+                if (Control.AxisY() == (facingDown ? 1 : -1))
+                    transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
+                if (grounded)
+                    ToggleShell();
+                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
+                if (distance < box.size.y * 0.5f)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
+                        (boxD.point.y < transform.position.y ? 1 : -1));
+                    UpdateBoxcasts();
+                }
+            }
+            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
+            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
+            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
+            {
+                againstWallFlag = true;
+                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
+                    runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
+                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
+                // we check to see if climbing is possible in either direction and switch the character's gravity state
+                if ((boxL.distance + boxR.distance) >= 1)
+                {
+                    if (!stunned)
+                    {
+                        if (((Control.RightHold() && !grounded) ||
+                            (Control.RightHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
+                            (Control.LeftHold() && !grounded))
+                            && CheckAbility(canSwapGravity))
+                        {
+                            if (shelled)
+                                ToggleShell();
+
+                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            float boxCorrection = (box.size.x - box.size.y) * 0.5f;
+                            float ceilDis = boxR.distance - boxCorrection;
+                            float floorDis = boxL.distance - boxCorrection;
+                            SwitchSurfaceAxis();
+                            float adjustment = 0;
+                            if (grounded)
+                                adjustment = -boxCorrection;
+                            else
+                            {
+                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                    adjustment = ceilDis - (box.size.y * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                            }
+                            transform.position = new Vector2(
+                                transform.position.x + adjustment,
+                                transform.position.y + (facingDown ? boxCorrection : -boxCorrection)
+                                );
+                            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                            grounded = true;
+                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                            if (box.size.y * 0.5f - 0.5f > 0)
+                                transform.position += new Vector3(0, (box.size.y * 0.5f - 0.5f) * (facingDown ? 1 : -1), 0);
+                            UpdateBoxcasts();
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                velocity.y = facingDown ? -runSpeedValue : runSpeedValue;
+                if (CheckAbility(hopWhileMoving))
+                {
+                    grounded = false;
+                    ungroundedViaHop = true;
+                    velocity.x = hopPower;
+                    lastPointBeforeHop = transform.position.x;
+                }
+            }
+            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+            UpdateBoxcasts();
+        }
+
+        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
+        if (!grounded)
+        {
+            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            {
+                switch (defaultGravityDir)
+                {
+                    case DIR_FLOOR:
+                        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                        SwapDir(DIR_FLOOR);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_FLOOR;
+                        if (Control.DownHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_CEILING:
+                        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                        SwapDir(DIR_CEILING);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_CEILING;
+                        if (Control.UpHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_WALL_RIGHT:
+                        SwapDir(DIR_WALL_RIGHT);
+                        gravityDir = DIR_WALL_RIGHT;
+                        if (Control.RightHold())
+                            holdingShell = true;
+                        break;
+                }
+            }
+            else
+            {
+                bool pokedCeiling = false;
+                velocity.x -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                if (velocity.x > 0 && !holdingJump)
+                    velocity.x = PlayState.Integrate(velocity.x, 0, 4, Time.fixedDeltaTime);
+                velocity.x = Mathf.Clamp(velocity.x, terminalVelocity[readIDSpeed], Mathf.Infinity);
+                if (boxL.distance != 0 && boxR.distance != 0)
+                {
+                    if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
+                    {
+                        velocity.x = boxR.distance;
+                        pokedCeiling = true;
+                    }
+                    else if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                    {
+                        velocity.x = -boxL.distance;
+                        grounded = true;
+                        ungroundedViaHop = false;
+                    }
+                }
+                if (!againstWallFlag)
+                {
+                    transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                }
+                else
+                {
+                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                    for (int i = 0; i < 8; i++)
+                    {
+                        transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
+                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                            new Vector2(transform.position.x + 0.375f, transform.position.y),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                            new Vector2(transform.position.x - 0.375f, transform.position.y),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                        {
+                            transform.position = new Vector2(
+                                Mathf.Floor(transform.position.x) + 0.5f,
+                                transform.position.y + ((facingDown ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
+                            i = 8;
+                        }
+                    }
+                }
+                UpdateBoxcasts();
+                if (pokedCeiling)
+                {
+                    velocity.x = 0;
+                    if (Control.RightHold() && CheckAbility(canSwapGravity))
+                    {
+                        gravityDir = DIR_WALL_RIGHT;
+                        SwapDir(DIR_WALL_RIGHT);
+                        grounded = true;
+                        ungroundedViaHop = false;
+                        holdingShell = true;
+                        return;
+                    }
+                }
+                // Gravity jumping
+                if (Control.JumpHold() && !holdingJump && CheckAbility(canSwapGravity))
+                {
+                    if (CheckAbility(canGravityJumpOpposite) && ((Control.RightHold() && CheckAbility(canGravityJumpAdjacent)) || (!CheckAbility(canGravityJumpAdjacent))))
+                    {
+                        gravityDir = DIR_WALL_RIGHT;
+                        SwapDir(DIR_WALL_RIGHT);
+                        holdingShell = true;
+                    }
+                    else if (Control.AxisY() != 0 && CheckAbility(canGravityJumpAdjacent))
+                    {
+                        int newDir = Control.AxisY() == 1 ? DIR_CEILING : DIR_FLOOR;
+                        gravityDir = newDir;
+                        SwapDir(newDir);
+                        SwitchSurfaceAxis();
+                        holdingShell = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Suddenly in the air when we weren't last frame
+            if (boxL.distance > 0.0125f)
+            {
+                // Round an outside corner
+                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                {
+                    // Can't round corners? Fall.
+                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_RIGHT)
+                    {
+                        SwapDir(DIR_WALL_RIGHT);
+                        gravityDir = DIR_WALL_RIGHT;
+                        if (Control.RightHold())
+                            holdingShell = true;
+                    }
+                    // CAN round corners? Round that corner, you glorious little snail, you
+                    else if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
+                    {
+                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
+                        SwitchSurfaceAxis();
+                        RaycastHit2D wallTester = Physics2D.Raycast(
+                            new Vector2(transform.position.x - 0.75f, transform.position.y + (facingDown ? -box.size.x * 0.5f : box.size.x * 0.5f)),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        transform.position = new Vector2(
+                            transform.position.x,
+                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
+                            );
+                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        return;
+                    }
+                }
+                // FALL
+                else
+                    grounded = false;
+            }
+        }
+
+        // Now, let's see if we can jump
+        if (boxL.distance == 0)
+        {
+            transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
+            UpdateBoxcasts();
+        }
+        if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.x > lastPointBeforeHop))
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x < 0)) && boxR.distance > 0.95f && !PlayState.paralyzed)
+        {
+            if (shelled)
+                ToggleShell();
+            grounded = false;
+            if (gravityDir != defaultGravityDir)
+            {
+                if (CheckAbility(retainGravityOnAirborne))
+                    velocity.x = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+                else
+                {
+                    switch (defaultGravityDir)
+                    {
+                        case DIR_FLOOR:
+                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
+                            if (Control.DownHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_CEILING:
+                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            SwapDir(DIR_CEILING);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_CEILING;
+                            if (Control.UpHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_WALL_RIGHT:
+                            SwapDir(DIR_WALL_RIGHT);
+                            gravityDir = DIR_WALL_RIGHT;
+                            if (Control.RightHold())
+                                holdingShell = true;
+                            break;
+                    }
+                }
+            }
+            else
+                velocity.x = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+            PlayState.PlaySound("Jump");
+        }
+        if (Control.JumpHold() && !holdingJump)
+            holdingJump = true;
+        else if (!Control.JumpHold() && holdingJump)
+            holdingJump = false;
+
+        // Finally, we check to see if we can shell
+        if (Control.LeftHold() &&
+            Control.AxisY() == 0 &&
+            !Control.JumpHold() &&
+            !Control.ShootHold() &&
+            !Control.StrafeHold() &&
+            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+        {
+            ToggleShell();
+            holdingShell = true;
+        }
+        else if (!holdingShell && Control.LeftHold())
+            holdingShell = true;
+        if (holdingShell && !Control.LeftHold())
+            holdingShell = false;
+        if (PlayState.IsTileSolid(transform.position))
+            transform.position = new Vector2(transform.position.x + 1, transform.position.y);
+    }
+
+    public virtual void CaseRight()
+    {
+        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
+        //velocity.y = 0;
+        if (grounded)
+            velocity.x = 0;
+
+        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
+        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
+        {
+            if (shelled)
+            {
+                if (Control.AxisY() == (facingDown ? 1 : -1))
+                    transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
+                if (grounded)
+                    ToggleShell();
+                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
+                if (distance < box.size.y * 0.5f)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
+                        (boxD.point.y < transform.position.y ? 1 : -1));
+                    UpdateBoxcasts();
+                }
+            }
+            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
+            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
+            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
+            {
+                againstWallFlag = true;
+                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - boxD.distance) + 0.0078125f :
+                    runSpeedValue - (runSpeedValue - boxU.distance) - 0.0078125f;
+                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
+                // we check to see if climbing is possible in either direction and switch the character's gravity state
+                if ((boxL.distance + boxR.distance) >= 1)
+                {
+                    if (!stunned)
+                    {
+                        if (((Control.LeftHold() && !grounded) ||
+                            (Control.LeftHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
+                            (Control.RightHold() && !grounded))
+                            && CheckAbility(canSwapGravity))
+                        {
+                            if (shelled)
+                                ToggleShell();
+
+                            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                            float boxCorrection = (box.size.x - box.size.y) * 0.5f;
+                            float ceilDis = boxL.distance - boxCorrection;
+                            float floorDis = boxR.distance - boxCorrection;
+                            SwitchSurfaceAxis();
+                            float adjustment = 0;
+                            if (grounded)
+                                adjustment = -boxCorrection;
+                            else
+                            {
+                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                    adjustment = ceilDis - (box.size.y * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                            }
+                            transform.position = new Vector2(
+                                transform.position.x - adjustment,
+                                transform.position.y + (facingDown ? boxCorrection : -boxCorrection)
+                                );
+                            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                            grounded = true;
+                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                            if (box.size.y * 0.5f - 0.5f > 0)
+                                transform.position += new Vector3(0, (box.size.y * 0.5f - 0.5f) * (facingDown ? 1 : -1), 0);
+                            UpdateBoxcasts();
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                velocity.y = facingDown ? -runSpeedValue : runSpeedValue;
+                if (CheckAbility(hopWhileMoving))
+                {
+                    grounded = false;
+                    ungroundedViaHop = true;
+                    velocity.x = -hopPower;
+                    lastPointBeforeHop = transform.position.x;
+                }
+            }
+            transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+            UpdateBoxcasts();
+        }
+
+        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
+        if (!grounded)
+        {
+            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            {
+                switch (defaultGravityDir)
+                {
+                    case DIR_FLOOR:
+                        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                        SwapDir(DIR_FLOOR);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_FLOOR;
+                        if (Control.DownHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_CEILING:
+                        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                        SwapDir(DIR_CEILING);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_CEILING;
+                        if (Control.UpHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_WALL_LEFT:
+                        SwapDir(DIR_WALL_LEFT);
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.LeftHold())
+                            holdingShell = true;
+                        break;
+                }
+            }
+            else
+            {
+                bool pokedCeiling = false;
+                velocity.x += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                if (velocity.x < 0 && !holdingJump)
+                    velocity.x = PlayState.Integrate(velocity.x, 0, 4, Time.fixedDeltaTime);
+                velocity.x = Mathf.Clamp(velocity.x, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
+                if (boxL.distance != 0 && boxR.distance != 0)
+                {
+                    if (boxL.distance < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                    {
+                        velocity.x = -boxL.distance;
+                        pokedCeiling = true;
+                    }
+                    else if (boxR.distance < velocity.x && Mathf.Sign(velocity.x) == 1)
+                    {
+                        velocity.x = boxR.distance;
+                        grounded = true;
+                        ungroundedViaHop = false;
+                    }
+                }
+                if (!againstWallFlag)
+                {
+                    transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                }
+                else
+                {
+                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                    for (int i = 0; i < 8; i++)
+                    {
+                        transform.position = new Vector2(transform.position.x + (velocity.x * 0.125f), transform.position.y);
+                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                            new Vector2(transform.position.x + 0.375f, transform.position.y),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                            new Vector2(transform.position.x - 0.375f, transform.position.y),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                        {
+                            transform.position = new Vector2(
+                                Mathf.Floor(transform.position.x) + 0.5f,
+                                transform.position.y + ((facingDown ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime));
+                            i = 8;
+                        }
+                    }
+                }
+                UpdateBoxcasts();
+                if (pokedCeiling)
+                {
+                    velocity.x = 0;
+                    if (Control.LeftHold() && CheckAbility(canSwapGravity))
+                    {
+                        gravityDir = DIR_WALL_LEFT;
+                        SwapDir(DIR_WALL_LEFT);
+                        grounded = true;
+                        ungroundedViaHop = false;
+                        holdingShell = true;
+                        return;
+                    }
+                }
+                // Gravity jumping
+                if (Control.JumpHold() && !holdingJump && CheckAbility(canSwapGravity))
+                {
+                    if (CheckAbility(canGravityJumpOpposite) && ((Control.LeftHold() && CheckAbility(canGravityJumpAdjacent)) || (!CheckAbility(canGravityJumpAdjacent))))
+                    {
+                        gravityDir = DIR_WALL_LEFT;
+                        SwapDir(DIR_WALL_LEFT);
+                        holdingShell = true;
+                    }
+                    else if (Control.AxisY() != 0 && CheckAbility(canGravityJumpAdjacent))
+                    {
+                        int newDir = Control.AxisY() == 1 ? DIR_CEILING : DIR_FLOOR;
+                        gravityDir = newDir;
+                        SwapDir(newDir);
+                        SwitchSurfaceAxis();
+                        holdingShell = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Suddenly in the air when we weren't last frame
+            if (boxR.distance > 0.0125f)
+            {
+                // Round an outside corner
+                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                {
+                    // Can't round corners? Fall.
+                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_LEFT)
+                    {
+                        SwapDir(DIR_WALL_LEFT);
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.LeftHold())
+                            holdingShell = true;
+                    }
+                    // CAN round corners? Round that corner, you glorious little snail, you
+                    else if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
+                    {
+                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
+                        SwitchSurfaceAxis();
+                        RaycastHit2D wallTester = Physics2D.Raycast(
+                            new Vector2(transform.position.x + 0.75f, transform.position.y + (facingDown ? -box.size.x * 0.5f : box.size.x * 0.5f)),
+                            facingDown ? Vector2.down : Vector2.up,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        transform.position = new Vector2(
+                            transform.position.x,
+                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
+                            );
+                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        return;
+                    }
+                }
+                // FALL
+                else
+                    grounded = false;
+            }
+        }
+
+        // Now, let's see if we can jump
+        if (boxR.distance == 0)
+        {
+            transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
+            UpdateBoxcasts();
+        }
+        if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.x < lastPointBeforeHop))
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x > 0)) && boxL.distance > 0.95f && !PlayState.paralyzed)
+        {
+            if (shelled)
+                ToggleShell();
+            grounded = false;
+            if (gravityDir != defaultGravityDir)
+            {
+                if (CheckAbility(retainGravityOnAirborne))
+                    velocity.x = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+                else
+                {
+                    switch (defaultGravityDir)
+                    {
+                        case DIR_FLOOR:
+                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            SwapDir(DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_FLOOR;
+                            if (Control.DownHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_CEILING:
+                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            SwapDir(DIR_CEILING);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_CEILING;
+                            if (Control.UpHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_WALL_LEFT:
+                            SwapDir(DIR_WALL_LEFT);
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.LeftHold())
+                                holdingShell = true;
+                            break;
+                    }
+                }
+            }
+            else
+                velocity.x = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+            PlayState.PlaySound("Jump");
+        }
+        if (Control.JumpHold() && !holdingJump)
+            holdingJump = true;
+        else if (!Control.JumpHold() && holdingJump)
+            holdingJump = false;
+
+        // Finally, we check to see if we can shell
+        if (Control.RightHold() &&
+            Control.AxisY() == 0 &&
+            !Control.JumpHold() &&
+            !Control.ShootHold() &&
+            !Control.StrafeHold() &&
+            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+        {
+            ToggleShell();
+            holdingShell = true;
+        }
+        else if (!holdingShell && Control.RightHold())
+            holdingShell = true;
+        if (holdingShell && !Control.RightHold())
+            holdingShell = false;
+        if (PlayState.IsTileSolid(transform.position))
+            transform.position = new Vector2(transform.position.x - 1, transform.position.y);
+    }
+
+    public virtual void CaseUp()
+    {
+        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
+        //velocity.x = 0;
+        if (grounded)
+            velocity.y = 0;
+
+        // From here, we perform relatively horizontal movement checks to move, stop if we hit a wall, and allow for climbing
+        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed)
+        {
+            if (shelled)
+            {
+                if (Control.AxisX() == (facingLeft ? 1 : -1))
+                    transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
+                if (grounded)
+                    ToggleShell();
+                float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
+                if (distance < box.size.x * 0.5f)
+                {
+                    transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
+                        (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
+                    UpdateBoxcasts();
+                }
+            }
+            SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+            float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
+            if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
+            {
+                againstWallFlag = true;
+                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - boxL.distance) + 0.0078125f :
+                    runSpeedValue - (runSpeedValue - boxR.distance) - 0.0078125f;
+                // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
+                // we check to see if climbing is possible in either direction and switch the character's gravity state
+                if ((boxD.distance + boxU.distance) >= 1)
+                {
+                    if (!stunned)
+                    {
+                        if (((Control.DownHold() && !grounded) ||
+                            (Control.DownHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
+                            (Control.UpHold() && !grounded))
+                            && CheckAbility(canSwapGravity))
+                        {
+                            if (shelled)
+                                ToggleShell();
+
+                            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+                            float boxCorrection = (box.size.y - box.size.x) * 0.5f;
+                            float ceilDis = boxD.distance - boxCorrection;
+                            float floorDis = boxU.distance - boxCorrection;
+                            SwitchSurfaceAxis();
+                            float adjustment = 0;
+                            if (grounded)
+                                adjustment = -boxCorrection;
+                            else
+                            {
+                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
+                                    adjustment = ceilDis - (box.size.y * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
+                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                            }
+                            transform.position = new Vector2(
+                                transform.position.x + (facingLeft ? boxCorrection : -boxCorrection),
+                                transform.position.y - adjustment
+                                );
+                            SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
+                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                            grounded = true;
+                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                            if (box.size.x * 0.5f - 0.5f > 0)
+                                transform.position += new Vector3((box.size.x * 0.5f - 0.5f) * (facingLeft ? 1 : -1), 0, 0);
+                            UpdateBoxcasts();
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                velocity.x = facingLeft ? -runSpeedValue : runSpeedValue;
+                if (CheckAbility(hopWhileMoving))
+                {
+                    grounded = false;
+                    ungroundedViaHop = true;
+                    velocity.y = -hopPower;
+                    lastPointBeforeHop = transform.position.y;
+                }
+            }
+            transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+            UpdateBoxcasts();
+        }
+
+        // Now, we perform relatively vertical checks. This mainly involves jumping and falling
+        if (!grounded)
+        {
+            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            {
+                switch (defaultGravityDir)
+                {
+                    case DIR_WALL_LEFT:
+                        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                        SwapDir(DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.LeftHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_WALL_RIGHT:
+                        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                        SwapDir(DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        gravityDir = DIR_WALL_LEFT;
+                        if (Control.RightHold())
+                            holdingShell = true;
+                        break;
+                    case DIR_FLOOR:
+                        SwapDir(DIR_FLOOR);
+                        gravityDir = DIR_FLOOR;
+                        if (Control.DownHold())
+                            holdingShell = true;
+                        break;
+                }
+            }
+            else
+            {
+                bool pokedCeiling = false;
+                velocity.y += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
+                if (velocity.y < 0 && !holdingJump)
+                    velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                velocity.y = Mathf.Clamp(velocity.y, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
+                if (boxD.distance != 0 && boxU.distance != 0)
+                {
+                    if (boxD.distance < -velocity.y && Mathf.Sign(velocity.y) == -1)
+                    {
+                        velocity.y = -boxD.distance;
+                        pokedCeiling = true;
+                    }
+                    else if (boxU.distance < velocity.y && Mathf.Sign(velocity.y) == 1)
+                    {
+                        velocity.y = boxU.distance;
+                        grounded = true;
+                        ungroundedViaHop = false;
+                    }
+                }
+                if (!againstWallFlag)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
+                }
+                else
+                {
+                    // This entire block here covers the specific case of slipping into a one-tall tunnel in a wall while midair
+                    for (int i = 0; i < 8; i++)
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y + (velocity.y * 0.125f));
+                        RaycastHit2D tunnelCheckUpper = Physics2D.Raycast(
+                            new Vector2(transform.position.x, transform.position.y + 0.375f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        RaycastHit2D tunnelCheckLower = Physics2D.Raycast(
+                            new Vector2(transform.position.x, transform.position.y - 0.375f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        if (tunnelCheckUpper.distance >= 1.5f && tunnelCheckLower.distance >= 1.5f)
+                        {
+                            transform.position = new Vector2(
+                                transform.position.x + ((facingLeft ? -runSpeed[readIDSpeed] : runSpeed[readIDSpeed]) * speedMod * Time.fixedDeltaTime),
+                                Mathf.Floor(transform.position.y) + 0.5f);
+                            i = 8;
+                        }
+                    }
+                }
+                UpdateBoxcasts();
+                if (pokedCeiling)
+                {
+                    velocity.y = 0;
+                    if (Control.DownHold() && CheckAbility(canSwapGravity))
+                    {
+                        gravityDir = DIR_FLOOR;
+                        SwapDir(DIR_FLOOR);
+                        grounded = true;
+                        ungroundedViaHop = false;
+                        holdingShell = true;
+                        return;
+                    }
+                }
+                // Gravity jumping
+                if (Control.JumpHold() && !holdingJump && CheckAbility(canSwapGravity))
+                {
+                    if (CheckAbility(canGravityJumpOpposite) && ((Control.DownHold() && CheckAbility(canGravityJumpAdjacent)) || (!CheckAbility(canGravityJumpAdjacent))))
+                    {
+                        gravityDir = DIR_FLOOR;
+                        SwapDir(DIR_FLOOR);
+                        holdingShell = true;
+                    }
+                    else if (Control.AxisX() != 0 && CheckAbility(canGravityJumpAdjacent))
+                    {
+                        int newDir = Control.AxisX() == 1 ? DIR_WALL_RIGHT : DIR_WALL_LEFT;
+                        gravityDir = newDir;
+                        SwapDir(newDir);
+                        SwitchSurfaceAxis();
+                        holdingShell = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Suddenly in the air when we weren't last frame
+            if (boxU.distance > 0.0125f)
+            {
+                // Round an outside corner
+                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                {
+                    // Can't round corners? Fall.
+                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_FLOOR)
+                    {
+                        SwapDir(DIR_FLOOR);
+                        gravityDir = DIR_FLOOR;
+                        if (Control.DownHold())
+                            holdingShell = true;
+                    }
+                    // CAN round corners? Round that corner, you glorious little snail, you
+                    else if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
+                    {
+                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                        SwitchSurfaceAxis();
+                        RaycastHit2D wallTester = Physics2D.Raycast(
+                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y + 0.75f),
+                            facingLeft ? Vector2.left : Vector2.right,
+                            Mathf.Infinity,
+                            playerCollide,
+                            Mathf.Infinity,
+                            Mathf.Infinity
+                            );
+                        transform.position = new Vector2(
+                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
+                            transform.position.y
+                            );
+                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        return;
+                    }
+                }
+                // FALL
+                else
+                    grounded = false;
+            }
+        }
+
+        // Now, let's see if we can jump
+        if (boxU.distance == 0)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
+            UpdateBoxcasts();
+        }
+        if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.y < lastPointBeforeHop))
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y > 0)) && boxD.distance > 0.95f && !PlayState.paralyzed)
+        {
+            if (shelled)
+                ToggleShell();
+            grounded = false;
+            if (gravityDir != defaultGravityDir)
+            {
+                if (CheckAbility(retainGravityOnAirborne))
+                    velocity.y = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+                else
+                {
+                    switch (defaultGravityDir)
+                    {
+                        case DIR_WALL_LEFT:
+                            transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                            SwapDir(DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.LeftHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_WALL_RIGHT:
+                            transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                            SwapDir(DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.RightHold())
+                                holdingShell = true;
+                            break;
+                        case DIR_FLOOR:
+                            SwapDir(DIR_FLOOR);
+                            gravityDir = DIR_FLOOR;
+                            if (Control.DownHold())
+                                holdingShell = true;
+                            break;
+                    }
+                }
+            }
+            else
+                velocity.y = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
+            PlayState.PlaySound("Jump");
+        }
+        if (Control.JumpHold() && !holdingJump)
+            holdingJump = true;
+        else if (!Control.JumpHold() && holdingJump)
+            holdingJump = false;
+
+        // Finally, we check to see if we can shell
+        if (Control.UpHold() &&
+            Control.AxisX() == 0 &&
+            !Control.JumpHold() &&
+            !Control.ShootHold() &&
+            !Control.StrafeHold() &&
+            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+        {
+            ToggleShell();
+            holdingShell = true;
+        }
+        else if (!holdingShell && Control.UpHold())
+            holdingShell = true;
+        if (holdingShell && !Control.UpHold())
+            holdingShell = false;
+        if (PlayState.IsTileSolid(transform.position))
+            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+    }
+
+    private bool CheckAbility(int[] ability)
+    {
+        for (int i = 0; i < ability.Length; i++)
+        {
+            if (ability[i] == -1)
+                return true;
+            else if (ability[i] == -2)
+                return false;
+            else if (PlayState.itemCollection[ability[i]] == 1)
+                return true;
+        }
+        return false;
+    }
+
+    private int GetOppositeDir(int direction)
+    {
+        return direction switch
+        {
+            DIR_WALL_LEFT => DIR_WALL_RIGHT,
+            DIR_WALL_RIGHT => DIR_WALL_LEFT,
+            DIR_CEILING => DIR_FLOOR,
+            _ => DIR_CEILING,
+        };
+    }
+
+    #endregion Movement
+
+    #region Player utilities
 
     // This function is used to reset all five boxcasts the player character uses for ground checks. It's called once per
     // FixedUpdate() call automatically plus any additional resets needed, for instance, after a gravity change
@@ -1468,7 +1735,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     // This function is called whenever a shelled character asks to enter/exit their shell
-    public void ToggleShell()
+    public virtual void ToggleShell()
     {
         if (stunned && !shelled)
             return;
@@ -1504,11 +1771,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
             {
+                if (boxD.distance < unshellAdjust && boxU.distance < unshellAdjust)
+                    return;
+                if (boxD.distance > unshellAdjust && boxU.distance < unshellAdjust)
+                    transform.position = new Vector2(transform.position.x,
+                        transform.position.y - (0.675f - boxU.distance - (facingDown ? 0.25f : 0)));
+                else if (boxD.distance < unshellAdjust && boxU.distance > unshellAdjust)
+                    transform.position = new Vector2(transform.position.x,
+                        transform.position.y + (0.675f - boxD.distance - (facingDown ? 0 : 0.25f)));
+
                 box.offset = new Vector2(hitboxOffset_normal.y * (facingLeft ? -1 : 1), hitboxOffset_normal.x * (facingDown ? -1 : 1));
                 box.size = new Vector2(hitboxSize_normal.y, hitboxSize_normal.x);
             }
             else
             {
+                if (boxL.distance < unshellAdjust && boxR.distance < unshellAdjust)
+                    return;
+                if (boxL.distance > unshellAdjust && boxR.distance < unshellAdjust)
+                    transform.position = new Vector2(transform.position.x - (0.675f - boxR.distance - (facingLeft ? 0.25f : 0)),
+                        transform.position.y);
+                else if (boxL.distance < unshellAdjust && boxR.distance > unshellAdjust)
+                    transform.position = new Vector2(transform.position.x + (0.675f - boxL.distance - (facingLeft ? 0 : 0.25f)),
+                        transform.position.y);
+
                 box.offset = new Vector2(hitboxOffset_normal.x * (facingLeft ? -1 : 1), hitboxOffset_normal.y * (facingDown ? -1 : 1));
                 box.size = hitboxSize_normal;
             }
@@ -1532,7 +1817,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     // This function handles activation of projectiles when the player presses either shoot button
-    private void Shoot()
+    public virtual void Shoot()
     {
         if (fireCooldown == 0 && armed && !PlayState.paralyzed)
         {
@@ -1592,13 +1877,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else if (gravityDir == DIR_CEILING && dir == -1)
                     dir = facingLeft ? 3 : 4;
             }
-            if (!bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
+            if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
-                bulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
+                PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
                 bulletID++;
-                if (bulletID >= bulletPool.transform.childCount)
+                if (bulletID >= PlayState.globalFunctions.playerBulletPool.transform.childCount)
                     bulletID = 0;
-                fireCooldown = WEAPON_COOLDOWNS[type - 1];
+                int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (PlayState.CheckForItem("Rapid Fire") ? 3 : 0);
+                fireCooldown = weaponCooldowns[fireRateIndex];
                 PlayState.PlaySound(type switch { 2 => "ShotBoomerang", 3 => "ShotRainbow", 4 => "ShotRainbow", 5 => "ShotRainbow", 6 => "ShotRainbow", _ => "ShotPeashooter", });
             }
         }
@@ -1653,7 +1939,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
     }
 
-    IEnumerator DieAndRespawn()
+    public virtual IEnumerator DieAndRespawn()
     {
         if (shelled)
             ToggleShell();
@@ -1740,4 +2026,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
         //        break;
         //}
     }
+
+    #endregion Player utilities
 }

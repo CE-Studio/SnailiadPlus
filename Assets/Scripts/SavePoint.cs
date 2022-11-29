@@ -46,7 +46,7 @@ public class SavePoint:MonoBehaviour, IRoomObject {
                 hasBeenActivated = true;
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active");
-                PlayState.FlashSaveText();
+                PlayState.globalFunctions.FlashSaveText();
                 PlayState.respawnCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
                 PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
                 PlayState.WriteSave("game");

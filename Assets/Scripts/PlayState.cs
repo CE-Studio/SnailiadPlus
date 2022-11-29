@@ -91,6 +91,7 @@ public class PlayState {
     public static List<int> tempTiles = new List<int>(); // x, y, layer, original tile ID
     public static bool dialogueOpen = false;
     public static bool cutsceneActive = false;
+    public static int lastLoadedWeapon = 0;
 
     public static int importJobs = 0;
 
@@ -436,11 +437,11 @@ public class PlayState {
     public static CollectiveData gameData = new CollectiveData();
 
     public static Sprite BlankTexture(bool useSmallBlank = false) {
-        return useSmallBlank ? playerScript.smallBlank : playerScript.blank;
+        return useSmallBlank ? globalFunctions.blankSmall : globalFunctions.blank;
     }
 
     public static Sprite MissingTexture() {
-        return playerScript.missing;
+        return globalFunctions.missing;
     }
 
     public static AnimationData GetAnim(string name) {
@@ -466,7 +467,7 @@ public class PlayState {
     public static void RefreshPoolAnims() {
         foreach (Transform obj in particlePool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
-        foreach (Transform obj in playerScript.bulletPool.transform)
+        foreach (Transform obj in globalFunctions.playerBulletPool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
         foreach (Transform obj in enemyBulletPool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
@@ -726,11 +727,11 @@ public class PlayState {
         foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);
             if (state) {
-                if (element.name == "Weapon Icons") {
-                    globalFunctions.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
-                    globalFunctions.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
-                    globalFunctions.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
-                }
+                //if (element.name == "Weapon Icons") {
+                //    globalFunctions.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
+                //    globalFunctions.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
+                //    globalFunctions.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
+                //}
                 if (element.name == "Minimap Panel")
                     element.SetActive(!inBossFight);
                 if (element.name == "Boss Health Bar")
@@ -794,18 +795,6 @@ public class PlayState {
                 globalFunctions.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, sortingOrder);
                 break;
         }
-    }
-
-    public static void FlashItemText(string item) {
-        globalFunctions.FlashItemText(item);
-    }
-
-    public static void FlashCollectionText() {
-        globalFunctions.FlashCollectionText();
-    }
-
-    public static void FlashSaveText() {
-        globalFunctions.FlashSaveText();
     }
 
     public static Particle RequestParticle(Vector2 position, string type) {
@@ -925,10 +914,6 @@ public class PlayState {
         return selectedParticle;
     }
 
-    public static void RequestQueuedExplosion(Vector2 pos, float lifeTime, int size, bool loudly) {
-        globalFunctions.RequestQueuedExplosion(pos, lifeTime, size, loudly);
-    }
-
     public static void ResetAllParticles() {
         foreach (Transform particle in particlePool.transform) {
             Particle particleScript = particle.GetComponent<Particle>();
@@ -969,6 +954,18 @@ public class PlayState {
 
     public static int GetShellLevel() {
         return CheckForItem(9) ? 3 : (CheckForItem(8) ? 2 : (CheckForItem(7) ? 1 : 0));
+    }
+
+    public static void SetPlayer(string newPlayer)
+    {
+        playerScript.GetComponent<Snaily>().enabled = newPlayer == "Snaily";
+        //playerScript.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
+        //playerScript.GetComponent<Upside>().enabled = newPlayer == "Upside";
+        //playerScript.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
+        //playerScript.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
+        //playerScript.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
+        currentCharacter = newPlayer;
+        playerScript = player.GetComponent<Player>();
     }
 
     public static void AddItem(int itemID) {
@@ -1256,9 +1253,11 @@ public class PlayState {
                 currentDifficulty = loadedSave.difficulty;
                 currentTime = (float[])loadedSave.gameTime.Clone();
                 respawnCoords = loadedSave.saveCoords;
-                currentCharacter = loadedSave.character;
+                //currentCharacter = loadedSave.character;
+                SetPlayer(loadedSave.character);
                 itemCollection = (int[])loadedSave.items.Clone();
                 playerScript.selectedWeapon = loadedSave.weapon;
+                lastLoadedWeapon = loadedSave.weapon;
                 bossStates = (int[])loadedSave.bossStates.Clone();
                 hasSeenIris = loadedSave.NPCVars[0] == 1;
                 talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
@@ -1582,9 +1581,5 @@ public class PlayState {
         if (Mathf.Abs(num - target) < threshold)
             num = target;
         return num;
-    }
-
-    public static void ScreenShake(List<float> intensities, List<float> times) {
-        globalFunctions.ScreenShake(intensities, times);
     }
 }

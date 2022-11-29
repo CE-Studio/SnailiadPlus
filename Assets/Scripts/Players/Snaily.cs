@@ -2,87 +2,115 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snaily : MonoBehaviour
+public class Snaily : Player
 {
-    public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
-    public readonly float[] JUMPPOWER = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
-    public readonly float[] GRAVITY = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
-    public readonly float[] TERMINAL_VELOCITY = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
-    public const float HITBOX_X = 1.467508f;
-    public const float HITBOX_Y = 0.96f;
-    public const float HITBOX_SHELL_X = 0.75f;
-    public const float HITBOX_SHELL_Y = 0.96f;
-    public const float HITBOX_SHELL_OFFSET = 0.186518f;
-    public const int DIR_FLOOR = 0;
-    public const int DIR_WALL_LEFT = 1;
-    public const int DIR_WALL_RIGHT = 2;
-    public const int DIR_CEILING = 3;
-    public const float FALLSPEED_MOD = 2.5f;
-    public const float SLEEP_TIMER_MAX = 30f;
-    
-    public float[] WEAPON_COOLDOWNS = new float[6];
-
-    private Vector2 velocity = new Vector2(0, 0);
-    private int gravityDir = DIR_FLOOR;
-    public bool grounded = false;
-    public bool shelled = false;
-    private float speedMod = 1;
-    private float jumpMod = 1;
-    private float gravityMod = 1;
-    private bool facingLeft = false;
-    private bool facingDown = false;
-    public bool holdingJump = false;
-    private bool holdingShell = false;
-    private bool axisFlag = false;
-    private bool againstWallFlag = false;
-    private float fireCooldown = 0;
-    private int bulletID = 0;
-    private float sleepTimer = 30f;
-    private bool isSleeping = false;
-
-    private RaycastHit2D boxL;
-    private RaycastHit2D boxR;
-    private RaycastHit2D boxU;
-    private RaycastHit2D boxD;
-    private RaycastHit2D boxCorner;
-    private Vector2 lastPosition;
-    private Vector2 lastSize;
-
-    public BoxCollider2D box;
-    public SpriteRenderer sprite;
-    public AnimationModule anim;
-
-    private bool[] animData;
-
-    public LayerMask playerCollide;
-
-    public Player player;
-    public Particle zzz;
+    //public readonly float[] RUNSPEED = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
+    //public readonly float[] JUMPPOWER = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
+    //public readonly float[] GRAVITY = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
+    //public readonly float[] TERMINAL_VELOCITY = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
+    //public const float HITBOX_X = 1.467508f;
+    //public const float HITBOX_Y = 0.96f;
+    //public const float HITBOX_SHELL_X = 0.75f;
+    //public const float HITBOX_SHELL_Y = 0.96f;
+    //public const float HITBOX_SHELL_OFFSET = 0.186518f;
+    //public const int DIR_FLOOR = 0;
+    //public const int DIR_WALL_LEFT = 1;
+    //public const int DIR_WALL_RIGHT = 2;
+    //public const int DIR_CEILING = 3;
+    //public const float FALLSPEED_MOD = 2.5f;
+    //public const float SLEEP_TIMER_MAX = 30f;
+    //
+    //public float[] WEAPON_COOLDOWNS = new float[6];
+    //
+    //private Vector2 velocity = new Vector2(0, 0);
+    //private int gravityDir = DIR_FLOOR;
+    //public bool grounded = false;
+    //public bool shelled = false;
+    //private float speedMod = 1;
+    //private float jumpMod = 1;
+    //private float gravityMod = 1;
+    //private bool facingLeft = false;
+    //private bool facingDown = false;
+    //public bool holdingJump = false;
+    //private bool holdingShell = false;
+    //private bool axisFlag = false;
+    //private bool againstWallFlag = false;
+    //private float fireCooldown = 0;
+    //private int bulletID = 0;
+    //private float sleepTimer = 30f;
+    //private bool isSleeping = false;
+    //
+    //private RaycastHit2D boxL;
+    //private RaycastHit2D boxR;
+    //private RaycastHit2D boxU;
+    //private RaycastHit2D boxD;
+    //private RaycastHit2D boxCorner;
+    //private Vector2 lastPosition;
+    //private Vector2 lastSize;
+    //
+    //public BoxCollider2D box;
+    //public SpriteRenderer sprite;
+    //public AnimationModule anim;
+    //
+    //private bool[] animData;
+    //
+    //public LayerMask playerCollide;
+    //
+    //public Player player;
+    //public Particle zzz;
 
     // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
-    void Start()
+    public override void Start()
     {
-        box = GetComponent<BoxCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<AnimationModule>();
-        player = GetComponent<Player>();
-        playerCollide = LayerMask.GetMask("PlayerCollide");
+        base.Start();
+
+        defaultGravityDir = DIR_FLOOR;
+        canJump = new int[] { -1 };
+        canSwapGravity = new int[] { -1 };
+        retainGravityOnAirborne = new int[] { 8 };
+        canGravityJumpOpposite = new int[] { 8 };
+        canGravityJumpAdjacent = new int[] { 8 };
+        shellable = new int[] { -1 };
+        hopWhileMoving = new int[] { -2 };
+        hopPower = 0;
+        canRoundInnerCorners = new int[] { -1 };
+        canRoundOuterCorners = new int[] { -1 };
+        canRoundOppositeOuterCorners = new int[] { -1 };
+        runSpeed = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
+        jumpPower = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
+        gravity = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
+        terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
+        weaponCooldowns = new float[] { 0.085f, 0.3f, 0.17f, 0.0425f, 0.15f, 0.085f };
+        idleTimer = 30;
+        hitboxSize_normal = new Vector2(1.467508f, 0.96f);
+        hitboxSize_shell = new Vector2(0.75f, 0.96f);
+        hitboxOffset_normal = Vector2.zero;
+        hitboxOffset_shell = new Vector2(-0.186518f, 0);
+        unshellAdjust = 0.4f;
+        coyoteTime = 0.0625f;
+        jumpBuffer = 0.125f;
+
+        //box = GetComponent<BoxCollider2D>();
+        //sprite = GetComponent<SpriteRenderer>();
+        //anim = GetComponent<AnimationModule>();
+        //player = GetComponent<Player>();
+        //playerCollide = LayerMask.GetMask("PlayerCollide");
 
         int[] tempData = PlayState.GetAnim("Player_Snaily_data").frames;
         animData = new bool[tempData.Length];
         for (int i = 0; i < tempData.Length; i++)
             animData[i] = tempData[i] == 1;
 
-        // Weapon cooldowns; first three are without Rapid Fire, last three are with
-        WEAPON_COOLDOWNS[0] = 0.085f;
-        WEAPON_COOLDOWNS[1] = 0.3f;
-        WEAPON_COOLDOWNS[2] = 0.17f;
-        WEAPON_COOLDOWNS[3] = 0.0425f;
-        WEAPON_COOLDOWNS[4] = 0.15f;
-        WEAPON_COOLDOWNS[5] = 0.085f;
+        //// Weapon cooldowns; first three are without Rapid Fire, last three are with
+        //WEAPON_COOLDOWNS[0] = 0.085f;
+        //WEAPON_COOLDOWNS[1] = 0.3f;
+        //WEAPON_COOLDOWNS[2] = 0.17f;
+        //WEAPON_COOLDOWNS[3] = 0.0425f;
+        //WEAPON_COOLDOWNS[4] = 0.15f;
+        //WEAPON_COOLDOWNS[5] = 0.085f;
 
         PlayState.currentCharacter = "Snaily";
-        player.playerScriptSnaily = this;
+        //player.playerScriptSnaily = this;
 
         string[] animDirections = new string[] { "floor_right", "floor_left", "ceiling_right", "ceiling_left", "wallR_down", "wallR_up", "wallL_down", "wallL_up" };
         string[] animStates = new string[] { "idle", "move", "shell", "air" };
@@ -1323,104 +1351,104 @@ public class Snaily : MonoBehaviour
     //}
     //
     // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
-    //private void LateUpdate()
-    //{
-    //    /*\
-    //     *   ANIMATION DATA VALUES
-    //     * 0 - Update animation on move
-    //     * 1 - Update animation on turnaround
-    //     * 2 - Update animation when off ground
-    //     * 3 - Flip X on ground
-    //     * 4 - Flip X on ceiling
-    //     * 5 - Flip X on left wall
-    //     * 6 - Flip Y on right wall
-    //     * 7 - Flip Y on left wall
-    //     * 8 - Flip Y on ceiling 
-    //    \*/
-    //    string currentState = "Player_Snaily" + PlayState.globalFunctions.shellStateBuffer + "_";
-    //    if (player.inDeathCutscene)
-    //    {
-    //        anim.Play(currentState + "die");
-    //        return;
-    //    }
-    //    
-    //    sprite.flipX = false;
-    //    sprite.flipY = false;
-    //
-    //    if (gravityDir == DIR_WALL_LEFT)
-    //    {
-    //        if (animData[5])
-    //            sprite.flipX = true;
-    //        if (animData[1])
-    //            currentState += "wallR_";
-    //        else
-    //            currentState += "wallL_";
-    //
-    //        if (!facingDown && animData[7])
-    //            sprite.flipY = true;
-    //        if (!facingDown && animData[1])
-    //            currentState += "down_";
-    //        else if (!facingDown)
-    //            currentState += "up_";
-    //        else
-    //            currentState += "down_";
-    //    }
-    //    else if (gravityDir == DIR_WALL_RIGHT)
-    //    {
-    //        currentState += "wallR_";
-    //        if (!facingDown && animData[6])
-    //            sprite.flipY = true;
-    //        if (!facingDown && animData[1])
-    //            currentState += "down_";
-    //        else if (!facingDown)
-    //            currentState += "up_";
-    //        else
-    //            currentState += "down_";
-    //    }
-    //    else if (gravityDir == DIR_CEILING)
-    //    {
-    //        if (animData[8])
-    //            sprite.flipY = true;
-    //        if (animData[1])
-    //            currentState += "floor_";
-    //        else
-    //            currentState += "ceiling_";
-    //
-    //        if (facingLeft && animData[4])
-    //            sprite.flipX = true;
-    //        if (facingLeft && animData[1])
-    //            currentState += "right_";
-    //        else if (facingLeft)
-    //            currentState += "left_";
-    //        else
-    //            currentState += "right_";
-    //    }
-    //    else
-    //    {
-    //        currentState += "floor_";
-    //        if (facingLeft && animData[3])
-    //            sprite.flipX = true;
-    //        if (facingLeft && animData[1])
-    //            currentState += "right_";
-    //        else if (facingLeft)
-    //            currentState += "left_";
-    //        else
-    //            currentState += "right_";
-    //    }
-    //
-    //    if (shelled)
-    //        currentState += "shell";
-    //    else if (!grounded && animData[2])
-    //        currentState += "air";
-    //    else if ((((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && Control.AxisY() != 0) ||
-    //        ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && Control.AxisY() != 0)) && animData[0])
-    //        currentState += "move";
-    //    else
-    //        currentState += "idle";
-    //
-    //    if (currentState != anim.currentAnimName)
-    //        anim.Play(currentState);
-    //}
+    public override void LateUpdate()
+    {
+        /*\
+         *   ANIMATION DATA VALUES
+         * 0 - Update animation on move
+         * 1 - Update animation on turnaround
+         * 2 - Update animation when off ground
+         * 3 - Flip X on ground
+         * 4 - Flip X on ceiling
+         * 5 - Flip X on left wall
+         * 6 - Flip Y on right wall
+         * 7 - Flip Y on left wall
+         * 8 - Flip Y on ceiling 
+        \*/
+        string currentState = "Player_Snaily" + PlayState.globalFunctions.shellStateBuffer + "_";
+        if (inDeathCutscene)
+        {
+            anim.Play(currentState + "die");
+            return;
+        }
+        
+        sprite.flipX = false;
+        sprite.flipY = false;
+    
+        if (gravityDir == DIR_WALL_LEFT)
+        {
+            if (animData[5])
+                sprite.flipX = true;
+            if (animData[1])
+                currentState += "wallR_";
+            else
+                currentState += "wallL_";
+    
+            if (!facingDown && animData[7])
+                sprite.flipY = true;
+            if (!facingDown && animData[1])
+                currentState += "down_";
+            else if (!facingDown)
+                currentState += "up_";
+            else
+                currentState += "down_";
+        }
+        else if (gravityDir == DIR_WALL_RIGHT)
+        {
+            currentState += "wallR_";
+            if (!facingDown && animData[6])
+                sprite.flipY = true;
+            if (!facingDown && animData[1])
+                currentState += "down_";
+            else if (!facingDown)
+                currentState += "up_";
+            else
+                currentState += "down_";
+        }
+        else if (gravityDir == DIR_CEILING)
+        {
+            if (animData[8])
+                sprite.flipY = true;
+            if (animData[1])
+                currentState += "floor_";
+            else
+                currentState += "ceiling_";
+    
+            if (facingLeft && animData[4])
+                sprite.flipX = true;
+            if (facingLeft && animData[1])
+                currentState += "right_";
+            else if (facingLeft)
+                currentState += "left_";
+            else
+                currentState += "right_";
+        }
+        else
+        {
+            currentState += "floor_";
+            if (facingLeft && animData[3])
+                sprite.flipX = true;
+            if (facingLeft && animData[1])
+                currentState += "right_";
+            else if (facingLeft)
+                currentState += "left_";
+            else
+                currentState += "right_";
+        }
+    
+        if (shelled)
+            currentState += "shell";
+        else if (!grounded && animData[2])
+            currentState += "air";
+        else if ((((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && Control.AxisY() != 0) ||
+            ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && Control.AxisY() != 0)) && animData[0])
+            currentState += "move";
+        else
+            currentState += "idle";
+    
+        if (currentState != anim.currentAnimName)
+            anim.Play(currentState);
+    }
     //
     //// This function is used to reset all five boxcasts the player character uses for ground checks. It's called once per
     //// FixedUpdate() call automatically plus any additional resets needed, for instance, after a gravity change

@@ -6,6 +6,15 @@ using UnityEngine.Networking;
 
 public class GlobalFunctions : MonoBehaviour
 {
+    // Pools
+    public GameObject playerBulletPool;
+    public GameObject enemyBulletPool;
+
+    // General-use textures
+    public Sprite blank;
+    public Sprite blankSmall;
+    public Sprite missing;
+    
     // HUD object groups
     public GameObject hearts;
     public GameObject itemTextGroup;
@@ -13,20 +22,10 @@ public class GlobalFunctions : MonoBehaviour
     public GameObject gameSaveGroup;
 
     // Debug keys
-    public GameObject debugUp;
-    public GameObject debugDown;
-    public GameObject debugLeft;
-    public GameObject debugRight;
-    public GameObject debugJump;
-    public GameObject debugShoot;
-    public GameObject debugStrafe;
-    public List<SpriteRenderer> keySprites = new List<SpriteRenderer>();
+    public AnimationModule[] keySprites = new AnimationModule[7];
 
     // Weapon icons
-    public GameObject weaponIcon1;
-    public GameObject weaponIcon2;
-    public GameObject weaponIcon3;
-    public SpriteRenderer[] weaponIcons;
+    public AnimationModule[] weaponIcons = new AnimationModule[3];
 
     // Health
     public readonly int[] hpPerHeart = new int[] { 8, 4, 2 };
@@ -60,17 +59,13 @@ public class GlobalFunctions : MonoBehaviour
 
     public void Start()
     {
-        weaponIcons = new SpriteRenderer[]
+        for (int i = 0; i < weaponIcons.Length; i++)
         {
-            weaponIcon1.GetComponent<SpriteRenderer>(),
-            weaponIcon2.GetComponent<SpriteRenderer>(),
-            weaponIcon3.GetComponent<SpriteRenderer>()
-        };
-        foreach (SpriteRenderer sprite in weaponIcons)
-            sprite.enabled = false;
-        weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
-        weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
-        weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
+            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_locked");
+            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_inactive");
+            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_active");
+            weaponIcons[i].Play("WeaponIcon_" + (i + 1) + "_locked");
+        }
 
         areaText = new TextMesh[]
         {
@@ -481,62 +476,71 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
-    public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
+    public void InitializeWeaponIcons()
     {
-        weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", 0);
-        weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", 1);
-        weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", 2);
-        int selectedWeapon = PlayState.playerScript.selectedWeapon;
-        if ((weaponID + 1 > selectedWeapon && activateThisWeapon) || !activateThisWeapon)
-            selectedWeapon = weaponID + 1;
-        if (activateThisWeapon)
-            weaponIcons[weaponID].enabled = true;
-        if (weaponID == 2)
-            weaponIcons[2].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 5 : 2);
-        else if (weaponID == 1)
-            weaponIcons[1].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 4 : 1);
-        else
-            weaponIcons[0].sprite = PlayState.GetSprite("UI/WeaponIcons", selectedWeapon == weaponID + 1 ? 3 : 0);
+        
     }
 
-    public void ChangeWeaponIconSprite(int weaponID, int state)
+    public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
     {
-        weaponIcons[weaponID].enabled = state != 0;
-        Sprite icon = null;
-        if (weaponID == 0)
-            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 3) : PlayState.GetSprite("UI/WeaponIcons", 0);
-        else if (weaponID == 1)
-            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 4) : PlayState.GetSprite("UI/WeaponIcons", 1);
-        else if (weaponID == 2)
-            icon = state == 2 ? PlayState.GetSprite("UI/WeaponIcons", 5) : PlayState.GetSprite("UI/WeaponIcons", 2);
-        weaponIcons[weaponID].sprite = icon;
+        if ((weaponID + 1 > PlayState.playerScript.selectedWeapon && activateThisWeapon) || !activateThisWeapon)
+            PlayState.playerScript.selectedWeapon = weaponID + 1;
+        for (int i = 0; i < weaponIcons.Length; i++)
+        {
+            string animName = "WeaponIcon_" + (i + 1);
+            if (i switch { 1 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
+                2 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
+                _ => PlayState.CheckForItem(0) })
+            {
+                if (weaponID == i)
+                    animName += "_active";
+                else
+                    animName += "_inactive";
+            }
+            else
+                animName += "_locked";
+            weaponIcons[i].Play(animName);
+        }
     }
 
     public void RunDebugKeys()
     {
-        keySprites.Add(debugUp.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugDown.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugLeft.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugRight.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugJump.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugShoot.GetComponent<SpriteRenderer>());
-        keySprites.Add(debugStrafe.GetComponent<SpriteRenderer>());
+        foreach (AnimationModule anim in keySprites)
+        {
+            anim.Add("DebugKey_idle");
+            anim.Add("DebugKey_pressed");
+            anim.Play("DebugKey_idle");
+        }
         StartCoroutine(DebugKeys());
     }
     IEnumerator DebugKeys()
     {
+        bool[] keyStates = new bool[keySprites.Length];
         while (true)
         {
-            foreach (SpriteRenderer key in keySprites)
-                key.gameObject.SetActive(PlayState.gameOptions[5] == 1);
-
-            keySprites[0].sprite = Control.UpHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[1].sprite = Control.DownHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[2].sprite = Control.LeftHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[3].sprite = Control.RightHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[4].sprite = Control.JumpHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[5].sprite = Control.ShootHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
-            keySprites[6].sprite = Control.StrafeHold() ? PlayState.GetSprite("UI/DebugKey", 2) : PlayState.GetSprite("UI/DebugKey", 0);
+            for (int i = 0; i < keySprites.Length; i++)
+            {
+                bool pressed = i switch
+                {
+                    1 => Control.DownHold(),
+                    2 => Control.LeftHold(),
+                    3 => Control.RightHold(),
+                    4 => Control.JumpHold(),
+                    5 => Control.ShootHold(),
+                    6 => Control.StrafeHold(),
+                    _ => Control.UpHold()
+                };
+                if (pressed && !keyStates[i])
+                {
+                    keySprites[i].Play("DebugKey_pressed");
+                    keyStates[i] = true;
+                }
+                else if (!pressed && keyStates[i])
+                {
+                    keySprites[i].Play("DebugKey_idle");
+                    keyStates[i] = false;
+                }
+            }
 
             yield return new WaitForEndOfFrame();
         }

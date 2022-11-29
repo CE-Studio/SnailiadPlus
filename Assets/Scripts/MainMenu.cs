@@ -993,47 +993,16 @@ public class MainMenu : MonoBehaviour
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
+        PlayState.playerScript.health = PlayState.playerScript.maxHealth;
         PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+        PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
         SetTextComponentOrigins();
         fadingToIntro = false;
 
-        PlayState.player.GetComponent<Snaily>().enabled = false;
-        //PlayState.player.GetComponent<Sluggy>().enabled = false;
-        //PlayState.player.GetComponent<Upside>().enabled = false;
-        //PlayState.player.GetComponent<Leggy>().enabled = false;
-        //PlayState.player.GetComponent<Blobby>().enabled = false;
-        //PlayState.player.GetComponent<Leechy>().enabled = false;
-        switch (runIntro ? CharacterIDToName(menuVarFlags[1]) : PlayState.currentCharacter)
-        {
-            default:
-            case "Snaily":
-                PlayState.player.GetComponent<Snaily>().enabled = true;
-                PlayState.player.GetComponent<Snaily>().holdingJump = true;
-                break;
-                case "Sluggy":
-                //    PlayState.player.GetComponent<Sluggy>().enabled = true;
-                //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-                    break;
-                case "Upside":
-                //    PlayState.player.GetComponent<Upside>().enabled = true;
-                //    PlayState.player.GetComponent<Upside>().holdingJump = true;
-                    break;
-                case "Leggy":
-                //    PlayState.player.GetComponent<Leggy>().enabled = true;
-                //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
-                    break;
-                case "Blobby":
-                //    PlayState.player.GetComponent<Blobby>().enabled = true;
-                //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
-                    break;
-                case "Leechy":
-                //    PlayState.player.GetComponent<Leechy>().enabled = true;
-                //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
-                    PlayState.itemCollection[5] = 1;
-                    break;
-        }
+        PlayState.playerScript.holdingJump = true;
+        PlayState.playerScript.selectedWeapon = PlayState.lastLoadedWeapon;
     }
 
     public void SetTextComponentOrigins()
@@ -1129,7 +1098,7 @@ public class MainMenu : MonoBehaviour
         PlayState.currentDifficulty = menuVarFlags[0];
         PlayState.currentTime = new float[] { 0, 0, 0 };
         PlayState.respawnCoords = PlayState.WORLD_SPAWN;
-        PlayState.currentCharacter = CharacterIDToName(menuVarFlags[1]);
+        PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.itemCollection = new int[]
         {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

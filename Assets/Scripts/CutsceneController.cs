@@ -935,7 +935,7 @@ public class CutsceneController : MonoBehaviour
                         timesShake.Add(ParseFloat(tokens[i]));
                     assignFlag = !assignFlag;
                 }
-                PlayState.ScreenShake(intensitiesShake, timesShake);
+                PlayState.globalFunctions.ScreenShake(intensitiesShake, timesShake);
                 break;
 
             case "sound":
