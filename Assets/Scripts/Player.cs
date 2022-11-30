@@ -363,7 +363,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
                             gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                             grounded = true;
-                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                            transform.position = new Vector2(Mathf.Floor(transform.position.x) + 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
                             if (box.size.x * 0.5f - 0.5f > 0)
                                 transform.position += new Vector3((box.size.x * 0.5f - 0.5f) * (facingLeft ? 1 : -1), 0, 0);
                             UpdateBoxcasts();
@@ -516,32 +516,37 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // Round an outside corner
                 if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
-                    // Can't round corners? Fall.
-                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_CEILING)
+                    // Trying to round corners
+                    if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
-                        SwapDir(DIR_CEILING);
-                        gravityDir = DIR_CEILING;
-                        if (Control.UpHold())
-                            holdingShell = true;
-                    }
-                    // CAN round corners? Round that corner, you glorious little snail, you
-                    else if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
-                    {
-                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        RaycastHit2D wallTester = Physics2D.Raycast(
-                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y - 0.75f),
-                            facingLeft ? Vector2.left : Vector2.right,
-                            Mathf.Infinity,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        transform.position = new Vector2(
-                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
-                            transform.position.y
-                            );
-                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        // Can't round corners? Fall.
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_CEILING)
+                        {
+                            SwapDir(DIR_CEILING);
+                            gravityDir = DIR_CEILING;
+                            if (Control.UpHold())
+                                holdingShell = true;
+                        }
+                        // CAN round corners? Round that corner, you glorious little snail, you
+                        else
+                        {
+                            SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            RaycastHit2D wallTester = Physics2D.Raycast(
+                                new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y - 0.75f),
+                                facingLeft ? Vector2.left : Vector2.right,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            transform.position = new Vector2(
+                                transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
+                                transform.position.y
+                                );
+                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        }
+                        UpdateBoxcasts();
                         return;
                     }
                 }
@@ -679,10 +684,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                                 adjustment = -boxCorrection;
                             else
                             {
-                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                    adjustment = ceilDis - (box.size.y * 0.5f);
-                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                                if (ceilDis < floorDis && ceilDis < box.size.x * 0.5f)
+                                    adjustment = ceilDis - (box.size.x * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
+                                    adjustment = -(floorDis - (box.size.x * 0.5f));
                             }
                             transform.position = new Vector2(
                                 transform.position.x + adjustment,
@@ -691,7 +696,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                             gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
                             grounded = true;
-                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                            transform.position = new Vector2(transform.position.x, Mathf.Floor(transform.position.y) + 0.5f + (facingDown ? -0.01f : 0.01f));
                             if (box.size.y * 0.5f - 0.5f > 0)
                                 transform.position += new Vector3(0, (box.size.y * 0.5f - 0.5f) * (facingDown ? 1 : -1), 0);
                             UpdateBoxcasts();
@@ -844,32 +849,37 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // Round an outside corner
                 if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
-                    // Can't round corners? Fall.
-                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_RIGHT)
+                    // Trying to round corners
+                    if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
-                        SwapDir(DIR_WALL_RIGHT);
-                        gravityDir = DIR_WALL_RIGHT;
-                        if (Control.RightHold())
-                            holdingShell = true;
-                    }
-                    // CAN round corners? Round that corner, you glorious little snail, you
-                    else if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
-                    {
-                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
-                        SwitchSurfaceAxis();
-                        RaycastHit2D wallTester = Physics2D.Raycast(
-                            new Vector2(transform.position.x - 0.75f, transform.position.y + (facingDown ? -box.size.x * 0.5f : box.size.x * 0.5f)),
-                            facingDown ? Vector2.down : Vector2.up,
-                            Mathf.Infinity,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        transform.position = new Vector2(
-                            transform.position.x,
-                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
-                            );
-                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        // Can't round corners? Fall.
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_RIGHT)
+                        {
+                            SwapDir(DIR_WALL_RIGHT);
+                            gravityDir = DIR_WALL_RIGHT;
+                            if (Control.RightHold())
+                                holdingShell = true;
+                        }
+                        // CAN round corners? Round that corner, you glorious little snail, you
+                        else
+                        {
+                            SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            RaycastHit2D wallTester = Physics2D.Raycast(
+                                new Vector2(transform.position.x - 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
+                                facingDown ? Vector2.down : Vector2.up,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            transform.position = new Vector2(
+                                transform.position.x,
+                                transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
+                                );
+                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        }
+                        UpdateBoxcasts();
                         return;
                     }
                 }
@@ -900,7 +910,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     switch (defaultGravityDir)
                     {
                         case DIR_FLOOR:
-                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
                             SwapDir(DIR_FLOOR);
                             SwitchSurfaceAxis();
                             gravityDir = DIR_FLOOR;
@@ -908,7 +918,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                                 holdingShell = true;
                             break;
                         case DIR_CEILING:
-                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
                             SwapDir(DIR_CEILING);
                             SwitchSurfaceAxis();
                             gravityDir = DIR_CEILING;
@@ -1007,10 +1017,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                                 adjustment = -boxCorrection;
                             else
                             {
-                                if (ceilDis < floorDis && ceilDis < box.size.y * 0.5f)
-                                    adjustment = ceilDis - (box.size.y * 0.5f);
-                                else if (floorDis < ceilDis && floorDis < box.size.y * 0.5f)
-                                    adjustment = -(floorDis - (box.size.y * 0.5f));
+                                if (ceilDis < floorDis && ceilDis < box.size.x * 0.5f)
+                                    adjustment = ceilDis - (box.size.x * 0.5f);
+                                else if (floorDis < ceilDis && floorDis < box.size.x * 0.5f)
+                                    adjustment = -(floorDis - (box.size.x * 0.5f));
                             }
                             transform.position = new Vector2(
                                 transform.position.x - adjustment,
@@ -1019,7 +1029,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
                             gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
                             grounded = true;
-                            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y * 2) * 0.5f + (facingDown ? -0.01f : 0.01f));
+                            transform.position = new Vector2(transform.position.x, Mathf.Floor(transform.position.y) + 0.5f + (facingDown ? -0.01f : 0.01f));
                             if (box.size.y * 0.5f - 0.5f > 0)
                                 transform.position += new Vector3(0, (box.size.y * 0.5f - 0.5f) * (facingDown ? 1 : -1), 0);
                             UpdateBoxcasts();
@@ -1172,32 +1182,37 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // Round an outside corner
                 if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
-                    // Can't round corners? Fall.
-                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_LEFT)
+                    // Trying to round corners
+                    if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
-                        SwapDir(DIR_WALL_LEFT);
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.LeftHold())
-                            holdingShell = true;
-                    }
-                    // CAN round corners? Round that corner, you glorious little snail, you
-                    else if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
-                    {
-                        SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
-                        SwitchSurfaceAxis();
-                        RaycastHit2D wallTester = Physics2D.Raycast(
-                            new Vector2(transform.position.x + 0.75f, transform.position.y + (facingDown ? -box.size.x * 0.5f : box.size.x * 0.5f)),
-                            facingDown ? Vector2.down : Vector2.up,
-                            Mathf.Infinity,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        transform.position = new Vector2(
-                            transform.position.x,
-                            transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
-                            );
-                        gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        // Can't round corners? Fall.
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_LEFT)
+                        {
+                            SwapDir(DIR_WALL_LEFT);
+                            gravityDir = DIR_WALL_LEFT;
+                            if (Control.LeftHold())
+                                holdingShell = true;
+                        }
+                        // CAN round corners? Round that corner, you glorious little snail, you
+                        else
+                        {
+                            SwapDir(facingDown ? DIR_CEILING : DIR_FLOOR);
+                            SwitchSurfaceAxis();
+                            RaycastHit2D wallTester = Physics2D.Raycast(
+                                new Vector2(transform.position.x + 0.75f, transform.position.y + (facingDown ? -box.size.y * 0.5f : box.size.y * 0.5f)),
+                                facingDown ? Vector2.down : Vector2.up,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            transform.position = new Vector2(
+                                transform.position.x,
+                                transform.position.y + (facingDown ? -wallTester.distance : wallTester.distance)
+                                );
+                            gravityDir = facingDown ? DIR_FLOOR : DIR_CEILING;
+                        }
+                        UpdateBoxcasts();
                         return;
                     }
                 }
@@ -1228,7 +1243,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     switch (defaultGravityDir)
                     {
                         case DIR_FLOOR:
-                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
                             SwapDir(DIR_FLOOR);
                             SwitchSurfaceAxis();
                             gravityDir = DIR_FLOOR;
@@ -1236,7 +1251,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                                 holdingShell = true;
                             break;
                         case DIR_CEILING:
-                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
                             SwapDir(DIR_CEILING);
                             SwitchSurfaceAxis();
                             gravityDir = DIR_CEILING;
@@ -1347,7 +1362,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
                             gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
                             grounded = true;
-                            transform.position = new Vector2(Mathf.Round(transform.position.x * 2) * 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
+                            transform.position = new Vector2(Mathf.Floor(transform.position.x) + 0.5f + (facingLeft ? -0.01f : 0.01f), transform.position.y);
                             if (box.size.x * 0.5f - 0.5f > 0)
                                 transform.position += new Vector3((box.size.x * 0.5f - 0.5f) * (facingLeft ? 1 : -1), 0, 0);
                             UpdateBoxcasts();
@@ -1500,32 +1515,37 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // Round an outside corner
                 if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
-                    // Can't round corners? Fall.
-                    if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_FLOOR)
+                    // Trying to round corners
+                    if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
-                        SwapDir(DIR_FLOOR);
-                        gravityDir = DIR_FLOOR;
-                        if (Control.DownHold())
-                            holdingShell = true;
-                    }
-                    // CAN round corners? Round that corner, you glorious little snail, you
-                    else if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
-                    {
-                        SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        RaycastHit2D wallTester = Physics2D.Raycast(
-                            new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y + 0.75f),
-                            facingLeft ? Vector2.left : Vector2.right,
-                            Mathf.Infinity,
-                            playerCollide,
-                            Mathf.Infinity,
-                            Mathf.Infinity
-                            );
-                        transform.position = new Vector2(
-                            transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
-                            transform.position.y
-                            );
-                        gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        // Can't round corners? Fall.
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_FLOOR)
+                        {
+                            SwapDir(DIR_FLOOR);
+                            gravityDir = DIR_FLOOR;
+                            if (Control.DownHold())
+                                holdingShell = true;
+                        }
+                        // CAN round corners? Round that corner, you glorious little snail, you
+                        else
+                        {
+                            SwapDir(facingLeft ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
+                            SwitchSurfaceAxis();
+                            RaycastHit2D wallTester = Physics2D.Raycast(
+                                new Vector2(transform.position.x + (facingLeft ? -box.size.x * 0.5f : box.size.x * 0.5f), transform.position.y + 0.75f),
+                                facingLeft ? Vector2.left : Vector2.right,
+                                Mathf.Infinity,
+                                playerCollide,
+                                Mathf.Infinity,
+                                Mathf.Infinity
+                                );
+                            transform.position = new Vector2(
+                                transform.position.x + (facingLeft ? -wallTester.distance : wallTester.distance),
+                                transform.position.y
+                                );
+                            gravityDir = facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT;
+                        }
+                        UpdateBoxcasts();
                         return;
                     }
                 }
@@ -1622,14 +1642,36 @@ public class Player : MonoBehaviour, ICutsceneObject {
         return false;
     }
 
-    private int GetOppositeDir(int direction)
+    public int GetDirOpposite(int direction)
     {
         return direction switch
         {
             DIR_WALL_LEFT => DIR_WALL_RIGHT,
             DIR_WALL_RIGHT => DIR_WALL_LEFT,
             DIR_CEILING => DIR_FLOOR,
-            _ => DIR_CEILING,
+            _ => DIR_CEILING
+        };
+    }
+
+    public int GetDirAdjacentLeft(int direction)
+    {
+        return direction switch
+        {
+            DIR_WALL_LEFT => DIR_CEILING,
+            DIR_WALL_RIGHT => DIR_FLOOR,
+            DIR_CEILING => DIR_WALL_RIGHT,
+            _ => DIR_WALL_LEFT
+        };
+    }
+
+    public int GetDirAdjacentRight(int direction) // Todo: gravity correction on hit, fix ceiling corner jumps, fix opposite outside corner check
+    {
+        return direction switch
+        {
+            DIR_WALL_LEFT => DIR_FLOOR,
+            DIR_WALL_RIGHT => DIR_CEILING,
+            DIR_CEILING => DIR_WALL_LEFT,
+            _ => DIR_WALL_RIGHT
         };
     }
 
