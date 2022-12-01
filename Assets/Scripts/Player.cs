@@ -58,27 +58,28 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public LayerMask playerCollide;
 
-    //public Snaily playerScriptSnaily;
-
     // Movement control vars
     // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
-    public int defaultGravityDir = DIR_FLOOR; // --------------------- Determines the default direction gravity pulls the player
-    public int[] canJump = new int[] { -1 }; // -------------------- I Determines if the player can jump
-    public int[] canSwapGravity = new int[] { -1 }; // ------------- I Determines if the player can change their gravity state
-    public int[] retainGravityOnAirborne = new int[] { 8 }; // ----- I Determines whether or not player keeps their current gravity when in the air
-    public int[] canGravityJumpOpposite = new int[] { 8 }; // ------ I Determines if the player can change their gravity mid-air to the opposite direction
-    public int[] canGravityJumpAdjacent = new int[] { 8 }; // ------ I Determines if the player can change their gravity mid-air relatively left or relatively right
-    public int[] shellable = new int[] { -1 }; // ------------------ I Determines if the player can retract into a shell. Item system
-    public int[] hopWhileMoving = new int[] { -2 }; // ------------- I Determines if the player bounces along the ground when they move
+    // Item scheme variables can contain multiple values, denoting an assortment of items that can fulfill a given check
+    // Example: setting hopWhileMoving to { { 4, 7 }, 8 } will make Snaily hop along the ground if they find either (High Jump AND Ice Snail) OR Gravity Snail
+    public int defaultGravityDir; // --------------------------------- Determines the default direction gravity pulls the player
+    public int[][] canJump; // ------------------------------------- I Determines if the player can jump
+    public int[][] canSwapGravity; // ------------------------------ I Determines if the player can change their gravity state
+    public int[][] retainGravityOnAirborne; // --------------------- I Determines whether or not player keeps their current gravity when in the air
+    public int[][] canGravityJumpOpposite; // ---------------------- I Determines if the player can change their gravity mid-air to the opposite direction
+    public int[][] canGravityJumpAdjacent; // ---------------------- I Determines if the player can change their gravity mid-air relatively left or relatively right
+    public int[][] shellable; // ----------------------------------- I Determines if the player can retract into a shell. Item system
+    public int[][] hopWhileMoving; // ------------------------------ I Determines if the player bounces along the ground when they move
     public float hopPower; // ---------------------------------------- The power of a walking bounce
-    public int[] canRoundInnerCorners = new int[] { -1 }; // ------- I Determines if the player can round inside corners
-    public int[] canRoundOuterCorners = new int[] { -1 }; // ------- I Determines if the player can round outside corners
-    public int[] canRoundOppositeOuterCorners = new int[] { -1 }; // I Determines if the player can round outside corners opposite the default gravity
-    public float[] runSpeed = new float[4]; // ----------------------- Contains the speed at which the player moves with each shell upgrade
-    public float[] jumpPower = new float[8]; // ---------------------- Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
-    public float[] gravity = new float[4]; // ------------------------ Contains the gravity scale with each shell upgrade
-    public float[] terminalVelocity = new float[4]; // --------------- Contains the player's terminal velocity with each shell upgrade
-    public float[] weaponCooldowns = new float[6]; // ---------------- Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
+    public int[][] canRoundInnerCorners; // ------------------------ I Determines if the player can round inside corners
+    public int[][] canRoundOuterCorners; // ------------------------ I Determines if the player can round outside corners
+    public int[][] canRoundOppositeOuterCorners; // ---------------- I Determines if the player can round outside corners opposite the default gravity
+    public int[][] stickToWallsWhenHurt; // ------------------------ I Determines if the player returns to their default gravity when hit by an enemy, bullet, or hazard or not
+    public float[] runSpeed; // -------------------------------------- Contains the speed at which the player moves with each shell upgrade
+    public float[] jumpPower; // ------------------------------------- Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
+    public float[] gravity; // --------------------------------------- Contains the gravity scale with each shell upgrade
+    public float[] terminalVelocity; // ------------------------------ Contains the player's terminal velocity with each shell upgrade
+    public float[] weaponCooldowns; // ------------------------------- Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
     public float idleTimer; // --------------------------------------- Determines how long the player must remain idle before playing an idle animation
     public List<Particle> idleParticles; // -------------------------- Contains every particle used in the player's idle animation so that they can be despawned easily
     public Vector2 hitboxSize_normal; // ----------------------------- The size of the player's hitbox
@@ -520,7 +521,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_CEILING)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_FLOOR)
                         {
                             SwapDir(DIR_CEILING);
                             gravityDir = DIR_CEILING;
@@ -853,7 +854,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_RIGHT)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_WALL_LEFT)
                         {
                             SwapDir(DIR_WALL_RIGHT);
                             gravityDir = DIR_WALL_RIGHT;
@@ -1186,7 +1187,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_WALL_LEFT)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_WALL_RIGHT)
                         {
                             SwapDir(DIR_WALL_LEFT);
                             gravityDir = DIR_WALL_LEFT;
@@ -1519,7 +1520,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir == DIR_FLOOR)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_CEILING)
                         {
                             SwapDir(DIR_FLOOR);
                             gravityDir = DIR_FLOOR;
@@ -1628,18 +1629,44 @@ public class Player : MonoBehaviour, ICutsceneObject {
             transform.position = new Vector2(transform.position.x, transform.position.y - 1);
     }
 
-    private bool CheckAbility(int[] ability)
+    private bool CheckAbility(int[][] ability)
     {
+        //for (int i = 0; i < ability.Length; i++)
+        //{
+        //    if (ability[i] == -1)
+        //        return true;
+        //    else if (ability[i] == -2)
+        //        return false;
+        //    else if (PlayState.itemCollection[ability[i]] == 1)
+        //        return true;
+        //}
+        //return false;
+        bool fullCheck = false;
         for (int i = 0; i < ability.Length; i++)
         {
-            if (ability[i] == -1)
-                return true;
-            else if (ability[i] == -2)
-                return false;
-            else if (PlayState.itemCollection[ability[i]] == 1)
-                return true;
+            bool thisCheck = true;
+            for (int j = 0; j < ability[i].Length; j++)
+            {
+                if (thisCheck)
+                {
+                    switch (ability[i][j])
+                    {
+                        case -1:
+                            break;
+                        case -2:
+                            thisCheck = false;
+                            break;
+                        default:
+                            thisCheck = PlayState.itemCollection[ability[i][j]] == 1;
+                            break;
+                    }
+                }
+            }
+            fullCheck = thisCheck;
+            if (fullCheck)
+                i = ability.Length;
         }
-        return false;
+        return fullCheck;
     }
 
     public int GetDirOpposite(int direction)
@@ -1673,6 +1700,40 @@ public class Player : MonoBehaviour, ICutsceneObject {
             DIR_CEILING => DIR_WALL_LEFT,
             _ => DIR_WALL_RIGHT
         };
+    }
+
+    public void CorrectGravity()
+    {
+        //switch (defaultGravityDir)
+        //{
+        //    case DIR_WALL_LEFT:
+        //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+        //        SwapDir(DIR_WALL_LEFT);
+        //        SwitchSurfaceAxis();
+        //        gravityDir = DIR_WALL_LEFT;
+        //        if (Control.LeftHold())
+        //            holdingShell = true;
+        //        break;
+        //    case DIR_WALL_RIGHT:
+        //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+        //        SwapDir(DIR_WALL_LEFT);
+        //        SwitchSurfaceAxis();
+        //        gravityDir = DIR_WALL_LEFT;
+        //        if (Control.RightHold())
+        //            holdingShell = true;
+        //        break;
+        //    case DIR_CEILING:
+        //        SwapDir(DIR_CEILING);
+        //        gravityDir = DIR_CEILING;
+        //        if (Control.UpHold())
+        //            holdingShell = true;
+        //        break;
+        //}
+        bool swapAxis = defaultGravityDir == GetDirAdjacentLeft(gravityDir) || defaultGravityDir == GetDirAdjacentRight(gravityDir);
+        if (defaultGravityDir == GetDirAdjacentLeft(gravityDir))
+        {
+            
+        }
     }
 
     #endregion Movement
