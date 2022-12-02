@@ -393,31 +393,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
             {
-                switch (defaultGravityDir)
-                {
-                    case DIR_WALL_LEFT:
-                        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
-                        SwapDir(DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.LeftHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_WALL_RIGHT:
-                        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
-                        SwapDir(DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.RightHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_CEILING:
-                        SwapDir(DIR_CEILING);
-                        gravityDir = DIR_CEILING;
-                        if (Control.UpHold())
-                            holdingShell = true;
-                        break;
-                }
+                //switch (defaultGravityDir)
+                //{
+                //    case DIR_WALL_LEFT:
+                //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                //        SwapDir(DIR_WALL_LEFT);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_WALL_LEFT;
+                //        if (Control.LeftHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_WALL_RIGHT:
+                //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                //        SwapDir(DIR_WALL_LEFT);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_WALL_LEFT;
+                //        if (Control.RightHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_CEILING:
+                //        SwapDir(DIR_CEILING);
+                //        gravityDir = DIR_CEILING;
+                //        if (Control.UpHold())
+                //            holdingShell = true;
+                //        break;
+                //}
+                CorrectGravity();
             }
             else
             {
@@ -521,11 +522,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_FLOOR)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == DIR_WALL_LEFT && Control.AxisX() == -1) ||
+                            (defaultGravityDir == DIR_WALL_RIGHT && Control.AxisX() == 1) || defaultGravityDir == DIR_CEILING))
                         {
-                            SwapDir(DIR_CEILING);
-                            gravityDir = DIR_CEILING;
-                            if (Control.UpHold())
+                            CorrectGravity();
+                            if (defaultGravityDir switch { DIR_WALL_LEFT => Control.LeftHold(), DIR_WALL_RIGHT => Control.RightHold(), _ => Control.UpHold() })
                                 holdingShell = true;
                         }
                         // CAN round corners? Round that corner, you glorious little snail, you
@@ -575,31 +576,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     velocity.y = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
                 else
                 {
-                    switch (defaultGravityDir)
-                    {
-                        case DIR_WALL_LEFT:
-                            transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
-                            SwapDir(DIR_WALL_LEFT);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.LeftHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_WALL_RIGHT:
-                            transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
-                            SwapDir(DIR_WALL_LEFT);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.RightHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_FLOOR:
-                            SwapDir(DIR_FLOOR);
-                            gravityDir = DIR_FLOOR;
-                            if (Control.DownHold())
-                                holdingShell = true;
-                            break;
-                    }
+                    //switch (defaultGravityDir)
+                    //{
+                    //    case DIR_WALL_LEFT:
+                    //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                    //        SwapDir(DIR_WALL_LEFT);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_WALL_LEFT;
+                    //        if (Control.LeftHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_WALL_RIGHT:
+                    //        transform.position = new Vector2(transform.position.x, transform.position.y + 0.0625f + (box.size.x - box.size.y) * 0.5f);
+                    //        SwapDir(DIR_WALL_LEFT);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_WALL_LEFT;
+                    //        if (Control.RightHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_FLOOR:
+                    //        SwapDir(DIR_FLOOR);
+                    //        gravityDir = DIR_FLOOR;
+                    //        if (Control.DownHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //}
+                    CorrectGravity();
+                    jumpBufferCounter = jumpBuffer;
                 }
             }
             else
@@ -726,31 +729,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
             {
-                switch (defaultGravityDir)
-                {
-                    case DIR_FLOOR:
-                        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
-                        SwapDir(DIR_FLOOR);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_FLOOR;
-                        if (Control.DownHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_CEILING:
-                        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
-                        SwapDir(DIR_CEILING);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_CEILING;
-                        if (Control.UpHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_WALL_RIGHT:
-                        SwapDir(DIR_WALL_RIGHT);
-                        gravityDir = DIR_WALL_RIGHT;
-                        if (Control.RightHold())
-                            holdingShell = true;
-                        break;
-                }
+                //switch (defaultGravityDir)
+                //{
+                //    case DIR_FLOOR:
+                //        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                //        SwapDir(DIR_FLOOR);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_FLOOR;
+                //        if (Control.DownHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_CEILING:
+                //        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                //        SwapDir(DIR_CEILING);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_CEILING;
+                //        if (Control.UpHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_WALL_RIGHT:
+                //        SwapDir(DIR_WALL_RIGHT);
+                //        gravityDir = DIR_WALL_RIGHT;
+                //        if (Control.RightHold())
+                //            holdingShell = true;
+                //        break;
+                //}
+                CorrectGravity();
             }
             else
             {
@@ -854,11 +858,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_WALL_LEFT)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == DIR_FLOOR && Control.AxisY() == -1) ||
+                            (defaultGravityDir == DIR_CEILING && Control.AxisY() == 1) || defaultGravityDir == DIR_WALL_RIGHT))
                         {
-                            SwapDir(DIR_WALL_RIGHT);
-                            gravityDir = DIR_WALL_RIGHT;
-                            if (Control.RightHold())
+                            CorrectGravity();
+                            if (defaultGravityDir switch { DIR_FLOOR => Control.DownHold(), DIR_CEILING => Control.UpHold(), _ => Control.RightHold() })
                                 holdingShell = true;
                         }
                         // CAN round corners? Round that corner, you glorious little snail, you
@@ -908,31 +912,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     velocity.x = jumpPower[readIDJump] * jumpMod * Time.deltaTime;
                 else
                 {
-                    switch (defaultGravityDir)
-                    {
-                        case DIR_FLOOR:
-                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                            SwapDir(DIR_FLOOR);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_FLOOR;
-                            if (Control.DownHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_CEILING:
-                            transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                            SwapDir(DIR_CEILING);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_CEILING;
-                            if (Control.UpHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_WALL_RIGHT:
-                            SwapDir(DIR_WALL_RIGHT);
-                            gravityDir = DIR_WALL_RIGHT;
-                            if (Control.RightHold())
-                                holdingShell = true;
-                            break;
-                    }
+                    //switch (defaultGravityDir)
+                    //{
+                    //    case DIR_FLOOR:
+                    //        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                    //        SwapDir(DIR_FLOOR);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_FLOOR;
+                    //        if (Control.DownHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_CEILING:
+                    //        transform.position = new Vector2(transform.position.x + 0.0625f + (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                    //        SwapDir(DIR_CEILING);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_CEILING;
+                    //        if (Control.UpHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_WALL_RIGHT:
+                    //        SwapDir(DIR_WALL_RIGHT);
+                    //        gravityDir = DIR_WALL_RIGHT;
+                    //        if (Control.RightHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //}
+                    CorrectGravity();
+                    jumpBufferCounter = jumpBuffer;
                 }
             }
             else
@@ -1059,31 +1065,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
             {
-                switch (defaultGravityDir)
-                {
-                    case DIR_FLOOR:
-                        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
-                        SwapDir(DIR_FLOOR);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_FLOOR;
-                        if (Control.DownHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_CEILING:
-                        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
-                        SwapDir(DIR_CEILING);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_CEILING;
-                        if (Control.UpHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_WALL_LEFT:
-                        SwapDir(DIR_WALL_LEFT);
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.LeftHold())
-                            holdingShell = true;
-                        break;
-                }
+                //switch (defaultGravityDir)
+                //{
+                //    case DIR_FLOOR:
+                //        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                //        SwapDir(DIR_FLOOR);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_FLOOR;
+                //        if (Control.DownHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_CEILING:
+                //        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.x - box.size.y) * 0.5f, transform.position.y);
+                //        SwapDir(DIR_CEILING);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_CEILING;
+                //        if (Control.UpHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_WALL_LEFT:
+                //        SwapDir(DIR_WALL_LEFT);
+                //        gravityDir = DIR_WALL_LEFT;
+                //        if (Control.LeftHold())
+                //            holdingShell = true;
+                //        break;
+                //}
+                CorrectGravity();
             }
             else
             {
@@ -1187,11 +1194,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_WALL_RIGHT)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == DIR_FLOOR && Control.AxisY() == -1) ||
+                            (defaultGravityDir == DIR_CEILING && Control.AxisY() == 1) || defaultGravityDir == DIR_WALL_LEFT))
                         {
-                            SwapDir(DIR_WALL_LEFT);
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.LeftHold())
+                            CorrectGravity();
+                            if (defaultGravityDir switch { DIR_FLOOR => Control.DownHold(), DIR_CEILING => Control.UpHold(), _ => Control.LeftHold() })
                                 holdingShell = true;
                         }
                         // CAN round corners? Round that corner, you glorious little snail, you
@@ -1241,31 +1248,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     velocity.x = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
                 else
                 {
-                    switch (defaultGravityDir)
-                    {
-                        case DIR_FLOOR:
-                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                            SwapDir(DIR_FLOOR);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_FLOOR;
-                            if (Control.DownHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_CEILING:
-                            transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
-                            SwapDir(DIR_CEILING);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_CEILING;
-                            if (Control.UpHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_WALL_LEFT:
-                            SwapDir(DIR_WALL_LEFT);
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.LeftHold())
-                                holdingShell = true;
-                            break;
-                    }
+                    //switch (defaultGravityDir)
+                    //{
+                    //    case DIR_FLOOR:
+                    //        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                    //        SwapDir(DIR_FLOOR);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_FLOOR;
+                    //        if (Control.DownHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_CEILING:
+                    //        transform.position = new Vector2(transform.position.x - 0.0625f - (box.size.y - box.size.x) * 0.5f, transform.position.y);
+                    //        SwapDir(DIR_CEILING);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_CEILING;
+                    //        if (Control.UpHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_WALL_LEFT:
+                    //        SwapDir(DIR_WALL_LEFT);
+                    //        gravityDir = DIR_WALL_LEFT;
+                    //        if (Control.LeftHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //}
+                    CorrectGravity();
+                    jumpBufferCounter = jumpBuffer;
                 }
             }
             else
@@ -1392,31 +1401,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
             {
-                switch (defaultGravityDir)
-                {
-                    case DIR_WALL_LEFT:
-                        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
-                        SwapDir(DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.LeftHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_WALL_RIGHT:
-                        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
-                        SwapDir(DIR_WALL_LEFT);
-                        SwitchSurfaceAxis();
-                        gravityDir = DIR_WALL_LEFT;
-                        if (Control.RightHold())
-                            holdingShell = true;
-                        break;
-                    case DIR_FLOOR:
-                        SwapDir(DIR_FLOOR);
-                        gravityDir = DIR_FLOOR;
-                        if (Control.DownHold())
-                            holdingShell = true;
-                        break;
-                }
+                //switch (defaultGravityDir)
+                //{
+                //    case DIR_WALL_LEFT:
+                //        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                //        SwapDir(DIR_WALL_LEFT);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_WALL_LEFT;
+                //        if (Control.LeftHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_WALL_RIGHT:
+                //        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                //        SwapDir(DIR_WALL_LEFT);
+                //        SwitchSurfaceAxis();
+                //        gravityDir = DIR_WALL_LEFT;
+                //        if (Control.RightHold())
+                //            holdingShell = true;
+                //        break;
+                //    case DIR_FLOOR:
+                //        SwapDir(DIR_FLOOR);
+                //        gravityDir = DIR_FLOOR;
+                //        if (Control.DownHold())
+                //            holdingShell = true;
+                //        break;
+                //}
+                CorrectGravity();
             }
             else
             {
@@ -1520,11 +1530,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
                     {
                         // Can't round corners? Fall.
-                        if (!CheckAbility(canRoundOppositeOuterCorners) && defaultGravityDir != DIR_CEILING)
+                        if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == DIR_WALL_LEFT && Control.AxisX() == -1) ||
+                            (defaultGravityDir == DIR_WALL_RIGHT && Control.AxisX() == 1) || defaultGravityDir == DIR_FLOOR))
                         {
-                            SwapDir(DIR_FLOOR);
-                            gravityDir = DIR_FLOOR;
-                            if (Control.DownHold())
+                            CorrectGravity();
+                            if (defaultGravityDir switch { DIR_WALL_LEFT => Control.LeftHold(), DIR_WALL_RIGHT => Control.RightHold(), _ => Control.DownHold() })
                                 holdingShell = true;
                         }
                         // CAN round corners? Round that corner, you glorious little snail, you
@@ -1574,31 +1584,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     velocity.y = -jumpPower[readIDJump] * jumpMod * Time.deltaTime;
                 else
                 {
-                    switch (defaultGravityDir)
-                    {
-                        case DIR_WALL_LEFT:
-                            transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
-                            SwapDir(DIR_WALL_LEFT);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.LeftHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_WALL_RIGHT:
-                            transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
-                            SwapDir(DIR_WALL_LEFT);
-                            SwitchSurfaceAxis();
-                            gravityDir = DIR_WALL_LEFT;
-                            if (Control.RightHold())
-                                holdingShell = true;
-                            break;
-                        case DIR_FLOOR:
-                            SwapDir(DIR_FLOOR);
-                            gravityDir = DIR_FLOOR;
-                            if (Control.DownHold())
-                                holdingShell = true;
-                            break;
-                    }
+                    //switch (defaultGravityDir)
+                    //{
+                    //    case DIR_WALL_LEFT:
+                    //        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                    //        SwapDir(DIR_WALL_LEFT);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_WALL_LEFT;
+                    //        if (Control.LeftHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_WALL_RIGHT:
+                    //        transform.position = new Vector2(transform.position.x, transform.position.y - 0.0625f - (box.size.x - box.size.y) * 0.5f);
+                    //        SwapDir(DIR_WALL_LEFT);
+                    //        SwitchSurfaceAxis();
+                    //        gravityDir = DIR_WALL_LEFT;
+                    //        if (Control.RightHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //    case DIR_FLOOR:
+                    //        SwapDir(DIR_FLOOR);
+                    //        gravityDir = DIR_FLOOR;
+                    //        if (Control.DownHold())
+                    //            holdingShell = true;
+                    //        break;
+                    //}
+                    CorrectGravity();
+                    jumpBufferCounter = jumpBuffer;
                 }
             }
             else
@@ -1691,7 +1703,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         };
     }
 
-    public int GetDirAdjacentRight(int direction) // Todo: gravity correction on hit, fix ceiling corner jumps, fix opposite outside corner check
+    public int GetDirAdjacentRight(int direction)
     {
         return direction switch
         {
@@ -1730,10 +1742,48 @@ public class Player : MonoBehaviour, ICutsceneObject {
         //        break;
         //}
         bool swapAxis = defaultGravityDir == GetDirAdjacentLeft(gravityDir) || defaultGravityDir == GetDirAdjacentRight(gravityDir);
-        if (defaultGravityDir == GetDirAdjacentLeft(gravityDir))
+        bool revertVertical = defaultGravityDir == DIR_FLOOR || defaultGravityDir == DIR_CEILING;
+        bool revertLower = defaultGravityDir == DIR_FLOOR || defaultGravityDir == DIR_WALL_LEFT;
+        if (swapAxis)
+            SwitchSurfaceAxis();
+        UpdateBoxcasts();
+        bool insideWall;
+        if (revertVertical)
         {
-            
+            if (gravityDir == DIR_WALL_LEFT)
+                insideWall = boxL.distance == 0;
+            else
+                insideWall = boxR.distance == 0;
         }
+        else
+        {
+            if (gravityDir == DIR_FLOOR)
+                insideWall = boxD.distance == 0;
+            else
+                insideWall = boxU.distance == 0;
+        }
+        if (insideWall)
+        {
+            if (swapAxis)
+            {
+                Vector3 tweak;
+                if (revertVertical)
+                    tweak = new Vector3((0.0625f + (box.size.x - box.size.y) * 0.5f) * (facingLeft ? 1 : -1), 0, 0);
+                else
+                    tweak = new Vector3(0, (0.0625f + (box.size.y - box.size.x) * 0.5f) * (facingDown ? 1 : -1), 0);
+                transform.position += tweak;
+            }
+        }
+        SwapDir(defaultGravityDir);
+        gravityDir = defaultGravityDir;
+        if (defaultGravityDir switch { DIR_WALL_LEFT => Control.LeftHold(), DIR_WALL_RIGHT => Control.RightHold(),
+            DIR_CEILING => Control.UpHold(), _ => Control.DownHold() })
+            holdingShell = true;
+        if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+            velocity.x = 0;
+        else
+            velocity.y = 0;
+        jumpBufferCounter = jumpBuffer;
     }
 
     #endregion Movement
@@ -2023,6 +2073,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Hurt");
         }
         stunned = true;
+        if (!CheckAbility(stickToWallsWhenHurt))
+            CorrectGravity();
         float timer = 0;
         while (timer < 1)
         {
