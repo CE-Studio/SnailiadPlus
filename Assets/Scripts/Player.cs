@@ -95,6 +95,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public void cutRegister() {
         CutsceneManager.declare("PLAYER", new CutsceneManager.Unit("dict", new Dictionary<string, CutsceneManager.Unit> {
             {"setFreeze", new CutsceneManager.Unit(setFreeze, 2, "none")},
+            {"impulse", new CutsceneManager.Unit(impulse, 3, "none")},
         }));
     }
 
@@ -123,9 +124,18 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     public object[] impulse(object[] inputs) {
-        Vector3 vel = new Vector3((float)inputs[0], (float)inputs[1], (float)inputs[2]);
-        int condition = (int)inputs[3];
+        Vector2 vel = new Vector2((float)inputs[0], (float)inputs[1]);
+        int condition = (int)inputs[2];
         bool success = false;
+        if (condition == 0) {
+            velocity += vel;
+            success = true;
+        } else if (condition == 1) {
+            if (grounded) {
+                velocity += vel;
+                success = true;
+            }
+        }
         return new object[1] { success };
     }
     #endregion cutscene
