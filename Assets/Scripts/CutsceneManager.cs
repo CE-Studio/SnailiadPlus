@@ -127,61 +127,61 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
     List<sline> extract(int lnum, int depth, out int nlnum) {
         List<sline> extlines = new List<sline>();
         while (lnum < (rawlines.Length - 1)) {
-            int ld = 0;
-            int pd = 0;
-            bool cw = true;
-            bool sn = false;
-            bool quot = false;
-            bool lo = false;
+            int lineDepth = 0;
+            int parenDepth = 0;
+            bool countWhitesapce = true;
+            bool skipNext = false;
+            bool quote = false;
+            bool lineOver = false;
             List<sline> content = null;
             print(rawlines[lnum]);
             foreach (char i in rawlines[lnum]) {
-                if (sn || lo) {
-                    sn = false;
+                if (skipNext || lineOver) {
+                    skipNext = false;
                 } else {
                     if (i == '\\') {
-                        sn = true;
+                        skipNext = true;
                     } else {
                         switch (i) {
                             case '\t':
                             case ' ':
-                                if (cw) {
-                                    ld += 1;
+                                if (countWhitesapce) {
+                                    lineDepth += 1;
                                 }
                                 break;
                             case '(':
-                                if (!quot) pd += 1;
-                                cw = false;
+                                if (!quote) parenDepth += 1;
+                                countWhitesapce = false;
                                 break;
                             case ')':
-                                if (!quot) pd -= 1;
-                                cw = false;
+                                if (!quote) parenDepth -= 1;
+                                countWhitesapce = false;
                                 break;
                             case '"':
-                                quot = !quot;
-                                cw = false;
+                                quote = !quote;
+                                countWhitesapce = false;
                                 break;
                             case '#':
-                                lo = true;
+                                lineOver = true;
                                 break;
                             default:
-                                cw = false;
+                                countWhitesapce = false;
                                 break;
                         }
                     }
                 }
             }
-            if (quot) {
+            if (quote) {
                 throw new System.Exception("Open string on line " + lnum);
             }
-            if (pd != 0) {
+            if (parenDepth != 0) {
                 throw new System.Exception("Imbalanced parenthesis on line " + lnum);
             }
-            if (ld > depth) {
+            if (lineDepth > depth) {
                 print("Hold my line, I'm going in!");
-                content = extract(lnum, ld, out lnum);
+                content = extract(lnum, lineDepth, out lnum);
             }
-            if (ld < depth) {
+            if (lineDepth < depth) {
                 lnum -= 1;
                 break;
             } else {
