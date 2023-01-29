@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 571015afd15eeac4cbf6fe518d77decc, type: 3}
-  m_Name: Sound Library
+  m_Name: 
   m_EditorClassIdentifier: 
   library:
   - {fileID: 8300000, guid: cfa105eaedf81aa49be768660328b539, type: 3}
@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cd7c3815d9fe56c46b29d9722596d36b, type: 3}
   - {fileID: 8300000, guid: 706d6f824c17a7b4e919bdc655d3c176, type: 3}
   - {fileID: 8300000, guid: 13444d2e6b53601429b54d19e356c7ce, type: 3}
+  - {fileID: 8300000, guid: f90570f7b2b58c24f9dde2cb82189cb1, type: 3}
   - {fileID: 8300000, guid: 0e365b3df404ffa448bdcc172516d622, type: 3}
   - {fileID: 8300000, guid: d6288a3cde5452644bd8cc6e8e2dce0e, type: 3}
   - {fileID: 8300000, guid: d153f66040e9f424a9f4706302e04083, type: 3}
@@ -56,6 +57,7 @@ MonoBehaviour:
   - Dialogue1
   - Dialogue2
   - Dialogue3
+  - Dialogue4
   - DoorClose
   - DoorOpen
   - EatGrass

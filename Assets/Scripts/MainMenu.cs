@@ -606,7 +606,7 @@ public class MainMenu : MonoBehaviour
                         }
                         PlayState.gameOptions[11] = menuVarFlags[6];
                         break;
-                    case "screenShake":
+                    case "paletteShader":
                         TestForArrowAdjust(option, 7, 1);
                         switch (menuVarFlags[7])
                         {
@@ -617,7 +617,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
                                 break;
                         }
-                        PlayState.gameOptions[15] = menuVarFlags[7];
+                        PlayState.gameOptions[16] = menuVarFlags[7];
                         break;
                     case "control_jump":
                         if (!isRebinding)
@@ -678,6 +678,28 @@ public class MainMenu : MonoBehaviour
                     case "control_menu":
                         if (!isRebinding)
                             AddToOptionText(option, Control.ParseKeyName(22));
+                        break;
+                    case "screenShake":
+                        TestForArrowAdjust(option, 4, 4);
+                        switch (menuVarFlags[4])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minimal"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                break;
+                            case 3:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minNoHud"));
+                                break;
+                            case 4:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_noHud"));
+                                break;
+                        }
+                        PlayState.gameOptions[15] = menuVarFlags[4];
                         break;
                     case "slot":
                         TestForArrowAdjust(option, 0, 9);
@@ -1321,11 +1343,11 @@ public class MainMenu : MonoBehaviour
             0, PlayState.gameOptions[2], 1, PlayState.gameOptions[3],
             2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
             4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7],
-            6, PlayState.gameOptions[11], 7, PlayState.gameOptions[15]
+            6, PlayState.gameOptions[11], 7, PlayState.gameOptions[16]
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
-            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13], 3, PlayState.gameOptions[14] });
+            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13], 3, PlayState.gameOptions[14], 4, PlayState.gameOptions[15] });
         if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
@@ -1360,7 +1382,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true, "gameTime");
         AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true, "fps");
         AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true, "particles");
-        AddOption(PlayState.GetText("menu_option_display_screenShake") + ": ", true, "screenShake");
+        AddOption(PlayState.GetText("menu_option_display_paletteShader") + ": ", true, "paletteShader");
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
@@ -1451,6 +1473,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true, "showBreakables");
         AddOption(PlayState.GetText("menu_option_gameplay_secretTiles") + ": ", true, "secretTiles");
         AddOption(PlayState.GetText("menu_option_gameplay_frameLimit") + ": ", true, "frameLimit");
+        AddOption(PlayState.GetText("menu_option_gameplay_screenShake") + ": ", true, "screenShake");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
         ForceSelect(0);

@@ -360,7 +360,8 @@ public class PlayState {
         0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious, 2 = all)
         0,  // 13 - Secret tile visibility (boolean)
         2,  // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
-        1   // 15 - Screen shake (boolean)
+        1,  // 15 - Screen shake (0 = off, 1 = minimal, 2 = full, 3 = minimal w/ no HUD shake, 4 = full w/ no HUD shake)
+        0   // 16 - Palette filter (boolean)
     };
 
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
