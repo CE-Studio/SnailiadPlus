@@ -311,8 +311,8 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_display_screenShake",
-			"text": "Screen shake",
+			"name": "menu_option_display_paletteShader",
+			"text": "Small palette shader",
 			"value": 0
 		},
 		{
@@ -433,6 +433,11 @@
 		{
 			"name": "menu_option_gameplay_frameLimit",
 			"text": "Frame limiter",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gameplay_screenShake",
+			"text": "Screen shake",
 			"value": 0
 		},
 		{
@@ -1263,6 +1268,21 @@
 		{
 			"name": "menu_add_particles4",
 			"text": "Flash",
+			"value": 0
+		},
+		{
+			"name": "menu_add_shake_minimal",
+			"text": "minimal",
+			"value": 0
+		},
+		{
+			"name": "menu_add_shake_minNoHud",
+			"text": "minimal (no HUD shake)",
+			"value": 0
+		},
+		{
+			"name": "menu_add_shake_noHud",
+			"text": "on (no HUD shake)",
 			"value": 0
 		},
 		{

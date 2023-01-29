@@ -21,6 +21,7 @@ public class SoundLibrary : ScriptableObject
         "Dialogue1",
         "Dialogue2",
         "Dialogue3",
+        "Dialogue4",
         "DoorClose",
         "DoorOpen",
         "EatGrass",

@@ -57,6 +57,9 @@ public class GlobalFunctions : MonoBehaviour
     public int shellStateBuffer = 0;
     public float shellAnimTimer = 0f;
 
+    // Reference to palette shader component
+    public Assets.Scripts.Cam.Effects.RetroPixelMax paletteShader;
+
     public void Start()
     {
         for (int i = 0; i < weaponIcons.Length; i++)
@@ -72,6 +75,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject.Find("View/Area Name Text/Text").GetComponent<TextMesh>(),
             GameObject.Find("View/Area Name Text/Shadow").GetComponent<TextMesh>()
         };
+
+        paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
     }
 
     public void Update()
@@ -187,6 +192,10 @@ public class GlobalFunctions : MonoBehaviour
         // Audiosource volume control
         PlayState.globalSFX.volume = PlayState.gameOptions[0] * 0.1f;
         PlayState.globalMusic.volume = PlayState.gameOptions[1] * 0.1f;
+
+        // Palette shader toggle
+        if ((PlayState.gameOptions[16] == 1 && !paletteShader.enabled) || (PlayState.gameOptions[16] == 0 && paletteShader.enabled))
+            paletteShader.enabled = !paletteShader.enabled;
 
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)
@@ -897,10 +906,10 @@ public class GlobalFunctions : MonoBehaviour
 
     public void ScreenShake(List<float> intensities, List<float> times)
     {
-        if (PlayState.gameOptions[15] == 1)
-            StartCoroutine(ScreenShakeCoroutine(intensities, times));
+        if (PlayState.gameOptions[15] >= 1)
+            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1));
     }
-    public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times)
+    public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times, bool minimalShake)
     {
         if ((times.Count - intensities.Count == 1) || (times.Count == intensities.Count))
         {
@@ -910,6 +919,10 @@ public class GlobalFunctions : MonoBehaviour
                 intensities[i] = Mathf.Clamp(intensities[i], 0, Mathf.Infinity);
             for (int i = 0; i < times.Count; i++)
                 times[i] = Mathf.Clamp(times[i], 0, Mathf.Infinity);
+
+            if (minimalShake)
+                for (int i = 0; i < intensities.Count; i++)
+                    intensities[i] = Mathf.Clamp(intensities[i] * 0.25f, 0, 0.5f);
 
             float intensity;
             float time = 0;

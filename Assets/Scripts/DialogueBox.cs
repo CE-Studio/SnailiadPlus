@@ -415,7 +415,7 @@ public class DialogueBox : MonoBehaviour
                 playSound = true;
             if (thisChar != ' ' && playSound)
             {
-                switch (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound)
+                switch (currentSound == 5 ? 5 : (currentSound == 0 ? (currentSpeaker % 4) + 1 : currentSound))
                 {
                     case 1:
                         PlayState.PlaySound("Dialogue0");
@@ -428,6 +428,9 @@ public class DialogueBox : MonoBehaviour
                         break;
                     case 4:
                         PlayState.PlaySound("Dialogue3");
+                        break;
+                    case 5:
+                        PlayState.PlaySound("Dialogue4");
                         break;
                 }
             }

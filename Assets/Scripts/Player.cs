@@ -1724,7 +1724,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         };
     }
 
-    public void CorrectGravity()
+    public void CorrectGravity(bool zeroVel = true)
     {
         //switch (defaultGravityDir)
         //{
@@ -1778,9 +1778,19 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 Vector3 tweak;
                 if (revertVertical)
-                    tweak = new Vector3((0.0625f + (box.size.x - box.size.y) * 0.5f) * (facingLeft ? 1 : -1), 0, 0);
+                {
+                    if (boxL.distance == 0)
+                        tweak = new Vector3(transform.position.x - boxL.point.x + 0.03125f, 0, 0);
+                    else
+                        tweak = new Vector3(boxR.point.x - transform.position.x - 0.03125f, 0, 0);
+                }
                 else
-                    tweak = new Vector3(0, (0.0625f + (box.size.y - box.size.x) * 0.5f) * (facingDown ? 1 : -1), 0);
+                {
+                    if (boxD.distance == 0)
+                        tweak = new Vector3(0, transform.position.y - boxL.point.y + 0.03125f, 0);
+                    else
+                        tweak = new Vector3(0, boxR.point.y - transform.position.y - 0.03125f, 0);
+                }
                 transform.position += tweak;
             }
         }
@@ -1789,10 +1799,13 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if (defaultGravityDir switch { DIR_WALL_LEFT => Control.LeftHold(), DIR_WALL_RIGHT => Control.RightHold(),
             DIR_CEILING => Control.UpHold(), _ => Control.DownHold() })
             holdingShell = true;
-        if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
-            velocity.x = 0;
-        else
-            velocity.y = 0;
+        if (zeroVel)
+        {
+            if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
+                velocity.x = 0;
+            else
+                velocity.y = 0;
+        }
         jumpBufferCounter = jumpBuffer;
     }
 
@@ -2084,7 +2097,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
         stunned = true;
         if (!CheckAbility(stickToWallsWhenHurt))
-            CorrectGravity();
+            CorrectGravity(false);
         float timer = 0;
         while (timer < 1)
         {

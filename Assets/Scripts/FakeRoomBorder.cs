@@ -51,9 +51,29 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
         isActive = true;
         initialPosRelative = new Vector2(PlayState.player.transform.position.x > transform.position.x ? 1 : -1,
             PlayState.player.transform.position.y > transform.position.y ? 1 : -1);
+        string roomName = transform.parent.name;
+        if (roomName.Contains("/"))
+        {
+            string[] nameParts = roomName.Split('/');
+            int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
+            foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + nameParts[0]))
+            {
+                if (character == '|')
+                    downLeftRoomName += "\n";
+                else
+                    downLeftRoomName += character;
+            }
+            foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + nameParts[1]))
+            {
+                if (character == '|')
+                    upRightRoomName += "\n";
+                else
+                    upRightRoomName += character;
+            }
+        }
     }
 
-    private void Update() {
+    public void Update() {
         if (downLeftRoomName != "" || upRightRoomName != "") {
             if ((!direction && PlayState.player.transform.position.y > transform.position.y) ||
                 (direction && PlayState.player.transform.position.x > transform.position.x)) {
