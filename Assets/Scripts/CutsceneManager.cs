@@ -6,6 +6,22 @@ using System.Threading;
 [RequireComponent(typeof(BoxCollider2D))]
 public class CutsceneManager:MonoBehaviour, IRoomObject {
 
+    public class cutsceneCompileError:System.Exception {
+        public cutsceneCompileError() { }
+
+        public cutsceneCompileError(string content) : base("Cutscene compiler: " + content) {
+
+        }
+    }
+
+    public class cutsceneRuntimeError:System.Exception {
+        public cutsceneRuntimeError() { }
+
+        public cutsceneRuntimeError(string content) : base("Cutscene runtime: " + content) {
+
+        }
+    }
+
     public TextAsset script;
     public bool active = true;
 
@@ -106,6 +122,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
 
     void Start() {
         verfy();
+        tokenize(lines);
     }
 
     void verfy() {
@@ -172,10 +189,10 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
                 }
             }
             if (quote) {
-                throw new System.Exception("Open string on line " + lnum);
+                throw new cutsceneCompileError("Open string on line " + lnum);
             }
             if (parenDepth != 0) {
-                throw new System.Exception("Imbalanced parenthesis on line " + lnum);
+                throw new cutsceneCompileError("Imbalanced parenthesis on line " + lnum);
             }
             if (lineDepth > depth) {
                 print("Hold my line, I'm going in!");
@@ -189,7 +206,7 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
                 a.line = rawlines[lnum].Trim();
                 if (content != null) {
                     if (extlines.Count < 1) {
-                        throw new System.Exception("Script cannot start with indented block");
+                        throw new cutsceneCompileError("Script cannot start with indented block");
                     }
                     sline h = extlines[extlines.Count - 1];
                     h.indent = content;
@@ -203,5 +220,14 @@ public class CutsceneManager:MonoBehaviour, IRoomObject {
         print("Recursion level ended");
         nlnum = lnum;
         return extlines;
+    }
+
+    void tokenize(List<sline> slines) {
+        foreach (sline thisline in slines) {
+            print(thisline.line);
+            if (thisline.indent != null) {
+                tokenize(thisline.indent);
+            }
+        }
     }
 }
