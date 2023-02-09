@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 151c6c8e6d84d3c41a02ed8b0d88b35e, type: 3}
-  m_Name: Texture Library
+  m_Name: 
   m_EditorClassIdentifier: 
   referenceList:
   - AchievementIcons
@@ -32,6 +32,10 @@ MonoBehaviour:
   - Entities/Boss1
   - Entities/Boss1Eyes
   - Entities/Boss1Hand
+  - Entities/Boss2Eye
+  - Entities/Boss2Eyelid
+  - Entities/Boss2Foot
+  - Entities/Boss2Pupil
   - Entities/BreakableIcons
   - Entities/Chirpy1
   - Entities/Chirpy2
