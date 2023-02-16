@@ -27,7 +27,7 @@ public class Kitty2 : Enemy
 
     void Awake()
     {
-        Spawn(900, 2, 1, true, new Vector2(1.95f, 0.95f));
+        Spawn(900, 2, 1, true);
 
         anim.Add("Enemy_kitty2_idle");
         anim.Add("Enemy_kitty2_jump");

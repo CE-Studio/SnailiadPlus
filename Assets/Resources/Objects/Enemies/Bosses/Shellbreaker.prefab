@@ -247,7 +247,10 @@ MonoBehaviour:
   immunities: 
   letsPermeatingShotsBy: 0
   stunInvulnerability: 0
+  makeSoundOnPing: 1
   elementType: 
+  invulnerable: 0
+  canDamage: 1
   box: {fileID: 0}
   rb: {fileID: 0}
   sprite: {fileID: 0}
@@ -255,6 +258,9 @@ MonoBehaviour:
   mask: {fileID: 0}
   spawnConditions: []
   origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
   enemyCollide:
     serializedVersion: 2
     m_Bits: 0
@@ -263,6 +269,7 @@ MonoBehaviour:
   frameAnim: {fileID: 0}
   barAnim: {fileID: 0}
   barMask: {fileID: 0}
+  hand: {fileID: 0}
 --- !u!61 &4528620742383635789
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -287,5 +294,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 2.95, y: 2.95}
   m_EdgeRadius: 0

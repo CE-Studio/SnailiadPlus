@@ -12,7 +12,7 @@ public class Bat : Enemy
 
     private void Awake()
     {
-        Spawn(120, 3, 10, true, new Vector2(1.95f, 0.95f));
+        Spawn(120, 3, 10, true);
         anim.Add("Enemy_bat_idle");
         anim.Add("Enemy_bat_fly");
         anim.Play("Enemy_bat_idle");

@@ -28,7 +28,7 @@ public class Snelk : Enemy
             Destroy(gameObject);
             return;
         }
-        Spawn(50, 2, 1, true, new Vector2(1.45f, 1.45f));
+        Spawn(50, 2, 1, true);
         invulnerable = true;
         canDamage = false;
 

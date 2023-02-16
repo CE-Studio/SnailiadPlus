@@ -1570,10 +1570,55 @@ public class PlayState {
         }
     }
 
-    public static bool OnScreen(Vector2 position, BoxCollider2D box) {
-        float boxAdjust = box != null ? box.size.x * 0.5f : 8;
-        return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
-            Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
+    public static bool OnScreen(Vector2 position, Collider2D col) {
+        //float boxAdjust = box != null ? box.size.x * 0.5f : 8;
+        //return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
+        //    Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
+        string colType = "";
+        if (col.TryGetComponent(out BoxCollider2D box))
+            colType = "box";
+        if (col.TryGetComponent(out CircleCollider2D circ))
+            colType = "circ";
+        if (col.TryGetComponent(out PolygonCollider2D poly))
+            colType = "poly";
+        if (col.TryGetComponent(out CapsuleCollider2D cap))
+            colType = "cap";
+
+        Vector2 halfBoxSize;
+        switch (colType)
+        {
+            default:
+            case "box":
+                halfBoxSize = new Vector2(box.size.x * 0.5f, box.size.y * 0.5f);
+                break;
+            case "circ":
+                halfBoxSize = new Vector2(circ.radius, circ.radius);
+                break;
+            case "poly":
+                float left = 99f;
+                float right = -99f;
+                float up = -99f;
+                float down = 99f;
+                foreach (Vector2 point in poly.points)
+                {
+                    if (point.x < left)
+                        left = point.x;
+                    if (point.x > right)
+                        right = point.x;
+                    if (point.y < down)
+                        down = point.y;
+                    if (point.y > up)
+                        up = point.y;
+                }
+                halfBoxSize = new Vector2(Mathf.Abs(right - left) * 0.5f, Mathf.Abs(up - down) * 0.5f);
+                break;
+            case "cap":
+                halfBoxSize = new Vector2(cap.size.x * 0.5f, cap.size.y * 0.5f);
+                break;
+        }
+
+        return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - halfBoxSize.x < 12.5f &&
+            Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - halfBoxSize.y < 7.5f;
     }
 
     public static float Integrate(float num, float target, float speed, float elapsed, float threshold = 0.1f) {

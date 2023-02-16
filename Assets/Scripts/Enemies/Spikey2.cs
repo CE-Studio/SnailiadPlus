@@ -31,7 +31,7 @@ public class Spikey2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(PlayState.currentDifficulty == 2 ? 720 : 340, 4, 0, true, new Vector2(0.95f, 0.95f));
+        Spawn(PlayState.currentDifficulty == 2 ? 720 : 340, 4, 0, true);
         if (PlayState.currentDifficulty == 2)
         {
             STOP_TIMEOUT = 3f;

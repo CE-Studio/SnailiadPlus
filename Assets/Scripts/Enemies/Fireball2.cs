@@ -27,7 +27,7 @@ public class Fireball2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(50, 3, 25, true, new Vector2(0.95f, 0.95f));
+        Spawn(50, 3, 25, true);
         speed = PlayState.currentProfile == 2 ? 0.14f : 0.08f;
         elementType = "ice";
 

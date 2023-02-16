@@ -37,7 +37,7 @@ public class Shellbreaker : Boss
         if (PlayState.IsBossAlive(0))
         {
             SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentDifficulty == 2 ? 1 : (PlayState.currentCharacter == "Sluggy" ? 0.66f : 0.88f))),
-                2, 3, true, new Vector2(2.95f, 2.95f), 0);
+                2, 3, true, 0);
             StartCoroutine(RunIntro());
             eyes = transform.GetChild(0).gameObject;
             PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + (2.25f * (PlayState.playerScript.facingLeft ? -1 : 1)),

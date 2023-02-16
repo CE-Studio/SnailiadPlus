@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public bool canDamage = true;
 
     public BoxCollider2D box;
+    public Collider2D col;
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
     public AnimationModule anim;
@@ -33,9 +34,10 @@ public class Enemy : MonoBehaviour
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
-    public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> wea = null, List<int> res = null, List<int> imm = null)
+    //public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> wea = null, List<int> res = null, List<int> imm = null)
+    public void Spawn(int hp, int atk, int def, bool piercable, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
-        box = GetComponent<BoxCollider2D>();
+        //box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
@@ -54,8 +56,8 @@ public class Enemy : MonoBehaviour
         resistances = res;
         immunities = imm;
         letsPermeatingShotsBy = piercable;
-        if (box != null)
-            box.size = hitboxSize;
+        //if (box != null)
+        //    box.size = hitboxSize;
 
         if (weaknesses == null)
             weaknesses = new List<int> { -1 };

@@ -3059,6 +3059,598 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Boss_stompy_data",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL0_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR0_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL0_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR0_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL0_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR0_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL1_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR1_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL1_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR1_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL1_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR1_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL2_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR2_ground",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL2_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR2_rise",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footL2_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_footR2_fall",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeL0",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeR0",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeL1",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeR1",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeL2",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyeR2",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilL0",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilR0",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilL1",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilR1",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilL2",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_pupilR2",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL0_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR0_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL0_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR0_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL0_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR0_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL1_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR1_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL1_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR1_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL1_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR1_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL2_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR2_open",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL2_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR2_close",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidL2_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_stompy_eyelidR2_blink",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_babyfish1_normal",
 			"spriteName": "Entities/Babyfish",
 			"framerate": 0.0,

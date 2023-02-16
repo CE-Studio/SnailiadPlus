@@ -49,6 +49,7 @@ public class SoundLibrary : ScriptableObject
         "ShotPeashooter",
         "Snelk",
         "Splash",
+        "Stomp",
         "Transformation"
     };
 

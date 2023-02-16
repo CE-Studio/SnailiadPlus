@@ -11,7 +11,7 @@ public class Floatspike : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
         
-        Spawn(5, 2, 59, true, new Vector2(0.95f, 0.95f));
+        Spawn(5, 2, 59, true);
 
         time = Random.Range(0, 100) * 0.01f;
 

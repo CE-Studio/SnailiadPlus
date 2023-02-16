@@ -20,7 +20,7 @@ public class Blob1 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(50, 2, 1, true, new Vector2(0.95f, 0.95f));
+        Spawn(50, 2, 1, true);
         
         anim.Add("Enemy_blob1_normal");
         anim.Add("Enemy_blob1_jump");

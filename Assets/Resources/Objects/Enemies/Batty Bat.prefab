@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 1.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!114 &6036836413789330721
 MonoBehaviour:
@@ -133,7 +133,10 @@ MonoBehaviour:
   immunities: 
   letsPermeatingShotsBy: 0
   stunInvulnerability: 0
+  makeSoundOnPing: 1
   elementType: 
+  invulnerable: 0
+  canDamage: 1
   box: {fileID: 0}
   rb: {fileID: 0}
   sprite: {fileID: 0}
@@ -141,6 +144,9 @@ MonoBehaviour:
   mask: {fileID: 0}
   spawnConditions: []
   origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
   enemyCollide:
     serializedVersion: 2
     m_Bits: 0
