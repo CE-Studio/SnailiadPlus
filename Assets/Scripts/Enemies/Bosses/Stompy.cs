@@ -47,10 +47,10 @@ public class Stompy : Boss
     private const float SHAKE_STRENGTH = 0.35f;
     private const float SHAKE_TIME = 0.6f;
 
-    private readonly Vector2 offsetEyeL = new Vector2(6.0625f, 1.5625f);
-    private readonly Vector2 offsetEyeR = new Vector2(-0.5625f, 1.5625f);
-    private readonly Vector2 offsetFootL = new Vector2(-15.625f, 0f);
-    private readonly Vector2 offsetFootR = new Vector2(0f, 0f);
+    private readonly Vector2 offsetEyeL = new Vector2(3.25f, 4.8125f);
+    private readonly Vector2 offsetEyeR = new Vector2(-3.3735f, 4.8125f);
+    private readonly Vector2 offsetFootL = new Vector2(-10.1875f, -4.375f);
+    private readonly Vector2 offsetFootR = new Vector2(6f, -4.375f);
 
     private int attackMode = 0;
     private float bossSpeed = 0.6f;
@@ -85,7 +85,7 @@ public class Stompy : Boss
     private float stepThetaR;
     private float thetaL;
     private float thetaR;
-    private float minEyeY;
+    private float maxEyeY;
 
     private readonly float[] timeouts = new float[]
     {
@@ -124,7 +124,7 @@ public class Stompy : Boss
             else if (PlayState.currentCharacter == "Sluggy")
                 bossSpeed = 0.9f;
             transform.position -= Vector3.up * 2.5625f;
-            minEyeY = transform.position.y + 5f;
+            maxEyeY = transform.position.y + 5f;
             footLPos.y = RAISED_Y;
             footRPos.y = RAISED_Y;
             footL = transform.Find("Foot L").GetComponent<StompyFoot>();
@@ -232,7 +232,7 @@ public class Stompy : Boss
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        elapsed += Time.deltaTime * bossSpeed * 2f;
+        elapsed += Time.deltaTime * bossSpeed;
         while (elapsed > SEC_PER_TICK)
         {
             elapsed -= SEC_PER_TICK;
@@ -271,7 +271,7 @@ public class Stompy : Boss
                         //PlayState.miniMap.setMapLittle();
                         //PlayState.showBossName(2);
                         //Music.playBoss1();
-                        RunIntro(false);
+                        StartCoroutine(RunIntro(false));
                     }
                     //else
                     //{
@@ -292,7 +292,7 @@ public class Stompy : Boss
                     }
                     break;
                 case BossMode.moveStomp:
-                    stepModeTimeout -= elapsed * bossSpeed;
+                    stepModeTimeout -= Time.deltaTime * bossSpeed;
                     if (stepModeTimeout < 0)
                         modeMain = BossMode.hunt;
                     break;
@@ -309,7 +309,7 @@ public class Stompy : Boss
                         modeL = FootMode.stomp;
                         modeR = FootMode.stomp;
                     }
-                    stepModeTimeout -= elapsed * bossSpeed;
+                    stepModeTimeout -= Time.deltaTime * bossSpeed;
                     if (stepModeTimeout < 0)
                     {
                         stepModeTimeout = STEP_MODE_TIMEOUT;
@@ -321,7 +321,7 @@ public class Stompy : Boss
                         modeL = FootMode.stomp;
                     if (modeR == FootMode.move)
                         modeR = FootMode.stomp;
-                    stepModeTimeout -= elapsed * bossSpeed;
+                    stepModeTimeout -= Time.deltaTime * bossSpeed;
                     if (stepModeTimeout < 0)
                     {
                         stepModeTimeout = STEP_MODE_TIMEOUT;
@@ -338,7 +338,10 @@ public class Stompy : Boss
         }
     }
 
-    public override void LateUpdate() { }
+    public override void LateUpdate()
+    {
+        Debug.Log(modeMain + ", " + modeL + ", " + modeR);
+    }
 
     private void MoveChildren()
     {
@@ -387,14 +390,19 @@ public class Stompy : Boss
         if (modeR == FootMode.stomp)
         {
             footRVel.y -= 0.2f;
-            footRPos.y += footRVel.y * SIXTEENTH;
-            if (modeMain == BossMode.step)
-                modeR = FootMode.step;
-            footRVel.y = 0;
-            footRTimeoutRaise = 50;
-            footRTimeoutStomp = 1000000;
-            PlayState.PlaySound("Stomp");
-            PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+            footRPos = new Vector2(footRPos.x, footRPos.y + footRVel.y * SIXTEENTH);
+            if (footRPos.y < 0)
+            {
+                footRPos.y = 0;
+                modeR = FootMode.waitRaise;
+                if (modeMain == BossMode.step)
+                    modeR = FootMode.step;
+                footRVel.y = 0;
+                footRTimeoutRaise = 50;
+                footRTimeoutStomp = 1000000;
+                PlayState.PlaySound("Stomp");
+                PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+            }
         }
         else if (modeMain > BossMode.intro3 && modeR == FootMode.waitRaise && --footRTimeoutRaise <= 0)
         {
@@ -424,7 +432,7 @@ public class Stompy : Boss
             if (modeMain == BossMode.hunt)
                 footLTarget.x = PlayState.player.transform.position.x - transform.position.x;
             else
-                footLTarget.x = Mathf.Sin(thetaL / 15) * 160;
+                footLTarget.x = Mathf.Sin(thetaL / 15) * 10;
             if (footRPos.x - footLTarget.x < MIN_DIST)
                 footLTarget.x = footRPos.x - MIN_DIST;
             if (PlayState.player.transform.position.x - transform.position.x < -20)
@@ -445,7 +453,7 @@ public class Stompy : Boss
             if (modeMain == BossMode.hunt)
                 footRTarget.x = PlayState.player.transform.position.x - transform.position.x;
             else
-                footRTarget.x = Mathf.Sin(thetaR / 15.5f + Mathf.PI / 3f) * 160;
+                footRTarget.x = Mathf.Sin(thetaR / 15.5f + Mathf.PI / 3f) * 10;
             if (footRTarget.x - footLPos.x < MIN_DIST)
                 footRTarget.x = footLPos.x + MIN_DIST;
             if (PlayState.player.transform.position.x - transform.position.x > 18.875f)
@@ -453,7 +461,7 @@ public class Stompy : Boss
             footRVel.x = footRTarget.x - footRPos.x;
             footRPos.x += footRVel.x * 0.1f;
             footRTimeoutStomp--;
-            if (footRTimeoutStomp <= 0 && footRPos.y >= RAISED_Y - 10 && footRVel.y > 1)
+            if (footRTimeoutStomp <= 0 && footRPos.y >= RAISED_Y - 0.625f && footRVel.y > 1)
             {
                 modeR = FootMode.stomp;
                 footRVel.y = -10f;
@@ -579,18 +587,18 @@ public class Stompy : Boss
             eyeL.transform.position = (Vector2)footL.transform.position + offsetEyeL;
             eyeR.transform.position = (Vector2)footR.transform.position + offsetEyeR;
         }
-        if (eyeL.transform.position.y >= minEyeY)
+        if (eyeL.transform.position.y >= maxEyeY)
         {
-            eyeL.transform.position = new Vector2(eyeL.transform.position.x, minEyeY);
+            eyeL.transform.position = new Vector2(eyeL.transform.position.x, maxEyeY);
             //eyeL.solid = false;
         }
         //else
         //{
         //    this.leye.solid = true;
         //}
-        if (eyeR.transform.position.y >= minEyeY)
+        if (eyeR.transform.position.y >= maxEyeY)
         {
-            eyeR.transform.position = new Vector2(eyeR.transform.position.x, minEyeY);
+            eyeR.transform.position = new Vector2(eyeR.transform.position.x, maxEyeY);
             //this.reye.solid = false;
         }
         //else

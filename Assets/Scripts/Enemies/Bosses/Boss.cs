@@ -89,7 +89,8 @@ public class Boss : Enemy
         barMask.GetComponent<SpriteMask>().sprite = PlayState.GetSprite("UI/BossHealthBar", barData[4]);
         barMask.transform.localPosition = new Vector2(barPointLeft, barMask.transform.localPosition.y);
         frameAnim.Play("BossBar_frame_idle");
-        col.enabled = false;
+        if (col != null)
+            col.enabled = false;
         PlayState.globalFunctions.currentBossName = PlayState.GetText(
             "boss_" + ID switch { 1 => "stompy", 2 => "spaceBox", 3 => "moonSnail", _ => "shellbreaker" } + (PlayState.currentArea == 7 ? "_rush" : ""));
 
@@ -126,7 +127,8 @@ public class Boss : Enemy
             }
             yield return new WaitForEndOfFrame();
         }
-        col.enabled = true;
+        if (col != null)
+            col.enabled = true;
         PlayState.paralyzed = false;
         barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
     }
