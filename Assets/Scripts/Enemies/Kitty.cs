@@ -25,9 +25,12 @@ public class Kitty : Enemy
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
 
+    private BoxCollider2D box;
+
     void Awake()
     {
         Spawn(100, 2, 1, true);
+        col.TryGetComponent(out box);
 
         anim.Add("Enemy_kitty1_idle");
         anim.Add("Enemy_kitty1_jump");

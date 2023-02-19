@@ -24,7 +24,7 @@ public class AnimationModule : MonoBehaviour
     private bool smallBlank = false;
 
     private SpriteRenderer sprite;
-    private SpriteMask mask;
+    private List<SpriteMask> masks = new List<SpriteMask>();
 
     void Awake()
     {
@@ -59,8 +59,9 @@ public class AnimationModule : MonoBehaviour
                                 {
                                     sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                         PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                                    if (updateMask && mask != null)
-                                        mask.sprite = sprite.sprite;
+                                    if (updateMask && masks.Count > 0)
+                                        foreach (SpriteMask mask in masks)
+                                            mask.sprite = sprite.sprite;
                                 }
                                 animTimer += timerMax;
                             }
@@ -73,8 +74,9 @@ public class AnimationModule : MonoBehaviour
                                     {
                                         sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                             PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                                        if (updateMask && mask != null)
-                                            mask.sprite = sprite.sprite;
+                                        if (updateMask && masks.Count > 0)
+                                            foreach (SpriteMask mask in masks)
+                                                mask.sprite = sprite.sprite;
                                     }
                                     animTimer += timerMax;
                                 }
@@ -125,10 +127,13 @@ public class AnimationModule : MonoBehaviour
             {
                 sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                     PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                if (updateMask && mask != null)
+                if (updateMask && masks.Count > 0)
                 {
-                    mask.sprite = sprite.sprite;
-                    mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
+                    foreach (SpriteMask mask in masks)
+                    {
+                        mask.sprite = sprite.sprite;
+                        mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
+                    }
                 }
             }
             speed = newSpeed;
@@ -215,6 +220,6 @@ public class AnimationModule : MonoBehaviour
     public void AddMask(SpriteMask newMask)
     {
         updateMask = true;
-        mask = newMask;
+        masks.Add(newMask);
     }
 }

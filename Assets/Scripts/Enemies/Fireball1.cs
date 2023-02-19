@@ -22,13 +22,16 @@ public class Fireball1 : Enemy
     private RaycastHit2D groundCheck;
     private bool updateAnimOnTurn;
 
+    private BoxCollider2D box;
+
     private void Awake()
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(400, 3, 0, true);
-        speed = PlayState.currentProfile == 2 ? 0.12f : 0.06f;
+        col.TryGetComponent(out box);
+        speed = PlayState.currentDifficulty == 2 ? 0.12f : 0.06f;
         elementType = "fire";
 
         anim.Add("Enemy_fireball1_down");

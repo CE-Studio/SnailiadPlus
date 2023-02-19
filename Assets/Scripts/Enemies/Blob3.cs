@@ -19,12 +19,15 @@ public class Blob3 : Enemy
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
 
+    private BoxCollider2D box;
+
     private void Awake()
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(10000, 12, 30, true);
+        col.TryGetComponent(out box);
 
         anim.Add("Enemy_blob3_normal");
         anim.Add("Enemy_blob3_jump");

@@ -26,12 +26,15 @@ public class Spikey2 : Enemy
     private float startTimeout;
     private bool stopped = false;
 
+    private BoxCollider2D box;
+
     private void Awake()
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
         Spawn(PlayState.currentDifficulty == 2 ? 720 : 340, 4, 0, true);
+        col.TryGetComponent(out box);
         if (PlayState.currentDifficulty == 2)
         {
             STOP_TIMEOUT = 3f;

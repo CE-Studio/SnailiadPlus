@@ -21,6 +21,8 @@ public class Snelk : Enemy
     private bool hasLandedOnce = false;
     private bool facingLeft = false;
 
+    private BoxCollider2D box;
+
     void Awake()
     {
         if (Random.Range(0f, 1f) > spawnChance)
@@ -29,6 +31,7 @@ public class Snelk : Enemy
             return;
         }
         Spawn(50, 2, 1, true);
+        col.TryGetComponent(out box);
         invulnerable = true;
         canDamage = false;
 

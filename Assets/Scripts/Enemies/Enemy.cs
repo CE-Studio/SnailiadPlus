@@ -18,7 +18,6 @@ public class Enemy : MonoBehaviour
     public bool invulnerable = false;
     public bool canDamage = true;
 
-    public BoxCollider2D box;
     public Collider2D col;
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
@@ -34,10 +33,9 @@ public class Enemy : MonoBehaviour
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
-    //public void Spawn(int hp, int atk, int def, bool piercable, Vector2 hitboxSize, List<int> wea = null, List<int> res = null, List<int> imm = null)
     public void Spawn(int hp, int atk, int def, bool piercable, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
-        //box = GetComponent<BoxCollider2D>();
+        col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
@@ -56,8 +54,6 @@ public class Enemy : MonoBehaviour
         resistances = res;
         immunities = imm;
         letsPermeatingShotsBy = piercable;
-        //if (box != null)
-        //    box.size = hitboxSize;
 
         if (weaknesses == null)
             weaknesses = new List<int> { -1 };
@@ -79,7 +75,7 @@ public class Enemy : MonoBehaviour
                 PlayState.playerScript.HitFor(attack);
         }
 
-        if (!stunInvulnerability && PlayState.OnScreen(transform.position, box) && !invulnerable)
+        if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
             List<GameObject> bulletsToDespawn = new List<GameObject>();
             bool killFlag = false;
@@ -175,14 +171,17 @@ public class Enemy : MonoBehaviour
 
     private void BuildMask()
     {
-        GameObject child = new GameObject("Mask Object");
-        child.transform.parent = transform;
-        child.transform.localPosition = Vector2.zero;
-        mask = child.AddComponent<SpriteMask>();
-        anim.AddMask(mask);
-        mask.isCustomRangeActive = true;
-        mask.frontSortingOrder = -2;
-        mask.backSortingOrder = -3;
-        mask.enabled = false;
+        if (anim != null)
+        {
+            GameObject child = new GameObject("Mask Object");
+            child.transform.parent = transform;
+            child.transform.localPosition = Vector2.zero;
+            mask = child.AddComponent<SpriteMask>();
+            anim.AddMask(mask);
+            mask.isCustomRangeActive = true;
+            mask.frontSortingOrder = -2;
+            mask.backSortingOrder = -3;
+            mask.enabled = false;
+        }
     }
 }

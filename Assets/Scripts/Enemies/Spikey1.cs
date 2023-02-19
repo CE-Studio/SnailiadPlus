@@ -20,6 +20,8 @@ public class Spikey1 : Enemy
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
     private RaycastHit2D groundCheck;
+
+    private BoxCollider2D box;
     
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class Spikey1 : Enemy
             return;
 
         Spawn(70, 2, 0, true);
+        col.TryGetComponent(out box);
 
         anim.Add("Enemy_spikey_blue_down");
         anim.Add("Enemy_spikey_blue_right");
