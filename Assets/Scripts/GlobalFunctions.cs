@@ -907,7 +907,7 @@ public class GlobalFunctions : MonoBehaviour
     public void ScreenShake(List<float> intensities, List<float> times)
     {
         if (PlayState.gameOptions[15] >= 1)
-            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1));
+            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1 || PlayState.gameOptions[15] == 3));
     }
     public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times, bool minimalShake)
     {
@@ -938,10 +938,15 @@ public class GlobalFunctions : MonoBehaviour
                 if (index < times.Count)
                 {
                     intensity = Mathf.Lerp(index == intensities.Count - 1 ? 0 : intensities[index], intensities[index + 1], time / times[index]);
-                    PlayState.camShakeOffset += new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                    Vector2 intensityVector = new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                    if (PlayState.gameOptions[15] > 2)
+                        PlayState.camShakeOffset += intensityVector;
+                    else
+                        PlayState.camObj.transform.localPosition += (Vector3)intensityVector;
                 }
                 yield return new WaitForEndOfFrame();
                 PlayState.camShakeOffset = Vector2.zero;
+                PlayState.camObj.transform.localPosition = new Vector3(0, 0, -10);
             }
         }
         else

@@ -60,13 +60,13 @@ public class Boss : Enemy
                 barMask.transform.localPosition.y);
     }
 
-    public override IEnumerator Flash()
+    public override IEnumerator Flash(bool playSound = true)
     {
         if (barData[0] == 1)
             frameAnim.Play("BossBar_frame_hit");
         if (barData[1] == 1)
             barAnim.Play("BossBar_bar_hit");
-        return base.Flash();
+        return base.Flash(playSound);
     }
 
     public override void Kill()

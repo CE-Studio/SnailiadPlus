@@ -35,8 +35,8 @@ public class Enemy : MonoBehaviour
     
     public void Spawn(int hp, int atk, int def, bool piercable, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
-        col = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
+        TryGetComponent(out col);
+        TryGetComponent(out rb);
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
         BuildMask();
@@ -149,11 +149,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public virtual IEnumerator Flash()
+    public virtual IEnumerator Flash(bool playSound = true)
     {
         mask.enabled = true;
         stunInvulnerability = true;
-        PlayState.PlaySound("Explode" + Random.Range(1, 5));
+        if (playSound)
+            PlayState.PlaySound("Explode" + Random.Range(1, 5));
         yield return new WaitForSeconds(0.0125f);
         mask.enabled = false;
         yield return new WaitForSeconds(0.0125f);

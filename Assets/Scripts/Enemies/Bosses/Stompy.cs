@@ -124,7 +124,7 @@ public class Stompy : Boss
             else if (PlayState.currentCharacter == "Sluggy")
                 bossSpeed = 0.9f;
             transform.position -= Vector3.up * 2.5625f;
-            maxEyeY = transform.position.y + 5f;
+            maxEyeY = transform.position.y + 3.875f;
             footLPos.y = RAISED_Y;
             footRPos.y = RAISED_Y;
             footL = transform.Find("Foot L").GetComponent<StompyFoot>();
@@ -641,4 +641,11 @@ public class Stompy : Boss
     public override void OnTriggerEnter2D(Collider2D collision) { }
 
     public override void OnTriggerExit2D(Collider2D collision) { }
+
+    public void Damage(int damage, bool hitLeft)
+    {
+        health -= damage;
+        (hitLeft ? footL : footR).StartFlash();
+        (hitLeft ? eyeL : eyeR).StartFlash();
+    }
 }

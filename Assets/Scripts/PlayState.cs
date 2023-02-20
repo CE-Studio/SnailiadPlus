@@ -117,6 +117,7 @@ public class PlayState {
     public static GameObject player = GameObject.Find("Player");
     public static Player playerScript = player.GetComponent<Player>();
     public static GameObject cam = GameObject.Find("View");
+    public static GameObject camObj = cam.transform.Find("Main Camera").gameObject;
     public static SpriteRenderer screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
     public static GameObject groundLayer = GameObject.Find("Grid/Ground");
     public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");
@@ -1574,6 +1575,9 @@ public class PlayState {
         //float boxAdjust = box != null ? box.size.x * 0.5f : 8;
         //return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
         //    Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
+        if (col == null)
+            return false;
+
         string colType = "";
         if (col.TryGetComponent(out BoxCollider2D box))
             colType = "box";
