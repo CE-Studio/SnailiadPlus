@@ -92,7 +92,8 @@ public class Blob3 : Enemy
             {
                 shotTimeout = SHOT_TIMEOUT;
                 for (int i = 0; i < SHOT_COUNT; i++)
-                    PlayState.ShootEnemyBullet(transform.position, 2, new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * i }, i == 0);
+                    PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutRotary,
+                        new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * i }, i == 0);
             }
         }
     }

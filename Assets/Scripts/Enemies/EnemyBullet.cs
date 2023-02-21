@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public int bulletType;
+    public BulletType bulletType;
     public Vector2 origin;
     public Vector2 direction;
     public float speed;
@@ -23,6 +23,8 @@ public class EnemyBullet : MonoBehaviour
     public BoxCollider2D box;
 
     private readonly string[] compassDirs = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+
+    public enum BulletType { pea, boomBlue, boomRed, laser, donutLinear, donutRotary, spikeball }
     
     void Start()
     {
@@ -32,8 +34,12 @@ public class EnemyBullet : MonoBehaviour
 
         anim.Add("Bullet_enemy_peashooter");
         foreach (string dir in compassDirs)
+        {
             anim.Add("Bullet_enemy_boomerang1_" + dir);
-        anim.Add("Bullet_enemy_donut_rotary");
+            anim.Add("Bullet_enemy_donut_linear_" + dir);
+        }
+        anim.Add("Bullet_enemy_donut_rotary_CW");
+        anim.Add("Bullet_enemy_donut_rotary_CCW");
 
         sprite.enabled = false;
         box.enabled = false;
@@ -49,16 +55,20 @@ public class EnemyBullet : MonoBehaviour
             lifeTimer += Time.fixedDeltaTime;
             switch (bulletType)
             {
-                case 0: // Pea
+                case BulletType.pea:
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
-                case 1: // Devastator Boomerang (blue)
+                case BulletType.boomBlue:
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     speed -= initialSpeed * 1.5f * Time.fixedDeltaTime;
                     break;
-                case 2: // Rotary donut
+                case BulletType.donutLinear:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
+                        transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
+                    break;
+                case BulletType.donutRotary:
                     transform.position = new Vector2(
                         origin.x + radius_velocity * lifeTimer * Mathf.Cos(lifeTimer * theta_velocity + theta_offset),
                         origin.y - radius_velocity * lifeTimer * Mathf.Sin(lifeTimer * theta_velocity + theta_offset)
@@ -70,7 +80,7 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
-    public void Shoot(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true)
+    public void Shoot(Vector2 newOrigin, BulletType type, float[] dirVelVars, bool playSound = true)
     {
         sprite.enabled = true;
         box.enabled = true;
@@ -83,7 +93,7 @@ public class EnemyBullet : MonoBehaviour
         initialSpeed = speed;
         switch (type)
         {
-            case 0:
+            case BulletType.pea:
                 anim.Play("Bullet_enemy_peashooter");
                 damage = 2;
                 maxLifetime = 3.6f;
@@ -94,7 +104,7 @@ public class EnemyBullet : MonoBehaviour
                 if (playSound)
                     PlayState.PlaySound("ShotPeashooter");
                 break;
-            case 1:
+            case BulletType.boomBlue:
                 anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 4f;
@@ -105,8 +115,19 @@ public class EnemyBullet : MonoBehaviour
                 if (playSound)
                     PlayState.PlaySound("ShotBoomerangDev");
                 break;
-            case 2:
-                anim.Play("Bullet_enemy_donut_rotary");
+            case BulletType.donutLinear:
+                anim.Play("Bullet_enemy_donut_linear_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                damage = 2;
+                maxLifetime = 3.8f;
+                box.size = new Vector2(1.45f, 1.45f);
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = true;
+                if (playSound)
+                    PlayState.PlaySound("ShotEnemyDonut");
+                break;
+            case BulletType.donutRotary:
+                anim.Play("Bullet_enemy_donut_rotary_" + (dirVelVars[1] > 0 ? "CW" : "CCW"));
                 damage = 2;
                 maxLifetime = 3f;
                 box.size = new Vector2(1.45f, 1.45f);

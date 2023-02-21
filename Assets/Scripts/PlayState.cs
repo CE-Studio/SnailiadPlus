@@ -1525,11 +1525,11 @@ public class PlayState {
         }
     }
 
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float angle, float newSpeed, bool playSound = true) {
+    public static bool ShootEnemyBullet(Vector2 newOrigin, EnemyBullet.BulletType type, float angle, float newSpeed, bool playSound = true) {
         Vector2 newAngle = Quaternion.Euler(0, 0, angle) * Vector2.up;
         return ShootEnemyBullet(newOrigin, type, new float[] { newSpeed, newAngle.x, newAngle.y }, playSound);
     }
-    public static bool ShootEnemyBullet(Vector2 newOrigin, int type, float[] dirVelVars, bool playSound = true) {
+    public static bool ShootEnemyBullet(Vector2 newOrigin, EnemyBullet.BulletType type, float[] dirVelVars, bool playSound = true) {
         bool hasShot = false;
         if (!enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().isActive) {
             enemyBulletPool.transform.GetChild(enemyBulletPointer).GetComponent<EnemyBullet>().Shoot(newOrigin, type, dirVelVars, playSound);

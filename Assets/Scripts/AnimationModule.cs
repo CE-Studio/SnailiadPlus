@@ -7,6 +7,7 @@ public class AnimationModule : MonoBehaviour
 {
     public bool isPlaying = false;
     public string currentAnimName = "";
+    public string lastAnimName = "";
     public PlayState.AnimationData currentAnim;
     public Dictionary<string, PlayState.AnimationData> animList = new Dictionary<string, PlayState.AnimationData>();
     public List<string> listKeys = new List<string>();
@@ -59,9 +60,6 @@ public class AnimationModule : MonoBehaviour
                                 {
                                     sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                         PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                                    if (updateMask && masks.Count > 0)
-                                        foreach (SpriteMask mask in masks)
-                                            mask.sprite = sprite.sprite;
                                 }
                                 animTimer += timerMax;
                             }
@@ -74,9 +72,6 @@ public class AnimationModule : MonoBehaviour
                                     {
                                         sprite.sprite = currentAnim.frames[currentFrame] == -1 ? PlayState.BlankTexture(smallBlank) :
                                             PlayState.GetSprite(currentAnim.spriteName, currentAnim.frames[currentFrame]);
-                                        if (updateMask && masks.Count > 0)
-                                            foreach (SpriteMask mask in masks)
-                                                mask.sprite = sprite.sprite;
                                     }
                                     animTimer += timerMax;
                                 }
@@ -90,6 +85,11 @@ public class AnimationModule : MonoBehaviour
                     else
                         Stop(blankOnNonLoopEnd);
                 }
+            }
+            if (updateMask && masks.Count > 0)
+            {
+                foreach (SpriteMask mask in masks)
+                    mask.sprite = sprite.sprite;
             }
         }
     }
@@ -119,6 +119,7 @@ public class AnimationModule : MonoBehaviour
         {
             currentAnim = animList[animName];
             currentAnimName = animName;
+            lastAnimName = animName;
 
             timerMax = 1 / currentAnim.framerate;
             animTimer = timerMax;

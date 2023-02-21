@@ -6,7 +6,7 @@ public class Boss : Enemy
 {
     public int ID;
 
-    private float[] introTimestamps = new float[] { 0.5f, 1, 2.5f, 2.7f, 2.9f };
+    protected float[] introTimestamps = new float[] { 0.5f, 1, 2.5f, 2.7f, 2.9f };
                                                  // Pan to boss
                                                        // Begin filling bar
                                                           // Finish filling bar
@@ -27,8 +27,8 @@ public class Boss : Enemy
      * 3 - Width of bar in pixels
      * 4 - Frame used by the mask
     \*/
-    private float barPointLeft;
-    private float barPointRight;
+    protected float barPointLeft;
+    protected float barPointRight;
 
     public void SpawnBoss(int hp, int atk, int def, bool piercable, int bossID, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {

@@ -24,12 +24,12 @@ public class Enemy : MonoBehaviour
     public AnimationModule anim;
     public SpriteMask mask;
 
-    private int pingPlayer = 0;
+    protected int pingPlayer = 0;
 
     public List<float> spawnConditions;
     public Vector2 origin;
     private bool intersectingPlayer = false;
-    private List<GameObject> intersectingBullets = new List<GameObject>();
+    protected List<GameObject> intersectingBullets = new List<GameObject>();
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     

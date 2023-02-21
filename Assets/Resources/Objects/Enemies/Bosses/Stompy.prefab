@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1769368248884447253}
   - component: {fileID: 12328672194395955}
   - component: {fileID: 5092572300690704166}
+  - component: {fileID: 2773517619286209654}
   m_Layer: 10
   m_Name: Eyelid
   m_TagString: Untagged
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -112,6 +114,44 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!114 &2773517619286209654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699268493910766830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702da34b317b1d8428982b097d2a224f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  makeSoundOnPing: 1
+  elementType: 
+  invulnerable: 0
+  canDamage: 1
+  col: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1738681556946417785
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -267,6 +308,8 @@ MonoBehaviour:
   enemyCollide:
     serializedVersion: 2
     m_Bits: 0
+  isLeft: 0
+  shouldAttack: 0
 --- !u!61 &2328665182162571480
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -396,6 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -448,6 +492,8 @@ MonoBehaviour:
   enemyCollide:
     serializedVersion: 2
     m_Bits: 0
+  isLeft: 0
+  shouldAttack: 0
 --- !u!61 &421976253451783064
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -619,6 +665,7 @@ GameObject:
   - component: {fileID: 8369635040658232388}
   - component: {fileID: 6410596279258933797}
   - component: {fileID: 2601716414067715384}
+  - component: {fileID: 5382758211280464176}
   m_Layer: 10
   m_Name: Eyelid
   m_TagString: Untagged
@@ -706,6 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -720,6 +768,44 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!114 &5382758211280464176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343265052904950131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702da34b317b1d8428982b097d2a224f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  makeSoundOnPing: 1
+  elementType: 
+  invulnerable: 0
+  canDamage: 1
+  col: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &5396817293669952273
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,6 +951,7 @@ GameObject:
   - component: {fileID: 3215540429686931460}
   - component: {fileID: 3944839422493352567}
   - component: {fileID: 740839412857710953}
+  - component: {fileID: 4627458393716672381}
   m_Layer: 10
   m_Name: Pupil
   m_TagString: Untagged
@@ -952,6 +1039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -966,6 +1054,44 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!114 &4627458393716672381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057976899792522070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702da34b317b1d8428982b097d2a224f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  makeSoundOnPing: 1
+  elementType: 
+  invulnerable: 0
+  canDamage: 1
+  col: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7567477151641799858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -1280,6 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -1421,6 +1549,7 @@ GameObject:
   - component: {fileID: 1868794737774231489}
   - component: {fileID: 396864211049796063}
   - component: {fileID: 5795003806528030841}
+  - component: {fileID: 746127399981064697}
   m_Layer: 10
   m_Name: Pupil
   m_TagString: Untagged
@@ -1508,6 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -1522,3 +1652,41 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+--- !u!114 &746127399981064697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024061225024769965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702da34b317b1d8428982b097d2a224f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  makeSoundOnPing: 1
+  elementType: 
+  invulnerable: 0
+  canDamage: 1
+  col: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0

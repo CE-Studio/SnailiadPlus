@@ -117,7 +117,7 @@ public class Stompy : Boss
     {
         if (PlayState.IsBossAlive(1))
         {
-            SpawnBoss(Mathf.FloorToInt(2000 * PlayState.currentDifficulty == 2 ? 2 : (PlayState.currentCharacter == "Sluggy" ? 1.4f : 1)),
+            SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentDifficulty == 2 ? 2f : (PlayState.currentCharacter == "Sluggy" ? 1.4f : 1f))),
                 2, 5, true, 1);
             if (PlayState.currentDifficulty == 2)
                 bossSpeed = 1f;
@@ -131,12 +131,24 @@ public class Stompy : Boss
             footR = transform.Find("Foot R").GetComponent<StompyFoot>();
             eyeL = transform.Find("Eye L").GetComponent<StompyEye>();
             eyeR = transform.Find("Eye R").GetComponent<StompyEye>();
+            InitializeParts();
             InitializeAnims();
             MoveChildren();
             modeMain = BossMode.intro1;
         }
         else
             Destroy(gameObject);
+    }
+
+    private void InitializeParts()
+    {
+        eyeL.isLeft = true;
+        eyeL.weaknesses = weaknesses;
+        eyeL.resistances = resistances;
+        eyeL.immunities = immunities;
+        eyeR.weaknesses = weaknesses;
+        eyeR.resistances = resistances;
+        eyeR.immunities = immunities;
     }
 
     private void InitializeAnims()
@@ -159,8 +171,8 @@ public class Stompy : Boss
         anims.Add(eyeL.transform.Find("Eyelid").GetComponent<AnimationModule>());
         anims.Add(eyeR.transform.Find("Eyelid").GetComponent<AnimationModule>());
 
-        anims[4].AddMask(eyeL.transform.Find("Mask").GetComponent<SpriteMask>());
-        anims[5].AddMask(eyeR.transform.Find("Mask").GetComponent<SpriteMask>());
+        anims[2].AddMask(eyeL.transform.Find("Mask").GetComponent<SpriteMask>());
+        anims[3].AddMask(eyeR.transform.Find("Mask").GetComponent<SpriteMask>());
 
         for (int i = 0; i <= 2; i++)
         {
@@ -217,7 +229,7 @@ public class Stompy : Boss
     {
         foreach (AnimationModule anim in anims)
         {
-            string oldName = anim.currentAnimName;
+            string oldName = anim.lastAnimName;
             string[] nameParts;
             if (attackMode == 2)
                 nameParts = oldName.Split('1');
@@ -340,7 +352,11 @@ public class Stompy : Boss
 
     public override void LateUpdate()
     {
-        Debug.Log(modeMain + ", " + modeL + ", " + modeR);
+        //Debug.Log(modeMain + ", " + modeL + ", " + modeR);
+        if (introTimer >= introTimestamps[4])
+            barMask.transform.localPosition = new Vector2(
+                Mathf.Floor(Mathf.Lerp(barPointLeft, barPointRight, Mathf.InverseLerp(0, maxHealth, health)) * 16) * 0.0625f,
+                barMask.transform.localPosition.y);
     }
 
     private void MoveChildren()
@@ -362,7 +378,7 @@ public class Stompy : Boss
                 footLTimeoutRaise = 50;
                 footLTimeoutStomp = 1000000;
                 PlayState.PlaySound("Stomp");
-                PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+                Shake();
             }
         }
         else if (modeMain > BossMode.intro3 && modeL == FootMode.waitRaise && --footLTimeoutRaise <= 0)
@@ -380,7 +396,7 @@ public class Stompy : Boss
             {
                 footLPos.y = RAISED_Y;
                 modeL = FootMode.move;
-                //this.leye.shouldAttack = true;
+                eyeL.shouldAttack = true;
                 footLTimeoutRaise = 1000000;
                 footLTimeoutStomp = timeouts[++footLTimeoutIndex % timeouts.Length] * 360 + 60;
                 if (modeMain == BossMode.sync)
@@ -401,7 +417,7 @@ public class Stompy : Boss
                 footRTimeoutRaise = 50;
                 footRTimeoutStomp = 1000000;
                 PlayState.PlaySound("Stomp");
-                PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+                Shake();
             }
         }
         else if (modeMain > BossMode.intro3 && modeR == FootMode.waitRaise && --footRTimeoutRaise <= 0)
@@ -419,7 +435,7 @@ public class Stompy : Boss
             {
                 footRPos.y = RAISED_Y;
                 modeR = FootMode.move;
-                //this.reye.shouldAttack = true;
+                eyeR.shouldAttack = true;
                 footRTimeoutRaise = 1000000;
                 footRTimeoutStomp = timeouts[++footRTimeoutIndex % timeouts.Length] * 360 + 60;
                 if (modeMain == BossMode.sync)
@@ -444,7 +460,7 @@ public class Stompy : Boss
             {
                 modeL = FootMode.stomp;
                 footLVel.y = -10f;
-                //this.leye.shouldAttack = false;
+                eyeL.shouldAttack = false;
             }
         }
         if (modeMain > BossMode.intro3 && modeR == FootMode.move)
@@ -465,7 +481,7 @@ public class Stompy : Boss
             {
                 modeR = FootMode.stomp;
                 footRVel.y = -10f;
-                //this.reye.shouldAttack = false;
+                eyeR.shouldAttack = false;
             }
         }
         if (modeL == FootMode.step && modeR == FootMode.step)
@@ -506,7 +522,7 @@ public class Stompy : Boss
                 {
                     stepThetaL = Mathf.PI;
                     PlayState.PlaySound("Stomp");
-                    PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+                    Shake();
                     modeL = FootMode.stepWait;
                     modeR = FootMode.stepNow;
                     stepThetaR = 0f;
@@ -545,7 +561,7 @@ public class Stompy : Boss
                 {
                     stepThetaR = Mathf.PI;
                     PlayState.PlaySound("Stomp");
-                    PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME });
+                    Shake();
                     modeL = FootMode.stepNow;
                     modeR = FootMode.stepWait;
                     stepLOrigin = new Vector2(NO_ORIGIN, footLPos.y);
@@ -644,8 +660,26 @@ public class Stompy : Boss
 
     public void Damage(int damage, bool hitLeft)
     {
-        health -= damage;
+        health -= (int)Mathf.Clamp(damage, 0, Mathf.Infinity);
         (hitLeft ? footL : footR).StartFlash();
         (hitLeft ? eyeL : eyeR).StartFlash();
+
+        if (health < maxHealth * 0.28f && attackMode < 2)
+        {
+            bossSpeed += 0.3f;
+            attackMode = 2;
+            UpdateAnimLifeState();
+        }
+        else if (health < maxHealth * 0.66f && attackMode < 1)
+        {
+            bossSpeed += 0.2f;
+            attackMode = 1;
+            UpdateAnimLifeState();
+        }
+    }
+
+    private void Shake()
+    {
+        PlayState.globalFunctions.ScreenShake(new List<float> { SHAKE_STRENGTH, 0 }, new List<float> { SHAKE_TIME }, 90f, 10f);
     }
 }

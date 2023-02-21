@@ -82,7 +82,7 @@ public class Kitty2 : Enemy
                 shotCount--;
                 actionTimeout = WEAPON_TIMEOUT;
                 float fireAngle = (Mathf.PI - Mathf.PI * 0.6f * shotCount / MAX_SHOTS) * Mathf.Rad2Deg - 90;
-                PlayState.ShootEnemyBullet(transform.position, 0, facingRight ? Mathf.PI - fireAngle : fireAngle, WEAPON_SPEED);
+                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.pea, facingRight ? Mathf.PI - fireAngle : fireAngle, WEAPON_SPEED);
                 anim.Play("Enemy_kitty2_shoot");
             }
             if (shotCount <= 0)

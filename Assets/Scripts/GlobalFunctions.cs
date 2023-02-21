@@ -904,12 +904,12 @@ public class GlobalFunctions : MonoBehaviour
         queuedExplosion.GetComponent<QueuedExplosion>().Spawn(lifeTime, size, loudly);
     }
 
-    public void ScreenShake(List<float> intensities, List<float> times)
+    public void ScreenShake(List<float> intensities, List<float> times, float angle = -99999f, float angleVariation = 0f)
     {
         if (PlayState.gameOptions[15] >= 1)
-            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1 || PlayState.gameOptions[15] == 3));
+            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1 || PlayState.gameOptions[15] == 3, angle, angleVariation));
     }
-    public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times, bool minimalShake)
+    public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times, bool minimalShake, float angle = -99999f, float angleVariation = 0f)
     {
         if ((intensities.Count - times.Count == 1) || (intensities.Count == times.Count))
         {
@@ -938,7 +938,17 @@ public class GlobalFunctions : MonoBehaviour
                 if (index < times.Count)
                 {
                     intensity = Mathf.Lerp(index == intensities.Count - 1 ? 0 : intensities[index], intensities[index + 1], time / times[index]);
-                    Vector2 intensityVector = new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                    Vector2 intensityVector;
+
+                    if (angle == -99999f)
+                        intensityVector = new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                    else
+                    {
+                        angleVariation = Mathf.Abs(angleVariation);
+                        angle += UnityEngine.Random.Range(-angleVariation, angleVariation);
+                        intensityVector = (Vector2)(Quaternion.Euler(0, 0, angle) * Vector2.right) * UnityEngine.Random.Range(-intensity, intensity);
+                    }
+
                     if (PlayState.gameOptions[15] > 2)
                         PlayState.camShakeOffset += intensityVector;
                     else
