@@ -75,7 +75,7 @@ public class EnemyBullet : MonoBehaviour
                         );
                     break;
             }
-            if ((!despawnOffscreen && lifeTimer > maxLifetime && !PlayState.OnScreen(transform.position, box)) || (despawnOffscreen && !PlayState.OnScreen(transform.position, box)))
+            if (lifeTimer > maxLifetime || (despawnOffscreen && !PlayState.OnScreen(transform.position, box)))
                 Despawn();
         }
     }

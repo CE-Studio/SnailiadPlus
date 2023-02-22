@@ -14,6 +14,7 @@ public class Boss : Enemy
                                                                       // Become vulnerable
     public float introTimer = 0;
     private readonly int[] songIndeces = new int[] { -4, -3, -2, -1 };
+    public bool introDone = false;
 
     public AnimationModule frameAnim;
     public AnimationModule barAnim;
@@ -130,6 +131,7 @@ public class Boss : Enemy
         if (col != null)
             col.enabled = true;
         PlayState.paralyzed = false;
+        introDone = true;
         barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
     }
 }

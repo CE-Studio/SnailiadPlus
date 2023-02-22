@@ -38,7 +38,6 @@ public class Stompy : Boss
 
     private const int NO_ORIGIN = -999999999;
     private const float RAISED_Y = 13.75f;
-    private const float STOMP_Y = 0f;
     private const float MIN_DIST = 2.25f;
     private const float SYNC_MODE_TIMEOUT = 3f;
     private const float STEP_MODE_TIMEOUT = 9f;
@@ -52,7 +51,7 @@ public class Stompy : Boss
     private readonly Vector2 offsetFootL = new Vector2(-10.1875f, -4.375f);
     private readonly Vector2 offsetFootR = new Vector2(6f, -4.375f);
 
-    private int attackMode = 0;
+    public int attackMode = 0;
     private float bossSpeed = 0.6f;
 
     private StompyFoot footL;
@@ -105,13 +104,14 @@ public class Stompy : Boss
     private float stepModeTimeout;
 
     private float elapsed;
-    private bool hasIntroRun = false;
 
     private bool eyesOnFeet = true;
     private bool beingKilled = false;
     private bool stepDirIsLeft = true;
 
     private List<GameObject> cannons = new List<GameObject>();
+
+    private bool legacyCutscene = true;
 
     private void Awake()
     {
@@ -251,44 +251,51 @@ public class Stompy : Boss
             MoveChildren();
         }
 
-        if (!hasIntroRun)
+        if (!introDone)
         {
             switch (modeMain)
             {
                 case BossMode.intro1:
+                    if (legacyCutscene && !PlayState.paralyzed)
+                    {
+                        PlayState.paralyzed = true;
+                        PlayState.playerScript.CorrectGravity();
+                    }
                     if (PlayState.player.transform.position.x < transform.position.x - 5.5625f)
                         modeL = FootMode.stomp;
                     if (PlayState.player.transform.position.x < transform.position.x - 6.8125f)
                     {
-                        //PlayState.player.velocity.x = PlayState.player._runSpeed.value;
-                        //PlayState.player.setFaceDir(Player.FACE_FLOOR_RIGHT, true);
+                        if (legacyCutscene)
+                        {
+                            PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] * Time.deltaTime;
+                            PlayState.playerScript.SwapDir(Player.DIR_WALL_LEFT);
+                        }
                         modeMain = BossMode.intro2;
                     }
-                    //else
-                    //{
-                    //    PlayState.player.velocity.x = -PlayState.player._runSpeed.value;
-                    //}
+                    else
+                    {
+                        if (legacyCutscene)
+                            PlayState.playerScript.velocity.x = -PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] * Time.deltaTime;
+                    }
                     break;
                 case BossMode.intro2:
                     if (PlayState.player.transform.position.x > transform.position.x - 2.875f)
                         modeR = FootMode.stomp;
                     if (PlayState.player.transform.position.x > transform.position.x - 2.375f)
                     {
-                        //PlayState.player.setFaceDir(Player.FACE_FLOOR_LEFT, true);
-                        //PlayState.player.velocity.x = 0;
+                        if (legacyCutscene)
+                        {
+                            PlayState.playerScript.velocity.x = 0;
+                            PlayState.playerScript.SwapDir(Player.DIR_WALL_LEFT);
+                        }
                         modeMain = BossMode.intro3;
-                        hasIntroRun = true;
-                        //resetStartTime();
-                        //PlayState.hud.bossBarHud.makeBar(_hp);
-                        //PlayState.miniMap.setMapLittle();
-                        //PlayState.showBossName(2);
-                        //Music.playBoss1();
                         StartCoroutine(RunIntro(false));
                     }
-                    //else
-                    //{
-                    //    PlayState.player.velocity.x = PlayState.player._runSpeed.value;
-                    //}
+                    else
+                    {
+                        if (legacyCutscene)
+                            PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] * Time.deltaTime;
+                    }
                     break;
             }
         }
@@ -297,10 +304,11 @@ public class Stompy : Boss
             switch (modeMain)
             {
                 case BossMode.intro3:
-                    if (hasIntroRun)
+                    if (introDone)
                     {
                         modeMain = BossMode.moveStomp;
                         stepModeTimeout = STEP_MODE_TIMEOUT;
+                        PlayState.paralyzed = false;
                     }
                     break;
                 case BossMode.moveStomp:
@@ -606,21 +614,17 @@ public class Stompy : Boss
         if (eyeL.transform.position.y >= maxEyeY)
         {
             eyeL.transform.position = new Vector2(eyeL.transform.position.x, maxEyeY);
-            //eyeL.solid = false;
+            eyeL.SetSolid(false);
         }
-        //else
-        //{
-        //    this.leye.solid = true;
-        //}
+        else
+            eyeL.SetSolid(true);
         if (eyeR.transform.position.y >= maxEyeY)
         {
             eyeR.transform.position = new Vector2(eyeR.transform.position.x, maxEyeY);
-            //this.reye.solid = false;
+            eyeR.SetSolid(false);
         }
-        //else
-        //{
-        //    this.reye.solid = true;
-        //}
+        else
+            eyeR.SetSolid(true);
 
         if (footLPos.y > lastFootLY && lastFootLState != "rise")
         {

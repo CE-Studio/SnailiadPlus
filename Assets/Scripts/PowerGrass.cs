@@ -49,7 +49,7 @@ public class PowerGrass : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !PlayState.paralyzed)
         {
             if (timer == 0)
             {

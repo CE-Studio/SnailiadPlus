@@ -50,12 +50,20 @@ public class StompyEye : Enemy
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
                 if (!immunities.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
                 {
-                    int damage = Mathf.FloorToInt((bulletScript.damage - defense) *
-                        (weaknesses.Contains(bulletScript.bulletType) ? 2 : 1) * (resistances.Contains(bulletScript.bulletType) ? 0.5f : 1));
-                    if (boss.health - damage <= 0)
-                        killFlag = true;
-                    else
-                        boss.Damage(damage, isLeft);
+                    if (isOpen)
+                    {
+                        int damage = Mathf.FloorToInt((bulletScript.damage - defense) *
+                            (weaknesses.Contains(bulletScript.bulletType) ? 2 : 1) * (resistances.Contains(bulletScript.bulletType) ? 0.5f : 1));
+                        if (boss.health - damage <= 0)
+                            killFlag = true;
+                        else
+                            boss.Damage(damage, isLeft);
+                        if (!willClose)
+                        {
+                            willClose = true;
+                            closeTimeout = 0.3f;
+                        }
+                    }
                 }
                 else
                 {
@@ -87,10 +95,9 @@ public class StompyEye : Enemy
 
     private void Shoot(float angle)
     {
-        float mult = 40f;
-        float angleX = -Mathf.Cos(angle) * mult;
-        float angleY = -Mathf.Sin(angle) * mult;
-        PlayState.ShootEnemyBullet(pupil.transform.position, EnemyBullet.BulletType.donutLinear, new float[] { mult, angleX, angleY });
+        float angleX = -Mathf.Cos(angle);
+        float angleY = Mathf.Sin(angle);
+        PlayState.ShootEnemyBullet(pupil.transform.position, EnemyBullet.BulletType.donutLinear, new float[] { 2.5f, angleX, angleY });
     }
 
     private void Update()
@@ -101,6 +108,71 @@ public class StompyEye : Enemy
         float playerDir = Mathf.Atan2(PlayState.player.transform.position.y - (transform.position.y - 1.25f),
             PlayState.player.transform.position.x - transform.position.x);
         pupil.transform.position = new Vector2(transform.position.x + Mathf.Cos(playerDir) * 1.25f, transform.position.y + Mathf.Sin(playerDir) * 0.625f);
+
+        if (shouldAttack)
+        {
+            clusterTimeout -= Time.deltaTime;
+            if (clusterTimeout < 0)
+            {
+                clusterTimeout = CLUSTER_TIMEOUT;
+                shotTimeout = SHOT_TIMEOUT;
+                shots = SHOT_NUM;
+                shooting = true;
+            }
+            if (shooting)
+            {
+                shotTimeout -= Time.deltaTime;
+                if (shotTimeout < 0)
+                {
+                    shotTimeout = SHOT_TIMEOUT;
+                    --shots;
+                    if (shots == 0)
+                        shooting = false;
+                    float fireAngle;
+                    if (isLeft)
+                        fireAngle = -Mathf.PI / SHOT_NUM * shots;
+                    else
+                        fireAngle = -Mathf.PI / SHOT_NUM * (SHOT_NUM - shots);
+                    Shoot(fireAngle);
+                }
+            }
+        }
+
+        if (isOpen)
+        {
+            blinkTimeout -= Time.deltaTime;
+            if (blinkTimeout < 0)
+            {
+                blinkTimeout = Random.Range(0f, 1f) * 8f + 1f;
+                eyelidAnim.Play("Boss_stompy_eyelid" + (isLeft ? "L" : "R") + boss.attackMode.ToString() + "_blink");
+            }
+            if (willClose)
+            {
+                closeTimeout -= Time.deltaTime;
+                if (closeTimeout < 0)
+                {
+                    willClose = false;
+                    isOpen = false;
+                    eyelidAnim.Play("Boss_stompy_eyelid" + (isLeft ? "L" : "R") + boss.attackMode.ToString() + "_close");
+                    openTimeout = 0.8f;
+                }
+            }
+        }
+        else
+        {
+            openTimeout -= Time.deltaTime;
+            if (openTimeout < 0)
+            {
+                isOpen = true;
+                eyelidAnim.Play("Boss_stompy_eyelid" + (isLeft ? "L" : "R") + boss.attackMode.ToString() + "_open");
+            }
+        }
+    }
+
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerBullet"))
+            intersectingBullets.Add(collision.gameObject);
     }
 
     public void StartFlash()
@@ -122,5 +194,12 @@ public class StompyEye : Enemy
         eyelid.mask.enabled = false;
         yield return new WaitForSeconds(0.0125f);
         stunInvulnerability = false;
+    }
+
+    public void SetSolid(bool state)
+    {
+        if (col == null)
+            col = GetComponent<Collider2D>();
+        col.enabled = state;
     }
 }

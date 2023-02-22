@@ -304,6 +304,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     ToggleShell();
                 Shoot();
             }
+
+            if (PlayState.paralyzed)
+            {
+                if ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && velocity.x != 0)
+                    transform.position += new Vector3(velocity.x, 0, 0);
+                if ((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && velocity.y != 0)
+                    transform.position += new Vector3(0, velocity.y, 0);
+            }
         }
     }
 
@@ -1882,7 +1890,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     // This function is called to reorient the player character in any way necessary
     // Note: this only accounts for four directions in either the ground/ceiling state or the wall state, never both. A call to
     // SwitchSurfaceAxis() is necessary for that
-    private void SwapDir(int dirToFace)
+    public void SwapDir(int dirToFace)
     {
         switch (dirToFace)
         {
@@ -1902,7 +1910,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     // This function is used to swap the player character between the ground/ceiling state and the wall state and vice versa
-    private void SwitchSurfaceAxis()
+    public void SwitchSurfaceAxis()
     {
         axisFlag = !axisFlag;
         box.size = new Vector2(box.size.y, box.size.x);
@@ -2068,7 +2076,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public void HitFor(int damage)
     {
-        if (stunned || inDeathCutscene)
+        if ((stunned && damage > 0) || inDeathCutscene)
             return;
 
         if (damage < 0)
