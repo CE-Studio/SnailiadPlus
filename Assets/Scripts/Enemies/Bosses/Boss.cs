@@ -98,33 +98,36 @@ public class Boss : Enemy
         int playBeep = 0;
         while (introTimer <= introTimestamps[4])
         {
-            introTimer += Time.deltaTime;
-            if(introTimer > introTimestamps[0] && introTimer <= introTimestamps[1])
+            if (PlayState.gameState != PlayState.GameState.pause)
             {
-                if (focusOnMe)
-                    PlayState.SetCamFocus(transform);
-            }
-            else if(introTimer > introTimestamps[1] && introTimer <= introTimestamps[2])
-            {
-                if (barAnim.currentAnimName != "BossBar_bar_idle")
-                    barAnim.Play("BossBar_bar_idle");
-                playBeep--;
-                if (playBeep <= 0)
+                introTimer += Time.deltaTime;
+                if (introTimer > introTimestamps[0] && introTimer <= introTimestamps[1])
                 {
-                    PlayState.PlaySound("BossHPBleep");
-                    playBeep = Application.targetFrameRate switch { 30 => 1, 60 => 3, 120 => 7, _ => 15 };
+                    if (focusOnMe)
+                        PlayState.SetCamFocus(transform);
                 }
-                barMask.transform.localPosition = new Vector2(
-                    Mathf.Lerp(barPointLeft, barPointRight, Mathf.InverseLerp(introTimestamps[1], introTimestamps[2], introTimer)),
-                    barMask.transform.localPosition.y);
-            }
-            else if(introTimer > introTimestamps[2] && introTimer <= introTimestamps[3])
-            {
-                barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
-            }
-            else if(introTimer > introTimestamps[3] && introTimer <= introTimestamps[4])
-            {
-                PlayState.SetCamFocus(PlayState.player.transform);
+                else if (introTimer > introTimestamps[1] && introTimer <= introTimestamps[2])
+                {
+                    if (barAnim.currentAnimName != "BossBar_bar_idle")
+                        barAnim.Play("BossBar_bar_idle");
+                    playBeep--;
+                    if (playBeep <= 0)
+                    {
+                        PlayState.PlaySound("BossHPBleep");
+                        playBeep = Application.targetFrameRate switch { 30 => 1, 60 => 3, 120 => 7, _ => 15 };
+                    }
+                    barMask.transform.localPosition = new Vector2(
+                        Mathf.Lerp(barPointLeft, barPointRight, Mathf.InverseLerp(introTimestamps[1], introTimestamps[2], introTimer)),
+                        barMask.transform.localPosition.y);
+                }
+                else if (introTimer > introTimestamps[2] && introTimer <= introTimestamps[3])
+                {
+                    barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
+                }
+                else if (introTimer > introTimestamps[3] && introTimer <= introTimestamps[4])
+                {
+                    PlayState.SetCamFocus(PlayState.player.transform);
+                }
             }
             yield return new WaitForEndOfFrame();
         }

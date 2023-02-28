@@ -310,7 +310,7 @@ public class MainMenu : MonoBehaviour
             music.volume = (PlayState.gameOptions[1] * 0.1f) * PlayState.fader;
             Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
 
-            if (!isRebinding && !fadingToIntro && !PlayState.paralyzed)
+            if (!isRebinding && !fadingToIntro)// && !PlayState.paralyzed)
             {
                 if (Control.UpPress(1) || Control.DownPress(1))
                 {
@@ -987,12 +987,14 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
     {
+        RoomTrigger lastRoomTrigger = null;
+
         if (PlayState.currentArea != -1)
         {
             Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
             lastRoom.GetComponent<Collider2D>().enabled = true;
             lastRoom.GetComponent<RoomTrigger>().active = true;
-            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+            lastRoomTrigger = lastRoom.GetComponent<RoomTrigger>();
             PlayState.currentArea = -1;
             PlayState.currentSubzone = -1;
         }
@@ -1008,6 +1010,8 @@ public class MainMenu : MonoBehaviour
 
         }
 
+        if (lastRoomTrigger != null)
+            lastRoomTrigger.DespawnEverything();
         PlayState.screenCover.sortingOrder = 999;
         PlayState.player.transform.position = spawnPos;
         PlayState.gameState = PlayState.GameState.game;
@@ -1016,7 +1020,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
         PlayState.playerScript.health = PlayState.playerScript.maxHealth;
-        PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        //PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
@@ -1024,7 +1028,12 @@ public class MainMenu : MonoBehaviour
         fadingToIntro = false;
 
         PlayState.playerScript.holdingJump = true;
-        PlayState.playerScript.selectedWeapon = PlayState.lastLoadedWeapon;
+        if (PlayState.lastLoadedWeapon != 0)
+        //    PlayState.playerScript.selectedWeapon = PlayState.lastLoadedWeapon;
+            PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon - 1);
+        else
+            PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
+                (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
     }
 
     public void SetTextComponentOrigins()
@@ -1168,13 +1177,13 @@ public class MainMenu : MonoBehaviour
         if (menuVarFlags[0] != PlayState.currentProfile)
             PlayState.LoadGame(menuVarFlags[0], true);
 
-        if (PlayState.gameState == PlayState.GameState.pause)
-        {
-            Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
-            lastRoom.GetComponent<Collider2D>().enabled = true;
-            lastRoom.GetComponent<RoomTrigger>().active = true;
-            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
-        }
+        //if (PlayState.gameState == PlayState.GameState.pause)
+        //{
+        //    Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+        //    lastRoom.GetComponent<Collider2D>().enabled = true;
+        //    lastRoom.GetComponent<RoomTrigger>().active = true;
+        //    lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+        //}
 
         StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords));
     }

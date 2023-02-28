@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour
                     if (health <= 0)
                         killFlag = true;
                     else
-                        StartCoroutine(nameof(Flash));
+                        StartCoroutine(Flash());
                 }
                 else
                 {

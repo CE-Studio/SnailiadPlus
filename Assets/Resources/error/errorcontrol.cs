@@ -6,7 +6,7 @@ public class errorcontrol : MonoBehaviour {
 
     public static string text;
     public UnityEngine.UI.Text textbox;
-    public AudioSource audio;
+    new public AudioSource audio;
     public Animator anim;
 
     private bool playcheck = false;

@@ -2708,6 +2708,94 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
 		},
+		{
+			"name": "Bullet_enemy_spikeball_N",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_NE",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_E",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_SE",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_S",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_SW",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_W",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_spikeball_NW",
+			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Grass_idle",
@@ -4106,6 +4194,138 @@
 				15,
 				15,
 				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_N",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_NE",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_E",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_SE",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_S",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_SW",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_W",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_NW",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_base_floor",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_base_wallL",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_base_ceiling",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_base_wallR",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				3
 			],
 			"loop": false,
 			"loopStartFrame": 0,

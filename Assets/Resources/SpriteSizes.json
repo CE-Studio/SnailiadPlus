@@ -57,6 +57,11 @@
             "height": 24
         },
 		{
+            "name": "Bullets/EnemySpikeBall",
+            "width": 28,
+            "height": 28
+        },
+		{
             "name": "Bullets/Peashooter",
             "width": 4,
             "height": 4
@@ -119,6 +124,16 @@
         },
 		{
             "name": "Entities/BreakableIcons",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Cannon1",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Cannon1Base",
             "width": 16,
             "height": 16
         },

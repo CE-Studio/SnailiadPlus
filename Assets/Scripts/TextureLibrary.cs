@@ -24,6 +24,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/Boomerang",
         "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyDonut",
+        "Bullets/EnemySpikeBall",
         "Bullets/Peashooter",
         "Bullets/RainbowWave",
 
@@ -38,6 +39,8 @@ public class TextureLibrary : ScriptableObject
         "Entities/Boss2Foot",
         "Entities/Boss2Pupil",
         "Entities/BreakableIcons",
+        "Entities/Cannon1",
+        "Entities/Cannon1Base",
         "Entities/Chirpy1",
         "Entities/Chirpy2",
         "Entities/Dandelion",

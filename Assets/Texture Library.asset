@@ -24,6 +24,7 @@ MonoBehaviour:
   - Bullets/Boomerang
   - Bullets/EnemyBoomerangBlue
   - Bullets/EnemyDonut
+  - Bullets/EnemySpikeBall
   - Bullets/Peashooter
   - Bullets/RainbowWave
   - Entities/Babyfish
@@ -37,6 +38,8 @@ MonoBehaviour:
   - Entities/Boss2Foot
   - Entities/Boss2Pupil
   - Entities/BreakableIcons
+  - Entities/Cannon1
+  - Entities/Cannon1Base
   - Entities/Chirpy1
   - Entities/Chirpy2
   - Entities/Dandelion

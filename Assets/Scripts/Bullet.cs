@@ -33,11 +33,10 @@ public class Bullet : MonoBehaviour
         cam = GameObject.Find("View");
 
         string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave" };
-        string[] directions = new string[] { "NW", "N", "NE", "E", "SE", "S", "SW", "W" };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
-            for (int j = 0; j < directions.Length; j++)
-                anim.Add("Bullet_" + bulletTypes[i] + "_" + directions[j]);
+            for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
+                anim.Add("Bullet_" + bulletTypes[i] + "_" + PlayState.DIRS_COMPASS[j]);
         }
     }
 

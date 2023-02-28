@@ -22,8 +22,6 @@ public class EnemyBullet : MonoBehaviour
     public AnimationModule anim;
     public BoxCollider2D box;
 
-    private readonly string[] compassDirs = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
-
     public enum BulletType { pea, boomBlue, boomRed, laser, donutLinear, donutRotary, spikeball }
     
     void Start()
@@ -33,10 +31,11 @@ public class EnemyBullet : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
 
         anim.Add("Bullet_enemy_peashooter");
-        foreach (string dir in compassDirs)
+        foreach (string dir in PlayState.DIRS_COMPASS)
         {
             anim.Add("Bullet_enemy_boomerang1_" + dir);
             anim.Add("Bullet_enemy_donut_linear_" + dir);
+            anim.Add("Bullet_enemy_spikeball_" + dir);
         }
         anim.Add("Bullet_enemy_donut_rotary_CW");
         anim.Add("Bullet_enemy_donut_rotary_CCW");
@@ -73,6 +72,10 @@ public class EnemyBullet : MonoBehaviour
                         origin.x + radius_velocity * lifeTimer * Mathf.Cos(lifeTimer * theta_velocity + theta_offset),
                         origin.y - radius_velocity * lifeTimer * Mathf.Sin(lifeTimer * theta_velocity + theta_offset)
                         );
+                    break;
+                case BulletType.spikeball:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
+                        transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
             }
             if (lifeTimer > maxLifetime || (despawnOffscreen && !PlayState.OnScreen(transform.position, box)))
@@ -137,6 +140,17 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     PlayState.PlaySound("ShotEnemyDonut");
+                break;
+            case BulletType.spikeball:
+                anim.Play("Bullet_enemy_spikeball_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                damage = 2;
+                maxLifetime = 1.6f;
+                box.size = new Vector2(1.7f, 1.7f);
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = true;
+                if (playSound)
+                    PlayState.PlaySound("Cannon");
                 break;
         }
     }

@@ -49,7 +49,7 @@ public class Stompy : Boss
     private readonly Vector2 offsetEyeL = new Vector2(3.25f, 4.8125f);
     private readonly Vector2 offsetEyeR = new Vector2(-3.3735f, 4.8125f);
     private readonly Vector2 offsetFootL = new Vector2(-10.1875f, -4.375f);
-    private readonly Vector2 offsetFootR = new Vector2(6f, -4.375f);
+    private readonly Vector2 offsetFootR = new Vector2(5.4375f, -4.375f);
 
     public int attackMode = 0;
     private float bossSpeed = 0.6f;
@@ -111,7 +111,8 @@ public class Stompy : Boss
 
     private List<GameObject> cannons = new List<GameObject>();
 
-    private bool legacyCutscene = true;
+    private readonly bool legacyCutscene = true;
+    private readonly bool keepOriginalBehavior = true;
 
     private void Awake()
     {
@@ -149,6 +150,16 @@ public class Stompy : Boss
         eyeR.weaknesses = weaknesses;
         eyeR.resistances = resistances;
         eyeR.immunities = immunities;
+
+        for (int i = 0; i < 4; i++)
+        {
+            cannons.Add(Instantiate(Resources.Load<GameObject>("Objects/Enemies/Canon"), transform));
+            cannons[i].GetComponent<Cannon1>().PlayAnim("ceiling", true);
+        }
+        cannons[0].transform.position = (Vector2)transform.position + new Vector2(-18f, 1.5625f);
+        cannons[1].transform.position = (Vector2)transform.position + new Vector2(-12f, 1.5625f);
+        cannons[2].transform.position = (Vector2)transform.position + new Vector2(8f, 1.5625f);
+        cannons[3].transform.position = (Vector2)transform.position + new Vector2(14f, 1.5625f);
     }
 
     private void InitializeAnims()
@@ -406,7 +417,7 @@ public class Stompy : Boss
                 modeL = FootMode.move;
                 eyeL.shouldAttack = true;
                 footLTimeoutRaise = 1000000;
-                footLTimeoutStomp = timeouts[++footLTimeoutIndex % timeouts.Length] * 360 + 60;
+                footLTimeoutStomp = (int)(timeouts[++footLTimeoutIndex % timeouts.Length] * 360) + 60;
                 if (modeMain == BossMode.sync)
                     footLTimeoutStomp = 10;
             }
@@ -445,7 +456,10 @@ public class Stompy : Boss
                 modeR = FootMode.move;
                 eyeR.shouldAttack = true;
                 footRTimeoutRaise = 1000000;
-                footRTimeoutStomp = timeouts[++footRTimeoutIndex % timeouts.Length] * 360 + 60;
+                if (keepOriginalBehavior)
+                    footRTimeoutStomp = (int)(timeouts[++footLTimeoutIndex % timeouts.Length] * 360) + 60;
+                else
+                    footRTimeoutStomp = (int)(timeouts[++footRTimeoutIndex % timeouts.Length] * 360) + 60;
                 if (modeMain == BossMode.sync)
                     footRTimeoutStomp = 10;
             }

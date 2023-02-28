@@ -11,6 +11,10 @@ public class PlayState {
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
 
+    public static readonly string[] DIRS_COMPASS = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+    public static readonly string[] DIRS_CARDINAL = new string[] { "up", "down", "left", "right" };
+    public static readonly string[] DIRS_SURFACE = new string[] { "floor", "wallL", "wallR", "ceiling" };
+
     public enum GameState { game, menu, pause, map, debug, dialogue, error }
     public static GameState gameState = GameState.menu;
 

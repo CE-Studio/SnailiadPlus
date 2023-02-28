@@ -15,6 +15,7 @@ public class SoundLibrary : ScriptableObject
     public string[] referenceList = new string[]
     {
         "BossHPBleep",
+        "Cannon",
         "Chirp",
         "Death",
         "Dialogue0",
