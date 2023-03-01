@@ -722,7 +722,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
                 ToggleHUD(false);
             }
-            if ((!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown) && (PlayState.gameState != PlayState.GameState.error))
+            if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error) && !PlayState.playerScript.inDeathCutscene)
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);

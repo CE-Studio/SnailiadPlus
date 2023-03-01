@@ -44,9 +44,9 @@ public class QueuedExplosion : MonoBehaviour
         soundTimeout--;
         if (soundTimeout < 0 && makeNoise)
         {
-            if (Random.Range(0f, 1f) > 0.4f)
+            if (Random.Range(0f, 1f) > 0.7f)
                 PlayState.PlaySound("Explode" + Random.Range(1, 5).ToString());
-            if (Random.Range(0f, 1f) > 0.4f)
+            if (Random.Range(0f, 1f) > 0.25f)
                 PlayState.PlaySound("EnemyKilled" + Random.Range(1, 4).ToString());
             soundTimeout = Application.targetFrameRate switch { 30 => 0, 60 => 1, 120 => 3, _ => 7 };
         }

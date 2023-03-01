@@ -374,6 +374,22 @@ public class RoomTrigger:MonoBehaviour {
                             GameObject iceSpikeRight = Instantiate(Resources.Load<GameObject>("Objects/Hazards/Ice Spike"), worldPos, Quaternion.identity, transform);
                             iceSpikeRight.GetComponent<IceSpike>().Spawn(3);
                             break;
+                        case 381:
+                            GameObject cannon1Floor = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            cannon1Floor.GetComponent<Cannon1>().PlayAnim("floor", true);
+                            break;
+                        case 382:
+                            GameObject cannon1WallL = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            cannon1WallL.GetComponent<Cannon1>().PlayAnim("wallL", true);
+                            break;
+                        case 383:
+                            GameObject cannon1WallR = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            cannon1WallR.GetComponent<Cannon1>().PlayAnim("wallR", true);
+                            break;
+                        case 384:
+                            GameObject cannon1Ceil = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            cannon1Ceil.GetComponent<Cannon1>().PlayAnim("ceiling", true);
+                            break;
                         case 386:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Muck"), worldPos, Quaternion.identity, transform);
                             break;

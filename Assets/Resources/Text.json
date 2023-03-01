@@ -1946,6 +1946,11 @@
 			"value": 0
 		},
 		{
+			"name": "room_02_rainbowWave",
+			"text": "Prismatic Prize",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1

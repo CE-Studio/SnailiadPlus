@@ -4332,6 +4332,50 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_cannon1_baseDestroyed_floor",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_baseDestroyed_wallL",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_baseDestroyed_ceiling",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon1_baseDestroyed_wallR",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_chirpy1_up",
 			"spriteName": "Entities/Chirpy1",
 			"framerate": 20.0,

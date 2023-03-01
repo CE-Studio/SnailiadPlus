@@ -106,7 +106,6 @@ public class Stompy : Boss
     private float elapsed;
 
     private bool eyesOnFeet = true;
-    private bool beingKilled = false;
     private bool stepDirIsLeft = true;
 
     private List<GameObject> cannons = new List<GameObject>();
@@ -675,6 +674,24 @@ public class Stompy : Boss
     public override void OnTriggerEnter2D(Collider2D collision) { }
 
     public override void OnTriggerExit2D(Collider2D collision) { }
+
+    public override void Kill()
+    {
+        foreach (GameObject cannon in cannons)
+        {
+            Vector2 cannonPos = cannon.transform.position;
+            for (int i = Random.Range(1, 4); i > 0; i--)
+                PlayState.RequestParticle(new Vector2(Random.Range(cannonPos.x - 0.5f, cannonPos.x + 0.5f),
+                    Random.Range(cannonPos.y - 0.5f, cannonPos.y + 0.5f)), "explosion", new float[] { 2 });
+        }
+        PlayState.bossStates[ID] = 0;
+        PlayState.ToggleBossfightState(false, 0);
+        PlayState.globalFunctions.RequestQueuedExplosion(footL.transform.position, 2.7f, 0, true);
+        PlayState.globalFunctions.RequestQueuedExplosion(footR.transform.position, 2.7f, 0, false);
+        foreach (Transform bullet in PlayState.enemyBulletPool.transform)
+            bullet.GetComponent<EnemyBullet>().Despawn();
+        Destroy(gameObject);
+    }
 
     public void Damage(int damage, bool hitLeft)
     {

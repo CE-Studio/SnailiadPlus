@@ -141,17 +141,17 @@ public class Bullet : MonoBehaviour
         {
             case 1:
                 box.size = new Vector2(0.25f, 0.25f);
-                velocity = 0.3855f;
+                velocity = 0.4625f;
                 damage = 10;
                 break;
             case 2:
                 box.size = new Vector2(0.9f, 0.9f);
-                velocity = 0.34375f;
+                velocity = 0.4125f;
                 damage = 20;
                 break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
-                velocity = 0.0625f;
+                velocity = 0.075f;
                 damage = 30;
                 break;
         }
