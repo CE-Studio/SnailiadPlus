@@ -4,10 +4,10 @@ using UnityEngine;
 using System.Linq;
 
 public class Item:MonoBehaviour, IRoomObject {
-    public bool countedInPercentage = true;
+    [SerializeField] private bool countedInPercentage = true;
     public bool collected;
     public int itemID = -1;
-    public bool isSuperUnique = false;
+    [SerializeField] private bool isSuperUnique = false;
     public bool[] difficultiesPresentIn = new bool[] { true, true, true };
     public bool[] charactersPresentFor = new bool[] { true, true, true, true, true, true };
 

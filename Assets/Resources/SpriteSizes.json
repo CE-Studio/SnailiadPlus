@@ -148,6 +148,11 @@
             "height": 16
         },
 		{
+            "name": "Entities/Fire",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/Fireball",
             "width": 16,
             "height": 16
@@ -286,6 +291,11 @@
 		
 		{
             "name": "Particles/Bubble",
+            "width": 8,
+            "height": 8
+        },
+		{
+            "name": "Particles/Dot",
             "width": 8,
             "height": 8
         },

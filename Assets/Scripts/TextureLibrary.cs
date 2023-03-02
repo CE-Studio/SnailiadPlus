@@ -44,6 +44,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Chirpy1",
         "Entities/Chirpy2",
         "Entities/Dandelion",
+        "Entities/Fire",
         "Entities/Fireball",
         "Entities/Fireball2",
         "Entities/Floatspike1",
@@ -73,6 +74,7 @@ public class TextureLibrary : ScriptableObject
         "Items/WallGrab",
 
         "Particles/Bubble",
+        "Particles/Dot",
         "Particles/Dust",
         "Particles/Explosion",
         "Particles/Nom",

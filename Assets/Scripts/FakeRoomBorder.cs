@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FakeRoomBorder:MonoBehaviour, IRoomObject {
-    public bool direction = false; // Specifies the relative orientation of the border. False for horizontal border, true for vertical border
-    public int workingDirections = 3; // Specifies what directions it will look for the player upon spawning. 1 for down/left only, 2 for up/right only, 3 for both
+    [SerializeField] private bool direction = false; // Specifies the relative orientation of the border. False for horizontal border, true for vertical border
+    [SerializeField] private int workingDirections = 3; // Specifies what directions it will look for the player upon spawning. 1 for down/left only, 2 for up/right only, 3 for both
     public string downLeftRoomName = "";
     public string upRightRoomName = "";
 

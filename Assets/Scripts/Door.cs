@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Door:MonoBehaviour, IRoomObject {
-    public int doorWeapon;
-    public int bossLock;
-    public bool locked;
-    public int direction;
+    [SerializeField] private int doorWeapon;
+    [SerializeField] private int bossLock;
+    [SerializeField] private bool locked;
+    [SerializeField] private int direction;
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
 

@@ -106,6 +106,20 @@ public class RoomTrigger:MonoBehaviour {
                             }
                         }
                         break;
+                    case "heat":
+                        if (!initializedEffects)
+                            effectVars.Add(Random.Range(0f, 1f) * 0.5f);
+                        if (PlayState.gameState == PlayState.GameState.game)
+                        {
+                            effectVars[effectVarIndex] -= Time.deltaTime;
+                            if (effectVars[effectVarIndex] <= 0)
+                            {
+                                effectVars[effectVarIndex] = Random.Range(0f, 1f) * 0.5f;
+                                Vector2 truePos = new Vector2(PlayState.cam.transform.position.x + Random.Range(-12.5f, 12.5f), PlayState.cam.transform.position.y - 7.5f);
+                                PlayState.RequestParticle(truePos, "heat");
+                            }
+                        }
+                        break;
                     case "snow":
                         if (!initializedEffects) {
                             for (int i = 0; i < 60; i++) {
@@ -426,6 +440,10 @@ public class RoomTrigger:MonoBehaviour {
                         case 452:
                             GameObject sleepingSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
                             sleepingSnelk.GetComponent<Snelk>().SetState(2);
+                            break;
+                        case 1120:
+                        case 1121:
+                            Instantiate(Resources.Load<GameObject>("Objects/Hazards/Fire"), worldPos, Quaternion.identity, transform);
                             break;
                     }
                 }

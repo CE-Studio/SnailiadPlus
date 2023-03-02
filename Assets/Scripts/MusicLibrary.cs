@@ -45,6 +45,10 @@ public class MusicLibrary : ScriptableObject
         new string[]
         {
             "SpiralisSilere"
+        },
+        new string[]
+        {
+            "AmastridaAbyssus"
         }
     };
     public int areaThemeOffset = 5;

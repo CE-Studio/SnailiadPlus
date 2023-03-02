@@ -223,4 +223,9 @@ public class AnimationModule : MonoBehaviour
         updateMask = true;
         masks.Add(newMask);
     }
+
+    public SpriteRenderer GetSpriteRenderer()
+    {
+        return sprite;
+    }
 }

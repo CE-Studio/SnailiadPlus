@@ -551,6 +551,9 @@ public class GlobalFunctions : MonoBehaviour
                 }
             }
 
+            foreach (AnimationModule sprite in keySprites)
+                sprite.GetSpriteRenderer().enabled = PlayState.gameOptions[5] == 1;
+
             yield return new WaitForEndOfFrame();
         }
     }

@@ -9,16 +9,28 @@ public class NPCUtilities:Editor {
     NPC script;
     private static readonly string[] looklist = new string[] { "Look at Player", "Left", "Right" };
 
-    private void OnEnable() {
+    SerializedProperty sID;
+    SerializedProperty sName;
+    SerializedProperty sUpside;
+    SerializedProperty sLook;
+
+    public void OnEnable() {
         script = (NPC)target;
+
+        sID = serializedObject.FindProperty("ID");
+        sName = serializedObject.FindProperty("nameID");
+        sUpside = serializedObject.FindProperty("upsideDown");
+        sLook = serializedObject.FindProperty("lookMode");
     }
 
     public override void OnInspectorGUI() {
-        EditorUtility.SetDirty(target);
+        serializedObject.Update();
 
-        script.ID = EditorGUILayout.IntField("NPC ID: ", script.ID);
-        script.nameID = EditorGUILayout.TextField("NPC Cutscene Name:", script.nameID);
-        script.upsideDown = EditorGUILayout.Toggle("NPC upside down? ", script.upsideDown);
-        script.lookMode = EditorGUILayout.Popup("Look Behavior: ", script.lookMode, looklist);
+        sID.intValue = EditorGUILayout.IntField("NPC ID: ", sID.intValue);
+        sName.stringValue = EditorGUILayout.TextField("NPC Cutscene Name:", sName.stringValue);
+        sUpside.boolValue = EditorGUILayout.Toggle("NPC upside down? ", sUpside.boolValue);
+        sLook.intValue = EditorGUILayout.Popup("Look Behavior: ", sLook.intValue, looklist);
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

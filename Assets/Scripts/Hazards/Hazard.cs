@@ -4,31 +4,47 @@ using UnityEngine;
 
 public class Hazard : MonoBehaviour
 {
-    public int damage;
-    public int protectionRequired;
+    public int[] damageValues = new int[] { };
     private bool intersectingPlayer = false;
 
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AnimationModule anim;
     
-    public void Spawn(int newDamage, int newProtection)
+    public void Spawn(int[] damage)
     {
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         anim = GetComponent<AnimationModule>();
 
-        damage = newDamage;
-        protectionRequired = newProtection;
+        damageValues = damage;
     }
 
     public virtual void FixedUpdate()
     {
         if (intersectingPlayer && !PlayState.playerScript.stunned)
         {
-            if (protectionRequired == 0 || (protectionRequired == 1 && PlayState.currentDifficulty == 2) || (protectionRequired != 0 &&
-                !PlayState.CheckForItem(protectionRequired switch { 3 => "Full-Metal Snail", 2 => "Gravity Snail", _ => "Ice Snail" })))
-                PlayState.playerScript.HitFor(damage);
+            int thisDamage = damageValues[0];
+            if (PlayState.stackShells)
+            {
+                int shellLevel = PlayState.GetShellLevel();
+                for (int i = 1; i <= shellLevel; i++)
+                {
+                    if (damageValues[i] < thisDamage)
+                        thisDamage = damageValues[i];
+                }
+            }
+            else
+            {
+                if (PlayState.CheckForItem(7) && damageValues[1] < thisDamage)
+                    thisDamage = damageValues[1];
+                if (PlayState.CheckForItem(8) && damageValues[2] < thisDamage)
+                    thisDamage = damageValues[2];
+                if (PlayState.CheckForItem(9) && damageValues[3] < thisDamage)
+                    thisDamage = damageValues[3];
+            }
+            if (thisDamage > 0)
+                PlayState.playerScript.HitFor(thisDamage);
         }
     }
 

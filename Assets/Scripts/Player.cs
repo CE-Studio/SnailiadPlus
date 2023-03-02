@@ -498,7 +498,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (pokedCeiling)
                 {
                     velocity.y = 0;
-                    if (Control.UpHold() && CheckAbility(canSwapGravity))
+                    if (Control.UpHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = DIR_CEILING;
                         SwapDir(DIR_CEILING);
@@ -834,7 +834,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (pokedCeiling)
                 {
                     velocity.x = 0;
-                    if (Control.RightHold() && CheckAbility(canSwapGravity))
+                    if (Control.RightHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = DIR_WALL_RIGHT;
                         SwapDir(DIR_WALL_RIGHT);
@@ -1170,7 +1170,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (pokedCeiling)
                 {
                     velocity.x = 0;
-                    if (Control.LeftHold() && CheckAbility(canSwapGravity))
+                    if (Control.LeftHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = DIR_WALL_LEFT;
                         SwapDir(DIR_WALL_LEFT);
@@ -1506,7 +1506,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (pokedCeiling)
                 {
                     velocity.y = 0;
-                    if (Control.DownHold() && CheckAbility(canSwapGravity))
+                    if (Control.DownHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = DIR_FLOOR;
                         SwapDir(DIR_FLOOR);

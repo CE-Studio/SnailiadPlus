@@ -8,8 +8,8 @@ public class Particle : MonoBehaviour
     public AnimationModule anim;
     public SpriteRenderer sprite;
     public string type = "";
-    public float[] vars = new float[] { 0, 0, 0, 0, 0 };
-    private float[] internalVars = new float[] { 0, 0, 0, 0, 0 };
+    public float[] vars = new float[] { 0, 0, 0, 0, 0, 0 };
+    private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
     public void Start()
@@ -20,6 +20,9 @@ public class Particle : MonoBehaviour
         gameObject.SetActive(false);
 
         anim.Add("Bubble");
+        anim.Add("Dot_heat_tiny");
+        anim.Add("Dot_heat_small");
+        anim.Add("Dot_heat_medium");
         anim.Add("Dust");
         anim.Add("Explosion_tiny");
         anim.Add("Explosion_small");
@@ -74,6 +77,15 @@ public class Particle : MonoBehaviour
                         transform.position = new Vector2(vars[1] + 2 * Mathf.Sin(vars[0] / 1.2f) * 0.0625f, transform.position.y + vars[3] * Time.deltaTime * 0.25f);
                         if (transform.position.y > vars[2] - 0.25f)
                             ResetParticle();
+                        break;
+                    case "heat":
+                        vars[0] += Time.deltaTime * vars[4];
+                        transform.position = new Vector2(vars[3] + Mathf.Sin(vars[0]) * vars[4], transform.position.y + vars[1] * Time.deltaTime);
+                        vars[1] -= vars[2] * Time.deltaTime;
+                        while (transform.position.x < PlayState.cam.transform.position.x - 13)
+                            transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                        while (transform.position.x > PlayState.cam.transform.position.x + 13)
+                            transform.position = new Vector2(transform.position.x - 26, transform.position.y);
                         break;
                     case "nom":
                         internalVars[0] += Time.deltaTime;
@@ -134,6 +146,9 @@ public class Particle : MonoBehaviour
                     _ => "small"
                 });
                 break;
+            case "heat":
+                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_heat_small", 2 => "Dot_heat_medium", _ => "Dot_heat_tiny" });
+                break;
             case "nom":
                 anim.Play("Nom");
                 break;
@@ -165,8 +180,18 @@ public class Particle : MonoBehaviour
         sprite.sortingOrder = animType switch
         {
             "transformation" => -51,
+            "heat" => Random.Range(0, 4) switch { 0 => -124, 1 => -110, 2 => -24, _ => -1 },
             _ => -15
         };
+        sprite.color = animType switch
+        {
+            "heat" => PlayState.GetColor(Random.Range(0, 7) switch { 0 => "0209", 1 => "0210", 2 => "0211", 3=> "0309", 4 => "0310", 5 => "0311", _ => "0312"}),
+            _ => Color.white
+        };
+        anim.SetSpeed(animType switch {
+            "heat" => Random.Range(0.5f, 1.5f),
+            _ => 1f
+        });
     }
 
     public void PlaySound()

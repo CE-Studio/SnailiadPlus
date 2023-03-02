@@ -96,6 +96,7 @@ public class PlayState {
     public static bool dialogueOpen = false;
     public static bool cutsceneActive = false;
     public static int lastLoadedWeapon = 0;
+    public static bool stackShells = true;
 
     public static int importJobs = 0;
 
@@ -864,6 +865,17 @@ public class PlayState {
                     if ((gameOptions[11] > 1 && values[0] <= 4) || ((gameOptions[11] == 3 || gameOptions[11] == 5) && values[0] > 4)) {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
+                    }
+                    break;
+                case "heat":
+                    if (gameOptions[11] == 1 || gameOptions[11] == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);  // Animation cycle
+                        particleScript.vars[1] = UnityEngine.Random.Range(3f, 7f);           // Initial velocity
+                        particleScript.vars[2] = UnityEngine.Random.Range(0.5f, 3f);         // Deceleration
+                        particleScript.vars[3] = position.x;                                 // Origin X
+                        particleScript.vars[4] = UnityEngine.Random.Range(0.5f, 1.25f);      // Sine amplitude
                     }
                     break;
                 case "nom":

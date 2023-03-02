@@ -4812,6 +4812,62 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Hazard_fire1",
+			"spriteName": "Entities/Fire",
+			"framerate": 9.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_fire2",
+			"spriteName": "Entities/Fire",
+			"framerate": 10.0,
+			"frames": [
+				3,
+				2,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_fire3",
+			"spriteName": "Entities/Fire",
+			"framerate": 11.0,
+			"frames": [
+				1,
+				0,
+				3,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Hazard_fire4",
+			"spriteName": "Entities/Fire",
+			"framerate": 13.0,
+			"frames": [
+				2,
+				3,
+				1,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Hazard_iceSpike_down",
 			"spriteName": "Entities/IceSpike",
 			"framerate": 0.0,
@@ -4925,6 +4981,47 @@
 				5,
 				6,
 				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Dot_heat_tiny",
+			"spriteName": "Particles/Dot",
+			"framerate": 0.5,
+			"frames": [
+				0,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Dot_heat_small",
+			"spriteName": "Particles/Dot",
+			"framerate": 1.0,
+			"frames": [
+				1,
+				0,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Dot_heat_medium",
+			"spriteName": "Particles/Dot",
+			"framerate": 2.0,
+			"frames": [
+				2,
+				1,
+				1,
+				0,
+				0,
+				-1
 			],
 			"loop": false,
 			"loopStartFrame": 0,

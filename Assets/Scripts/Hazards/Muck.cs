@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Muck : Hazard
 {
-    public void Start()
+    public void Awake()
     {
-        Spawn(3, 3);
+        Spawn(new int[] { 3, 3, 3, 0 });
 
         string newAnim = "Hazard_muck_" + (Mathf.FloorToInt(transform.position.x) % 4).ToString();
         anim.Add(newAnim);
