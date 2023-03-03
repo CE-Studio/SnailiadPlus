@@ -40,8 +40,8 @@ public class RoomUtilities : Editor
         Vector2 boxPos = room.transform.position;
         Vector2 boxSize = room.GetComponent<BoxCollider2D>().size;
 
-        sID.intValue = EditorGUILayout.IntField("Area ID: ", sID.intValue);
-        sSubID.intValue = EditorGUILayout.IntField("Subzone ID:", sSubID.intValue);
+        sID.intValue = EditorGUILayout.IntField("Area ID", sID.intValue);
+        sSubID.intValue = EditorGUILayout.IntField("Subzone ID", sSubID.intValue);
         GUILayout.Space(15);
 
         if (GUILayout.Button("Snap position to nearest tile"))
@@ -64,7 +64,7 @@ public class RoomUtilities : Editor
         }
         GUILayout.Space(15);
 
-        size = EditorGUILayout.Vector2Field("Size parameters:", size);
+        size = EditorGUILayout.Vector2Field("Size parameters", size);
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Set size in screens"))
         {
@@ -195,10 +195,10 @@ public class RoomUtilities : Editor
         }
 
         GUILayout.Label("Parallax modifiers");
-        sParFG2.vector2Value = EditorGUILayout.Vector2Field("Foreground 2: ", sParFG2.vector2Value);
-        sParFG1.vector2Value = EditorGUILayout.Vector2Field("Foreground 1: ", sParFG1.vector2Value);
-        sParBG1.vector2Value = EditorGUILayout.Vector2Field("Background: ", sParBG1.vector2Value);
-        sParBG2.vector2Value = EditorGUILayout.Vector2Field("Sky: ", sParBG2.vector2Value);
+        sParFG2.vector2Value = EditorGUILayout.Vector2Field("Foreground 2", sParFG2.vector2Value);
+        sParFG1.vector2Value = EditorGUILayout.Vector2Field("Foreground 1", sParFG1.vector2Value);
+        sParBG1.vector2Value = EditorGUILayout.Vector2Field("Background", sParBG1.vector2Value);
+        sParBG2.vector2Value = EditorGUILayout.Vector2Field("Sky", sParBG2.vector2Value);
         GUILayout.Space(15);
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("waterLevel"), true);

@@ -54,6 +54,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Kitty2",
         "Entities/Muck",
         "Entities/PixelPeople",
+        "Entities/Platform",
         "Entities/PowerGrass",
         "Entities/SnailNpc",
         "Entities/SnailNpcColor",

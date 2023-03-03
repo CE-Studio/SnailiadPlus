@@ -104,7 +104,7 @@ public class FakeBorderHighlighter : Editor
         serializedObject.Update();
 
         sDir.boolValue = EditorGUILayout.Popup("Direction", sDir.boolValue ? 1 : 0, new string[] { "Stop camera vertically", "Stop camera horizontally" }) == 1;
-        sWork.intValue = EditorGUILayout.Popup("Function from: ", sWork.intValue - 1,
+        sWork.intValue = EditorGUILayout.Popup("Function from", sWork.intValue - 1,
             new string[] { sDir.boolValue ? "Left of" : "Below", sDir.boolValue ? "Right of" : "Above", "Both directions" }) + 1;
 
         serializedObject.ApplyModifiedProperties();

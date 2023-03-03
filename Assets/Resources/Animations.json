@@ -3036,6 +3036,95 @@
 		},
 		
 		{
+			"name": "Object_platform1_1",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_2",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_3",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_4",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_1",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_2",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_3",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
+		{
 			"name": "NPC_idle",
 			"spriteName": "Entities/SnailNpc",
 			"framerate": 3.0,

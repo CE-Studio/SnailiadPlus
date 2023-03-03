@@ -198,6 +198,11 @@
             "height": 32
         },
 		{
+            "name": "Entities/Platform",
+            "width": 64,
+            "height": 16
+        },
+		{
             "name": "Entities/PowerGrass",
             "width": 16,
             "height": 16

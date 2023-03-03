@@ -25,6 +25,7 @@ public class Spikey2 : Enemy
     private float stopTimeout;
     private float startTimeout;
     private bool stopped = false;
+    private bool initializedRotation = false;
 
     private BoxCollider2D box;
 
@@ -49,28 +50,6 @@ public class Spikey2 : Enemy
         anim.Add("Enemy_spikey_orange_up");
         anim.Add("Enemy_spikey_orange_left");
 
-        if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y - 1), true))
-        {
-            direction = DIR_FLOOR;
-            anim.Play("Enemy_spikey_orange_down");
-        }
-        else if (PlayState.IsTileSolid(new Vector2(transform.position.x + 1, transform.position.y), true))
-        {
-            direction = DIR_WALL_RIGHT;
-            anim.Play("Enemy_spikey_orange_right");
-        }
-        else if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y + 1), true))
-        {
-            direction = DIR_CEILING;
-            anim.Play("Enemy_spikey_orange_up");
-        }
-        else
-        {
-            direction = DIR_WALL_LEFT;
-            anim.Play("Enemy_spikey_orange_left");
-        }
-        AdjustGroundChecks();
-
         groundCheck = Physics2D.BoxCast(
             transform.position,
             box.size,
@@ -87,6 +66,32 @@ public class Spikey2 : Enemy
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
+
+        if (!initializedRotation)
+        {
+            if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y - 1), true))
+            {
+                direction = DIR_FLOOR;
+                anim.Play("Enemy_spikey_orange_down");
+            }
+            else if (PlayState.IsTileSolid(new Vector2(transform.position.x + 1, transform.position.y), true))
+            {
+                direction = DIR_WALL_RIGHT;
+                anim.Play("Enemy_spikey_orange_right");
+            }
+            else if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y + 1), true))
+            {
+                direction = DIR_CEILING;
+                anim.Play("Enemy_spikey_orange_up");
+            }
+            else
+            {
+                direction = DIR_WALL_LEFT;
+                anim.Play("Enemy_spikey_orange_left");
+            }
+            AdjustGroundChecks();
+            initializedRotation = true;
+        }
 
         if (gracePeriod != 0)
             gracePeriod = Mathf.Clamp(gracePeriod - SPEED, 0, 1);

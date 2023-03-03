@@ -21,6 +21,7 @@ public class Fireball2 : Enemy
     private RaycastHit2D vCast;
     private RaycastHit2D groundCheck;
     private bool updateAnimOnTurn;
+    private bool initializedRotation = false;
 
     private BoxCollider2D box;
 
@@ -38,28 +39,6 @@ public class Fireball2 : Enemy
         anim.Add("Enemy_fireball2_right");
         anim.Add("Enemy_fireball2_up");
         anim.Add("Enemy_fireball2_left");
-
-        if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y - 1), true))
-        {
-            direction = DIR_FLOOR;
-            anim.Play("Enemy_fireball2_down");
-        }
-        else if (PlayState.IsTileSolid(new Vector2(transform.position.x + 1, transform.position.y), true))
-        {
-            direction = DIR_WALL_RIGHT;
-            anim.Play("Enemy_fireball2_right");
-        }
-        else if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y + 1), true))
-        {
-            direction = DIR_CEILING;
-            anim.Play("Enemy_fireball2_up");
-        }
-        else
-        {
-            direction = DIR_WALL_LEFT;
-            anim.Play("Enemy_fireball2_left");
-        }
-        AdjustGroundChecks();
 
         groundCheck = Physics2D.BoxCast(
             transform.position,
@@ -79,6 +58,32 @@ public class Fireball2 : Enemy
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
+
+        if (!initializedRotation)
+        {
+            if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y - 1), true))
+            {
+                direction = DIR_FLOOR;
+                anim.Play("Enemy_fireball2_down");
+            }
+            else if (PlayState.IsTileSolid(new Vector2(transform.position.x + 1, transform.position.y), true))
+            {
+                direction = DIR_WALL_RIGHT;
+                anim.Play("Enemy_fireball2_right");
+            }
+            else if (PlayState.IsTileSolid(new Vector2(transform.position.x, transform.position.y + 1), true))
+            {
+                direction = DIR_CEILING;
+                anim.Play("Enemy_fireball2_up");
+            }
+            else
+            {
+                direction = DIR_WALL_LEFT;
+                anim.Play("Enemy_fireball2_left");
+            }
+            AdjustGroundChecks();
+            initializedRotation = true;
+        }
 
         if (gracePeriod != 0)
             gracePeriod = Mathf.Clamp(gracePeriod - speed, 0, 1);
