@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,24 +25,22 @@ public class PlatformUtilities : Editor
     SerializedProperty sSize;
     SerializedProperty sType;
     SerializedProperty sSpeed;
-    SerializedProperty sA;
-    SerializedProperty sB;
-    SerializedProperty sBrake;
+    SerializedProperty sPath;
 
     const int WIDTH = 2;
 
     public void OnEnable()
     {
         plat = (Platform)target;
-        box = plat.GetComponent<BoxCollider2D>();
-        sprite = plat.GetComponent<SpriteRenderer>();
+        box = plat.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        sprite = plat.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if (plat.pathAnim == null)
+            plat.pathAnim = plat.transform.GetChild(0).GetComponent<Animator>();
 
         sSize = serializedObject.FindProperty("size");
         sType = serializedObject.FindProperty("type");
-        sSpeed = serializedObject.FindProperty("topSpeed");
-        sA = serializedObject.FindProperty("aRelative");
-        sB = serializedObject.FindProperty("bRelative");
-        sBrake = serializedObject.FindProperty("brakePercentage");
+        sSpeed = serializedObject.FindProperty("speed");
+        sPath = serializedObject.FindProperty("pathName");
 
         sprites = new Sprite[] { p11, p12, p13, p14, p21, p22, p23, p24 };
     }
@@ -78,32 +77,23 @@ public class PlatformUtilities : Editor
         sType.intValue = EditorGUILayout.Popup("Platform Type", sType.intValue, new string[] { "Blue", "Pink" });
         GUILayout.Space(5);
 
-        sSpeed.floatValue = Mathf.Clamp(EditorGUILayout.FloatField("Speed", sSpeed.floatValue), 0, Mathf.Infinity);
-        sBrake.floatValue = Mathf.Clamp(EditorGUILayout.FloatField("Slowdown range", sBrake.floatValue), 0, 0.5f);
-        GUILayout.Label("Range value is a percentage of the total\nrange of the platform, capping at 50%");
+        sSpeed.floatValue = EditorGUILayout.FloatField("Speed", sSpeed.floatValue);
         GUILayout.Space(5);
 
-        sA.vector2Value = EditorGUILayout.Vector2Field("Point A", sA.vector2Value);
-        sB.vector2Value = EditorGUILayout.Vector2Field("Point B", sB.vector2Value);
+        AnimationClip[] paths = plat.pathAnim.runtimeAnimatorController.animationClips;
+        string[] pathNames = new string[paths.Length + 1];
+        pathNames[0] = "None";
+        for (int i = 0; i < paths.Length; i++)
+            pathNames[i + 1] = paths[i].name;
+        int index = Mathf.Clamp(Array.IndexOf(pathNames, sPath.stringValue), 0, paths.Length);
+        sPath.stringValue = pathNames[EditorGUILayout.Popup("Path", index, pathNames)];
+        GUILayout.Label("Make sure that any new paths you've created\nmove the child object with the sprite and\nhitbox, not the origin object!");
 
         serializedObject.ApplyModifiedProperties();
     }
 
     public void OnSceneGUI()
     {
-        Vector2 a = sA.vector2Value;
-        Vector2 b = sB.vector2Value;
-        Vector2 size = new Vector2(sSize.intValue * 0.5f, 0.5f);
-        Vector2 pos = plat.transform.position;
-
-        Handles.DrawSolidRectangleWithOutline(new Rect((Vector2)plat.transform.position + a - size, size * 2), new Color(1f, 1f, 1f, 0.1f), Color.white);
-        Handles.DrawSolidRectangleWithOutline(new Rect((Vector2)plat.transform.position + b - size, size * 2), new Color(1f, 1f, 1f, 0.1f), Color.white);
-        Handles.color = new Color(0, 1, 1);
-        Handles.DrawLine((Vector2)plat.transform.position + a, (Vector2)plat.transform.position + b, WIDTH);
-
-        Handles.DrawSolidRectangleWithOutline(new Rect(Vector2.Lerp(pos + a, pos + b, sBrake.floatValue) - size, size * 2), Color.clear, Color.white);
-        Handles.DrawSolidRectangleWithOutline(new Rect(Vector2.Lerp(pos + b, pos + a, sBrake.floatValue) - size, size * 2), Color.clear, Color.white);
-
         sprite.sprite = sprites[sSize.intValue + (sType.intValue * 4) - 1];
     }
 }

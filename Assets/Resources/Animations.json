@@ -3036,7 +3036,7 @@
 		},
 		
 		{
-			"name": "Object_platform1_1",
+			"name": "Object_platform1_1_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3047,7 +3047,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform1_2",
+			"name": "Object_platform1_1_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_1_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_1_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_1_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_2_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3058,7 +3102,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform1_3",
+			"name": "Object_platform1_2_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_2_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_2_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_2_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_3_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3069,7 +3157,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform1_4",
+			"name": "Object_platform1_3_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_3_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_3_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_3_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_4_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3080,7 +3212,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform2_1",
+			"name": "Object_platform1_4_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_4_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_4_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform1_4_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_1_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3091,7 +3267,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform2_2",
+			"name": "Object_platform2_1_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_1_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_1_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_1_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_2_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3102,7 +3322,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform2_3",
+			"name": "Object_platform2_2_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_2_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_2_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_2_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_3_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
@@ -3113,7 +3377,95 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Object_platform2_4",
+			"name": "Object_platform2_3_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_3_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_3_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_3_right",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4_idle",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4_up",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4_down",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4_left",
+			"spriteName": "Entities/Platform",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_platform2_4_right",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
 			"frames": [
