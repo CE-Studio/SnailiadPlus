@@ -10,6 +10,11 @@ public class PlayState {
     public const float TAU = Mathf.PI * 2;
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
+    public const float FRAC_8 = 0.125f;
+    public const float FRAC_16 = 0.0625f;
+    public const float FRAC_32 = 0.03125f;
+    public const float FRAC_64 = 0.015625f;
+    public const float FRAC_128 = 0.0078125f;
 
     public static readonly string[] DIRS_COMPASS = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
     public static readonly string[] DIRS_CARDINAL = new string[] { "up", "down", "left", "right" };

@@ -89,7 +89,11 @@ public class Platform : MonoBehaviour, IRoomObject
     void Update()
     {
         if (PlayState.gameState != PlayState.GameState.game)
+        {
+            pathAnim.speed = 0;
             return;
+        }
+        pathAnim.speed = speed;
 
         if ((Vector2)transform.position == lastPos)
             PlayAnim();
@@ -110,6 +114,12 @@ public class Platform : MonoBehaviour, IRoomObject
                     PlayAnim("left");
             }
         }
+
+        if (player.currentCollision == box)
+        {
+            player.transform.position += transform.position - (Vector3)lastPos;
+        }
+
         lastPos = transform.position;
     }
 

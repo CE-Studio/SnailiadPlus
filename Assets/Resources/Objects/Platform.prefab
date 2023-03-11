@@ -46,14 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 2
   type: 0
-  moveType: 0
-  topSpeed: 0
-  acceleration: 0
-  a: {x: 0, y: 0}
-  b: {x: 0, y: 0}
-  aRelative: {x: 0, y: 0}
-  bRelative: {x: 0, y: 0}
-  brakePercentage: 0
+  speed: 0
   pathName: None
   platObj: {fileID: 0}
   box: {fileID: 0}
@@ -74,6 +67,7 @@ GameObject:
   - component: {fileID: 8717605488911462102}
   - component: {fileID: 3797761161635359404}
   - component: {fileID: 7393799734702619576}
+  - component: {fileID: 1679608508729115589}
   m_Layer: 8
   m_Name: Platform
   m_TagString: Platform
@@ -221,3 +215,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1679608508729115589
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038993495248318844}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
