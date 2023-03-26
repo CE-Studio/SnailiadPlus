@@ -141,7 +141,7 @@ TextureImporter:
       213: -7132135047079255631
     second: DebugIcons_45
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -162,6 +162,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -200,6 +201,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -251,6 +253,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1240,6 +1266,53 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      DebugIcons_0: -7047557597682004019
+      DebugIcons_1: 8355901992318247671
+      DebugIcons_10: -4344759066239615041
+      DebugIcons_11: 3328637815246493814
+      DebugIcons_12: 5167730858940455219
+      DebugIcons_13: 3576297615561557966
+      DebugIcons_14: 3413712019818885713
+      DebugIcons_15: -6730822706876972219
+      DebugIcons_16: -3818701858632320902
+      DebugIcons_17: 3771567012507804200
+      DebugIcons_18: -5192623018058727930
+      DebugIcons_19: 6190946327720856817
+      DebugIcons_2: 421501414266881060
+      DebugIcons_20: 2828390675248103174
+      DebugIcons_21: 8141993495166403851
+      DebugIcons_22: -256240502315324858
+      DebugIcons_23: 4056993774666578842
+      DebugIcons_24: 8787229895638976759
+      DebugIcons_25: -4948673822435409267
+      DebugIcons_26: 8040373364509560923
+      DebugIcons_27: -1973682963280586690
+      DebugIcons_28: -4351290093676017164
+      DebugIcons_29: 3583610655553252288
+      DebugIcons_3: 7974176562347305748
+      DebugIcons_30: -1887198591663277873
+      DebugIcons_31: -8997583251602112935
+      DebugIcons_32: 895138003736540337
+      DebugIcons_33: -5890706021062167665
+      DebugIcons_34: -2629549121181295860
+      DebugIcons_35: -3138868839232152830
+      DebugIcons_36: 6721083688615951042
+      DebugIcons_37: 7854620221913564932
+      DebugIcons_38: 1373214603429328957
+      DebugIcons_39: -8629625055250312048
+      DebugIcons_4: -4600273936112123306
+      DebugIcons_40: 877561340199745116
+      DebugIcons_41: 7236211602235948002
+      DebugIcons_42: -7169027381719216372
+      DebugIcons_43: -7596859391663412061
+      DebugIcons_44: 6650751767733245489
+      DebugIcons_45: -7132135047079255631
+      DebugIcons_5: -9005559373969567352
+      DebugIcons_6: 8470694599820092435
+      DebugIcons_7: 7149836554956440592
+      DebugIcons_8: 4728547280672689184
+      DebugIcons_9: 1441925812315517787
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

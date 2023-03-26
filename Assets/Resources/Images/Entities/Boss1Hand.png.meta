@@ -51,7 +51,7 @@ TextureImporter:
       213: -5823582718478992802
     second: Boss1Hand_15
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -72,6 +72,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -110,6 +111,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -161,6 +163,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -520,6 +546,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Boss1Hand_0: -6864182001435656170
+      Boss1Hand_1: -5943274607457660763
+      Boss1Hand_10: -8971427172845965719
+      Boss1Hand_11: -3246429296321321164
+      Boss1Hand_12: 2576125358053549029
+      Boss1Hand_13: -1857950627753442990
+      Boss1Hand_14: -3857002230137490770
+      Boss1Hand_15: -5823582718478992802
+      Boss1Hand_2: 191909349855262739
+      Boss1Hand_3: 8947088772570489158
+      Boss1Hand_4: 4137471600000289794
+      Boss1Hand_5: -5592656538679648690
+      Boss1Hand_6: 143633394259829608
+      Boss1Hand_7: 390479749120601024
+      Boss1Hand_8: -3806739129827060084
+      Boss1Hand_9: -4335175518731530236
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

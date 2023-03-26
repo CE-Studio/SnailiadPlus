@@ -132,7 +132,7 @@ TextureImporter:
       213: 3967398337005475353
     second: AchievementIcons_24
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -153,6 +153,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -191,6 +192,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -242,6 +244,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -790,6 +816,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      AchievementIcons_0: 3750462811398264160
+      AchievementIcons_1: 5419619222919131884
+      AchievementIcons_10: 3936552293513842047
+      AchievementIcons_11: 8123229453744332770
+      AchievementIcons_12: 6296080612480912762
+      AchievementIcons_13: -116717324566209897
+      AchievementIcons_14: 1309816890133518916
+      AchievementIcons_15: -1077138468529523819
+      AchievementIcons_16: -8953426543293752422
+      AchievementIcons_17: -6906052872826400360
+      AchievementIcons_18: 2512820669586406625
+      AchievementIcons_19: -1522448939617037900
+      AchievementIcons_2: -5842918949187353718
+      AchievementIcons_20: -1868850736756724243
+      AchievementIcons_21: 2647163670388637084
+      AchievementIcons_22: -6480901536647495751
+      AchievementIcons_23: -265031505987639007
+      AchievementIcons_24: 3967398337005475353
+      AchievementIcons_3: 8516264978905723479
+      AchievementIcons_4: -5467455265929296757
+      AchievementIcons_5: -8681047091142656483
+      AchievementIcons_6: -4168307313765905988
+      AchievementIcons_7: 3170157978546824141
+      AchievementIcons_8: 7707491100009306634
+      AchievementIcons_9: -4484400924655503357
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

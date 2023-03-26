@@ -156,7 +156,7 @@ TextureImporter:
       213: -3730225269123139485
     second: RainbowWave_23
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -176,6 +176,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -185,8 +187,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -207,10 +209,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -262,6 +268,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -732,7 +762,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 22235743da579b8f0800000000000000
-      internalID: -524258494842064350
+      internalID: -5135362713509719689
       vertices: []
       indices: 
       edges: []
@@ -753,7 +783,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c1d5fbcaa77828d90800000000000000
-      internalID: -7096961101828498148
+      internalID: -4227184807293184740
       vertices: []
       indices: 
       edges: []
@@ -774,7 +804,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 368babd91e39b3cc0800000000000000
-      internalID: -3730225269123139485
+      internalID: -8933182660126335700
       vertices: []
       indices: 
       edges: []
@@ -789,6 +819,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      RainbowWave_0: -2125285009704309759
+      RainbowWave_1: -1000239792644991580
+      RainbowWave_10: 6423764383974233275
+      RainbowWave_11: 1210834060306619545
+      RainbowWave_12: 2507467898773391885
+      RainbowWave_13: 349935892586036976
+      RainbowWave_14: 4291451459744474449
+      RainbowWave_15: 3847261947609495208
+      RainbowWave_16: -3273404016154274064
+      RainbowWave_17: -2958030262749036598
+      RainbowWave_18: 8031223582779746474
+      RainbowWave_19: -8671226949303475160
+      RainbowWave_2: 1359575161649513882
+      RainbowWave_20: 7431914578768525066
+      RainbowWave_21: -5135362713509719689
+      RainbowWave_22: -4227184807293184740
+      RainbowWave_23: -8933182660126335700
+      RainbowWave_3: 7205272332485825235
+      RainbowWave_4: 1604491180324688417
+      RainbowWave_5: 271825379710869633
+      RainbowWave_6: -3373721263851245950
+      RainbowWave_7: -4240720797034322930
+      RainbowWave_8: 5408650719590335247
+      RainbowWave_9: -7036840917076082533
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

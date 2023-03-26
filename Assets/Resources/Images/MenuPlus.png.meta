@@ -210,7 +210,7 @@ TextureImporter:
       213: 8275555810925906511
     second: MenuPlus_68
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -231,6 +231,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -269,6 +270,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -320,6 +322,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1792,6 +1818,76 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      MenuPlus_0: 7578844536803756993
+      MenuPlus_1: 6804251685726774678
+      MenuPlus_10: 8879510291723696134
+      MenuPlus_11: 372636865513122068
+      MenuPlus_12: 3835439091229346253
+      MenuPlus_13: 8318106653545087141
+      MenuPlus_14: -2620239841496824193
+      MenuPlus_15: 746287902760084320
+      MenuPlus_16: 60244248375019696
+      MenuPlus_17: 769680773605499170
+      MenuPlus_18: -2384693967035620835
+      MenuPlus_19: -1213821684334206308
+      MenuPlus_2: -3994558994909635091
+      MenuPlus_20: -6818738178998889050
+      MenuPlus_21: -1555955160318133244
+      MenuPlus_22: -6070379309784846386
+      MenuPlus_23: -1539168487024321617
+      MenuPlus_24: -8293861978870625411
+      MenuPlus_25: -3085575919108633907
+      MenuPlus_26: 5281661310853970762
+      MenuPlus_27: -6543418960873405694
+      MenuPlus_28: 8515149650811869192
+      MenuPlus_29: 6885924878417190310
+      MenuPlus_3: 4308265112730040815
+      MenuPlus_30: 5394854784058957435
+      MenuPlus_31: 1487054908186521668
+      MenuPlus_32: 5243941083430095279
+      MenuPlus_33: -5516293287965475129
+      MenuPlus_34: -5438819374241653349
+      MenuPlus_35: 663662771870213511
+      MenuPlus_36: -9139747629554764115
+      MenuPlus_37: 6453363006181328997
+      MenuPlus_38: 3775564085566313257
+      MenuPlus_39: -1707775213386247123
+      MenuPlus_4: -464385042323459165
+      MenuPlus_40: -1578030343041225584
+      MenuPlus_41: -7302606864916729618
+      MenuPlus_42: -8838633427931148645
+      MenuPlus_43: 7024986656077098479
+      MenuPlus_44: -126236767698601320
+      MenuPlus_45: 5220023508571290460
+      MenuPlus_46: -4410847178372604478
+      MenuPlus_47: 8966394894509759678
+      MenuPlus_48: 8873427935184380451
+      MenuPlus_49: -1561984381137665697
+      MenuPlus_5: 5581404118736740547
+      MenuPlus_50: -3011120317036462246
+      MenuPlus_51: -730847891165023766
+      MenuPlus_52: 1311354110620358790
+      MenuPlus_53: 4563426827624736516
+      MenuPlus_54: 9137222657163036279
+      MenuPlus_55: 2988179044539053667
+      MenuPlus_56: 6275820986598854330
+      MenuPlus_57: 170974371320589328
+      MenuPlus_58: 1460224151579694735
+      MenuPlus_59: -6631677590994434809
+      MenuPlus_6: 6146389442926124272
+      MenuPlus_60: 8623565063115606593
+      MenuPlus_61: -7356540059721352883
+      MenuPlus_62: 8551097897422606905
+      MenuPlus_63: 9196681525533351761
+      MenuPlus_64: 2677667918224701866
+      MenuPlus_65: 7466340098643281418
+      MenuPlus_66: -5341291933713924357
+      MenuPlus_67: -7904613230295253482
+      MenuPlus_68: 8275555810925906511
+      MenuPlus_7: 309117038656541111
+      MenuPlus_8: -8807467053808180506
+      MenuPlus_9: 1154813167235285013
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -195,7 +195,7 @@ TextureImporter:
       213: 21300126
     second: ocean_63
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -215,6 +215,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -224,8 +226,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -246,10 +248,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -337,6 +343,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1368,6 +1386,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      ocean_0: 21300000
+      ocean_1: 21300002
+      ocean_10: 21300020
+      ocean_11: 21300022
+      ocean_12: 21300024
+      ocean_13: 21300026
+      ocean_14: 21300028
+      ocean_15: 21300030
+      ocean_16: 21300032
+      ocean_17: 21300034
+      ocean_18: 21300036
+      ocean_19: 21300038
+      ocean_2: 21300004
+      ocean_20: 21300040
+      ocean_21: 21300042
+      ocean_22: 21300044
+      ocean_23: 21300046
+      ocean_24: 21300048
+      ocean_25: 21300050
+      ocean_26: 21300052
+      ocean_27: 21300054
+      ocean_28: 21300056
+      ocean_29: 21300058
+      ocean_3: 21300006
+      ocean_30: 21300060
+      ocean_31: 21300062
+      ocean_32: 21300064
+      ocean_33: 21300066
+      ocean_34: 21300068
+      ocean_35: 21300070
+      ocean_36: 21300072
+      ocean_37: 21300074
+      ocean_38: 21300076
+      ocean_39: 21300078
+      ocean_4: 21300008
+      ocean_40: 21300080
+      ocean_41: 21300082
+      ocean_42: 21300084
+      ocean_43: 21300086
+      ocean_44: 21300088
+      ocean_45: 21300090
+      ocean_46: 21300092
+      ocean_47: 21300094
+      ocean_5: 21300010
+      ocean_6: 21300012
+      ocean_7: 21300014
+      ocean_8: 21300016
+      ocean_9: 21300018
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

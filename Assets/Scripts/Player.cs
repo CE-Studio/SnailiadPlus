@@ -260,6 +260,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Among other things, this is used to test for ground when we're airborne
         lastPosition = new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y);
         lastSize = box.size;
+        // We ensure we're not clipping inside any ground
+        CheckIntersectionAndCorrect();
         // We also update all our boxcasts, both for the corner and in case they're misaligned with our current gravity state
         UpdateBoxcasts();
         // Next, we decrease the fire cooldown
@@ -397,6 +399,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 currentCollision = null;
             }
         }
+        CheckIntersectionAndCorrect();
     }
 
     public virtual void CaseDown()
@@ -2040,7 +2043,35 @@ public class Player : MonoBehaviour, ICutsceneObject {
         RaycastHit2D boxCheck = Physics2D.BoxCast(transform.position, box.size, 0, Vector2.up, 0, playerCollide, Mathf.Infinity, Mathf.Infinity);
         while (boxCheck.collider != null && currentIterations++ < MAX_ITERATIONS)
         {
-            Vector2 closest = boxCheck.collider.ClosestPoint(transform.position);
+            Collider2D collider = boxCheck.collider;
+            Vector2 closest = collider.ClosestPoint(transform.position);
+            RaycastHit2D pointCheck = Physics2D.Raycast(transform.position, closest - (Vector2)transform.position, Mathf.Infinity, playerCollide);
+            Vector2 normal = pointCheck.normal;
+            
+            if (normal == Vector2.up)
+            {
+                transform.position = new Vector2(transform.position.x, closest.y + (box.size.y - Mathf.Abs(transform.position.y - closest.y)));
+                if (gravityDir == DIR_FLOOR)
+                    grounded = true;
+            }
+            if (normal == Vector2.down)
+            {
+                transform.position = new Vector2(transform.position.x, closest.y - (box.size.y - Mathf.Abs(transform.position.y - closest.y)));
+                if (gravityDir == DIR_CEILING)
+                    grounded = true;
+            }
+            if (normal == Vector2.left)
+            {
+                transform.position = new Vector2(closest.x - (box.size.x - Mathf.Abs(transform.position.x - closest.x)), transform.position.y);
+                if (gravityDir == DIR_WALL_RIGHT)
+                    grounded = true;
+            }
+            if (normal == Vector2.right)
+            {
+                transform.position = new Vector2(closest.x + (box.size.x - Mathf.Abs(transform.position.x - closest.x)), transform.position.y);
+                if (gravityDir == DIR_WALL_LEFT)
+                    grounded = true;
+            }
         }
     }
 

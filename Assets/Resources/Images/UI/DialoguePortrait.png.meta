@@ -87,7 +87,7 @@ TextureImporter:
       213: 8042932413124127254
     second: DialoguePortrait_27
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -108,6 +108,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -146,6 +147,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -197,6 +199,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -808,6 +834,35 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      DialoguePortrait_0: -8233279692294183291
+      DialoguePortrait_1: 9180505643162347052
+      DialoguePortrait_10: 1328257925723772917
+      DialoguePortrait_11: -7717895711688215884
+      DialoguePortrait_12: -4643073515673114293
+      DialoguePortrait_13: -6072248764051093403
+      DialoguePortrait_14: -2143781974266030606
+      DialoguePortrait_15: -666063813601721588
+      DialoguePortrait_16: -1285226643671432446
+      DialoguePortrait_17: 5054260645351496847
+      DialoguePortrait_18: 6321208707643535785
+      DialoguePortrait_19: 1476878122565732234
+      DialoguePortrait_2: 3015035862605544690
+      DialoguePortrait_20: -1829413431053573783
+      DialoguePortrait_21: 2897236703007180743
+      DialoguePortrait_22: 1989715705667845650
+      DialoguePortrait_23: -7849760805111843119
+      DialoguePortrait_24: 8166009521241562680
+      DialoguePortrait_25: 115509113036973114
+      DialoguePortrait_26: -7335923909937838819
+      DialoguePortrait_27: 8042932413124127254
+      DialoguePortrait_3: 4765963678563621145
+      DialoguePortrait_4: -1285042617439647903
+      DialoguePortrait_5: 1185048229261083423
+      DialoguePortrait_6: 4988375545595931565
+      DialoguePortrait_7: 5223949038016901152
+      DialoguePortrait_8: 8780960299741809833
+      DialoguePortrait_9: -6441007749237469119
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

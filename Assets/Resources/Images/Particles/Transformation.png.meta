@@ -273,7 +273,7 @@ TextureImporter:
       213: 1662276536138335628
     second: Transformation_89
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -294,6 +294,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -332,6 +333,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -383,6 +385,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2296,6 +2322,97 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Transformation_0: 8697888545393100830
+      Transformation_1: -1259240960594374151
+      Transformation_10: 7108002060014679548
+      Transformation_11: 7597190717251124769
+      Transformation_12: 3365205024852184719
+      Transformation_13: 6689108688745337005
+      Transformation_14: -5972541539508105134
+      Transformation_15: 5713718016196649545
+      Transformation_16: -2865241712218424143
+      Transformation_17: 6804056488991036454
+      Transformation_18: -2898511031327664079
+      Transformation_19: -292904327165677634
+      Transformation_2: 8570288700241866018
+      Transformation_20: -4772705042489171155
+      Transformation_21: 8535898667205252278
+      Transformation_22: 674396877216499855
+      Transformation_23: 3370589534692625284
+      Transformation_24: 1775505641063330182
+      Transformation_25: -6411682660858328059
+      Transformation_26: 3240294642542776071
+      Transformation_27: -5215758520364020306
+      Transformation_28: 8033749956399412242
+      Transformation_29: -8272099010490203816
+      Transformation_3: 5522383980822981015
+      Transformation_30: -3013781647378205489
+      Transformation_31: -8563068240210052891
+      Transformation_32: 5861720167009809958
+      Transformation_33: 717756167476787662
+      Transformation_34: 7009933318929251740
+      Transformation_35: 8466858936697546881
+      Transformation_36: -8348655756097597792
+      Transformation_37: -7894284188307181864
+      Transformation_38: 5653962733524233708
+      Transformation_39: -5173567693733729531
+      Transformation_4: -4893288342474515267
+      Transformation_40: -1991052758123742276
+      Transformation_41: 3375271422725927218
+      Transformation_42: 8764863446259558851
+      Transformation_43: -6720452843216537262
+      Transformation_44: 428567132271977777
+      Transformation_45: -8270262074962283450
+      Transformation_46: -3009616332155242362
+      Transformation_47: -2850739614816109671
+      Transformation_48: -4910591461174377777
+      Transformation_49: -8286090174547799358
+      Transformation_5: -7841550028933566082
+      Transformation_50: 8560049695234342252
+      Transformation_51: -1857802628135247121
+      Transformation_52: -7339863684978331860
+      Transformation_53: -7966576638669854614
+      Transformation_54: -8093879875567672682
+      Transformation_55: -551064889941837465
+      Transformation_56: -2548424605130302360
+      Transformation_57: -5757822984819010794
+      Transformation_58: 4927069027329585375
+      Transformation_59: -8795829141893897785
+      Transformation_6: -3554353151860954686
+      Transformation_60: -1117608093939521864
+      Transformation_61: 4565498008857186335
+      Transformation_62: 6943820525091567720
+      Transformation_63: -2828227690985197480
+      Transformation_64: 8144744115454913597
+      Transformation_65: -199389048511187556
+      Transformation_66: -2653388105191840051
+      Transformation_67: 1288850654391990559
+      Transformation_68: -38659698507920510
+      Transformation_69: 5635772011193016143
+      Transformation_7: -3897892308659486621
+      Transformation_70: 2404188280470513069
+      Transformation_71: -7050839921647932250
+      Transformation_72: 8268723914737852986
+      Transformation_73: 5748633025949630187
+      Transformation_74: 8837054026493016716
+      Transformation_75: 4545919901814005529
+      Transformation_76: 6594343710622165821
+      Transformation_77: 5925218836851765054
+      Transformation_78: -2634424098643588841
+      Transformation_79: -567181739528616681
+      Transformation_8: 3798086482788329896
+      Transformation_80: 5056841397206200032
+      Transformation_81: -2821456704503521447
+      Transformation_82: 3655990464270506638
+      Transformation_83: -2500627228902494425
+      Transformation_84: 5701845138887527299
+      Transformation_85: 2826578945136498640
+      Transformation_86: -7030388599101034615
+      Transformation_87: -3274348686271406412
+      Transformation_88: -7579916304194922704
+      Transformation_89: 1662276536138335628
+      Transformation_9: -8463781382855045211
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

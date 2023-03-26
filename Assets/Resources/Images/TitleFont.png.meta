@@ -81,7 +81,7 @@ TextureImporter:
       213: -7707550614482404333
     second: TitleFont_25
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -102,6 +102,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -140,6 +141,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -191,6 +193,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -760,6 +786,33 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      TitleFont_0: 3863593859728841697
+      TitleFont_1: -2483285697581930132
+      TitleFont_10: 6637054331635928148
+      TitleFont_11: -3511442584110249334
+      TitleFont_12: -3776701510140804439
+      TitleFont_13: 8513379444639509432
+      TitleFont_14: -7793728239685112934
+      TitleFont_15: 359992076201277310
+      TitleFont_16: -6573543552385591807
+      TitleFont_17: 8290868529285214864
+      TitleFont_18: -4820298162576650655
+      TitleFont_19: 4376892671083160684
+      TitleFont_2: -6654234740717220200
+      TitleFont_20: -4645825548312424980
+      TitleFont_21: 1300196441176845788
+      TitleFont_22: 5787993273585434521
+      TitleFont_23: -8278795976974106072
+      TitleFont_24: -1230910241378677087
+      TitleFont_25: -7707550614482404333
+      TitleFont_3: 1645643317308544593
+      TitleFont_4: -7396722712644579807
+      TitleFont_5: -1288428095115230753
+      TitleFont_6: -2655520093175284573
+      TitleFont_7: -4611712446210890719
+      TitleFont_8: -7129787110242003346
+      TitleFont_9: -8813569875128894042
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

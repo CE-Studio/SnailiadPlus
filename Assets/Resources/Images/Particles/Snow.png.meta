@@ -99,7 +99,7 @@ TextureImporter:
       213: 2440026815729042325
     second: Snow_31
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -120,6 +120,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -158,6 +159,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -209,6 +211,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -904,6 +930,39 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Snow_0: -8394923397258659077
+      Snow_1: -700802387755607878
+      Snow_10: 8235637959329656600
+      Snow_11: -502909287690801590
+      Snow_12: 6821385647441620854
+      Snow_13: -8713245854877983712
+      Snow_14: -3540746672530995561
+      Snow_15: -3321196436731473878
+      Snow_16: 5508355996189440785
+      Snow_17: -4144981547572560349
+      Snow_18: -4416522309444128685
+      Snow_19: -3990915906328758076
+      Snow_2: 7584599556470768026
+      Snow_20: -3537590260765287591
+      Snow_21: 1986929507142679026
+      Snow_22: -7763431447320025699
+      Snow_23: 9163872841180725335
+      Snow_24: 2689580043110298439
+      Snow_25: -8936359714851267059
+      Snow_26: 8521073779960552534
+      Snow_27: 1893751271895391176
+      Snow_28: -7990636400254430504
+      Snow_29: 6572561433671410292
+      Snow_3: -6653427178143589517
+      Snow_30: -8286859100202407170
+      Snow_31: 2440026815729042325
+      Snow_4: -1373021062083815541
+      Snow_5: 3902038328246712289
+      Snow_6: -432508135219837307
+      Snow_7: -3438506031057545582
+      Snow_8: 7985254847781677195
+      Snow_9: -8609862783061455279
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -483,7 +483,7 @@ TextureImporter:
       213: 307727910649952968
     second: SnailySnail_79
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -503,6 +503,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -512,8 +514,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -534,10 +536,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -589,6 +595,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2292,6 +2322,87 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      SnailySnail_0: -7890797848284347783
+      SnailySnail_1: -3824089603117443626
+      SnailySnail_10: -8916237054889702875
+      SnailySnail_11: 7967632207973429645
+      SnailySnail_12: 5256703357164289068
+      SnailySnail_13: -771191663287746663
+      SnailySnail_14: 1323643020643996808
+      SnailySnail_15: -1450680356866929157
+      SnailySnail_16: 7724819094778684561
+      SnailySnail_17: 7123425123351824067
+      SnailySnail_18: -5633083591047734794
+      SnailySnail_19: 2453444696267674468
+      SnailySnail_2: -2910689358516676904
+      SnailySnail_20: -2557127452028453300
+      SnailySnail_21: 8235585310897510812
+      SnailySnail_22: -5474133674165086705
+      SnailySnail_23: -1398204433295863145
+      SnailySnail_24: -1938751964550671206
+      SnailySnail_25: -6419958927327009450
+      SnailySnail_26: 6860038385680178819
+      SnailySnail_27: 3576472216698970869
+      SnailySnail_28: 5844977410632136689
+      SnailySnail_29: 41811924228211999
+      SnailySnail_3: -7337958901536413793
+      SnailySnail_30: 2312850959050168781
+      SnailySnail_31: -127172497823067604
+      SnailySnail_32: -6274449673882822307
+      SnailySnail_33: 6677835488278799147
+      SnailySnail_34: -3424044292592366559
+      SnailySnail_35: 2795508125385670116
+      SnailySnail_36: -6361163217770631712
+      SnailySnail_37: -8280835968294596290
+      SnailySnail_38: 998662693223851335
+      SnailySnail_39: -3674702271089355463
+      SnailySnail_4: -7780422299087486105
+      SnailySnail_40: 7828404203179418659
+      SnailySnail_41: 2318849134011801622
+      SnailySnail_42: 7374696285931025096
+      SnailySnail_43: -1066266842456877422
+      SnailySnail_44: -8669794326624533469
+      SnailySnail_45: 1466937732267148133
+      SnailySnail_46: -7274644451532053301
+      SnailySnail_47: 241879582544727560
+      SnailySnail_48: -463304905134951731
+      SnailySnail_49: 1378066714812848979
+      SnailySnail_5: -68906886936872733
+      SnailySnail_50: -5187863361001821673
+      SnailySnail_51: -5062926426228077730
+      SnailySnail_52: 4919763973212140570
+      SnailySnail_53: -8616482513128625924
+      SnailySnail_54: -9093445487594971578
+      SnailySnail_55: -2594341774368672258
+      SnailySnail_56: 5613803650860358404
+      SnailySnail_57: -1228274502890292684
+      SnailySnail_58: 2416547538395110317
+      SnailySnail_59: 2237572128211352570
+      SnailySnail_6: 635912406040735399
+      SnailySnail_60: 7060096230336265210
+      SnailySnail_61: -1103817990193913189
+      SnailySnail_62: -4497695997724848524
+      SnailySnail_63: 9114754870111440256
+      SnailySnail_64: -781424178877401869
+      SnailySnail_65: 2209899324945369687
+      SnailySnail_66: -5451713846432019459
+      SnailySnail_67: 6351197108163774592
+      SnailySnail_68: -4657295977100517232
+      SnailySnail_69: 3776283049357889857
+      SnailySnail_7: -6253229955342129579
+      SnailySnail_70: 2644398942325291775
+      SnailySnail_71: -4931353869577960346
+      SnailySnail_72: 8038725653184691506
+      SnailySnail_73: 2454219320750055231
+      SnailySnail_74: 5634536591961162257
+      SnailySnail_75: 2978162017766943335
+      SnailySnail_76: -3187918416326457259
+      SnailySnail_77: 1862437251868227993
+      SnailySnail_78: 8351723103668323005
+      SnailySnail_79: 307727910649952968
+      SnailySnail_8: 837051807851349787
+      SnailySnail_9: -8362529410071747782
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

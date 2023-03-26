@@ -99,7 +99,7 @@ TextureImporter:
       213: 9083752459489423076
     second: DialogueBox_31
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -120,6 +120,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -158,6 +159,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -209,6 +211,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -904,6 +930,39 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      DialogueBox_0: -5261992394389525642
+      DialogueBox_1: 4833402455760112517
+      DialogueBox_10: -8035253365610160461
+      DialogueBox_11: -4305987829575919833
+      DialogueBox_12: 4327619644572472749
+      DialogueBox_13: 2004953373242104937
+      DialogueBox_14: 4978569047680241414
+      DialogueBox_15: 152275659147122096
+      DialogueBox_16: -2172435897910417186
+      DialogueBox_17: -4952854465673142814
+      DialogueBox_18: -8895393186233304400
+      DialogueBox_19: 2733948184701907164
+      DialogueBox_2: 1985244466137632497
+      DialogueBox_20: 493489406407921221
+      DialogueBox_21: 3599240349838395294
+      DialogueBox_22: 9009173165333409524
+      DialogueBox_23: -8203079626090277391
+      DialogueBox_24: -6446707349968929923
+      DialogueBox_25: -3404045872328430538
+      DialogueBox_26: 4048350830793733207
+      DialogueBox_27: 234391295439668715
+      DialogueBox_28: -6206079371667101092
+      DialogueBox_29: 5639410902329149321
+      DialogueBox_3: 5990025479660455320
+      DialogueBox_30: -5733791737883367431
+      DialogueBox_31: 9083752459489423076
+      DialogueBox_4: 286951395555686171
+      DialogueBox_5: -3269740052623572309
+      DialogueBox_6: 8856994912449456434
+      DialogueBox_7: 351229467481711618
+      DialogueBox_8: -8285276330046664298
+      DialogueBox_9: 1654630142534069648
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
