@@ -238,9 +238,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public virtual void IdleAnim()
     {
-        if (!shelled)
-            ToggleShell();
-        idleParticles.Add(PlayState.RequestParticle(new Vector2(transform.position.x + 0.75f, transform.position.y), "zzz"));
+        
     }
 
     // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
@@ -2033,6 +2031,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
     {
         if (!collisions.Contains(collision))
             collisions.Add(collision);
+    }
+
+    public void CheckIntersectionAndCorrect()
+    {
+        const int MAX_ITERATIONS = 8;
+        int currentIterations = 0;
+        RaycastHit2D boxCheck = Physics2D.BoxCast(transform.position, box.size, 0, Vector2.up, 0, playerCollide, Mathf.Infinity, Mathf.Infinity);
+        while (boxCheck.collider != null && currentIterations++ < MAX_ITERATIONS)
+        {
+            Vector2 closest = boxCheck.collider.ClosestPoint(transform.position);
+        }
     }
 
     #endregion Player utilities

@@ -317,7 +317,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 12:
-                            if (!transform.parent.Find("Item").GetComponent<Item>().collected)
+                            if (CheckForUncollectedItem(PlayState.OFFSET_HEARTS))
                                 AddText("funBlocks");
                             else
                                 AddText("default");
@@ -437,7 +437,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 24:
-                            if (!transform.parent.Find("Item").GetComponent<Item>().collected)
+                            if (CheckForUncollectedItem(PlayState.OFFSET_FRAGMENTS))
                                 AddText("offerHelixFragment");
                             else
                                 AddText("default");
@@ -683,5 +683,32 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             speechBubbleAnim.Play("NPC_bubble_close");
             bubbleState = false;
         }
+    }
+
+    private bool CheckForUncollectedItem(int ID, bool strictIDCheck = false)
+    {
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        if (items.Length == 0)
+            return false;
+        bool foundItem = false;
+        foreach (GameObject obj in items)
+        {
+            Item objScript = obj.GetComponent<Item>();
+            if (strictIDCheck)
+            {
+                if (objScript.itemID == ID)
+                    foundItem = true;
+            }
+            else
+            {
+                if (objScript.itemID >= PlayState.OFFSET_FRAGMENTS && ID >= PlayState.OFFSET_FRAGMENTS)
+                    foundItem = true;
+                else if (objScript.itemID >= PlayState.OFFSET_HEARTS && ID >= PlayState.OFFSET_HEARTS)
+                    foundItem = true;
+                else if (objScript.itemID == ID)
+                    foundItem = true;
+            }
+        }
+        return foundItem;
     }
 }

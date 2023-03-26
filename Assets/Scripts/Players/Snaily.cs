@@ -58,6 +58,13 @@ public class Snaily : Player
         }
     }
 
+    public override void IdleAnim()
+    {
+        if (!shelled)
+            ToggleShell();
+        idleParticles.Add(PlayState.RequestParticle(new Vector2(transform.position.x + 0.75f, transform.position.y), "zzz"));
+    }
+
     // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
     public override void LateUpdate()
     {
