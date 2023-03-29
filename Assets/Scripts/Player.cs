@@ -2050,25 +2050,25 @@ public class Player : MonoBehaviour, ICutsceneObject {
             
             if (normal == Vector2.up)
             {
-                transform.position = new Vector2(transform.position.x, closest.y + (box.size.y - Mathf.Abs(transform.position.y - closest.y)));
+                transform.position = new Vector2(transform.position.x, closest.y + (box.size.y - Mathf.Abs(transform.position.y - closest.y)) + PlayState.FRAC_128);
                 if (gravityDir == DIR_FLOOR)
                     grounded = true;
             }
             if (normal == Vector2.down)
             {
-                transform.position = new Vector2(transform.position.x, closest.y - (box.size.y - Mathf.Abs(transform.position.y - closest.y)));
+                transform.position = new Vector2(transform.position.x, closest.y - (box.size.y - Mathf.Abs(transform.position.y - closest.y)) - PlayState.FRAC_128);
                 if (gravityDir == DIR_CEILING)
                     grounded = true;
             }
             if (normal == Vector2.left)
             {
-                transform.position = new Vector2(closest.x - (box.size.x - Mathf.Abs(transform.position.x - closest.x)), transform.position.y);
+                transform.position = new Vector2(closest.x - (box.size.x - Mathf.Abs(transform.position.x - closest.x)) - PlayState.FRAC_128, transform.position.y);
                 if (gravityDir == DIR_WALL_RIGHT)
                     grounded = true;
             }
             if (normal == Vector2.right)
             {
-                transform.position = new Vector2(closest.x + (box.size.x - Mathf.Abs(transform.position.x - closest.x)), transform.position.y);
+                transform.position = new Vector2(closest.x + (box.size.x - Mathf.Abs(transform.position.x - closest.x)) + PlayState.FRAC_128, transform.position.y);
                 if (gravityDir == DIR_WALL_LEFT)
                     grounded = true;
             }

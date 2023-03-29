@@ -118,6 +118,7 @@ public class Platform : MonoBehaviour, IRoomObject
         if (player.currentCollision == box)
         {
             player.transform.position += transform.position - (Vector3)lastPos;
+            PlayState.playerScript.CheckIntersectionAndCorrect();
         }
 
         lastPos = transform.position;
@@ -128,5 +129,36 @@ public class Platform : MonoBehaviour, IRoomObject
         string animName = "Object_platform" + (type + 1) + "_" + size + "_" + dir;
         if (anim.currentAnimName != animName)
             anim.Play(animName);
+    }
+
+    private void EjectPlayerFromBox()
+    {
+        Vector2 playerSize = PlayState.playerScript.box.size * 0.5f;
+        Vector2 radiiFromCenter = new Vector2(box.size.x + playerSize.x, box.size.y + playerSize.y) * 0.5f;
+        Vector2 playerPos = PlayState.player.transform.position;
+        if (playerPos.x > transform.position.x - radiiFromCenter.x && playerPos.x < transform.position.x)
+        {
+            PlayState.player.transform.position = new Vector2(transform.position.x - radiiFromCenter.x - PlayState.FRAC_128, playerPos.y);
+            if (PlayState.playerScript.gravityDir == Player.DIR_WALL_RIGHT)
+                PlayState.playerScript.grounded = true;
+        }
+        if (playerPos.x < transform.position.x + radiiFromCenter.x && playerPos.x > transform.position.x)
+        {
+            PlayState.player.transform.position = new Vector2(transform.position.x + radiiFromCenter.x + PlayState.FRAC_128, playerPos.y);
+            if (PlayState.playerScript.gravityDir == Player.DIR_WALL_LEFT)
+                PlayState.playerScript.grounded = true;
+        }
+        if (playerPos.y > transform.position.y - radiiFromCenter.y && playerPos.y < transform.position.y)
+        {
+            PlayState.player.transform.position = new Vector2(playerPos.x, transform.position.y - radiiFromCenter.y - PlayState.FRAC_128);
+            if (PlayState.playerScript.gravityDir == Player.DIR_CEILING)
+                PlayState.playerScript.grounded = true;
+        }
+        if (playerPos.y < transform.position.y + radiiFromCenter.y && playerPos.y > transform.position.y)
+        {
+            PlayState.player.transform.position = new Vector2(playerPos.x, transform.position.y + radiiFromCenter.y + PlayState.FRAC_128);
+            if (PlayState.playerScript.gravityDir == Player.DIR_FLOOR)
+                PlayState.playerScript.grounded = true;
+        }
     }
 }
