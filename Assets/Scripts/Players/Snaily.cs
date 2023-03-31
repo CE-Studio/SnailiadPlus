@@ -26,6 +26,7 @@ public class Snaily : Player
         jumpPower = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
         gravity = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
+        jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
         weaponCooldowns = new float[] { 0.085f, 0.3f, 0.17f, 0.0425f, 0.15f, 0.085f };
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);
