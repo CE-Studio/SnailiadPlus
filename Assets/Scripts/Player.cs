@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public const int DIR_WALL_RIGHT = 2;
     public const int DIR_CEILING = 3;
     public const int MAX_DIST_CASTS = 4;
+    public const float DIST_CAST_EDGE_BUFFER = 0;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
@@ -327,7 +328,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public virtual void CaseDown()
     {
-        //// We start by zeroing our relative vertical velocity if we're grounded
+        // We start by zeroing our relative vertical velocity if we're grounded
         if (grounded)
             velocity.y = 0;
 
@@ -509,7 +510,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (GetDistance(DIR_FLOOR) > 0.0125f)
             {
                 // Round an outside corner
-                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                if (GetCornerDistance() <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
                     // Trying to round corners
                     if (Control.DownHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
@@ -592,14 +593,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && !Control.DownHold())
             holdingShell = false;
-        if (PlayState.IsTileSolid(transform.position))
-            transform.position = new Vector2(transform.position.x, transform.position.y + 1);
     }
 
     public virtual void CaseLeft()
     {
-        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-        //velocity.y = 0;
+        // We start by zeroing our relative vertical velocity if we're grounded
         if (grounded)
             velocity.x = 0;
 
@@ -612,24 +610,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
                 if (grounded)
                     ToggleShell();
-                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
-                if (distance < box.size.y * 0.5f)
-                {
-                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
-                        (boxD.point.y < transform.position.y ? 1 : -1));
-                    UpdateBoxcasts();
-                }
             }
             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
             float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
+            if (GetDistance(facingDown ? DIR_FLOOR : DIR_CEILING) < runSpeedValue)
             {
                 againstWallFlag = true;
-                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - GetBoxcastDistance(DIR_FLOOR)) + 0.0078125f :
-                    runSpeedValue - (runSpeedValue - GetBoxcastDistance(DIR_CEILING)) - 0.0078125f;
+                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - lastDistance) + PlayState.FRAC_128 :
+                    runSpeedValue - (runSpeedValue - lastDistance) - PlayState.FRAC_128;
                 // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                 // we check to see if climbing is possible in either direction and switch the character's gravity state
-                if ((GetBoxcastDistance(DIR_WALL_LEFT) + GetBoxcastDistance(DIR_WALL_RIGHT)) >= 1)
+                if ((GetDistance(DIR_WALL_LEFT) + GetDistance(DIR_WALL_RIGHT)) >= 1)
                 {
                     if (!stunned)
                     {
@@ -643,8 +634,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
                             transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
                             float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                            float ceilDis = GetBoxcastDistance(DIR_WALL_RIGHT) - boxCorrection;
-                            float floorDis = GetBoxcastDistance(DIR_WALL_LEFT) - boxCorrection;
+                            float ceilDis = GetDistance(DIR_WALL_RIGHT) - boxCorrection;
+                            float floorDis = GetDistance(DIR_WALL_LEFT) - boxCorrection;
                             SwitchSurfaceAxis();
                             float adjustment = 0;
                             if (grounded)
@@ -697,18 +688,18 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool pokedCeiling = false;
                 velocity.x -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.x > 0 && !holdingJump)
-                    velocity.x = PlayState.Integrate(velocity.x, 0, 4, Time.fixedDeltaTime);
+                    velocity.x = PlayState.Integrate(velocity.x, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
                 velocity.x = Mathf.Clamp(velocity.x, terminalVelocity[readIDSpeed], Mathf.Infinity);
-                if (GetBoxcastDistance(DIR_WALL_LEFT) != 0 && GetBoxcastDistance(DIR_WALL_RIGHT) != 0)
+                if (GetDistance(DIR_WALL_LEFT) != 0 && GetDistance(DIR_WALL_RIGHT) != 0)
                 {
-                    if (GetBoxcastDistance(DIR_WALL_RIGHT) < velocity.x && Mathf.Sign(velocity.x) == 1)
+                    if (GetDistance(DIR_WALL_RIGHT) < velocity.x && Mathf.Sign(velocity.x) == 1)
                     {
-                        velocity.x = GetBoxcastDistance(DIR_WALL_RIGHT);
+                        velocity.x = lastDistance - PlayState.FRAC_128;
                         pokedCeiling = true;
                     }
-                    else if (GetBoxcastDistance(DIR_WALL_LEFT) < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                    else if (GetDistance(DIR_WALL_LEFT) < -velocity.x && Mathf.Sign(velocity.x) == -1)
                     {
-                        velocity.x = -GetBoxcastDistance(DIR_WALL_LEFT);
+                        velocity.x = -lastDistance + PlayState.FRAC_128;
                         grounded = true;
                         ungroundedViaHop = false;
                     }
@@ -785,10 +776,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Suddenly in the air when we weren't last frame
-            if (GetBoxcastDistance(DIR_WALL_LEFT) > 0.0125f)
+            if (GetDistance(DIR_WALL_LEFT) > 0.0125f)
             {
                 // Round an outside corner
-                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                if (GetCornerDistance() <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
                     // Trying to round corners
                     if (Control.LeftHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
@@ -831,13 +822,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, let's see if we can jump
-        if (GetBoxcastDistance(DIR_WALL_LEFT) == 0)
-        {
-            transform.position = new Vector2(transform.position.x + 0.01f, transform.position.y);
-            UpdateBoxcasts();
-        }
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.x > lastPointBeforeHop))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x < 0)) && GetBoxcastDistance(DIR_WALL_RIGHT) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x < 0)) && GetDistance(DIR_WALL_RIGHT) > 0.95f && !PlayState.paralyzed)
         {
             if (shelled)
                 ToggleShell();
@@ -876,14 +862,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && !Control.LeftHold())
             holdingShell = false;
-        if (PlayState.IsTileSolid(transform.position))
-            transform.position = new Vector2(transform.position.x + 1, transform.position.y);
     }
 
     public virtual void CaseRight()
     {
-        //// We start by zeroing our relative vertical velocity if we're grounded, and our relative horizontal velocity no matter what
-        //velocity.y = 0;
+        // We start by zeroing our relative vertical velocity if we're grounded
         if (grounded)
             velocity.x = 0;
 
@@ -896,24 +879,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     transform.position = new Vector2(transform.position.x, transform.position.y + (0.1667f * (facingDown ? 1 : -1)));
                 if (grounded)
                     ToggleShell();
-                float distance = Vector2.Distance(boxD.point, new Vector2(boxD.point.x, transform.position.y));
-                if (distance < box.size.y * 0.5f)
-                {
-                    transform.position = new Vector2(transform.position.x, transform.position.y + ((box.size.y * 0.675f) - distance) *
-                        (boxD.point.y < transform.position.y ? 1 : -1));
-                    UpdateBoxcasts();
-                }
             }
             SwapDir(Control.UpHold() ? DIR_CEILING : DIR_FLOOR);
             float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-            if ((facingDown ? boxD : boxU).distance < runSpeedValue)
+            if (GetDistance(facingDown ? DIR_FLOOR : DIR_CEILING) < runSpeedValue)
             {
                 againstWallFlag = true;
-                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - GetBoxcastDistance(DIR_FLOOR)) + 0.0078125f :
-                    runSpeedValue - (runSpeedValue - GetBoxcastDistance(DIR_CEILING)) - 0.0078125f;
+                velocity.y = facingDown ? -runSpeedValue + (runSpeedValue - lastDistance) + PlayState.FRAC_128 :
+                    runSpeedValue - (runSpeedValue - lastDistance) - PlayState.FRAC_128;
                 // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                 // we check to see if climbing is possible in either direction and switch the character's gravity state
-                if ((GetBoxcastDistance(DIR_WALL_LEFT) + GetBoxcastDistance(DIR_WALL_RIGHT)) >= 1)
+                if ((GetDistance(DIR_WALL_LEFT) + GetDistance(DIR_WALL_RIGHT)) >= 1)
                 {
                     if (!stunned)
                     {
@@ -927,8 +903,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
                             transform.position = new Vector2(transform.position.x, transform.position.y + velocity.y);
                             float boxCorrection = (box.size.x - box.size.y) * 0.5f;
-                            float ceilDis = GetBoxcastDistance(DIR_WALL_LEFT) - boxCorrection;
-                            float floorDis = GetBoxcastDistance(DIR_WALL_RIGHT) - boxCorrection;
+                            float ceilDis = GetDistance(DIR_WALL_LEFT) - boxCorrection;
+                            float floorDis = GetDistance(DIR_WALL_RIGHT) - boxCorrection;
                             SwitchSurfaceAxis();
                             float adjustment = 0;
                             if (grounded)
@@ -981,18 +957,18 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool pokedCeiling = false;
                 velocity.x += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.x < 0 && !holdingJump)
-                    velocity.x = PlayState.Integrate(velocity.x, 0, 4, Time.fixedDeltaTime);
+                    velocity.x = PlayState.Integrate(velocity.x, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
                 velocity.x = Mathf.Clamp(velocity.x, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
-                if (GetBoxcastDistance(DIR_WALL_LEFT) != 0 && GetBoxcastDistance(DIR_WALL_RIGHT) != 0)
+                if (GetDistance(DIR_WALL_LEFT) != 0 && GetDistance(DIR_WALL_RIGHT) != 0)
                 {
-                    if (GetBoxcastDistance(DIR_WALL_LEFT) < -velocity.x && Mathf.Sign(velocity.x) == -1)
+                    if (GetDistance(DIR_WALL_LEFT) < -velocity.x && Mathf.Sign(velocity.x) == -1)
                     {
-                        velocity.x = -GetBoxcastDistance(DIR_WALL_LEFT);
+                        velocity.x = -lastDistance + PlayState.FRAC_128;
                         pokedCeiling = true;
                     }
-                    else if (GetBoxcastDistance(DIR_WALL_RIGHT) < velocity.x && Mathf.Sign(velocity.x) == 1)
+                    else if (GetDistance(DIR_WALL_RIGHT) < velocity.x && Mathf.Sign(velocity.x) == 1)
                     {
-                        velocity.x = GetBoxcastDistance(DIR_WALL_RIGHT);
+                        velocity.x = lastDistance - PlayState.FRAC_128;
                         grounded = true;
                         ungroundedViaHop = false;
                     }
@@ -1069,10 +1045,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Suddenly in the air when we weren't last frame
-            if (GetBoxcastDistance(DIR_WALL_RIGHT) > 0.0125f)
+            if (GetDistance(DIR_WALL_RIGHT) > 0.0125f)
             {
                 // Round an outside corner
-                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                if (GetCornerDistance() <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
                     // Trying to round corners
                     if (Control.RightHold() && Control.AxisY() == (facingDown ? -1 : 1) && !stunned)
@@ -1115,13 +1091,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, let's see if we can jump
-        if (GetBoxcastDistance(DIR_WALL_RIGHT) == 0)
-        {
-            transform.position = new Vector2(transform.position.x - 0.01f, transform.position.y);
-            UpdateBoxcasts();
-        }
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.x < lastPointBeforeHop))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x > 0)) && GetBoxcastDistance(DIR_WALL_LEFT) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x > 0)) && GetDistance(DIR_WALL_LEFT) > 0.95f && !PlayState.paralyzed)
         {
             if (shelled)
                 ToggleShell();
@@ -1160,8 +1131,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && !Control.RightHold())
             holdingShell = false;
-        if (PlayState.IsTileSolid(transform.position))
-            transform.position = new Vector2(transform.position.x - 1, transform.position.y);
     }
 
     public virtual void CaseUp()
@@ -1180,24 +1149,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     transform.position = new Vector2(transform.position.x + (0.1667f * (facingLeft ? 1 : -1)), transform.position.y);
                 if (grounded)
                     ToggleShell();
-                float distance = Vector2.Distance(boxL.point, new Vector2(transform.position.x, boxL.point.y));
-                if (distance < box.size.x * 0.5f)
-                {
-                    transform.position = new Vector2(transform.position.x + ((box.size.x * 0.675f) - distance) *
-                        (boxL.point.x < transform.position.x ? 1 : -1), transform.position.y);
-                    UpdateBoxcasts();
-                }
             }
             SwapDir(Control.RightHold() ? DIR_WALL_RIGHT : DIR_WALL_LEFT);
             float runSpeedValue = runSpeed[readIDSpeed] * speedMod * Time.fixedDeltaTime;
-            if ((facingLeft ? boxL : boxR).distance < runSpeedValue)
+            if (GetDistance(facingLeft ? DIR_WALL_LEFT : DIR_WALL_RIGHT) < runSpeedValue)
             {
                 againstWallFlag = true;
-                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - GetBoxcastDistance(DIR_WALL_LEFT)) + 0.0078125f :
-                    runSpeedValue - (runSpeedValue - GetBoxcastDistance(DIR_WALL_RIGHT)) - 0.0078125f;
+                velocity.x = facingLeft ? -runSpeedValue + (runSpeedValue - lastDistance) + PlayState.FRAC_128 :
+                    runSpeedValue - (runSpeedValue - lastDistance) - PlayState.FRAC_128;
                 // In case the player happens to be holding the relative up/down button while the character runs face-first into a wall,
                 // we check to see if climbing is possible in either direction and switch the character's gravity state
-                if ((GetBoxcastDistance(DIR_FLOOR) + GetBoxcastDistance(DIR_CEILING)) >= 1)
+                if ((GetDistance(DIR_FLOOR) + GetDistance(DIR_CEILING)) >= 1)
                 {
                     if (!stunned)
                     {
@@ -1211,8 +1173,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
                             transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
                             float boxCorrection = (box.size.y - box.size.x) * 0.5f;
-                            float ceilDis = GetBoxcastDistance(DIR_FLOOR) - boxCorrection;
-                            float floorDis = GetBoxcastDistance(DIR_CEILING) - boxCorrection;
+                            float ceilDis = GetDistance(DIR_FLOOR) - boxCorrection;
+                            float floorDis = GetDistance(DIR_CEILING) - boxCorrection;
                             SwitchSurfaceAxis();
                             float adjustment = 0;
                             if (grounded)
@@ -1265,18 +1227,18 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool pokedCeiling = false;
                 velocity.y += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y < 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, 4, Time.fixedDeltaTime);
+                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
                 velocity.y = Mathf.Clamp(velocity.y, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
-                if (GetBoxcastDistance(DIR_FLOOR) != 0 && GetBoxcastDistance(DIR_CEILING) != 0)
+                if (GetDistance(DIR_FLOOR) != 0 && GetDistance(DIR_CEILING) != 0)
                 {
-                    if (GetBoxcastDistance(DIR_FLOOR) < -velocity.y && Mathf.Sign(velocity.y) == -1)
+                    if (GetDistance(DIR_FLOOR) < -velocity.y && Mathf.Sign(velocity.y) == -1)
                     {
-                        velocity.y = -GetBoxcastDistance(DIR_FLOOR);
+                        velocity.y = -lastDistance + PlayState.FRAC_128;
                         pokedCeiling = true;
                     }
-                    else if (GetBoxcastDistance(DIR_CEILING) < velocity.y && Mathf.Sign(velocity.y) == 1)
+                    else if (GetDistance(DIR_CEILING) < velocity.y && Mathf.Sign(velocity.y) == 1)
                     {
-                        velocity.y = GetBoxcastDistance(DIR_CEILING);
+                        velocity.y = lastDistance - PlayState.FRAC_128;
                         grounded = true;
                         ungroundedViaHop = false;
                     }
@@ -1353,10 +1315,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Suddenly in the air when we weren't last frame
-            if (GetBoxcastDistance(DIR_CEILING) > 0.0125f)
+            if (GetDistance(DIR_CEILING) > 0.0125f)
             {
                 // Round an outside corner
-                if (boxCorner.distance <= 0.0125f && CheckAbility(canRoundOuterCorners))
+                if (GetCornerDistance() <= 0.0125f && CheckAbility(canRoundOuterCorners))
                 {
                     // Trying to round corners
                     if (Control.UpHold() && Control.AxisX() == (facingLeft ? -1 : 1) && !stunned)
@@ -1399,13 +1361,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, let's see if we can jump
-        if (GetBoxcastDistance(DIR_CEILING) == 0)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
-            UpdateBoxcasts();
-        }
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || coyoteTimeCounter < coyoteTime || (ungroundedViaHop && transform.position.y < lastPointBeforeHop))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y > 0)) && GetBoxcastDistance(DIR_FLOOR) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y > 0)) && GetDistance(DIR_FLOOR) > 0.95f && !PlayState.paralyzed)
         {
             if (shelled)
                 ToggleShell();
@@ -1444,8 +1401,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && !Control.UpHold())
             holdingShell = false;
-        if (PlayState.IsTileSolid(transform.position))
-            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
     }
 
     private bool CheckAbility(int[][] ability)
@@ -1518,44 +1473,45 @@ public class Player : MonoBehaviour, ICutsceneObject {
         bool revertLower = defaultGravityDir == DIR_FLOOR || defaultGravityDir == DIR_WALL_LEFT;
         if (swapAxis)
             SwitchSurfaceAxis();
-        UpdateBoxcasts();
-        bool insideWall;
-        if (revertVertical)
-        {
-            if (gravityDir == DIR_WALL_LEFT)
-                insideWall = GetBoxcastDistance(DIR_WALL_LEFT) == 0;
-            else
-                insideWall = GetBoxcastDistance(DIR_WALL_RIGHT) == 0;
-        }
-        else
-        {
-            if (gravityDir == DIR_FLOOR)
-                insideWall = GetBoxcastDistance(DIR_FLOOR) == 0;
-            else
-                insideWall = GetBoxcastDistance(DIR_CEILING) == 0;
-        }
-        if (insideWall)
-        {
-            if (swapAxis)
-            {
-                Vector3 tweak;
-                if (revertVertical)
-                {
-                    if (GetBoxcastDistance(DIR_WALL_LEFT) == 0)
-                        tweak = new Vector3(transform.position.x - boxL.point.x + 0.03125f, 0, 0);
-                    else
-                        tweak = new Vector3(boxR.point.x - transform.position.x - 0.03125f, 0, 0);
-                }
-                else
-                {
-                    if (GetBoxcastDistance(DIR_FLOOR) == 0)
-                        tweak = new Vector3(0, transform.position.y - boxL.point.y + 0.03125f, 0);
-                    else
-                        tweak = new Vector3(0, boxR.point.y - transform.position.y - 0.03125f, 0);
-                }
-                transform.position += tweak;
-            }
-        }
+        //UpdateBoxcasts();
+        //bool insideWall;
+        //if (revertVertical)
+        //{
+        //    if (gravityDir == DIR_WALL_LEFT)
+        //        insideWall = GetDistance(DIR_WALL_LEFT) == 0;
+        //    else
+        //        insideWall = GetDistance(DIR_WALL_RIGHT) == 0;
+        //}
+        //else
+        //{
+        //    if (gravityDir == DIR_FLOOR)
+        //        insideWall = GetDistance(DIR_FLOOR) == 0;
+        //    else
+        //        insideWall = GetDistance(DIR_CEILING) == 0;
+        //}
+        //if (insideWall)
+        //{
+        //    if (swapAxis)
+        //    {
+        //        Vector3 tweak;
+        //        if (revertVertical)
+        //        {
+        //            if (GetDistance(DIR_WALL_LEFT) == 0)
+        //                tweak = new Vector3(transform.position.x - boxL.point.x + 0.03125f, 0, 0);
+        //            else
+        //                tweak = new Vector3(boxR.point.x - transform.position.x - 0.03125f, 0, 0);
+        //        }
+        //        else
+        //        {
+        //            if (GetDistance(DIR_FLOOR) == 0)
+        //                tweak = new Vector3(0, transform.position.y - boxL.point.y + 0.03125f, 0);
+        //            else
+        //                tweak = new Vector3(0, boxR.point.y - transform.position.y - 0.03125f, 0);
+        //        }
+        //        transform.position += tweak;
+        //    }
+        //}
+        EjectFromCollisions();
         SwapDir(defaultGravityDir);
         gravityDir = defaultGravityDir;
         if (defaultGravityDir switch { DIR_WALL_LEFT => Control.LeftHold(), DIR_WALL_RIGHT => Control.RightHold(),
@@ -1681,52 +1637,66 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float GetDistance(int dir, bool fromCenter = false)
     {
         float shortestDis = Mathf.Infinity;
-        Vector2 a = (Vector2)transform.position - (box.size * 0.5f);
-        Vector2 b = (Vector2)transform.position + (box.size * 0.5f);
+        Vector2 a = (Vector2)transform.position - (box.size * 0.5f) - new Vector2(DIST_CAST_EDGE_BUFFER, DIST_CAST_EDGE_BUFFER);
+        Vector2 b = (Vector2)transform.position + (box.size * 0.5f) + new Vector2(DIST_CAST_EDGE_BUFFER, DIST_CAST_EDGE_BUFFER);
         Vector2 origin = Vector2.zero;
         RaycastHit2D hit;
         for (int i = 0; i < MAX_DIST_CASTS; i++)
         {
+            float t = (float)i / (float)(MAX_DIST_CASTS - 1);
             switch (dir)
             {
                 default:
                 case DIR_FLOOR:
                     if (fromCenter)
-                        origin = Vector2.Lerp(new Vector2(a.x, transform.position.y), new Vector2(b.x, transform.position.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(a.x, transform.position.y), new Vector2(b.x, transform.position.y), t);
                     else
-                        origin = Vector2.Lerp(a, new Vector2(b.x, a.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(a, new Vector2(b.x, a.y), t);
                     hit = Physics2D.Raycast(origin, Vector2.down, Mathf.Infinity, playerCollide);
                     break;
                 case DIR_WALL_LEFT:
                     if (fromCenter)
-                        origin = Vector2.Lerp(new Vector2(transform.position.x, a.y), new Vector2(transform.position.x, b.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(transform.position.x, a.y), new Vector2(transform.position.x, b.y), t);
                     else
-                        origin = Vector2.Lerp(a, new Vector2(a.x, b.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(a, new Vector2(a.x, b.y), t);
                     hit = Physics2D.Raycast(origin, Vector2.left, Mathf.Infinity, playerCollide);
                     break;
                 case DIR_WALL_RIGHT:
                     if (fromCenter)
-                        origin = Vector2.Lerp(new Vector2(transform.position.x, a.y), new Vector2(transform.position.x, b.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(transform.position.x, a.y), new Vector2(transform.position.x, b.y), t);
                     else
-                        origin = Vector2.Lerp(new Vector2(b.x, a.y), b, i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(b.x, a.y), b, t);
                     hit = Physics2D.Raycast(origin, Vector2.right, Mathf.Infinity, playerCollide);
                     break;
                 case DIR_CEILING:
                     if (fromCenter)
-                        origin = Vector2.Lerp(new Vector2(a.x, transform.position.y), new Vector2(b.x, transform.position.y), i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(a.x, transform.position.y), new Vector2(b.x, transform.position.y), t);
                     else
-                        origin = Vector2.Lerp(new Vector2(a.x, b.y), b, i / (MAX_DIST_CASTS - 1));
+                        origin = Vector2.Lerp(new Vector2(a.x, b.y), b, t);
                     hit = Physics2D.Raycast(origin, Vector2.up, Mathf.Infinity, playerCollide);
                     break;
             }
-            if (hit.collider != null)
+            if (hit.collider != null && !PlayState.IsPointPlayerCollidable(origin))
             {
                 if (shortestDis > hit.distance)
                     shortestDis = hit.distance;
+                Debug.DrawLine(origin, hit.point, Color.white, 0);
             }
         }
         lastDistance = shortestDis;
         return shortestDis;
+    }
+
+    public float GetCornerDistance()
+    {
+        Vector2 cornerTestDir = gravityDir switch {
+            DIR_WALL_LEFT => Vector2.left,
+            DIR_WALL_RIGHT => Vector2.right,
+            DIR_CEILING => Vector2.up,
+            _ => Vector2.down
+        };
+        RaycastHit2D boxCorner = Physics2D.BoxCast(lastPosition, lastSize, 0, cornerTestDir, Mathf.Infinity, playerCollide);
+        return boxCorner.distance;
     }
 
     // This function is called to reorient the player character in any way necessary
@@ -1765,31 +1735,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
     {
         if (stunned && !shelled)
             return;
+        float[] disVars = new float[] { GetDistance(DIR_FLOOR), GetDistance(DIR_WALL_LEFT), GetDistance(DIR_WALL_RIGHT), GetDistance(DIR_CEILING) };
         if (shelled)
         {
             if (gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT)
             {
-                if (GetBoxcastDistance(DIR_FLOOR) < unshellAdjust && GetBoxcastDistance(DIR_CEILING) < unshellAdjust)
+                if (disVars[DIR_FLOOR] < unshellAdjust && disVars[DIR_CEILING] < unshellAdjust)
                     return;
-                if (GetBoxcastDistance(DIR_FLOOR) > unshellAdjust && GetBoxcastDistance(DIR_CEILING) < unshellAdjust)
+                if (disVars[DIR_FLOOR] > unshellAdjust && disVars[DIR_CEILING] < unshellAdjust)
                     transform.position = new Vector2(transform.position.x,
-                        transform.position.y - (0.675f - GetBoxcastDistance(DIR_CEILING) - (facingDown ? 0.25f : 0)));
-                else if (GetBoxcastDistance(DIR_FLOOR) < unshellAdjust && GetBoxcastDistance(DIR_CEILING) > unshellAdjust)
+                        transform.position.y - (0.675f - disVars[DIR_CEILING] - (facingDown ? 0.25f : 0)));
+                else if (disVars[DIR_FLOOR] < unshellAdjust && disVars[DIR_CEILING] > unshellAdjust)
                     transform.position = new Vector2(transform.position.x,
-                        transform.position.y + (0.675f - GetBoxcastDistance(DIR_FLOOR) - (facingDown ? 0 : 0.25f)));
+                        transform.position.y + (0.675f - disVars[DIR_FLOOR] - (facingDown ? 0 : 0.25f)));
 
                 box.offset = new Vector2(hitboxOffset_normal.y * (facingLeft ? -1 : 1), hitboxOffset_normal.x * (facingDown ? -1 : 1));
                 box.size = new Vector2(hitboxSize_normal.y, hitboxSize_normal.x);
             }
             else
             {
-                if (GetBoxcastDistance(DIR_WALL_LEFT) < unshellAdjust && GetBoxcastDistance(DIR_WALL_RIGHT) < unshellAdjust)
+                if (disVars[DIR_WALL_LEFT] < unshellAdjust && disVars[DIR_WALL_RIGHT] < unshellAdjust)
                     return;
-                if (GetBoxcastDistance(DIR_WALL_LEFT) > unshellAdjust && GetBoxcastDistance(DIR_WALL_RIGHT) < unshellAdjust)
-                    transform.position = new Vector2(transform.position.x - (0.675f - GetBoxcastDistance(DIR_WALL_RIGHT) - (facingLeft ? 0.25f : 0)),
+                if (disVars[DIR_WALL_LEFT] > unshellAdjust && disVars[DIR_WALL_RIGHT] < unshellAdjust)
+                    transform.position = new Vector2(transform.position.x - (0.675f - disVars[DIR_WALL_RIGHT] - (facingLeft ? 0.25f : 0)),
                         transform.position.y);
-                else if (GetBoxcastDistance(DIR_WALL_LEFT) < unshellAdjust && GetBoxcastDistance(DIR_WALL_RIGHT) > unshellAdjust)
-                    transform.position = new Vector2(transform.position.x + (0.675f - GetBoxcastDistance(DIR_WALL_LEFT) - (facingLeft ? 0 : 0.25f)),
+                else if (disVars[DIR_WALL_LEFT] < unshellAdjust && disVars[DIR_WALL_RIGHT] > unshellAdjust)
+                    transform.position = new Vector2(transform.position.x + (0.675f - disVars[DIR_WALL_LEFT] - (facingLeft ? 0 : 0.25f)),
                         transform.position.y);
 
                 box.offset = new Vector2(hitboxOffset_normal.x * (facingLeft ? -1 : 1), hitboxOffset_normal.y * (facingDown ? -1 : 1));
@@ -2085,25 +2056,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 _ => Vector3.down
             };
         }
-        if (GetDistance(gravityDir, true) < ((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ? box.size.x : box.size.y) * 0.5f)
-        {
-            switch (gravityDir)
-            {
-                default:
-                case DIR_FLOOR:
-                    transform.position += new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
-                    break;
-                case DIR_WALL_LEFT:
-                    transform.position += new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
-                    break;
-                case DIR_WALL_RIGHT:
-                    transform.position -= new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
-                    break;
-                case DIR_CEILING:
-                    transform.position -= new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
-                    break;
-            }
-        }
+        //if (GetDistance(gravityDir, true) < ((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) ? box.size.x : box.size.y) * 0.5f)
+        //{
+        //    switch (gravityDir)
+        //    {
+        //        default:
+        //        case DIR_FLOOR:
+        //            transform.position += new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
+        //            break;
+        //        case DIR_WALL_LEFT:
+        //            transform.position += new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
+        //            break;
+        //        case DIR_WALL_RIGHT:
+        //            transform.position -= new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
+        //            break;
+        //        case DIR_CEILING:
+        //            transform.position -= new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
+        //            break;
+        //    }
+        //}
+        if (GetDistance(DIR_FLOOR, true) < box.size.y * 0.5f)
+            transform.position += new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
+        if (GetDistance(DIR_WALL_LEFT, true) < box.size.x * 0.5f)
+            transform.position += new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
+        if (GetDistance(DIR_WALL_RIGHT, true) < box.size.x * 0.5f)
+            transform.position += new Vector3(box.size.x * 0.5f - lastDistance, 0, 0);
+        if (GetDistance(DIR_CEILING, true) < box.size.y * 0.5f)
+            transform.position += new Vector3(0, box.size.y * 0.5f - lastDistance, 0);
     }
 
     #endregion Player utilities

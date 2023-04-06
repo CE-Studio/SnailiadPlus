@@ -735,6 +735,28 @@ public class PlayState {
         }
     }
 
+    public static bool IsPointPlayerCollidable(Vector2 pos)
+    {
+        if (IsTileSolid(pos))
+            return true;
+        List<Transform> platforms = new List<Transform>();
+        Transform room = roomTriggerParent.transform.GetChild((int)positionOfLastRoom.x).GetChild((int)positionOfLastRoom.y);
+        for (int i = 0; i < room.childCount; i++)
+        {
+            if (room.GetChild(i).gameObject.CompareTag("Platform"))
+                platforms.Add(room.GetChild(i));
+        }
+        foreach (Transform platform in platforms)
+        {
+            BoxCollider2D platBox = platform.GetChild(0).GetComponent<BoxCollider2D>();
+            Vector2 a = (Vector2)platform.position - (platBox.size * 0.5f);
+            Vector2 b = (Vector2)platform.position + (platBox.size * 0.5f);
+            if (pos.x > a.x && pos.x < b.x && pos.y > a.y && pos.y < b.y)
+                return true;
+        }
+        return false;
+    }
+
     public static void ToggleHUD(bool state) {
         foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);
