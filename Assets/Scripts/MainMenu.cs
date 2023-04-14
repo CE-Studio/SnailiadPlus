@@ -114,7 +114,8 @@ public class MainMenu : MonoBehaviour
                 },
                 controls = new PlayState.ControlData
                 {
-                    controls = Control.defaultInputs
+                    keyboard = Control.defaultKeyboardInputs,
+                    controller = Control.defaultControllerInputs
                 },
                 options = new PlayState.OptionData
                 {
@@ -802,7 +803,7 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetKey(key))
                 {
-                    Control.inputs[controlID] = key;
+                    Control.keyboardInputs[controlID] = key;
                     isRebinding = false;
                 }
             }
@@ -1404,7 +1405,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_control2"), true, Controls2);
         AddOption(PlayState.GetText("menu_option_controls_controlMisc"), true, Controls3);
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_controls_default"), true, ResetControls);
+        AddOption(PlayState.GetText("menu_option_controls_default"), true, ResetKeyboardControls);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveControls);
         ForceSelect(0);
@@ -1462,9 +1463,15 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         backPage = ControlMain;
     }
 
-    public void ResetControls()
+    public void ResetKeyboardControls()
     {
-        Control.inputs = Control.defaultInputs;
+        Control.keyboardInputs = Control.defaultKeyboardInputs;
+        SaveControls();
+    }
+
+    public void ResetControllerControls()
+    {
+        Control.controllerInputs = Control.defaultControllerInputs;
         SaveControls();
     }
 
@@ -1842,7 +1849,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
         PlayState.PackData packDataForCollective = new PlayState.PackData { packs = PlayState.currentPacks };
         fullData.packs = packDataForCollective;
 
-        PlayState.ControlData controlDataForCollective = new PlayState.ControlData { controls = Control.inputs };
+        PlayState.ControlData controlDataForCollective = new PlayState.ControlData { keyboard = Control.keyboardInputs, controller = Control.controllerInputs };
         fullData.controls = controlDataForCollective;
 
         PlayState.RecordData recordDataForCollective = new PlayState.RecordData { achievements = PlayState.achievementStates, times = PlayState.savedTimes  };

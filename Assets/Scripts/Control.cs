@@ -4,34 +4,36 @@ using UnityEngine;
 
 public class Control
 {
-    public static KeyCode[] inputs = new KeyCode[]
+    public enum Keyboard
     {
-        KeyCode.LeftArrow,  //  0 - Left 1
-        KeyCode.RightArrow, //  1 - Right 1
-        KeyCode.UpArrow,    //  2 - Up 1
-        KeyCode.DownArrow,  //  3 - Down 1
-        KeyCode.Z,          //  4 - Jump 1
-        KeyCode.X,          //  5 - Shoot 1
-        KeyCode.C,          //  6 - Strafe 1
-        KeyCode.C,          //  7 - Speak 1
-        KeyCode.A,          //  8 - Left 2
-        KeyCode.D,          //  9 - Right 2
-        KeyCode.W,          // 10 - Up 2
-        KeyCode.S,          // 11 - Down 2
-        KeyCode.K,          // 12 - Jump 2
-        KeyCode.J,          // 13 - Shoot 2
-        KeyCode.H,          // 14 - Strafe 2
-        KeyCode.H,          // 15 - Speak 2
-        KeyCode.Alpha1,     // 16 - Weapon 1
-        KeyCode.Alpha2,     // 17 - Weapon 2
-        KeyCode.Alpha3,     // 18 - Weapon 3
-        KeyCode.Equals,     // 19 - Next weapon
-        KeyCode.Minus,      // 20 - Previous weapon
-        KeyCode.M,          // 21 - Map
-        KeyCode.Escape      // 22 - Pause
+        Left1,
+        Right1,
+        Up1,
+        Down1,
+        Jump1,
+        Shoot1,
+        Strafe1,
+        Speak1,
+        Left2,
+        Right2,
+        Up2,
+        Down2,
+        Jump2,
+        Shoot2,
+        Strafe2,
+        Speak2,
+        Weapon1,
+        Weapon2,
+        Weapon3,
+        NextWeapon,
+        PrevWeapon,
+        Map,
+        Pause
     };
 
-    public static KeyCode[] defaultInputs = new KeyCode[]
+    public static KeyCode[] keyboardInputs = new KeyCode[] { };
+
+    public static KeyCode[] defaultKeyboardInputs = new KeyCode[]
     {
         KeyCode.LeftArrow,
         KeyCode.RightArrow,
@@ -58,6 +60,65 @@ public class Control
         KeyCode.Escape
     };
 
+    public enum Controller
+    {
+        Left,
+        Right,
+        Up,
+        Down,
+        Jump1,
+        Shoot1,
+        Strafe1,
+        Speak1,
+        AimL,
+        AimR,
+        AimU,
+        AimD,
+        Jump2,
+        Shoot2,
+        Strafe2,
+        Speak2,
+        Weapon1,
+        Weapon2,
+        Weapon3,
+        NextWeapon,
+        PrevWeapon,
+        Map,
+        Pause
+    };
+
+    public static KeyCode[] controllerInputs = new KeyCode[] {};
+
+    public static KeyCode[] defaultControllerInputs = new KeyCode[]
+    {
+        KeyCode.Keypad0,
+        KeyCode.Alpha0,
+        KeyCode.Alpha1,
+        KeyCode.Keypad1,
+        KeyCode.JoystickButton0,
+        KeyCode.JoystickButton2,
+        KeyCode.JoystickButton7,
+        KeyCode.JoystickButton1,
+        KeyCode.Keypad2,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Keypad3,
+        KeyCode.JoystickButton6,
+        KeyCode.JoystickButton2,
+        KeyCode.JoystickButton7,
+        KeyCode.JoystickButton3,
+        KeyCode.JoystickButton14,
+        KeyCode.JoystickButton12,
+        KeyCode.JoystickButton15,
+        KeyCode.JoystickButton5,
+        KeyCode.JoystickButton4,
+        KeyCode.JoystickButton8,
+        KeyCode.JoystickButton9
+    };
+
+    public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
+    public static bool[] virtualCon = new bool[defaultControllerInputs.Length];
+
     public static int AxisX(int player = 0)
     {
         return 0 + (RightHold(player) ? 1 : 0) - (LeftHold(player) ? 1 : 0);
@@ -69,91 +130,127 @@ public class Control
 
     public static bool LeftPress(int player = 0)
     {
+        if (CheckButton(Controller.Left))
+            return true;
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[0]),
-            2 => Input.GetKeyDown(inputs[8]),
-            _ => Input.GetKeyDown(inputs[0]) || Input.GetKeyDown(inputs[8]),
+            1 => CheckKey(Keyboard.Left1, true),
+            2 => CheckKey(Keyboard.Left2, true),
+            _ => CheckKey(Keyboard.Left1, true) || CheckKey(Keyboard.Left2, true)
         };
     }
 
     public static bool LeftHold(int player = 0)
     {
+        if (CheckButton(Controller.Left))
+            return true;
         return player switch
         {
-            1 => Input.GetKey(inputs[0]),
-            2 => Input.GetKey(inputs[8]),
-            _ => Input.GetKey(inputs[0]) || Input.GetKey(inputs[8]),
+            1 => CheckKey(Keyboard.Left1),
+            2 => CheckKey(Keyboard.Left2),
+            _ => CheckKey(Keyboard.Left1) || CheckKey(Keyboard.Left2)
         };
+    }
+
+    public static bool LeftAim()
+    {
+        return CheckButton(Controller.AimL);
     }
 
     public static bool RightPress(int player = 0)
     {
+        if (CheckButton(Controller.Right))
+            return true;
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[1]),
-            2 => Input.GetKeyDown(inputs[9]),
-            _ => Input.GetKeyDown(inputs[1]) || Input.GetKeyDown(inputs[9]),
+            1 => CheckKey(Keyboard.Right1, true),
+            2 => CheckKey(Keyboard.Right2, true),
+            _ => CheckKey(Keyboard.Right1, true) || CheckKey(Keyboard.Right2, true)
         };
     }
 
     public static bool RightHold(int player = 0)
     {
+        if (CheckButton(Controller.Right))
+            return true;
         return player switch
         {
-            1 => Input.GetKey(inputs[1]),
-            2 => Input.GetKey(inputs[9]),
-            _ => Input.GetKey(inputs[1]) || Input.GetKey(inputs[9]),
+            1 => CheckKey(Keyboard.Right1),
+            2 => CheckKey(Keyboard.Right2),
+            _ => CheckKey(Keyboard.Right1) || CheckKey(Keyboard.Right2)
         };
+    }
+
+    public static bool RightAim()
+    {
+        return CheckButton(Controller.AimR);
     }
 
     public static bool UpPress(int player = 0)
     {
+        if (CheckButton(Controller.Up))
+            return true;
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[2]),
-            2 => Input.GetKeyDown(inputs[10]),
-            _ => Input.GetKeyDown(inputs[2]) || Input.GetKeyDown(inputs[10]),
+            1 => CheckKey(Keyboard.Up1, true),
+            2 => CheckKey(Keyboard.Up2, true),
+            _ => CheckKey(Keyboard.Up1, true) || CheckKey(Keyboard.Up2, true)
         };
     }
 
     public static bool UpHold(int player = 0)
     {
+        if (CheckButton(Controller.Up))
+            return true;
         return player switch
         {
-            1 => Input.GetKey(inputs[2]),
-            2 => Input.GetKey(inputs[10]),
-            _ => Input.GetKey(inputs[2]) || Input.GetKey(inputs[10]),
+            1 => CheckKey(Keyboard.Up1),
+            2 => CheckKey(Keyboard.Up2),
+            _ => CheckKey(Keyboard.Up1) || CheckKey(Keyboard.Up2)
         };
+    }
+
+    public static bool UpAim()
+    {
+        return CheckButton(Controller.AimU);
     }
 
     public static bool DownPress(int player = 0)
     {
+        if (CheckButton(Controller.Down))
+            return true;
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[3]),
-            2 => Input.GetKeyDown(inputs[11]),
-            _ => Input.GetKeyDown(inputs[3]) || Input.GetKeyDown(inputs[11]),
+            1 => CheckKey(Keyboard.Down1, true),
+            2 => CheckKey(Keyboard.Down2, true),
+            _ => CheckKey(Keyboard.Down1, true) || CheckKey(Keyboard.Down2, true)
         };
     }
 
     public static bool DownHold(int player = 0)
     {
+        if (CheckButton(Controller.Down))
+            return true;
         return player switch
         {
-            1 => Input.GetKey(inputs[3]),
-            2 => Input.GetKey(inputs[11]),
-            _ => Input.GetKey(inputs[3]) || Input.GetKey(inputs[11]),
+            1 => CheckKey(Keyboard.Down1),
+            2 => CheckKey(Keyboard.Down2),
+            _ => CheckKey(Keyboard.Down1) || CheckKey(Keyboard.Down2)
         };
+    }
+
+    public static bool DownAim()
+    {
+        return CheckButton(Controller.AimD);
     }
 
     public static bool JumpPress(int player = 0)
     {
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[4]),
-            2 => Input.GetKeyDown(inputs[12]),
-            _ => Input.GetKeyDown(inputs[4]) || Input.GetKeyDown(inputs[12]),
+            1 => CheckKey(Keyboard.Jump1, true) || CheckButton(Controller.Jump1, true),
+            2 => CheckKey(Keyboard.Jump2, true) || CheckButton(Controller.Jump2, true),
+            _ => CheckKey(Keyboard.Jump1, true) || CheckButton(Controller.Jump1, true) || CheckKey(Keyboard.Jump2, true) || CheckButton(Controller.Jump2, true)
         };
     }
 
@@ -161,9 +258,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKey(inputs[4]),
-            2 => Input.GetKey(inputs[12]),
-            _ => Input.GetKey(inputs[4]) || Input.GetKey(inputs[12]),
+            1 => CheckKey(Keyboard.Jump1) || CheckButton(Controller.Jump1),
+            2 => CheckKey(Keyboard.Jump2) || CheckButton(Controller.Jump2),
+            _ => CheckKey(Keyboard.Jump1) || CheckButton(Controller.Jump1) || CheckKey(Keyboard.Jump2) || CheckButton(Controller.Jump2)
         };
     }
 
@@ -171,9 +268,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[5]),
-            2 => Input.GetKeyDown(inputs[13]),
-            _ => Input.GetKeyDown(inputs[5]) || Input.GetKeyDown(inputs[13]),
+            1 => CheckKey(Keyboard.Shoot1, true) || CheckButton(Controller.Shoot1, true),
+            2 => CheckKey(Keyboard.Shoot2, true) || CheckButton(Controller.Shoot2, true),
+            _ => CheckKey(Keyboard.Shoot1, true) || CheckButton(Controller.Shoot1, true) || CheckKey(Keyboard.Shoot2, true) || CheckButton(Controller.Shoot2, true)
         };
     }
 
@@ -181,9 +278,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKey(inputs[5]),
-            2 => Input.GetKey(inputs[13]),
-            _ => Input.GetKey(inputs[5]) || Input.GetKey(inputs[13]),
+            1 => CheckKey(Keyboard.Shoot1) || CheckButton(Controller.Shoot1),
+            2 => CheckKey(Keyboard.Shoot2) || CheckButton(Controller.Shoot2),
+            _ => CheckKey(Keyboard.Shoot1) || CheckButton(Controller.Shoot1) || CheckKey(Keyboard.Shoot2) || CheckButton(Controller.Shoot2)
         };
     }
 
@@ -191,9 +288,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[6]),
-            2 => Input.GetKeyDown(inputs[14]),
-            _ => Input.GetKeyDown(inputs[6]) || Input.GetKeyDown(inputs[14]),
+            1 => CheckKey(Keyboard.Strafe1, true) || CheckButton(Controller.Strafe1, true),
+            2 => CheckKey(Keyboard.Strafe2, true) || CheckButton(Controller.Strafe2, true),
+            _ => CheckKey(Keyboard.Strafe1, true) || CheckButton(Controller.Strafe1, true) || CheckKey(Keyboard.Strafe2, true) || CheckButton(Controller.Strafe2, true)
         };
     }
 
@@ -201,9 +298,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKey(inputs[6]),
-            2 => Input.GetKey(inputs[14]),
-            _ => Input.GetKey(inputs[6]) || Input.GetKey(inputs[14]),
+            1 => CheckKey(Keyboard.Strafe1) || CheckButton(Controller.Strafe1),
+            2 => CheckKey(Keyboard.Strafe2) || CheckButton(Controller.Strafe2),
+            _ => CheckKey(Keyboard.Strafe1) || CheckButton(Controller.Strafe1) || CheckKey(Keyboard.Strafe2) || CheckButton(Controller.Strafe2)
         };
     }
 
@@ -211,9 +308,9 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKeyDown(inputs[7]),
-            2 => Input.GetKeyDown(inputs[15]),
-            _ => Input.GetKeyDown(inputs[7]) || Input.GetKeyDown(inputs[15]),
+            1 => CheckKey(Keyboard.Speak1, true) || CheckButton(Controller.Speak1, true),
+            2 => CheckKey(Keyboard.Speak2, true) || CheckButton(Controller.Speak2, true),
+            _ => CheckKey(Keyboard.Speak1, true) || CheckButton(Controller.Speak1, true) || CheckKey(Keyboard.Speak2, true) || CheckButton(Controller.Speak2, true)
         };
     }
 
@@ -221,45 +318,45 @@ public class Control
     {
         return player switch
         {
-            1 => Input.GetKey(inputs[7]),
-            2 => Input.GetKey(inputs[15]),
-            _ => Input.GetKey(inputs[7]) || Input.GetKey(inputs[15]),
+            1 => CheckKey(Keyboard.Speak1) || CheckButton(Controller.Speak1),
+            2 => CheckKey(Keyboard.Speak2) || CheckButton(Controller.Speak2),
+            _ => CheckKey(Keyboard.Speak1) || CheckButton(Controller.Speak1) || CheckKey(Keyboard.Speak2) || CheckButton(Controller.Speak2)
         };
     }
 
     public static bool Weapon1()
     {
-        return Input.GetKeyDown(inputs[16]);
+        return CheckKey(Keyboard.Weapon1, true) || CheckButton(Controller.Weapon1, true);
     }
 
     public static bool Weapon2()
     {
-        return Input.GetKeyDown(inputs[17]);
+        return CheckKey(Keyboard.Weapon2, true) || CheckButton(Controller.Weapon2, true);
     }
 
     public static bool Weapon3()
     {
-        return Input.GetKeyDown(inputs[18]);
+        return CheckKey(Keyboard.Weapon3, true) || CheckButton(Controller.Weapon3, true);
     }
 
     public static bool NextWeapon()
     {
-        return Input.GetKeyDown(inputs[19]);
+        return CheckKey(Keyboard.NextWeapon, true) || CheckButton(Controller.NextWeapon, true);
     }
 
     public static bool PreviousWeapon()
     {
-        return Input.GetKeyDown(inputs[20]);
+        return CheckKey(Keyboard.PrevWeapon, true) || CheckButton(Controller.PrevWeapon, true);
     }
 
     public static bool Map()
     {
-        return Input.GetKeyDown(inputs[21]);
+        return CheckKey(Keyboard.Map) || CheckButton(Controller.Map);
     }
 
     public static bool Pause()
     {
-        return Input.GetKeyDown(inputs[22]);
+        return CheckKey(Keyboard.Pause) || CheckButton(Controller.Pause);
     }
 
     public static bool Generic(KeyCode key)
@@ -267,11 +364,39 @@ public class Control
         return Input.GetKeyDown(key);
     }
 
-    public static string ParseKeyName(int keyID)
+    public static bool CheckKey(Keyboard input, bool pressed = false)
     {
-        return ParseKeyName(inputs[keyID]);
+        int index = (int)input;
+        return (pressed ? Input.GetKeyDown(keyboardInputs[index]) : Input.GetKey(keyboardInputs[index])) || virtualKey[index];
     }
 
+    public static bool CheckButton(Controller input, bool pressed = false)
+    {
+        int index = (int)input;
+        string inputName = input.ToString();
+        if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
+        {
+            char ID = inputName[inputName.Length - 1];
+            bool positive = inputName.Contains("Alpha");
+            float stickValue = ID switch {
+                '0' => Input.GetAxisRaw("LStickX"),
+                '1' => Input.GetAxisRaw("LStickY"),
+                '2' => Input.GetAxisRaw("RStickX"),
+                _ => Input.GetAxisRaw("RStickY")
+            };
+            return (positive ? (stickValue > 0) : (stickValue < 0)) || virtualCon[index];
+        }
+        return (pressed ? Input.GetKeyDown(keyboardInputs[index]) : Input.GetKey(keyboardInputs[index])) || virtualCon[index];
+    }
+
+    public static string ParseKeyName(int keyID, bool shortForm = false)
+    {
+        return ParseKeyName(keyboardInputs[keyID], shortForm);
+    }
+    public static string ParseKeyName(Keyboard keyID, bool shortForm = false)
+    {
+        return ParseKeyName(keyboardInputs[(int)keyID], shortForm);
+    }
     public static string ParseKeyName(KeyCode key, bool shortForm = false)
     {
         return key switch
@@ -338,6 +463,47 @@ public class Control
             KeyCode.Mouse1 => shortForm ? "RMB" : "Right mouse",
             KeyCode.Mouse2 => shortForm ? "MMB" : "Middle mouse",
             _ => key.ToString(),
+        };
+    }
+
+    public static string ParseButtonName(int buttonID, bool shortForm = false)
+    {
+        return ParseButtonName(controllerInputs[buttonID], shortForm);
+    }
+    public static string ParseButtonName(Controller buttonID, bool shortForm = false)
+    {
+        return ParseButtonName(controllerInputs[(int)buttonID], shortForm);
+    }
+    public static string ParseButtonName(KeyCode button, bool shortForm = false)
+    {
+        return button switch
+        {
+            KeyCode.Alpha0 => shortForm ? "L +x" : "L stick right",
+            KeyCode.Keypad0 => shortForm ? "L -x" : "L stick left",
+            KeyCode.Alpha1 => shortForm ? "L +y" : "L stick up",
+            KeyCode.Keypad1 => shortForm ? "L -y" : "L stick down",
+            KeyCode.Alpha2 => shortForm ? "R +x" : "R stick right",
+            KeyCode.Keypad2 => shortForm ? "R -x" : "R stick left",
+            KeyCode.Alpha3 => shortForm ? "R +y" : "R stick up",
+            KeyCode.Keypad3 => shortForm ? "R -y" : "R stick down",
+            KeyCode.JoystickButton0 => PlayState.gameOptions[17] switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
+            KeyCode.JoystickButton1 => PlayState.gameOptions[17] switch { 1 => "A", 2 => (shortForm ? "CIR" : "Circle"), 3 => "A", _ => "B" },
+            KeyCode.JoystickButton2 => PlayState.gameOptions[17] switch { 1 => "Y", 2 => (shortForm ? "SQR" : "Square"), 3 => "U", _ => "X" },
+            KeyCode.JoystickButton3 => PlayState.gameOptions[17] switch { 1 => "X", 2 => (shortForm ? "TRI" : "Triangle"), 3 => "Y", _ => "Y" },
+            KeyCode.JoystickButton4 => "L1",
+            KeyCode.JoystickButton5 => "R1",
+            KeyCode.JoystickButton6 => "L2",
+            KeyCode.JoystickButton7 => "R2",
+            KeyCode.JoystickButton8 => PlayState.gameOptions[17] switch { 0 => "View", 1 => "-", _ => (shortForm ? "SEL" : "Select") },
+            KeyCode.JoystickButton9 => PlayState.gameOptions[17] switch { 0 => "Menu", 1 => "+", _ => (shortForm ? "ST" : "Start") },
+            KeyCode.JoystickButton10 => "L3",
+            KeyCode.JoystickButton11 => "R3",
+            KeyCode.JoystickButton12 => "Up",
+            KeyCode.JoystickButton13 => "Down",
+            KeyCode.JoystickButton14 => "Left",
+            KeyCode.JoystickButton15 => "Right",
+            KeyCode.JoystickButton16 => "Home",
+            _ => button.ToString()
         };
     }
 

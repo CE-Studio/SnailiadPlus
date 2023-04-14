@@ -249,10 +249,20 @@ public class GlobalFunctions : MonoBehaviour
         {
             PlayState.TogglableHUDElements[11].SetActive(PlayState.gameOptions[4] == 2);
             PlayState.TogglableHUDElements[3].SetActive(PlayState.gameOptions[4] >= 1);
-            PlayState.pauseText.text = Control.ParseKeyName(Control.inputs[22], true);
-            PlayState.pauseShadow.text = Control.ParseKeyName(Control.inputs[22], true);
-            PlayState.mapText.text = Control.ParseKeyName(Control.inputs[21], true);
-            PlayState.mapShadow.text = Control.ParseKeyName(Control.inputs[21], true);
+            if (PlayState.IsControllerConnected())
+            {
+                PlayState.pauseText.text = Control.ParseButtonName(Control.Controller.Pause, true);
+                PlayState.pauseShadow.text = Control.ParseButtonName(Control.Controller.Pause, true);
+                PlayState.mapText.text = Control.ParseButtonName(Control.Controller.Map, true);
+                PlayState.mapShadow.text = Control.ParseButtonName(Control.Controller.Map, true);
+            }
+            else
+            {
+                PlayState.pauseText.text = Control.ParseKeyName(Control.Keyboard.Pause, true);
+                PlayState.pauseShadow.text = Control.ParseKeyName(Control.Keyboard.Pause, true);
+                PlayState.mapText.text = Control.ParseKeyName(Control.Keyboard.Map, true);
+                PlayState.mapShadow.text = Control.ParseKeyName(Control.Keyboard.Map, true);
+            }
         }
 
         // FPS calculator

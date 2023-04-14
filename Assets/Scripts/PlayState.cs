@@ -372,7 +372,8 @@ public class PlayState {
         0,  // 13 - Secret tile visibility (boolean)
         2,  // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
         1,  // 15 - Screen shake (0 = off, 1 = minimal, 2 = full, 3 = minimal w/ no HUD shake, 4 = full w/ no HUD shake)
-        0   // 16 - Palette filter (boolean)
+        0,  // 16 - Palette filter (boolean)
+        0   // 17 - Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
     };
 
     public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
@@ -397,7 +398,8 @@ public class PlayState {
 
     [Serializable]
     public struct ControlData {
-        public KeyCode[] controls;
+        public KeyCode[] keyboard;
+        public KeyCode[] controller;
     }
 
     public const byte OFFSET_HEARTS = 13;
@@ -1265,7 +1267,8 @@ public class PlayState {
             };
         } else if (dataType == "controls") {
             gameData.controls = new ControlData {
-                controls = Control.inputs
+                keyboard = Control.keyboardInputs,
+                controller = Control.controllerInputs
             };
         } else if (!(dataType == "" || dataType == " ")) {
             Debug.LogWarning("Invalid save type \"" + dataType + "\"");
@@ -1493,7 +1496,7 @@ public class PlayState {
     public static void LoadControls() {
         bool load = true;
         try {
-            int i = gameData.controls.controls.Length;
+            int i = gameData.controls.keyboard.Length;
         }
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 #pragma warning disable CS0168 // Variable is declared but never used
@@ -1505,11 +1508,17 @@ public class PlayState {
         }
 
         if (load) {
-            if (Control.inputs.Length == gameData.controls.controls.Length)
-                Control.inputs = gameData.controls.controls;
+            if (Control.keyboardInputs.Length == gameData.controls.keyboard.Length)
+                Control.keyboardInputs = gameData.controls.keyboard;
             else {
-                for (int i = 0; i < gameData.controls.controls.Length; i++)
-                    Control.inputs[i] = gameData.controls.controls[i];
+                for (int i = 0; i < gameData.controls.keyboard.Length; i++)
+                    Control.keyboardInputs[i] = gameData.controls.keyboard[i];
+            }
+            if (Control.controllerInputs.Length == gameData.controls.controller.Length)
+                Control.controllerInputs = gameData.controls.controller;
+            else {
+                for (int i = 0; i < gameData.controls.controller.Length; i++)
+                    Control.controllerInputs[i] = gameData.controls.controller[i];
             }
         }
     }
@@ -1674,5 +1683,10 @@ public class PlayState {
         if (Mathf.Abs(num - target) < threshold)
             num = target;
         return num;
+    }
+
+    public static bool IsControllerConnected()
+    {
+        return Input.GetJoystickNames().Length > 0;
     }
 }
