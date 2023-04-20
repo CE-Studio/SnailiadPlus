@@ -624,61 +624,132 @@ public class MainMenu : MonoBehaviour
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(12) : Control.ParseKeyName(4));
                         break;
+                    case "control_jump1":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(4));
+                        break;
+                    case "control_jump2":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(12));
+                        break;
                     case "control_shoot":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(13) : Control.ParseKeyName(5));
+                        break;
+                    case "control_shoot1":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(5));
+                        break;
+                    case "control_shoot2":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(13));
                         break;
                     case "control_strafe":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(14) : Control.ParseKeyName(6));
                         break;
+                    case "control_strafe1":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(6));
+                        break;
+                    case "control_strafe2":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(14));
+                        break;
                     case "control_speak":
                         if (!isRebinding)
                             AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(15) : Control.ParseKeyName(7));
                         break;
+                    case "control_speak1":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(7));
+                        break;
+                    case "control_speak2":
+                        if (!isRebinding)
+                            AddToOptionText(option, Control.ParseButtonName(15));
+                        break;
                     case "control_up":
                         if (!isRebinding)
-                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(10) : Control.ParseKeyName(2));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(2) :
+                                (controlScreen == 2 ? Control.ParseKeyName(10) : Control.ParseKeyName(2)));
                         break;
                     case "control_left":
                         if (!isRebinding)
-                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(8) : Control.ParseKeyName(0));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(0) :
+                                (controlScreen == 2 ? Control.ParseKeyName(8) : Control.ParseKeyName(0)));
                         break;
                     case "control_right":
                         if (!isRebinding)
-                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(9) : Control.ParseKeyName(1));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(1) :
+                                (controlScreen == 2 ? Control.ParseKeyName(9) : Control.ParseKeyName(1)));
                         break;
                     case "control_down":
                         if (!isRebinding)
-                            AddToOptionText(option, controlScreen == 2 ? Control.ParseKeyName(11) : Control.ParseKeyName(3));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(3) :
+                                (controlScreen == 2 ? Control.ParseKeyName(11) : Control.ParseKeyName(3)));
+                        break;
+                    case "control_aimUp":
+                        AddToOptionText(option, Control.ParseButtonName(10));
+                        break;
+                    case "control_aimLeft":
+                        AddToOptionText(option, Control.ParseButtonName(8));
+                        break;
+                    case "control_aimRight":
+                        AddToOptionText(option, Control.ParseButtonName(9));
+                        break;
+                    case "control_aimDown":
+                        AddToOptionText(option, Control.ParseButtonName(11));
                         break;
                     case "control_weapon1":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(16));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(16) : Control.ParseKeyName(16));
                         break;
                     case "control_weapon2":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(17));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(17) : Control.ParseKeyName(17));
                         break;
                     case "control_weapon3":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(18));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(18) : Control.ParseKeyName(18));
                         break;
                     case "control_weaponNext":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(19));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(19) : Control.ParseKeyName(19));
                         break;
                     case "control_weaponPrev":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(20));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(20) : Control.ParseKeyName(20));
                         break;
                     case "control_map":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(21));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(21) : Control.ParseKeyName(21));
                         break;
                     case "control_menu":
                         if (!isRebinding)
-                            AddToOptionText(option, Control.ParseKeyName(22));
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(22) : Control.ParseKeyName(22));
+                        break;
+                    case "control_back":
+                        if (!isRebinding)
+                            AddToOptionText(option, controlScreen == 4 ? Control.ParseButtonName(23) : Control.ParseKeyName(23));
+                        break;
+                    case "buttonType":
+                        TestForArrowAdjust(option, 0, 3);
+                        switch (menuVarFlags[0])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_option_controls_buttonType_xbox"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_option_controls_buttonType_nintendo"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_option_controls_buttonType_playstation"));
+                                break;
+                            case 3:
+                                AddToOptionText(option, PlayState.GetText("menu_option_controls_buttonType_ouya"));
+                                break;
+                        }
+                        PlayState.gameOptions[17] = menuVarFlags[0];
                         break;
                     case "screenShake":
                         TestForArrowAdjust(option, 4, 4);
@@ -785,11 +856,12 @@ public class MainMenu : MonoBehaviour
 
     public void TestForRebind()
     {
-        StartCoroutine(RebindKey(menuVarFlags[0]));
+        StartCoroutine(RebindKey(menuVarFlags[0], menuVarFlags[1]));
     }
 
-    public IEnumerator RebindKey(int controlID)
+    public IEnumerator RebindKey(int controlID, int keyOrCon)
     {
+        bool bindingController = keyOrCon == 1;
         while (Control.JumpHold(1) && Control.Generic(KeyCode.Return))
         {
             yield return new WaitForEndOfFrame();
@@ -803,7 +875,53 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetKey(key))
                 {
-                    Control.keyboardInputs[controlID] = key;
+                    if (bindingController)
+                        Control.controllerInputs[controlID] = key;
+                    else
+                        Control.keyboardInputs[controlID] = key;
+                    isRebinding = false;
+                }
+            }
+            if (bindingController)
+            {
+                if (Input.GetAxis("LStickX") > 0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Alpha0;
+                    isRebinding = false;
+                }
+                else if (Input.GetAxis("LStickX") < -0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Keypad0;
+                    isRebinding = false;
+                }
+                if (Input.GetAxis("LStickY") > 0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Alpha1;
+                    isRebinding = false;
+                }
+                else if (Input.GetAxis("LStickY") < -0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Keypad1;
+                    isRebinding = false;
+                }
+                if (Input.GetAxis("RStickX") > 0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Alpha2;
+                    isRebinding = false;
+                }
+                else if (Input.GetAxis("RStickX") < -0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Keypad2;
+                    isRebinding = false;
+                }
+                if (Input.GetAxis("RStickY") > 0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Alpha3;
+                    isRebinding = false;
+                }
+                else if (Input.GetAxis("RStickY") < -0.75f)
+                {
+                    Control.controllerInputs[controlID] = KeyCode.Keypad3;
                     isRebinding = false;
                 }
             }
@@ -1401,9 +1519,23 @@ public class MainMenu : MonoBehaviour
     public void ControlMain()
     {
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_controls_control1"), true, Controls1);
-        AddOption(PlayState.GetText("menu_option_controls_control2"), true, Controls2);
-        AddOption(PlayState.GetText("menu_option_controls_controlMisc"), true, Controls3);
+        AddOption(PlayState.GetText("menu_option_controls_main_keyboard"), true, ControlKeyboard);
+        if (PlayState.IsControllerConnected())
+            AddOption(PlayState.GetText("menu_option_controls_main_controller"), true, ControlController, new int[] { 0, PlayState.gameOptions[17] });
+        else
+            AddOption(PlayState.GetText("menu_option_controls_main_noController"), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
+        ForceSelect(0);
+        backPage = OptionsScreen;
+    }
+
+    public void ControlKeyboard()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_controls_keyboard_set1"), true, ControlsKey1);
+        AddOption(PlayState.GetText("menu_option_controls_keyboard_set2"), true, ControlsKey2);
+        AddOption(PlayState.GetText("menu_option_controls_keyboard_set3"), true, ControlsKey3);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_controls_default"), true, ResetKeyboardControls);
         AddOption("", false);
@@ -1412,55 +1544,121 @@ public class MainMenu : MonoBehaviour
         backPage = SaveControls;
     }
 
-    public void Controls1()
+    public void ControlController()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_controls_controller_set1"), true, ControlsCon1);
+        AddOption(PlayState.GetText("menu_option_controls_controller_set2"), true, ControlsCon2);
+        AddOption(PlayState.GetText("menu_option_controls_controller_set3"), true, ControlsCon3);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_controls_buttonType") + ": ", true, "buttonType");
+        AddOption(PlayState.GetText("menu_option_controls_default"), true, ResetControllerControls);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveControls);
+        ForceSelect(0);
+        backPage = SaveControls;
+    }
+
+    public void ControlsKey1()
     {
         ClearOptions();
         controlScreen = 1;
-        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 4 }, "control_jump");
-        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 5 }, "control_shoot");
-        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 6 }, "control_strafe");
-        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 7 }, "control_speak");
-        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2 }, "control_up");
-        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0 }, "control_left");
-        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3 }, "control_down");
-        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1 }, "control_right");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 4, 1, 0 }, "control_jump");
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 5, 1, 0 }, "control_shoot");
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 6, 1, 0 }, "control_strafe");
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 7, 1, 0 }, "control_speak");
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2, 1, 0 }, "control_up");
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0, 1, 0 }, "control_left");
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3, 1, 0 }, "control_down");
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1, 1, 0 }, "control_right");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
         ForceSelect(0);
-        backPage = ControlMain;
+        backPage = ControlKeyboard;
     }
 
-    public void Controls2()
+    public void ControlsKey2()
     {
         ClearOptions();
         controlScreen = 2;
-        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 12 }, "control_jump");
-        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 13 }, "control_shoot");
-        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 14 }, "control_strafe");
-        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 15 }, "control_speak");
-        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 10 },  "control_up");
-        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8 }, "control_left");
-        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11 }, "control_down");
-        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9 }, "control_right");
-AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_jump") + ":   ", true, TestForRebind, new int[] { 0, 12, 1, 0 }, "control_jump");
+        AddOption(PlayState.GetText("menu_option_controls_shoot") + ":   ", true, TestForRebind, new int[] { 0, 13, 1, 0 }, "control_shoot");
+        AddOption(PlayState.GetText("menu_option_controls_strafe") + ":   ", true, TestForRebind, new int[] { 0, 14, 1, 0 }, "control_strafe");
+        AddOption(PlayState.GetText("menu_option_controls_speak") + ":   ", true, TestForRebind, new int[] { 0, 15, 1, 0 }, "control_speak");
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 10, 1, 0 },  "control_up");
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8, 1, 0 }, "control_left");
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11, 1, 0 }, "control_down");
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9, 1, 0 }, "control_right");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
         ForceSelect(0);
-        backPage = ControlMain;
+        backPage = ControlKeyboard;
     }
 
-    public void Controls3()
+    public void ControlsKey3()
     {
         ClearOptions();
         controlScreen = 3;
-        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16 }, "control_weapon1");
-        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17 }, "control_weapon2");
-        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18 }, "control_weapon3");
-        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19 }, "control_weaponNext");
-        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20 }, "control_weaponPrev");
-        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21 }, "control_map");
-        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22 }, "control_menu");
-        AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
+        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16, 1, 0 }, "control_weapon1");
+        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17, 1, 0 }, "control_weapon2");
+        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18, 1, 0 }, "control_weapon3");
+        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19, 1, 0 }, "control_weaponNext");
+        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20, 1, 0 }, "control_weaponPrev");
+        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21, 1, 0 }, "control_map");
+        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22, 1, 0 }, "control_menu");
+        AddOption(PlayState.GetText("menu_option_controls_back") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 0 }, "control_back");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
         ForceSelect(0);
-        backPage = ControlMain;
+        backPage = ControlKeyboard;
+    }
+
+    public void ControlsCon1()
+    {
+        ClearOptions();
+        controlScreen = 4;
+        AddOption(PlayState.GetText("menu_option_controls_up") + ":   ", true, TestForRebind, new int[] { 0, 2, 1, 1 }, "control_up");
+        AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0, 1, 1 }, "control_left");
+        AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3, 1, 1 }, "control_down");
+        AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1, 1, 1 }, "control_right");
+        AddOption(PlayState.GetText("menu_option_controls_aimUp") + ":   ", true, TestForRebind, new int[] { 0, 10, 1, 1 }, "control_aimUp");
+        AddOption(PlayState.GetText("menu_option_controls_aimLeft") + ":   ", true, TestForRebind, new int[] { 0, 8, 1, 1 }, "control_aimLeft");
+        AddOption(PlayState.GetText("menu_option_controls_aimDown") + ":   ", true, TestForRebind, new int[] { 0, 11, 1, 1 }, "control_aimDown");
+        AddOption(PlayState.GetText("menu_option_controls_aimRight") + ":   ", true, TestForRebind, new int[] { 0, 9, 1, 1 }, "control_aimRight");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        ForceSelect(0);
+        backPage = ControlController;
+    }
+
+    public void ControlsCon2()
+    {
+        ClearOptions();
+        controlScreen = 4;
+        AddOption(PlayState.GetText("menu_option_controls_jump1") + ":   ", true, TestForRebind, new int[] { 0, 4, 1, 1 }, "control_jump1");
+        AddOption(PlayState.GetText("menu_option_controls_jump2") + ":   ", true, TestForRebind, new int[] { 0, 12, 1, 1 }, "control_jump2");
+        AddOption(PlayState.GetText("menu_option_controls_shoot1") + ":   ", true, TestForRebind, new int[] { 0, 5, 1, 1 }, "control_shoot1");
+        AddOption(PlayState.GetText("menu_option_controls_shoot2") + ":   ", true, TestForRebind, new int[] { 0, 13, 1, 1 }, "control_shoot2");
+        AddOption(PlayState.GetText("menu_option_controls_strafe1") + ":   ", true, TestForRebind, new int[] { 0, 6, 1, 1 }, "control_strafe1");
+        AddOption(PlayState.GetText("menu_option_controls_strafe2") + ":   ", true, TestForRebind, new int[] { 0, 14, 1, 1 }, "control_strafe2");
+        AddOption(PlayState.GetText("menu_option_controls_speak1") + ":   ", true, TestForRebind, new int[] { 0, 7, 1, 1 }, "control_speak1");
+        AddOption(PlayState.GetText("menu_option_controls_speak2") + ":   ", true, TestForRebind, new int[] { 0, 15, 1, 1 }, "control_speak2");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        ForceSelect(0);
+        backPage = ControlController;
+    }
+
+    public void ControlsCon3()
+    {
+        ClearOptions();
+        controlScreen = 4;
+        AddOption(PlayState.GetText("menu_option_controls_weapon1") + ":   ", true, TestForRebind, new int[] { 0, 16, 1, 1 }, "control_weapon1");
+        AddOption(PlayState.GetText("menu_option_controls_weapon2") + ":   ", true, TestForRebind, new int[] { 0, 17, 1, 1 }, "control_weapon2");
+        AddOption(PlayState.GetText("menu_option_controls_weapon3") + ":   ", true, TestForRebind, new int[] { 0, 18, 1, 1 }, "control_weapon3");
+        AddOption(PlayState.GetText("menu_option_controls_weaponNext") + ":   ", true, TestForRebind, new int[] { 0, 19, 1, 1 }, "control_weaponNext");
+        AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20, 1, 1 }, "control_weaponPrev");
+        AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21, 1, 1 }, "control_map");
+        AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22, 1, 1 }, "control_menu");
+        AddOption(PlayState.GetText("menu_option_controls_back") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 1 }, "control_back");
+        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        ForceSelect(0);
+        backPage = ControlController;
     }
 
     public void ResetKeyboardControls()
@@ -1479,7 +1677,7 @@ AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlMain);
     {
         PlayState.WriteSave("controls");
         controlScreen = 0;
-        OptionsScreen();
+        ControlMain();
     }
 
     public void GameplayScreen()

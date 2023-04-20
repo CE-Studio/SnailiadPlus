@@ -316,18 +316,73 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_controls_control1",
+			"name": "menu_option_controls_main_keyboard",
+			"text": "Keyboard inputs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_main_controller",
+			"text": "Controller inputs",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_main_noController",
+			"text": "No controller connected",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_keyboard_set1",
 			"text": "Control set 1",
 			"value": 0
 		},
 		{
-			"name": "menu_option_controls_control2",
+			"name": "menu_option_controls_keyboard_set2",
 			"text": "Control set 2",
 			"value": 0
 		},
 		{
-			"name": "menu_option_controls_controlMisc",
+			"name": "menu_option_controls_keyboard_set3",
 			"text": "Miscellaneous",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_controller_set1",
+			"text": "Movement and Aiming",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_controller_set2",
+			"text": "Actions",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_controller_set3",
+			"text": "UI and weapons",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_buttonType",
+			"text": "Button styling",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_buttonType_xbox",
+			"text": "Xbox",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_buttonType_nintendo",
+			"text": "Nintendo",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_buttonType_playstation",
+			"text": "PlayStation",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_buttonType_ouya",
+			"text": "Ouya",
 			"value": 0
 		},
 		{
@@ -341,8 +396,28 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_controls_jump1",
+			"text": "Jump (Primary)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_jump2",
+			"text": "Jump (Secondary)",
+			"value": 0
+		},
+		{
 			"name": "menu_option_controls_shoot",
 			"text": "Shoot",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_shoot1",
+			"text": "Shoot (Primary)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_shoot2",
+			"text": "Shoot (Secondary)",
 			"value": 0
 		},
 		{
@@ -351,8 +426,28 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_controls_strafe1",
+			"text": "Strafe (Primary)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_strafe2",
+			"text": "Strafe (Secondary)",
+			"value": 0
+		},
+		{
 			"name": "menu_option_controls_speak",
 			"text": "Speak",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_speak1",
+			"text": "Speak (Primary)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_speak2",
+			"text": "Speak (Secondary)",
 			"value": 0
 		},
 		{
@@ -373,6 +468,26 @@
 		{
 			"name": "menu_option_controls_down",
 			"text": "Move down",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_aimUp",
+			"text": "Aim up",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_aimLeft",
+			"text": "Aim left",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_aimRight",
+			"text": "Aim right",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_aimDown",
+			"text": "Aim down",
 			"value": 0
 		},
 		{
@@ -411,8 +526,23 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_controls_back",
+			"text": "Return",
+			"value": 0
+		},
+		{
 			"name": "menu_option_controls_return",
 			"text": "Back",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_add_primary",
+			"text": "(Pri.)",
+			"value": 0
+		},
+		{
+			"name": "menu_option_controls_add_secondary",
+			"text": "(Sec.)",
 			"value": 0
 		},
 		{

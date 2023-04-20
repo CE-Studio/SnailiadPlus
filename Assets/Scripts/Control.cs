@@ -28,7 +28,8 @@ public class Control
         NextWeapon,
         PrevWeapon,
         Map,
-        Pause
+        Pause,
+        Return
     };
 
     public static KeyCode[] keyboardInputs = new KeyCode[] { };
@@ -57,6 +58,7 @@ public class Control
         KeyCode.Equals,
         KeyCode.Minus,
         KeyCode.M,
+        KeyCode.Escape,
         KeyCode.Escape
     };
 
@@ -84,7 +86,8 @@ public class Control
         NextWeapon,
         PrevWeapon,
         Map,
-        Pause
+        Pause,
+        Return
     };
 
     public static KeyCode[] controllerInputs = new KeyCode[] {};
@@ -93,16 +96,16 @@ public class Control
     {
         KeyCode.Keypad0,
         KeyCode.Alpha0,
-        KeyCode.Alpha1,
         KeyCode.Keypad1,
+        KeyCode.Alpha1,
         KeyCode.JoystickButton0,
         KeyCode.JoystickButton2,
         KeyCode.JoystickButton7,
         KeyCode.JoystickButton1,
         KeyCode.Keypad2,
         KeyCode.Alpha2,
-        KeyCode.Alpha3,
         KeyCode.Keypad3,
+        KeyCode.Alpha3,
         KeyCode.JoystickButton6,
         KeyCode.JoystickButton2,
         KeyCode.JoystickButton7,
@@ -112,12 +115,17 @@ public class Control
         KeyCode.JoystickButton15,
         KeyCode.JoystickButton5,
         KeyCode.JoystickButton4,
-        KeyCode.JoystickButton8,
-        KeyCode.JoystickButton9
+        KeyCode.JoystickButton13,
+        KeyCode.JoystickButton9,
+        KeyCode.JoystickButton8
     };
 
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
     public static bool[] virtualCon = new bool[defaultControllerInputs.Length];
+
+    public static bool[] conPressed = new bool[defaultControllerInputs.Length];
+
+    public const float STICK_DEADZONE = 0.25f;
 
     public static int AxisX(int player = 0)
     {
@@ -130,7 +138,7 @@ public class Control
 
     public static bool LeftPress(int player = 0)
     {
-        if (CheckButton(Controller.Left))
+        if (CheckButton(Controller.Left, true))
             return true;
         return player switch
         {
@@ -159,7 +167,7 @@ public class Control
 
     public static bool RightPress(int player = 0)
     {
-        if (CheckButton(Controller.Right))
+        if (CheckButton(Controller.Right, true))
             return true;
         return player switch
         {
@@ -188,7 +196,7 @@ public class Control
 
     public static bool UpPress(int player = 0)
     {
-        if (CheckButton(Controller.Up))
+        if (CheckButton(Controller.Up, true))
             return true;
         return player switch
         {
@@ -217,7 +225,7 @@ public class Control
 
     public static bool DownPress(int player = 0)
     {
-        if (CheckButton(Controller.Down))
+        if (CheckButton(Controller.Down, true))
             return true;
         return player switch
         {
@@ -372,21 +380,39 @@ public class Control
 
     public static bool CheckButton(Controller input, bool pressed = false)
     {
+        if (!PlayState.IsControllerConnected())
+            return false;
         int index = (int)input;
-        string inputName = input.ToString();
+        string inputName = controllerInputs[index].ToString();
+        bool inputDown;
         if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
         {
             char ID = inputName[inputName.Length - 1];
             bool positive = inputName.Contains("Alpha");
             float stickValue = ID switch {
-                '0' => Input.GetAxisRaw("LStickX"),
-                '1' => Input.GetAxisRaw("LStickY"),
-                '2' => Input.GetAxisRaw("RStickX"),
-                _ => Input.GetAxisRaw("RStickY")
+                '0' => Input.GetAxis("LStickX"),
+                '1' => Input.GetAxis("LStickY"),
+                '2' => Input.GetAxis("RStickX"),
+                _ => Input.GetAxis("RStickY")
             };
-            return (positive ? (stickValue > 0) : (stickValue < 0)) || virtualCon[index];
+            inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
         }
-        return (pressed ? Input.GetKeyDown(keyboardInputs[index]) : Input.GetKey(keyboardInputs[index])) || virtualCon[index];
+        else
+            inputDown = Input.GetKey(controllerInputs[index]);
+        if (inputDown)
+        {
+            if (conPressed[index] && !pressed)
+                return true;
+            else if (!conPressed[index])
+            {
+                conPressed[index] = true;
+                return true;
+            }
+            else
+                return virtualCon[index];
+        }
+        conPressed[index] = false;
+        return virtualCon[index];
     }
 
     public static string ParseKeyName(int keyID, bool shortForm = false)
@@ -480,24 +506,24 @@ public class Control
         {
             KeyCode.Alpha0 => shortForm ? "L +x" : "L stick right",
             KeyCode.Keypad0 => shortForm ? "L -x" : "L stick left",
-            KeyCode.Alpha1 => shortForm ? "L +y" : "L stick up",
-            KeyCode.Keypad1 => shortForm ? "L -y" : "L stick down",
+            KeyCode.Alpha1 => shortForm ? "L +y" : "L stick down",
+            KeyCode.Keypad1 => shortForm ? "L -y" : "L stick up",
             KeyCode.Alpha2 => shortForm ? "R +x" : "R stick right",
             KeyCode.Keypad2 => shortForm ? "R -x" : "R stick left",
-            KeyCode.Alpha3 => shortForm ? "R +y" : "R stick up",
-            KeyCode.Keypad3 => shortForm ? "R -y" : "R stick down",
+            KeyCode.Alpha3 => shortForm ? "R +y" : "R stick down",
+            KeyCode.Keypad3 => shortForm ? "R -y" : "R stick up",
             KeyCode.JoystickButton0 => PlayState.gameOptions[17] switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
             KeyCode.JoystickButton1 => PlayState.gameOptions[17] switch { 1 => "A", 2 => (shortForm ? "CIR" : "Circle"), 3 => "A", _ => "B" },
             KeyCode.JoystickButton2 => PlayState.gameOptions[17] switch { 1 => "Y", 2 => (shortForm ? "SQR" : "Square"), 3 => "U", _ => "X" },
             KeyCode.JoystickButton3 => PlayState.gameOptions[17] switch { 1 => "X", 2 => (shortForm ? "TRI" : "Triangle"), 3 => "Y", _ => "Y" },
-            KeyCode.JoystickButton4 => "L1",
-            KeyCode.JoystickButton5 => "R1",
-            KeyCode.JoystickButton6 => "L2",
-            KeyCode.JoystickButton7 => "R2",
+            KeyCode.JoystickButton4 => PlayState.gameOptions[17] switch { 1 => "L", _ => "L1" },
+            KeyCode.JoystickButton5 => PlayState.gameOptions[17] switch { 1 => "R", _ => "R1" },
+            KeyCode.JoystickButton6 => PlayState.gameOptions[17] switch { 1 => "ZL", _ => "L2" },
+            KeyCode.JoystickButton7 => PlayState.gameOptions[17] switch { 1 => "ZR", _ => "R2" },
             KeyCode.JoystickButton8 => PlayState.gameOptions[17] switch { 0 => "View", 1 => "-", _ => (shortForm ? "SEL" : "Select") },
             KeyCode.JoystickButton9 => PlayState.gameOptions[17] switch { 0 => "Menu", 1 => "+", _ => (shortForm ? "ST" : "Start") },
-            KeyCode.JoystickButton10 => "L3",
-            KeyCode.JoystickButton11 => "R3",
+            KeyCode.JoystickButton10 => PlayState.gameOptions[17] switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
+            KeyCode.JoystickButton11 => PlayState.gameOptions[17] switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
             KeyCode.JoystickButton12 => "Up",
             KeyCode.JoystickButton13 => "Down",
             KeyCode.JoystickButton14 => "Left",

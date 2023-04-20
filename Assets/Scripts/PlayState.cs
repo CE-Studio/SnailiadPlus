@@ -1508,12 +1508,14 @@ public class PlayState {
         }
 
         if (load) {
+            Control.keyboardInputs = new KeyCode[Control.defaultKeyboardInputs.Length];
             if (Control.keyboardInputs.Length == gameData.controls.keyboard.Length)
                 Control.keyboardInputs = gameData.controls.keyboard;
             else {
                 for (int i = 0; i < gameData.controls.keyboard.Length; i++)
                     Control.keyboardInputs[i] = gameData.controls.keyboard[i];
             }
+            Control.controllerInputs = new KeyCode[Control.defaultControllerInputs.Length];
             if (Control.controllerInputs.Length == gameData.controls.controller.Length)
                 Control.controllerInputs = gameData.controls.controller;
             else {
@@ -1521,6 +1523,11 @@ public class PlayState {
                     Control.controllerInputs[i] = gameData.controls.controller[i];
             }
         }
+
+        if (Control.keyboardInputs.Length == 0)
+            Control.keyboardInputs = Control.defaultKeyboardInputs;
+        if (Control.controllerInputs.Length == 0)
+            Control.controllerInputs = Control.defaultControllerInputs;
     }
 
     public static bool HasTime(int ID = -1) {
