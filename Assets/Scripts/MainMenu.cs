@@ -862,7 +862,7 @@ public class MainMenu : MonoBehaviour
     public IEnumerator RebindKey(int controlID, int keyOrCon)
     {
         bool bindingController = keyOrCon == 1;
-        while (Control.JumpHold(1) && Control.Generic(KeyCode.Return))
+        while (Control.JumpHold(1) || Control.Generic(KeyCode.Return))
         {
             yield return new WaitForEndOfFrame();
         }
@@ -1133,6 +1133,7 @@ public class MainMenu : MonoBehaviour
             lastRoomTrigger.DespawnEverything();
         PlayState.screenCover.sortingOrder = 999;
         PlayState.player.transform.position = spawnPos;
+        PlayState.playerScript.CorrectGravity(false);
         PlayState.gameState = PlayState.GameState.game;
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);

@@ -269,7 +269,7 @@ public class Stompy : Boss
                     if (legacyCutscene && !PlayState.paralyzed)
                     {
                         PlayState.paralyzed = true;
-                        PlayState.playerScript.CorrectGravity();
+                        PlayState.playerScript.CorrectGravity(true);
                     }
                     if (PlayState.player.transform.position.x < transform.position.x - 5.5625f)
                         modeL = FootMode.stomp;
@@ -278,7 +278,7 @@ public class Stompy : Boss
                         if (legacyCutscene)
                         {
                             PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] * Time.deltaTime;
-                            PlayState.playerScript.SwapDir(Player.DIR_WALL_LEFT);
+                            PlayState.playerScript.SwapDir(Player.Dirs.WallL);
                         }
                         modeMain = BossMode.intro2;
                     }
@@ -296,7 +296,7 @@ public class Stompy : Boss
                         if (legacyCutscene)
                         {
                             PlayState.playerScript.velocity.x = 0;
-                            PlayState.playerScript.SwapDir(Player.DIR_WALL_LEFT);
+                            PlayState.playerScript.SwapDir(Player.Dirs.WallL);
                         }
                         modeMain = BossMode.intro3;
                         StartCoroutine(RunIntro(false));

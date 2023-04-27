@@ -189,13 +189,13 @@ public class RoomTrigger:MonoBehaviour {
                 Vector2 playerPos = PlayState.player.transform.position;
                 switch (PlayState.playerScript.gravityDir) {
                     default:
-                    case 0:
-                    case 3:
+                    case Player.Dirs.Floor:
+                    case Player.Dirs.Ceiling:
                         if (PlayState.IsTileSolid(new Vector2(playerPos.x + 1, playerPos.y)) || PlayState.IsTileSolid(new Vector2(playerPos.x - 1, playerPos.y)))
                             PlayState.player.transform.position = new Vector2(Mathf.Floor(playerPos.x) + 0.5f + (PlayState.playerScript.facingLeft ? -0.125f : 0.125f), playerPos.y);
                         break;
-                    case 1:
-                    case 2:
+                    case Player.Dirs.WallL:
+                    case Player.Dirs.WallR:
                         if (PlayState.IsTileSolid(new Vector2(playerPos.x, playerPos.y + 1)) || PlayState.IsTileSolid(new Vector2(playerPos.x, playerPos.y - 1)))
                             PlayState.player.transform.position = new Vector2(playerPos.x, Mathf.Floor(playerPos.y) + 0.5f + (PlayState.playerScript.facingDown ? -0.125f : 0.125f));
                         break;

@@ -1524,9 +1524,9 @@ public class PlayState {
             }
         }
 
-        if (Control.keyboardInputs.Length == 0)
+        if (Control.keyboardInputs.Length == 0 || !load || Control.keyboardInputs[0] == KeyCode.None)
             Control.keyboardInputs = Control.defaultKeyboardInputs;
-        if (Control.controllerInputs.Length == 0)
+        if (Control.controllerInputs.Length == 0 || !load || Control.controllerInputs[0] == KeyCode.None)
             Control.controllerInputs = Control.defaultControllerInputs;
     }
 

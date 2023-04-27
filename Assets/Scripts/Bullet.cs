@@ -104,9 +104,9 @@ public class Bullet : MonoBehaviour
             player.transform.position.x + player.GetComponent<Player>().box.offset.x,
             player.transform.position.y + player.GetComponent<Player>().box.offset.y) + PlayState.playerScript.gravityDir switch
             {
-                1 => new Vector2(-0.0625f, 0),
-                2 => new Vector2(0.0625f, 0),
-                3 => new Vector2(0, 0.0625f),
+                Player.Dirs.WallL => new Vector2(-0.0625f, 0),
+                Player.Dirs.WallR => new Vector2(0.0625f, 0),
+                Player.Dirs.Ceiling => new Vector2(0, 0.0625f),
                 _ => new Vector2(0, -0.0625f)
             };
         switch (dir)

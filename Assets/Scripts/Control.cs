@@ -364,7 +364,7 @@ public class Control
 
     public static bool Pause()
     {
-        return CheckKey(Keyboard.Pause) || CheckButton(Controller.Pause);
+        return CheckKey(Keyboard.Pause, true) || CheckButton(Controller.Pause, true);
     }
 
     public static bool Generic(KeyCode key)

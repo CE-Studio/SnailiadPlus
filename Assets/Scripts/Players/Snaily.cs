@@ -9,7 +9,7 @@ public class Snaily : Player
     {
         base.Start();
 
-        defaultGravityDir = DIR_FLOOR;
+        defaultGravityDir = Dirs.Floor;
         canJump = new int[][] { new int[] { -1 } };
         canSwapGravity = new int[][] { new int[] { -1 } };
         retainGravityOnAirborne = new int[][] { new int[] { 8 } };
@@ -34,6 +34,7 @@ public class Snaily : Player
         hitboxOffset_normal = Vector2.zero;
         hitboxOffset_shell = new Vector2(-0.186518f, 0);
         unshellAdjust = 0.4f;
+        shellTurnaroundAdjust = 0.1667f;
         coyoteTime = 0.0625f;
         jumpBuffer = 0.125f;
 
@@ -91,7 +92,7 @@ public class Snaily : Player
         sprite.flipX = false;
         sprite.flipY = false;
     
-        if (gravityDir == DIR_WALL_LEFT)
+        if (gravityDir == Dirs.WallL)
         {
             if (animData[5])
                 sprite.flipX = true;
@@ -109,7 +110,7 @@ public class Snaily : Player
             else
                 currentState += "down_";
         }
-        else if (gravityDir == DIR_WALL_RIGHT)
+        else if (gravityDir == Dirs.WallR)
         {
             currentState += "wallR_";
             if (!facingDown && animData[6])
@@ -121,7 +122,7 @@ public class Snaily : Player
             else
                 currentState += "down_";
         }
-        else if (gravityDir == DIR_CEILING)
+        else if (gravityDir == Dirs.Ceiling)
         {
             if (animData[8])
                 sprite.flipY = true;
@@ -156,8 +157,8 @@ public class Snaily : Player
             currentState += "shell";
         else if (!grounded && animData[2])
             currentState += "air";
-        else if ((((gravityDir == DIR_WALL_LEFT || gravityDir == DIR_WALL_RIGHT) && Control.AxisY() != 0) ||
-            ((gravityDir == DIR_FLOOR || gravityDir == DIR_CEILING) && Control.AxisY() != 0)) && animData[0])
+        else if ((((gravityDir == Dirs.WallL || gravityDir == Dirs.WallR) && Control.AxisY() != 0) ||
+            ((gravityDir == Dirs.Floor || gravityDir == Dirs.Ceiling) && Control.AxisY() != 0)) && animData[0])
             currentState += "move";
         else
             currentState += "idle";

@@ -29,7 +29,7 @@ public class Bat : Enemy
             anim.Play("Enemy_bat_fly");
             velocity = new Vector2(SPEED * (transform.position.x > PlayState.player.transform.position.x ? -1 : 1),
                 -Mathf.Sqrt(Mathf.Abs((PlayState.player.transform.position.x - transform.position.x) * 16 + 40 + 
-                    PlayState.playerScript.gravityDir switch { 0 => 8, 3 => -8, _ => 0 })) * (SPEED * 16) * 0.1875f * 0.0625f);
+                    PlayState.playerScript.gravityDir switch { Player.Dirs.Floor => 8, Player.Dirs.Ceiling => -8, _ => 0 })) * (SPEED * 16) * 0.1875f * 0.0625f);
         }
         if (active)
         {
