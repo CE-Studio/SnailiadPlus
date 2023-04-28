@@ -95,20 +95,20 @@ public class Platform : MonoBehaviour, IRoomObject
         }
         pathAnim.speed = speed;
 
-        if ((Vector2)transform.position == lastPos)
+        if ((Vector2)platObj.position == lastPos)
             PlayAnim();
         else
         {
-            if (Mathf.Abs(transform.position.y) > Mathf.Abs(transform.position.x))
+            if (Mathf.Abs(platObj.position.y) > Mathf.Abs(platObj.position.x))
             {
-                if (transform.position.y > 0)
+                if (platObj.position.y > 0)
                     PlayAnim("up");
                 else
                     PlayAnim("down");
             }
             else
             {
-                if (transform.position.x > 0)
+                if (platObj.position.x > 0)
                     PlayAnim("right");
                 else
                     PlayAnim("left");
@@ -117,11 +117,16 @@ public class Platform : MonoBehaviour, IRoomObject
 
         if (player.collisions.Contains(box))
         {
-            player.transform.position += transform.position - (Vector3)lastPos;
-            PlayState.playerScript.EjectFromCollisions();
+            Vector3 tweak = platObj.position - (Vector3)lastPos;
+            player.transform.position += tweak;
+            Player.Dirs gravityDir = PlayState.playerScript.gravityDir;
+            PlayState.playerScript.EjectFromCollisions(gravityDir);
+            PlayState.playerScript.EjectFromCollisions(PlayState.playerScript.GetDirAdjacentLeft(gravityDir));
+            PlayState.playerScript.EjectFromCollisions(PlayState.playerScript.GetDirAdjacentRight(gravityDir));
+            PlayState.playerScript.EjectFromCollisions(PlayState.playerScript.GetDirOpposite(gravityDir));
         }
 
-        lastPos = transform.position;
+        lastPos = platObj.position;
     }
 
     private void PlayAnim(string dir = "idle")

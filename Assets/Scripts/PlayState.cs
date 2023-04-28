@@ -750,9 +750,10 @@ public class PlayState {
         }
         foreach (Transform platform in platforms)
         {
-            BoxCollider2D platBox = platform.GetChild(0).GetComponent<BoxCollider2D>();
-            Vector2 a = (Vector2)platform.position - (platBox.size * 0.5f);
-            Vector2 b = (Vector2)platform.position + (platBox.size * 0.5f);
+            Transform platObj = platform.GetChild(0);
+            BoxCollider2D platBox = platObj.GetComponent<BoxCollider2D>();
+            Vector2 a = (Vector2)platObj.position - (platBox.size * 0.5f);
+            Vector2 b = (Vector2)platObj.position + (platBox.size * 0.5f);
             if (pos.x > a.x && pos.x < b.x && pos.y > a.y && pos.y < b.y)
                 return true;
         }

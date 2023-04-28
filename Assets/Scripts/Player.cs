@@ -299,7 +299,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     CaseUp();
                     break;
             }
-    
+            transform.position += (Vector3)velocity;
+            if (!grounded && transform.position == (Vector3)lastPosition)
+                transform.position += PlayState.FRAC_128 * gravityDir switch { Dirs.Floor => Vector3.down, Dirs.WallL => Vector3.left, Dirs.WallR => Vector3.right, _ => Vector3.up };
+
             if ((Control.ShootHold() || Control.StrafeHold()) && !PlayState.paralyzed)
             {
                 if (shelled)
@@ -307,13 +310,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 Shoot();
             }
 
-            if (PlayState.paralyzed)
-            {
-                if ((gravityDir == Dirs.Floor || gravityDir == Dirs.Ceiling) && velocity.x != 0)
-                    transform.position += new Vector3(velocity.x, 0, 0);
-                if ((gravityDir == Dirs.WallL || gravityDir == Dirs.WallR) && velocity.y != 0)
-                    transform.position += new Vector3(0, velocity.y, 0);
-            }
             EjectFromCollisions();
         }
     }
@@ -377,7 +373,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
-            if (GetDistance(Dirs.Floor) > PlayState.FRAC_16)
+            if (GetDistance(Dirs.Floor, true) > (box.size.y * 0.5f) + PlayState.FRAC_16)
             {
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.DownHold() &&
@@ -408,6 +404,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     grounded = false;
             }
+            else
+            {
+                // We're still safe on the ground. Here we're just logging the ground as a collision
+                // While we're here, just in case we happen to be on a platform that's moving up, let's make sure we haven't accidentally clipped inside of it
+                if (GetDistance(Dirs.Floor, true) < (box.size.y * 0.5f))
+                    transform.position += ((box.size.y * 0.5f) - lastDistance + PlayState.FRAC_128) * Vector3.up;
+                AddCollision(lastCollision);
+            }
         }
 
         // Now, we perform horizontal checks for moving back and forth
@@ -428,7 +432,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.x = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisX());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.Floor) + GetDistance(Dirs.Ceiling) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
                 {
                     if ((Control.UpHold() && !grounded) ||
                         (Control.UpHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -467,7 +471,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.y > lastPointBeforeHop)))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && GetDistance(Dirs.Ceiling) > 0.95f && ! PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && GetDistance(Dirs.Ceiling) > 0.95f && !PlayState.paralyzed)
         {
             if (shelled)
                 ToggleShell();
@@ -527,8 +531,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && gravityDir == Dirs.Floor && !Control.DownHold())
             holdingShell = false;
-
-        transform.position += (Vector3)velocity;
     }
 
     public virtual void CaseLeft()
@@ -590,7 +592,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
-            if (GetDistance(Dirs.WallL) > PlayState.FRAC_16)
+            if (GetDistance(Dirs.WallL, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
             {
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.LeftHold() &&
@@ -621,6 +623,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     grounded = false;
             }
+            else
+            {
+                // We're still safe on the ground. Here we're just logging the ground as a collision
+                // While we're here, just in case we happen to be on a platform that's moving up, let's make sure we haven't accidentally clipped inside of it
+                if (GetDistance(Dirs.WallL, true) < (box.size.x * 0.5f))
+                    transform.position += ((box.size.x * 0.5f) - lastDistance + PlayState.FRAC_128) * Vector3.right;
+                AddCollision(lastCollision);
+            }
         }
 
         // Now, we perform horizontal checks for moving back and forth
@@ -641,7 +651,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.y = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisY());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.WallL) + GetDistance(Dirs.WallR) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
                 {
                     if ((Control.RightHold() && !grounded) ||
                         (Control.RightHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -740,8 +750,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && gravityDir == Dirs.WallL && !Control.LeftHold())
             holdingShell = false;
-
-        transform.position += (Vector3)velocity;
     }
 
     public virtual void CaseRight()
@@ -803,7 +811,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
-            if (GetDistance(Dirs.WallR) > PlayState.FRAC_16)
+            if (GetDistance(Dirs.WallR, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
             {
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.RightHold() &&
@@ -834,6 +842,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     grounded = false;
             }
+            else
+            {
+                // We're still safe on the ground. Here we're just logging the ground as a collision
+                // While we're here, just in case we happen to be on a platform that's moving up, let's make sure we haven't accidentally clipped inside of it
+                if (GetDistance(Dirs.WallR, true) < (box.size.x * 0.5f))
+                    transform.position += ((box.size.x * 0.5f) - lastDistance + PlayState.FRAC_128) * Vector3.left;
+                AddCollision(lastCollision);
+            }
         }
 
         // Now, we perform horizontal checks for moving back and forth
@@ -854,7 +870,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.y = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisY());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.WallL) + GetDistance(Dirs.WallR) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
                 {
                     if ((Control.LeftHold() && !grounded) ||
                         (Control.LeftHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -953,8 +969,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && gravityDir == Dirs.WallR && !Control.RightHold())
             holdingShell = false;
-
-        transform.position += (Vector3)velocity;
     }
 
     public virtual void CaseUp()
@@ -1016,7 +1030,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
-            if (GetDistance(Dirs.Ceiling) > PlayState.FRAC_16)
+            if (GetDistance(Dirs.Ceiling, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
             {
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.UpHold() &&
@@ -1047,6 +1061,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     grounded = false;
             }
+            else
+            {
+                // We're still safe on the ground. Here we're just logging the ground as a collision
+                // While we're here, just in case we happen to be on a platform that's moving up, let's make sure we haven't accidentally clipped inside of it
+                if (GetDistance(Dirs.Ceiling, true) < (box.size.y * 0.5f))
+                    transform.position += ((box.size.y * 0.5f) - lastDistance + PlayState.FRAC_128) * Vector3.down;
+                AddCollision(lastCollision);
+            }
         }
 
         // Now, we perform horizontal checks for moving back and forth
@@ -1067,7 +1089,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.x = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisX());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.Floor) + GetDistance(Dirs.Ceiling) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
                 {
                     if ((Control.DownHold() && !grounded) ||
                         (Control.DownHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -1166,8 +1188,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = true;
         if (holdingShell && gravityDir == Dirs.Ceiling && !Control.UpHold())
             holdingShell = false;
-
-        transform.position += (Vector3)velocity;
     }
 
     private bool CheckAbility(int[][] ability)
@@ -1686,7 +1706,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public void EjectFromCollisions()
     {
-        while (PlayState.IsTileSolid(transform.position))
+        if (inDeathCutscene)
+            return;
+
+        while (PlayState.IsPointPlayerCollidable(transform.position))
         {
             transform.position += gravityDir switch {
                 Dirs.WallL => Vector3.right,
@@ -1708,7 +1731,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
     public void EjectFromCollisions(Dirs from)
     {
-        while (PlayState.IsTileSolid(transform.position))
+        while (PlayState.IsPointPlayerCollidable(transform.position))
         {
             transform.position += from switch
             {

@@ -17,6 +17,7 @@ public class Babyfish : Enemy
     private void Awake()
     {
         Spawn(40, 0, 0, true);
+        canDamage = false;
 
         wallCheck = Physics2D.Raycast(
             transform.position,
