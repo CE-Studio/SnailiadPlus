@@ -11,6 +11,7 @@ public class Particle : MonoBehaviour
     public float[] vars = new float[] { 0, 0, 0, 0, 0, 0 };
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
+    public bool trackWithCamera = false;
 
     public void Start()
     {
@@ -19,7 +20,10 @@ public class Particle : MonoBehaviour
         anim.blankOnNonLoopEnd = true;
         gameObject.SetActive(false);
 
-        anim.Add("Bubble");
+        anim.Add("Bubble1");
+        anim.Add("Bubble2");
+        anim.Add("Bubble3");
+        anim.Add("Bubble4");
         anim.Add("Dot_heat_tiny");
         anim.Add("Dot_heat_small");
         anim.Add("Dot_heat_medium");
@@ -39,6 +43,10 @@ public class Particle : MonoBehaviour
         anim.Add("Snow3");
         anim.Add("Snow4");
         anim.Add("Splash");
+        anim.Add("Star1");
+        anim.Add("Star2");
+        anim.Add("Star3");
+        anim.Add("Star4");
         anim.Add("Transformation_ice");
         anim.Add("Transformation_gravity");
         anim.Add("Transformation_fullMetal");
@@ -106,11 +114,108 @@ public class Particle : MonoBehaviour
                         while (transform.position.y > PlayState.cam.transform.position.y + 8)
                             transform.position = new Vector2(transform.position.x, transform.position.y - 16);
                         break;
+                    case "star":
+                        float centerDis = Vector2.Distance(transform.position, PlayState.cam.transform.position);
+                        if (internalVars[0] == 0 && internalVars[1] == 0)
+                        {
+                            switch (vars[0])
+                            {
+                                case 0:
+                                    internalVars[0] = 0;
+                                    internalVars[1] = vars[1];
+                                    break;
+                                case 1:
+                                    internalVars[0] = PlayState.ANGLE_DIAG.x * vars[1];
+                                    internalVars[1] = PlayState.ANGLE_DIAG.y * vars[1];
+                                    break;
+                                case 2:
+                                    internalVars[0] = vars[1];
+                                    internalVars[1] = 0;
+                                    break;
+                                case 3:
+                                    internalVars[0] = PlayState.ANGLE_DIAG.x * vars[1];
+                                    internalVars[1] = -PlayState.ANGLE_DIAG.y * vars[1];
+                                    break;
+                                case 4:
+                                    internalVars[0] = 0;
+                                    internalVars[1] = -vars[1];
+                                    break;
+                                case 5:
+                                    internalVars[0] = -PlayState.ANGLE_DIAG.x * vars[1];
+                                    internalVars[1] = -PlayState.ANGLE_DIAG.y * vars[1];
+                                    break;
+                                default:
+                                case 6:
+                                    internalVars[0] = -vars[1];
+                                    internalVars[1] = 0;
+                                    break;
+                                case 7:
+                                    internalVars[0] = -PlayState.ANGLE_DIAG.x * vars[1];
+                                    internalVars[1] = PlayState.ANGLE_DIAG.y * vars[1];
+                                    break;
+                                case 8:
+                                    Vector2 toCenter = (Vector2)(PlayState.cam.transform.position - transform.position).normalized * vars[2];
+                                    internalVars[0] = toCenter.x;
+                                    internalVars[1] = toCenter.y;
+                                    break;
+                                case 9:
+                                    Vector2 fromCenter = (Vector2)(PlayState.cam.transform.position - transform.position).normalized * -vars[2];
+                                    internalVars[0] = fromCenter.x;
+                                    internalVars[1] = fromCenter.y;
+                                    break;
+                            }
+                        }
+                        transform.position += new Vector3(internalVars[0], internalVars[1]);
+                        if (vars[0] == 8)
+                        {
+                            if (centerDis < Vector2.Distance(transform.position, PlayState.cam.transform.position))
+                            {
+                                if (Mathf.Round(Random.Range(0f, 1f)) == 1)
+                                {
+                                    transform.position = (Vector2)PlayState.cam.transform.position +
+                                        new Vector2(Mathf.Round(Random.Range(0f, 1f)) == 1 ? 13 : -13, Random.Range(-8, 8));
+                                }
+                                else
+                                {
+                                    transform.position = (Vector2)PlayState.cam.transform.position +
+                                        new Vector2(Random.Range(-13, 13), Mathf.Round(Random.Range(0f, 1f)) == 1 ? 8 : -8);
+                                }
+                                internalVars[0] = 0;
+                                internalVars[1] = 0;
+                            }
+                        }
+                        else if (vars[0] == 9)
+                        {
+                            if (transform.position.x < PlayState.cam.transform.position.x - 13 ||
+                                transform.position.x > PlayState.cam.transform.position.x + 13 ||
+                                transform.position.y < PlayState.cam.transform.position.y - 8 ||
+                                transform.position.y > PlayState.cam.transform.position.y + 8)
+                            {
+                                transform.position = (Vector2)PlayState.cam.transform.position +
+                                    new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+                                internalVars[0] = 0;
+                                internalVars[1] = 0;
+                            }
+                        }
+                        else
+                        {
+                            while (transform.position.x < PlayState.cam.transform.position.x - 13)
+                                transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                            while (transform.position.x > PlayState.cam.transform.position.x + 13)
+                                transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                            while (transform.position.y < PlayState.cam.transform.position.y - 8)
+                                transform.position = new Vector2(transform.position.x, transform.position.y + 16);
+                            while (transform.position.y > PlayState.cam.transform.position.y + 8)
+                                transform.position = new Vector2(transform.position.x, transform.position.y - 16);
+                        }
+                        break;
                 }
 
                 if (!anim.isPlaying && isActive && !(type == "bubble"))
                     ResetParticle();
             }
+            if (trackWithCamera)
+                transform.position += (Vector3)PlayState.camScript.lastMove;
         }
         else
         {
@@ -127,7 +232,7 @@ public class Particle : MonoBehaviour
             default:
                 break;
             case "bubble":
-                anim.Play("Bubble");
+                anim.Play("Bubble" + Random.Range(1, 5).ToString());
                 break;
             case "dust":
                 anim.Play("Dust");
@@ -161,6 +266,9 @@ public class Particle : MonoBehaviour
             case "splash":
                 anim.Play("Splash");
                 break;
+            case "star":
+                anim.Play("Star" + Random.Range(1, 5).ToString());
+                break;
             case "transformation":
                 anim.Play("Transformation_" + vars[0] switch
                 {
@@ -181,6 +289,7 @@ public class Particle : MonoBehaviour
         {
             "transformation" => -51,
             "heat" => Random.Range(0, 4) switch { 0 => -124, 1 => -110, 2 => -24, _ => -1 },
+            "star" => -115,
             _ => -15
         };
         sprite.color = animType switch
@@ -221,6 +330,7 @@ public class Particle : MonoBehaviour
             vars[i] = 0;
         for (int i = 0; i < internalVars.Length; i++)
             internalVars[i] = 0;
+        trackWithCamera = false;
         gameObject.SetActive(false);
     }
 }

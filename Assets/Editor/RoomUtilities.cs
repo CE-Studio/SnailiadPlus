@@ -20,6 +20,10 @@ public class RoomUtilities : Editor
     SerializedProperty sParFG1;
     SerializedProperty sParBG1;
     SerializedProperty sParBG2;
+    SerializedProperty sOffFG2;
+    SerializedProperty sOffFG1;
+    SerializedProperty sOffBG1;
+    SerializedProperty sOffBG2;
 
     public void OnEnable()
     {
@@ -31,6 +35,10 @@ public class RoomUtilities : Editor
         sParFG1 = serializedObject.FindProperty("parallaxForeground1Modifier");
         sParBG1 = serializedObject.FindProperty("parallaxBackgroundModifier");
         sParBG2 = serializedObject.FindProperty("parallaxSkyModifier");
+        sOffFG2 = serializedObject.FindProperty("offsetForeground2");
+        sOffFG1 = serializedObject.FindProperty("offsetForeground1");
+        sOffBG1 = serializedObject.FindProperty("offsetBackground");
+        sOffBG2 = serializedObject.FindProperty("offsetSky");
     }
 
     public override void OnInspectorGUI()
@@ -196,9 +204,13 @@ public class RoomUtilities : Editor
 
         GUILayout.Label("Parallax modifiers");
         sParFG2.vector2Value = EditorGUILayout.Vector2Field("Foreground 2", sParFG2.vector2Value);
+        sOffFG2.vector2Value = EditorGUILayout.Vector2Field("        Offset", sOffFG2.vector2Value);
         sParFG1.vector2Value = EditorGUILayout.Vector2Field("Foreground 1", sParFG1.vector2Value);
+        sOffFG1.vector2Value = EditorGUILayout.Vector2Field("        Offset", sOffFG1.vector2Value);
         sParBG1.vector2Value = EditorGUILayout.Vector2Field("Background", sParBG1.vector2Value);
+        sOffBG1.vector2Value = EditorGUILayout.Vector2Field("        Offset", sOffBG1.vector2Value);
         sParBG2.vector2Value = EditorGUILayout.Vector2Field("Sky", sParBG2.vector2Value);
+        sOffBG2.vector2Value = EditorGUILayout.Vector2Field("        Offset", sOffBG2.vector2Value);
         GUILayout.Space(15);
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("waterLevel"), true);

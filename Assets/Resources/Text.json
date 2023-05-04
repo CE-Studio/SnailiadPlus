@@ -2096,6 +2096,11 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_snelk",
+			"text": "Scorching Snelks",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2621,6 +2626,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_47_default_0",
+			"text": "So many {col|0210}secret snelks!  {p|0.15}{col|0312}Have{nl}you found the other {col|0210}secret{nl}snelk {col|0312}room yet?  {p|0.2}_@_v!!",
+			"value": 1
+		},
+		{
 			"name": "npc_48_greet_0",
 			"text": "Hey, {P}, what's up?",
 			"value": 1
@@ -2696,24 +2706,24 @@
 			"value": 1
 		},
 		{
-			"name": "npc_turtle_default_0",
-			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
-			"value": 0
-		},
-		{
 			"name": "npc_54_default_0",
 			"text": "Idk how I'm saying this I'm not supposed{nl}to be talking right now.",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_55_default_0",
 			"text": "The test subject looks just{nl}like me...{p|0.5}{nl}I think I feel a connection...",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_55_second_0",
 			"text": "\"Not tile\"...{p|0.5}{nl}I'm not a tile either, am I,{nl}{P}?",
-			"value": 0
+			"value": 1
+		},
+		{
+			"name": "npc_56_default_0",
+			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
+			"value": 1
 		},
 		{
 			"name": "",

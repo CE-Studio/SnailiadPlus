@@ -6,6 +6,7 @@ public class CamMovement : MonoBehaviour
 {
     public Transform focusPoint;
     public float camSpeed = 0.1f;
+    public Vector2 lastMove = Vector2.zero;
 
     private Vector2 lastShakeOffset = Vector2.zero;
 
@@ -13,6 +14,7 @@ public class CamMovement : MonoBehaviour
     {
         if (PlayState.gameState != PlayState.GameState.menu)
         {
+            Vector2 lastPos = transform.position;
             Vector2 camBoundsX = new Vector2(
                 PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x,
                 PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y);
@@ -43,6 +45,7 @@ public class CamMovement : MonoBehaviour
                 transform.position += (Vector3)PlayState.camShakeOffset;
                 lastShakeOffset = PlayState.camShakeOffset;
             }
+            lastMove = (Vector2)transform.position - lastPos;
 
             Debug.DrawLine(
                 new Vector2(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),

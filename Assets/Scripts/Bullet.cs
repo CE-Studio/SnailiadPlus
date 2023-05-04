@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     public GameObject player;
     public GameObject cam;
 
-    private readonly Vector2 diagonalAim = new Vector2(Mathf.Cos(40 * Mathf.Deg2Rad), Mathf.Sin(40 * Mathf.Deg2Rad));
+    private readonly Vector2 diagonalAim = PlayState.ANGLE_DIAG;
     
     void Start()
     {

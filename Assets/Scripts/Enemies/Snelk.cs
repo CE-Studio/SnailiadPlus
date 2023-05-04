@@ -39,12 +39,15 @@ public class Snelk : Enemy
         anim.Add("Enemy_snelk_sleep");
         SetState(state);
 
-        currentHop = Mathf.FloorToInt(transform.position.x) % hopHeights.Length;
+        currentHop = Mathf.Abs(Mathf.FloorToInt(transform.position.x)) % hopHeights.Length;
         facingLeft = PlayState.player.transform.position.x < transform.position.x;
     }
 
     public void FixedUpdate()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (!(state == 2 && velocity.y == 0 && hasLandedOnce))
             velocity = new Vector2((hasLandedOnce ? (state == 1 ? SPEED_RUN : SPEED_NORMAL) * (facingLeft ? -1 : 1) : 0) * Time.deltaTime,
                 Mathf.Clamp(velocity.y - GRAVITY * Time.deltaTime, TERMINAL_VELOCITY, Mathf.Infinity));

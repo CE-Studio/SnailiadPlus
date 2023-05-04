@@ -1030,7 +1030,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
-            if (GetDistance(Dirs.Ceiling, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
+            if (GetDistance(Dirs.Ceiling, true) > (box.size.y * 0.5f) + PlayState.FRAC_16)
             {
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.UpHold() &&

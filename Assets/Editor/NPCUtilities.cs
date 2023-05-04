@@ -13,6 +13,7 @@ public class NPCUtilities:Editor {
     SerializedProperty sName;
     SerializedProperty sUpside;
     SerializedProperty sLook;
+    SerializedProperty sAnim;
 
     public void OnEnable() {
         script = (NPC)target;
@@ -21,6 +22,7 @@ public class NPCUtilities:Editor {
         sName = serializedObject.FindProperty("nameID");
         sUpside = serializedObject.FindProperty("upsideDown");
         sLook = serializedObject.FindProperty("lookMode");
+        sAnim = serializedObject.FindProperty("animationSet");
     }
 
     public override void OnInspectorGUI() {
@@ -30,6 +32,7 @@ public class NPCUtilities:Editor {
         sName.stringValue = EditorGUILayout.TextField("NPC Cutscene Name:", sName.stringValue);
         sUpside.boolValue = EditorGUILayout.Toggle("NPC upside down? ", sUpside.boolValue);
         sLook.intValue = EditorGUILayout.Popup("Look Behavior: ", sLook.intValue, looklist);
+        sAnim.intValue = EditorGUILayout.IntField("Animation Set:", sAnim.intValue);
 
         serializedObject.ApplyModifiedProperties();
     }

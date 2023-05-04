@@ -12,6 +12,10 @@ public class RoomTrigger:MonoBehaviour {
     public Vector2 parallaxForeground1Modifier = Vector2.zero;
     public Vector2 parallaxBackgroundModifier = Vector2.zero;
     public Vector2 parallaxSkyModifier = Vector2.zero;
+    public Vector2 offsetForeground2 = Vector2.zero;
+    public Vector2 offsetForeground1 = Vector2.zero;
+    public Vector2 offsetBackground = Vector2.zero;
+    public Vector2 offsetSky = Vector2.zero;
 
     public int areaID = 0;
     // 0 = Snail Town
@@ -81,7 +85,16 @@ public class RoomTrigger:MonoBehaviour {
 
             int effectVarIndex = 0;
             foreach (string effect in environmentalEffects) {
-                switch (effect.ToLower()) {
+                string effMain = effect.ToLower();
+                string effType = "";
+                if (effect.Contains('_'))
+                {
+                    string[] effParts = effect.Split('_');
+                    effMain = effParts[0].ToLower();
+                    effType = effParts[1].ToLower();
+                }
+
+                switch (effMain) {
                     default:
                         break;
                     case "bubble":
@@ -123,9 +136,34 @@ public class RoomTrigger:MonoBehaviour {
                     case "snow":
                         if (!initializedEffects) {
                             for (int i = 0; i < 60; i++) {
-                                Vector2 snowPos = new Vector2(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
+                                Vector2 snowPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
                                 PlayState.RequestParticle(snowPos, "snow");
+                            }
+                        }
+                        break;
+                    case "star":
+                        if (!initializedEffects)
+                        {
+                            int typeID = effType switch
+                            {
+                                "n" => 0,
+                                "ne" => 1,
+                                "e" => 2,
+                                "se" => 3,
+                                "s" => 4,
+                                "sw" => 5,
+                                "w" => 6,
+                                "nw" => 7,
+                                "center" => 8,
+                                "border" => 9,
+                                _ => 6
+                            };
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Vector2 starPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
+                                    Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
+                                PlayState.RequestParticle(starPos, "star", new float[] { typeID });
                             }
                         }
                         break;
@@ -181,6 +219,10 @@ public class RoomTrigger:MonoBehaviour {
             PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
             PlayState.parallaxBgMod = parallaxBackgroundModifier;
             PlayState.parallaxSkyMod = parallaxSkyModifier;
+            PlayState.fg2Offset = offsetForeground2;
+            PlayState.fg1Offset = offsetForeground1;
+            PlayState.bgOffset = offsetBackground;
+            PlayState.skyOffset = offsetSky;
             PlayState.PlayAreaSong(areaID, areaSubzone);
             PlayState.CloseDialogue();
             PlayState.isTalking = false;

@@ -15,6 +15,7 @@ public class PlayState {
     public const float FRAC_32 = 0.03125f;
     public const float FRAC_64 = 0.015625f;
     public const float FRAC_128 = 0.0078125f;
+    public static readonly Vector2 ANGLE_DIAG = new(Mathf.Cos(40 * Mathf.Deg2Rad), Mathf.Sin(40 * Mathf.Deg2Rad));
 
     public static readonly string[] DIRS_COMPASS = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
     public static readonly string[] DIRS_CARDINAL = new string[] { "up", "down", "left", "right" };
@@ -58,23 +59,23 @@ public class PlayState {
         public int value;
     }
 
-    public static TextureLibrary textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
+    public static TextureLibrary textureLibrary;
     public static AnimationData[] animationLibrary = new AnimationData[0];
     public static SpriteFrameSize[] spriteSizeLibrary = new SpriteFrameSize[0];
-    public static SoundLibrary soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
-    public static MusicLibrary musicLibrary = GameObject.Find("View").GetComponent<LibraryManager>().musicLibrary;
+    public static SoundLibrary soundLibrary;
+    public static MusicLibrary musicLibrary;
     public static MusicLoopOffset[] musicLoopOffsetLibrary = new MusicLoopOffset[0];
-    public static TextLibrary textLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textLibrary;
+    public static TextLibrary textLibrary;
 
     public static int[] charWidths;
 
-    public static Transform musicParent = GameObject.Find("View/Music Parent").transform;
+    public static Transform musicParent;
     public static List<AudioSource> musicSourceArray = new List<AudioSource>();
     public static AudioSource mus1; //= GameObject.Find("View/Music1").GetComponent<AudioSource>();
     public static AudioSource mus2; //= GameObject.Find("View/Music2").GetComponent<AudioSource>();
     public static AudioSource activeMus; //= mus1;
-    public static AudioSource globalSFX = GameObject.Find("View/Global SFX Source").GetComponent<AudioSource>();
-    public static AudioSource globalMusic = GameObject.Find("View/Global Music Source").GetComponent<AudioSource>();
+    public static AudioSource globalSFX;
+    public static AudioSource globalMusic;
     public static bool musFlag = false;
     public static bool playingMusic = false;
     public static int musicVol = 1;
@@ -90,6 +91,10 @@ public class PlayState {
     public static Vector2 parallaxFg1Mod = Vector2.zero;
     public static Vector2 parallaxBgMod = Vector2.zero;
     public static Vector2 parallaxSkyMod = Vector2.zero;
+    public static Vector2 fg2Offset = Vector2.zero;
+    public static Vector2 fg1Offset = Vector2.zero;
+    public static Vector2 bgOffset = Vector2.zero;
+    public static Vector2 skyOffset = Vector2.zero;
     public static int thisParticleID = 0;
     public static bool isTalking = false;
     public static bool hasJumped = false;
@@ -105,48 +110,37 @@ public class PlayState {
 
     public static int importJobs = 0;
 
-    public static Texture2D palette = (Texture2D)Resources.Load("Images/Palette");
+    public static Texture2D palette;
 
-    public static AudioClip snailTown = (AudioClip)Resources.Load("Sounds/Music/SnailTown");
-    public static AudioClip majorItemJingle = (AudioClip)Resources.Load("Sounds/Music/MajorItemJingle");
-    public static AudioClip[][] areaMusic = new AudioClip[][]
-    {
-        new AudioClip[]
-        {
-            (AudioClip)Resources.Load("Sounds/Music/SnailTown"),
-            (AudioClip)Resources.Load("Sounds/Music/TestZone")
-        },
-        new AudioClip[]
-        {
-            (AudioClip)Resources.Load("Sounds/Music/MareCarelia")
-        }
-    };
     public static int currentArea = -1;
     public static int currentSubzone = -1;
 
-    public static GameObject player = GameObject.Find("Player");
-    public static Player playerScript = player.GetComponent<Player>();
-    public static GameObject cam = GameObject.Find("View");
-    public static GameObject camObj = cam.transform.Find("Main Camera").gameObject;
-    public static SpriteRenderer screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
-    public static GameObject groundLayer = GameObject.Find("Grid/Ground");
-    public static GameObject fg2Layer = GameObject.Find("Grid/Foreground 2");
-    public static GameObject fg1Layer = GameObject.Find("Grid/Foreground");
-    public static GameObject bgLayer = GameObject.Find("Grid/Background");
-    public static GameObject skyLayer = GameObject.Find("Grid/Sky");
-    public static GameObject specialLayer = GameObject.Find("Grid/Special");
-    public static GameObject minimap = GameObject.Find("View/Minimap Panel/Minimap");
-    public static Minimap minimapScript = minimap.transform.parent.GetComponent<Minimap>();
-    public static GameObject achievement = GameObject.Find("View/Achievement Panel");
-    public static GameObject particlePool = GameObject.Find("Particle Pool");
-    public static GameObject roomTriggerParent = GameObject.Find("Room Triggers");
-    public static GameObject mainMenu = GameObject.Find("View/Menu Parent");
-    public static GameObject loadingIcon = GameObject.Find("View/Loading Icon");
-    public static GameObject enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
-    public static GameObject subscreen = GameObject.Find("View/Subscreen");
-    public static Subscreen subscreenScript = subscreen.GetComponent<Subscreen>();
+    public static GameObject player;
+    public static Player playerScript;
+    public static GameObject cam;
+    public static GameObject camObj;
+    public static CamMovement camScript;
+    public static SpriteRenderer screenCover;
+    public static GameObject groundLayer;
+    public static GameObject fg2Layer;
+    public static GameObject fg1Layer;
+    public static GameObject bgLayer;
+    public static GameObject skyLayer;
+    public static GameObject specialLayer;
+    public static GameObject minimap;
+    public static Minimap minimapScript;
+    public static GameObject achievement;
+    public static GameObject particlePool;
+    public static GameObject roomTriggerParent;
+    public static GameObject mainMenu;
+    public static GameObject loadingIcon;
+    public static GameObject enemyBulletPool;
+    public static GameObject subscreen;
+    public static Subscreen subscreenScript;
+    public static GameObject dialogueBox;
+    public static DialogueBox dialogueScript;
 
-    public static GlobalFunctions globalFunctions = GameObject.Find("View").GetComponent<GlobalFunctions>();
+    public static GlobalFunctions globalFunctions;
 
     //Replaced with IRoomObject
     //public struct RoomEntity
@@ -163,22 +157,7 @@ public class PlayState {
         public bool isSilent;
     }
 
-    public static GameObject[] TogglableHUDElements = new GameObject[]
-    {
-        GameObject.Find("View/Minimap Panel"),             //  0
-        GameObject.Find("View/Hearts"),                    //  1
-        GameObject.Find("View/Debug Keypress Indicators"), //  2
-        GameObject.Find("View/Weapon Icons"),              //  3
-        GameObject.Find("View/Game Saved Text"),           //  4
-        GameObject.Find("View/Area Name Text"),            //  5
-        GameObject.Find("View/Item Get Text"),             //  6
-        GameObject.Find("View/Item Percentage Text"),      //  7
-        GameObject.Find("View/FPS Text"),                  //  8
-        GameObject.Find("View/Time Text"),                 //  9
-        GameObject.Find("View/Dialogue Box"),              // 10
-        GameObject.Find("View/Bottom Keys"),               // 11
-        GameObject.Find("View/Boss Health Bar")            // 12
-    };
+    public static GameObject[] TogglableHUDElements;
 
     public static bool paralyzed = false;
     public static bool isArmed = false;
@@ -199,16 +178,16 @@ public class PlayState {
     public static readonly Vector2 WORLD_SPAWN = new Vector2(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
     public static readonly Vector2 ROOM_SIZE = new Vector2(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
     public static Vector2 respawnCoords = WORLD_SPAWN;
-    public static Scene respawnScene = SceneManager.GetActiveScene();
+    public static Scene respawnScene;
 
-    public static TextMesh fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
-    public static TextMesh fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
-    public static TextMesh timeText = GameObject.Find("View/Time Text/Text").GetComponent<TextMesh>();
-    public static TextMesh timeShadow = GameObject.Find("View/Time Text/Shadow").GetComponent<TextMesh>();
-    public static TextMesh pauseText = GameObject.Find("View/Bottom Keys/Pause Key/Text").GetComponent<TextMesh>();
-    public static TextMesh pauseShadow = GameObject.Find("View/Bottom Keys/Pause Key/Shadow").GetComponent<TextMesh>();
-    public static TextMesh mapText = GameObject.Find("View/Bottom Keys/Map Key/Text").GetComponent<TextMesh>();
-    public static TextMesh mapShadow = GameObject.Find("View/Bottom Keys/Map Key/Shadow").GetComponent<TextMesh>();
+    public static TextMesh fpsText;
+    public static TextMesh fpsShadow;
+    public static TextMesh timeText;
+    public static TextMesh timeShadow;
+    public static TextMesh pauseText;
+    public static TextMesh pauseShadow;
+    public static TextMesh mapText;
+    public static TextMesh mapShadow;
 
     public static int currentProfile = -1;
     public static int currentDifficulty = 1; // 0 = Easy, 1 = Normal, 2 = Insane
@@ -781,7 +760,7 @@ public class PlayState {
         playbackTime = activeMus.time;
         mus1.Stop();
         areaMus = activeMus.clip;
-        mus1.PlayOneShot(majorItemJingle);
+        PlayMusic(0, 2);
         List<string> text = new List<string>();
         List<Color32> colors = new List<Color32>();
         switch (item) {
@@ -795,24 +774,24 @@ public class PlayState {
             colors.Add(new Color32(0, 0, 0, 0));
         }
         gameState = GameState.dialogue;
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(1, 0, text, 0, "0005");
+        dialogueScript.RunBox(1, 0, text, 0, "0005");
     }
 
     public static void OpenDialogue(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false) {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().RunBox(type, speaker, text, shape, boxColor, stateList, facingLeft);
+        dialogueScript.RunBox(type, speaker, text, shape, boxColor, stateList, facingLeft);
     }
 
     public static void CloseDialogue() {
         isTalking = false;
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().CloseBox();
+        dialogueScript.CloseBox();
     }
 
     public static void StallDialogueContinuous(CutsceneController cutscene, float lingerTime) {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialogue(cutscene, lingerTime);
+        dialogueScript.StallCutsceneDialogue(cutscene, lingerTime);
     }
 
     public static void StallDialoguePrompted(CutsceneController cutscene) {
-        cam.transform.Find("Dialogue Box").GetComponent<DialogueBox>().StallCutsceneDialoguePrompted(cutscene);
+        dialogueScript.StallCutsceneDialoguePrompted(cutscene);
     }
 
     public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001) {
@@ -931,6 +910,18 @@ public class PlayState {
                 case "splash":
                     if (gameOptions[11] == 1 || gameOptions[11] == 3 || gameOptions[11] == 5)
                         activateParticle = true;
+                    break;
+                case "star":
+                    if ((gameOptions[11] == 4 && values[0] == 6) || gameOptions[11] == 1 || gameOptions[11] == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                        //particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * FRAC_8;
+                        //particleScript.vars[2] = UnityEngine.Random.Range(0f, 1f) * 7.5f * FRAC_16;
+                        particleScript.vars[1] = (UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f) * Time.fixedDeltaTime;
+                        particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
+                        particleScript.trackWithCamera = values[0] == 8 || values[0] == 9;
+                    }
                     break;
                 case "transformation":
                     // Values:
@@ -1604,11 +1595,11 @@ public class PlayState {
     }
 
     public static void SetCamFocus(Transform point = null) {
-        cam.GetComponent<CamMovement>().focusPoint = point;
+        camScript.focusPoint = point;
     }
 
     public static void SetCamSpeed(float speed = 0.1f) {
-        cam.GetComponent<CamMovement>().camSpeed = speed;
+        camScript.camSpeed = speed;
     }
 
     public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false) {
@@ -1632,9 +1623,6 @@ public class PlayState {
     }
 
     public static bool OnScreen(Vector2 position, Collider2D col) {
-        //float boxAdjust = box != null ? box.size.x * 0.5f : 8;
-        //return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - boxAdjust < 12.5f &&
-        //    Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - boxAdjust < 7.5f;
         if (col == null)
             return false;
 

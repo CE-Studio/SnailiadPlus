@@ -3477,7 +3477,7 @@
 		},
 		
 		{
-			"name": "NPC_idle",
+			"name": "NPC_0_idle",
 			"spriteName": "Entities/SnailNpc",
 			"framerate": 3.0,
 			"frames": [
@@ -3489,7 +3489,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "NPC_shell",
+			"name": "NPC_0_shell",
 			"spriteName": "Entities/SnailNpc",
 			"framerate": 0.0,
 			"frames": [
@@ -3500,7 +3500,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "NPC_sleep",
+			"name": "NPC_0_sleep",
 			"spriteName": "Entities/SnailNpc",
 			"framerate": 2.0,
 			"frames": [
@@ -3512,14 +3512,37 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "NPC_turtle",
-			"spriteName": "Entities/TurtleNpc",
+			"name": "NPC_1_idle",
+			"spriteName": "Entities/SnailNpc",
 			"framerate": 3.0,
 			"frames": [
-				0,
-				1,
-				0,
-				2
+				6,
+				7,
+				6,
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_1_shell",
+			"spriteName": "Entities/SnailNpc",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_1_sleep",
+			"spriteName": "Entities/SnailNpc",
+			"framerate": 2.0,
+			"frames": [
+				10,
+				11
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -5410,7 +5433,61 @@
 		},
 		
 		{
-			"name": "Bubble",
+			"name": "Bubble1",
+			"spriteName": "Particles/Bubble",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bubble2",
+			"spriteName": "Particles/Bubble",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bubble3",
+			"spriteName": "Particles/Bubble",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bubble4",
 			"spriteName": "Particles/Bubble",
 			"framerate": 0.0,
 			"frames": [
@@ -5829,6 +5906,174 @@
             "loop": false,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
+        },
+        {
+            "name": "Star1",
+			"spriteName": "Particles/Star",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Star2",
+			"spriteName": "Particles/Star",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Star3",
+			"spriteName": "Particles/Star",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
+        },
+        {
+            "name": "Star4",
+			"spriteName": "Particles/Star",
+            "framerate": 0.0,
+            "frames": [
+                0,
+                1,
+                2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": true
         },
         {
             "name": "Transformation_ice",
@@ -6765,7 +7010,7 @@
 			"frames": [
 				5,
 				6,
-				110,
+				109,
 				105,
 				1,
 				313

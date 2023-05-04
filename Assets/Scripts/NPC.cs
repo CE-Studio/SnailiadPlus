@@ -9,6 +9,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     public int lookMode = 0;
     public bool upsideDown = false;
     public string nameID = "pleaseNameMe";
+    public int animationSet = 0;
 
     public bool chatting = false;
     public bool needsSpace = false; // On the off chance that two snails are close enough to each other to trigger simultaneously, like 06 and 17
@@ -66,6 +67,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         content["lookMode"] = lookMode;
         content["upsideDown"] = upsideDown;
         content["nameID"] = nameID;
+        content["animationSet"] = animationSet;
         return content;
     }
 
@@ -74,6 +76,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         lookMode = (int)content["lookMode"];
         upsideDown = (bool)content["upsideDown"];
         nameID = (string)content["nameID"];
+        animationSet = (int)content["animationSet"];
         Spawn();
     }
 
@@ -109,14 +112,14 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
     public virtual void Spawn() {
         CreateNewSprites();
-        anim.Add("NPC_idle");
-        anim.Add("NPC_shell");
-        anim.Add("NPC_sleep");
+        anim.Add("NPC_" + animationSet + "_idle");
+        anim.Add("NPC_" + animationSet + "_shell");
+        anim.Add("NPC_" + animationSet + "_sleep");
         if (ID == 26 && (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy")) {
-            anim.Play("NPC_sleep");
+            anim.Play("NPC_" + animationSet + "_sleep");
             sprite.flipX = PlayState.player.transform.position.x < transform.position.x;
         } else
-            anim.Play("NPC_idle");
+            anim.Play("NPC_" + animationSet + "_idle");
         if (upsideDown) {
             sprite.flipY = true;
             speechBubbleSprite.flipY = true;
@@ -383,6 +386,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 17:
+                            boxShape = PlayState.GetAnim("Dialogue_characterShapes").frames[2];
+                            boxColor = PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[2]);
                             if (PlayState.GetItemPercentage() < 100)
                                 AddText("secret");
                             else
@@ -512,6 +517,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 47:
+                            AddText("default");
+                            break;
+
                         case 48:
                             if (nexted == 0)
                                 AddText("greet");
@@ -550,6 +559,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 nexted++;
                             } else
                                 AddText("second");
+                            break;
+
+                        case 56:
+                            boxShape = PlayState.GetAnim("Dialogue_characterShapes").frames[3];
+                            boxColor = PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[3]);
+                            AddText("default");
                             break;
 
                         default:

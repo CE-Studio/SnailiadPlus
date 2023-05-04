@@ -160,7 +160,6 @@ public class MainMenu : MonoBehaviour
 
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         cam = PlayState.cam.transform;
-        PlayState.SetCamFocus(PlayState.player.transform);
         music = GetComponent<AudioSource>();
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
         PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
@@ -1132,6 +1131,8 @@ public class MainMenu : MonoBehaviour
         if (lastRoomTrigger != null)
             lastRoomTrigger.DespawnEverything();
         PlayState.screenCover.sortingOrder = 999;
+        PlayState.SetCamFocus(PlayState.player.transform);
+        PlayState.cam.transform.position = spawnPos;
         PlayState.player.transform.position = spawnPos;
         PlayState.playerScript.CorrectGravity(false);
         PlayState.gameState = PlayState.GameState.game;

@@ -15,7 +15,7 @@ MonoImporter:
       type: 3}
   - titlePlus: {fileID: 2993922094836015574, guid: caf6e6ec384a1bd43b8d01302e7ea2b0,
       type: 3}
-  executionOrder: -50
+  executionOrder: -30
   icon: {fileID: 2800000, guid: 078f95d0434ecb648b851d3da3e39769, type: 3}
   userData: 
   assetBundleName: 

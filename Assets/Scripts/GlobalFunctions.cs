@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class GlobalFunctions : MonoBehaviour
@@ -60,6 +61,11 @@ public class GlobalFunctions : MonoBehaviour
     // Reference to palette shader component
     public Assets.Scripts.Cam.Effects.RetroPixelMax paletteShader;
 
+    public void Awake()
+    {
+        DeclarePlayStateMono();
+    }
+
     public void Start()
     {
         for (int i = 0; i < weaponIcons.Length; i++)
@@ -77,6 +83,75 @@ public class GlobalFunctions : MonoBehaviour
         };
 
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
+    }
+
+    private void DeclarePlayStateMono()
+    {
+        PlayState.textureLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textureLibrary;
+        PlayState.soundLibrary = GameObject.Find("View").GetComponent<LibraryManager>().soundLibrary;
+        PlayState.musicLibrary = GameObject.Find("View").GetComponent<LibraryManager>().musicLibrary;
+        PlayState.textLibrary = GameObject.Find("View").GetComponent<LibraryManager>().textLibrary;
+
+        PlayState.musicParent = GameObject.Find("View/Music Parent").transform;
+        PlayState.globalSFX = GameObject.Find("View/Global SFX Source").GetComponent<AudioSource>();
+        PlayState.globalMusic = GameObject.Find("View/Global Music Source").GetComponent<AudioSource>();
+
+        PlayState.player = GameObject.Find("Player");
+        PlayState.playerScript = PlayState.player.GetComponent<Player>();
+        PlayState.cam = GameObject.Find("View");
+        PlayState.camObj = PlayState.cam.transform.Find("Main Camera").gameObject;
+        PlayState.camScript = PlayState.cam.GetComponent<CamMovement>();
+        PlayState.screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
+        PlayState.groundLayer = GameObject.Find("Grid/Ground");
+        PlayState.fg2Layer = GameObject.Find("Grid/Foreground 2");
+        PlayState.fg1Layer = GameObject.Find("Grid/Foreground");
+        PlayState.bgLayer = GameObject.Find("Grid/Background");
+        PlayState.skyLayer = GameObject.Find("Grid/Sky");
+        PlayState.specialLayer = GameObject.Find("Grid/Special");
+        PlayState.minimap = GameObject.Find("View/Minimap Panel/Minimap");
+        PlayState.minimapScript = PlayState.minimap.transform.parent.GetComponent<Minimap>();
+        PlayState.achievement = GameObject.Find("View/Achievement Panel");
+        PlayState.particlePool = GameObject.Find("Particle Pool");
+        PlayState.roomTriggerParent = GameObject.Find("Room Triggers");
+        PlayState.mainMenu = GameObject.Find("View/Menu Parent");
+        PlayState.loadingIcon = GameObject.Find("View/Loading Icon");
+        PlayState.enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
+        PlayState.subscreen = GameObject.Find("View/Subscreen");
+        PlayState.subscreenScript = PlayState.subscreen.GetComponent<Subscreen>();
+        PlayState.dialogueBox = PlayState.cam.transform.Find("Dialogue Box").gameObject;
+        PlayState.dialogueScript = PlayState.dialogueBox.GetComponent<DialogueBox>();
+
+        PlayState.globalFunctions = this;
+
+        PlayState.fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
+        PlayState.fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
+        PlayState.timeText = GameObject.Find("View/Time Text/Text").GetComponent<TextMesh>();
+        PlayState.timeShadow = GameObject.Find("View/Time Text/Shadow").GetComponent<TextMesh>();
+        PlayState.pauseText = GameObject.Find("View/Bottom Keys/Pause Key/Text").GetComponent<TextMesh>();
+        PlayState.pauseShadow = GameObject.Find("View/Bottom Keys/Pause Key/Shadow").GetComponent<TextMesh>();
+        PlayState.mapText = GameObject.Find("View/Bottom Keys/Map Key/Text").GetComponent<TextMesh>();
+        PlayState.mapShadow = GameObject.Find("View/Bottom Keys/Map Key/Shadow").GetComponent<TextMesh>();
+
+        PlayState.palette = (Texture2D)Resources.Load("Images/Palette");
+
+        PlayState.TogglableHUDElements = new GameObject[]
+        {
+            GameObject.Find("View/Minimap Panel"),             //  0
+            GameObject.Find("View/Hearts"),                    //  1
+            GameObject.Find("View/Debug Keypress Indicators"), //  2
+            GameObject.Find("View/Weapon Icons"),              //  3
+            GameObject.Find("View/Game Saved Text"),           //  4
+            GameObject.Find("View/Area Name Text"),            //  5
+            GameObject.Find("View/Item Get Text"),             //  6
+            GameObject.Find("View/Item Percentage Text"),      //  7
+            GameObject.Find("View/FPS Text"),                  //  8
+            GameObject.Find("View/Time Text"),                 //  9
+            GameObject.Find("View/Dialogue Box"),              // 10
+            GameObject.Find("View/Bottom Keys"),               // 11
+            GameObject.Find("View/Boss Health Bar")            // 12
+        };
+
+        PlayState.respawnScene = SceneManager.GetActiveScene();
     }
 
     public void Update()
@@ -226,19 +301,19 @@ public class GlobalFunctions : MonoBehaviour
     {
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            PlayState.fg2Layer.transform.localPosition = new Vector2(
+            PlayState.fg2Layer.transform.localPosition = PlayState.fg2Offset + new Vector2(
                 Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg2Mod.x * 16) * 0.0625f,
                 Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg2Mod.y * 16) * 0.0625f
                 );
-            PlayState.fg1Layer.transform.localPosition = new Vector2(
+            PlayState.fg1Layer.transform.localPosition = PlayState.fg1Offset + new Vector2(
                 Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxFg1Mod.x * 16) * 0.0625f,
                 Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxFg1Mod.y * 16) * 0.0625f
                 );
-            PlayState.bgLayer.transform.localPosition = new Vector2(
+            PlayState.bgLayer.transform.localPosition = PlayState.bgOffset + new Vector2(
                 Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxBgMod.x * 16) * 0.0625f,
                 Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxBgMod.y * 16) * 0.0625f
                 );
-            PlayState.skyLayer.transform.localPosition = new Vector2(
+            PlayState.skyLayer.transform.localPosition = PlayState.skyOffset + new Vector2(
                 Mathf.Round((PlayState.cam.transform.position.x - PlayState.camCenter.x) * PlayState.parallaxSkyMod.x * 16) * 0.0625f,
                 Mathf.Round((PlayState.cam.transform.position.y - PlayState.camCenter.y) * PlayState.parallaxSkyMod.y * 16) * 0.0625f
                 );
