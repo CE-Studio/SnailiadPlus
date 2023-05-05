@@ -5141,6 +5141,30 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_snakey_green_idle",
+			"spriteName": "Entities/Snake",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_snakey_green_attack",
+			"spriteName": "Entities/Snake",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_snelk_jump",
 			"spriteName": "Entities/Snelk",
 			"framerate": 0.0,
