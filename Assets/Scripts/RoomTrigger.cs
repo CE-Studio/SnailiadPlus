@@ -173,8 +173,7 @@ public class RoomTrigger:MonoBehaviour {
 
             if (waterLevel.Length > 0) {
                 float playerY = PlayState.player.transform.position.y;
-                float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f +
-                    waterLevel[WaterPoint(PlayState.player.transform.position.x)].y;
+                float waterY = GetWaterLevelAt(PlayState.player.transform.position.x);
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects) {
                     if (initializationBuffer <= 0 && splashTimeout <= 0) {
                         PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
@@ -206,6 +205,13 @@ public class RoomTrigger:MonoBehaviour {
         if (waterPoint == -1)
             waterPoint = 0;
         return waterPoint;
+    }
+
+    public float GetWaterLevelAt(float x)
+    {
+        int waterPoint = WaterPoint(x);
+        float waterY = transform.position.y - (box.size.y * 0.5f) - 0.25f + waterLevel[waterPoint].y;
+        return waterY;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -431,19 +437,19 @@ public class RoomTrigger:MonoBehaviour {
                             iceSpikeRight.GetComponent<IceSpike>().Spawn(3);
                             break;
                         case 381:
-                            GameObject cannon1Floor = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            GameObject cannon1Floor = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Canon"), worldPos, Quaternion.identity, transform);
                             cannon1Floor.GetComponent<Cannon1>().PlayAnim("floor", true);
                             break;
                         case 382:
-                            GameObject cannon1WallL = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            GameObject cannon1WallL = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Canon"), worldPos, Quaternion.identity, transform);
                             cannon1WallL.GetComponent<Cannon1>().PlayAnim("wallL", true);
                             break;
                         case 383:
-                            GameObject cannon1WallR = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            GameObject cannon1WallR = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Canon"), worldPos, Quaternion.identity, transform);
                             cannon1WallR.GetComponent<Cannon1>().PlayAnim("wallR", true);
                             break;
                         case 384:
-                            GameObject cannon1Ceil = Instantiate(Resources.Load<GameObject>("Objects/Entities/Canon"), worldPos, Quaternion.identity, transform);
+                            GameObject cannon1Ceil = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Canon"), worldPos, Quaternion.identity, transform);
                             cannon1Ceil.GetComponent<Cannon1>().PlayAnim("ceiling", true);
                             break;
                         case 386:
@@ -461,8 +467,18 @@ public class RoomTrigger:MonoBehaviour {
                         case 398:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snakey (green)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 402:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Syngnathida"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 405:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 417:
+                            GameObject walleyeLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
+                            walleyeLeft.GetComponent<Walleye>().Face(true);
                             break;
                         case 424:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);

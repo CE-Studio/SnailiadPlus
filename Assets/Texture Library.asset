@@ -24,6 +24,7 @@ MonoBehaviour:
   - Bullets/Boomerang
   - Bullets/EnemyBoomerangBlue
   - Bullets/EnemyDonut
+  - Bullets/EnemyLaser
   - Bullets/EnemySpikeBall
   - Bullets/Peashooter
   - Bullets/RainbowWave
@@ -55,6 +56,7 @@ MonoBehaviour:
   - Entities/PixelPeople
   - Entities/Platform
   - Entities/PowerGrass
+  - Entities/Seahorse
   - Entities/SnailNpc
   - Entities/SnailNpcColor
   - Entities/Snake
@@ -63,6 +65,7 @@ MonoBehaviour:
   - Entities/Spikey1
   - Entities/Spikey2
   - Entities/TurtleNpc
+  - Entities/Walleye
   - Items/Boomerang
   - Items/HeartContainer
   - Items/HelixFragment

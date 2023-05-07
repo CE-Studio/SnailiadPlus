@@ -57,6 +57,11 @@
             "height": 24
         },
 		{
+            "name": "Bullets/EnemyLaser",
+            "width": 24,
+            "height": 6
+        },
+		{
             "name": "Bullets/EnemySpikeBall",
             "width": 28,
             "height": 28
@@ -245,6 +250,11 @@
 		{
             "name": "Entities/TurtleNpc",
             "width": 32,
+            "height": 16
+        },
+		{
+            "name": "Entities/Walleye",
+            "width": 16,
             "height": 16
         },
 		{

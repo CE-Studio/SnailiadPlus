@@ -117,6 +117,8 @@ public class Enemy : MonoBehaviour
         {
             pingPlayer = 0;
         }
+
+        mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -174,7 +176,7 @@ public class Enemy : MonoBehaviour
     {
         if (anim != null)
         {
-            GameObject child = new GameObject("Mask Object");
+            GameObject child = new("Mask Object");
             child.transform.parent = transform;
             child.transform.localPosition = Vector2.zero;
             mask = child.AddComponent<SpriteMask>();

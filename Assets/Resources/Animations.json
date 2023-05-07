@@ -2569,6 +2569,34 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Bullet_enemy_laser_left",
+			"spriteName": "Bullets/EnemyLaser",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_laser_right",
+			"spriteName": "Bullets/EnemyLaser",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Bullet_enemy_donut_linear_N",
 			"spriteName": "Bullets/EnemyDonut",
 			"framerate": 30.0,
@@ -5298,6 +5326,51 @@
 			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_syngnathida_data",
+			"spriteName": "Entities/Seahorse",
+			"framerate": 0.0,
+			"frames": [
+				-1,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_syngnathida_forward",
+			"spriteName": "Entities/Seahorse",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_syngnathida_turn_up",
+			"spriteName": "Entities/Seahorse",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_syngnathida_turn_down",
+			"spriteName": "Entities/Seahorse",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Hazard_fire1",

@@ -39,6 +39,8 @@ public class EnemyBullet : MonoBehaviour
         }
         anim.Add("Bullet_enemy_donut_rotary_CW");
         anim.Add("Bullet_enemy_donut_rotary_CCW");
+        anim.Add("Bullet_enemy_laser_left");
+        anim.Add("Bullet_enemy_laser_right");
 
         sprite.enabled = false;
         box.enabled = false;
@@ -62,6 +64,10 @@ public class EnemyBullet : MonoBehaviour
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     speed -= initialSpeed * 1.5f * Time.fixedDeltaTime;
+                    break;
+                case BulletType.laser:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
+                        transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
                 case BulletType.donutLinear:
                     transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
@@ -94,6 +100,7 @@ public class EnemyBullet : MonoBehaviour
 
         bulletType = type;
         initialSpeed = speed;
+        string soundID = "";
         switch (type)
         {
             case BulletType.pea:
@@ -105,7 +112,7 @@ public class EnemyBullet : MonoBehaviour
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = false;
                 if (playSound)
-                    PlayState.PlaySound("ShotPeashooter");
+                    soundID = "ShotPeashooter";
                 break;
             case BulletType.boomBlue:
                 anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -116,7 +123,17 @@ public class EnemyBullet : MonoBehaviour
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = false;
                 if (playSound)
-                    PlayState.PlaySound("ShotBoomerangDev");
+                    soundID = "ShotBoomerangDev";
+                break;
+            case BulletType.laser:
+                anim.Play("Bullet_enemy_laser_" + (dirVelVars[1] == -1 ? "left" : "right"));
+                damage = 3;
+                maxLifetime = 3f;
+                box.size = new Vector2(1.45f, 0.25f);
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                if (playSound)
+                    soundID = "ShotEnemyLaser";
                 break;
             case BulletType.donutLinear:
                 anim.Play("Bullet_enemy_donut_linear_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -127,7 +144,7 @@ public class EnemyBullet : MonoBehaviour
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = true;
                 if (playSound)
-                    PlayState.PlaySound("ShotEnemyDonut");
+                    soundID = "ShotEnemyDonut";
                 break;
             case BulletType.donutRotary:
                 anim.Play("Bullet_enemy_donut_rotary_" + (dirVelVars[1] > 0 ? "CW" : "CCW"));
@@ -139,7 +156,7 @@ public class EnemyBullet : MonoBehaviour
                 theta_offset = dirVelVars[2];
                 despawnOffscreen = true;
                 if (playSound)
-                    PlayState.PlaySound("ShotEnemyDonut");
+                    soundID = "ShotEnemyDonut";
                 break;
             case BulletType.spikeball:
                 anim.Play("Bullet_enemy_spikeball_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -150,9 +167,14 @@ public class EnemyBullet : MonoBehaviour
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = true;
                 if (playSound)
-                    PlayState.PlaySound("Cannon");
+                    soundID = "Cannon";
                 break;
         }
+
+        if (!PlayState.OnScreen(transform.position, box))
+            Despawn();
+        else if (playSound)
+            PlayState.PlaySound(soundID);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -517,6 +517,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 46:
+                            AddText("default");
+                            break;
+
                         case 47:
                             AddText("default");
                             break;

@@ -24,6 +24,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/Boomerang",
         "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyDonut",
+        "Bullets/EnemyLaser",
         "Bullets/EnemySpikeBall",
         "Bullets/Peashooter",
         "Bullets/RainbowWave",
@@ -56,6 +57,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/PixelPeople",
         "Entities/Platform",
         "Entities/PowerGrass",
+        "Entities/Seahorse",
         "Entities/SnailNpc",
         "Entities/SnailNpcColor",
         "Entities/Snake",
@@ -64,6 +66,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Spikey1",
         "Entities/Spikey2",
         "Entities/TurtleNpc",
+        "Entities/Walleye",
 
         "Items/Boomerang",
         "Items/HeartContainer",

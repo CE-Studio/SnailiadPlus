@@ -2111,6 +2111,21 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_platTower2",
+			"text": "Watertower",
+			"value": 0
+		},
+		{
+			"name": "room_03_waterFireTransition",
+			"text": "Boiler Room",
+			"value": 0
+		},
+		{
+			"name": "room_03_walleye",
+			"text": "Hidden Hideout",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2633,6 +2648,11 @@
 		{
 			"name": "npc_43_default_0",
 			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
+			"value": 1
+		},
+		{
+			"name": "npc_46_default_0",
+			"text": "{col|0111}Walleyes {col|0312}can't hurt you, {P}!{p|0.25}{nl}You can just crawl right past{nl}them, {p|0.1}right on the same wall!",
 			"value": 1
 		},
 		{
