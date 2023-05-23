@@ -2126,6 +2126,36 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_grassy2",
+			"text": "Green Cache",
+			"value": 0
+		},
+		{
+			"name": "room_03_pinkIntersection",
+			"text": "Crawlspace",
+			"value": 0
+		},
+		{
+			"name": "room_03_topSave",
+			"text": "Break Room",
+			"value": 0
+		},
+		{
+			"name": "room_03_topHub",
+			"text": "Snarkour",
+			"value": 0
+		},
+		{
+			"name": "room_03_fireballItem",
+			"text": "The Furnace",
+			"value": 0
+		},
+		{
+			"name": "room_03_pinkTower1",
+			"text": "The Tower",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1

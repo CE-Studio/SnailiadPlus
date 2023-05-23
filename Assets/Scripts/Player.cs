@@ -350,7 +350,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.y = lastDistance - PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.UpHold() && CheckAbility(canSwapGravity))
+                    if (Control.UpHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = Dirs.Ceiling;
                         SwapDir(Dirs.Ceiling);
@@ -466,7 +466,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if (Control.AxisX() == 0 && !PlayState.paralyzed)
+        else if ((Control.AxisX() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
             velocity.x = 0;
 
         // Now, let's see if we can jump
@@ -569,7 +569,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.x = lastDistance - PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.RightHold() && CheckAbility(canSwapGravity))
+                    if (Control.RightHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = Dirs.WallR;
                         SwapDir(Dirs.WallR);
@@ -685,7 +685,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if (Control.AxisY() == 0 && !PlayState.paralyzed)
+        else if ((Control.AxisY() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
             velocity.y = 0;
 
         // Now, let's see if we can jump
@@ -788,7 +788,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.x = -lastDistance + PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.LeftHold() && CheckAbility(canSwapGravity))
+                    if (Control.LeftHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = Dirs.WallL;
                         SwapDir(Dirs.WallL);
@@ -904,7 +904,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if (Control.AxisY() == 0 && !PlayState.paralyzed)
+        else if ((Control.AxisY() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
             velocity.y = 0;
 
         // Now, let's see if we can jump
@@ -1007,7 +1007,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.y = -lastDistance + PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.DownHold() && CheckAbility(canSwapGravity))
+                    if (Control.DownHold() && CheckAbility(canSwapGravity) && !stunned)
                     {
                         gravityDir = Dirs.Floor;
                         SwapDir(Dirs.Floor);
@@ -1123,7 +1123,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if (Control.AxisX() == 0 && !PlayState.paralyzed)
+        else if ((Control.AxisX() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
             velocity.x = 0;
 
         // Now, let's see if we can jump
@@ -1751,6 +1751,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if (from == Dirs.Ceiling && GetDistance(Dirs.Ceiling, true) < box.size.y * 0.5f)
             tweakDis.y = (-box.size.y * 0.5f) + lastDistance - PlayState.FRAC_128;
         transform.position += (Vector3)tweakDis;
+    }
+
+    public void ZeroWalkVelocity()
+    {
+        if (gravityDir == Dirs.WallL || gravityDir == Dirs.WallR)
+            velocity.y = 0;
+        else
+            velocity.x = 0;
     }
 
     #endregion Player utilities

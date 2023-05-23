@@ -693,6 +693,7 @@ public class Stompy : Boss
         PlayState.globalFunctions.RequestQueuedExplosion(footR.transform.position, 2.7f, 0, false);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
+        PlayState.QueueAchievementPopup("stink");
         Destroy(gameObject);
     }
 

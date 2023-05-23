@@ -739,6 +739,13 @@ public class PlayState {
         return false;
     }
 
+    public static bool IsPointEnemyCollidable(Vector2 pos)
+    {
+        if (IsTileSolid(pos, true) || IsPointPlayerCollidable(pos))
+            return true;
+        return false;
+    }
+
     public static void ToggleHUD(bool state) {
         foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);

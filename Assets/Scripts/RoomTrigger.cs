@@ -473,6 +473,16 @@ public class RoomTrigger:MonoBehaviour {
                         case 405:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 411:
+                            GameObject redTurtRight = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
+                                worldPos, Quaternion.identity, transform);
+                            redTurtRight.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.wallR);
+                            break;
+                        case 412:
+                            GameObject redTurtLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
+                                worldPos, Quaternion.identity, transform);
+                            redTurtLeft.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.wallL);
+                            break;
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
@@ -501,6 +511,16 @@ public class RoomTrigger:MonoBehaviour {
                         case 452:
                             GameObject sleepingSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
                             sleepingSnelk.GetComponent<Snelk>().SetState(2);
+                            break;
+                        case 455:
+                            GameObject redTurtDown = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
+                                worldPos, Quaternion.identity, transform);
+                            redTurtDown.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.floor);
+                            break;
+                        case 456:
+                            GameObject redTurtUp = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
+                                worldPos, Quaternion.identity, transform);
+                            redTurtUp.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.ceiling);
                             break;
                         case 1120:
                         case 1121:

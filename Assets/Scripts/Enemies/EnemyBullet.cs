@@ -99,7 +99,6 @@ public class EnemyBullet : MonoBehaviour
         transform.position = newOrigin;
 
         bulletType = type;
-        initialSpeed = speed;
         string soundID = "";
         switch (type)
         {
@@ -118,7 +117,7 @@ public class EnemyBullet : MonoBehaviour
                 anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 4f;
-                box.size = new Vector2(1.5f, 1.5f);
+                box.size = new Vector2(1.45f, 1.45f);
                 speed = dirVelVars[0];
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = false;
@@ -170,6 +169,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "Cannon";
                 break;
         }
+        initialSpeed = speed;
 
         if (!PlayState.OnScreen(transform.position, box))
             Despawn();

@@ -83,6 +83,7 @@ public class Boss : Enemy
     public IEnumerator RunIntro(bool focusOnMe = true)
     {
         PlayState.paralyzed = true;
+        PlayState.playerScript.ZeroWalkVelocity();
         PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
         PlayState.ToggleBossfightState(true, songIndeces[ID]);
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = true;

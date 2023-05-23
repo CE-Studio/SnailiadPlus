@@ -164,6 +164,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.MuteMusic();
                 PlayState.PlayMusic(0, 2);
                 PlayState.paralyzed = true;
+                PlayState.playerScript.ZeroWalkVelocity();
             } else
                 PlayState.PlayMusic(0, 1);
             switch (itemID) {
