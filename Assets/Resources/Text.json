@@ -2156,6 +2156,26 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_pinkTower2",
+			"text": "The Tower",
+			"value": 0
+		},
+		{
+			"name": "room_03_pinkTower3",
+			"text": "The Tower",
+			"value": 0
+		},
+		{
+			"name": "room_03_snakeHeart",
+			"text": "Slitherine|Grove",
+			"value": 0
+		},
+		{
+			"name": "room_03_floatspikeMaze",
+			"text": "Floaty Fortress",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1

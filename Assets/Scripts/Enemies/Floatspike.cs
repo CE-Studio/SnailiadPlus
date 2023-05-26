@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Floatspike : Enemy
 {
-    private float time;
+    private float theta;
     
     private void Awake()
     {
@@ -13,7 +13,7 @@ public class Floatspike : Enemy
         
         Spawn(5, 2, 59, true);
 
-        time = Random.Range(0, 100) * 0.01f;
+        theta = origin.x * origin.x * 1.1f + origin.y * 3.2f + 0.7f;
 
         anim.Add("Enemy_floatspike_black");
         anim.Play("Enemy_floatspike_black");
@@ -24,26 +24,7 @@ public class Floatspike : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        if (time >= 0.75f)
-        {
-            transform.localPosition = new Vector2(transform.localPosition.x, origin.y - 0.0625f);
-        }
-        else if (time >= 0.5f)
-        {
-            transform.localPosition = new Vector2(transform.localPosition.x,
-                Mathf.Lerp(origin.y + 0.125f, origin.y - 0.0625f, (time - 0.5f) * 4));
-        }
-        else if (time >= 0.25f)
-        {
-            transform.localPosition = new Vector2(transform.localPosition.x, origin.y + 0.125f);
-        }
-        else
-        {
-            transform.localPosition = new Vector2(transform.localPosition.x,
-                Mathf.Lerp(origin.y - 0.0625f, origin.y + 0.125f, time * 4));
-        }
-        time += Time.deltaTime * 0.25f;
-        if (time >= 1)
-            time = 0;
+        theta += Time.deltaTime;
+        transform.localPosition = new Vector2(origin.x, origin.y + (Mathf.Sin(theta) * 1.8f * PlayState.FRAC_16) + PlayState.FRAC_32);
     }
 }

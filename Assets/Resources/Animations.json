@@ -5081,6 +5081,17 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_floatspike_blue",
+			"spriteName": "Entities/Floatspike2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_gravturtle2_data",
 			"spriteName": "Entities/GravTurtle2",
 			"framerate": 0.0,
@@ -5429,6 +5440,30 @@
 		{
 			"name": "Enemy_snakey_green_attack",
 			"spriteName": "Entities/Snake",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_snakey_blue_idle",
+			"spriteName": "Entities/Snake2",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_snakey_blue_attack",
+			"spriteName": "Entities/Snake2",
 			"framerate": 10.0,
 			"frames": [
 				0,

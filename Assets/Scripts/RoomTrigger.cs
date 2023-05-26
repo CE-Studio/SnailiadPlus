@@ -473,6 +473,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 405:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 410:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snakey (blue)"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 411:
                             GameObject redTurtRight = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
                                 worldPos, Quaternion.identity, transform);
@@ -489,6 +492,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 417:
                             GameObject walleyeLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
                             walleyeLeft.GetComponent<Walleye>().Face(true);
+                            break;
+                        case 418:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike (blue)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 424:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);

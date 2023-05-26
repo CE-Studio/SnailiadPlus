@@ -49,6 +49,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Fireball",
         "Entities/Fireball2",
         "Entities/Floatspike1",
+        "Entities/Floatspike2",
         "Entities/GravTurtle2",
         "Entities/Grass",
         "Entities/IceSpike",
