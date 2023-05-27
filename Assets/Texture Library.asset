@@ -49,9 +49,11 @@ MonoBehaviour:
   - Entities/Fireball2
   - Entities/Floatspike1
   - Entities/Floatspike2
+  - Entities/GravTurtle1
   - Entities/GravTurtle2
   - Entities/Grass
   - Entities/IceSpike
+  - Entities/Jellyfish
   - Entities/Kitty
   - Entities/Kitty2
   - Entities/Muck
@@ -64,6 +66,8 @@ MonoBehaviour:
   - Entities/Snake
   - Entities/Snake2
   - Entities/Snelk
+  - Entities/Spider1
+  - Entities/Spider2
   - Entities/Spikey1
   - Entities/Spikey2
   - Entities/TurtleNpc

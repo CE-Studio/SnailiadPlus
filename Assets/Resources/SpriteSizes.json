@@ -178,6 +178,11 @@
             "height": 16
         },
 		{
+            "name": "Entities/GravTurtle1",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Entities/GravTurtle2",
             "width": 32,
             "height": 32
@@ -189,6 +194,11 @@
         },
 		{
             "name": "Entities/IceSpike",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Jellyfish",
             "width": 16,
             "height": 16
         },

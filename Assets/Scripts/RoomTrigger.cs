@@ -467,11 +467,30 @@ public class RoomTrigger:MonoBehaviour {
                         case 398:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snakey (green)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 401:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Jellyfish"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 402:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Syngnathida"), worldPos, Quaternion.identity, transform);
                             break;
                         case 405:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 406:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spider"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 407:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spider Mama"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 408:
+                            GameObject greenTurtRight = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (green)"),
+                                worldPos, Quaternion.identity, transform);
+                            greenTurtRight.GetComponent<GravTurtle1>().SetGravity(GravTurtle1.Dirs.wallR);
+                            break;
+                        case 409:
+                            GameObject greenTurtLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (green)"),
+                                worldPos, Quaternion.identity, transform);
+                            greenTurtLeft.GetComponent<GravTurtle1>().SetGravity(GravTurtle1.Dirs.wallL);
                             break;
                         case 410:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snakey (blue)"), worldPos, Quaternion.identity, transform);
@@ -517,6 +536,16 @@ public class RoomTrigger:MonoBehaviour {
                         case 452:
                             GameObject sleepingSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
                             sleepingSnelk.GetComponent<Snelk>().SetState(2);
+                            break;
+                        case 453:
+                            GameObject greenTurtDown = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (green)"),
+                                worldPos, Quaternion.identity, transform);
+                            greenTurtDown.GetComponent<GravTurtle1>().SetGravity(GravTurtle1.Dirs.floor);
+                            break;
+                        case 454:
+                            GameObject greenTurtUp = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (green)"),
+                                worldPos, Quaternion.identity, transform);
+                            greenTurtUp.GetComponent<GravTurtle1>().SetGravity(GravTurtle1.Dirs.ceiling);
                             break;
                         case 455:
                             GameObject redTurtDown = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),

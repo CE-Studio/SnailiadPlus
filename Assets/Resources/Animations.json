@@ -5092,6 +5092,252 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_gravturtle1_data",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1,
+				1,
+				1,
+				-1,
+				-1,
+				-1,
+				-1,
+				-1,
+				-1,
+				-1,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_floor_walk",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_floor_turn",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_floor_jump",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_floor_flipTo",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallL_walk",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallL_turn",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallL_jump",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallL_flipTo",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallR_walk",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallR_turn",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallR_jump",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_wallR_flipTo",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_ceiling_walk",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_ceiling_turn",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_ceiling_jump",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gravturtle1_ceiling_flipTo",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_gravturtle2_data",
 			"spriteName": "Entities/GravTurtle2",
 			"framerate": 0.0,
@@ -5338,6 +5584,87 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_jellyfish_data",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_jellyfish_normal",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_jellyfish_upRight",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_jellyfish_downRight",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_jellyfish_downLeft",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_jellyfish_upLeft",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Enemy_kitty1_idle",
 			"spriteName": "Entities/Kitty",
 			"framerate": 0.0,
@@ -5495,6 +5822,30 @@
 			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_spider_gray_normal",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_normal",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_spikey_blue_down",
