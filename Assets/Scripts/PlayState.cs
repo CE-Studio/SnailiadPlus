@@ -8,6 +8,8 @@ using UnityEngine.Tilemaps;
 
 public class PlayState {
     public const float TAU = Mathf.PI * 2;
+    public const float PI_OVER_EIGHT = Mathf.PI * 0.125f;
+    public const float PI_OVER_FOUR = Mathf.PI * 0.25f;
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
     public const float FRAC_8 = 0.125f;
@@ -101,6 +103,7 @@ public class PlayState {
     public static Vector2 positionOfLastRoom = Vector2.zero;
     public static Vector2 positionOfLastSave = Vector2.zero;
     public static int enemyBulletPointer = 0;
+    public static int enemyGlobalMoveIndex = 0;
     public static List<Vector2> breakablePositions = new List<Vector2>();
     public static List<int> tempTiles = new List<int>(); // x, y, layer, original tile ID
     public static bool dialogueOpen = false;

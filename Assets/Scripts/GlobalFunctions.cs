@@ -516,8 +516,8 @@ public class GlobalFunctions : MonoBehaviour
             for (int i = 0; i < particleCount; i++)
             {
                 Vector2 thisDustPos = new Vector2(
-                    transform.position.x + (Mathf.Sin((i / particleCount) * PlayState.TAU) * radius),
-                    transform.position.y + (Mathf.Cos((i / particleCount) * PlayState.TAU) * radius)
+                    PlayState.player.transform.position.x + (Mathf.Sin((i / particleCount) * PlayState.TAU) * radius),
+                    PlayState.player.transform.position.y + (Mathf.Cos((i / particleCount) * PlayState.TAU) * radius)
                     );
                 dustRing.Add(PlayState.RequestParticle(thisDustPos, "dust"));
             }
@@ -528,8 +528,8 @@ public class GlobalFunctions : MonoBehaviour
             {
                 float thisCurve = PlayState.TAU / dustRing.Count * i + spinMod * spinSpeed;
                 dustRing[i].transform.position = new Vector2(
-                    transform.position.x + Mathf.Cos(thisCurve) * radiusMod,
-                    transform.position.y - Mathf.Sin(thisCurve) * radiusMod
+                    PlayState.player.transform.position.x + Mathf.Cos(thisCurve) * radiusMod,
+                    PlayState.player.transform.position.y - Mathf.Sin(thisCurve) * radiusMod
                     );
             }
             spinMod += Time.deltaTime;
@@ -551,19 +551,19 @@ public class GlobalFunctions : MonoBehaviour
         if (tfType != -1 && (PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
         {
             shellStateBuffer = tfType;
-            PlayState.RequestParticle(transform.position, "transformation", new float[]
+            PlayState.RequestParticle(PlayState.player.transform.position, "transformation", new float[]
             {
                 tfType switch
                 {
                     2 => PlayState.currentCharacter switch
                     {
-                        "Upside" => 3,
-                        "Leggy" => 4,
-                        "Blobby" => 5,
-                        _ => 1
+                        "Upside" => 4,
+                        "Leggy" => 5,
+                        "Blobby" => 6,
+                        _ => 2
                     },
-                    3 => 2,
-                    _ => 0
+                    3 => 3,
+                    _ => 1
                 }
             });
             PlayState.PlaySound("Transformation");

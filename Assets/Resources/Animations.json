@@ -3017,6 +3017,62 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_gravitySnail",
+			"spriteName": "Items/GravitySnail",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_magneticFoot",
+			"spriteName": "Items/MagneticFoot",
+			"framerate": 16.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_corkscrewJump",
+			"spriteName": "Items/CorkscrewJump",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_angelJump",
+			"spriteName": "Items/AngelJump",
+			"framerate": 12.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_helixFragment",
 			"spriteName": "Items/HelixFragment",
 			"framerate": 24.0,
@@ -5824,6 +5880,17 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_spider_gray_data",
+			"spriteName": "Entities/Spider1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_spider_gray_normal",
 			"spriteName": "Entities/Spider1",
 			"framerate": 6.0,
@@ -5836,7 +5903,210 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Enemy_spider_gray_N",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_NE",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_E",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_SE",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_S",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_SW",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_W",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_gray_NW",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_data",
+			"spriteName": "Entities/Spider2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_spider_red_normal",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_N",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_NE",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_E",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_SE",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_S",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_SW",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_W",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_spider_red_NW",
 			"spriteName": "Entities/Spider2",
 			"framerate": 8.0,
 			"frames": [
@@ -5998,6 +6268,144 @@
 			"spriteName": "Entities/Seahorse",
 			"framerate": 0.0,
 			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_green_idle",
+			"spriteName": "Entities/Tallfish1",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_green_attackForward",
+			"spriteName": "Entities/Tallfish1",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_green_attackTurnaround",
+			"spriteName": "Entities/Tallfish1",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_pink_idle",
+			"spriteName": "Entities/Tallfish2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_pink_attackForward",
+			"spriteName": "Entities/Tallfish2",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_tallfish_pink_attackTurnaround",
+			"spriteName": "Entities/Tallfish2",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
 				0
 			],
 			"loop": false,

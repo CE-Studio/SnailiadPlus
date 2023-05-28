@@ -134,6 +134,16 @@ public class Item:MonoBehaviour, IRoomObject {
                     animName = "Item_iceSnail";
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
+                case 8:
+                    animName = PlayState.currentCharacter switch
+                    {
+                        "Upside" => "Item_magneticFoot",
+                        "Leggy" => "Item_corkscrewJump",
+                        "Blobby" => "Item_angelJump",
+                        _ => "Item_gravitySnail"
+                    };
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 default:
                     animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
@@ -193,6 +203,12 @@ public class Item:MonoBehaviour, IRoomObject {
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
+                case 8:
+                    if (isSuperUnique)
+                        PlayState.globalFunctions.RunDustRing(2);
+                    else
+                        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+                    break;
                 default:
                     break;
             }
@@ -222,13 +238,13 @@ public class Item:MonoBehaviour, IRoomObject {
             5 => PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_shelmet" : "item_shellShield"),
             6 => PlayState.GetText(PlayState.currentCharacter == "Leechy" ? "item_backfire" : "item_rapidFire"),
             7 => PlayState.GetText("item_iceSnail").Replace("_", species),
-            8 => (PlayState.currentCharacter switch {
+            8 => PlayState.GetText(PlayState.currentCharacter switch {
                 "Upside" => "item_magneticFoot",
                 "Leggy" => "item_corkscrewJump",
                 "Blobby" => "item_angelJump",
                 _ => "item_gravitySnail"
             }).Replace("_", species),
-            9 => (PlayState.currentCharacter switch {
+            9 => PlayState.GetText(PlayState.currentCharacter switch {
                 "Sluggy" => "item_fullMetalSnail_noShell",
                 "Blobby" => "item_fullMetalSnail_blob",
                 "Leechy" => "item_fullMetalSnail_noShell",

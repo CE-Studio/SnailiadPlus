@@ -2186,6 +2186,26 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_basement",
+			"text": "Seafloor of Ire",
+			"value": 0
+		},
+		{
+			"name": "room_03_jellyCave",
+			"text": "Shocked Shell",
+			"value": 0
+		},
+		{
+			"name": "room_03_gravitySnailEntry",
+			"text": "Up and Over",
+			"value": 0
+		},
+		{
+			"name": "room_03_gravitySnail",
+			"text": "Gravity Shrine",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2367,7 +2387,7 @@
 		},
 		{
 			"name": "npc_7_scared_0",
-			"text": "I'm scared, {P}!{p|0.25}{nl}Is Moon Snail going to take{nl}me away like the others?",
+			"text": "I'm scared, {P}!{p|0.25}{nl}Is {col|0204}Moon Snail {col|0312}going to take{nl}me away like the others?",
 			"value": 1
 		},
 		{
@@ -2633,6 +2653,31 @@
 		{
 			"name": "npc_27_powerfulPlayer_0",
 			"text": "Hey, {P}!  {p|0.15}You came{nl}back to visit!!  {p|0.2}{eff|Wave}Yay!!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_default_0",
+			"text": "Oh, {P}, it's you!!  {p|0.15}I'm saved!!{nl}{p|0.2}{col|0204}Moon Snail {col|0312}took me here!  {p|0.15}He's{nl}gone bad, {P}!!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_gravSnail_0",
+			"text": "{P}, you can {col|0207}gravity jump{col|0312}!{nl}{p|0.25}{col|0309}Jump in the air, {p|0.1}then hold any{nl}direction and press jump again{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_magneticFoot_0",
+			"text": "{P}, you're a {col|0211}magnet snail{col|0312}!{nl}{p|0.25}You can {col|0309}round ceiling corners{nl}with no problem{col|0312}!  {p|0.2}Lucky you!!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_corkscrewJump_0",
+			"text": "{P}, you can {col|0209}corkscrew jump{col|0312}!{nl}{p|0.25}Now you can {col|0309}flip multiple times{nl}before hitting the ground{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_angelJump_0",
+			"text": "{P}, you're an {col|0302}angelblob{col|0312}!  {p|0.25}{nl}You can {col|0309}jump a few times mid-air{nl}before hitting the ground{col|0312}!",
 			"value": 1
 		},
 		{

@@ -473,6 +473,21 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 28:
+                            if (PlayState.CheckForItem("Gravity Snail"))
+                            {
+                                AddText(PlayState.currentCharacter switch
+                                {
+                                    "Upside" => "magneticFoot",
+                                    "Leggy" => "corkscrewJump",
+                                    "Blobby" => "angelJump",
+                                    _ => "gravSnail"
+                                });
+                            }
+                            else
+                                AddText("default");
+                            break;
+
                         case 29:
                             boxColor = "0002";
                             if (PlayState.currentDifficulty == 2)

@@ -70,13 +70,19 @@ MonoBehaviour:
   - Entities/Spider2
   - Entities/Spikey1
   - Entities/Spikey2
+  - Entities/Tallfish1
+  - Entities/Tallfish2
   - Entities/TurtleNpc
   - Entities/Walleye
+  - Items/AngelJump
   - Items/Boomerang
+  - Items/CorkscrewJump
+  - Items/GravitySnail
   - Items/HeartContainer
   - Items/HelixFragment
   - Items/HighJump
   - Items/IceSnail
+  - Items/MagneticFoot
   - Items/Peashooter
   - Items/RainbowWave
   - Items/ShellShield

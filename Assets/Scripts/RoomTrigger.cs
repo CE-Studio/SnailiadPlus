@@ -329,6 +329,7 @@ public class RoomTrigger:MonoBehaviour {
             pool.transform.GetChild(i).transform.position = Vector2.zero;
         }
         PlayState.ReplaceAllTempTiles();
+        PlayState.enemyGlobalMoveIndex = 0;
     }
 
     private void CheckSpecialLayer() {
@@ -473,6 +474,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 402:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Syngnathida"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 403:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Tallfish (normal)"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 405:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
                             break;
@@ -507,6 +511,9 @@ public class RoomTrigger:MonoBehaviour {
                             break;
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 416:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Tallfish (angry)"), worldPos, Quaternion.identity, transform);
                             break;
                         case 417:
                             GameObject walleyeLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
