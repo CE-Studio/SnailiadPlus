@@ -3003,6 +3003,50 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_rapidFire",
+			"spriteName": "Items/RapidFire",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Item_backfire",
+			"spriteName": "Items/Backfire",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_iceSnail",
 			"spriteName": "Items/IceSnail",
 			"framerate": 8.0,
@@ -4407,6 +4451,528 @@
 				8,
 				5,
 				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_idle0",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_N",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_N",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_NE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_NE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_E",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_E",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_SE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_SE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_S",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_S",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_SW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_SW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_W",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_W",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge0_NW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit0_NW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_waitSpawn0",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_idle1",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_N",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_N",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_NE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_NE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_E",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_E",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_SE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_SE",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_S",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_S",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_SW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_SW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_W",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_W",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_charge1_NW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_hit1_NW",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_waitSpawn1",
+			"spriteName": "Entities/Boss3",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_shield0_spawn",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_shield0_hit",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_shield0_turnBlue",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_shield1_spawn",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_shield1_hit",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_babybox0_spawn",
+			"spriteName": "Entities/Boss3Babybox",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_babybox0_hit",
+			"spriteName": "Entities/Boss3Babybox",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_babybox0_turnBlue",
+			"spriteName": "Entities/Boss3Babybox",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_babybox1_spawn",
+			"spriteName": "Entities/Boss3Babybox",
+			"framerate": 20.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_spaceBox_babybox1_hit",
+			"spriteName": "Entities/Boss3Babybox",
+			"framerate": 0.0,
+			"frames": [
+				7
 			],
 			"loop": false,
 			"loopStartFrame": 0,

@@ -28,6 +28,7 @@ public class Snaily : Player
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
         weaponCooldowns = new float[] { 0.085f, 0.3f, 0.17f, 0.0425f, 0.15f, 0.085f };
+        applyRapidFireMultiplier = 1;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);
         hitboxSize_shell = new Vector2(0.75f, 0.96f);

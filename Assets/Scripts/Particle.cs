@@ -11,7 +11,6 @@ public class Particle : MonoBehaviour
     public float[] vars = new float[] { 0, 0, 0, 0, 0, 0 };
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
-    public bool trackWithCamera = false;
 
     public void Start()
     {
@@ -122,36 +121,36 @@ public class Particle : MonoBehaviour
                             {
                                 case 0:
                                     internalVars[0] = 0;
-                                    internalVars[1] = vars[1];
+                                    internalVars[1] = Mathf.Abs(vars[1]);
                                     break;
                                 case 1:
-                                    internalVars[0] = PlayState.ANGLE_DIAG.x * vars[1];
-                                    internalVars[1] = PlayState.ANGLE_DIAG.y * vars[1];
+                                    internalVars[0] = Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]);
+                                    internalVars[1] = Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]);
                                     break;
                                 case 2:
-                                    internalVars[0] = vars[1];
+                                    internalVars[0] = Mathf.Abs(vars[1]);
                                     internalVars[1] = 0;
                                     break;
                                 case 3:
-                                    internalVars[0] = PlayState.ANGLE_DIAG.x * vars[1];
-                                    internalVars[1] = -PlayState.ANGLE_DIAG.y * vars[1];
+                                    internalVars[0] = Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]);
+                                    internalVars[1] = -Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]);
                                     break;
                                 case 4:
                                     internalVars[0] = 0;
-                                    internalVars[1] = -vars[1];
+                                    internalVars[1] = -Mathf.Abs(vars[1]);
                                     break;
                                 case 5:
-                                    internalVars[0] = -PlayState.ANGLE_DIAG.x * vars[1];
-                                    internalVars[1] = -PlayState.ANGLE_DIAG.y * vars[1];
+                                    internalVars[0] = -Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]);
+                                    internalVars[1] = -Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]);
                                     break;
                                 default:
                                 case 6:
-                                    internalVars[0] = -vars[1];
+                                    internalVars[0] = -Mathf.Abs(vars[1]);
                                     internalVars[1] = 0;
                                     break;
                                 case 7:
-                                    internalVars[0] = -PlayState.ANGLE_DIAG.x * vars[1];
-                                    internalVars[1] = PlayState.ANGLE_DIAG.y * vars[1];
+                                    internalVars[0] = -Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]);
+                                    internalVars[1] = Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]);
                                     break;
                                 case 8:
                                     Vector2 toCenter = (Vector2)(PlayState.cam.transform.position - transform.position).normalized * vars[2];
@@ -208,14 +207,13 @@ public class Particle : MonoBehaviour
                             while (transform.position.y > PlayState.cam.transform.position.y + 8)
                                 transform.position = new Vector2(transform.position.x, transform.position.y - 16);
                         }
+                        MoveToCamSynced();
                         break;
                 }
 
                 if (!anim.isPlaying && isActive && !(type == "bubble"))
                     ResetParticle();
             }
-            if (trackWithCamera)
-                transform.position += (Vector3)PlayState.camScript.lastMove;
         }
         else
         {
@@ -330,7 +328,19 @@ public class Particle : MonoBehaviour
             vars[i] = 0;
         for (int i = 0; i < internalVars.Length; i++)
             internalVars[i] = 0;
-        trackWithCamera = false;
+        MoveToMainPool();
         gameObject.SetActive(false);
+    }
+
+    public void MoveToCamSynced()
+    {
+        if (transform.parent != PlayState.camParticlePool.transform)
+            transform.parent = PlayState.camParticlePool.transform;
+    }
+
+    public void MoveToMainPool()
+    {
+        if (transform.parent != PlayState.particlePool.transform)
+            transform.parent = PlayState.particlePool.transform;
     }
 }

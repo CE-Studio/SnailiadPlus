@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     private float velocity;
     private float initialVelocity;
     public int damage;
+    public float rapidMult;
 
     public SpriteRenderer sprite;
     public AnimationModule anim;
@@ -52,7 +53,7 @@ public class Bullet : MonoBehaviour
                 case 1:
                     break;
                 case 2:
-                    velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime;
+                    velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime * rapidMult;
                     break;
                 case 3:
                     velocity += initialVelocity * 18f * Time.fixedDeltaTime;
@@ -95,7 +96,7 @@ public class Bullet : MonoBehaviour
             Despawn(PlayState.OnScreen(transform.position, box));
     }
 
-    public void Shoot(int type, int dir)
+    public void Shoot(int type, int dir, bool applyRapidMult)
     {
         isActive = true;
         sprite.enabled = true;
@@ -143,20 +144,26 @@ public class Bullet : MonoBehaviour
                 box.size = new Vector2(0.25f, 0.25f);
                 velocity = 0.4625f;
                 damage = 10;
+                rapidMult = 2f;
                 break;
             case 2:
                 box.size = new Vector2(0.9f, 0.9f);
                 velocity = 0.4125f;
                 damage = 20;
+                rapidMult = 2f;
                 break;
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
                 velocity = 0.075f;
                 damage = 30;
+                rapidMult = 2f;
                 break;
         }
         direction = dir;
         initialVelocity = velocity;
+        if (!PlayState.CheckForItem("Rapid Fire") || !applyRapidMult)
+            rapidMult = 1f;
+        velocity *= rapidMult;
         PlayAnim();
     }
 

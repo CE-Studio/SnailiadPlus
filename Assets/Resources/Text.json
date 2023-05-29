@@ -2206,6 +2206,26 @@
 			"value": 0
 		},
 		{
+			"name": "room_03_gravTunnel",
+			"text": "Funnel Tunnel",
+			"value": 0
+		},
+		{
+			"name": "room_03_rapidFire",
+			"text": "Fast Food",
+			"value": 0
+		},
+		{
+			"name": "room_03_pathToSpaceBox",
+			"text": "Troubled Waters",
+			"value": 0
+		},
+		{
+			"name": "room_03_spaceBox",
+			"text": "Gravity Arena",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2728,6 +2748,21 @@
 		{
 			"name": "npc_41_goodLuck_0",
 			"text": "Good luck, {P}!",
+			"value": 1
+		},
+		{
+			"name": "npc_42_default_0",
+			"text": "What?  {p|0.15}There was a {col|0200}monster{nl}{col|0312}in the next room??  {p|0.25}Are you{nl}trying to scare me, {P}??",
+			"value": 1
+		},
+		{
+			"name": "npc_42_noRapidFire_0",
+			"text": "Hey, {P}!  {p|0.15}I heard a rumor{nl}that the next room is too hard{nl}without \"{col|0209}Rapid Fire{col|0312}\"!!",
+			"value": 1
+		},
+		{
+			"name": "npc_42_pinkGrass_0",
+			"text": "{col|0204}Moon Snail {col|0312}brought me here!{nl}{p|0.15}Isn't he nice?  {p|0.15}{eff|Wave}All the {col|0201}pink{nl}grass {col|0312}I could ever eat!!",
 			"value": 1
 		},
 		{

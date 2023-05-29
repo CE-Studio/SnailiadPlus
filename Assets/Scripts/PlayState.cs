@@ -134,6 +134,7 @@ public class PlayState {
     public static Minimap minimapScript;
     public static GameObject achievement;
     public static GameObject particlePool;
+    public static GameObject camParticlePool;
     public static GameObject roomTriggerParent;
     public static GameObject mainMenu;
     public static GameObject loadingIcon;
@@ -926,11 +927,8 @@ public class PlayState {
                     {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
-                        //particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * FRAC_8;
-                        //particleScript.vars[2] = UnityEngine.Random.Range(0f, 1f) * 7.5f * FRAC_16;
                         particleScript.vars[1] = (UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f) * Time.fixedDeltaTime;
                         particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
-                        particleScript.trackWithCamera = values[0] == 8 || values[0] == 9;
                     }
                     break;
                 case "transformation":

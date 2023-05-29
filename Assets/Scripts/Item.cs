@@ -130,6 +130,13 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.45f, 1.675f);
                     }
                     break;
+                case 6:
+                    if (PlayState.currentCharacter == "Leechy")
+                        animName = "Item_backfire";
+                    else
+                        animName = "Item_rapidFire";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 case 7:
                     animName = "Item_iceSnail";
                     box.size = new Vector2(1.95f, 1.95f);

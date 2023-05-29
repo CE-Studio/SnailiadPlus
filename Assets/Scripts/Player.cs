@@ -81,6 +81,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float[] terminalVelocity; // ------------------------------ Contains the player's terminal velocity with each shell upgrade
     public float[] jumpFloatiness; // -------------------------------- Contains how floaty the player's jump is when the jump button is held with each shell upgrade + High Jump
     public float[] weaponCooldowns; // ------------------------------- Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
+    public int applyRapidFireMultiplier; // -------------------------- Determines if collecting Rapid Fire affects bullet velocity
     public float idleTimer; // --------------------------------------- Determines how long the player must remain idle before playing an idle animation
     public List<Particle> idleParticles; // -------------------------- Contains every particle used in the player's idle animation so that they can be despawned easily
     public Vector2 hitboxSize_normal; // ----------------------------- The size of the player's hitbox
@@ -1547,7 +1548,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
             if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
-                PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir);
+                PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir, applyRapidFireMultiplier == 1);
                 bulletID++;
                 if (bulletID >= PlayState.globalFunctions.playerBulletPool.transform.childCount)
                     bulletID = 0;
@@ -1587,6 +1588,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.globalFunctions.UpdateHearts();
             PlayState.PlaySound("Hurt");
         }
+        if (shelled)
+            ToggleShell();
         stunned = true;
         if (!CheckAbility(stickToWallsWhenHurt))
             CorrectGravity(true, false);

@@ -128,6 +128,21 @@
             "height": 52
         },
 		{
+            "name": "Entities/Boss3",
+            "width": 128,
+            "height": 128
+        },
+		{
+            "name": "Entities/Boss3Babybox",
+            "width": 64,
+            "height": 64
+        },
+		{
+            "name": "Entities/Boss3Shield",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/BreakableIcons",
             "width": 16,
             "height": 16
@@ -299,6 +314,11 @@
             "height": 32
         },
 		{
+            "name": "Items/Backfire",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Items/Boomerang",
             "width": 32,
             "height": 32
@@ -345,6 +365,11 @@
         },
 		{
             "name": "Items/RainbowWave",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/RapidFire",
             "width": 32,
             "height": 32
         },

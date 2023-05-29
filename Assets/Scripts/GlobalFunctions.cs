@@ -112,6 +112,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.minimapScript = PlayState.minimap.transform.parent.GetComponent<Minimap>();
         PlayState.achievement = GameObject.Find("View/Achievement Panel");
         PlayState.particlePool = GameObject.Find("Particle Pool");
+        PlayState.camParticlePool = PlayState.cam.transform.Find("Camera-synced Particle Layer").gameObject;
         PlayState.roomTriggerParent = GameObject.Find("Room Triggers");
         PlayState.mainMenu = GameObject.Find("View/Menu Parent");
         PlayState.loadingIcon = GameObject.Find("View/Loading Icon");

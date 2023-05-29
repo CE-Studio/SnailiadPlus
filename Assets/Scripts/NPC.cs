@@ -519,6 +519,15 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 42:
+                            if (!PlayState.CheckForItem("Rapid Fire") && PlayState.currentCharacter != "Leechy" && PlayState.IsBossAlive(2))
+                                AddText("noRapidFire");
+                            else if (PlayState.IsBossAlive(2))
+                                AddText("pinkGrass");
+                            else
+                                AddText("default");
+                            break;
+
                         case 43:
                             if (!PlayState.CheckForItem("Gravity Snail"))
                                 AddText("cantCorner");
