@@ -34,6 +34,9 @@ public class Shellbreaker : Boss
 
     void Awake()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (PlayState.IsBossAlive(0))
         {
             SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentDifficulty == 2 ? 1 : (PlayState.currentCharacter == "Sluggy" ? 0.66f : 0.88f))),

@@ -403,6 +403,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 24:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Stompy"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 25:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Space Box"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 27:
                             Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);
                             break;

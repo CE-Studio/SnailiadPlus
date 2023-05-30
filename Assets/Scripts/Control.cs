@@ -372,6 +372,30 @@ public class Control
         return Input.GetKeyDown(key);
     }
 
+    public static void SetVirtual(Keyboard input, bool state)
+    {
+        virtualKey[(int)input] = state;
+    }
+
+    public static void SetVirtual(Controller input, bool state)
+    {
+        virtualCon[(int)input] = state;
+    }
+
+    public static void ClearVirtual(bool clearKey, bool clearCon)
+    {
+        if (clearKey)
+        {
+            for (int i = 0; i < virtualKey.Length; i++)
+                virtualKey[i] = false;
+        }
+        if (clearCon)
+        {
+            for (int i = 0; i < virtualCon.Length; i++)
+                virtualCon[i] = false;
+        }
+    }
+
     public static bool CheckKey(Keyboard input, bool pressed = false)
     {
         int index = (int)input;

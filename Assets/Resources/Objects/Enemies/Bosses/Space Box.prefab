@@ -125,6 +125,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b46bc00ba2718346af426ffa5e17ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  attack: 0
+  defense: 0
+  weaknesses: 
+  resistances: 
+  immunities: 
+  letsPermeatingShotsBy: 0
+  stunInvulnerability: 0
+  makeSoundOnPing: 1
+  elementType: 
+  invulnerable: 0
+  canDamage: 1
+  col: {fileID: 0}
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
+  mask: {fileID: 0}
+  spawnConditions: []
+  origin: {x: 0, y: 0}
+  playerCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  ID: 0
+  introTimer: 0
+  introDone: 0
+  frameAnim: {fileID: 0}
+  barAnim: {fileID: 0}
+  barMask: {fileID: 0}
+  shieldObj: {fileID: 1626126138224033484, guid: bf80151ebac7a764d81b7a3a35bb0c71,
+    type: 3}
+  babyboxObj: {fileID: 3976093514069562874, guid: 35f0ffbeb1db0b348b3ff622fb961e97,
+    type: 3}
 --- !u!114 &2106636298018407134
 MonoBehaviour:
   m_ObjectHideFlags: 0

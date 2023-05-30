@@ -115,6 +115,9 @@ public class Stompy : Boss
 
     private void Awake()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (PlayState.IsBossAlive(1))
         {
             SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentDifficulty == 2 ? 2f : (PlayState.currentCharacter == "Sluggy" ? 1.4f : 1f))),

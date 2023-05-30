@@ -4853,6 +4853,17 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Boss_spaceBox_shield0_inactive",
+			"spriteName": "Entities/Boss3Shield",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Boss_spaceBox_shield0_spawn",
 			"spriteName": "Entities/Boss3Shield",
 			"framerate": 30.0,

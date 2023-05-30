@@ -7,7 +7,7 @@ public class SpaceBox : Boss
     private const int MAX_BOXES = 8;
     private const int SHIELD_SLOTS = 36;
     private const int MAX_ACTIVE_SHIELDS = 26;
-    private const int SHIELD_START = 0;
+    private const int STARTING_SHIELDS = 0;
     private const int DAMAGE_TAKEN_FOR_SHIELD = 100;
     private const int SHIELD_PERIOD = 4;
     private const float MODE_TIMEOUT = 0.6f;
@@ -49,6 +49,9 @@ public class SpaceBox : Boss
     private BossMode mode = BossMode.Idle;
     private BossMode lastMode = BossMode.Right;
     private BossMode nextMode = BossMode.Up;
+    private BossMode[] introSteps = new BossMode[] { BossMode.Up, BossMode.Left };
+    private int introStepID = 0;
+    private bool introPlayerMovementDone = false;
 
     private enum ShootMode
     {
@@ -57,26 +60,180 @@ public class SpaceBox : Boss
     };
     private ShootMode shootMode;
 
-    private List<GameObject> shields = new List<GameObject>();
-    private List<GameObject> babyboxes = new List<GameObject>();
+    private List<SpaceBoxShield> shields = new List<SpaceBoxShield>();
+    private List<SpaceBoxBabybox> babyboxes = new List<SpaceBoxBabybox>();
 
     private float modeTimeout = MODE_TIMEOUT;
     private int spawnCounter = SPAWN_COUNTER;
-    private int attackMode = 0;
+    public int attackMode = 0;
     private float speed = STARTING_SPEED;
     private float acceleration = 0.2625f;
     private int decisionTableIndex = 0;
     private int shotCount = SHOT_COUNT;
     private float shotTimeout = SHOT_TIMEOUT;
     private float clusterTimeout = CLUSTER_TIMEOUT;
+    private Vector2 velocity = Vector2.zero;
+    private string dirString = "";
+    private float elapsed = 0;
+    private bool legacyCutscene = true;
+    private bool spawnAtCorner = true;
+    private Vector2 shieldRange;
+
+    public GameObject shieldObj;
+    public GameObject babyboxObj;
 
     private void Awake()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (PlayState.IsBossAlive(2))
         {
             SpawnBoss(5100, 4, 9, true, 2);
 
+            string[] bossAnimTypes = new string[] { "idle#", "charge#_$", "hit#_$", "waitSpawn#" };
+            string[] babyboxAnimTypes = new string[] { "#_spawn", "#_hit", "0_turnBlue" };
+            for (int i = 0; i < 2; i++)
+            {
+                foreach (string animType in bossAnimTypes)
+                {
+                    string formattedAnimType = animType.Replace("#", i.ToString());
+                    if (formattedAnimType.Contains("$"))
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            string furtherFormattedAnimType = formattedAnimType.Replace("$", PlayState.DIRS_COMPASS[j]);
+                            anim.Add("Boss_spaceBox_" + furtherFormattedAnimType);
+                        }
+                    }
+                    else
+                        anim.Add("Boss_spaceBox_" + formattedAnimType);
+                }
+            }
 
+            float childCount = 0;
+            while (childCount < SHIELD_SLOTS)
+            {
+                GameObject newShield = Instantiate(shieldObj, transform);
+                SpaceBoxShield shieldComponent = newShield.GetComponent<SpaceBoxShield>();
+                shields.Add(shieldComponent);
+                shieldComponent.parentBoss = this;
+                shieldComponent.SetActive(true);
+                childCount++;
+            }
+
+            col.TryGetComponent(out BoxCollider2D box);
+            shieldRange = (box.size * 0.5f) + new Vector2(0.55f, 0.55f);
+
+            if (spawnAtCorner)
+                transform.position += new Vector3(3.5f, -3.5f, 0);
         }
+    }
+
+    private void Update()
+    {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
+        if (legacyCutscene && mode == BossMode.Intro && !introPlayerMovementDone)
+        {
+            if (PlayState.currentDifficulty == 2)
+            {
+                if (elapsed > 2.2f && elapsed < 2.9f)
+                {
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
+                    Control.SetVirtual(Control.Controller.Right, true);
+                }
+                else
+                    Control.ClearVirtual(true, true);
+            }
+            else
+            {
+                if (elapsed > 2.7f && elapsed < 3.4f)
+                {
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
+                    Control.SetVirtual(Control.Controller.Right, true);
+                }
+                else
+                    Control.ClearVirtual(true, true);
+            }
+        }
+        else if (mode != BossMode.Intro && !introPlayerMovementDone)
+        {
+            Control.ClearVirtual(true, true);
+            introPlayerMovementDone = true;
+        }
+        elapsed += Time.deltaTime;
+
+        CheckMode();
+        CheckShoot();
+        AddNewShields();
+        UpdateShieldPositions();
+    }
+
+    private void CheckMode()
+    {
+        
+    }
+
+    private void CheckShoot()
+    {
+
+    }
+
+    private void AddNewShields()
+    {
+
+    }
+
+    private void UpdateShieldPositions()
+    {
+        int shieldID = 0;
+        float timeValue;
+        float moddedTime;
+        while (shieldID < MAX_ACTIVE_SHIELDS)
+        {
+            timeValue = (elapsed / SHIELD_PERIOD % 1f * SHIELD_SLOTS + 17f * (shieldID + 8) % MAX_ACTIVE_SHIELDS) % SHIELD_SLOTS;
+            moddedTime = timeValue % 9;
+            if (timeValue < 9f)
+            {
+                shields[shieldID].transform.position = new Vector2(
+                    transform.position.x - shieldRange.x + moddedTime,
+                    transform.position.y + shieldRange.y
+                    );
+            }
+            else if (timeValue < 18f)
+            {
+                shields[shieldID].transform.position = new Vector2(
+                    transform.position.x + shieldRange.x,
+                    transform.position.y + shieldRange.y - moddedTime
+                    );
+            }
+            else if (timeValue < 27f)
+            {
+                shields[shieldID].transform.position = new Vector2(
+                    transform.position.x + shieldRange.x - moddedTime,
+                    transform.position.y - shieldRange.y
+                    );
+            }
+            else
+            {
+                shields[shieldID].transform.position = new Vector2(
+                    transform.position.x - shieldRange.x,
+                    transform.position.y - shieldRange.y + moddedTime
+                    );
+            }
+            shieldID++;
+        }
+    }
+
+    private void Stomp()
+    {
+
+    }
+
+    private void Charge(BossMode dir)
+    {
+
     }
 }
