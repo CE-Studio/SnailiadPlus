@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     private const float LIST_OPTION_SPACING = 1.25f;
     private float currentSpawnY = LIST_CENTER_Y;
     private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
-    private const float LETTER_SPAWN_Y = 5;
+    //private const float LETTER_SPAWN_Y = 5;
     private const float LETTER_SPAWN_TIME = Mathf.PI / 11;
 
     private int selectedOption = 0;
@@ -56,6 +56,9 @@ public class MainMenu : MonoBehaviour
     private float moveTimer = 0;
     private bool direction = true;
     private bool isMoving = true;
+    private Vector2 titleHomePos = Vector2.zero;
+    private float letterOffsetForIntro = -3.75f;
+    private bool lerpLetterOffsetToZero = false;
 
     public static AudioSource music;
     public GameObject textObject;
@@ -204,21 +207,29 @@ public class MainMenu : MonoBehaviour
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);
         PlayState.loadingIcon.SetActive(false);
         preloading = false;
+
+        titleHomePos = PlayState.titleParent.transform.localPosition;
+        PlayState.titleParent.transform.localPosition = new Vector2(titleHomePos.x, titleHomePos.y + letterOffsetForIntro);
     }
 
     void Update()
     {
+        if (lerpLetterOffsetToZero && letterOffsetForIntro != 0)
+        {
+            letterOffsetForIntro = Mathf.Lerp(letterOffsetForIntro, 0, 10f * Time.deltaTime);
+            PlayState.titleParent.transform.localPosition = new Vector2(titleHomePos.x, titleHomePos.y + letterOffsetForIntro);
+        }
         if ((PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause) && !PlayState.isMenuOpen)
         {
             if (PlayState.gameState == PlayState.GameState.menu && !preloading)
             {
-                music.volume = (PlayState.gameOptions[1] * 0.1f);
+                music.volume = PlayState.gameOptions[1] * 0.1f;
                 music.Play();
             }
             PlayState.isMenuOpen = true;
             PlayState.ToggleHUD(false);
             ToggleHUD(true);
-            PageMain();
+            PageIntro();
             currentPointInIndex = 0;
             moveTimer = 0;
             isMoving = true;
@@ -1093,9 +1104,10 @@ public class MainMenu : MonoBehaviour
         {
             if (title[i] != ' ')
             {
-                GameObject newLetter = Instantiate(titleLetter);
-                newLetter.GetComponent<TitleLetter>().Create(title[i], new Vector2(letterSpawnX + (title[i] == '+' ? -0.25f : 0),
-                    LETTER_SPAWN_Y + (title[i] == '+' ? 0.0625f : 0)), currentDelay + (title[i] == '+' ? 2 : 0));
+                GameObject newLetter = Instantiate(titleLetter, PlayState.titleParent.transform);
+                TitleLetter letterScript = newLetter.GetComponent<TitleLetter>();
+                letterScript.Create(title[i], new Vector2(letterSpawnX + (title[i] == '+' ? -0.25f : 0),
+                    title[i] == '+' ? 0.0625f : 0), currentDelay + (title[i] == '+' ? 2 : 0));
                 currentDelay += LETTER_SPAWN_TIME;
                 letters.Add(newLetter);
             }
@@ -1130,6 +1142,7 @@ public class MainMenu : MonoBehaviour
 
         if (lastRoomTrigger != null)
             lastRoomTrigger.DespawnEverything();
+        PlayState.ResetAllParticles();
         PlayState.screenCover.sortingOrder = 999;
         PlayState.SetCamFocus(PlayState.player.transform);
         PlayState.cam.transform.position = spawnPos;
@@ -1146,6 +1159,7 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
         SetTextComponentOrigins();
+        Control.ClearVirtual(true, true);
         fadingToIntro = false;
 
         PlayState.playerScript.holdingJump = true;
@@ -1173,9 +1187,23 @@ public class MainMenu : MonoBehaviour
         PlayState.timeShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f, -7.44f);
     }
 
+    public void PageIntro()
+    {
+        ClearOptions();
+        if (PlayState.IsControllerConnected())
+            AddOption(PlayState.GetText("menu_intro_controller").Replace("_", Control.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
+        else
+            AddOption(PlayState.GetText("menu_intro_keyboard").Replace("_", Control.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
+        AddOption("", false);
+        AddOption("", false);
+        ForceSelect(0);
+        backPage = null;
+    }
+
     public void PageMain()
     {
         ClearOptions();
+        lerpLetterOffsetToZero = true;
         bool returnAvailable = false;
         if (PlayState.gameState == PlayState.GameState.pause)
         {
@@ -2371,6 +2399,7 @@ public class MainMenu : MonoBehaviour
         PageMain();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.globalFunctions.StopMusic();
+        PlayState.ResetAllParticles();
 
         PlayState.skyLayer.transform.localPosition = Vector2.zero;
         PlayState.bgLayer.transform.localPosition = Vector2.zero;

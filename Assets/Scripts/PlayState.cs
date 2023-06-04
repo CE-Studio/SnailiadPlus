@@ -22,6 +22,9 @@ public class PlayState {
     public static readonly string[] DIRS_COMPASS = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
     public static readonly string[] DIRS_CARDINAL = new string[] { "up", "down", "left", "right" };
     public static readonly string[] DIRS_SURFACE = new string[] { "floor", "wallL", "wallR", "ceiling" };
+    public enum EDirsCompass { N, NE, E, SE, S, SW, W, NW };
+    public enum EDirsCardinal { Up, Down, Left, Right };
+    public enum EDirsSurface { Floor, WallL, WallR, Ceiling };
 
     public enum GameState { game, menu, pause, map, debug, dialogue, error }
     public static GameState gameState = GameState.menu;
@@ -110,6 +113,7 @@ public class PlayState {
     public static bool cutsceneActive = false;
     public static int lastLoadedWeapon = 0;
     public static bool stackShells = true;
+    public static bool stackWeaponMods = true;
 
     public static int importJobs = 0;
 
@@ -143,6 +147,7 @@ public class PlayState {
     public static Subscreen subscreenScript;
     public static GameObject dialogueBox;
     public static DialogueBox dialogueScript;
+    public static GameObject titleParent;
 
     public static GlobalFunctions globalFunctions;
 
@@ -164,6 +169,7 @@ public class PlayState {
     public static GameObject[] TogglableHUDElements;
 
     public static bool paralyzed = false;
+    public static bool overrideParalysisInvulnerability = false;
     public static bool isArmed = false;
     public static bool inBossFight = false;
 
@@ -359,7 +365,7 @@ public class PlayState {
         0   // 17 - Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
     };
 
-    public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0 };
+    public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0, 0, 2, 1, 0, 0 };
 
     [Serializable]
     public struct OptionData {
@@ -961,11 +967,19 @@ public class PlayState {
         return selectedParticle;
     }
 
-    public static void ResetAllParticles() {
-        foreach (Transform particle in particlePool.transform) {
+    public static void ResetAllParticles()
+    {
+        foreach (Transform particle in particlePool.transform)
+        {
             Particle particleScript = particle.GetComponent<Particle>();
             if (particle.gameObject.activeSelf)
                 particleScript.ResetParticle();
+        }
+        for (int i = camParticlePool.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform particle = camParticlePool.transform.GetChild(i);
+            if (particle.gameObject.activeSelf)
+                particle.GetComponent<Particle>().ResetParticle();
         }
     }
 
@@ -1337,15 +1351,22 @@ public class PlayState {
     }
 
     public static void EraseGame(int profile) {
-        switch (profile) {
+        GameSaveData blankProfile = new GameSaveData
+        {
+            profile = -1,
+            exploredMap = defaultMinimapState,
+            items = new int[itemCollection.Length]
+        };
+        switch (profile)
+        {
             case 1:
-                gameData.profile1 = new GameSaveData { profile = -1 };
+                gameData.profile1 = blankProfile;
                 break;
             case 2:
-                gameData.profile2 = new GameSaveData { profile = -1 };
+                gameData.profile2 = blankProfile;
                 break;
             case 3:
-                gameData.profile3 = new GameSaveData { profile = -1 };
+                gameData.profile3 = blankProfile;
                 break;
         }
         WriteSave();
@@ -1541,7 +1562,7 @@ public class PlayState {
             return savedTimes[ID] != blankTime;
     }
 
-    public static void QueueAchievementPopup(string achID) {
+    public static void QueueAchievementPopup(AchievementPanel.Achievements achID) {
         achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
     }
 
@@ -1679,6 +1700,49 @@ public class PlayState {
 
         return Vector2.Distance(new Vector2(position.x, 0), new Vector2(cam.transform.position.x, 0)) - halfBoxSize.x < 12.5f &&
             Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - halfBoxSize.y < 7.5f;
+    }
+
+    public static float GetDistance(EDirsCardinal dir, Vector2 a, Vector2 b, int castCount, LayerMask layerMask)
+    {
+        float shortestDis = Mathf.Infinity;
+        Vector2 origin;
+        RaycastHit2D hit;
+        LayerMask playerCollide = LayerMask.GetMask("PlayerCollide");
+        LayerMask enemyCollide = LayerMask.GetMask("PlayerCollide", "EnemyCollide");
+        for (int i = 0; i < castCount; i++)
+        {
+            float t = (float)i / (float)(castCount - 1);
+            switch (dir)
+            {
+                default:
+                case EDirsCardinal.Down:
+                    origin = Vector2.Lerp(a, new Vector2(b.x, a.y), t);
+                    hit = Physics2D.Raycast(origin, Vector2.down, Mathf.Infinity, layerMask);
+                    break;
+                case EDirsCardinal.Left:
+                    origin = Vector2.Lerp(a, new Vector2(a.x, b.y), t);
+                    hit = Physics2D.Raycast(origin, Vector2.left, Mathf.Infinity, layerMask);
+                    break;
+                case EDirsCardinal.Right:
+                    origin = Vector2.Lerp(new Vector2(b.x, a.y), b, t);
+                    hit = Physics2D.Raycast(origin, Vector2.right, Mathf.Infinity, layerMask);
+                    break;
+                case EDirsCardinal.Up:
+                    origin = Vector2.Lerp(new Vector2(a.x, b.y), b, t);
+                    hit = Physics2D.Raycast(origin, Vector2.up, Mathf.Infinity, layerMask);
+                    break;
+            }
+            if (layerMask == playerCollide && IsPointPlayerCollidable(origin))
+                shortestDis = 0;
+            else if (layerMask == enemyCollide && IsPointEnemyCollidable(origin))
+                shortestDis = 0;
+            else if (hit.collider != null)
+            {
+                if (shortestDis > hit.distance)
+                    shortestDis = hit.distance;
+            }
+        }
+        return shortestDis;
     }
 
     public static float Integrate(float num, float target, float speed, float elapsed, float threshold = 0.1f) {

@@ -1561,7 +1561,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public void HitFor(int damage)
     {
-        if ((stunned && damage > 0) || inDeathCutscene)
+        if ((stunned && damage > 0) || inDeathCutscene || (PlayState.paralyzed && !PlayState.overrideParalysisInvulnerability))
             return;
 
         if (damage < 0)

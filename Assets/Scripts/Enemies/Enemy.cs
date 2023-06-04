@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     public bool invulnerable = false;
     public bool canDamage = true;
 
+    private const float HITSTUN_DURATION = 0.025f;
+
     public Collider2D col;
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
@@ -29,7 +31,7 @@ public class Enemy : MonoBehaviour
     public List<float> spawnConditions;
     public Vector2 origin;
     private bool intersectingPlayer = false;
-    protected List<GameObject> intersectingBullets = new List<GameObject>();
+    protected List<Bullet> intersectingBullets = new List<Bullet>();
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
@@ -77,19 +79,17 @@ public class Enemy : MonoBehaviour
 
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
-            List<GameObject> bulletsToDespawn = new List<GameObject>();
+            List<Bullet> bulletsToDespawn = new List<Bullet>();
             bool killFlag = false;
-            foreach (GameObject bullet in intersectingBullets)
+            int maxDamage = 0;
+            foreach (Bullet bullet in intersectingBullets)
             {
-                Bullet bulletScript = bullet.GetComponent<Bullet>();
-                if (!immunities.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
+                if (!immunities.Contains(bullet.bulletType) && bullet.damage - defense > 0)
                 {
-                    health -= Mathf.FloorToInt((bulletScript.damage - defense) *
-                        (weaknesses.Contains(bulletScript.bulletType) ? 2 : 1) * (resistances.Contains(bulletScript.bulletType) ? 0.5f : 1));
-                    if (health <= 0)
-                        killFlag = true;
-                    else
-                        StartCoroutine(Flash());
+                    int thisDamage = Mathf.FloorToInt((bullet.damage - defense) *
+                        (weaknesses.Contains(bullet.bulletType) ? 2 : 1) * (resistances.Contains(bullet.bulletType) ? 0.5f : 1));
+                    if (thisDamage > maxDamage)
+                        maxDamage = thisDamage;
                 }
                 else
                 {
@@ -100,8 +100,16 @@ public class Enemy : MonoBehaviour
                     }
                     pingPlayer -= 1;
                 }
-                if (!letsPermeatingShotsBy || bulletScript.bulletType == 1)
+                if (!letsPermeatingShotsBy || bullet.bulletType == 1)
                     bulletsToDespawn.Add(bullet);
+            }
+            if (maxDamage > 0)
+            {
+                health -= maxDamage;
+                if (health <= 0)
+                    killFlag = true;
+                else
+                    StartCoroutine(Flash());
             }
             while (bulletsToDespawn.Count > 0)
             {
@@ -126,7 +134,7 @@ public class Enemy : MonoBehaviour
         switch (collision.tag)
         {
             case "PlayerBullet":
-                intersectingBullets.Add(collision.gameObject);
+                intersectingBullets.Add(collision.GetComponent<Bullet>());
                 break;
             case "Player":
                 intersectingPlayer = true;
@@ -141,7 +149,7 @@ public class Enemy : MonoBehaviour
         switch (collision.tag)
         {
             case "PlayerBullet":
-                intersectingBullets.Remove(collision.gameObject);
+                intersectingBullets.Remove(collision.GetComponent<Bullet>());
                 break;
             case "Player":
                 intersectingPlayer = false;
@@ -157,9 +165,10 @@ public class Enemy : MonoBehaviour
         stunInvulnerability = true;
         if (playSound)
             PlayState.PlaySound("Explode" + Random.Range(1, 5));
-        yield return new WaitForSeconds(0.0125f);
+        float halfDuration = HITSTUN_DURATION * 0.5f;
+        yield return new WaitForSeconds(halfDuration);
         mask.enabled = false;
-        yield return new WaitForSeconds(0.0125f);
+        yield return new WaitForSeconds(halfDuration);
         stunInvulnerability = false;
     }
 

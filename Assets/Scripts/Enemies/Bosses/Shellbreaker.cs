@@ -40,11 +40,9 @@ public class Shellbreaker : Boss
         if (PlayState.IsBossAlive(0))
         {
             SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentDifficulty == 2 ? 1 : (PlayState.currentCharacter == "Sluggy" ? 0.66f : 0.88f))),
-                2, 3, true, 0);
+                2, 3, true, 0, true);
             StartCoroutine(RunIntro());
             eyes = transform.GetChild(0).gameObject;
-            PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + (2.25f * (PlayState.playerScript.facingLeft ? -1 : 1)),
-                PlayState.player.transform.position.y);
             
             handCount *= (PlayState.currentDifficulty == 2 ? 4 : 1) * ((PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy") ? 2 : 1);
             shotMax = (PlayState.currentDifficulty == 2 ? 6 : 1) * ((PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy") ? 10 : 1);
@@ -173,7 +171,7 @@ public class Shellbreaker : Boss
 
     public override void Kill()
     {
-        PlayState.QueueAchievementPopup("fo4");
+        PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatShellbreaker);
         base.Kill();
     }
 }

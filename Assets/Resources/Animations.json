@@ -5501,6 +5501,182 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_cannon2_N",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_NE",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_E",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_SE",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_S",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_SW",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_W",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_NW",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_base_floor",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_base_wallL",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_base_ceiling",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_base_wallR",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_baseDestroyed_floor",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_baseDestroyed_wallL",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_baseDestroyed_ceiling",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_cannon2_baseDestroyed_wallR",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_chirpy1_up",
 			"spriteName": "Entities/Chirpy1",
 			"framerate": 20.0,
@@ -6384,6 +6560,210 @@
 			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_pincer_data",
+			"spriteName": "Entities/Pincer",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_pincer_floor_walkL",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_floor_jumpL",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_floor_walkR",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_floor_jumpR",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallL_walkD",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallL_jumpD",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallL_walkU",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallL_jumpU",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallR_walkD",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallR_jumpD",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallR_walkU",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_wallR_jumpU",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_ceiling_walkL",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_ceiling_jumpL",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_ceiling_walkR",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_pincer_ceiling_jumpR",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_snakey_green_idle",

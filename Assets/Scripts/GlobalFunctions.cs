@@ -121,6 +121,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.subscreenScript = PlayState.subscreen.GetComponent<Subscreen>();
         PlayState.dialogueBox = PlayState.cam.transform.Find("Dialogue Box").gameObject;
         PlayState.dialogueScript = PlayState.dialogueBox.GetComponent<DialogueBox>();
+        PlayState.titleParent = GameObject.Find("View/Title Parent");
 
         PlayState.globalFunctions = this;
 

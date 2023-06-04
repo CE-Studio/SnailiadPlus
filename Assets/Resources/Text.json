@@ -26,6 +26,16 @@
 			"value": 0
 		},
 		{
+			"name": "menu_intro_keyboard",
+			"text": "Click or press _ to play!",
+			"value": 0
+		},
+		{
+			"name": "menu_intro_controller",
+			"text": "Press _ to play!",
+			"value": 0
+		},
+		{
 			"name": "menu_option_main_return",
 			"text": "Return to game",
 			"value": 0
@@ -2223,6 +2233,16 @@
 		{
 			"name": "room_03_spaceBox",
 			"text": "Gravity Arena",
+			"value": 0
+		},
+		{
+			"name": "room_03_lateCrossroad",
+			"text": "The Bridge",
+			"value": 0
+		},
+		{
+			"name": "room_04_entrance",
+			"text": "Sky Plaza",
 			"value": 0
 		},
 		{

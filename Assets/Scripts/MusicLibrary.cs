@@ -49,6 +49,10 @@ public class MusicLibrary : ScriptableObject
         new string[]
         {
             "AmastridaAbyssus"
+        },
+        new string[]
+        {
+            "LuxLirata"
         }
     };
     public int areaThemeOffset = 5;

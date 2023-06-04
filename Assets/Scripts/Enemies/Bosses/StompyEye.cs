@@ -14,6 +14,7 @@ public class StompyEye : Enemy
     private const float CLUSTER_TIMEOUT = 7.2f;
     private const float SHOT_TIMEOUT = 0.6f;
     private const int SHOT_NUM = 2;
+    private const float CLOSE_DELAY = 0.3f;
 
     private bool isOpen = true;
     private float blinkTimeout = 4f;
@@ -43,27 +44,17 @@ public class StompyEye : Enemy
     {
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
-            List<GameObject> bulletsToDespawn = new List<GameObject>();
+            List<Bullet> bulletsToDespawn = new List<Bullet>();
             bool killFlag = false;
-            foreach (GameObject bullet in intersectingBullets)
+            int maxDamage = 0;
+            foreach (Bullet bullet in intersectingBullets)
             {
-                Bullet bulletScript = bullet.GetComponent<Bullet>();
-                if (!immunities.Contains(bulletScript.bulletType) && bulletScript.damage - defense > 0)
+                if (!immunities.Contains(bullet.bulletType) && bullet.damage - defense > 0)
                 {
-                    if (isOpen)
-                    {
-                        int damage = Mathf.FloorToInt((bulletScript.damage - defense) *
-                            (weaknesses.Contains(bulletScript.bulletType) ? 2 : 1) * (resistances.Contains(bulletScript.bulletType) ? 0.5f : 1));
-                        if (boss.health - damage <= 0)
-                            killFlag = true;
-                        else
-                            boss.Damage(damage, isLeft);
-                        if (!willClose)
-                        {
-                            willClose = true;
-                            closeTimeout = 0.3f;
-                        }
-                    }
+                    int thisDamage = Mathf.FloorToInt((bullet.damage - defense) *
+                        (weaknesses.Contains(bullet.bulletType) ? 2 : 1) * (resistances.Contains(bullet.bulletType) ? 0.5f : 1));
+                    if (thisDamage > maxDamage)
+                        maxDamage = thisDamage;
                 }
                 else
                 {
@@ -74,8 +65,21 @@ public class StompyEye : Enemy
                     }
                     pingPlayer -= 1;
                 }
-                if (!letsPermeatingShotsBy || bulletScript.bulletType == 1)
+                if (!letsPermeatingShotsBy || bullet.bulletType == 1)
                     bulletsToDespawn.Add(bullet);
+            }
+            if (maxDamage > 0 && isOpen)
+            {
+                health -= maxDamage;
+                if (health <= 0)
+                    killFlag = true;
+                else
+                    boss.Damage(maxDamage, isLeft);
+                if (!willClose)
+                {
+                    willClose = true;
+                    closeTimeout = CLOSE_DELAY;
+                }
             }
             while (bulletsToDespawn.Count > 0)
             {
@@ -172,7 +176,7 @@ public class StompyEye : Enemy
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
-            intersectingBullets.Add(collision.gameObject);
+            intersectingBullets.Add(collision.GetComponent<Bullet>());
     }
 
     public void StartFlash()

@@ -31,7 +31,7 @@ public class Boss : Enemy
     protected float barPointLeft;
     protected float barPointRight;
 
-    public void SpawnBoss(int hp, int atk, int def, bool piercable, int bossID, List<int> wea = null, List<int> res = null, List<int> imm = null)
+    public void SpawnBoss(int hp, int atk, int def, bool piercable, int bossID, bool shiftPlayer, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
         Spawn(hp, atk, def, piercable, wea, res, imm);
         ID = bossID;
@@ -50,6 +50,9 @@ public class Boss : Enemy
         }
         barPointLeft = ((barData[3] * 0.5f) + barData[2]) * 0.0625f;
         barPointRight = barPointLeft + (barData[3] * 0.0625f);
+        if (shiftPlayer)
+            PlayState.player.transform.position = new Vector2(PlayState.player.transform.position.x + (2.25f * (PlayState.playerScript.facingLeft ? -1 : 1)),
+                PlayState.player.transform.position.y);
     }
 
     public override void LateUpdate()
@@ -80,7 +83,7 @@ public class Boss : Enemy
         Destroy(gameObject);
     }
 
-    public IEnumerator RunIntro(bool focusOnMe = true)
+    public IEnumerator RunIntro(bool focusOnMe = true, bool endParalysisOnEnd = true)
     {
         PlayState.paralyzed = true;
         PlayState.playerScript.ZeroWalkVelocity();
@@ -134,7 +137,8 @@ public class Boss : Enemy
         }
         if (col != null)
             col.enabled = true;
-        PlayState.paralyzed = false;
+        if (endParalysisOnEnd)
+            PlayState.paralyzed = false;
         introDone = true;
         barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
     }

@@ -282,8 +282,8 @@ public class RoomTrigger:MonoBehaviour {
             box.enabled = false;
 
             for (int i = 0; i < roomCommands.Length; i++) {
-                string[] command = roomCommands[i].ToLower().Replace(" ", "").Split(',');
-                switch (command[0]) {
+                string[] command = roomCommands[i].Replace(" ", "").Split(',');
+                switch (command[0].ToLower()) {
                     default:
                         Debug.LogWarning("Unknown room command \"" + command[0] + "\"");
                         break;
@@ -292,7 +292,9 @@ public class RoomTrigger:MonoBehaviour {
                         PlayState.SetMapTile(mapPos, bool.Parse(command[3]));
                         break;
                     case "achievement":
-                        PlayState.QueueAchievementPopup(command[1]);
+                        AchievementPanel.Achievements thisAchievement =
+                            (AchievementPanel.Achievements)System.Enum.Parse(typeof(AchievementPanel.Achievements), command[1]);
+                        PlayState.QueueAchievementPopup(thisAchievement);
                         break;
                 }
             }
@@ -471,6 +473,14 @@ public class RoomTrigger:MonoBehaviour {
                         case 398:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snakey (green)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 399:
+                            GameObject pincerFloor = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
+                            pincerFloor.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Down);
+                            break;
+                        case 400:
+                            GameObject pincerCeiling = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
+                            pincerCeiling.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Up);
+                            break;
                         case 401:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Jellyfish"), worldPos, Quaternion.identity, transform);
                             break;
@@ -512,6 +522,9 @@ public class RoomTrigger:MonoBehaviour {
                                 worldPos, Quaternion.identity, transform);
                             redTurtLeft.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.wallL);
                             break;
+                        case 413:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Balloon Buster"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
                             break;
@@ -524,6 +537,22 @@ public class RoomTrigger:MonoBehaviour {
                             break;
                         case 418:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike (blue)"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 420:
+                            GameObject cannon2Floor = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Non-Canon"), worldPos, Quaternion.identity, transform);
+                            cannon2Floor.GetComponent<Cannon2>().PlayAnim("floor", true);
+                            break;
+                        case 421:
+                            GameObject cannon2WallL = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Non-Canon"), worldPos, Quaternion.identity, transform);
+                            cannon2WallL.GetComponent<Cannon2>().PlayAnim("wallL", true);
+                            break;
+                        case 422:
+                            GameObject cannon2WallR = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Non-Canon"), worldPos, Quaternion.identity, transform);
+                            cannon2WallR.GetComponent<Cannon2>().PlayAnim("wallR", true);
+                            break;
+                        case 423:
+                            GameObject cannon2Ceil = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Non-Canon"), worldPos, Quaternion.identity, transform);
+                            cannon2Ceil.GetComponent<Cannon2>().PlayAnim("ceiling", true);
                             break;
                         case 424:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
@@ -566,6 +595,17 @@ public class RoomTrigger:MonoBehaviour {
                             GameObject redTurtUp = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Gravity Turtle (cherry red)"),
                                 worldPos, Quaternion.identity, transform);
                             redTurtUp.GetComponent<GravTurtle2>().SetGravity(GravTurtle2.Dirs.ceiling);
+                            break;
+                        case 457:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Balloon Buster Generator"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 458:
+                            GameObject pincerWallL = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
+                            pincerWallL.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Left);
+                            break;
+                        case 459:
+                            GameObject pincerWallR = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
+                            pincerWallR.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Right);
                             break;
                         case 1120:
                         case 1121:

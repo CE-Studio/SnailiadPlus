@@ -83,6 +83,11 @@
 			"height": 10
 		},
 		{
+            "name": "Entities/BalloonBuster",
+            "width": 16,
+            "height": 32
+        },
+		{
 			"name": "Entities/Bat",
 			"width": 32,
 			"height": 16
@@ -158,6 +163,16 @@
             "height": 16
         },
 		{
+            "name": "Entities/Cannon2",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Cannon2Base",
+            "width": 16,
+            "height": 16
+        },
+		{
             "name": "Entities/Chirpy1",
             "width": 16,
             "height": 16
@@ -229,6 +244,11 @@
         },
 		{
             "name": "Entities/Muck",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Pincer",
             "width": 16,
             "height": 16
         },

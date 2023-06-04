@@ -24,7 +24,7 @@ public class SpaceBoxShield : Enemy
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
-            anim.Play("Boss_spaceBox.shield" + parentBoss.attackMode.ToString() + "_hit");
+            anim.Play("Boss_spaceBox_shield" + parentBoss.attackMode.ToString() + "_hit");
         base.OnTriggerEnter2D(collision);
     }
 

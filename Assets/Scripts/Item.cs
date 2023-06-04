@@ -196,7 +196,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     PlayState.playerScript.selectedWeapon = 2;
                     PlayState.globalFunctions.ChangeActiveWeapon(1, true);
                     if (itemID == 11)
-                        PlayState.QueueAchievementPopup("secrt");
+                        PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SuperSecretBoom);
                     break;
                 case 2:
                 case 12:

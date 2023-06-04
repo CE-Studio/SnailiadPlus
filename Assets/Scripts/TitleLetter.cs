@@ -34,7 +34,6 @@ public class TitleLetter : MonoBehaviour
 
     public void Create(char newLetter, Vector2 finalPos, float animOffset)
     {
-        transform.parent = PlayState.mainMenu.transform;
         SetLetter(newLetter);
         localFinalPos = finalPos;
         startOffset = animOffset;
@@ -82,6 +81,9 @@ public class TitleLetter : MonoBehaviour
             string currentColorString = (currentColorInt < 1000 ? "0" : "") + (currentColorInt < 100 ? "0" : "") + (currentColorInt < 10 ? "0" : "") + currentColorInt;
             sprite.color = PlayState.GetColor(currentColorString);
         }
+
+        if (!(PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause))
+            Destroy(gameObject);
     }
 
     public void SetLetter(char newLetter)

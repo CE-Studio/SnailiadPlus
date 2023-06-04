@@ -121,7 +121,7 @@ public class Stompy : Boss
         if (PlayState.IsBossAlive(1))
         {
             SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentDifficulty == 2 ? 2f : (PlayState.currentCharacter == "Sluggy" ? 1.4f : 1f))),
-                2, 5, true, 1);
+                2, 5, true, 1, false);
             if (PlayState.currentDifficulty == 2)
                 bossSpeed = 1f;
             else if (PlayState.currentCharacter == "Sluggy")
@@ -696,7 +696,7 @@ public class Stompy : Boss
         PlayState.globalFunctions.RequestQueuedExplosion(footR.transform.position, 2.7f, 0, false);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
-        PlayState.QueueAchievementPopup("stink");
+        PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatStompy);
         Destroy(gameObject);
     }
 

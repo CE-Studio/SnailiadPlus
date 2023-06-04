@@ -29,6 +29,7 @@ MonoBehaviour:
   - Bullets/Peashooter
   - Bullets/RainbowWave
   - Entities/Babyfish
+  - Entities/BalloonBuster
   - Entities/Bat
   - Entities/Blob
   - Entities/Boss1
@@ -44,6 +45,8 @@ MonoBehaviour:
   - Entities/BreakableIcons
   - Entities/Cannon1
   - Entities/Cannon1Base
+  - Entities/Cannon2
+  - Entities/Cannon2Base
   - Entities/Chirpy1
   - Entities/Chirpy2
   - Entities/Dandelion
@@ -60,6 +63,7 @@ MonoBehaviour:
   - Entities/Kitty
   - Entities/Kitty2
   - Entities/Muck
+  - Entities/Pincer
   - Entities/PixelPeople
   - Entities/Platform
   - Entities/PowerGrass
