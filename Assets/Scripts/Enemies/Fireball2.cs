@@ -32,7 +32,7 @@ public class Fireball2 : Enemy
 
         Spawn(50, 3, 25, true);
         col.TryGetComponent(out box);
-        speed = PlayState.currentDifficulty == 2 ? 0.14f : 0.08f;
+        speed = PlayState.currentProfile.difficulty == 2 ? 0.14f : 0.08f;
         elementType = "ice";
 
         anim.Add("Enemy_fireball2_down");

@@ -45,13 +45,13 @@ public class Syngnathida : Enemy
             return;
 
         Spawn(250, 2, 10, true);
-        if (PlayState.currentDifficulty == 2)
+        if (PlayState.currentProfile.difficulty == 2)
         {
             MOVE_TIME = 1.3f;
             X_RADIUS = 8.125f;
             Y_RADIUS = 2.5f;
         }
-        else if (PlayState.currentCharacter == "Sluggy")
+        else if (PlayState.currentProfile.character == "Sluggy")
         {
             MOVE_TIME = 1.9f;
             X_RADIUS = 8.75f;

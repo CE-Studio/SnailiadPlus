@@ -106,14 +106,14 @@ public class SpaceBoxBabybox : Enemy
         parentBoss = parent;
         parentBoss.babyboxes.Add(this);
         anim.Play("Boss_spaceBox_babybox" + parentBoss.attackMode.ToString() + "_spawn");
-        acceleration = (parentBoss.attackMode == 1 ? ACCEL_BLUE : ACCEL_NORMAL) * (PlayState.currentDifficulty == 2 ? 1.3f : 1f);
+        acceleration = (parentBoss.attackMode == 1 ? ACCEL_BLUE : ACCEL_NORMAL) * (PlayState.currentProfile.difficulty == 2 ? 1.3f : 1f);
         lastMode = startingOrientation ? BoxMode.Up : BoxMode.Left;
     }
 
     public void TurnBlue()
     {
         anim.Play("Boss_spaceBox_babybox0_turnBlue");
-        acceleration = ACCEL_BLUE * (PlayState.currentDifficulty == 2 ? 1.3f : 1f);
+        acceleration = ACCEL_BLUE * (PlayState.currentProfile.difficulty == 2 ? 1.3f : 1f);
     }
 
     private float GetDistance(BoxMode dir)

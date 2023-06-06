@@ -67,7 +67,7 @@ public class BreakableBlock : MonoBehaviour
                         PlayState.PlaySound("Ping");
                         PlayState.armorPingPlayedThisFrame = true;
                     }
-                    if ((PlayState.gameOptions[12] == 1 && !isSilent) || (PlayState.gameOptions[12] == 2 && isSilent))
+                    if ((PlayState.generalData.breakableState == 1 && !isSilent) || (PlayState.generalData.breakableState == 2 && isSilent))
                     {
                         if (!hasBeenHit)
                         {

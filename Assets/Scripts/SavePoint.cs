@@ -47,10 +47,12 @@ public class SavePoint:MonoBehaviour, IRoomObject {
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active");
                 PlayState.globalFunctions.FlashSaveText();
-                PlayState.respawnCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
+                //PlayState.respawnCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
+                PlayState.currentProfile.saveCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
                 PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
-                PlayState.WriteSave("game");
-                PlayState.WriteSave("records");
+                //PlayState.WriteSave("game");
+                //PlayState.WriteSave("records");
+                PlayState.WriteSave(PlayState.currentProfileNumber, true);
             }
         }
     }

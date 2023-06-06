@@ -120,11 +120,12 @@ public class Stompy : Boss
 
         if (PlayState.IsBossAlive(1))
         {
-            SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentDifficulty == 2 ? 2f : (PlayState.currentCharacter == "Sluggy" ? 1.4f : 1f))),
+            SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentProfile.difficulty == 2 ? 2f :
+                (PlayState.currentProfile.character == "Sluggy" ? 1.4f : 1f))),
                 2, 5, true, 1, false);
-            if (PlayState.currentDifficulty == 2)
+            if (PlayState.currentProfile.difficulty == 2)
                 bossSpeed = 1f;
-            else if (PlayState.currentCharacter == "Sluggy")
+            else if (PlayState.currentProfile.character == "Sluggy")
                 bossSpeed = 0.9f;
             transform.position -= Vector3.up * 2.5625f;
             maxEyeY = transform.position.y + 3.875f;
@@ -690,7 +691,7 @@ public class Stompy : Boss
                 PlayState.RequestParticle(new Vector2(Random.Range(cannonPos.x - 0.5f, cannonPos.x + 0.5f),
                     Random.Range(cannonPos.y - 0.5f, cannonPos.y + 0.5f)), "explosion", new float[] { 2 });
         }
-        PlayState.bossStates[ID] = 0;
+        PlayState.currentProfile.bossStates[ID] = 0;
         PlayState.ToggleBossfightState(false, 0);
         PlayState.globalFunctions.RequestQueuedExplosion(footL.transform.position, 2.7f, 0, true);
         PlayState.globalFunctions.RequestQueuedExplosion(footR.transform.position, 2.7f, 0, false);

@@ -124,7 +124,7 @@ public class Subscreen : MonoBehaviour
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, -2);
             buttonDown = true;
-            anim.Play("Subscreen_" + PlayState.currentCharacter.ToLower());
+            anim.Play("Subscreen_" + PlayState.currentProfile.character.ToLower());
             helixAnim.Play("Item_helixFragment");
             UpdateCells();
             UpdateText();
@@ -171,12 +171,12 @@ public class Subscreen : MonoBehaviour
                     if (PlayState.playerMarkerLocations.ContainsKey(currentlySelectedCell))
                     {
                         PlayState.playerMarkerLocations.Remove(currentlySelectedCell);
-                        PlayState.minimapScript.currentMap[currentlySelectedCell] -= 10;
+                        PlayState.currentProfile.exploredMap[currentlySelectedCell] -= 10;
                     }
                     else
                     {
                         PlayState.playerMarkerLocations.Add(currentlySelectedCell, "placeholder for multiplayer name");
-                        PlayState.minimapScript.currentMap[currentlySelectedCell] += 10;
+                        PlayState.currentProfile.exploredMap[currentlySelectedCell] += 10;
                     }
                     UpdateCells();
                 }
@@ -239,7 +239,7 @@ public class Subscreen : MonoBehaviour
         cellsWithMarkers.Clear();
         for (int i = 0; i < cells.Count; i++)
         {
-            int thisCellValue = (PlayState.minimapScript.currentMap[i] < 10) ? PlayState.minimapScript.currentMap[i] : (PlayState.minimapScript.currentMap[i] - 10);
+            int thisCellValue = (PlayState.currentProfile.exploredMap[i] < 10) ? PlayState.currentProfile.exploredMap[i] : (PlayState.currentProfile.exploredMap[i] - 10);
             if (thisCellValue == 0 || thisCellValue == 2)
             {
                 cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
@@ -252,26 +252,38 @@ public class Subscreen : MonoBehaviour
             }
             else
             {
-                cells[i].GetComponent<SpriteMask>().enabled = false;
-                cells[i].GetComponent<SpriteRenderer>().color = PlayState.GetColor("0312");
-                if (PlayState.playerMarkerLocations.ContainsKey(i))
+                if (thisCellValue == 3 || thisCellValue == 13)
                 {
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
-                    cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
-                }
-                else if (PlayState.bossLocations.Contains(i))
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
-                else if (PlayState.saveLocations.Contains(i))
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
-                else if (PlayState.itemLocations.ContainsKey(i))
-                {
-                    if (PlayState.itemCollection[PlayState.itemLocations[i]] == 0)
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
-                    else
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                    cells[i].GetComponent<SpriteMask>().enabled = true;
+                    if (PlayState.playerMarkerLocations.ContainsKey(i))
+                    {
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
+                        cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
+                    }
                 }
                 else
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
+                {
+                    cells[i].GetComponent<SpriteMask>().enabled = false;
+                    cells[i].GetComponent<SpriteRenderer>().color = PlayState.GetColor("0312");
+                    if (PlayState.playerMarkerLocations.ContainsKey(i))
+                    {
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
+                        cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
+                    }
+                    else if (PlayState.bossLocations.Contains(i))
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
+                    else if (PlayState.saveLocations.Contains(i))
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
+                    else if (PlayState.itemLocations.ContainsKey(i))
+                    {
+                        if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0)
+                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
+                        else
+                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                    }
+                    else
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
+                }
             }
         }
 
@@ -279,7 +291,7 @@ public class Subscreen : MonoBehaviour
         playerMarker.transform.localPosition = new Vector2(topLeftCell.x + (playerCellPos.x * 0.5f), topLeftCell.y - (playerCellPos.y * 0.5f));
         int playerCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
         if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
-            (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.itemCollection[PlayState.itemLocations[playerCellID]] == 0))
+            (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0))
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerHighlight");
         else
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerNormal");
@@ -290,8 +302,9 @@ public class Subscreen : MonoBehaviour
         for (int i = 0; i < texts.Count; i += 2)
         {
             string newText = "";
-            string shell = PlayState.currentCharacter == "Sluggy" ? PlayState.GetText("species_sluggy") : (PlayState.currentCharacter == "Blobby" ?
-                PlayState.GetText("species_blobby") : (PlayState.currentCharacter == "Leechy" ? PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell")));
+            string shell = PlayState.currentProfile.character == "Sluggy" ? PlayState.GetText("species_sluggy") : (PlayState.currentProfile.character == "Blobby" ?
+                PlayState.GetText("species_blobby") : (PlayState.currentProfile.character == "Leechy" ? PlayState.GetText("species_leechy") :
+                PlayState.GetText("subscreen_shell")));
             bool hasShell = shell == PlayState.GetText("subscreen_shell");
             switch (Mathf.RoundToInt(i * 0.5f))
             {
@@ -299,7 +312,7 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_header_name");
                     break;
                 case 1:
-                    newText = PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower());
+                    newText = PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower());
                     break;
                 case 2:
                     newText = PlayState.GetText("subscreen_header_weapon");
@@ -320,8 +333,8 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_header_shell");
                     break;
                 case 7:
-                    newText = PlayState.GetText("subscreen_shellNormal").Replace("_", PlayState.currentCharacter == "Sluggy" ? PlayState.GetText("species_sluggy") :
-                        (PlayState.currentCharacter == "Blobby" ? PlayState.GetText("species_blobby") : (PlayState.currentCharacter == "Leechy" ?
+                    newText = PlayState.GetText("subscreen_shellNormal").Replace("_", PlayState.currentProfile.character == "Sluggy" ? PlayState.GetText("species_sluggy") :
+                        (PlayState.currentProfile.character == "Blobby" ? PlayState.GetText("species_blobby") : (PlayState.currentProfile.character == "Leechy" ?
                         PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell"))));
                     break;
                 case 8:
@@ -330,7 +343,7 @@ public class Subscreen : MonoBehaviour
                     break;
                 case 9:
                     if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
-                        newText = PlayState.GetText(PlayState.currentCharacter switch {
+                        newText = PlayState.GetText(PlayState.currentProfile.character switch {
                             "Upside" => "item_magneticFoot",
                             "Leggy" => "item_corkscrewJump",
                             "Blobby" => "item_angelJump",
@@ -339,23 +352,23 @@ public class Subscreen : MonoBehaviour
                     break;
                 case 10:
                     if (PlayState.CheckForItem("Full-Metal Snail"))
-                        newText = PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentCharacter == "Blobby" ?
+                        newText = PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentProfile.character == "Blobby" ?
                             "item_fullMetalSnail_blob" : "item_fullMetalSnail_noShell")).Replace("_", shell);
                     break;
                 case 11:
                     newText = PlayState.GetText("subscreen_header_ability");
                     break;
                 case 12:
-                    if (PlayState.CheckForItem("Shell Shield") && !(PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy"))
-                        newText = PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_shelmet" : "item_shellShield");
+                    if (PlayState.CheckForItem("Shell Shield") && !(PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy"))
+                        newText = PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield");
                     break;
                 case 13:
                     if (PlayState.CheckForItem("High Jump"))
-                        newText = PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_wallGrab" : "item_highJump");
+                        newText = PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_wallGrab" : "item_highJump");
                     break;
                 case 14:
                     if (PlayState.CheckForItem("Rapid Fire"))
-                        newText = PlayState.GetText(PlayState.currentCharacter == "Leechy" ? "item_backfire" : "item_rapidFire");
+                        newText = PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire");
                     break;
                 case 15:
                     if (PlayState.CheckForItem("Devastator"))
@@ -378,7 +391,7 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_time").Replace("_", PlayState.GetTimeString());
                     break;
                 case 21:
-                    newText = "X " + PlayState.helixCount;
+                    newText = "X " + PlayState.CountFragments();
                     break;
             }
             texts[i].text = newText;

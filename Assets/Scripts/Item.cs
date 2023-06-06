@@ -35,7 +35,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
     public Dictionary<string, object> save() {
         if (PlayState.itemData.Length == 0) {
-            PlayState.itemData = new bool[PlayState.itemCollection.Length][];
+            PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
         }
         PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
         Dictionary<string, object> content = new Dictionary<string, object>();
@@ -56,8 +56,8 @@ public class Item:MonoBehaviour, IRoomObject {
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
 
-        int charCheck = (PlayState.currentCharacter switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 });
-        if (PlayState.itemCollection[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentDifficulty] || !PlayState.itemData[itemID][charCheck]) {
+        int charCheck = (PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 });
+        if (PlayState.currentProfile.items[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentProfile.difficulty] || !PlayState.itemData[itemID][charCheck]) {
             Spawn();
         } else {
             Destroy(gameObject);
@@ -74,7 +74,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
             originPos = transform.localPosition;
 
-            if (!difficultiesPresentIn[PlayState.currentDifficulty] || !charactersPresentFor[PlayState.currentCharacter switch {
+            if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch {
                 "Snaily" => 0,
                 "Sluggy" => 1,
                 "Upside" => 2,
@@ -83,7 +83,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 "Leechy" => 5,
                 _ => 0
             }]) {
-                PlayState.itemCollection[itemID] = -1;
+                PlayState.currentProfile.items[itemID] = -1;
                 Destroy(gameObject);
             }
         }
@@ -115,14 +115,14 @@ public class Item:MonoBehaviour, IRoomObject {
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
                 case 4:
-                    if (PlayState.currentCharacter == "Blobby")
+                    if (PlayState.currentProfile.character == "Blobby")
                         animName = "Item_wallGrab";
                     else
                         animName = "Item_highJump";
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
                 case 5:
-                    if (PlayState.currentCharacter == "Blobby") {
+                    if (PlayState.currentProfile.character == "Blobby") {
                         animName = "Item_shelmet";
                         box.size = new Vector2(1.45f, 1.825f);
                     } else {
@@ -131,7 +131,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     }
                     break;
                 case 6:
-                    if (PlayState.currentCharacter == "Leechy")
+                    if (PlayState.currentProfile.character == "Leechy")
                         animName = "Item_backfire";
                     else
                         animName = "Item_rapidFire";
@@ -142,7 +142,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
                 case 8:
-                    animName = PlayState.currentCharacter switch
+                    animName = PlayState.currentProfile.character switch
                     {
                         "Upside" => "Item_magneticFoot",
                         "Leggy" => "Item_corkscrewJump",
@@ -169,11 +169,11 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
-            if (itemID >= PlayState.OFFSET_FRAGMENTS)
-                PlayState.helixCount++;
-            else if (itemID >= PlayState.OFFSET_HEARTS) {
-                PlayState.heartCount++;
-                PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentDifficulty];
+            //if (itemID >= PlayState.OFFSET_FRAGMENTS)
+            //    PlayState.helixCount++;
+            if (itemID >= PlayState.OFFSET_HEARTS) {
+                //PlayState.heartCount++;
+                PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.globalFunctions.RenderNewHearts();
             }
@@ -222,36 +222,37 @@ public class Item:MonoBehaviour, IRoomObject {
             FlashItemText();
             PlayState.globalFunctions.FlashCollectionText();
             StartCoroutine(nameof(HoverOverPlayer));
-            PlayState.WriteSave("game");
+            //PlayState.WriteSave("game");
+            PlayState.WriteSave(PlayState.currentProfileNumber, false);
         }
     }
 
     public void FlashItemText() {
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.helixCount.ToString()));
+            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.CountFragments().ToString()));
         else if (itemID >= PlayState.OFFSET_HEARTS)
-            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.heartCount.ToString()));
+            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.CountHearts().ToString()));
         else
             PlayState.globalFunctions.FlashItemText(IDToName());
     }
 
     private string IDToName() {
-        string species = PlayState.GetText("species_" + PlayState.currentCharacter.ToLower());
+        string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
         return itemID switch {
             1 => PlayState.GetText("item_boomerang"),
             2 => PlayState.GetText("item_rainbowWave"),
             3 => PlayState.GetText("item_devastator"),
-            4 => PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_wallGrab" : "item_highJump"),
-            5 => PlayState.GetText(PlayState.currentCharacter == "Blobby" ? "item_shelmet" : "item_shellShield"),
-            6 => PlayState.GetText(PlayState.currentCharacter == "Leechy" ? "item_backfire" : "item_rapidFire"),
+            4 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_wallGrab" : "item_highJump"),
+            5 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield"),
+            6 => PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire"),
             7 => PlayState.GetText("item_iceSnail").Replace("_", species),
-            8 => PlayState.GetText(PlayState.currentCharacter switch {
+            8 => PlayState.GetText(PlayState.currentProfile.character switch {
                 "Upside" => "item_magneticFoot",
                 "Leggy" => "item_corkscrewJump",
                 "Blobby" => "item_angelJump",
                 _ => "item_gravitySnail"
             }).Replace("_", species),
-            9 => PlayState.GetText(PlayState.currentCharacter switch {
+            9 => PlayState.GetText(PlayState.currentProfile.character switch {
                 "Sluggy" => "item_fullMetalSnail_noShell",
                 "Blobby" => "item_fullMetalSnail_blob",
                 "Leechy" => "item_fullMetalSnail_noShell",

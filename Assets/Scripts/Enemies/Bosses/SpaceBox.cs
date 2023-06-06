@@ -103,7 +103,7 @@ public class SpaceBox : Boss
             StartCoroutine(RunIntro(true, false));
 
             SHOT_COUNT = 4;
-            if (PlayState.currentDifficulty == 2)
+            if (PlayState.currentProfile.difficulty == 2)
             {
                 SHOT_COUNT = 6;
                 speed += 0.2f;
@@ -159,7 +159,7 @@ public class SpaceBox : Boss
 
         if (legacyCutscene && !introMovementsDone)
         {
-            if (PlayState.currentDifficulty == 2)
+            if (PlayState.currentProfile.difficulty == 2)
             {
                 if (elapsed > 2.2f && elapsed < 2.9f)
                 {
@@ -425,7 +425,7 @@ public class SpaceBox : Boss
                             break;
                         case BossMode.Left:
                         case BossMode.Right:
-                            if (PlayState.currentDifficulty == 2)
+                            if (PlayState.currentProfile.difficulty == 2)
                             {
                                 if (decisionValue < 0.4f)
                                     ChargeVert();
@@ -444,7 +444,7 @@ public class SpaceBox : Boss
                             break;
                         case BossMode.Up:
                         case BossMode.Down:
-                            if (PlayState.currentDifficulty == 2)
+                            if (PlayState.currentProfile.difficulty == 2)
                             {
                                 if (decisionValue < 0.4f)
                                     ChargeHoriz();

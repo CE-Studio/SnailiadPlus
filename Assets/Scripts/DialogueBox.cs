@@ -120,7 +120,7 @@ public class DialogueBox : MonoBehaviour
     {
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            sfx.volume = PlayState.gameOptions[0] * 0.1f;
+            sfx.volume = PlayState.generalData.soundVolume * 0.1f;
 
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
 
@@ -224,12 +224,13 @@ public class DialogueBox : MonoBehaviour
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
-                            UpdatePortrait(PlayState.currentCharacter, PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
+                            UpdatePortrait(PlayState.currentProfile.character,
+                                PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
                             if (left)
                                 portraitChar.flipX = false;
                             else
                                 portraitChar.flipX = true;
-                            switch (PlayState.currentCharacter)
+                            switch (PlayState.currentProfile.character)
                             {
                                 case "Snaily":
                                     currentSound = 1;
@@ -460,9 +461,9 @@ public class DialogueBox : MonoBehaviour
 
     public IEnumerator ReturnMusicVol()
     {
-        while (PlayState.activeMus.volume < 0.1f * PlayState.gameOptions[1])
+        while (PlayState.activeMus.volume < 0.1f * PlayState.generalData.musicVolume)
         {
-            PlayState.activeMus.volume += 0.025f * PlayState.gameOptions[1];
+            PlayState.activeMus.volume += 0.025f * PlayState.generalData.musicVolume;
             yield return new WaitForFixedUpdate();
         }
     }
@@ -528,7 +529,7 @@ public class DialogueBox : MonoBehaviour
             int[] colorList = PlayState.GetAnim("Dialogue_characterColors").frames;
             int[] shapeList = PlayState.GetAnim("Dialogue_characterShapes").frames;
             int charID = 0;
-            switch (PlayState.currentCharacter)
+            switch (PlayState.currentProfile.character)
             {
                 case "Snaily":
                     currentSound = 1;

@@ -115,7 +115,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         anim.Add("NPC_" + animationSet + "_idle");
         anim.Add("NPC_" + animationSet + "_shell");
         anim.Add("NPC_" + animationSet + "_sleep");
-        if (ID == 26 && (PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy")) {
+        if (ID == 26 && (PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy")) {
             anim.Play("NPC_" + animationSet + "_sleep");
             sprite.flipX = PlayState.player.transform.position.x < transform.position.x;
         } else
@@ -241,7 +241,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("predictRapidFire");
                             else if (PlayState.IsBossAlive(3))
                                 AddText("predictMoonSnail");
-                            else if (PlayState.helixCount < 30)
+                            else if (PlayState.CountFragments() < 30)
                                 AddText("predictHelixFragments");
                             else if (!PlayState.hasSeenIris)
                                 AddText("predictIris");
@@ -302,7 +302,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 9:
-                            if (PlayState.itemPercentage < 100)
+                            if (PlayState.currentProfile.percentage < 100)
                                 AddText("dirtHome");
                             else
                                 AddText("default");
@@ -331,9 +331,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 14:
-                            if (PlayState.helixCount < 15)
+                            if (PlayState.CountFragments() < 15)
                                 AddText("helixFragments");
-                            else if (PlayState.helixCount < 30 || !PlayState.hasSeenIris)
+                            else if (PlayState.CountFragments() < 30 || !PlayState.hasSeenIris)
                                 AddText("shrine");
                             else
                                 AddText("default");
@@ -343,7 +343,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             if (PlayState.GetItemPercentage() < 20)
                                 AddText("hintSecret");
                             else if (PlayState.GetItemPercentage() < 40) {
-                                switch (PlayState.currentCharacter) {
+                                switch (PlayState.currentProfile.character) {
                                     case "Snaily":
                                         AddText("hintSnaily");
                                         break;
@@ -375,7 +375,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 16:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang")) {
-                                if (PlayState.currentCharacter == "Leechy")
+                                if (PlayState.currentProfile.character == "Leechy")
                                     AddText("healTipLeechy");
                                 else
                                     AddText("healTipGeneric");
@@ -456,9 +456,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 26:
-                            if (PlayState.currentCharacter == "Blobby")
+                            if (PlayState.currentProfile.character == "Blobby")
                                 AddText("blobby");
-                            else if (PlayState.currentCharacter == "Snaily" || PlayState.currentCharacter == "Upside" || PlayState.currentCharacter == "Leggy")
+                            else if (PlayState.currentProfile.character == "Snaily" || PlayState.currentProfile.character == "Upside" || PlayState.currentProfile.character == "Leggy")
                                 AddText("default");
                             else
                                 intentionallyEmpty = true;
@@ -476,7 +476,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         case 28:
                             if (PlayState.CheckForItem("Gravity Snail"))
                             {
-                                AddText(PlayState.currentCharacter switch
+                                AddText(PlayState.currentProfile.character switch
                                 {
                                     "Upside" => "magneticFoot",
                                     "Leggy" => "corkscrewJump",
@@ -490,7 +490,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 29:
                             boxColor = "0002";
-                            if (PlayState.currentDifficulty == 2)
+                            if (PlayState.currentProfile.difficulty == 2)
                                 AddText("insane");
                             else
                                 AddText("default");
@@ -514,13 +514,13 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             else if (!PlayState.CheckForItem("Boomerang"))
                                 AddText("greyDoor");
                             else if (PlayState.IsBossAlive(3))
-                                AddText(PlayState.currentCharacter switch { "Snaily" => "babySnails", "Upside" => "babySnails", _ => "goodLuck" });
+                                AddText(PlayState.currentProfile.character switch { "Snaily" => "babySnails", "Upside" => "babySnails", _ => "goodLuck" });
                             else
                                 AddText("default");
                             break;
 
                         case 42:
-                            if (!PlayState.CheckForItem("Rapid Fire") && PlayState.currentCharacter != "Leechy" && PlayState.IsBossAlive(2))
+                            if (!PlayState.CheckForItem("Rapid Fire") && PlayState.currentProfile.character != "Leechy" && PlayState.IsBossAlive(2))
                                 AddText("noRapidFire");
                             else if (PlayState.IsBossAlive(2))
                                 AddText("pinkGrass");
@@ -531,11 +531,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         case 43:
                             if (!PlayState.CheckForItem("Gravity Snail"))
                                 AddText("cantCorner");
-                            else if (PlayState.currentCharacter == "Upside")
+                            else if (PlayState.currentProfile.character == "Upside")
                                 AddText("upside");
-                            else if (PlayState.currentCharacter == "Leggy")
+                            else if (PlayState.currentProfile.character == "Leggy")
                                 AddText("leggy");
-                            else if (PlayState.currentCharacter == "Blobby")
+                            else if (PlayState.currentProfile.character == "Blobby")
                                 AddText("blobby");
                             else
                                 AddText("default");
@@ -604,10 +604,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                     if (textToSend.Count == 0)
                         textToSend.Add(PlayState.GetText("npc_?")
                             .Replace("##", PlayState.GetItemPercentage().ToString())
-                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
                             .Replace("{ID}", ID.ToString()));
                     if (textToSend.Count > 1) {
                         if (!speechBubbleSprite.enabled)
@@ -668,10 +668,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         if (textID == "?") {
             textToSend.Add(PlayState.GetText("npc_?")
                     .Replace("##", PlayState.GetItemPercentage().ToString())
-                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
                     .Replace("{ID}", ID.ToString()));
             portraitStateList.Add(PlayState.GetTextInfo("npc_?").value);
         } else {
@@ -683,10 +683,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                 if (newText != fullID) {
                     string finalText = newText
                         .Replace("##", PlayState.GetItemPercentage().ToString())
-                        .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                        .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                        .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                        .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                        .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                        .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                        .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                        .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
                         .Replace("{ID}", ID.ToString());
                     textToSend.Add(finalText);
                     portraitStateList.Add(PlayState.GetTextInfo(fullID).value);

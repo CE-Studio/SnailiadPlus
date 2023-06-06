@@ -39,14 +39,16 @@ public class Shellbreaker : Boss
 
         if (PlayState.IsBossAlive(0))
         {
-            SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentDifficulty == 2 ? 1 : (PlayState.currentCharacter == "Sluggy" ? 0.66f : 0.88f))),
+            SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentProfile.difficulty == 2 ? 1 : (PlayState.currentProfile.character == "Sluggy" ? 0.66f : 0.88f))),
                 2, 3, true, 0, true);
             StartCoroutine(RunIntro());
             eyes = transform.GetChild(0).gameObject;
             
-            handCount *= (PlayState.currentDifficulty == 2 ? 4 : 1) * ((PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy") ? 2 : 1);
-            shotMax = (PlayState.currentDifficulty == 2 ? 6 : 1) * ((PlayState.currentCharacter == "Sluggy" || PlayState.currentCharacter == "Leechy") ? 10 : 1);
-            if (PlayState.currentDifficulty == 2)
+            handCount *= (PlayState.currentProfile.difficulty == 2 ? 4 : 1) * ((PlayState.currentProfile.character == "Sluggy" ||
+                PlayState.currentProfile.character == "Leechy") ? 2 : 1);
+            shotMax = (PlayState.currentProfile.difficulty == 2 ? 6 : 1) * ((PlayState.currentProfile.character == "Sluggy" ||
+                PlayState.currentProfile.character == "Leechy") ? 10 : 1);
+            if (PlayState.currentProfile.difficulty == 2)
             {
                 patternDelay = 4;
                 weaponSpeed = 18.125f;
@@ -106,7 +108,7 @@ public class Shellbreaker : Boss
                 stateTimeout = shotDelay * turboMultiplier;
         }
 
-        lifetime += Time.deltaTime * (PlayState.currentDifficulty == 2 ? 1.2f : 1);
+        lifetime += Time.deltaTime * (PlayState.currentProfile.difficulty == 2 ? 1.2f : 1);
         float modifier = Mathf.Sin(3f / 7f * lifetime);
         transform.localPosition = new Vector2(origin.x + 9 * Mathf.Cos(lifetime) * modifier, origin.y - 7 * Mathf.Sin(lifetime) * modifier);
 

@@ -91,7 +91,7 @@ public class Snakey2 : Enemy
 
     private void Shoot(float angle)
     {
-        if (PlayState.currentDifficulty == 2)
+        if (PlayState.currentProfile.difficulty == 2)
         {
             float angleX = -Mathf.Cos(angle);
             float angleY = Mathf.Sin(angle);

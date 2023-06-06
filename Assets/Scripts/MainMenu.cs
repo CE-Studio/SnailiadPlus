@@ -79,17 +79,17 @@ public class MainMenu : MonoBehaviour
         { 'y', 24 }, { 'z', 24 }, { ' ', 12 }, { '+', 24 }
     };
 
-    [Serializable]
-    public struct CollectiveData
-    {
-        public PlayState.GameSaveData profile1;
-        public PlayState.GameSaveData profile2;
-        public PlayState.GameSaveData profile3;
-        public PlayState.OptionData options;
-        public PlayState.PackData packs;
-        public PlayState.ControlData controls;
-        public PlayState.RecordData records;
-    }
+    //[Serializable]
+    //public struct CollectiveData
+    //{
+    //    public PlayState.GameSaveData profile1;
+    //    public PlayState.GameSaveData profile2;
+    //    public PlayState.GameSaveData profile3;
+    //    public PlayState.OptionData options;
+    //    public PlayState.PackData packs;
+    //    public PlayState.ControlData controls;
+    //    public PlayState.RecordData records;
+    //}
 
     void Start()
     {
@@ -98,48 +98,57 @@ public class MainMenu : MonoBehaviour
 
         if (!Directory.Exists(Application.persistentDataPath + "/Saves"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
-        if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"))
+        for (int i = 1; i <= 3; i++)
         {
-            PlayState.CollectiveData newData = new PlayState.CollectiveData
-            {
-                version = Application.version,
-                profile1 = new PlayState.GameSaveData
-                {
-                    profile = -1
-                },
-                profile2 = new PlayState.GameSaveData
-                {
-                    profile = -1
-                },
-                profile3 = new PlayState.GameSaveData
-                {
-                    profile = -1
-                },
-                controls = new PlayState.ControlData
-                {
-                    keyboard = Control.defaultKeyboardInputs,
-                    controller = Control.defaultControllerInputs
-                },
-                options = new PlayState.OptionData
-                {
-                    options = PlayState.optionsDefault
-                },
-                packs = new PlayState.PackData
-                {
-                    packs = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" }
-                },
-                records = new PlayState.RecordData
-                {
-                    achievements = PlayState.achievementDefault,
-                    times = PlayState.timeDefault
-                }
-            };
-            PlayState.gameData = newData;
-            File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(newData));
+            if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_Profile" + i + ".json"))
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_Profile" + i + ".json",
+                    JsonUtility.ToJson(PlayState.blankProfile));
         }
-        else
-            PlayState.gameData = JsonUtility.FromJson<PlayState.CollectiveData>(
-                File.ReadAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"));
+        if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json"))
+            File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json",
+                JsonUtility.ToJson(PlayState.blankData));
+        //if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"))
+        //{
+        //    PlayState.CollectiveData newData = new PlayState.CollectiveData
+        //    {
+        //        version = Application.version,
+        //        profile1 = new PlayState.GameSaveData
+        //        {
+        //            profile = -1
+        //        },
+        //        profile2 = new PlayState.GameSaveData
+        //        {
+        //            profile = -1
+        //        },
+        //        profile3 = new PlayState.GameSaveData
+        //        {
+        //            profile = -1
+        //        },
+        //        controls = new PlayState.ControlData
+        //        {
+        //            keyboard = Control.defaultKeyboardInputs,
+        //            controller = Control.defaultControllerInputs
+        //        },
+        //        options = new PlayState.OptionData
+        //        {
+        //            options = PlayState.optionsDefault
+        //        },
+        //        packs = new PlayState.PackData
+        //        {
+        //            packs = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" }
+        //        },
+        //        records = new PlayState.RecordData
+        //        {
+        //            achievements = PlayState.achievementDefault,
+        //            times = PlayState.timeDefault
+        //        }
+        //    };
+        //    PlayState.gameData = newData;
+        //    File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(newData));
+        //}
+        //else
+        //    PlayState.gameData = JsonUtility.FromJson<PlayState.CollectiveData>(
+        //        File.ReadAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"));
 
         if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TexturePacks");
@@ -150,14 +159,16 @@ public class MainMenu : MonoBehaviour
         if (!Directory.Exists(Application.persistentDataPath + "/TextPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TextPacks");
 
+        PlayState.LoadAllMainData();
+
         PlayState.LoadPacks();
 
         PlayState.loadingIcon.GetComponent<AnimationModule>().Add("Loading");
         PlayState.loadingIcon.GetComponent<AnimationModule>().Play("Loading");
 
-        PlayState.LoadOptions();
-        PlayState.LoadControls();
-        Screen.SetResolution(400 * (PlayState.gameOptions[2] + 1), 240 * (PlayState.gameOptions[2] + 1), false);
+        //PlayState.LoadOptions();
+        //PlayState.LoadControls();
+        Screen.SetResolution(400 * (PlayState.generalData.windowSize + 1), 240 * (PlayState.generalData.windowSize + 1), false);
 
         //PlayState.LoadRecords();
 
@@ -223,7 +234,7 @@ public class MainMenu : MonoBehaviour
         {
             if (PlayState.gameState == PlayState.GameState.menu && !preloading)
             {
-                music.volume = PlayState.gameOptions[1] * 0.1f;
+                music.volume = PlayState.generalData.musicVolume * 0.1f;
                 music.Play();
             }
             PlayState.isMenuOpen = true;
@@ -238,8 +249,8 @@ public class MainMenu : MonoBehaviour
                 i++;
             selectedOption = i;
             GetNewSnailOffset();
-            selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
-            selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfile != -1 ? PlayState.currentCharacter : "Snaily"));
+            selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
+            selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
         }
         if (PlayState.gameState == PlayState.GameState.menu)
         {
@@ -318,8 +329,15 @@ public class MainMenu : MonoBehaviour
         }
         if (PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause)
         {
-            music.volume = (PlayState.gameOptions[1] * 0.1f) * PlayState.fader;
-            Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
+            music.volume = (PlayState.generalData.musicVolume * 0.1f) * PlayState.fader;
+            //Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
+            Application.targetFrameRate = PlayState.generalData.frameLimiter switch
+            {
+                1 => 30,
+                2 => 60,
+                3 => 120,
+                _ => -1
+            };
 
             if (!isRebinding && !fadingToIntro)// && !PlayState.paralyzed)
             {
@@ -377,7 +395,7 @@ public class MainMenu : MonoBehaviour
                             Debug.LogWarning("Menu option variable type \"" + option.varType + "\" is not recognized");
                         break;
                     case "difficulty":
-                        TestForArrowAdjust(option, 0, PlayState.achievementStates[14] == 1 ? 2 : 1);
+                        TestForArrowAdjust(option, 0, PlayState.generalData.achievements[14] ? 2 : 1);
                         switch (menuVarFlags[0])
                         {
                             case 0:
@@ -438,7 +456,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_shooting_toggle"));
                                 break;
                         }
-                        PlayState.gameOptions[8] = menuVarFlags[0];
+                        PlayState.generalData.shootMode = menuVarFlags[0] == 1;
                         break;
                     case "showBreakables":
                         TestForArrowAdjust(option, 1, 2);
@@ -454,7 +472,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_breakables2"));
                                 break;
                         }
-                        PlayState.gameOptions[12] = menuVarFlags[1];
+                        PlayState.generalData.breakableState = menuVarFlags[1];
                         break;
                     case "secretTiles":
                         TestForArrowAdjust(option, 2, 1);
@@ -467,7 +485,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[13] = menuVarFlags[2];
+                        PlayState.generalData.secretMapTilesVisible = menuVarFlags[2] == 1;
                         break;
                     case "frameLimit":
                         TestForArrowAdjust(option, 3, 3);
@@ -486,17 +504,17 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_frameLimit_120"));
                                 break;
                         }
-                        PlayState.gameOptions[14] = menuVarFlags[3];
+                        PlayState.generalData.frameLimiter = menuVarFlags[3];
                         break;
                     case "soundVolume":
                         TestForArrowAdjust(option, 0, 10);
                         AddToOptionText(option, menuVarFlags[0].ToString());
-                        PlayState.gameOptions[0] = menuVarFlags[0];
+                        PlayState.generalData.soundVolume = menuVarFlags[0];
                         break;
                     case "musicVolume":
                         TestForArrowAdjust(option, 1, 10);
                         AddToOptionText(option, menuVarFlags[1].ToString());
-                        PlayState.gameOptions[1] = menuVarFlags[1];
+                        PlayState.generalData.musicVolume = menuVarFlags[1];
                         break;
                     case "resolution":
                         TestForArrowAdjust(option, 0, 3);
@@ -519,7 +537,7 @@ public class MainMenu : MonoBehaviour
                                 Screen.SetResolution(1600, 960, false);
                                 break;
                         }
-                        PlayState.gameOptions[2] = menuVarFlags[0];
+                        PlayState.generalData.windowSize = menuVarFlags[0];
                         break;
                     case "minimap":
                         TestForArrowAdjust(option, 1, 2);
@@ -535,7 +553,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[3] = menuVarFlags[1];
+                        PlayState.generalData.minimapState = menuVarFlags[1];
                         break;
                     case "bottomKeys":
                         TestForArrowAdjust(option, 2, 2);
@@ -551,7 +569,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[4] = menuVarFlags[2];
+                        PlayState.generalData.bottomKeyState = menuVarFlags[2];
                         break;
                     case "keymap":
                         TestForArrowAdjust(option, 3, 1);
@@ -564,7 +582,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[5] = menuVarFlags[3];
+                        PlayState.generalData.keymapState = menuVarFlags[3] == 1;
                         break;
                     case "gameTime":
                         TestForArrowAdjust(option, 4, 1);
@@ -577,7 +595,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[6] = menuVarFlags[4];
+                        PlayState.generalData.timeState = menuVarFlags[4] == 1;
                         break;
                     case "fps":
                         TestForArrowAdjust(option, 5, 1);
@@ -590,7 +608,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_show"));
                                 break;
                         }
-                        PlayState.gameOptions[7] = menuVarFlags[5];
+                        PlayState.generalData.FPSState = menuVarFlags[5] == 1;
                         break;
                     case "particles":
                         TestForArrowAdjust(option, 6, 5);
@@ -615,7 +633,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_all"));
                                 break;
                         }
-                        PlayState.gameOptions[11] = menuVarFlags[6];
+                        PlayState.generalData.particleState = menuVarFlags[6];
                         break;
                     case "paletteShader":
                         TestForArrowAdjust(option, 7, 1);
@@ -628,7 +646,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
                                 break;
                         }
-                        PlayState.gameOptions[16] = menuVarFlags[7];
+                        PlayState.generalData.paletteFilterState = menuVarFlags[7] == 1;
                         break;
                     case "control_jump":
                         if (!isRebinding)
@@ -759,7 +777,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_option_controls_buttonType_ouya"));
                                 break;
                         }
-                        PlayState.gameOptions[17] = menuVarFlags[0];
+                        PlayState.generalData.controllerFaceType = menuVarFlags[0];
                         break;
                     case "screenShake":
                         TestForArrowAdjust(option, 4, 4);
@@ -781,7 +799,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_shake_noHud"));
                                 break;
                         }
-                        PlayState.gameOptions[15] = menuVarFlags[4];
+                        PlayState.generalData.screenShake = menuVarFlags[4];
                         break;
                     case "slot":
                         TestForArrowAdjust(option, 0, 9);
@@ -886,9 +904,9 @@ public class MainMenu : MonoBehaviour
                 if (Input.GetKey(key))
                 {
                     if (bindingController)
-                        Control.controllerInputs[controlID] = key;
+                        PlayState.generalData.controllerInputs[controlID] = key;
                     else
-                        Control.keyboardInputs[controlID] = key;
+                        PlayState.generalData.keyboardInputs[controlID] = key;
                     isRebinding = false;
                 }
             }
@@ -896,42 +914,42 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetAxis("LStickX") > 0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Alpha0;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha0;
                     isRebinding = false;
                 }
                 else if (Input.GetAxis("LStickX") < -0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Keypad0;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad0;
                     isRebinding = false;
                 }
                 if (Input.GetAxis("LStickY") > 0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Alpha1;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha1;
                     isRebinding = false;
                 }
                 else if (Input.GetAxis("LStickY") < -0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Keypad1;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad1;
                     isRebinding = false;
                 }
                 if (Input.GetAxis("RStickX") > 0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Alpha2;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha2;
                     isRebinding = false;
                 }
                 else if (Input.GetAxis("RStickX") < -0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Keypad2;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad2;
                     isRebinding = false;
                 }
                 if (Input.GetAxis("RStickY") > 0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Alpha3;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha3;
                     isRebinding = false;
                 }
                 else if (Input.GetAxis("RStickY") < -0.75f)
                 {
-                    Control.controllerInputs[controlID] = KeyCode.Keypad3;
+                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad3;
                     isRebinding = false;
                 }
             }
@@ -1158,6 +1176,7 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
+        PlayState.hasJumped = false;
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
@@ -1173,27 +1192,27 @@ public class MainMenu : MonoBehaviour
 
     public void SetTextComponentOrigins()
     {
-        PlayState.pauseText.GetComponent<TextAligner>().originalPos = new Vector2(-12.4375f, -7.3775f + (PlayState.gameOptions[5] == 1 ? 2 : (
-            PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
-        PlayState.pauseShadow.GetComponent<TextAligner>().originalPos = new Vector2(-12.375f, -7.44f + (PlayState.gameOptions[5] == 1 ? 2 : (
-            PlayState.gameOptions[6] == 1 && PlayState.gameOptions[7] == 1 ? 1 : (PlayState.gameOptions[6] != 1 && PlayState.gameOptions[7] != 1 ? 0 : 0.5f))));
+        PlayState.pauseText.GetComponent<TextAligner>().originalPos = new Vector2(-12.4375f, -7.3775f + (PlayState.generalData.keymapState ? 2 : (
+            PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
+        PlayState.pauseShadow.GetComponent<TextAligner>().originalPos = new Vector2(-12.375f, -7.44f + (PlayState.generalData.keymapState ? 2 : (
+            PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
 
-        PlayState.fpsText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f,
-            PlayState.gameOptions[6] == 1 ? -6.8775f : -7.3775f);
-        PlayState.fpsShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f,
-            PlayState.gameOptions[6] == 1 ? -6.94f : -7.44f);
+        PlayState.fpsText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f,
+            PlayState.generalData.timeState ? -6.8775f : -7.3775f);
+        PlayState.fpsShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.375f : -12.375f,
+            PlayState.generalData.timeState ? -6.94f : -7.44f);
 
-        PlayState.timeText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.4375f : -12.4375f, -7.3775f);
-        PlayState.timeShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.gameOptions[5] == 1 ? -10.375f : -12.375f, -7.44f);
+        PlayState.timeText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, -7.3775f);
+        PlayState.timeShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.375f : -12.375f, -7.44f);
     }
 
     public void PageIntro()
     {
         ClearOptions();
         if (PlayState.IsControllerConnected())
-            AddOption(PlayState.GetText("menu_intro_controller").Replace("_", Control.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
+            AddOption(PlayState.GetText("menu_intro_controller").Replace("_", PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
         else
-            AddOption(PlayState.GetText("menu_intro_keyboard").Replace("_", Control.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
+            AddOption(PlayState.GetText("menu_intro_keyboard").Replace("_", PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
         AddOption("", false);
         AddOption("", false);
         ForceSelect(0);
@@ -1211,7 +1230,7 @@ public class MainMenu : MonoBehaviour
             returnAvailable = true;
         }
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
-        if (PlayState.achievementStates[6] == 1)
+        if (PlayState.generalData.achievements[6])
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true);
         AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
@@ -1238,17 +1257,23 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_profile_header"), false);
         for (int i = 1; i <= 3; i++)
         {
-            PlayState.GameSaveData data = PlayState.LoadGame(i, false);
-            if (data.profile != -1)
+            //PlayState.GameSaveData data = PlayState.LoadGame(i, false);
+            //if (data.profile != -1)
+            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+            //        " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
+            //else
+            //    AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
+            PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            if (data.isEmpty)
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
+            else
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
                     " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
-            else
-                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_profile_copy"), true, CopyData);
         AddOption(PlayState.GetText("menu_option_profile_erase"), true, EraseData);
-        AddOption(PlayState.GetText(PlayState.currentProfile != -1 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(1);
         backPage = PageMain;
     }
@@ -1259,7 +1284,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_newGame_header"), false);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true, "difficulty");
-        if (PlayState.achievementStates[14] == 1)
+        if (PlayState.generalData.achievements[14])
         {
             AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true, "character");
             AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true, "isRandomized");
@@ -1274,26 +1299,27 @@ public class MainMenu : MonoBehaviour
     public void StartNewSave()
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
-        PlayState.currentProfile = menuVarFlags[3];
-        PlayState.currentDifficulty = menuVarFlags[0];
-        PlayState.currentTime = new float[] { 0, 0, 0 };
-        PlayState.respawnCoords = PlayState.WORLD_SPAWN;
+        PlayState.currentProfileNumber = menuVarFlags[3];
+        PlayState.currentProfile.difficulty = menuVarFlags[0];
+        //PlayState.currentProfile.gameTime = new float[] { 0, 0, 0 };
+        //PlayState.currentProfile.saveCoords = PlayState.WORLD_SPAWN;
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
-        PlayState.itemCollection = new int[]
-        {
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0
-        };
+        //PlayState.itemCollection = new int[]
+        //{
+        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //    0, 0, 0
+        //};
         PlayState.playerScript.selectedWeapon = 0;
-        PlayState.bossStates = new int[] { 1, 1, 1, 1 };
-        PlayState.hasSeenIris = false;
-        PlayState.talkedToCaveSnail = false;
-        PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
-        PlayState.WriteSave("game");
+        //PlayState.bossStates = new int[] { 1, 1, 1, 1 };
+        //PlayState.hasSeenIris = false;
+        //PlayState.talkedToCaveSnail = false;
+        //PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
+        PlayState.currentProfile.isEmpty = false;
+        PlayState.WriteSave(PlayState.currentProfileNumber, false);
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {
@@ -1323,8 +1349,10 @@ public class MainMenu : MonoBehaviour
     public void LoadAndSpawn()
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
-        if (menuVarFlags[0] != PlayState.currentProfile)
+        if (menuVarFlags[0] != PlayState.currentProfileNumber)
             PlayState.LoadGame(menuVarFlags[0], true);
+        PlayState.currentProfileNumber = menuVarFlags[0];
+        PlayState.SetPlayer(PlayState.currentProfile.character);
 
         //if (PlayState.gameState == PlayState.GameState.pause)
         //{
@@ -1346,7 +1374,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         SetTextComponentOrigins();
 
-        switch (PlayState.currentCharacter)
+        switch (PlayState.currentProfile.character)
         {
             default:
             case "Snaily":
@@ -1376,12 +1404,18 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_copyGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
-            PlayState.GameSaveData data = PlayState.LoadGame(i);
-            if (data.profile != -1)
+            //PlayState.GameSaveData data = PlayState.LoadGame(i);
+            //if (data.profile != -1)
+            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+            //        " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
+            //else
+            //    AddOption(PlayState.GetText("menu_option_profile_empty"), false);
+            PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            if (data.isEmpty)
+                AddOption(PlayState.GetText("menu_option_profile_empty"), false);
+            else
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
                     " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
-            else
-                AddOption(PlayState.GetText("menu_option_profile_empty"), false);
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_copyGame_cancel"), true, ProfileScreen);
@@ -1397,12 +1431,19 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_copyGame_header2"), false);
         for (int i = 1; i <= 3; i++)
         {
-            PlayState.GameSaveData data = PlayState.LoadGame(i);
-            if (data.profile != -1)
-                AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-                    " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
+            //PlayState.GameSaveData data = PlayState.LoadGame(i);
+            //if (data.profile != -1)
+            //    AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+            //        " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
+            //else
+            //    AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
+            PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            if (data.isEmpty)
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             else
-                AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
+                AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                    " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
+                    menuVarFlags[0] != i && PlayState.currentProfileNumber != i, CopyConfirm, new int[] { 1, i });
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_copyGame_cancel"), true, ProfileScreen);
@@ -1414,7 +1455,8 @@ public class MainMenu : MonoBehaviour
 
     public void CopyConfirm()
     {
-        bool isChosenSlotEmpty = PlayState.LoadGame(menuVarFlags[1]).profile == -1;
+        //bool isChosenSlotEmpty = PlayState.LoadGame(menuVarFlags[1]).profile == -1;
+        bool isChosenSlotEmpty = (menuVarFlags[1] switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 }).isEmpty;
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_copyGame_header3").Replace("#1", menuVarFlags[0].ToString()).Replace("#2", menuVarFlags[1].ToString()).Replace("_",
             isChosenSlotEmpty ? PlayState.GetText("menu_option_copyGame_empty") : PlayState.GetText("menu_option_copyGame_full")), false);
@@ -1427,7 +1469,8 @@ public class MainMenu : MonoBehaviour
 
     public void ActuallyCopyData()
     {
-        PlayState.WriteSave(PlayState.LoadGame(menuVarFlags[0]), menuVarFlags[1]);
+        //PlayState.WriteSave(PlayState.LoadGame(menuVarFlags[0]), menuVarFlags[1]);
+        PlayState.CopySave(menuVarFlags[0], menuVarFlags[1]);
         ProfileScreen();
     }
 
@@ -1437,14 +1480,20 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_eraseGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
-            PlayState.GameSaveData data = PlayState.LoadGame(i);
-            if (data.profile != -1)
-            {
+            //PlayState.GameSaveData data = PlayState.LoadGame(i);
+            //if (data.profile != -1)
+            //{
+            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+            //        " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
+            //}
+            //else
+            //    AddOption("Empty profile", false);
+            PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            if (data.isEmpty)
+                AddOption(PlayState.GetText("menu_option_profile_empty"), false);
+            else
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
                     " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
-            }
-            else
-                AddOption("Empty profile", false);
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_eraseGame_cancel"), true, ProfileScreen);
@@ -1457,7 +1506,7 @@ public class MainMenu : MonoBehaviour
     public void ConfirmErase()
     {
         ClearOptions();
-        if (PlayState.currentProfile == menuVarFlags[0])
+        if (PlayState.currentProfileNumber == menuVarFlags[0])
         {
             AddOption(PlayState.GetText("menu_option_eraseGame_header3").Replace("#", menuVarFlags[0].ToString()), false);
             AddOption(PlayState.GetText("menu_option_eraseGame_header4").Replace("#", menuVarFlags[0].ToString()), false);
@@ -1488,33 +1537,36 @@ public class MainMenu : MonoBehaviour
     public void EraseAndBoot()
     {
         PlayState.EraseGame(menuVarFlags[0]);
+        PlayState.currentProfile = PlayState.blankProfile;
         ReturnToMenu();
     }
 
     public void OptionsScreen()
     {
         ClearOptions();
-        menuVarFlags[0] = PlayState.gameOptions[8];
-        AddOption(PlayState.GetText("menu_option_options_sound"), true, SoundOptions, new int[] { 0, PlayState.gameOptions[0], 1, PlayState.gameOptions[1] });
+        menuVarFlags[0] = PlayState.generalData.shootMode ? 1 : 0;
+        AddOption(PlayState.GetText("menu_option_options_sound"), true, SoundOptions, new int[] { 0, PlayState.generalData.soundVolume, 1, PlayState.generalData.musicVolume });
         AddOption(PlayState.GetText("menu_option_options_display"), true, DisplayOptions, new int[]
         {
-            0, PlayState.gameOptions[2], 1, PlayState.gameOptions[3],
-            2, PlayState.gameOptions[4], 3, PlayState.gameOptions[5],
-            4, PlayState.gameOptions[6], 5, PlayState.gameOptions[7],
-            6, PlayState.gameOptions[11], 7, PlayState.gameOptions[16]
+            0, PlayState.generalData.windowSize, 1, PlayState.generalData.minimapState,
+            2, PlayState.generalData.bottomKeyState, 3, PlayState.generalData.keymapState ? 1 : 0,
+            4, PlayState.generalData.timeState ? 1 : 0, 5, PlayState.generalData.FPSState ? 1 : 0,
+            6, PlayState.generalData.particleState, 7, PlayState.generalData.paletteFilterState ? 1 : 0
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
-            { 0, PlayState.gameOptions[8], 1, PlayState.gameOptions[12], 2, PlayState.gameOptions[13], 3, PlayState.gameOptions[14], 4, PlayState.gameOptions[15] });
+            { 0, PlayState.generalData.shootMode ? 1 : 0, 1, PlayState.generalData.breakableState,
+                2, PlayState.generalData.secretMapTilesVisible ? 1 : 0, 3, PlayState.generalData.frameLimiter,
+                4, PlayState.generalData.screenShake });
         if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
             AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_eraseRecords"), true, RecordEraseSelect);
-        if (PlayState.gameState == PlayState.GameState.menu)
-            AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
+        //if (PlayState.gameState == PlayState.GameState.menu)
+        //    AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
         AddOption("", false);
-        AddOption(PlayState.GetText(PlayState.currentProfile != -1 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(0);
         backPage = PageMain;
     }
@@ -1551,7 +1603,7 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_controls_main_keyboard"), true, ControlKeyboard);
         if (PlayState.IsControllerConnected())
-            AddOption(PlayState.GetText("menu_option_controls_main_controller"), true, ControlController, new int[] { 0, PlayState.gameOptions[17] });
+            AddOption(PlayState.GetText("menu_option_controls_main_controller"), true, ControlController, new int[] { 0, PlayState.generalData.controllerFaceType });
         else
             AddOption(PlayState.GetText("menu_option_controls_main_noController"), false);
         AddOption("", false);
@@ -1705,7 +1757,8 @@ public class MainMenu : MonoBehaviour
 
     public void SaveControls()
     {
-        PlayState.WriteSave("controls");
+        //PlayState.WriteSave("controls");
+        PlayState.WriteSave(0, true);
         controlScreen = 0;
         ControlMain();
     }
@@ -1838,7 +1891,22 @@ public class MainMenu : MonoBehaviour
             4 => "Text",
             _ => "Texture"
         };
-        PlayState.currentPacks[menuVarFlags[0] - 1] = menuVarFlags[2] == -1 ? "DEFAULT" : tempPackNameBuffer;
+        //PlayState.currentPacks[menuVarFlags[0] - 1] = menuVarFlags[2] == -1 ? "DEFAULT" : tempPackNameBuffer;
+        switch (menuVarFlags[0])
+        {
+            case 1:
+                PlayState.generalData.texturePackID = (menuVarFlags[2] == -1) ? "DEFAULT" : tempPackNameBuffer;
+                break;
+            case 2:
+                PlayState.generalData.soundPackID = (menuVarFlags[2] == -1) ? "DEFAULT" : tempPackNameBuffer;
+                break;
+            case 3:
+                PlayState.generalData.musicPackID = (menuVarFlags[2] == -1) ? "DEFAULT" : tempPackNameBuffer;
+                break;
+            case 4:
+                PlayState.generalData.textPackID = (menuVarFlags[2] == -1) ? "DEFAULT" : tempPackNameBuffer;
+                break;
+        }
         if (menuVarFlags[2] == -1)
         {
             switch (packType)
@@ -1908,7 +1976,8 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
-        PlayState.WriteSave("packs");
+        //PlayState.WriteSave("packs");
+        PlayState.WriteSave(0, true);
         PlayState.ToggleLoadingIcon(false);
         AssetPackMenu();
     }
@@ -1966,8 +2035,9 @@ public class MainMenu : MonoBehaviour
 
     public void EraseAchievements()
     {
-        PlayState.gameData.records.achievements = PlayState.achievementDefault;
-        PlayState.achievementStates = PlayState.achievementDefault;
+        //PlayState.gameData.records.achievements = PlayState.achievementDefault;
+        //PlayState.achievementStates = PlayState.achievementDefault;
+        PlayState.generalData.achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length];
         OptionsScreen();
     }
 
@@ -1984,8 +2054,9 @@ public class MainMenu : MonoBehaviour
 
     public void EraseTimes()
     {
-        PlayState.gameData.records.times = PlayState.timeDefault;
-        PlayState.savedTimes = PlayState.timeDefault;
+        //PlayState.gameData.records.times = PlayState.timeDefault;
+        //PlayState.savedTimes = PlayState.timeDefault;
+        PlayState.generalData.times = PlayState.timeDefault;
         OptionsScreen();
     }
 
@@ -2002,16 +2073,18 @@ public class MainMenu : MonoBehaviour
 
     public void EraseRecords()
     {
-        PlayState.gameData.records.achievements = PlayState.achievementDefault;
-        PlayState.gameData.records.times = PlayState.timeDefault;
-        PlayState.achievementStates = PlayState.achievementDefault;
-        PlayState.savedTimes = PlayState.timeDefault;
+        //PlayState.gameData.records.achievements = PlayState.achievementDefault;
+        //PlayState.gameData.records.times = PlayState.timeDefault;
+        //PlayState.achievementStates = PlayState.achievementDefault;
+        //PlayState.savedTimes = PlayState.timeDefault;
+        PlayState.generalData.achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length];
+        PlayState.generalData.times = PlayState.timeDefault;
         OptionsScreen();
     }
 
     public void ImportExportData()
     {
-        if (PlayState.currentProfile == -1)
+        if (PlayState.currentProfileNumber == 0)
         {
             ClearOptions();
             AddOption(PlayState.GetText("menu_option_importExport_export"), true, ExportSelect, new int[] { 0, 0 });
@@ -2067,43 +2140,43 @@ public class MainMenu : MonoBehaviour
 
     public void WriteDataToFile()
     {
-        string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
-
-        CollectiveData fullData = new CollectiveData { profile1 = PlayState.LoadGame(1), profile2 = PlayState.LoadGame(2), profile3 = PlayState.LoadGame(3) };
-
-        PlayState.OptionData optionDataForCollective = new PlayState.OptionData { options = PlayState.gameOptions  };
-        fullData.options = optionDataForCollective;
-
-        PlayState.PackData packDataForCollective = new PlayState.PackData { packs = PlayState.currentPacks };
-        fullData.packs = packDataForCollective;
-
-        PlayState.ControlData controlDataForCollective = new PlayState.ControlData { keyboard = Control.keyboardInputs, controller = Control.controllerInputs };
-        fullData.controls = controlDataForCollective;
-
-        PlayState.RecordData recordDataForCollective = new PlayState.RecordData { achievements = PlayState.achievementStates, times = PlayState.savedTimes  };
-        fullData.records = recordDataForCollective;
-
-        File.WriteAllText(dataPath, JsonUtility.ToJson(fullData));
-
-        ClearOptions();
-        AddOption(PlayState.GetText("menu_option_export_success1"), false);
-        AddOption(PlayState.GetText("menu_option_export_success2"), false);
-
-        string currentText = "";
-        int j = 32;
-        for (int i = 0; i < dataPath.Length; i++)
-        {
-            currentText += dataPath[i];
-            j--;
-            if (j == 0 || i == dataPath.Length - 1)
-            {
-                AddOption(currentText, false);
-                j = 32;
-                currentText = "";
-            }
-        }
-
-        AddOption("", false);
+        //string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
+        //
+        //CollectiveData fullData = new CollectiveData { profile1 = PlayState.LoadGame(1), profile2 = PlayState.LoadGame(2), profile3 = PlayState.LoadGame(3) };
+        //
+        //PlayState.OptionData optionDataForCollective = new PlayState.OptionData { options = PlayState.gameOptions  };
+        //fullData.options = optionDataForCollective;
+        //
+        //PlayState.PackData packDataForCollective = new PlayState.PackData { packs = PlayState.currentPacks };
+        //fullData.packs = packDataForCollective;
+        //
+        //PlayState.ControlData controlDataForCollective = new PlayState.ControlData { keyboard = Control.keyboardInputs, controller = Control.controllerInputs };
+        //fullData.controls = controlDataForCollective;
+        //
+        //PlayState.RecordData recordDataForCollective = new PlayState.RecordData { achievements = PlayState.achievementStates, times = PlayState.savedTimes  };
+        //fullData.records = recordDataForCollective;
+        //
+        //File.WriteAllText(dataPath, JsonUtility.ToJson(fullData));
+        //
+        //ClearOptions();
+        //AddOption(PlayState.GetText("menu_option_export_success1"), false);
+        //AddOption(PlayState.GetText("menu_option_export_success2"), false);
+        //
+        //string currentText = "";
+        //int j = 32;
+        //for (int i = 0; i < dataPath.Length; i++)
+        //{
+        //    currentText += dataPath[i];
+        //    j--;
+        //    if (j == 0 || i == dataPath.Length - 1)
+        //    {
+        //        AddOption(currentText, false);
+        //        j = 32;
+        //        currentText = "";
+        //    }
+        //}
+        //
+        //AddOption("", false);
         AddOption(PlayState.GetText("menu_option_export_success_confirm"), true, ImportExportData);
         ForceSelect(currentOptions.Count - 1);
         backPage = ImportExportData;
@@ -2145,119 +2218,120 @@ public class MainMenu : MonoBehaviour
 
     public void ReadDataFromFile()
     {
-        string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
-
-        PlayState.CollectiveData fullData = JsonUtility.FromJson<PlayState.CollectiveData>(File.ReadAllText(dataPath));
-
-        if (fullData.version == Application.version)
-        {
-            PlayState.gameData = fullData;
-            PlayState.LoadOptions();
-            PlayState.LoadPacks();
-            PlayState.LoadControls();
-            //PlayState.LoadRecords();
-
-            ClearOptions();
-            AddOption(PlayState.GetText("menu_option_import_success"), false);
-            AddOption("", false);
-            AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
-            ForceSelect(2);
-            backPage = ImportExportData;
-        }
-        else
-        {
-            string[] importVersionStrings = fullData.version.Split(' ')[1].Split('.');
-            int importVersion = (int.Parse(importVersionStrings[0]) * 10000) + (int.Parse(importVersionStrings[1]) * 100) + int.Parse(importVersionStrings[2]);
-            string[] currentVersionStrings = Application.version.Split(' ')[1].Split('.');
-            int currentVersion = (int.Parse(currentVersionStrings[0]) * 10000) + (int.Parse(currentVersionStrings[1]) * 100) + int.Parse(currentVersionStrings[2]);
-            tempDataSlot = fullData;
-            ConfirmMismatchedImport(importVersion > currentVersion);
-        }
+        //string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
+        //
+        //PlayState.CollectiveData fullData = JsonUtility.FromJson<PlayState.CollectiveData>(File.ReadAllText(dataPath));
+        //
+        //if (fullData.version == Application.version)
+        //{
+        //    PlayState.gameData = fullData;
+        //    PlayState.LoadOptions();
+        //    PlayState.LoadPacks();
+        //    PlayState.LoadControls();
+        //    //PlayState.LoadRecords();
+        //
+        //    ClearOptions();
+        //    AddOption(PlayState.GetText("menu_option_import_success"), false);
+        //    AddOption("", false);
+        //    AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
+        //    ForceSelect(2);
+        //    backPage = ImportExportData;
+        //}
+        //else
+        //{
+        //    string[] importVersionStrings = fullData.version.Split(' ')[1].Split('.');
+        //    int importVersion = (int.Parse(importVersionStrings[0]) * 10000) + (int.Parse(importVersionStrings[1]) * 100) + int.Parse(importVersionStrings[2]);
+        //    string[] currentVersionStrings = Application.version.Split(' ')[1].Split('.');
+        //    int currentVersion = (int.Parse(currentVersionStrings[0]) * 10000) + (int.Parse(currentVersionStrings[1]) * 100) + int.Parse(currentVersionStrings[2]);
+        //    tempDataSlot = fullData;
+        //    ConfirmMismatchedImport(importVersion > currentVersion);
+        //}
     }
 
-    PlayState.CollectiveData tempDataSlot;
-    public void ConfirmMismatchedImport(bool isNewer)
-    {
-        string add = isNewer ? PlayState.GetText("menu_option_import_mismatched_newer") : PlayState.GetText("menu_option_import_mismatched_older");
-        ClearOptions();
-        AddOption(PlayState.GetText("menu_option_import_mismatched1").Replace("_", add), false);
-        AddOption(PlayState.GetText("menu_option_import_mismatched2").Replace("_", add), false);
-        AddOption(PlayState.GetText("menu_option_import_mismatched3").Replace("_", add), false);
-        AddOption(PlayState.GetText("menu_option_import_mismatched4").Replace("_", add), false);
-        AddOption(PlayState.GetText("menu_option_import_mismatched5").Replace("_", add), false);
-        AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_import_mismatched_confirm"), true, ImportMismatched);
-        AddOption(PlayState.GetText("menu_option_import_mismatched_return"), true, ClearTempAndReturn);
-        ForceSelect(6);
-        backPage = ClearTempAndReturn;
-    }
+    //PlayState.CollectiveData tempDataSlot;
+    //public void ConfirmMismatchedImport(bool isNewer)
+    //{
+    //    string add = isNewer ? PlayState.GetText("menu_option_import_mismatched_newer") : PlayState.GetText("menu_option_import_mismatched_older");
+    //    ClearOptions();
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched1").Replace("_", add), false);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched2").Replace("_", add), false);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched3").Replace("_", add), false);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched4").Replace("_", add), false);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched5").Replace("_", add), false);
+    //    AddOption("", false);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched_confirm"), true, ImportMismatched);
+    //    AddOption(PlayState.GetText("menu_option_import_mismatched_return"), true, ClearTempAndReturn);
+    //    ForceSelect(6);
+    //    backPage = ClearTempAndReturn;
+    //}
 
-    public void ImportMismatched()
-    {
-        for (int i = 1; i < 4; i++)
-        {
-            PlayState.GameSaveData newProfile = new PlayState.GameSaveData();
-            var oldProfile = i == 1 ? tempDataSlot.profile1 : (i == 2 ? tempDataSlot.profile2 : tempDataSlot.profile3);
+    //public void ImportMismatched()
+    //{
+    //    for (int i = 1; i < 4; i++)
+    //    {
+    //        PlayState.GameSaveData newProfile = new PlayState.GameSaveData();
+    //        var oldProfile = i == 1 ? tempDataSlot.profile1 : (i == 2 ? tempDataSlot.profile2 : tempDataSlot.profile3);
+    //
+    //        if (oldProfile.profile == -1)
+    //            newProfile = new PlayState.GameSaveData { profile = -1 };
+    //        else
+    //        {
+    //            newProfile.profile = i;
+    //            newProfile.difficulty = oldProfile.difficulty;
+    //            newProfile.gameTime = oldProfile.gameTime;
+    //            newProfile.saveCoords = oldProfile.saveCoords;
+    //            newProfile.character = oldProfile.character;
+    //            newProfile.items = oldProfile.items;
+    //            newProfile.weapon = oldProfile.weapon;
+    //            newProfile.bossStates = oldProfile.bossStates;
+    //            newProfile.NPCVars = PlayState.NPCvarDefault;
+    //            for (int j = 0; j < oldProfile.NPCVars.Length; j++)
+    //                newProfile.NPCVars[j] = oldProfile.NPCVars[j];
+    //            newProfile.percentage = oldProfile.percentage;
+    //            newProfile.exploredMap = oldProfile.exploredMap;
+    //        }
+    //        switch (i)
+    //        {
+    //            case 1:
+    //                PlayState.gameData.profile1 = newProfile;
+    //                break;
+    //            case 2:
+    //                PlayState.gameData.profile2 = newProfile;
+    //                break;
+    //            case 3:
+    //                PlayState.gameData.profile3 = newProfile;
+    //                break;
+    //        }
+    //    }
+    //
+    //    int[] newAchievementStates = PlayState.achievementDefault;
+    //    for (int i = 0; i < tempDataSlot.records.achievements.Length; i++)
+    //        newAchievementStates[i] = tempDataSlot.records.achievements[i];
+    //    PlayState.gameData.records.achievements = newAchievementStates;
+    //
+    //    float[][] newTimes = PlayState.timeDefault;
+    //    for (int i = 0; i < tempDataSlot.records.times.Length; i++)
+    //        newTimes[i] = tempDataSlot.records.times[i];
+    //    PlayState.gameData.records.times = newTimes;
+    //    //PlayState.LoadRecords();
+    //    ClearOptions();
+    //    AddOption(PlayState.GetText("menu_option_import_success"), false);
+    //    AddOption("", false);
+    //    AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
+    //    ForceSelect(2);
+    //    backPage = ImportExportData;
+    //}
 
-            if (oldProfile.profile == -1)
-                newProfile = new PlayState.GameSaveData { profile = -1 };
-            else
-            {
-                newProfile.profile = i;
-                newProfile.difficulty = oldProfile.difficulty;
-                newProfile.gameTime = oldProfile.gameTime;
-                newProfile.saveCoords = oldProfile.saveCoords;
-                newProfile.character = oldProfile.character;
-                newProfile.items = oldProfile.items;
-                newProfile.weapon = oldProfile.weapon;
-                newProfile.bossStates = oldProfile.bossStates;
-                newProfile.NPCVars = PlayState.NPCvarDefault;
-                for (int j = 0; j < oldProfile.NPCVars.Length; j++)
-                    newProfile.NPCVars[j] = oldProfile.NPCVars[j];
-                newProfile.percentage = oldProfile.percentage;
-                newProfile.exploredMap = oldProfile.exploredMap;
-            }
-            switch (i)
-            {
-                case 1:
-                    PlayState.gameData.profile1 = newProfile;
-                    break;
-                case 2:
-                    PlayState.gameData.profile2 = newProfile;
-                    break;
-                case 3:
-                    PlayState.gameData.profile3 = newProfile;
-                    break;
-            }
-        }
-
-        int[] newAchievementStates = PlayState.achievementDefault;
-        for (int i = 0; i < tempDataSlot.records.achievements.Length; i++)
-            newAchievementStates[i] = tempDataSlot.records.achievements[i];
-        PlayState.gameData.records.achievements = newAchievementStates;
-
-        float[][] newTimes = PlayState.timeDefault;
-        for (int i = 0; i < tempDataSlot.records.times.Length; i++)
-            newTimes[i] = tempDataSlot.records.times[i];
-        PlayState.gameData.records.times = newTimes;
-        //PlayState.LoadRecords();
-        ClearOptions();
-        AddOption(PlayState.GetText("menu_option_import_success"), false);
-        AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_import_success_confirm"), true, ImportExportData);
-        ForceSelect(2);
-        backPage = ImportExportData;
-    }
-
-    public void ClearTempAndReturn()
-    {
-        tempDataSlot = new PlayState.CollectiveData();
-        ImportExportData();
-    }
+    //public void ClearTempAndReturn()
+    //{
+    //    tempDataSlot = new PlayState.CollectiveData();
+    //    ImportExportData();
+    //}
 
     public void SaveOptions()
     {
-        PlayState.WriteSave("options");
+        //PlayState.WriteSave("options");
+        PlayState.WriteSave(0, true);
         OptionsScreen();
     }
 
@@ -2387,7 +2461,8 @@ public class MainMenu : MonoBehaviour
 
     public void SaveQuit()
     {
-        PlayState.WriteSave("game");
+        //PlayState.WriteSave("game");
+        PlayState.SaveAll();
         ReturnToMenu();
     }
 
@@ -2411,7 +2486,8 @@ public class MainMenu : MonoBehaviour
         lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         PlayState.currentArea = -1;
         PlayState.currentSubzone = -1;
-        PlayState.currentProfile = -1;
+        PlayState.currentProfileNumber = 0;
+        PlayState.currentProfile = PlayState.blankProfile;
 
         music.Play();
     }

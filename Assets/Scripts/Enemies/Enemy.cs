@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
         if (intersectingPlayer && !PlayState.playerScript.stunned && canDamage)
         {
             bool canHit = true;
-            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1) && PlayState.currentDifficulty != 2) ||
+            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1) && PlayState.currentProfile.difficulty != 2) ||
                 (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
                 canHit = false;
             if (canHit)
