@@ -1577,13 +1577,18 @@ public class PlayState {
         return thisProfile;
     }
 
+    public static void LoadAllProfiles()
+    {
+        LoadGame(1, false);
+        LoadGame(2, false);
+        LoadGame(3, false);
+    }
+
     public static void LoadAllMainData()
     {
         currentProfile = blankProfile;
 
-        LoadGame(1, false);
-        LoadGame(2, false);
-        LoadGame(3, false);
+        LoadAllProfiles();
 
         string path = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_OptionsAndRecords.json";
         if (File.Exists(path))
@@ -1613,19 +1618,26 @@ public class PlayState {
         //}
         //WriteSave();
         Debug.Log("Erasing profile " + profile);
+        if (currentProfileNumber == profile)
+        {
+            currentProfileNumber = 0;
+            currentProfile = blankProfile;
+        }    
         switch (profile)
         {
             case 1:
                 profile1 = blankProfile;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile1.json", JsonUtility.ToJson(profile1));
                 break;
             case 2:
                 profile2 = blankProfile;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile2.json", JsonUtility.ToJson(profile2));
                 break;
             case 3:
                 profile3 = blankProfile;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile3.json", JsonUtility.ToJson(profile3));
                 break;
         }
-        WriteSave(profile, false);
     }
 
     //public static void LoadRecords() {

@@ -1254,6 +1254,7 @@ public class MainMenu : MonoBehaviour
     public void ProfileScreen()
     {
         ClearOptions();
+        PlayState.LoadAllProfiles();
         AddOption(PlayState.GetText("menu_option_profile_header"), false);
         for (int i = 1; i <= 3; i++)
         {
@@ -1264,6 +1265,7 @@ public class MainMenu : MonoBehaviour
             //else
             //    AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            Debug.Log("Profile" + i + " game time: " + data.gameTime[0] + ":" + data.gameTime[1] + ":" + data.gameTime[2]);
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             else
@@ -1300,6 +1302,8 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = menuVarFlags[3];
+        Debug.Log("Profile number set to " + menuVarFlags[3]);
+        PlayState.currentProfile = PlayState.blankProfile;
         PlayState.currentProfile.difficulty = menuVarFlags[0];
         //PlayState.currentProfile.gameTime = new float[] { 0, 0, 0 };
         //PlayState.currentProfile.saveCoords = PlayState.WORLD_SPAWN;
@@ -1320,6 +1324,7 @@ public class MainMenu : MonoBehaviour
         //PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
         PlayState.currentProfile.isEmpty = false;
         PlayState.WriteSave(PlayState.currentProfileNumber, false);
+        PlayState.LoadGame(PlayState.currentProfileNumber, true);
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {
@@ -1352,6 +1357,7 @@ public class MainMenu : MonoBehaviour
         if (menuVarFlags[0] != PlayState.currentProfileNumber)
             PlayState.LoadGame(menuVarFlags[0], true);
         PlayState.currentProfileNumber = menuVarFlags[0];
+        Debug.Log("Profile number set to " + menuVarFlags[0]);
         PlayState.SetPlayer(PlayState.currentProfile.character);
 
         //if (PlayState.gameState == PlayState.GameState.pause)
