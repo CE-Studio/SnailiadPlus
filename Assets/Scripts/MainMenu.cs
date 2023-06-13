@@ -32,7 +32,6 @@ public class MainMenu : MonoBehaviour
     private const float LIST_OPTION_SPACING = 1.25f;
     private float currentSpawnY = LIST_CENTER_Y;
     private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
-    //private const float LETTER_SPAWN_Y = 5;
     private const float LETTER_SPAWN_TIME = Mathf.PI / 11;
 
     private int selectedOption = 0;
@@ -79,18 +78,6 @@ public class MainMenu : MonoBehaviour
         { 'y', 24 }, { 'z', 24 }, { ' ', 12 }, { '+', 24 }
     };
 
-    //[Serializable]
-    //public struct CollectiveData
-    //{
-    //    public PlayState.GameSaveData profile1;
-    //    public PlayState.GameSaveData profile2;
-    //    public PlayState.GameSaveData profile3;
-    //    public PlayState.OptionData options;
-    //    public PlayState.PackData packs;
-    //    public PlayState.ControlData controls;
-    //    public PlayState.RecordData records;
-    //}
-
     void Start()
     {
         PlayState.screenCover.sortingOrder = 1001;
@@ -107,48 +94,6 @@ public class MainMenu : MonoBehaviour
         if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json"))
             File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json",
                 JsonUtility.ToJson(PlayState.blankData));
-        //if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"))
-        //{
-        //    PlayState.CollectiveData newData = new PlayState.CollectiveData
-        //    {
-        //        version = Application.version,
-        //        profile1 = new PlayState.GameSaveData
-        //        {
-        //            profile = -1
-        //        },
-        //        profile2 = new PlayState.GameSaveData
-        //        {
-        //            profile = -1
-        //        },
-        //        profile3 = new PlayState.GameSaveData
-        //        {
-        //            profile = -1
-        //        },
-        //        controls = new PlayState.ControlData
-        //        {
-        //            keyboard = Control.defaultKeyboardInputs,
-        //            controller = Control.defaultControllerInputs
-        //        },
-        //        options = new PlayState.OptionData
-        //        {
-        //            options = PlayState.optionsDefault
-        //        },
-        //        packs = new PlayState.PackData
-        //        {
-        //            packs = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" }
-        //        },
-        //        records = new PlayState.RecordData
-        //        {
-        //            achievements = PlayState.achievementDefault,
-        //            times = PlayState.timeDefault
-        //        }
-        //    };
-        //    PlayState.gameData = newData;
-        //    File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(newData));
-        //}
-        //else
-        //    PlayState.gameData = JsonUtility.FromJson<PlayState.CollectiveData>(
-        //        File.ReadAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_CurrentSave.json"));
 
         if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TexturePacks");
@@ -166,11 +111,7 @@ public class MainMenu : MonoBehaviour
         PlayState.loadingIcon.GetComponent<AnimationModule>().Add("Loading");
         PlayState.loadingIcon.GetComponent<AnimationModule>().Play("Loading");
 
-        //PlayState.LoadOptions();
-        //PlayState.LoadControls();
         Screen.SetResolution(400 * (PlayState.generalData.windowSize + 1), 240 * (PlayState.generalData.windowSize + 1), false);
-
-        //PlayState.LoadRecords();
 
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         cam = PlayState.cam.transform;
@@ -330,7 +271,6 @@ public class MainMenu : MonoBehaviour
         if (PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause)
         {
             music.volume = (PlayState.generalData.musicVolume * 0.1f) * PlayState.fader;
-            //Application.targetFrameRate = PlayState.gameOptions[14] == 3 ? 120 : (PlayState.gameOptions[14] == 2 ? 60 : (PlayState.gameOptions[14] == 1 ? 30 : -1));
             Application.targetFrameRate = PlayState.generalData.frameLimiter switch
             {
                 1 => 30,
@@ -339,7 +279,7 @@ public class MainMenu : MonoBehaviour
                 _ => -1
             };
 
-            if (!isRebinding && !fadingToIntro)// && !PlayState.paralyzed)
+            if (!isRebinding && !fadingToIntro)
             {
                 if (Control.UpPress(1) || Control.DownPress(1))
                 {
@@ -1172,7 +1112,6 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
         PlayState.playerScript.health = PlayState.playerScript.maxHealth;
-        //PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 : (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
@@ -1183,7 +1122,6 @@ public class MainMenu : MonoBehaviour
 
         PlayState.playerScript.holdingJump = true;
         if (PlayState.lastLoadedWeapon != 0)
-        //    PlayState.playerScript.selectedWeapon = PlayState.lastLoadedWeapon;
             PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon - 1);
         else
             PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
@@ -1258,14 +1196,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_profile_header"), false);
         for (int i = 1; i <= 3; i++)
         {
-            //PlayState.GameSaveData data = PlayState.LoadGame(i, false);
-            //if (data.profile != -1)
-            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-            //        " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
-            //else
-            //    AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
-            Debug.Log("Profile" + i + " game time: " + data.gameTime[0] + ":" + data.gameTime[1] + ":" + data.gameTime[2]);
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             else
@@ -1302,26 +1233,10 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = menuVarFlags[3];
-        Debug.Log("Profile number set to " + menuVarFlags[3]);
         PlayState.currentProfile = PlayState.blankProfile;
         PlayState.currentProfile.difficulty = menuVarFlags[0];
-        //PlayState.currentProfile.gameTime = new float[] { 0, 0, 0 };
-        //PlayState.currentProfile.saveCoords = PlayState.WORLD_SPAWN;
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
-        //PlayState.itemCollection = new int[]
-        //{
-        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        //    0, 0, 0
-        //};
         PlayState.playerScript.selectedWeapon = 0;
-        //PlayState.bossStates = new int[] { 1, 1, 1, 1 };
-        //PlayState.hasSeenIris = false;
-        //PlayState.talkedToCaveSnail = false;
-        //PlayState.minimapScript.currentMap = PlayState.defaultMinimapState;
         PlayState.currentProfile.isEmpty = false;
         PlayState.WriteSave(PlayState.currentProfileNumber, false);
         PlayState.LoadGame(PlayState.currentProfileNumber, true);
@@ -1357,18 +1272,9 @@ public class MainMenu : MonoBehaviour
         if (menuVarFlags[0] != PlayState.currentProfileNumber)
             PlayState.LoadGame(menuVarFlags[0], true);
         PlayState.currentProfileNumber = menuVarFlags[0];
-        Debug.Log("Profile number set to " + menuVarFlags[0]);
         PlayState.SetPlayer(PlayState.currentProfile.character);
 
-        //if (PlayState.gameState == PlayState.GameState.pause)
-        //{
-        //    Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
-        //    lastRoom.GetComponent<Collider2D>().enabled = true;
-        //    lastRoom.GetComponent<RoomTrigger>().active = true;
-        //    lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
-        //}
-
-        StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.respawnCoords));
+        StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.currentProfile.saveCoords));
     }
 
     public void Unpause()
@@ -1380,28 +1286,7 @@ public class MainMenu : MonoBehaviour
         PlayState.minimapScript.RefreshMap();
         SetTextComponentOrigins();
 
-        switch (PlayState.currentProfile.character)
-        {
-            default:
-            case "Snaily":
-                PlayState.player.GetComponent<Snaily>().holdingJump = true;
-                break;
-                //case "Sluggy":
-                //    PlayState.player.GetComponent<Sluggy>().holdingJump = true;
-                //    break;
-                //case "Upside":
-                //    PlayState.player.GetComponent<Upside>().holdingJump = true;
-                //    break;
-                //case "Leggy":
-                //    PlayState.player.GetComponent<Leggy>().holdingJump = true;
-                //    break;
-                //case "Blobby":
-                //    PlayState.player.GetComponent<Blobby>().holdingJump = true;
-                //    break;
-                //case "Leechy":
-                //    PlayState.player.GetComponent<Leechy>().holdingJump = true;
-                //    break;
-        }
+        PlayState.playerScript.holdingJump = true;
     }
 
     public void CopyData()
@@ -1410,12 +1295,6 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_copyGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
-            //PlayState.GameSaveData data = PlayState.LoadGame(i);
-            //if (data.profile != -1)
-            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-            //        " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
-            //else
-            //    AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
@@ -1437,12 +1316,6 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_copyGame_header2"), false);
         for (int i = 1; i <= 3; i++)
         {
-            //PlayState.GameSaveData data = PlayState.LoadGame(i);
-            //if (data.profile != -1)
-            //    AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-            //        " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""), menuVarFlags[0] != i && PlayState.currentProfile != i, CopyConfirm, new int[] { 1, i });
-            //else
-            //    AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
@@ -1461,7 +1334,6 @@ public class MainMenu : MonoBehaviour
 
     public void CopyConfirm()
     {
-        //bool isChosenSlotEmpty = PlayState.LoadGame(menuVarFlags[1]).profile == -1;
         bool isChosenSlotEmpty = (menuVarFlags[1] switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 }).isEmpty;
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_copyGame_header3").Replace("#1", menuVarFlags[0].ToString()).Replace("#2", menuVarFlags[1].ToString()).Replace("_",
@@ -1475,7 +1347,6 @@ public class MainMenu : MonoBehaviour
 
     public void ActuallyCopyData()
     {
-        //PlayState.WriteSave(PlayState.LoadGame(menuVarFlags[0]), menuVarFlags[1]);
         PlayState.CopySave(menuVarFlags[0], menuVarFlags[1]);
         ProfileScreen();
     }
@@ -1486,14 +1357,6 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_eraseGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
-            //PlayState.GameSaveData data = PlayState.LoadGame(i);
-            //if (data.profile != -1)
-            //{
-            //    AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-            //        " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
-            //}
-            //else
-            //    AddOption("Empty profile", false);
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
@@ -1569,8 +1432,6 @@ public class MainMenu : MonoBehaviour
         else
             AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_eraseRecords"), true, RecordEraseSelect);
-        //if (PlayState.gameState == PlayState.GameState.menu)
-        //    AddOption(PlayState.GetText("menu_option_options_importExport"), true, ImportExportData);
         AddOption("", false);
         AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(0);
@@ -1763,7 +1624,6 @@ public class MainMenu : MonoBehaviour
 
     public void SaveControls()
     {
-        //PlayState.WriteSave("controls");
         PlayState.WriteSave(0, true);
         controlScreen = 0;
         ControlMain();
@@ -1897,7 +1757,6 @@ public class MainMenu : MonoBehaviour
             4 => "Text",
             _ => "Texture"
         };
-        //PlayState.currentPacks[menuVarFlags[0] - 1] = menuVarFlags[2] == -1 ? "DEFAULT" : tempPackNameBuffer;
         switch (menuVarFlags[0])
         {
             case 1:
@@ -1982,7 +1841,6 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
-        //PlayState.WriteSave("packs");
         PlayState.WriteSave(0, true);
         PlayState.ToggleLoadingIcon(false);
         AssetPackMenu();
@@ -2041,9 +1899,8 @@ public class MainMenu : MonoBehaviour
 
     public void EraseAchievements()
     {
-        //PlayState.gameData.records.achievements = PlayState.achievementDefault;
-        //PlayState.achievementStates = PlayState.achievementDefault;
         PlayState.generalData.achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length];
+        PlayState.WriteSave(0, true);
         OptionsScreen();
     }
 
@@ -2060,9 +1917,8 @@ public class MainMenu : MonoBehaviour
 
     public void EraseTimes()
     {
-        //PlayState.gameData.records.times = PlayState.timeDefault;
-        //PlayState.savedTimes = PlayState.timeDefault;
         PlayState.generalData.times = PlayState.timeDefault;
+        PlayState.WriteSave(0, true);
         OptionsScreen();
     }
 
@@ -2079,12 +1935,9 @@ public class MainMenu : MonoBehaviour
 
     public void EraseRecords()
     {
-        //PlayState.gameData.records.achievements = PlayState.achievementDefault;
-        //PlayState.gameData.records.times = PlayState.timeDefault;
-        //PlayState.achievementStates = PlayState.achievementDefault;
-        //PlayState.savedTimes = PlayState.timeDefault;
         PlayState.generalData.achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length];
         PlayState.generalData.times = PlayState.timeDefault;
+        PlayState.WriteSave(0, true);
         OptionsScreen();
     }
 
@@ -2144,6 +1997,11 @@ public class MainMenu : MonoBehaviour
         backPage = ImportExportData;
     }
 
+    // This function is a scrapped "export collective data" function that I realized was kinda redundant when you had to go to the same place
+    // that your current save file was stored to find the exports in the first place, and with the new save system it's easier to just
+    // copy and paste individual profiles anyway
+    // The structs that this function relied on have since been removed. If for whatever reason you want to add them back in and add this functionality back,
+    // refer to the main project's commit history during the "save data refactor" branch's existence (June of 2023). Or write a better system
     public void WriteDataToFile()
     {
         //string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
@@ -2222,6 +2080,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    // All of the below commented functions fall under the same scrapped feature as the above WriteDataToFile() function
     public void ReadDataFromFile()
     {
         //string dataPath = Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json";
@@ -2336,7 +2195,6 @@ public class MainMenu : MonoBehaviour
 
     public void SaveOptions()
     {
-        //PlayState.WriteSave("options");
         PlayState.WriteSave(0, true);
         OptionsScreen();
     }
@@ -2467,7 +2325,6 @@ public class MainMenu : MonoBehaviour
 
     public void SaveQuit()
     {
-        //PlayState.WriteSave("game");
         PlayState.SaveAll();
         ReturnToMenu();
     }

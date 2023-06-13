@@ -200,13 +200,6 @@ public class PlayState {
     public static TextMesh mapShadow;
 
     public static int currentProfileNumber = 0;
-    //public static int currentDifficulty = 1; // 0 = Easy, 1 = Normal, 2 = Insane
-    //public static string currentCharacter = "";
-    //public static float[] currentTime = new float[] { 0, 0, 0 };
-
-    //public static int helixCount;
-    //public static int heartCount;
-    //public static int itemPercentage;
 
     public static readonly int[] defaultMinimapState = new int[]
     {
@@ -238,88 +231,8 @@ public class PlayState {
     public static Dictionary<int, int> itemLocations = new Dictionary<int, int>();
     public static Dictionary<int, string> playerMarkerLocations = new Dictionary<int, string>();
 
-    //public static int[] itemCollection = new int[]
-    //{
-    //    0,  //  0 - Peashooter
-    //    0,  //  1 - Boomerang
-    //    0,  //  2 - Rainbow Wave
-    //    0,  //  3 - Devastator
-    //    0,  //  4 - High Jump          Wall Grab
-    //    0,  //  5 - Shell Shield       Shelmet
-    //    0,  //  6 - Rapid Fire         Backfire
-    //    0,  //  7 - Ice Snail
-    //    0,  //  8 - Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
-    //    0,  //  9 - Full-Metal Snail
-    //    0,  // 10 - Gravity Shock
-    //    0,  // 11 - Super Secret Boomerang
-    //    0,  // 12 - Debug Rainbow Wave
-    //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 13-23 - Heart Containers
-    //    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // 24-53 - Helix Fragments
-    //};
-    //
     public static bool[][] itemData = new bool[][] { };
-    //
-    //public static int[] bossStates = new int[]
-    //{
-    //    1,  // Shellbreaker / Super Shellbreaker
-    //    1,  // Stompy / Vis Vires
-    //    1,  // Space Box / Time Cube
-    //    1   // Moon Snail / Sun Snail
-    //};
-    //
-    //public static int[] achievementStates = new int[]
-    //{
-    //    0, //  0 - First of Four
-    //    0, //  1 - Stinky Toe
-    //    0, //  2 - Gravity Battle
-    //    0, //  3 - Victory
-    //    0, //  4 - Scout
-    //    0, //  5 - Explorer
-    //    0, //  6 - Happy Ending
-    //    0, //  7 - Treasure Hunter
-    //    0, //  8 - Homeless
-    //    0, //  9 - Top Floor
-    //    0, // 10 - Mansion
-    //    0, // 11 - Just Renting
-    //    0, // 12 - Attic Dweller
-    //    0, // 13 - Speedrunner
-    //    0, // 14 - The Gauntlet
-    //    0, // 15 - Pilgrim
-    //    0, // 16 - Snelk Hunter A
-    //    0, // 17 - Snelk Hunter B
-    //    0, // 18 - Super Secret
-    //    0, // 19 - Counter-Snail
-    //    0, // 20 - Birds in the Maze Room
-    //    0, // 21 - Where are we, Snaily?
-    //    0, // 22 - Omega Snail
-    //    0  // 23 - How did you get up here?
-    //};
-    //
-    //public static int[] achievementDefault = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    //
-    //public static float[][] savedTimes = new float[][]
-    //{
-    //    new float[] { 0, 0, 0 }, // Snaily Normal
-    //    new float[] { 0, 0, 0 }, // Snaily Insane
-    //    new float[] { 0, 0, 0 }, // Snaily 100%
-    //    new float[] { 0, 0, 0 }, // Sluggy Normal
-    //    new float[] { 0, 0, 0 }, // Sluggy Insane
-    //    new float[] { 0, 0, 0 }, // Sluggy 100%
-    //    new float[] { 0, 0, 0 }, // Upside Normal
-    //    new float[] { 0, 0, 0 }, // Upside Insane
-    //    new float[] { 0, 0, 0 }, // Upside 100%
-    //    new float[] { 0, 0, 0 }, // Leggy  Normal
-    //    new float[] { 0, 0, 0 }, // Leggy  Insane
-    //    new float[] { 0, 0, 0 }, // Leggy  100%
-    //    new float[] { 0, 0, 0 }, // Blobby Normal
-    //    new float[] { 0, 0, 0 }, // Blobby Insane
-    //    new float[] { 0, 0, 0 }, // Blobby 100%
-    //    new float[] { 0, 0, 0 }, // Leechy Normal
-    //    new float[] { 0, 0, 0 }, // Leechy Insane
-    //    new float[] { 0, 0, 0 }, // Leechy 100%
-    //    new float[] { 0, 0, 0 }  // Boss Rush
-    //};
-    //
+    
     public static readonly float[] timeDefault = new float[]
     {
         0, 0, 0,  // Snaily Normal
@@ -347,55 +260,7 @@ public class PlayState {
         0, 0, 0,  // Leechy 100%
         0, 0, 0   // Leechy Boss Rush
     };
-    //
-    //public static int[] gameOptions = new int[]
-    //{
-    //    10, //  0 - Sound volume (0-10)
-    //    10, //  1 - Music volume (0-10)
-    //    1,  //  2 - Window resolution (0, 1, 2, or 3 (plus 1) for each zoom level)
-    //    1,  //  3 - Minimap display (0 = hidden, 1 = only minimap, 2 = minimap and room names)
-    //    2,  //  4 - Display bottom keys (0 = hidden, 1 = only weapon icons, 2 = all)
-    //    0,  //  5 - Display keymap (boolean)
-    //    0,  //  6 - Time display (boolean)
-    //    0,  //  7 - FPS counter (boolean)
-    //    0,  //  8 - Shoot mode (boolean)
-    //    0,  //  9 - Texture pack ID (any positive int, 0 for default)
-    //    0,  // 10 - Music pack ID (any positive int, 0 for default)
-    //    5,  // 11 - Particle settings (0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all)
-    //    0,  // 12 - Breakable block reveal settings (0 = off, 1 = obvious, 2 = all)
-    //    0,  // 13 - Secret tile visibility (boolean)
-    //    2,  // 14 - Frame limiter (0 = unlimited, 1 = 30fps, 2 = 60fps, 3 = 120fps)
-    //    1,  // 15 - Screen shake (0 = off, 1 = minimal, 2 = full, 3 = minimal w/ no HUD shake, 4 = full w/ no HUD shake)
-    //    0,  // 16 - Palette filter (boolean)
-    //    0   // 17 - Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
-    //};
-    //
-    //public static int[] optionsDefault = new int[] { 10, 10, 1, 1, 2, 0, 0, 0, 0, 0, 0, 5, 0, 0, 2, 1, 0, 0 };
-    //
-    //[Serializable]
-    //public struct OptionData {
-    //    public int[] options;
-    //}
-    //
-    //public static string[] currentPacks = new string[]
-    //{
-    //    "DEFAULT", // Texture
-    //    "DEFAULT", // Sound
-    //    "DEFAULT", // Music
-    //    "DEFAULT"  // Text
-    //};
-    //
-    //[Serializable]
-    //public struct PackData {
-    //    public string[] packs;
-    //}
-    //
-    //[Serializable]
-    //public struct ControlData {
-    //    public KeyCode[] keyboard;
-    //    public KeyCode[] controller;
-    //}
-
+    
     public const byte OFFSET_HEARTS = 13;
     public const byte MAX_HEARTS = 11;
     public const byte OFFSET_FRAGMENTS = 24;
@@ -409,42 +274,6 @@ public class PlayState {
     public static List<int> cutscenesToNotSpawn = new List<int> { };
 
     public const string SAVE_FILE_PREFIX = "SnailySave";
-
-    //[Serializable]
-    //public struct GameSaveData {
-    //
-    //    public int profile;
-    //    public int difficulty;
-    //    public float[] gameTime;
-    //    public Vector2 saveCoords;
-    //    public string character;
-    //    public int[] items;
-    //    public int weapon;
-    //    public int[] bossStates;
-    //    public int[] NPCVars;
-    //    public int percentage;
-    //    public int[] exploredMap;
-    //    public int[] cutsceneStates;
-    //}
-    //
-    //[Serializable]
-    //public struct RecordData {
-    //    public int[] achievements;
-    //    public float[][] times;
-    //}
-    //
-    //[Serializable]
-    //public struct CollectiveData {
-    //    public string version;
-    //    public GameSaveData profile1;
-    //    public GameSaveData profile2;
-    //    public GameSaveData profile3;
-    //    public OptionData options;
-    //    public PackData packs;
-    //    public ControlData controls;
-    //    public RecordData records;
-    //}
-    //public static CollectiveData gameData = new CollectiveData();
 
     [Serializable]
     public struct ProfileData
@@ -902,11 +731,6 @@ public class PlayState {
         foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);
             if (state) {
-                //if (element.name == "Weapon Icons") {
-                //    globalFunctions.ChangeWeaponIconSprite(0, !CheckForItem(0) ? 0 : (playerScript.selectedWeapon == 1 ? 2 : 1));
-                //    globalFunctions.ChangeWeaponIconSprite(1, !(CheckForItem(1) || CheckForItem(11)) ? 0 : (playerScript.selectedWeapon == 2 ? 2 : 1));
-                //    globalFunctions.ChangeWeaponIconSprite(2, !(CheckForItem(2) || CheckForItem(12)) ? 0 : (playerScript.selectedWeapon == 3 ? 2 : 1));
-                //}
                 if (element.name == "Minimap Panel")
                     element.SetActive(!inBossFight);
                 if (element.name == "Boss Health Bar")
@@ -1396,60 +1220,6 @@ public class PlayState {
     }
 
     public static void WriteSave(int profileID, bool saveGeneral) {
-        //if (dataType == "game") {
-        //    GameSaveData data = new GameSaveData {
-        //        profile = currentProfile,
-        //        difficulty = currentDifficulty,
-        //        gameTime = (float[])currentTime.Clone(),
-        //        saveCoords = respawnCoords,
-        //        character = currentCharacter,
-        //        items = (int[])itemCollection.Clone(),
-        //        weapon = playerScript.selectedWeapon,
-        //        bossStates = (int[])bossStates.Clone(),
-        //        NPCVars = new int[]
-        //        {
-        //            hasSeenIris ? 1 : 0,
-        //            talkedToCaveSnail ? 1 : 0
-        //        },
-        //        percentage = GetItemPercentage(),
-        //        exploredMap = (int[])minimapScript.currentMap.Clone(),
-        //        cutsceneStates = cutscenesToNotSpawn.ToArray()
-        //    };
-        //    switch (currentProfile) {
-        //        case 1:
-        //            gameData.profile1 = data;
-        //            break;
-        //        case 2:
-        //            gameData.profile2 = data;
-        //            break;
-        //        case 3:
-        //            gameData.profile3 = data;
-        //            break;
-        //    }
-        //} else if (dataType == "options") {
-        //    gameData.options = new OptionData {
-        //        options = gameOptions
-        //    };
-        //} else if (dataType == "packs") {
-        //    gameData.packs = new PackData {
-        //        packs = currentPacks
-        //    };
-        //} else if (dataType == "records") {
-        //    gameData.records = new RecordData {
-        //        achievements = achievementStates,
-        //        times = savedTimes
-        //    };
-        //} else if (dataType == "controls") {
-        //    gameData.controls = new ControlData {
-        //        keyboard = Control.keyboardInputs,
-        //        controller = Control.controllerInputs
-        //    };
-        //} else if (!(dataType == "" || dataType == " ")) {
-        //    Debug.LogWarning("Invalid save type \"" + dataType + "\"");
-        //}
-        //gameData.version = Application.version;
-        //File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_CurrentSave.json", JsonUtility.ToJson(gameData));
-        Debug.Log("Saving profile " + profileID);
         switch (profileID)
         {
             case 1:
@@ -1471,42 +1241,14 @@ public class PlayState {
 
     public static void SaveAll()
     {
-        Debug.Log("Saving to all profiles");
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile1.json", JsonUtility.ToJson(profile1));
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile2.json", JsonUtility.ToJson(profile2));
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile3.json", JsonUtility.ToJson(profile3));
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_OptionsAndRecords.json", JsonUtility.ToJson(generalData));
     }
 
-    //public static void WriteSave(GameSaveData copyData, int profileToCopyTo) {
-    //    copyData.profile = profileToCopyTo;
-    //    switch (profileToCopyTo) {
-    //        case 1:
-    //            gameData.profile1 = copyData;
-    //            break;
-    //        case 2:
-    //            gameData.profile2 = copyData;
-    //            break;
-    //        case 3:
-    //            gameData.profile3 = copyData;
-    //            break;
-    //    }
-    //    WriteSave();
-    //}
     public static void CopySave(int copiedDataID, int destinationID)
     {
-        //switch (destinationID)
-        //{
-        //    case 1:
-        //        File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile1.json", JsonUtility.ToJson(data));
-        //        break;
-        //    case 2:
-        //        File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile2.json", JsonUtility.ToJson(data));
-        //        break;
-        //    case 3:
-        //        File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile3.json", JsonUtility.ToJson(data));
-        //        break;
-        //}
         if (copiedDataID > 0 && copiedDataID <= 3)
             File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + destinationID + ".json",
                 JsonUtility.ToJson(copiedDataID switch { 1 => profile1, 2 => profile2, _ => profile3 }));
@@ -1514,46 +1256,6 @@ public class PlayState {
 
     public static ProfileData LoadGame(int profile, bool setAsCurrent)
     {
-        //if ((profile == 1 && gameData.profile1.profile == 1) || (profile == 2 && gameData.profile2.profile == 2) || (profile == 3 && gameData.profile3.profile == 3)) {
-        //    GameSaveData loadedSave = profile == 1 ? gameData.profile1 : (profile == 2 ? gameData.profile2 : gameData.profile3);
-        //    if (mode) {
-        //        currentProfile = loadedSave.profile;
-        //        currentDifficulty = loadedSave.difficulty;
-        //        currentTime = (float[])loadedSave.gameTime.Clone();
-        //        respawnCoords = loadedSave.saveCoords;
-        //        //currentCharacter = loadedSave.character;
-        //        SetPlayer(loadedSave.character);
-        //        itemCollection = (int[])loadedSave.items.Clone();
-        //        playerScript.selectedWeapon = loadedSave.weapon;
-        //        lastLoadedWeapon = loadedSave.weapon;
-        //        bossStates = (int[])loadedSave.bossStates.Clone();
-        //        hasSeenIris = loadedSave.NPCVars[0] == 1;
-        //        talkedToCaveSnail = loadedSave.NPCVars[1] == 1;
-        //        minimapScript.currentMap = (int[])loadedSave.exploredMap.Clone();
-        //        cutscenesToNotSpawn = new List<int>(loadedSave.cutsceneStates);
-        //        playerScript.maxHealth = globalFunctions.hpPerHeart[currentDifficulty] * 3;
-        //        helixCount = 0;
-        //        heartCount = 0;
-        //        for (int i = 0; i < loadedSave.items.Length; i++) {
-        //            if (loadedSave.items[i] == 1) {
-        //                if (i >= OFFSET_FRAGMENTS)
-        //                    helixCount++;
-        //                else if (i >= OFFSET_HEARTS) {
-        //                    heartCount++;
-        //                    playerScript.maxHealth += globalFunctions.hpPerHeart[currentDifficulty];
-        //                }
-        //            }
-        //        }
-        //        playerScript.health = playerScript.maxHealth;
-        //        globalFunctions.RenderNewHearts();
-        //    }
-        //    return loadedSave;
-        //} else {
-        //    GameSaveData nullData = new GameSaveData {
-        //        profile = -1
-        //    };
-        //    return nullData;
-        //}
         ProfileData thisProfile = blankProfile;
         string path = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + profile + ".json";
         if (File.Exists(path))
@@ -1598,26 +1300,6 @@ public class PlayState {
     }
 
     public static void EraseGame(int profile) {
-        //GameSaveData blankProfile = new GameSaveData
-        //{
-        //    profile = -1,
-        //    exploredMap = defaultMinimapState,
-        //    items = new int[itemCollection.Length]
-        //};
-        //switch (profile)
-        //{
-        //    case 1:
-        //        gameData.profile1 = blankProfile;
-        //        break;
-        //    case 2:
-        //        gameData.profile2 = blankProfile;
-        //        break;
-        //    case 3:
-        //        gameData.profile3 = blankProfile;
-        //        break;
-        //}
-        //WriteSave();
-        Debug.Log("Erasing profile " + profile);
         if (currentProfileNumber == profile)
         {
             currentProfileNumber = 0;
@@ -1640,99 +1322,7 @@ public class PlayState {
         }
     }
 
-    //public static void LoadRecords() {
-    //    //if (PlayerPrefs.HasKey("RecordData"))
-    //    //{
-    //    //    RecordData data = JsonUtility.FromJson<RecordData>(PlayerPrefs.GetString("RecordData"));
-    //    //    for (int i = 0; i < data.achievements.Length; i++)
-    //    //        achievementStates[i] = data.achievements[i];
-    //    //    if (data.times != null)
-    //    //    {
-    //    //        for (int i = 0; i < data.times.Length; i++)
-    //    //            savedTimes[i] = data.times[i];
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        savedTimes = new float[][]
-    //    //        {
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 },
-    //    //            new float[] { 0, 0, 0 }
-    //    //        };
-    //    //    }
-    //    //}
-    //    if (achievementStates.Length == gameData.records.achievements.Length)
-    //        achievementStates = gameData.records.achievements;
-    //    else {
-    //        for (int i = 0; i < gameData.records.achievements.Length; i++)
-    //            achievementStates[i] = gameData.records.achievements[i];
-    //    }
-    //    if (savedTimes.Length == gameData.records.times.Length)
-    //        savedTimes = gameData.records.times;
-    //    else {
-    //        for (int i = 0; i < gameData.records.times.Length; i++)
-    //            savedTimes[i] = gameData.records.times[i];
-    //    }
-    //}
-
-    //public static void LoadOptions() {
-    //    bool load = true;
-    //    try {
-    //        int i = gameData.options.options.Length;
-    //    }
-    //#pragma warning disable IDE0059 // Unnecessary assignment of a value
-    //#pragma warning disable CS0168 // Variable is declared but never used
-    //    catch (Exception e)
-    //#pragma warning restore CS0168 // Variable is declared but never used
-    //#pragma warning restore IDE0059 // Unnecessary assignment of a value
-    //    {
-    //        load = false;
-    //    }
-    //
-    //    if (load) {
-    //        if (gameOptions.Length == gameData.options.options.Length)
-    //            gameOptions = gameData.options.options;
-    //        else {
-    //            for (int i = 0; i < gameData.options.options.Length; i++)
-    //                gameOptions[i] = gameData.options.options[i];
-    //        }
-    //    }
-    //}
-
     public static void LoadPacks() {
-        //bool loadNewPacks = true;
-        //try {
-        //    string pack1 = gameData.packs.packs[0];
-        //    string pack2 = gameData.packs.packs[1];
-        //    string pack3 = gameData.packs.packs[2];
-        //    string pack4 = gameData.packs.packs[3];
-        //}
-        //#pragma warning disable IDE0059 // Unnecessary assignment of a value
-        //#pragma warning disable CS0168 // Variable is declared but never used
-        //catch (Exception e)
-        //#pragma warning restore CS0168 // Variable is declared but never used
-        //#pragma warning restore IDE0059 // Unnecessary assignment of a value
-        //{
-        //    loadNewPacks = false;
-        //}
-
-        //if (currentPacks.Length == gameData.packs.packs.Length && loadNewPacks) {
         for (int i = 0; i < 4; i++)
         {
             string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
@@ -1793,46 +1383,9 @@ public class PlayState {
                 }
             }
         }
-        //}
-        //else
-        //    currentPacks = new string[] { "DEFAULT", "DEFAULT", "DEFAULT", "DEFAULT" };
     }
 
     public static void CheckControlsAreUpToDate() {
-        //    bool load = true;
-        //    try {
-        //        int i = gameData.controls.keyboard.Length;
-        //    }
-        //#pragma warning disable IDE0059 // Unnecessary assignment of a value
-        //#pragma warning disable CS0168 // Variable is declared but never used
-        //    catch (Exception e)
-        //#pragma warning restore CS0168 // Variable is declared but never used
-        //#pragma warning restore IDE0059 // Unnecessary assignment of a value
-        //    {
-        //        load = false;
-        //    }
-        //
-        //    if (load) {
-        //        Control.keyboardInputs = new KeyCode[Control.defaultKeyboardInputs.Length];
-        //        if (Control.keyboardInputs.Length == gameData.controls.keyboard.Length)
-        //            Control.keyboardInputs = gameData.controls.keyboard;
-        //        else {
-        //            for (int i = 0; i < gameData.controls.keyboard.Length; i++)
-        //                Control.keyboardInputs[i] = gameData.controls.keyboard[i];
-        //        }
-        //        Control.controllerInputs = new KeyCode[Control.defaultControllerInputs.Length];
-        //        if (Control.controllerInputs.Length == gameData.controls.controller.Length)
-        //            Control.controllerInputs = gameData.controls.controller;
-        //        else {
-        //            for (int i = 0; i < gameData.controls.controller.Length; i++)
-        //                Control.controllerInputs[i] = gameData.controls.controller[i];
-        //        }
-        //    }
-        //
-        //    if (Control.keyboardInputs.Length == 0 || !load || Control.keyboardInputs[0] == KeyCode.None)
-        //        Control.keyboardInputs = Control.defaultKeyboardInputs;
-        //    if (Control.controllerInputs.Length == 0 || !load || Control.controllerInputs[0] == KeyCode.None)
-        //        Control.controllerInputs = Control.defaultControllerInputs;
         if (generalData.keyboardInputs.Length != Enum.GetNames(typeof(Control.Keyboard)).Length)
             generalData.keyboardInputs = Control.defaultKeyboardInputs;
         if (generalData.controllerInputs.Length != Enum.GetNames(typeof(Control.Controller)).Length)
@@ -1840,20 +1393,6 @@ public class PlayState {
     }
 
     public static bool HasTime(int ID = -1) {
-        //float[] blankTime = new float[] { 0, 0, 0 };
-        //bool foundTimes = false;
-        //if (ID == -1) {
-        //    //Debug.Log(timeDefault == null);
-        //    //foreach (float[] selectedTime in generalData.times)
-        //    //    foundTimes = selectedTime == blankTime;
-        //    return foundTimes;
-        //} else
-        //    return generalData.times[ID] != blankTime;
-        //if (generalData.times.Count == 0)
-        //    generalData.times = new List<float>(timeDefault);
-
-        //Debug.Log(timeDefault.Count);
-        //Debug.Log(generalData.times.Count);
         int rowCount = generalData.times.Length / 3;
 
         if (ID == -1)
