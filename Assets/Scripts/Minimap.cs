@@ -21,14 +21,14 @@ public class Minimap : MonoBehaviour
          49,  50,  51,  52,  53,  54,  55
     };
 
-    public int[] currentMap = new int[] { };
+    //public int[] currentMap = new int[] { };
 
     private float currentMarkerColor = 0;
     private List<SpriteRenderer> cellsWithMarkers = new List<SpriteRenderer>();
 
     void Start()
     {
-        currentMap = (int[])PlayState.defaultMinimapState.Clone();
+        //currentMap = (int[])PlayState.defaultMinimapState.Clone();
 
         Transform maskParent = transform.Find("Room Masks");
         List<GameObject> newMaskList = new List<GameObject>();
@@ -70,15 +70,18 @@ public class Minimap : MonoBehaviour
 
     void Update()
     {
+        //currentMap = (int[])PlayState.currentProfile.exploredMap.Clone();
+
         minimap.transform.localPosition = new Vector2(
             -Mathf.Round((PlayState.WORLD_ORIGIN.x + PlayState.player.transform.position.x - 1 + (PlayState.ROOM_SIZE.x * 0.5f)) / PlayState.ROOM_SIZE.x) * 0.5f + 0.25f,
             -Mathf.Round((PlayState.WORLD_ORIGIN.y + PlayState.player.transform.position.y - 1 + (PlayState.ROOM_SIZE.y * 0.5f)) / PlayState.ROOM_SIZE.y) * 0.5f + 0.25f
             );
         currentCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
-        if (currentCellID >= 0 && currentCellID < currentMap.Length && !PlayState.playerScript.inDeathCutscene)
+        if (currentCellID >= 0 && currentCellID < PlayState.currentProfile.exploredMap.Length && !PlayState.playerScript.inDeathCutscene)
         {
-            if (currentMap[currentCellID] == 0 || currentMap[currentCellID] == 2 || currentMap[currentCellID] == 10 || currentMap[currentCellID] == 12)
-                currentMap[currentCellID]++;
+            if (PlayState.currentProfile.exploredMap[currentCellID] == 0 || PlayState.currentProfile.exploredMap[currentCellID] == 2 ||
+                PlayState.currentProfile.exploredMap[currentCellID] == 10 || PlayState.currentProfile.exploredMap[currentCellID] == 12)
+                PlayState.currentProfile.exploredMap[currentCellID]++;
         }
         if (lastCellID != currentCellID)
             RefreshMap();
@@ -105,10 +108,11 @@ public class Minimap : MonoBehaviour
         for (int i = 0; i < masks.Length; i++)
         {
             int thisMaskID = currentCellID + maskIDoffsets[i];
-            if (thisMaskID >= 0 && thisMaskID < currentMap.Length)
+            if (thisMaskID >= 0 && thisMaskID < PlayState.currentProfile.exploredMap.Length)
             {
-                int thisCellValue = (currentMap[thisMaskID] < 10) ? currentMap[thisMaskID] : (currentMap[thisMaskID] - 10);
-                if (thisCellValue == 1 || thisCellValue == 11 || ((thisCellValue == 3 || thisCellValue == 13) && PlayState.gameOptions[13] == 1))
+                int thisCellValue = (PlayState.currentProfile.exploredMap[thisMaskID] < 10) ? PlayState.currentProfile.exploredMap[thisMaskID] :
+                    (PlayState.currentProfile.exploredMap[thisMaskID] - 10);
+                if (thisCellValue == 1 || thisCellValue == 11 || ((thisCellValue == 3 || thisCellValue == 13) && PlayState.generalData.secretMapTilesVisible))
                 {
                     bool highlightPlayerTile = true;
                     masks[i].GetComponent<SpriteMask>().enabled = false;
@@ -124,7 +128,7 @@ public class Minimap : MonoBehaviour
                         anims[i + 4].Play("Minimap_icon_save", true);
                     else if (PlayState.itemLocations.ContainsKey(thisMaskID))
                     {
-                        if (PlayState.itemCollection[PlayState.itemLocations[thisMaskID]] == 0)
+                        if (PlayState.currentProfile.items[PlayState.itemLocations[thisMaskID]] == 0)
                             anims[i + 4].Play("Minimap_icon_itemNormal", true);
                         else
                         {

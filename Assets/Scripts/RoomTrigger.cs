@@ -177,7 +177,7 @@ public class RoomTrigger:MonoBehaviour {
                 if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects) {
                     if (initializationBuffer <= 0 && splashTimeout <= 0) {
                         PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
-                        if (playerY < waterY && (PlayState.gameOptions[11] == 1 || PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5)) {
+                        if (playerY < waterY && (PlayState.generalData.particleState == 1 || PlayState.generalData.particleState == 3 || PlayState.generalData.particleState == 5)) {
                             for (int i = Random.Range(2, 8); i > 0; i--)
                                 PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
                         }

@@ -63,7 +63,7 @@ public class PowerGrass : MonoBehaviour
                 else
                     timer = biteTimeout;
                 PlayState.playerScript.HitFor(-healthPerBite);
-                if (PlayState.gameOptions[11] > 1)
+                if (PlayState.generalData.particleState > 1)
                     PlayState.RequestParticle(new Vector2(transform.position.x, transform.position.y + 0.25f), "nom");
             }
         }

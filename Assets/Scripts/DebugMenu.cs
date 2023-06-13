@@ -144,57 +144,57 @@ public class DebugMenu : MonoBehaviour
                             default:
                                 if (Control.JumpPress() && button.label == currentSelected)
                                 {
-                                    PlayState.itemCollection[int.Parse(typeParts[1])] = PlayState.itemCollection[int.Parse(typeParts[1])] == 0 ? 1 : 0;
+                                    PlayState.currentProfile.items[int.Parse(typeParts[1])] = PlayState.currentProfile.items[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                                     PlayState.minimapScript.RefreshMap();
                                     PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                                 }
                                 button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                             case "heartContainer":
-                                button.sprite.sprite = GetSprite(PlayState.heartCount > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
+                                button.sprite.sprite = GetSprite(PlayState.CountHearts() > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                             case "helixFragment":
-                                button.sprite.sprite = GetSprite(PlayState.helixCount > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
+                                button.sprite.sprite = GetSprite(PlayState.CountFragments() > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                         }
                         break;
                     case "boss":
                         if (Control.JumpPress() && button.label == currentSelected)
-                            PlayState.bossStates[int.Parse(typeParts[1])] = PlayState.bossStates[int.Parse(typeParts[1])] == 0 ? 1 : 0;
+                            PlayState.currentProfile.bossStates[int.Parse(typeParts[1])] = PlayState.currentProfile.bossStates[int.Parse(typeParts[1])] == 0 ? 1 : 0;
                         button.sprite.sprite = GetSprite(PlayState.IsBossAlive(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                         break;
                     case "player":
-                        switch (PlayState.currentCharacter)
+                        switch (PlayState.currentProfile.character)
                         {
                             case "Snaily":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[0]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Sluggy";
+                                    PlayState.currentProfile.character = "Sluggy";
                                 break;
                             case "Sluggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[1]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Upside";
+                                    PlayState.currentProfile.character = "Upside";
                                 break;
                             case "Upside":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[2]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Leggy";
+                                    PlayState.currentProfile.character = "Leggy";
                                 break;
                             case "Leggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[3]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Blobby";
+                                    PlayState.currentProfile.character = "Blobby";
                                 break;
                             case "Blobby":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[4]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Leechy";
+                                    PlayState.currentProfile.character = "Leechy";
                                 break;
                             case "Leechy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[5]);
                                 if (Control.JumpPress() && button.label == currentSelected)
-                                    PlayState.currentCharacter = "Snaily";
+                                    PlayState.currentProfile.character = "Snaily";
                                 break;
                         }
                         break;

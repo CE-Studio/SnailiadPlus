@@ -75,7 +75,7 @@ public class Boss : Enemy
 
     public override void Kill()
     {
-        PlayState.bossStates[ID] = 0;
+        PlayState.currentProfile.bossStates[ID] = 0;
         PlayState.ToggleBossfightState(false, 0);
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 2.7f, 0, true);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)

@@ -67,7 +67,7 @@ public class GravTurtle2 : Enemy
         boxSize = box.size;
         animData = PlayState.GetAnim("Enemy_gravturtle2_data").frames;
 
-        if (PlayState.currentDifficulty == 2)
+        if (PlayState.currentProfile.difficulty == 2)
             WALKSPEED *= 1.9f;
 
         jumpTimeoutIndex = Mathf.Abs(Mathf.RoundToInt(transform.position.x + transform.position.y)) % jumpTimeouts.Length;

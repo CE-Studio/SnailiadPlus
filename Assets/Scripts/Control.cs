@@ -399,7 +399,8 @@ public class Control
     public static bool CheckKey(Keyboard input, bool pressed = false)
     {
         int index = (int)input;
-        return (pressed ? Input.GetKeyDown(keyboardInputs[index]) : Input.GetKey(keyboardInputs[index])) || virtualKey[index];
+        return (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
+            Input.GetKey(PlayState.generalData.keyboardInputs[index])) || virtualKey[index];
     }
 
     public static bool CheckButton(Controller input, bool pressed = false)
@@ -407,7 +408,7 @@ public class Control
         if (!PlayState.IsControllerConnected())
             return false;
         int index = (int)input;
-        string inputName = controllerInputs[index].ToString();
+        string inputName = PlayState.generalData.controllerInputs[index].ToString();
         bool inputDown;
         if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
         {
@@ -422,7 +423,7 @@ public class Control
             inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
         }
         else
-            inputDown = Input.GetKey(controllerInputs[index]);
+            inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
         if (inputDown)
         {
             if (conPressed[index] && !pressed)
@@ -441,11 +442,11 @@ public class Control
 
     public static string ParseKeyName(int keyID, bool shortForm = false)
     {
-        return ParseKeyName(keyboardInputs[keyID], shortForm);
+        return ParseKeyName(PlayState.generalData.keyboardInputs[keyID], shortForm);
     }
     public static string ParseKeyName(Keyboard keyID, bool shortForm = false)
     {
-        return ParseKeyName(keyboardInputs[(int)keyID], shortForm);
+        return ParseKeyName(PlayState.generalData.keyboardInputs[(int)keyID], shortForm);
     }
     public static string ParseKeyName(KeyCode key, bool shortForm = false)
     {
@@ -518,11 +519,11 @@ public class Control
 
     public static string ParseButtonName(int buttonID, bool shortForm = false)
     {
-        return ParseButtonName(controllerInputs[buttonID], shortForm);
+        return ParseButtonName(PlayState.generalData.controllerInputs[buttonID], shortForm);
     }
     public static string ParseButtonName(Controller buttonID, bool shortForm = false)
     {
-        return ParseButtonName(controllerInputs[(int)buttonID], shortForm);
+        return ParseButtonName(PlayState.generalData.controllerInputs[(int)buttonID], shortForm);
     }
     public static string ParseButtonName(KeyCode button, bool shortForm = false)
     {
@@ -536,18 +537,18 @@ public class Control
             KeyCode.Keypad2 => shortForm ? "R -x" : "R stick left",
             KeyCode.Alpha3 => shortForm ? "R +y" : "R stick down",
             KeyCode.Keypad3 => shortForm ? "R -y" : "R stick up",
-            KeyCode.JoystickButton0 => PlayState.gameOptions[17] switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
-            KeyCode.JoystickButton1 => PlayState.gameOptions[17] switch { 1 => "A", 2 => (shortForm ? "CIR" : "Circle"), 3 => "A", _ => "B" },
-            KeyCode.JoystickButton2 => PlayState.gameOptions[17] switch { 1 => "Y", 2 => (shortForm ? "SQR" : "Square"), 3 => "U", _ => "X" },
-            KeyCode.JoystickButton3 => PlayState.gameOptions[17] switch { 1 => "X", 2 => (shortForm ? "TRI" : "Triangle"), 3 => "Y", _ => "Y" },
-            KeyCode.JoystickButton4 => PlayState.gameOptions[17] switch { 1 => "L", _ => "L1" },
-            KeyCode.JoystickButton5 => PlayState.gameOptions[17] switch { 1 => "R", _ => "R1" },
-            KeyCode.JoystickButton6 => PlayState.gameOptions[17] switch { 1 => "ZL", _ => "L2" },
-            KeyCode.JoystickButton7 => PlayState.gameOptions[17] switch { 1 => "ZR", _ => "R2" },
-            KeyCode.JoystickButton8 => PlayState.gameOptions[17] switch { 0 => "View", 1 => "-", _ => (shortForm ? "SEL" : "Select") },
-            KeyCode.JoystickButton9 => PlayState.gameOptions[17] switch { 0 => "Menu", 1 => "+", _ => (shortForm ? "ST" : "Start") },
-            KeyCode.JoystickButton10 => PlayState.gameOptions[17] switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
-            KeyCode.JoystickButton11 => PlayState.gameOptions[17] switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
+            KeyCode.JoystickButton0 => PlayState.generalData.controllerFaceType switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
+            KeyCode.JoystickButton1 => PlayState.generalData.controllerFaceType switch { 1 => "A", 2 => (shortForm ? "CIR" : "Circle"), 3 => "A", _ => "B" },
+            KeyCode.JoystickButton2 => PlayState.generalData.controllerFaceType switch { 1 => "Y", 2 => (shortForm ? "SQR" : "Square"), 3 => "U", _ => "X" },
+            KeyCode.JoystickButton3 => PlayState.generalData.controllerFaceType switch { 1 => "X", 2 => (shortForm ? "TRI" : "Triangle"), 3 => "Y", _ => "Y" },
+            KeyCode.JoystickButton4 => PlayState.generalData.controllerFaceType switch { 1 => "L", _ => "L1" },
+            KeyCode.JoystickButton5 => PlayState.generalData.controllerFaceType switch { 1 => "R", _ => "R1" },
+            KeyCode.JoystickButton6 => PlayState.generalData.controllerFaceType switch { 1 => "ZL", _ => "L2" },
+            KeyCode.JoystickButton7 => PlayState.generalData.controllerFaceType switch { 1 => "ZR", _ => "R2" },
+            KeyCode.JoystickButton8 => PlayState.generalData.controllerFaceType switch { 0 => "View", 1 => "-", _ => (shortForm ? "SEL" : "Select") },
+            KeyCode.JoystickButton9 => PlayState.generalData.controllerFaceType switch { 0 => "Menu", 1 => "+", _ => (shortForm ? "ST" : "Start") },
+            KeyCode.JoystickButton10 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
+            KeyCode.JoystickButton11 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
             KeyCode.JoystickButton12 => "Up",
             KeyCode.JoystickButton13 => "Down",
             KeyCode.JoystickButton14 => "Left",

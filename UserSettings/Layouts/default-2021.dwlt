@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 4140
+  controlID: 77
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 4141
+  controlID: 78
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 4142
+  controlID: 79
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 4095
+  controlID: 116
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -405,7 +405,7 @@ MonoBehaviour:
       y: 21
       width: 842
       height: 446
-    m_Scale: {x: 0.7743056, y: 0.7743056}
+    m_Scale: {x: 0.7743055, y: 0.7743056}
     m_Translation: {x: 421, y: 223}
     m_MarginLeft: 0
     m_MarginRight: 0
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f0060000
+      m_SelectedIDs: 88120000
       m_LastClickedID: 0
-      m_ExpandedIDs: 1e13fcff2afbffff365b0000
+      m_ExpandedIDs: 2afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -766,9 +766,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -44.115356, y: 85.95603, z: -4.8179593}
+    m_Target: {x: -45.407734, y: 27.617685, z: -5.2039437}
     speed: 2
-    m_Value: {x: -44.115356, y: 85.95603, z: -4.8179593}
+    m_Value: {x: -45.407734, y: 27.617685, z: -5.2039437}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -819,9 +819,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 24.853441
+    m_Target: 55.74973
     speed: 2
-    m_Value: 24.853441
+    m_Value: 55.74973
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -926,8 +926,8 @@ MonoBehaviour:
   m_MipLevel: 0
   m_Zoom: 12.105
   m_ScrollPosition: {x: 58.441624, y: 16.73332}
-  m_SelectedObject: {fileID: 11500000, guid: 0ecde15cc4344d847a1ef0c70c830ede, type: 3}
-  m_SelectedSpriteRectGUID: 3ed2a236224dff2499a637c20f5517d6
+  m_SelectedObject: {fileID: 0}
+  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
   m_LastUsedModuleTypeName: 
 --- !u!114 &19
 MonoBehaviour:
@@ -1109,22 +1109,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Enemies
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Enemies
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\james\Documents\Unity projects\Snailiad Unity remake
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 362.2}
-    m_SelectedIDs: f0970000
-    m_LastClickedID: 38896
-    m_ExpandedIDs: 00000000e8970000ea970000ec970000ee970000a6a7000000ca9a3b
+    scrollPos: {x: 0, y: 394.2}
+    m_SelectedIDs: 16980000
+    m_LastClickedID: 38934
+    m_ExpandedIDs: 000000001498000016980000189800001a9800001c9800001e98000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1152,7 +1152,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e8970000ea970000ec970000ee97000000ca9a3b
+    m_ExpandedIDs: 000000001498000016980000189800001a9800001c9800001e980000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -69,7 +69,7 @@ public class AchievementPanel : MonoBehaviour
     {
         if (popupQueue.Count != 0 && runState == 0)
         {
-            if (PlayState.achievementStates[(int)popupQueue[0]] == 0)
+            if (!PlayState.generalData.achievements[(int)popupQueue[0]])
                 OpenBox();
             else
                 popupQueue.RemoveAt(0);
@@ -107,7 +107,7 @@ public class AchievementPanel : MonoBehaviour
     {
         sprite.enabled = true;
         sprite.sprite = PlayState.GetSprite("AchievementIcons", (int)currentAchievement + 1);
-        PlayState.achievementStates[(int)currentAchievement] = 1;
+        PlayState.generalData.achievements[(int)currentAchievement] = true;
     }
 
     public void CloseAchievement()

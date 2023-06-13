@@ -154,6 +154,8 @@ public class GlobalFunctions : MonoBehaviour
         };
 
         PlayState.respawnScene = SceneManager.GetActiveScene();
+
+        PlayState.blankData.gameVersion = Application.version;
     }
 
     public void Update()
@@ -267,16 +269,16 @@ public class GlobalFunctions : MonoBehaviour
         }
 
         // Audiosource volume control
-        PlayState.globalSFX.volume = PlayState.gameOptions[0] * 0.1f;
-        PlayState.globalMusic.volume = PlayState.gameOptions[1] * 0.1f;
+        PlayState.globalSFX.volume = PlayState.generalData.soundVolume * 0.1f;
+        PlayState.globalMusic.volume = PlayState.generalData.musicVolume * 0.1f;
 
         // Palette shader toggle
-        if ((PlayState.gameOptions[16] == 1 && !paletteShader.enabled) || (PlayState.gameOptions[16] == 0 && paletteShader.enabled))
+        if ((PlayState.generalData.paletteFilterState && !paletteShader.enabled) || (!PlayState.generalData.paletteFilterState && paletteShader.enabled))
             paletteShader.enabled = !paletteShader.enabled;
 
         // Music
         foreach (AudioSource audio in PlayState.musicSourceArray)
-            audio.volume = musicMuted ? 0 : Mathf.Lerp(audio.volume, (PlayState.gameOptions[1] * 0.1f) * PlayState.fader, 5 * Time.deltaTime);
+            audio.volume = musicMuted ? 0 : Mathf.Lerp(audio.volume, (PlayState.generalData.musicVolume * 0.1f) * PlayState.fader, 5 * Time.deltaTime);
 
         if (!PlayState.playingMusic)
             return;
@@ -324,8 +326,8 @@ public class GlobalFunctions : MonoBehaviour
         // Update bottom keys
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            PlayState.TogglableHUDElements[11].SetActive(PlayState.gameOptions[4] == 2);
-            PlayState.TogglableHUDElements[3].SetActive(PlayState.gameOptions[4] >= 1);
+            PlayState.TogglableHUDElements[11].SetActive(PlayState.generalData.bottomKeyState == 2);
+            PlayState.TogglableHUDElements[3].SetActive(PlayState.generalData.bottomKeyState >= 1);
             if (PlayState.IsControllerConnected())
             {
                 PlayState.pauseText.text = Control.ParseButtonName(Control.Controller.Pause, true);
@@ -345,7 +347,7 @@ public class GlobalFunctions : MonoBehaviour
         // FPS calculator
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            PlayState.TogglableHUDElements[8].SetActive(PlayState.gameOptions[7] == 1);
+            PlayState.TogglableHUDElements[8].SetActive(PlayState.generalData.FPSState);
         }
         frameCount++;
         dt += Time.deltaTime;
@@ -355,24 +357,24 @@ public class GlobalFunctions : MonoBehaviour
             frameCount = 0;
             dt -= 1 / updateRate;
         }
-        PlayState.fpsText.text = "" + Mathf.Round(fps) + (PlayState.gameOptions[14] != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
-        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + (PlayState.gameOptions[14] != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
+        PlayState.fpsText.text = "" + Mathf.Round(fps) + (PlayState.generalData.frameLimiter != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
+        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + (PlayState.generalData.frameLimiter != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
 
         // Game time counter
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            PlayState.currentTime[2] += Time.deltaTime;
-            PlayState.TogglableHUDElements[9].SetActive(PlayState.gameOptions[6] == 1);
+            PlayState.currentProfile.gameTime[2] += Time.deltaTime;
+            PlayState.TogglableHUDElements[9].SetActive(PlayState.generalData.timeState);
         }
-        if (PlayState.currentTime[2] >= 60)
+        if (PlayState.currentProfile.gameTime[2] >= 60)
         {
-            PlayState.currentTime[2] -= 60;
-            PlayState.currentTime[1] += 1;
+            PlayState.currentProfile.gameTime[2] -= 60;
+            PlayState.currentProfile.gameTime[1] += 1;
         }
-        if (PlayState.currentTime[1] >= 60)
+        if (PlayState.currentProfile.gameTime[1] >= 60)
         {
-            PlayState.currentTime[1] -= 60;
-            PlayState.currentTime[0] += 1;
+            PlayState.currentProfile.gameTime[1] -= 60;
+            PlayState.currentProfile.gameTime[0] += 1;
         }
         PlayState.timeText.text = PlayState.GetTimeString();
         PlayState.timeShadow.text = PlayState.GetTimeString();
@@ -513,7 +515,7 @@ public class GlobalFunctions : MonoBehaviour
 
         if (shellAnimTimer == 0)
         {
-            if (!(PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+            if (!(PlayState.generalData.particleState == 3 || PlayState.generalData.particleState == 5))
                 shellStateBuffer = PlayState.GetShellLevel();
             for (int i = 0; i < particleCount; i++)
             {
@@ -550,14 +552,14 @@ public class GlobalFunctions : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
-        if (tfType != -1 && (PlayState.gameOptions[11] == 3 || PlayState.gameOptions[11] == 5))
+        if (tfType != -1 && (PlayState.generalData.particleState == 3 || PlayState.generalData.particleState == 5))
         {
             shellStateBuffer = tfType;
             PlayState.RequestParticle(PlayState.player.transform.position, "transformation", new float[]
             {
                 tfType switch
                 {
-                    2 => PlayState.currentCharacter switch
+                    2 => PlayState.currentProfile.character switch
                     {
                         "Upside" => 4,
                         "Leggy" => 5,
@@ -639,7 +641,7 @@ public class GlobalFunctions : MonoBehaviour
             }
 
             foreach (AnimationModule sprite in keySprites)
-                sprite.GetSpriteRenderer().enabled = PlayState.gameOptions[5] == 1;
+                sprite.GetSpriteRenderer().enabled = PlayState.generalData.keymapState;
 
             yield return new WaitForEndOfFrame();
         }
@@ -709,7 +711,8 @@ public class GlobalFunctions : MonoBehaviour
                 Destroy(hearts.transform.GetChild(i).gameObject);
             }
         }
-        for (int i = 0; i < PlayState.playerScript.maxHealth * (PlayState.currentDifficulty == 2 ? 0.5f : (PlayState.currentDifficulty == 1 ? 0.25f : 0.125f)); i++)
+        for (int i = 0; i < PlayState.playerScript.maxHealth * (PlayState.currentProfile.difficulty == 2 ? 0.5f :
+            (PlayState.currentProfile.difficulty == 1 ? 0.25f : 0.125f)); i++)
         {
             GameObject NewHeart = new GameObject();
             NewHeart.transform.parent = hearts.transform;
@@ -723,7 +726,8 @@ public class GlobalFunctions : MonoBehaviour
                 heartAnim.Add("Heart_normal_" + j);
             for (int j = 0; j <= 2; j++)
                 heartAnim.Add("Heart_insane_" + j);
-            heartAnim.Play(PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"));
+            heartAnim.Play(PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" :
+                (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"));
             NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
@@ -738,19 +742,19 @@ public class GlobalFunctions : MonoBehaviour
             {
                 hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play((PlayState.playerScript.health - totalOfPreviousHearts) switch
                 {
-                    1 => PlayState.currentDifficulty == 2 ? "Heart_insane_1" : (PlayState.currentDifficulty == 1 ? "Heart_normal_1" : "Heart_easy_1"),
-                    2 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_2" : "Heart_easy_2"),
-                    3 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_3" : "Heart_easy_3"),
-                    4 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_4"),
-                    5 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_5"),
-                    6 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_6"),
-                    7 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_7"),
-                    8 => PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"),
+                    1 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_1" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_1" : "Heart_easy_1"),
+                    2 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_2" : "Heart_easy_2"),
+                    3 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_3" : "Heart_easy_3"),
+                    4 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_4"),
+                    5 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_5"),
+                    6 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_6"),
+                    7 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_7"),
+                    8 => PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"),
                     _ => ((PlayState.playerScript.health - totalOfPreviousHearts) > 0) ?
-                    (PlayState.currentDifficulty == 2 ? "Heart_insane_2" : (PlayState.currentDifficulty == 1 ? "Heart_normal_4" : "Heart_easy_8")) :
-                    (PlayState.currentDifficulty == 2 ? "Heart_insane_0" : (PlayState.currentDifficulty == 1 ? "Heart_normal_0" : "Heart_easy_0"))
+                    (PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_8")) :
+                    (PlayState.currentProfile.difficulty == 2 ? "Heart_insane_0" : (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_0" : "Heart_easy_0"))
                 });
-                totalOfPreviousHearts += hpPerHeart[PlayState.currentDifficulty];
+                totalOfPreviousHearts += hpPerHeart[PlayState.currentProfile.difficulty];
             }
         }
     }
@@ -996,8 +1000,9 @@ public class GlobalFunctions : MonoBehaviour
 
     public void ScreenShake(List<float> intensities, List<float> times, float angle = -99999f, float angleVariation = 0f)
     {
-        if (PlayState.gameOptions[15] >= 1)
-            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.gameOptions[15] == 1 || PlayState.gameOptions[15] == 3, angle, angleVariation));
+        if (PlayState.generalData.screenShake >= 1)
+            StartCoroutine(ScreenShakeCoroutine(intensities, times, PlayState.generalData.screenShake == 1 ||
+                PlayState.generalData.screenShake == 3, angle, angleVariation));
     }
     public IEnumerator ScreenShakeCoroutine(List<float> intensities, List<float> times, bool minimalShake, float angle = -99999f, float angleVariation = 0f)
     {
@@ -1039,7 +1044,7 @@ public class GlobalFunctions : MonoBehaviour
                         intensityVector = (Vector2)(Quaternion.Euler(0, 0, angle) * Vector2.right) * UnityEngine.Random.Range(-intensity, intensity);
                     }
 
-                    if (PlayState.gameOptions[15] > 2)
+                    if (PlayState.generalData.screenShake > 2)
                         PlayState.camShakeOffset += intensityVector;
                     else
                         PlayState.camObj.transform.localPosition += (Vector3)intensityVector;

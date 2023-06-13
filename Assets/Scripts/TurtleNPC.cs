@@ -50,10 +50,10 @@ public class TurtleNPC:NPC {
                     if (textToSend.Count == 0)
                         textToSend.Add(PlayState.GetText("npc_?"
                             .Replace("##", PlayState.GetItemPercentage().ToString())
-                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
                             .Replace("{ID}", ID.ToString())));
                     if (textToSend.Count > 1) {
                         if (!speechBubbleSprite.enabled)
@@ -92,10 +92,10 @@ public class TurtleNPC:NPC {
             if (newText != fullID) {
                 string finalText = newText
                     .Replace("##", PlayState.GetItemPercentage().ToString())
-                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower()))
+                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
                     .Replace("{ID}", ID.ToString());
                 textToSend.Add(finalText);
                 portraitStateList.Add(PlayState.GetTextInfo(fullID).value);

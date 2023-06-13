@@ -85,7 +85,7 @@ public class Blob3 : Enemy
         Face(velocity.x != 0 ? velocity.x > 0 : facingRight);
         velocity.y -= 75 * Time.deltaTime;
 
-        if (PlayState.currentDifficulty == 2)
+        if (PlayState.currentProfile.difficulty == 2)
         {
             shotTimeout -= Time.deltaTime;
             if (shotTimeout <= 0)

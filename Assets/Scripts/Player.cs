@@ -1209,7 +1209,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             thisCheck = false;
                             break;
                         default:
-                            thisCheck = PlayState.itemCollection[ability[i][j]] == 1;
+                            thisCheck = PlayState.currentProfile.items[ability[i][j]] == 1;
                             break;
                     }
                 }

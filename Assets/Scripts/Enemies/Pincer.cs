@@ -229,7 +229,7 @@ public class Pincer : Enemy
 
     private void Shoot()
     {
-        if (PlayState.currentDifficulty != 2)
+        if (PlayState.currentProfile.difficulty != 2)
             return;
 
         float angle = Mathf.Atan2(transform.position.y - PlayState.player.transform.position.y,

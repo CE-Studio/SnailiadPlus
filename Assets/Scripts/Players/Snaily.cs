@@ -44,7 +44,7 @@ public class Snaily : Player
         for (int i = 0; i < tempData.Length; i++)
             animData[i] = tempData[i] == 1;
 
-        PlayState.currentCharacter = "Snaily";
+        PlayState.currentProfile.character = "Snaily";
 
         string[] animDirections = new string[] { "floor_right", "floor_left", "ceiling_right", "ceiling_left", "wallR_down", "wallR_up", "wallL_down", "wallL_up" };
         string[] animStates = new string[] { "idle", "move", "shell", "air" };

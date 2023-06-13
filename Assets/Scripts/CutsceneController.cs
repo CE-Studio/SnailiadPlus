@@ -304,21 +304,21 @@ public class CutsceneController : MonoBehaviour
                     thisVar = 0;
                     break;
                 case "player":
-                    thisVar = PlayState.currentCharacter switch { "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
+                    thisVar = PlayState.currentProfile.character switch { "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
                     break;
                 case "itemstate":
-                    thisVar = PlayState.itemCollection[ParseInt(thisVarList[1])] == 1 ? 1 : 0;
+                    thisVar = PlayState.currentProfile.items[ParseInt(thisVarList[1])] == 1 ? 1 : 0;
                     break;
                 case "bossstate":
-                    thisVar = PlayState.bossStates[ParseInt(thisVarList[1])] == 1 ? 1 : 0;
+                    thisVar = PlayState.currentProfile.bossStates[ParseInt(thisVarList[1])] == 1 ? 1 : 0;
                     break;
                 case "npcvar":
                     break;
                 case "achievement":
-                    thisVar = PlayState.achievementStates[ParseInt(thisVarList[1])] == 1 ? 1 : 0;
+                    thisVar = PlayState.generalData.achievements[ParseInt(thisVarList[1])] ? 1 : 0;
                     break;
                 case "gametime":
-                    thisVar = PlayState.currentTime[1] + (PlayState.currentTime[0] * 60) + (PlayState.currentTime[2] / 60);
+                    thisVar = PlayState.currentProfile.gameTime[1] + (PlayState.currentProfile.gameTime[0] * 60) + (PlayState.currentProfile.gameTime[2] / 60);
                     break;
                 case "health":
                     thisVar = thisVarList[1] == "current" ? (PlayState.playerScript.health / PlayState.playerScript.maxHealth) : PlayState.playerScript.maxHealth;
@@ -420,10 +420,10 @@ public class CutsceneController : MonoBehaviour
                 num += 2;
                 newBatch.dialogue.Add(PlayState.GetText(tokens[num])
                     .Replace("##", PlayState.GetItemPercentage().ToString())
-                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower())));
+                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower())));
                 while (num < tokens.Length)
                 {
                     if (tokens[num] == "as" || tokens[num] == "box" || tokens[num] == "sound")
@@ -738,10 +738,10 @@ public class CutsceneController : MonoBehaviour
                         else if (parseIndex == 3)
                             newDialogue.dialogue.Add(PlayState.GetText(tokens[thisTokenNum + parseIndex])
                                 .Replace("##", PlayState.GetItemPercentage().ToString())
-                                .Replace("{P}", PlayState.GetText("char_" + PlayState.currentCharacter.ToLower()))
-                                .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentCharacter.ToLower()))
-                                .Replace("{S}", PlayState.GetText("species_" + PlayState.currentCharacter.ToLower()))
-                                .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentCharacter.ToLower())));
+                                .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                                .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                                .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                                .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower())));
                         else
                         {
                             if (tokens[thisTokenNum + parseIndex] == "as" || tokens[thisTokenNum + parseIndex] == "box" || tokens[thisTokenNum + parseIndex] == "sound")

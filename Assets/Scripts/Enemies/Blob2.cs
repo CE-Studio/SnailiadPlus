@@ -32,7 +32,7 @@ public class Blob2 : Enemy
 
         Face(PlayState.player.transform.position.x > transform.position.x);
         hopNum = Mathf.Abs(Mathf.FloorToInt(transform.position.x) % HOP_TIMEOUTS.Length);
-        hopTimeout = HOP_TIMEOUTS[hopNum] / (PlayState.currentDifficulty == 2 ? 2 : 1);
+        hopTimeout = HOP_TIMEOUTS[hopNum] / (PlayState.currentProfile.difficulty == 2 ? 2 : 1);
 
         UpdateBoxcasts();
     }
