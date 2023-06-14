@@ -409,7 +409,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_breakables1"));
                                 break;
                             case 2:
-                                AddToOptionText(option, PlayState.GetText("menu_add_breakables2"));
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_all"));
                                 break;
                         }
                         PlayState.generalData.breakableState = menuVarFlags[1];
@@ -1111,9 +1111,11 @@ public class MainMenu : MonoBehaviour
         PlayState.ToggleHUD(true);
         PlayState.minimapScript.RefreshMap();
         PlayState.BuildPlayerMarkerArray();
+        PlayState.globalFunctions.CalculateMaxHealth();
         PlayState.playerScript.health = PlayState.playerScript.maxHealth;
-        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+        PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
+        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
         SetTextComponentOrigins();

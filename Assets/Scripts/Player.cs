@@ -1649,7 +1649,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
         }
         PlayState.ToggleBossfightState(false, 0, true);
-        transform.position = PlayState.respawnCoords;
+        transform.position = PlayState.currentProfile.saveCoords;
         inDeathCutscene = false;
         box.enabled = true;
         PlayState.paralyzed = false;

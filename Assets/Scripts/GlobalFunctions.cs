@@ -702,6 +702,11 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
+    public void CalculateMaxHealth()
+    {
+        PlayState.playerScript.maxHealth = hpPerHeart[PlayState.currentProfile.difficulty] * (PlayState.CountHearts() + 3);
+    }
+
     public void RenderNewHearts()
     {
         if (hearts.transform.childCount != 0)
@@ -711,8 +716,8 @@ public class GlobalFunctions : MonoBehaviour
                 Destroy(hearts.transform.GetChild(i).gameObject);
             }
         }
-        for (int i = 0; i < PlayState.playerScript.maxHealth * (PlayState.currentProfile.difficulty == 2 ? 0.5f :
-            (PlayState.currentProfile.difficulty == 1 ? 0.25f : 0.125f)); i++)
+        int max = PlayState.CountHearts() + 3;
+        for (int i = 0; i < max; i++)
         {
             GameObject NewHeart = new GameObject();
             NewHeart.transform.parent = hearts.transform;
@@ -738,7 +743,7 @@ public class GlobalFunctions : MonoBehaviour
         if (hearts.transform.childCount != 0)
         {
             int totalOfPreviousHearts = 0;
-            for (int i = 0; i < hearts.transform.childCount; i++)
+            for (int i = 0; i < PlayState.CountHearts() + 3; i++)
             {
                 hearts.transform.GetChild(i).GetComponent<AnimationModule>().Play((PlayState.playerScript.health - totalOfPreviousHearts) switch
                 {

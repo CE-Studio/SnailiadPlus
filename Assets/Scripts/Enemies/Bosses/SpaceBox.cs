@@ -15,7 +15,7 @@ public class SpaceBox : Boss
     private const float STARTING_SPEED = 1f;
     private const int SPAWN_COUNTER = 8;
     private const int CAST_COUNT = 9;
-    private const float SHAKE_STRENGTH = 1.2f;
+    private const float SHAKE_STRENGTH = 0.6f;
     private const float SHAKE_TIME = 0.8f;
 
     private float[] decisionTable = new float[]

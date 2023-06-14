@@ -9,7 +9,7 @@ public class SpaceBoxBabybox : Enemy
     private const float ACCEL_NORMAL = 0.416f;
     private const float ACCEL_BLUE = 0.52f;
     private const float MODE_TIMEOUT = 0.6f;
-    private const float SHAKE_STRENGTH = 0.8f;
+    private const float SHAKE_STRENGTH = 0.4f;
     private const float SHAKE_TIME = 0.6f;
     private const int CAST_COUNT = 5;
 

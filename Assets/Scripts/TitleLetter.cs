@@ -30,6 +30,7 @@ public class TitleLetter : MonoBehaviour
         colorAnim.pauseOnMenu = false;
         colorAnim.Add("Title_letterFlash_intro");
         colorAnim.Add("Title_letterFlash_hold");
+        sprite.enabled = false;
     }
 
     public void Create(char newLetter, Vector2 finalPos, float animOffset)

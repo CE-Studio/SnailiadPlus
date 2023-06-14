@@ -70,8 +70,7 @@ public class StompyEye : Enemy
             }
             if (maxDamage > 0 && isOpen)
             {
-                health -= maxDamage;
-                if (health <= 0)
+                if (boss.health - maxDamage <= 0)
                     killFlag = true;
                 else
                     boss.Damage(maxDamage, isLeft);

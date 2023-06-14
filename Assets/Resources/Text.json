@@ -1336,11 +1336,6 @@
 			"value": 0
 		},
 		{
-			"name": "menu_add_breakables2",
-			"text": "all",
-			"value": 0
-		},
-		{
 			"name": "menu_add_frameLimit_none",
 			"text": "Unlimited",
 			"value": 0
