@@ -1654,9 +1654,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
         box.enabled = true;
         PlayState.paralyzed = false;
         health = maxHealth;
+        ResetState();
         PlayState.globalFunctions.UpdateHearts();
         yield return new WaitForEndOfFrame();
         PlayState.ScreenFlash("Room Transition");
+    }
+
+    public virtual void ResetState()
+    {
+        facingLeft = false;
+        if (shelled)
+            ToggleShell();
     }
 
     public void RemoteJump(float jumpPower)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pincer : Enemy
 {
-    private const float SPEED = 12.5f;
+    private const float SPEED = 4f;
     private const float SHOT_TIMEOUT = 0.4f;
     private const float BASE_JUMP_POWER = 0.135f;
     private const float GRAVITY = 1.25f;
@@ -106,7 +106,7 @@ public class Pincer : Enemy
                             velocity.x = -SPEED * Time.fixedDeltaTime;
                         else
                             velocity.x = SPEED * Time.fixedDeltaTime;
-                        PlayAnim("walk", velocity.x > 0);
+                        PlayAnim("walk", velocity.x < 0);
                         if (Random.Range(0f, 1f) > 0.9f && grounded)
                         {
                             velocity.y = BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex] * Time.fixedDeltaTime;
@@ -126,7 +126,8 @@ public class Pincer : Enemy
                             velocity.y -= GRAVITY * Time.fixedDeltaTime;
                             if (lastDistance < -velocity.y && velocity.y < 0)
                             {
-                                velocity.y = -lastDistance + PlayState.FRAC_32;
+                                transform.position += (-lastDistance + PlayState.FRAC_32) * Vector3.down;
+                                velocity.y *= -0.1f;
                                 grounded = true;
                             }
                             if (GetDistance(PlayState.EDirsCardinal.Up) < velocity.y && velocity.y > 0)
@@ -135,11 +136,16 @@ public class Pincer : Enemy
                                 velocity.y = 0;
                             }
                         }
-                        velocity.x -= DECELERATION * Time.fixedDeltaTime * (facingDownLeft ? -1 : 1);
+                        Debug.Log(Mathf.Abs(velocity.x) + ", " + (DECELERATION * Time.fixedDeltaTime));
+                        if (velocity.x != 0)
+                            velocity.x -= DECELERATION * Time.fixedDeltaTime * (facingDownLeft ? -1 : 1);
+                        if ((facingDownLeft && velocity.x > 0) || (!facingDownLeft && velocity.x < 0))
+                            velocity.x = 0;
                         if (GetDistance(facingDownLeft ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right) < Mathf.Abs(velocity.x))
                         {
-                            transform.position += (facingDownLeft ? -1 : 1) * lastDistance * Vector3.right;
+                            transform.position += (facingDownLeft ? -1 : 1) * (lastDistance - PlayState.FRAC_32) * Vector3.right;
                             velocity.x = -velocity.x;
+                            PlayAnim("walk", !facingDownLeft);
                         }
                         break;
                     case PlayState.EDirsCardinal.Left:
@@ -241,9 +247,9 @@ public class Pincer : Enemy
     {
         string parsedLookState;
         if (gravState == PlayState.EDirsCardinal.Down || gravState == PlayState.EDirsCardinal.Up)
-            parsedLookState = lookState ? "R" : "L";
+            parsedLookState = lookState ? "L" : "R";
         else
-            parsedLookState = lookState ? "U" : "D";
+            parsedLookState = lookState ? "D" : "U";
         string parsedDir = gravState switch
         {
             PlayState.EDirsCardinal.Down => "floor",

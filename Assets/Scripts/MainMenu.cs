@@ -1106,6 +1106,7 @@ public class MainMenu : MonoBehaviour
         PlayState.cam.transform.position = spawnPos;
         PlayState.player.transform.position = spawnPos;
         PlayState.playerScript.CorrectGravity(false);
+        PlayState.playerScript.ResetState();
         PlayState.gameState = PlayState.GameState.game;
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;
         PlayState.ToggleHUD(true);
@@ -1320,7 +1321,7 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
-                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
             else
                 AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
                     " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
