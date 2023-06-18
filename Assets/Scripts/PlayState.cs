@@ -1558,7 +1558,7 @@ public class PlayState {
             Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - halfBoxSize.y < 7.5f;
     }
 
-    public static float GetDistance(EDirsCardinal dir, Vector2 a, Vector2 b, int castCount, LayerMask layerMask)
+    public static float GetDistance(EDirsCardinal dir, Vector2 a, Vector2 b, int castCount, LayerMask layerMask, bool drawRays = false)
     {
         float shortestDis = Mathf.Infinity;
         Vector2 origin;
@@ -1596,6 +1596,8 @@ public class PlayState {
             {
                 if (shortestDis > hit.distance)
                     shortestDis = hit.distance;
+                if (drawRays)
+                    Debug.DrawLine(origin, hit.point);
             }
         }
         return shortestDis;

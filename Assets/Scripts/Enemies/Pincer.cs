@@ -71,7 +71,10 @@ public class Pincer : Enemy
         switch (dir)
         {
             case PlayState.EDirsCardinal.Down:
+                sprite.flipY = false;
+                break;
             case PlayState.EDirsCardinal.Left:
+                sprite.flipX = false;
                 break;
             case PlayState.EDirsCardinal.Right:
                 if (flipData[1])
@@ -82,6 +85,7 @@ public class Pincer : Enemy
                     sprite.flipY = true;
                 break;
         }
+        PlayAnim("walk", facingDownLeft);
     }
 
     private void FixedUpdate()
@@ -116,47 +120,47 @@ public class Pincer : Enemy
                         break;
                     case PlayState.EDirsCardinal.Left:
                         if (Random.Range(0f, 1f) > 0.77f)
-                            velocity.y = Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED;
+                            velocity.y = (Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED) * Time.fixedDeltaTime;
                         else if (PlayState.player.transform.position.y < transform.position.y)
-                            velocity.y = -SPEED;
+                            velocity.y = -SPEED * Time.fixedDeltaTime;
                         else
-                            velocity.y = SPEED;
-                        PlayAnim("walk", velocity.y > 0);
+                            velocity.y = SPEED * Time.fixedDeltaTime;
+                        PlayAnim("walk", velocity.y < 0);
                         if (Random.Range(0f, 1f) > 0.9f && grounded)
                         {
-                            velocity.x = BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex];
+                            velocity.x = BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex] * Time.fixedDeltaTime;
                             grounded = false;
-                            PlayAnim("jump", velocity.y > 0);
+                            PlayAnim("jump", velocity.y < 0);
                         }
                         break;
                     case PlayState.EDirsCardinal.Right:
                         if (Random.Range(0f, 1f) > 0.77f)
-                            velocity.y = Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED;
+                            velocity.y = (Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED) * Time.fixedDeltaTime;
                         else if (PlayState.player.transform.position.y < transform.position.y)
-                            velocity.y = -SPEED;
+                            velocity.y = -SPEED * Time.fixedDeltaTime;
                         else
-                            velocity.y = SPEED;
-                        PlayAnim("walk", velocity.y > 0);
+                            velocity.y = SPEED * Time.fixedDeltaTime;
+                        PlayAnim("walk", velocity.y < 0);
                         if (Random.Range(0f, 1f) > 0.9f && grounded)
                         {
-                            velocity.x = -BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex];
+                            velocity.x = -BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex] * Time.fixedDeltaTime;
                             grounded = false;
-                            PlayAnim("jump", velocity.y > 0);
+                            PlayAnim("jump", velocity.y < 0);
                         }
                         break;
                     case PlayState.EDirsCardinal.Up:
                         if (Random.Range(0f, 1f) > 0.77f)
-                            velocity.x = Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED;
+                            velocity.x = (Random.Range(0f, 1f) < 0.5f ? -SPEED : SPEED) * Time.fixedDeltaTime;
                         else if (PlayState.player.transform.position.x < transform.position.x)
-                            velocity.x = -SPEED;
+                            velocity.x = -SPEED * Time.fixedDeltaTime;
                         else
-                            velocity.x = SPEED;
-                        PlayAnim("walk", velocity.x > 0);
+                            velocity.x = SPEED * Time.fixedDeltaTime;
+                        PlayAnim("walk", velocity.x < 0);
                         if (Random.Range(0f, 1f) > 0.9f && grounded)
                         {
-                            velocity.y = -BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex];
+                            velocity.y = -BASE_JUMP_POWER * jumpHeights[moveTimeoutIndex] * Time.fixedDeltaTime;
                             grounded = false;
-                            PlayAnim("jump", velocity.x > 0);
+                            PlayAnim("jump", velocity.x < 0);
                         }
                         break;
                 }
@@ -177,6 +181,8 @@ public class Pincer : Enemy
                         velocity.y = 0;
                         if (lastDistance > 0.25f)
                             grounded = false;
+                        else if ((lastDistance - PlayState.FRAC_32) > 0)
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.down;
                     }
                     else
                     {
@@ -201,18 +207,130 @@ public class Pincer : Enemy
                     {
                         transform.position += (facingDownLeft ? -1 : 1) * (lastDistance - PlayState.FRAC_32) * Vector3.right;
                         velocity.x = -velocity.x;
-                        PlayAnim("walk", facingDownLeft);
+                        PlayAnim("walk", velocity.x < 0);
                     }
                     break;
                 case PlayState.EDirsCardinal.Left:
+                    GetDistance(PlayState.EDirsCardinal.Left);
+                    if (grounded)
+                    {
+                        velocity.x = 0;
+                        if (lastDistance > 0.25f)
+                            grounded = false;
+                        else if ((lastDistance - PlayState.FRAC_32) > 0)
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.left;
+                    }
+                    else
+                    {
+                        velocity.x -= GRAVITY * Time.fixedDeltaTime;
+                        if (lastDistance < -velocity.x && velocity.x < 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.left;
+                            velocity.x *= -0.1f;
+                            grounded = true;
+                        }
+                        if (GetDistance(PlayState.EDirsCardinal.Right) < velocity.x && velocity.x > 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.right;
+                            velocity.x = 0;
+                        }
+                    }
+                    if (velocity.y != 0)
+                        velocity.y -= DECELERATION * Time.fixedDeltaTime * (facingDownLeft ? -1 : 1);
+                    if ((facingDownLeft && velocity.y > 0) || (!facingDownLeft && velocity.y < 0))
+                        velocity.y = 0;
+                    if (GetDistance(facingDownLeft ? PlayState.EDirsCardinal.Down : PlayState.EDirsCardinal.Up) < Mathf.Abs(velocity.y))
+                    {
+                        transform.position += (facingDownLeft ? -1 : 1) * (lastDistance - PlayState.FRAC_32) * Vector3.up;
+                        velocity.y = -velocity.y;
+                        PlayAnim("walk", velocity.y < 0);
+                    }
                     break;
                 case PlayState.EDirsCardinal.Right:
+                    GetDistance(PlayState.EDirsCardinal.Right);
+                    if (grounded)
+                    {
+                        velocity.x = 0;
+                        if (lastDistance > 0.25f)
+                            grounded = false;
+                        else if ((lastDistance - PlayState.FRAC_32) > 0)
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.right;
+                    }
+                    else
+                    {
+                        velocity.x += GRAVITY * Time.fixedDeltaTime;
+                        if (lastDistance < velocity.x && velocity.x > 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.right;
+                            velocity.x *= -0.1f;
+                            grounded = true;
+                        }
+                        if (GetDistance(PlayState.EDirsCardinal.Left) < velocity.x && velocity.x < 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.left;
+                            velocity.x = 0;
+                        }
+                    }
+                    if (velocity.y != 0)
+                        velocity.y -= DECELERATION * Time.fixedDeltaTime * (facingDownLeft ? -1 : 1);
+                    if ((facingDownLeft && velocity.y > 0) || (!facingDownLeft && velocity.y < 0))
+                        velocity.y = 0;
+                    if (GetDistance(facingDownLeft ? PlayState.EDirsCardinal.Down : PlayState.EDirsCardinal.Up) < Mathf.Abs(velocity.y))
+                    {
+                        transform.position += (facingDownLeft ? -1 : 1) * (lastDistance - PlayState.FRAC_32) * Vector3.up;
+                        velocity.y = -velocity.y;
+                        PlayAnim("walk", velocity.y < 0);
+                    }
                     break;
                 case PlayState.EDirsCardinal.Up:
+                    GetDistance(PlayState.EDirsCardinal.Up);
+                    if (grounded)
+                    {
+                        velocity.y = 0;
+                        if (lastDistance > 0.25f)
+                            grounded = false;
+                        else if ((lastDistance - PlayState.FRAC_32) > 0)
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.up;
+                    }
+                    else
+                    {
+                        velocity.y += GRAVITY * Time.fixedDeltaTime;
+                        if (lastDistance < velocity.y && velocity.y > 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.up;
+                            velocity.y *= -0.1f;
+                            grounded = true;
+                        }
+                        if (GetDistance(PlayState.EDirsCardinal.Down) < velocity.y && velocity.y < 0)
+                        {
+                            transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.down;
+                            velocity.y = 0;
+                        }
+                    }
+                    if (velocity.x != 0)
+                        velocity.x -= DECELERATION * Time.fixedDeltaTime * (facingDownLeft ? -1 : 1);
+                    if ((facingDownLeft && velocity.x > 0) || (!facingDownLeft && velocity.x < 0))
+                        velocity.x = 0;
+                    if (GetDistance(facingDownLeft ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right) < Mathf.Abs(velocity.x))
+                    {
+                        transform.position += (facingDownLeft ? -1 : 1) * (lastDistance - PlayState.FRAC_32) * Vector3.right;
+                        velocity.x = -velocity.x;
+                        PlayAnim("walk", velocity.x < 0);
+                    }
                     break;
             }
 
             transform.position += (Vector3)velocity;
+            if (gravState == PlayState.EDirsCardinal.Down || gravState == PlayState.EDirsCardinal.Up)
+            {
+                if (flipData[0])
+                    sprite.flipX = velocity.x > 0;
+            }
+            else
+            {
+                if (flipData[1])
+                    sprite.flipY = velocity.y > 0;
+            }
         }
     }
 
@@ -270,17 +388,6 @@ public class Pincer : Enemy
 
         anim.Play("Enemy_pincer_" + parsedDir + "_" + action + parsedLookState);
 
-        if (gravState == PlayState.EDirsCardinal.Down || gravState == PlayState.EDirsCardinal.Up)
-        {
-            facingDownLeft = lookState;
-            if (lookState && flipData[0])
-                sprite.flipX = lookState;
-        }
-        else
-        {
-            facingDownLeft = lookState;
-            if (lookState && flipData[1])
-                sprite.flipY = lookState;
-        }
+        facingDownLeft = lookState;
     }
 }
