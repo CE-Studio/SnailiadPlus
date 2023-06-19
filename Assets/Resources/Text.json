@@ -536,12 +536,12 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_controls_back",
+			"name": "menu_option_controls_backButton",
 			"text": "Return",
 			"value": 0
 		},
 		{
-			"name": "menu_option_controls_return",
+			"name": "menu_option_exitControlMenu",
 			"text": "Back",
 			"value": 0
 		},

@@ -5070,7 +5070,51 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Enemy_bat_idle",
+			"name": "Enemy_balloon_floatL",
+			"spriteName": "Entities/BalloonBuster",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_balloon_floatR",
+			"spriteName": "Entities/BalloonBuster",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_balloon_shootL",
+			"spriteName": "Entities/BalloonBuster",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_balloon_shootR",
+			"spriteName": "Entities/BalloonBuster",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_bat_idleL",
 			"spriteName": "Entities/Bat",
 			"framerate": 0.0,
 			"frames": [
@@ -5081,7 +5125,30 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Enemy_bat_fly",
+			"name": "Enemy_bat_idleR",
+			"spriteName": "Entities/Bat",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_bat_flyL",
+			"spriteName": "Entities/Bat",
+			"framerate": 6.0,
+			"frames": [
+				1,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_bat_flyR",
 			"spriteName": "Entities/Bat",
 			"framerate": 6.0,
 			"frames": [

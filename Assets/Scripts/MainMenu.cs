@@ -1523,7 +1523,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 0, 1, 0 }, "control_left");
         AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 3, 1, 0 }, "control_down");
         AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 1, 1, 0 }, "control_right");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlKeyboard);
         ForceSelect(0);
         backPage = ControlKeyboard;
     }
@@ -1540,7 +1540,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_left") + ":   ", true, TestForRebind, new int[] { 0, 8, 1, 0 }, "control_left");
         AddOption(PlayState.GetText("menu_option_controls_down") + ":   ", true, TestForRebind, new int[] { 0, 11, 1, 0 }, "control_down");
         AddOption(PlayState.GetText("menu_option_controls_right") + ":   ", true, TestForRebind, new int[] { 0, 9, 1, 0 }, "control_right");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlKeyboard);
         ForceSelect(0);
         backPage = ControlKeyboard;
     }
@@ -1556,8 +1556,8 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20, 1, 0 }, "control_weaponPrev");
         AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21, 1, 0 }, "control_map");
         AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22, 1, 0 }, "control_menu");
-        AddOption(PlayState.GetText("menu_option_controls_back") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 0 }, "control_back");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlKeyboard);
+        AddOption(PlayState.GetText("menu_option_controls_backButton") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 0 }, "control_back");
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlKeyboard);
         ForceSelect(0);
         backPage = ControlKeyboard;
     }
@@ -1574,7 +1574,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_aimLeft") + ":   ", true, TestForRebind, new int[] { 0, 8, 1, 1 }, "control_aimLeft");
         AddOption(PlayState.GetText("menu_option_controls_aimDown") + ":   ", true, TestForRebind, new int[] { 0, 11, 1, 1 }, "control_aimDown");
         AddOption(PlayState.GetText("menu_option_controls_aimRight") + ":   ", true, TestForRebind, new int[] { 0, 9, 1, 1 }, "control_aimRight");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlController);
         ForceSelect(0);
         backPage = ControlController;
     }
@@ -1591,7 +1591,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_strafe2") + ":   ", true, TestForRebind, new int[] { 0, 14, 1, 1 }, "control_strafe2");
         AddOption(PlayState.GetText("menu_option_controls_speak1") + ":   ", true, TestForRebind, new int[] { 0, 7, 1, 1 }, "control_speak1");
         AddOption(PlayState.GetText("menu_option_controls_speak2") + ":   ", true, TestForRebind, new int[] { 0, 15, 1, 1 }, "control_speak2");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlController);
         ForceSelect(0);
         backPage = ControlController;
     }
@@ -1608,7 +1608,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21, 1, 1 }, "control_map");
         AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22, 1, 1 }, "control_menu");
         AddOption(PlayState.GetText("menu_option_controls_back") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 1 }, "control_back");
-        AddOption(PlayState.GetText("menu_option_controls_return"), true, ControlController);
+        AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlController);
         ForceSelect(0);
         backPage = ControlController;
     }
