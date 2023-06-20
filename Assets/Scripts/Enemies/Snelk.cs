@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snelk : Enemy
+public class Snelk : Enemy, IRoomObject
 {
     public int state; // 0 = default, 1 = run from player, 2 = sleeping
     public float spawnChance = 1;
+    public int facingState = 3; // 0 = right, 1 = left, 2 = either direction at random, 3 = facing player, 4 = facing away from player
     public Particle zzz;
 
     private RaycastHit2D hCast;
@@ -23,13 +24,60 @@ public class Snelk : Enemy
 
     private BoxCollider2D box;
 
-    void Awake()
+    public static readonly string myType = "Enemies/Snelk";
+
+    public Dictionary<string, object> resave()
     {
+        return null;
+    }
+
+    public string objType
+    {
+        get
+        {
+            return myType;
+        }
+    }
+
+    public Dictionary<string, object> save()
+    {
+        Dictionary<string, object> content = new Dictionary<string, object>();
+        content["state"] = state;
+        content["spawnChance"] = spawnChance;
+        content["facingState"] = facingState;
+        return content;
+    }
+
+    public void load(Dictionary<string, object> content)
+    {
+        state = (int)content["state"];
+        spawnChance = (float)content["spawnChance"];
+        facingState = (int)content["facingState"];
+
+        facingLeft = facingState switch
+        {
+            0 => false,
+            1 => true,
+            2 => Random.Range(0, 2) == 1,
+            3 => PlayState.player.transform.position.x < transform.position.x,
+            _ => PlayState.player.transform.position.x > transform.position.x
+        };
+        sprite.flipX = facingLeft;
+
         if (Random.Range(0f, 1f) > spawnChance)
         {
             Destroy(gameObject);
             return;
         }
+
+        SetState(state);
+    }
+
+    void Awake()
+    {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         Spawn(50, 2, 1, true);
         col.TryGetComponent(out box);
         invulnerable = true;
@@ -37,10 +85,8 @@ public class Snelk : Enemy
 
         anim.Add("Enemy_snelk_jump");
         anim.Add("Enemy_snelk_sleep");
-        SetState(state);
 
         currentHop = Mathf.Abs(Mathf.FloorToInt(transform.position.x)) % hopHeights.Length;
-        facingLeft = PlayState.player.transform.position.x < transform.position.x;
     }
 
     public void FixedUpdate()

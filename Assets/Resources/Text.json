@@ -2241,6 +2241,21 @@
 			"value": 0
 		},
 		{
+			"name": "room_04_anglePassageItem",
+			"text": "Transit 90",
+			"value": 0
+		},
+		{
+			"name": "room_04_anglePassageTop",
+			"text": "Transit 90",
+			"value": 0
+		},
+		{
+			"name": "room_04_skyViper",
+			"text": "Viper's Pass",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1

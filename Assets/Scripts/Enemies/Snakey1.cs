@@ -14,6 +14,9 @@ public class Snakey1 : Enemy
     private Vector2 velocity = Vector2.zero;
     private bool grounded = true;
     private BoxCollider2D box;
+    private Vector2 halfBox;
+    private float lastDistance;
+    private float lastX;
 
     private void Awake()
     {
@@ -22,6 +25,8 @@ public class Snakey1 : Enemy
 
         Spawn(250, 4, 10, true);
         col.TryGetComponent(out box);
+        halfBox = box.size * 0.5f;
+        lastX = transform.position.x;
 
         anim.Add("Enemy_snakey_green_idle");
         anim.Add("Enemy_snakey_green_attack");
@@ -52,29 +57,59 @@ public class Snakey1 : Enemy
                 velocity.x = SPEED * Mathf.Sign(playerDistance);
                 anim.Play("Enemy_snakey_green_attack");
             }
-            Vector2 pos = transform.position;
 
-            RaycastHit2D wallHit = Physics2D.BoxCast(transform.position, new Vector2(box.size.x, box.size.y * 0.5f), 0,
-                Vector2.right * Mathf.Sign(velocity.x), velocity.x * Time.fixedDeltaTime, enemyCollide);
-            RaycastHit2D floorLeft = Physics2D.Raycast(new Vector2(pos.x - (box.size.x * 0.5f), pos.y - (box.size.y * 0.5f)), Vector2.down, 20, enemyCollide);
-            RaycastHit2D floorRight = Physics2D.Raycast(new Vector2(pos.x + (box.size.x * 0.5f), pos.y - (box.size.y * 0.5f)), Vector2.down, 20, enemyCollide);
-
-            if (wallHit.collider != null)
-                velocity.x *= -1;
-            if ((floorLeft.distance < -(velocity.y * Time.fixedDeltaTime) || floorRight.distance < -(velocity.y * Time.fixedDeltaTime)) && !grounded)
+            if (GetDistance(velocity.x < 0 ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right) < Mathf.Abs(velocity.x * Time.fixedDeltaTime))
             {
-                transform.position = new Vector2(transform.position.x,
-                    (floorLeft.point.y > floorRight.point.y ? floorLeft.point.y : floorRight.point.y) + (box.size.y * 0.5f) + 0.05f);
-                grounded = true;
+                transform.position += (lastDistance - PlayState.FRAC_32) * (velocity.x < 0 ? Vector3.left : Vector3.right);
+                velocity.x *= -1;
+            }
+            GetDistance(PlayState.EDirsCardinal.Down);
+            if (lastDistance < Mathf.Abs(velocity.y * Time.fixedDeltaTime) && !grounded)
+            {
+                transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.down;
                 velocity.y = 0;
+                grounded = true;
                 anim.Play("Enemy_snakey_green_idle");
             }
-            else if (floorLeft.distance > 0.25f && floorRight.distance > 0.25f && grounded)
+            else if (lastDistance > 0.25f && grounded)
                 grounded = false;
+
             transform.position += (Vector3)velocity * Time.fixedDeltaTime;
+
+            if (velocity.x != 0)
+            {
+                Vector2 testPoint = new Vector2(transform.position.x + (halfBox.x * (velocity.x > 0 ? 1 : -1)), transform.position.y - halfBox.y);
+                if (PlayState.IsPointEnemyCollidable(testPoint))
+                    transform.position = new Vector2(lastX, transform.position.y);
+            }
+            lastX = transform.position.x;
         }
 
         if (velocity.x != 0)
             sprite.flipX = velocity.x > 0;
+    }
+
+    private float GetDistance(PlayState.EDirsCardinal direction)
+    {
+        Vector2 a;
+        Vector2 b;
+        switch (direction)
+        {
+            default:
+            case PlayState.EDirsCardinal.Down:
+                a = (Vector2)transform.position + new Vector2(-halfBox.x, -halfBox.y);
+                b = (Vector2)transform.position + new Vector2(halfBox.x, -halfBox.y);
+                break;
+            case PlayState.EDirsCardinal.Left:
+                a = (Vector2)transform.position + new Vector2(-halfBox.x, -halfBox.y);
+                b = (Vector2)transform.position + new Vector2(-halfBox.x, halfBox.y);
+                break;
+            case PlayState.EDirsCardinal.Right:
+                a = (Vector2)transform.position + new Vector2(halfBox.x, -halfBox.y);
+                b = (Vector2)transform.position + new Vector2(halfBox.x, halfBox.y);
+                break;
+        }
+        lastDistance = PlayState.GetDistance(direction, a, b, 2, enemyCollide);
+        return lastDistance;
     }
 }

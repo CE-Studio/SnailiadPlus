@@ -6833,6 +6833,137 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Enemy_skyViper_data",
+			"spriteName": "Entities/Snake3",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_idleL",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_idleR",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackN",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackNE",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackE",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackSE",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackS",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackSW",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackW",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_skyViper_attackNW",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_snakey_green_idle",
 			"spriteName": "Entities/Snake",
 			"framerate": 10.0,

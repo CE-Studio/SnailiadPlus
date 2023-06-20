@@ -538,6 +538,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 418:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike (blue)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 419:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Sky Viper"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 420:
                             GameObject cannon2Floor = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Non-Canon"), worldPos, Quaternion.identity, transform);
                             cannon2Floor.GetComponent<Cannon2>().PlayAnim("floor", true);

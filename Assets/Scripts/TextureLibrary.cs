@@ -73,6 +73,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/SnailNpcColor",
         "Entities/Snake",
         "Entities/Snake2",
+        "Entities/Snake3",
         "Entities/Snelk",
         "Entities/Spider1",
         "Entities/Spider2",
