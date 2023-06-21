@@ -541,6 +541,21 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 45:
+                            if (PlayState.CheckForItem("Full-Metal Snail"))
+                            {
+                                AddText(PlayState.currentProfile.character switch
+                                {
+                                    "Sluggy" => "fullPower",
+                                    "Blobby" => "nonNeutonian",
+                                    "Leechy" => "fullPower",
+                                    _ => "fullMetal"
+                                });
+                            }
+                            else
+                                AddText("default");
+                            break;
+
                         case 46:
                             AddText("default");
                             break;

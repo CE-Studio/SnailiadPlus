@@ -3117,6 +3117,20 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_fullMetalSnail",
+			"spriteName": "Items/FullMetalSnail",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_helixFragment",
 			"spriteName": "Items/HelixFragment",
 			"framerate": 24.0,
@@ -5966,6 +5980,66 @@
 			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_gear_idle",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_gear_down",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_gear_left",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_gear_right",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_gear_up",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "Enemy_gravturtle1_data",

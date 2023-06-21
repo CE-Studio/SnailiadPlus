@@ -2256,6 +2256,21 @@
 			"value": 0
 		},
 		{
+			"name": "room_04_threeChamber",
+			"text": "Triple Trouble",
+			"value": 0
+		},
+		{
+			"name": "room_04_purpleSkyPath",
+			"text": "Sunset Vista",
+			"value": 0
+		},
+		{
+			"name": "room_04_fullMetalSnail",
+			"text": "Steel Shrine",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2818,6 +2833,26 @@
 		{
 			"name": "npc_43_default_0",
 			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
+			"value": 1
+		},
+		{
+			"name": "npc_45_fullMetal_0",
+			"text": "Ooh, a {col|0301}Full Metal {S}{col|0312}!  {p|0.2}Now{nl}you're as tough as iron, {p|0.1}and as{nl}quick as Mercury!",
+			"value": 1
+		},
+		{
+			"name": "npc_45_fullPower_0",
+			"text": "Ooh, a {col|0302}Full Power {S}{col|0312}, {p|0.15}the{nl}fastest {S} on earth!!",
+			"value": 1
+		},
+		{
+			"name": "npc_45_nonNeutonian_0",
+			"text": "Ooh, a {col|0211}Non-Neutonian {S}{col|0312}! {p|0.2}{nl}The perfect blend of fluidity{nl}and indestructibility!!",
+			"value": 1
+		},
+		{
+			"name": "npc_45_default_0",
+			"text": "Hey, {P}!  {p|0.15}If you grab the{nl}{col|0301}powerup {col|0312}ahead, {p|0.1}you'll only take{nl}half damage from enemies!!",
 			"value": 1
 		},
 		{

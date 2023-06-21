@@ -208,6 +208,11 @@
             "height": 16
         },
 		{
+            "name": "Entities/Gear",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Entities/GravTurtle1",
             "width": 32,
             "height": 32
@@ -350,6 +355,11 @@
         },
 		{
             "name": "Items/CorkscrewJump",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/FullMetalSnail",
             "width": 32,
             "height": 32
         },

@@ -1571,6 +1571,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
         else
         {
+            if (PlayState.CheckForItem("Full-Metal Snail"))
+                damage = Mathf.FloorToInt(damage * 0.5f);
             if (health - damage <= 0)
                 StartCoroutine(nameof(DieAndRespawn));
             else
@@ -1665,6 +1667,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         facingLeft = false;
         if (shelled)
             ToggleShell();
+        CorrectGravity(false);
     }
 
     public void RemoteJump(float jumpPower)

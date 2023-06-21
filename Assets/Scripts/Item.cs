@@ -151,6 +151,10 @@ public class Item:MonoBehaviour, IRoomObject {
                     };
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
+                case 9:
+                    animName = "Item_fullMetalSnail";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 default:
                     animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
@@ -213,6 +217,12 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 8:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing(2);
+                    else
+                        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+                    break;
+                case 9:
+                    if (isSuperUnique)
+                        PlayState.globalFunctions.RunDustRing(3);
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;

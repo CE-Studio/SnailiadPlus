@@ -55,6 +55,7 @@ MonoBehaviour:
   - Entities/Fireball2
   - Entities/Floatspike1
   - Entities/Floatspike2
+  - Entities/Gear
   - Entities/GravTurtle1
   - Entities/GravTurtle2
   - Entities/Grass
@@ -86,6 +87,7 @@ MonoBehaviour:
   - Items/Backfire
   - Items/Boomerang
   - Items/CorkscrewJump
+  - Items/FullMetalSnail
   - Items/GravitySnail
   - Items/HeartContainer
   - Items/HelixFragment

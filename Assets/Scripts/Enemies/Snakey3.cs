@@ -61,7 +61,7 @@ public class Snakey3 : Enemy
         col.TryGetComponent(out BoxCollider2D box);
         halfBox = box.size * 0.5f;
         lastPoint = transform.position;
-
+        
         anim.Add("Enemy_skyViper_idleL");
         anim.Add("Enemy_skyViper_idleR");
         foreach (string direction in PlayState.DIRS_COMPASS)
@@ -94,28 +94,29 @@ public class Snakey3 : Enemy
 
             if (velocity.x != 0)
             {
-                if (Mathf.Abs(velocity.x) < deceleration.x)
+                if (Mathf.Abs(velocity.x) < PlayState.FRAC_64)
                     velocity.x = 0;
                 else
                     velocity.x += deceleration.x * (velocity.x < 0 ? 1 : -1);
             }
             if (velocity.y != 0)
             {
-                if (Mathf.Abs(velocity.x) < deceleration.y)
+                if (Mathf.Abs(velocity.y) < PlayState.FRAC_64)
                     velocity.y = 0;
                 else
                     velocity.y += deceleration.y * (velocity.y < 0 ? 1 : -1);
             }
 
             GetDistance(velocity.x < 0 ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right);
-            if (lastDistance < Mathf.Abs(velocity.x))
+            if (lastDistance < Mathf.Abs(velocity.x) * Time.fixedDeltaTime)
             {
                 transform.position += (lastDistance - PlayState.FRAC_32) * (velocity.x < 0 ? Vector3.left : Vector3.right);
                 velocity.x *= -1;
+                facingRight = !facingRight;
                 PlayAttackAnim(Vector2.Angle(Vector2.right, velocity), false);
             }
             GetDistance(velocity.y < 0 ? PlayState.EDirsCardinal.Down : PlayState.EDirsCardinal.Up);
-            if (lastDistance < Mathf.Abs(velocity.y))
+            if (lastDistance < Mathf.Abs(velocity.y) * Time.fixedDeltaTime)
             {
                 transform.position += (lastDistance - PlayState.FRAC_32) * (velocity.y < 0 ? Vector3.down : Vector3.up);
                 velocity.y *= -1;

@@ -11,6 +11,7 @@ public class Blob1 : Enemy
     private float hopTimeout = 0;
     private Vector2 velocity = Vector2.zero;
     private bool facingRight = false;
+    private readonly Vector2 jumpVelocity = new Vector2(6.25f, 15f);
 
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
@@ -71,8 +72,8 @@ public class Blob1 : Enemy
             hopTimeout -= Time.deltaTime;
             if (hopTimeout <= 0)
             {
-                velocity.x = 6.25f * (transform.position.x > PlayState.player.transform.position.x ? -1 : 1);
-                velocity.y = 15 * HOP_HEIGHTS[hopNum];
+                velocity.x = jumpVelocity.x * (transform.position.x > PlayState.player.transform.position.x ? -1 : 1);
+                velocity.y = jumpVelocity.y * HOP_HEIGHTS[hopNum];
                 PlayAnim("Enemy_blob1_jump");
                 hopNum = (hopNum + 1) % HOP_TIMEOUTS.Length;
                 hopTimeout = HOP_TIMEOUTS[hopNum];

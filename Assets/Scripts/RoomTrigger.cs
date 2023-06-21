@@ -467,6 +467,22 @@ public class RoomTrigger:MonoBehaviour {
                         case 389:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Floatspike (black)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 393:
+                            GameObject gearUp = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spinnygear"), worldPos, Quaternion.identity, transform);
+                            gearUp.GetComponent<Spinnygear>().SetDirection(PlayState.EDirsCardinal.Up);
+                            break;
+                        case 394:
+                            GameObject gearDown = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spinnygear"), worldPos, Quaternion.identity, transform);
+                            gearDown.GetComponent<Spinnygear>().SetDirection(PlayState.EDirsCardinal.Down);
+                            break;
+                        case 395:
+                            GameObject gearRight = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spinnygear"), worldPos, Quaternion.identity, transform);
+                            gearRight.GetComponent<Spinnygear>().SetDirection(PlayState.EDirsCardinal.Right);
+                            break;
+                        case 396:
+                            GameObject gearLeft = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spinnygear"), worldPos, Quaternion.identity, transform);
+                            gearLeft.GetComponent<Spinnygear>().SetDirection(PlayState.EDirsCardinal.Left);
+                            break;
                         case 397:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Chirpy (aqua)"), worldPos, Quaternion.identity, transform);
                             break;
@@ -527,6 +543,9 @@ public class RoomTrigger:MonoBehaviour {
                             break;
                         case 414:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Batty Bat"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 415:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Angelblob"), worldPos, Quaternion.identity, transform);
                             break;
                         case 416:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Tallfish (angry)"), worldPos, Quaternion.identity, transform);

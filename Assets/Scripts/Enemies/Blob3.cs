@@ -12,6 +12,7 @@ public class Blob3 : Enemy
     private Vector2 velocity = Vector2.zero;
     private bool facingRight = false;
     private float shotTimeout = 0f;
+    private readonly Vector2 jumpVelocity = new Vector2(17.5f, 20f);
 
     private const float SHOT_TIMEOUT = 0.7f;
     private const int SHOT_COUNT = 4;
@@ -36,7 +37,7 @@ public class Blob3 : Enemy
 
         Face(PlayState.player.transform.position.x > transform.position.x);
         hopNum = Mathf.Abs(Mathf.FloorToInt(transform.position.x) % HOP_TIMEOUTS.Length);
-        hopTimeout = HOP_TIMEOUTS[hopNum] / 3;
+        hopTimeout = HOP_TIMEOUTS[hopNum];
 
         UpdateBoxcasts();
     }
@@ -75,8 +76,8 @@ public class Blob3 : Enemy
             hopTimeout -= Time.deltaTime;
             if (hopTimeout <= 0)
             {
-                velocity.x = 17.5f * (transform.position.x > PlayState.player.transform.position.x ? -1 : 1);
-                velocity.y = 20 * HOP_HEIGHTS[hopNum];
+                velocity.x = jumpVelocity.x * (transform.position.x > PlayState.player.transform.position.x ? -1 : 1);
+                velocity.y = jumpVelocity.y * HOP_HEIGHTS[hopNum];
                 PlayAnim("Enemy_blob3_jump");
                 hopNum = (hopNum + 1) % HOP_TIMEOUTS.Length;
                 hopTimeout = HOP_TIMEOUTS[hopNum];
