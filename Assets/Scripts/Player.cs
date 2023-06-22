@@ -1554,7 +1554,15 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     bulletID = 0;
                 int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (PlayState.CheckForItem("Rapid Fire") ? 3 : 0);
                 fireCooldown = weaponCooldowns[fireRateIndex];
-                PlayState.PlaySound(type switch { 2 => "ShotBoomerang", 3 => "ShotRainbow", 4 => "ShotRainbow", 5 => "ShotRainbow", 6 => "ShotRainbow", _ => "ShotPeashooter", });
+                PlayState.PlaySound(type switch
+                {
+                    1 => "ShotPeashooter",
+                    2 => "ShotBoomerang",
+                    3 => "ShotRainbow",
+                    4 => "ShotPeashooterDev",
+                    5 => "ShotBoomerangDev",
+                    _ => "ShotRainbowDev"
+                });
             }
         }
     }

@@ -58,7 +58,7 @@ public class Pincer : Enemy
         int[] rawAnimData = PlayState.GetAnim("Enemy_pincer_data").frames;
         flipData = new bool[] { rawAnimData[0] == 1, rawAnimData[1] == 1 };
 
-        moveTimeoutIndex = Mathf.RoundToInt(transform.position.x * 0.0625f + transform.position.y * 0.0625f) % moveTimeouts.Length;
+        moveTimeoutIndex = Mathf.Abs(Mathf.RoundToInt(transform.position.x * 0.0625f + transform.position.y * 0.0625f) % moveTimeouts.Length);
         moveTimeout = moveTimeouts[moveTimeoutIndex];
 
         col.TryGetComponent(out BoxCollider2D box);

@@ -20,6 +20,7 @@ public class Walleye : Enemy
 
         Spawn(400, 0, 0, true);
         canDamage = false;
+        invulnerable = true;
         col.TryGetComponent(out box);
     }
 

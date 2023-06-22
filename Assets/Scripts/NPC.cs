@@ -501,6 +501,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             AddText("default");
                             break;
 
+                        case 37:
+                            AddText("default");
+                            break;
+
                         case 40:
                             if (PlayState.IsBossAlive(2))
                                 AddText("warnAboutStompy");

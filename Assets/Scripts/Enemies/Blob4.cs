@@ -83,18 +83,18 @@ public class Blob4 : Enemy
                 hopNum = (hopNum + 1) % HOP_TIMEOUTS.Length;
                 hopTimeout = HOP_TIMEOUTS[hopNum];
             }
+
+            shotTimeout -= Time.deltaTime;
+            if (shotTimeout <= 0)
+            {
+                shotTimeout = SHOT_TIMEOUT;
+                for (int i = 0; i < SHOT_COUNT; i++)
+                    PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutRotary,
+                        new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * i }, i == 0);
+            }
         }
         Face(velocity.x != 0 ? velocity.x > 0 : facingRight);
         velocity.y -= 75 * Time.deltaTime;
-
-        shotTimeout -= Time.deltaTime;
-        if (shotTimeout <= 0)
-        {
-            shotTimeout = SHOT_TIMEOUT;
-            for (int i = 0; i < SHOT_COUNT; i++)
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutRotary,
-                    new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * i }, i == 0);
-        }
     }
 
     private void Face(bool direction)

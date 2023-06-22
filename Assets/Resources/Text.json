@@ -2271,6 +2271,31 @@
 			"value": 0
 		},
 		{
+			"name": "room_04_spaceSecret",
+			"text": "Space Balcony",
+			"value": 0
+		},
+		{
+			"name": "room_04_gearTower",
+			"text": "Clocktower",
+			"value": 0
+		},
+		{
+			"name": "room_04_devastator",
+			"text": "The Vault",
+			"value": 0
+		},
+		{
+			"name": "room_04_pincerPath",
+			"text": "Skyway",
+			"value": 0
+		},
+		{
+			"name": "room_04_labyrinth",
+			"text": "The Other Labyrinth",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2758,6 +2783,11 @@
 		{
 			"name": "npc_35_default_0",
 			"text": "{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!",
+			"value": 1
+		},
+		{
+			"name": "npc_37_default_0",
+			"text": "Where are we, {P}?  {p|0.2}Do you{nl}think they put this room in{nl}on purpose?",
 			"value": 1
 		},
 		{

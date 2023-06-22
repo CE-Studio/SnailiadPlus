@@ -114,6 +114,10 @@ public class Item:MonoBehaviour, IRoomObject {
                     animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
                     break;
+                case 3:
+                    animName = "Item_devastator";
+                    box.size = new Vector2(2.95f, 1.95f);
+                    break;
                 case 4:
                     if (PlayState.currentProfile.character == "Blobby")
                         animName = "Item_wallGrab";
@@ -173,10 +177,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
-            //if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            //    PlayState.helixCount++;
             if (itemID >= PlayState.OFFSET_HEARTS) {
-                //PlayState.heartCount++;
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.globalFunctions.RenderNewHearts();
@@ -207,6 +208,10 @@ public class Item:MonoBehaviour, IRoomObject {
                     PlayState.isArmed = true;
                     PlayState.playerScript.selectedWeapon = 3;
                     PlayState.globalFunctions.ChangeActiveWeapon(2, true);
+                    break;
+                case 3:
+                    if (isSuperUnique)
+                        PlayState.globalFunctions.RunDustRing();
                     break;
                 case 7:
                     if (isSuperUnique)

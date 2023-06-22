@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     private float initialVelocity;
     public int damage;
     public float rapidMult;
+    private bool despawnOffScreen = true;
 
     public SpriteRenderer sprite;
     public AnimationModule anim;
@@ -33,7 +34,7 @@ public class Bullet : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         cam = GameObject.Find("View");
 
-        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave" };
+        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev" };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
             for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
@@ -51,11 +52,14 @@ public class Bullet : MonoBehaviour
             switch (bulletType)
             {
                 case 1:
+                case 4:
                     break;
                 case 2:
+                case 5:
                     velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime * rapidMult;
                     break;
                 case 3:
+                case 6:
                     velocity += initialVelocity * 18f * Time.fixedDeltaTime;
                     break;
                 default:
@@ -90,7 +94,7 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-        if (lifeTimer > 3 && !PlayState.OnScreen(transform.position, box))
+        if ((lifeTimer > 3 || despawnOffScreen) && !PlayState.OnScreen(transform.position, box))
             Despawn();
         if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
             Despawn(PlayState.OnScreen(transform.position, box));
@@ -151,11 +155,32 @@ public class Bullet : MonoBehaviour
                 velocity = 0.4125f;
                 damage = 20;
                 rapidMult = 2f;
+                despawnOffScreen = false;
                 break;
+            default:
             case 3:
                 box.size = new Vector2(1.9f, 1.9f);
                 velocity = 0.075f;
                 damage = 30;
+                rapidMult = 2f;
+                break;
+            case 4:
+                box.size = new Vector2(1.4f, 1.4f);
+                velocity = 0.4625f;
+                damage = 45;
+                rapidMult = 2f;
+                break;
+            case 5:
+                box.size = new Vector2(1.4f, 1.4f);
+                velocity = 0.4125f;
+                damage = 50;
+                rapidMult = 2f;
+                despawnOffScreen = false;
+                break;
+            case 6:
+                box.size = new Vector2(2.4f, 2.4f);
+                velocity = 0.075f;
+                damage = 68;
                 rapidMult = 2f;
                 break;
         }
@@ -175,6 +200,9 @@ public class Bullet : MonoBehaviour
             1 => "peashooter_",
             2 => "boomerang_",
             3 => "rainbowWave_",
+            4 => "peashooterDev_",
+            5 => "boomerangDev_",
+            6 => "rainbowWaveDev_",
             _ => "rainbowWave_",
         };
         animToPlay += direction switch
@@ -243,6 +271,7 @@ public class Bullet : MonoBehaviour
             isActive = false;
             sprite.enabled = false;
             box.enabled = false;
+            despawnOffScreen = true;
             lifeTimer = 0;
             transform.position = Vector2.zero;
         }

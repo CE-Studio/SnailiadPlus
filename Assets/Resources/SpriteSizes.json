@@ -47,6 +47,11 @@
             "height": 16
         },
 		{
+            "name": "Bullets/BoomerangDev",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Bullets/EnemyBoomerangBlue",
             "width": 24,
             "height": 24
@@ -72,9 +77,19 @@
             "height": 4
         },
 		{
+            "name": "Bullets/PeashooterDev",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Bullets/RainbowWave",
             "width": 32,
             "height": 32
+        },
+		{
+            "name": "Bullets/RainbowWaveDev",
+            "width": 48,
+            "height": 48
         },
 		
 		{
@@ -181,6 +196,11 @@
             "name": "Entities/Chirpy2",
             "width": 16,
             "height": 16
+        },
+		{
+            "name": "Entities/Drone",
+            "width": 24,
+            "height": 30
         },
 		{
             "name": "Entities/Fire",
@@ -357,6 +377,11 @@
             "name": "Items/CorkscrewJump",
             "width": 32,
             "height": 32
+        },
+		{
+            "name": "Items/Devastator",
+            "width": 32,
+            "height": 64
         },
 		{
             "name": "Items/FullMetalSnail",

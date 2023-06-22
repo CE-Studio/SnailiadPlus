@@ -22,12 +22,15 @@ public class TextureLibrary : ScriptableObject
         "TitleFont",
 
         "Bullets/Boomerang",
+        "Bullets/BoomerangDev",
         "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyDonut",
         "Bullets/EnemyLaser",
         "Bullets/EnemySpikeBall",
         "Bullets/Peashooter",
+        "Bullets/PeashooterDev",
         "Bullets/RainbowWave",
+        "Bullets/RainbowWaveDev",
 
         "Entities/Babyfish",
         "Entities/BalloonBuster",
@@ -89,6 +92,7 @@ public class TextureLibrary : ScriptableObject
         "Items/Backfire",
         "Items/Boomerang",
         "Items/CorkscrewJump",
+        "Items/Devastator",
         "Items/FullMetalSnail",
         "Items/GravitySnail",
         "Items/HeartContainer",
