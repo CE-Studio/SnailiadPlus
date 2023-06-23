@@ -3545,6 +3545,20 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Item_gravityShock",
+			"spriteName": "Items/GravityShock",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Item_helixFragment",
 			"spriteName": "Items/HelixFragment",
 			"framerate": 24.0,

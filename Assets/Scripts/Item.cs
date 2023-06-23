@@ -159,6 +159,10 @@ public class Item:MonoBehaviour, IRoomObject {
                     animName = "Item_fullMetalSnail";
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
+                case 10:
+                    animName = "Item_gravityShock";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
                 default:
                     animName = "Item_helixFragment";
                     box.size = new Vector2(0.95f, 0.95f);
@@ -209,10 +213,6 @@ public class Item:MonoBehaviour, IRoomObject {
                     PlayState.playerScript.selectedWeapon = 3;
                     PlayState.globalFunctions.ChangeActiveWeapon(2, true);
                     break;
-                case 3:
-                    if (isSuperUnique)
-                        PlayState.globalFunctions.RunDustRing();
-                    break;
                 case 7:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing(1);
@@ -232,6 +232,8 @@ public class Item:MonoBehaviour, IRoomObject {
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
                 default:
+                    if (isSuperUnique)
+                        PlayState.globalFunctions.RunDustRing();
                     break;
             }
             FlashItemText();

@@ -323,12 +323,18 @@ public class RoomTrigger:MonoBehaviour {
             }
             Destroy(obj);
         }
-        GameObject pool = GameObject.Find("Player Bullet Pool");
-        for (int i = 0; i < pool.transform.childCount; i++) {
-            if (pool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive) {
-                pool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
-            }
-            pool.transform.GetChild(i).transform.position = Vector2.zero;
+        GameObject playerPool = GameObject.Find("Player Bullet Pool");
+        for (int i = 0; i < playerPool.transform.childCount; i++)
+        {
+            if (playerPool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive)
+                playerPool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
+            playerPool.transform.GetChild(i).transform.position = Vector2.zero;
+        }
+        for (int i = 0; i < PlayState.enemyBulletPool.transform.childCount; i++)
+        {
+            if (PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive)
+                PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
+            PlayState.enemyBulletPool.transform.GetChild(i).transform.position = Vector2.zero;
         }
         PlayState.ReplaceAllTempTiles();
         PlayState.enemyGlobalMoveIndex = 0;

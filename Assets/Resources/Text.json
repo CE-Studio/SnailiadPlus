@@ -2296,6 +2296,26 @@
 			"value": 0
 		},
 		{
+			"name": "room_04_gearHall",
+			"text": "Final Stretch",
+			"value": 0
+		},
+		{
+			"name": "room_04_angelItem",
+			"text": "Holy Hideaway",
+			"value": 0
+		},
+		{
+			"name": "room_04_iceballItem",
+			"text": "Arctic Alcove",
+			"value": 0
+		},
+		{
+			"name": "room_04_gravityShock",
+			"text": "Lost Loot",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2783,6 +2803,11 @@
 		{
 			"name": "npc_35_default_0",
 			"text": "{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!",
+			"value": 1
+		},
+		{
+			"name": "npc_36_default_0",
+			"text": "{P}?  {p|0.2}How did you get in{nl}here??  {p|0.25}This area isn't supposed{nl}to be finished yet!!",
 			"value": 1
 		},
 		{

@@ -501,7 +501,13 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             AddText("default");
                             break;
 
+                        case 36:
+                            boxColor = "0002";
+                            AddText("default");
+                            break;
+
                         case 37:
+                            boxColor = "0002";
                             AddText("default");
                             break;
 
@@ -546,6 +552,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 45:
+                            boxColor = "0002";
                             if (PlayState.CheckForItem("Full-Metal Snail"))
                             {
                                 AddText(PlayState.currentProfile.character switch

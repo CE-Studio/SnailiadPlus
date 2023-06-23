@@ -389,6 +389,11 @@
             "height": 32
         },
 		{
+            "name": "Items/GravityShock",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Items/GravitySnail",
             "width": 32,
             "height": 32

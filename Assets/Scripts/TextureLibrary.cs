@@ -95,6 +95,7 @@ public class TextureLibrary : ScriptableObject
         "Items/CorkscrewJump",
         "Items/Devastator",
         "Items/FullMetalSnail",
+        "Items/GravityShock",
         "Items/GravitySnail",
         "Items/HeartContainer",
         "Items/HelixFragment",
