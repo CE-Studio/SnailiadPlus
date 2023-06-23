@@ -6240,6 +6240,117 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_drone_data",
+			"spriteName": "Entities/Drone",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_drone_idle",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_up",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_down",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_turnIdle",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_turnUp",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_turnDown",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_fireLaser",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Enemy_drone_fireDonut",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Enemy_fireball1_data",
 			"spriteName": "Entities/Fireball",
 			"framerate": 0.0,

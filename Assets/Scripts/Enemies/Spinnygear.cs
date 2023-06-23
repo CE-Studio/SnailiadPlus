@@ -128,7 +128,7 @@ public class Spinnygear : Enemy
             }
             else
             {
-                if (Mathf.Abs(PlayState.player.transform.position.y - transform.position.y - halfBox.y) < DETECT_DISTANCE)
+                if (Mathf.Abs(PlayState.player.transform.position.y - transform.position.y + halfBox.y) < DETECT_DISTANCE)
                 {
                     isActive = true;
                     canAttack = false;

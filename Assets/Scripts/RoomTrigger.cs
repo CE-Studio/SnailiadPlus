@@ -506,6 +506,9 @@ public class RoomTrigger:MonoBehaviour {
                         case 403:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Tallfish (normal)"), worldPos, Quaternion.identity, transform);
                             break;
+                        case 404:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Federation Drone"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 405:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
                             break;

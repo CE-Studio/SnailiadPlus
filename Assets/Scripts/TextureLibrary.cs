@@ -54,6 +54,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Chirpy1",
         "Entities/Chirpy2",
         "Entities/Dandelion",
+        "Entities/Drone",
         "Entities/Fire",
         "Entities/Fireball",
         "Entities/Fireball2",

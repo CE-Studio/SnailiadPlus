@@ -51,12 +51,12 @@ public class Syngnathida : Enemy
             X_RADIUS = 8.125f;
             Y_RADIUS = 2.5f;
         }
-        else if (PlayState.currentProfile.character == "Sluggy")
-        {
-            MOVE_TIME = 1.9f;
-            X_RADIUS = 8.75f;
-            Y_RADIUS = 3.125f;
-        }
+        //else if (PlayState.currentProfile.character == "Sluggy")
+        //{
+        //    MOVE_TIME = 1.9f;
+        //    X_RADIUS = 8.75f;
+        //    Y_RADIUS = 3.125f;
+        //}
         elapsed = MOVE_TIME;
 
         anim.Add("Enemy_syngnathida_forward");
@@ -111,6 +111,21 @@ public class Syngnathida : Enemy
                         mode = MoveMode.Semicircle_UL;
                     else
                         mode = MoveMode.Semicircle_DL;
+                }
+
+                switch (mode)
+                {
+                    default:
+                        anim.Play("Enemy_syngnathida_forward");
+                        break;
+                    case MoveMode.Semicircle_UL:
+                    case MoveMode.Semicircle_UR:
+                        anim.Play("Enemy_syngnathida_turn_up");
+                        break;
+                    case MoveMode.Semicircle_DL:
+                    case MoveMode.Semicircle_DR:
+                        anim.Play("Enemy_syngnathida_turn_down");
+                        break;
                 }
             }
         }
