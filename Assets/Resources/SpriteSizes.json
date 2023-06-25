@@ -57,6 +57,11 @@
             "height": 24
         },
 		{
+            "name": "Bullets/EnemyBoomerangRed",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Bullets/EnemyDonut",
             "width": 24,
             "height": 24
@@ -65,6 +70,11 @@
             "name": "Bullets/EnemyLaser",
             "width": 24,
             "height": 6
+        },
+		{
+            "name": "Bullets/EnemyShadowWave",
+            "width": 48,
+            "height": 48
         },
 		{
             "name": "Bullets/EnemySpikeBall",
@@ -161,6 +171,16 @@
             "name": "Entities/Boss3Shield",
             "width": 16,
             "height": 16
+        },
+		{
+            "name": "Entities/Boss4",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Entities/Boss4ShadowBall",
+            "width": 24,
+            "height": 24
         },
 		{
             "name": "Entities/BreakableIcons",

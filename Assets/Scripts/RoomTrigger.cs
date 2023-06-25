@@ -64,6 +64,7 @@ public class RoomTrigger:MonoBehaviour {
     public Vector3[] roomContentPos;
     //public PlayState.RoomEntity[] preplacedEntities;
     public PlayState.Breakable[] breakables;
+    public PlayState.Breakable[] finalBossTiles;
 
     void Awake() {
         box = GetComponent<BoxCollider2D>();
@@ -332,8 +333,8 @@ public class RoomTrigger:MonoBehaviour {
         }
         for (int i = 0; i < PlayState.enemyBulletPool.transform.childCount; i++)
         {
-            if (PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive)
-                PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
+            if (PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<EnemyBullet>().isActive)
+                PlayState.enemyBulletPool.transform.GetChild(i).transform.GetComponent<EnemyBullet>().Despawn();
             PlayState.enemyBulletPool.transform.GetChild(i).transform.position = Vector2.zero;
         }
         PlayState.ReplaceAllTempTiles();
@@ -413,6 +414,9 @@ public class RoomTrigger:MonoBehaviour {
                             break;
                         case 25:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Space Box"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 26:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Moon Snail"), worldPos, Quaternion.identity, transform);
                             break;
                         case 27:
                             Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);
@@ -638,6 +642,9 @@ public class RoomTrigger:MonoBehaviour {
                             GameObject pincerWallR = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
                             pincerWallR.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Right);
                             break;
+                        case 460:
+
+                            break;
                         case 1120:
                         case 1121:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Fire"), worldPos, Quaternion.identity, transform);
@@ -671,6 +678,7 @@ public class RoomTrigger:MonoBehaviour {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
         List<PlayState.Breakable> newBreakableList = new List<PlayState.Breakable>();
+        List<PlayState.Breakable> newFinalBossList = new List<PlayState.Breakable>();
 
         for (int x = -limitX; x <= limitX; x++) {
             for (int y = -limitY; y <= limitY; y++) {
@@ -685,6 +693,7 @@ public class RoomTrigger:MonoBehaviour {
                     };
 
                     bool isBreakableTileHere = true;
+                    bool isFinalBossTile = false;
                     switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
                         default:
                             isBreakableTileHere = false;
@@ -702,6 +711,11 @@ public class RoomTrigger:MonoBehaviour {
                             newBreakable.weaponLevel = 4;
                             newBreakable.isSilent = true;
                             break;
+                        case 460:
+                            newBreakable.weaponLevel = -1;
+                            newBreakable.isSilent = true;
+                            isFinalBossTile = true;
+                            break;
                     }
 
                     newBreakable.tiles = new int[]
@@ -714,8 +728,12 @@ public class RoomTrigger:MonoBehaviour {
                         int.Parse(PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1
                     };
 
-                    if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere) {
-                        newBreakableList.Add(newBreakable);
+                    if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere)
+                    {
+                        if (isFinalBossTile)
+                            newFinalBossList.Add(newBreakable);
+                        else
+                            newBreakableList.Add(newBreakable);
                         PlayState.groundLayer.GetComponent<Tilemap>().SetTile(tilePos, null);
                         PlayState.fg1Layer.GetComponent<Tilemap>().SetTile(tilePos, null);
                         PlayState.fg2Layer.GetComponent<Tilemap>().SetTile(tilePos, null);
@@ -725,14 +743,23 @@ public class RoomTrigger:MonoBehaviour {
         }
 
         breakables = newBreakableList.ToArray();
+        finalBossTiles = newFinalBossList.ToArray();
     }
 
-    public void SpawnFromInternalList() {
-        foreach (PlayState.Breakable thisBreakable in breakables) {
+    public void SpawnFromInternalList()
+    {
+        foreach (PlayState.Breakable thisBreakable in breakables)
+        {
             GameObject breakable = Instantiate(breakableBlock, transform);
             breakable.GetComponent<BreakableBlock>().Instantiate(thisBreakable);
         }
-        for (int i = 0; i < roomContent.Length; i++) {
+        foreach (PlayState.Breakable thisFinalBossTile in finalBossTiles)
+        {
+            GameObject finalBossTile = Instantiate(breakableBlock, transform);
+            finalBossTile.GetComponent<BreakableBlock>().Instantiate(thisFinalBossTile);
+        }
+        for (int i = 0; i < roomContent.Length; i++)
+            {
             GameObject obj = Resources.Load<GameObject>("Objects/" + roomContentTypes[i]);
             GameObject newGameObject = Instantiate(obj, roomContentPos[i], Quaternion.identity, transform);
             IRoomObject newRoomObject = newGameObject.GetComponent<IRoomObject>();

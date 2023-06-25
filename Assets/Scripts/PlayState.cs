@@ -266,14 +266,18 @@ public class PlayState {
     public const byte OFFSET_FRAGMENTS = 24;
     public const byte MAX_FRAGMENTS = 30;
 
-    public static bool hasSeenIris;
-    public static bool talkedToCaveSnail;
     public static int[] NPCvarDefault = new int[] { 0, 0 };
 
     public static List<string[]> cutsceneData = new List<string[]>();
     public static List<int> cutscenesToNotSpawn = new List<int> { };
 
     public const string SAVE_FILE_PREFIX = "SnailySave";
+
+    public enum NPCVarIDs
+    {
+        HasSeenIris,
+        TalkedToCaveSnail
+    };
 
     [Serializable]
     public struct ProfileData
@@ -1217,6 +1221,16 @@ public class PlayState {
             if (currentProfile.items[i] == 1)
                 count++;
         return count;
+    }
+
+    public static int GetNPCVar(NPCVarIDs ID)
+    {
+        return currentProfile.NPCVars[(int)ID];
+    }
+
+    public static void SetNPCVar(NPCVarIDs ID, int value)
+    {
+        currentProfile.NPCVars[(int)ID] = value;
     }
 
     public static void WriteSave(int profileID, bool saveGeneral) {

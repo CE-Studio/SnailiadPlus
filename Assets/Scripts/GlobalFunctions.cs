@@ -205,7 +205,7 @@ public class GlobalFunctions : MonoBehaviour
                         areaName = PlayState.GetText("area_04");
                         break;
                     case 5:
-                        if (PlayState.hasSeenIris)
+                        if (PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1)
                             areaName = PlayState.GetText("area_iris");
                         break;
                     case 6:

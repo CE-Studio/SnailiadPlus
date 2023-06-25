@@ -44,6 +44,9 @@ public class BreakableBlock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (requiredWeapon == -1)
+            return;
+
         if (collision.CompareTag("PlayerBullet") && PlayState.OnScreen(transform.position, box))
         {
             if (collision.GetComponent<Bullet>().bulletType >= requiredWeapon)

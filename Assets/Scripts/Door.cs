@@ -9,6 +9,7 @@ public class Door:MonoBehaviour, IRoomObject {
     [SerializeField] private int direction;
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
+    private int[] flipStates;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -53,46 +54,53 @@ public class Door:MonoBehaviour, IRoomObject {
             box = GetComponent<BoxCollider2D>();
             player = GameObject.FindWithTag("Player");
 
-            string[] doorDirs = new string[] { "horiz", "vert" };
+            string[] doorDirs = new string[] { "L", "R", "U", "D" };
             string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
-            string[] doorStates = new string[] { "open", "hold", "close" };
-            for (int i = 0; i < doorDirs.Length; i++) {
-                for (int j = 0; j < doorColors.Length; j++) {
-                    for (int k = 0; k < doorStates.Length; k++)
-                        anim.Add("Door_" + doorDirs[i] + "_" + doorColors[j] + "_" + doorStates[k]);
+            string[] doorStates = new string[] { "open", "holdOpen", "close", "holdClosed" };
+            for (int i = 0; i < doorColors.Length; i++) {
+                for (int j = 0; j < doorStates.Length; j++) {
+                    for (int k = 0; k < doorDirs.Length; k++)
+                        anim.Add("Door_" + doorColors[i] + "_" + doorStates[j] + "_" + doorDirs[k]);
                 }
             }
+
+            flipStates = PlayState.GetAnim("Door_data").frames;
         }
     }
 
-    public void Spawn(/*int[] spawnData*/) {
-        //doorWeapon = spawnData[0];
-        //locked = spawnData[1] == 1 && PlayState.IsBossAlive(spawnData[2]);
-        //bossLock = spawnData[2];
-        //direction = spawnData[3];
-
+    public void Spawn()
+    {
         if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 2)
             SetState1();
         else
             SetState2();
 
-        if (direction == 1 || direction == 3) {
+        if (direction == 1 || direction == 3 && flipStates[1] == 1)
+        {
             box.size = new Vector2(3, 1);
-            if (direction == 3) {
+            if (direction == 3)
+            {
                 sprite.flipY = true;
             }
-        } else if (direction == 2) {
+        }
+        else if (direction == 2 && flipStates[0] == 1)
+        {
             sprite.flipX = true;
         }
     }
 
-    private void Update() {
-        if (locked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat) {
+    private void Update()
+    {
+        if (locked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat)
+        {
             bossUnlockDelay -= Time.deltaTime;
-            if (bossUnlockDelay < 0) {
+            if (bossUnlockDelay < 0)
+            {
                 SetState0();
                 openAfterBossDefeat = true;
             }
+            if (!box.enabled && !anim.isPlaying)
+                anim.Play("holdOpen");
         }
     }
 
@@ -100,35 +108,34 @@ public class Door:MonoBehaviour, IRoomObject {
         PlayAnim("hold");
     }
 
-    public void PlayAnim(string animType) {
+    public void PlayAnim(string animType)
+    {
         if (animType == "blank")
             sprite.enabled = false;
-        else {
+        else
+        {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            if (direction == 1 || direction == 3)
-                animToPlay += "vert_";
-            else
-                animToPlay += "horiz_";
             if (locked)
                 animToPlay += "locked_";
-            else {
-                switch (doorWeapon) {
-                    case 0:
-                        animToPlay += "blue_";
-                        break;
-                    case 1:
-                        animToPlay += "purple_";
-                        break;
-                    case 2:
-                        animToPlay += "red_";
-                        break;
-                    case 3:
-                        animToPlay += "green_";
-                        break;
-                }
+            else
+            {
+                animToPlay += doorWeapon switch
+                {
+                    0 => "blue_",
+                    1 => "purple_",
+                    2 => "red_",
+                    _ => "green_"
+                };
             }
-            anim.Play(animToPlay + animType);
+            animToPlay += animType + "_" + direction switch
+            {
+                0 => "L",
+                1 => "U",
+                2 => "R",
+                _ => "D"
+            };
+            anim.Play(animToPlay);
         }
     }
 
@@ -149,7 +156,7 @@ public class Door:MonoBehaviour, IRoomObject {
     // State 2 is for doors that are closed upon spawning
     public void SetState2() {
         sprite.enabled = true;
-        PlayAnim("hold");
+        PlayAnim("holdClosed");
         box.enabled = true;
     }
 

@@ -101,6 +101,7 @@ public class SpaceBox : Boss
         {
             SpawnBoss(5100, 4, 9, true, 2, true);
             StartCoroutine(RunIntro(true, false));
+            PlayState.playerScript.CorrectGravity(true);
 
             SHOT_COUNT = 4;
             if (PlayState.currentProfile.difficulty == 2)
@@ -150,6 +151,8 @@ public class SpaceBox : Boss
             if (spawnAtCorner)
                 transform.position += new Vector3(3.5f, -3.5f, 0);
         }
+        else
+            Destroy(gameObject);
     }
 
     private void FixedUpdate()

@@ -243,7 +243,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("predictMoonSnail");
                             else if (PlayState.CountFragments() < 30)
                                 AddText("predictHelixFragments");
-                            else if (!PlayState.hasSeenIris)
+                            else if (PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
                                 AddText("predictIris");
                             else
                                 AddText("default");
@@ -333,7 +333,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         case 14:
                             if (PlayState.CountFragments() < 15)
                                 AddText("helixFragments");
-                            else if (PlayState.CountFragments() < 30 || !PlayState.hasSeenIris)
+                            else if (PlayState.CountFragments() < 30 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
                                 AddText("shrine");
                             else
                                 AddText("default");
@@ -429,11 +429,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("thorgleBorgle");
                             else
                                 AddText("default");
-                            PlayState.talkedToCaveSnail = true;
+                            PlayState.SetNPCVar(PlayState.NPCVarIDs.TalkedToCaveSnail, 1);
                             break;
 
                         case 23:
-                            if (PlayState.GetItemPercentage() < 100 && !PlayState.talkedToCaveSnail)
+                            if (PlayState.GetItemPercentage() < 100 && PlayState.GetNPCVar(PlayState.NPCVarIDs.TalkedToCaveSnail) != 1)
                                 AddText("caveSnail");
                             else if (PlayState.GetItemPercentage() < 60)
                                 AddText("loadGame");
@@ -492,6 +492,52 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             boxColor = "0002";
                             if (PlayState.currentProfile.difficulty == 2)
                                 AddText("insane");
+                            else
+                                AddText("default");
+                            break;
+
+                        case 30:
+                            boxColor = "0002";
+                            if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
+                                AddText("underpowered");
+                            else if (PlayState.IsBossAlive(3))
+                                AddText("warnAboutMoonSnail");
+                            else if (PlayState.CountFragments() < 30 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
+                                AddText("helixFragments");
+                            else
+                                AddText("default");
+                            break;
+
+                        case 31:
+                            boxColor = "0002";
+                            if (PlayState.IsBossAlive(3))
+                                AddText("discussMoonSnail");
+                            else if (PlayState.CountFragments() < 30 && (!PlayState.IsBossAlive(3) || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1))
+                                AddText("helixFragments");
+                            else
+                                AddText("default");
+                            break;
+
+                        case 32:
+                            boxColor = "0002";
+                            if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
+                                AddText("underpowered");
+                            else if (PlayState.CountFragments() < 30 && PlayState.IsBossAlive(3))
+                                AddText("noIris");
+                            else if (PlayState.CountFragments() == 30 && PlayState.IsBossAlive(3))
+                                AddText("poweredIris");
+                            else if (PlayState.CountFragments() < 30 && PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
+                                AddText("helixFragments");
+                            else
+                                AddText("default");
+                            break;
+
+                        case 33:
+                            boxColor = "0002";
+                            if (!PlayState.IsBossAlive(3))
+                                AddText("celebrate");
+                            else if (CheckForUncollectedItem(PlayState.OFFSET_HEARTS))
+                                AddText("offerHeart");
                             else
                                 AddText("default");
                             break;

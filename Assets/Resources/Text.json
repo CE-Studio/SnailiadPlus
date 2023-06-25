@@ -2316,6 +2316,26 @@
 			"value": 0
 		},
 		{
+			"name": "room_04_lastHall",
+			"text": "End of the Line",
+			"value": 0
+		},
+		{
+			"name": "room_04_lastHeart",
+			"text": "Reinforcements",
+			"value": 0
+		},
+		{
+			"name": "room_04_moonSnail",
+			"text": "Moon Arena",
+			"value": 0
+		},
+		{
+			"name": "room_04_afterMoonSnail",
+			"text": "Victory Road",
+			"value": 0
+		},
+		{
 			"name": "npc_?",
 			"text": "Hey {P}!  {p|0.25}Unfortunately I,{nl|}{p|0.125}snail #{ID}, {p|0.125}don't have any{nl|}dialogue to offer.  {p|0.25}Sorry!!",
 			"value": 1
@@ -2798,6 +2818,81 @@
 		{
 			"name": "npc_29_insane_0",
 			"text": "Oh, no!! {p|0.2}{P}!! {p|0.2}The \"{col|0305}Ice {S}{col|0312}\"{nl}power-up is missing on insane{nl}mode! {p|0.25}Good luck without it!!",
+			"value": 1
+		},
+		{
+			"name": "npc_30_underpowered_0",
+			"text": "Be careful, {P}!  {p|0.25}With only{nl}the powers you have now, {col|0204}Moon{nl}Snail {col|0312}will eat you for lunch!!",
+			"value": 1
+		},
+		{
+			"name": "npc_30_warnAboutMoonSnail_0",
+			"text": "{P}, {p|0.1}{col|0204}Moon Snail's {col|0312}just ahead!{nl}{p|0.2}He brought us here!!  {p|0.15}He's gone{nl}bad!!  {p|0.15}You need to defeat him!!",
+			"value": 1
+		},
+		{
+			"name": "npc_30_helixFragments_0",
+			"text": "{P}, search for the {col|0302}helix{nl}fragments{col|0312}!  {p|0.2}Maybe {col|0302}Iris {col|0312}can{nl}still restore {col|0204}Moon Snail{col|0204}!!",
+			"value": 1
+		},
+		{
+			"name": "npc_30_default_0",
+			"text": "Congratulations, {P}!!  {p|0.2}{col|0204}Moon{nl}Snail {col|0312}is saved!!  {p|0.4}Wait, {p|0.2}is he a{nl}moon snail or a sun snail?",
+			"value": 1
+		},
+		{
+			"name": "npc_31_discussMoonSnail_0",
+			"text": "{col|0204}Moon Snail {col|0312}is still a snail!!  {p|0.2}He{nl}was once known as {col|0309}Sun Snail{col|0312}{nl}and enjoyed nomming on grass!!",
+			"value": 1
+		},
+		{
+			"name": "npc_31_helixFragments_0",
+			"text": "I've heard that the {col|0302}Shrine of{nl}Iris {col|0312}is not marked on any map!{nl}{p|0.25}Have you found it yet?",
+			"value": 1
+		},
+		{
+			"name": "npc_31_default_0",
+			"text": "Don't moon snails live in the{nl}ocean?  {p|0.25}{eff|Shake}{sfx|3}HEY, {p|0.2}{eff|None}{sfx|0}THIS GAME ISN'T{nl}REALISTIC!!  {p|0.2}WHAT GIVES??",
+			"value": 1
+		},
+		{
+			"name": "npc_32_underpowered_0",
+			"text": "Watch out, {P}!  {p|0.2}You're not{nl}strong enough to fight {col|0204}Moon{nl}Snail {col|0312}yet!!  {p|0.15}Turn back!!",
+			"value": 1
+		},
+		{
+			"name": "npc_32_noIris_0",
+			"text": "If only you had the power of{nl}{col|0302}Iris!  {col|0312}{p|0.2}She could restore his{nl}light once he's defeated!!",
+			"value": 1
+		},
+		{
+			"name": "npc_32_poweredIris_0",
+			"text": "Use the power of {col|0302}Iris{col|0312}, {P}!{nl}{p|0.2}Defeat {col|0204}Moon Snail{col|0312}, and restore{nl}him to his former light!",
+			"value": 1
+		},
+		{
+			"name": "npc_32_helixFragments_0",
+			"text": "There are 30 {col|0302}fragments {col|0312}hidden{nl}around Snaily World!  {p|0.15}Good luck{nl}finding them, {P}!!",
+			"value": 1
+		},
+		{
+			"name": "npc_32_default_0",
+			"text": "Amazing work, {P}!!  {p|0.5}Hey,{nl}{p|0.25}how'd we get into outer space,{nl}anyway?",
+			"value": 1
+		},
+		{
+			"name": "npc_33_celebrate_0",
+			"text": "Congratulations, {P}!!  {p|0.15}You{nl}defeated {col|0204}Moon Snail{col|0312}!!  {p|0.15}You're{nl}the best {S} ever!!",
+			"value": 1
+		},
+		{
+			"name": "npc_33_offerHeart_0",
+			"text": "{P}, take this heart!  {p|0.1}You'll{nl}need all the help you can get{nl}to defeat {col|0204}Moon Snail{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_33_default_0",
+			"text": "Good luck, {P}!!",
 			"value": 1
 		},
 		{
