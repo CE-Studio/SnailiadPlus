@@ -339,6 +339,7 @@ public class RoomTrigger:MonoBehaviour {
         }
         PlayState.ReplaceAllTempTiles();
         PlayState.enemyGlobalMoveIndex = 0;
+        PlayState.activeTargets.Clear();
     }
 
     private void CheckSpecialLayer() {
@@ -642,8 +643,189 @@ public class RoomTrigger:MonoBehaviour {
                             GameObject pincerWallR = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Pincer"), worldPos, Quaternion.identity, transform);
                             pincerWallR.GetComponent<Pincer>().SetGravity(PlayState.EDirsCardinal.Right);
                             break;
-                        case 460:
-
+                        case 461:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.S }
+                            });
+                            break;
+                        case 462:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W }
+                            });
+                            break;
+                        case 463:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.E }
+                            });
+                            break;
+                        case 464:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N }
+                            });
+                            break;
+                        case 465:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.S }
+                            });
+                            break;
+                        case 466:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W }
+                            });
+                            break;
+                        case 467:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.E }
+                            });
+                            break;
+                        case 468:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N }
+                            });
+                            break;
+                        case 469:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.S }
+                            });
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.S }
+                            });
+                            break;
+                        case 470:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W }
+                            });
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W }
+                            });
+                            break;
+                        case 471:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.E }
+                            });
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.E }
+                            });
+                            break;
+                        case 472:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonTele,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N }
+                            });
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.MoonMove,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N }
+                            });
+                            break;
+                        case 473:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.S }
+                            });
+                            break;
+                        case 474:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W }
+                            });
+                            break;
+                        case 475:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.E }
+                            });
+                            break;
+                        case 476:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N }
+                            });
+                            break;
+                        case 477:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N, PlayState.EDirsCompass.S }
+                            });
+                            break;
+                        case 478:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.W, PlayState.EDirsCompass.E }
+                            });
+                            break;
+                        case 479:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaStomp,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.N, PlayState.EDirsCompass.S, PlayState.EDirsCompass.E, PlayState.EDirsCompass.W }
+                            });
+                            break;
+                        case 480:
+                            PlayState.activeTargets.Add(new PlayState.TargetPoint
+                            {
+                                type = PlayState.TargetTypes.GigaSpawn,
+                                pos = worldPos,
+                                directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.None }
+                            });
                             break;
                         case 1120:
                         case 1121:

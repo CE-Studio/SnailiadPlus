@@ -22,9 +22,9 @@ public class PlayState {
     public static readonly string[] DIRS_COMPASS = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
     public static readonly string[] DIRS_CARDINAL = new string[] { "up", "down", "left", "right" };
     public static readonly string[] DIRS_SURFACE = new string[] { "floor", "wallL", "wallR", "ceiling" };
-    public enum EDirsCompass { N, NE, E, SE, S, SW, W, NW };
-    public enum EDirsCardinal { Up, Down, Left, Right };
-    public enum EDirsSurface { Floor, WallL, WallR, Ceiling };
+    public enum EDirsCompass { N, NE, E, SE, S, SW, W, NW, None };
+    public enum EDirsCardinal { Up, Down, Left, Right, None };
+    public enum EDirsSurface { Floor, WallL, WallR, Ceiling, None };
 
     public enum GameState { game, menu, pause, map, debug, dialogue, error }
     public static GameState gameState = GameState.menu;
@@ -198,6 +198,21 @@ public class PlayState {
     public static TextMesh pauseShadow;
     public static TextMesh mapText;
     public static TextMesh mapShadow;
+
+    public enum TargetTypes
+    {
+        MoonTele,
+        MoonMove,
+        GigaSpawn,
+        GigaStomp
+    };
+    public struct TargetPoint
+    {
+        public TargetTypes type;
+        public Vector2 pos;
+        public EDirsCompass[] directions;
+    }
+    public static List<TargetPoint> activeTargets = new();
 
     public static int currentProfileNumber = 0;
 

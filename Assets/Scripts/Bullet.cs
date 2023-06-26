@@ -316,4 +316,20 @@ public class Bullet : MonoBehaviour
     {
         transform.position = new Vector2(transform.position.x + (diagonalAim.x * velocity), transform.position.y + (-diagonalAim.y * velocity));
     }
+
+    public Vector2 Vector2Direction()
+    {
+        return direction switch
+        {
+            0 => new(-PlayState.ANGLE_DIAG.x, PlayState.ANGLE_DIAG.y),
+            1 => Vector2.up,
+            2 => PlayState.ANGLE_DIAG,
+            3 => Vector2.left,
+            4 => Vector2.right,
+            5 => -PlayState.ANGLE_DIAG,
+            6 => Vector2.down,
+            7 => new(PlayState.ANGLE_DIAG.x, -PlayState.ANGLE_DIAG.y),
+            _ => Vector2.right
+        };
+    }
 }

@@ -240,7 +240,30 @@ public class Subscreen : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             int thisCellValue = (PlayState.currentProfile.exploredMap[i] < 10) ? PlayState.currentProfile.exploredMap[i] : (PlayState.currentProfile.exploredMap[i] - 10);
-            if (thisCellValue == 0 || thisCellValue == 2)
+            if (thisCellValue == 1 || thisCellValue == 11 || ((thisCellValue == 3 || thisCellValue == 13) && PlayState.generalData.secretMapTilesVisible))
+            {
+                cells[i].GetComponent<SpriteMask>().enabled = false;
+                cells[i].GetComponent<SpriteRenderer>().color = PlayState.GetColor("0312");
+                if (PlayState.playerMarkerLocations.ContainsKey(i))
+                {
+                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
+                    cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
+                }
+                else if (PlayState.bossLocations.Contains(i))
+                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
+                else if (PlayState.saveLocations.Contains(i))
+                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
+                else if (PlayState.itemLocations.ContainsKey(i))
+                {
+                    if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0)
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
+                    else
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                }
+                else
+                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
+            }
+            else
             {
                 cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
                 if (PlayState.playerMarkerLocations.ContainsKey(i))
@@ -249,41 +272,6 @@ public class Subscreen : MonoBehaviour
                     cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
                 }
                 cells[i].GetComponent<SpriteMask>().enabled = true;
-            }
-            else
-            {
-                if (thisCellValue == 3 || thisCellValue == 13)
-                {
-                    cells[i].GetComponent<SpriteMask>().enabled = true;
-                    if (PlayState.playerMarkerLocations.ContainsKey(i))
-                    {
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
-                        cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
-                    }
-                }
-                else
-                {
-                    cells[i].GetComponent<SpriteMask>().enabled = false;
-                    cells[i].GetComponent<SpriteRenderer>().color = PlayState.GetColor("0312");
-                    if (PlayState.playerMarkerLocations.ContainsKey(i))
-                    {
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
-                        cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
-                    }
-                    else if (PlayState.bossLocations.Contains(i))
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
-                    else if (PlayState.saveLocations.Contains(i))
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
-                    else if (PlayState.itemLocations.ContainsKey(i))
-                    {
-                        if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0)
-                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
-                        else
-                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
-                    }
-                    else
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
-                }
             }
         }
 

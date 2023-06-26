@@ -26,6 +26,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyBoomerangRed",
         "Bullets/EnemyDonut",
+        "Bullets/EnemyGigaPeashooter",
         "Bullets/EnemyLaser",
         "Bullets/EnemyShadowWave",
         "Bullets/EnemySpikeBall",

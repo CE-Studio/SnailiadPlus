@@ -3492,6 +3492,134 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Bullet_enemy_gigaPea_N",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_NE",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_E",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_SE",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_S",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_SW",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_W",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_gigaPea_NW",
+			"spriteName": "Bullets/EnemyGigaPeashooter",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Bullet_enemy_boomerang1_N",
 			"spriteName": "Bullets/EnemyBoomerangBlue",
 			"framerate": 45.0,
@@ -3620,6 +3748,150 @@
 		{
 			"name": "Bullet_enemy_boomerang1_NW",
 			"spriteName": "Bullets/EnemyBoomerangBlue",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_N",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_NE",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_E",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_SE",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_S",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_SW",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_W",
+			"spriteName": "Bullets/EnemyBoomerangRed",
+			"framerate": 45.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_boomerang2_NW",
+			"spriteName": "Bullets/EnemyBoomerangRed",
 			"framerate": 45.0,
 			"frames": [
 				0,
@@ -3804,6 +4076,34 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Bullet_enemy_donut_hybrid_CW",
+			"spriteName": "Bullets/EnemyDonut",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_donut_hybrid_CCW",
+			"spriteName": "Bullets/EnemyDonut",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Bullet_enemy_spikeball_N",
 			"spriteName": "Bullets/EnemySpikeBall",
 			"framerate": 0.0,
@@ -3883,6 +4183,94 @@
 		{
 			"name": "Bullet_enemy_spikeball_NW",
 			"spriteName": "Bullets/EnemySpikeBall",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_N",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_NE",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_E",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_SE",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_S",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_SW",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_W",
+			"spriteName": "Bullets/EnemyShadowWave",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_shadowWave_NW",
+			"spriteName": "Bullets/EnemyShadowWave",
 			"framerate": 0.0,
 			"frames": [
 				0
