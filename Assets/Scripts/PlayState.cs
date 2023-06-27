@@ -1587,6 +1587,18 @@ public class PlayState {
             Vector2.Distance(new Vector2(0, position.y), new Vector2(0, cam.transform.position.y)) - halfBoxSize.y < 7.5f;
     }
 
+    public static float GetDistance(EDirsSurface dir, Vector2 a, Vector2 b, int castCount, LayerMask layerMask, bool drawRays = false)
+    {
+        EDirsCardinal newDir = dir switch
+        {
+            EDirsSurface.Floor => EDirsCardinal.Down,
+            EDirsSurface.WallL => EDirsCardinal.Left,
+            EDirsSurface.WallR => EDirsCardinal.Right,
+            EDirsSurface.Ceiling => EDirsCardinal.Up,
+            _ => EDirsCardinal.None
+        };
+        return GetDistance(newDir, a, b, castCount, layerMask, drawRays);
+    }
     public static float GetDistance(EDirsCardinal dir, Vector2 a, Vector2 b, int castCount, LayerMask layerMask, bool drawRays = false)
     {
         float shortestDis = Mathf.Infinity;

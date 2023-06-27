@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
                     }
                     pingPlayer -= 1;
                 }
-                if (!letsPermeatingShotsBy || bullet.bulletType == 1)
+                if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive)
                     bulletsToDespawn.Add(bullet);
             }
             if (maxDamage > 0)

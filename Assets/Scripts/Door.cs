@@ -47,25 +47,29 @@ public class Door:MonoBehaviour, IRoomObject {
         Spawn();
     }
 
-    void Awake() {
-        if (PlayState.gameState == PlayState.GameState.game) {
-            anim = GetComponent<AnimationModule>();
-            sprite = GetComponent<SpriteRenderer>();
-            box = GetComponent<BoxCollider2D>();
-            player = GameObject.FindWithTag("Player");
+    void Awake()
+    {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
 
-            string[] doorDirs = new string[] { "L", "R", "U", "D" };
-            string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
-            string[] doorStates = new string[] { "open", "holdOpen", "close", "holdClosed" };
-            for (int i = 0; i < doorColors.Length; i++) {
-                for (int j = 0; j < doorStates.Length; j++) {
-                    for (int k = 0; k < doorDirs.Length; k++)
-                        anim.Add("Door_" + doorColors[i] + "_" + doorStates[j] + "_" + doorDirs[k]);
-                }
+        anim = GetComponent<AnimationModule>();
+        sprite = GetComponent<SpriteRenderer>();
+        box = GetComponent<BoxCollider2D>();
+        player = GameObject.FindWithTag("Player");
+
+        string[] doorDirs = new string[] { "L", "R", "U", "D" };
+        string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
+        string[] doorStates = new string[] { "open", "holdOpen", "close", "holdClosed" };
+        for (int i = 0; i < doorColors.Length; i++)
+        {
+            for (int j = 0; j < doorStates.Length; j++)
+            {
+                for (int k = 0; k < doorDirs.Length; k++)
+                    anim.Add("Door_" + doorColors[i] + "_" + doorStates[j] + "_" + doorDirs[k]);
             }
-
-            flipStates = PlayState.GetAnim("Door_data").frames;
         }
+
+        flipStates = PlayState.GetAnim("Door_data").frames;
     }
 
     public void Spawn()
@@ -91,6 +95,9 @@ public class Door:MonoBehaviour, IRoomObject {
 
     private void Update()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (locked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat)
         {
             bossUnlockDelay -= Time.deltaTime;

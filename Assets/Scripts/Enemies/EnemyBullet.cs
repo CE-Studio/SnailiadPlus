@@ -129,8 +129,8 @@ public class EnemyBullet : MonoBehaviour
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
                 case BulletType.shadowWave:
-                    transform.position = new Vector2(transform.position.x + (direction.x * speed * Time.fixedDeltaTime),
-                        transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed),
+                        transform.position.y + (direction.y * speed));
                     speed += initialSpeed * 18f * Time.fixedDeltaTime;
                     break;
             }

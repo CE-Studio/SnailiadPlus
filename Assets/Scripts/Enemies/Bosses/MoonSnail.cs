@@ -22,9 +22,10 @@ public class MoonSnail : Boss
     private const float PLAYER_TOO_CLOSE_RADIUS = 3.75f;
     private const float AIM_DETECT_RADIUS_HORIZONTAL = 3.125f;
     private const float AIM_DETECT_RADIUS_VERTICAL = 12.5f;
+    private const int CAST_COUNT = 4;
 
-    private readonly float[] weaponTimeouts = new float[] { 0.1f, 0.3f, 0.155f };
-    private readonly float[] weaponSpeeds = new float[] { 0.4625f, 0.4125f, 0.075f };
+    private readonly float[] weaponTimeouts = new float[] { 0.05f, 0.15f, 0.0775f };
+    private readonly float[] weaponSpeeds = new float[] { 0.925f, 0.825f, 0.15f };
 
     private readonly float[] decisionTable = new float[]
     {
@@ -152,6 +153,7 @@ public class MoonSnail : Boss
                         anim.Add("Boss_moonSnail_" + states[j] + (i + 1).ToString() + "_" + directions[k]);
                 }
             }
+            animData = PlayState.GetAnim("Boss_moonSnail_data").frames;
 
             col.TryGetComponent(out box);
             boxSize = box.size;
@@ -514,16 +516,61 @@ public class MoonSnail : Boss
         FixGravity();
         if (CheckForFreshInput(Inputs.Jump) && isJumping)
             PerformGravityJump();
-        //CheckMoveInputs();
         if (CheckForFreshInput(Inputs.Jump))
         {
-            //if (shelled)
-            //    ToggleShell(false);
             if (!isJumping)
                 Jump();
         }
         Attack();
         IncrementInputFrames();
+
+        switch (gravity)
+        {
+            default:
+            case PlayState.EDirsSurface.Floor:
+                float disDown = GetDistance(PlayState.EDirsSurface.Floor);
+                if (grounded)
+                {
+                    velocity.y = 0;
+                    if (disDown < 0.25f)
+                        grounded = false;
+                }
+                else
+                {
+                    velocity.y -= GRAVITY * Time.fixedDeltaTime;
+                    if (disDown < Mathf.Abs(velocity.y) && velocity.y < 0)
+                    {
+                        transform.position += (disDown - PlayState.FRAC_32) * Vector3.down;
+                        velocity.y = 0;
+                        grounded = true;
+                    }
+                }
+                if (velocity.y > 0)
+                {
+                    float disUp = GetDistance(PlayState.EDirsSurface.Ceiling);
+                    if (disUp < Mathf.Abs(velocity.y))
+                    {
+                        transform.position += (disUp - PlayState.FRAC_32) * Vector3.up;
+                        velocity.y = 0;
+                    }
+                }
+                velocity.x = RUN_SPEED * Time.fixedDeltaTime * (0 + (virtualInputs[(int)Inputs.Right] > 1 ? 1 : 0) - (virtualInputs[(int)Inputs.Left] > 1 ? 1 : 0));
+                if (velocity.x != 0)
+                {
+                    facingLeft = velocity.x < 0;
+                    float disHoriz = GetDistance(facingLeft ? PlayState.EDirsSurface.WallL : PlayState.EDirsSurface.WallR);
+                    if (disHoriz < Mathf.Abs(velocity.x))
+                        velocity.x = (disHoriz - PlayState.FRAC_32) * (facingLeft ? -1 : 1);
+                }
+                break;
+            case PlayState.EDirsSurface.WallL:
+                break;
+            case PlayState.EDirsSurface.WallR:
+                break;
+            case PlayState.EDirsSurface.Ceiling:
+                break;
+        }
+        transform.position += (Vector3)velocity;
 
         if (health <= maxHealth * 0.5f && attackPhase < 1)
         {
@@ -564,25 +611,31 @@ public class MoonSnail : Boss
         {
             default:
             case PlayState.EDirsSurface.Floor:
-                if (!isJumping && velocity.y < 0 && CheckForFreshInput(Inputs.Down) && !justHitHeadOrWall)
-                {
-                    if (!facingLeft && CheckForFreshInput(Inputs.Right))
-                    {
-                        facingLeft = true;
-                        velocity.x = -RUN_SPEED;
-                    }
-                    else if (facingLeft && CheckForFreshInput(Inputs.Left))
-                    {
-                        facingLeft = false;
-                        velocity.x = RUN_SPEED;
-                    }
-                    break;
-                }
+                //if (!isJumping && velocity.y < 0 && CheckForFreshInput(Inputs.Down) && !justHitHeadOrWall)
+                //{
+                //    if (!facingLeft && CheckForFreshInput(Inputs.Right))
+                //    {
+                //        facingLeft = true;
+                //        velocity.x = -RUN_SPEED;
+                //    }
+                //    else if (facingLeft && CheckForFreshInput(Inputs.Left))
+                //    {
+                //        facingLeft = false;
+                //        velocity.x = RUN_SPEED;
+                //    }
+                //    break;
+                //}
+                //isJumping = velocity.y != 0;
+                //if (isJumping)
+                //    fallFrames++;
+                //else
+                //    fallFrames = 0;
                 isJumping = velocity.y != 0;
                 if (isJumping)
                     fallFrames++;
                 else
                     fallFrames = 0;
+
                 break;
             case PlayState.EDirsSurface.WallL:
                 if (!isJumping && velocity.x < 0 && CheckForFreshInput(Inputs.Left) && !justHitHeadOrWall)
@@ -654,6 +707,7 @@ public class MoonSnail : Boss
     {
         PlayState.PlaySound("Jump");
         GravityJump();
+        grounded = false;
     }
 
     private void GravityJump()
@@ -805,6 +859,23 @@ public class MoonSnail : Boss
             PlayState.EDirsCompass.W => PlayState.EDirsSurface.WallL,
             PlayState.EDirsCompass.E => PlayState.EDirsSurface.WallR,
             _ => PlayState.EDirsSurface.Floor
+        };
+    }
+
+    private float GetDistance(PlayState.EDirsSurface direction)
+    {
+        Vector2 halfBox = box.size * 0.5f;
+        Vector2 ul = new(transform.position.x - halfBox.x, transform.position.y + halfBox.y);
+        Vector2 dl = (Vector2)transform.position - halfBox;
+        Vector2 dr = new(transform.position.x + halfBox.x, transform.position.y - halfBox.y);
+        Vector2 ur = (Vector2)transform.position + halfBox;
+
+        return direction switch
+        {
+            PlayState.EDirsSurface.Floor => PlayState.GetDistance(direction, dl, dr, CAST_COUNT, enemyCollide),
+            PlayState.EDirsSurface.WallL => PlayState.GetDistance(direction, dl, ul, CAST_COUNT, enemyCollide),
+            PlayState.EDirsSurface.WallR => PlayState.GetDistance(direction, dr, ur, CAST_COUNT, enemyCollide),
+            _ => PlayState.GetDistance(direction, ul, ur, CAST_COUNT, enemyCollide)
         };
     }
 }
