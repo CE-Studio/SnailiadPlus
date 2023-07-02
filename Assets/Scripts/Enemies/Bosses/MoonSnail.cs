@@ -554,7 +554,7 @@ public class MoonSnail : Boss
                 }
                 else
                 {
-                    velocity.y -= GRAVITY * Time.fixedDeltaTime;
+                    velocity.y = Mathf.Clamp(velocity.y - GRAVITY * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity);
                     if (disFloor < Mathf.Abs(velocity.y) && velocity.y < 0)
                     {
                         transform.position += (disFloor - PlayState.FRAC_32) * Vector3.down;
@@ -591,7 +591,7 @@ public class MoonSnail : Boss
                 }
                 else
                 {
-                    velocity.x -= GRAVITY * Time.fixedDeltaTime;
+                    velocity.x = Mathf.Clamp(velocity.x - GRAVITY * Time.fixedDeltaTime, TERMINAL_VELOCITY, Mathf.Infinity);
                     if (disFloor < Mathf.Abs(velocity.x) && velocity.x < 0)
                     {
                         transform.position += (disFloor - PlayState.FRAC_32) * Vector3.left;
@@ -628,7 +628,7 @@ public class MoonSnail : Boss
                 }
                 else
                 {
-                    velocity.x += GRAVITY * Time.fixedDeltaTime;
+                    velocity.x = Mathf.Clamp(velocity.x + GRAVITY * Time.fixedDeltaTime, -Mathf.Infinity, -TERMINAL_VELOCITY);
                     if (disFloor < Mathf.Abs(velocity.x) && velocity.x > 0)
                     {
                         transform.position += (disFloor - PlayState.FRAC_32) * Vector3.right;
@@ -665,7 +665,7 @@ public class MoonSnail : Boss
                 }
                 else
                 {
-                    velocity.y += GRAVITY * Time.fixedDeltaTime;
+                    velocity.y = Mathf.Clamp(velocity.y + GRAVITY * Time.fixedDeltaTime, -Mathf.Infinity, -TERMINAL_VELOCITY);
                     if (disFloor < Mathf.Abs(velocity.y) && velocity.y > 0)
                     {
                         transform.position += (disFloor - PlayState.FRAC_32) * Vector3.up;
@@ -1010,6 +1010,11 @@ public class MoonSnail : Boss
 
     public override void Kill()
     {
-        base.Kill();
+        PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 2.7f, 0, true);
+        PlayState.ToggleBossfightState(false, -1);
+        foreach (Transform bullet in PlayState.enemyBulletPool.transform)
+            bullet.GetComponent<EnemyBullet>().Despawn();
+        Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Snail"), gigaSpawnPoint.pos, Quaternion.identity, transform.parent);
+        Destroy(gameObject);
     }
 }

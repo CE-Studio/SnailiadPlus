@@ -72,6 +72,11 @@
             "height": 24
         },
 		{
+            "name": "Bullets/EnemyGigaWave",
+            "width": 96,
+            "height": 96
+        },
+		{
             "name": "Bullets/EnemyLaser",
             "width": 24,
             "height": 6
@@ -183,9 +188,19 @@
             "height": 32
         },
 		{
+            "name": "Entities/Boss4SecondForm",
+            "width": 80,
+            "height": 80
+        },
+		{
             "name": "Entities/Boss4ShadowBall",
             "width": 24,
             "height": 24
+        },
+		{
+            "name": "Entities/Boss4Zzz",
+            "width": 24,
+            "height": 32
         },
 		{
             "name": "Entities/BreakableIcons",
@@ -498,6 +513,11 @@
             "name": "Particles/Explosion",
             "width": 64,
             "height": 64
+        },
+		{
+            "name": "Particles/GigaTrail",
+            "width": 48,
+            "height": 48
         },
 		{
 			"name": "Particles/Nom",

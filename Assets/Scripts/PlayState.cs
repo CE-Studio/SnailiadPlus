@@ -1531,6 +1531,8 @@ public class PlayState {
         if (currentArea != 7) {
             if (state)
                 globalFunctions.UpdateMusic(musicID, 0, 1);
+            else if (musicID == -1)
+                globalFunctions.UpdateMusic(-1, -1, 4);
             else
                 globalFunctions.UpdateMusic(currentArea, currentSubzone, 1);
         }

@@ -386,6 +386,7 @@ public class GlobalFunctions : MonoBehaviour
         // resetFlag = 1  -  change song
         // resetFlag = 2  -  rebuild array and change song
         // resetFlag = 3  -  rebuild array
+        // resetFlag = 4  -  stop all music
         if (resetFlag >= 2) // Hard reset array
         {
             PlayState.musicSourceArray.Clear();
@@ -435,7 +436,7 @@ public class GlobalFunctions : MonoBehaviour
                                 sourceComponent.mute = false;
                             else
                                 sourceComponent.mute = true;
-                            if (int.Parse(sourceName[3]) == 1)
+                            if (int.Parse(sourceName[3]) == 1 && resetFlag != 4)
                                 sourceComponent.Play();
                             else
                                 sourceComponent.Stop();
@@ -444,20 +445,25 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 nextLoopEvent = AudioSettings.dspTime + PlayState.musicLibrary.library[offsetID + 1][0].length;
             }
-            for (int i = 0; i * 2 < PlayState.musicParent.GetChild(offsetID).childCount; i++)
+            if (resetFlag != 4)
             {
-                if (i == subzone)
+                for (int i = 0; i * 2 < PlayState.musicParent.GetChild(offsetID).childCount; i++)
                 {
-                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = false;
-                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = false;
+                    if (i == subzone)
+                    {
+                        PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = false;
+                        PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = false;
+                    }
+                    else
+                    {
+                        PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = true;
+                        PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = true;
+                    }
                 }
-                else
-                {
-                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2).GetComponent<AudioSource>().mute = true;
-                    PlayState.musicParent.GetChild(offsetID).GetChild(i * 2 + 1).GetComponent<AudioSource>().mute = true;
-                }
+                PlayState.playingMusic = true;
             }
-            PlayState.playingMusic = true;
+            else
+                PlayState.playingMusic = false;
         }
     }
 

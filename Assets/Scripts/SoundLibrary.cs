@@ -46,6 +46,7 @@ public class SoundLibrary : ScriptableObject
         "ShotBoomerangDev",
         "ShotEnemyDonut",
         "ShotEnemyLaser",
+        "ShotGigaWave",
         "ShotHit",
         "ShotPeashooter",
         "ShotPeashooterDev",

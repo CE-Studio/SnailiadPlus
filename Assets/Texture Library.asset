@@ -26,6 +26,8 @@ MonoBehaviour:
   - Bullets/EnemyBoomerangBlue
   - Bullets/EnemyBoomerangRed
   - Bullets/EnemyDonut
+  - Bullets/EnemyGigaPeashooter
+  - Bullets/EnemyGigaWave
   - Bullets/EnemyLaser
   - Bullets/EnemyShadowWave
   - Bullets/EnemySpikeBall
@@ -48,7 +50,9 @@ MonoBehaviour:
   - Entities/Boss3Babybox
   - Entities/Boss3Shield
   - Entities/Boss4
+  - Entities/Boss4SecondForm
   - Entities/Boss4ShadowBall
+  - Entities/Boss4Zzz
   - Entities/BreakableIcons
   - Entities/Cannon1
   - Entities/Cannon1Base
@@ -114,6 +118,7 @@ MonoBehaviour:
   - Particles/Dot
   - Particles/Dust
   - Particles/Explosion
+  - Particles/GigaTrail
   - Particles/Nom
   - Particles/Smoke
   - Particles/Snow
