@@ -770,6 +770,29 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
+    public void RefillPlayerHealth(float fillTime, float delay, int fillRate, bool timeMode, bool playSound)
+    {
+        StartCoroutine(HealthRefillCoroutine(fillTime, delay, fillRate, timeMode, playSound));
+    }
+
+    public IEnumerator HealthRefillCoroutine(float fillTime, float delay, int fillRate, bool timeMode, bool playSound)
+    {
+        yield return new WaitForSeconds(delay);
+
+        int healthRemaining = PlayState.playerScript.maxHealth - PlayState.playerScript.health;
+        float secondsPerPoint = timeMode ? fillTime : (fillTime / (float)healthRemaining);
+
+        while (healthRemaining > 0)
+        {
+            healthRemaining -= fillRate;
+            PlayState.playerScript.health = Mathf.Clamp(PlayState.playerScript.health + fillRate, 0, PlayState.playerScript.maxHealth);
+            if (playSound)
+                PlayState.PlaySound("EatPowerGrass");
+            UpdateHearts();
+            yield return new WaitForSeconds(secondsPerPoint);
+        }
+    }
+
     public void FlashItemText(string itemName)
     {
         StartCoroutine(FlashText("item", itemName));

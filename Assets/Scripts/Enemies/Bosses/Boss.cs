@@ -13,7 +13,7 @@ public class Boss : Enemy
                                                                 // Pan to player
                                                                       // Become vulnerable
     public float introTimer = 0;
-    private readonly int[] songIndeces = new int[] { -4, -3, -2, -1 };
+    private readonly int[] songIndeces = new int[] { -5, -4, -3, -2 };
     public bool introDone = false;
 
     public AnimationModule frameAnim;
@@ -83,12 +83,17 @@ public class Boss : Enemy
         Destroy(gameObject);
     }
 
-    public IEnumerator RunIntro(bool focusOnMe = true, bool endParalysisOnEnd = true)
+    public IEnumerator RunIntro(bool focusOnMe = true, bool endParalysisOnEnd = true, bool isFinalBoss = false)
     {
-        PlayState.paralyzed = true;
-        PlayState.playerScript.ZeroWalkVelocity();
-        PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
-        PlayState.ToggleBossfightState(true, songIndeces[ID]);
+        if (!isFinalBoss)
+        {
+            PlayState.paralyzed = true;
+            PlayState.playerScript.ZeroWalkVelocity();
+            PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
+            PlayState.ToggleBossfightState(true, songIndeces[ID]);
+        }
+        else
+            PlayState.ToggleBossfightState(true, -1);
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = true;
         PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
         barMask.GetComponent<SpriteMask>().sprite = PlayState.GetSprite("UI/BossHealthBar", barData[4]);
@@ -97,7 +102,7 @@ public class Boss : Enemy
         if (col != null)
             col.enabled = false;
         PlayState.globalFunctions.currentBossName = PlayState.GetText(
-            "boss_" + ID switch { 1 => "stompy", 2 => "spaceBox", 3 => "moonSnail", _ => "shellbreaker" } + (PlayState.currentArea == 7 ? "_rush" : ""));
+            "boss_" + ID switch { 0 => "shellbreaker", 1 => "stompy", 2 => "spaceBox", _ => "moonSnail" } + (PlayState.currentArea == 7 ? "_rush" : ""));
 
         int playBeep = 0;
         while (introTimer <= introTimestamps[4])

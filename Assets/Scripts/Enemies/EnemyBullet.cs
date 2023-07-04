@@ -33,7 +33,7 @@ public class EnemyBullet : MonoBehaviour
     public AnimationModule anim;
     public BoxCollider2D box;
 
-    public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave }
+    public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave, gigaWave }
     
     void Start()
     {
@@ -50,6 +50,10 @@ public class EnemyBullet : MonoBehaviour
             anim.Add("Bullet_enemy_donut_linear_" + dir);
             anim.Add("Bullet_enemy_spikeball_" + dir);
             anim.Add("Bullet_enemy_shadowWave_" + dir);
+        }
+        foreach (string dir in PlayState.DIRS_CARDINAL)
+        {
+            anim.Add("Bullet_enemy_gigaWave_" + dir);
         }
         anim.Add("Bullet_enemy_donut_rotary_CW");
         anim.Add("Bullet_enemy_donut_rotary_CCW");
@@ -129,6 +133,11 @@ public class EnemyBullet : MonoBehaviour
                         transform.position.y + (direction.y * speed * Time.fixedDeltaTime));
                     break;
                 case BulletType.shadowWave:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed),
+                        transform.position.y + (direction.y * speed));
+                    speed += initialSpeed * 18f * Time.fixedDeltaTime;
+                    break;
+                case BulletType.gigaWave:
                     transform.position = new Vector2(transform.position.x + (direction.x * speed),
                         transform.position.y + (direction.y * speed));
                     speed += initialSpeed * 18f * Time.fixedDeltaTime;
@@ -273,6 +282,19 @@ public class EnemyBullet : MonoBehaviour
                 SetDestroyableLevels("111111", true);
                 bulletInteraction = 0;
                 break;
+            case BulletType.gigaWave:
+                anim.Play("Bullet_enemy_gigaWave_" + VectorToCardinal(new Vector2(dirVelVars[1], dirVelVars[2])));
+                damage = 12;
+                maxLifetime = 2f;
+                box.size = new Vector2(2f, 5.9f);
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = true;
+                if (playSound)
+                    soundID = "ShotGigaWave";
+                SetDestroyableLevels("111111", true);
+                bulletInteraction = 2;
+                break;
         }
         initialSpeed = speed;
 
@@ -368,6 +390,25 @@ public class EnemyBullet : MonoBehaviour
             return "NW";
         else
             return "N";
+    }
+
+    private string VectorToCardinal(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(Vector2.up, dir);
+        while (angle < 0)
+            angle += 360;
+        while (angle > 360)
+            angle -= 360;
+        if (angle > 315f)
+            return "up";
+        else if (angle > 225f)
+            return "left";
+        else if (angle > 135f)
+            return "down";
+        else if (angle > 45f)
+            return "right";
+        else
+            return "up";
     }
 
     private void SetDestroyableLevels(string data, bool setOffensiveArray)

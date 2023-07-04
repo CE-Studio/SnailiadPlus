@@ -102,6 +102,8 @@ public class MoonSnail : Boss
      * 5 - Restart shadow ball animations on teleport
     \*/
 
+    private readonly bool debugSkipToGiga = true;
+
     private void Awake()
     {
         if (PlayState.gameState != PlayState.GameState.game)
@@ -109,49 +111,59 @@ public class MoonSnail : Boss
 
         if (PlayState.IsBossAlive(3))
         {
-            SpawnBoss(7000, 0, 30, true, 3, true);
-            StartCoroutine(RunIntro());
-            PlayState.playerScript.CorrectGravity(true);
-            PlayState.playerScript.ZeroWalkVelocity();
-
-            int inputCount = System.Enum.GetValues(typeof(Inputs)).Length;
-            virtualInputs = new int[inputCount];
-            tappedInputs = new bool[inputCount];
-
-            decisionTableIndex = (PlayState.playerScript.maxHealth + PlayState.GetItemPercentage()) % decisionTable.Length;
-
-            if (PlayState.currentProfile.difficulty == 2)
-                speed += 0.1f;
-
-            for (int i = 0; i < SHADOW_BALL_COUNT; i++)
+            if (debugSkipToGiga)
             {
-                GameObject newShadowBall = new("Shadow Ball " + i.ToString());
-                newShadowBall.transform.parent = transform;
-                SpriteRenderer ballSprite = newShadowBall.AddComponent<SpriteRenderer>();
-                ballSprite.sortingOrder = -49;
-                AnimationModule ballAnim = newShadowBall.AddComponent<AnimationModule>();
-                ballAnim.Add("Boss_moonSnail_shadowBall1");
-                ballAnim.Add("Boss_moonSnail_shadowBall2");
-                ballAnim.Play("Boss_moonSnail_shadowBall1");
-                shadowBalls.Add(newShadowBall);
-                shadowBallAnims.Add(ballAnim);
-                newShadowBall.SetActive(false);
+                CollectTargetPoints();
+                Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Snail"), gigaSpawnPoint.pos, Quaternion.identity, transform.parent);
+                PlayState.ToggleBossfightState(false, -1);
+                Destroy(gameObject);
             }
-
-            string[] states = new string[] { "idle", "move", "jump", "shoot", "shell" };
-            string[] directions = new string[] { "floor_L", "floor_R", "wallL_D", "wallL_U", "wallR_D", "wallR_U", "ceiling_L", "ceiling_R" };
-            for (int i = 0; i < 2; i++)
+            else
             {
-                for (int j = 0; j < states.Length; j++)
+                SpawnBoss(7000, 0, 30, true, 3, true);
+                StartCoroutine(RunIntro());
+                PlayState.playerScript.CorrectGravity(true);
+                PlayState.playerScript.ZeroWalkVelocity();
+
+                int inputCount = System.Enum.GetValues(typeof(Inputs)).Length;
+                virtualInputs = new int[inputCount];
+                tappedInputs = new bool[inputCount];
+
+                decisionTableIndex = (PlayState.playerScript.maxHealth + PlayState.GetItemPercentage()) % decisionTable.Length;
+
+                if (PlayState.currentProfile.difficulty == 2)
+                    speed += 0.1f;
+
+                for (int i = 0; i < SHADOW_BALL_COUNT; i++)
                 {
-                    for (int k = 0; k < directions.Length; k++)
-                        anim.Add("Boss_moonSnail_" + states[j] + (i + 1).ToString() + "_" + directions[k]);
+                    GameObject newShadowBall = new("Shadow Ball " + i.ToString());
+                    newShadowBall.transform.parent = transform;
+                    SpriteRenderer ballSprite = newShadowBall.AddComponent<SpriteRenderer>();
+                    ballSprite.sortingOrder = -49;
+                    AnimationModule ballAnim = newShadowBall.AddComponent<AnimationModule>();
+                    ballAnim.Add("Boss_moonSnail_shadowBall1");
+                    ballAnim.Add("Boss_moonSnail_shadowBall2");
+                    ballAnim.Play("Boss_moonSnail_shadowBall1");
+                    shadowBalls.Add(newShadowBall);
+                    shadowBallAnims.Add(ballAnim);
+                    newShadowBall.SetActive(false);
                 }
-            }
-            animData = PlayState.GetAnim("Boss_moonSnail_data").frames;
 
-            col.TryGetComponent(out box);
-            boxSize = box.size;
+                string[] states = new string[] { "idle", "move", "jump", "shoot", "shell" };
+                string[] directions = new string[] { "floor_L", "floor_R", "wallL_D", "wallL_U", "wallR_D", "wallR_U", "ceiling_L", "ceiling_R" };
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < states.Length; j++)
+                    {
+                        for (int k = 0; k < directions.Length; k++)
+                            anim.Add("Boss_moonSnail_" + states[j] + (i + 1).ToString() + "_" + directions[k]);
+                    }
+                }
+                animData = PlayState.GetAnim("Boss_moonSnail_data").frames;
+
+                col.TryGetComponent(out box);
+                boxSize = box.size;
+            }
         }
         else
             Destroy(gameObject);

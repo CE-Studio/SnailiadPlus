@@ -1,39 +1,43 @@
 {
 	"offsetArray": [
 		{
-			"name": "Boss 1",
+			"name": "Boss1",
 			"offset": 0.0
 		},
 		{
-			"name": "Boss 2",
+			"name": "Boss2",
 			"offset": 0.0
 		},
 		{
-			"name": "Boss 3",
+			"name": "Boss3",
 			"offset": 0.0
 		},
 		{
-			"name": "Boss 4",
+			"name": "Boss4",
 			"offset": 0.0
 		},
 		{
-			"name": "Snail Town",
+			"name": "Boss4b",
 			"offset": 0.0
 		},
 		{
-			"name": "Mare Carelia",
+			"name": "SnailTown",
 			"offset": 0.0
 		},
 		{
-			"name": "Spiralis Silere",
+			"name": "MareCarelia",
 			"offset": 0.0
 		},
 		{
-			"name": "Amastrida Abyssus",
+			"name": "SpiralisSilere",
 			"offset": 0.0
 		},
 		{
-			"name": "Lux Lirata",
+			"name": "AmastridaAbyssus",
+			"offset": 0.0
+		},
+		{
+			"name": "LuxLirata",
 			"offset": 0.0
 		}
 	]

@@ -29,7 +29,7 @@ public class BreakableBlock : MonoBehaviour
         fg2Sprite.transform.localPosition = PlayState.fg2Layer.transform.position;
     }
 
-    public void Instantiate(PlayState.Breakable data)
+    public void Instantiate(PlayState.Breakable data, bool isFinalBossTile = false)
     {
         transform.position = data.pos;
         requiredWeapon = data.weaponLevel;
@@ -40,6 +40,8 @@ public class BreakableBlock : MonoBehaviour
             gameObject.layer = 10;
         else
             PlayState.breakablePositions.Add(new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y)));
+        if (isFinalBossTile)
+            PlayState.finalBossTiles.Add(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

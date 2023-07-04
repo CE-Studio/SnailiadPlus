@@ -214,6 +214,8 @@ public class PlayState {
     }
     public static List<TargetPoint> activeTargets = new();
 
+    public static List<GameObject> finalBossTiles = new();
+
     public static int currentProfileNumber = 0;
 
     public static readonly int[] defaultMinimapState = new int[]
@@ -1536,6 +1538,12 @@ public class PlayState {
             else
                 globalFunctions.UpdateMusic(currentArea, currentSubzone, 1);
         }
+    }
+
+    public static void ToggleGigaTiles(bool state)
+    {
+        for (int i = 0; i < finalBossTiles.Count; i++)
+            finalBossTiles[i].SetActive(state);
     }
 
     public static bool OnScreen(Vector2 position, Collider2D col) {

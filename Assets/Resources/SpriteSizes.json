@@ -11,6 +11,11 @@
             "height": 48
         },
 		{
+            "name": "GigaBackground",
+            "width": 400,
+            "height": 240
+        },
+		{
             "name": "MapTiles",
             "width": 8,
             "height": 8

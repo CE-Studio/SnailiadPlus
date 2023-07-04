@@ -15,6 +15,7 @@ MonoBehaviour:
   referenceList:
   - AchievementIcons
   - Door
+  - GigaBackground
   - MapTiles
   - MenuPlus
   - Player

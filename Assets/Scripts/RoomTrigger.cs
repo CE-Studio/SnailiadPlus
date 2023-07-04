@@ -340,6 +340,7 @@ public class RoomTrigger:MonoBehaviour {
         PlayState.ReplaceAllTempTiles();
         PlayState.enemyGlobalMoveIndex = 0;
         PlayState.activeTargets.Clear();
+        PlayState.finalBossTiles.Clear();
     }
 
     private void CheckSpecialLayer() {

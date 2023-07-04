@@ -35,6 +35,10 @@ public class MusicLibrary : ScriptableObject
         },
         new string[]
         {
+            "Boss4b"
+        },
+        new string[]
+        {
             "SnailTown",
             "TestZone"
         },
@@ -55,7 +59,7 @@ public class MusicLibrary : ScriptableObject
             "LuxLirata"
         }
     };
-    public int areaThemeOffset = 5;
+    public int areaThemeOffset = 6;
 
     public void BuildDefaultLibrary()
     {
