@@ -172,6 +172,7 @@ public class PlayState {
     public static bool overrideParalysisInvulnerability = false;
     public static bool isArmed = false;
     public static bool inBossFight = false;
+    public static bool finishedFinalBoss = false;
 
     public static Vector2 camCenter;
     public static Vector2 camBoundaryBuffers;
@@ -1543,7 +1544,7 @@ public class PlayState {
     public static void ToggleGigaTiles(bool state)
     {
         for (int i = 0; i < finalBossTiles.Count; i++)
-            finalBossTiles[i].SetActive(state);
+            finalBossTiles[i].GetComponent<BreakableBlock>().ToggleActive(state);
     }
 
     public static bool OnScreen(Vector2 position, Collider2D col) {

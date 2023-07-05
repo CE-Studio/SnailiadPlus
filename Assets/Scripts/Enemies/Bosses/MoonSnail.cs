@@ -111,19 +111,15 @@ public class MoonSnail : Boss
 
         if (PlayState.IsBossAlive(3))
         {
+            SpawnBoss(7000, 0, 30, true, 3, true);
             if (debugSkipToGiga)
-            {
-                CollectTargetPoints();
-                Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Snail"), gigaSpawnPoint.pos, Quaternion.identity, transform.parent);
-                PlayState.ToggleBossfightState(false, -1);
-                Destroy(gameObject);
-            }
+                StartCoroutine(DelayedSkipToGiga());
             else
             {
-                SpawnBoss(7000, 0, 30, true, 3, true);
                 StartCoroutine(RunIntro());
                 PlayState.playerScript.CorrectGravity(true);
                 PlayState.playerScript.ZeroWalkVelocity();
+                gigaSpawnPoint = new PlayState.TargetPoint { pos = (Vector2)transform.parent.position + origin };
 
                 int inputCount = System.Enum.GetValues(typeof(Inputs)).Length;
                 virtualInputs = new int[inputCount];
@@ -169,6 +165,18 @@ public class MoonSnail : Boss
             Destroy(gameObject);
     }
 
+    private IEnumerator DelayedSkipToGiga()
+    {
+        while (gigaSpawnPoint.pos == Vector2.zero)
+        {
+            CollectTargetPoints();
+            yield return new WaitForEndOfFrame();
+        }
+        Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Snail"), gigaSpawnPoint.pos, Quaternion.identity, transform.parent);
+        PlayState.ToggleBossfightState(false, -1);
+        Destroy(gameObject);
+    }
+
     private void SetMode(BossMode newMode, bool shootDonuts = false)
     {
         mode = newMode;
@@ -202,16 +210,32 @@ public class MoonSnail : Boss
 
     private void PickMoveTarget()
     {
-        int pointID = Mathf.FloorToInt(GetDecision() * movePoints.Count);
-        moveEnd = movePoints[pointID].pos;
-        targetGravity = CompassToSurface(movePoints[pointID].directions[0]);
+        if (movePoints.Count == 0)
+        {
+            moveEnd = origin;
+            targetGravity = PlayState.EDirsSurface.Floor;
+        }
+        else
+        {
+            int pointID = Mathf.FloorToInt(GetDecision() * movePoints.Count);
+            moveEnd = movePoints[pointID].pos;
+            targetGravity = CompassToSurface(movePoints[pointID].directions[0]);
+        }
     }
     private void PickTeleTarget()
     {
-        int pointID = Mathf.FloorToInt(GetDecision() * telePoints.Count);
         teleStart = transform.position;
-        teleEnd = telePoints[pointID].pos;
-        SetGravity(CompassToSurface(telePoints[pointID].directions[0]));
+        if (telePoints.Count == 0)
+        {
+            teleEnd = origin;
+            SetGravity(PlayState.EDirsSurface.Floor);
+        }
+        else
+        {
+            int pointID = Mathf.FloorToInt(GetDecision() * telePoints.Count);
+            teleEnd = telePoints[pointID].pos;
+            SetGravity(CompassToSurface(telePoints[pointID].directions[0]));
+        }
     }
 
     private void PressInput(Inputs input, bool tapped = false)
@@ -511,22 +535,18 @@ public class MoonSnail : Boss
                     default:
                     case PlayState.EDirsSurface.Floor:
                         PressInput(Inputs.Down, true);
-                        //AIJump(PlayState.EDirsSurface.None, 0.1f);
                         SetGravity(PlayState.EDirsSurface.Floor, true);
                         break;
                     case PlayState.EDirsSurface.WallL:
                         PressInput(Inputs.Left, true);
-                        //AIJump(PlayState.EDirsSurface.None, 0.1f);
                         SetGravity(PlayState.EDirsSurface.WallL, true);
                         break;
                     case PlayState.EDirsSurface.WallR:
                         PressInput(Inputs.Right, true);
-                        //AIJump(PlayState.EDirsSurface.None, 0.1f);
                         SetGravity(PlayState.EDirsSurface.WallR, true);
                         break;
                     case PlayState.EDirsSurface.Ceiling:
                         PressInput(Inputs.Up, true);
-                        //AIJump(PlayState.EDirsSurface.None, 0.1f);
                         SetGravity(PlayState.EDirsSurface.Ceiling, true);
                         break;
                 }
@@ -536,7 +556,7 @@ public class MoonSnail : Boss
 
     private void FixedUpdate()
     {
-        if (PlayState.gameState != PlayState.GameState.game)
+        if (PlayState.gameState != PlayState.GameState.game || debugSkipToGiga)
             return;
 
         if (!PlayState.paralyzed)
@@ -1024,6 +1044,7 @@ public class MoonSnail : Boss
     {
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 2.7f, 0, true);
         PlayState.ToggleBossfightState(false, -1);
+        PlayState.TogglableHUDElements[0].SetActive(false);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
         Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Snail"), gigaSpawnPoint.pos, Quaternion.identity, transform.parent);

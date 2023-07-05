@@ -12,6 +12,7 @@ public class GigaSnail : Boss
     private const float ZZZ_TIMEOUT = 0.3f;
     private const float HEAL_TIMEOUT = 0.1f;
     private const float HEAL_DELAY = 0.8f;
+    private const float GRAVITY = 56.25f;
 
     private float STRAFE_TIMEOUT = 0.03f;
     private float STRAFE_SPEED = 25f;
@@ -48,11 +49,12 @@ public class GigaSnail : Boss
 
     private PlayState.EDirsCardinal gravity;
 
-    private int lastHitDir;
+    private PlayState.EDirsCardinal lastHitDir;
     private int lastStomp;
     private int strafeCount;
     private Vector2 velocity;
     private Vector2 lastSmashVelocity = Vector2.zero;
+    private Vector2 smashAccel = Vector2.zero;
     private int decisionTableIndex;
     private float shotTimeout;
     private float bossSpeed;
@@ -75,6 +77,13 @@ public class GigaSnail : Boss
     private float gravJumpTimeout;
     private float jumpTimeout;
     private float zzzTimeout;
+    private int zzzNum;
+    private string lastAnimState = "shell";
+    private bool facingLeft = false;
+    private bool flipHoriz = false;
+    private bool facingDown = false;
+    private bool flipVert = false;
+    private PlayState.EDirsCardinal fallDir = PlayState.EDirsCardinal.None;
 
     private int[] animData;
     /*\
@@ -83,7 +92,7 @@ public class GigaSnail : Boss
      *  1 - Allow vertical sprite flip
      *  2 - Fade sprite in on spawn
      *  3 - Update animation on phase change
-     *  4 - Update animation on jump during Stomp phase
+     *  4 - Update animation on jump/land during Stomp phase
      *  5 - Update animation on gravity jump during Stomp phase
      *  6 - Update animation on turnaround during Stomp phase
      *  7 - Frames into Stomp turnaround to flip sprite
@@ -92,6 +101,10 @@ public class GigaSnail : Boss
      * 10 - Update animation on collision during Smash phase
      * 11 - Update animation on landing during Sleep phase
     \*/
+
+    private List<PlayState.TargetPoint> stompPoints = new();
+
+    private GameObject zzzObj;
 
     private struct BGObj
     {
@@ -125,12 +138,21 @@ public class GigaSnail : Boss
         halfBox = boxSize * 0.5f;
         box.enabled = false;
 
+        decisionTableIndex = Mathf.Abs(Mathf.FloorToInt(PlayState.WORLD_ORIGIN.x - (PlayState.WORLD_SIZE.x * PlayState.ROOM_SIZE.x * 0.5f)
+            - PlayState.player.transform.position.x)) % decisionTable.Length;
+
         if (PlayState.currentProfile.difficulty == 2)
             bossSpeed += 0.2f;
 
         animData = PlayState.GetAnim("Boss_gigaSnail_data").frames;
         if (animData[2] == 1)
             sprite.color = new Color32(255, 255, 255, 0);
+        for (int i = 0; i < 2; i++)
+        {
+
+        }
+        anim.Add("Boss_gigaSnail_intro");
+        anim.Play("Boss_gigaSnail_intro");
 
         bgAnimData = PlayState.GetAnim("GigaBackground_data").frames;
         for (int i = 1; i <= 2; i++)
@@ -139,7 +161,7 @@ public class GigaSnail : Boss
             newBG.obj.transform.parent = PlayState.cam.transform;
 
             newBG.sprite = newBG.obj.AddComponent<SpriteRenderer>();
-            newBG.sprite.sortingOrder = -124;
+            newBG.sprite.sortingOrder = -99;
 
             newBG.anim = newBG.obj.AddComponent<AnimationModule>();
             for (int j = 0; j < System.Enum.GetNames(typeof(BossMode)).Length; j++)
@@ -156,6 +178,10 @@ public class GigaSnail : Boss
             else
                 bgB = newBG;
         }
+
+        zzzObj = Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Zzz");
+
+        CollectTargetPoints();
     }
 
     private float GetDecision()
@@ -217,17 +243,347 @@ public class GigaSnail : Boss
         waitingToJump = false;
     }
 
+    private void PickStompTarget()
+    {
+        if (stompPoints.Count == 0)
+            moveTarget = origin;
+        else
+        {
+            int pointID = Mathf.FloorToInt(GetDecision() * stompPoints.Count);
+            moveTarget = stompPoints[pointID].pos;
+        }
+    }
+
     private void UpdateAIIntro()
     {
         if (elapsed > 2f && elapsed < 3f && animData[2] == 1)
             sprite.color = new Color32(255, 255, 255, (byte)((elapsed - 2) * 255));
-        else if (elapsed > 3)
+        else if (elapsed > 3 && introTimer == 0)
+        {
+            sprite.color = new Color32(255, 255, 255, 255);
             StartCoroutine(RunIntro(true, true, true));
+        }
         if (introDone)
         {
             PlayState.ToggleGigaTiles(false);
             SetMode(BossMode.Stomp);
             box.enabled = true;
+        }
+    }
+
+    private void UpdateAISleep()
+    {
+        if (!modeInitialized)
+        {
+            if (Mathf.Abs(transform.position.x - PlayState.player.transform.position.x) < 2.5f &&
+                transform.position.y > PlayState.player.transform.position.y)
+            {
+                SetMode(BossMode.Stomp);
+                return;
+            }
+            modeInitialized = true;
+            //this.bg.setTargetRgb(176, 174, 0);
+            //this.bg.bgColorSpeed = 3;
+            modeTimeout = 6.2f;
+            //this.playAnim("sleep");
+            zzzNum = 0;
+            zzzTimeout = ZZZ_TIMEOUT;
+            if (PlayState.currentProfile.difficulty == 2)
+            {
+                ZZZ_COUNT = 5;
+                modeTimeout *= 1.23f;
+            }
+            fallDir = PlayState.EDirsCardinal.Down;
+            PlayState.PlaySound("Shell");
+        }
+        if (stomped)
+        {
+            zzzTimeout -= Time.fixedDeltaTime * bossSpeed;
+            if (zzzTimeout <= 0 && zzzNum < ZZZ_COUNT)
+            {
+                Instantiate(zzzObj, new Vector2(transform.position.x + halfBox.x + 1.5f * zzzNum, transform.position.y), Quaternion.identity, transform);
+                zzzTimeout = ZZZ_TIMEOUT;
+                zzzNum++;
+            }
+        }
+        if (modeTimeout <= 0)
+        {
+            if (GetDecision() > 0.5f)
+                SetMode(BossMode.Stomp);
+            else
+                SetMode(BossMode.Strafe);
+        }
+    }
+
+    private void UpdateAIStomp()
+    {
+        if (!modeInitialized)
+        {
+            modeInitialized = true;
+            //this.bg.setTargetRgb(0, 48, 0);
+            //this.bg.bgColorSpeed = 3;
+            modeTimeout = 6f;
+            PickStompTarget();
+        }
+        if (lastAnimState == "shell")
+        {
+            if (Vector2.Distance(transform.position, moveTarget) < 0.625f)
+            {
+                if (GetDecision() > 0.5f)
+                {
+                    fallDir = PlayState.EDirsCardinal.Down;
+                    //this.playAnim("floor");
+                }
+                else
+                {
+                    fallDir = PlayState.EDirsCardinal.Up;
+                    //this.playAnim("ceil");
+                }
+                lastAnimState = "jump";
+            }
+            transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, 0.7f, Time.fixedDeltaTime * bossSpeed),
+                PlayState.Integrate(transform.position.y, moveTarget.y, 0.7f, Time.fixedDeltaTime * bossSpeed));
+        }
+        else
+        {
+            FacePlayer();
+            if (stomped)
+            {
+                if (!waitingToJump)
+                {
+                    waitingToJump = true;
+                    jumpTimeout = JUMP_TIMEOUT;
+                }
+                jumpTimeout -= Time.fixedDeltaTime * bossSpeed;
+                if (waitingToJump && jumpTimeout <= 0)
+                {
+                    waitingToJump = false;
+                    stomped = false;
+                    velocity = fallDir switch
+                    {
+                        PlayState.EDirsCardinal.Down => new Vector2(JUMP_POWER, WALK_SPEED * (facingLeft ? -1 : 1)),
+                        PlayState.EDirsCardinal.Left => new Vector2(WALK_SPEED * (facingDown ? -1 : 1), JUMP_POWER),
+                        PlayState.EDirsCardinal.Right => new Vector2(WALK_SPEED * (facingDown ? -1 : 1), -JUMP_POWER),
+                        PlayState.EDirsCardinal.Up => new Vector2(-JUMP_POWER, WALK_SPEED * (facingLeft ? -1 : 1)),
+                        _ => Vector2.zero
+                    };
+                    gravJumpTimeout = GRAV_JUMP_TIMEOUT;
+                    jumpTimeout = 99999;
+                }
+                else if (((fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right) ? velocity.x : velocity.y) != 0)
+                {
+                    gravJumpTimeout -= Time.fixedDeltaTime;
+                    if (gravJumpTimeout < 0)
+                    {
+                        if (GetDecision() > 0.66)
+                        {
+                            fallDir = fallDir switch
+                            {
+                                PlayState.EDirsCardinal.Down => PlayState.EDirsCardinal.Up,
+                                PlayState.EDirsCardinal.Left => PlayState.EDirsCardinal.Right,
+                                PlayState.EDirsCardinal.Right => PlayState.EDirsCardinal.Left,
+                                PlayState.EDirsCardinal.Up => PlayState.EDirsCardinal.Down,
+                                _ => PlayState.EDirsCardinal.None
+                            };
+                        }
+                        gravJumpTimeout = 999999;
+                    }
+                }
+            }
+        }
+        if ((attackPhase == 0 && modeElapsed > START_ATTACK_TIME * 2.5f) || (attackPhase == 1 && modeElapsed > START_ATTACK_TIME * 3.2f))
+            ShootWave();
+        if (modeTimeout <= 0)
+        {
+            if (attackPhase == 1 && GetDecision() > 0.7)
+                SetMode(BossMode.Sleep);
+            else if (GetDecision() > 0.7)
+                SetMode(BossMode.Smash);
+            else if (GetDecision() > 0.8)
+                SetMode(BossMode.Stomp);
+            else
+                SetMode(BossMode.Strafe);
+        }
+    }
+
+    private void UpdateAIStrafe()
+    {
+        if (modeInitialized)
+        {
+            modeInitialized = true;
+            //if (attackPhase < 1)
+            //{
+            //    this.bg.setTargetRgb(48, 0, 48);
+            //}
+            //else
+            //{
+            //    this.bg.setTargetRgb(0, 48, 48);
+            //}
+            //this.bg.bgColorSpeed = 3;
+            modeTimeout = 5.2f;
+            //this.playAnim("shell");
+            moveTarget = origin;
+            aimed = false;
+        }
+        transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, 1.7f, Time.fixedDeltaTime * bossSpeed),
+            PlayState.Integrate(transform.position.y, moveTarget.y, 1.7f, Time.fixedDeltaTime * bossSpeed));
+        if (modeElapsed > START_ATTACK_TIME && !aimed && Vector2.Distance(transform.position, moveTarget) < 0.625f)
+        {
+            AimStrafe();
+            strafeThetaVel = Mathf.PI * 0.125f * (GetDecision() > 0.5f ? 1 : -1);
+            aimed = true;
+            if (PlayState.currentProfile.difficulty == 2)
+                strafeThetaVel *= 1.6f;
+        }
+        strafeTheta += strafeThetaVel * Time.fixedDeltaTime * bossSpeed;
+        strafeThetaVel += strafeThetaAccel * Time.fixedDeltaTime * bossSpeed;
+        if (modeElapsed > START_ATTACK_TIME && aimed)
+            StrafeMulti();
+        if (modeTimeout <= 0)
+        {
+            if (attackPhase == 1 && GetDecision() > 0.74)
+                SetMode(BossMode.Sleep);
+            else if (GetDecision() < 0.77)
+                SetMode(BossMode.Stomp);
+            else
+                SetMode(BossMode.Smash);
+        }
+    }
+
+    private void UpdateAISmash()
+    {
+        if (!modeInitialized)
+        {
+            modeInitialized = true;
+            //this.bg.setTargetRgb(48, 0, 0);
+            //this.bg.bgColorSpeed = 3;
+            modeTimeout = 6f;
+            //this.playAnim("shell");
+            PickSmashDir();
+        }
+        if (stomped)
+        {
+            stomped = false;
+            if (GetDecision() > 0.7 || attackPhase == 1)
+                PickSmashDir(true);
+            else if (velocity.y == 0)
+                smashAccel.y *= -1;
+            else
+                smashAccel.x *= -1;
+        }
+        if (modeTimeout <= 0)
+        {
+            if (GetDecision() > 0.5)
+                SetMode(BossMode.Stomp);
+            else
+                SetMode(BossMode.Strafe);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
+        waveTimeout -= Time.fixedDeltaTime * bossSpeed;
+        modeTimeout -= Time.fixedDeltaTime * bossSpeed;
+        strafeTimeout -= Time.fixedDeltaTime * bossSpeed;
+        stompTimeout -= Time.fixedDeltaTime * bossSpeed;
+        modeElapsed += Time.fixedDeltaTime * bossSpeed;
+        switch (mode)
+        {
+            case BossMode.Intro:
+                UpdateAIIntro();
+                break;
+            case BossMode.Stomp:
+                UpdateAIStomp();
+                break;
+            case BossMode.Strafe:
+                UpdateAIStrafe();
+                break;
+            case BossMode.Smash:
+                UpdateAISmash();
+                break;
+            case BossMode.Sleep:
+                UpdateAISleep();
+                break;
+        }
+        elapsed += Time.fixedDeltaTime;
+    }
+
+    private void AimStrafe()
+    {
+        float fireAngle = Mathf.Atan2(PlayState.player.transform.position.y - transform.position.y, PlayState.player.transform.position.x - transform.position.x);
+        strafeCount = Mathf.Clamp(Mathf.RoundToInt(2.3f + 5f * (maxHealth - health) / maxHealth), 2, 7);
+        strafeTheta = fireAngle - Mathf.PI / strafeCount;
+    }
+
+    private void StrafeSingle(float angle, bool playSound)
+    {
+        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.bigPea, new float[] { Mathf.Cos(angle), Mathf.Sin(angle), STRAFE_SPEED }, playSound);
+    }
+
+    private void StrafeMulti()
+    {
+        if (strafeTimeout > 0)
+            return;
+
+        strafeTimeout = STRAFE_TIMEOUT;
+        for (int i = 0; i < strafeCount; i++)
+            StrafeSingle(strafeTheta + 2 * Mathf.PI / strafeCount * i, i == 0);
+    }
+
+    private void PickSmashDir(bool guaranteeTargetPlayer = false)
+    {
+        float angle = Random.Range(0f, 1f) * PlayState.TAU;
+        if (GetDecision() > 0.5f || guaranteeTargetPlayer)
+            angle = Mathf.Atan2(PlayState.player.transform.position.y - transform.position.y, PlayState.player.transform.position.x - transform.position.x);
+        velocity = Vector2.zero;
+        smashAccel = new Vector2(SMASH_SPEED * bossSpeed * Mathf.Cos(angle), SMASH_SPEED * bossSpeed * Mathf.Sin(angle));
+
+        if ((lastHitDir == PlayState.EDirsCardinal.Right && smashAccel.x > 0) || (lastHitDir == PlayState.EDirsCardinal.Left && smashAccel.x < 0))
+            smashAccel.x *= -1;
+        if ((lastHitDir == PlayState.EDirsCardinal.Up && smashAccel.y > 0) || (lastHitDir == PlayState.EDirsCardinal.Down && smashAccel.y < 0))
+            smashAccel.y *= -1;
+    }
+
+    private void FacePlayer()
+    {
+        if (fallDir == PlayState.EDirsCardinal.None)
+            return;
+
+        if (fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right)
+        {
+            bool targetState = PlayState.player.transform.position.y < transform.position.y;
+            if (targetState != facingDown)
+            {
+                facingDown = targetState;
+                if (animData[6] != 1)
+                    flipVert = targetState;
+                else if (flipVert == targetState)
+                    flipVert = !targetState;
+            }
+        }
+        else
+        {
+            bool targetState = PlayState.player.transform.position.x < transform.position.x;
+            if (targetState != facingLeft)
+            {
+                facingLeft = targetState;
+                if (animData[6] != 1)
+                    flipHoriz = targetState;
+                else if (flipHoriz == targetState)
+                    flipHoriz = !targetState;
+            }
+        }
+    }
+
+    private void CollectTargetPoints()
+    {
+        for (int i = 0; i < PlayState.activeTargets.Count; i++)
+        {
+            if (PlayState.activeTargets[i].type == PlayState.TargetTypes.GigaStomp)
+                stompPoints.Add(PlayState.activeTargets[i]);
         }
     }
 }

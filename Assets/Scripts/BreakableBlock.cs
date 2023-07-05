@@ -12,6 +12,8 @@ public class BreakableBlock : MonoBehaviour
 
     GameObject fg1Sprite;
     GameObject fg2Sprite;
+
+    private Vector2 worldPos;
     
     void Awake()
     {
@@ -34,14 +36,26 @@ public class BreakableBlock : MonoBehaviour
         transform.position = data.pos;
         requiredWeapon = data.weaponLevel;
         isSilent = data.isSilent;
+        worldPos = new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y));
         for (int i = 0; i < data.tiles.Length; i++)
             sprites[i].sprite = data.tiles[i] == -1 ? PlayState.BlankTexture() : PlayState.GetSprite("Tilesheet", data.tiles[i]);
         if (data.tiles[0] == -1)
             gameObject.layer = 10;
         else
-            PlayState.breakablePositions.Add(new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y)));
+            PlayState.breakablePositions.Add(worldPos);
         if (isFinalBossTile)
             PlayState.finalBossTiles.Add(gameObject);
+    }
+
+    public void ToggleActive(bool state)
+    {
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].enabled = state;
+        box.enabled = state;
+        if (state)
+            PlayState.breakablePositions.Add(worldPos);
+        else
+            PlayState.breakablePositions.Remove(worldPos);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,7 +74,7 @@ public class BreakableBlock : MonoBehaviour
                 }
                 for (int i = 0; i < 2; i++)
                     PlayState.RequestParticle(new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f)), "explosion", new float[] { 2 });
-                PlayState.breakablePositions.Remove(new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y)));
+                PlayState.breakablePositions.Remove(worldPos);
                 Destroy(gameObject);
             }
             else

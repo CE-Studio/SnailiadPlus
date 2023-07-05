@@ -7806,6 +7806,24 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Boss_gigaSnail_intro",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_babyfish1_normal",
 			"spriteName": "Entities/Babyfish",
 			"framerate": 0.0,

@@ -940,6 +940,7 @@ public class RoomTrigger:MonoBehaviour {
         {
             GameObject finalBossTile = Instantiate(breakableBlock, transform);
             finalBossTile.GetComponent<BreakableBlock>().Instantiate(thisFinalBossTile);
+            PlayState.finalBossTiles.Add(finalBossTile);
         }
         for (int i = 0; i < roomContent.Length; i++)
             {
