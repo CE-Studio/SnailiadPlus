@@ -118,9 +118,11 @@ public class GigaSnail : Boss
     /*\
      *   ANIMATION DATA
      * 0 - fade in intro background
-     * 1 - crossfade attack backgrounds
-     * 2 - display stars over the background
+     * 1 - fade out outro background
+     * 2 - crossfade attack backgrounds
+     * 3 - display stars over the background
     \*/
+    private string lastBGState = "none";
 
     private BoxCollider2D box;
     private Vector2 boxSize;
@@ -159,11 +161,14 @@ public class GigaSnail : Boss
         {
             BGObj newBG = new() { obj = new GameObject("Giga Snail Background Layer " + i.ToString()) };
             newBG.obj.transform.parent = PlayState.cam.transform;
+            newBG.obj.transform.localPosition = Vector2.zero;
 
             newBG.sprite = newBG.obj.AddComponent<SpriteRenderer>();
-            newBG.sprite.sortingOrder = -99;
+            newBG.sprite.sortingOrder = -100 + i;
 
             newBG.anim = newBG.obj.AddComponent<AnimationModule>();
+            newBG.anim.Add("GigaBackground_fadeIn");
+            newBG.anim.Add("GigaBackground_fadeOut");
             for (int j = 0; j < System.Enum.GetNames(typeof(BossMode)).Length; j++)
             {
                 string parsedStateName = ((BossMode)j).ToString().ToLower();
@@ -178,10 +183,77 @@ public class GigaSnail : Boss
             else
                 bgB = newBG;
         }
+        UpdateBackground("fadeIn");
 
         zzzObj = Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Zzz");
 
         CollectTargetPoints();
+    }
+
+    private void UpdateBackground(string newState)
+    {
+        switch (newState)
+        {
+            case "fadeIn":
+                SetBackgroundState(false, false);
+                SetBackgroundState(true, false);
+                bgA.anim.Play("GigaBackground_fadeIn");
+                if (bgAnimData[0] == 1)
+                    StartCoroutine(FadeBackground(false, 4f, true));
+                else
+                    SetBackgroundState(false, true);
+                break;
+            case "intro":
+                bgB.anim.Play("GigaBackground_intro_hold1");
+                if (bgAnimData[2] == 1)
+                    StartCoroutine(FadeBackground(true, 2f, true));
+                else
+                    SetBackgroundState(true, true);
+                break;
+            default:
+                SetBackgroundState(true, true);
+                if (bgAnimData[2] == 1)
+                    StartCoroutine(FadeBackground(true, 0.3333f, false));
+                bgB.anim.Play("GigaBackground_" + lastBGState + "_fadeOut" + (attackPhase + 1).ToString());
+                bgA.anim.Play("GigaBackground_" + newState + "_hold" + (attackPhase + 1).ToString());
+                break;
+            case "fadeOut":
+                SetBackgroundState(true, false);
+                if (bgAnimData[1] == 1)
+                    StartCoroutine(FadeBackground(false, 4f, false));
+                bgA.anim.Play("GigaBackground_fadeOut");
+                break;
+        }
+        lastBGState = newState;
+    }
+
+    private void SetBackgroundState(bool layer, bool mode)
+    {
+        byte alpha = mode ? (byte)255 : (byte)0;
+        if (layer)
+            bgB.sprite.color = new Color32(255, 255, 255, alpha);
+        else
+            bgA.sprite.color = new Color32(255, 255, 255, alpha);
+    }
+
+    private IEnumerator FadeBackground(bool layer, float fadeTime, bool fadeMode)
+    {
+        Color32 startingColor = (layer ? bgB : bgA).sprite.color;
+        Color32 targetColor = fadeMode ? new Color32(255, 255, 255, 255) : new Color32(255, 255, 255, 0);
+        float fadeElapsed = 0;
+        while (fadeElapsed < fadeTime)
+        {
+            fadeElapsed += Time.deltaTime;
+            if (layer)
+                bgB.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
+            else
+                bgA.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
+            yield return new WaitForEndOfFrame();
+        }
+        if (layer)
+            bgB.sprite.color = targetColor;
+        else
+            bgA.sprite.color = targetColor;
     }
 
     private float GetDecision()
@@ -263,6 +335,8 @@ public class GigaSnail : Boss
             sprite.color = new Color32(255, 255, 255, 255);
             StartCoroutine(RunIntro(true, true, true));
         }
+        if (introTimer >= 1f && lastBGState == "fadeIn")
+            UpdateBackground("intro");
         if (introDone)
         {
             PlayState.ToggleGigaTiles(false);
@@ -282,8 +356,6 @@ public class GigaSnail : Boss
                 return;
             }
             modeInitialized = true;
-            //this.bg.setTargetRgb(176, 174, 0);
-            //this.bg.bgColorSpeed = 3;
             modeTimeout = 6.2f;
             //this.playAnim("sleep");
             zzzNum = 0;
@@ -295,6 +367,7 @@ public class GigaSnail : Boss
             }
             fallDir = PlayState.EDirsCardinal.Down;
             PlayState.PlaySound("Shell");
+            UpdateBackground("sleep");
         }
         if (stomped)
         {
@@ -320,10 +393,9 @@ public class GigaSnail : Boss
         if (!modeInitialized)
         {
             modeInitialized = true;
-            //this.bg.setTargetRgb(0, 48, 0);
-            //this.bg.bgColorSpeed = 3;
             modeTimeout = 6f;
             PickStompTarget();
+            UpdateBackground("stomp");
         }
         if (lastAnimState == "shell")
         {
@@ -411,19 +483,11 @@ public class GigaSnail : Boss
         if (modeInitialized)
         {
             modeInitialized = true;
-            //if (attackPhase < 1)
-            //{
-            //    this.bg.setTargetRgb(48, 0, 48);
-            //}
-            //else
-            //{
-            //    this.bg.setTargetRgb(0, 48, 48);
-            //}
-            //this.bg.bgColorSpeed = 3;
             modeTimeout = 5.2f;
             //this.playAnim("shell");
             moveTarget = origin;
             aimed = false;
+            UpdateBackground("strafe");
         }
         transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, 1.7f, Time.fixedDeltaTime * bossSpeed),
             PlayState.Integrate(transform.position.y, moveTarget.y, 1.7f, Time.fixedDeltaTime * bossSpeed));
@@ -455,11 +519,10 @@ public class GigaSnail : Boss
         if (!modeInitialized)
         {
             modeInitialized = true;
-            //this.bg.setTargetRgb(48, 0, 0);
-            //this.bg.bgColorSpeed = 3;
             modeTimeout = 6f;
             //this.playAnim("shell");
             PickSmashDir();
+            UpdateBackground("smash");
         }
         if (stomped)
         {

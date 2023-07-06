@@ -2678,7 +2678,7 @@
 			"randomizeStartFrame": false
         },
         {
-            "name": "GigaBackground_Data",
+            "name": "GigaBackground_data",
 			"spriteName": "GigaBackground",
             "framerate": 0.0,
             "frames": [
@@ -2691,7 +2691,7 @@
 			"randomizeStartFrame": false
         },
         {
-            "name": "GigaBackground_intro_hold1",
+            "name": "GigaBackground_fadeIn",
 			"spriteName": "GigaBackground",
             "framerate": 0.0,
             "frames": [
@@ -2702,11 +2702,33 @@
 			"randomizeStartFrame": false
         },
         {
-            "name": "GigaBackground_intro_fadeOut1",
+            "name": "GigaBackground_fadeOut",
 			"spriteName": "GigaBackground",
             "framerate": 0.0,
             "frames": [
                 0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "GigaBackground_intro_hold1",
+			"spriteName": "GigaBackground",
+            "framerate": 0.0,
+            "frames": [
+                5
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "GigaBackground_intro_fadeOut1",
+			"spriteName": "GigaBackground",
+            "framerate": 0.0,
+            "frames": [
+                5
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -2769,6 +2791,17 @@
         },
         {
             "name": "GigaBackground_stomp_fadeOut2",
+			"spriteName": "GigaBackground",
+            "framerate": 0.0,
+            "frames": [
+                6
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "GigaBackground_stomp_fadeToPanic",
 			"spriteName": "GigaBackground",
             "framerate": 0.0,
             "frames": [
