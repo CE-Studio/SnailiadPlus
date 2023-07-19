@@ -12,7 +12,10 @@ public class GigaSnail : Boss
     private const float ZZZ_TIMEOUT = 0.3f;
     private const float HEAL_TIMEOUT = 0.1f;
     private const float HEAL_DELAY = 0.8f;
-    private const float GRAVITY = 56.25f;
+    private const float GRAVITY = 0.9375f;
+    private const float INTEGRATE_SPEED_STOMP = 0.7f;
+    private const float INTEGRATE_SPEED_STRAFE = 1.7f;
+    private const int CAST_COUNT = 6;
 
     private float STRAFE_TIMEOUT = 0.03f;
     private float STRAFE_SPEED = 25f;
@@ -57,7 +60,7 @@ public class GigaSnail : Boss
     private Vector2 smashAccel = Vector2.zero;
     private int decisionTableIndex;
     private float shotTimeout;
-    private float bossSpeed;
+    private float bossSpeed = 1;
     private int attackPhase;
     private float elapsed;
     private float modeElapsed;
@@ -74,6 +77,7 @@ public class GigaSnail : Boss
     private float waveTimeout;
     private bool stomped;
     private bool aimed;
+    private bool grounded;
     private float gravJumpTimeout;
     private float jumpTimeout;
     private float zzzTimeout;
@@ -164,7 +168,7 @@ public class GigaSnail : Boss
             newBG.obj.transform.localPosition = Vector2.zero;
 
             newBG.sprite = newBG.obj.AddComponent<SpriteRenderer>();
-            newBG.sprite.sortingOrder = -100 + i;
+            newBG.sprite.sortingOrder = -99 + i;
 
             newBG.anim = newBG.obj.AddComponent<AnimationModule>();
             newBG.anim.Add("GigaBackground_fadeIn");
@@ -182,6 +186,8 @@ public class GigaSnail : Boss
                 bgA = newBG;
             else
                 bgB = newBG;
+
+            PlayState.gigaBGLayers.Add(newBG.obj);
         }
         UpdateBackground("fadeIn");
 
@@ -276,6 +282,7 @@ public class GigaSnail : Boss
             stompTimeout = STOMP_TIMEOUT;
         }
         stomped = true;
+        grounded = true;
         gravJumpTimeout = 999999f;
     }
 
@@ -291,7 +298,7 @@ public class GigaSnail : Boss
         else
             direction = PlayState.player.transform.position.y < transform.position.y ? Vector2.down : Vector2.up;
 
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.gigaWave, new float[] { WAVE_SPEED, direction.x, direction.y });
+        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.gigaWave, new float[] { WAVE_SPEED * Time.fixedDeltaTime, direction.x, direction.y });
     }
 
     private void SetMode(BossMode newMode)
@@ -313,12 +320,14 @@ public class GigaSnail : Boss
         velocity = Vector2.zero;
         modeElapsed = 0;
         waitingToJump = false;
+        fallDir = PlayState.EDirsCardinal.None;
+        lastAnimState = "shell";
     }
 
     private void PickStompTarget()
     {
         if (stompPoints.Count == 0)
-            moveTarget = origin;
+            moveTarget = (Vector2)transform.parent.position + origin;
         else
         {
             int pointID = Mathf.FloorToInt(GetDecision() * stompPoints.Count);
@@ -396,6 +405,7 @@ public class GigaSnail : Boss
             modeTimeout = 6f;
             PickStompTarget();
             UpdateBackground("stomp");
+            lastAnimState = "shell";
         }
         if (lastAnimState == "shell")
         {
@@ -412,9 +422,10 @@ public class GigaSnail : Boss
                     //this.playAnim("ceil");
                 }
                 lastAnimState = "jump";
+                grounded = false;
             }
-            transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, 0.7f, Time.fixedDeltaTime * bossSpeed),
-                PlayState.Integrate(transform.position.y, moveTarget.y, 0.7f, Time.fixedDeltaTime * bossSpeed));
+            transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, INTEGRATE_SPEED_STOMP, Time.fixedDeltaTime * bossSpeed),
+                PlayState.Integrate(transform.position.y, moveTarget.y, INTEGRATE_SPEED_STOMP, Time.fixedDeltaTime * bossSpeed));
         }
         else
         {
@@ -431,14 +442,15 @@ public class GigaSnail : Boss
                 {
                     waitingToJump = false;
                     stomped = false;
+                    grounded = false;
                     velocity = fallDir switch
                     {
-                        PlayState.EDirsCardinal.Down => new Vector2(JUMP_POWER, WALK_SPEED * (facingLeft ? -1 : 1)),
-                        PlayState.EDirsCardinal.Left => new Vector2(WALK_SPEED * (facingDown ? -1 : 1), JUMP_POWER),
-                        PlayState.EDirsCardinal.Right => new Vector2(WALK_SPEED * (facingDown ? -1 : 1), -JUMP_POWER),
-                        PlayState.EDirsCardinal.Up => new Vector2(-JUMP_POWER, WALK_SPEED * (facingLeft ? -1 : 1)),
+                        PlayState.EDirsCardinal.Down => new Vector2(WALK_SPEED * (facingLeft ? -1 : 1), JUMP_POWER),
+                        PlayState.EDirsCardinal.Left => new Vector2(JUMP_POWER, WALK_SPEED * (facingDown ? -1 : 1)),
+                        PlayState.EDirsCardinal.Right => new Vector2(-JUMP_POWER, WALK_SPEED * (facingDown ? -1 : 1)),
+                        PlayState.EDirsCardinal.Up => new Vector2(WALK_SPEED * (facingLeft ? -1 : 1), -JUMP_POWER),
                         _ => Vector2.zero
-                    };
+                    } * Time.fixedDeltaTime;
                     gravJumpTimeout = GRAV_JUMP_TIMEOUT;
                     jumpTimeout = 99999;
                 }
@@ -467,6 +479,14 @@ public class GigaSnail : Boss
             ShootWave();
         if (modeTimeout <= 0)
         {
+            transform.position += PlayState.FRAC_32 * fallDir switch
+            {
+                PlayState.EDirsCardinal.Left => Vector3.left,
+                PlayState.EDirsCardinal.Right => Vector3.right,
+                PlayState.EDirsCardinal.Up => Vector3.up,
+                _ => Vector3.down
+            };
+
             if (attackPhase == 1 && GetDecision() > 0.7)
                 SetMode(BossMode.Sleep);
             else if (GetDecision() > 0.7)
@@ -480,17 +500,17 @@ public class GigaSnail : Boss
 
     private void UpdateAIStrafe()
     {
-        if (modeInitialized)
+        if (!modeInitialized)
         {
             modeInitialized = true;
             modeTimeout = 5.2f;
             //this.playAnim("shell");
-            moveTarget = origin;
+            moveTarget = (Vector2)transform.parent.position + origin;
             aimed = false;
             UpdateBackground("strafe");
         }
-        transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, 1.7f, Time.fixedDeltaTime * bossSpeed),
-            PlayState.Integrate(transform.position.y, moveTarget.y, 1.7f, Time.fixedDeltaTime * bossSpeed));
+        transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, INTEGRATE_SPEED_STRAFE, Time.fixedDeltaTime * bossSpeed),
+            PlayState.Integrate(transform.position.y, moveTarget.y, INTEGRATE_SPEED_STRAFE, Time.fixedDeltaTime * bossSpeed));
         if (modeElapsed > START_ATTACK_TIME && !aimed && Vector2.Distance(transform.position, moveTarget) < 0.625f)
         {
             AimStrafe();
@@ -522,17 +542,45 @@ public class GigaSnail : Boss
             modeTimeout = 6f;
             //this.playAnim("shell");
             PickSmashDir();
+            velocity = Vector2.zero;
             UpdateBackground("smash");
         }
+
+        bool hitHorizontal = false;
+        bool hitVertical = false;
+        velocity += smashAccel * Time.fixedDeltaTime;
+        float disHoriz = GetDistance(smashAccel.x > 0 ? PlayState.EDirsCardinal.Right : PlayState.EDirsCardinal.Left);
+        if (Mathf.Abs(velocity.x) > disHoriz && velocity.x != 0)
+        {
+            transform.position += (disHoriz - PlayState.FRAC_32) * (smashAccel.x > 0 ? Vector3.right : Vector3.left);
+            hitHorizontal = true;
+            velocity.x = 0;
+        }
+        float disVert = GetDistance(smashAccel.y > 0 ? PlayState.EDirsCardinal.Up : PlayState.EDirsCardinal.Down);
+        if (Mathf.Abs(velocity.y) > disVert && velocity.y != 0)
+        {
+            transform.position += (disVert - PlayState.FRAC_32) * (smashAccel.y > 0 ? Vector3.up : Vector3.down);
+            hitVertical = true;
+            velocity.y = 0;
+        }
+        transform.position += (Vector3)velocity;
+        if ((hitHorizontal || hitVertical) && modeTimeout <= 5.975f)
+        {
+            Stomp();
+        }
+
         if (stomped)
         {
             stomped = false;
             if (GetDecision() > 0.7 || attackPhase == 1)
                 PickSmashDir(true);
-            else if (velocity.y == 0)
-                smashAccel.y *= -1;
             else
-                smashAccel.x *= -1;
+            {
+                if (hitHorizontal)
+                    smashAccel.x *= -1;
+                if (hitVertical)
+                    smashAccel.y *= -1;
+            }
         }
         if (modeTimeout <= 0)
         {
@@ -572,6 +620,108 @@ public class GigaSnail : Boss
                 break;
         }
         elapsed += Time.fixedDeltaTime;
+
+        if (fallDir != PlayState.EDirsCardinal.None)
+        {
+            float floorDis = GetDistance(fallDir);
+            switch (fallDir)
+            {
+                default:
+                case PlayState.EDirsCardinal.Down:
+                    if (!grounded)
+                    {
+                        velocity.y -= GRAVITY * Time.fixedDeltaTime;
+                        if (floorDis < Mathf.Abs(velocity.y) && velocity.y < 0)
+                        {
+                            transform.position += (floorDis - PlayState.FRAC_32) * Vector3.down;
+                            Stomp();
+                        }
+                        float ceilDis = GetDistance(PlayState.EDirsCardinal.Up);
+                        if (ceilDis < Mathf.Abs(velocity.y) && velocity.y > 0)
+                        {
+                            transform.position += (ceilDis - PlayState.FRAC_32) * Vector3.up;
+                            velocity.y = 0;
+                        }
+                        float wallDis = GetDistance(velocity.x < 0 ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right);
+                        if (wallDis < Mathf.Abs(velocity.x))
+                        {
+                            transform.position += (wallDis - PlayState.FRAC_32) * (velocity.x < 0 ? Vector3.left : Vector3.right);
+                            velocity.x *= -1;
+                        }
+                    }
+                    break;
+                case PlayState.EDirsCardinal.Left:
+                    if (!grounded)
+                    {
+                        velocity.x -= GRAVITY * Time.fixedDeltaTime;
+                        if (floorDis < Mathf.Abs(velocity.x) && velocity.x < 0)
+                        {
+                            transform.position += (floorDis - PlayState.FRAC_32) * Vector3.left;
+                            Stomp();
+                        }
+                        float ceilDis = GetDistance(PlayState.EDirsCardinal.Right);
+                        if (ceilDis < Mathf.Abs(velocity.x) && velocity.x > 0)
+                        {
+                            transform.position += (ceilDis - PlayState.FRAC_32) * Vector3.right;
+                            velocity.x = 0;
+                        }
+                        float wallDis = GetDistance(velocity.y < 0 ? PlayState.EDirsCardinal.Down : PlayState.EDirsCardinal.Up);
+                        if (wallDis < Mathf.Abs(velocity.y))
+                        {
+                            transform.position += (wallDis - PlayState.FRAC_32) * (velocity.y < 0 ? Vector3.down : Vector3.up);
+                            velocity.y *= -1;
+                        }
+                    }
+                    break;
+                case PlayState.EDirsCardinal.Right:
+                    if (!grounded)
+                    {
+                        velocity.x += GRAVITY * Time.fixedDeltaTime;
+                        if (floorDis < Mathf.Abs(velocity.x) && velocity.x > 0)
+                        {
+                            transform.position += (floorDis - PlayState.FRAC_32) * Vector3.right;
+                            Stomp();
+                        }
+                        float ceilDis = GetDistance(PlayState.EDirsCardinal.Left);
+                        if (ceilDis < Mathf.Abs(velocity.x) && velocity.x < 0)
+                        {
+                            transform.position += (ceilDis - PlayState.FRAC_32) * Vector3.left;
+                            velocity.x = 0;
+                        }
+                        float wallDis = GetDistance(velocity.y < 0 ? PlayState.EDirsCardinal.Down : PlayState.EDirsCardinal.Up);
+                        if (wallDis < Mathf.Abs(velocity.y))
+                        {
+                            transform.position += (wallDis - PlayState.FRAC_32) * (velocity.y < 0 ? Vector3.down : Vector3.up);
+                            velocity.y *= -1;
+                        }
+                    }
+                    break;
+                case PlayState.EDirsCardinal.Up:
+                    if (!grounded)
+                    {
+                        velocity.y += GRAVITY * Time.fixedDeltaTime;
+                        if (floorDis < Mathf.Abs(velocity.y) && velocity.y > 0)
+                        {
+                            transform.position += (floorDis - PlayState.FRAC_32) * Vector3.up;
+                            Stomp();
+                        }
+                        float ceilDis = GetDistance(PlayState.EDirsCardinal.Down);
+                        if (ceilDis < Mathf.Abs(velocity.y) && velocity.y < 0)
+                        {
+                            transform.position += (ceilDis - PlayState.FRAC_32) * Vector3.down;
+                            velocity.y = 0;
+                        }
+                        float wallDis = GetDistance(velocity.x < 0 ? PlayState.EDirsCardinal.Left : PlayState.EDirsCardinal.Right);
+                        if (wallDis < Mathf.Abs(velocity.x))
+                        {
+                            transform.position += (wallDis - PlayState.FRAC_32) * (velocity.x < 0 ? Vector3.left : Vector3.right);
+                            velocity.x *= -1;
+                        }
+                    }
+                    break;
+            }
+            transform.position += (Vector3)velocity;
+        }
     }
 
     private void AimStrafe()
@@ -583,7 +733,7 @@ public class GigaSnail : Boss
 
     private void StrafeSingle(float angle, bool playSound)
     {
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.bigPea, new float[] { Mathf.Cos(angle), Mathf.Sin(angle), STRAFE_SPEED }, playSound);
+        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.bigPea, new float[] { STRAFE_SPEED, Mathf.Cos(angle), Mathf.Sin(angle) }, playSound);
     }
 
     private void StrafeMulti()
@@ -602,7 +752,7 @@ public class GigaSnail : Boss
         if (GetDecision() > 0.5f || guaranteeTargetPlayer)
             angle = Mathf.Atan2(PlayState.player.transform.position.y - transform.position.y, PlayState.player.transform.position.x - transform.position.x);
         velocity = Vector2.zero;
-        smashAccel = new Vector2(SMASH_SPEED * bossSpeed * Mathf.Cos(angle), SMASH_SPEED * bossSpeed * Mathf.Sin(angle));
+        smashAccel = new Vector2(SMASH_SPEED * bossSpeed * Mathf.Cos(angle), SMASH_SPEED * bossSpeed * Mathf.Sin(angle)) * Time.fixedDeltaTime;
 
         if ((lastHitDir == PlayState.EDirsCardinal.Right && smashAccel.x > 0) || (lastHitDir == PlayState.EDirsCardinal.Left && smashAccel.x < 0))
             smashAccel.x *= -1;
@@ -648,5 +798,21 @@ public class GigaSnail : Boss
             if (PlayState.activeTargets[i].type == PlayState.TargetTypes.GigaStomp)
                 stompPoints.Add(PlayState.activeTargets[i]);
         }
+    }
+
+    private float GetDistance(PlayState.EDirsCardinal direction)
+    {
+        Vector2 ul = new(transform.position.x - halfBox.x, transform.position.y + halfBox.y);
+        Vector2 dl = (Vector2)transform.position - halfBox;
+        Vector2 dr = new(transform.position.x + halfBox.x, transform.position.y - halfBox.y);
+        Vector2 ur = (Vector2)transform.position + halfBox;
+
+        return direction switch
+        {
+            PlayState.EDirsCardinal.Down => PlayState.GetDistance(direction, dl, dr, CAST_COUNT, enemyCollide),
+            PlayState.EDirsCardinal.Left => PlayState.GetDistance(direction, dl, ul, CAST_COUNT, enemyCollide),
+            PlayState.EDirsCardinal.Right => PlayState.GetDistance(direction, dr, ur, CAST_COUNT, enemyCollide),
+            _ => PlayState.GetDistance(direction, ul, ur, CAST_COUNT, enemyCollide)
+        };
     }
 }

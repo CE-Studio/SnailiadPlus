@@ -217,6 +217,8 @@ public class PlayState {
 
     public static List<GameObject> finalBossTiles = new();
 
+    public static List<GameObject> gigaBGLayers = new();
+
     public static int currentProfileNumber = 0;
 
     public static readonly int[] defaultMinimapState = new int[]
@@ -1186,17 +1188,23 @@ public class PlayState {
         return Mathf.FloorToInt(((float)explored / (float)total) * 100);
     }
 
-    public static int GetItemPercentage() {
+    public static int GetItemPercentage(int profileID = 0)
+    {
         int itemsFound = 0;
         int totalCount = 0;
-        int charCheck = currentProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
-        for (int i = 0; i < currentProfile.items.Length; i++) {
-            if (itemData[i] != null) {
-                if (itemData[i][currentProfile.difficulty] && itemData[i][charCheck]) {
+        ProfileData targetProfile = profileID switch { 1 => profile1, 2 => profile2, 3 => profile3, _ => currentProfile };
+        int charCheck = targetProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
+        for (int i = 0; i < targetProfile.items.Length; i++)
+        {
+            if (itemData[i] != null)
+            {
+                if (itemData[i][targetProfile.difficulty] && itemData[i][charCheck])
+                {
                     totalCount++;
-                    itemsFound += currentProfile.items[i] == 1 ? 1 : 0;
+                    itemsFound += targetProfile.items[i] == 1 ? 1 : 0;
                 }
-            } else
+            }
+            else
                 totalCount++;
         }
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
@@ -1519,17 +1527,25 @@ public class PlayState {
         camScript.camSpeed = speed;
     }
 
-    public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false) {
+    public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false)
+    {
         inBossFight = state;
         TogglableHUDElements[0].SetActive(!state);
-        if (!state && snapDespawnBar) {
-            TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
-            TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
-            globalFunctions.displayDefeatText = false;
-        } else if (!state && !snapDespawnBar) {
-            TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
-            TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
-            globalFunctions.displayDefeatText = true;
+        if (!state)
+        {
+            if (snapDespawnBar)
+            {
+                TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
+                TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+                globalFunctions.displayDefeatText = false;
+                globalFunctions.RemoveGigaBackgroundLayers();
+            }
+            else
+            {
+                TogglableHUDElements[12].GetComponent<AnimationModule>().Play("BossBar_frame_despawn");
+                TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().Play("BossBar_bar_despawn");
+                globalFunctions.displayDefeatText = true;
+            }
         }
         if (currentArea != 7) {
             if (state)

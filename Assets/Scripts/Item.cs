@@ -239,7 +239,7 @@ public class Item:MonoBehaviour, IRoomObject {
             FlashItemText();
             PlayState.globalFunctions.FlashCollectionText();
             StartCoroutine(nameof(HoverOverPlayer));
-            //PlayState.WriteSave("game");
+            PlayState.currentProfile.percentage = PlayState.GetItemPercentage();
             PlayState.WriteSave(PlayState.currentProfileNumber, false);
         }
     }

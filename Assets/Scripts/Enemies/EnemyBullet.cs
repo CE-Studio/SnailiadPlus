@@ -291,7 +291,7 @@ public class EnemyBullet : MonoBehaviour
                 direction = new Vector2(dirVelVars[1], dirVelVars[2]);
                 despawnOffscreen = true;
                 if (playSound)
-                    soundID = "ShotGigaWave";
+                    soundID = "ShotEnemyGigaWave";
                 SetDestroyableLevels("111111", true);
                 bulletInteraction = 2;
                 break;
@@ -311,17 +311,19 @@ public class EnemyBullet : MonoBehaviour
             Bullet bullet = collision.GetComponent<Bullet>();
             bool destroyFlag = false;
             float angleBetween = Vector2.Angle(direction, bullet.Vector2Direction());
+            while (angleBetween > 180f)
+                angleBetween -= 180f;
             switch (bulletInteraction)
             {
                 case 0:
                     destroyFlag = true;
                     break;
                 case 1:
-                    if (angleBetween <= 22.5f)
+                    if (angleBetween <= 22.5f || angleBetween >= 157.5f)
                         destroyFlag = true;
                     break;
                 case 2:
-                    if (angleBetween <= 67.5f)
+                    if (angleBetween <= 67.5f || angleBetween >= 112.5f)
                         destroyFlag = true;
                     break;
                 case 3:
@@ -402,11 +404,11 @@ public class EnemyBullet : MonoBehaviour
         if (angle > 315f)
             return "up";
         else if (angle > 225f)
-            return "left";
+            return "right";
         else if (angle > 135f)
             return "down";
         else if (angle > 45f)
-            return "right";
+            return "left";
         else
             return "up";
     }

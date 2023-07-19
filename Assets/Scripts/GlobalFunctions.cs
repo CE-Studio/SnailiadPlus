@@ -793,6 +793,12 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
+    public void RemoveGigaBackgroundLayers()
+    {
+        for (int i = PlayState.gigaBGLayers.Count - 1; i >= 0; i--)
+            Destroy(PlayState.gigaBGLayers[i]);
+    }
+
     public void FlashItemText(string itemName)
     {
         StartCoroutine(FlashText("item", itemName));
