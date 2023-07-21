@@ -153,9 +153,36 @@ public class GigaSnail : Boss
         animData = PlayState.GetAnim("Boss_gigaSnail_data").frames;
         if (animData[2] == 1)
             sprite.color = new Color32(255, 255, 255, 0);
-        for (int i = 0; i < 2; i++)
+        for (int i = 1; i <= 2; i++)
         {
+            anim.Add("Boss_gigaSnail_idle" + i.ToString());
+            anim.Add("Boss_gigaSnail_strafe" + i.ToString());
+            for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
+            {
+                anim.Add("Boss_gigaSnail_smash" + i.ToString() + "_" + PlayState.DIRS_COMPASS[j]);
+                anim.Add("Boss_gigaSnail_smash" + i.ToString() + "_collide_" + PlayState.DIRS_COMPASS[j]);
+            }
+            anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_shelled");
+            for (int j = 0; j < PlayState.DIRS_SURFACE.Length; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    string dirMod = k == 0 ? "L" : "R";
+                    if (j == 1 || j == 2)
+                        dirMod = k == 0 ? "D" : "U";
 
+                    anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_unshelled_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_idle_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turn_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_jump_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnAir_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_flip_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_land_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_shell_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    if (i == 1)
+                        anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnRed_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                }
+            }
         }
         anim.Add("Boss_gigaSnail_intro");
         anim.Play("Boss_gigaSnail_intro");
@@ -249,11 +276,14 @@ public class GigaSnail : Boss
         float fadeElapsed = 0;
         while (fadeElapsed < fadeTime)
         {
-            fadeElapsed += Time.deltaTime;
-            if (layer)
-                bgB.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
-            else
-                bgA.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
+            if (PlayState.gameState == PlayState.GameState.game)
+            {
+                fadeElapsed += Time.deltaTime;
+                if (layer)
+                    bgB.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
+                else
+                    bgA.sprite.color = Color32.Lerp(startingColor, targetColor, fadeElapsed / fadeTime);
+            }
             yield return new WaitForEndOfFrame();
         }
         if (layer)
