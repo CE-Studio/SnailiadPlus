@@ -1679,6 +1679,52 @@ public class PlayState {
         return num;
     }
 
+    public static string VectorToCompass(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(Vector2.up, dir);
+        while (angle < 0)
+            angle += 360;
+        while (angle > 360)
+            angle -= 360;
+        if (angle > 337.5f)
+            return "N";
+        else if (angle > 292.5f)
+            return "NE";
+        else if (angle > 247.5f)
+            return "E";
+        else if (angle > 202.5f)
+            return "SE";
+        else if (angle > 157.5f)
+            return "S";
+        else if (angle > 112.5f)
+            return "SW";
+        else if (angle > 67.5f)
+            return "W";
+        else if (angle > 22.5f)
+            return "NW";
+        else
+            return "N";
+    }
+
+    public static string VectorToCardinal(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(Vector2.up, dir);
+        while (angle < 0)
+            angle += 360;
+        while (angle > 360)
+            angle -= 360;
+        if (angle > 315f)
+            return "up";
+        else if (angle > 225f)
+            return "right";
+        else if (angle > 135f)
+            return "down";
+        else if (angle > 45f)
+            return "left";
+        else
+            return "up";
+    }
+
     public static bool IsControllerConnected()
     {
         return Input.GetJoystickNames().Length > 0;

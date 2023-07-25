@@ -7832,6 +7832,13 @@
 				0,
 				0,
 				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
 				0
 			],
 			"loop": false,
@@ -8280,6 +8287,41 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Boss_gigaSnail_sleep1_land",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_floor_L",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_floor_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Boss_gigaSnail_stomp1_idle_floor_L",
 			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
@@ -8426,10 +8468,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_floor_L",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				0,
-				1
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8438,10 +8486,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_floor_R",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				0,
-				1
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8466,6 +8520,54 @@
 			"frames": [
 				12,
 				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_floor_L",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_floor_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_wallL_D",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_wallL_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8618,10 +8720,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_wallL_D",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				2,
-				3
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8630,10 +8738,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_wallL_U",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				2,
-				3
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8658,6 +8772,54 @@
 			"frames": [
 				14,
 				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_wallL_D",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_wallL_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_wallR_D",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_wallR_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8810,10 +8972,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_wallR_D",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				2,
-				3
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8822,10 +8990,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_wallR_U",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				2,
-				3
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -8850,6 +9024,54 @@
 			"frames": [
 				14,
 				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_wallR_D",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_wallR_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_ceiling_L",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_unshell_ceiling_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9002,10 +9224,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_ceiling_L",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				0,
-				1
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9014,10 +9242,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp1_shell_ceiling_R",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				0,
-				1
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9037,6 +9271,30 @@
 		},
 		{
 			"name": "Boss_gigaSnail_stomp1_turnRed_ceiling_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_ceiling_L",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp1_turnRedAir_ceiling_R",
 			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
 			"frames": [
@@ -9471,6 +9729,41 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Boss_gigaSnail_sleep2_land",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_floor_L",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_floor_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Boss_gigaSnail_stomp2_idle_floor_L",
 			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
@@ -9617,10 +9910,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_floor_L",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				12,
-				13
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9629,10 +9928,40 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_floor_R",
 			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_wallL_D",
+			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
 			"frames": [
-				12,
-				13
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_wallL_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9785,6 +10114,42 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_wallL_D",
 			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_shell_wallL_U",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_wallR_D",
+			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
 			"frames": [
 				14,
@@ -9795,7 +10160,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Boss_gigaSnail_stomp2_shell_wallL_U",
+			"name": "Boss_gigaSnail_stomp2_unshell_wallR_U",
 			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
 			"frames": [
@@ -9953,10 +10318,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_wallR_D",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				14,
-				15
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -9965,10 +10336,40 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_wallR_U",
 			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_ceiling_L",
+			"spriteName": "Entities/Boss4SecondForm",
 			"framerate": 3.0,
 			"frames": [
-				14,
-				15
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_stomp2_unshell_ceiling_R",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -10121,10 +10522,16 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_ceiling_L",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				12,
-				13
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -10133,12 +10540,117 @@
 		{
 			"name": "Boss_gigaSnail_stomp2_shell_ceiling_R",
 			"spriteName": "Entities/Boss4SecondForm",
-			"framerate": 3.0,
+			"framerate": 16.0,
 			"frames": [
-				12,
-				13
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
 			],
 			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_spawn",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_N",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_NE",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_E",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_SE",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_S",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_SW",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_W",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_gigaSnail_zzz_attack_NW",
+			"spriteName": "Entities/Boss4Zzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},

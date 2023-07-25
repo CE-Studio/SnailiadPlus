@@ -173,7 +173,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotPeashooter";
                 break;
             case BulletType.bigPea:
-                anim.Play("Bullet_enemy_gigaPea_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_gigaPea_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 6;
                 maxLifetime = 3.6f;
                 box.size = new Vector2(1.45f, 1.45f);
@@ -184,7 +184,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotPeashooterDev";
                 break;
             case BulletType.boomBlue:
-                anim.Play("Bullet_enemy_boomerang1_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_boomerang1_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 4f;
                 box.size = new Vector2(1.45f, 1.45f);
@@ -195,7 +195,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotBoomerangDev";
                 break;
             case BulletType.boomRed:
-                anim.Play("Bullet_enemy_boomerang2_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_boomerang2_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 4f;
                 box.size = new Vector2(1.45f, 1.45f);
@@ -220,7 +220,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotEnemyLaser";
                 break;
             case BulletType.donutLinear:
-                anim.Play("Bullet_enemy_donut_linear_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_donut_linear_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 3.8f;
                 box.size = new Vector2(1.45f, 1.45f);
@@ -258,7 +258,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotEnemyDonut";
                 break;
             case BulletType.spikeball:
-                anim.Play("Bullet_enemy_spikeball_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_spikeball_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 2;
                 maxLifetime = 1.6f;
                 box.size = new Vector2(1.7f, 1.7f);
@@ -269,7 +269,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "Cannon";
                 break;
             case BulletType.shadowWave:
-                anim.Play("Bullet_enemy_shadowWave_" + VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_shadowWave_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 16;
                 maxLifetime = 2f;
                 box.size = new Vector2(2.4f, 2.4f);
@@ -283,7 +283,7 @@ public class EnemyBullet : MonoBehaviour
                 bulletInteraction = 0;
                 break;
             case BulletType.gigaWave:
-                anim.Play("Bullet_enemy_gigaWave_" + VectorToCardinal(new Vector2(dirVelVars[1], dirVelVars[2])));
+                anim.Play("Bullet_enemy_gigaWave_" + PlayState.VectorToCardinal(new Vector2(dirVelVars[1], dirVelVars[2])));
                 damage = 12;
                 maxLifetime = 2f;
                 box.size = new Vector2(2f, 5.9f);
@@ -365,52 +365,6 @@ public class EnemyBullet : MonoBehaviour
             SetDestroyableLevels("000000", true);
             bulletInteraction = 0;
         }
-    }
-
-    private string VectorToCompass(Vector2 dir)
-    {
-        float angle = Vector2.SignedAngle(Vector2.up, dir);
-        while (angle < 0)
-            angle += 360;
-        while (angle > 360)
-            angle -= 360;
-        if (angle > 337.5f)
-            return "N";
-        else if (angle > 292.5f)
-            return "NE";
-        else if (angle > 247.5f)
-            return "E";
-        else if (angle > 202.5f)
-            return "SE";
-        else if (angle > 157.5f)
-            return "S";
-        else if (angle > 112.5f)
-            return "SW";
-        else if (angle > 67.5f)
-            return "W";
-        else if (angle > 22.5f)
-            return "NW";
-        else
-            return "N";
-    }
-
-    private string VectorToCardinal(Vector2 dir)
-    {
-        float angle = Vector2.SignedAngle(Vector2.up, dir);
-        while (angle < 0)
-            angle += 360;
-        while (angle > 360)
-            angle -= 360;
-        if (angle > 315f)
-            return "up";
-        else if (angle > 225f)
-            return "right";
-        else if (angle > 135f)
-            return "down";
-        else if (angle > 45f)
-            return "left";
-        else
-            return "up";
     }
 
     private void SetDestroyableLevels(string data, bool setOffensiveArray)

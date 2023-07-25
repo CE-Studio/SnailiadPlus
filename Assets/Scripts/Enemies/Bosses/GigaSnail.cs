@@ -16,6 +16,7 @@ public class GigaSnail : Boss
     private const float INTEGRATE_SPEED_STOMP = 0.7f;
     private const float INTEGRATE_SPEED_STRAFE = 1.7f;
     private const int CAST_COUNT = 6;
+    private const float SMASH_REFLECT_BUFFER = 0.5f;
 
     private float STRAFE_TIMEOUT = 0.03f;
     private float STRAFE_SPEED = 25f;
@@ -52,7 +53,7 @@ public class GigaSnail : Boss
 
     private PlayState.EDirsCardinal gravity;
 
-    private PlayState.EDirsCardinal lastHitDir;
+    private PlayState.EDirsCardinal lastHitDir = PlayState.EDirsCardinal.None;
     private int lastStomp;
     private int strafeCount;
     private Vector2 velocity;
@@ -88,6 +89,7 @@ public class GigaSnail : Boss
     private bool facingDown = false;
     private bool flipVert = false;
     private PlayState.EDirsCardinal fallDir = PlayState.EDirsCardinal.None;
+    private PlayState.EDirsCardinal lastFallDir = PlayState.EDirsCardinal.None;
 
     private int[] animData;
     /*\
@@ -99,12 +101,41 @@ public class GigaSnail : Boss
      *  4 - Update animation on jump/land during Stomp phase
      *  5 - Update animation on gravity jump during Stomp phase
      *  6 - Update animation on turnaround during Stomp phase
-     *  7 - Frames into Stomp turnaround to flip sprite
-     *  8 - Frames into horizontal Stomp gravity jump to flip sprite
-     *  9 - Frames into vertical Stomp gravity jump to flip sprite
-     * 10 - Update animation on collision during Smash phase
-     * 11 - Update animation on landing during Sleep phase
+     *  7 - Frames into Stomp intro to flip sprite horizontally
+     *  8 - Frames into Stomp intro to flip sprite vertically
+     *  9 - Frames into Stomp outro to flip sprite horizontally
+     * 10 - Frames into Stomp outro to flip sprite vertically
+     * 11 - Frames into grounded Stomp turnaround to flip sprite
+     * 12 - Frames into airborne Stomp turnaround to flip sprite
+     * 13 - Frames into horizontal Stomp gravity jump to flip sprite
+     * 14 - Frames into vertical Stomp gravity jump to flip sprite
+     * 15 - Frames into Sleep intro to flip sprite horizontally
+     * 16 - Frames into Sleep intro to flip sprite vertically
+     * 17 - Update animation on collision during Smash phase
+     * 18 - Update animation on landing during Sleep phase
     \*/
+    private enum AnimData
+    {
+        AllowHorizontalSpriteFlip,
+        AllowVerticalSpriteFlip,
+        FadeInOnSpawn,
+        UpdateAnimOnPhaseChange,
+        UpdateOnJumpLand,
+        UpdateOnGravJump,
+        UpdateOnTurnaround,
+        FramesIntoStompIntroHorizontal,
+        FramesIntoStompIntroVertical,
+        FramesIntoStompOutroHorizontal,
+        FramesIntoStompOutroVertical,
+        FramesIntoGroundedTurnaround,
+        FramesIntoAirborneTurnaround,
+        FramesIntoHorizontalGravJump,
+        FramesIntoVerticalGravJump,
+        FramesIntoSleepIntroHorizontal,
+        FramesIntoSleepIntroVertical,
+        UpdateOnSmashCollision,
+        UpdateOnSleepLand
+    };
 
     private List<PlayState.TargetPoint> stompPoints = new();
 
@@ -151,7 +182,7 @@ public class GigaSnail : Boss
             bossSpeed += 0.2f;
 
         animData = PlayState.GetAnim("Boss_gigaSnail_data").frames;
-        if (animData[2] == 1)
+        if (animData[(int)AnimData.FadeInOnSpawn] == 1)
             sprite.color = new Color32(255, 255, 255, 0);
         for (int i = 1; i <= 2; i++)
         {
@@ -163,6 +194,7 @@ public class GigaSnail : Boss
                 anim.Add("Boss_gigaSnail_smash" + i.ToString() + "_collide_" + PlayState.DIRS_COMPASS[j]);
             }
             anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_shelled");
+            anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_land");
             for (int j = 0; j < PlayState.DIRS_SURFACE.Length; j++)
             {
                 for (int k = 0; k < 2; k++)
@@ -170,17 +202,22 @@ public class GigaSnail : Boss
                     string dirMod = k == 0 ? "L" : "R";
                     if (j == 1 || j == 2)
                         dirMod = k == 0 ? "D" : "U";
+                    string thisDir = PlayState.DIRS_SURFACE[j];
 
-                    anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_unshelled_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_idle_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turn_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_jump_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnAir_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_flip_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_land_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
-                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_shell_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_sleep" + i.ToString() + "_unshelled_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_unshell_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_idle_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turn_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_jump_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnAir_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_flip_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_land_" + thisDir + "_" + dirMod);
+                    anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_shell_" + thisDir + "_" + dirMod);
                     if (i == 1)
-                        anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnRed_" + PlayState.DIRS_SURFACE[j] + "_" + dirMod);
+                    {
+                        anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnRed_" + thisDir + "_" + dirMod);
+                        anim.Add("Boss_gigaSnail_stomp" + i.ToString() + "_turnRedAir_" + thisDir + "_" + dirMod);
+                    }
                 }
             }
         }
@@ -350,6 +387,7 @@ public class GigaSnail : Boss
         velocity = Vector2.zero;
         modeElapsed = 0;
         waitingToJump = false;
+        lastFallDir = fallDir;
         fallDir = PlayState.EDirsCardinal.None;
         lastAnimState = "shell";
     }
@@ -367,7 +405,7 @@ public class GigaSnail : Boss
 
     private void UpdateAIIntro()
     {
-        if (elapsed > 2f && elapsed < 3f && animData[2] == 1)
+        if (elapsed > 2f && elapsed < 3f && animData[(int)AnimData.FadeInOnSpawn] == 1)
             sprite.color = new Color32(255, 255, 255, (byte)((elapsed - 2) * 255));
         else if (elapsed > 3 && introTimer == 0)
         {
@@ -396,7 +434,7 @@ public class GigaSnail : Boss
             }
             modeInitialized = true;
             modeTimeout = 6.2f;
-            //this.playAnim("sleep");
+            PlayAnim(AnimTypes.sleepStart);
             zzzNum = 0;
             zzzTimeout = ZZZ_TIMEOUT;
             if (PlayState.currentProfile.difficulty == 2)
@@ -413,7 +451,8 @@ public class GigaSnail : Boss
             zzzTimeout -= Time.fixedDeltaTime * bossSpeed;
             if (zzzTimeout <= 0 && zzzNum < ZZZ_COUNT)
             {
-                Instantiate(zzzObj, new Vector2(transform.position.x + halfBox.x + 1.5f * zzzNum, transform.position.y), Quaternion.identity, transform);
+                GameObject newZzz = Instantiate(zzzObj, transform.position, Quaternion.identity);
+                newZzz.GetComponent<GigaZzz>().targetPoint = new Vector2(transform.position.x + halfBox.x + 1.5f * zzzNum, transform.position.y);
                 zzzTimeout = ZZZ_TIMEOUT;
                 zzzNum++;
             }
@@ -424,6 +463,7 @@ public class GigaSnail : Boss
                 SetMode(BossMode.Stomp);
             else
                 SetMode(BossMode.Strafe);
+            PlayAnim(AnimTypes.idle);
         }
     }
 
@@ -435,23 +475,19 @@ public class GigaSnail : Boss
             modeTimeout = 6f;
             PickStompTarget();
             UpdateBackground("stomp");
-            lastAnimState = "shell";
         }
         if (lastAnimState == "shell")
         {
             if (Vector2.Distance(transform.position, moveTarget) < 0.625f)
             {
                 if (GetDecision() > 0.5f)
-                {
                     fallDir = PlayState.EDirsCardinal.Down;
-                    //this.playAnim("floor");
-                }
                 else
-                {
                     fallDir = PlayState.EDirsCardinal.Up;
-                    //this.playAnim("ceil");
-                }
-                lastAnimState = "jump";
+                lastFallDir = fallDir;
+                flipVert = fallDir == PlayState.EDirsCardinal.Up;
+                PlayAnim(AnimTypes.shellIntoStomp);
+                FacePlayer();
                 grounded = false;
             }
             transform.position = new Vector2(PlayState.Integrate(transform.position.x, moveTarget.x, INTEGRATE_SPEED_STOMP, Time.fixedDeltaTime * bossSpeed),
@@ -483,6 +519,8 @@ public class GigaSnail : Boss
                     } * Time.fixedDeltaTime;
                     gravJumpTimeout = GRAV_JUMP_TIMEOUT;
                     jumpTimeout = 99999;
+                    if (animData[(int)AnimData.UpdateOnJumpLand] == 1)
+                        PlayAnim(AnimTypes.jump);
                 }
                 else if (((fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right) ? velocity.x : velocity.y) != 0)
                 {
@@ -509,6 +547,7 @@ public class GigaSnail : Boss
             ShootWave();
         if (modeTimeout <= 0)
         {
+            PlayAnim(AnimTypes.stompIntoShell);
             transform.position += PlayState.FRAC_32 * fallDir switch
             {
                 PlayState.EDirsCardinal.Left => Vector3.left,
@@ -534,7 +573,7 @@ public class GigaSnail : Boss
         {
             modeInitialized = true;
             modeTimeout = 5.2f;
-            //this.playAnim("shell");
+            PlayAnim(AnimTypes.idle);
             moveTarget = (Vector2)transform.parent.position + origin;
             aimed = false;
             UpdateBackground("strafe");
@@ -548,6 +587,8 @@ public class GigaSnail : Boss
             aimed = true;
             if (PlayState.currentProfile.difficulty == 2)
                 strafeThetaVel *= 1.6f;
+            if (anim.currentAnimName != "Boss_gigaSnail_strafe" + (attackPhase + 1).ToString() && animData[(int)AnimData.UpdateAnimOnPhaseChange] == 1)
+                PlayAnim(AnimTypes.strafe);
         }
         strafeTheta += strafeThetaVel * Time.fixedDeltaTime * bossSpeed;
         strafeThetaVel += strafeThetaAccel * Time.fixedDeltaTime * bossSpeed;
@@ -570,9 +611,8 @@ public class GigaSnail : Boss
         {
             modeInitialized = true;
             modeTimeout = 6f;
-            //this.playAnim("shell");
             PickSmashDir();
-            velocity = Vector2.zero;
+            PlayAnim(AnimTypes.smash);
             UpdateBackground("smash");
         }
 
@@ -597,6 +637,8 @@ public class GigaSnail : Boss
         if ((hitHorizontal || hitVertical) && modeTimeout <= 5.975f)
         {
             Stomp();
+            if (animData[(int)AnimData.UpdateAnimOnPhaseChange] == 1)
+                PlayAnim(AnimTypes.smashCollide);
         }
 
         if (stomped)
@@ -614,6 +656,7 @@ public class GigaSnail : Boss
         }
         if (modeTimeout <= 0)
         {
+            lastHitDir = PlayState.EDirsCardinal.None;
             if (GetDecision() > 0.5)
                 SetMode(BossMode.Stomp);
             else
@@ -665,6 +708,14 @@ public class GigaSnail : Boss
                         {
                             transform.position += (floorDis - PlayState.FRAC_32) * Vector3.down;
                             Stomp();
+                            if (lastAnimState == "sleepTurn" && animData[(int)AnimData.UpdateOnSleepLand] == 1)
+                            {
+                                PlayAnim(AnimTypes.sleepLand);
+                                facingLeft = false;
+                                facingDown = false;
+                            }
+                            if ((lastAnimState == "stomp" || lastAnimState == "stompTurn") && animData[(int)AnimData.UpdateOnJumpLand] == 1)
+                                PlayAnim(AnimTypes.land);
                         }
                         float ceilDis = GetDistance(PlayState.EDirsCardinal.Up);
                         if (ceilDis < Mathf.Abs(velocity.y) && velocity.y > 0)
@@ -688,6 +739,8 @@ public class GigaSnail : Boss
                         {
                             transform.position += (floorDis - PlayState.FRAC_32) * Vector3.left;
                             Stomp();
+                            if ((lastAnimState == "stomp" || lastAnimState == "stompTurn") && animData[(int)AnimData.UpdateOnJumpLand] == 1)
+                                PlayAnim(AnimTypes.land);
                         }
                         float ceilDis = GetDistance(PlayState.EDirsCardinal.Right);
                         if (ceilDis < Mathf.Abs(velocity.x) && velocity.x > 0)
@@ -711,6 +764,8 @@ public class GigaSnail : Boss
                         {
                             transform.position += (floorDis - PlayState.FRAC_32) * Vector3.right;
                             Stomp();
+                            if ((lastAnimState == "stomp" || lastAnimState == "stompTurn") && animData[(int)AnimData.UpdateOnJumpLand] == 1)
+                                PlayAnim(AnimTypes.land);
                         }
                         float ceilDis = GetDistance(PlayState.EDirsCardinal.Left);
                         if (ceilDis < Mathf.Abs(velocity.x) && velocity.x < 0)
@@ -734,6 +789,8 @@ public class GigaSnail : Boss
                         {
                             transform.position += (floorDis - PlayState.FRAC_32) * Vector3.up;
                             Stomp();
+                            if ((lastAnimState == "stomp" || lastAnimState == "stompTurn") && animData[(int)AnimData.UpdateOnJumpLand] == 1)
+                                PlayAnim(AnimTypes.land);
                         }
                         float ceilDis = GetDistance(PlayState.EDirsCardinal.Down);
                         if (ceilDis < Mathf.Abs(velocity.y) && velocity.y < 0)
@@ -752,12 +809,244 @@ public class GigaSnail : Boss
             }
             transform.position += (Vector3)velocity;
         }
+
+        int thisFrame = anim.GetCurrentFrame();
+        switch (lastAnimState)
+        {
+            case "sleepTurn":
+                if (thisFrame < animData[(int)AnimData.FramesIntoSleepIntroHorizontal] && sprite.flipX == true)
+                    sprite.flipX = true;
+                else
+                    sprite.flipX = false;
+                if (thisFrame < animData[(int)AnimData.FramesIntoSleepIntroVertical] && sprite.flipY == true)
+                    sprite.flipY = true;
+                else
+                    sprite.flipY = false;
+                break;
+            case "stompTurn":
+                if (fallDir == PlayState.EDirsCardinal.Up || fallDir == PlayState.EDirsCardinal.Down)
+                {
+                    sprite.flipX = !facingLeft;
+                    if (thisFrame < animData[(int)(grounded ? AnimData.FramesIntoGroundedTurnaround : AnimData.FramesIntoAirborneTurnaround)])
+                        sprite.flipY = !flipVert;
+                    else
+                        sprite.flipY = flipVert;
+                }
+                else
+                {
+                    sprite.flipY = !facingDown;
+                    if (thisFrame < animData[(int)(grounded ? AnimData.FramesIntoGroundedTurnaround : AnimData.FramesIntoAirborneTurnaround)])
+                        sprite.flipX = !flipHoriz;
+                    else
+                        sprite.flipX = flipHoriz;
+                }
+                break;
+            case "stomp":
+                sprite.flipX = flipHoriz;
+                sprite.flipY = flipVert;
+                break;
+            case "stompEnter":
+                if (thisFrame >= animData[(int)AnimData.FramesIntoStompIntroHorizontal] && flipHoriz)
+                    sprite.flipX = true;
+                else
+                    sprite.flipX = false;
+                if (thisFrame >= animData[(int)AnimData.FramesIntoStompIntroVertical] && flipVert)
+                    sprite.flipY = true;
+                else
+                    sprite.flipY = false;
+                break;
+            case "stompExit":
+                if (thisFrame < animData[(int)AnimData.FramesIntoStompOutroHorizontal] && flipHoriz)
+                    sprite.flipX = true;
+                else
+                    sprite.flipX = false;
+                if (thisFrame < animData[(int)AnimData.FramesIntoStompOutroVertical] && flipVert)
+                    sprite.flipY = true;
+                else
+                    sprite.flipY = false;
+                break;
+            default:
+                sprite.flipX = facingLeft;
+                sprite.flipY = facingDown;
+                break;
+        }
+        if (animData[(int)AnimData.AllowHorizontalSpriteFlip] == 0)
+            sprite.flipX = false;
+        if (animData[(int)AnimData.AllowVerticalSpriteFlip] == 0)
+            sprite.flipY = false;
+    }
+
+    public override void LateUpdate()
+    {
+        invulnerable = !(lastAnimState == "stomp" || lastAnimState == "stompTurn" || lastAnimState == "stompIntro");
+        base.LateUpdate();
+        if (health < maxHealth * 0.4f && attackPhase == 0)
+        {
+            PlayAnim(grounded ? AnimTypes.turnRedGround : AnimTypes.turnRedAir);
+            attackPhase = 1;
+            bossSpeed += 0.5f;
+        }
+    }
+
+    private enum AnimTypes
+    {
+        idle,
+        strafe,
+        smash,
+        smashCollide,
+        sleepStart,
+        sleepLand,
+        shellIntoStomp,
+        stompIdle,
+        jump,
+        turnGround,
+        turnAir,
+        flip,
+        land,
+        stompIntoShell,
+        turnRedGround,
+        turnRedAir
+    };
+    private void PlayAnim(AnimTypes state)
+    {
+        string animName = "Boss_gigaSnail_";
+        string att = (attackPhase + 1).ToString();
+
+        switch (state)
+        {
+            default:
+            case AnimTypes.idle:
+                animName += "idle" + att;
+                lastAnimState = "shell";
+                sprite.flipX = false;
+                sprite.flipY = false;
+                break;
+            case AnimTypes.strafe:
+                animName += "strafe" + att;
+                lastAnimState = "shell";
+                sprite.flipX = false;
+                sprite.flipY = false;
+                break;
+            case AnimTypes.smash:
+                animName += "smash" + att + "_" + GetSmashDir();
+                lastAnimState = "shell";
+                break;
+            case AnimTypes.smashCollide:
+                animName += "smash" + att + "_collide_" + GetSmashDir();
+                lastAnimState = "shell";
+                break;
+            case AnimTypes.sleepStart:
+                if (lastAnimState == "shell" || lastFallDir == PlayState.EDirsCardinal.None)
+                    animName += "sleep" + att + "_shelled";
+                else
+                    animName += "sleep" + att + "_unshelled_" + FallEnumToString(lastFallDir) + "_" + GetFacingString();
+                lastAnimState = "sleepTurn";
+                break;
+            case AnimTypes.sleepLand:
+                animName += "sleep" + att + "_land";
+                lastAnimState = "shell";
+                sprite.flipX = false;
+                sprite.flipY = false;
+                break;
+            case AnimTypes.shellIntoStomp:
+                animName += "stomp" + att + "_unshell_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = animData[(int)AnimData.UpdateOnJumpLand] == 1 ? "stompIntro" : "stomp";
+                break;
+            case AnimTypes.stompIdle:
+                animName += "stomp" + att + "_idle_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stomp";
+                break;
+            case AnimTypes.jump:
+                animName += "stomp" + att + "_jump_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stomp";
+                break;
+            case AnimTypes.turnGround:
+                animName += "stomp" + att + "_turn_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stompTurn";
+                break;
+            case AnimTypes.turnAir:
+                animName += "stomp" + att + "_turnAir_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stompTurn";
+                break;
+            case AnimTypes.flip:
+                animName += "stomp" + att + "_flip_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stompTurn";
+                break;
+            case AnimTypes.land:
+                animName += "stomp" + att + "_land_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stomp";
+                break;
+            case AnimTypes.stompIntoShell:
+                animName += "stomp" + att + "_shell_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stompOutro";
+                break;
+            case AnimTypes.turnRedGround:
+                animName += "stomp" + att + "_turnRed_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stomp";
+                break;
+            case AnimTypes.turnRedAir:
+                animName += "stomp" + att + "_turnRedAir_" + FallEnumToString(fallDir) + "_" + GetFacingString();
+                lastAnimState = "stomp";
+                break;
+        }
+
+        if (!anim.isPlaying)
+            animName = "Boss_gigaSnail_idle" + (attackPhase + 1).ToString();
+        if (anim.currentAnimName != animName)
+            anim.Play(animName);
+    }
+
+    private string GetSmashDir()
+    {
+        float angle = Vector2.SignedAngle(Vector2.up, smashAccel.normalized);
+        while (angle < 0)
+            angle += 360;
+        while (angle > 360)
+            angle -= 360;
+        if (angle > 337.5f)
+            return "N";
+        else if (angle > 292.5f)
+            return "NE";
+        else if (angle > 247.5f)
+            return "E";
+        else if (angle > 202.5f)
+            return "SE";
+        else if (angle > 157.5f)
+            return "S";
+        else if (angle > 112.5f)
+            return "SW";
+        else if (angle > 67.5f)
+            return "W";
+        else if (angle > 22.5f)
+            return "NW";
+        else
+            return "N";
+    }
+
+    private string GetFacingString()
+    {
+        if (lastFallDir == PlayState.EDirsCardinal.Up || lastFallDir == PlayState.EDirsCardinal.Down)
+            return facingLeft ? "L" : "R";
+        else
+            return facingDown ? "D" : "U";
+    }
+
+    private string FallEnumToString(PlayState.EDirsCardinal dir)
+    {
+        return dir switch
+        {
+            PlayState.EDirsCardinal.Down => "floor",
+            PlayState.EDirsCardinal.Left => "wallL",
+            PlayState.EDirsCardinal.Right => "wallR",
+            PlayState.EDirsCardinal.Up => "ceiling",
+            _ => "floor"
+        };
     }
 
     private void AimStrafe()
     {
         float fireAngle = Mathf.Atan2(PlayState.player.transform.position.y - transform.position.y, PlayState.player.transform.position.x - transform.position.x);
-        strafeCount = Mathf.Clamp(Mathf.RoundToInt(2.3f + 5f * (maxHealth - health) / maxHealth), 2, 7);
+        strafeCount = Mathf.Clamp(Mathf.FloorToInt(2.3f + 5f * (maxHealth - health) / maxHealth), 2, 7);
         strafeTheta = fireAngle - Mathf.PI / strafeCount;
     }
 
@@ -784,9 +1073,13 @@ public class GigaSnail : Boss
         velocity = Vector2.zero;
         smashAccel = new Vector2(SMASH_SPEED * bossSpeed * Mathf.Cos(angle), SMASH_SPEED * bossSpeed * Mathf.Sin(angle)) * Time.fixedDeltaTime;
 
-        if ((lastHitDir == PlayState.EDirsCardinal.Right && smashAccel.x > 0) || (lastHitDir == PlayState.EDirsCardinal.Left && smashAccel.x < 0))
+        if ((lastHitDir == PlayState.EDirsCardinal.Right && smashAccel.x > 0) || (lastHitDir == PlayState.EDirsCardinal.Left && smashAccel.x < 0) ||
+            GetDistance(smashAccel.x > 0 ? PlayState.EDirsCardinal.Right : PlayState.EDirsCardinal.Left) < SMASH_REFLECT_BUFFER)
             smashAccel.x *= -1;
-        if ((lastHitDir == PlayState.EDirsCardinal.Up && smashAccel.y > 0) || (lastHitDir == PlayState.EDirsCardinal.Down && smashAccel.y < 0))
+
+
+        if ((lastHitDir == PlayState.EDirsCardinal.Up && smashAccel.y > 0) || (lastHitDir == PlayState.EDirsCardinal.Down && smashAccel.y < 0) ||
+            GetDistance(smashAccel.y > 0 ? PlayState.EDirsCardinal.Up : PlayState.EDirsCardinal.Down) < SMASH_REFLECT_BUFFER)
             smashAccel.y *= -1;
     }
 
@@ -795,13 +1088,14 @@ public class GigaSnail : Boss
         if (fallDir == PlayState.EDirsCardinal.None)
             return;
 
+        bool lastState = (fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right) ? facingLeft : facingDown;
         if (fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right)
         {
             bool targetState = PlayState.player.transform.position.y < transform.position.y;
             if (targetState != facingDown)
             {
                 facingDown = targetState;
-                if (animData[6] != 1)
+                if (animData[(int)AnimData.UpdateOnTurnaround] != 1)
                     flipVert = targetState;
                 else if (flipVert == targetState)
                     flipVert = !targetState;
@@ -813,12 +1107,15 @@ public class GigaSnail : Boss
             if (targetState != facingLeft)
             {
                 facingLeft = targetState;
-                if (animData[6] != 1)
+                if (animData[(int)AnimData.UpdateOnTurnaround] != 1)
                     flipHoriz = targetState;
                 else if (flipHoriz == targetState)
                     flipHoriz = !targetState;
             }
         }
+        bool currentState = (fallDir == PlayState.EDirsCardinal.Left || fallDir == PlayState.EDirsCardinal.Right) ? facingLeft : facingDown;
+        if (currentState != lastState && animData[(int)AnimData.UpdateOnTurnaround] == 1)
+            PlayAnim(grounded ? AnimTypes.turnGround : AnimTypes.turnAir);
     }
 
     private void CollectTargetPoints()

@@ -102,7 +102,7 @@ public class MoonSnail : Boss
      * 5 - Restart shadow ball animations on teleport
     \*/
 
-    private readonly bool debugSkipToGiga = true;
+    private readonly bool debugSkipToGiga = false;
 
     private void Awake()
     {
@@ -448,25 +448,25 @@ public class MoonSnail : Boss
             {
                 default:
                 case PlayState.EDirsSurface.Floor:
-                    if (distanceX < AIM_DETECT_RADIUS_HORIZONTAL && distanceY > AIM_DETECT_RADIUS_VERTICAL)
+                    if (distanceX < AIM_DETECT_RADIUS_HORIZONTAL || distanceY > AIM_DETECT_RADIUS_VERTICAL)
                         PressInput(Inputs.Up);
                     else
                         ReleaseInput(Inputs.Up);
                     break;
                 case PlayState.EDirsSurface.WallL:
-                    if (distanceY < AIM_DETECT_RADIUS_HORIZONTAL && distanceX > AIM_DETECT_RADIUS_VERTICAL)
+                    if (distanceY < AIM_DETECT_RADIUS_HORIZONTAL || distanceX > AIM_DETECT_RADIUS_VERTICAL)
                         PressInput(Inputs.Right);
                     else
                         ReleaseInput(Inputs.Right);
                     break;
                 case PlayState.EDirsSurface.WallR:
-                    if (distanceY < AIM_DETECT_RADIUS_HORIZONTAL && distanceX > AIM_DETECT_RADIUS_VERTICAL)
+                    if (distanceY < AIM_DETECT_RADIUS_HORIZONTAL || distanceX > AIM_DETECT_RADIUS_VERTICAL)
                         PressInput(Inputs.Left);
                     else
                         ReleaseInput(Inputs.Left);
                     break;
                 case PlayState.EDirsSurface.Ceiling:
-                    if (distanceX < AIM_DETECT_RADIUS_HORIZONTAL && distanceY > AIM_DETECT_RADIUS_VERTICAL)
+                    if (distanceX < AIM_DETECT_RADIUS_HORIZONTAL || distanceY > AIM_DETECT_RADIUS_VERTICAL)
                         PressInput(Inputs.Down);
                     else
                         ReleaseInput(Inputs.Down);
@@ -840,8 +840,8 @@ public class MoonSnail : Boss
             return;
         weaponTimeout = weaponTimeouts[currentWeapon];
 
-        Vector2 inputDir = new(0 + (GetInput(Inputs.Right) > 0 ? 1 : 0) - (GetInput(Inputs.Left) > 0 ? 1 : 0),
-            0 + (GetInput(Inputs.Up) > 0 ? 1 : 0) - (GetInput(Inputs.Down) > 0 ? 1 : 0));
+        Vector2 inputDir = new(0 + (GetInput(Inputs.Right) > 1 ? 1 : 0) - (GetInput(Inputs.Left) > 1 ? 1 : 0),
+            0 + (GetInput(Inputs.Up) > 1 ? 1 : 0) - (GetInput(Inputs.Down) > 1 ? 1 : 0));
         int type = currentWeapon;
         int dir = 0;
         switch (inputDir.x + "" + inputDir.y)
