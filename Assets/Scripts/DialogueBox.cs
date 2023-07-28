@@ -13,9 +13,12 @@ public class DialogueBox : MonoBehaviour
     public GameObject portrait;
     public TextMesh dialogueText;
     public TextMesh dialogueShadow;
-    public Transform roomText;
+
+    private float roomNameAdjustAmount = 0;
 
     public GameObject letter;
+    public GameObject textObj;
+    public Font font;
 
     public int[] charWidths;
 
@@ -23,7 +26,7 @@ public class DialogueBox : MonoBehaviour
     private float portraitPos = 0;
     private int boxState = 0;
     private Vector2 pointer = Vector2.zero;          // This pointer points to what letter of page of text it's looking at
-    private Vector2 posPointerOrigin = new Vector2(-10.6875f, 1.125f);
+    private Vector2 posPointerOrigin = new(-11.1875f, 1.875f);
     private Vector2 posPointer;
     private const int MAX_LINE_WIDTH = 246;
     private bool buttonDown = false;
@@ -34,6 +37,7 @@ public class DialogueBox : MonoBehaviour
     public Sprite[] playerPortraits;
     private bool forceDownPosition;
     private float posVar;
+    private List<TextObject> textObjs;
 
     private SpriteRenderer portraitFrame;
     private AnimationModule portraitFrameAnim;
@@ -56,7 +60,7 @@ public class DialogueBox : MonoBehaviour
     private float timer = 0;
     private int currentSound = 0;
     private Vector2 currentColor = new Vector2(3, 12);
-    private string currentEffect = "None";
+    private string currentEffect = "none";
     public bool boxOpenAnimComplete = false;
 
     private readonly string[] boxShapeIDs = new string[]
@@ -82,8 +86,10 @@ public class DialogueBox : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         dialogueText = transform.Find("Text").gameObject.GetComponent<TextMesh>();
         dialogueShadow = transform.Find("Shadow").gameObject.GetComponent<TextMesh>();
-        roomText = GameObject.Find("View/Minimap Panel/Room Name Parent").transform;
-        roomTextOrigin = roomText.localPosition;
+        roomTextOrigin = PlayState.hudRoomName.transform.localPosition;
+
+        textObj = Resources.Load<GameObject>("Objects/Text Object");
+        font = textObj.GetComponent<TextMesh>().font;
 
         portraitFrame = portrait.GetComponent<SpriteRenderer>();
         portraitFrameAnim = portrait.GetComponent<AnimationModule>();
@@ -151,33 +157,25 @@ public class DialogueBox : MonoBehaviour
             }
 
             if (dialogueType != 1)
-            {
                 transform.localPosition = new Vector2(0, camPos);
-            }
             else
-            {
                 transform.localPosition = Vector2.zero;
-            }
 
             portrait.transform.localPosition = new Vector2(-10, portraitPos);
             portraitPos = Mathf.Lerp(portraitPos, 3, 7 * Time.deltaTime);
 
             if (dialogueType == 2 && boxState == 0)
-            {
-                if (player.transform.position.y > cam.transform.position.y + 0.125f)
-                {
-                    camPos = transform.localPosition.y - 4.5f;
-                }
-                else
-                {
-                    camPos = transform.localPosition.y + 4.5f;
-                }
-            }
+                camPos = transform.localPosition.y + 4.5f * (player.transform.position.y > cam.transform.position.y + 0.125f ? -1 : 1);
 
             if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + 0.125f)
-                roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x + 5, 8 * Time.deltaTime), roomTextOrigin.y);
+            {
+                if (roomNameAdjustAmount == 0)
+                    roomNameAdjustAmount = PlayState.hudRoomName.GetWidth(true) + 0.25f;
+            }
             else
-                roomText.localPosition = new Vector2(Mathf.Lerp(roomText.localPosition.x, roomTextOrigin.x, 8 * Time.deltaTime), roomTextOrigin.y);
+                roomNameAdjustAmount = 0;
+            PlayState.hudRoomName.position = new Vector2(Mathf.Lerp(PlayState.hudRoomName.position.x,
+                roomTextOrigin.x + roomNameAdjustAmount, 8 * Time.deltaTime), roomTextOrigin.y);
 
             if (!active)
                 return;
@@ -203,7 +201,7 @@ public class DialogueBox : MonoBehaviour
                     currentTimerMax = 0.02f;
                     currentSound = 0;
                     currentColor = new Vector2(3, 12);
-                    currentEffect = "None";
+                    currentEffect = "none";
                     initializationCooldown = INITIALIZATION_MAX;
                     break;
                 case 1:
@@ -317,7 +315,7 @@ public class DialogueBox : MonoBehaviour
                                 dialogueShadow.text = "";
                                 for (int i = transform.childCount - 1; i >= 0; i--)
                                 {
-                                    if (transform.GetChild(i).name.Contains("Font Object"))
+                                    if (transform.GetChild(i).name.Contains("Text Object"))
                                         Destroy(transform.GetChild(i).gameObject);
                                 }
                                 posPointer = posPointerOrigin;
@@ -369,7 +367,7 @@ public class DialogueBox : MonoBehaviour
                         posPointer = new Vector2(posPointerOrigin.x, posPointer.y - 1.125f);
                         break;
                     case "eff":   // Effect
-                        currentEffect = args[1];
+                        currentEffect = args[1].ToLower();
                         break;
                     case "spd":   // Speed
                         currentTimerMax = float.Parse(args[1]);
@@ -400,13 +398,17 @@ public class DialogueBox : MonoBehaviour
         }
         if (advanceChar)
         {
-            GameObject newLetter = Instantiate(letter);
+            GameObject newLetter = Instantiate(textObj);
             newLetter.transform.parent = transform;
             newLetter.transform.localPosition = posPointer;
-            FontObject newLetterScript = newLetter.GetComponent<FontObject>();
-            newLetterScript.Create(thisChar, 3, currentEffect, currentColor);
-            int addedWidth = (charWidths[newLetterScript.ID] + 1) * 2;
-            posPointer.x += addedWidth * 0.0625f;
+            TextObject newLetterScript = newLetter.GetComponent<TextObject>();
+            newLetterScript.CreateShadow();
+            newLetterScript.SetText(thisChar.ToString());
+            newLetterScript.SetColor(PlayState.GetColor(currentColor));
+            newLetterScript.SetMovement((TextObject.MoveEffects)System.Enum.Parse(typeof(TextObject.MoveEffects), currentEffect));
+            font.RequestCharactersInTexture(thisChar.ToString());
+            font.GetCharacterInfo(thisChar, out CharacterInfo info);
+            posPointer.x += info.advance * PlayState.FRAC_16;
 
             if (mute)
                 playSound = false;
@@ -486,7 +488,7 @@ public class DialogueBox : MonoBehaviour
         active = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            if (transform.GetChild(i).name.Contains("Font Object"))
+            if (transform.GetChild(i).name.Contains("Text Object"))
                 Destroy(transform.GetChild(i).gameObject);
         }
         if (stalledCutscene != null)

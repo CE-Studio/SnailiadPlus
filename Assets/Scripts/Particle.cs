@@ -8,8 +8,8 @@ public class Particle : MonoBehaviour
     public AnimationModule anim;
     public SpriteRenderer sprite;
     public string type = "";
-    public float[] vars = new float[] { 0, 0, 0, 0, 0, 0 };
-    private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0 };
+    public float[] vars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+    private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
     public void Start()
@@ -85,33 +85,104 @@ public class Particle : MonoBehaviour
                         if (transform.position.y > vars[2] - 0.25f)
                             ResetParticle();
                         break;
+                    case "gigaStar":
+                        for (int i = 2; i < 7; i++)
+                        {
+                            if (i == vars[0] + 2)
+                                internalVars[i] = Mathf.Clamp(internalVars[i] + Time.deltaTime, 0f, 1f);
+                            else
+                                internalVars[i] = Mathf.Clamp(internalVars[i] - Time.deltaTime, 0f, 1f);
+                        }
+
+                        float linearMod = 2.5f;
+                        float gigaCenterDis = Vector2.Distance(transform.position, PlayState.cam.transform.position);
+                        internalVars[0] = 0;
+                        internalVars[1] = 0;
+                        // Intro - to center
+                        Vector2 gigaToCenter = (Vector2)(PlayState.cam.transform.position - transform.position).normalized * vars[2];
+                        internalVars[0] += gigaToCenter.x * internalVars[2];
+                        internalVars[1] += gigaToCenter.y * internalVars[2];
+                        // Stomp - N
+                        internalVars[1] += Mathf.Abs(vars[1]) * internalVars[3] * linearMod;
+                        // Strafe - to border
+                        Vector2 gigaFromCenter = (Vector2)(PlayState.cam.transform.position - transform.position).normalized * -vars[2];
+                        internalVars[0] += gigaFromCenter.x * internalVars[4];
+                        internalVars[1] += gigaFromCenter.y * internalVars[4];
+                        // Smash - SE
+                        internalVars[0] += Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]) * internalVars[5] * linearMod;
+                        internalVars[1] += -Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]) * internalVars[5] * linearMod;
+                        // Sleep - don't move at all
+                        transform.position += new Vector3(internalVars[0], internalVars[1]);
+                        if (internalVars[2] > 0.25f)
+                        {
+                            if (gigaCenterDis < Vector2.Distance(transform.position, PlayState.cam.transform.position))
+                            {
+                                if (Mathf.Round(Random.Range(0f, 1f)) == 1)
+                                {
+                                    transform.position = (Vector2)PlayState.cam.transform.position +
+                                        new Vector2(Mathf.Round(Random.Range(0f, 1f)) == 1 ? 13 : -13, Random.Range(-8, 8));
+                                }
+                                else
+                                {
+                                    transform.position = (Vector2)PlayState.cam.transform.position +
+                                        new Vector2(Random.Range(-13, 13), Mathf.Round(Random.Range(0f, 1f)) == 1 ? 8 : -8);
+                                }
+                                internalVars[0] = 0;
+                                internalVars[1] = 0;
+                            }
+                        }
+                        else if (internalVars[4] > 0.25f)
+                        {
+                            if (transform.position.x < PlayState.cam.transform.position.x - 13 ||
+                                transform.position.x > PlayState.cam.transform.position.x + 13 ||
+                                transform.position.y < PlayState.cam.transform.position.y - 8 ||
+                                transform.position.y > PlayState.cam.transform.position.y + 8)
+                            {
+                                transform.position = (Vector2)PlayState.cam.transform.position +
+                                    new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+                                internalVars[0] = 0;
+                                internalVars[1] = 0;
+                            }
+                        }
+                        else
+                        {
+                            while (transform.position.x < PlayState.cam.transform.position.x - 13)
+                                transform.position = new(transform.position.x + 26, transform.position.y);
+                            while (transform.position.x > PlayState.cam.transform.position.x + 13)
+                                transform.position = new(transform.position.x - 26, transform.position.y);
+                            while (transform.position.y < PlayState.cam.transform.position.y - 8)
+                                transform.position = new(transform.position.x, transform.position.y + 16);
+                            while (transform.position.y > PlayState.cam.transform.position.y + 8)
+                                transform.position = new(transform.position.x, transform.position.y - 16);
+                        }
+                        break;
                     case "heat":
                         vars[0] += Time.deltaTime * vars[4];
-                        transform.position = new Vector2(vars[3] + Mathf.Sin(vars[0]) * vars[4], transform.position.y + vars[1] * Time.deltaTime);
+                        transform.position = new(vars[3] + Mathf.Sin(vars[0]) * vars[4], transform.position.y + vars[1] * Time.deltaTime);
                         vars[1] -= vars[2] * Time.deltaTime;
                         while (transform.position.x < PlayState.cam.transform.position.x - 13)
-                            transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                            transform.position = new(transform.position.x + 26, transform.position.y);
                         while (transform.position.x > PlayState.cam.transform.position.x + 13)
-                            transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                            transform.position = new(transform.position.x - 26, transform.position.y);
                         break;
                     case "nom":
                         internalVars[0] += Time.deltaTime;
-                        transform.position = new Vector2(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
+                        transform.position = new(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
                         break;
                     case "snow":
-                        transform.position = new Vector2(transform.position.x + (Mathf.Sin(vars[1] * 4) - 1) * 2.5f * Time.deltaTime,
+                        transform.position = new(transform.position.x + (Mathf.Sin(vars[1] * 4) - 1) * 2.5f * Time.deltaTime,
                             transform.position.y - vars[0] * Time.deltaTime);
                         vars[1] += Time.deltaTime;
                         if (vars[1] > Mathf.PI * 2)
                             vars[1] -= Mathf.PI * 2;
                         while (transform.position.x < PlayState.cam.transform.position.x - 13)
-                            transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                            transform.position = new(transform.position.x + 26, transform.position.y);
                         while (transform.position.x > PlayState.cam.transform.position.x + 13)
-                            transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                            transform.position = new(transform.position.x - 26, transform.position.y);
                         while (transform.position.y < PlayState.cam.transform.position.y - 8)
-                            transform.position = new Vector2(transform.position.x, transform.position.y + 16);
+                            transform.position = new(transform.position.x, transform.position.y + 16);
                         while (transform.position.y > PlayState.cam.transform.position.y + 8)
-                            transform.position = new Vector2(transform.position.x, transform.position.y - 16);
+                            transform.position = new(transform.position.x, transform.position.y - 16);
                         break;
                     case "star":
                         float centerDis = Vector2.Distance(transform.position, PlayState.cam.transform.position);
@@ -199,13 +270,13 @@ public class Particle : MonoBehaviour
                         else
                         {
                             while (transform.position.x < PlayState.cam.transform.position.x - 13)
-                                transform.position = new Vector2(transform.position.x + 26, transform.position.y);
+                                transform.position = new(transform.position.x + 26, transform.position.y);
                             while (transform.position.x > PlayState.cam.transform.position.x + 13)
-                                transform.position = new Vector2(transform.position.x - 26, transform.position.y);
+                                transform.position = new(transform.position.x - 26, transform.position.y);
                             while (transform.position.y < PlayState.cam.transform.position.y - 8)
-                                transform.position = new Vector2(transform.position.x, transform.position.y + 16);
+                                transform.position = new(transform.position.x, transform.position.y + 16);
                             while (transform.position.y > PlayState.cam.transform.position.y + 8)
-                                transform.position = new Vector2(transform.position.x, transform.position.y - 16);
+                                transform.position = new(transform.position.x, transform.position.y - 16);
                         }
                         MoveToCamSynced();
                         break;
@@ -249,6 +320,9 @@ public class Particle : MonoBehaviour
                     _ => "small"
                 });
                 break;
+            case "gigaStar":
+                anim.Play("Star" + Random.Range(1, 5).ToString());
+                break;
             case "heat":
                 anim.Play(Random.Range(0, 3) switch { 1 => "Dot_heat_small", 2 => "Dot_heat_medium", _ => "Dot_heat_tiny" });
                 break;
@@ -288,6 +362,7 @@ public class Particle : MonoBehaviour
             "transformation" => -51,
             "heat" => Random.Range(0, 4) switch { 0 => -124, 1 => -110, 2 => -24, _ => -1 },
             "star" => -115,
+            "gigaStar" => -96,
             _ => -15
         };
         sprite.color = animType switch

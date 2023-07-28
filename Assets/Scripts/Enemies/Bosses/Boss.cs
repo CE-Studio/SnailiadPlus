@@ -101,9 +101,13 @@ public class Boss : Enemy
         frameAnim.Play("BossBar_frame_idle");
         if (col != null)
             col.enabled = false;
-        if (!isFinalBoss)
-            PlayState.globalFunctions.currentBossName = PlayState.GetText(
-                "boss_" + ID switch { 0 => "shellbreaker", 1 => "stompy", 2 => "spaceBox", _ => "moonSnail" } + (PlayState.currentArea == 7 ? "_rush" : ""));
+        PlayState.globalFunctions.currentBossName = PlayState.GetText( "boss_" + ID switch
+        {
+            0 => "shellbreaker",
+            1 => "stompy",
+            2 => "spaceBox",
+            _ => isFinalBoss ? "gigaSnail" : "moonSnail"
+        } + (PlayState.currentArea == 7 ? "_rush" : ""));
 
         int playBeep = 0;
         while (introTimer <= introTimestamps[4])

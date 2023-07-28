@@ -15,8 +15,7 @@ public class MainMenu : MonoBehaviour
         public int optionID;
         public bool selectable;
         public DestinationDelegate destinationPage;
-        public GameObject optionObject;
-        public TextMesh[] textParts;
+        public TextObject textScript;
         public int[] menuParam;
     }
 
@@ -28,11 +27,13 @@ public class MainMenu : MonoBehaviour
     private bool pauseButtonDown = false;
     private bool fadingToIntro = false;
 
-    private const float LIST_CENTER_Y = -2.5f;
+    private const float LIST_CENTER_Y = -1.25f;
     private const float LIST_OPTION_SPACING = 1.25f;
     private float currentSpawnY = LIST_CENTER_Y;
-    private const float SELECT_SNAIL_VERTICAL_OFFSET = 0.625f;
+    private const float SELECT_SNAIL_VERTICAL_OFFSET = -0.625f;
     private const float LETTER_SPAWN_TIME = Mathf.PI / 11;
+
+    private List<TextObject> activeOptions = new();
 
     private int selectedOption = 0;
     private float selectSnailOffset = 0;
@@ -162,6 +163,8 @@ public class MainMenu : MonoBehaviour
 
         titleHomePos = PlayState.titleParent.transform.localPosition;
         PlayState.titleParent.transform.localPosition = new Vector2(titleHomePos.x, titleHomePos.y + letterOffsetForIntro);
+
+        textObject = Resources.Load<GameObject>("Objects/Text Object");
     }
 
     void Update()
@@ -784,7 +787,7 @@ public class MainMenu : MonoBehaviour
         {
             selector[0].transform.localPosition = new Vector2(0,
                     Mathf.Lerp(selector[0].transform.localPosition.y,
-                    currentOptions[selectedOption].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
+                    currentOptions[selectedOption].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
             selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
             selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
         }
@@ -901,8 +904,7 @@ public class MainMenu : MonoBehaviour
 
     public void AddToOptionText(MenuOption option, string text)
     {
-        option.textParts[0].text = (option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : "");
-        option.textParts[1].text = (option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : "");
+        option.textScript.SetText((option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : ""));
     }
 
     public void AddOption(string text = "", bool isSelectable = true)
@@ -927,10 +929,10 @@ public class MainMenu : MonoBehaviour
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null, string variable = "none")
     {
-        foreach (Transform entry in transform)
+        foreach (TextObject selectedText in activeOptions)
         {
-            if (entry.name.Contains("Text Object"))
-                entry.localPosition = new Vector2(0, entry.transform.localPosition.y + (LIST_OPTION_SPACING * 0.5f));
+            selectedText.position += new Vector2(0f, LIST_OPTION_SPACING * 0.5f);
+            selectedText.transform.localPosition = selectedText.position;
         }
 
         MenuOption option = new MenuOption
@@ -944,21 +946,19 @@ public class MainMenu : MonoBehaviour
 
         GameObject newText = Instantiate(textObject);
         newText.transform.parent = transform;
-        option.optionObject = newText;
-        option.textParts = new TextMesh[]
-        {
-            option.optionObject.transform.GetChild(0).GetComponent<TextMesh>(),
-            option.optionObject.transform.GetChild(1).GetComponent<TextMesh>()
-        };
-        option.textParts[0].text = option.optionText;
-        option.textParts[1].text = option.optionText;
-        newText.transform.localPosition = new Vector3(0, currentSpawnY);
+        option.textScript = newText.GetComponent<TextObject>();
+        option.textScript.SetText(option.optionText);
+        option.textScript.SetAlignment("center");
+        option.textScript.CreateShadow();
+        option.textScript.position = new Vector3(0, currentSpawnY);
+        option.textScript.transform.localPosition = option.textScript.position;
+        activeOptions.Add(option.textScript);
         currentSpawnY -= LIST_OPTION_SPACING * 0.5f;
 
         if (paramChange != null)
             option.menuParam = paramChange;
 
-        option.textParts[0].color = option.selectable ? PlayState.GetColor("0312") : PlayState.GetColor("0309");
+        option.textScript.SetColor(option.selectable ? PlayState.GetColor("0312") : PlayState.GetColor("0309"));
 
         currentOptions.Add(option);
     }
@@ -1013,24 +1013,23 @@ public class MainMenu : MonoBehaviour
 
     public void ClearOptions()
     {
+        activeOptions.Clear();
         foreach (MenuOption option in currentOptions)
-        {
-            Destroy(option.optionObject);
-        }
+            Destroy(option.textScript.gameObject);
         currentOptions.Clear();
         currentSpawnY = LIST_CENTER_Y;
     }
 
     public void GetNewSnailOffset()
     {
-        Bounds textBounds = currentOptions[selectedOption].optionObject.transform.GetChild(0).GetComponent<MeshRenderer>().bounds;
-        selectSnailOffset = textBounds.max.x - textBounds.center.x + 1.5f;
+        float textBounds = currentOptions[selectedOption].textScript.GetWidth(true);
+        selectSnailOffset = textBounds * 0.5f + 1.5f;
     }
 
     public void ForceSelect(int optionNum)
     {
         selectedOption = optionNum;
-        selector[0].transform.localPosition = new Vector2(0, currentOptions[optionNum].optionObject.transform.localPosition.y + SELECT_SNAIL_VERTICAL_OFFSET);
+        selector[0].transform.localPosition = new Vector2(0, currentOptions[optionNum].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET);
         GetNewSnailOffset();
         selector[1].transform.localPosition = new Vector2(-selectSnailOffset, 0);
         selector[2].transform.localPosition = new Vector2(selectSnailOffset, 0);
@@ -1133,18 +1132,10 @@ public class MainMenu : MonoBehaviour
 
     public void SetTextComponentOrigins()
     {
-        PlayState.pauseText.GetComponent<TextAligner>().originalPos = new Vector2(-12.4375f, -7.3775f + (PlayState.generalData.keymapState ? 2 : (
+        PlayState.hudPause.position = new Vector2(-12.4375f, -6.875f + (PlayState.generalData.keymapState ? 2 : (
             PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
-        PlayState.pauseShadow.GetComponent<TextAligner>().originalPos = new Vector2(-12.375f, -7.44f + (PlayState.generalData.keymapState ? 2 : (
-            PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
-
-        PlayState.fpsText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f,
-            PlayState.generalData.timeState ? -6.8775f : -7.3775f);
-        PlayState.fpsShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.375f : -12.375f,
-            PlayState.generalData.timeState ? -6.94f : -7.44f);
-
-        PlayState.timeText.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, -7.3775f);
-        PlayState.timeShadow.GetComponent<TextAligner>().originalPos = new Vector2(PlayState.generalData.keymapState ? -10.375f : -12.375f, -7.44f);
+        PlayState.hudFps.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, PlayState.generalData.timeState ? -6.375f : -6.875f);
+        PlayState.hudTime.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, -6.875f);
     }
 
     public void PageIntro()

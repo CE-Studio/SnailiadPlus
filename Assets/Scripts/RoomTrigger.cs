@@ -51,8 +51,8 @@ public class RoomTrigger:MonoBehaviour {
     };
     public string[] roomCommands = new string[] { };
 
-    public TextMesh roomNameText;
-    public TextMesh roomNameShadow;
+    //public TextMesh roomNameText;
+    //public TextMesh roomNameShadow;
 
     public Tilemap bg;
     public Tilemap fg;
@@ -68,8 +68,8 @@ public class RoomTrigger:MonoBehaviour {
 
     void Awake() {
         box = GetComponent<BoxCollider2D>();
-        roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
-        roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
+        //roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
+        //roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
         bg = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
         fg = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
         specialMap = GameObject.Find("Grid/Special").GetComponent<Tilemap>();
@@ -273,8 +273,9 @@ public class RoomTrigger:MonoBehaviour {
                         newRoomName += character;
                 }
             }
-            roomNameText.text = newRoomName;
-            roomNameShadow.text = newRoomName;
+            //roomNameText.text = newRoomName;
+            //roomNameShadow.text = newRoomName;
+            PlayState.hudRoomName.SetText(newRoomName);
 
             PlayState.breakablePositions.Clear();
             CheckSpecialLayer();

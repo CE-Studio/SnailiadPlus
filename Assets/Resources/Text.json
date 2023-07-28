@@ -1681,13 +1681,18 @@
 			"value": 0
 		},
 		{
-			"name": "boss_moonSnail_phase2",
+			"name": "boss_moonSnail_rush",
+			"text": "Sun Snail",
+			"value": 0
+		},
+		{
+			"name": "boss_gigaSnail",
 			"text": "Giga Snail",
 			"value": 0
 		},
 		{
-			"name": "boss_moonSnail_rush",
-			"text": "Sun Snail",
+			"name": "boss_gigaSnail_rush",
+			"text": "Giga Sun Snail",
 			"value": 0
 		},
 		{

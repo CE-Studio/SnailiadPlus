@@ -191,14 +191,11 @@ public class PlayState {
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene;
 
-    public static TextMesh fpsText;
-    public static TextMesh fpsShadow;
-    public static TextMesh timeText;
-    public static TextMesh timeShadow;
-    public static TextMesh pauseText;
-    public static TextMesh pauseShadow;
-    public static TextMesh mapText;
-    public static TextMesh mapShadow;
+    public static TextObject hudFps;
+    public static TextObject hudTime;
+    public static TextObject hudPause;
+    public static TextObject hudMap;
+    public static TextObject hudRoomName;
 
     public enum TargetTypes
     {
@@ -544,8 +541,13 @@ public class PlayState {
         globalFunctions.musicMuted = false;
     }
 
-    public static Color32 GetColor(string ID) {
+    public static Color32 GetColor(string ID)
+    {
         return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
+    }
+    public static Color32 GetColor(Vector2 ID)
+    {
+        return palette.GetPixel((int)ID.x % 4, (int)ID.y % 14);
     }
 
     public static string GetText(string ID) {
@@ -881,6 +883,15 @@ public class PlayState {
                     if ((generalData.particleState > 1 && values[0] <= 4) || ((generalData.particleState == 3 || generalData.particleState == 5) && values[0] > 4)) {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
+                    }
+                    break;
+                case "gigastar":
+                    if (generalData.particleState == 4 || generalData.particleState == 1 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = 0;
+                        particleScript.vars[1] = (UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f) * Time.fixedDeltaTime;
+                        particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
                     }
                     break;
                 case "heat":

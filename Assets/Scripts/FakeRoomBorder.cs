@@ -14,8 +14,8 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
     private const float BUFFER_HORIZ = 13;
     private const float BUFFER_VERT = 8;
 
-    private TextMesh roomNameText;
-    private TextMesh roomNameShadow;
+    //private TextMesh roomNameText;
+    //private TextMesh roomNameShadow;
 
     public Dictionary<string, object> resave() {
         return null;
@@ -43,8 +43,8 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
     }
 
     public void Awake() {
-        roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
-        roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
+        //roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
+        //roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
     }
 
     public void Spawn() {
@@ -76,13 +76,10 @@ public class FakeRoomBorder:MonoBehaviour, IRoomObject {
     public void Update() {
         if (downLeftRoomName != "" || upRightRoomName != "") {
             if ((!direction && PlayState.player.transform.position.y > transform.position.y) ||
-                (direction && PlayState.player.transform.position.x > transform.position.x)) {
-                roomNameText.text = upRightRoomName;
-                roomNameShadow.text = upRightRoomName;
-            } else {
-                roomNameText.text = downLeftRoomName;
-                roomNameShadow.text = downLeftRoomName;
-            }
+                (direction && PlayState.player.transform.position.x > transform.position.x))
+                PlayState.hudRoomName.SetText(upRightRoomName);
+            else
+                PlayState.hudRoomName.SetText(downLeftRoomName);
         }
 
         if (isActive) {

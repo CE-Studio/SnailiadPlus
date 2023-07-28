@@ -125,14 +125,11 @@ public class GlobalFunctions : MonoBehaviour
 
         PlayState.globalFunctions = this;
 
-        PlayState.fpsText = GameObject.Find("View/FPS Text/Text").GetComponent<TextMesh>();
-        PlayState.fpsShadow = GameObject.Find("View/FPS Text/Shadow").GetComponent<TextMesh>();
-        PlayState.timeText = GameObject.Find("View/Time Text/Text").GetComponent<TextMesh>();
-        PlayState.timeShadow = GameObject.Find("View/Time Text/Shadow").GetComponent<TextMesh>();
-        PlayState.pauseText = GameObject.Find("View/Bottom Keys/Pause Key/Text").GetComponent<TextMesh>();
-        PlayState.pauseShadow = GameObject.Find("View/Bottom Keys/Pause Key/Shadow").GetComponent<TextMesh>();
-        PlayState.mapText = GameObject.Find("View/Bottom Keys/Map Key/Text").GetComponent<TextMesh>();
-        PlayState.mapShadow = GameObject.Find("View/Bottom Keys/Map Key/Shadow").GetComponent<TextMesh>();
+        PlayState.hudFps = GameObject.Find("View/FPS").GetComponent<TextObject>();
+        PlayState.hudTime = GameObject.Find("View/Time").GetComponent<TextObject>();
+        PlayState.hudPause = GameObject.Find("View/Bottom Keys/Pause").GetComponent<TextObject>();
+        PlayState.hudMap = GameObject.Find("View/Bottom Keys/Map").GetComponent<TextObject>();
+        PlayState.hudRoomName = GameObject.Find("View/Minimap Panel/Room Name").GetComponent<TextObject>();
 
         PlayState.palette = (Texture2D)Resources.Load("Images/Palette");
 
@@ -146,8 +143,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject.Find("View/Area Name Text"),            //  5
             GameObject.Find("View/Item Get Text"),             //  6
             GameObject.Find("View/Item Percentage Text"),      //  7
-            GameObject.Find("View/FPS Text"),                  //  8
-            GameObject.Find("View/Time Text"),                 //  9
+            GameObject.Find("View/FPS"),                       //  8
+            GameObject.Find("View/Time"),                      //  9
             GameObject.Find("View/Dialogue Box"),              // 10
             GameObject.Find("View/Bottom Keys"),               // 11
             GameObject.Find("View/Boss Health Bar")            // 12
@@ -229,21 +226,20 @@ public class GlobalFunctions : MonoBehaviour
             }
             else if (!PlayState.inBossFight && currentBossName != "")
             {
-                if (currentBossName == PlayState.GetText("boss_moonSnail"))
-                {
-
-                }
-                else
+                if (currentBossName != PlayState.GetText("boss_moonSnail"))
                 {
                     if (displayDefeatText)
                     {
-                        areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
-                        areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", currentBossName);
+                        string thisBossName = currentBossName;
+                        if (thisBossName == PlayState.GetText("boss_gigaSnail"))
+                            thisBossName = PlayState.GetText("boss_moonSnail");
+                        areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", thisBossName);
+                        areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", thisBossName);
                         areaTextTimer = 0;
                     }
-                    currentBossName = "";
-                    flashedBossName = false;
                 }
+                currentBossName = "";
+                flashedBossName = false;
             }
             areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
             if (areaTextTimer < 0.5f)
@@ -330,25 +326,19 @@ public class GlobalFunctions : MonoBehaviour
             PlayState.TogglableHUDElements[3].SetActive(PlayState.generalData.bottomKeyState >= 1);
             if (PlayState.IsControllerConnected())
             {
-                PlayState.pauseText.text = Control.ParseButtonName(Control.Controller.Pause, true);
-                PlayState.pauseShadow.text = Control.ParseButtonName(Control.Controller.Pause, true);
-                PlayState.mapText.text = Control.ParseButtonName(Control.Controller.Map, true);
-                PlayState.mapShadow.text = Control.ParseButtonName(Control.Controller.Map, true);
+                PlayState.hudPause.SetText(Control.ParseButtonName(Control.Controller.Pause, true));
+                PlayState.hudMap.SetText(Control.ParseButtonName(Control.Controller.Map, true));
             }
             else
             {
-                PlayState.pauseText.text = Control.ParseKeyName(Control.Keyboard.Pause, true);
-                PlayState.pauseShadow.text = Control.ParseKeyName(Control.Keyboard.Pause, true);
-                PlayState.mapText.text = Control.ParseKeyName(Control.Keyboard.Map, true);
-                PlayState.mapShadow.text = Control.ParseKeyName(Control.Keyboard.Map, true);
+                PlayState.hudPause.SetText(Control.ParseKeyName(Control.Keyboard.Pause, true));
+                PlayState.hudMap.SetText(Control.ParseKeyName(Control.Keyboard.Map, true));
             }
         }
 
         // FPS calculator
         if (PlayState.gameState == PlayState.GameState.game)
-        {
             PlayState.TogglableHUDElements[8].SetActive(PlayState.generalData.FPSState);
-        }
         frameCount++;
         dt += Time.deltaTime;
         if (dt > 1 / updateRate)
@@ -357,8 +347,8 @@ public class GlobalFunctions : MonoBehaviour
             frameCount = 0;
             dt -= 1 / updateRate;
         }
-        PlayState.fpsText.text = "" + Mathf.Round(fps) + (PlayState.generalData.frameLimiter != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
-        PlayState.fpsShadow.text = "" + Mathf.Round(fps) + (PlayState.generalData.frameLimiter != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps");
+        PlayState.hudFps.SetText(Mathf.Round(fps).ToString() +
+            (PlayState.generalData.frameLimiter != 0 ? "/" + Application.targetFrameRate : "") + PlayState.GetText("hud_fps"));
 
         // Game time counter
         if (PlayState.gameState == PlayState.GameState.game)
@@ -376,8 +366,7 @@ public class GlobalFunctions : MonoBehaviour
             PlayState.currentProfile.gameTime[1] -= 60;
             PlayState.currentProfile.gameTime[0] += 1;
         }
-        PlayState.timeText.text = PlayState.GetTimeString();
-        PlayState.timeShadow.text = PlayState.GetTimeString();
+        PlayState.hudTime.SetText(PlayState.GetTimeString());
     }
 
     public void UpdateMusic(int area, int subzone, int resetFlag = 0)

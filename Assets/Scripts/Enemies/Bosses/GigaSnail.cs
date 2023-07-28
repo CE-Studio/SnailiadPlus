@@ -141,6 +141,8 @@ public class GigaSnail : Boss
 
     private GameObject zzzObj;
 
+    private List<Particle> bgStars = new();
+
     private struct BGObj
     {
         public GameObject obj;
@@ -262,6 +264,16 @@ public class GigaSnail : Boss
 
     private void UpdateBackground(string newState)
     {
+        if (bgAnimData[3] == 1 && bgStars.Count == 0)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                float angle = Random.Range(0, PlayState.TAU);
+                Vector2 startingPos = new(Mathf.Clamp(Mathf.Cos(angle) * 30f, -13f, 13f), Mathf.Clamp(Mathf.Sin(angle) * 30f, -8f, 8f));
+                bgStars.Add(PlayState.RequestParticle((Vector2)PlayState.cam.transform.position + startingPos, "gigaStar"));
+            }
+        }
+
         switch (newState)
         {
             case "fadeIn":
@@ -295,6 +307,10 @@ public class GigaSnail : Boss
                 break;
         }
         lastBGState = newState;
+
+        if (PlayState.generalData.particleState != 4)
+            foreach (Particle particle in bgStars)
+                particle.vars[0] = (int)mode;
     }
 
     private void SetBackgroundState(bool layer, bool mode)

@@ -5,8 +5,7 @@ using UnityEngine;
 public class AchievementPanel : MonoBehaviour
 {
     public SpriteRenderer sprite;
-    public TextMesh text;
-    public TextMesh shadow;
+    public TextObject text;
     public Sprite blankIcon;
     public Sprite[] achIconArray;
     public AnimationModule anim;
@@ -50,8 +49,7 @@ public class AchievementPanel : MonoBehaviour
     {
         anim = GetComponent<AnimationModule>();
         sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        text = transform.GetChild(1).GetChild(0).GetComponent<TextMesh>();
-        shadow = transform.GetChild(1).GetChild(1).GetComponent<TextMesh>();
+        text = transform.Find("Achievement Text").GetComponent<TextObject>();
         sfx = GetComponent<AudioSource>();
         jingle = (AudioClip)Resources.Load("Sounds/Music/AchievementJingle");
 
@@ -59,8 +57,7 @@ public class AchievementPanel : MonoBehaviour
         anim.Add("AchievementPanel_hold");
         anim.Add("AchievementPanel_close");
 
-        text.text = "";
-        shadow.text = "";
+        text.SetText("");
         sprite.enabled = false;
         GetComponent<SpriteRenderer>().sprite = PlayState.BlankTexture();
     }
@@ -113,8 +110,7 @@ public class AchievementPanel : MonoBehaviour
     public void CloseAchievement()
     {
         runState = 3;
-        text.text = "";
-        shadow.text = "";
+        text.SetText("");
         sprite.enabled = false;
         anim.Play("AchievementPanel_close");
     }
