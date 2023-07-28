@@ -5,8 +5,8 @@ using UnityEngine;
 public class TextObject : MonoBehaviour
 {
     public Vector2 position;
+    private float currentLength = 0;
     public int size = 2;
-    public float currentLength = 0;
     private Font font;
     private readonly float[] lineSpacings = new float[] { 0.89f, 1f };
     private float animTimer = 0;
@@ -44,6 +44,10 @@ public class TextObject : MonoBehaviour
         childText.Clear();
         for (int i = 0; i < transform.childCount; i++)
             childText.Add(transform.GetChild(i).GetComponent<TextMesh>());
+        for (int i = 0; i < lineSpacings.Length; i++)
+            if (lineSpacings[i] == thisText.lineSpacing)
+                size = i + 1;
+        currentLength = GetWidth();
     }
 
     void Update()
@@ -66,7 +70,7 @@ public class TextObject : MonoBehaviour
         animTimer += Time.deltaTime;
 
         transform.position = new Vector2(Mathf.Round(transform.position.x * 16) * 0.0625f, Mathf.Round(transform.position.y * 16) * 0.0625f);
-        if (thisText.anchor == TextAnchor.MiddleCenter && size == 1 && currentLength % 2 == 1)
+        if (thisText.anchor == TextAnchor.UpperCenter && size == 1 && currentLength % 2 == 1)
             transform.position += PIXEL * 0.5f * Vector3.left;
     }
 
@@ -81,6 +85,7 @@ public class TextObject : MonoBehaviour
         thisText.text = text;
         foreach (TextMesh cText in childText)
             cText.text = text;
+        currentLength = GetWidth();
     }
 
     public void SetSize(int newSize)
@@ -107,10 +112,14 @@ public class TextObject : MonoBehaviour
     public void SetColor(Color color)
     {
         thisText.color = color;
+        foreach (TextMesh text in childText)
+            text.color = new Color(0, 0, 0, color.a);
     }
     public void SetColor(Color32 color)
     {
         thisText.color = color;
+        foreach (TextMesh text in childText)
+            text.color = new Color32(0, 0, 0, color.a);
     }
 
     public void SetAlignment(string alignment)
@@ -193,7 +202,7 @@ public class TextObject : MonoBehaviour
             float widthFloat = longestWidth * PlayState.FRAC_32 * size;
             return widthFloat;
         }
-        return longestWidth;
+        return longestWidth * 0.5f * size;
     }
 
     public void ClearChildText()

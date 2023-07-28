@@ -17,8 +17,14 @@ public class Subscreen : MonoBehaviour
     GameObject map;
     GameObject playerMarker;
     GameObject cellSelector;
-    List<GameObject> helixCount = new List<GameObject>();
+    GameObject helixIcon;
+    TextObject helixCount;
     List<float> helixCountOriginYs = new List<float>();
+    private const float HELIX_COUNT_OFF_Y = 16.5f;
+    private float helixCountPos = HELIX_COUNT_OFF_Y;
+    private const float BOTTOM_BUTTON_OFF_Y = 13.5f;
+    private float mapButtonPos = 0;
+    private float mapButtonOriginY;
 
     AnimationModule anim;
     AnimationModule mapAnim;
@@ -26,7 +32,10 @@ public class Subscreen : MonoBehaviour
     AnimationModule selectorAnim;
     AnimationModule helixAnim;
 
-    List<TextMesh> texts = new List<TextMesh>();
+    List<TextObject> texts = new();
+
+    private GameObject pauseButton;
+    private TextObject mapButton;
 
     void Start()
     {
@@ -65,15 +74,15 @@ public class Subscreen : MonoBehaviour
         selectorAnim.pauseOnMenu = false;
         cellSelector.SetActive(false);
 
-        helixCount.Add(transform.GetChild(1).gameObject);
-        helixCount.Add(transform.GetChild(23).gameObject);
-        helixAnim = helixCount[0].GetComponent<AnimationModule>();
+        helixIcon = transform.Find("Helix Fragment").gameObject;
+        helixCount = transform.Find("Helix Count").GetComponent<TextObject>();
+        helixAnim = helixIcon.GetComponent<AnimationModule>();
         helixAnim.Add("Item_helixFragment");
         helixAnim.pauseOnMenu = false;
-        helixCountOriginYs.Add(helixCount[0].transform.localPosition.y);
-        helixCountOriginYs.Add(helixCount[1].transform.localPosition.y);
-        helixCount[0].transform.localPosition = new Vector2(helixCount[0].transform.localPosition.x, helixCountOriginYs[0] + 16.5f);
-        helixCount[1].transform.localPosition = new Vector2(helixCount[1].transform.localPosition.x, helixCountOriginYs[1] + 16.5f);
+        helixCountOriginYs.Add(helixIcon.transform.localPosition.y);
+        helixCountOriginYs.Add(helixCount.position.y);
+        helixIcon.transform.localPosition = new Vector2(helixIcon.transform.localPosition.x, helixCountOriginYs[0] + HELIX_COUNT_OFF_Y);
+        helixCount.position = new Vector2(helixCount.position.x, helixCountOriginYs[1] + HELIX_COUNT_OFF_Y);
 
         int cellID = 0;
         for (int y = 0; y < PlayState.WORLD_SIZE.y; y++)
@@ -106,10 +115,11 @@ public class Subscreen : MonoBehaviour
         }
 
         for (int i = 2; i < transform.childCount; i++)
-        {
-            texts.Add(transform.GetChild(i).GetChild(0).GetComponent<TextMesh>());
-            texts.Add(transform.GetChild(i).GetChild(1).GetComponent<TextMesh>());
-        }
+            texts.Add(transform.GetChild(i).GetComponent<TextObject>());
+
+        pauseButton = PlayState.TogglableHUDElements[11].transform.Find("Pause").gameObject;
+        mapButton = PlayState.TogglableHUDElements[11].transform.Find("Map").GetComponent<TextObject>();
+        mapButtonOriginY = mapButton.position.y;
     }
 
     void Update()
@@ -121,6 +131,8 @@ public class Subscreen : MonoBehaviour
             PlayState.ToggleHUD(false);
             PlayState.TogglableHUDElements[1].SetActive(true);
             PlayState.TogglableHUDElements[3].SetActive(true);
+            PlayState.TogglableHUDElements[11].SetActive(true);
+            pauseButton.SetActive(false);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, -2);
             buttonDown = true;
@@ -133,6 +145,7 @@ public class Subscreen : MonoBehaviour
         {
             menuOpen = false;
             PlayState.gameState = PlayState.GameState.game;
+            pauseButton.SetActive(true);
             PlayState.ToggleHUD(true);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
             buttonDown = true;
@@ -142,11 +155,13 @@ public class Subscreen : MonoBehaviour
             buttonDown = false;
 
         transform.localPosition = new Vector2(0, Mathf.Lerp(transform.localPosition.y, menuOpen ? 0 : -15, 10 * Time.deltaTime));
-        for (int i = 0; i < helixCount.Count; i++)
-            helixCount[i].transform.localPosition = new Vector2(helixCount[i].transform.localPosition.x,
-                Mathf.Lerp(helixCount[i].transform.localPosition.y, menuOpen ? helixCountOriginYs[i] : helixCountOriginYs[i] + 16.5f, 10 * Time.deltaTime));
+        helixCountPos = Mathf.Lerp(helixCountPos, menuOpen ? 0 : HELIX_COUNT_OFF_Y, 10 * Time.deltaTime);
+        helixIcon.transform.localPosition = new Vector2(helixIcon.transform.localPosition.x, helixCountOriginYs[0] + helixCountPos);
+        helixCount.position = new Vector2(helixCount.position.x, helixCountOriginYs[1] + helixCountPos);
         PlayState.TogglableHUDElements[3].transform.localPosition = new Vector2(0, Mathf.Lerp(PlayState.TogglableHUDElements[3].transform.localPosition.y,
-            menuOpen ? 13.5f : 0, 10 * Time.deltaTime));
+            menuOpen ? BOTTOM_BUTTON_OFF_Y : 0, 10 * Time.deltaTime));
+        mapButtonPos = Mathf.Lerp(mapButtonPos, menuOpen ? BOTTOM_BUTTON_OFF_Y : 0, 10 * Time.deltaTime);
+        mapButton.position = new Vector2(mapButton.position.x, mapButtonOriginY + mapButtonPos);
 
         if (menuOpen)
         {
@@ -287,14 +302,14 @@ public class Subscreen : MonoBehaviour
 
     private void UpdateText()
     {
-        for (int i = 0; i < texts.Count; i += 2)
+        for (int i = 0; i < texts.Count; i++)
         {
             string newText = "";
             string shell = PlayState.currentProfile.character == "Sluggy" ? PlayState.GetText("species_sluggy") : (PlayState.currentProfile.character == "Blobby" ?
                 PlayState.GetText("species_blobby") : (PlayState.currentProfile.character == "Leechy" ? PlayState.GetText("species_leechy") :
                 PlayState.GetText("subscreen_shell")));
             bool hasShell = shell == PlayState.GetText("subscreen_shell");
-            switch (Mathf.RoundToInt(i * 0.5f))
+            switch (i)
             {
                 case 0:
                     newText = PlayState.GetText("subscreen_header_name");
@@ -382,8 +397,7 @@ public class Subscreen : MonoBehaviour
                     newText = "X " + PlayState.CountFragments();
                     break;
             }
-            texts[i].text = newText;
-            texts[i + 1].text = newText;
+            texts[i].SetText(newText);
         }
     }
 

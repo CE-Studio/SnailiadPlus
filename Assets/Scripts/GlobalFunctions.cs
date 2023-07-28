@@ -18,9 +18,9 @@ public class GlobalFunctions : MonoBehaviour
     
     // HUD object groups
     public GameObject hearts;
-    public GameObject itemTextGroup;
-    public GameObject itemPercentageGroup;
-    public GameObject gameSaveGroup;
+    public TextObject itemText;
+    public TextObject itemPercentageText;
+    public TextObject gameSaveText;
 
     // Debug keys
     public AnimationModule[] keySprites = new AnimationModule[7];
@@ -49,7 +49,8 @@ public class GlobalFunctions : MonoBehaviour
     // Area name text
     float areaTextTimer = 0;
     int lastAreaID = -1;
-    TextMesh[] areaText;
+    //TextMesh[] areaText;
+    TextObject areaText;
     public string currentBossName = "";
     bool flashedBossName = false;
     public bool displayDefeatText = false;
@@ -76,11 +77,14 @@ public class GlobalFunctions : MonoBehaviour
             weaponIcons[i].Play("WeaponIcon_" + (i + 1) + "_locked");
         }
 
-        areaText = new TextMesh[]
-        {
-            GameObject.Find("View/Area Name Text/Text").GetComponent<TextMesh>(),
-            GameObject.Find("View/Area Name Text/Shadow").GetComponent<TextMesh>()
-        };
+        itemText = GameObject.Find("View/Item Get").GetComponent<TextObject>();
+        itemText.SetColor(new Color(1, 1, 1, 0));
+        itemPercentageText = GameObject.Find("View/Item Percentage").GetComponent<TextObject>();
+        itemPercentageText.SetColor(new Color(1, 1, 1, 0));
+        gameSaveText = GameObject.Find("View/Game Saved").GetComponent<TextObject>();
+        gameSaveText.SetColor(new Color(1, 1, 1, 0));
+        areaText = GameObject.Find("View/Area Name").GetComponent<TextObject>();
+        areaText.SetColor(new Color(1, 1, 1, 0));
 
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
     }
@@ -212,15 +216,13 @@ public class GlobalFunctions : MonoBehaviour
                         areaName = PlayState.GetText("area_bossRush");
                         break;
                 }
-                if (areaName != areaText[0].text)
+                if (areaName != areaText.GetText())
                     areaTextTimer = 0;
-                areaText[0].text = areaName;
-                areaText[1].text = areaName;
+                areaText.SetText(areaName);
             }
             else if (currentBossName != "" && !flashedBossName)
             {
-                areaText[0].text = currentBossName;
-                areaText[1].text = currentBossName;
+                areaText.SetText(currentBossName);
                 areaTextTimer = 0;
                 flashedBossName = true;
             }
@@ -233,8 +235,7 @@ public class GlobalFunctions : MonoBehaviour
                         string thisBossName = currentBossName;
                         if (thisBossName == PlayState.GetText("boss_gigaSnail"))
                             thisBossName = PlayState.GetText("boss_moonSnail");
-                        areaText[0].text = PlayState.GetText("boss_defeated").Replace("_", thisBossName);
-                        areaText[1].text = PlayState.GetText("boss_defeated").Replace("_", thisBossName);
+                        areaText.SetText(PlayState.GetText("boss_defeated").Replace("_", thisBossName));
                         areaTextTimer = 0;
                     }
                 }
@@ -243,25 +244,13 @@ public class GlobalFunctions : MonoBehaviour
             }
             areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
             if (areaTextTimer < 0.5f)
-            {
-                areaText[0].color = new Color32(255, 255, 255, (byte)Mathf.Round(Mathf.Lerp(0, 255, areaTextTimer * 2)));
-                areaText[1].color = new Color32(0, 0, 0, (byte)Mathf.Round(Mathf.Lerp(0, 255, areaTextTimer * 2)));
-            }
+                areaText.SetColor(new Color(1, 1, 1, Mathf.Lerp(0, 1, areaTextTimer * 2)));
             else if (areaTextTimer < 3.5f)
-            {
-                areaText[0].color = new Color32(255, 255, 255, 255);
-                areaText[1].color = new Color32(0, 0, 0, 255);
-            }
+                areaText.SetColor(new Color(1, 1, 1, 1));
             else if (areaTextTimer < 4)
-            {
-                areaText[0].color = new Color32(255, 255, 255, (byte)Mathf.Round(Mathf.Lerp(255, 0, (areaTextTimer - 3.5f) * 2)));
-                areaText[1].color = new Color32(0, 0, 0, (byte)Mathf.Round(Mathf.Lerp(255, 0, (areaTextTimer - 3.5f) * 2)));
-            }
+                areaText.SetColor(new Color(1, 1, 1, Mathf.Lerp(1, 0, (areaTextTimer - 3.5f) * 2)));
             else
-            {
-                areaText[0].color = new Color32(255, 255, 255, 0);
-                areaText[1].color = new Color32(0, 0, 0, 0);
-            }
+                areaText.SetColor(new Color(1, 1, 1, 0));
         }
 
         // Audiosource volume control
@@ -808,167 +797,72 @@ public class GlobalFunctions : MonoBehaviour
         float timer = 0;
         int colorPointer = 0;
         int colorCooldown = 0;
+        byte alpha;
         switch (textType)
         {
             default:
                 yield return new WaitForEndOfFrame();
                 break;
             case "item":
-                SetTextAlpha("item", 255);
-                SetTextDisplayed("item", itemName);
-                while (timer < 3)
+                itemText.SetText(itemName);
+                while (timer < 3f)
                 {
+                    alpha = timer > 2.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)) : (byte)255;
                     if (colorCooldown <= 0)
                     {
-                        switch (colorPointer)
+                        itemText.SetColor(colorPointer switch
                         {
-                            case 0:
-                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(189, 191, 198, 255);
-                                break;
-                            case 1:
-                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(247, 196, 223, 255);
-                                break;
-                            case 2:
-                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(252, 214, 136, 255);
-                                break;
-                            case 3:
-                                itemTextGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(170, 229, 214, 255);
-                                break;
-                        }
-                        colorPointer++;
-                        if (colorPointer >= 4)
-                        {
-                            colorPointer = 0;
-                        }
+                            0 => new Color32(189, 191, 198, alpha),
+                            1 => new Color32(247, 198, 223, alpha),
+                            2 => new Color32(252, 214, 136, alpha),
+                            _ => new Color32(170, 229, 214, alpha)
+                        });
+                        colorPointer = (colorPointer + 1) % 4;
                         colorCooldown = 2;
                     }
                     else
                         colorCooldown--;
-
-                    if (timer > 2.5f)
-                    {
-                        SetTextAlpha("item", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)));
-                    }
-                    yield return new WaitForFixedUpdate();
+                    yield return new WaitForEndOfFrame();
                     timer += Time.deltaTime;
                 }
-                SetTextAlpha("item", 0);
+                itemText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case "collection":
-                SetTextAlpha("collection", 255);
-                SetTextDisplayed("collection", PlayState.GetText("hud_collectedItemPercentage").Replace("#", PlayState.GetItemPercentage().ToString()));
-                while (timer < 2)
+                itemPercentageText.SetText(PlayState.GetText("hud_collectedItemPercentage").Replace("#", PlayState.GetItemPercentage().ToString()));
+                while (timer < 2f)
                 {
+                    alpha = timer > 1.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)) : (byte)255;
                     if (colorCooldown <= 0)
                     {
-                        switch (colorPointer)
+                        itemPercentageText.SetColor(colorPointer switch
                         {
-                            case 0:
-                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(189, 191, 198, 255);
-                                break;
-                            case 1:
-                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(247, 196, 223, 255);
-                                break;
-                            case 2:
-                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(252, 214, 136, 255);
-                                break;
-                            case 3:
-                                itemPercentageGroup.transform.GetChild(0).GetComponent<TextMesh>().color = new Color32(170, 229, 214, 255);
-                                break;
-                        }
-                        colorPointer++;
-                        if (colorPointer >= 4)
-                        {
-                            colorPointer = 0;
-                        }
+                            0 => new Color32(189, 191, 198, alpha),
+                            1 => new Color32(247, 198, 223, alpha),
+                            2 => new Color32(252, 214, 136, alpha),
+                            _ => new Color32(170, 229, 214, alpha)
+                        });
+                        colorPointer = (colorPointer + 1) % 4;
                         colorCooldown = 2;
                     }
                     else
                         colorCooldown--;
-
-                    if (timer > 1.5f)
-                    {
-                        SetTextAlpha("collection", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)));
-                    }
-                    yield return new WaitForFixedUpdate();
+                    yield return new WaitForEndOfFrame();
                     timer += Time.deltaTime;
                 }
-                SetTextAlpha("collection", 0);
+                itemPercentageText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case "save":
-                SetTextAlpha("save", 255);
+                gameSaveText.SetText(PlayState.GetText("hud_gameSaved"));
                 while (timer < 2.5f)
                 {
-                    if (timer > 2)
-                    {
-                        SetTextAlpha("save", Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2) * 1.5f)));
-                    }
-                    yield return new WaitForFixedUpdate();
+                    gameSaveText.SetColor(new Color(1, 1, 1, timer > 2 ? Mathf.Lerp(1, 0, (timer - 2) * 1.5f) : 1));
+                    yield return new WaitForEndOfFrame();
                     timer += Time.deltaTime;
                 }
-                SetTextAlpha("save", 0);
+                gameSaveText.SetColor(new Color(1, 1, 1, 0));
                 break;
         }
         yield return new WaitForEndOfFrame();
-    }
-
-    void SetTextAlpha(string textGroup, int alpha)
-    {
-        switch (textGroup)
-        {
-            case "item":
-                foreach (Transform textObj in itemTextGroup.transform)
-                {
-                    textObj.GetComponent<TextMesh>().color = new Color32(
-                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
-                        (byte)alpha
-                        );
-                }
-                break;
-            case "collection":
-                foreach (Transform textObj in itemPercentageGroup.transform)
-                {
-                    textObj.GetComponent<TextMesh>().color = new Color32(
-                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
-                        (byte)alpha
-                        );
-                }
-                break;
-            case "save":
-                foreach (Transform textObj in gameSaveGroup.transform)
-                {
-                    textObj.GetComponent<TextMesh>().color = new Color32(
-                        (byte)(textObj.GetComponent<TextMesh>().color.r * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.g * 255),
-                        (byte)(textObj.GetComponent<TextMesh>().color.b * 255),
-                        (byte)alpha
-                        );
-                }
-                break;
-        }
-    }
-
-    void SetTextDisplayed(string textGroup, string textToDisplay)
-    {
-        switch (textGroup)
-        {
-            case "item":
-                foreach (Transform textObj in itemTextGroup.transform)
-                    textObj.GetComponent<TextMesh>().text = textToDisplay;
-                break;
-            case "collection":
-                foreach (Transform textObj in itemPercentageGroup.transform)
-                    textObj.GetComponent<TextMesh>().text = textToDisplay;
-                break;
-            case "save":
-                foreach (Transform textObj in gameSaveGroup.transform)
-                    textObj.GetComponent<TextMesh>().text = textToDisplay;
-                break;
-        }
     }
 
     public void LoadClip(string path, string name, Vector2 location)

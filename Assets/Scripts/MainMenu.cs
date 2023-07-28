@@ -153,8 +153,9 @@ public class MainMenu : MonoBehaviour
         string[] version = Application.version.Split(' ');
         string versionText = PlayState.GetText("menu_version_header") + "\n" + (version[0].ToLower() == "release" ? PlayState.GetText("menu_version_release") :
             (version[0].ToLower() == "demo" ? PlayState.GetText("menu_version_demo") : PlayState.GetText("menu_version_developer"))) + " " + version[1];
-        menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = versionText;
-        menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
+        //menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = versionText;
+        //menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
+        menuHUDElements[1].GetComponent<TextObject>().SetText(versionText);
 
         CreateTitle();
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f);

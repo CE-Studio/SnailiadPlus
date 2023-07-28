@@ -402,6 +402,7 @@ public class DialogueBox : MonoBehaviour
             newLetter.transform.parent = transform;
             newLetter.transform.localPosition = posPointer;
             TextObject newLetterScript = newLetter.GetComponent<TextObject>();
+            newLetterScript.position = posPointer;
             newLetterScript.CreateShadow();
             newLetterScript.SetText(thisChar.ToString());
             newLetterScript.SetColor(PlayState.GetColor(currentColor));
