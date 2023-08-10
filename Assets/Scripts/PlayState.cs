@@ -26,10 +26,12 @@ public class PlayState {
     public enum EDirsCardinal { Up, Down, Left, Right, None };
     public enum EDirsSurface { Floor, WallL, WallR, Ceiling, None };
 
-    public enum GameState { game, menu, pause, map, debug, dialogue, error }
+    public enum GameState { game, menu, pause, map, debug, dialogue, error, credits }
     public static GameState gameState = GameState.menu;
 
     public static bool isMenuOpen = false;
+    public enum CreditsStates { none, fadeIn, moonScene, credits, time };
+    public static CreditsStates creditsState = CreditsStates.none;
 
     public static bool noclipMode = false;
 
@@ -140,7 +142,8 @@ public class PlayState {
     public static GameObject particlePool;
     public static GameObject camParticlePool;
     public static GameObject roomTriggerParent;
-    public static GameObject mainMenu;
+    public static MainMenu mainMenu;
+    public static Credits credits;
     public static GameObject loadingIcon;
     public static GameObject enemyBulletPool;
     public static GameObject subscreen;
@@ -243,10 +246,11 @@ public class PlayState {
          0, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0, -1, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0,  0, -1, -1, -1, -1, -1
     };
-    public static List<int> saveLocations = new List<int>();
-    public static List<int> bossLocations = new List<int>();
-    public static Dictionary<int, int> itemLocations = new Dictionary<int, int>();
-    public static Dictionary<int, string> playerMarkerLocations = new Dictionary<int, string>();
+    public static List<int> saveLocations = new();
+    public static List<int> bossLocations = new();
+    public static Dictionary<int, int> itemLocations = new();
+    public static Dictionary<int, string> playerMarkerLocations = new();
+    public static List<List<int>> itemAreas = new();
 
     public static bool[][] itemData = new bool[][] { };
     
@@ -277,6 +281,22 @@ public class PlayState {
         0, 0, 0,  // Leechy 100%
         0, 0, 0   // Leechy Boss Rush
     };
+
+    public enum TimeIndeces
+    {
+        snailyNormal, snailyInsane, snaily100, snailyRush,
+        sluggyNormal, sluggyInsane, sluggy100, sluggyRush,
+        upsideNormal, upsideInsane, upside100, upsideRush,
+        leggyNormal, leggyInsane, leggy100, leggyRush,
+        blobbyNormal, blobbyInsane, blobby100, blobbyRush,
+        leechyNormal, leechyInsane, leechy100, leechyRush,
+        none
+    }
+
+    public enum TimeCategories
+    {
+        normal, insane, hundo, rush
+    }
     
     public const byte OFFSET_HEARTS = 13;
     public const byte MAX_HEARTS = 11;
@@ -648,10 +668,10 @@ public class PlayState {
         }
 
         Tilemap spMap = specialLayer.GetComponent<Tilemap>();
+        List<int> bossTileIDs = new() { 23, 24, 25, 26 };
         for (int y = 0; y < spMap.size.y; y++) {
             for (int x = 0; x < spMap.size.x; x++) {
-                List<int> bossTileIDs = new List<int> { 23, 24, 25, 26 };
-                Vector3Int worldPos = new Vector3Int(Mathf.RoundToInt(spMap.origin.x - (spMap.size.x * 0.5f) + x), Mathf.RoundToInt(spMap.origin.y - (spMap.size.y * 0.5f) + y), 0);
+                Vector3Int worldPos = new(Mathf.RoundToInt(spMap.origin.x + x), Mathf.RoundToInt(spMap.origin.y + y), 0);
                 Sprite tileSprite = spMap.GetSprite(worldPos);
                 if (tileSprite != null) {
                     int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
@@ -894,6 +914,20 @@ public class PlayState {
                         particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
                     }
                     break;
+                case "gigatrail":
+                    // Values:
+                    // 0 = sprite ID
+                    // 1 = flip sprite X
+                    // 2 = flip sprite Y
+                    
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                        particleScript.vars[1] = values[1];
+                        particleScript.vars[2] = values[2];
+                    }
+                    break;
                 case "heat":
                     if (generalData.particleState == 1 || generalData.particleState == 5)
                     {
@@ -956,8 +990,8 @@ public class PlayState {
             if (activateParticle) {
                 selectedParticle = particleScript;
                 particleObject.position = position;
-                particleScript.type = type;
-                particleScript.SetAnim(type);
+                particleScript.type = type.ToLower();
+                particleScript.SetAnim(type.ToLower());
                 if (playSound)
                     particleScript.PlaySound();
                 thisParticleID++;
@@ -1221,11 +1255,63 @@ public class PlayState {
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
     }
 
-    public static string GetTimeString() {
-        string hourInt = currentProfile.gameTime[0] < 10 ? "0" + currentProfile.gameTime[0] : (currentProfile.gameTime[0] == 0 ? "00" : currentProfile.gameTime[0].ToString());
-        string minuteInt = currentProfile.gameTime[1] < 10 ? "0" + currentProfile.gameTime[1] : (currentProfile.gameTime[1] == 0 ? "00" : currentProfile.gameTime[1].ToString());
-        string secondsInt = (Mathf.RoundToInt(currentProfile.gameTime[2] * 100) + 10000).ToString();
-        return hourInt + ":" + minuteInt + ":" + secondsInt.Substring(1, 2) + "." + secondsInt.Substring(3, 2);
+    public static bool GetItemAvailabilityThisDifficulty(int itemID)
+    {
+        return itemData[itemID][currentProfile.difficulty];
+    }
+    public static bool GetItemAvailabilityThisDifficulty(int itemID, int difficulty)
+    {
+        return itemData[itemID][difficulty];
+    }
+
+    public static bool GetItemAvailabilityThisCharacter(int itemID)
+    {
+        int charCheck = currentProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
+        return itemData[itemID][charCheck];
+    }
+    public static bool GetItemAvailabilityThisCharacter(int itemID, string character)
+    {
+        int charCheck = character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
+        return itemData[itemID][charCheck];
+    }
+
+    public static string GetTimeString(bool trimBlankHours = true, bool dropSecondDecimal = false)
+    {
+        return GetTimeString(currentProfile.gameTime, trimBlankHours, dropSecondDecimal);
+    }
+    public static string GetTimeString(TimeIndeces target, bool trimBlankHours = true, bool dropSecondDecimal = false)
+    {
+        return GetTimeString(GetTime(target), trimBlankHours, dropSecondDecimal);
+    }
+    public static string GetTimeString(int profile, bool trimBlankHours = true, bool dropSecondDecimal = false)
+    {
+        return GetTimeString(profile switch { 2 => profile2.gameTime, 3 => profile3.gameTime, _ => profile1.gameTime }, trimBlankHours, dropSecondDecimal);
+    }
+    public static string GetTimeString(float[] time, bool trimBlankHours = true, bool dropSecondDecimal = false)
+    {
+        int hours = (int)time[0];
+        int minutesI = (int)time[1];
+        float secondsF = Mathf.RoundToInt(time[2] * 100) * 0.01f;
+        if (dropSecondDecimal)
+            secondsF = (int)secondsF;
+
+        string minutes = minutesI.ToString();
+        if (minutesI < 10)
+            minutes = "0" + minutes;
+        string seconds = secondsF.ToString();
+        if (secondsF < 10f)
+            seconds = "0" + seconds;
+        seconds += seconds.Length switch
+        {
+            2 => ".00",
+            4 => "0",
+            _ => ""
+        };
+
+        if (trimBlankHours && hours == 0)
+            return string.Format("{0}:{1}", minutes, seconds);
+        else
+            return string.Format("{0}:{1}:{2}", hours, minutes, seconds);
     }
 
     public static void SetMapTile(Vector2 pos, bool state) {
@@ -1443,10 +1529,27 @@ public class PlayState {
             generalData.controllerInputs = Control.defaultControllerInputs;
     }
 
-    public static bool HasTime(int ID = -1) {
+    public static void SetTime(TimeIndeces target, float[] newTime)
+    {
+        if (newTime.Length != 3)
+            return;
+        int startID = (int)target * 3;
+        generalData.times[startID] = newTime[0];
+        generalData.times[startID + 1] = newTime[1];
+        generalData.times[startID + 2] = newTime[2];
+        WriteSave(0, true);
+    }
+
+    public static float[] GetTime(TimeIndeces target)
+    {
+        int startID = (int)target * 3;
+        return new float[] { generalData.times[startID], generalData.times[startID + 1], generalData.times[startID + 2] };
+    }
+
+    public static bool HasTime(TimeIndeces ID = TimeIndeces.none) {
         int rowCount = generalData.times.Length / 3;
 
-        if (ID == -1)
+        if (ID == TimeIndeces.none)
         {
             for (int i = 0; i < rowCount; i++)
             {
@@ -1463,14 +1566,37 @@ public class PlayState {
         }
         else
         {
-            if (generalData.times[ID * 3] == 0 && generalData.times[(ID * 3) + 1] == 0 && generalData.times[(ID * 3) + 2] == 0)
+            int intID = (int)ID * 3;
+            if (generalData.times[intID] == 0 && generalData.times[intID + 1] == 0 && generalData.times[intID + 2] == 0)
                 return false;
             return true;
         }
     }
+    public static bool HasTime(TimeCategories ID)
+    {
+        return ID switch
+        {
+            TimeCategories.insane => HasTime(TimeIndeces.snailyInsane) || HasTime(TimeIndeces.sluggyInsane) || HasTime(TimeIndeces.upsideInsane) ||
+                HasTime(TimeIndeces.leggyInsane) || HasTime(TimeIndeces.blobbyInsane) || HasTime(TimeIndeces.leechyInsane),
+            TimeCategories.hundo => HasTime(TimeIndeces.snaily100) || HasTime(TimeIndeces.sluggy100) || HasTime(TimeIndeces.upside100) ||
+                HasTime(TimeIndeces.leggy100) || HasTime(TimeIndeces.blobby100) || HasTime(TimeIndeces.leechy100),
+            TimeCategories.rush => HasTime(TimeIndeces.snailyRush) || HasTime(TimeIndeces.sluggyRush) || HasTime(TimeIndeces.upsideRush) ||
+                HasTime(TimeIndeces.leggyRush) || HasTime(TimeIndeces.blobbyRush) || HasTime(TimeIndeces.leechyRush),
+            _ => HasTime(TimeIndeces.snailyNormal) || HasTime(TimeIndeces.sluggyNormal) || HasTime(TimeIndeces.upsideNormal) ||
+                HasTime(TimeIndeces.leggyNormal) || HasTime(TimeIndeces.blobbyNormal) || HasTime(TimeIndeces.leechyNormal)
+        };
+    }
 
     public static void QueueAchievementPopup(AchievementPanel.Achievements achID) {
         achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
+    }
+
+    public static bool HasAchievemements()
+    {
+        bool found = false;
+        foreach (bool achState in generalData.achievements)
+            found = found || achState;
+        return found;
     }
 
     public struct AnimationLibrary {

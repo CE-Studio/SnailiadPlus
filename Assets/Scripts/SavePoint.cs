@@ -46,7 +46,7 @@ public class SavePoint:MonoBehaviour, IRoomObject {
                 hasBeenActivated = true;
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active");
-                PlayState.globalFunctions.FlashSaveText();
+                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.save);
                 PlayState.currentProfile.saveCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
                 PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
                 PlayState.WriteSave(PlayState.currentProfileNumber, true);

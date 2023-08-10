@@ -27,12 +27,67 @@
 		},
 		{
 			"name": "menu_intro_keyboard",
-			"text": "Click or press _ to play!",
+			"text": "Click or press {0} to play!",
 			"value": 0
 		},
 		{
 			"name": "menu_intro_controller",
-			"text": "Press _ to play!",
+			"text": "Press {0} to play!",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_header1",
+			"text": "Hey there!  Since you've already",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_header2",
+			"text": "beaten the demo version, you've",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_header3",
+			"text": "automatically unlocked",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_oneUnlock",
+			"text": "{0}!!",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_twoUnlocks",
+			"text": "{0} and {1}!!",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_threeUnlocks1",
+			"text": "{0}, {1},",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_threeUnlocks2",
+			"text": "and {0}!!",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_bossRush",
+			"text": "Boss Rush",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_insaneMode",
+			"text": "Insane Mode",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_randomizer",
+			"text": "Rando Mode",
+			"value": 0
+		},
+		{
+			"name": "menu_postDemo_confirm",
+			"text": "Awesome!!",
 			"value": 0
 		},
 		{
@@ -61,13 +116,13 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_main_credits",
-			"text": "Credits",
+			"name": "menu_option_main_records",
+			"text": "Records",
 			"value": 0
 		},
 		{
-			"name": "menu_option_main_records",
-			"text": "Records",
+			"name": "menu_option_main_credits",
+			"text": "Credits",
 			"value": 0
 		},
 		{
@@ -172,7 +227,7 @@
 		},
 		{
 			"name": "menu_option_copyGame_header3",
-			"text": "Copy file #1 to _ slot #2?",
+			"text": "Copy file {0} to {2} slot {1}?",
 			"value": 0
 		},
 		{
@@ -207,7 +262,7 @@
 		},
 		{
 			"name": "menu_option_eraseGame_header2",
-			"text": "Really erase file #?",
+			"text": "Really erase file {0}?",
 			"value": 0
 		},
 		{
@@ -637,7 +692,7 @@
 		},
 		{
 			"name": "menu_option_assetConfirm_defaultInfo1",
-			"text": "The default _ of the game",
+			"text": "The default {0} of the game",
 			"value": 0
 		},
 		{
@@ -667,12 +722,12 @@
 		},
 		{
 			"name": "menu_option_assetConfirm_version",
-			"text": "Pack ver. #1, game ver. #2",
+			"text": "Pack ver. {0}, game ver. {1}",
 			"value": 0
 		},
 		{
 			"name": "menu_option_assetConfirm_author",
-			"text": "Made by: _",
+			"text": "Made by: {0}",
 			"value": 0
 		},
 		{
@@ -893,6 +948,331 @@
 		{
 			"name": "menu_option_import_mismatched_return",
 			"text": "No way, go back!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_noTimes",
+			"text": "No best clear times yet!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_normal",
+			"text": "Normal Mode",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_insane",
+			"text": "Insane Mode",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_100",
+			"text": "100% Clear",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_bossRush",
+			"text": "Boss Rush",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_time",
+			"text": "{0} - {1}",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_achievements",
+			"text": "View Achievements",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_locked_title",
+			"text": "Locked",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_locked_desc",
+			"text": "You haven't unlocked this achievement yet",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatshellbreaker_title",
+			"text": "First of Four",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatshellbreaker_desc",
+			"text": "Defeat Shellbreaker",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatstompy_title",
+			"text": "Stinky Toe",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatstompy_desc",
+			"text": "Defeat Stompy",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatspacebox_title",
+			"text": "Gravity Battle",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatspacebox_desc",
+			"text": "Defeat Space Box",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatmoonsnail_title",
+			"text": "Victory",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatmoonsnail_desc",
+			"text": "Defeat Moon Snail and beat the game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatmoonsnailnofms_title",
+			"text": "Scout",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_beatmoonsnailnofms_desc",
+			"text": "Defeat Moon Snail without collecting Full Metal Snail",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_map100_title",
+			"text": "Explorer",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_map100_desc",
+			"text": "Find 100% of the map",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_sunsnail_title",
+			"text": "Happy Ending",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_sunsnail_desc",
+			"text": "Return Sun Snail's light",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_items100_title",
+			"text": "Treasure Hunter",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_items100_desc",
+			"text": "Find 100% of all items",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winsluggy_title",
+			"text": "Homeless",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winsluggy_desc",
+			"text": "Beat the game as Sluggy",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winupside_title",
+			"text": "Top Floor",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winupside_desc",
+			"text": "Beat the game as Upside",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winleggy_title",
+			"text": "Mansion",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winleggy_desc",
+			"text": "Beat the game as Leggy",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winblobby_title",
+			"text": "Just Renting",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winblobby_desc",
+			"text": "Beat the game as Blobby",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winleechy_title",
+			"text": "Attic Dweller",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winleechy_desc",
+			"text": "Beat the game as Leechy",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_under30minutes_title",
+			"text": "Speedrunner",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_under30minutes_desc",
+			"text": "Beat the game in under 30 minutes",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_bossrush_title",
+			"text": "The Gauntlet",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_bossrush_desc",
+			"text": "Beat the Boss Rush",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_findshrine_title",
+			"text": "Pilgrim",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_findshrine_desc",
+			"text": "Find the Shrine of Iris",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_snelka_title",
+			"text": "Snelk Hunter A",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_snelka_desc",
+			"text": "Find the first Secret Snelk room",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_snelkb_title",
+			"text": "Snelk Hunter B",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_snelkb_desc",
+			"text": "Find the second Secret Snelk room",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_supersecretboom_title",
+			"text": "Super Secret",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_supersecretboom_desc",
+			"text": "Find the Super Secret Boomerang",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_remaketestrooms_title",
+			"text": "Counter-Snail",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_remaketestrooms_desc",
+			"text": "Find the Remake's original test rooms",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_mazebirds_title",
+			"text": "Birds in the Maze Room",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_mazebirds_desc",
+			"text": "Find them",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_flashtestrooms_title",
+			"text": "Where are we, Snaily?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_flashtestrooms_desc",
+			"text": "Find the original test map",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_wininsane_title",
+			"text": "Omega Snail",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_wininsane_desc",
+			"text": "Beat the game on Insane difficulty",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winrandomizer_title",
+			"text": "How did you get up here?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_winrandomizer_desc",
+			"text": "Beat a randomized seed",
+			"value": 0
+		},
+		{
+			"name": "menu_option_achievements_progress",
+			"text": "{0}/{1} unlocked",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_gallery",
+			"text": "View Gallery",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gallery_normal",
+			"text": "Regular Clear",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gallery_bossRush",
+			"text": "Boss Rush Clear",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gallery_100",
+			"text": "100% Clear",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gallery_lessThan30",
+			"text": "Clear in < 30 Min",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gallery_insane",
+			"text": "Insane Clear",
+			"value": 0
+		},
+		{
+			"name": "menu_option_records_returnTo",
+			"text": "Return to Records",
 			"value": 0
 		},
 		{
@@ -1422,12 +1802,52 @@
 		},
 		{
 			"name": "hud_collectedItemPercentage",
-			"text": "Item collection #% complete!  Game saved.",
+			"text": "Item collection {0}% complete!  Game saved.",
 			"value": 0
 		},
 		{
 			"name": "hud_gameSaved",
 			"text": "Game saved.",
+			"value": 0
+		},
+		{
+			"name": "hud_newBestTime",
+			"text": "New best - {0} on {1} - {2}",
+			"value": 0
+		},
+		{
+			"name": "hud_demoComplete",
+			"text": "Demo completed!",
+			"value": 0
+		},
+		{
+			"name": "hud_unlockBossRush",
+			"text": "Boss Rush unlocked!",
+			"value": 0
+		},
+		{
+			"name": "hud_unlockCharacters",
+			"text": "Character Select unlocked!",
+			"value": 0
+		},
+		{
+			"name": "hud_unlockRandoMode",
+			"text": "Item Randomizer unlocked!",
+			"value": 0
+		},
+		{
+			"name": "hud_unlockInsane",
+			"text": "Insane Mode unlocked!",
+			"value": 0
+		},
+		{
+			"name": "hud_unlockBossRushAndInsane",
+			"text": "Boss Rush unlocked!\nInsane Mode unlocked!",
+			"value": 0
+		},
+		{
+			"name": "hud_radar",
+			"text": "(Items found: {0}/{1})",
 			"value": 0
 		},
 		{
@@ -1462,7 +1882,7 @@
 		},
 		{
 			"name": "subscreen_shellNormal",
-			"text": "Normal _",
+			"text": "Normal {0}",
 			"value": 0
 		},
 		{
@@ -1472,22 +1892,22 @@
 		},
 		{
 			"name": "subscreen_markers",
-			"text": "Press \"_\" to\nset markers",
+			"text": "Press \"{0}\" to\nset markers",
 			"value": 0
 		},
 		{
 			"name": "subscreen_mapRate",
-			"text": "Map\n##%",
+			"text": "Map\n{0}%",
 			"value": 0
 		},
 		{
 			"name": "subscreen_itemRate",
-			"text": "Items\n##%",
+			"text": "Items\n{0}%",
 			"value": 0
 		},
 		{
 			"name": "subscreen_time",
-			"text": "Time\n_",
+			"text": "Time\n{0}",
 			"value": 0
 		},
 		{
@@ -1582,12 +2002,12 @@
 		},
 		{
 			"name": "item_iceSnail",
-			"text": "Ice _",
+			"text": "Ice {0}",
 			"value": 0
 		},
 		{
 			"name": "item_gravitySnail",
-			"text": "Gravity _",
+			"text": "Gravity {0}",
 			"value": 0
 		},
 		{
@@ -1607,17 +2027,17 @@
 		},
 		{
 			"name": "item_fullMetalSnail_generic",
-			"text": "Full-Metal _",
+			"text": "Full Metal {0}",
 			"value": 0
 		},
 		{
 			"name": "item_fullMetalSnail_noShell",
-			"text": "Full-Power _",
+			"text": "Full Power {0}",
 			"value": 0
 		},
 		{
 			"name": "item_fullMetalSnail_blob",
-			"text": "Non-Newtonian _",
+			"text": "Non-Newtonian {0}",
 			"value": 0
 		},
 		{
@@ -1637,12 +2057,12 @@
 		},
 		{
 			"name": "item_heartContainer",
-			"text": "Heart Container #_",
+			"text": "Heart Container #{0}",
 			"value": 0
 		},
 		{
 			"name": "item_helixFragment",
-			"text": "Helix Fragment #_",
+			"text": "Helix Fragment #{0}",
 			"value": 0
 		},
 		{
@@ -1697,7 +2117,7 @@
 		},
 		{
 			"name": "boss_defeated",
-			"text": "_ defeated!",
+			"text": "{0} defeated!",
 			"value": 0
 		},
 		{

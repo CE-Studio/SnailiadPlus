@@ -9,17 +9,17 @@ public class Subscreen : MonoBehaviour
     bool isSelecting = false;
     int currentlySelectedCell = 0;
     float currentMarkerColor = 0;
-    List<GameObject> cells = new List<GameObject>();
-    List<SpriteRenderer> cellsWithMarkers = new List<SpriteRenderer>();
+    List<GameObject> cells = new();
+    List<SpriteRenderer> cellsWithMarkers = new();
 
-    private readonly Vector2 topLeftCell = new Vector2(-6.25f, 5.25f);
+    private readonly Vector2 topLeftCell = new(-6.25f, 5.25f);
 
     GameObject map;
     GameObject playerMarker;
     GameObject cellSelector;
     GameObject helixIcon;
     TextObject helixCount;
-    List<float> helixCountOriginYs = new List<float>();
+    List<float> helixCountOriginYs = new();
     private const float HELIX_COUNT_OFF_Y = 16.5f;
     private float helixCountPos = HELIX_COUNT_OFF_Y;
     private const float BOTTOM_BUTTON_OFF_Y = 13.5f;
@@ -89,7 +89,7 @@ public class Subscreen : MonoBehaviour
         {
             for (int x = 0; x < PlayState.WORLD_SIZE.x; x++)
             {
-                GameObject newCell = new GameObject("Cell " + cellID.ToString());
+                GameObject newCell = new("Cell " + cellID.ToString());
                 newCell.transform.parent = map.transform;
                 SpriteRenderer cellSprite = newCell.AddComponent<SpriteRenderer>();
                 cellSprite.sortingOrder = 4;
@@ -336,27 +336,27 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_header_shell");
                     break;
                 case 7:
-                    newText = PlayState.GetText("subscreen_shellNormal").Replace("_", PlayState.currentProfile.character == "Sluggy" ? PlayState.GetText("species_sluggy") :
+                    newText = string.Format(PlayState.GetText("subscreen_shellNormal"), PlayState.currentProfile.character == "Sluggy" ? PlayState.GetText("species_sluggy") :
                         (PlayState.currentProfile.character == "Blobby" ? PlayState.GetText("species_blobby") : (PlayState.currentProfile.character == "Leechy" ?
                         PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell"))));
                     break;
                 case 8:
                     if (PlayState.CheckForItem("Ice Snail") || PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
-                        newText = PlayState.GetText("item_iceSnail").Replace("_", shell);
+                        newText = string.Format(PlayState.GetText("item_iceSnail"), shell);
                     break;
                 case 9:
                     if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
-                        newText = PlayState.GetText(PlayState.currentProfile.character switch {
+                        newText = string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
                             "Upside" => "item_magneticFoot",
                             "Leggy" => "item_corkscrewJump",
                             "Blobby" => "item_angelJump",
                             _ => "item_gravitySnail"
-                        }).Replace("_", shell);
+                        }), shell);
                     break;
                 case 10:
                     if (PlayState.CheckForItem("Full-Metal Snail"))
-                        newText = PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentProfile.character == "Blobby" ?
-                            "item_fullMetalSnail_blob" : "item_fullMetalSnail_noShell")).Replace("_", shell);
+                        newText = string.Format(PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentProfile.character == "Blobby" ?
+                            "item_fullMetalSnail_blob" : "item_fullMetalSnail_noShell")), shell);
                     break;
                 case 11:
                     newText = PlayState.GetText("subscreen_header_ability");
@@ -382,16 +382,16 @@ public class Subscreen : MonoBehaviour
                         newText = PlayState.GetText("item_gravityShock");
                     break;
                 case 17:
-                    newText = PlayState.GetText("subscreen_markers").Replace("_", Control.ParseKeyName(4));
+                    newText = string.Format(PlayState.GetText("subscreen_markers"), Control.ParseKeyName(4));
                     break;
                 case 18:
-                    newText = PlayState.GetText("subscreen_mapRate").Replace("##", PlayState.GetMapPercentage().ToString());
+                    newText = string.Format(PlayState.GetText("subscreen_mapRate"), PlayState.GetMapPercentage().ToString());
                     break;
                 case 19:
-                    newText = PlayState.GetText("subscreen_itemRate").Replace("##", PlayState.GetItemPercentage().ToString());
+                    newText = string.Format(PlayState.GetText("subscreen_itemRate"), PlayState.GetItemPercentage().ToString());
                     break;
                 case 20:
-                    newText = PlayState.GetText("subscreen_time").Replace("_", PlayState.GetTimeString());
+                    newText = string.Format(PlayState.GetText("subscreen_time"), PlayState.GetTimeString());
                     break;
                 case 21:
                     newText = "X " + PlayState.CountFragments();

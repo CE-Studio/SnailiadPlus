@@ -40,7 +40,7 @@ public class AchievementPanel : MonoBehaviour
         WinRandomizer          // (Beat the game on a randomized seed)
     };
     public Achievements currentAchievement;
-    public List<Achievements> popupQueue = new List<Achievements>();
+    public List<Achievements> popupQueue = new();
     public bool runningPopup = false;
     private int runState = 0;
     private float openTime = 0;

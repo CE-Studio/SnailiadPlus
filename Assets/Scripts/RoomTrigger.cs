@@ -74,7 +74,7 @@ public class RoomTrigger:MonoBehaviour {
         fg = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
         specialMap = GameObject.Find("Grid/Special").GetComponent<Tilemap>();
         breakableBlock = (GameObject)Resources.Load("Objects/Breakable Block");
-        MoveEntitiesToInternalList();
+        //MoveEntitiesToInternalList();
         specialMap.color = new Color32(255, 255, 255, 0);
     }
 

@@ -20,7 +20,10 @@ public class GlobalFunctions : MonoBehaviour
     public GameObject hearts;
     public TextObject itemText;
     public TextObject itemPercentageText;
+    public TextObject itemCompletionText;
     public TextObject gameSaveText;
+    public TextObject newBestTimeText;
+    public TextObject newUnlocksText;
 
     // Debug keys
     public AnimationModule[] keySprites = new AnimationModule[7];
@@ -40,7 +43,7 @@ public class GlobalFunctions : MonoBehaviour
     int frameCount = 0;
     float dt = 0f;
     float fps = 0f;
-    float updateRate = 4;
+    readonly float updateRate = 4;
 
     // Global sound flag stuff
     int pingTimer = 0;
@@ -49,8 +52,8 @@ public class GlobalFunctions : MonoBehaviour
     // Area name text
     float areaTextTimer = 0;
     int lastAreaID = -1;
-    //TextMesh[] areaText;
     TextObject areaText;
+    TextObject radarText;
     public string currentBossName = "";
     bool flashedBossName = false;
     public bool displayDefeatText = false;
@@ -81,10 +84,18 @@ public class GlobalFunctions : MonoBehaviour
         itemText.SetColor(new Color(1, 1, 1, 0));
         itemPercentageText = GameObject.Find("View/Item Percentage").GetComponent<TextObject>();
         itemPercentageText.SetColor(new Color(1, 1, 1, 0));
+        itemCompletionText = GameObject.Find("View/Item Completion").GetComponent<TextObject>();
+        itemCompletionText.SetColor(new Color(1, 1, 1, 0));
         gameSaveText = GameObject.Find("View/Game Saved").GetComponent<TextObject>();
         gameSaveText.SetColor(new Color(1, 1, 1, 0));
+        newBestTimeText = GameObject.Find("View/New Best Time").GetComponent<TextObject>();
+        newBestTimeText.SetColor(new Color(1, 1, 1, 0));
+        newUnlocksText = GameObject.Find("View/Mode Unlocks").GetComponent<TextObject>();
+        newUnlocksText.SetColor(new Color(1, 1, 1, 0));
         areaText = GameObject.Find("View/Area Name").GetComponent<TextObject>();
         areaText.SetColor(new Color(1, 1, 1, 0));
+        radarText = GameObject.Find("View/Radar").GetComponent<TextObject>();
+        radarText.SetColor(new Color(1, 1, 1, 0));
 
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
     }
@@ -118,7 +129,8 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.particlePool = GameObject.Find("Particle Pool");
         PlayState.camParticlePool = PlayState.cam.transform.Find("Camera-synced Particle Layer").gameObject;
         PlayState.roomTriggerParent = GameObject.Find("Room Triggers");
-        PlayState.mainMenu = GameObject.Find("View/Menu Parent");
+        PlayState.mainMenu = GameObject.Find("View/Menu Parent").GetComponent<MainMenu>();
+        PlayState.credits = GameObject.Find("View/Credits Parent").GetComponent<Credits>();
         PlayState.loadingIcon = GameObject.Find("View/Loading Icon");
         PlayState.enemyBulletPool = GameObject.Find("Enemy Bullet Pool");
         PlayState.subscreen = GameObject.Find("View/Subscreen");
@@ -137,21 +149,28 @@ public class GlobalFunctions : MonoBehaviour
 
         PlayState.palette = (Texture2D)Resources.Load("Images/Palette");
 
+        for (int i = 0; i < 6; i++)
+            PlayState.itemAreas.Add(new List<int>());
+
         PlayState.TogglableHUDElements = new GameObject[]
         {
             GameObject.Find("View/Minimap Panel"),             //  0
             GameObject.Find("View/Hearts"),                    //  1
             GameObject.Find("View/Debug Keypress Indicators"), //  2
             GameObject.Find("View/Weapon Icons"),              //  3
-            GameObject.Find("View/Game Saved Text"),           //  4
-            GameObject.Find("View/Area Name Text"),            //  5
-            GameObject.Find("View/Item Get Text"),             //  6
-            GameObject.Find("View/Item Percentage Text"),      //  7
+            GameObject.Find("View/Game Saved"),                //  4
+            GameObject.Find("View/Area Name"),                 //  5
+            GameObject.Find("View/Item Get"),                  //  6
+            GameObject.Find("View/Item Percentage"),           //  7
             GameObject.Find("View/FPS"),                       //  8
             GameObject.Find("View/Time"),                      //  9
             GameObject.Find("View/Dialogue Box"),              // 10
             GameObject.Find("View/Bottom Keys"),               // 11
-            GameObject.Find("View/Boss Health Bar")            // 12
+            GameObject.Find("View/Boss Health Bar"),           // 12
+            GameObject.Find("View/Radar"),                     // 13
+            GameObject.Find("View/New Best Time"),             // 14
+            GameObject.Find("View/Mode Unlocks"),              // 15
+            GameObject.Find("View/Item Completion")            // 16
         };
 
         PlayState.respawnScene = SceneManager.GetActiveScene();
@@ -219,8 +238,28 @@ public class GlobalFunctions : MonoBehaviour
                 if (areaName != areaText.GetText())
                     areaTextTimer = 0;
                 areaText.SetText(areaName);
+
+                radarText.SetText("");
+                if (!PlayState.IsBossAlive(3) && lastAreaID < 7)
+                {
+                    int collectedItems = 0;
+                    int totalItems = 0;
+                    int target = Math.Clamp(lastAreaID, 0, 6);
+                    for (int i = 0; i < PlayState.itemAreas[target].Count; i++)
+                    {
+                        if (PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemAreas[target][i]) &&
+                            PlayState.GetItemAvailabilityThisCharacter(PlayState.itemAreas[target][i]))
+                        {
+                            totalItems++;
+                            if (PlayState.currentProfile.items[PlayState.itemAreas[target][i]] == 1)
+                                collectedItems++;
+                        }
+                    }
+                    if (totalItems > 0)
+                        radarText.SetText(string.Format(PlayState.GetText("hud_radar"), collectedItems.ToString(), totalItems.ToString()));
+                }
             }
-            else if (currentBossName != "" && !flashedBossName)
+            else if (currentBossName != "" && currentBossName != PlayState.GetText("boss_gigaSnail") && !flashedBossName)
             {
                 areaText.SetText(currentBossName);
                 areaTextTimer = 0;
@@ -235,22 +274,26 @@ public class GlobalFunctions : MonoBehaviour
                         string thisBossName = currentBossName;
                         if (thisBossName == PlayState.GetText("boss_gigaSnail"))
                             thisBossName = PlayState.GetText("boss_moonSnail");
-                        areaText.SetText(PlayState.GetText("boss_defeated").Replace("_", thisBossName));
+                        areaText.SetText(string.Format(PlayState.GetText("boss_defeated"), thisBossName));
                         areaTextTimer = 0;
                     }
                 }
                 currentBossName = "";
                 flashedBossName = false;
             }
-            areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
+            if (areaText.GetText() != string.Format(PlayState.GetText("boss_defeated"), PlayState.GetText("boss_moonSnail")))
+                areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
+            Color textColor;
             if (areaTextTimer < 0.5f)
-                areaText.SetColor(new Color(1, 1, 1, Mathf.Lerp(0, 1, areaTextTimer * 2)));
+                textColor = new Color(1, 1, 1, Mathf.Lerp(0, 1, areaTextTimer * 2));
             else if (areaTextTimer < 3.5f)
-                areaText.SetColor(new Color(1, 1, 1, 1));
+                textColor = new Color(1, 1, 1, 1);
             else if (areaTextTimer < 4)
-                areaText.SetColor(new Color(1, 1, 1, Mathf.Lerp(1, 0, (areaTextTimer - 3.5f) * 2)));
+                textColor = new Color(1, 1, 1, Mathf.Lerp(1, 0, (areaTextTimer - 3.5f) * 2));
             else
-                areaText.SetColor(new Color(1, 1, 1, 0));
+                textColor = new Color(1, 1, 1, 0);
+            areaText.SetColor(textColor);
+            radarText.SetColor(textColor);
         }
 
         // Audiosource volume control
@@ -373,7 +416,7 @@ public class GlobalFunctions : MonoBehaviour
 
             for (int i = 0; i < PlayState.musicLibrary.library.Length - 1; i++)
             {
-                GameObject newSourceParent = new GameObject();
+                GameObject newSourceParent = new();
                 newSourceParent.transform.parent = PlayState.musicParent;
                 newSourceParent.name = (i < PlayState.musicLibrary.areaThemeOffset - 1) ? "Auxillary group " + i
                     : "Area " + (i - PlayState.musicLibrary.areaThemeOffset + 1) + " music group";
@@ -381,7 +424,7 @@ public class GlobalFunctions : MonoBehaviour
                 {
                     for (int k = 0; k < 2; k++)
                     {
-                        GameObject newSource = new GameObject();
+                        GameObject newSource = new();
                         newSource.transform.parent = newSourceParent.transform;
                         newSource.name = "Subzone " + j + " source " + (k + 1);
                         newSource.AddComponent<AudioSource>();
@@ -488,7 +531,7 @@ public class GlobalFunctions : MonoBehaviour
 
     private IEnumerator DustRing(int tfType)
     {
-        List<Particle> dustRing = new List<Particle>();
+        List<Particle> dustRing = new();
         float spinSpeed = Mathf.PI * 2;
         int particleCount = 16;
         int repeatCount = 0;
@@ -503,7 +546,7 @@ public class GlobalFunctions : MonoBehaviour
                 shellStateBuffer = PlayState.GetShellLevel();
             for (int i = 0; i < particleCount; i++)
             {
-                Vector2 thisDustPos = new Vector2(
+                Vector2 thisDustPos = new(
                     PlayState.player.transform.position.x + (Mathf.Sin((i / particleCount) * PlayState.TAU) * radius),
                     PlayState.player.transform.position.y + (Mathf.Cos((i / particleCount) * PlayState.TAU) * radius)
                     );
@@ -703,7 +746,7 @@ public class GlobalFunctions : MonoBehaviour
         int max = PlayState.CountHearts() + 3;
         for (int i = 0; i < max; i++)
         {
-            GameObject NewHeart = new GameObject();
+            GameObject NewHeart = new();
             NewHeart.transform.parent = hearts.transform;
             NewHeart.transform.localPosition = new Vector3(-12 + (0.5f * (i % 7)), 7 - (0.5f * ((i / 7) % 7)), 0);
             NewHeart.AddComponent<SpriteRenderer>();
@@ -777,22 +820,21 @@ public class GlobalFunctions : MonoBehaviour
             Destroy(PlayState.gigaBGLayers[i]);
     }
 
-    public void FlashItemText(string itemName)
+    public void FlashHUDText(TextTypes textType, string textValue = "No text")
     {
-        StartCoroutine(FlashText("item", itemName));
+        StartCoroutine(FlashText(textType, textValue));
     }
 
-    public void FlashCollectionText()
+    public enum TextTypes
     {
-        StartCoroutine(FlashText("collection"));
+        item,
+        collection,
+        completion,
+        save,
+        bestTime,
+        unlock
     }
-
-    public void FlashSaveText()
-    {
-        StartCoroutine(FlashText("save"));
-    }
-
-    public IEnumerator FlashText(string textType, string itemName = "No item")
+    public IEnumerator FlashText(TextTypes textType, string textValue)
     {
         float timer = 0;
         int colorPointer = 0;
@@ -803,8 +845,8 @@ public class GlobalFunctions : MonoBehaviour
             default:
                 yield return new WaitForEndOfFrame();
                 break;
-            case "item":
-                itemText.SetText(itemName);
+            case TextTypes.item:
+                itemText.SetText(textValue);
                 while (timer < 3f)
                 {
                     alpha = timer > 2.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)) : (byte)255;
@@ -827,8 +869,8 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 itemText.SetColor(new Color(1, 1, 1, 0));
                 break;
-            case "collection":
-                itemPercentageText.SetText(PlayState.GetText("hud_collectedItemPercentage").Replace("#", PlayState.GetItemPercentage().ToString()));
+            case TextTypes.collection:
+                itemPercentageText.SetText(string.Format(PlayState.GetText("hud_completedItemPercentage"), PlayState.GetItemPercentage().ToString()));
                 while (timer < 2f)
                 {
                     alpha = timer > 1.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)) : (byte)255;
@@ -851,7 +893,7 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 itemPercentageText.SetColor(new Color(1, 1, 1, 0));
                 break;
-            case "save":
+            case TextTypes.save:
                 gameSaveText.SetText(PlayState.GetText("hud_gameSaved"));
                 while (timer < 2.5f)
                 {
@@ -860,6 +902,15 @@ public class GlobalFunctions : MonoBehaviour
                     timer += Time.deltaTime;
                 }
                 gameSaveText.SetColor(new Color(1, 1, 1, 0));
+                break;
+            case TextTypes.bestTime:
+                string character = PlayState.GetText(PlayState.currentProfile.character.ToLower());
+                string diff = PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" });
+                string time = PlayState.GetTimeString();
+                newBestTimeText.SetText(string.Format(PlayState.GetText("hud_newBestTime"), character, diff, time));
+                break;
+            case TextTypes.unlock:
+                newUnlocksText.SetText(PlayState.GetText("hud_unlock" + textValue));
                 break;
         }
         yield return new WaitForEndOfFrame();

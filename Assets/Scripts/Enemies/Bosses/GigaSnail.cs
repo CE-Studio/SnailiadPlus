@@ -17,6 +17,7 @@ public class GigaSnail : Boss
     private const float INTEGRATE_SPEED_STRAFE = 1.7f;
     private const int CAST_COUNT = 6;
     private const float SMASH_REFLECT_BUFFER = 0.5f;
+    private const float TRAIL_TIMEOUT = 0.0625f;
 
     private float STRAFE_TIMEOUT = 0.03f;
     private float STRAFE_SPEED = 25f;
@@ -49,7 +50,6 @@ public class GigaSnail : Boss
         Sleep
     };
     private BossMode mode = BossMode.Intro;
-    private BossMode lastMode = BossMode.Intro;
 
     private PlayState.EDirsCardinal gravity;
 
@@ -57,21 +57,18 @@ public class GigaSnail : Boss
     private int lastStomp;
     private int strafeCount;
     private Vector2 velocity;
-    private Vector2 lastSmashVelocity = Vector2.zero;
     private Vector2 smashAccel = Vector2.zero;
     private int decisionTableIndex;
-    private float shotTimeout;
     private float bossSpeed = 1;
     private int attackPhase;
     private float elapsed;
     private float modeElapsed;
     private bool modeInitialized;
     private float modeTimeout;
-    private Vector2 moveOrigin = Vector2.zero;
     private Vector2 moveTarget = Vector2.zero;
     private float strafeTheta;
     private float strafeThetaVel;
-    private float strafeThetaAccel;
+    private float strafeThetaAccel = 0;
     private bool waitingToJump;
     private float strafeTimeout;
     private float stompTimeout;
@@ -90,6 +87,9 @@ public class GigaSnail : Boss
     private bool flipVert = false;
     private PlayState.EDirsCardinal fallDir = PlayState.EDirsCardinal.None;
     private PlayState.EDirsCardinal lastFallDir = PlayState.EDirsCardinal.None;
+    private float trailTimeout;
+    private bool delayedDespawn = false;
+    private float despawnCountdown = 5f;
 
     private int[] animData;
     /*\
@@ -113,6 +113,7 @@ public class GigaSnail : Boss
      * 16 - Frames into Sleep intro to flip sprite vertically
      * 17 - Update animation on collision during Smash phase
      * 18 - Update animation on landing during Sleep phase
+     * 19 - Maximum sprite ID for phase 1; current sprite ID will be modulo'd by this to determine trail sprite ID
     \*/
     private enum AnimData
     {
@@ -396,7 +397,6 @@ public class GigaSnail : Boss
             lastStomp = 0;
         }
 
-        lastMode = mode;
         mode = newMode;
         modeInitialized = false;
         stomped = false;
@@ -461,6 +461,7 @@ public class GigaSnail : Boss
             fallDir = PlayState.EDirsCardinal.Down;
             PlayState.PlaySound("Shell");
             UpdateBackground("sleep");
+            grounded = false;
         }
         if (stomped)
         {
@@ -685,6 +686,23 @@ public class GigaSnail : Boss
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
+        if (delayedDespawn)
+        {
+            if (PlayState.creditsState == PlayState.CreditsStates.none)
+            {
+                PlayState.globalFunctions.RemoveGigaBackgroundLayers();
+                despawnCountdown = 3.75f;
+            }
+            if (despawnCountdown < 5f)
+                despawnCountdown -= Time.fixedDeltaTime;
+            if (despawnCountdown < 0f)
+            {
+                PlayState.PlayAreaSong(PlayState.currentArea, PlayState.currentSubzone);
+                Destroy(gameObject);
+            }
+            return;
+        }
+
         waveTimeout -= Time.fixedDeltaTime * bossSpeed;
         modeTimeout -= Time.fixedDeltaTime * bossSpeed;
         strafeTimeout -= Time.fixedDeltaTime * bossSpeed;
@@ -890,6 +908,29 @@ public class GigaSnail : Boss
             sprite.flipX = false;
         if (animData[(int)AnimData.AllowVerticalSpriteFlip] == 0)
             sprite.flipY = false;
+
+        if ((lastAnimState == "shell" || (mode == BossMode.Sleep && !grounded)) && mode != BossMode.Intro)
+        {
+            trailTimeout -= Time.fixedDeltaTime;
+            if (trailTimeout <= 0)
+            {
+                trailTimeout += TRAIL_TIMEOUT;
+
+                int baseSpriteID = anim.GetCurrentFrameValue() % animData[19];
+                int attackOffset = mode switch
+                {
+                    BossMode.Stomp => 0,
+                    BossMode.Smash => 1,
+                    BossMode.Strafe => 2,
+                    BossMode.Sleep => 3,
+                    _ => 0
+                };
+                int finalSpriteID = baseSpriteID + (attackOffset * animData[19]);
+                PlayState.RequestParticle(transform.position, "gigaTrail", new float[] { finalSpriteID, sprite.flipX ? 1 : 0, sprite.flipY ? 1 : 0 });
+            }
+        }
+        else
+            trailTimeout = 0;
     }
 
     public override void LateUpdate()
@@ -1157,5 +1198,62 @@ public class GigaSnail : Boss
             PlayState.EDirsCardinal.Right => PlayState.GetDistance(direction, dr, ur, CAST_COUNT, enemyCollide),
             _ => PlayState.GetDistance(direction, ul, ur, CAST_COUNT, enemyCollide)
         };
+    }
+
+    public override void Kill()
+    {
+        foreach (Particle star in bgStars)
+            star.ResetParticle();
+        UpdateBackground("fadeOut");
+
+        string unlocks = "";
+        PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnail);
+        if (!PlayState.CheckForItem("Full-Metal Snail"))
+            PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnailNoFMS);
+        if (PlayState.currentProfile.gameTime[0] < 30)
+        {
+            PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Under30Minutes);
+            unlocks += "Insane";
+        }
+        PlayState.QueueAchievementPopup(PlayState.currentProfile.character switch
+        {
+            "Sluggy" => AchievementPanel.Achievements.WinSluggy,
+            "Upside" => AchievementPanel.Achievements.WinUpside,
+            "Leggy" => AchievementPanel.Achievements.WinLeggy,
+            "Blobby" => AchievementPanel.Achievements.WinBlobby,
+            "Leechy" => AchievementPanel.Achievements.WinLeechy,
+            _ => AchievementPanel.Achievements.BeatMoonSnail
+        });
+        if (!PlayState.HasTime())
+            unlocks = unlocks == "" ? "BossRush" : "BossRushAndInsane";
+        PlayState.credits.StartCredits();
+        if (PlayState.currentProfile.difficulty != 0)
+        {
+            PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.bestTime);
+            PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
+
+            PlayState.SetTime(PlayState.currentProfile.character switch
+            {
+                "Snaily" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.snailyInsane : PlayState.TimeIndeces.snailyNormal,
+                "Sluggy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.sluggyInsane : PlayState.TimeIndeces.sluggyNormal,
+                "Upside" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.upsideInsane : PlayState.TimeIndeces.upsideNormal,
+                "Leggy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.leggyInsane : PlayState.TimeIndeces.leggyNormal,
+                "Blobby" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.blobbyInsane : PlayState.TimeIndeces.blobbyNormal,
+                "Leechy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.leechyInsane : PlayState.TimeIndeces.leechyNormal,
+                _ => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.snailyInsane : PlayState.TimeIndeces.snailyNormal
+            }, PlayState.currentProfile.gameTime);
+        }
+
+        PlayState.currentProfile.bossStates[ID] = 0;
+        PlayState.WriteSave(PlayState.currentProfileNumber, false);
+        PlayState.ToggleBossfightState(false, -1);
+        PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 11.7f, 1, true);
+        PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0.25f, 0 }, new List<float> { 10.7f, 1.2f });
+        foreach (Transform bullet in PlayState.enemyBulletPool.transform)
+            bullet.GetComponent<EnemyBullet>().Despawn();
+        delayedDespawn = true;
+        box.enabled = false;
+        sprite.enabled = false;
+        anim.Stop();
     }
 }

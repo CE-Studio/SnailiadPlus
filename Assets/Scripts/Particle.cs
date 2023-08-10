@@ -85,7 +85,7 @@ public class Particle : MonoBehaviour
                         if (transform.position.y > vars[2] - 0.25f)
                             ResetParticle();
                         break;
-                    case "gigaStar":
+                    case "gigastar":
                         for (int i = 2; i < 7; i++)
                         {
                             if (i == vars[0] + 2)
@@ -155,6 +155,11 @@ public class Particle : MonoBehaviour
                             while (transform.position.y > PlayState.cam.transform.position.y + 8)
                                 transform.position = new(transform.position.x, transform.position.y - 16);
                         }
+                        break;
+                    case "gigatrail":
+                        sprite.color = new Color(1, 1, 1, sprite.color.a - Time.deltaTime * 2f);
+                        if (sprite.color.a <= 0)
+                            ResetParticle();
                         break;
                     case "heat":
                         vars[0] += Time.deltaTime * vars[4];
@@ -282,7 +287,7 @@ public class Particle : MonoBehaviour
                         break;
                 }
 
-                if (!anim.isPlaying && isActive && !(type == "bubble"))
+                if (!anim.isPlaying && isActive && !(type == "bubble" || type == "gigatrail"))
                     ResetParticle();
             }
         }
@@ -320,8 +325,11 @@ public class Particle : MonoBehaviour
                     _ => "small"
                 });
                 break;
-            case "gigaStar":
+            case "gigastar":
                 anim.Play("Star" + Random.Range(1, 5).ToString());
+                break;
+            case "gigatrail":
+                sprite.sprite = PlayState.GetSprite("Particles/GigaTrail", (int)vars[0]);
                 break;
             case "heat":
                 anim.Play(Random.Range(0, 3) switch { 1 => "Dot_heat_small", 2 => "Dot_heat_medium", _ => "Dot_heat_tiny" });
@@ -362,7 +370,8 @@ public class Particle : MonoBehaviour
             "transformation" => -51,
             "heat" => Random.Range(0, 4) switch { 0 => -124, 1 => -110, 2 => -24, _ => -1 },
             "star" => -115,
-            "gigaStar" => -96,
+            "gigastar" => -96,
+            "gigatrail" => -51,
             _ => -15
         };
         sprite.color = animType switch
@@ -399,6 +408,7 @@ public class Particle : MonoBehaviour
         sprite.sprite = sprites.blank;
         sprite.flipX = false;
         sprite.flipY = false;
+        sprite.color = new Color(1, 1, 1, 1);
         for (int i = 0; i < vars.Length; i++)
             vars[i] = 0;
         for (int i = 0; i < internalVars.Length; i++)

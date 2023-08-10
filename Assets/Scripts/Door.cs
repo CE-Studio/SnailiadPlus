@@ -31,7 +31,7 @@ public class Door:MonoBehaviour, IRoomObject {
     }
 
     public Dictionary<string, object> save() {
-        Dictionary<string, object> content = new Dictionary<string, object>();
+        Dictionary<string, object> content = new();
         content["doorWeapon"] = doorWeapon;
         content["bossLock"] = bossLock;
         content["locked"] = locked;
@@ -91,6 +91,9 @@ public class Door:MonoBehaviour, IRoomObject {
         {
             sprite.flipX = true;
         }
+
+        if (bossLock == 3)
+            bossUnlockDelay += 9f;
     }
 
     private void Update()

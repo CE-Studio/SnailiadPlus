@@ -153,8 +153,6 @@ public class MainMenu : MonoBehaviour
         string[] version = Application.version.Split(' ');
         string versionText = PlayState.GetText("menu_version_header") + "\n" + (version[0].ToLower() == "release" ? PlayState.GetText("menu_version_release") :
             (version[0].ToLower() == "demo" ? PlayState.GetText("menu_version_demo") : PlayState.GetText("menu_version_developer"))) + " " + version[1];
-        //menuHUDElements[1].transform.GetChild(0).GetComponent<TextMesh>().text = versionText;
-        //menuHUDElements[1].transform.GetChild(1).GetComponent<TextMesh>().text = versionText;
         menuHUDElements[1].GetComponent<TextObject>().SetText(versionText);
 
         CreateTitle();
@@ -766,7 +764,8 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
                 ToggleHUD(false);
             }
-            if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error) && !PlayState.playerScript.inDeathCutscene)
+            if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error)
+                && !PlayState.playerScript.inDeathCutscene && PlayState.creditsState == 0)
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);
@@ -977,39 +976,14 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public string ConvertTimeToString(float[] gameTime)
-    {
-        string time = gameTime[0] + ":";
-        if (gameTime[1] < 10)
-            time += "0";
-        time += gameTime[1] + ":";
-        int seconds = Mathf.RoundToInt(gameTime[2] * 100);
-        bool lessThanTen = seconds < 1000;
-        bool lessThanOne = seconds < 100;
-        if (seconds == 0)
-            time += "00.00";
-        else
-            time += (lessThanOne ? "00" : (lessThanTen ? "0" + seconds.ToString()[0] : seconds.ToString().Substring(0, 2))) + "." +
-                seconds.ToString().Substring(lessThanOne ? 0 : (lessThanTen ? 1 : 2), 2);
-        return time;
-    }
-
     public string ConvertDifficultyToString(int difficulty)
     {
-        string output = "";
-        switch (difficulty)
+        return difficulty switch
         {
-            case 0:
-                output = PlayState.GetText("difficulty_easy");
-                break;
-            case 1:
-                output = PlayState.GetText("difficulty_normal");
-                break;
-            case 2:
-                output = PlayState.GetText("difficulty_insane");
-                break;
-        }
-        return output;
+            1 => PlayState.GetText("difficulty_normal"),
+            2 => PlayState.GetText("difficulty_insane"),
+            _ => PlayState.GetText("difficulty_easy")
+        };
     }
 
     public void ClearOptions()
@@ -1143,9 +1117,11 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         if (PlayState.IsControllerConnected())
-            AddOption(PlayState.GetText("menu_intro_controller").Replace("_", PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
+            AddOption(string.Format(PlayState.GetText("menu_intro_controller"),
+                PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
         else
-            AddOption(PlayState.GetText("menu_intro_keyboard").Replace("_", PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
+            AddOption(string.Format(PlayState.GetText("menu_intro_keyboard"),
+                PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
         AddOption("", false);
         AddOption("", false);
         ForceSelect(0);
@@ -1169,8 +1145,8 @@ public class MainMenu : MonoBehaviour
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
         AddOption(PlayState.GetText("menu_option_main_credits"), true, CreditsPage1);
-        if (PlayState.HasTime())
-            AddOption(PlayState.GetText("menu_option_records"), true);
+        if (PlayState.HasTime() || PlayState.HasAchievemements())
+            AddOption(PlayState.GetText("menu_option_main_records"), true, RecordsScreen);
         if (returnAvailable)
         {
             AddOption(PlayState.GetText("menu_option_main_returnTo"), true, MenuReturnConfirm);
@@ -1195,7 +1171,7 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
             else
-                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + PlayState.GetTimeString(data.gameTime) +
                     " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
         }
         AddOption("", false);
@@ -1294,7 +1270,7 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else
-                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + PlayState.GetTimeString(data.gameTime) +
                     " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
         }
         AddOption("", false);
@@ -1315,8 +1291,8 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
             else
-                AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
-                    " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
+                AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " +
+                    PlayState.GetTimeString(data.gameTime) + " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
                     menuVarFlags[0] != i && PlayState.currentProfileNumber != i, CopyConfirm, new int[] { 1, i });
         }
         AddOption("", false);
@@ -1331,7 +1307,7 @@ public class MainMenu : MonoBehaviour
     {
         bool isChosenSlotEmpty = (menuVarFlags[1] switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 }).isEmpty;
         ClearOptions();
-        AddOption(PlayState.GetText("menu_option_copyGame_header3").Replace("#1", menuVarFlags[0].ToString()).Replace("#2", menuVarFlags[1].ToString()).Replace("_",
+        AddOption(string.Format(PlayState.GetText("menu_option_copyGame_header3"), menuVarFlags[0].ToString(), menuVarFlags[1].ToString(),
             isChosenSlotEmpty ? PlayState.GetText("menu_option_copyGame_empty") : PlayState.GetText("menu_option_copyGame_full")), false);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_copyGame_confirm"), true, ActuallyCopyData);
@@ -1356,7 +1332,7 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else
-                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + ConvertTimeToString(data.gameTime) +
+                AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + PlayState.GetTimeString(data.gameTime) +
                     " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
         }
         AddOption("", false);
@@ -1372,10 +1348,10 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         if (PlayState.currentProfileNumber == menuVarFlags[0])
         {
-            AddOption(PlayState.GetText("menu_option_eraseGame_header3").Replace("#", menuVarFlags[0].ToString()), false);
-            AddOption(PlayState.GetText("menu_option_eraseGame_header4").Replace("#", menuVarFlags[0].ToString()), false);
-            AddOption(PlayState.GetText("menu_option_eraseGame_header5").Replace("#", menuVarFlags[0].ToString()), false);
-            AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_eraseGame_header3"), menuVarFlags[0].ToString()), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_eraseGame_header4"), menuVarFlags[0].ToString()), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_eraseGame_header5"), menuVarFlags[0].ToString()), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_eraseGame_header2"), menuVarFlags[0].ToString()), false);
             AddOption("", false);
             AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, EraseAndBoot);
             AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
@@ -1383,7 +1359,7 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            AddOption(PlayState.GetText("menu_option_eraseGame_header2").Replace("#", menuVarFlags[0].ToString()), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_eraseGame_header2"), menuVarFlags[0].ToString()), false);
             AddOption("", false);
             AddOption(PlayState.GetText("menu_option_eraseGame_confirm"), true, ActuallyEraseData);
             AddOption(PlayState.GetText("menu_option_eraseGame_cancelConfirm"), true, ProfileScreen);
@@ -1702,9 +1678,9 @@ public class MainMenu : MonoBehaviour
             ClearOptions();
             string insert = (menuVarFlags[0] == 2 || menuVarFlags[0] == 3) ?
                 PlayState.GetText("menu_option_assetConfirm_defaultInfo_audio") : PlayState.GetText("menu_option_assetConfirm_defaultInfo_video");
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo1").Replace("_", insert), false);
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo2").Replace("_", insert), false);
-            AddOption(PlayState.GetText("menu_option_assetConfirm_defaultInfo3").Replace("_", insert), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_assetConfirm_defaultInfo1"), insert), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_assetConfirm_defaultInfo2"), insert), false);
+            AddOption(string.Format(PlayState.GetText("menu_option_assetConfirm_defaultInfo3"), insert), false);
         }
         else
         {
@@ -1731,8 +1707,8 @@ public class MainMenu : MonoBehaviour
             ClearOptions();
             tempPackNameBuffer = packTitle;
             AddOption(packTitle, false);
-            AddOption(packInfo[0] == null ? PlayState.GetText("menu_option_assetConfirm_noInfo") : PlayState.GetText("menu_option_assetConfirm_author").Replace("_", packInfo[0]), false);
-            AddOption(packInfo[0] == null ? "" : PlayState.GetText("menu_option_assetConfirm_version").Replace("#1", packInfo[1]).Replace("#2", packInfo[2]), false);
+            AddOption(packInfo[0] == null ? PlayState.GetText("menu_option_assetConfirm_noInfo") : string.Format(PlayState.GetText("menu_option_assetConfirm_author"), packInfo[0]), false);
+            AddOption(packInfo[0] == null ? "" : string.Format(PlayState.GetText("menu_option_assetConfirm_version"), packInfo[1], packInfo[2]), false);
         }
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_assetConfirm_confirm"), false);
@@ -2304,6 +2280,154 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
         ForceSelect(6);
         backPage = PageMain;
+    }
+
+    public void RecordsScreen()
+    {
+        ClearOptions();
+        if (PlayState.HasTime(PlayState.TimeCategories.normal))
+            AddOption(PlayState.GetText("menu_option_records_normal"), true, NormalTimes);
+        if (PlayState.HasTime(PlayState.TimeCategories.insane))
+            AddOption(PlayState.GetText("menu_option_records_insane"), true, InsaneTimes);
+        if (PlayState.HasTime(PlayState.TimeCategories.hundo))
+            AddOption(PlayState.GetText("menu_option_records_100"), true, HundoTimes);
+        if (PlayState.HasTime(PlayState.TimeCategories.rush))
+            AddOption(PlayState.GetText("menu_option_records_bossRush"), true, RushTimes);
+        if (currentOptions.Count == 0)
+            AddOption(PlayState.GetText("menu_option_records_noTimes"), false);
+        AddOption("", false);
+        if (PlayState.HasAchievemements())
+            AddOption(PlayState.GetText("menu_option_records_achievements"), true, AchievementScreen);
+        AddOption(PlayState.GetText("menu_option_records_gallery"), true, GalleryScreen);
+        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
+        ForceSelect(2);
+        backPage = PageMain;
+    }
+
+    public void NormalTimes()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_records_normal"), false);
+        AddOption("", false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.snailyNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.snailyNormal)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.sluggyNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyNormal)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.upsideNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.upsideNormal)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leggyNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leggyNormal)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.blobbyNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyNormal)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leechyNormal))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leechyNormal)), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = RecordsScreen;
+    }
+
+    public void InsaneTimes()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_records_insane"), false);
+        AddOption("", false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.snailyInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.snailyInsane)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.sluggyInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyInsane)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.upsideInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.upsideInsane)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leggyInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leggyInsane)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.blobbyInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyInsane)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leechyInsane))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leechyInsane)), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = RecordsScreen;
+    }
+
+    public void HundoTimes()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_records_100"), false);
+        AddOption("", false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.snaily100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.snaily100)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.sluggy100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.sluggy100)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.upside100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.upside100)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leggy100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leggy100)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.blobby100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.blobby100)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leechy100))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leechy100)), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = RecordsScreen;
+    }
+
+    public void RushTimes()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_records_bossRush"), false);
+        AddOption("", false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.snailyRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.snailyRush)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.sluggyRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyRush)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.upsideRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.upsideRush)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leggyRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leggyRush)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.blobbyRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyRush)), false);
+        if (PlayState.HasTime(PlayState.TimeIndeces.leechyRush))
+            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
+                PlayState.GetTimeString(PlayState.TimeIndeces.leechyRush)), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(currentOptions.Count - 1);
+        backPage = RecordsScreen;
+    }
+
+    public void AchievementScreen()
+    {
+
+    }
+
+    public void GalleryScreen()
+    {
+
     }
 
     public void MenuReturnConfirm()

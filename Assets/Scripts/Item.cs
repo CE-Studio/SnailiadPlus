@@ -38,7 +38,15 @@ public class Item:MonoBehaviour, IRoomObject {
             PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
         }
         PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
-        Dictionary<string, object> content = new Dictionary<string, object>();
+        int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
+        if (areaID < 7)
+        {
+            if (areaID == 6)
+                areaID = 5;
+            if (!PlayState.itemAreas[areaID].Contains(itemID))
+                PlayState.itemAreas[areaID].Add(itemID);
+        }
+        Dictionary<string, object> content = new();
         content["countedInPercentage"] = countedInPercentage;
         content["collected"] = collected;
         content["itemID"] = itemID;
@@ -237,7 +245,10 @@ public class Item:MonoBehaviour, IRoomObject {
                     break;
             }
             FlashItemText();
-            PlayState.globalFunctions.FlashCollectionText();
+            if (PlayState.GetItemPercentage() == 100)
+                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.completion);
+            else
+                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.collection);
             StartCoroutine(nameof(HoverOverPlayer));
             PlayState.currentProfile.percentage = PlayState.GetItemPercentage();
             PlayState.WriteSave(PlayState.currentProfileNumber, false);
@@ -245,12 +256,12 @@ public class Item:MonoBehaviour, IRoomObject {
     }
 
     public void FlashItemText() {
+        string itemName = IDToName();
         if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_helixFragment").Replace("_", PlayState.CountFragments().ToString()));
+            itemName = string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString());
         else if (itemID >= PlayState.OFFSET_HEARTS)
-            PlayState.globalFunctions.FlashItemText(PlayState.GetText("item_heartContainer").Replace("_", PlayState.CountHearts().ToString()));
-        else
-            PlayState.globalFunctions.FlashItemText(IDToName());
+            itemName = string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString());
+        PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.item, itemName);
     }
 
     private string IDToName() {
@@ -262,19 +273,19 @@ public class Item:MonoBehaviour, IRoomObject {
             4 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_wallGrab" : "item_highJump"),
             5 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield"),
             6 => PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire"),
-            7 => PlayState.GetText("item_iceSnail").Replace("_", species),
-            8 => PlayState.GetText(PlayState.currentProfile.character switch {
+            7 => string.Format(PlayState.GetText("item_iceSnail"), species),
+            8 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
                 "Upside" => "item_magneticFoot",
                 "Leggy" => "item_corkscrewJump",
                 "Blobby" => "item_angelJump",
                 _ => "item_gravitySnail"
-            }).Replace("_", species),
-            9 => PlayState.GetText(PlayState.currentProfile.character switch {
+            }), species),
+            9 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
                 "Sluggy" => "item_fullMetalSnail_noShell",
                 "Blobby" => "item_fullMetalSnail_blob",
                 "Leechy" => "item_fullMetalSnail_noShell",
                 _ => "item_fullMetalSnail_generic"
-            }).Replace("_", species),
+            }), species),
             10 => PlayState.GetText("item_gravityShock"),
             11 => PlayState.GetText("item_boomerang_secret"),
             12 => PlayState.GetText("item_rainbowWave_secret"),
