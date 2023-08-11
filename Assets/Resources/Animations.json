@@ -1581,6 +1581,281 @@
 		},
 		
 		{
+            "name": "Achievement_locked",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_beatshellbreaker",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_beatstompy",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                2
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_beatspacebox",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                3
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_beatmoonsnail",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                4
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_beatmoonsnailnofms",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                5
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_map100",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                6
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_sunsnail",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                7
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_items100",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                8
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winsluggy",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                9
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winupside",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                10
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winleggy",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                11
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winblobby",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                12
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winleechy",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                13
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_under30minutes",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                14
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_bossrush",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                15
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_findshrine",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                16
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_snelka",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                17
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_snelkb",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                18
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_supersecretboom",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                19
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_remaketestrooms",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                20
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_mazebirds",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                21
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_flashtestrooms",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                22
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_wininsane",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                23
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
+            "name": "Achievement_winrandomizer",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                24
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
             "name": "Door_data",
 			"spriteName": "Door",
             "framerate": 0.0,
@@ -4597,6 +4872,73 @@
 			"framerate": 0.0,
 			"frames": [
 				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		
+		{
+			"name": "Ending_background",
+			"spriteName": "Endings/EndingBackground",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Ending_normal",
+			"spriteName": "Endings/EndingNormal",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Ending_bossRush",
+			"spriteName": "Endings/EndingBossRush",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Ending_100",
+			"spriteName": "Endings/Ending100",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Ending_sub30",
+			"spriteName": "Endings/EndingSub30",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Ending_insane",
+			"spriteName": "Endings/EndingInsane",
+			"framerate": 0.0,
+			"frames": [
+				0
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -14374,6 +14716,28 @@
 			"randomizeStartFrame": false
         },
 		
+		{
+			"name": "AchievementFrame_idle",
+			"spriteName": "UI/AchievementFrame",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "AchievementFrame_selected",
+			"spriteName": "UI/AchievementFrame",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
 		{
 			"name": "AchievementPanel_open",
 			"spriteName": "UI/AchievementPanel",

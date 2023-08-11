@@ -118,6 +118,37 @@
         },
 		
 		{
+			"name": "Endings/Ending100",
+			"width": 400,
+			"height": 240
+		},
+		{
+			"name": "Endings/EndingBackground",
+			"width": 600,
+			"height": 240
+		},
+		{
+			"name": "Endings/EndingBossRush",
+			"width": 400,
+			"height": 240
+		},
+		{
+			"name": "Endings/EndingInsane",
+			"width": 400,
+			"height": 240
+		},
+		{
+			"name": "Endings/EndingNormal",
+			"width": 400,
+			"height": 240
+		},
+		{
+			"name": "Endings/EndingSub30",
+			"width": 400,
+			"height": 240
+		},
+		
+		{
 			"name": "Entities/Babyfish",
 			"width": 14,
 			"height": 10
@@ -560,6 +591,11 @@
             "height": 16
         },
 		
+		{
+            "name": "UI/AchievementFrame",
+            "width": 60,
+            "height": 60
+        },
 		{
             "name": "UI/AchievementPanel",
             "width": 80,

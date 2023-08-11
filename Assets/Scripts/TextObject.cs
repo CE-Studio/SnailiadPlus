@@ -74,12 +74,6 @@ public class TextObject : MonoBehaviour
             transform.position += PIXEL * 0.5f * Vector3.left;
     }
 
-    public void EnsureChildArrayExists()
-    {
-        if (childText == null)
-            childText = new();
-    }
-
     public void SetText(string text)
     {
         thisText.text = text;
@@ -107,6 +101,7 @@ public class TextObject : MonoBehaviour
             font.GetCharacterInfo(thisChar, out CharacterInfo info);
             currentLength += info.advance;
         }
+        currentLength = Mathf.RoundToInt((float)currentLength / 2f * (float)size);
     }
 
     public void SetColor(Color color)

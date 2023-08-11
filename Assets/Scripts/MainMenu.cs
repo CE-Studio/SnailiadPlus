@@ -32,6 +32,10 @@ public class MainMenu : MonoBehaviour
     private float currentSpawnY = LIST_CENTER_Y;
     private const float SELECT_SNAIL_VERTICAL_OFFSET = -0.625f;
     private const float LETTER_SPAWN_TIME = Mathf.PI / 11;
+    private const float ACHIEVEMENT_ICON_SPACING = 4f;
+    private const float ACHIEVEMENT_ICON_Y = -0.25f;
+    private const float ACHIEVEMENT_ICON_LERP_VALUE = 12f;
+    private const float GALLERY_LERP_VALUE = 7.5f;
 
     private List<TextObject> activeOptions = new();
 
@@ -59,6 +63,26 @@ public class MainMenu : MonoBehaviour
     private Vector2 titleHomePos = Vector2.zero;
     private float letterOffsetForIntro = -3.75f;
     private bool lerpLetterOffsetToZero = false;
+    
+    private struct AchievementIcon
+    {
+        public GameObject obj;
+        public SpriteRenderer icon;
+        public AnimationModule iconAnim;
+        public AnimationModule frameAnim;
+    }
+    private string[] achievements = new string[] { };
+    private List<AchievementIcon> achievementIcons = new();
+
+    private struct GalleryPart
+    {
+        public Transform obj;
+        public SpriteRenderer image;
+        public AnimationModule anim;
+    }
+    private GalleryPart galleryBG;
+    private GalleryPart galleryImage;
+    private bool viewingGallery = false;
 
     public static AudioSource music;
     public GameObject textObject;
@@ -66,12 +90,12 @@ public class MainMenu : MonoBehaviour
     public GameObject titlePlus;
     public GameObject[] selector;
 
-    public List<GameObject> letters = new List<GameObject>();
+    public List<GameObject> letters = new();
 
     public GameObject[] menuHUDElements;
 
     private readonly string acceptedChars = "abcdefghijklmnopqrstuvwxyz +";
-    public Dictionary<char, int> letterPixelWidths = new Dictionary<char, int>
+    public Dictionary<char, int> letterPixelWidths = new()
     {
         { 'a', 28 }, { 'b', 28 }, { 'c', 24 }, { 'd', 28 }, { 'e', 24 }, { 'f', 24 }, { 'g', 28 }, { 'h', 24 },
         { 'i', 6 }, { 'j', 24 }, { 'k', 24 }, { 'l', 6 }, { 'm', 32 }, { 'n', 24 }, { 'o', 28 }, { 'p', 28 },
@@ -164,6 +188,43 @@ public class MainMenu : MonoBehaviour
         PlayState.titleParent.transform.localPosition = new Vector2(titleHomePos.x, titleHomePos.y + letterOffsetForIntro);
 
         textObject = Resources.Load<GameObject>("Objects/Text Object");
+
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject newGalleryPart = new("Gallery Part");
+            newGalleryPart.transform.parent = transform;
+            SpriteRenderer partSprite = newGalleryPart.AddComponent<SpriteRenderer>();
+            AnimationModule partAnim = newGalleryPart.AddComponent<AnimationModule>();
+            if (i == 0)
+            {
+                galleryBG = new GalleryPart
+                {
+                    obj = newGalleryPart.transform,
+                    image = partSprite,
+                    anim = partAnim
+                };
+                galleryBG.image.sortingOrder = 1010;
+                galleryBG.anim.Add("Ending_background");
+                galleryBG.obj.localPosition = new Vector2(26, 0);
+            }
+            else
+            {
+                galleryImage = new GalleryPart
+                {
+                    obj = newGalleryPart.transform,
+                    image = partSprite,
+                    anim = partAnim
+                };
+                galleryImage.image.sortingOrder = 1011;
+                galleryImage.anim.Add("Ending_normal");
+                galleryImage.anim.Add("Ending_bossRush");
+                galleryImage.anim.Add("Ending_100");
+                galleryImage.anim.Add("Ending_sub30");
+                galleryImage.anim.Add("Ending_insane");
+                galleryImage.obj.localPosition = new Vector2(-26, 0);
+            }
+            partSprite.color = new Color(1, 1, 1, 0);
+        }
     }
 
     void Update()
@@ -281,7 +342,7 @@ public class MainMenu : MonoBehaviour
                 _ => -1
             };
 
-            if (!isRebinding && !fadingToIntro)
+            if (!isRebinding && !fadingToIntro && !viewingGallery)
             {
                 if (Control.UpPress(1) || Control.DownPress(1))
                 {
@@ -325,6 +386,14 @@ public class MainMenu : MonoBehaviour
                         currentOptions[selectedOption].destinationPage();
                         PlayState.PlaySound("MenuBeep2");
                     }
+                }
+            }
+            else if (!isRebinding && !fadingToIntro && viewingGallery)
+            {
+                if (Control.JumpPress() || Control.Pause())
+                {
+                    PlayState.PlaySound("MenuBeep2");
+                    viewingGallery = false;
                 }
             }
 
@@ -748,6 +817,32 @@ public class MainMenu : MonoBehaviour
                         AddToOptionText(option, (menuVarFlags[0] + 1).ToString() +
                             (File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_" + (menuVarFlags[0] + 1) + ".json") ? " (full)" : " (empty)"));
                         break;
+                    case "achievements":
+                        if (TestForArrowAdjust(option, 0, achievements.Length - 1))
+                        {
+                            foreach (AchievementIcon icon in achievementIcons)
+                            {
+                                int thisID = int.Parse(icon.obj.name.Split(' ')[1]);
+                                if (thisID == menuVarFlags[0])
+                                    icon.frameAnim.Play("AchievementFrame_selected");
+                                else if (thisID != menuVarFlags[0] && icon.frameAnim.currentAnimName == "AchievementFrame_selected")
+                                    icon.frameAnim.Play("AchievementFrame_idle");
+                            }
+
+                            if (PlayState.generalData.achievements[menuVarFlags[0]])
+                            {
+                                currentOptions[4].textScript.SetText(PlayState.GetText(string.Format("menu_option_achievements_{0}_title",
+                                    achievements[menuVarFlags[0]].ToLower())));
+                                currentOptions[5].textScript.SetText(PlayState.GetText(string.Format("menu_option_achievements_{0}_desc",
+                                    achievements[menuVarFlags[0]].ToLower())));
+                            }
+                            else
+                            {
+                                currentOptions[4].textScript.SetText(PlayState.GetText("menu_option_achievements_locked_title"));
+                                currentOptions[5].textScript.SetText(PlayState.GetText("menu_option_achievements_locked_desc"));
+                            }
+                        }
+                        break;
                 }
             }
             GetNewSnailOffset();
@@ -790,6 +885,32 @@ public class MainMenu : MonoBehaviour
                     currentOptions[selectedOption].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
             selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
             selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
+
+            if (achievementIcons.Count != 0)
+            {
+                foreach (AchievementIcon icon in achievementIcons)
+                {
+                    int iconID = int.Parse(icon.obj.name.Split(' ')[1]);
+                    icon.obj.transform.localPosition = Vector2.Lerp(icon.obj.transform.localPosition,
+                        new Vector2((iconID - menuVarFlags[0]) * ACHIEVEMENT_ICON_SPACING, ACHIEVEMENT_ICON_Y), ACHIEVEMENT_ICON_LERP_VALUE * Time.deltaTime);
+                }
+            }
+
+            float timeStep = GALLERY_LERP_VALUE * Time.deltaTime;
+            if (viewingGallery)
+            {
+                galleryBG.obj.transform.localPosition = Vector2.Lerp(galleryBG.obj.transform.localPosition, Vector2.zero, timeStep);
+                galleryBG.image.color = Color.Lerp(galleryBG.image.color, new Color(1, 1, 1, 1), timeStep);
+                galleryImage.obj.transform.localPosition = Vector2.Lerp(galleryImage.obj.transform.localPosition, Vector2.zero, timeStep);
+                galleryImage.image.color = Color.Lerp(galleryImage.image.color, new Color(1, 1, 1, 1), timeStep);
+            }
+            else
+            {
+                galleryBG.obj.transform.localPosition = Vector2.Lerp(galleryBG.obj.transform.localPosition, new Vector2(26, 0), timeStep);
+                galleryBG.image.color = Color.Lerp(galleryBG.image.color, new Color(1, 1, 1, 0), timeStep);
+                galleryImage.obj.transform.localPosition = Vector2.Lerp(galleryImage.obj.transform.localPosition, new Vector2(-26, 0), timeStep);
+                galleryImage.image.color = Color.Lerp(galleryImage.image.color, new Color(1, 1, 1, 0), timeStep);
+            }
         }
     }
 
@@ -806,7 +927,7 @@ public class MainMenu : MonoBehaviour
         };
     }
 
-    public void TestForArrowAdjust(MenuOption option, int varSlot, int max)
+    public bool TestForArrowAdjust(MenuOption option, int varSlot, int max)
     {
         if (selectedOption == currentOptions.IndexOf(option))
         if (Control.LeftPress(1))
@@ -815,6 +936,7 @@ public class MainMenu : MonoBehaviour
             if (menuVarFlags[varSlot] < 0)
                 menuVarFlags[varSlot] = max;
             PlayState.PlaySound("MenuBeep1");
+            return true;
         }
         else if (Control.RightPress(1))
         {
@@ -822,7 +944,9 @@ public class MainMenu : MonoBehaviour
             if (menuVarFlags[varSlot] > max)
                 menuVarFlags[varSlot] = 0;
             PlayState.PlaySound("MenuBeep1");
+            return true;
         }
+        return false;
     }
 
     public void TestForRebind()
@@ -1111,6 +1235,54 @@ public class MainMenu : MonoBehaviour
             PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
         PlayState.hudFps.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, PlayState.generalData.timeState ? -6.375f : -6.875f);
         PlayState.hudTime.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, -6.875f);
+    }
+
+    public int[] ToggleAchievementInterface(bool state)
+    {
+        if (state)
+        {
+            if (achievements.Length == 0)
+                achievements = Enum.GetNames(typeof(AchievementPanel.Achievements));
+            int totalAchievementCount = achievements.Length;
+            int collectedAchievementCount = 0;
+            for (int i = 0; i < totalAchievementCount; i++)
+            {
+                GameObject newObj = new("Icon " + i.ToString());
+                GameObject newObjFrame = new("Icon " + i.ToString() + " Frame");
+                newObj.transform.parent = transform;
+                newObjFrame.transform.parent = newObj.transform;
+                newObj.transform.localPosition = new Vector2(ACHIEVEMENT_ICON_SPACING * i, ACHIEVEMENT_ICON_Y);
+                AchievementIcon thisIcon = new()
+                {
+                    obj = newObj,
+                    icon = newObj.AddComponent<SpriteRenderer>(),
+                    iconAnim = newObj.AddComponent<AnimationModule>(),
+                    frameAnim = newObjFrame.AddComponent<AnimationModule>()
+                };
+                thisIcon.icon.sortingOrder = -1;
+                achievementIcons.Add(thisIcon);
+                thisIcon.frameAnim.Add("AchievementFrame_idle");
+                thisIcon.frameAnim.Add("AchievementFrame_selected");
+                thisIcon.frameAnim.Play(i == 0 ? "AchievementFrame_selected" : "AchievementFrame_idle");
+
+                string iconAnimName = "Achievement_locked";
+                if (PlayState.generalData.achievements[i])
+                {
+                    collectedAchievementCount++;
+                    iconAnimName = "Achievement_" + achievements[i].ToLower();
+                }
+                thisIcon.iconAnim.Add(iconAnimName);
+                thisIcon.iconAnim.Play(iconAnimName);
+            }
+            return new int[] { collectedAchievementCount, totalAchievementCount };
+        }
+        else
+        {
+            for (int i = achievementIcons.Count - 1; i >= 0; i--)
+                Destroy(achievementIcons[i].obj);
+            achievementIcons.Clear();
+            return new int[] { };
+        }
     }
 
     public void PageIntro()
@@ -2285,6 +2457,7 @@ public class MainMenu : MonoBehaviour
     public void RecordsScreen()
     {
         ClearOptions();
+        ToggleAchievementInterface(false);
         if (PlayState.HasTime(PlayState.TimeCategories.normal))
             AddOption(PlayState.GetText("menu_option_records_normal"), true, NormalTimes);
         if (PlayState.HasTime(PlayState.TimeCategories.insane))
@@ -2297,10 +2470,11 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_records_noTimes"), false);
         AddOption("", false);
         if (PlayState.HasAchievemements())
-            AddOption(PlayState.GetText("menu_option_records_achievements"), true, AchievementScreen);
-        AddOption(PlayState.GetText("menu_option_records_gallery"), true, GalleryScreen);
+            AddOption(PlayState.GetText("menu_option_records_achievements"), true, AchievementScreen, new int[] { 0, 0 });
+        if (PlayState.HasTime())
+            AddOption(PlayState.GetText("menu_option_records_gallery"), true, GalleryScreen);
         AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
-        ForceSelect(2);
+        ForceSelect(0);
         backPage = PageMain;
     }
 
@@ -2308,7 +2482,6 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_normal"), false);
-        AddOption("", false);
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
                 PlayState.GetTimeString(PlayState.TimeIndeces.snailyNormal)), false);
@@ -2337,7 +2510,6 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_insane"), false);
-        AddOption("", false);
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyInsane))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
                 PlayState.GetTimeString(PlayState.TimeIndeces.snailyInsane)), false);
@@ -2366,7 +2538,6 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_100"), false);
-        AddOption("", false);
         if (PlayState.HasTime(PlayState.TimeIndeces.snaily100))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
                 PlayState.GetTimeString(PlayState.TimeIndeces.snaily100)), false);
@@ -2395,7 +2566,6 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_bossRush"), false);
-        AddOption("", false);
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyRush))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
                 PlayState.GetTimeString(PlayState.TimeIndeces.snailyRush)), false);
@@ -2422,12 +2592,91 @@ public class MainMenu : MonoBehaviour
 
     public void AchievementScreen()
     {
-
+        ClearOptions();
+        int[] counts = ToggleAchievementInterface(true);
+        AddOption(string.Format(PlayState.GetText("menu_option_achievements_progress"), counts[0], counts[1]), false);
+        currentOptions[0].textScript.SetSize(1);
+        AddOption("", false);
+        AddOption("", false);
+        AddOption("", false);
+        if (PlayState.generalData.achievements[0])
+        {
+            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_title", achievements[0].ToLower())), true, "achievements");
+            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_desc", achievements[0].ToLower())), false);
+        }
+        else
+        {
+            AddOption(PlayState.GetText("menu_option_achievements_locked_title"), true, "achievements");
+            AddOption(PlayState.GetText("menu_option_achievements_locked_desc"), false);
+        }
+        currentOptions[5].textScript.SetSize(1);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(4);
+        backPage = RecordsScreen;
     }
 
     public void GalleryScreen()
     {
+        ClearOptions();
+        if (PlayState.generalData.achievements[3])
+            AddOption(PlayState.GetText("menu_option_gallery_normal"), true, GalleryNormal);
+        else
+            AddOption("-", false);
+        if (PlayState.generalData.achievements[14])
+            AddOption(PlayState.GetText("menu_option_gallery_bossRush"), true, GalleryRush);
+        else
+            AddOption("-", false);
+        if (PlayState.generalData.achievements[5])
+            AddOption(PlayState.GetText("menu_option_gallery_100"), true, Gallery100);
+        else
+            AddOption("-", false);
+        if (PlayState.generalData.achievements[13])
+            AddOption(PlayState.GetText("menu_option_gallery_lessThan30"), true, GallerySub30);
+        else
+            AddOption("-", false);
+        if (PlayState.generalData.achievements[22])
+            AddOption(PlayState.GetText("menu_option_gallery_insane"), true, GalleryInsane);
+        else
+            AddOption("-", false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
+        ForceSelect(0);
+        backPage = RecordsScreen;
+    }
 
+    public void GalleryNormal()
+    {
+        galleryBG.anim.Play("Ending_background");
+        galleryImage.anim.Play("Ending_normal");
+        viewingGallery = true;
+    }
+
+    public void GalleryRush()
+    {
+        galleryBG.anim.Play("Ending_background");
+        galleryImage.anim.Play("Ending_bossRush");
+        viewingGallery = true;
+    }
+
+    public void Gallery100()
+    {
+        galleryBG.anim.Play("Ending_background");
+        galleryImage.anim.Play("Ending_100");
+        viewingGallery = true;
+    }
+
+    public void GallerySub30()
+    {
+        galleryBG.anim.Play("Ending_background");
+        galleryImage.anim.Play("Ending_sub30");
+        viewingGallery = true;
+    }
+
+    public void GalleryInsane()
+    {
+        galleryBG.anim.Play("Ending_background");
+        galleryImage.anim.Play("Ending_insane");
+        viewingGallery = true;
     }
 
     public void MenuReturnConfirm()

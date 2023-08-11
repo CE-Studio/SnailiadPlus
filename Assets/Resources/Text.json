@@ -1082,7 +1082,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winsluggy_desc",
-			"text": "Beat the game as Sluggy",
+			"text": "Beat the game as Sluggy Slug",
 			"value": 0
 		},
 		{
@@ -1092,7 +1092,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winupside_desc",
-			"text": "Beat the game as Upside",
+			"text": "Beat the game as Upside Snail",
 			"value": 0
 		},
 		{
@@ -1102,7 +1102,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winleggy_desc",
-			"text": "Beat the game as Leggy",
+			"text": "Beat the game as Leggy Snail",
 			"value": 0
 		},
 		{
@@ -1112,7 +1112,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winblobby_desc",
-			"text": "Beat the game as Blobby",
+			"text": "Beat the game as Blobby Blob",
 			"value": 0
 		},
 		{
@@ -1122,7 +1122,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winleechy_desc",
-			"text": "Beat the game as Leechy",
+			"text": "Beat the game as Leechy Leech",
 			"value": 0
 		},
 		{

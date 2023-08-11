@@ -37,6 +37,13 @@ public class TextureLibrary : ScriptableObject
         "Bullets/RainbowWave",
         "Bullets/RainbowWaveDev",
 
+        "Endings/Ending100",
+        "Endings/EndingBackground",
+        "Endings/EndingBossRush",
+        "Endings/EndingInsane",
+        "Endings/EndingNormal",
+        "Endings/EndingSub30",
+
         "Entities/Babyfish",
         "Entities/BalloonBuster",
         "Entities/Bat",
@@ -131,6 +138,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Transformation",
         "Particles/Zzz",
 
+        "UI/AchievementFrame",
         "UI/AchievementPanel",
         "UI/BossHealthBar",
         "UI/DebugIcons",
