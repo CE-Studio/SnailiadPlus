@@ -581,7 +581,7 @@ public class MoonSnail : Boss
                 if (grounded)
                 {
                     velocity.y = 0;
-                    if (disFloor < 0.25f)
+                    if (disFloor > 0.25f)
                         grounded = false;
                 }
                 else
@@ -618,7 +618,7 @@ public class MoonSnail : Boss
                 if (grounded)
                 {
                     velocity.x = 0;
-                    if (disFloor < 0.25f)
+                    if (disFloor > 0.25f)
                         grounded = false;
                 }
                 else
@@ -655,7 +655,7 @@ public class MoonSnail : Boss
                 if (grounded)
                 {
                     velocity.x = 0;
-                    if (disFloor < 0.25f)
+                    if (disFloor > 0.25f)
                         grounded = false;
                 }
                 else
@@ -692,7 +692,7 @@ public class MoonSnail : Boss
                 if (grounded)
                 {
                     velocity.y = 0;
-                    if (disFloor < 0.25f)
+                    if (disFloor > 0.25f)
                         grounded = false;
                 }
                 else

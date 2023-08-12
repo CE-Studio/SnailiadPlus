@@ -49,20 +49,20 @@ public class DebugMenu : MonoBehaviour
         Vector2 bossGridZero = new Vector2(1.5f, 2);
 
         AddButton(itemGridZero, "peashooter", "item_0", new int[] { 2, 3 }, new string[] { "noclip", "shellShield", "moonSnail", "boomerang" });
-        AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y), "boomerang", "item_1", new int[] { 4, 5 }, new string[] { "noclip", "rapidFire", "peashooter", "rainbowWave" });
-        AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y), "rainbowWave", "item_2", new int[] { 6, 7 }, new string[] { "noclip", "iceSnail", "boomerang", "devastator" });
-        AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y), "devastator", "item_3", new int[] { 8, 9 }, new string[] { "noclip", "gravitySnail", "rainbowWave", "highJump" });
-        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y), "highJump", "item_4", new int[] { 10, 11 }, new string[] { "noclip", "fullMetalSnail", "devastator", "shellbreaker" });
+        AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y), "boomerang", "item_1", new int[] { 4, 5 }, new string[] { "damage", "rapidFire", "peashooter", "rainbowWave" });
+        AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y), "rainbowWave", "item_2", new int[] { 6, 7 }, new string[] { "damage", "iceSnail", "boomerang", "devastator" });
+        AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y), "devastator", "item_3", new int[] { 8, 9 }, new string[] { "damage", "gravitySnail", "rainbowWave", "highJump" });
+        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y), "highJump", "item_4", new int[] { 10, 11 }, new string[] { "damage", "fullMetalSnail", "devastator", "shellbreaker" });
         AddButton(new Vector2(itemGridZero.x, itemGridZero.y - 1), "shellShield", "item_5", new int[] { 12, 13 }, new string[] { "peashooter", "gravityShock", "moonSnail", "rapidFire" });
         AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y - 1), "rapidFire", "item_6", new int[] { 14, 15 }, new string[] { "boomerang", "superSecretBoomerang", "shellShield", "iceSnail" });
         AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y - 1), "iceSnail", "item_7", new int[] { 16, 17 }, new string[] { "rainbowWave", "debugRainbowWave", "rapidFire", "gravitySnail" });
         AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y - 1), "gravitySnail", "item_8", new int[] { 18, 19 }, new string[] { "devastator", "heartContainer", "iceSnail", "fullMetalSnail" });
         AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y - 1), "fullMetalSnail", "item_9", new int[] { 20, 21 }, new string[] { "highJump", "helixFragment", "gravitySnail", "shellbreaker" });
         AddButton(new Vector2(itemGridZero.x, itemGridZero.y - 2), "gravityShock", "item_10", new int[] { 22, 23 }, new string[] { "shellShield", "noclip", "player", "superSecretBoomerang" });
-        AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y - 2), "superSecretBoomerang", "item_11", new int[] { 24, 25 }, new string[] { "rapidFire", "noclip", "gravityShock", "debugRainbowWave" });
-        AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y - 2), "debugRainbowWave", "item_12", new int[] { 26, 27 }, new string[] { "iceSnail", "noclip", "superSecretBoomerang", "heartContainer" });
-        AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y - 2), "heartContainer", "item_13", new int[] { 28, 29 }, new string[] { "gravitySnail", "noclip", "debugRainbowWave", "helixFragment" });
-        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y - 2), "helixFragment", "item_14", new int[] { 30, 31 }, new string[] { "fullMetalSnail", "noclip", "heartContainer", "player" });
+        AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y - 2), "superSecretBoomerang", "item_11", new int[] { 24, 25 }, new string[] { "rapidFire", "damage", "gravityShock", "debugRainbowWave" });
+        AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y - 2), "debugRainbowWave", "item_12", new int[] { 26, 27 }, new string[] { "iceSnail", "damage", "superSecretBoomerang", "heartContainer" });
+        AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y - 2), "heartContainer", "item_13", new int[] { 28, 29 }, new string[] { "gravitySnail", "damage", "debugRainbowWave", "helixFragment" });
+        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y - 2), "helixFragment", "item_14", new int[] { 30, 31 }, new string[] { "fullMetalSnail", "damage", "heartContainer", "player" });
 
         AddButton(bossGridZero, "shellbreaker", "boss_0", new int[] { 32, 33 }, new string[] { "player", "player", "highJump", "stompy" });
         AddButton(new Vector2(bossGridZero.x + 1, bossGridZero.y), "stompy", "boss_1", new int[] { 34, 35 }, new string[] { "player", "player", "shellbreaker", "spaceBox" });
@@ -71,7 +71,8 @@ public class DebugMenu : MonoBehaviour
 
         AddButton(new Vector2(1.5f, 0), "player", "player", new int[] { 40, 41, 42, 43, 44, 45 }, new string[] { "shellbreaker", "shellbreaker", "helixFragment", "gravityShock" });
 
-        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 0, 1 }, new string[] { "gravityShock", "peashooter", "noclip", "noclip" });
+        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 0, 1 }, new string[] { "gravityShock", "peashooter", "damage", "damage" });
+        AddButton(new Vector2(-3.5f, -2), "damage", "option", new int[] { 0, 1 }, new string[] { "superSecretBoomerang", "boomerang", "noclip", "noclip" });
 
         selector.transform.localPosition = buttonPosArray[currentSelected];
         foreach (GameObject obj in menuObjects)
@@ -208,6 +209,11 @@ public class DebugMenu : MonoBehaviour
                                 if (Control.JumpPress() && button.label == currentSelected)
                                     PlayState.noclipMode = !PlayState.noclipMode;
                                 button.sprite.sprite = PlayState.noclipMode ? GetSprite(1) : GetSprite(0);
+                                break;
+                            case "damage":
+                                if (Control.JumpPress() && button.label == currentSelected)
+                                    PlayState.damageMult = !PlayState.damageMult;
+                                button.sprite.sprite = PlayState.damageMult ? GetSprite(1) : GetSprite(0);
                                 break;
                         }
                         break;

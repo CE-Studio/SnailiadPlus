@@ -69,6 +69,7 @@ public class MainMenu : MonoBehaviour
         public GameObject obj;
         public SpriteRenderer icon;
         public AnimationModule iconAnim;
+        public SpriteRenderer frame;
         public AnimationModule frameAnim;
     }
     private string[] achievements = new string[] { };
@@ -1257,9 +1258,11 @@ public class MainMenu : MonoBehaviour
                     obj = newObj,
                     icon = newObj.AddComponent<SpriteRenderer>(),
                     iconAnim = newObj.AddComponent<AnimationModule>(),
+                    frame = newObjFrame.AddComponent<SpriteRenderer>(),
                     frameAnim = newObjFrame.AddComponent<AnimationModule>()
                 };
-                thisIcon.icon.sortingOrder = -1;
+                thisIcon.icon.sortingOrder = 1010;
+                thisIcon.frame.sortingOrder = 1011;
                 achievementIcons.Add(thisIcon);
                 thisIcon.frameAnim.Add("AchievementFrame_idle");
                 thisIcon.frameAnim.Add("AchievementFrame_selected");

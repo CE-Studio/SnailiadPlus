@@ -188,6 +188,8 @@ public class Bullet : MonoBehaviour
         initialVelocity = velocity;
         if (!PlayState.CheckForItem("Rapid Fire") || !applyRapidMult)
             rapidMult = 1f;
+        if (PlayState.damageMult)
+            damage *= 10;
         velocity *= rapidMult;
         PlayAnim();
     }

@@ -1210,7 +1210,7 @@ public class GigaSnail : Boss
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnail);
         if (!PlayState.CheckForItem("Full-Metal Snail"))
             PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnailNoFMS);
-        if (PlayState.currentProfile.gameTime[0] < 30)
+        if (PlayState.currentProfile.gameTime[0] < 30 && !PlayState.generalData.achievements[13])
         {
             PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Under30Minutes);
             unlocks += "Insane";
@@ -1229,23 +1229,27 @@ public class GigaSnail : Boss
         PlayState.credits.StartCredits();
         if (PlayState.currentProfile.difficulty != 0)
         {
-            PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.bestTime);
-            PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
-
-            PlayState.SetTime(PlayState.currentProfile.character switch
+            PlayState.TimeIndeces targetTime = PlayState.currentProfile.character switch
             {
-                "Snaily" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.snailyInsane : PlayState.TimeIndeces.snailyNormal,
                 "Sluggy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.sluggyInsane : PlayState.TimeIndeces.sluggyNormal,
                 "Upside" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.upsideInsane : PlayState.TimeIndeces.upsideNormal,
                 "Leggy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.leggyInsane : PlayState.TimeIndeces.leggyNormal,
                 "Blobby" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.blobbyInsane : PlayState.TimeIndeces.blobbyNormal,
                 "Leechy" => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.leechyInsane : PlayState.TimeIndeces.leechyNormal,
                 _ => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.snailyInsane : PlayState.TimeIndeces.snailyNormal
-            }, PlayState.currentProfile.gameTime);
+            };
+
+            if (PlayState.CompareTimes(PlayState.GetTime(targetTime), new float[] { 0, 0, 0 }) == 0 ||
+                PlayState.CompareTimes(PlayState.GetTime(targetTime), PlayState.currentProfile.gameTime) == 1)
+            {
+                PlayState.SetTime(targetTime, PlayState.currentProfile.gameTime);
+                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.bestTime);
+                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
+            }
         }
 
         PlayState.currentProfile.bossStates[ID] = 0;
-        PlayState.WriteSave(PlayState.currentProfileNumber, false);
+        PlayState.WriteSave(PlayState.currentProfileNumber, true);
         PlayState.ToggleBossfightState(false, -1);
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 11.7f, 1, true);
         PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0.25f, 0 }, new List<float> { 10.7f, 1.2f });

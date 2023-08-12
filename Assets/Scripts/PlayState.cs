@@ -34,6 +34,7 @@ public class PlayState {
     public static CreditsStates creditsState = CreditsStates.none;
 
     public static bool noclipMode = false;
+    public static bool damageMult = false;
 
     [Serializable]
     public struct AnimationData {
@@ -855,12 +856,11 @@ public class PlayState {
     public static Particle RequestParticle(Vector2 position, string type, float[] values, bool playSound) {
         Particle selectedParticle = null;
         bool found = false;
+        //Debug.Log(thisParticleID + "/" + particlePool.transform.childCount);
         if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf) {
             int i = 0;
             while (i < particlePool.transform.childCount - 1 && !found) {
-                thisParticleID++;
-                if (thisParticleID >= particlePool.transform.childCount)
-                    thisParticleID = 0;
+                thisParticleID = (thisParticleID + 1) % particlePool.transform.childCount;
                 if (!particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf)
                     found = true;
                 i++;
@@ -994,9 +994,7 @@ public class PlayState {
                 particleScript.SetAnim(type.ToLower());
                 if (playSound)
                     particleScript.PlaySound();
-                thisParticleID++;
-                if (thisParticleID >= particlePool.transform.childCount)
-                    thisParticleID = 0;
+                thisParticleID = (thisParticleID + 1) % particlePool.transform.childCount;
             }
         }
         return selectedParticle;
@@ -1307,6 +1305,8 @@ public class PlayState {
             4 => "0",
             _ => ""
         };
+        if (seconds.Length > 5)
+            seconds = seconds.Substring(0, 5);
 
         if (trimBlankHours && hours == 0)
             return string.Format("{0}:{1}", minutes, seconds);
@@ -1546,7 +1546,8 @@ public class PlayState {
         return new float[] { generalData.times[startID], generalData.times[startID + 1], generalData.times[startID + 2] };
     }
 
-    public static bool HasTime(TimeIndeces ID = TimeIndeces.none) {
+    public static bool HasTime(TimeIndeces ID = TimeIndeces.none)
+    {
         int rowCount = generalData.times.Length / 3;
 
         if (ID == TimeIndeces.none)
@@ -1587,8 +1588,53 @@ public class PlayState {
         };
     }
 
-    public static void QueueAchievementPopup(AchievementPanel.Achievements achID) {
-        achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
+    // Returns
+    // -1, if time A is less than time B
+    // 0, if the two times are equal
+    // 1, if time A is greater than time B
+    public static int CompareTimes(TimeIndeces time1, TimeIndeces time2)
+    {
+        return CompareTimes(GetTime(time1), GetTime(time2));
+    }
+    public static int CompareTimes(TimeIndeces indexTime, float[] rawTime)
+    {
+        return CompareTimes(GetTime(indexTime), rawTime);
+    }
+    public static int CompareTimes(float[] rawTime, TimeIndeces indexTime)
+    {
+        return CompareTimes(rawTime, GetTime(indexTime));
+    }
+    public static int CompareTimes(float[] time1, float[] time2)
+    {
+        if (time1[0] < time2[0])
+            return -1;
+        else if (time1[0] > time2[0])
+            return 1;
+        else
+        {
+            if (time1[1] < time2[1])
+                return -1;
+            else if (time1[1] > time2[1])
+                return 1;
+            else
+            {
+                if (time1[2] < time2[2])
+                    return -1;
+                else if (time1[2] > time2[2])
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+    }
+
+    public static void QueueAchievementPopup(AchievementPanel.Achievements achID)
+    {
+        if (!generalData.achievements[(int)achID])
+        {
+            achievement.GetComponent<AchievementPanel>().popupQueue.Add(achID);
+            generalData.achievements[(int)achID] = true;
+        }
     }
 
     public static bool HasAchievemements()

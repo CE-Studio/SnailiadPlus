@@ -262,6 +262,7 @@ public class GlobalFunctions : MonoBehaviour
             else if (currentBossName != "" && currentBossName != PlayState.GetText("boss_gigaSnail") && !flashedBossName)
             {
                 areaText.SetText(currentBossName);
+                radarText.SetText("");
                 areaTextTimer = 0;
                 flashedBossName = true;
             }
@@ -281,8 +282,7 @@ public class GlobalFunctions : MonoBehaviour
                 currentBossName = "";
                 flashedBossName = false;
             }
-            if (areaText.GetText() != string.Format(PlayState.GetText("boss_defeated"), PlayState.GetText("boss_moonSnail")))
-                areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
+            areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
             Color textColor;
             if (areaTextTimer < 0.5f)
                 textColor = new Color(1, 1, 1, Mathf.Lerp(0, 1, areaTextTimer * 2));
@@ -908,9 +908,23 @@ public class GlobalFunctions : MonoBehaviour
                 string diff = PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" });
                 string time = PlayState.GetTimeString();
                 newBestTimeText.SetText(string.Format(PlayState.GetText("hud_newBestTime"), character, diff, time));
+                while (timer < 4f)
+                {
+                    newBestTimeText.SetColor(areaText.thisText.color);
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                newBestTimeText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.unlock:
                 newUnlocksText.SetText(PlayState.GetText("hud_unlock" + textValue));
+                while (timer < 4f)
+                {
+                    newUnlocksText.SetColor(areaText.thisText.color);
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                newUnlocksText.SetColor(new Color(1, 1, 1, 0));
                 break;
         }
         yield return new WaitForEndOfFrame();

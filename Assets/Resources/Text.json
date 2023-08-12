@@ -1812,7 +1812,7 @@
 		},
 		{
 			"name": "hud_newBestTime",
-			"text": "New best - {0} on {1} - {2}",
+			"text": "New best ({0}, {1}) - {2}",
 			"value": 0
 		},
 		{
