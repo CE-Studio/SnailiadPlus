@@ -26,8 +26,8 @@ public class PlayState {
     public enum EDirsCardinal { Up, Down, Left, Right, None };
     public enum EDirsSurface { Floor, WallL, WallR, Ceiling, None };
 
-    public enum GameState { game, menu, pause, map, debug, dialogue, error, credits }
-    public static GameState gameState = GameState.menu;
+    public enum GameState { preload, game, menu, pause, map, debug, dialogue, error, credits }
+    public static GameState gameState = GameState.preload;
 
     public static bool isMenuOpen = false;
     public enum CreditsStates { none, fadeIn, moonScene, credits, time };
@@ -152,6 +152,10 @@ public class PlayState {
     public static GameObject dialogueBox;
     public static DialogueBox dialogueScript;
     public static GameObject titleParent;
+
+    public static RoomTrigger titleRoom;
+    public static RoomTrigger moonCutsceneRoom;
+    public static RoomTrigger creditsRoom;
 
     public static GlobalFunctions globalFunctions;
 
@@ -824,8 +828,11 @@ public class PlayState {
         dialogueScript.StallCutsceneDialoguePrompted(cutscene);
     }
 
-    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, int sortingOrder = 1001) {
-        switch (type) {
+    public static void ScreenFlash(string type, int red = 0, int green = 0, int blue = 0, int alpha = 0, float maxTime = 0, float delay = 0,
+        int sortingOrder = 1001)
+    {
+        switch (type)
+        {
             default:
             case "Solid Color":
                 screenCover.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha);
@@ -838,7 +845,7 @@ public class PlayState {
                 globalFunctions.ExecuteCoverCommand(type);
                 break;
             case "Custom Fade":
-                globalFunctions.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, sortingOrder);
+                globalFunctions.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, delay, sortingOrder);
                 break;
         }
     }

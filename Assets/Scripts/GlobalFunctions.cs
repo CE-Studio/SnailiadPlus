@@ -139,6 +139,10 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.dialogueScript = PlayState.dialogueBox.GetComponent<DialogueBox>();
         PlayState.titleParent = GameObject.Find("View/Title Parent");
 
+        PlayState.titleRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Title").GetComponent<RoomTrigger>();
+        PlayState.moonCutsceneRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Moon Snail Cutscene").GetComponent<RoomTrigger>();
+        PlayState.creditsRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Credits").GetComponent<RoomTrigger>();
+
         PlayState.globalFunctions = this;
 
         PlayState.hudFps = GameObject.Find("View/FPS").GetComponent<TextObject>();
@@ -674,7 +678,7 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
-    public void ExecuteCoverCommand(string type, byte r = 0, byte g = 0, byte b = 0, byte a = 0, float maxTime = 0, int sortingOrder = 1001)
+    public void ExecuteCoverCommand(string type, byte r = 0, byte g = 0, byte b = 0, byte a = 0, float maxTime = 0, float delay = 0, int sortingOrder = 1001)
     {
         switch (type)
         {
@@ -685,7 +689,7 @@ public class GlobalFunctions : MonoBehaviour
                 StartCoroutine(CoverDeathTransition());
                 break;
             case "Custom Fade":
-                StartCoroutine(CoverCustomFade(r, g, b, a, maxTime, sortingOrder));
+                StartCoroutine(CoverCustomFade(r, g, b, a, maxTime, delay, sortingOrder));
                 break;
         }
     }
@@ -712,11 +716,11 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
-    public IEnumerator CoverCustomFade(byte r, byte g, byte b, byte a, float maxTime, int sortingOrder)
+    public IEnumerator CoverCustomFade(byte r, byte g, byte b, byte a, float maxTime, float delay, int sortingOrder)
     {
         SpriteRenderer sprite = PlayState.screenCover;
         sprite.sortingOrder = sortingOrder;
-        float timer = 0;
+        float timer = -Mathf.Abs(delay);
         Color32 startColor = sprite.color;
         while (timer < maxTime)
         {

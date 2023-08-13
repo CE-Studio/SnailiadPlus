@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class RoomTrigger:MonoBehaviour {
+public class RoomTrigger : MonoBehaviour {
     public BoxCollider2D box;
     public bool active = true;
     private float initializationBuffer = 0;
@@ -41,7 +41,7 @@ public class RoomTrigger:MonoBehaviour {
     // - dark
     // - fog
     // - heat
-    private List<float> effectVars = new List<float>();
+    private List<float> effectVars = new();
     private bool initializedEffects = false;
     private float splashTimeout = 0;
 
@@ -51,9 +51,6 @@ public class RoomTrigger:MonoBehaviour {
     };
     public string[] roomCommands = new string[] { };
 
-    //public TextMesh roomNameText;
-    //public TextMesh roomNameShadow;
-
     public Tilemap bg;
     public Tilemap fg;
     public Tilemap specialMap;
@@ -62,19 +59,15 @@ public class RoomTrigger:MonoBehaviour {
     public Dictionary<string, object>[] roomContent;
     public string[] roomContentTypes;
     public Vector3[] roomContentPos;
-    //public PlayState.RoomEntity[] preplacedEntities;
     public PlayState.Breakable[] breakables;
     public PlayState.Breakable[] finalBossTiles;
 
     void Awake() {
         box = GetComponent<BoxCollider2D>();
-        //roomNameText = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Text").GetComponent<TextMesh>();
-        //roomNameShadow = GameObject.Find("View/Minimap Panel/Room Name Parent/Room Name Shadow").GetComponent<TextMesh>();
         bg = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
         fg = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
         specialMap = GameObject.Find("Grid/Special").GetComponent<Tilemap>();
         breakableBlock = (GameObject)Resources.Load("Objects/Breakable Block");
-        //MoveEntitiesToInternalList();
         specialMap.color = new Color32(255, 255, 255, 0);
     }
 
@@ -101,17 +94,17 @@ public class RoomTrigger:MonoBehaviour {
                     case "bubble":
                         if (!initializedEffects) {
                             for (int i = 0; i < 8; i++) {
-                                Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
+                                Vector2 bubblePos = new(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
-                                Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
+                                Vector2 truePos = new(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
                                 PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                             }
                             effectVars.Add(Random.Range(0f, 1f) * 12);
                         } else {
                             if (effectVars[effectVarIndex] <= 0) {
-                                Vector2 bubblePos = new Vector2(Random.Range(0, box.size.x + 0.5f), 0);
+                                Vector2 bubblePos = new(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
-                                Vector2 truePos = new Vector2(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
+                                Vector2 truePos = new(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
                                 PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
                             } else {
@@ -129,7 +122,7 @@ public class RoomTrigger:MonoBehaviour {
                             if (effectVars[effectVarIndex] <= 0)
                             {
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 0.5f;
-                                Vector2 truePos = new Vector2(PlayState.cam.transform.position.x + Random.Range(-12.5f, 12.5f), PlayState.cam.transform.position.y - 7.5f);
+                                Vector2 truePos = new(PlayState.cam.transform.position.x + Random.Range(-12.5f, 12.5f), PlayState.cam.transform.position.y - 7.5f);
                                 PlayState.RequestParticle(truePos, "heat");
                             }
                         }
@@ -215,8 +208,34 @@ public class RoomTrigger:MonoBehaviour {
         return waterY;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Player") && active && PlayState.gameState == PlayState.GameState.game) {
+    public void RemoteActivateRoom()
+    {
+        if (active)
+        {
+            PlayState.ResetAllParticles();
+            effectVars.Clear();
+            PlayState.parallaxFg2Mod = parallaxForeground2Modifier;
+            PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
+            PlayState.parallaxBgMod = parallaxBackgroundModifier;
+            PlayState.parallaxSkyMod = parallaxSkyModifier;
+            PlayState.fg2Offset = offsetForeground2;
+            PlayState.fg1Offset = offsetForeground1;
+            PlayState.bgOffset = offsetBackground;
+            PlayState.skyOffset = offsetSky;
+
+            initializationBuffer = 0.25f;
+            box.enabled = false;
+
+            PlayState.breakablePositions.Clear();
+            CheckSpecialLayer();
+            SpawnFromInternalList();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && active && PlayState.gameState == PlayState.GameState.game)
+        {
             PlayState.ResetAllParticles();
             effectVars.Clear();
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
@@ -234,9 +253,11 @@ public class RoomTrigger:MonoBehaviour {
             PlayState.CloseDialogue();
             PlayState.isTalking = false;
 
-            if (!PlayState.playerScript.grounded && PlayState.playerScript.shelled) {
+            if (!PlayState.playerScript.grounded && PlayState.playerScript.shelled)
+            {
                 Vector2 playerPos = PlayState.player.transform.position;
-                switch (PlayState.playerScript.gravityDir) {
+                switch (PlayState.playerScript.gravityDir)
+                {
                     default:
                     case Player.Dirs.Floor:
                     case Player.Dirs.Ceiling:
@@ -253,9 +274,10 @@ public class RoomTrigger:MonoBehaviour {
 
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;
-            Vector2 thisTriggerPos = new Vector2(areaID, transform.GetSiblingIndex());
+            Vector2 thisTriggerPos = new(areaID, transform.GetSiblingIndex());
             initializationBuffer = 0.25f;
-            if (thisTriggerPos != PlayState.positionOfLastRoom) {
+            if (thisTriggerPos != PlayState.positionOfLastRoom)
+            {
                 Transform previousTrigger = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
                 previousTrigger.GetComponent<Collider2D>().enabled = true;
                 previousTrigger.GetComponent<RoomTrigger>().active = true;
@@ -265,16 +287,16 @@ public class RoomTrigger:MonoBehaviour {
 
             string newRoomName = "";
 
-            if (newRoomName == "") {
-                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name)) {
+            if (newRoomName == "")
+            {
+                foreach (char character in PlayState.GetText("room_" + (areaID < 10 ? "0" : "") + areaID + "_" + transform.name))
+                {
                     if (character == '|')
                         newRoomName += "\n";
                     else
                         newRoomName += character;
                 }
             }
-            //roomNameText.text = newRoomName;
-            //roomNameShadow.text = newRoomName;
             PlayState.hudRoomName.SetText(newRoomName);
 
             PlayState.breakablePositions.Clear();
@@ -283,14 +305,16 @@ public class RoomTrigger:MonoBehaviour {
 
             box.enabled = false;
 
-            for (int i = 0; i < roomCommands.Length; i++) {
+            for (int i = 0; i < roomCommands.Length; i++)
+            {
                 string[] command = roomCommands[i].Replace(" ", "").Split(',');
-                switch (command[0].ToLower()) {
+                switch (command[0].ToLower())
+                {
                     default:
                         Debug.LogWarning("Unknown room command \"" + command[0] + "\"");
                         break;
                     case "setmaptile":
-                        Vector2 mapPos = new Vector2(int.Parse(command[1]), int.Parse(command[2]));
+                        Vector2 mapPos = new(int.Parse(command[1]), int.Parse(command[2]));
                         PlayState.SetMapTile(mapPos, bool.Parse(command[3]));
                         break;
                     case "achievement":
@@ -303,10 +327,10 @@ public class RoomTrigger:MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
             active = false;
-        }
     }
 
     public void DespawnEverything() {
@@ -350,8 +374,8 @@ public class RoomTrigger:MonoBehaviour {
 
         for (int x = -limitX; x <= limitX; x++) {
             for (int y = -limitY; y <= limitY; y++) {
-                Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
-                Vector2 worldPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
+                Vector3Int tilePos = new((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
+                Vector2 worldPos = new(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
                 if (currentTile != null) {
                     switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
@@ -431,7 +455,7 @@ public class RoomTrigger:MonoBehaviour {
                             PlayState.RequestParticle(worldPos, "smoke");
                             break;
                         case 376:
-                            GameObject block = new GameObject { name = "Enemy-Collidable Tile", layer = 9 };
+                            GameObject block = new() { name = "Enemy-Collidable Tile", layer = 9 };
                             block.transform.parent = transform;
                             block.transform.position = worldPos;
                             BoxCollider2D box = block.AddComponent<BoxCollider2D>();
@@ -840,9 +864,9 @@ public class RoomTrigger:MonoBehaviour {
     }
 
     public void MoveEntitiesToInternalList() {
-        List<Dictionary<string, object>> newContent = new List<Dictionary<string, object>>();
-        List<string> newTypes = new List<string>();
-        List<Vector3> newPos = new List<Vector3>();
+        List<Dictionary<string, object>> newContent = new();
+        List<string> newTypes = new();
+        List<Vector3> newPos = new();
         for (int i = transform.childCount - 1; i >= 0; i--) {
             GameObject obj = transform.GetChild(i).gameObject;
             IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
@@ -861,16 +885,16 @@ public class RoomTrigger:MonoBehaviour {
     public void LogBreakables() {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
-        List<PlayState.Breakable> newBreakableList = new List<PlayState.Breakable>();
-        List<PlayState.Breakable> newFinalBossList = new List<PlayState.Breakable>();
+        List<PlayState.Breakable> newBreakableList = new();
+        List<PlayState.Breakable> newFinalBossList = new();
 
         for (int x = -limitX; x <= limitX; x++) {
             for (int y = -limitY; y <= limitY; y++) {
-                Vector3Int tilePos = new Vector3Int((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
-                Vector2 worldPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
+                Vector3Int tilePos = new((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
+                Vector2 worldPos = new(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
                 if (currentTile != null) {
-                    PlayState.Breakable newBreakable = new PlayState.Breakable {
+                    PlayState.Breakable newBreakable = new() {
                         pos = worldPos,
                         weaponLevel = 2,
                         isSilent = false

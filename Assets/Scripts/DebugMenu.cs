@@ -89,7 +89,7 @@ public class DebugMenu : MonoBehaviour
                 obj.SetActive(true);
             PlayState.ToggleHUD(false);
             PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0);
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0, 0);
             buttonDown = true;
             currentSelected = "peashooter";
             selector.transform.localPosition = buttonPosArray[currentSelected];
@@ -101,7 +101,7 @@ public class DebugMenu : MonoBehaviour
             foreach (GameObject obj in menuObjects)
                 obj.SetActive(false);
             PlayState.ToggleHUD(true);
-            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
+            PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 0, 999);
             buttonDown = true;
         }
         if (buttonDown && !Control.Generic(terminalKey) && !Control.Pause())

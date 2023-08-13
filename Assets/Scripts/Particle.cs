@@ -12,13 +12,16 @@ public class Particle : MonoBehaviour
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     public ParticleSpriteCollection sprites;
 
-    public void Start()
+    public void Awake()
     {
         anim = GetComponent<AnimationModule>();
         sprite = GetComponent<SpriteRenderer>();
         anim.blankOnNonLoopEnd = true;
         gameObject.SetActive(false);
+    }
 
+    public void Start()
+    {
         anim.Add("Bubble1");
         anim.Add("Bubble2");
         anim.Add("Bubble3");

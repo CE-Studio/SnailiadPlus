@@ -226,10 +226,19 @@ public class MainMenu : MonoBehaviour
             }
             partSprite.color = new Color(1, 1, 1, 0);
         }
+
+        PlayState.titleRoom.RemoteActivateRoom();
+        PlayState.gameState = PlayState.GameState.menu;
     }
 
     void Update()
     {
+        //if (PlayState.gameState == PlayState.GameState.preload)
+        //{
+        //    PlayState.titleRoom.RemoteActivateRoom();
+        //    PlayState.gameState = PlayState.GameState.menu;
+        //}
+
         if (lerpLetterOffsetToZero && letterOffsetForIntro != 0)
         {
             letterOffsetForIntro = Mathf.Lerp(letterOffsetForIntro, 0, 10f * Time.deltaTime);
@@ -857,7 +866,7 @@ public class MainMenu : MonoBehaviour
                 PlayState.isMenuOpen = false;
                 ClearOptions();
                 music.Stop();
-                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 999);
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 0, 999);
                 ToggleHUD(false);
             }
             if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error)
@@ -868,7 +877,7 @@ public class MainMenu : MonoBehaviour
                 ToggleHUD(true);
                 PlayState.gameState = PlayState.GameState.pause;
                 PlayState.ScreenFlash("Solid Color", 0, 0, 0, 0);
-                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0);
+                PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 150, 0.25f, 0, 0);
                 PageMain();
                 CreateTitle();
             }
@@ -1174,7 +1183,7 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator LoadFade(Vector2 spawnPos, bool runIntro = false)
     {
-        RoomTrigger lastRoomTrigger = null;
+        RoomTrigger lastRoomTrigger;
 
         if (PlayState.currentArea != -1)
         {
@@ -1185,6 +1194,8 @@ public class MainMenu : MonoBehaviour
             PlayState.currentArea = -1;
             PlayState.currentSubzone = -1;
         }
+        else
+            lastRoomTrigger = PlayState.titleRoom;
 
         fadingToIntro = true;
         PlayState.screenCover.sortingOrder = 1001;
@@ -1197,8 +1208,7 @@ public class MainMenu : MonoBehaviour
 
         }
 
-        if (lastRoomTrigger != null)
-            lastRoomTrigger.DespawnEverything();
+        lastRoomTrigger.DespawnEverything();
         PlayState.ResetAllParticles();
         PlayState.screenCover.sortingOrder = 999;
         PlayState.SetCamFocus(PlayState.player.transform);
@@ -2703,17 +2713,17 @@ public class MainMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         PlayState.gameState = PlayState.GameState.menu;
-        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0);
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0, 0);
         cam.position = panPoints[0];
         PageMain();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.globalFunctions.StopMusic();
         PlayState.ResetAllParticles();
 
-        PlayState.skyLayer.transform.localPosition = Vector2.zero;
-        PlayState.bgLayer.transform.localPosition = Vector2.zero;
-        PlayState.fg1Layer.transform.localPosition = Vector2.zero;
-        PlayState.fg2Layer.transform.localPosition = Vector2.zero;
+        //PlayState.skyLayer.transform.localPosition = Vector2.zero;
+        //PlayState.bgLayer.transform.localPosition = Vector2.zero;
+        //PlayState.fg1Layer.transform.localPosition = Vector2.zero;
+        //PlayState.fg2Layer.transform.localPosition = Vector2.zero;
         Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
         lastRoom.GetComponent<Collider2D>().enabled = true;
         lastRoom.GetComponent<RoomTrigger>().active = true;
@@ -2722,6 +2732,8 @@ public class MainMenu : MonoBehaviour
         PlayState.currentSubzone = -1;
         PlayState.currentProfileNumber = 0;
         PlayState.currentProfile = PlayState.blankProfile;
+
+        PlayState.titleRoom.RemoteActivateRoom();
 
         music.Play();
     }
