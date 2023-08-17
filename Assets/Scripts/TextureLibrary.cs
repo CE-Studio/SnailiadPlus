@@ -14,13 +14,14 @@ public class TextureLibrary : ScriptableObject
     {
         "AchievementIcons",
         "Door",
-        "GigaBackground",
         "MapTiles",
         "MenuPlus",
         "Player",
         "SavePoint",
         "Tilesheet",
         "TitleFont",
+
+        "Backgrounds/GigaBackground",
 
         "Bullets/Boomerang",
         "Bullets/BoomerangDev",
@@ -71,6 +72,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Chirpy2",
         "Entities/Dandelion",
         "Entities/Drone",
+        "Entities/EndingMoonSnail",
         "Entities/Fire",
         "Entities/Fireball",
         "Entities/Fireball2",
@@ -131,6 +133,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Explosion",
         "Particles/GigaTrail",
         "Particles/Nom",
+        "Particles/Shield",
         "Particles/Smoke",
         "Particles/Snow",
         "Particles/Splash",

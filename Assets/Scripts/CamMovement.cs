@@ -12,18 +12,18 @@ public class CamMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PlayState.gameState != PlayState.GameState.menu)
+        if (PlayState.gameState != PlayState.GameState.menu && PlayState.gameState != PlayState.GameState.credits)
         {
             Vector2 lastPos = transform.position;
-            Vector2 camBoundsX = new Vector2(
+            Vector2 camBoundsX = new(
                 PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x,
                 PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y);
-            Vector2 camBoundsY = new Vector2(
+            Vector2 camBoundsY = new(
                 PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x,
                 PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y);
             float xDif = camBoundsX.y - camBoundsX.x;
             float yDif = camBoundsY.y - camBoundsY.x;
-            Vector2 focus = ((focusPoint != null) ? new Vector2(focusPoint.position.x, focusPoint.position.y) : Vector2.zero) + PlayState.camCutsceneOffset;
+            Vector2 focus = ((focusPoint != null) ? new(focusPoint.position.x, focusPoint.position.y) : Vector2.zero) + PlayState.camCutsceneOffset;
 
             if (PlayState.gameState == PlayState.GameState.game)
             {
@@ -32,13 +32,13 @@ public class CamMovement : MonoBehaviour
                 bool inBoundsY = ((camBoundsY.x <= (focus.y + 8.5f)) && ((focus.y - 8.5f) <= camBoundsY.y));
                 if (!(inBoundsX && inBoundsY) && !PlayState.playerScript.inDeathCutscene)
                 {
-                    transform.position = new Vector2(
+                    transform.position = new(
                         Mathf.Lerp(transform.position.x, focus.x, camSpeed),
                         Mathf.Lerp(transform.position.y, focus.y, camSpeed));
                 }
                 else
                 {
-                    transform.position = new Vector2(
+                    transform.position = new(
                         xDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.x, focus.x, camSpeed), camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
                         yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, focus.y, camSpeed), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
                 }
@@ -48,26 +48,26 @@ public class CamMovement : MonoBehaviour
             lastMove = (Vector2)transform.position - lastPos;
 
             Debug.DrawLine(
-                new Vector2(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
-                new Vector2(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
                 Color.green,
                 0,
                 false);
             Debug.DrawLine(
-                new Vector2(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
-                new Vector2(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
                 Color.green,
                 0,
                 false);
             Debug.DrawLine(
-                new Vector2(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
-                new Vector2(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x - PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
                 Color.green,
                 0,
                 false);
             Debug.DrawLine(
-                new Vector2(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
-                new Vector2(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y - PlayState.camBoundaryBuffers.y),
+                new(PlayState.camCenter.x + PlayState.camBoundaryBuffers.x, PlayState.camCenter.y + PlayState.camBoundaryBuffers.y),
                 Color.green,
                 0,
                 false);

@@ -227,17 +227,17 @@ public class MainMenu : MonoBehaviour
             partSprite.color = new Color(1, 1, 1, 0);
         }
 
-        PlayState.titleRoom.RemoteActivateRoom();
-        PlayState.gameState = PlayState.GameState.menu;
+        //PlayState.titleRoom.RemoteActivateRoom();
+        //PlayState.gameState = PlayState.GameState.menu;
     }
 
     void Update()
     {
-        //if (PlayState.gameState == PlayState.GameState.preload)
-        //{
-        //    PlayState.titleRoom.RemoteActivateRoom();
-        //    PlayState.gameState = PlayState.GameState.menu;
-        //}
+        if (PlayState.gameState == PlayState.GameState.preload)
+        {
+            PlayState.titleRoom.RemoteActivateRoom();
+            PlayState.gameState = PlayState.GameState.menu;
+        }
 
         if (lerpLetterOffsetToZero && letterOffsetForIntro != 0)
         {
@@ -1195,7 +1195,10 @@ public class MainMenu : MonoBehaviour
             PlayState.currentSubzone = -1;
         }
         else
+        {
             lastRoomTrigger = PlayState.titleRoom;
+            PlayState.titleRoom.active = true;
+        }
 
         fadingToIntro = true;
         PlayState.screenCover.sortingOrder = 1001;

@@ -725,10 +725,11 @@ public class GlobalFunctions : MonoBehaviour
         while (timer < maxTime)
         {
             yield return new WaitForFixedUpdate();
-            sprite.color = new Color32((byte)Mathf.Lerp(startColor.r, r, timer / maxTime),
-                (byte)Mathf.Lerp(startColor.g, g, timer / maxTime),
-                (byte)Mathf.Lerp(startColor.b, b, timer / maxTime),
-                (byte)Mathf.Lerp(startColor.a, a, timer / maxTime));
+            if (timer >= 0)
+                sprite.color = new Color32((byte)Mathf.Lerp(startColor.r, r, timer / maxTime),
+                    (byte)Mathf.Lerp(startColor.g, g, timer / maxTime),
+                    (byte)Mathf.Lerp(startColor.b, b, timer / maxTime),
+                    (byte)Mathf.Lerp(startColor.a, a, timer / maxTime));
             timer += Time.fixedDeltaTime;
         }
     }
@@ -1016,31 +1017,36 @@ public class GlobalFunctions : MonoBehaviour
             int index = 0;
             while (index < times.Count)
             {
-                time += Time.deltaTime;
-                if (time >= times[index])
+                if (PlayState.gameState == PlayState.GameState.game)
                 {
-                    time = 0;
-                    index++;
-                }
-                if (index < times.Count)
-                {
-                    intensity = Mathf.Lerp(index == intensities.Count - 1 ? 0 : intensities[index], intensities[index + 1], time / times[index]);
-                    Vector2 intensityVector;
-
-                    if (angle == -99999f)
-                        intensityVector = new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
-                    else
+                    time += Time.deltaTime;
+                    if (time >= times[index])
                     {
-                        angleVariation = Mathf.Abs(angleVariation);
-                        angle += UnityEngine.Random.Range(-angleVariation, angleVariation);
-                        intensityVector = (Vector2)(Quaternion.Euler(0, 0, angle) * Vector2.right) * UnityEngine.Random.Range(-intensity, intensity);
+                        time = 0;
+                        index++;
                     }
+                    if (index < times.Count)
+                    {
+                        intensity = Mathf.Lerp(index == intensities.Count - 1 ? 0 : intensities[index], intensities[index + 1], time / times[index]);
+                        Vector2 intensityVector;
 
-                    if (PlayState.generalData.screenShake > 2)
-                        PlayState.camShakeOffset += intensityVector;
-                    else
-                        PlayState.camObj.transform.localPosition += (Vector3)intensityVector;
+                        if (angle == -99999f)
+                            intensityVector = new Vector2(UnityEngine.Random.Range(-intensity, intensity), UnityEngine.Random.Range(-intensity, intensity));
+                        else
+                        {
+                            angleVariation = Mathf.Abs(angleVariation);
+                            angle += UnityEngine.Random.Range(-angleVariation, angleVariation);
+                            intensityVector = (Vector2)(Quaternion.Euler(0, 0, angle) * Vector2.right) * UnityEngine.Random.Range(-intensity, intensity);
+                        }
+
+                        if (PlayState.generalData.screenShake > 2)
+                            PlayState.camShakeOffset += intensityVector;
+                        else
+                            PlayState.camObj.transform.localPosition += (Vector3)intensityVector;
+                    }
                 }
+                else if (PlayState.gameState == PlayState.GameState.menu)
+                    index = times.Count;
                 yield return new WaitForEndOfFrame();
                 PlayState.camShakeOffset = Vector2.zero;
                 PlayState.camObj.transform.localPosition = new Vector3(0, 0, -10);

@@ -15,7 +15,8 @@ public class MusicLibrary : ScriptableObject
             "TitleSong",
             "MinorItemJingle",
             "MajorItemJingle",
-            "AchievementJingle"
+            "AchievementJingle",
+            "EndingIntro"
         },
         new string[]
         {

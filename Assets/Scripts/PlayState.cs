@@ -30,7 +30,7 @@ public class PlayState {
     public static GameState gameState = GameState.preload;
 
     public static bool isMenuOpen = false;
-    public enum CreditsStates { none, fadeIn, moonScene, credits, time };
+    public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, fadeOut };
     public static CreditsStates creditsState = CreditsStates.none;
 
     public static bool noclipMode = false;
@@ -778,6 +778,11 @@ public class PlayState {
         return false;
     }
 
+    public static RoomTrigger LastRoom()
+    {
+        return roomTriggerParent.transform.GetChild((int)positionOfLastRoom.x).GetChild((int)positionOfLastRoom.y).GetComponent<RoomTrigger>();
+    }
+
     public static void ToggleHUD(bool state) {
         foreach (GameObject element in TogglableHUDElements) {
             element.SetActive(state);
@@ -954,6 +959,10 @@ public class PlayState {
                         activateParticle = true;
                         particleScript.vars[0] = position.y;
                     }
+                    break;
+                case "shield":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                        activateParticle = true;
                     break;
                 case "smoke":
                     if (generalData.particleState == 1 || generalData.particleState >= 4)

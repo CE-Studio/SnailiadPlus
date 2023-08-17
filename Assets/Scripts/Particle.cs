@@ -22,6 +22,12 @@ public class Particle : MonoBehaviour
 
     public void Start()
     {
+        if (anim.animList.Count == 0)
+            AddAnims();
+    }
+
+    public void AddAnims()
+    {
         anim.Add("Bubble1");
         anim.Add("Bubble2");
         anim.Add("Bubble3");
@@ -39,6 +45,7 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
         anim.Add("Nom");
+        anim.Add("Shield");
         anim.Add("Smoke");
         anim.Add("Snow1");
         anim.Add("Snow2");
@@ -60,7 +67,7 @@ public class Particle : MonoBehaviour
 
     public void Update()
     {
-        if (PlayState.gameState == PlayState.GameState.game)
+        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.credits)
         {
             if (!anim.isPlaying)
                 anim.Resume();
@@ -303,6 +310,8 @@ public class Particle : MonoBehaviour
 
     public void SetAnim(string animType)
     {
+        if (anim.animList.Count == 0)
+            AddAnims();
         isActive = true;
         switch (animType)
         {
@@ -339,6 +348,9 @@ public class Particle : MonoBehaviour
                 break;
             case "nom":
                 anim.Play("Nom");
+                break;
+            case "shield":
+                anim.Play("Shield");
                 break;
             case "smoke":
                 anim.Play("Smoke");

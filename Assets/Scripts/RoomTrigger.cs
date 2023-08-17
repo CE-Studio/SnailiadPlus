@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class RoomTrigger : MonoBehaviour {
     public BoxCollider2D box;
     public bool active = true;
+    private bool temporarilyActive = false;
     private float initializationBuffer = 0;
 
     public Vector2 parallaxForeground2Modifier = Vector2.zero;
@@ -16,6 +17,9 @@ public class RoomTrigger : MonoBehaviour {
     public Vector2 offsetForeground1 = Vector2.zero;
     public Vector2 offsetBackground = Vector2.zero;
     public Vector2 offsetSky = Vector2.zero;
+
+    private Vector2[] tempBGValues = new Vector2[8];
+    private Vector2 tempCamReturnPoint = Vector2.zero;
 
     public int areaID = 0;
     // 0 = Snail Town
@@ -44,6 +48,7 @@ public class RoomTrigger : MonoBehaviour {
     private List<float> effectVars = new();
     private bool initializedEffects = false;
     private float splashTimeout = 0;
+    private List<Particle> effectParticles = new();
 
     public struct RoomCommand {
         public string name;
@@ -71,14 +76,17 @@ public class RoomTrigger : MonoBehaviour {
         specialMap.color = new Color32(255, 255, 255, 0);
     }
 
-    void Update() {
-        if (!active) {
+    void Update()
+    {
+        if (!active)
+        {
             if (initializationBuffer > 0)
                 initializationBuffer -= Time.deltaTime;
             splashTimeout = Mathf.Clamp(splashTimeout - Time.deltaTime, 0, Mathf.Infinity);
 
             int effectVarIndex = 0;
-            foreach (string effect in environmentalEffects) {
+            foreach (string effect in environmentalEffects)
+            {
                 string effMain = effect.ToLower();
                 string effType = "";
                 if (effect.Contains('_'))
@@ -88,26 +96,36 @@ public class RoomTrigger : MonoBehaviour {
                     effType = effParts[1].ToLower();
                 }
 
-                switch (effMain) {
+                switch (effMain)
+                {
                     default:
                         break;
                     case "bubble":
-                        if (!initializedEffects) {
-                            for (int i = 0; i < 8; i++) {
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
                                 Vector2 bubblePos = new(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) + bubblePos.y);
-                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
+                                effectParticles.Add(PlayState.RequestParticle(truePos, "bubble",
+                                    new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 }));
                             }
                             effectVars.Add(Random.Range(0f, 1f) * 12);
-                        } else {
-                            if (effectVars[effectVarIndex] <= 0) {
+                        }
+                        else
+                        {
+                            if (effectVars[effectVarIndex] <= 0)
+                            {
                                 Vector2 bubblePos = new(Random.Range(0, box.size.x + 0.5f), 0);
                                 bubblePos.y = Random.Range(0, waterLevel[WaterPoint(bubblePos.x)].y);
                                 Vector2 truePos = new(transform.position.x - (box.size.x * 0.5f) + bubblePos.x, transform.position.y - (box.size.y * 0.5f) - 0.25f);
-                                PlayState.RequestParticle(truePos, "bubble", new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 });
+                                effectParticles.Add(PlayState.RequestParticle(truePos, "bubble",
+                                    new float[] { transform.position.y - (box.size.y * 0.5f) + waterLevel[WaterPoint(bubblePos.x)].y, 0 }));
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 12;
-                            } else {
+                            }
+                            else
+                            {
                                 if (PlayState.gameState == PlayState.GameState.game)
                                     effectVars[effectVarIndex] -= Time.deltaTime;
                             }
@@ -123,16 +141,18 @@ public class RoomTrigger : MonoBehaviour {
                             {
                                 effectVars[effectVarIndex] = Random.Range(0f, 1f) * 0.5f;
                                 Vector2 truePos = new(PlayState.cam.transform.position.x + Random.Range(-12.5f, 12.5f), PlayState.cam.transform.position.y - 7.5f);
-                                PlayState.RequestParticle(truePos, "heat");
+                                effectParticles.Add(PlayState.RequestParticle(truePos, "heat"));
                             }
                         }
                         break;
                     case "snow":
-                        if (!initializedEffects) {
-                            for (int i = 0; i < 60; i++) {
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 60; i++)
+                            {
                                 Vector2 snowPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
-                                PlayState.RequestParticle(snowPos, "snow");
+                                effectParticles.Add(PlayState.RequestParticle(snowPos, "snow"));
                             }
                         }
                         break;
@@ -157,7 +177,7 @@ public class RoomTrigger : MonoBehaviour {
                             {
                                 Vector2 starPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
-                                PlayState.RequestParticle(starPos, "star", new float[] { typeID });
+                                effectParticles.Add(PlayState.RequestParticle(starPos, "star", new float[] { typeID }));
                             }
                         }
                         break;
@@ -165,13 +185,17 @@ public class RoomTrigger : MonoBehaviour {
                 effectVarIndex++;
             }
 
-            if (waterLevel.Length > 0) {
+            if (waterLevel.Length > 0)
+            {
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = GetWaterLevelAt(PlayState.player.transform.position.x);
-                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects) {
-                    if (initializationBuffer <= 0 && splashTimeout <= 0) {
+                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
+                {
+                    if (initializationBuffer <= 0 && splashTimeout <= 0)
+                    {
                         PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
-                        if (playerY < waterY && (PlayState.generalData.particleState == 1 || PlayState.generalData.particleState == 3 || PlayState.generalData.particleState == 5)) {
+                        if (playerY < waterY)
+                        {
                             for (int i = Random.Range(2, 8); i > 0; i--)
                                 PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
                         }
@@ -179,18 +203,26 @@ public class RoomTrigger : MonoBehaviour {
                     PlayState.playerScript.underwater = playerY < waterY;
                     splashTimeout = 0.125f;
                 }
-            } else
+            }
+            else
                 PlayState.playerScript.underwater = false;
 
             initializedEffects = true;
         }
     }
 
-    private int WaterPoint(float x) {
+    public void ResetEffects()
+    {
+        initializedEffects = false;
+    }
+
+    private int WaterPoint(float x)
+    {
         bool foundPointLeftOf = false;
         float relativeX = x - transform.position.x + (box.size.x * 0.5f);
         int waterPoint = waterLevel.Length - 1;
-        while (!foundPointLeftOf && waterPoint != -1) {
+        while (!foundPointLeftOf && waterPoint != -1)
+        {
             if (relativeX > waterLevel[waterPoint].x)
                 foundPointLeftOf = true;
             else
@@ -208,11 +240,25 @@ public class RoomTrigger : MonoBehaviour {
         return waterY;
     }
 
-    public void RemoteActivateRoom()
+    public void RemoteActivateRoom(bool temporary = false)
     {
         if (active)
         {
-            PlayState.ResetAllParticles();
+            if (temporary)
+            {
+                temporarilyActive = true;
+                tempBGValues = new Vector2[]
+                {
+                    PlayState.parallaxFg2Mod, PlayState.parallaxFg1Mod, PlayState.parallaxBgMod, PlayState.parallaxSkyMod,
+                    PlayState.fg2Offset, PlayState.fg1Offset, PlayState.bgOffset, PlayState.skyOffset
+                };
+                tempCamReturnPoint = PlayState.cam.transform.position;
+            }
+            else
+            {
+                PlayState.ResetAllParticles();
+                PlayState.breakablePositions.Clear();
+            }
             effectVars.Clear();
             PlayState.parallaxFg2Mod = parallaxForeground2Modifier;
             PlayState.parallaxFg1Mod = parallaxForeground1Modifier;
@@ -225,8 +271,8 @@ public class RoomTrigger : MonoBehaviour {
 
             initializationBuffer = 0.25f;
             box.enabled = false;
+            active = false;
 
-            PlayState.breakablePositions.Clear();
             CheckSpecialLayer();
             SpawnFromInternalList();
         }
@@ -278,10 +324,10 @@ public class RoomTrigger : MonoBehaviour {
             initializationBuffer = 0.25f;
             if (thisTriggerPos != PlayState.positionOfLastRoom)
             {
-                Transform previousTrigger = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+                RoomTrigger previousTrigger = PlayState.LastRoom();
                 previousTrigger.GetComponent<Collider2D>().enabled = true;
-                previousTrigger.GetComponent<RoomTrigger>().active = true;
-                previousTrigger.GetComponent<RoomTrigger>().DespawnEverything();
+                previousTrigger.active = true;
+                previousTrigger.DespawnEverything();
                 PlayState.positionOfLastRoom = thisTriggerPos;
             }
 
@@ -333,15 +379,20 @@ public class RoomTrigger : MonoBehaviour {
             active = false;
     }
 
-    public void DespawnEverything() {
+    public void DespawnEverything()
+    {
         initializedEffects = false;
-        for (int i = (transform.childCount - 1); i >= 0; i--) {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
             GameObject obj = transform.GetChild(i).gameObject;
             IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
-            if (roomObject != null) {
+            if (roomObject != null)
+            {
                 Dictionary<string, object> datout = roomObject.resave();
-                if (datout != null) {
-                    foreach (KeyValuePair<string, object> h in datout) {
+                if (datout != null)
+                {
+                    foreach (KeyValuePair<string, object> h in datout)
+                    {
                         print(h.Key + ", " + h.Value + ", " + roomContent.Length);
                         roomContent[i][h.Key] = h.Value;
                     }
@@ -366,6 +417,23 @@ public class RoomTrigger : MonoBehaviour {
         PlayState.enemyGlobalMoveIndex = 0;
         PlayState.activeTargets.Clear();
         PlayState.finalBossTiles.Clear();
+        if (temporarilyActive)
+        {
+            temporarilyActive = false;
+            foreach (Particle particle in effectParticles)
+                particle.ResetParticle();
+
+            PlayState.parallaxFg2Mod = tempBGValues[0];
+            PlayState.parallaxFg1Mod = tempBGValues[1];
+            PlayState.parallaxBgMod = tempBGValues[2];
+            PlayState.parallaxSkyMod = tempBGValues[3];
+            PlayState.fg2Offset = tempBGValues[4];
+            PlayState.fg1Offset = tempBGValues[5];
+            PlayState.bgOffset = tempBGValues[6];
+            PlayState.skyOffset = tempBGValues[7];
+            PlayState.cam.transform.position = tempCamReturnPoint;
+        }
+        effectParticles.Clear();
     }
 
     private void CheckSpecialLayer() {

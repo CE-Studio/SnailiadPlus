@@ -1226,7 +1226,7 @@ public class GigaSnail : Boss
         });
         if (!PlayState.HasTime())
             unlocks = unlocks == "" ? "BossRush" : "BossRushAndInsane";
-        PlayState.credits.StartCredits();
+        PlayState.credits.StartCredits(PlayState.currentProfile.gameTime);
         if (PlayState.currentProfile.difficulty != 0)
         {
             PlayState.TimeIndeces targetTime = PlayState.currentProfile.character switch
@@ -1244,7 +1244,8 @@ public class GigaSnail : Boss
             {
                 PlayState.SetTime(targetTime, PlayState.currentProfile.gameTime);
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.bestTime);
-                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
+                if (unlocks != "")
+                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
             }
         }
 
@@ -1252,7 +1253,7 @@ public class GigaSnail : Boss
         PlayState.WriteSave(PlayState.currentProfileNumber, true);
         PlayState.ToggleBossfightState(false, -1);
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 11.7f, 1, true);
-        PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0.25f, 0 }, new List<float> { 10.7f, 1.2f });
+        PlayState.globalFunctions.ScreenShake(new List<float> { 0.15f, 0.15f, 0 }, new List<float> { 10.7f, 1.2f });
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
         delayedDespawn = true;

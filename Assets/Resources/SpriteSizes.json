@@ -11,11 +11,6 @@
             "height": 48
         },
 		{
-            "name": "GigaBackground",
-            "width": 400,
-            "height": 240
-        },
-		{
             "name": "MapTiles",
             "width": 8,
             "height": 8
@@ -44,6 +39,17 @@
             "name": "TitleFont",
             "width": 32,
             "height": 56
+        },
+		
+		{
+            "name": "Backgrounds/EndingBackground",
+            "width": 400,
+            "height": 240
+        },
+		{
+            "name": "Backgrounds/GigaBackground",
+            "width": 400,
+            "height": 240
         },
 		
 		{
@@ -277,6 +283,12 @@
             "name": "Entities/Drone",
             "width": 24,
             "height": 30
+        },
+		{
+		{
+            "name": "Entities/EndingMoonSnail",
+            "width": 80,
+            "height": 44
         },
 		{
             "name": "Entities/Fire",
@@ -560,6 +572,11 @@
 			"width": 16,
 			"height": 4
 		},
+		{
+            "name": "Particles/Shield",
+            "width": 32,
+            "height": 32
+        },
 		{
             "name": "Particles/Smoke",
             "width": 16,

@@ -45,6 +45,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float coyoteTimeCounter = 0;
     public float lastPointBeforeHop = 0;
     public bool[] animData;
+    private int[] shellShieldEffectOffset;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -159,6 +160,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         PlayState.globalFunctions.RunDebugKeys();
 
         PlayState.globalFunctions.UpdateMusic(-1, -1, 3);
+
+        shellShieldEffectOffset = PlayState.GetAnim("Shield_data").frames;
     }
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
@@ -1480,6 +1483,30 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 box.size = hitboxSize_shell;
             }
             PlayState.PlaySound("Shell");
+            if (PlayState.CheckForItem("Shell Shield"))
+            {
+                int charID = PlayState.currentProfile.character switch
+                {
+                    "Snaily" => 0,
+                    "Sluggy" => 2,
+                    "Upside" => 4,
+                    "Leggy" => 6,
+                    "Blobby" => 8,
+                    "Leechy" => 10,
+                    _ => 0
+                };
+                int leftState = facingLeft ? -1 : 1;
+                int downState = facingDown ? -1 : 1;
+                Vector2 offset = gravityDir switch
+                {
+                    Dirs.Floor => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1]),
+                    Dirs.WallL => new(shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
+                    Dirs.WallR => new(-shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
+                    Dirs.Ceiling => new(shellShieldEffectOffset[charID] * leftState, -shellShieldEffectOffset[charID + 1]),
+                    _ => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1])
+                };
+                PlayState.RequestParticle((Vector2)transform.position + (offset * PlayState.FRAC_16), "shield");
+            }
         }
         shelled = !shelled;
         EjectFromCollisions();
