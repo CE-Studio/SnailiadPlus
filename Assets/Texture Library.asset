@@ -21,6 +21,7 @@ MonoBehaviour:
   - SavePoint
   - Tilesheet
   - TitleFont
+  - Backgrounds/EndingBackground
   - Backgrounds/GigaBackground
   - Bullets/Boomerang
   - Bullets/BoomerangDev
@@ -125,6 +126,7 @@ MonoBehaviour:
   - Particles/Bubble
   - Particles/Dot
   - Particles/Dust
+  - Particles/EndingZzz
   - Particles/Explosion
   - Particles/GigaTrail
   - Particles/Nom

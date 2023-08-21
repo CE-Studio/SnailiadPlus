@@ -285,7 +285,6 @@
             "height": 30
         },
 		{
-		{
             "name": "Entities/EndingMoonSnail",
             "width": 80,
             "height": 44
@@ -554,6 +553,11 @@
         },
 		{
             "name": "Particles/Dust",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Particles/EndingZzz",
             "width": 16,
             "height": 16
         },

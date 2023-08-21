@@ -21,6 +21,7 @@ public class TextureLibrary : ScriptableObject
         "Tilesheet",
         "TitleFont",
 
+        "Backgrounds/EndingBackground",
         "Backgrounds/GigaBackground",
 
         "Bullets/Boomerang",
@@ -130,6 +131,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Bubble",
         "Particles/Dot",
         "Particles/Dust",
+        "Particles/EndingZzz",
         "Particles/Explosion",
         "Particles/GigaTrail",
         "Particles/Nom",

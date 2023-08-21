@@ -32,12 +32,18 @@ public class TextObjectUtilities : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear Formatting"))
             script.ClearChildText();
         if (GUILayout.Button("Add Shadow"))
             script.CreateShadow();
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Outline"))
             script.CreateOutline();
+        if (GUILayout.Button("Add Both"))
+            script.CreateBoth();
+        GUILayout.EndHorizontal();
 
         GUILayout.Space(10);
         GUILayout.Label("Text Alignment");

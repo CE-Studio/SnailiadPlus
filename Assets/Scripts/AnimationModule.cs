@@ -30,20 +30,15 @@ public class AnimationModule : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        //if (GameObject.Find("Mask Object") != null)
-        //    mask = GameObject.Find("Mask Object").GetComponent<SpriteMask>();
     }
 
     void Update()
     {
-        if (PlayState.gameState != PlayState.GameState.game && pauseOnMenu)
+        if (PlayState.gameState != PlayState.GameState.game && PlayState.gameState != PlayState.GameState.credits && pauseOnMenu)
             speed = 0;
         else
         {
             speed = lastNonZeroSpeed;
-            //if (updateMask && mask == null)
-            //    if (GameObject.Find("Mask Object") != null && mask == null)
-            //        mask = GameObject.Find("Mask Object").GetComponent<SpriteMask>();
             if (isPlaying)
             {
                 if (currentAnim.framerate != 0)

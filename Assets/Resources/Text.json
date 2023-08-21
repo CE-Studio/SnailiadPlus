@@ -3536,13 +3536,33 @@
 			"value": 1
 		},
 		{
-			"name": "",
-			"text": "",
+			"name": "ending_moon1",
+			"text": "     And so...",
 			"value": 0
 		},
 		{
-			"name": "",
-			"text": "",
+			"name": "ending_moon2",
+			"text": "   Defeated, Moon Snail\n          lost his powers",
+			"value": 0
+		},
+		{
+			"name": "ending_moon3",
+			"text": "But could he ever become\n      Sun Snail once more?",
+			"value": 0
+		},
+		{
+			"name": "ending_sun1",
+			"text": "     And so...",
+			"value": 0
+		},
+		{
+			"name": "ending_sun2",
+			"text": "   Moon Snail once again\n     regained his light",
+			"value": 0
+		},
+		{
+			"name": "ending_sun3",
+			"text": "     and became the\n  legendary Sun Snail",
 			"value": 0
 		},
 		{

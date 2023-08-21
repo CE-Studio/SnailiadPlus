@@ -3000,9 +3000,7 @@
 			"spriteName": "Backgrounds/EndingBackground",
             "framerate": 0.0,
             "frames": [
-                1,
-				1,
-				1
+                1
             ],
             "loop": false,
             "loopStartFrame": 0,
@@ -11056,6 +11054,79 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		
+		{
+			"name": "EndingMoonSnail_data",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_large",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 2.5,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_medium",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 2.5,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_small",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 2.5,
+			"frames": [
+				4,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_shell",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_sun",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 3.3,
+			"frames": [
+				8,
+				9
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		
 		{
 			"name": "Enemy_babyfish1_normal",
 			"spriteName": "Entities/Babyfish",
@@ -14092,6 +14163,29 @@
 			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
+		},
+		{
+			"name": "EndingZzz_data",
+			"spriteName": "Particles/EndingZzz",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingZzz",
+			"spriteName": "Particles/EndingZzz",
+			"framerate": 2.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "Explosion_tiny",

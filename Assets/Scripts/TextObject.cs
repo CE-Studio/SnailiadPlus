@@ -243,4 +243,15 @@ public class TextObject : MonoBehaviour
         childText[2].transform.position += PIXEL * Vector3.down;
         childText[3].transform.position += PIXEL * Vector3.right;
     }
+
+    public void CreateBoth()
+    {
+        ClearChildText();
+        CreateNewChildText(5);
+        childText[0].transform.position += new Vector3(PIXEL * 2, -PIXEL * 2, 0);
+        childText[1].transform.position += PIXEL * Vector3.up;
+        childText[2].transform.position += PIXEL * Vector3.left;
+        childText[3].transform.position += PIXEL * Vector3.down;
+        childText[4].transform.position += PIXEL * Vector3.right;
+    }
 }
