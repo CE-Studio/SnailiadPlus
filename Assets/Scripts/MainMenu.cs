@@ -2723,10 +2723,10 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.StopMusic();
         PlayState.ResetAllParticles();
 
-        //PlayState.skyLayer.transform.localPosition = Vector2.zero;
-        //PlayState.bgLayer.transform.localPosition = Vector2.zero;
-        //PlayState.fg1Layer.transform.localPosition = Vector2.zero;
-        //PlayState.fg2Layer.transform.localPosition = Vector2.zero;
+        PlayState.skyLayer.transform.localPosition = Vector2.zero;
+        PlayState.bgLayer.transform.localPosition = Vector2.zero;
+        PlayState.fg1Layer.transform.localPosition = Vector2.zero;
+        PlayState.fg2Layer.transform.localPosition = Vector2.zero;
         Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
         lastRoom.GetComponent<Collider2D>().enabled = true;
         lastRoom.GetComponent<RoomTrigger>().active = true;

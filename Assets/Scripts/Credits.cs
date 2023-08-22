@@ -12,16 +12,26 @@ public class Credits : MonoBehaviour
     private const float ZZZ_FADE_SPEED = 1f;
     private const float ZZZ_SPAWN_TIMEOUT = 1.6f;
     private const float CUTSCENE_CHAR_TIMEOUT = 0.067f;
+    private const float SUN_RISE_SPEED = 1f;
+    private const float SUN_MAX_RISE = 3f;
+    private const float SUN_FLOAT_SPEED = 2f;
+    private const float SUN_FLOAT_AMPLITUDE = 0.25f;
+    private const float SUN_SCENE_START_OFFSET = 15.5f;
 
-    private Vector2 camTarget = new(-324.5f, 152.5f);
     private float modeTimer = 0;
     private float startDelay = START_DELAY;
     private bool startedFade = false;
     private bool backgroundActive = false;
     private float backgroundDelay = BG_START_DELAY;
     private float fadeTransitionCountdown;
+    private int moonState;
     private bool zzzActive = false;
     private float zzzDelay = ZZZ_SPAWN_TIMEOUT;
+    private float sunOriginY;
+    private float sunRiseTimer;
+    private float sunFloatTimer;
+    private bool fadingIntoSun;
+    private bool sunSpawned;
 
     private float[] completionTime = new float[] { };
 
@@ -35,6 +45,7 @@ public class Credits : MonoBehaviour
     private bool fadeBg;
     private List<CreditsObj> moonSprites = new();
     private bool fadeMoon;
+    private bool updateAnimOnRise;
     private CreditsObj zzz;
     private bool fadeZzz;
     private bool spawnZzz;
@@ -72,8 +83,8 @@ public class Credits : MonoBehaviour
                 if (startDelay <= 0)
                     RunMoonCutscene();
                 break;
-            case PlayState.CreditsStates.moonScene:
             case PlayState.CreditsStates.fadeToCredits:
+            case PlayState.CreditsStates.moonScene:
                 modeTimer += Time.deltaTime;
 
                 if (modeTimer > 0.9f && !startedFade)
@@ -98,27 +109,56 @@ public class Credits : MonoBehaviour
                 else if (fadeBg)
                     background.sprite.color = new Color(1, 1, 1, PlayState.Integrate(background.sprite.color.a, 1, BG_FADE_SPEED, Time.deltaTime, 0.01f));
 
-                if (modeTimer < 5f || !fadeMoon)
+                if (modeTimer < 5f)
                     FadeMoonSprite(0, 1f, INTRO_MOON_FADE_SPEED);
-                else if (modeTimer < 10.5f)
-                {
-                    FadeMoonSprite(0, 0f, MOON_FADE_SPEED);
-                    FadeMoonSprite(1, 1f, MOON_FADE_SPEED);
-                }
-                else if (modeTimer < 16.5f)
-                {
-                    if (moonSprites[0].sprite.sortingOrder != -49)
-                    {
-                        foreach (CreditsObj sprite in moonSprites)
-                            sprite.sprite.sortingOrder = -49;
-                    }
-                    FadeMoonSprite(1, 0f, MOON_FADE_SPEED);
-                    FadeMoonSprite(2, 1f, MOON_FADE_SPEED);
-                }
                 else
                 {
-                    FadeMoonSprite(2, 0f, MOON_FADE_SPEED);
-                    FadeMoonSprite(3, 1f, MOON_FADE_SPEED);
+                    if (fadeMoon)
+                    {
+                        if (modeTimer < 10.5f)
+                        {
+                            FadeMoonSprite(0, 0f, MOON_FADE_SPEED);
+                            FadeMoonSprite(1, 1f, MOON_FADE_SPEED);
+                        }
+                        else if (modeTimer < 16.5f)
+                        {
+                            if (moonSprites[0].sprite.sortingOrder != -49)
+                            {
+                                foreach (CreditsObj sprite in moonSprites)
+                                    sprite.sprite.sortingOrder = -49;
+                            }
+                            FadeMoonSprite(1, 0f, MOON_FADE_SPEED);
+                            FadeMoonSprite(2, 1f, MOON_FADE_SPEED);
+                        }
+                    }
+                    else
+                    {
+                        if (modeTimer > 5f && moonState == 0)
+                        {
+                            moonSprites[0].anim.Play("EndingMoonSnail_medium");
+                            moonState = 1;
+                        }
+                        else if (modeTimer > 10.5f && moonState == 1)
+                        {
+                            moonSprites[0].sprite.sortingOrder = -49;
+                            moonSprites[0].anim.Play("EndingMoonSnail_small");
+                            moonState = 2;
+                        }
+                    }
+                }
+
+                if (modeTimer >= 16.5f && !isSun)
+                {
+                    if (fadeMoon)
+                    {
+                        FadeMoonSprite(2, 0f, MOON_FADE_SPEED);
+                        FadeMoonSprite(3, 1f, MOON_FADE_SPEED);
+                    }
+                    else if (moonState == 2)
+                    {
+                        moonSprites[0].anim.Play("EndingMoonSnail_shell");
+                        moonState = 3;
+                    }
                     zzzDelay -= Time.deltaTime;
                     if (fadeZzz)
                     {
@@ -138,6 +178,45 @@ public class Credits : MonoBehaviour
                         zzz.sprite.enabled = true;
                         zzz.anim.Play("EndingZzz");
                     }
+                }
+
+                if (isSun && modeTimer >= SUN_SCENE_START_OFFSET)
+                {
+                    float currentElapsed = modeTimer - SUN_SCENE_START_OFFSET;
+
+                    CreditsObj moon = fadeMoon ? moonSprites[2] : moonSprites[0];
+                    CreditsObj sun = fadeMoon ? moonSprites[3] : moonSprites[0];
+
+                    if (sunRiseTimer >= 1 && !fadingIntoSun)
+                    {
+                        fadingIntoSun = true;
+                        if (updateAnimOnRise)
+                            moon.anim.Play("EndingMoonSnail_becomeSun");
+                        PlayState.ScreenFlash("Custom Fade", 255, 255, 255, 255, 0.6f);
+                    }
+                    if (currentElapsed > 1.6f)
+                    {
+                        sunFloatTimer += Time.deltaTime * SUN_FLOAT_SPEED;
+                        if (!sunSpawned)
+                        {
+                            sunSpawned = true;
+                            background.anim.Play("EndingBackground_sunEnding");
+                            if (fadeMoon)
+                            {
+                                moon.sprite.color = new Color(1, 1, 1, 0);
+                                sun.sprite.color = new Color(1, 1, 1, 1);
+                            }
+                            else
+                                moon.anim.Play("EndingMoonSnail_sun");
+                            PlayState.ScreenFlash("Custom Fade", 255, 255, 255, 0, 1.4f);
+                        }
+                    }
+                    sunRiseTimer = Mathf.Clamp(sunRiseTimer + (Time.deltaTime * SUN_RISE_SPEED), 0, Mathf.PI);
+                    float halfRise = SUN_MAX_RISE * 0.5f;
+                    float newY = sunOriginY + halfRise - (Mathf.Cos(sunRiseTimer) * halfRise) + (Mathf.Sin(sunFloatTimer) * SUN_FLOAT_AMPLITUDE);
+                    moon.obj.transform.position = new Vector2(moon.obj.transform.position.x, newY);
+                    if (fadeMoon)
+                        sun.obj.transform.position = new Vector2(sun.obj.transform.position.x, newY);
                 }
 
                 if (modeTimer > 0.6f && stringIndex == 0 && !textVisible)
@@ -212,6 +291,26 @@ public class Credits : MonoBehaviour
                     charPointer = 0;
                     startedNewLine = true;
                 }
+
+                if (PlayState.creditsState == PlayState.CreditsStates.fadeToCredits)
+                {
+                    fadeTransitionCountdown -= Time.deltaTime;
+                    PlayState.fader = fadeTransitionCountdown * 0.5f;
+                    if (fadeTransitionCountdown <= 0f)
+                    {
+                        PlayState.creditsState = PlayState.CreditsStates.credits;
+                        PlayState.globalMusic.Stop();
+                        PlayState.fader = 1f;
+                        CreditsRoll();
+                    }
+                }
+                else if (startedFade && (modeTimer > 26f || Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause)))
+                {
+                    PlayState.creditsState = PlayState.CreditsStates.fadeToCredits;
+                    PlayState.screenCover.color = new Color(0, 0, 0, 0);
+                    PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 1.9f);
+                    fadeTransitionCountdown = 2f;
+                }
                 break;
             case PlayState.CreditsStates.credits:
             case PlayState.CreditsStates.fadeToTime:
@@ -267,6 +366,7 @@ public class Credits : MonoBehaviour
         int[] moonData = PlayState.GetAnim("EndingMoonSnail_data").frames;
         fadeMoon = moonData[0] == 1;
         spawnZzz = moonData[1] == 1;
+        updateAnimOnRise = moonData[2] == 1;
         if (fadeMoon)
         {
             for (int i = 0; i < 4; i++)
@@ -290,6 +390,8 @@ public class Credits : MonoBehaviour
                 newObj.sprite.sortingOrder = -49;
                 newObj.sprite.color = new Color(1, 1, 1, 0);
                 newObj.anim.Add(thisAnimName);
+                if (i == 2)
+                    newObj.anim.Add("EndingMoonSnail_becomeSun");
                 newObj.anim.Play(thisAnimName);
                 if (i != 0)
                     newObj.sprite.color = new Color(1, 1, 1, 0);
@@ -313,6 +415,7 @@ public class Credits : MonoBehaviour
             newObj.anim.Add("EndingMoonSnail_medium");
             newObj.anim.Add("EndingMoonSnail_small");
             newObj.anim.Add("EndingMoonSnail_shell");
+            newObj.anim.Add("EndingMoonSnail_becomeSun");
             newObj.anim.Add("EndingMoonSnail_sun");
             newObj.anim.Play("EndingMoonSnail_large");
         }
@@ -345,12 +448,19 @@ public class Credits : MonoBehaviour
         modeTimer = 0;
         PlayState.ResetAllParticles();
         PlayState.creditsState = PlayState.CreditsStates.moonScene;
-        PlayState.cam.transform.position = camTarget;
+        PlayState.cam.transform.position = PlayState.moonCutsceneRoom.transform.position;
         PlayState.ToggleHUD(false);
         PlayState.moonCutsceneRoom.RemoteActivateRoom(true);
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 0, 0, -75);
+        startedFade = false;
         for (int i = 0; i < moonSprites.Count; i++)
             moonSprites[i].sprite.enabled = true;
+        moonState = 0;
+        sunOriginY = moonSprites[0].obj.transform.position.y;
+        sunRiseTimer = 0;
+        sunFloatTimer = 0;
+        fadingIntoSun = false;
+        sunSpawned = false;
         zzzActive = false;
         zzzDelay = ZZZ_SPAWN_TIMEOUT;
         charPointer = 0;
@@ -365,9 +475,19 @@ public class Credits : MonoBehaviour
     public void CreditsRoll()
     {
         modeTimer = 0;
+        PlayState.ResetAllParticles();
         PlayState.creditsState = PlayState.CreditsStates.credits;
         PlayState.moonCutsceneRoom.DespawnEverything();
+        for (int i = moonSprites.Count - 1; i >= 0; i--)
+            Destroy(moonSprites[i].obj);
+        moonSprites.Clear();
         PlayState.creditsRoom.RemoteActivateRoom(true);
+        PlayState.cam.transform.position = PlayState.creditsRoom.transform.position;
+        cutsceneText.SetText("");
+        background.sprite.color = new Color(1, 1, 1, 1);
+        background.anim.Play("EndingBackground_credits");
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 1.4f);
+        PlayState.PlayMusic(1, 0);
     }
 
     public void DisplayFinalTime()

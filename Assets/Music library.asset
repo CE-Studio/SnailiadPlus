@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd74759cb00b174390f6ecdf0a98c80, type: 3}
   m_Name: Music library
   m_EditorClassIdentifier: 
-  areaThemeOffset: 6
+  areaThemeOffset: 7

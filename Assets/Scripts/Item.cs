@@ -33,11 +33,14 @@ public class Item:MonoBehaviour, IRoomObject {
         }
     }
 
-    public Dictionary<string, object> save() {
-        if (PlayState.itemData.Length == 0) {
+    public Dictionary<string, object> save()
+    {
+        if (PlayState.itemData.Length == 0)
             PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
-        }
         PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
+        if (PlayState.countedItems.Length == 0)
+            PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
+        PlayState.countedItems[itemID] = countedInPercentage;
         int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
         if (areaID < 7)
         {

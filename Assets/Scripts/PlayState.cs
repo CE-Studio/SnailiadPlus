@@ -258,6 +258,7 @@ public class PlayState {
     public static List<List<int>> itemAreas = new();
 
     public static bool[][] itemData = new bool[][] { };
+    public static bool[] countedItems = new bool[] { };
     
     public static readonly float[] timeDefault = new float[]
     {
@@ -310,8 +311,8 @@ public class PlayState {
 
     public static int[] NPCvarDefault = new int[] { 0, 0 };
 
-    public static List<string[]> cutsceneData = new List<string[]>();
-    public static List<int> cutscenesToNotSpawn = new List<int> { };
+    public static List<string[]> cutsceneData = new();
+    public static List<int> cutscenesToNotSpawn = new();
 
     public const string SAVE_FILE_PREFIX = "SnailySave";
 
@@ -1255,16 +1256,19 @@ public class PlayState {
         int charCheck = targetProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
         for (int i = 0; i < targetProfile.items.Length; i++)
         {
-            if (itemData[i] != null)
+            if (countedItems[i])
             {
-                if (itemData[i][targetProfile.difficulty] && itemData[i][charCheck])
+                if (itemData[i] != null)
                 {
-                    totalCount++;
-                    itemsFound += targetProfile.items[i] == 1 ? 1 : 0;
+                    if (itemData[i][targetProfile.difficulty] && itemData[i][charCheck])
+                    {
+                        totalCount++;
+                        itemsFound += targetProfile.items[i] == 1 ? 1 : 0;
+                    }
                 }
+                else
+                    totalCount++;
             }
-            else
-                totalCount++;
         }
         return Mathf.FloorToInt(((float)itemsFound / (float)totalCount) * 100);
     }

@@ -20,6 +20,10 @@ public class MusicLibrary : ScriptableObject
         },
         new string[]
         {
+            "EndingCredits"
+        },
+        new string[]
+        {
             "Boss1"
         },
         new string[]
@@ -60,7 +64,7 @@ public class MusicLibrary : ScriptableObject
             "LuxLirata"
         }
     };
-    public int areaThemeOffset = 6;
+    public int areaThemeOffset = 7;
 
     public void BuildDefaultLibrary()
     {

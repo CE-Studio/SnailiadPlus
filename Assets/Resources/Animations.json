@@ -11061,7 +11061,8 @@
 			"framerate": 0.0,
 			"frames": [
 				1,
-				1
+				1,
+				0
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -11109,6 +11110,18 @@
 			"framerate": 0.0,
 			"frames": [
 				6
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "EndingMoonSnail_becomeSun",
+			"spriteName": "Entities/EndingMoonSnail",
+			"framerate": 2.5,
+			"frames": [
+				4,
+				5
 			],
 			"loop": true,
 			"loopStartFrame": 0,
