@@ -159,6 +159,7 @@ public class MainMenu : MonoBehaviour
 
         PlayState.AssignProperCollectibleIDs();
         PlayState.BuildMapMarkerArrays();
+        PlayState.credits.BuildEntityRollCall();
 
         foreach (Transform area in PlayState.roomTriggerParent.transform)
         {
@@ -226,9 +227,6 @@ public class MainMenu : MonoBehaviour
             }
             partSprite.color = new Color(1, 1, 1, 0);
         }
-
-        //PlayState.titleRoom.RemoteActivateRoom();
-        //PlayState.gameState = PlayState.GameState.menu;
     }
 
     void Update()

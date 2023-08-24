@@ -2121,16 +2121,6 @@
 			"value": 0
 		},
 		{
-			"name": "enemy_spikey",
-			"text": "Spikey",
-			"value": 0
-		},
-		{
-			"name": "enemy_floatspike",
-			"text": "Floatspike",
-			"value": 0
-		},
-		{
 			"name": "room_00_townMain",
 			"text": "Snail Town|Plaza",
 			"value": 0
@@ -3563,6 +3553,256 @@
 		{
 			"name": "ending_sun3",
 			"text": "     and became the\n  legendary Sun Snail",
+			"value": 0
+		},
+		{
+			"name": "credits_header",
+			"text": "Credits",
+			"value": 0
+		},
+		{
+			"name": "credits_generic_join2",
+			"text": "{0} and {1}",
+			"value": 0
+		},
+		{
+			"name": "credits_generic_join3",
+			"text": "{0}, {1}, and {2}",
+			"value": 0
+		},
+		{
+			"name": "credits_generic_join4",
+			"text": "{0}, {1}, {2}, and {3}",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_spikey",
+			"text": "Spikey",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_babyfish",
+			"text": "Babyfish",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_floatspike",
+			"text": "Floatspike",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_blob1",
+			"text": "Blob",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_blob2",
+			"text": "Blub",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_blob3",
+			"text": "Devilblob",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_blob4",
+			"text": "Angelblob",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_chirpy",
+			"text": "Chirpy",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_bat",
+			"text": "Batty Bat",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_fireball",
+			"text": "Fireball",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_iceball",
+			"text": "Iceball",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_snelk",
+			"text": "Secret Snelk",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_kitty",
+			"text": "Kitty!!",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_dandelion",
+			"text": "Ghost Dandelion",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_cannon1",
+			"text": "Canon",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_cannon2",
+			"text": "Non-Canon",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_snakey",
+			"text": "Snakey",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_skyviper",
+			"text": "Sky Viper",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_spider1",
+			"text": "Spider",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_spider2",
+			"text": "Spider Mama",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_turtle1",
+			"text": "Gravity Turtle",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_turtle2",
+			"text": "Gravity Turtle (Cherry Red Finish)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_jellyfish",
+			"text": "Jellyfish",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_syngnathida",
+			"text": "Syngnathida",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_tallfish1",
+			"text": "Tallfish",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_tallfish2",
+			"text": "Angry Tallfish",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_walleye",
+			"text": "Walleye",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_pincerFloor",
+			"text": "Pincer",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_pincerWall",
+			"text": "Pouncer",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_pincerCeiling",
+			"text": "Sky Pincer",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_spinnygear",
+			"text": "Spinnygear",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_drone",
+			"text": "Federation Drone",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_balloon",
+			"text": "Balloon Buster",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_tarsh",
+			"text": "NewStarshipSmell\n(Tested Flash Snaily extensively!!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_xdanond",
+			"text": "xdanond\n(Drew several of\nFlash Snaily's sprites!!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_adamatomic",
+			"text": "AdamAtomic\n(Created Flixel, without which\nSnaily game would not exist!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_auriplane",
+			"text": "Auriplane\n(Author artist composer etc etc,\nallowed this project to exist!!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_epsilon",
+			"text": "Epsilon\n(Ported Snaily game to Unity along\nwith all the fresh bells\nand whistles!!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_clarence",
+			"text": "clarence112\n(Being infinitely better at coding\nthan I am, and also very cute)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_nat",
+			"text": "Nat the Chicken\n(Tester and idea-bouncer-offer)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_broomie",
+			"text": "Broomietunes\n(Wrote a bunch of new songs for\nall of the new content!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_zettex",
+			"text": "Zettex\n(Designed two of the new\nplayable characters!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_minervo",
+			"text": "Minervo Ionni\n(Designed another playable\ncharacter and helped bounce even\nmore ideas!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_goldguy",
+			"text": "Goldguy40\n(Drew a bunch of new tiles!)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_discord",
+			"text": "The Snailiad Discord\n(Testing, feedback, ideas,\nand being patient\nSeriously y'all are amazing _@_v)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_you",
+			"text": "And you\n\n\nBecause seriously, why not\n\n\nAll the other games\nput \"And You\" in the credits\nso I figure, \"And You\" must be\nsomeone pretty cool\n\n\nThanks, And You!!",
 			"value": 0
 		},
 		{

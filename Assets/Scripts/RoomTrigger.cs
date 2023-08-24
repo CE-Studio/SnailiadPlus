@@ -420,6 +420,7 @@ public class RoomTrigger : MonoBehaviour {
         if (temporarilyActive)
         {
             temporarilyActive = false;
+            active = true;
             foreach (Particle particle in effectParticles)
                 particle.ResetParticle();
 

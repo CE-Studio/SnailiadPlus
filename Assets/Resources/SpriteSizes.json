@@ -153,6 +153,11 @@
 			"width": 400,
 			"height": 240
 		},
+		{
+			"name": "Endings/TheEnd",
+			"width": 194,
+			"height": 122
+		},
 		
 		{
 			"name": "Entities/Babyfish",
@@ -378,6 +383,11 @@
             "name": "Entities/PowerGrass",
             "width": 16,
             "height": 16
+        },
+		{
+            "name": "Entities/Seahorse",
+            "width": 16,
+            "height": 32
         },
 		{
             "name": "Entities/SnailNpc",

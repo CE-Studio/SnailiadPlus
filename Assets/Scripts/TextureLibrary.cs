@@ -45,6 +45,7 @@ public class TextureLibrary : ScriptableObject
         "Endings/EndingInsane",
         "Endings/EndingNormal",
         "Endings/EndingSub30",
+        "Endings/TheEnd",
 
         "Entities/Babyfish",
         "Entities/BalloonBuster",

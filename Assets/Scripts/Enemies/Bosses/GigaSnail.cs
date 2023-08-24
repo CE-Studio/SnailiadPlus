@@ -1205,6 +1205,7 @@ public class GigaSnail : Boss
         foreach (Particle star in bgStars)
             star.ResetParticle();
         UpdateBackground("fadeOut");
+        PlayState.ToggleGigaTiles(true);
 
         string unlocks = "";
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnail);

@@ -419,6 +419,7 @@ public class Particle : MonoBehaviour
     {
         isActive = false;
         transform.position = Vector2.zero;
+        type = "";
         anim.Stop(true);
         sprite.sprite = sprites.blank;
         sprite.flipX = false;

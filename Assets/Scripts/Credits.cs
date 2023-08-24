@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Credits : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Credits : MonoBehaviour
     private const float SUN_FLOAT_SPEED = 2f;
     private const float SUN_FLOAT_AMPLITUDE = 0.25f;
     private const float SUN_SCENE_START_OFFSET = 15.5f;
+    private const float CREDITS_SCROLL_SPEED = 2.0625f;
+    private const float TEXT_VERTICAL_SIZE = 1.125f;
+    private const float CREDITS_DONE_TIMER = 7f;
 
     private float modeTimer = 0;
     private float startDelay = START_DELAY;
@@ -32,6 +36,9 @@ public class Credits : MonoBehaviour
     private float sunFloatTimer;
     private bool fadingIntoSun;
     private bool sunSpawned;
+    private float creditsGenerateY;
+    public bool creditsDone;
+    private float creditsDoneTimer = CREDITS_DONE_TIMER;
 
     private float[] completionTime = new float[] { };
 
@@ -60,10 +67,158 @@ public class Credits : MonoBehaviour
     private float nextCharTimeout = 0;
     private bool startedNewLine = false;
 
+    private Transform creditsParent;
+
+    private GameObject textObj;
+    private GameObject creditsEntity;
+
+    #region Entity Roll Call
+
+    public struct EntityEntry
+    {
+        public string name;
+        public int[] tileIDs;
+        public bool isPresent;
+    }
+
+    public EntityEntry[] presentEntities = new EntityEntry[]
+    {
+        new EntityEntry { name = "Spikey (blue)", tileIDs = new int[] { 11, 12 } },
+        new EntityEntry { name = "Spikey (orange)", tileIDs = new int[] { 13, 14 } },
+        new EntityEntry { name = "Babyfish", tileIDs = new int[] { 445, 446 } },
+        new EntityEntry { name = "Floatspike (black)", tileIDs = new int[] { 389 } },
+        new EntityEntry { name = "Floatspike (blue)", tileIDs = new int[] { 418 } },
+        new EntityEntry { name = "Blob", tileIDs = new int[] { 4 } },
+        new EntityEntry { name = "Blub", tileIDs = new int[] { 5 } },
+        new EntityEntry { name = "Angelblob", tileIDs = new int[] { 415 } },
+        new EntityEntry { name = "Devilblob", tileIDs = new int[] { 6 } },
+        new EntityEntry { name = "Chirpy (blue)", tileIDs = new int[] { 7, 10 } },
+        new EntityEntry { name = "Chirpy (aqua)", tileIDs = new int[] { 397, 451 } },
+        new EntityEntry { name = "Batty Bat", tileIDs = new int[] { 414 } },
+        new EntityEntry { name = "Fireball", tileIDs = new int[] { 15, 16 } },
+        new EntityEntry { name = "Iceball", tileIDs = new int[] { 17, 18 } },
+        new EntityEntry { name = "Snelk", tileIDs = new int[] { 424, 425, 452 } },
+        new EntityEntry { name = "Kitty (gray)", tileIDs = new int[] { 9 } },
+        new EntityEntry { name = "Kitty (orange)", tileIDs = new int[] { 8 } },
+        new EntityEntry { name = "Ghost Dandelion", tileIDs = new int[] { 387, 19 } },
+        new EntityEntry { name = "Canon", tileIDs = new int[] { 381, 382, 383, 384 } },
+        new EntityEntry { name = "Non-Canon", tileIDs = new int[] { 420, 421, 422, 423 } },
+        new EntityEntry { name = "Snakey (green)", tileIDs = new int[] { 398 } },
+        new EntityEntry { name = "Snakey (blue)", tileIDs = new int[] { 410 } },
+        new EntityEntry { name = "Sky Viper", tileIDs = new int[] { 419 } },
+        new EntityEntry { name = "Spider", tileIDs = new int[] { 406 } },
+        new EntityEntry { name = "Spider Mama", tileIDs = new int[] { 407 } },
+        new EntityEntry { name = "Gravity Turtle (green)", tileIDs = new int[] { 408, 409, 453, 454 } },
+        new EntityEntry { name = "Gravity Turtle (cherry red)", tileIDs = new int[] { 411, 412, 455, 456 } },
+        new EntityEntry { name = "Jellyfish", tileIDs = new int[] { 401 } },
+        new EntityEntry { name = "Syngnathida", tileIDs = new int[] { 402 } },
+        new EntityEntry { name = "Tallfish (normal)", tileIDs = new int[] { 403 } },
+        new EntityEntry { name = "Tallfish (angry)", tileIDs = new int[] { 416 } },
+        new EntityEntry { name = "Walleye", tileIDs = new int[] { 405, 417 } },
+        new EntityEntry { name = "Pincer", tileIDs = new int[] { 399, 400, 458, 459 } },
+        new EntityEntry { name = "Spinnygear", tileIDs = new int[] { 393, 394, 395, 396 } },
+        new EntityEntry { name = "Federation Drone", tileIDs = new int[] { 404 } },
+        new EntityEntry { name = "Balloon Buster", tileIDs = new int[] { 413, 457 } },
+        new EntityEntry { name = "Shellbreaker", tileIDs = new int[] { 23 } },
+        new EntityEntry { name = "Stompy", tileIDs = new int[] { 24 } },
+        new EntityEntry { name = "Space Box", tileIDs = new int[] { 25 } },
+        new EntityEntry { name = "Moon Snail", tileIDs = new int[] { 26 } }
+    };
+    private readonly List<int> entryEnumIDs = new()
+    {
+        1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 39, 40, 41, 42, 45, 54, 55
+    };
+    private readonly List<int> entryExceptions = new()
+    {
+        4, 37, 38
+    };
+
+    public void BuildEntityRollCall()
+    {
+        for (int i = 0; i < presentEntities.Length; i++)
+        {
+            if (presentEntities[i].name != "Kitty (gray)")
+                presentEntities[i].isPresent = true;
+            else
+                presentEntities[i].isPresent = false;
+        }
+
+        //if (PlayState.specialLayer == null)
+        //    PlayState.specialLayer = GameObject.Find("Grid/Special");
+        //
+        //List<int> compiledTileIDs = new() { };
+        //List<string> compiledEntityNames = new() { };
+        //foreach (EntityEntry entity in presentEntities)
+        //{
+        //    compiledEntityNames.Add(entity.name);
+        //    for (int i = 0; i < entity.tileIDs.Length; i++)
+        //        compiledTileIDs.Add(entity.tileIDs[i]);
+        //}
+        //Tilemap sp = PlayState.specialLayer.GetComponent<Tilemap>();
+        //for (int x = 0; x < sp.size.x; x++)
+        //{
+        //    for (int y = 0; y < sp.size.y; y++)
+        //    {
+        //        int thisTile = int.Parse(sp.GetTile(new((int)sp.origin.x + x, (int)sp.origin.y + y, 0)).name.Split('_')[1]);
+        //        if (compiledTileIDs.Contains(thisTile))
+        //        {
+        //            for (int i = 0; i < presentEntities.Length; i++)
+        //            {
+        //                for (int j = 0; j < presentEntities[i].tileIDs.Length; j++)
+        //                {
+        //                    if (presentEntities[i].tileIDs[j] == thisTile)
+        //                    {
+        //                        presentEntities[i].isPresent = true;
+        //                        j = presentEntities[i].tileIDs.Length;
+        //                        i = presentEntities.Length;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //for (int area = 0; area < PlayState.roomTriggerParent.transform.childCount; area++)
+        //{
+        //    for (int room = 0; room < PlayState.roomTriggerParent.transform.GetChild(area).childCount; room++)
+        //    {
+        //        for (int entityNum = 0; entityNum < PlayState.roomTriggerParent.transform.GetChild(area).GetChild(room).childCount; entityNum++)
+        //        {
+        //            GameObject thisEntity = PlayState.roomTriggerParent.transform.GetChild(area).GetChild(room).GetChild(entityNum).gameObject;
+        //            if (compiledEntityNames.Contains(thisEntity.name))
+        //            {
+        //                for (int i = 0; i < presentEntities.Length; i++)
+        //                {
+        //                    if (presentEntities[i].name == thisEntity.name)
+        //                    {
+        //                        presentEntities[i].isPresent = true;
+        //                        i = presentEntities.Length;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //
+        //int foundEntities = 0;
+        //int totalEntities = 0;
+        //for (int i = 0; i < presentEntities.Length; i++)
+        //{
+        //    totalEntities++;
+        //    if (presentEntities[i].isPresent)
+        //        foundEntities++;
+        //}
+        //Debug.Log(string.Format("Found {0} of {1} possible entities", foundEntities, totalEntities));
+    }
+
+    #endregion
+
     void Start()
     {
         cutsceneText = transform.Find("Cutscene Text").GetComponent<TextObject>();
         cutsceneText.SetText("");
+        creditsParent = transform.Find("Credits Roll").transform;
+        textObj = Resources.Load<GameObject>("Objects/Text Object");
+        creditsEntity = Resources.Load<GameObject>("Objects/Credits Entity");
     }
 
     void Update()
@@ -159,24 +314,27 @@ public class Credits : MonoBehaviour
                         moonSprites[0].anim.Play("EndingMoonSnail_shell");
                         moonState = 3;
                     }
-                    zzzDelay -= Time.deltaTime;
-                    if (fadeZzz)
+                    if (spawnZzz)
                     {
-                        if (zzzDelay <= 0 && !zzzActive)
+                        zzzDelay -= Time.deltaTime;
+                        if (fadeZzz)
+                        {
+                            if (zzzDelay <= 0 && !zzzActive)
+                            {
+                                zzzActive = true;
+                                zzz.sprite.enabled = true;
+                                zzz.sprite.color = new Color(1, 1, 1, 0);
+                                zzz.anim.Play("EndingZzz");
+                            }
+                            if (zzzActive && zzz.sprite.color.a < 1f)
+                                FadeZzz(ZZZ_FADE_SPEED);
+                        }
+                        else if (!fadeZzz && !zzzActive && zzzDelay <= 0)
                         {
                             zzzActive = true;
                             zzz.sprite.enabled = true;
-                            zzz.sprite.color = new Color(1, 1, 1, 0);
                             zzz.anim.Play("EndingZzz");
                         }
-                        if (zzzActive && zzz.sprite.color.a < 1f)
-                            FadeZzz(ZZZ_FADE_SPEED);
-                    }
-                    else if (!fadeZzz && !zzzActive && zzzDelay <= 0)
-                    {
-                        zzzActive = true;
-                        zzz.sprite.enabled = true;
-                        zzz.anim.Play("EndingZzz");
                     }
                 }
 
@@ -304,7 +462,7 @@ public class Credits : MonoBehaviour
                         CreditsRoll();
                     }
                 }
-                else if (startedFade && (modeTimer > 26f || Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause)))
+                else if (modeTimer > 26f || (modeTimer > 2f && (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))))
                 {
                     PlayState.creditsState = PlayState.CreditsStates.fadeToCredits;
                     PlayState.screenCover.color = new Color(0, 0, 0, 0);
@@ -314,9 +472,27 @@ public class Credits : MonoBehaviour
                 break;
             case PlayState.CreditsStates.credits:
             case PlayState.CreditsStates.fadeToTime:
+                creditsParent.transform.localPosition += CREDITS_SCROLL_SPEED * Time.deltaTime * Vector3.up;
+                if (creditsDone)
+                    creditsDoneTimer -= Time.deltaTime;
+                if (PlayState.creditsState == PlayState.CreditsStates.fadeToTime)
+                {
+                    fadeTransitionCountdown -= Time.deltaTime;
+                    if (fadeTransitionCountdown <= 0)
+                    {
+                        for (int i = creditsParent.childCount - 1; i >= 0; i--)
+                            Destroy(creditsParent.GetChild(i));
+                        DisplayFinalTime();
+                    }
+                }
+                if (creditsDoneTimer <= 0 || (modeTimer > 1.5f && (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))))
+                {
+                    PlayState.creditsState = PlayState.CreditsStates.fadeToTime;
+                    PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 1.9f);
+                    fadeTransitionCountdown = 2f;
+                }
                 break;
             case PlayState.CreditsStates.time:
-                break;
             case PlayState.CreditsStates.fadeOut:
                 break;
         }
@@ -484,16 +660,25 @@ public class Credits : MonoBehaviour
         PlayState.creditsRoom.RemoteActivateRoom(true);
         PlayState.cam.transform.position = PlayState.creditsRoom.transform.position;
         cutsceneText.SetText("");
+        background.sprite.enabled = true;
         background.sprite.color = new Color(1, 1, 1, 1);
         background.anim.Play("EndingBackground_credits");
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 1.4f);
-        PlayState.PlayMusic(1, 0);
+        PlayState.globalFunctions.UpdateMusic(-6, 0, 1);
+        creditsGenerateY = 0;
+        creditsDone = false;
+        creditsDoneTimer = CREDITS_DONE_TIMER;
+        CreateCredits();
+        creditsParent.transform.localPosition = new Vector2(0, -8);
     }
 
     public void DisplayFinalTime()
     {
         modeTimer = 0;
         PlayState.creditsState = PlayState.CreditsStates.time;
+        PlayState.ResetAllParticles();
+        PlayState.creditsRoom.DespawnEverything();
+
     }
 
     public void EndCredits()
@@ -502,5 +687,229 @@ public class Credits : MonoBehaviour
         PlayState.creditsState = PlayState.CreditsStates.none;
         PlayState.LastRoom().ResetEffects();
         Destroy(background.obj);
+    }
+
+    private void CreateCredits()
+    {
+        AddCreditsEntry("credits_header");
+        creditsGenerateY -= 2f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.BlueSpikey, CreditsEntity.Entities.OrangeSpikey },
+            new string[] { "credits_entity_spikey" }, 3.75f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GreenBabyfish, CreditsEntity.Entities.PinkBabyfish },
+            new string[] { "credits_entity_babyfish" }, 3.125f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.BlackFloatspike, CreditsEntity.Entities.BlueFloatspike },
+            new string[] { "credits_entity_floatspike" }, 1.625f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Blob, CreditsEntity.Entities.Blub, CreditsEntity.Entities.Angelblob, CreditsEntity.Entities.Devilblob },
+            new string[] { "credits_entity_blob1", "credits_entity_blob2", "credits_entity_blob4", "credits_entity_blob3" }, 1.25f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.BlueChirpy, CreditsEntity.Entities.AquaChirpy },
+            new string[] { "credits_entity_chirpy" }, 1.75f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.BattyBat },
+            new string[] { "credits_entity_bat" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Fireball, CreditsEntity.Entities.Iceball },
+            new string[] { "credits_entity_fireball", "credits_entity_iceball" }, 1.5f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Snelk },
+            new string[] { "credits_entity_snelk" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GrayKitty, CreditsEntity.Entities.OrangeKitty },
+            new string[] { "credits_entity_kitty" }, 2.75f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Dandelion },
+            new string[] { "credits_entity_dandelion"});
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Canon, CreditsEntity.Entities.NonCanon },
+            new string[] { "credits_entity_cannon1", "credits_entity_cannon2" }, 3.75f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GreenSnakey, CreditsEntity.Entities.BlueSnakey },
+            new string[] { "credits_entity_snakey" }, 2.5f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.SkyViper },
+            new string[] { "credits_entity_skyviper" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Spider },
+            new string[] { "credits_entity_spider1" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.SpiderMama },
+            new string[] { "credits_entity_spider2" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GreenTurtle },
+            new string[] { "credits_entity_turtle1" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.CherryTurtle },
+            new string[] { "credits_entity_turtle2" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Jellyfish },
+            new string[] { "credits_entity_jellyfish" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Syngnathida },
+            new string[] { "credits_entity_syngnathida" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Tallfish, CreditsEntity.Entities.AngryTallfish },
+            new string[] { "credits_entity_tallfish1", "credits_entity_tallfish2" }, 3.25f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Walleye },
+            new string[] { "credits_entity_walleye" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Pincer, CreditsEntity.Entities.SkyPincer },
+            new string[] { "credits_entity_pincerFloor", "credits_entity_pincerCeiling" }, 2.125f);
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Spinnygear },
+            new string[] { "credits_entity_spinnygear" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.FederationDrone },
+            new string[] { "credits_entity_drone" });
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.BalloonBuster },
+            new string[] { "credits_entity_balloon" });
+        creditsGenerateY -= 3.75f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Shellbreaker },
+            new string[] { "boss_shellbreaker" });
+        creditsGenerateY -= 3.75f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Stompy },
+            new string[] { "boss_stompy" });
+        creditsGenerateY -= 1.875f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.SpaceBox },
+            new string[] { "boss_spaceBox" });
+        creditsGenerateY -= 1.875f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.MoonSnail },
+            new string[] { "boss_moonSnail" });
+        creditsGenerateY -= 1.875f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GigaSnail },
+            new string[] { "boss_gigaSnail" });
+        creditsGenerateY -= 1.875f;
+
+        switch (PlayState.currentProfile.character)
+        {
+            default:
+            case "Snaily":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Snaily },
+                    new string[] { "char_full_snaily" });
+                break;
+            case "Sluggy":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Sluggy },
+                    new string[] { "char_full_sluggy" });
+                break;
+            case "Upside":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Upside },
+                    new string[] { "char_full_upside" });
+                break;
+            case "Leggy":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Leggy },
+                    new string[] { "char_full_leggy" });
+                break;
+            case "Blobby":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Blobby },
+                    new string[] { "char_full_blobby" });
+                break;
+            case "Leechy":
+                AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Leechy },
+                    new string[] { "char_full_leechy" });
+                break;
+        }
+        creditsGenerateY -= 1.875f;
+
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.NewStarshipSmell },
+            new string[] { "credits_entity_tarsh" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Xdanond },
+            new string[] { "credits_entity_xdanond" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.AdamAtomic },
+            new string[] { "credits_entity_adamatomic" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Auriplane },
+            new string[] { "credits_entity_auriplane" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Epsilon },
+            new string[] { "credits_entity_epsilon" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Clarence },
+            new string[] { "credits_entity_clarence" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Nat },
+            new string[] { "credits_entity_nat" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Broomie },
+            new string[] { "credits_entity_broomie" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Zettex },
+            new string[] { "credits_entity_zettex" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Minervo },
+            new string[] { "credits_entity_minervo" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GoldGuy },
+            new string[] { "credits_entity_goldguy" });
+        creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Discord },
+            new string[] { "credits_entity_discord" });
+        creditsGenerateY -= 4.375f;
+        AddCreditsEntry("credits_entity_you");
+        creditsGenerateY -= 2.5f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.TheEnd },
+            new string[] { });
+    }
+
+    private void AddCreditsEntry(string textID)
+    {
+        AddCreditsEntry(new CreditsEntity.Entities[] { }, new string[] { textID });
+    }
+    private void AddCreditsEntry(CreditsEntity.Entities[] entityIDs, string[] textIDs, float horizBuffer = 0)
+    {
+        List<CreditsEntity.Entities> listedEntities = new();
+        List<string> filteredText = new();
+        if (entityIDs.Length > 0)
+        {
+            for (int i = 0; i < entityIDs.Length; i++)
+            {
+                bool logEntity = false;
+                if (entryEnumIDs.Contains((int)entityIDs[i]))
+                {
+                    if (presentEntities[entryEnumIDs.IndexOf((int)entityIDs[i])].isPresent)
+                        logEntity = true;
+                }
+                else if (entryExceptions.Contains((int)entityIDs[i]) && listedEntities.Count > 0)
+                    logEntity = true;
+                else if (!entryExceptions.Contains((int)entityIDs[i]))
+                    logEntity = true;
+                if (logEntity)
+                {
+                    listedEntities.Add(entityIDs[i]);
+                    if (textIDs.Length > 1)
+                        filteredText.Add(textIDs[i]);
+                    else if (textIDs.Length == 1 && filteredText.Count == 0)
+                        filteredText.Add(textIDs[0]);
+                }
+            }
+            if (listedEntities.Count > 0)
+            {
+                float spawnX = (listedEntities.Count - 1) * horizBuffer;
+                spawnX = -spawnX * 0.5f;
+                float largestHeight = 0;
+                for (int i = 0; i < listedEntities.Count; i++)
+                {
+                    CreditsEntity newEntity = Instantiate(creditsEntity, creditsParent).GetComponent<CreditsEntity>();
+                    float thisHeight = newEntity.Spawn(listedEntities[i], spawnX, creditsGenerateY);
+                    if (thisHeight > largestHeight)
+                        largestHeight = thisHeight;
+                    spawnX += horizBuffer;
+                }
+                creditsGenerateY -= largestHeight + PlayState.FRAC_8;
+            }
+        }
+        if (textIDs.Length > 0)
+        {
+            if (entityIDs.Length == 0)
+                creditsGenerateY -= AddText(textIDs);
+            if (entityIDs.Length > 0 && listedEntities.Count > 0)
+                creditsGenerateY -= AddText(filteredText.ToArray());
+        }
+        else
+            creditsGenerateY -= 2f;
+    }
+
+    private float AddText(string[] textIDs)
+    {
+        TextObject newText = Instantiate(textObj, creditsParent).GetComponent<TextObject>();
+        newText.position = new Vector2(0, creditsGenerateY);
+        newText.SetAlignment("center");
+        newText.CreateOutline();
+        for (int i = 0; i < textIDs.Length; i++)
+            textIDs[i] = PlayState.GetText(textIDs[i]);
+        string finalText = textIDs.Length switch
+        {
+            2 => string.Format(PlayState.GetText("credits_generic_join2"), textIDs[0], textIDs[1]),
+            3 => string.Format(PlayState.GetText("credits_generic_join3"), textIDs[0], textIDs[1], textIDs[2]),
+            4 => string.Format(PlayState.GetText("credits_generic_join4"), textIDs[0], textIDs[1], textIDs[2], textIDs[3]),
+            _ => PlayState.GetText(textIDs[0])
+        };
+        newText.SetText(finalText);
+        int lineCount = 1;
+        for (int i = 0; i < finalText.Length; i++)
+            if (finalText[i] == '\n')
+                lineCount++;
+        return TEXT_VERTICAL_SIZE * lineCount + 2f;
     }
 }

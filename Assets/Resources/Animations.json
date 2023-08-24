@@ -13890,6 +13890,61 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Enemy_walleye_data",
+			"spriteName": "Entities/Walleye",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_walleye_left_idle",
+			"spriteName": "Entities/Walleye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_walleye_left_shoot",
+			"spriteName": "Entities/Walleye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_walleye_right_idle",
+			"spriteName": "Entities/Walleye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_walleye_right_shoot",
+			"spriteName": "Entities/Walleye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Hazard_fire1",
 			"spriteName": "Entities/Fire",
 			"framerate": 9.0,
@@ -16823,6 +16878,1132 @@
 			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
+		},
+		{
+			"name": "Credits_bluespikey",
+			"spriteName": "Entities/Spikey1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_orangespikey",
+			"spriteName": "Entities/Spikey2",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_greenbabyfish",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				0,
+				1,
+				1,
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_pinkbabyfish",
+			"spriteName": "Entities/Babyfish",
+			"framerate": 12.0,
+			"frames": [
+				0,
+				0,
+				2,
+				3,
+				2,
+				3,
+				2,
+				3,
+				2,
+				2,
+				3,
+				3,
+				2,
+				2,
+				2,
+				3,
+				3,
+				3,
+				3,
+				3,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_blackfloatspike",
+			"spriteName": "Entities/Floatspike1",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_bluefloatspike",
+			"spriteName": "Entities/Floatspike2",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_blob",
+			"spriteName": "Entities/Blob",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_blub",
+			"spriteName": "Entities/Blob",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_angelblob",
+			"spriteName": "Entities/Blob",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				12
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_devilblob",
+			"spriteName": "Entities/Blob",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_bluechirpy",
+			"spriteName": "Entities/Chirpy1",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_aquachirpy",
+			"spriteName": "Entities/Chirpy2",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_battybat",
+			"spriteName": "Entities/Bat",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				1,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_fireball",
+			"spriteName": "Entities/Fireball",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_iceball",
+			"spriteName": "Entities/Fireball2",
+			"framerate": 6.1,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_snelk",
+			"spriteName": "Entities/Snelk",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_graykitty",
+			"spriteName": "Entities/Kitty",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_orangekitty",
+			"spriteName": "Entities/Kitty2",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_dandelion",
+			"spriteName": "Entities/Dandelion",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_canon",
+			"spriteName": "Entities/Cannon1",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_canonbase",
+			"spriteName": "Entities/Cannon1Base",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_noncanon",
+			"spriteName": "Entities/Cannon2",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_noncanonbase",
+			"spriteName": "Entities/Cannon2Base",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_greensnakey",
+			"spriteName": "Entities/Snake",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_bluesnakey",
+			"spriteName": "Entities/Snake2",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_skyviper",
+			"spriteName": "Entities/Snake3",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_spider",
+			"spriteName": "Entities/Spider1",
+			"framerate": 6.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_spidermama",
+			"spriteName": "Entities/Spider2",
+			"framerate": 8.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_greenturtle",
+			"spriteName": "Entities/GravTurtle1",
+			"framerate": 3.0,
+			"frames": [
+				1,
+				1,
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_cherryturtle",
+			"spriteName": "Entities/GravTurtle2",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1,
+				3,
+				4,
+				3,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_jellyfish",
+			"spriteName": "Entities/Jellyfish",
+			"framerate": 4.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_syngnathida",
+			"spriteName": "Entities/Seahorse",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_tallfish",
+			"spriteName": "Entities/Tallfish1",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_angrytallfish",
+			"spriteName": "Entities/Tallfish2",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				0,
+				2,
+				2,
+				0,
+				0,
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				2,
+				2,
+				2,
+				2,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_walleye",
+			"spriteName": "Entities/Walleye",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_pincer",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_pouncer",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				1,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_skypincer",
+			"spriteName": "Entities/Pincer",
+			"framerate": 10.0,
+			"frames": [
+				1,
+				1,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_spinnygear",
+			"spriteName": "Entities/Gear",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_federationdrone",
+			"spriteName": "Entities/Drone",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_balloonbuster",
+			"spriteName": "Entities/BalloonBuster",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_shellbreaker",
+			"spriteName": "Entities/Boss1",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_shellbreakereye",
+			"spriteName": "Entities/Boss1Eyes",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_shellbreakerhand",
+			"spriteName": "Entities/Boss1Hand",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyfootl",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 1.0,
+			"frames": [
+				1,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyeyel",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyeyelidl",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompypupill",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyfootr",
+			"spriteName": "Entities/Boss2Foot",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyeyer",
+			"spriteName": "Entities/Boss2Eye",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompyeyelidr",
+			"spriteName": "Entities/Boss2Eyelid",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_stompypupilr",
+			"spriteName": "Entities/Boss2Pupil",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_spacebox",
+			"spriteName": "Entities/Boss3",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0,
+				6,
+				2,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_moonsnail",
+			"spriteName": "Entities/Boss4",
+			"framerate": 2.9,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_gigasnail",
+			"spriteName": "Entities/Boss4SecondForm",
+			"framerate": 3.1,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_snaily",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_sluggy",
+			"spriteName": "Player",
+			"framerate": 3.05,
+			"frames": [
+				0,
+				0,
+				48,
+				49
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_upside",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				0,
+				96,
+				97
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_leggy",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				0,
+				144,
+				145,
+				144,
+				146
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_blobby",
+			"spriteName": "Player",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				198
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_leechy",
+			"spriteName": "Player",
+			"framerate": 2.75,
+			"frames": [
+				0,
+				0,
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_newstarshipsmell",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_xdanond",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_adamatomic",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_auriplane",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_epsilon",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_clarence",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_nat",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				6
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_broomie",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				9
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_zettex",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_minervo",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_goldguy",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_discord",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				12
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_theend",
+			"spriteName": "Endings/TheEnd",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
 		},
 		{
 			"name": "",

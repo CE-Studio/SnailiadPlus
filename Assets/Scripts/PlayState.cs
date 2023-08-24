@@ -10,6 +10,7 @@ public class PlayState {
     public const float TAU = Mathf.PI * 2;
     public const float PI_OVER_EIGHT = Mathf.PI * 0.125f;
     public const float PI_OVER_FOUR = Mathf.PI * 0.25f;
+    public const float PI_OVER_THREE = Mathf.PI * 0.3333f;
     public const float PI_OVER_TWO = Mathf.PI * 0.5f;
     public const float THREE_PI_OVER_TWO = TAU - PI_OVER_TWO;
     public const float FRAC_8 = 0.125f;
@@ -1019,17 +1020,13 @@ public class PlayState {
 
     public static void ResetAllParticles()
     {
+        for (int i = camParticlePool.transform.childCount - 1; i >= 0; i--)
+            camParticlePool.transform.GetChild(i).parent = particlePool.transform;
         foreach (Transform particle in particlePool.transform)
         {
             Particle particleScript = particle.GetComponent<Particle>();
             if (particle.gameObject.activeSelf)
                 particleScript.ResetParticle();
-        }
-        for (int i = camParticlePool.transform.childCount - 1; i >= 0; i--)
-        {
-            Transform particle = camParticlePool.transform.GetChild(i);
-            if (particle.gameObject.activeSelf)
-                particle.GetComponent<Particle>().ResetParticle();
         }
     }
 
