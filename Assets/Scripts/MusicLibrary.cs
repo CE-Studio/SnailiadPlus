@@ -62,16 +62,24 @@ public class MusicLibrary : ScriptableObject
         new string[]
         {
             "LuxLirata"
+        },
+        new string[]
+        {
+            "ShrineOfIris"
+        },
+        new string[]
+        {
+            "ShrineOfIris"
         }
     };
     public int areaThemeOffset = 7;
 
     public void BuildDefaultLibrary()
     {
-        List<AudioClip[]> newLibrary = new List<AudioClip[]>();
+        List<AudioClip[]> newLibrary = new();
         for (int i = 0; i < referenceList.Length; i++)
         {
-            List<AudioClip> newList = new List<AudioClip>();
+            List<AudioClip> newList = new();
             for (int j = 0; j < referenceList[i].Length; j++)
                 newList.Add((AudioClip)Resources.Load("Sounds/Music/" + referenceList[i][j]));
             newLibrary.Add(newList.ToArray());

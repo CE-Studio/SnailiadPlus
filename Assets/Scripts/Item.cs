@@ -249,12 +249,15 @@ public class Item:MonoBehaviour, IRoomObject {
             }
             FlashItemText();
             if (PlayState.GetItemPercentage() == 100)
+            {
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.completion);
+                PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Items100);
+            }
             else
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.collection);
             StartCoroutine(nameof(HoverOverPlayer));
             PlayState.currentProfile.percentage = PlayState.GetItemPercentage();
-            PlayState.WriteSave(PlayState.currentProfileNumber, false);
+            PlayState.WriteSave(PlayState.currentProfileNumber, true);
         }
     }
 

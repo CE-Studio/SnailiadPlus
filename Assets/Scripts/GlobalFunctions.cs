@@ -153,7 +153,7 @@ public class GlobalFunctions : MonoBehaviour
 
         PlayState.palette = (Texture2D)Resources.Load("Images/Palette");
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
             PlayState.itemAreas.Add(new List<int>());
 
         PlayState.TogglableHUDElements = new GameObject[]
@@ -301,8 +301,8 @@ public class GlobalFunctions : MonoBehaviour
         }
 
         // Audiosource volume control
-        PlayState.globalSFX.volume = PlayState.generalData.soundVolume * 0.1f;
-        PlayState.globalMusic.volume = PlayState.generalData.musicVolume * 0.1f;
+        PlayState.globalSFX.volume = PlayState.generalData.soundVolume * 0.1f * PlayState.sfxFader;
+        PlayState.globalMusic.volume = PlayState.generalData.musicVolume * 0.1f * PlayState.fader;
 
         // Palette shader toggle
         if ((PlayState.generalData.paletteFilterState && !paletteShader.enabled) || (!PlayState.generalData.paletteFilterState && paletteShader.enabled))
@@ -526,6 +526,22 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.playingMusic = false;
         foreach (AudioSource source in PlayState.musicSourceArray)
             source.Stop();
+    }
+
+    public void DelayStartAreaTheme(int area, int subzone, float delayTime)
+    {
+        StartCoroutine(DelayStartThemeCoroutine(area, subzone, delayTime));
+    }
+    
+    private IEnumerator DelayStartThemeCoroutine(int area, int subzone, float delayTime)
+    {
+        while (delayTime > 0)
+        {
+            if (PlayState.gameState == PlayState.GameState.game)
+                delayTime -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        UpdateMusic(area, subzone, 1);
     }
 
     public void RunDustRing(int tfType = -1)
@@ -852,9 +868,9 @@ public class GlobalFunctions : MonoBehaviour
                 break;
             case TextTypes.item:
                 itemText.SetText(textValue);
-                while (timer < 3f)
+                while (timer < 3.5f)
                 {
-                    alpha = timer > 2.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 2.5f) * 2)) : (byte)255;
+                    alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
                     if (colorCooldown <= 0)
                     {
                         itemText.SetColor(colorPointer switch
@@ -876,9 +892,9 @@ public class GlobalFunctions : MonoBehaviour
                 break;
             case TextTypes.collection:
                 itemPercentageText.SetText(string.Format(PlayState.GetText("hud_completedItemPercentage"), PlayState.GetItemPercentage().ToString()));
-                while (timer < 2f)
+                while (timer < 2.5f)
                 {
-                    alpha = timer > 1.5f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, (timer - 1.5f) * 2)) : (byte)255;
+                    alpha = timer > 1.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(1.8f, 2.5f, timer))) : (byte)255;
                     if (colorCooldown <= 0)
                     {
                         itemPercentageText.SetColor(colorPointer switch
@@ -898,11 +914,38 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 itemPercentageText.SetColor(new Color(1, 1, 1, 0));
                 break;
+            case TextTypes.completion:
+                string thisText = PlayState.GetText("hud_collectedAllItems");
+                if (!PlayState.generalData.achievements[7])
+                    thisText += "\n" + PlayState.GetText("hud_unlockRandoMode");
+                itemCompletionText.SetText(thisText);
+                while (timer < 8.5f)
+                {
+                    alpha = timer > 7.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(7.8f, 8.5f, timer))) : (byte)255;
+                    if (colorCooldown <= 0)
+                    {
+                        itemCompletionText.SetColor(colorPointer switch
+                        {
+                            0 => new Color32(189, 191, 198, alpha),
+                            1 => new Color32(247, 198, 223, alpha),
+                            2 => new Color32(252, 214, 136, alpha),
+                            _ => new Color32(170, 229, 214, alpha)
+                        });
+                        colorPointer = (colorPointer + 1) % 4;
+                        colorCooldown = 2;
+                    }
+                    else
+                        colorCooldown--;
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                itemCompletionText.SetColor(new Color(1, 1, 1, 0));
+                break;
             case TextTypes.save:
                 gameSaveText.SetText(PlayState.GetText("hud_gameSaved"));
                 while (timer < 2.5f)
                 {
-                    gameSaveText.SetColor(new Color(1, 1, 1, timer > 2 ? Mathf.Lerp(1, 0, (timer - 2) * 1.5f) : 1));
+                    gameSaveText.SetColor(new Color(1, 1, 1, timer > 1.8f ? Mathf.Lerp(1, 0, Mathf.InverseLerp(1.8f, 2.5f, timer)) : 1));
                     yield return new WaitForEndOfFrame();
                     timer += Time.deltaTime;
                 }

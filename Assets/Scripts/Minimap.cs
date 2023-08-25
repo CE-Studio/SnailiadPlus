@@ -10,6 +10,8 @@ public class Minimap : MonoBehaviour
     private int currentCellID;
     private int lastCellID;
 
+    private int maxNormalCells;
+
     private GameObject[] masks = new GameObject[] { };
     private SpriteRenderer[] sprites = new SpriteRenderer[] { };
     private readonly int[] maskIDoffsets = new int[]
@@ -21,18 +23,24 @@ public class Minimap : MonoBehaviour
          49,  50,  51,  52,  53,  54,  55
     };
 
-    //public int[] currentMap = new int[] { };
-
     private float currentMarkerColor = 0;
-    private List<SpriteRenderer> cellsWithMarkers = new List<SpriteRenderer>();
+    private List<SpriteRenderer> cellsWithMarkers = new();
+
+    //   Cell value legend
+    //
+    // -1 - Empty cell
+    //  0 - Unexplored cell
+    //  1 - Explored cell
+    //  2 - Unexplored secret cell
+    //  3 - Explored secret cell
+    //
+    // Any cells with value 10 or higher denote a cell with a player-set marker within them. The true value is the number minus 10
 
     void Start()
     {
-        //currentMap = (int[])PlayState.defaultMinimapState.Clone();
-
         Transform maskParent = transform.Find("Room Masks");
-        List<GameObject> newMaskList = new List<GameObject>();
-        List<SpriteRenderer> newSpriteList = new List<SpriteRenderer>();
+        List<GameObject> newMaskList = new();
+        List<SpriteRenderer> newSpriteList = new();
         for (int i = 0; i < maskIDoffsets.Length; i++)
         {
             newMaskList.Add(maskParent.GetChild(i).gameObject);
@@ -41,7 +49,7 @@ public class Minimap : MonoBehaviour
         masks = newMaskList.ToArray();
         sprites = newSpriteList.ToArray();
 
-        List<AnimationModule> newAnimList = new List<AnimationModule>();
+        List<AnimationModule> newAnimList = new();
         newAnimList.Add(GetComponent<AnimationModule>());
         newAnimList.Add(transform.Find("Minimap").GetComponent<AnimationModule>());
         newAnimList.Add(transform.Find("Minimap Mask").GetComponent<AnimationModule>());
@@ -66,12 +74,14 @@ public class Minimap : MonoBehaviour
             anims[i].Add("Minimap_icon_marker");
         }
         anims[3].Play("Minimap_icon_playerNormal");
+
+        foreach (int cell in PlayState.defaultMinimapState)
+            if (cell == 0)
+                maxNormalCells++;
     }
 
     void Update()
     {
-        //currentMap = (int[])PlayState.currentProfile.exploredMap.Clone();
-
         minimap.transform.localPosition = new Vector2(
             -Mathf.Round((PlayState.WORLD_ORIGIN.x + PlayState.player.transform.position.x - 1 + (PlayState.ROOM_SIZE.x * 0.5f)) / PlayState.ROOM_SIZE.x) * 0.5f + 0.25f,
             -Mathf.Round((PlayState.WORLD_ORIGIN.y + PlayState.player.transform.position.y - 1 + (PlayState.ROOM_SIZE.y * 0.5f)) / PlayState.ROOM_SIZE.y) * 0.5f + 0.25f
@@ -81,7 +91,15 @@ public class Minimap : MonoBehaviour
         {
             if (PlayState.currentProfile.exploredMap[currentCellID] == 0 || PlayState.currentProfile.exploredMap[currentCellID] == 2 ||
                 PlayState.currentProfile.exploredMap[currentCellID] == 10 || PlayState.currentProfile.exploredMap[currentCellID] == 12)
+            {
                 PlayState.currentProfile.exploredMap[currentCellID]++;
+                int newCurrentCells = 0;
+                foreach (int cell in PlayState.currentProfile.exploredMap)
+                    if (cell == 1 || cell == 11)
+                        newCurrentCells++;
+                if (newCurrentCells == maxNormalCells)
+                    PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Map100);
+            }
         }
         if (lastCellID != currentCellID)
             RefreshMap();

@@ -454,6 +454,18 @@ public class DialogueBox : MonoBehaviour
         currentShape = shape;
         sprite.color = PlayState.GetColor(boxColor);
         currentFrameColor = boxColor;
+
+        for (int i = 0; i < text.Count; i++)
+            text[i] = text[i]
+                .Replace("##", PlayState.GetItemPercentage().ToString())
+                .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
+                .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
+                .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
+                .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
+                .Replace("{ID}", speaker.ToString())
+                .Replace("{Helix}", PlayState.CountFragments().ToString())
+                .Replace("{HelixLeft}", (PlayState.MAX_FRAGMENTS - PlayState.CountFragments()).ToString());
+
         textList = text;
         states = stateList;
         left = facingLeft;

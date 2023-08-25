@@ -2640,7 +2640,7 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_gallery_bossRush"), true, GalleryRush);
         else
             AddOption("-", false);
-        if (PlayState.generalData.achievements[5])
+        if (PlayState.generalData.achievements[7])
             AddOption(PlayState.GetText("menu_option_gallery_100"), true, Gallery100);
         else
             AddOption("-", false);

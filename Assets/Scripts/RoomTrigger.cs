@@ -214,6 +214,7 @@ public class RoomTrigger : MonoBehaviour {
     public void ResetEffects()
     {
         initializedEffects = false;
+        Update();
     }
 
     private int WaterPoint(float x)
@@ -691,6 +692,22 @@ public class RoomTrigger : MonoBehaviour {
                         case 425:
                             GameObject runningSnelk = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Snelk"), worldPos, Quaternion.identity, transform);
                             runningSnelk.GetComponent<Snelk>().SetState(1);
+                            break;
+                        case 440:
+                            GameObject collideTileFS1 = Instantiate(Resources.Load<GameObject>("Objects/Collision Tile"), worldPos, Quaternion.identity, transform);
+                            collideTileFS1.GetComponent<CollisionTile>().Spawn(PlayState.EDirsSurface.Floor, CollisionTile.Types.QuarterStep);
+                            break;
+                        case 441:
+                            GameObject collideTileFS2 = Instantiate(Resources.Load<GameObject>("Objects/Collision Tile"), worldPos, Quaternion.identity, transform);
+                            collideTileFS2.GetComponent<CollisionTile>().Spawn(PlayState.EDirsSurface.Floor, CollisionTile.Types.HalfStep);
+                            break;
+                        case 442:
+                            GameObject collideTileFS3 = Instantiate(Resources.Load<GameObject>("Objects/Collision Tile"), worldPos, Quaternion.identity, transform);
+                            collideTileFS3.GetComponent<CollisionTile>().Spawn(PlayState.EDirsSurface.Floor, CollisionTile.Types.ThreeQuarterStep);
+                            break;
+                        case 443:
+                            GameObject collideTileFS4 = Instantiate(Resources.Load<GameObject>("Objects/Collision Tile"), worldPos, Quaternion.identity, transform);
+                            collideTileFS4.GetComponent<CollisionTile>().Spawn(PlayState.EDirsSurface.Floor, CollisionTile.Types.FullStep);
                             break;
                         case 445:
                             GameObject babyfishGreen = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Babyfish"), worldPos, Quaternion.identity, transform);

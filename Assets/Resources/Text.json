@@ -1806,6 +1806,11 @@
 			"value": 0
 		},
 		{
+			"name": "hud_collectedAllItems",
+			"text": "Item collection 100% complete!\nFind the Shrine of Iris!",
+			"value": 0
+		},
+		{
 			"name": "hud_gameSaved",
 			"text": "Game saved.",
 			"value": 0
@@ -1832,7 +1837,7 @@
 		},
 		{
 			"name": "hud_unlockRandoMode",
-			"text": "Item Randomizer unlocked!",
+			"text": "(Item Randomizer unlocked!)",
 			"value": 0
 		},
 		{
@@ -2707,7 +2712,7 @@
 		},
 		{
 			"name": "room_04_labyrinth",
-			"text": "The Other Labyrinth",
+			"text": "The Other\nLabyrinth",
 			"value": 0
 		},
 		{
@@ -2748,6 +2753,26 @@
 		{
 			"name": "room_04_afterMoonSnail",
 			"text": "Victory Road",
+			"value": 0
+		},
+		{
+			"name": "room_05_entrance",
+			"text": "Wait what",
+			"value": 0
+		},
+		{
+			"name": "room_05_crossroads",
+			"text": "Where are we,\nSnaily?",
+			"value": 0
+		},
+		{
+			"name": "room_05_helix",
+			"text": "Glitched Goodies",
+			"value": 0
+		},
+		{
+			"name": "room_06_shrine",
+			"text": "Shrine of Iris",
 			"value": 0
 		},
 		{
@@ -3311,6 +3336,16 @@
 			"value": 1
 		},
 		{
+			"name": "npc_34_findFragments_0",
+			"text": "{P}, {p|0.15}search for the {col|0302}Helix{nl}Fragments!{col|0312}  {p|0.25}Once you have them{nl}all, {p|0.15}find the {col|0302}Shrine of Iris{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_34_default_0",
+			"text": "Amazing work, {P}!!  {p|0.25}You've{nl}saved {col|0309}Sun Snail {col|0312}using the power{nl}of {col|0302}Iris{col|0312}!!",
+			"value": 1
+		},
+		{
 			"name": "npc_35_default_0",
 			"text": "{eff|Wave}Wow! {eff|None}{p|0.15}You found the secret room{nl}full of {col|0210}Snelks{col|0312}!! {p|0.2}_@_v!!",
 			"value": 1
@@ -3323,6 +3358,21 @@
 		{
 			"name": "npc_37_default_0",
 			"text": "Where are we, {P}?  {p|0.2}Do you{nl}think they put this room in{nl}on purpose?",
+			"value": 1
+		},
+		{
+			"name": "npc_38_default_0",
+			"text": "{spd|0.06}zzzzz...  {p|0.1}4,978,213...  {p|0.1}zzzzz...{nl}{p|0.1}7,723,297...  {p|0.1}zzzzz...  {p|0.1}6,017,093...{nl}{p|0.1}zzzzz...  {p|0.1}2,425,991...  {p|0.1}zzzzz...",
+			"value": 1
+		},
+		{
+			"name": "npc_38_thank_0",
+			"text": "{P}, thank you for helping{nl}me!  {p|0.3}Now I can get back to my{nl}hobby: {p|0.25}collecting prime numbers!",
+			"value": 1
+		},
+		{
+			"name": "npc_39_default_0",
+			"text": "{sfx|5}{col|0204}{spd|0.04}Moon Snail {col|0312}rests fitfully{nl}upon the shrine steps...  {p|0.3}{spd|0.02}Find {HelixLeft}{nl}more {col|0302}fragments{col|0312}, {PF}!",
 			"value": 1
 		},
 		{
@@ -3803,6 +3853,11 @@
 		{
 			"name": "credits_entity_you",
 			"text": "And you\n\n\nBecause seriously, why not\n\n\nAll the other games\nput \"And You\" in the credits\nso I figure, \"And You\" must be\nsomeone pretty cool\n\n\nThanks, And You!!",
+			"value": 0
+		},
+		{
+			"name": "ending_stats",
+			"text": "Congratulations!!\n\n{0} - {1}\nItems collected: {2}%\nClear time: {3}",
 			"value": 0
 		},
 		{

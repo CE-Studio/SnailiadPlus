@@ -21,6 +21,8 @@ public class Credits : MonoBehaviour
     private const float CREDITS_SCROLL_SPEED = 2.0625f;
     private const float TEXT_VERTICAL_SIZE = 1.125f;
     private const float CREDITS_DONE_TIMER = 7f;
+    private const float STATS_FADE_DELAY = 3f;
+    private const float FINAL_FADEOUT_TIME = 2f;
 
     private float modeTimer = 0;
     private float startDelay = START_DELAY;
@@ -56,6 +58,8 @@ public class Credits : MonoBehaviour
     private CreditsObj zzz;
     private bool fadeZzz;
     private bool spawnZzz;
+    private CreditsObj imageBg;
+    private CreditsObj endImage;
 
     private bool isSun = false;
 
@@ -66,6 +70,8 @@ public class Credits : MonoBehaviour
     private bool textVisible = false;
     private float nextCharTimeout = 0;
     private bool startedNewLine = false;
+
+    private TextObject statsText;
 
     private Transform creditsParent;
 
@@ -216,6 +222,8 @@ public class Credits : MonoBehaviour
     {
         cutsceneText = transform.Find("Cutscene Text").GetComponent<TextObject>();
         cutsceneText.SetText("");
+        statsText = transform.Find("Final Stats Text").GetComponent<TextObject>();
+        statsText.SetColor(new Color(1, 1, 1, 0));
         creditsParent = transform.Find("Credits Roll").transform;
         textObj = Resources.Load<GameObject>("Objects/Text Object");
         creditsEntity = Resources.Load<GameObject>("Objects/Credits Entity");
@@ -472,20 +480,22 @@ public class Credits : MonoBehaviour
                 break;
             case PlayState.CreditsStates.credits:
             case PlayState.CreditsStates.fadeToTime:
-                creditsParent.transform.localPosition += CREDITS_SCROLL_SPEED * Time.deltaTime * Vector3.up;
+                modeTimer += Time.deltaTime;
                 if (creditsDone)
                     creditsDoneTimer -= Time.deltaTime;
+                else
+                    creditsParent.transform.localPosition += CREDITS_SCROLL_SPEED * Time.deltaTime * Vector3.up;
                 if (PlayState.creditsState == PlayState.CreditsStates.fadeToTime)
                 {
                     fadeTransitionCountdown -= Time.deltaTime;
                     if (fadeTransitionCountdown <= 0)
                     {
                         for (int i = creditsParent.childCount - 1; i >= 0; i--)
-                            Destroy(creditsParent.GetChild(i));
+                            Destroy(creditsParent.GetChild(i).gameObject);
                         DisplayFinalTime();
                     }
                 }
-                if (creditsDoneTimer <= 0 || (modeTimer > 1.5f && (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))))
+                else if (creditsDoneTimer <= 0 || (modeTimer > 1.5f && (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))))
                 {
                     PlayState.creditsState = PlayState.CreditsStates.fadeToTime;
                     PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 1.9f);
@@ -494,6 +504,28 @@ public class Credits : MonoBehaviour
                 break;
             case PlayState.CreditsStates.time:
             case PlayState.CreditsStates.fadeOut:
+                modeTimer += Time.deltaTime;
+                float layerX = Mathf.Clamp(30f - (modeTimer * 10f), 0, Mathf.Infinity);
+                imageBg.obj.transform.localPosition = layerX * PlayState.FRAC_16 * Vector3.right;
+                endImage.obj.transform.localPosition = layerX * PlayState.FRAC_16 * Vector3.left;
+                if (modeTimer > STATS_FADE_DELAY)
+                {
+                    float tweakedTime = modeTimer - STATS_FADE_DELAY;
+                    statsText.SetColor(new Color(1, 1, 1, tweakedTime));
+                }
+                if (PlayState.creditsState == PlayState.CreditsStates.fadeOut)
+                {
+                    fadeTransitionCountdown -= Time.deltaTime;
+                    PlayState.fader = Mathf.InverseLerp(0, FINAL_FADEOUT_TIME, fadeTransitionCountdown);
+                    if (fadeTransitionCountdown <= 0)
+                        EndCredits();
+                }
+                else if (modeTimer >= 1.5f && (Control.CheckKey(Control.Keyboard.Return) || Control.CheckButton(Control.Controller.Pause)))
+                {
+                    PlayState.creditsState = PlayState.CreditsStates.fadeOut;
+                    PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, FINAL_FADEOUT_TIME);
+                    fadeTransitionCountdown = FINAL_FADEOUT_TIME;
+                }
                 break;
         }
     }
@@ -678,15 +710,64 @@ public class Credits : MonoBehaviour
         PlayState.creditsState = PlayState.CreditsStates.time;
         PlayState.ResetAllParticles();
         PlayState.creditsRoom.DespawnEverything();
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 1.4f);
 
+        GameObject imgBgObj = new("Ending Background");
+        imgBgObj.transform.parent = transform;
+        imageBg = new CreditsObj
+        {
+            obj = imgBgObj,
+            sprite = imgBgObj.AddComponent<SpriteRenderer>(),
+            anim = imgBgObj.AddComponent<AnimationModule>()
+        };
+        imageBg.sprite.sortingOrder = -5;
+        imageBg.anim.Add("Ending_background");
+        imageBg.anim.Play("Ending_background");
+        GameObject imgObj = new("Ending Image");
+        imgObj.transform.parent = transform;
+        endImage = new CreditsObj
+        {
+            obj = imgObj,
+            sprite = imgObj.AddComponent<SpriteRenderer>(),
+            anim = imgObj.AddComponent<AnimationModule>()
+        };
+        endImage.sprite.sortingOrder = -4;
+        string imageAnimName = "Ending_";
+        if (PlayState.currentProfile.difficulty == 2)
+            imageAnimName += "insane";
+        else if (completionTime[0] < 30)
+            imageAnimName += "sub30";
+        else if (PlayState.currentProfile.percentage == 100)
+            imageAnimName += "100";
+        else
+            imageAnimName += "normal";
+        endImage.anim.Add(imageAnimName);
+        endImage.anim.Play(imageAnimName);
+
+        statsText.SetText(string.Format(PlayState.GetText("ending_stats"), PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()),
+            PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" }),
+            PlayState.currentProfile.percentage, PlayState.GetTimeString(completionTime)));
     }
 
     public void EndCredits()
     {
         modeTimer = 0;
         PlayState.creditsState = PlayState.CreditsStates.none;
+        PlayState.ResetAllParticles();
         PlayState.LastRoom().ResetEffects();
+        PlayState.globalFunctions.UpdateMusic(-1, -1, 4);
+        PlayState.fader = 1f;
+        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.34f);
+        statsText.SetColor(new Color(1, 1, 1, 0));
+        PlayState.gameState = PlayState.GameState.game;
         Destroy(background.obj);
+        Destroy(endImage.obj);
+        Destroy(imageBg.obj);
+        PlayState.ToggleHUD(true);
+        if (PlayState.currentArea == 6)
+            PlayState.globalFunctions.UpdateMusic(PlayState.currentArea, PlayState.currentSubzone, 1);
+        else
+            PlayState.globalFunctions.DelayStartAreaTheme(PlayState.currentArea, PlayState.currentSubzone, 4f);
     }
 
     private void CreateCredits()

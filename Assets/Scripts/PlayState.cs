@@ -79,7 +79,7 @@ public class PlayState {
     public static int[] charWidths;
 
     public static Transform musicParent;
-    public static List<AudioSource> musicSourceArray = new List<AudioSource>();
+    public static List<AudioSource> musicSourceArray = new();
     public static AudioSource mus1; //= GameObject.Find("View/Music1").GetComponent<AudioSource>();
     public static AudioSource mus2; //= GameObject.Find("View/Music2").GetComponent<AudioSource>();
     public static AudioSource activeMus; //= mus1;
@@ -90,6 +90,7 @@ public class PlayState {
     public static int musicVol = 1;
     public static float playbackTime;
     public static float fader = 1.0f;
+    public static float sfxFader = 1.0f;
     public static string area;
     public static AudioClip areaMus;
     public static bool colorblindMode = true;
@@ -724,11 +725,14 @@ public class PlayState {
         }
     }
 
-    public static void PlayAreaSong(int area, int subzone) {
-        if (area == currentArea && subzone != currentSubzone) {
-            globalFunctions.UpdateMusic(area, subzone);
-        } else if (area != currentArea) {
-            globalFunctions.UpdateMusic(area, subzone, 1);
+    public static void PlayAreaSong(int area, int subzone)
+    {
+        if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)))
+        {
+            if (area == currentArea && subzone != currentSubzone)
+                globalFunctions.UpdateMusic(area, subzone);
+            else if (area != currentArea)
+                globalFunctions.UpdateMusic(area, subzone, 1);
         }
         currentArea = area;
         currentSubzone = subzone;
@@ -870,7 +874,7 @@ public class PlayState {
     public static Particle RequestParticle(Vector2 position, string type, float[] values, bool playSound) {
         Particle selectedParticle = null;
         bool found = false;
-        //Debug.Log(thisParticleID + "/" + particlePool.transform.childCount);
+        thisParticleID %= particlePool.transform.childCount;
         if (particlePool.transform.GetChild(thisParticleID).gameObject.activeSelf) {
             int i = 0;
             while (i < particlePool.transform.childCount - 1 && !found) {

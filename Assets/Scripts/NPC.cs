@@ -14,8 +14,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     public bool chatting = false;
     public bool needsSpace = false; // On the off chance that two snails are close enough to each other to trigger simultaneously, like 06 and 17
     public bool buttonDown = false;
-    public List<Color32> colors = new List<Color32>();
-    public List<int> portraitStateList = new List<int>();         // 0 for the player, any other positive number for whatever other NPC is speaking
+    public List<Color32> colors = new();
+    public List<int> portraitStateList = new();         // 0 for the player, any other positive number for whatever other NPC is speaking
     public Texture2D colorTable;
     public Sprite[] npcSpriteSheet;
     public Sprite[] sprites;
@@ -27,12 +27,13 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     public bool bubbleState = false;
     public Vector2 origin;
     public float velocity;
-    public List<string> textToSend = new List<string>();
+    public List<string> textToSend = new();
 
     private int nexted = 0;
     private RaycastHit2D groundCheck;
     private const float GRAVITY = 1.25f;
     private const float TERMINAL_VELOCITY = -0.5208f;
+    private float floatTheta = 0;
     #endregion vars
 
     #region cutscene
@@ -62,7 +63,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
 
     public Dictionary<string, object> save() {
-        Dictionary<string, object> content = new Dictionary<string, object>();
+        Dictionary<string, object> content = new();
         content["ID"] = ID;
         content["lookMode"] = lookMode;
         content["upsideDown"] = upsideDown;
@@ -95,6 +96,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         nexted = 0;
         chatting = false;
         speechBubbleSprite.enabled = false;
+        floatTheta = UnityEngine.Random.Range(0, PlayState.TAU);
 
         origin = transform.localPosition;
 
@@ -115,10 +117,15 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         anim.Add("NPC_" + animationSet + "_idle");
         anim.Add("NPC_" + animationSet + "_shell");
         anim.Add("NPC_" + animationSet + "_sleep");
-        if (ID == 26 && (PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy")) {
+        if ((ID == 26 && (PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy")) ||
+            (ID == 38 && PlayState.CountFragments() < PlayState.MAX_FRAGMENTS))
+        {
             anim.Play("NPC_" + animationSet + "_sleep");
-            sprite.flipX = PlayState.player.transform.position.x < transform.position.x;
-        } else
+            lookMode = 2;
+            if (ID == 38)
+                transform.position += new Vector3(1, -2, 0);
+        }
+        else
             anim.Play("NPC_" + animationSet + "_idle");
         if (upsideDown) {
             sprite.flipY = true;
@@ -128,6 +135,13 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
 
     public virtual void FixedUpdate() {
+        if ((ID == 38 && anim.currentAnimName != "NPC_0_sleep") || ID == 39)
+        {
+            floatTheta += Time.fixedDeltaTime;
+            transform.localPosition = new Vector2(origin.x, origin.y + Mathf.Sin(floatTheta * 0.5f) * 0.3125f);
+            return;
+        }
+
         groundCheck = Physics2D.BoxCast(
             transform.position,
             new Vector2(1, 0.98f),
@@ -542,6 +556,14 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 AddText("default");
                             break;
 
+                        case 34:
+                            boxColor = "0002";
+                            if (PlayState.CountFragments() < 30 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 0)
+                                AddText("findFragments");
+                            else
+                                AddText("default");
+                            break;
+
                         case 35:
                             boxColor = "0002";
                             AddText("default");
@@ -554,6 +576,18 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 37:
                             boxColor = "0002";
+                            AddText("default");
+                            break;
+
+                        case 38:
+                            boxColor = "0009";
+                            boxShape = 4;
+                            AddText("default");
+                            break;
+
+                        case 39:
+                            boxColor = "0102";
+                            boxShape = 4;
                             AddText("default");
                             break;
 
@@ -674,13 +708,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                     if (intentionallyEmpty)
                         return;
                     if (textToSend.Count == 0)
-                        textToSend.Add(PlayState.GetText("npc_?")
-                            .Replace("##", PlayState.GetItemPercentage().ToString())
-                            .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
-                            .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
-                            .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
-                            .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
-                            .Replace("{ID}", ID.ToString()));
+                        textToSend.Add(PlayState.GetText("npc_?"));
                     if (textToSend.Count > 1) {
                         if (!speechBubbleSprite.enabled)
                             speechBubbleSprite.enabled = true;
@@ -738,13 +766,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
     public virtual void AddText(string textID) {
         if (textID == "?") {
-            textToSend.Add(PlayState.GetText("npc_?")
-                    .Replace("##", PlayState.GetItemPercentage().ToString())
-                    .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
-                    .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
-                    .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
-                    .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
-                    .Replace("{ID}", ID.ToString()));
+            textToSend.Add(PlayState.GetText("npc_?"));
             portraitStateList.Add(PlayState.GetTextInfo("npc_?").value);
         } else {
             bool locatedAll = false;
@@ -753,14 +775,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                 string fullID = "npc_" + ID.ToString() + "_" + textID + "_" + i;
                 string newText = PlayState.GetText(fullID);
                 if (newText != fullID) {
-                    string finalText = newText
-                        .Replace("##", PlayState.GetItemPercentage().ToString())
-                        .Replace("{P}", PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()))
-                        .Replace("{PF}", PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()))
-                        .Replace("{S}", PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower()))
-                        .Replace("{SS}", PlayState.GetText("species_plural_" + PlayState.currentProfile.character.ToLower()))
-                        .Replace("{ID}", ID.ToString());
-                    textToSend.Add(finalText);
+                    textToSend.Add(newText);
                     portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
                 } else
                     locatedAll = true;
@@ -770,10 +785,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
 
     private void CreateNewSprites() {
-        List<Sprite> newSprites = new List<Sprite>();
+        List<Sprite> newSprites = new();
 
+        int thisID = (ID == 38 && PlayState.CountFragments() < PlayState.MAX_FRAGMENTS) ? 44 : ID;
         for (int i = 0; i < PlayState.textureLibrary.library[Array.IndexOf(PlayState.textureLibrary.referenceList, "Entities/SnailNpc")].Length; i++) {
-            newSprites.Add(PlayState.Colorize("Entities/SnailNpc", i, "Entities/SnailNpcColor", ID));
+            newSprites.Add(PlayState.Colorize("Entities/SnailNpc", i, "Entities/SnailNpcColor", thisID));
         }
 
         sprites = newSprites.ToArray();
