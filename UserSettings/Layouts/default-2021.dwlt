@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 19205
+  controlID: 3727
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 19206
+  controlID: 3728
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 19207
+  controlID: 3729
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -225,7 +225,7 @@ MonoBehaviour:
   - {fileID: 18}
   - {fileID: 19}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 3
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 19160
+  controlID: 3657
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -403,23 +403,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1536
-      height: 690.8
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 768, y: 345.4}
+      width: 897.2001
+      height: 446
+    m_Scale: {x: 0.77430564, y: 0.7743056}
+    m_Translation: {x: 448.60004, y: 223}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -768
-      y: -345.4
-      width: 1536
-      height: 690.8
+      x: -579.35785
+      y: -288
+      width: 1158.7157
+      height: 576
     m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1920, y: 889.75}
+  m_defaultScale: 0.7743056
+  m_LastWindowPixelSize: {x: 1121.5001, y: 583.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 70a00000
+      m_SelectedIDs: c60b0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 2afbffff52520000
+      m_ExpandedIDs: 2e00faff2afbffff02570000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -766,9 +766,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -120.68671, y: 23.322697, z: 0.24817634}
+    m_Target: {x: 27.786495, y: 1.1165109, z: 0.89417124}
     speed: 2
-    m_Value: {x: -120.68671, y: 23.322697, z: 0.24817634}
+    m_Value: {x: 28.57219, y: 1.3028581, z: 0.8994061}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -819,9 +819,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 16.856255
+    m_Target: 12.156353
     speed: 2
-    m_Value: 16.856255
+    m_Value: 11.632874
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -924,10 +924,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_ShowAlpha: 0
   m_MipLevel: 0
-  m_Zoom: -1
+  m_Zoom: 1.9835999
   m_ScrollPosition: {x: 0, y: 0}
-  m_SelectedObject: {fileID: 2800000, guid: ffefcfd9c00ba7f46bf409dc7e7e15b5, type: 3}
-  m_SelectedSpriteRectGUID: 5e97eb03825dee720800000000000000
+  m_SelectedObject: {fileID: 11500000, guid: 50712c76cbe342048a9f2aa2e432ff67, type: 3}
+  m_SelectedSpriteRectGUID: ee4cb99db40a88243b504bac459165b8
   m_LastUsedModuleTypeName: 
 --- !u!114 &19
 MonoBehaviour:
@@ -1109,22 +1109,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Images/Entities
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Images/Entities
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\james\Documents\Unity projects\Snailiad Unity remake
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 166.20001}
-    m_SelectedIDs: f49d0000
-    m_LastClickedID: 40436
-    m_ExpandedIDs: 00000000d29d0000d49d0000e69d000000ca9a3b
+    scrollPos: {x: 0, y: 218.20001}
+    m_SelectedIDs: 58b00000
+    m_LastClickedID: 45144
+    m_ExpandedIDs: 00000000769e0000789e000058b0000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1152,7 +1152,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d29d0000d49d000000ca9a3b
+    m_ExpandedIDs: 00000000769e000058b0000070b0000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300004216000074a600008ebc030008990000a4b10300
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1204,7 +1204,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 501.2}
+    m_ScrollPosition: {x: 0, y: 360}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 151

@@ -132,9 +132,22 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             speechBubbleSprite.flipY = true;
             speechBubble.transform.localPosition = new Vector2(0, -0.75f);
         }
+        if (ID == 38)
+        {
+            if (PlayState.IsBossAlive(3))
+                Destroy(gameObject);
+            else if (PlayState.CountFragments() == PlayState.MAX_FRAGMENTS && PlayState.GetNPCVar(PlayState.NPCVarIDs.SeenSunEnding) == 0)
+            {
+                PlayState.SetNPCVar(PlayState.NPCVarIDs.SeenSunEnding, 1);
+                PlayState.credits.StartCredits(PlayState.currentProfile.gameTime);
+            }
+        }
     }
 
     public virtual void FixedUpdate() {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if ((ID == 38 && anim.currentAnimName != "NPC_0_sleep") || ID == 39)
         {
             floatTheta += Time.fixedDeltaTime;
@@ -582,13 +595,37 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         case 38:
                             boxColor = "0009";
                             boxShape = 4;
-                            AddText("default");
+                            if (PlayState.CountFragments() == PlayState.MAX_FRAGMENTS)
+                                AddText("thank");
+                            else
+                                AddText("default");
                             break;
 
                         case 39:
                             boxColor = "0102";
                             boxShape = 4;
-                            AddText("default");
+                            PlayState.SetNPCVar(PlayState.NPCVarIDs.HasSeenIris, 1);
+                            int helixes = PlayState.CountFragments();
+                            int helixesLeft = PlayState.MAX_FRAGMENTS - PlayState.CountFragments();
+                            if (PlayState.IsBossAlive(3))
+                            {
+                                if (helixes == 0)
+                                    AddText("noFragments");
+                                else if (helixes == 1)
+                                    AddText("oneFragment");
+                                else if (helixesLeft > 5)
+                                    AddText("someFragments");
+                                else if (helixesLeft > 1)
+                                    AddText("mostFragments");
+                                else if (helixesLeft > 0)
+                                    AddText("almostAllFragments");
+                                else
+                                    AddText("allFragments");
+                            }
+                            else if (helixes == PlayState.MAX_FRAGMENTS)
+                                AddText("restoredSun");
+                            else
+                                AddText("default");
                             break;
 
                         case 40:

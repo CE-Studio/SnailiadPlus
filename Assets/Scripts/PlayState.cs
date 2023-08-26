@@ -311,7 +311,7 @@ public class PlayState {
     public const byte OFFSET_FRAGMENTS = 24;
     public const byte MAX_FRAGMENTS = 30;
 
-    public static int[] NPCvarDefault = new int[] { 0, 0 };
+    public static int[] NPCvarDefault = new int[] { 0, 0, 0 };
 
     public static List<string[]> cutsceneData = new();
     public static List<int> cutscenesToNotSpawn = new();
@@ -321,7 +321,8 @@ public class PlayState {
     public enum NPCVarIDs
     {
         HasSeenIris,
-        TalkedToCaveSnail
+        TalkedToCaveSnail,
+        SeenSunEnding
     };
 
     [Serializable]
@@ -419,7 +420,7 @@ public class PlayState {
         items = new int[54],
         weapon = -1,
         bossStates = new int[] { 1, 1, 1, 1 },
-        NPCVars = new int[] { 0, 0 },
+        NPCVars = new int[] { 0, 0, 0 },
         percentage = 0,
         exploredMap = defaultMinimapState,
         cutsceneStates = new int[] { }

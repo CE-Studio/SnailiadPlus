@@ -737,6 +737,11 @@ public class GlobalFunctions : MonoBehaviour
         SpriteRenderer sprite = PlayState.screenCover;
         sprite.sortingOrder = sortingOrder;
         float timer = -Mathf.Abs(delay);
+        while (timer < 0)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
         Color32 startColor = sprite.color;
         while (timer < maxTime)
         {

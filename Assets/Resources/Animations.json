@@ -14384,6 +14384,94 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "IntroPattern_1",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_2",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_3",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_4",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_5",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_6",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_7",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "IntroPattern_8",
+			"spriteName": "Particles/IntroBGPattern",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Nom",
 			"spriteName": "Particles/Nom",
 			"framerate": 5.0,

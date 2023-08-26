@@ -243,6 +243,8 @@ public class Credits : MonoBehaviour
                 break;
             case PlayState.CreditsStates.startDelay:
                 startDelay -= Time.deltaTime;
+                if (startDelay <= 1)
+                    PlayState.fader = startDelay;
                 if (startDelay <= 0)
                     RunMoonCutscene();
                 break;
@@ -654,6 +656,8 @@ public class Credits : MonoBehaviour
     public void RunMoonCutscene()
     {
         modeTimer = 0;
+        PlayState.fader = 1;
+        PlayState.globalFunctions.UpdateMusic(-1, -1, 4);
         PlayState.ResetAllParticles();
         PlayState.creditsState = PlayState.CreditsStates.moonScene;
         PlayState.cam.transform.position = PlayState.moonCutsceneRoom.transform.position;

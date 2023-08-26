@@ -63,6 +63,31 @@ public class MainMenu : MonoBehaviour
     private Vector2 titleHomePos = Vector2.zero;
     private float letterOffsetForIntro = -3.75f;
     private bool lerpLetterOffsetToZero = false;
+
+    private enum IntroStates
+    {
+        fadeIn,
+        peaceful,
+        journey,
+        disappearance,
+        help,
+        player,
+        fadeOut
+    };
+    private IntroStates introState = IntroStates.fadeIn;
+    private float modeElapsed = 0;
+    private Transform introParent;
+    private SpriteRenderer introBGSprite;
+    private AnimationModule introBGAnim;
+    private List<Particle> introBGPatterns = new();
+    private SpriteRenderer introPictureSprite;
+    private AnimationModule introPictureAnim;
+    private TextObject introStoryText;
+    private TextObject introSkipText;
+    private int[] introData = new int[] { };
+    // 0 - Fade in background
+    // 1 - Image fade mode (0 = no fade, 1 = fade images in and out in turn, 2 = crossfade images)
+    // 2 - Crossfade "disappearance" images
     
     private struct AchievementIcon
     {
@@ -227,6 +252,10 @@ public class MainMenu : MonoBehaviour
             }
             partSprite.color = new Color(1, 1, 1, 0);
         }
+
+        introParent = GameObject.Find("View/Intro Parent").transform;
+        introData = PlayState.GetAnim("Intro_data").frames;
+
     }
 
     void Update()
@@ -1067,7 +1096,7 @@ public class MainMenu : MonoBehaviour
             selectedText.transform.localPosition = selectedText.position;
         }
 
-        MenuOption option = new MenuOption
+        MenuOption option = new()
         {
             optionText = text,
             optionID = currentOptions.Count,
@@ -1145,7 +1174,7 @@ public class MainMenu : MonoBehaviour
     public void GetNewLetterPixelWidths()
     {
         int[] newWidths = PlayState.GetAnim("Title_letterWidths").frames;
-        Dictionary<char, int> newDict = new Dictionary<char, int>();
+        Dictionary<char, int> newDict = new();
         for (int i = 0; i < acceptedChars.Length; i++)
             newDict.Add(acceptedChars[i], newWidths[i]);
         letterPixelWidths = newDict;
@@ -1206,7 +1235,29 @@ public class MainMenu : MonoBehaviour
 
         if (runIntro)
         {
-
+            introState = IntroStates.fadeIn;
+            while (introState != IntroStates.fadeOut)
+            {
+                modeElapsed += Time.deltaTime;
+                switch (introState)
+                {
+                    default:
+                        break;
+                    case IntroStates.fadeIn:
+                        break;
+                    case IntroStates.peaceful:
+                        break;
+                    case IntroStates.journey:
+                        break;
+                    case IntroStates.disappearance:
+                        break;
+                    case IntroStates.help:
+                        break;
+                    case IntroStates.player:
+                        break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         lastRoomTrigger.DespawnEverything();
