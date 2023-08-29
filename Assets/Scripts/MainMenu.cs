@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
         public int[] menuParam;
     }
 
-    private List<MenuOption> currentOptions = new List<MenuOption>();
+    private List<MenuOption> currentOptions = new();
     private DestinationDelegate backPage;
     private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
@@ -36,6 +36,9 @@ public class MainMenu : MonoBehaviour
     private const float ACHIEVEMENT_ICON_Y = -0.25f;
     private const float ACHIEVEMENT_ICON_LERP_VALUE = 12f;
     private const float GALLERY_LERP_VALUE = 7.5f;
+    private const float INTRO_FADE_TIME = 1.25f;
+    private const float INTRO_PICTURE_FADE_TIME = 2f;
+    private const float INTRO_LETTER_DELAY = 0.067f;
 
     private List<TextObject> activeOptions = new();
 
@@ -63,6 +66,8 @@ public class MainMenu : MonoBehaviour
     private Vector2 titleHomePos = Vector2.zero;
     private float letterOffsetForIntro = -3.75f;
     private bool lerpLetterOffsetToZero = false;
+    private Transform cursor;
+    private Vector2 lastCursorPos;
 
     private enum IntroStates
     {
@@ -76,18 +81,22 @@ public class MainMenu : MonoBehaviour
     };
     private IntroStates introState = IntroStates.fadeIn;
     private float modeElapsed = 0;
+    private bool modeInitialized = false;
     private Transform introParent;
     private SpriteRenderer introBGSprite;
     private AnimationModule introBGAnim;
     private List<Particle> introBGPatterns = new();
-    private SpriteRenderer introPictureSprite;
-    private AnimationModule introPictureAnim;
+    private SpriteRenderer introPicture1Sprite;
+    private SpriteRenderer introPicture2Sprite;
+    private AnimationModule introPicture1Anim;
+    private AnimationModule introPicture2Anim;
     private TextObject introStoryText;
     private TextObject introSkipText;
     private int[] introData = new int[] { };
     // 0 - Fade in background
     // 1 - Image fade mode (0 = no fade, 1 = fade images in and out in turn, 2 = crossfade images)
     // 2 - Crossfade "disappearance" images
+    // 3 - Alpha of background pattern particles (byte)
     
     private struct AchievementIcon
     {
@@ -253,9 +262,36 @@ public class MainMenu : MonoBehaviour
             partSprite.color = new Color(1, 1, 1, 0);
         }
 
-        introParent = GameObject.Find("View/Intro Parent").transform;
+        introParent = GameObject.Find("Intro Parent").transform;
+        introParent.gameObject.SetActive(false);
         introData = PlayState.GetAnim("Intro_data").frames;
+        introBGSprite = introParent.GetComponent<SpriteRenderer>();
+        introBGAnim = introParent.GetComponent<AnimationModule>();
+        introBGAnim.Add("IntroBackground");
+        introPicture1Sprite = introParent.transform.Find("Picture 1").GetComponent<SpriteRenderer>();
+        introPicture1Anim = introParent.transform.Find("Picture 1").GetComponent<AnimationModule>();
+        introPicture2Sprite = introParent.transform.Find("Picture 2").GetComponent<SpriteRenderer>();
+        introPicture2Anim = introParent.transform.Find("Picture 2").GetComponent<AnimationModule>();
+        string[] introPics = new string[]
+        {
+            "Intro_1", "Intro_2", "Intro_3A", "Intro_3B", "Intro_3C",
+            "Intro_snaily", "Intro_sluggy", "Intro_upside", "Intro_leggy", "Intro_blobby", "Intro_leechy"
+        };
+        for (int i = 0; i < introPics.Length; i++)
+        {
+            introPicture1Anim.Add(introPics[i]);
+            introPicture2Anim.Add(introPics[i]);
+        }
+        introStoryText = introParent.transform.Find("Story Text").GetComponent<TextObject>();
+        introSkipText = introParent.transform.Find("Skip Text").GetComponent<TextObject>();
+        introBGSprite.color = new Color(1, 1, 1, 0);
+        introPicture1Sprite.color = new Color(1, 1, 1, 0);
+        introPicture2Sprite.color = new Color(1, 1, 1, 0);
+        introStoryText.SetColor(new Color(1, 1, 1, 0));
+        introSkipText.SetColor(new Color(1, 1, 1, 0));
 
+        cursor = transform.Find("Mouse");
+        Cursor.visible = false;
     }
 
     void Update()
@@ -379,6 +415,26 @@ public class MainMenu : MonoBehaviour
                 _ => -1
             };
 
+            lastCursorPos = cursor.localPosition;
+            Vector2 newCursorPos = PlayState.mainCam.ScreenToViewportPoint(Input.mousePosition);
+            newCursorPos = newCursorPos * new Vector2(25, 15) - new Vector2(12.5f, 7.5f);
+            cursor.localPosition = newCursorPos;
+            if (newCursorPos != lastCursorPos)
+            {
+                foreach (MenuOption option in currentOptions)
+                {
+                    if (Mathf.Abs(option.textScript.position.y - 0.675f - newCursorPos.y) < 0.4f &&
+                        Mathf.Abs(option.textScript.position.x - newCursorPos.x) < option.textScript.GetWidth(true) * 0.5f &&
+                        option.selectable)
+                    {
+                        if (option.optionID != selectedOption)
+                            PlayState.PlaySound("MenuBeep1");
+                        selectedOption = option.optionID;
+                        GetNewSnailOffset();
+                    }
+                }
+            }
+
             if (!isRebinding && !fadingToIntro && !viewingGallery)
             {
                 if (Control.UpPress(1) || Control.DownPress(1))
@@ -411,7 +467,7 @@ public class MainMenu : MonoBehaviour
                         PlayState.PlaySound("MenuBeep2");
                     }
                 }
-                else if (Control.JumpPress(1) || Input.GetKeyDown(KeyCode.Return))
+                else if (Control.JumpPress(1) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 {
                     if (currentOptions[selectedOption].menuParam != null)
                     {
@@ -915,7 +971,7 @@ public class MainMenu : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause)
+        if ((PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.pause) && !fadingToIntro)
         {
             selector[0].transform.localPosition = new Vector2(0,
                     Mathf.Lerp(selector[0].transform.localPosition.y,
@@ -1127,14 +1183,10 @@ public class MainMenu : MonoBehaviour
     public void ToggleHUD(bool state)
     {
         foreach (GameObject element in menuHUDElements)
-        {
             element.SetActive(state);
-        }
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            if (!state && (transform.GetChild(i).name.Contains("Title Letter") || transform.GetChild(i).name.Contains("Title Plus")))
-                Destroy(transform.GetChild(i).gameObject);
-        }
+        if (!state)
+            for (int i = PlayState.titleParent.transform.childCount - 1; i >= 0; i--)
+                Destroy(PlayState.titleParent.transform.GetChild(i).gameObject);
     }
 
     public string ConvertDifficultyToString(int difficulty)
@@ -1158,8 +1210,11 @@ public class MainMenu : MonoBehaviour
 
     public void GetNewSnailOffset()
     {
-        float textBounds = currentOptions[selectedOption].textScript.GetWidth(true);
-        selectSnailOffset = textBounds * 0.5f + 1.5f;
+        if (!fadingToIntro)
+        {
+            float textBounds = currentOptions[selectedOption].textScript.GetWidth(true);
+            selectSnailOffset = textBounds * 0.5f + 1.5f;
+        }
     }
 
     public void ForceSelect(int optionNum)
@@ -1228,14 +1283,23 @@ public class MainMenu : MonoBehaviour
         }
 
         fadingToIntro = true;
-        PlayState.screenCover.sortingOrder = 1001;
-        PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);
-        PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 0.5f);
-        yield return new WaitForSeconds(0.5f);
 
         if (runIntro)
         {
+            introBGSprite.color = new Color(1, 1, 1, 0);
+            introBGSprite.sortingOrder = 1001;
+            introPicture1Sprite.color = new Color(1, 1, 1, 0);
+            introPicture2Sprite.color = new Color(1, 1, 1, 0);
             introState = IntroStates.fadeIn;
+            modeElapsed = 0;
+            modeInitialized = false;
+            string storyText = "";
+            introStoryText.SetText("");
+            int storyCharIndex = 0;
+            bool newLine = false;
+            float letterDelay = 0;
+            int disappearState = 0;
+            introSkipText.SetColor(new Color(1, 1, 1, 0));
             while (introState != IntroStates.fadeOut)
             {
                 modeElapsed += Time.deltaTime;
@@ -1244,20 +1308,291 @@ public class MainMenu : MonoBehaviour
                     default:
                         break;
                     case IntroStates.fadeIn:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            introParent.gameObject.SetActive(true);
+                            introBGAnim.Play("IntroBackground");
+                            introBGSprite.color = new Color(1, 1, 1, introData[0] == 1 ? 0 : 1);
+
+                            Vector2 origin = (Vector2)cam.transform.position + new Vector2(-10.5f, 6.5f);
+                            Vector2 size = new(3, 3);
+                            for (int y = 0; y < 6; y++)
+                            {
+                                for (int x = 0; x < 10; x++)
+                                {
+                                    int isOddTile = (x + y) % 2;
+                                    Particle newPattern = PlayState.RequestParticle(origin + new Vector2(size.x * x, size.y * y), "introPattern", new float[] { isOddTile });
+                                    newPattern.sprite.color = new Color(1, 1, 1, 0);
+                                    introBGPatterns.Add(newPattern);
+                                }
+                            }
+                        }
+                        if (introData[0] == 1)
+                        {
+                            introBGSprite.color = new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_FADE_TIME, modeElapsed));
+                            foreach (Particle pattern in introBGPatterns)
+                                pattern.sprite.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(0, introData[3], Mathf.InverseLerp(0, INTRO_FADE_TIME, modeElapsed)));
+                        }
+                        if (modeElapsed > INTRO_FADE_TIME)
+                        {
+                            introBGSprite.color = new Color(1, 1, 1, 1);
+                            modeInitialized = false;
+                            introState = IntroStates.peaceful;
+                        }
                         break;
                     case IntroStates.peaceful:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            ClearOptions();
+                            ToggleHUD(false);
+                            introBGSprite.sortingOrder = -2;
+                            introPicture1Anim.Play("Intro_1");
+                            introPicture1Sprite.color = new Color(1, 1, 1, introData[1] != 0 ? 0 : 1);
+                            introStoryText.SetText("");
+                            introStoryText.SetColor(new Color(1, 1, 1, 1));
+                            storyText = PlayState.GetText("intro_1");
+                            newLine = true;
+                            foreach (Particle pattern in introBGPatterns)
+                            {
+                                pattern.sprite.sortingOrder = -1;
+                                pattern.sprite.color = new Color32(255, 255, 255, (byte)introData[3]);
+                            }
+                        }
+                        if (introData[1] != 0 && modeElapsed < INTRO_PICTURE_FADE_TIME)
+                            introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_PICTURE_FADE_TIME, modeElapsed));
+                        else
+                            introPicture1Sprite.color = new Color(1, 1, 1, 1);
+                        if (introData[0] == 0)
+                            foreach (Particle pattern in introBGPatterns)
+                                pattern.sprite.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(0, introData[3], modeElapsed));
+                        introSkipText.SetColor(new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_PICTURE_FADE_TIME, modeElapsed)));
+                        if (modeElapsed >= 5.4f)
+                        {
+                            bool advance = false;
+                            if (introData[1] == 2)
+                                advance = false;
+                            else if (introData[1] == 1)
+                            {
+                                introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(5.4f + INTRO_PICTURE_FADE_TIME, 5.4f, modeElapsed));
+                                if (modeElapsed > 5.4f + INTRO_PICTURE_FADE_TIME)
+                                    advance = true;
+                            }
+                            else
+                                advance = true;
+                            if (advance)
+                            {
+                                modeInitialized = false;
+                                introState = IntroStates.journey;
+                            }
+                        }
                         break;
                     case IntroStates.journey:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            introPicture2Anim.Play("Intro_2");
+                            if (introData[1] == 0)
+                                introPicture2Sprite.color = new Color(1, 1, 1, 1);
+                            if (introData[1] != 2)
+                                introPicture1Sprite.color = new Color(1, 1, 1, 0);
+                            introStoryText.SetText("");
+                            storyText = PlayState.GetText("intro_2");
+                            storyCharIndex = 0;
+                            newLine = true;
+                        }
+                        if (introData[1] != 0 && modeElapsed < INTRO_PICTURE_FADE_TIME)
+                        {
+                            introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_PICTURE_FADE_TIME, modeElapsed));
+                            if (introData[1] == 2)
+                                introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(INTRO_PICTURE_FADE_TIME, 0, modeElapsed));
+                        }
+                        if (modeElapsed >= 6f)
+                        {
+                            bool advance = false;
+                            if (introData[1] == 2)
+                                advance = false;
+                            else if (introData[1] == 1)
+                            {
+                                introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(6f + INTRO_PICTURE_FADE_TIME, 6f, modeElapsed));
+                                if (modeElapsed > 6f + INTRO_PICTURE_FADE_TIME)
+                                    advance = true;
+                            }
+                            else
+                                advance = true;
+                            if (advance)
+                            {
+                                modeInitialized = false;
+                                introState = IntroStates.disappearance;
+                            }
+                        }
                         break;
                     case IntroStates.disappearance:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            introPicture1Anim.Play("Intro_3A");
+                            if (introData[1] == 0)
+                                introPicture1Sprite.color = new Color(1, 1, 1, 1);
+                            if (introData[1] != 2)
+                                introPicture2Sprite.color = new Color(1, 1, 1, 0);
+                            introStoryText.SetText("");
+                            storyText = PlayState.GetText("intro_3");
+                            storyCharIndex = 0;
+                            newLine = true;
+                            disappearState = 0;
+                        }
+                        if (introData[1] != 0 && modeElapsed < INTRO_PICTURE_FADE_TIME)
+                        {
+                            introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_PICTURE_FADE_TIME, modeElapsed));
+                            if (introData[1] == 2)
+                                introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(INTRO_PICTURE_FADE_TIME, 0, modeElapsed));
+                        }
+                        if (modeElapsed <= 3f)
+                            break;
+                        else if (modeElapsed <= 5.5f)
+                        {
+                            if (disappearState == 0)
+                            {
+                                disappearState++;
+                                introPicture2Anim.Play("Intro_3B");
+                                if (introData[2] == 0)
+                                    introPicture2Sprite.color = new Color(1, 1, 1, 1);
+                            }
+                            if (introData[2] == 1)
+                                introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(3f, 3f + INTRO_PICTURE_FADE_TIME, modeElapsed));
+                        }
+                        else if (modeElapsed <= 8.5f)
+                        {
+                            if (disappearState == 1)
+                            {
+                                disappearState++;
+                                introPicture1Anim.Play("Intro_3C");
+                                if (introData[2] == 0)
+                                    introPicture2Sprite.color = new Color(1, 1, 1, 0);
+                            }
+                            if (introData[2] == 1)
+                                introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(5.5f + INTRO_PICTURE_FADE_TIME, 5.5f, modeElapsed));
+                        }
+                        else
+                        {
+                            modeInitialized = false;
+                            introState = IntroStates.help;
+                        }
                         break;
                     case IntroStates.help:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            introStoryText.SetText("");
+                            storyText = PlayState.GetText("intro_4");
+                            storyCharIndex = 0;
+                            newLine = true;
+                        }
+                        if (modeElapsed >= 6.5f)
+                        {
+                            bool advance = false;
+                            if (introData[1] == 2)
+                                advance = false;
+                            else if (introData[1] == 1)
+                            {
+                                introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(6.5f + INTRO_PICTURE_FADE_TIME, 6.5f, modeElapsed));
+                                if (modeElapsed > 6.5f + INTRO_PICTURE_FADE_TIME)
+                                    advance = true;
+                            }
+                            else
+                                advance = true;
+                            if (advance)
+                            {
+                                modeInitialized = false;
+                                introState = IntroStates.player;
+                            }
+                        }
                         break;
                     case IntroStates.player:
+                        if (!modeInitialized)
+                        {
+                            modeInitialized = true;
+                            modeElapsed = 0;
+                            introPicture2Anim.Play("Intro_" + PlayState.currentProfile.character.ToLower());
+                            if (introData[1] == 0)
+                                introPicture2Sprite.color = new Color(1, 1, 1, 1);
+                            if (introData[1] != 2)
+                                introPicture1Sprite.color = new Color(1, 1, 1, 0);
+                            introStoryText.SetText("");
+                            storyText = string.Format(PlayState.GetText("intro_5"), PlayState.GetText("char_full_" + PlayState.currentProfile.character.ToLower()));
+                            storyCharIndex = 0;
+                            newLine = true;
+                        }
+                        if (introData[1] != 0 && modeElapsed < INTRO_PICTURE_FADE_TIME)
+                        {
+                            introPicture2Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(0, INTRO_PICTURE_FADE_TIME, modeElapsed));
+                            if (introData[1] == 2)
+                                introPicture1Sprite.color = new Color(1, 1, 1, Mathf.InverseLerp(INTRO_PICTURE_FADE_TIME, 0, modeElapsed));
+                        }
+                        if (modeElapsed >= 7.6f)
+                            introState = IntroStates.fadeOut;
                         break;
                 }
+                if (storyCharIndex < storyText.Length)
+                {
+                    if (newLine)
+                    {
+                        string whiteSpace = "";
+                        while (storyText[storyCharIndex] == ' ' || storyText[storyCharIndex] == '\n')
+                        {
+                            whiteSpace += storyText[storyCharIndex];
+                            storyCharIndex++;
+                        }
+                        introStoryText.SetText(introStoryText.GetText() + whiteSpace);
+                        newLine = false;
+                    }
+                    if (storyText[storyCharIndex] == '[')
+                    {
+                        storyCharIndex++;
+                        string newNum = "";
+                        while (storyText[storyCharIndex] != ']')
+                        {
+                            newNum += storyText[storyCharIndex];
+                            storyCharIndex++;
+                        }
+                        storyCharIndex++;
+                        letterDelay = float.Parse(newNum);
+                    }
+                    letterDelay -= Time.deltaTime;
+                    while (letterDelay <= 0)
+                    {
+                        letterDelay += INTRO_LETTER_DELAY;
+                        if (storyText[storyCharIndex] != ' ' && storyText[storyCharIndex] != '\n')
+                            PlayState.PlaySound("Dialogue1");
+                        introStoryText.SetText(introStoryText.GetText() + storyText[storyCharIndex]);
+                        if (storyText[storyCharIndex] == '\n')
+                            newLine = true;
+                        storyCharIndex++;
+                    }
+                }
+                if (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))
+                    introState = IntroStates.fadeOut;
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        PlayState.screenCover.sortingOrder = 1001;
+        PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);
+        PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 0.5f);
+
+        float waitTime = 0.5f;
+        while (waitTime >= 0)
+        {
+            waitTime -= Time.deltaTime;
+            PlayState.fader = waitTime * 2;
+            yield return new WaitForEndOfFrame();
         }
 
         lastRoomTrigger.DespawnEverything();
@@ -1283,6 +1618,20 @@ public class MainMenu : MonoBehaviour
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
+        PlayState.fader = 1;
+        music.Stop();
+
+        if (runIntro)
+        {
+            introBGSprite.color = new Color(1, 1, 1, 0);
+            introBGAnim.Stop(true);
+            introPicture1Anim.Stop(true);
+            introPicture1Sprite.color = new Color(1, 1, 1, 0);
+            introPicture2Anim.Stop(true);
+            introPicture2Sprite.color = new Color(1, 1, 1, 0);
+            introParent.gameObject.SetActive(false);
+            PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(false, false);
+        }
 
         PlayState.playerScript.holdingJump = true;
         if (PlayState.lastLoadedWeapon != 0)
@@ -1290,6 +1639,7 @@ public class MainMenu : MonoBehaviour
         else
             PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
                 (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        PlayState.isArmed = PlayState.CheckForItem(0) || PlayState.CheckForItem(1) || PlayState.CheckForItem(2) || PlayState.CheckForItem(11) || PlayState.CheckForItem(12);
     }
 
     public void SetTextComponentOrigins()

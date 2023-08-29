@@ -51,6 +51,11 @@
             "width": 400,
             "height": 240
         },
+		{
+            "name": "Backgrounds/IntroBackground",
+            "width": 400,
+            "height": 240
+        },
 		
 		{
             "name": "Bullets/Boomerang",
@@ -449,10 +454,61 @@
             "width": 16,
             "height": 16
         },
+		
 		{
-            "name": "AchievementIcons",
-            "width": 50,
-            "height": 50
+            "name": "Intro/Intro1",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro2",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro3A",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro3B",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro3C",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4A",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4B",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4C",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4D",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4E",
+            "width": 400,
+            "height": 138
+        },
+		{
+            "name": "Intro/Intro4F",
+            "width": 400,
+            "height": 138
         },
 		
 		{
@@ -582,6 +638,11 @@
             "height": 48
         },
 		{
+            "name": "Particles/IntroBGPatterns",
+            "width": 48,
+            "height": 48
+        },
+		{
 			"name": "Particles/Nom",
 			"width": 16,
 			"height": 4
@@ -637,6 +698,16 @@
             "width": 256,
             "height": 16
         },
+		{
+			"name": "UI/ControlHelp",
+			"width": 336,
+			"height": 32
+		},
+		{
+			"name": "UI/Cursor",
+			"width": 32,
+			"height": 32
+		},
 		{
 			"name": "UI/DebugIcons",
 			"width": 16,

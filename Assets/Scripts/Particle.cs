@@ -44,6 +44,14 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_white_big");
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
+        anim.Add("IntroPattern_1");
+        anim.Add("IntroPattern_2");
+        anim.Add("IntroPattern_3");
+        anim.Add("IntroPattern_4");
+        anim.Add("IntroPattern_5");
+        anim.Add("IntroPattern_6");
+        anim.Add("IntroPattern_7");
+        anim.Add("IntroPattern_8");
         anim.Add("Nom");
         anim.Add("Shield");
         anim.Add("Smoke");
@@ -179,6 +187,13 @@ public class Particle : MonoBehaviour
                             transform.position = new(transform.position.x + 26, transform.position.y);
                         while (transform.position.x > PlayState.cam.transform.position.x + 13)
                             transform.position = new(transform.position.x - 26, transform.position.y);
+                        break;
+                    case "intropattern":
+                        transform.position += new Vector3(-0.0425f, 0.0425f);
+                        if (transform.position.x < PlayState.cam.transform.position.x - 14)
+                            transform.position += 30 * Vector3.right;
+                        if (transform.position.y > PlayState.cam.transform.position.y + 9)
+                            transform.position += 18 * Vector3.down;
                         break;
                     case "nom":
                         internalVars[0] += Time.deltaTime;
@@ -346,6 +361,9 @@ public class Particle : MonoBehaviour
             case "heat":
                 anim.Play(Random.Range(0, 3) switch { 1 => "Dot_heat_small", 2 => "Dot_heat_medium", _ => "Dot_heat_tiny" });
                 break;
+            case "intropattern":
+                anim.Play("IntroPattern_" + (vars[0] == 1 ? Random.Range(5, 9) : Random.Range(1, 5)));
+                break;
             case "nom":
                 anim.Play("Nom");
                 break;
@@ -387,6 +405,7 @@ public class Particle : MonoBehaviour
             "star" => -115,
             "gigastar" => -96,
             "gigatrail" => -51,
+            "intropattern" => 1002,
             _ => -15
         };
         sprite.color = animType switch

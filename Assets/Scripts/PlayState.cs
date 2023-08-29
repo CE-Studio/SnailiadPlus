@@ -112,8 +112,8 @@ public class PlayState {
     public static Vector2 positionOfLastSave = Vector2.zero;
     public static int enemyBulletPointer = 0;
     public static int enemyGlobalMoveIndex = 0;
-    public static List<Vector2> breakablePositions = new List<Vector2>();
-    public static List<int> tempTiles = new List<int>(); // x, y, layer, original tile ID
+    public static List<Vector2> breakablePositions = new();
+    public static List<int> tempTiles = new(); // x, y, layer, original tile ID
     public static bool dialogueOpen = false;
     public static bool cutsceneActive = false;
     public static int lastLoadedWeapon = 0;
@@ -131,6 +131,7 @@ public class PlayState {
     public static Player playerScript;
     public static GameObject cam;
     public static GameObject camObj;
+    public static Camera mainCam;
     public static CamMovement camScript;
     public static SpriteRenderer screenCover;
     public static GameObject groundLayer;
@@ -194,10 +195,10 @@ public class PlayState {
     public static Vector2 camCutsceneOffset;
     public static Vector2 camShakeOffset;
 
-    public static readonly Vector2 WORLD_ORIGIN = new Vector2(0.5f, 0.5f); // The exact center of the chartable map
-    public static readonly Vector2 WORLD_SIZE = new Vector2(26, 22); // The number of screens wide and tall the world is
-    public static readonly Vector2 WORLD_SPAWN = new Vector2(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
-    public static readonly Vector2 ROOM_SIZE = new Vector2(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
+    public static readonly Vector2 WORLD_ORIGIN = new(0.5f, 0.5f); // The exact center of the chartable map
+    public static readonly Vector2 WORLD_SIZE = new(26, 22); // The number of screens wide and tall the world is
+    public static readonly Vector2 WORLD_SPAWN = new(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
+    public static readonly Vector2 ROOM_SIZE = new(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene;
 
@@ -448,8 +449,8 @@ public class PlayState {
         screenShake = 2,
         paletteFilterState = false,
         controllerFaceType = 0,
-        keyboardInputs = Control.defaultKeyboardInputs,
-        controllerInputs = Control.defaultControllerInputs,
+        keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone(),
+        controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone(),
         achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length],
         times = (float[])timeDefault.Clone()
     };
@@ -469,7 +470,7 @@ public class PlayState {
     }
 
     public static AnimationData GetAnim(string name) {
-        AnimationData foundData = new AnimationData {
+        AnimationData foundData = new() {
             name = "NoAnim"
         };
         int i = 0;
@@ -502,7 +503,7 @@ public class PlayState {
     }
 
     public static int GetAnimID(string name) {
-        AnimationData foundData = new AnimationData {
+        AnimationData foundData = new() {
             name = "NoAnim"
         };
         int i = 0;
@@ -618,13 +619,13 @@ public class PlayState {
 
     public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue) {
         Texture2D colorTable = GetSprite(table).texture;
-        Dictionary<Color32, int> referenceColors = new Dictionary<Color32, int>();
+        Dictionary<Color32, int> referenceColors = new();
         for (int i = 0; i < colorTable.width; i++) {
             referenceColors.Add(colorTable.GetPixel(i, 0), i);
         }
 
         Sprite oldSprite = GetSprite(sprite, spriteNum);
-        Texture2D newSprite = new Texture2D((int)oldSprite.rect.width, (int)oldSprite.rect.height);
+        Texture2D newSprite = new((int)oldSprite.rect.width, (int)oldSprite.rect.height);
         Color[] pixels = oldSprite.texture.GetPixels((int)oldSprite.textureRect.x,
             (int)oldSprite.textureRect.y,
             (int)oldSprite.textureRect.width,
@@ -646,7 +647,7 @@ public class PlayState {
     }
 
     public static Vector2 WorldPosToMapPos(Vector2 worldPos) {
-        Vector2 topLeftCorner = new Vector2(WORLD_ORIGIN.x - (WORLD_SIZE.x * ROOM_SIZE.x * 0.5f), WORLD_ORIGIN.y + (WORLD_SIZE.y * ROOM_SIZE.y * 0.5f));
+        Vector2 topLeftCorner = new(WORLD_ORIGIN.x - (WORLD_SIZE.x * ROOM_SIZE.x * 0.5f), WORLD_ORIGIN.y + (WORLD_SIZE.y * ROOM_SIZE.y * 0.5f));
         return new Vector2(Mathf.Floor(Mathf.Abs(topLeftCorner.x - worldPos.x) / ROOM_SIZE.x), Mathf.Floor(Mathf.Abs(topLeftCorner.y - worldPos.y) / ROOM_SIZE.y));
     }
 
@@ -701,7 +702,7 @@ public class PlayState {
     public static void ReplaceAllTempTiles() // x, y, layer, original tile ID
     {
         while (tempTiles.Count > 0) {
-            Vector3Int position = new Vector3Int(tempTiles[0], tempTiles[1], 0);
+            Vector3Int position = new(tempTiles[0], tempTiles[1], 0);
             Tilemap map = tempTiles[2] switch {
                 0 => specialLayer.GetComponent<Tilemap>(),
                 1 => fg2Layer.GetComponent<Tilemap>(),
@@ -743,7 +744,7 @@ public class PlayState {
         if (breakablePositions.Contains(new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y))))
             return true;
         else {
-            Vector2 gridPos = new Vector2(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
+            Vector2 gridPos = new(Mathf.Floor(tilePos.x), Mathf.Floor(tilePos.y));
             bool result = groundLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0)) != null;
             if (!result && checkForEnemyCollide) {
                 TileBase spTile = specialLayer.GetComponent<Tilemap>().GetTile(new Vector3Int((int)gridPos.x, (int)gridPos.y, 0));
@@ -759,7 +760,7 @@ public class PlayState {
     {
         if (IsTileSolid(pos))
             return true;
-        List<Transform> platforms = new List<Transform>();
+        List<Transform> platforms = new();
         Transform room = roomTriggerParent.transform.GetChild((int)positionOfLastRoom.x).GetChild((int)positionOfLastRoom.y);
         for (int i = 0; i < room.childCount; i++)
         {
@@ -807,8 +808,8 @@ public class PlayState {
         mus1.Stop();
         areaMus = activeMus.clip;
         PlayMusic(0, 2);
-        List<string> text = new List<string>();
-        List<Color32> colors = new List<Color32>();
+        List<string> text = new();
+        List<Color32> colors = new();
         switch (item) {
             default:
                 text.Add("skibidi bop mm dada");
@@ -958,11 +959,22 @@ public class PlayState {
                         particleScript.vars[4] = UnityEngine.Random.Range(0.5f, 1.25f);      // Sine amplitude
                     }
                     break;
+                case "intropattern":
+                    // Values:
+                    // 0 = if the tile should play anim 1, 2, 3, or 4 VS anim 5, 6, 7, or 8
+
+                    if (generalData.particleState != 0)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                    }
+                    break;
                 case "nom":
                     // Values:
                     // 0 = Start Y
 
-                    if (generalData.particleState > 1) {
+                    if (generalData.particleState > 1)
+                    {
                         activateParticle = true;
                         particleScript.vars[0] = position.y;
                     }
@@ -1242,8 +1254,9 @@ public class PlayState {
         int total = 0;
         foreach (int i in currentProfile.exploredMap) {
             if (i != -1) {
-                total++;
-                if (i == 1)
+                if (i != 2 && i != 3 && i != 12 && i != 13)
+                    total++;
+                if (i == 1 || i == 11)
                     explored++;
             }
         }

@@ -115,6 +115,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.playerScript = PlayState.player.GetComponent<Player>();
         PlayState.cam = GameObject.Find("View");
         PlayState.camObj = PlayState.cam.transform.Find("Main Camera").gameObject;
+        PlayState.mainCam = PlayState.camObj.GetComponent<Camera>();
         PlayState.camScript = PlayState.cam.GetComponent<CamMovement>();
         PlayState.screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
         PlayState.groundLayer = GameObject.Find("Grid/Ground");
@@ -174,7 +175,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject.Find("View/Radar"),                     // 13
             GameObject.Find("View/New Best Time"),             // 14
             GameObject.Find("View/Mode Unlocks"),              // 15
-            GameObject.Find("View/Item Completion")            // 16
+            GameObject.Find("View/Item Completion"),           // 16
+            GameObject.Find("View/Control Guide")              // 17
         };
 
         PlayState.respawnScene = SceneManager.GetActiveScene();
@@ -896,7 +898,7 @@ public class GlobalFunctions : MonoBehaviour
                 itemText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.collection:
-                itemPercentageText.SetText(string.Format(PlayState.GetText("hud_completedItemPercentage"), PlayState.GetItemPercentage().ToString()));
+                itemPercentageText.SetText(string.Format(PlayState.GetText("hud_collectedItemPercentage"), PlayState.GetItemPercentage().ToString()));
                 while (timer < 2.5f)
                 {
                     alpha = timer > 1.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(1.8f, 2.5f, timer))) : (byte)255;

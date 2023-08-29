@@ -135,29 +135,35 @@ public class Minimap : MonoBehaviour
                     bool highlightPlayerTile = true;
                     masks[i].GetComponent<SpriteMask>().enabled = false;
                     sprites[i].color = PlayState.GetColor("0312");
-                    if (PlayState.playerMarkerLocations.ContainsKey(thisMaskID))
+
+                    int thisRow = Mathf.FloorToInt((currentCellID + maskIDoffsets[i]) / PlayState.WORLD_SIZE.x);
+                    int intendedRow = Mathf.FloorToInt((currentCellID + maskIDoffsets[Mathf.FloorToInt(i / 7) * 7 + 3]) / PlayState.WORLD_SIZE.x);
+                    if (thisRow == intendedRow)
                     {
-                        cellsWithMarkers.Add(sprites[i]);
-                        anims[i + 4].Play("Minimap_icon_marker", true);
-                    }
-                    else if (PlayState.bossLocations.Contains(thisMaskID))
-                        anims[i + 4].Play("Minimap_icon_boss", true);
-                    else if (PlayState.saveLocations.Contains(thisMaskID))
-                        anims[i + 4].Play("Minimap_icon_save", true);
-                    else if (PlayState.itemLocations.ContainsKey(thisMaskID))
-                    {
-                        if (PlayState.currentProfile.items[PlayState.itemLocations[thisMaskID]] == 0)
-                            anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                        if (PlayState.playerMarkerLocations.ContainsKey(thisMaskID))
+                        {
+                            cellsWithMarkers.Add(sprites[i]);
+                            anims[i + 4].Play("Minimap_icon_marker", true);
+                        }
+                        else if (PlayState.bossLocations.Contains(thisMaskID))
+                            anims[i + 4].Play("Minimap_icon_boss", true);
+                        else if (PlayState.saveLocations.Contains(thisMaskID))
+                            anims[i + 4].Play("Minimap_icon_save", true);
+                        else if (PlayState.itemLocations.ContainsKey(thisMaskID))
+                        {
+                            if (PlayState.currentProfile.items[PlayState.itemLocations[thisMaskID]] == 0)
+                                anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                            else
+                            {
+                                anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                                highlightPlayerTile = false;
+                            }
+                        }
                         else
                         {
-                            anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                            anims[i + 4].Play("Minimap_icon_blank", true);
                             highlightPlayerTile = false;
                         }
-                    }
-                    else
-                    {
-                        anims[i + 4].Play("Minimap_icon_blank", true);
-                        highlightPlayerTile = false;
                     }
                     UpdatePlayerIcon(highlightPlayerTile ? "Minimap_icon_playerHighlight" : "Minimap_icon_playerNormal", thisMaskID == currentCellID);
                 }

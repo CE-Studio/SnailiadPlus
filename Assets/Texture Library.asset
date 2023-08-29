@@ -23,6 +23,7 @@ MonoBehaviour:
   - TitleFont
   - Backgrounds/EndingBackground
   - Backgrounds/GigaBackground
+  - Backgrounds/IntroBackground
   - Bullets/Boomerang
   - Bullets/BoomerangDev
   - Bullets/EnemyBoomerangBlue
@@ -105,6 +106,17 @@ MonoBehaviour:
   - Entities/Tallfish2
   - Entities/TurtleNpc
   - Entities/Walleye
+  - Intro/Intro1
+  - Intro/Intro2
+  - Intro/Intro3A
+  - Intro/Intro3B
+  - Intro/Intro3C
+  - Intro/Intro4A
+  - Intro/Intro4B
+  - Intro/Intro4C
+  - Intro/Intro4D
+  - Intro/Intro4E
+  - Intro/Intro4F
   - Items/AngelJump
   - Items/Backfire
   - Items/Boomerang
@@ -130,6 +142,7 @@ MonoBehaviour:
   - Particles/EndingZzz
   - Particles/Explosion
   - Particles/GigaTrail
+  - Particles/IntroBGPatterns
   - Particles/Nom
   - Particles/Shield
   - Particles/Smoke
@@ -141,6 +154,7 @@ MonoBehaviour:
   - UI/AchievementFrame
   - UI/AchievementPanel
   - UI/BossHealthBar
+  - UI/ControlHelp
   - UI/DebugIcons
   - UI/DebugKey
   - UI/DialogueBox

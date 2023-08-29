@@ -1254,7 +1254,7 @@ public class GigaSnail : Boss
         PlayState.WriteSave(PlayState.currentProfileNumber, true);
         PlayState.ToggleBossfightState(false, -1);
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 11.7f, 1, true);
-        PlayState.globalFunctions.ScreenShake(new List<float> { 0.15f, 0.15f, 0 }, new List<float> { 10.7f, 1.2f });
+        PlayState.globalFunctions.ScreenShake(new List<float> { 0.075f, 0.075f, 0 }, new List<float> { 10.7f, 1.2f });
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
         delayedDespawn = true;

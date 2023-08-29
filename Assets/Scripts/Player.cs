@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public bool ungroundedViaHop;
     public bool groundedOnPlatform;
     public float lastDistance;
+    public bool toggleModeActive;
 
     public float speedMod = 1;
     public float jumpMod = 1;
@@ -305,9 +306,13 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
             transform.position += (Vector3)velocity;
             if (!grounded && transform.position == (Vector3)lastPosition)
-                transform.position += PlayState.FRAC_128 * gravityDir switch { Dirs.Floor => Vector3.down, Dirs.WallL => Vector3.left, Dirs.WallR => Vector3.right, _ => Vector3.up };
+                transform.position += PlayState.FRAC_64 * gravityDir switch { Dirs.Floor => Vector3.down, Dirs.WallL => Vector3.left, Dirs.WallR => Vector3.right, _ => Vector3.up };
 
-            if ((Control.ShootHold() || Control.StrafeHold()) && !PlayState.paralyzed)
+            if (Control.ShootPress() && PlayState.generalData.shootMode)
+                toggleModeActive = !toggleModeActive;
+            else if (!PlayState.generalData.shootMode)
+                toggleModeActive = false;
+            if ((Control.ShootHold() || Control.StrafeHold() || toggleModeActive) && !PlayState.paralyzed)
             {
                 if (shelled)
                     ToggleShell();
@@ -379,6 +384,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
             if (GetDistance(Dirs.Floor, true) > (box.size.y * 0.5f) + PlayState.FRAC_16)
             {
+                bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.DownHold() &&
                     (facingLeft ? Control.LeftHold() : Control.RightHold()) && !stunned)
@@ -402,11 +408,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         performHorizCheck = false;
                         AddCollision(lastCollision);
                         // Round that corner, you glorious little snail, you
+                        fall = false;
                     }
                 }
                 // FALL
-                else
+                if (fall)
+                {
                     grounded = false;
+                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                        coyoteTimeCounter = coyoteTime;
+                }
             }
             else
             {
@@ -526,6 +537,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.JumpHold() &&
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
+            !toggleModeActive &&
             !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
         {
             ToggleShell();
@@ -598,6 +610,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
             if (GetDistance(Dirs.WallL, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
             {
+                bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.LeftHold() &&
                     (facingDown ? Control.DownHold() : Control.UpHold()) && !stunned)
@@ -621,11 +634,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         performHorizCheck = false;
                         AddCollision(lastCollision);
                         // Round that corner, you glorious little snail, you
+                        fall = false;
                     }
                 }
                 // FALL
-                else
+                if (fall)
+                {
                     grounded = false;
+                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                        coyoteTimeCounter = coyoteTime;
+                }
             }
             else
             {
@@ -745,6 +763,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.JumpHold() &&
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
+            !toggleModeActive &&
             !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
         {
             ToggleShell();
@@ -817,6 +836,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
             if (GetDistance(Dirs.WallR, true) > (box.size.x * 0.5f) + PlayState.FRAC_16)
             {
+                bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.RightHold() &&
                     (facingDown ? Control.DownHold() : Control.UpHold()) && !stunned)
@@ -840,11 +860,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         performHorizCheck = false;
                         AddCollision(lastCollision);
                         // Round that corner, you glorious little snail, you
+                        fall = false;
                     }
                 }
                 // FALL
-                else
+                if (fall)
+                {
                     grounded = false;
+                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                        coyoteTimeCounter = coyoteTime;
+                }
             }
             else
             {
@@ -964,6 +989,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.JumpHold() &&
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
+            !toggleModeActive &&
             !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
         {
             ToggleShell();
@@ -1036,6 +1062,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Are we suddenly in the air (considered when Snaily is at least one pixel above the nearest surface) when we weren't last frame?
             if (GetDistance(Dirs.Ceiling, true) > (box.size.y * 0.5f) + PlayState.FRAC_16)
             {
+                bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.UpHold() &&
                     (facingLeft ? Control.LeftHold() : Control.RightHold()) && !stunned)
@@ -1059,11 +1086,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         performHorizCheck = false;
                         AddCollision(lastCollision);
                         // Round that corner, you glorious little snail, you
+                        fall = false;
                     }
                 }
                 // FALL
-                else
+                if (fall)
+                {
                     grounded = false;
+                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                        coyoteTimeCounter = coyoteTime;
+                }
             }
             else
             {
@@ -1183,6 +1215,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.JumpHold() &&
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
+            !toggleModeActive &&
             !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
         {
             ToggleShell();

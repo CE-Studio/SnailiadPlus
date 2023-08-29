@@ -44,11 +44,13 @@ public class AchievementPanel : MonoBehaviour
     public bool runningPopup = false;
     private int runState = 0;
     private float openTime = 0;
+    private int colorState = 0;
+    private bool advanceColor = false;
     
     public void Start()
     {
         anim = GetComponent<AnimationModule>();
-        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sprite = transform.Find("Achievement Icon").GetComponent<SpriteRenderer>();
         text = transform.Find("Achievement Text").GetComponent<TextObject>();
         sfx = GetComponent<AudioSource>();
         jingle = (AudioClip)Resources.Load("Sounds/Music/AchievementJingle");
@@ -70,6 +72,16 @@ public class AchievementPanel : MonoBehaviour
             RunPopup(popupQueue[0]);
         if (runState == 2)
         {
+            advanceColor = !advanceColor;
+            if (advanceColor)
+                colorState = (colorState + 1) % 4;
+            text.SetColor(colorState switch
+            {
+                0 => new Color32(189, 191, 198, 255),
+                1 => new Color32(247, 198, 223, 255),
+                2 => new Color32(252, 214, 136, 255),
+                _ => new Color32(170, 229, 214, 255)
+            });
             if (openTime < 4)
                 openTime += Time.deltaTime;
             else
@@ -90,6 +102,8 @@ public class AchievementPanel : MonoBehaviour
     private void RunPopup(Achievements achievementID)
     {
         runState = 2;
+        colorState = 0;
+        advanceColor = true;
         currentAchievement = achievementID;
         anim.Play("AchievementPanel_hold");
         DisplayAchievement();
@@ -99,6 +113,7 @@ public class AchievementPanel : MonoBehaviour
     {
         sprite.enabled = true;
         sprite.sprite = PlayState.GetSprite("AchievementIcons", (int)currentAchievement + 1);
+        text.SetText(PlayState.GetText("hud_achievement"));
     }
 
     public void CloseAchievement()

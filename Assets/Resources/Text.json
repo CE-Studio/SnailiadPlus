@@ -1801,6 +1801,31 @@
 			"value": 0
 		},
 		{
+			"name": "intro_1",
+			"text": "  [1.4]All was peaceful in Snail Town...",
+			"value": 0
+		},
+		{
+			"name": "intro_2",
+			"text": " [0.25]Until one day...\n     [0.5]Moon Snail left on a journey",
+			"value": 0
+		},
+		{
+			"name": "intro_3",
+			"text": " [0.25]Soon after...\n     [0.75]the snails began to disappear\n                   [1.75]one by one",
+			"value": 0
+		},
+		{
+			"name": "intro_4",
+			"text": "Will anyone help?  [0.2]Can anyone\n        rescue the missing snails??",
+			"value": 0
+		},
+		{
+			"name": "intro_5",
+			"text": "[0.15]You can do it, {0}!!\n        [1.05]It's up to you!!  Good luck!!",
+			"value": 0
+		},
+		{
 			"name": "hud_collectedItemPercentage",
 			"text": "Item collection {0}% complete!  Game saved.",
 			"value": 0

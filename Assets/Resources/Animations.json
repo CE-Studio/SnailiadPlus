@@ -3317,6 +3317,17 @@
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
+        {
+            "name": "IntroBackground",
+			"spriteName": "Backgrounds/IntroBackground",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
 		
 		{
 			"name": "Bullet_peashooter_N",
@@ -5821,6 +5832,187 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		
+		{
+			"name": "Intro_data",
+			"spriteName": "Backgrounds/IntroBackground",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1,
+				1,
+				36
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+        {
+            "name": "Intro_1",
+			"spriteName": "Intro/Intro1",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_2",
+			"spriteName": "Intro/Intro2",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_3A",
+			"spriteName": "Intro/Intro3A",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_3B",
+			"spriteName": "Intro/Intro3B",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_3C",
+			"spriteName": "Intro/Intro3C",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_snaily",
+			"spriteName": "Intro/Intro4A",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_sluggy",
+			"spriteName": "Intro/Intro4B",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_upside",
+			"spriteName": "Intro/Intro4C",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_leggy",
+			"spriteName": "Intro/Intro4D",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_blobby",
+			"spriteName": "Intro/Intro4E",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Intro_leechy",
+			"spriteName": "Intro/Intro4F",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		
+        {
+            "name": "Controls_keyboard_base",
+			"spriteName": "UI/ControlHelp",
+            "framerate": 0.0,
+            "frames": [
+                1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Controls_keyboard_weapon",
+			"spriteName": "UI/ControlHelp",
+            "framerate": 0.0,
+            "frames": [
+                2
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Controls_controller_base",
+			"spriteName": "UI/ControlHelp",
+            "framerate": 0.0,
+            "frames": [
+                1
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Controls_controller_weapon",
+			"spriteName": "UI/ControlHelp",
+            "framerate": 0.0,
+            "frames": [
+                2
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
 		
 		{
 			"name": "NPC_0_idle",
@@ -14385,7 +14577,7 @@
 		},
 		{
 			"name": "IntroPattern_1",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				0
@@ -14396,7 +14588,7 @@
 		},
 		{
 			"name": "IntroPattern_2",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				1
@@ -14407,7 +14599,7 @@
 		},
 		{
 			"name": "IntroPattern_3",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				2
@@ -14418,7 +14610,7 @@
 		},
 		{
 			"name": "IntroPattern_4",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				3
@@ -14429,7 +14621,7 @@
 		},
 		{
 			"name": "IntroPattern_5",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				-1
@@ -14440,7 +14632,7 @@
 		},
 		{
 			"name": "IntroPattern_6",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				-1
@@ -14451,7 +14643,7 @@
 		},
 		{
 			"name": "IntroPattern_7",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				-1
@@ -14462,7 +14654,7 @@
 		},
 		{
 			"name": "IntroPattern_8",
-			"spriteName": "Particles/IntroBGPattern",
+			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
 			"frames": [
 				-1
@@ -15109,10 +15301,7 @@
 			"spriteName": "UI/AchievementPanel",
 			"framerate": 16.0,
 			"frames": [
-				6,
-				7,
-				8,
-				9
+				6
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -15211,6 +15400,17 @@
 				-124,
 				248,
 				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Cursor",
+			"spriteName": "UI/Cursor",
+			"framerate": 0.0,
+			"frames": [
+				0
 			],
 			"loop": false,
 			"loopStartFrame": 0,

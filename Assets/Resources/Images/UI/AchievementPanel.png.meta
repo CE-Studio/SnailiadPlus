@@ -187,7 +187,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -208,7 +208,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 256
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -228,8 +228,8 @@ TextureImporter:
       name: AchievementPanel_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 160
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -249,8 +249,8 @@ TextureImporter:
       name: AchievementPanel_3
       rect:
         serializedVersion: 2
-        x: 80
-        y: 192
+        x: 240
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -270,8 +270,8 @@ TextureImporter:
       name: AchievementPanel_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 320
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -291,8 +291,8 @@ TextureImporter:
       name: AchievementPanel_5
       rect:
         serializedVersion: 2
-        x: 80
-        y: 128
+        x: 400
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -312,8 +312,8 @@ TextureImporter:
       name: AchievementPanel_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 480
+        y: 0
         width: 80
         height: 64
       alignment: 0
@@ -325,69 +325,6 @@ TextureImporter:
       bones: []
       spriteID: d820515b94ed7a6c0800000000000000
       internalID: -4132089724937108851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AchievementPanel_7
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 64
-        width: 80
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2648ee04905b126e0800000000000000
-      internalID: -1864009719405968286
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AchievementPanel_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 80
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 942df6bbb4309b3a0800000000000000
-      internalID: -6649279751033728439
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AchievementPanel_9
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 80
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75887693be5653e40800000000000000
-      internalID: 5635522569678850135
       vertices: []
       indices: 
       edges: []
@@ -410,9 +347,6 @@ TextureImporter:
       AchievementPanel_4: -6542528645927611716
       AchievementPanel_5: -8139789074978453078
       AchievementPanel_6: -4132089724937108851
-      AchievementPanel_7: -1864009719405968286
-      AchievementPanel_8: -6649279751033728439
-      AchievementPanel_9: 5635522569678850135
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

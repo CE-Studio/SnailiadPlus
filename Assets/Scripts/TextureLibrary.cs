@@ -23,6 +23,7 @@ public class TextureLibrary : ScriptableObject
 
         "Backgrounds/EndingBackground",
         "Backgrounds/GigaBackground",
+        "Backgrounds/IntroBackground",
 
         "Bullets/Boomerang",
         "Bullets/BoomerangDev",
@@ -109,6 +110,18 @@ public class TextureLibrary : ScriptableObject
         "Entities/TurtleNpc",
         "Entities/Walleye",
 
+        "Intro/Intro1",
+        "Intro/Intro2",
+        "Intro/Intro3A",
+        "Intro/Intro3B",
+        "Intro/Intro3C",
+        "Intro/Intro4A",
+        "Intro/Intro4B",
+        "Intro/Intro4C",
+        "Intro/Intro4D",
+        "Intro/Intro4E",
+        "Intro/Intro4F",
+
         "Items/AngelJump",
         "Items/Backfire",
         "Items/Boomerang",
@@ -135,6 +148,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/EndingZzz",
         "Particles/Explosion",
         "Particles/GigaTrail",
+        "Particles/IntroBGPatterns",
         "Particles/Nom",
         "Particles/Shield",
         "Particles/Smoke",
@@ -147,6 +161,7 @@ public class TextureLibrary : ScriptableObject
         "UI/AchievementFrame",
         "UI/AchievementPanel",
         "UI/BossHealthBar",
+        "UI/ControlHelp",
         "UI/DebugIcons",
         "UI/DebugKey",
         "UI/DialogueBox",
@@ -166,7 +181,7 @@ public class TextureLibrary : ScriptableObject
 
     public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight, string name)
     {
-        Texture2D newTexture = new Texture2D((int)texture.rect.width, (int)texture.rect.height);
+        Texture2D newTexture = new((int)texture.rect.width, (int)texture.rect.height);
         newTexture.SetPixels(texture.texture.GetPixels((int)texture.textureRect.x, (int)texture.textureRect.y,
             (int)texture.textureRect.width, (int)texture.textureRect.height));
         newTexture.Apply();
@@ -175,7 +190,7 @@ public class TextureLibrary : ScriptableObject
 
     public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight, string name)
     {
-        List<Sprite> unpackedArray = new List<Sprite>();
+        List<Sprite> unpackedArray = new();
         int counter = 0;
         if (texture.name == "Tilesheet")
         {
@@ -221,7 +236,7 @@ public class TextureLibrary : ScriptableObject
 
     public void BuildDefaultLibrary()
     {
-        List<Sprite[]> newLibrary = new List<Sprite[]>();
+        List<Sprite[]> newLibrary = new();
         for (int i = 0; i < referenceList.Length; i++)
         {
             Vector2 thisSize = GetSpriteSize(referenceList[i]);
@@ -254,12 +269,12 @@ public class TextureLibrary : ScriptableObject
             if (layer.name != "Special")
             {
                 Tilemap map = layer.GetComponent<Tilemap>();
-                List<int> swappedIDs = new List<int>();
+                List<int> swappedIDs = new();
                 for (int y = 0; y < map.size.y; y++)
                 {
                     for (int x = 0; x < map.size.x; x++)
                     {
-                        Vector3Int worldPos = new Vector3Int(Mathf.RoundToInt(map.origin.x - (map.size.x * 0.5f) + x), Mathf.RoundToInt(map.origin.y - (map.size.y * 0.5f) + y), 0);
+                        Vector3Int worldPos = new(Mathf.RoundToInt(map.origin.x - (map.size.x * 0.5f) + x), Mathf.RoundToInt(map.origin.y - (map.size.y * 0.5f) + y), 0);
                         if (map.GetSprite(worldPos) != null)
                         {
                             Sprite tileSprite = map.GetSprite(worldPos);
@@ -306,7 +321,7 @@ public class TextureLibrary : ScriptableObject
                         if (InReferenceList(fileName))
                         {
                             byte[] rawSpriteData = File.ReadAllBytes(file);
-                            Texture2D newTexture = new Texture2D(128, 1);
+                            Texture2D newTexture = new(128, 1);
                             newTexture.LoadImage(rawSpriteData);
                             Vector2 thisSize = GetSpriteSize(fileName);
                             if (thisSize == Vector2.zero || thisSize.x < 0 || thisSize.y < 0)
@@ -340,7 +355,7 @@ public class TextureLibrary : ScriptableObject
 
     public void GetNewTextWidths()
     {
-        List<int> newWidths = new List<int>();
+        List<int> newWidths = new();
         for (int i = 0; i < 94; i++)
         {
             Sprite letter = PlayState.GetSprite("UI/FontSprites", i);
