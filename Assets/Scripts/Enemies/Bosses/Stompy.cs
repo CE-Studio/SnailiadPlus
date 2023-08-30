@@ -68,7 +68,7 @@ public class Stompy : Boss
      * 4 - Mask left pupil to only appear over eye
      * 5 - Mask right pupil to only appear over eye
     \*/
-    private List<AnimationModule> anims = new List<AnimationModule>();
+    private List<AnimationModule> anims = new();
 
     private Vector2 footLPos;
     private Vector2 footRPos;
@@ -282,8 +282,8 @@ public class Stompy : Boss
                     {
                         if (legacyCutscene)
                         {
-                            PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] *
-                                PlayState.playerScript.speedMod * Time.fixedDeltaTime;
+                            Control.SetVirtual(Control.Keyboard.Left1, false);
+                            Control.SetVirtual(Control.Keyboard.Right1, true);
                             PlayState.playerScript.SwapDir(Player.Dirs.WallL);
                         }
                         modeMain = BossMode.intro2;
@@ -291,8 +291,7 @@ public class Stompy : Boss
                     else
                     {
                         if (legacyCutscene)
-                            PlayState.playerScript.velocity.x = -PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] *
-                                PlayState.playerScript.speedMod * Time.fixedDeltaTime;
+                            Control.SetVirtual(Control.Keyboard.Left1, true);
                     }
                     break;
                 case BossMode.intro2:
@@ -303,6 +302,7 @@ public class Stompy : Boss
                         if (legacyCutscene)
                         {
                             PlayState.playerScript.velocity.x = 0;
+                            Control.ClearVirtual(true, true);
                             PlayState.playerScript.SwapDir(Player.Dirs.WallL);
                         }
                         modeMain = BossMode.intro3;
