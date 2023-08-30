@@ -1790,6 +1790,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewSave()
     {
+        if (PlayState.currentProfileNumber != 0)
+            ReturnToMenu();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = menuVarFlags[3];
         PlayState.currentProfile = PlayState.blankProfile;
@@ -2408,30 +2410,7 @@ public class MainMenu : MonoBehaviour
 
     public void ReturnAssetPath()
     {
-        string dataPath = Application.persistentDataPath + "/";
-
-        ClearOptions();
-        AddOption(PlayState.GetText("menu_option_assetPath_header1"), false);
-        AddOption(PlayState.GetText("menu_option_assetPath_header2"), false);
-
-        string currentText = "";
-        int j = 32;
-        for (int i = 0; i < dataPath.Length; i++)
-        {
-            currentText += dataPath[i];
-            j--;
-            if (j == 0 || i == dataPath.Length - 1)
-            {
-                AddOption(currentText, false);
-                j = 32;
-                currentText = "";
-            }
-        }
-
-        AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_assetPath_confirm"), true, AssetPackMenu);
-        ForceSelect(currentOptions.Count - 1);
-        backPage = AssetPackMenu;
+        Application.OpenURL("file:///" + Application.persistentDataPath);
     }
 
     public void RecordEraseSelect()

@@ -657,7 +657,7 @@
 		},
 		{
 			"name": "menu_option_assets_path",
-			"text": "Get asset pack path",
+			"text": "Open asset pack folder",
 			"value": 0
 		},
 		{
