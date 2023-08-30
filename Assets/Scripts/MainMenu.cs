@@ -1729,7 +1729,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.generalData.achievements[6])
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true);
-        AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
+        //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
         AddOption(PlayState.GetText("menu_option_main_credits"), true, CreditsPage1);
@@ -2018,7 +2018,8 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true, "gameTime");
         AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true, "fps");
         AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true, "particles");
-        AddOption(PlayState.GetText("menu_option_display_paletteShader") + ": ", true, "paletteShader");
+        //AddOption(PlayState.GetText("menu_option_display_paletteShader") + ": ", true, "paletteShader");
+        AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;

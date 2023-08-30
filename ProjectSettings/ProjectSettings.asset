@@ -42,7 +42,7 @@ PlayerSettings:
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
     duration: 2
-  - logo: {fileID: 21300000, guid: a2f2efea2ffa7054dabef5cf01b522aa, type: 3}
+  - logo: {fileID: 21300000, guid: 6d5c35ab4d8bbfc4484d69c56eeea830, type: 3}
     duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
@@ -569,7 +569,7 @@ PlayerSettings:
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: e2945c950f9a2af489c97184a3c40229,
+  splashScreenBackgroundSourceLandscape: {fileID: 1069920497, guid: c6a04de5b1efcda4bb9e714fcb62ef4a,
     type: 3}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
   blurSplashScreenBackground: 0
