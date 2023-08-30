@@ -187,13 +187,13 @@ public class Pincer : Enemy
                     else
                     {
                         velocity.y -= GRAVITY * Time.fixedDeltaTime;
-                        if (lastDistance < -velocity.y && velocity.y < 0)
+                        if (lastDistance < Mathf.Abs(velocity.y) && velocity.y < 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.down;
                             velocity.y *= -0.1f;
                             grounded = true;
                         }
-                        if (GetDistance(PlayState.EDirsCardinal.Up) < velocity.y && velocity.y > 0)
+                        if (GetDistance(PlayState.EDirsCardinal.Up) < Mathf.Abs(velocity.y) && velocity.y > 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.up;
                             velocity.y = 0;
@@ -223,13 +223,13 @@ public class Pincer : Enemy
                     else
                     {
                         velocity.x -= GRAVITY * Time.fixedDeltaTime;
-                        if (lastDistance < -velocity.x && velocity.x < 0)
+                        if (lastDistance < Mathf.Abs(velocity.x) && velocity.x < 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.left;
                             velocity.x *= -0.1f;
                             grounded = true;
                         }
-                        if (GetDistance(PlayState.EDirsCardinal.Right) < velocity.x && velocity.x > 0)
+                        if (GetDistance(PlayState.EDirsCardinal.Right) < Mathf.Abs(velocity.x) && velocity.x > 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.right;
                             velocity.x = 0;
@@ -259,13 +259,13 @@ public class Pincer : Enemy
                     else
                     {
                         velocity.x += GRAVITY * Time.fixedDeltaTime;
-                        if (lastDistance < velocity.x && velocity.x > 0)
+                        if (lastDistance < Mathf.Abs(velocity.x) && velocity.x > 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.right;
                             velocity.x *= -0.1f;
                             grounded = true;
                         }
-                        if (GetDistance(PlayState.EDirsCardinal.Left) < velocity.x && velocity.x < 0)
+                        if (GetDistance(PlayState.EDirsCardinal.Left) < Mathf.Abs(velocity.x) && velocity.x < 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.left;
                             velocity.x = 0;
@@ -295,13 +295,13 @@ public class Pincer : Enemy
                     else
                     {
                         velocity.y += GRAVITY * Time.fixedDeltaTime;
-                        if (lastDistance < velocity.y && velocity.y > 0)
+                        if (lastDistance < Mathf.Abs(velocity.y) && velocity.y > 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.up;
                             velocity.y *= -0.1f;
                             grounded = true;
                         }
-                        if (GetDistance(PlayState.EDirsCardinal.Down) < velocity.y && velocity.y < 0)
+                        if (GetDistance(PlayState.EDirsCardinal.Down) < Mathf.Abs(velocity.y) && velocity.y < 0)
                         {
                             transform.position += (lastDistance - PlayState.FRAC_32) * Vector3.down;
                             velocity.y = 0;

@@ -248,21 +248,9 @@ public class GlobalFunctions : MonoBehaviour
                 radarText.SetText("");
                 if (!PlayState.IsBossAlive(3) && lastAreaID < 7)
                 {
-                    int collectedItems = 0;
-                    int totalItems = 0;
-                    int target = Math.Clamp(lastAreaID, 0, 6);
-                    for (int i = 0; i < PlayState.itemAreas[target].Count; i++)
-                    {
-                        if (PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemAreas[target][i]) &&
-                            PlayState.GetItemAvailabilityThisCharacter(PlayState.itemAreas[target][i]))
-                        {
-                            totalItems++;
-                            if (PlayState.currentProfile.items[PlayState.itemAreas[target][i]] == 1)
-                                collectedItems++;
-                        }
-                    }
-                    if (totalItems > 0)
-                        radarText.SetText(string.Format(PlayState.GetText("hud_radar"), collectedItems.ToString(), totalItems.ToString()));
+                    int[] itemData = PlayState.GetAreaItemRate(lastAreaID);
+                    if (itemData[1] > 0)
+                        radarText.SetText(string.Format(PlayState.GetText("hud_radar"), itemData[0].ToString(), itemData[1].ToString()));
                 }
             }
             else if (currentBossName != "" && currentBossName != PlayState.GetText("boss_gigaSnail") && !flashedBossName)
@@ -923,7 +911,7 @@ public class GlobalFunctions : MonoBehaviour
                 break;
             case TextTypes.completion:
                 string thisText = PlayState.GetText("hud_collectedAllItems");
-                if (!PlayState.generalData.achievements[7])
+                if (!PlayState.generalData.achievements[7] && !Application.version.ToLower().Contains("demo"))
                     thisText += "\n" + PlayState.GetText("hud_unlockRandoMode");
                 itemCompletionText.SetText(thisText);
                 while (timer < 8.5f)
@@ -972,6 +960,8 @@ public class GlobalFunctions : MonoBehaviour
                 newBestTimeText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.unlock:
+                if (Application.version.ToLower().Contains("demo"))
+                    break;
                 newUnlocksText.SetText(PlayState.GetText("hud_unlock" + textValue));
                 while (timer < 4f)
                 {
@@ -1104,5 +1094,137 @@ public class GlobalFunctions : MonoBehaviour
         }
         else
             Debug.Log("Unable to parse screen shake command. Expected time count - intensity count difference of 0 or 1, but got " + (times.Count - intensities.Count));
+    }
+
+    public void RunLegacyGravCutscene(Vector2 itemOrigin)
+    {
+        switch (PlayState.currentProfile.character)
+        {
+            case "Upside":
+                StartCoroutine(LegacyGravCutsceneUpside(itemOrigin));
+                break;
+            case "Leggy":
+                StartCoroutine(LegacyGravCutsceneLeggy(itemOrigin));
+                break;
+            case "Blobby":
+                StartCoroutine(LegacyGravCutsceneBlobby(itemOrigin));
+                break;
+            default:
+                StartCoroutine(LegacyGravCutscene(itemOrigin));
+                break;
+        }
+    }
+
+    private IEnumerator LegacyGravCutscene(Vector2 itemOrigin)
+    {
+        int step = 0;
+        float stepElapsed = 0;
+        float totalElapsed = 0;
+        bool sceneActive = true;
+        int preGravJumpFrames = 0;
+        while (sceneActive)
+        {
+            stepElapsed += Time.deltaTime;
+            totalElapsed += Time.deltaTime;
+            PlayState.paralyzed = true;
+            switch (step)
+            {
+                case 0: // Initial delay
+                    if (stepElapsed > 3.5f)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 1: // Move to the right
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
+                    Control.SetVirtual(Control.Keyboard.Up1, true);
+                    if (PlayState.player.transform.position.x - itemOrigin.x > 9.5f)
+                    {
+                        ChangeActiveWeapon(2);
+                        Control.SetVirtual(Control.Keyboard.Right1, false);
+                        Control.SetVirtual(Control.Keyboard.Jump1, true);
+                        //Control.SetVirtual(Control.Keyboard.Shoot1, true);
+                        PlayState.playerScript.Shoot();
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 2: // Shoot once and jump
+                    preGravJumpFrames++;
+                    Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 6);
+                    if (PlayState.player.transform.position.y - itemOrigin.y > 3f)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 3: // Grav up
+                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    if (PlayState.player.transform.position.y - itemOrigin.y > 16.5f)
+                    {
+                        Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        Control.SetVirtual(Control.Keyboard.Up1, false);
+                        Control.SetVirtual(Control.Keyboard.Left1, true);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 4: // Grav left
+                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    if (PlayState.player.transform.position.x - itemOrigin.x < -3.5f)
+                    {
+                        Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        Control.SetVirtual(Control.Keyboard.Left1, false);
+                        Control.SetVirtual(Control.Keyboard.Right1, true);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 5: // Grav right
+                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    if (PlayState.player.transform.position.x - itemOrigin.x > 3f)
+                    {
+                        Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        Control.SetVirtual(Control.Keyboard.Right1, false);
+                        Control.SetVirtual(Control.Keyboard.Down1, true);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 6: // Grav down
+                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    if (PlayState.playerScript.grounded)
+                        sceneActive = false;
+                    break;
+            }
+            if (totalElapsed > 10f)
+                sceneActive = false;
+            yield return new WaitForEndOfFrame();
+        }
+        Control.ClearVirtual(true, true);
+        PlayState.FadeMusicBackIn();
+        PlayState.paralyzed = false;
+    }
+
+    private IEnumerator LegacyGravCutsceneUpside(Vector2 itemOrigin)
+    {
+        yield return new WaitForEndOfFrame();
+        PlayState.FadeMusicBackIn();
+        PlayState.paralyzed = false;
+    }
+
+    private IEnumerator LegacyGravCutsceneLeggy(Vector2 itemOrigin)
+    {
+        yield return new WaitForEndOfFrame();
+        PlayState.FadeMusicBackIn();
+        PlayState.paralyzed = false;
+    }
+
+    private IEnumerator LegacyGravCutsceneBlobby(Vector2 itemOrigin)
+    {
+        yield return new WaitForEndOfFrame();
+        PlayState.FadeMusicBackIn();
+        PlayState.paralyzed = false;
     }
 }

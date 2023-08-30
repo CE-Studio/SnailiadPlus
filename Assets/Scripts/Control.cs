@@ -399,6 +399,8 @@ public class Control
     public static bool CheckKey(Keyboard input, bool pressed = false)
     {
         int index = (int)input;
+        if (PlayState.paralyzed)
+            return virtualKey[index];
         return (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
             Input.GetKey(PlayState.generalData.keyboardInputs[index])) || virtualKey[index];
     }
@@ -408,6 +410,8 @@ public class Control
         if (!PlayState.IsControllerConnected())
             return false;
         int index = (int)input;
+        if (PlayState.paralyzed)
+            return virtualCon[index];
         string inputName = PlayState.generalData.controllerInputs[index].ToString();
         bool inputDown;
         if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))

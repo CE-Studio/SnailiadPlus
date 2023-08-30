@@ -74,6 +74,9 @@ public class Subscreen : MonoBehaviour
         selectorAnim.pauseOnMenu = false;
         cellSelector.SetActive(false);
 
+        for (int i = 2; i < transform.childCount; i++)
+            texts.Add(transform.GetChild(i).GetComponent<TextObject>());
+
         helixIcon = transform.Find("Helix Fragment").gameObject;
         helixCount = transform.Find("Helix Count").GetComponent<TextObject>();
         helixAnim = helixIcon.GetComponent<AnimationModule>();
@@ -83,6 +86,7 @@ public class Subscreen : MonoBehaviour
         helixCountOriginYs.Add(helixCount.position.y);
         helixIcon.transform.localPosition = new Vector2(helixIcon.transform.localPosition.x, helixCountOriginYs[0] + HELIX_COUNT_OFF_Y);
         helixCount.position = new Vector2(helixCount.position.x, helixCountOriginYs[1] + HELIX_COUNT_OFF_Y);
+        texts[22].position = new Vector2(texts[22].position.x, helixCountOriginYs[1] + HELIX_COUNT_OFF_Y);
 
         int cellID = 0;
         for (int y = 0; y < PlayState.WORLD_SIZE.y; y++)
@@ -113,9 +117,6 @@ public class Subscreen : MonoBehaviour
                 cellID++;
             }
         }
-
-        for (int i = 2; i < transform.childCount; i++)
-            texts.Add(transform.GetChild(i).GetComponent<TextObject>());
 
         pauseButton = PlayState.TogglableHUDElements[11].transform.Find("Pause").gameObject;
         mapButton = PlayState.TogglableHUDElements[11].transform.Find("Map").GetComponent<TextObject>();
@@ -158,6 +159,7 @@ public class Subscreen : MonoBehaviour
         helixCountPos = Mathf.Lerp(helixCountPos, menuOpen ? 0 : HELIX_COUNT_OFF_Y, 10 * Time.deltaTime);
         helixIcon.transform.localPosition = new Vector2(helixIcon.transform.localPosition.x, helixCountOriginYs[0] + helixCountPos);
         helixCount.position = new Vector2(helixCount.position.x, helixCountOriginYs[1] + helixCountPos);
+        texts[22].position = new Vector2(texts[22].position.x, helixCountOriginYs[1] + helixCountPos);
         PlayState.TogglableHUDElements[3].transform.localPosition = new Vector2(0, Mathf.Lerp(PlayState.TogglableHUDElements[3].transform.localPosition.y,
             menuOpen ? BOTTOM_BUTTON_OFF_Y : 0, 10 * Time.deltaTime));
         mapButtonPos = Mathf.Lerp(mapButtonPos, menuOpen ? BOTTOM_BUTTON_OFF_Y : 0, 10 * Time.deltaTime);
@@ -395,6 +397,15 @@ public class Subscreen : MonoBehaviour
                     break;
                 case 21:
                     newText = "X " + PlayState.CountFragments();
+                    break;
+                case 22:
+                    if (PlayState.currentArea > 6)
+                    {
+                        newText = "";
+                        break;
+                    }
+                    int[] itemData = PlayState.GetAreaItemRate(PlayState.currentArea);
+                    newText = PlayState.IsBossAlive(3) ? "" : string.Format(PlayState.GetText("subscreen_areaItemRate"), itemData[0], itemData[1]);
                     break;
             }
             texts[i].SetText(newText);

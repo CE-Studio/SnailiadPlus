@@ -693,6 +693,7 @@ public class Credits : MonoBehaviour
         for (int i = moonSprites.Count - 1; i >= 0; i--)
             Destroy(moonSprites[i].obj);
         moonSprites.Clear();
+        Destroy(zzz.obj);
         PlayState.creditsRoom.RemoteActivateRoom(true);
         PlayState.cam.transform.position = PlayState.creditsRoom.transform.position;
         cutsceneText.SetText("");

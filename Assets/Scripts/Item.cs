@@ -21,6 +21,10 @@ public class Item:MonoBehaviour, IRoomObject {
     public AudioClip minorJingle;
     public AudioClip majorJingle;
 
+    private readonly bool legacyGravCutscene = true;
+
+    private const float UNIQUE_ITEM_CUTSCENE_TIME = 3.5f;
+
     public Dictionary<string, object> resave() {
         return null;
     }
@@ -238,7 +242,11 @@ public class Item:MonoBehaviour, IRoomObject {
                     break;
                 case 8:
                     if (isSuperUnique)
+                    {
                         PlayState.globalFunctions.RunDustRing(2);
+                        if (legacyGravCutscene)
+                            PlayState.globalFunctions.RunLegacyGravCutscene(transform.position);
+                    }
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
@@ -276,9 +284,11 @@ public class Item:MonoBehaviour, IRoomObject {
         PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.item, itemName);
     }
 
-    private string IDToName() {
+    private string IDToName()
+    {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
-        return itemID switch {
+        return itemID switch
+        {
             1 => PlayState.GetText("item_boomerang"),
             2 => PlayState.GetText("item_rainbowWave"),
             3 => PlayState.GetText("item_devastator"),
@@ -286,13 +296,15 @@ public class Item:MonoBehaviour, IRoomObject {
             5 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield"),
             6 => PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire"),
             7 => string.Format(PlayState.GetText("item_iceSnail"), species),
-            8 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
+            8 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch
+            {
                 "Upside" => "item_magneticFoot",
                 "Leggy" => "item_corkscrewJump",
                 "Blobby" => "item_angelJump",
                 _ => "item_gravitySnail"
             }), species),
-            9 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
+            9 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch
+            {
                 "Sluggy" => "item_fullMetalSnail_noShell",
                 "Blobby" => "item_fullMetalSnail_blob",
                 "Leechy" => "item_fullMetalSnail_noShell",
@@ -305,19 +317,22 @@ public class Item:MonoBehaviour, IRoomObject {
         };
     }
 
-    public void SetDeactivated() {
+    public void SetDeactivated()
+    {
         transform.localPosition = originPos;
         box.enabled = false;
         sprite.enabled = false;
     }
 
-    public IEnumerator HoverOverPlayer() {
+    public IEnumerator HoverOverPlayer()
+    {
         box.enabled = false;
         float timer = 0;
-        float jingleTime = PlayState.GetMusic(0, 2).length + 0.5f;
         bool musicMuted = isSuperUnique;
-        while (timer < 2) {
-            Vector2 targetPos = PlayState.playerScript.gravityDir switch {
+        while (timer < 2)
+        {
+            Vector2 targetPos = PlayState.playerScript.gravityDir switch
+            {
                 Player.Dirs.WallL => new Vector2(PlayState.player.transform.position.x + (box.size.y * 0.75f) + 0.25f, PlayState.player.transform.position.y),
                 Player.Dirs.WallR => new Vector2(PlayState.player.transform.position.x - (box.size.y * 0.75f) - 0.25f, PlayState.player.transform.position.y),
                 Player.Dirs.Ceiling => new Vector2(PlayState.player.transform.position.x, PlayState.player.transform.position.y - (box.size.y * 0.75f) - 0.25f),
@@ -327,20 +342,25 @@ public class Item:MonoBehaviour, IRoomObject {
             yield return new WaitForEndOfFrame();
             if (PlayState.gameState == PlayState.GameState.game)
                 timer += Time.deltaTime;
-            if (musicMuted && timer >= jingleTime) {
+            if (musicMuted && timer >= UNIQUE_ITEM_CUTSCENE_TIME)
+            {
                 musicMuted = false;
-                PlayState.FadeMusicBackIn();
+                if (!(itemID == 8 && legacyGravCutscene))
+                    PlayState.FadeMusicBackIn();
                 PlayState.paralyzed = false;
             }
         }
         SetDeactivated();
-        while (musicMuted && timer <= jingleTime) {
+        while (musicMuted && timer <= UNIQUE_ITEM_CUTSCENE_TIME)
+        {
             yield return new WaitForEndOfFrame();
             if (PlayState.gameState == PlayState.GameState.game)
                 timer += Time.deltaTime;
         }
-        if (musicMuted) {
-            PlayState.FadeMusicBackIn();
+        if (musicMuted)
+        {
+            if (!(itemID == 8 && legacyGravCutscene))
+                PlayState.FadeMusicBackIn();
             PlayState.paralyzed = false;
         }
     }

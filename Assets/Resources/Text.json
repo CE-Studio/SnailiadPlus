@@ -1941,6 +1941,11 @@
 			"value": 0
 		},
 		{
+			"name": "subscreen_areaItemRate",
+			"text": "Area items found: {0}/{1}",
+			"value": 0
+		},
+		{
 			"name": "area_00",
 			"text": "Snail Town",
 			"value": 0

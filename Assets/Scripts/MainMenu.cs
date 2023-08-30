@@ -207,7 +207,8 @@ public class MainMenu : MonoBehaviour
         menuHUDElements = new GameObject[]
         {
             selector[0],
-            GameObject.Find("Version Text")
+            GameObject.Find("Version Text"),
+            GameObject.Find("Mouse")
         };
 
         string[] version = Application.version.Split(' ');

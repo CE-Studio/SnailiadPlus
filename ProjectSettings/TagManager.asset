@@ -32,7 +32,7 @@ TagManager:
   - NonCollidable
   - Player
   - CollisionTile
-  - 
+  - RoomTrigger
   - 
   - 
   - 

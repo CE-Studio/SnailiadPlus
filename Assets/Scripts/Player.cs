@@ -59,6 +59,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public Collider2D lastCollision;
 
     public LayerMask playerCollide;
+    public LayerMask roomCollide;
 
     // Movement control vars
     // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
@@ -154,6 +155,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         playerCollide = LayerMask.GetMask("PlayerCollide");
+        roomCollide = LayerMask.GetMask("RoomCollide");
 
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
@@ -430,7 +432,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, we perform horizontal checks for moving back and forth
-        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed && performHorizCheck)
+        if (Control.AxisX() != 0 && !Control.StrafeHold() && performHorizCheck)
         {
             if (shelled)
             {
@@ -481,12 +483,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if ((Control.AxisX() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
+        else if (Control.AxisX() == 0 || Control.StrafeHold())
             velocity.x = 0;
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.y > lastPointBeforeHop)))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && GetDistance(Dirs.Ceiling) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && GetDistance(Dirs.Ceiling) > 0.95f)
         {
             if (shelled)
                 ToggleShell();
@@ -538,7 +540,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
             !toggleModeActive &&
-            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+            !holdingShell && CheckAbility(shellable))
         {
             ToggleShell();
             holdingShell = true;
@@ -656,7 +658,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, we perform horizontal checks for moving back and forth
-        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed && performHorizCheck)
+        if (Control.AxisY() != 0 && !Control.StrafeHold() && performHorizCheck)
         {
             if (shelled)
             {
@@ -707,12 +709,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if ((Control.AxisY() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
+        else if (Control.AxisY() == 0 || Control.StrafeHold())
             velocity.y = 0;
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.x > lastPointBeforeHop)))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x < 0)) && GetDistance(Dirs.WallR) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x < 0)) && GetDistance(Dirs.WallR) > 0.95f)
         {
             if (shelled)
                 ToggleShell();
@@ -764,7 +766,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
             !toggleModeActive &&
-            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+            !holdingShell && CheckAbility(shellable))
         {
             ToggleShell();
             holdingShell = true;
@@ -882,7 +884,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, we perform horizontal checks for moving back and forth
-        if (Control.AxisY() != 0 && !Control.StrafeHold() && !PlayState.paralyzed && performHorizCheck)
+        if (Control.AxisY() != 0 && !Control.StrafeHold() && performHorizCheck)
         {
             if (shelled)
             {
@@ -933,12 +935,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if ((Control.AxisY() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
+        else if (Control.AxisY() == 0 || Control.StrafeHold())
             velocity.y = 0;
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.x < lastPointBeforeHop)))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x > 0)) && GetDistance(Dirs.WallL) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.x > 0)) && GetDistance(Dirs.WallL) > 0.95f)
         {
             if (shelled)
                 ToggleShell();
@@ -990,7 +992,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
             !toggleModeActive &&
-            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+            !holdingShell && CheckAbility(shellable))
         {
             ToggleShell();
             holdingShell = true;
@@ -1108,7 +1110,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
 
         // Now, we perform horizontal checks for moving back and forth
-        if (Control.AxisX() != 0 && !Control.StrafeHold() && !PlayState.paralyzed && performHorizCheck)
+        if (Control.AxisX() != 0 && !Control.StrafeHold() && performHorizCheck)
         {
             if (shelled)
             {
@@ -1159,12 +1161,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
         }
-        else if ((Control.AxisX() == 0 && !PlayState.paralyzed) || Control.StrafeHold())
+        else if (Control.AxisX() == 0 || Control.StrafeHold())
             velocity.x = 0;
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.y < lastPointBeforeHop)))
-            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y > 0)) && GetDistance(Dirs.Floor) > 0.95f && !PlayState.paralyzed)
+            && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y > 0)) && GetDistance(Dirs.Floor) > 0.95f)
         {
             if (shelled)
                 ToggleShell();
@@ -1216,7 +1218,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             !Control.ShootHold() &&
             !Control.StrafeHold() &&
             !toggleModeActive &&
-            !holdingShell && !PlayState.paralyzed && CheckAbility(shellable))
+            !holdingShell && CheckAbility(shellable))
         {
             ToggleShell();
             holdingShell = true;
@@ -1548,7 +1550,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     // This function handles activation of projectiles when the player presses either shoot button
     public virtual void Shoot()
     {
-        if (fireCooldown == 0 && armed && !PlayState.paralyzed)
+        if (fireCooldown == 0 && armed)
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
             int type = selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
@@ -1841,6 +1843,13 @@ public class Player : MonoBehaviour, ICutsceneObject {
             velocity.y = 0;
         else
             velocity.x = 0;
+    }
+
+    public void AdjustPosIntoRoom(Vector2 target)
+    {
+        RaycastHit2D roomTest = Physics2D.Raycast(lastPosition, (Vector2)transform.position - target, Mathf.Infinity, roomCollide);
+        if (roomTest.collider != null)
+            transform.position += -1 * (Vector3)roomTest.normal.normalized;
     }
 
     #endregion Player utilities

@@ -65,8 +65,8 @@ public class SpaceBox : Boss
     };
     private ShootMode shootMode;
 
-    public List<SpaceBoxShield> shields = new List<SpaceBoxShield>();
-    public List<SpaceBoxBabybox> babyboxes = new List<SpaceBoxBabybox>();
+    public List<SpaceBoxShield> shields = new();
+    public List<SpaceBoxBabybox> babyboxes = new();
 
     private float modeTimeout = MODE_TIMEOUT;
     private int spawnCounter = SPAWN_COUNTER;
@@ -165,27 +165,21 @@ public class SpaceBox : Boss
             if (PlayState.currentProfile.difficulty == 2)
             {
                 if (elapsed > 2.2f && elapsed < 2.9f)
-                {
-                    PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] *
-                        PlayState.playerScript.speedMod * Time.fixedDeltaTime;
-                }
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
                 else if (elapsed >= 2.9f)
                     PlayState.paralyzed = false;
             }
             else
             {
                 if (elapsed > 2.7f && elapsed < 3.4f)
-                {
-                    PlayState.playerScript.velocity.x = PlayState.playerScript.runSpeed[PlayState.GetShellLevel()] *
-                        PlayState.playerScript.speedMod * Time.fixedDeltaTime;
-                }
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
                 else if (elapsed >= 3.4f)
                     PlayState.paralyzed = false;
             }
         }
         else if (introMovementsDone && !haltedIntroPlayerMovement)
         {
-            PlayState.playerScript.velocity.x = 0;
+            Control.ClearVirtual(true, true);
             haltedIntroPlayerMovement = true;
         }
         elapsed += Time.fixedDeltaTime;

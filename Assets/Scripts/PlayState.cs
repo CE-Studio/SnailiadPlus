@@ -1381,6 +1381,23 @@ public class PlayState {
         return count;
     }
 
+    public static int[] GetAreaItemRate(int areaID)
+    {
+        int collectedItems = 0;
+        int totalItems = 0;
+        int target = Math.Clamp(areaID, 0, 6);
+        for (int i = 0; i < itemAreas[target].Count; i++)
+        {
+            if (GetItemAvailabilityThisDifficulty(itemAreas[target][i]) && GetItemAvailabilityThisCharacter(itemAreas[target][i]))
+            {
+                totalItems++;
+                if (currentProfile.items[itemAreas[target][i]] == 1)
+                    collectedItems++;
+            }
+        }
+        return new int[] { collectedItems, totalItems };
+    }
+
     public static int GetNPCVar(NPCVarIDs ID)
     {
         return currentProfile.NPCVars[(int)ID];
