@@ -622,27 +622,26 @@ public class MainMenu : MonoBehaviour
                         PlayState.generalData.musicVolume = menuVarFlags[1];
                         break;
                     case "resolution":
+                        int oldResolution = menuVarFlags[0];
                         TestForArrowAdjust(option, 0, 3);
                         switch (menuVarFlags[0])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_resolution_1x"));
-                                Screen.SetResolution(400, 240, false);
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("menu_add_resolution_2x"));
-                                Screen.SetResolution(800, 480, false);
                                 break;
                             case 2:
                                 AddToOptionText(option, PlayState.GetText("menu_add_resolution_3x"));
-                                Screen.SetResolution(1200, 720, false);
                                 break;
                             case 3:
                                 AddToOptionText(option, PlayState.GetText("menu_add_resolution_4x"));
-                                Screen.SetResolution(1600, 960, false);
                                 break;
                         }
                         PlayState.generalData.windowSize = menuVarFlags[0];
+                        if (menuVarFlags[0] != oldResolution)
+                            Screen.SetResolution(400 * (menuVarFlags[0] + 1), 240 * (menuVarFlags[0] + 1), false);
                         break;
                     case "minimap":
                         TestForArrowAdjust(option, 1, 2);
