@@ -446,7 +446,7 @@ public class PlayState {
         breakableState = 0,
         secretMapTilesVisible = false,
         frameLimiter = 2,
-        screenShake = 2,
+        screenShake = 4,
         paletteFilterState = false,
         controllerFaceType = 0,
         keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone(),

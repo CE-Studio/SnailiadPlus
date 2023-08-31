@@ -2517,7 +2517,7 @@
 		},
 		{
 			"name": "room_02_angryBlock",
-			"text": "Realm of the|Angry Pink Block",
+			"text": "In the Hall of|the Pouting Thing",
 			"value": 0
 		},
 		{
@@ -2637,7 +2637,7 @@
 		},
 		{
 			"name": "room_03_spider",
-			"text": "Beeg Spider",
+			"text": "Whoa mama",
 			"value": 0
 		},
 		{
@@ -2652,7 +2652,7 @@
 		},
 		{
 			"name": "room_03_gravitySnailEntry",
-			"text": "Up and Over",
+			"text": "Up and Across",
 			"value": 0
 		},
 		{

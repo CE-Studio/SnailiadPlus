@@ -196,7 +196,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
-            if (itemID >= PlayState.OFFSET_HEARTS) {
+            if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.globalFunctions.RenderNewHearts();

@@ -318,7 +318,7 @@ public class RoomTrigger : MonoBehaviour {
             //            break;
             //    }
             //}
-            PlayState.playerScript.AdjustPosIntoRoom(transform.position);
+            //PlayState.playerScript.AdjustPosIntoRoom(transform.position);
 
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;
