@@ -345,7 +345,7 @@ public class RoomTrigger : MonoBehaviour {
                         newRoomName += character;
                 }
             }
-            PlayState.hudRoomName.SetText(newRoomName);
+            PlayState.hudRoomName.SetText((PlayState.currentArea != 5 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1) ? newRoomName : "");
 
             PlayState.breakablePositions.Clear();
             CheckSpecialLayer();
