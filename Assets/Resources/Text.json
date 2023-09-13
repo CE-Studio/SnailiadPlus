@@ -3197,7 +3197,7 @@
 		},
 		{
 			"name": "npc_23_default_0",
-			"text": "Do you think {col|0204}Cave Snail{nl}{col|0312}is single?",
+			"text": "Do you think {col|0200}Cave Snail{nl}{col|0312}is single?",
 			"value": 1
 		},
 		{
@@ -3621,13 +3621,18 @@
 			"value": 1
 		},
 		{
-			"name": "npc_53_default_0",
+			"name": "npc_53_postScene_0",
 			"text": "Y'know, {p|0.1}now that I think about{nl}it... {p|0.15}would this freeze over the{nl}rooms around us?  {p|0.2}I hope not!",
 			"value": 1
 		},
 		{
+			"name": "npc_53_default_0",
+			"text": "Hey, {P}!  {p|0.25}Seems you've found{nl}an unfinished area.  {p|0.15}Not much{nl}going on in here right now.",
+			"value": 1
+		},
+		{
 			"name": "npc_54_default_0",
-			"text": "Idk how I'm saying this I'm not supposed{nl}to be talking right now.",
+			"text": "Idk how I'm saying this I'm not{nl}supposed to be talking right now.",
 			"value": 1
 		},
 		{

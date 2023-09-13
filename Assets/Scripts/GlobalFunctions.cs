@@ -1144,7 +1144,6 @@ public class GlobalFunctions : MonoBehaviour
                         ChangeActiveWeapon(2);
                         Control.SetVirtual(Control.Keyboard.Right1, false);
                         Control.SetVirtual(Control.Keyboard.Jump1, true);
-                        //Control.SetVirtual(Control.Keyboard.Shoot1, true);
                         PlayState.playerScript.Shoot();
                         step++;
                         stepElapsed = 0;
@@ -1152,7 +1151,7 @@ public class GlobalFunctions : MonoBehaviour
                     break;
                 case 2: // Shoot once and jump
                     preGravJumpFrames++;
-                    Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 6);
+                    Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
                     if (PlayState.player.transform.position.y - itemOrigin.y > 3f)
                     {
                         step++;
@@ -1205,6 +1204,7 @@ public class GlobalFunctions : MonoBehaviour
         Control.ClearVirtual(true, true);
         PlayState.FadeMusicBackIn();
         PlayState.paralyzed = false;
+        PlayState.suppressPause = false;
     }
 
     private IEnumerator LegacyGravCutsceneUpside(Vector2 itemOrigin)

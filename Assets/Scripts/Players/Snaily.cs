@@ -23,8 +23,8 @@ public class Snaily : Player
         canRoundOppositeOuterCorners = new int[][] { new int[] { 8 } };
         stickToWallsWhenHurt = new int[][] { new int[] { 8 } };
         runSpeed = new float[] { 8.6667f, 8.6667f, 8.6667f, 11 };
-        jumpPower = new float[] { 25.25f, 25.25f, 25.25f, 25.25f, 31.125f, 31.125f, 31.125f, 31.125f };
-        gravity = new float[] { 1.25f, 1.25f, 1.25f, 1.25f };
+        jumpPower = new float[] { 26.5f, 26.5f, 26.5f, 26.5f, 31.125f, 31.125f, 31.125f, 31.125f };
+        gravity = new float[] { 1.5f, 1.5f, 1.5f, 1.5f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
         weaponCooldowns = new float[] { 0.085f, 0.3f, 0.17f, 0.0425f, 0.15f, 0.085f };

@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     public List<float> spawnConditions;
     public Vector2 origin;
     private bool intersectingPlayer = false;
-    protected List<Bullet> intersectingBullets = new List<Bullet>();
+    protected List<Bullet> intersectingBullets = new();
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
@@ -67,6 +67,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void LateUpdate()
     {
+        if (PlayState.gameState != PlayState.GameState.game && !PlayState.playerScript.inDeathCutscene)
+            return;
+
         if (intersectingPlayer && !PlayState.playerScript.stunned && canDamage)
         {
             bool canHit = true;
@@ -79,7 +82,7 @@ public class Enemy : MonoBehaviour
 
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
-            List<Bullet> bulletsToDespawn = new List<Bullet>();
+            List<Bullet> bulletsToDespawn = new();
             bool killFlag = false;
             int maxDamage = 0;
             foreach (Bullet bullet in intersectingBullets)

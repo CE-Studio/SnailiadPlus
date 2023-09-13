@@ -140,7 +140,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             {
                 PlayState.SetNPCVar(PlayState.NPCVarIDs.SeenSunEnding, 1);
                 PlayState.credits.StartCredits(PlayState.currentProfile.gameTime);
-                PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SunSnail);
             }
         }
     }

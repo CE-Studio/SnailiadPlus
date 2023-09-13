@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class RoomTrigger : MonoBehaviour {
+public class RoomTrigger : MonoBehaviour
+{
     public BoxCollider2D box;
     public bool active = true;
     private bool temporarilyActive = false;
@@ -80,6 +81,12 @@ public class RoomTrigger : MonoBehaviour {
     {
         if (!active)
         {
+            if (box.enabled)
+            {
+                active = false;
+                return;
+            }    
+
             if (initializationBuffer > 0)
                 initializationBuffer -= Time.deltaTime;
             splashTimeout = Mathf.Clamp(splashTimeout - Time.deltaTime, 0, Mathf.Infinity);
@@ -189,19 +196,22 @@ public class RoomTrigger : MonoBehaviour {
             {
                 float playerY = PlayState.player.transform.position.y;
                 float waterY = GetWaterLevelAt(PlayState.player.transform.position.x);
-                if (((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater)) && initializedEffects)
+                if ((playerY > waterY && PlayState.playerScript.underwater) || (playerY < waterY && !PlayState.playerScript.underwater))
                 {
-                    if (initializationBuffer <= 0 && splashTimeout <= 0)
+                    if (initializedEffects)
                     {
-                        PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
-                        if (playerY < waterY)
+                        if (initializationBuffer <= 0 && splashTimeout <= 0)
                         {
-                            for (int i = Random.Range(2, 8); i > 0; i--)
-                                PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
+                            PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY + 0.5f), "splash", true);
+                            if (playerY < waterY)
+                            {
+                                for (int i = Random.Range(2, 8); i > 0; i--)
+                                    PlayState.RequestParticle(new Vector2(PlayState.player.transform.position.x, waterY - 0.5f), "bubble", new float[] { waterY, 1 });
+                            }
                         }
+                        splashTimeout = 0.125f;
                     }
                     PlayState.playerScript.underwater = playerY < waterY;
-                    splashTimeout = 0.125f;
                 }
             }
             else
@@ -300,25 +310,11 @@ public class RoomTrigger : MonoBehaviour {
             PlayState.CloseDialogue();
             PlayState.isTalking = false;
 
-            //if (!PlayState.playerScript.grounded && PlayState.playerScript.shelled)
-            //{
-            //    Vector2 playerPos = PlayState.player.transform.position;
-            //    switch (PlayState.playerScript.gravityDir)
-            //    {
-            //        default:
-            //        case Player.Dirs.Floor:
-            //        case Player.Dirs.Ceiling:
-            //            if (PlayState.IsTileSolid(new Vector2(playerPos.x + 1, playerPos.y)) || PlayState.IsTileSolid(new Vector2(playerPos.x - 1, playerPos.y)))
-            //                PlayState.player.transform.position = new Vector2(Mathf.Floor(playerPos.x) + 0.5f + (PlayState.playerScript.facingLeft ? -0.125f : 0.125f), playerPos.y);
-            //            break;
-            //        case Player.Dirs.WallL:
-            //        case Player.Dirs.WallR:
-            //            if (PlayState.IsTileSolid(new Vector2(playerPos.x, playerPos.y + 1)) || PlayState.IsTileSolid(new Vector2(playerPos.x, playerPos.y - 1)))
-            //                PlayState.player.transform.position = new Vector2(playerPos.x, Mathf.Floor(playerPos.y) + 0.5f + (PlayState.playerScript.facingDown ? -0.125f : 0.125f));
-            //            break;
-            //    }
-            //}
-            //PlayState.playerScript.AdjustPosIntoRoom(transform.position);
+            if (!box.bounds.Contains(PlayState.player.transform.position))
+            {
+                Vector2 normal = box.ClosestPoint(PlayState.player.transform.position) - (Vector2)PlayState.player.transform.position;
+                PlayState.player.transform.position += (Vector3)normal;
+            }
 
             PlayState.camTempBuffersX = Vector2.zero;
             PlayState.camTempBuffersY = Vector2.zero;

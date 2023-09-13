@@ -377,7 +377,9 @@ public class Stompy : Boss
 
     public override void LateUpdate()
     {
-        //Debug.Log(modeMain + ", " + modeL + ", " + modeR);
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         if (introTimer >= introTimestamps[4])
             barMask.transform.localPosition = new Vector2(
                 Mathf.Floor(Mathf.Lerp(barPointLeft, barPointRight, Mathf.InverseLerp(0, maxHealth, health)) * 16) * 0.0625f,

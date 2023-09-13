@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public const int MAX_DIST_CASTS = 4;
     public const int THIN_TUNNEL_ENTRANCE_STEPS = 16;
     public const float DIST_CAST_EDGE_BUFFER = 0;
+    public const float STUCK_DETECT_MARGIN = 0.015625f;
     public int currentSurface = 0;
     public bool facingLeft = false;
     public bool facingDown = false;
@@ -208,12 +209,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 PlayState.hasJumped = true;
 
             // Weapon swapping
-            if (Control.Weapon1() && PlayState.CheckForItem(0))
+            bool[] weaponStates = new bool[]
+            {
+                PlayState.CheckForItem(0),
+                PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
+                PlayState.CheckForItem(2) || PlayState.CheckForItem(12)
+            };
+            if (Control.Weapon1() && weaponStates[0])
                 PlayState.globalFunctions.ChangeActiveWeapon(0);
-            if (Control.Weapon2() && (PlayState.CheckForItem(1) || PlayState.CheckForItem(11)))
+            if (Control.Weapon2() && weaponStates[1])
                 PlayState.globalFunctions.ChangeActiveWeapon(1);
-            if (Control.Weapon3() && (PlayState.CheckForItem(2) || PlayState.CheckForItem(12)))
+            if (Control.Weapon3() && weaponStates[2])
                 PlayState.globalFunctions.ChangeActiveWeapon(2);
+            if (Control.NextWeapon())
+            {
+                int thisIndex = (selectedWeapon) % weaponStates.Length;
+                while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)
+                    thisIndex = (thisIndex + 1) % weaponStates.Length;
+                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex);
+            }
+            if (Control.PreviousWeapon())
+            {
+                int thisIndex = (selectedWeapon - 2) < 0 ? selectedWeapon - 2 + weaponStates.Length : selectedWeapon - 2;
+                while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)
+                    thisIndex = (thisIndex - 1) < 0 ? thisIndex - 1 + weaponStates.Length : thisIndex - 1;
+                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex);
+            }
 
             // Sleep code! Don't do anything for thirty seconds and Snaily takes a nap!
             if (PlayState.gameState == PlayState.GameState.game)
@@ -306,9 +327,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     CaseUp();
                     break;
             }
+            if (velocity.x == Mathf.Infinity || velocity.x == -Mathf.Infinity)
+                velocity.x = 0;
+            if (velocity.y == Mathf.Infinity || velocity.y == -Mathf.Infinity)
+                velocity.y = 0;
             transform.position += (Vector3)velocity;
-            if (!grounded && transform.position == (Vector3)lastPosition)
-                transform.position += PlayState.FRAC_64 * gravityDir switch { Dirs.Floor => Vector3.down, Dirs.WallL => Vector3.left, Dirs.WallR => Vector3.right, _ => Vector3.up };
 
             if (Control.ShootPress() && PlayState.generalData.shootMode)
                 toggleModeActive = !toggleModeActive;
@@ -322,6 +345,24 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
 
             EjectFromCollisions();
+
+            // Hey, do we happen to be stuck falling on a corner here?
+            if (lastPosition == (Vector2)transform.position && !grounded)
+            {
+                transform.position += PlayState.FRAC_64 * gravityDir switch
+                {
+                    Dirs.Floor => new Vector3(1, Control.AxisX(), 0),
+                    Dirs.WallL => new Vector3(Control.AxisY(), 1, 0),
+                    Dirs.WallR => new Vector3(Control.AxisY(), -1, 0),
+                    _ => new Vector3(-1, Control.AxisX(), 0)
+                };
+            }
+
+            //Vector2 halfBox = box.size * 0.5f;
+            //Debug.DrawLine(new(transform.position.x - halfBox.x, transform.position.y - halfBox.y, 0),
+            //    new(transform.position.x + halfBox.x, transform.position.y + halfBox.y, 0), Color.red, 3f);
+            //Debug.DrawLine(new(transform.position.x - halfBox.x, transform.position.y + halfBox.y, 0),
+            //    new(transform.position.x + halfBox.x, transform.position.y - halfBox.y, 0), Color.red, 3f);
         }
     }
 
@@ -361,7 +402,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.y = lastDistance - PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.UpHold() && CheckAbility(canSwapGravity) && !stunned)
+                    if (Control.UpHold() && CheckAbility(canSwapGravity) && CanChangeGravWhileStunned())
                     {
                         gravityDir = Dirs.Ceiling;
                         SwapDir(Dirs.Ceiling);
@@ -389,7 +430,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.DownHold() &&
-                    (facingLeft ? Control.LeftHold() : Control.RightHold()) && !stunned)
+                    (facingLeft ? Control.LeftHold() : Control.RightHold()) && CanChangeGravWhileStunned())
                 {
                     // Can we even round these corners at all? This check assumes our default gravity state means this corner is considered a ceiling corner
                     if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == Dirs.WallL && Control.AxisX() == -1) ||
@@ -446,10 +487,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Are we currently running our face into a wall?
             if (GetDistance(facingLeft ? Dirs.WallL : Dirs.WallR) < runSpeedValue)
             {
+                againstWallFlag = true;
                 velocity.x = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisX());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 &&
+                    CanChangeGravWhileStunned() && CheckAbility(canSwapGravity))
                 {
                     if ((Control.UpHold() && !grounded) ||
                         (Control.UpHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -587,7 +630,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.x = lastDistance - PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.RightHold() && CheckAbility(canSwapGravity) && !stunned)
+                    if (Control.RightHold() && CheckAbility(canSwapGravity) && CanChangeGravWhileStunned())
                     {
                         gravityDir = Dirs.WallR;
                         SwapDir(Dirs.WallR);
@@ -615,7 +658,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.LeftHold() &&
-                    (facingDown ? Control.DownHold() : Control.UpHold()) && !stunned)
+                    (facingDown ? Control.DownHold() : Control.UpHold()) && CanChangeGravWhileStunned())
                 {
                     // Can we even round these corners at all? This check assumes our default gravity state means this corner is considered a ceiling corner
                     if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == Dirs.Floor && Control.AxisY() == -1) ||
@@ -675,7 +718,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.y = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisY());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 &&
+                    CanChangeGravWhileStunned() && CheckAbility(canSwapGravity))
                 {
                     if ((Control.RightHold() && !grounded) ||
                         (Control.RightHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -813,7 +857,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.x = -lastDistance + PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.LeftHold() && CheckAbility(canSwapGravity) && !stunned)
+                    if (Control.LeftHold() && CheckAbility(canSwapGravity) && CanChangeGravWhileStunned())
                     {
                         gravityDir = Dirs.WallL;
                         SwapDir(Dirs.WallL);
@@ -841,7 +885,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.y * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.RightHold() &&
-                    (facingDown ? Control.DownHold() : Control.UpHold()) && !stunned)
+                    (facingDown ? Control.DownHold() : Control.UpHold()) && CanChangeGravWhileStunned())
                 {
                     // Can we even round these corners at all? This check assumes our default gravity state means this corner is considered a ceiling corner
                     if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == Dirs.Floor && Control.AxisY() == -1) ||
@@ -901,7 +945,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.y = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisY());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.WallL, true) + GetDistance(Dirs.WallR, true) > box.size.x + PlayState.FRAC_8 &&
+                    CanChangeGravWhileStunned() && CheckAbility(canSwapGravity))
                 {
                     if ((Control.LeftHold() && !grounded) ||
                         (Control.LeftHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -1039,7 +1084,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     velocity.y = -lastDistance + PlayState.FRAC_128;
                     // Can the player grab the ceiling?
-                    if (Control.DownHold() && CheckAbility(canSwapGravity) && !stunned)
+                    if (Control.DownHold() && CheckAbility(canSwapGravity) && CanChangeGravWhileStunned())
                     {
                         gravityDir = Dirs.Floor;
                         SwapDir(Dirs.Floor);
@@ -1067,7 +1112,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bool fall = true;
                 // Is the player holding down and forward? If so, let's see if there are any corners to round
                 if (GetCornerDistance() <= (box.size.x * 0.75f) && CheckAbility(canRoundOuterCorners) && Control.UpHold() &&
-                    (facingLeft ? Control.LeftHold() : Control.RightHold()) && !stunned)
+                    (facingLeft ? Control.LeftHold() : Control.RightHold()) && CanChangeGravWhileStunned())
                 {
                     // Can we even round these corners at all? This check assumes our default gravity state means this corner is considered a ceiling corner
                     if (!CheckAbility(canRoundOppositeOuterCorners) && ((defaultGravityDir == Dirs.WallL && Control.AxisX() == -1) ||
@@ -1127,7 +1172,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 velocity.x = (lastDistance - PlayState.FRAC_128) * Mathf.Sign(Control.AxisX());
                 AddCollision(lastCollision);
                 // Does the player happen to be trying to climb a wall?
-                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 && !stunned && CheckAbility(canSwapGravity))
+                if (GetDistance(Dirs.Floor, true) + GetDistance(Dirs.Ceiling, true) > box.size.y + PlayState.FRAC_8 &&
+                    CanChangeGravWhileStunned() && CheckAbility(canSwapGravity))
                 {
                     if ((Control.DownHold() && !grounded) ||
                         (Control.DownHold() && grounded && CheckAbility(canRoundInnerCorners)) ||
@@ -1614,7 +1660,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 bulletID++;
                 if (bulletID >= PlayState.globalFunctions.playerBulletPool.transform.childCount)
                     bulletID = 0;
-                int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (PlayState.CheckForItem("Rapid Fire") ? 3 : 0);
+                bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
+                int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
                 fireCooldown = weaponCooldowns[fireRateIndex];
                 PlayState.PlaySound(type switch
                 {
@@ -1627,6 +1674,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 });
             }
         }
+    }
+
+    private bool CanChangeGravWhileStunned()
+    {
+        return !stunned || PlayState.CheckForItem(8) || (PlayState.stackShells && PlayState.GetShellLevel() > 1);
     }
 
     public void HitFor(int damage)
@@ -1734,6 +1786,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public virtual void ResetState()
     {
+        stunned = false;
         facingLeft = false;
         if (shelled)
             ToggleShell();
@@ -1847,9 +1900,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public void AdjustPosIntoRoom(Vector2 target)
     {
-        RaycastHit2D roomTest = Physics2D.Raycast(lastPosition, (Vector2)transform.position - target, Mathf.Infinity, roomCollide);
-        if (roomTest.collider != null)
-            transform.position += -1 * (Vector3)roomTest.normal.normalized;
+        //RaycastHit2D roomTest = Physics2D.Raycast(lastPosition, velocity - (Vector2)transform.position, Mathf.Infinity, roomCollide);
+        //Debug.DrawLine(lastPosition, lastPosition + ((velocity - (Vector2)transform.position) * 4), Color.red, 5);
+        //if (roomTest.collider != null)
+        //    transform.position += -1 * (Vector3)roomTest.normal.normalized;
     }
 
     #endregion Player utilities

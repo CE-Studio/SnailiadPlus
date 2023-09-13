@@ -977,16 +977,19 @@ public class GigaSnail : Boss
                 lastAnimState = "shell";
                 sprite.flipX = false;
                 sprite.flipY = false;
+                SetBoxState(0);
                 break;
             case AnimTypes.strafe:
                 animName += "strafe" + att;
                 lastAnimState = "shell";
                 sprite.flipX = false;
                 sprite.flipY = false;
+                SetBoxState(0);
                 break;
             case AnimTypes.smash:
                 animName += "smash" + att + "_" + GetSmashDir();
                 lastAnimState = "shell";
+                SetBoxState(0);
                 break;
             case AnimTypes.smashCollide:
                 animName += "smash" + att + "_collide_" + GetSmashDir();
@@ -998,6 +1001,7 @@ public class GigaSnail : Boss
                 else
                     animName += "sleep" + att + "_unshelled_" + FallEnumToString(lastFallDir) + "_" + GetFacingString();
                 lastAnimState = "sleepTurn";
+                SetBoxState(0);
                 break;
             case AnimTypes.sleepLand:
                 animName += "sleep" + att + "_land";
@@ -1008,6 +1012,7 @@ public class GigaSnail : Boss
             case AnimTypes.shellIntoStomp:
                 animName += "stomp" + att + "_unshell_" + FallEnumToString(fallDir) + "_" + GetFacingString();
                 lastAnimState = animData[(int)AnimData.UpdateOnJumpLand] == 1 ? "stompIntro" : "stomp";
+                SetBoxState(1);
                 break;
             case AnimTypes.stompIdle:
                 animName += "stomp" + att + "_idle_" + FallEnumToString(fallDir) + "_" + GetFacingString();
@@ -1036,6 +1041,7 @@ public class GigaSnail : Boss
             case AnimTypes.stompIntoShell:
                 animName += "stomp" + att + "_shell_" + FallEnumToString(fallDir) + "_" + GetFacingString();
                 lastAnimState = "stompOutro";
+                SetBoxState(0);
                 break;
             case AnimTypes.turnRedGround:
                 animName += "stomp" + att + "_turnRed_" + FallEnumToString(fallDir) + "_" + GetFacingString();
@@ -1200,6 +1206,11 @@ public class GigaSnail : Boss
         };
     }
 
+    private void SetBoxState(int state)
+    {
+        box.size = new Vector2(state == 1 ? boxSize.x : boxSize.y, state == -1 ? boxSize.x : boxSize.y);
+    }
+
     public override void Kill()
     {
         foreach (Particle star in bgStars)
@@ -1211,7 +1222,7 @@ public class GigaSnail : Boss
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnail);
         if (!PlayState.CheckForItem("Full-Metal Snail"))
             PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnailNoFMS);
-        if (PlayState.currentProfile.gameTime[0] < 30 && !PlayState.generalData.achievements[13])
+        if (PlayState.currentProfile.gameTime[0] == 0 && PlayState.currentProfile.gameTime[1] < 30 && !PlayState.generalData.achievements[13])
         {
             PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Under30Minutes);
             unlocks += "Insane";

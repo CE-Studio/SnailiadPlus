@@ -115,10 +115,12 @@ public class PlayState {
     public static List<Vector2> breakablePositions = new();
     public static List<int> tempTiles = new(); // x, y, layer, original tile ID
     public static bool dialogueOpen = false;
+    public static bool achievementOpen = false;
     public static bool cutsceneActive = false;
     public static int lastLoadedWeapon = 0;
     public static bool stackShells = true;
     public static bool stackWeaponMods = true;
+    public static bool suppressPause = false;
 
     public static int importJobs = 0;
 
@@ -237,7 +239,7 @@ public class PlayState {
         -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  0,  0,  0,  0,  0, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0, -1, -1, -1, -1,
-        -1,  0,  0,  0,  0,  0,  0,  0, -1,  0, -1, -1, -1,  0,  2,  2,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
+        -1,  0,  0,  0,  0,  0,  0,  0, -1,  0,  2,  2,  2,  0,  2,  2,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1,
         -1,  0,  0,  0,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0, -1,  0, -1,  0, -1, -1, -1, -1, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0,  0, -1,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1,
          0,  0,  0,  0,  0,  0,  0,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -1253,7 +1255,7 @@ public class PlayState {
         int explored = 0;
         int total = 0;
         foreach (int i in currentProfile.exploredMap) {
-            if (i != -1) {
+            if (i != -1 && i != 9) {
                 if (i != 2 && i != 3 && i != 12 && i != 13)
                     total++;
                 if (i == 1 || i == 11)
@@ -1388,7 +1390,8 @@ public class PlayState {
         int target = Math.Clamp(areaID, 0, 6);
         for (int i = 0; i < itemAreas[target].Count; i++)
         {
-            if (GetItemAvailabilityThisDifficulty(itemAreas[target][i]) && GetItemAvailabilityThisCharacter(itemAreas[target][i]))
+            if (GetItemAvailabilityThisDifficulty(itemAreas[target][i]) && GetItemAvailabilityThisCharacter(itemAreas[target][i])
+                && countedItems[itemAreas[target][i]])
             {
                 totalItems++;
                 if (currentProfile.items[itemAreas[target][i]] == 1)

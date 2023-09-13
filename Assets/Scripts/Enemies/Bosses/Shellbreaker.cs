@@ -13,11 +13,11 @@ public class Shellbreaker : Boss
 
     private int handCount = 3;
     public GameObject hand;
-    private List<GameObject> hands = new List<GameObject>();
-    private List<AnimationModule> handAnims = new List<AnimationModule>();
-    private List<BoxCollider2D> handBoxes = new List<BoxCollider2D>();
-    private List<float> handTheta = new List<float>();
-    private List<float> handThetaSpeed = new List<float>();
+    private List<GameObject> hands = new();
+    private List<AnimationModule> handAnims = new();
+    private List<BoxCollider2D> handBoxes = new();
+    private List<float> handTheta = new();
+    private List<float> handThetaSpeed = new();
     private float handRadius;
     private float currentRadiusMultiplier = 1;
     private float targetRadiusMultiplier = 1;

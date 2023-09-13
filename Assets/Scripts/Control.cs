@@ -127,249 +127,266 @@ public class Control
 
     public const float STICK_DEADZONE = 0.25f;
 
-    public static int AxisX(int player = 0)
+    public static bool lastInputIsCon = false;
+
+    public static int AxisX(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return 0 + (RightHold(player) ? 1 : 0) - (LeftHold(player) ? 1 : 0);
+        return 0 + (RightHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0) - (LeftHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0);
     }
-    public static int AxisY(int player = 0)
+    public static int AxisY(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return 0 + (UpHold(player) ? 1 : 0) - (DownHold(player) ? 1 : 0);
+        return 0 + (UpHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0) - (DownHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0);
     }
 
-    public static bool LeftPress(int player = 0)
+    public static bool LeftPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Left, true))
+        if (CheckButton(Controller.Left, true, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Left1, true),
-            2 => CheckKey(Keyboard.Left2, true),
-            _ => CheckKey(Keyboard.Left1, true) || CheckKey(Keyboard.Left2, true)
+            1 => CheckKey(Keyboard.Left1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Left2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Left1, true, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Left2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool LeftHold(int player = 0)
+    public static bool LeftHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Left))
+        if (CheckButton(Controller.Left, false, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Left1),
-            2 => CheckKey(Keyboard.Left2),
-            _ => CheckKey(Keyboard.Left1) || CheckKey(Keyboard.Left2)
+            1 => CheckKey(Keyboard.Left1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Left2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Left1, false, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Left2, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool LeftAim()
+    public static bool LeftAim(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckButton(Controller.AimL);
+        return CheckButton(Controller.AimL, false, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool RightPress(int player = 0)
+    public static bool RightPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Right, true))
+        if (CheckButton(Controller.Right, true, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Right1, true),
-            2 => CheckKey(Keyboard.Right2, true),
-            _ => CheckKey(Keyboard.Right1, true) || CheckKey(Keyboard.Right2, true)
+            1 => CheckKey(Keyboard.Right1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Right2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Right1, true, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Right2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool RightHold(int player = 0)
+    public static bool RightHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Right))
+        if (CheckButton(Controller.Right, false, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Right1),
-            2 => CheckKey(Keyboard.Right2),
-            _ => CheckKey(Keyboard.Right1) || CheckKey(Keyboard.Right2)
+            1 => CheckKey(Keyboard.Right1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Right2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Right1, false, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Right2, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool RightAim()
+    public static bool RightAim(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckButton(Controller.AimR);
+        return CheckButton(Controller.AimR, false, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool UpPress(int player = 0)
+    public static bool UpPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Up, true))
+        if (CheckButton(Controller.Up, true, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Up1, true),
-            2 => CheckKey(Keyboard.Up2, true),
-            _ => CheckKey(Keyboard.Up1, true) || CheckKey(Keyboard.Up2, true)
+            1 => CheckKey(Keyboard.Up1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Up2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Up1, true, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Up2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool UpHold(int player = 0)
+    public static bool UpHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Up))
+        if (CheckButton(Controller.Up, false, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Up1),
-            2 => CheckKey(Keyboard.Up2),
-            _ => CheckKey(Keyboard.Up1) || CheckKey(Keyboard.Up2)
+            1 => CheckKey(Keyboard.Up1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Up2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Up1, false, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Up2, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool UpAim()
+    public static bool UpAim(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckButton(Controller.AimU);
+        return CheckButton(Controller.AimU, false, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool DownPress(int player = 0)
+    public static bool DownPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Down, true))
+        if (CheckButton(Controller.Down, true, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Down1, true),
-            2 => CheckKey(Keyboard.Down2, true),
-            _ => CheckKey(Keyboard.Down1, true) || CheckKey(Keyboard.Down2, true)
+            1 => CheckKey(Keyboard.Down1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Down2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Down1, true, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Down2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool DownHold(int player = 0)
+    public static bool DownHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        if (CheckButton(Controller.Down))
+        if (CheckButton(Controller.Down, false, overrideParalyze, ignoreVirtual))
             return true;
         return player switch
         {
-            1 => CheckKey(Keyboard.Down1),
-            2 => CheckKey(Keyboard.Down2),
-            _ => CheckKey(Keyboard.Down1) || CheckKey(Keyboard.Down2)
+            1 => CheckKey(Keyboard.Down1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Down2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Down1, false, overrideParalyze, ignoreVirtual) || CheckKey(Keyboard.Down2, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool DownAim()
+    public static bool DownAim(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckButton(Controller.AimD);
+        return CheckButton(Controller.AimD, false, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool JumpPress(int player = 0)
+    public static bool JumpPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Jump1, true) || CheckButton(Controller.Jump1, true),
-            2 => CheckKey(Keyboard.Jump2, true) || CheckButton(Controller.Jump2, true),
-            _ => CheckKey(Keyboard.Jump1, true) || CheckButton(Controller.Jump1, true) || CheckKey(Keyboard.Jump2, true) || CheckButton(Controller.Jump2, true)
+            1 => CheckKey(Keyboard.Jump1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Jump2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Jump1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump1, true, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Jump2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool JumpHold(int player = 0)
+    public static bool JumpHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Jump1) || CheckButton(Controller.Jump1),
-            2 => CheckKey(Keyboard.Jump2) || CheckButton(Controller.Jump2),
-            _ => CheckKey(Keyboard.Jump1) || CheckButton(Controller.Jump1) || CheckKey(Keyboard.Jump2) || CheckButton(Controller.Jump2)
+            1 => CheckKey(Keyboard.Jump1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Jump2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Jump1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump1, false, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Jump2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Jump2, false, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool ShootPress(int player = 0)
+    public static bool ShootPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Shoot1, true) || CheckButton(Controller.Shoot1, true),
-            2 => CheckKey(Keyboard.Shoot2, true) || CheckButton(Controller.Shoot2, true),
-            _ => CheckKey(Keyboard.Shoot1, true) || CheckButton(Controller.Shoot1, true) || CheckKey(Keyboard.Shoot2, true) || CheckButton(Controller.Shoot2, true)
+            1 => CheckKey(Keyboard.Shoot1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Shoot2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Shoot1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot1, true, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Shoot2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool ShootHold(int player = 0)
+    public static bool ShootHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Shoot1) || CheckButton(Controller.Shoot1),
-            2 => CheckKey(Keyboard.Shoot2) || CheckButton(Controller.Shoot2),
-            _ => CheckKey(Keyboard.Shoot1) || CheckButton(Controller.Shoot1) || CheckKey(Keyboard.Shoot2) || CheckButton(Controller.Shoot2)
+            1 => CheckKey(Keyboard.Shoot1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Shoot2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Shoot1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot1, false, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Shoot2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Shoot2, false, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool StrafePress(int player = 0)
+    public static bool StrafePress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Strafe1, true) || CheckButton(Controller.Strafe1, true),
-            2 => CheckKey(Keyboard.Strafe2, true) || CheckButton(Controller.Strafe2, true),
-            _ => CheckKey(Keyboard.Strafe1, true) || CheckButton(Controller.Strafe1, true) || CheckKey(Keyboard.Strafe2, true) || CheckButton(Controller.Strafe2, true)
+            1 => CheckKey(Keyboard.Strafe1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Strafe2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Strafe1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe1, true, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Strafe2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool StrafeHold(int player = 0)
+    public static bool StrafeHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Strafe1) || CheckButton(Controller.Strafe1),
-            2 => CheckKey(Keyboard.Strafe2) || CheckButton(Controller.Strafe2),
-            _ => CheckKey(Keyboard.Strafe1) || CheckButton(Controller.Strafe1) || CheckKey(Keyboard.Strafe2) || CheckButton(Controller.Strafe2)
+            1 => CheckKey(Keyboard.Strafe1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Strafe2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Strafe1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe1, false, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Strafe2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Strafe2, false, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool SpeakPress(int player = 0)
+    public static bool SpeakPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Speak1, true) || CheckButton(Controller.Speak1, true),
-            2 => CheckKey(Keyboard.Speak2, true) || CheckButton(Controller.Speak2, true),
-            _ => CheckKey(Keyboard.Speak1, true) || CheckButton(Controller.Speak1, true) || CheckKey(Keyboard.Speak2, true) || CheckButton(Controller.Speak2, true)
+            1 => CheckKey(Keyboard.Speak1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak1, true, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Speak2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak2, true, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Speak1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak1, true, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Speak2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak2, true, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool SpeakHold(int player = 0)
+    public static bool SpeakHold(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return player switch
         {
-            1 => CheckKey(Keyboard.Speak1) || CheckButton(Controller.Speak1),
-            2 => CheckKey(Keyboard.Speak2) || CheckButton(Controller.Speak2),
-            _ => CheckKey(Keyboard.Speak1) || CheckButton(Controller.Speak1) || CheckKey(Keyboard.Speak2) || CheckButton(Controller.Speak2)
+            1 => CheckKey(Keyboard.Speak1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak1, false, overrideParalyze, ignoreVirtual),
+            2 => CheckKey(Keyboard.Speak2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak2, false, overrideParalyze, ignoreVirtual),
+            _ => CheckKey(Keyboard.Speak1, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak1, false, overrideParalyze, ignoreVirtual)
+                || CheckKey(Keyboard.Speak2, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Speak2, false, overrideParalyze, ignoreVirtual)
         };
     }
 
-    public static bool Weapon1()
+    public static bool Weapon1(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.Weapon1, true) || CheckButton(Controller.Weapon1, true);
+        return CheckKey(Keyboard.Weapon1, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Weapon1, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool Weapon2()
+    public static bool Weapon2(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.Weapon2, true) || CheckButton(Controller.Weapon2, true);
+        return CheckKey(Keyboard.Weapon2, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Weapon2, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool Weapon3()
+    public static bool Weapon3(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.Weapon3, true) || CheckButton(Controller.Weapon3, true);
+        return CheckKey(Keyboard.Weapon3, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Weapon3, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool NextWeapon()
+    public static bool NextWeapon(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.NextWeapon, true) || CheckButton(Controller.NextWeapon, true);
+        return CheckKey(Keyboard.NextWeapon, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.NextWeapon, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool PreviousWeapon()
+    public static bool PreviousWeapon(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.PrevWeapon, true) || CheckButton(Controller.PrevWeapon, true);
+        return CheckKey(Keyboard.PrevWeapon, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.PrevWeapon, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool Map()
+    public static bool Map(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.Map) || CheckButton(Controller.Map);
+        return CheckKey(Keyboard.Map, false, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Map, false, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool Pause()
+    public static bool Pause(bool overrideParalyze = false, bool ignoreVirtual = false)
     {
-        return CheckKey(Keyboard.Pause, true) || CheckButton(Controller.Pause, true);
+        return CheckKey(Keyboard.Pause, true, overrideParalyze, ignoreVirtual) || CheckButton(Controller.Pause, true, overrideParalyze, ignoreVirtual);
     }
 
-    public static bool Generic(KeyCode key)
+    public static bool Generic(KeyCode key, bool overrideParalyze = false)
     {
+        if (!overrideParalyze && PlayState.paralyzed)
+            return false;
         return Input.GetKeyDown(key);
+    }
+
+    public static bool AnyInputDown()
+    {
+        return Input.anyKey;
     }
 
     public static void SetVirtual(Keyboard input, bool state)
@@ -396,52 +413,69 @@ public class Control
         }
     }
 
-    public static bool CheckKey(Keyboard input, bool pressed = false)
+    public static bool CheckKey(Keyboard input, bool pressed = false, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         int index = (int)input;
-        if (PlayState.paralyzed)
-            return virtualKey[index];
-        return (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
-            Input.GetKey(PlayState.generalData.keyboardInputs[index])) || virtualKey[index];
+        bool output;
+        if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
+            output = virtualKey[index];
+        else
+            output = (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
+                Input.GetKey(PlayState.generalData.keyboardInputs[index])) || (ignoreVirtual ? false : virtualKey[index]);
+        if (output)
+            lastInputIsCon = false;
+        return output;
     }
 
-    public static bool CheckButton(Controller input, bool pressed = false)
+    public static bool CheckButton(Controller input, bool pressed = false, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         if (!PlayState.IsControllerConnected())
             return false;
         int index = (int)input;
-        if (PlayState.paralyzed)
-            return virtualCon[index];
-        string inputName = PlayState.generalData.controllerInputs[index].ToString();
-        bool inputDown;
-        if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
-        {
-            char ID = inputName[inputName.Length - 1];
-            bool positive = inputName.Contains("Alpha");
-            float stickValue = ID switch {
-                '0' => Input.GetAxis("LStickX"),
-                '1' => Input.GetAxis("LStickY"),
-                '2' => Input.GetAxis("RStickX"),
-                _ => Input.GetAxis("RStickY")
-            };
-            inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
-        }
+        bool output = false;
+        if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
+            output = virtualCon[index];
         else
-            inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
-        if (inputDown)
         {
-            if (conPressed[index] && !pressed)
-                return true;
-            else if (!conPressed[index])
+            string inputName = PlayState.generalData.controllerInputs[index].ToString();
+            bool inputDown;
+            if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
             {
-                conPressed[index] = true;
-                return true;
+                char ID = inputName[inputName.Length - 1];
+                bool positive = inputName.Contains("Alpha");
+                float stickValue = ID switch
+                {
+                    '0' => Input.GetAxis("LStickX"),
+                    '1' => Input.GetAxis("LStickY"),
+                    '2' => Input.GetAxis("RStickX"),
+                    _ => Input.GetAxis("RStickY")
+                };
+                inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
             }
             else
-                return virtualCon[index];
+                inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
+            if (inputDown)
+            {
+                if (conPressed[index] && !pressed)
+                    output = true;
+                else if (!conPressed[index])
+                {
+                    conPressed[index] = true;
+                    output = true;
+                }
+                else if (!ignoreVirtual)
+                    output = virtualCon[index];
+            }
+            else
+            {
+                conPressed[index] = false;
+                if (!ignoreVirtual)
+                    output = virtualCon[index];
+            }
         }
-        conPressed[index] = false;
-        return virtualCon[index];
+        if (output)
+            lastInputIsCon = true;
+        return output;
     }
 
     public static string ParseKeyName(int keyID, bool shortForm = false)

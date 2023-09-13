@@ -189,8 +189,10 @@ public class Item:MonoBehaviour, IRoomObject {
         anim.Play(animName);
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
             collected = true;
             if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
                 PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
@@ -244,6 +246,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     if (isSuperUnique)
                     {
                         PlayState.globalFunctions.RunDustRing(2);
+                        PlayState.suppressPause = true;
                         if (legacyGravCutscene)
                             PlayState.globalFunctions.RunLegacyGravCutscene(transform.position);
                     }

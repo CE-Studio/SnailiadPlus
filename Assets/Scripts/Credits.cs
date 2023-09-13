@@ -550,6 +550,8 @@ public class Credits : MonoBehaviour
         PlayState.creditsState = PlayState.CreditsStates.fadeIn;
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 3, 6);
         isSun = PlayState.CountFragments() == PlayState.MAX_FRAGMENTS;
+        if (isSun)
+            PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SunSnail);
 
         completionTime = (float[])timeToDisplay.Clone();
 
@@ -740,7 +742,7 @@ public class Credits : MonoBehaviour
         string imageAnimName = "Ending_";
         if (PlayState.currentProfile.difficulty == 2)
             imageAnimName += "insane";
-        else if (completionTime[0] < 30)
+        else if (completionTime[0] == 0 && completionTime[1] < 30)
             imageAnimName += "sub30";
         else if (PlayState.currentProfile.percentage == 100)
             imageAnimName += "100";

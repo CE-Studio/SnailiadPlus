@@ -18,7 +18,7 @@ public class SpaceBox : Boss
     private const float SHAKE_STRENGTH = 0.6f;
     private const float SHAKE_TIME = 0.8f;
 
-    private float[] decisionTable = new float[]
+    private readonly float[] decisionTable = new float[]
     {
         0.1640168826f, 0.3892556902f, 0.0336081053f, 0.2246864975f, 0.5434009453f, 0.4227320437f, 0.1017472328f, 0.2041907897f, 0.9950191347f, 0.3634705228f,
         0.0779175897f, 0.384822732f, 0.3284047846f, 0.0951552057f, 0.1941055446f, 0.496359046f, 0.2428007567f, 0.8280672868f, 0.852732986f, 0.6928913176f,
@@ -48,7 +48,7 @@ public class SpaceBox : Boss
     };
     private BossMode mode = BossMode.Wait;
     private BossMode lastMode = BossMode.Wait;
-    private BossMode[] introSteps = new BossMode[] { BossMode.Up, BossMode.Left };
+    private readonly BossMode[] introSteps = new BossMode[] { BossMode.Up, BossMode.Left };
     private int introStepID = 0;
     private bool introMovementsDone = false;
     private bool haltedIntroPlayerMovement = false;
@@ -83,8 +83,8 @@ public class SpaceBox : Boss
     private Vector2 velocity = Vector2.zero;
     private string dirString = "";
     private float elapsed = 0;
-    private bool legacyCutscene = true;
-    private bool spawnAtCorner = true;
+    private readonly bool legacyCutscene = true;
+    private readonly bool spawnAtCorner = true;
     private Vector2 shieldRange;
     private int activeShields = 0;
     private Vector2 halfBox;

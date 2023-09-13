@@ -42,9 +42,12 @@ public class StompyEye : Enemy
 
     public override void LateUpdate()
     {
+        if (PlayState.gameState != PlayState.GameState.game && !PlayState.playerScript.inDeathCutscene)
+            return;
+
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
-            List<Bullet> bulletsToDespawn = new List<Bullet>();
+            List<Bullet> bulletsToDespawn = new();
             bool killFlag = false;
             int maxDamage = 0;
             foreach (Bullet bullet in intersectingBullets)

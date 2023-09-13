@@ -96,6 +96,7 @@ public class AchievementPanel : MonoBehaviour
         runState = 1;
         PlayState.PlayMusic(0, 3);
         runningPopup = true;
+        PlayState.achievementOpen = true;
         anim.Play("AchievementPanel_open");
     }
 
@@ -121,6 +122,7 @@ public class AchievementPanel : MonoBehaviour
         runState = 3;
         text.SetText("");
         sprite.enabled = false;
+        PlayState.achievementOpen = false;
         anim.Play("AchievementPanel_close");
     }
 

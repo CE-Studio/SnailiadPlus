@@ -43,15 +43,15 @@ public class DialogueBox : MonoBehaviour
     private AnimationModule portraitFrameAnim;
     private SpriteRenderer portraitChar;
     private AnimationModule portraitCharAnim;
-    private Dictionary<int, Sprite> colorizedSprites = new Dictionary<int, Sprite>();
+    private Dictionary<int, Sprite> colorizedSprites = new();
     private string currentFrameColor = "0005";
     private CutsceneController stalledCutscene = null;
 
     private int dialogueType = 0;     // 1 = Item popup, 2 = single-page dialogue, 3 = involved multi-page dialogue
     private int currentSpeaker = 0;
     private int currentShape = 0;
-    private List<string> textList = new List<string>();
-    private List<int> states = new List<int>();
+    private List<string> textList = new();
+    private List<int> states = new();
     private bool left = false;
     private const float INITIALIZATION_MAX = 0.027f;
     private float initializationCooldown;
@@ -59,7 +59,7 @@ public class DialogueBox : MonoBehaviour
     private float currentTimerMax = 0.02f;
     private float timer = 0;
     private int currentSound = 0;
-    private Vector2 currentColor = new Vector2(3, 12);
+    private Vector2 currentColor = new(3, 12);
     private string currentEffect = "none";
     public bool boxOpenAnimComplete = false;
 
@@ -132,7 +132,7 @@ public class DialogueBox : MonoBehaviour
 
             if (dialogueType != 3)
             {
-                if (player.transform.position.y > cam.transform.position.y + 1f || forceDownPosition)
+                if (player.transform.position.y > cam.transform.position.y + 1f || forceDownPosition || PlayState.achievementOpen)
                 {
                     if (active)
                         posVar = Mathf.Lerp(posVar, 1, 7 * Time.deltaTime);
@@ -271,9 +271,9 @@ public class DialogueBox : MonoBehaviour
                                 {
                                     ParseNextChar();
                                 }
-                                if (!Control.SpeakHold() && buttonDown)
+                                if (!Control.SpeakHold(0, true) && buttonDown)
                                     buttonDown = false;
-                                if (Control.SpeakPress() && !buttonDown && dialogueType == 3)
+                                if (Control.SpeakPress(0, true) && !buttonDown && dialogueType == 3)
                                 {
                                     buttonDown = true;
                                     while (pointer.y < textList[(int)pointer.x].Length)
@@ -300,7 +300,7 @@ public class DialogueBox : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if (Control.SpeakPress())
+                    if (Control.SpeakPress(0, true))
                     {
                         buttonDown = true;
                         if (pointer.x == textList.Count)

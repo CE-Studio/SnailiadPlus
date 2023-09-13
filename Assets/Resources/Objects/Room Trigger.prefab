@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4864329900485946837}
   - component: {fileID: 4864329900485946834}
   - component: {fileID: 4727603495965231525}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Room Trigger
   m_TagString: RoomTrigger
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,14 +99,18 @@ MonoBehaviour:
   parallaxForeground1Modifier: {x: 0, y: 0}
   parallaxBackgroundModifier: {x: 0, y: 0}
   parallaxSkyModifier: {x: 0, y: 0}
+  offsetForeground2: {x: 0, y: 0}
+  offsetForeground1: {x: 0, y: 0}
+  offsetBackground: {x: 0, y: 0}
+  offsetSky: {x: 0, y: 0}
   areaID: 0
   areaSubzone: 0
   waterLevel: []
   environmentalEffects: []
   roomCommands: []
-  roomNameText: {fileID: 0}
-  roomNameShadow: {fileID: 0}
   bg: {fileID: 0}
   fg: {fileID: 0}
   specialMap: {fileID: 0}
   breakableBlock: {fileID: 0}
+  roomContentTypes: []
+  roomContentPos: []

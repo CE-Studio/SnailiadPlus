@@ -420,7 +420,7 @@ public class MainMenu : MonoBehaviour
             Vector2 newCursorPos = PlayState.mainCam.ScreenToViewportPoint(Input.mousePosition);
             newCursorPos = newCursorPos * new Vector2(25, 15) - new Vector2(12.5f, 7.5f);
             cursor.localPosition = newCursorPos;
-            if (newCursorPos != lastCursorPos)
+            if (newCursorPos != lastCursorPos && !isRebinding)
             {
                 foreach (MenuOption option in currentOptions)
                 {
@@ -438,9 +438,9 @@ public class MainMenu : MonoBehaviour
 
             if (!isRebinding && !fadingToIntro && !viewingGallery)
             {
-                if (Control.UpPress(1) || Control.DownPress(1))
+                if (Control.UpPress(1, true, true) || Control.DownPress(1, true, true))
                 {
-                    bool nextDown = Control.AxisY(1) == -1;
+                    bool nextDown = Control.AxisY(1, true, true) == -1;
                     int intendedSelection = selectedOption + (nextDown ? 1 : -1);
                     if (intendedSelection >= currentOptions.Count)
                         intendedSelection = 0;
@@ -460,7 +460,7 @@ public class MainMenu : MonoBehaviour
                     GetNewSnailOffset();
                 }
 
-                if (Control.Pause())
+                if (Control.Pause(true, true))
                 {
                     if (backPage != null)
                     {
@@ -468,7 +468,7 @@ public class MainMenu : MonoBehaviour
                         PlayState.PlaySound("MenuBeep2");
                     }
                 }
-                else if (Control.JumpPress(1) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+                else if (Control.JumpPress(1, true, true) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 {
                     if (currentOptions[selectedOption].menuParam != null)
                     {
@@ -484,7 +484,7 @@ public class MainMenu : MonoBehaviour
             }
             else if (!isRebinding && !fadingToIntro && viewingGallery)
             {
-                if (Control.JumpPress() || Control.Pause())
+                if (Control.JumpPress(0, true, true) || Control.Pause(true, true))
                 {
                     PlayState.PlaySound("MenuBeep2");
                     viewingGallery = false;
@@ -952,8 +952,8 @@ public class MainMenu : MonoBehaviour
                 PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 0, 999);
                 ToggleHUD(false);
             }
-            if (!PlayState.isMenuOpen && Control.Pause() && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error)
-                && !PlayState.playerScript.inDeathCutscene && PlayState.creditsState == 0)
+            if (!PlayState.isMenuOpen && Control.Pause(true, true) && !pauseButtonDown && (PlayState.gameState != PlayState.GameState.error)
+                && !PlayState.playerScript.inDeathCutscene && PlayState.creditsState == 0 && !PlayState.suppressPause)
             {
                 PlayState.isMenuOpen = true;
                 PlayState.ToggleHUD(false);
@@ -964,7 +964,7 @@ public class MainMenu : MonoBehaviour
                 PageMain();
                 CreateTitle();
             }
-            if (pauseButtonDown && !Control.Pause())
+            if (pauseButtonDown && !Control.Pause(true, true))
                 pauseButtonDown = false;
         }
     }
@@ -1023,7 +1023,7 @@ public class MainMenu : MonoBehaviour
     public bool TestForArrowAdjust(MenuOption option, int varSlot, int max)
     {
         if (selectedOption == currentOptions.IndexOf(option))
-        if (Control.LeftPress(1))
+        if (Control.LeftPress(1, true, true))
         {
             menuVarFlags[varSlot]--;
             if (menuVarFlags[varSlot] < 0)
@@ -1031,7 +1031,7 @@ public class MainMenu : MonoBehaviour
             PlayState.PlaySound("MenuBeep1");
             return true;
         }
-        else if (Control.RightPress(1))
+        else if (Control.RightPress(1, true, true))
         {
             menuVarFlags[varSlot]++;
             if (menuVarFlags[varSlot] > max)
@@ -1050,10 +1050,8 @@ public class MainMenu : MonoBehaviour
     public IEnumerator RebindKey(int controlID, int keyOrCon)
     {
         bool bindingController = keyOrCon == 1;
-        while (Control.JumpHold(1) || Control.Generic(KeyCode.Return))
-        {
+        while (Control.AnyInputDown())
             yield return new WaitForEndOfFrame();
-        }
         float timer = 0;
         isRebinding = true;
         while (timer < 3 && isRebinding)
@@ -1577,7 +1575,7 @@ public class MainMenu : MonoBehaviour
                         storyCharIndex++;
                     }
                 }
-                if (Control.CheckKey(Control.Keyboard.Pause) || Control.CheckButton(Control.Controller.Pause))
+                if (Control.CheckKey(Control.Keyboard.Pause, true, true) || Control.CheckButton(Control.Controller.Pause, true, true))
                     introState = IntroStates.fadeOut;
                 yield return new WaitForEndOfFrame();
             }
@@ -1601,7 +1599,6 @@ public class MainMenu : MonoBehaviour
         PlayState.SetCamFocus(PlayState.player.transform);
         PlayState.cam.transform.position = spawnPos;
         PlayState.player.transform.position = spawnPos;
-        PlayState.playerScript.CorrectGravity(false);
         PlayState.playerScript.ResetState();
         PlayState.gameState = PlayState.GameState.game;
         PlayState.player.GetComponent<BoxCollider2D>().enabled = true;

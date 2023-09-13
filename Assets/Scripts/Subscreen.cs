@@ -288,7 +288,7 @@ public class Subscreen : MonoBehaviour
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
                     cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
                 }
-                cells[i].GetComponent<SpriteMask>().enabled = true;
+                cells[i].GetComponent<SpriteMask>().enabled = thisCellValue != -1 || thisCellValue != 9;
             }
         }
 

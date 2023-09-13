@@ -93,7 +93,7 @@ public class Spikey2 : Enemy
             initializedRotation = true;
         }
 
-        if (gracePeriod != 0)
+        if (gracePeriod != 0 && !stopped)
             gracePeriod = Mathf.Clamp(gracePeriod - SPEED, 0, 1);
 
         stopTimeout -= Time.deltaTime;
@@ -131,7 +131,7 @@ public class Spikey2 : Enemy
                 isFalling = false;
             }
         }
-        else if (vCast.collider == null && gracePeriod == 0)
+        else if (vCast.collider == null && gracePeriod == 0 && !stopped)
         {
             transform.position = new Vector2(Mathf.Floor(transform.position.x) + 0.5f, Mathf.Floor(transform.position.y) + 0.5f);
             Turn(!rotation);
@@ -164,7 +164,7 @@ public class Spikey2 : Enemy
             if (!stopped)
                 transform.position = new Vector2(transform.position.x + (dirToMove.x * SPEED), transform.position.y + (dirToMove.y * SPEED));
         }
-        else
+        else if (!stopped)
         {
             isFalling = true;
         }
