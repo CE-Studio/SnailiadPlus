@@ -31,7 +31,7 @@ public class PlayState {
     public static GameState gameState = GameState.preload;
 
     public static bool isMenuOpen = false;
-    public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, fadeOut };
+    public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, overwriteOldTime, fadeOut };
     public static CreditsStates creditsState = CreditsStates.none;
 
     public static bool noclipMode = false;
@@ -93,7 +93,6 @@ public class PlayState {
     public static float sfxFader = 1.0f;
     public static string area;
     public static AudioClip areaMus;
-    public static bool colorblindMode = true;
     public static bool quickDeathTransition = false;
     public static bool armorPingPlayedThisFrame = false;
     public static bool explodePlayedThisFrame = false;
@@ -121,6 +120,8 @@ public class PlayState {
     public static bool stackShells = true;
     public static bool stackWeaponMods = true;
     public static bool suppressPause = false;
+    public static bool resetInducingFadeActive = false;
+    public static int areaOfDeath = -1;
 
     public static int importJobs = 0;
 
@@ -183,7 +184,6 @@ public class PlayState {
 
     public static bool paralyzed = false;
     public static bool overrideParalysisInvulnerability = false;
-    public static bool isArmed = false;
     public static bool inBossFight = false;
     public static bool finishedFinalBoss = false;
 
@@ -266,6 +266,34 @@ public class PlayState {
     public static bool[] countedItems = new bool[] { };
     
     public static readonly float[] timeDefault = new float[]
+    {
+        0, 0, 0,  // Snaily Normal
+        0, 0, 0,  // Snaily Insane
+        0, 0, 0,  // Snaily 100%
+        0, 0, 0,  // Snaily Boss Rush
+        0, 0, 0,  // Sluggy Normal
+        0, 0, 0,  // Sluggy Insane
+        0, 0, 0,  // Sluggy 100%
+        0, 0, 0,  // Sluggy Boss Rush
+        0, 0, 0,  // Upside Normal
+        0, 0, 0,  // Upside Insane
+        0, 0, 0,  // Upside 100%
+        0, 0, 0,  // Upside Boss Rush
+        0, 0, 0,  // Leggy  Normal
+        0, 0, 0,  // Leggy  Insane
+        0, 0, 0,  // Leggy  100%
+        0, 0, 0,  // Leggy  Boss Rush
+        0, 0, 0,  // Blobby Normal
+        0, 0, 0,  // Blobby Insane
+        0, 0, 0,  // Blobby 100%
+        0, 0, 0,  // Blobby Boss Rush
+        0, 0, 0,  // Leechy Normal
+        0, 0, 0,  // Leechy Insane
+        0, 0, 0,  // Leechy 100%
+        0, 0, 0   // Leechy Boss Rush
+    };
+
+    public static readonly int[] timeVersionsDefault = new int[]
     {
         0, 0, 0,  // Snaily Normal
         0, 0, 0,  // Snaily Insane
@@ -411,6 +439,7 @@ public class PlayState {
         // RECORDS
         public bool[] achievements;
         public float[] times;
+        public int[] timeVers;
     }
 
     public static readonly ProfileData blankProfile = new()
@@ -454,7 +483,8 @@ public class PlayState {
         keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone(),
         controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone(),
         achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length],
-        times = (float[])timeDefault.Clone()
+        times = (float[])timeDefault.Clone(),
+        timeVers = (int[])timeVersionsDefault.Clone()
     };
 
     public static ProfileData profile1 = blankProfile;
@@ -469,6 +499,47 @@ public class PlayState {
 
     public static Sprite MissingTexture() {
         return globalFunctions.missing;
+    }
+
+    public static int[] ParseVersion(string version)
+    {
+        if (version.Contains(' '))
+            version = version.Split(' ')[1];
+        string[] parts = version.Split('.');
+        int major = int.Parse(parts[0]);
+        int minor = int.Parse(parts[1]);
+        int patch = int.Parse(parts[2]);
+        return new int[] { major, minor, patch };
+    }
+
+    public static int CompareVersions(string ver1, string ver2)
+    {
+        int[] newVer1 = ParseVersion(ver1);
+        int[] newVer2 = ParseVersion(ver2);
+        return CompareVersions(newVer1, newVer2);
+    }
+    public static int CompareVersions(int[] ver1, int[] ver2)
+    {
+        if (ver1[0] > ver2[0])
+            return 1;
+        else if (ver1[0] < ver2[0])
+            return -1;
+        else
+        {
+            if (ver1[1] > ver2[1])
+                return 1;
+            else if (ver1[1] < ver2[1])
+                return -1;
+            else
+            {
+                if (ver1[2] > ver2[2])
+                    return 1;
+                else if (ver1[2] < ver2[2])
+                    return -1;
+                else
+                    return 0;
+            }
+        }
     }
 
     public static AnimationData GetAnim(string name) {
@@ -731,7 +802,7 @@ public class PlayState {
 
     public static void PlayAreaSong(int area, int subzone)
     {
-        if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)))
+        if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)) && areaOfDeath != area)
         {
             if (area == currentArea && subzone != currentSubzone)
                 globalFunctions.UpdateMusic(area, subzone);
@@ -740,6 +811,7 @@ public class PlayState {
         }
         currentArea = area;
         currentSubzone = subzone;
+        areaOfDeath = -1;
     }
 
     public static bool IsTileSolid(Vector2 tilePos, bool checkForEnemyCollide = false) {
@@ -1481,14 +1553,54 @@ public class PlayState {
     public static void LoadAllMainData()
     {
         currentProfile = blankProfile;
-
         LoadAllProfiles();
 
+        generalData = blankData;
         string path = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_OptionsAndRecords.json";
+        //if (File.Exists(path))
+        //    generalData = JsonUtility.FromJson<GeneralData>(File.ReadAllText(path));
+        //else
+        //    generalData = blankData;
         if (File.Exists(path))
-            generalData = JsonUtility.FromJson<GeneralData>(File.ReadAllText(path));
-        else
-            generalData = blankData;
+        {
+            GeneralData newData = JsonUtility.FromJson<GeneralData>(File.ReadAllText(path));
+            if (newData.gameVersion != null)
+                generalData.gameVersion = newData.gameVersion;
+            generalData.soundVolume = newData.soundVolume;
+            generalData.musicVolume = newData.musicVolume;
+            generalData.windowSize = newData.windowSize;
+            generalData.minimapState = newData.minimapState;
+            generalData.bottomKeyState = newData.bottomKeyState;
+            generalData.keymapState = newData.keymapState;
+            generalData.timeState = newData.timeState;
+            generalData.FPSState = newData.FPSState;
+            generalData.shootMode = newData.shootMode;
+            if (newData.texturePackID != null)
+                generalData.texturePackID = newData.texturePackID;
+            if (newData.musicPackID != null)
+                generalData.musicPackID = newData.musicPackID;
+            if (newData.soundPackID != null)
+                generalData.soundPackID = newData.soundPackID;
+            if (newData.textPackID != null)
+                generalData.textPackID = newData.textPackID;
+            generalData.particleState = newData.particleState;
+            generalData.breakableState = newData.breakableState;
+            generalData.secretMapTilesVisible = newData.secretMapTilesVisible;
+            generalData.frameLimiter = newData.frameLimiter;
+            generalData.screenShake = newData.screenShake;
+            generalData.paletteFilterState = newData.paletteFilterState;
+            generalData.controllerFaceType = newData.controllerFaceType;
+            if (newData.keyboardInputs != null)
+                generalData.keyboardInputs = newData.keyboardInputs;
+            if (newData.controllerInputs != null)
+                generalData.controllerInputs = newData.controllerInputs;
+            if (newData.achievements != null)
+                generalData.achievements = newData.achievements;
+            if (newData.times != null)
+                generalData.times = newData.times;
+            if (newData.timeVers != null)
+                generalData.timeVers = newData.timeVers;
+        }
     }
 
     public static void EraseGame(int profile) {
@@ -1592,13 +1704,41 @@ public class PlayState {
         generalData.times[startID] = newTime[0];
         generalData.times[startID + 1] = newTime[1];
         generalData.times[startID + 2] = newTime[2];
-        WriteSave(0, true);
+        SetTimeVersion(target, Application.version, true);
+    }
+
+    public static void SetTimeVersion(TimeIndeces target, string newVer, bool save = false)
+    {
+        if (newVer.Contains(' '))
+            newVer = newVer.Split(' ')[1];
+        string[] verParts = newVer.Split('.');
+        SetTimeVersion(target, new int[] { int.Parse(verParts[0]), int.Parse(verParts[1]), int.Parse(verParts[2]) }, save);
+    }
+    public static void SetTimeVersion(TimeIndeces target, int[] newVer, bool save = false)
+    {
+        int startID = (int)target * 3;
+        generalData.timeVers[startID] = newVer[0];
+        generalData.timeVers[startID + 1] = newVer[1];
+        generalData.timeVers[startID + 2] = newVer[2];
+        if (save)
+            WriteSave(0, true);
     }
 
     public static float[] GetTime(TimeIndeces target)
     {
         int startID = (int)target * 3;
         return new float[] { generalData.times[startID], generalData.times[startID + 1], generalData.times[startID + 2] };
+    }
+
+    public static string GetTimeVersion(TimeIndeces target)
+    {
+        int startID = (int)target * 3;
+        return string.Format("{0}.{1}.{2}", generalData.timeVers[startID], generalData.timeVers[startID + 1], generalData.timeVers[startID + 2]);
+    }
+
+    public static string GetCurrentVersion()
+    {
+        return Application.version.Split(' ')[1];
     }
 
     public static bool HasTime(TimeIndeces ID = TimeIndeces.none)

@@ -1251,13 +1251,20 @@ public class GigaSnail : Boss
                 _ => PlayState.currentProfile.difficulty == 2 ? PlayState.TimeIndeces.snailyInsane : PlayState.TimeIndeces.snailyNormal
             };
 
-            if (PlayState.CompareTimes(PlayState.GetTime(targetTime), new float[] { 0, 0, 0 }) == 0 ||
-                PlayState.CompareTimes(PlayState.GetTime(targetTime), PlayState.currentProfile.gameTime) == 1)
+            if ((PlayState.CompareTimes(PlayState.GetTime(targetTime), new float[] { 0, 0, 0 }) == 0 ||
+                PlayState.CompareTimes(PlayState.GetTime(targetTime), PlayState.currentProfile.gameTime) == 1) &&
+                PlayState.CompareVersions(PlayState.GetTimeVersion(targetTime), PlayState.GetCurrentVersion()) != -1)
             {
                 PlayState.SetTime(targetTime, PlayState.currentProfile.gameTime);
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.bestTime);
                 if (unlocks != "")
                     PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.unlock, unlocks);
+            }
+            else if (PlayState.CompareTimes(PlayState.GetTime(targetTime), new float[] { 0, 0, 0 }) == 1 &&
+                PlayState.CompareTimes(PlayState.GetTime(targetTime), PlayState.currentProfile.gameTime) == -1 &&
+                PlayState.CompareVersions(PlayState.GetTimeVersion(targetTime), PlayState.GetCurrentVersion()) == -1)
+            {
+                PlayState.credits.oldTime = targetTime;
             }
         }
 

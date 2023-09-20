@@ -212,28 +212,22 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.PlayMusic(0, 1);
             switch (itemID) {
                 case 0:
-                    if (!PlayState.isArmed)
+                    if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, false);
-                    PlayState.isArmed = true;
-                    PlayState.playerScript.selectedWeapon = 1;
                     PlayState.globalFunctions.ChangeActiveWeapon(0, true);
                     break;
                 case 1:
                 case 11:
-                    if (!PlayState.isArmed)
+                    if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, false);
-                    PlayState.isArmed = true;
-                    PlayState.playerScript.selectedWeapon = 2;
                     PlayState.globalFunctions.ChangeActiveWeapon(1, true);
                     if (itemID == 11)
                         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SuperSecretBoom);
                     break;
                 case 2:
                 case 12:
-                    if (!PlayState.isArmed)
+                    if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, false);
-                    PlayState.isArmed = true;
-                    PlayState.playerScript.selectedWeapon = 3;
                     PlayState.globalFunctions.ChangeActiveWeapon(2, true);
                     break;
                 case 7:

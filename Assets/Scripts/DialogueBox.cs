@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Globalization;
 
 public class DialogueBox : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class DialogueBox : MonoBehaviour
     private Vector2 posPointerOrigin = new(-11.1875f, 1.875f);
     private Vector2 posPointer;
     private const int MAX_LINE_WIDTH = 246;
+    private const float PLAYER_OFFSET_FOR_DOWN_POS = 1f;
     private bool buttonDown = false;
     private bool active = false;
     private bool playSound = true;
@@ -132,7 +134,7 @@ public class DialogueBox : MonoBehaviour
 
             if (dialogueType != 3)
             {
-                if (player.transform.position.y > cam.transform.position.y + 1f || forceDownPosition || PlayState.achievementOpen)
+                if (player.transform.position.y > cam.transform.position.y + PLAYER_OFFSET_FOR_DOWN_POS || forceDownPosition || PlayState.achievementOpen)
                 {
                     if (active)
                         posVar = Mathf.Lerp(posVar, 1, 7 * Time.deltaTime);
@@ -167,7 +169,7 @@ public class DialogueBox : MonoBehaviour
             if (dialogueType == 2 && boxState == 0)
                 camPos = transform.localPosition.y + 4.5f * (player.transform.position.y > cam.transform.position.y + 0.125f ? -1 : 1);
 
-            if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + 0.125f)
+            if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + PLAYER_OFFSET_FOR_DOWN_POS)
             {
                 if (roomNameAdjustAmount == 0)
                     roomNameAdjustAmount = PlayState.hudRoomName.GetWidth(true) + 0.25f;
@@ -370,7 +372,7 @@ public class DialogueBox : MonoBehaviour
                         currentEffect = args[1].ToLower();
                         break;
                     case "spd":   // Speed
-                        currentTimerMax = float.Parse(args[1]);
+                        currentTimerMax = float.Parse(args[1], CultureInfo.InvariantCulture);
                         break;
                     case "sfx":   // Speaker sound
                         currentSound = int.Parse(args[1]);
@@ -379,7 +381,7 @@ public class DialogueBox : MonoBehaviour
                         currentColor = new Vector2(int.Parse(args[1].Substring(0, 2)), int.Parse(args[1].Substring(2, 2)));
                         break;
                     case "p":     // Pause
-                        timer = float.Parse(args[1]);
+                        timer = float.Parse(args[1], CultureInfo.InvariantCulture);
                         advanceChar = false;
                         break;
                     case "ctrl":  // Parse keybind to string
@@ -497,6 +499,7 @@ public class DialogueBox : MonoBehaviour
             PlayState.paralyzed = false;
         PlayState.dialogueOpen = false;
         dialogueType = 0;
+        timer = 0;
         boxOpenAnimComplete = false;
         active = false;
         for (int i = transform.childCount - 1; i >= 0; i--)

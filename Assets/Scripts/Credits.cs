@@ -22,6 +22,7 @@ public class Credits : MonoBehaviour
     private const float TEXT_VERTICAL_SIZE = 1.125f;
     private const float CREDITS_DONE_TIMER = 7f;
     private const float STATS_FADE_DELAY = 3f;
+    private const float OVERWRITE_LERP_VALUE = 15f;
     private const float FINAL_FADEOUT_TIME = 2f;
 
     private float modeTimer = 0;
@@ -70,13 +71,18 @@ public class Credits : MonoBehaviour
     private bool textVisible = false;
     private float nextCharTimeout = 0;
     private bool startedNewLine = false;
+    private string overwriteString;
+    private bool confirmOverwrite;
 
     private TextObject statsText;
+    private TextObject overwriteText;
 
     private Transform creditsParent;
 
     private GameObject textObj;
     private GameObject creditsEntity;
+
+    public PlayState.TimeIndeces oldTime = PlayState.TimeIndeces.none;
 
     #region Entity Roll Call
 
@@ -224,6 +230,8 @@ public class Credits : MonoBehaviour
         cutsceneText.SetText("");
         statsText = transform.Find("Final Stats Text").GetComponent<TextObject>();
         statsText.SetColor(new Color(1, 1, 1, 0));
+        overwriteText = transform.Find("Overwrite Prompt Text").GetComponent<TextObject>();
+        overwriteText.SetColor(new Color(1, 1, 1, 0));
         creditsParent = transform.Find("Credits Roll").transform;
         textObj = Resources.Load<GameObject>("Objects/Text Object");
         creditsEntity = Resources.Load<GameObject>("Objects/Credits Entity");
@@ -505,6 +513,7 @@ public class Credits : MonoBehaviour
                 }
                 break;
             case PlayState.CreditsStates.time:
+            case PlayState.CreditsStates.overwriteOldTime:
             case PlayState.CreditsStates.fadeOut:
                 modeTimer += Time.deltaTime;
                 float layerX = Mathf.Clamp(30f - (modeTimer * 10f), 0, Mathf.Infinity);
@@ -522,11 +531,41 @@ public class Credits : MonoBehaviour
                     if (fadeTransitionCountdown <= 0)
                         EndCredits();
                 }
-                else if (modeTimer >= 1.5f && (Control.CheckKey(Control.Keyboard.Return) || Control.CheckButton(Control.Controller.Pause)))
+                else if (PlayState.creditsState == PlayState.CreditsStates.overwriteOldTime)
                 {
-                    PlayState.creditsState = PlayState.CreditsStates.fadeOut;
-                    PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, FINAL_FADEOUT_TIME);
-                    fadeTransitionCountdown = FINAL_FADEOUT_TIME;
+                    statsText.position = new Vector2(0, Mathf.Lerp(statsText.position.y, 6.5f, OVERWRITE_LERP_VALUE * Time.deltaTime));
+                    overwriteText.position = new Vector2(0, Mathf.Lerp(overwriteText.position.y, -0.5f, OVERWRITE_LERP_VALUE * Time.deltaTime));
+                    if (Control.LeftPress() || Control.RightPress())
+                    {
+                        confirmOverwrite = !confirmOverwrite;
+                        PlayState.PlaySound("MenuBeep1");
+                    }
+                    overwriteText.SetText(overwriteString + "\n\n" + string.Format(confirmOverwrite ? "> {0} <   {1}  " : "  {0}   > {1} <",
+                        PlayState.GetText("ending_overwriteConfirm"), PlayState.GetText("ending_overwriteCancel")));
+                    if (Control.JumpPress())
+                    {
+                        PlayState.PlaySound("MenuBeep2");
+                        if (confirmOverwrite)
+                            PlayState.SetTime(oldTime, completionTime);
+                        PlayState.creditsState = PlayState.CreditsStates.fadeOut;
+                        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, FINAL_FADEOUT_TIME);
+                        fadeTransitionCountdown = FINAL_FADEOUT_TIME;
+                    }
+                }
+                else if (modeTimer >= 1.5f && (Control.Pause() || Control.JumpHold() || Control.ShootHold() || Control.StrafeHold() ||
+                    Control.CheckKey(Control.Keyboard.Return) || Control.CheckButton(Control.Controller.Pause)))
+                {
+                    if (oldTime != PlayState.TimeIndeces.none)
+                    {
+                        modeTimer = STATS_FADE_DELAY + 1f;
+                        PlayState.creditsState = PlayState.CreditsStates.overwriteOldTime;
+                    }
+                    else
+                    {
+                        PlayState.creditsState = PlayState.CreditsStates.fadeOut;
+                        PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, FINAL_FADEOUT_TIME);
+                        fadeTransitionCountdown = FINAL_FADEOUT_TIME;
+                    }
                 }
                 break;
         }
@@ -754,6 +793,12 @@ public class Credits : MonoBehaviour
         statsText.SetText(string.Format(PlayState.GetText("ending_stats"), PlayState.GetText("char_" + PlayState.currentProfile.character.ToLower()),
             PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" }),
             PlayState.currentProfile.percentage, PlayState.GetTimeString(completionTime)));
+        statsText.position = new Vector2(0, 2.5f);
+        if (oldTime != PlayState.TimeIndeces.none)
+            overwriteString = string.Format(PlayState.GetText("ending_promptOverwrite"), PlayState.GetTimeString(oldTime), PlayState.GetTimeVersion(oldTime));
+        overwriteText.position = new Vector2(0, -7.5f);
+        overwriteText.SetColor(new Color(1, 1, 1, 1));
+        confirmOverwrite = false;
     }
 
     public void EndCredits()
@@ -766,6 +811,7 @@ public class Credits : MonoBehaviour
         PlayState.fader = 1f;
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.34f);
         statsText.SetColor(new Color(1, 1, 1, 0));
+        overwriteText.SetColor(new Color(1, 1, 1, 0));
         PlayState.gameState = PlayState.GameState.game;
         Destroy(background.obj);
         Destroy(endImage.obj);

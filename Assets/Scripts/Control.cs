@@ -421,7 +421,7 @@ public class Control
             output = virtualKey[index];
         else
             output = (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
-                Input.GetKey(PlayState.generalData.keyboardInputs[index])) || (ignoreVirtual ? false : virtualKey[index]);
+                Input.GetKey(PlayState.generalData.keyboardInputs[index])) || (!ignoreVirtual && virtualKey[index]);
         if (output)
             lastInputIsCon = false;
         return output;

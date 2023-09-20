@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Globalization;
 
 public class MainMenu : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class MainMenu : MonoBehaviour
     private bool lerpLetterOffsetToZero = false;
     private Transform cursor;
     private Vector2 lastCursorPos;
+    private int versionCompare = 0;
 
     private enum IntroStates
     {
@@ -165,6 +167,23 @@ public class MainMenu : MonoBehaviour
             Directory.CreateDirectory(Application.persistentDataPath + "/TextPacks");
 
         PlayState.LoadAllMainData();
+
+        string oldVerStr = PlayState.generalData.gameVersion;
+        string newVerStr = Application.version;
+        if (oldVerStr == "")
+            PlayState.generalData.gameVersion = newVerStr;
+        else
+        {
+            versionCompare = PlayState.CompareVersions(newVerStr, oldVerStr);
+            if (versionCompare == 1)
+                PlayState.generalData.gameVersion = newVerStr;
+        }
+        for (int i = 0; i * 3 < PlayState.generalData.times.Length; i++)
+        {
+            PlayState.TimeIndeces target = (PlayState.TimeIndeces)i;
+            if (PlayState.HasTime(target) && PlayState.GetTimeVersion(target) == "0.0.0")
+                PlayState.SetTimeVersion(target, new int[] { 0, 2, 0 });
+        }
 
         PlayState.LoadPacks();
 
@@ -1561,7 +1580,7 @@ public class MainMenu : MonoBehaviour
                             storyCharIndex++;
                         }
                         storyCharIndex++;
-                        letterDelay = float.Parse(newNum);
+                        letterDelay = float.Parse(newNum, CultureInfo.InvariantCulture);
                     }
                     letterDelay -= Time.deltaTime;
                     while (letterDelay <= 0)
@@ -1586,12 +1605,14 @@ public class MainMenu : MonoBehaviour
         PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 0.5f);
 
         float waitTime = 0.5f;
+        PlayState.resetInducingFadeActive = true;
         while (waitTime >= 0)
         {
             waitTime -= Time.deltaTime;
             PlayState.fader = waitTime * 2;
             yield return new WaitForEndOfFrame();
         }
+        PlayState.resetInducingFadeActive = false;
 
         lastRoomTrigger.DespawnEverything();
         PlayState.ResetAllParticles();
@@ -1636,7 +1657,7 @@ public class MainMenu : MonoBehaviour
         else
             PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
                 (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
-        PlayState.isArmed = PlayState.CheckForItem(0) || PlayState.CheckForItem(1) || PlayState.CheckForItem(2) || PlayState.CheckForItem(11) || PlayState.CheckForItem(12);
+        //PlayState.isArmed = PlayState.CheckForItem(0) || PlayState.CheckForItem(1) || PlayState.CheckForItem(2) || PlayState.CheckForItem(11) || PlayState.CheckForItem(12);
     }
 
     public void SetTextComponentOrigins()
@@ -1702,19 +1723,43 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         if (PlayState.IsControllerConnected())
             AddOption(string.Format(PlayState.GetText("menu_intro_controller"),
-                PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageMain);
+                PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageWarning);
         else
             AddOption(string.Format(PlayState.GetText("menu_intro_keyboard"),
-                PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageMain);
+                PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageWarning);
         AddOption("", false);
         AddOption("", false);
         ForceSelect(0);
         backPage = null;
     }
 
+    public void PageWarning()
+    {
+        if (versionCompare != -1)
+        {
+            PageMain();
+            return;
+        }
+        ClearOptions();
+        lerpLetterOffsetToZero = true;
+        AddOption(PlayState.GetText("menu_olderVersion_1"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_2"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_3"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_4"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_5"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_6"), false);
+        AddOption(PlayState.GetText("menu_olderVersion_7"), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_olderVersion_confirm"), true, PageMain);
+        ForceSelect(8);
+        backPage = null;
+    }
+
     public void PageMain()
     {
         ClearOptions();
+        if (versionCompare == -1)
+            PlayState.generalData.gameVersion = Application.version;
         lerpLetterOffsetToZero = true;
         bool returnAvailable = false;
         if (PlayState.gameState == PlayState.GameState.pause)
@@ -1723,7 +1768,7 @@ public class MainMenu : MonoBehaviour
             returnAvailable = true;
         }
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
-        if (PlayState.generalData.achievements[6])
+        if (PlayState.generalData.achievements[3])
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true);
         //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
@@ -2874,24 +2919,43 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_normal"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.snailyNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.snailyNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.snailyNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.snailyNormal) + ")"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.sluggyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.sluggyNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.sluggyNormal) + ")"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.upsideNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.upsideNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.upsideNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.upsideNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.upsideNormal) + ")"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.leggyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leggyNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.leggyNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.leggyNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.leggyNormal) + ")"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.blobbyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.blobbyNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.blobbyNormal) + ")"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.leechyNormal))
             AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leechyNormal)), false);
+                PlayState.GetTimeString(PlayState.TimeIndeces.leechyNormal))
+                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.leechyNormal)) == 0 ?
+                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.leechyNormal) + ")"), false);
+
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(currentOptions.Count - 1);

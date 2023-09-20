@@ -525,13 +525,14 @@ public class GlobalFunctions : MonoBehaviour
     
     private IEnumerator DelayStartThemeCoroutine(int area, int subzone, float delayTime)
     {
-        while (delayTime > 0)
+        while (delayTime > 0 && !PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
         {
             if (PlayState.gameState == PlayState.GameState.game)
                 delayTime -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        UpdateMusic(area, subzone, 1);
+        if (!PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
+            UpdateMusic(area, subzone, 1);
     }
 
     public void RunDustRing(int tfType = -1)
@@ -819,7 +820,7 @@ public class GlobalFunctions : MonoBehaviour
         int healthRemaining = PlayState.playerScript.maxHealth - PlayState.playerScript.health;
         float secondsPerPoint = timeMode ? fillTime : (fillTime / (float)healthRemaining);
 
-        while (healthRemaining > 0)
+        while (healthRemaining > 0 && !PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
         {
             healthRemaining -= fillRate;
             PlayState.playerScript.health = Mathf.Clamp(PlayState.playerScript.health + fillRate, 0, PlayState.playerScript.maxHealth);
@@ -1057,7 +1058,7 @@ public class GlobalFunctions : MonoBehaviour
             int index = 0;
             while (index < times.Count)
             {
-                if (PlayState.gameState == PlayState.GameState.game)
+                if (PlayState.gameState == PlayState.GameState.game && !PlayState.resetInducingFadeActive)
                 {
                     time += Time.deltaTime;
                     if (time >= times[index])
@@ -1085,7 +1086,7 @@ public class GlobalFunctions : MonoBehaviour
                             PlayState.camObj.transform.localPosition += (Vector3)intensityVector;
                     }
                 }
-                else if (PlayState.gameState == PlayState.GameState.menu)
+                else if (PlayState.gameState == PlayState.GameState.menu || PlayState.resetInducingFadeActive)
                     index = times.Count;
                 yield return new WaitForEndOfFrame();
                 PlayState.camShakeOffset = Vector2.zero;

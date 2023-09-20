@@ -91,6 +91,46 @@
 			"value": 0
 		},
 		{
+			"name": "menu_olderVersion_1",
+			"text": "Woah there!!",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_2",
+			"text": "Looks like your current save is",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_3",
+			"text": "from a newer version of the game!",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_4",
+			"text": "Are you sure you wanna continue",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_5",
+			"text": "playing this version? Some data",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_6",
+			"text": "might get erased!! I'd recommend",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_7",
+			"text": "backing it up before continuing!",
+			"value": 0
+		},
+		{
+			"name": "menu_olderVersion_confirm",
+			"text": "Yeah, let me in!",
+			"value": 0
+		},
+		{
 			"name": "menu_option_main_return",
 			"text": "Return to game",
 			"value": 0
@@ -3933,6 +3973,21 @@
 		{
 			"name": "ending_stats",
 			"text": "Congratulations!!\n\n{0} - {1}\nItems collected: {2}%\nClear time: {3}",
+			"value": 0
+		},
+		{
+			"name": "ending_promptOverwrite",
+			"text": "Would you like to overwrite\nyour previous best of\n{0} (from ver. {1})?",
+			"value": 0
+		},
+		{
+			"name": "ending_overwriteConfirm",
+			"text": "Sure",
+			"value": 0
+		},
+		{
+			"name": "ending_overwriteCancel",
+			"text": "Nah",
 			"value": 0
 		},
 		{

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     #region vars
     public enum Dirs { Floor, WallL, WallR, Ceiling };
     public Dirs gravityDir = Dirs.Floor;
+    public Dirs lastGravity = Dirs.Floor;
 
     public const int MAX_DIST_CASTS = 4;
     public const int THIN_TUNNEL_ENTRANCE_STEPS = 16;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public bool underwater = false;
     public Vector2 velocity = Vector2.zero;
     public bool grounded;
+    public bool groundedLastFrame;
     public bool shelled;
     public bool ungroundedViaHop;
     public bool groundedOnPlatform;
@@ -287,6 +289,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Among other things, this is used to test for ground when we're airborne
         lastPosition = new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y);
         lastSize = box.size;
+        lastGravity = gravityDir;
+        groundedLastFrame = grounded;
         // We ensure we're not clipping inside any ground
         EjectFromCollisions();
         // Next, we decrease the fire cooldown
@@ -347,7 +351,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             EjectFromCollisions();
 
             // Hey, do we happen to be stuck falling on a corner here?
-            if (lastPosition == (Vector2)transform.position && !grounded)
+            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame)
             {
                 transform.position += PlayState.FRAC_64 * gravityDir switch
                 {
@@ -458,7 +462,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (fall)
                 {
                     grounded = false;
-                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                    if (!CheckAbility(retainGravityOnAirborne) && lastGravity != defaultGravityDir)
                         coyoteTimeCounter = coyoteTime;
                 }
             }
@@ -686,7 +690,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (fall)
                 {
                     grounded = false;
-                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                    if (!CheckAbility(retainGravityOnAirborne) && lastGravity != defaultGravityDir)
                         coyoteTimeCounter = coyoteTime;
                 }
             }
@@ -913,7 +917,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (fall)
                 {
                     grounded = false;
-                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                    if (!CheckAbility(retainGravityOnAirborne) && lastGravity != defaultGravityDir)
                         coyoteTimeCounter = coyoteTime;
                 }
             }
@@ -1140,7 +1144,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (fall)
                 {
                     grounded = false;
-                    if (!CheckAbility(retainGravityOnAirborne) && gravityDir != defaultGravityDir)
+                    if (!CheckAbility(retainGravityOnAirborne) && lastGravity != defaultGravityDir)
                         coyoteTimeCounter = coyoteTime;
                 }
             }
@@ -1747,12 +1751,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
         box.enabled = false;
         PlayState.paralyzed = true;
         PlayState.PlaySound("Death");
+        PlayState.areaOfDeath = PlayState.currentArea;
         float timer = 0;
         bool hasStartedTransition = false;
         Vector3 fallDir = new(0.125f, 0.35f, 0);
         if (!facingLeft)
             fallDir = new Vector3(-0.125f, 0.35f, 0);
-        while ((timer < 1.6f && PlayState.quickDeathTransition) || (timer < 2 && !PlayState.quickDeathTransition))
+        while (((timer < 1.6f && PlayState.quickDeathTransition) || (timer < 2 && !PlayState.quickDeathTransition))
+            && !PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
         {
             transform.position += fallDir;
             fallDir = new Vector3(fallDir.x, Mathf.Clamp(fallDir.y - 0.025f, -0.5f, Mathf.Infinity), 0);
@@ -1765,23 +1771,26 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
         }
         yield return new WaitForEndOfFrame();
-        if (PlayState.positionOfLastRoom == PlayState.positionOfLastSave)
+        if (!PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
         {
-            Transform deathLocation = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
-            deathLocation.GetComponent<Collider2D>().enabled = true;
-            deathLocation.GetComponent<RoomTrigger>().active = true;
-            deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
+            if (PlayState.positionOfLastRoom == PlayState.positionOfLastSave)
+            {
+                Transform deathLocation = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+                deathLocation.GetComponent<Collider2D>().enabled = true;
+                deathLocation.GetComponent<RoomTrigger>().active = true;
+                deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
+            }
+            PlayState.ToggleBossfightState(false, 0, true);
+            transform.position = PlayState.currentProfile.saveCoords;
+            inDeathCutscene = false;
+            box.enabled = true;
+            PlayState.paralyzed = false;
+            health = maxHealth;
+            ResetState();
+            PlayState.globalFunctions.UpdateHearts();
+            yield return new WaitForEndOfFrame();
+            PlayState.ScreenFlash("Room Transition");
         }
-        PlayState.ToggleBossfightState(false, 0, true);
-        transform.position = PlayState.currentProfile.saveCoords;
-        inDeathCutscene = false;
-        box.enabled = true;
-        PlayState.paralyzed = false;
-        health = maxHealth;
-        ResetState();
-        PlayState.globalFunctions.UpdateHearts();
-        yield return new WaitForEndOfFrame();
-        PlayState.ScreenFlash("Room Transition");
     }
 
     public virtual void ResetState()
