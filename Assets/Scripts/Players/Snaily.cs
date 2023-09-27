@@ -166,5 +166,8 @@ public class Snaily : Player
     
         if (currentState != anim.currentAnimName)
             anim.Play(currentState);
+
+        sprite.flipX = forceFaceH != 1 && (forceFaceH == -1 || sprite.flipX);
+        sprite.flipY = forceFaceV == 1 || (forceFaceV != -1 && sprite.flipY);
     }
 }

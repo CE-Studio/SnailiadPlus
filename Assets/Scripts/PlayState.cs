@@ -1121,37 +1121,47 @@ public class PlayState {
         }
     }
 
-    public static bool IsBossAlive(int bossID) {
+    public static bool IsBossAlive(int bossID)
+    {
         return currentProfile.bossStates[bossID] == 1;
     }
 
-    public static bool CheckForItem(int itemID) {
+    public static bool CheckForItem(int itemID)
+    {
         return currentProfile.items[itemID] == 1;
     }
 
-    public static bool CheckForItem(string itemName) {
+    public static bool CheckForItem(string itemName)
+    {
         return currentProfile.items[TranslateItemNameToID(itemName)] == 1;
     }
 
-    public static bool CheckShellLevel(int level) {
+    public static bool CheckShellLevel(int level)
+    {
         bool meetsLevel;
-        if (currentProfile.difficulty == 2) {
-            meetsLevel = level switch {
-                2 => CheckForItem(8),
-                3 => CheckForItem(9),
-                _ => CheckForItem(7),
-            };
-        } else {
-            meetsLevel = level switch {
+        if (stackShells)
+        {
+            meetsLevel = level switch
+            {
                 2 => CheckForItem(8) || CheckForItem(9),
                 3 => CheckForItem(9),
                 _ => CheckForItem(7) || CheckForItem(8) || CheckForItem(9),
             };
         }
+        else
+        {
+            meetsLevel = level switch
+            {
+                2 => CheckForItem(8),
+                3 => CheckForItem(9),
+                _ => CheckForItem(7),
+            };
+        }
         return meetsLevel;
     }
 
-    public static int GetShellLevel() {
+    public static int GetShellLevel()
+    {
         return CheckForItem(9) ? 3 : (CheckForItem(8) ? 2 : (CheckForItem(7) ? 1 : 0));
     }
 
@@ -1557,10 +1567,6 @@ public class PlayState {
 
         generalData = blankData;
         string path = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_OptionsAndRecords.json";
-        //if (File.Exists(path))
-        //    generalData = JsonUtility.FromJson<GeneralData>(File.ReadAllText(path));
-        //else
-        //    generalData = blankData;
         if (File.Exists(path))
         {
             GeneralData newData = JsonUtility.FromJson<GeneralData>(File.ReadAllText(path));
@@ -1591,15 +1597,25 @@ public class PlayState {
             generalData.paletteFilterState = newData.paletteFilterState;
             generalData.controllerFaceType = newData.controllerFaceType;
             if (newData.keyboardInputs != null)
-                generalData.keyboardInputs = newData.keyboardInputs;
+                generalData.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
             if (newData.controllerInputs != null)
-                generalData.controllerInputs = newData.controllerInputs;
+                generalData.controllerInputs = (KeyCode[])newData.controllerInputs.Clone();
             if (newData.achievements != null)
-                generalData.achievements = newData.achievements;
+                generalData.achievements = (bool[])newData.achievements.Clone();
             if (newData.times != null)
-                generalData.times = newData.times;
+                generalData.times = (float[])newData.times.Clone();
             if (newData.timeVers != null)
-                generalData.timeVers = newData.timeVers;
+                generalData.timeVers = (int[])newData.timeVers.Clone();
+        }
+        if (Control.keyboardInputs.Length != Control.defaultKeyboardInputs.Length)
+        {
+            Control.keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone();
+            generalData.keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone();
+        }
+        if (Control.controllerInputs.Length != Control.defaultControllerInputs.Length)
+        {
+            Control.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
+            generalData.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
         }
     }
 

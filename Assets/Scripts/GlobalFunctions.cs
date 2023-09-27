@@ -30,6 +30,7 @@ public class GlobalFunctions : MonoBehaviour
 
     // Weapon icons
     public AnimationModule[] weaponIcons = new AnimationModule[3];
+    private bool bottomKeysAreCon = false;
 
     // Health
     public readonly int[] hpPerHeart = new int[] { 8, 4, 2 };
@@ -65,9 +66,23 @@ public class GlobalFunctions : MonoBehaviour
     // Reference to palette shader component
     public Assets.Scripts.Cam.Effects.RetroPixelMax paletteShader;
 
+    // Controller input mono
+    public ControllerInput conInput;
+
     public void Awake()
     {
         DeclarePlayStateMono();
+        conInput = new ControllerInput();
+        Control.conInput = conInput;
+    }
+
+    private void OnEnable()
+    {
+        conInput.Enable();
+    }
+    private void OnDisable()
+    {
+        conInput.Disable();
     }
 
     public void Start()
@@ -346,19 +361,21 @@ public class GlobalFunctions : MonoBehaviour
         }
 
         // Update bottom keys
-        if (PlayState.gameState == PlayState.GameState.game)
+        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.map)
         {
             PlayState.TogglableHUDElements[11].SetActive(PlayState.generalData.bottomKeyState == 2);
             PlayState.TogglableHUDElements[3].SetActive(PlayState.generalData.bottomKeyState >= 1);
-            if (PlayState.IsControllerConnected())
+            if (Control.lastInputIsCon && !bottomKeysAreCon)
             {
                 PlayState.hudPause.SetText(Control.ParseButtonName(Control.Controller.Pause, true));
                 PlayState.hudMap.SetText(Control.ParseButtonName(Control.Controller.Map, true));
+                bottomKeysAreCon = true;
             }
-            else
+            else if (!Control.lastInputIsCon && bottomKeysAreCon)
             {
                 PlayState.hudPause.SetText(Control.ParseKeyName(Control.Keyboard.Pause, true));
                 PlayState.hudMap.SetText(Control.ParseKeyName(Control.Keyboard.Map, true));
+                bottomKeysAreCon = false;
             }
         }
 

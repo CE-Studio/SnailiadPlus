@@ -957,6 +957,9 @@ public class Credits : MonoBehaviour
         AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.GoldGuy },
             new string[] { "credits_entity_goldguy" });
         creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Xander },
+            new string[] { "credits_entity_xander" });
+        creditsGenerateY -= 0.625f;
         AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Discord },
             new string[] { "credits_entity_discord" });
         creditsGenerateY -= 4.375f;

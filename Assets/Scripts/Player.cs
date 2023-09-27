@@ -50,6 +50,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float lastPointBeforeHop = 0;
     public bool[] animData;
     private int[] shellShieldEffectOffset;
+    public int forceFaceH = 0;
+    public int forceFaceV = 0;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -1297,7 +1299,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             thisCheck = false;
                             break;
                         default:
-                            thisCheck = PlayState.currentProfile.items[ability[i][j]] == 1;
+                            int thisItem = ability[i][j];
+                            if (thisItem == 8 || thisItem == 9)
+                                thisCheck = PlayState.CheckShellLevel(thisItem switch { 7 => 1, 8 => 2, _ => 3 });
+                            else
+                                thisCheck = PlayState.currentProfile.items[ability[i][j]] == 1;
                             break;
                     }
                 }

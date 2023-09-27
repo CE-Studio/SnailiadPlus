@@ -425,7 +425,7 @@ TextureImporter:
         width: 18
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -446,7 +446,7 @@ TextureImporter:
         width: 18
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -454,6 +454,27 @@ TextureImporter:
       bones: []
       spriteID: 8ef06b3f45edc544f96617a00b0ee486
       internalID: 1451207143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelPeople_13
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 0
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d46a518fb1173f4c9a900decfc64133
+      internalID: 419365118
       vertices: []
       indices: 
       edges: []
@@ -474,6 +495,7 @@ TextureImporter:
       PixelPeople_10: 3493522958586446201
       PixelPeople_11: -308975675
       PixelPeople_12: 1451207143
+      PixelPeople_13: 419365118
       PixelPeople_2: -855077781951170873
       PixelPeople_3: 2271647522411465316
       PixelPeople_4: 8569312285807852600

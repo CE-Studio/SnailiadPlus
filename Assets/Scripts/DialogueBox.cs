@@ -172,7 +172,7 @@ public class DialogueBox : MonoBehaviour
             if (active && dialogueType == 2 && player.transform.position.y < cam.transform.position.y + PLAYER_OFFSET_FOR_DOWN_POS)
             {
                 if (roomNameAdjustAmount == 0)
-                    roomNameAdjustAmount = PlayState.hudRoomName.GetWidth(true) + 0.25f;
+                    roomNameAdjustAmount = PlayState.hudRoomName.GetWidth(true) + 0.5f;
             }
             else
                 roomNameAdjustAmount = 0;

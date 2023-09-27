@@ -298,7 +298,7 @@ public class EnemyBullet : MonoBehaviour
         }
         initialSpeed = speed;
 
-        if (!PlayState.OnScreen(transform.position, box))
+        if (despawnOffscreen && !PlayState.OnScreen(transform.position, box))
             Despawn();
         else if (playSound)
             PlayState.PlaySound(soundID);

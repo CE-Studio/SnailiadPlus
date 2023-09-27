@@ -1077,7 +1077,7 @@
 		},
 		{
 			"name": "menu_option_achievements_beatmoonsnailnofms_title",
-			"text": "Scout",
+			"text": "Glass Cannon",
 			"value": 0
 		},
 		{
@@ -1838,6 +1838,11 @@
 		{
 			"name": "menu_add_shake_noHud",
 			"text": "on (no HUD shake)",
+			"value": 0
+		},
+		{
+			"name": "intro_skip",
+			"text": "{0} to skip",
 			"value": 0
 		},
 		{
@@ -3963,6 +3968,11 @@
 		{
 			"name": "credits_entity_discord",
 			"text": "The Snailiad Discord\n(Testing, feedback, ideas,\nand being patient\nSeriously y'all are amazing _@_v)",
+			"value": 0
+		},
+		{
+			"name": "credits_entity_xander",
+			"text": "They Call Me Xander\n(Call him an entomologist the\nway he discovers those bugs)",
 			"value": 0
 		},
 		{

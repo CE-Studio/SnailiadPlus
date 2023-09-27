@@ -284,7 +284,7 @@ public class Stompy : Boss
                         {
                             Control.SetVirtual(Control.Keyboard.Left1, false);
                             Control.SetVirtual(Control.Keyboard.Right1, true);
-                            PlayState.playerScript.SwapDir(Player.Dirs.WallL);
+                            PlayState.playerScript.forceFaceH = -1;
                         }
                         modeMain = BossMode.intro2;
                     }
@@ -303,6 +303,7 @@ public class Stompy : Boss
                         {
                             PlayState.playerScript.velocity.x = 0;
                             Control.ClearVirtual(true, true);
+                            PlayState.playerScript.forceFaceH = 0;
                             PlayState.playerScript.SwapDir(Player.Dirs.WallL);
                         }
                         modeMain = BossMode.intro3;

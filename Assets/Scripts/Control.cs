@@ -34,7 +34,7 @@ public class Control
 
     public static KeyCode[] keyboardInputs = new KeyCode[] { };
 
-    public static KeyCode[] defaultKeyboardInputs = new KeyCode[]
+    public static readonly KeyCode[] defaultKeyboardInputs = new KeyCode[]
     {
         KeyCode.LeftArrow,
         KeyCode.RightArrow,
@@ -92,32 +92,32 @@ public class Control
 
     public static KeyCode[] controllerInputs = new KeyCode[] {};
 
-    public static KeyCode[] defaultControllerInputs = new KeyCode[]
+    public static readonly KeyCode[] defaultControllerInputs = new KeyCode[]
     {
         KeyCode.Keypad0,
         KeyCode.Alpha0,
         KeyCode.Keypad1,
         KeyCode.Alpha1,
-        KeyCode.JoystickButton0,
-        KeyCode.JoystickButton2,
-        KeyCode.JoystickButton7,
-        KeyCode.JoystickButton1,
+        KeyCode.Joystick1Button0,
+        KeyCode.Joystick1Button2,
+        KeyCode.Joystick1Button7,
+        KeyCode.Joystick1Button1,
         KeyCode.Keypad2,
         KeyCode.Alpha2,
         KeyCode.Keypad3,
         KeyCode.Alpha3,
-        KeyCode.JoystickButton6,
-        KeyCode.JoystickButton2,
-        KeyCode.JoystickButton7,
-        KeyCode.JoystickButton3,
-        KeyCode.JoystickButton14,
-        KeyCode.JoystickButton12,
-        KeyCode.JoystickButton15,
-        KeyCode.JoystickButton5,
-        KeyCode.JoystickButton4,
-        KeyCode.JoystickButton13,
-        KeyCode.JoystickButton9,
-        KeyCode.JoystickButton8
+        KeyCode.Joystick1Button6,
+        KeyCode.Joystick1Button2,
+        KeyCode.Joystick1Button7,
+        KeyCode.Joystick1Button3,
+        KeyCode.Joystick1Button14,
+        KeyCode.Joystick1Button12,
+        KeyCode.Joystick1Button15,
+        KeyCode.Joystick1Button5,
+        KeyCode.Joystick1Button4,
+        KeyCode.Joystick1Button13,
+        KeyCode.Joystick1Button9,
+        KeyCode.Joystick1Button8
     };
 
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
@@ -128,6 +128,8 @@ public class Control
     public const float STICK_DEADZONE = 0.25f;
 
     public static bool lastInputIsCon = false;
+
+    public static ControllerInput conInput;
 
     public static int AxisX(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
@@ -575,23 +577,23 @@ public class Control
             KeyCode.Keypad2 => shortForm ? "R -x" : "R stick left",
             KeyCode.Alpha3 => shortForm ? "R +y" : "R stick down",
             KeyCode.Keypad3 => shortForm ? "R -y" : "R stick up",
-            KeyCode.JoystickButton0 => PlayState.generalData.controllerFaceType switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
-            KeyCode.JoystickButton1 => PlayState.generalData.controllerFaceType switch { 1 => "A", 2 => (shortForm ? "CIR" : "Circle"), 3 => "A", _ => "B" },
-            KeyCode.JoystickButton2 => PlayState.generalData.controllerFaceType switch { 1 => "Y", 2 => (shortForm ? "SQR" : "Square"), 3 => "U", _ => "X" },
-            KeyCode.JoystickButton3 => PlayState.generalData.controllerFaceType switch { 1 => "X", 2 => (shortForm ? "TRI" : "Triangle"), 3 => "Y", _ => "Y" },
-            KeyCode.JoystickButton4 => PlayState.generalData.controllerFaceType switch { 1 => "L", _ => "L1" },
-            KeyCode.JoystickButton5 => PlayState.generalData.controllerFaceType switch { 1 => "R", _ => "R1" },
-            KeyCode.JoystickButton6 => PlayState.generalData.controllerFaceType switch { 1 => "ZL", _ => "L2" },
-            KeyCode.JoystickButton7 => PlayState.generalData.controllerFaceType switch { 1 => "ZR", _ => "R2" },
-            KeyCode.JoystickButton8 => PlayState.generalData.controllerFaceType switch { 0 => "View", 1 => "-", _ => (shortForm ? "SEL" : "Select") },
-            KeyCode.JoystickButton9 => PlayState.generalData.controllerFaceType switch { 0 => "Menu", 1 => "+", _ => (shortForm ? "ST" : "Start") },
-            KeyCode.JoystickButton10 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
-            KeyCode.JoystickButton11 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
-            KeyCode.JoystickButton12 => "Up",
-            KeyCode.JoystickButton13 => "Down",
-            KeyCode.JoystickButton14 => "Left",
-            KeyCode.JoystickButton15 => "Right",
-            KeyCode.JoystickButton16 => "Home",
+            KeyCode.Joystick1Button0 => PlayState.generalData.controllerFaceType switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
+            KeyCode.Joystick1Button1 => PlayState.generalData.controllerFaceType switch { 1 => "A", 2 => shortForm ? "CIR" : "Circle", 3 => "A", _ => "B" },
+            KeyCode.Joystick1Button2 => PlayState.generalData.controllerFaceType switch { 1 => "Y", 2 => shortForm ? "SQR" : "Square", 3 => "U", _ => "X" },
+            KeyCode.Joystick1Button3 => PlayState.generalData.controllerFaceType switch { 1 => "X", 2 => shortForm ? "TRI" : "Triangle", 3 => "Y", _ => "Y" },
+            KeyCode.Joystick1Button4 => PlayState.generalData.controllerFaceType switch { 1 => "L", _ => "L1" },
+            KeyCode.Joystick1Button5 => PlayState.generalData.controllerFaceType switch { 1 => "R", _ => "R1" },
+            KeyCode.Joystick1Button6 => PlayState.generalData.controllerFaceType switch { 1 => "ZL", _ => "L2" },
+            KeyCode.Joystick1Button7 => PlayState.generalData.controllerFaceType switch { 1 => "ZR", _ => "R2" },
+            KeyCode.Joystick1Button8 => PlayState.generalData.controllerFaceType switch { 0 => "View", 1 => "-", _ => shortForm ? "SEL" : "Select" },
+            KeyCode.Joystick1Button9 => PlayState.generalData.controllerFaceType switch { 0 => "Menu", 1 => "+", _ => shortForm ? "ST" : "Start" },
+            KeyCode.Joystick1Button10 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
+            KeyCode.Joystick1Button11 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
+            KeyCode.Joystick1Button12 => "Up",
+            KeyCode.Joystick1Button13 => "Down",
+            KeyCode.Joystick1Button14 => "Left",
+            KeyCode.Joystick1Button15 => "Right",
+            KeyCode.Joystick1Button16 => "Home",
             _ => button.ToString()
         };
     }

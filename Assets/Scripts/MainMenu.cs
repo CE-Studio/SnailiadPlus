@@ -1080,11 +1080,16 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetKey(key))
                 {
-                    if (bindingController)
+                    if (bindingController && (int)key >= 330)
+                    {
                         PlayState.generalData.controllerInputs[controlID] = key;
-                    else
+                        isRebinding = false;
+                    }
+                    else if (!bindingController && (int)key < 330)
+                    {
                         PlayState.generalData.keyboardInputs[controlID] = key;
-                    isRebinding = false;
+                        isRebinding = false;
+                    }
                 }
             }
             if (bindingController)
@@ -1316,6 +1321,9 @@ public class MainMenu : MonoBehaviour
             bool newLine = false;
             float letterDelay = 0;
             int disappearState = 0;
+            introSkipText.SetText(string.Format(PlayState.GetText("intro_skip"), Control.lastInputIsCon ?
+                Control.ParseButtonName(Control.controllerInputs[(int)Control.Controller.Pause]) :
+                Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Pause])));
             introSkipText.SetColor(new Color(1, 1, 1, 0));
             while (introState != IntroStates.fadeOut)
             {
@@ -1631,6 +1639,8 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+        PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
+        PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
         SetTextComponentOrigins();
@@ -1657,7 +1667,6 @@ public class MainMenu : MonoBehaviour
         else
             PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
                 (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
-        //PlayState.isArmed = PlayState.CheckForItem(0) || PlayState.CheckForItem(1) || PlayState.CheckForItem(2) || PlayState.CheckForItem(11) || PlayState.CheckForItem(12);
     }
 
     public void SetTextComponentOrigins()
@@ -1723,10 +1732,10 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         if (PlayState.IsControllerConnected())
             AddOption(string.Format(PlayState.GetText("menu_intro_controller"),
-                PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1].ToString()), true, PageWarning);
+                Control.ParseButtonName(PlayState.generalData.controllerInputs[(int)Control.Controller.Jump1])), true, PageWarning);
         else
             AddOption(string.Format(PlayState.GetText("menu_intro_keyboard"),
-                PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1].ToString()), true, PageWarning);
+                Control.ParseKeyName(PlayState.generalData.keyboardInputs[(int)Control.Keyboard.Jump1])), true, PageWarning);
         AddOption("", false);
         AddOption("", false);
         ForceSelect(0);
@@ -2215,18 +2224,25 @@ public class MainMenu : MonoBehaviour
 
     public void ResetKeyboardControls()
     {
-        Control.keyboardInputs = Control.defaultKeyboardInputs;
+        Control.keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone();
+        //for (int i = 0; i < Control.keyboardInputs.Length; i++)
+        //    Control.keyboardInputs[i] = Control.defaultKeyboardInputs[i];
         SaveControls();
     }
 
     public void ResetControllerControls()
     {
-        Control.controllerInputs = Control.defaultControllerInputs;
+        Control.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
+        //for (int i = 0; i < Control.controllerInputs.Length; i++)
+        //    Control.controllerInputs[i] = Control.defaultControllerInputs[i];
+        //Debug.Log(Control.defaultControllerInputs[4] + ", " + Control.controllerInputs[4]);
         SaveControls();
     }
 
     public void SaveControls()
     {
+        PlayState.generalData.keyboardInputs = (KeyCode[])Control.keyboardInputs.Clone();
+        PlayState.generalData.controllerInputs = (KeyCode[])Control.controllerInputs.Clone();
         PlayState.WriteSave(0, true);
         controlScreen = 0;
         ControlMain();
@@ -2886,7 +2902,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_credits_8-4"), false);
         AddOption(PlayState.GetText("menu_option_credits_8-5"), false);
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(6);
         backPage = PageMain;
     }
@@ -2910,7 +2926,7 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_records_achievements"), true, AchievementScreen, new int[] { 0, 0 });
         if (PlayState.HasTime())
             AddOption(PlayState.GetText("menu_option_records_gallery"), true, GalleryScreen);
-        AddOption(PlayState.GetText("menu_option_main_returnTo"), true, PageMain);
+        AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(0);
         backPage = PageMain;
     }

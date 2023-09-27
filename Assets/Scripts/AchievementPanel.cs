@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AchievementPanel : MonoBehaviour
 {
-    public SpriteRenderer sprite;
+    public SpriteRenderer frameSprite;
+    public SpriteRenderer iconSprite;
     public TextObject text;
     public Sprite blankIcon;
     public Sprite[] achIconArray;
@@ -46,11 +47,14 @@ public class AchievementPanel : MonoBehaviour
     private float openTime = 0;
     private int colorState = 0;
     private bool advanceColor = false;
+
+    private const float OPEN_TIME = 2.5f;
     
     public void Start()
     {
         anim = GetComponent<AnimationModule>();
-        sprite = transform.Find("Achievement Icon").GetComponent<SpriteRenderer>();
+        frameSprite = GetComponent<SpriteRenderer>();
+        iconSprite = transform.Find("Achievement Icon").GetComponent<SpriteRenderer>();
         text = transform.Find("Achievement Text").GetComponent<TextObject>();
         sfx = GetComponent<AudioSource>();
         jingle = (AudioClip)Resources.Load("Sounds/Music/AchievementJingle");
@@ -58,14 +62,29 @@ public class AchievementPanel : MonoBehaviour
         anim.Add("AchievementPanel_open");
         anim.Add("AchievementPanel_hold");
         anim.Add("AchievementPanel_close");
+        anim.pauseOnMenu = false;
 
         text.SetText("");
-        sprite.enabled = false;
+        iconSprite.enabled = false;
         GetComponent<SpriteRenderer>().sprite = PlayState.BlankTexture();
     }
 
     private void Update()
     {
+        if (PlayState.gameState == PlayState.GameState.menu && popupQueue.Count != 0)
+        {
+            CloseAchievement();
+            popupQueue.Clear();
+        }
+        if (PlayState.gameState != PlayState.GameState.game && PlayState.gameState != PlayState.GameState.menu && PlayState.gameState != PlayState.GameState.pause)
+        {
+            text.SetColor(new Color(0, 0, 0, 0));
+            frameSprite.enabled = false;
+            iconSprite.enabled = false;
+            return;
+        }
+        frameSprite.enabled = true;
+        iconSprite.enabled = runState == 2;
         if (popupQueue.Count != 0 && runState == 0)
             OpenBox();
         if (!anim.isPlaying && runState == 1)
@@ -82,7 +101,7 @@ public class AchievementPanel : MonoBehaviour
                 2 => new Color32(252, 214, 136, 255),
                 _ => new Color32(170, 229, 214, 255)
             });
-            if (openTime < 4)
+            if (openTime < OPEN_TIME)
                 openTime += Time.deltaTime;
             else
                 CloseAchievement();
@@ -112,8 +131,8 @@ public class AchievementPanel : MonoBehaviour
 
     public void DisplayAchievement()
     {
-        sprite.enabled = true;
-        sprite.sprite = PlayState.GetSprite("AchievementIcons", (int)currentAchievement + 1);
+        iconSprite.enabled = true;
+        iconSprite.sprite = PlayState.GetSprite("AchievementIcons", (int)currentAchievement + 1);
         text.SetText(PlayState.GetText("hud_achievement"));
     }
 
@@ -121,7 +140,7 @@ public class AchievementPanel : MonoBehaviour
     {
         runState = 3;
         text.SetText("");
-        sprite.enabled = false;
+        iconSprite.enabled = false;
         PlayState.achievementOpen = false;
         anim.Play("AchievementPanel_close");
     }

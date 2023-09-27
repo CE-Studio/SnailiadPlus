@@ -41,7 +41,7 @@ public class Snelk : Enemy, IRoomObject
 
     public Dictionary<string, object> save()
     {
-        Dictionary<string, object> content = new Dictionary<string, object>();
+        Dictionary<string, object> content = new();
         content["state"] = state;
         content["spawnChance"] = spawnChance;
         content["facingState"] = facingState;
@@ -105,10 +105,10 @@ public class Snelk : Enemy, IRoomObject
             {
                 transform.position = new Vector2(hCast.point.x + (0.75f * (facingLeft ? 1 : -1)), transform.position.y);
                 facingLeft = !facingLeft;
-                UpdateBoxcasts();
             }
             else
                 transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
+            UpdateBoxcasts();
         }
         if (vCast.collider != null)
         {

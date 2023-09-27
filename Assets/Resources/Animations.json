@@ -18281,6 +18281,19 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Credits_xander",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Credits_theend",
 			"spriteName": "Endings/TheEnd",
 			"framerate": 1.0,
