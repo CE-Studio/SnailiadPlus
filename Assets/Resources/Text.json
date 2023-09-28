@@ -221,8 +221,13 @@
 			"value": 0
 		},
 		{
-			"name": "menu_option_newGame_randomized",
-			"text": "Randomized",
+			"name": "menu_option_newGame_randomizer",
+			"text": "Randomizer options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_newGame_openMap",
+			"text": "Open map",
 			"value": 0
 		},
 		{

@@ -384,7 +384,7 @@ public class Subscreen : MonoBehaviour
                         newText = PlayState.GetText("item_gravityShock");
                     break;
                 case 17:
-                    newText = string.Format(PlayState.GetText("subscreen_markers"), Control.ParseKeyName(4));
+                    newText = string.Format(PlayState.GetText("subscreen_markers"), Control.lastInputIsCon ? Control.ParseButtonName(4) : Control.ParseKeyName(4));
                     break;
                 case 18:
                     newText = string.Format(PlayState.GetText("subscreen_mapRate"), PlayState.GetMapPercentage().ToString());

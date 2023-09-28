@@ -141,7 +141,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BumperR1",
+                    "name": "TriggerR",
                     "type": "Button",
                     "id": "48159ed4-1b9d-4604-8a93-67a9fc59a787",
                     "expectedControlType": "Button",
@@ -341,7 +341,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "BumperR1",
+                    "action": "TriggerR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

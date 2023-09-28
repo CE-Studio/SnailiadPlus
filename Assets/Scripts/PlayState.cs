@@ -434,7 +434,7 @@ public class PlayState {
         public bool paletteFilterState;     // Palette filter
         public int controllerFaceType;      // Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
         public KeyCode[] keyboardInputs;
-        public KeyCode[] controllerInputs;
+        public Control.ControllerBinds[] controllerInputs;
 
         // RECORDS
         public bool[] achievements;
@@ -481,7 +481,7 @@ public class PlayState {
         paletteFilterState = false,
         controllerFaceType = 0,
         keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone(),
-        controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone(),
+        controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone(),
         achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length],
         times = (float[])timeDefault.Clone(),
         timeVers = (int[])timeVersionsDefault.Clone()
@@ -1599,7 +1599,7 @@ public class PlayState {
             if (newData.keyboardInputs != null)
                 generalData.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
             if (newData.controllerInputs != null)
-                generalData.controllerInputs = (KeyCode[])newData.controllerInputs.Clone();
+                generalData.controllerInputs = (Control.ControllerBinds[])newData.controllerInputs.Clone();
             if (newData.achievements != null)
                 generalData.achievements = (bool[])newData.achievements.Clone();
             if (newData.times != null)
@@ -1614,8 +1614,8 @@ public class PlayState {
         }
         if (Control.controllerInputs.Length != Control.defaultControllerInputs.Length)
         {
-            Control.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
-            generalData.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
+            Control.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
+            generalData.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
         }
     }
 

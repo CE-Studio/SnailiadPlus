@@ -163,7 +163,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""BumperR1"",
+                    ""name"": ""TriggerR"",
                     ""type"": ""Button"",
                     ""id"": ""48159ed4-1b9d-4604-8a93-67a9fc59a787"",
                     ""expectedControlType"": ""Button"",
@@ -363,7 +363,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""BumperR1"",
+                    ""action"": ""TriggerR"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -472,7 +472,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         m_Controller_BumperL = m_Controller.FindAction("BumperL", throwIfNotFound: true);
         m_Controller_TriggerL = m_Controller.FindAction("TriggerL", throwIfNotFound: true);
         m_Controller_BumperR = m_Controller.FindAction("BumperR", throwIfNotFound: true);
-        m_Controller_BumperR1 = m_Controller.FindAction("BumperR1", throwIfNotFound: true);
+        m_Controller_TriggerR = m_Controller.FindAction("TriggerR", throwIfNotFound: true);
         m_Controller_Start = m_Controller.FindAction("Start", throwIfNotFound: true);
         m_Controller_Select = m_Controller.FindAction("Select", throwIfNotFound: true);
     }
@@ -551,7 +551,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controller_BumperL;
     private readonly InputAction m_Controller_TriggerL;
     private readonly InputAction m_Controller_BumperR;
-    private readonly InputAction m_Controller_BumperR1;
+    private readonly InputAction m_Controller_TriggerR;
     private readonly InputAction m_Controller_Start;
     private readonly InputAction m_Controller_Select;
     public struct ControllerActions
@@ -573,7 +573,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         public InputAction @BumperL => m_Wrapper.m_Controller_BumperL;
         public InputAction @TriggerL => m_Wrapper.m_Controller_TriggerL;
         public InputAction @BumperR => m_Wrapper.m_Controller_BumperR;
-        public InputAction @BumperR1 => m_Wrapper.m_Controller_BumperR1;
+        public InputAction @TriggerR => m_Wrapper.m_Controller_TriggerR;
         public InputAction @Start => m_Wrapper.m_Controller_Start;
         public InputAction @Select => m_Wrapper.m_Controller_Select;
         public InputActionMap Get() { return m_Wrapper.m_Controller; }
@@ -630,9 +630,9 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
             @BumperR.started += instance.OnBumperR;
             @BumperR.performed += instance.OnBumperR;
             @BumperR.canceled += instance.OnBumperR;
-            @BumperR1.started += instance.OnBumperR1;
-            @BumperR1.performed += instance.OnBumperR1;
-            @BumperR1.canceled += instance.OnBumperR1;
+            @TriggerR.started += instance.OnTriggerR;
+            @TriggerR.performed += instance.OnTriggerR;
+            @TriggerR.canceled += instance.OnTriggerR;
             @Start.started += instance.OnStart;
             @Start.performed += instance.OnStart;
             @Start.canceled += instance.OnStart;
@@ -688,9 +688,9 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
             @BumperR.started -= instance.OnBumperR;
             @BumperR.performed -= instance.OnBumperR;
             @BumperR.canceled -= instance.OnBumperR;
-            @BumperR1.started -= instance.OnBumperR1;
-            @BumperR1.performed -= instance.OnBumperR1;
-            @BumperR1.canceled -= instance.OnBumperR1;
+            @TriggerR.started -= instance.OnTriggerR;
+            @TriggerR.performed -= instance.OnTriggerR;
+            @TriggerR.canceled -= instance.OnTriggerR;
             @Start.started -= instance.OnStart;
             @Start.performed -= instance.OnStart;
             @Start.canceled -= instance.OnStart;
@@ -776,7 +776,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         void OnBumperL(InputAction.CallbackContext context);
         void OnTriggerL(InputAction.CallbackContext context);
         void OnBumperR(InputAction.CallbackContext context);
-        void OnBumperR1(InputAction.CallbackContext context);
+        void OnTriggerR(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
     }

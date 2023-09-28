@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Control
 {
@@ -62,6 +63,34 @@ public class Control
         KeyCode.Escape
     };
 
+    public enum ControllerBinds
+    {
+        LStickU,
+        LStickD,
+        LStickL,
+        LStickR,
+        LStickClick,
+        RStickU,
+        RStickD,
+        RStickL,
+        RStickR,
+        RStickClick,
+        FaceU,
+        FaceD,
+        FaceL,
+        FaceR,
+        DPadU,
+        DPadD,
+        DPadL,
+        DPadR,
+        LBumper,
+        LTrigger,
+        RBumper,
+        RTrigger,
+        Start,
+        Select
+    }
+
     public enum Controller
     {
         Left,
@@ -90,34 +119,34 @@ public class Control
         Return
     };
 
-    public static KeyCode[] controllerInputs = new KeyCode[] {};
+    public static ControllerBinds[] controllerInputs = new ControllerBinds[] {};
 
-    public static readonly KeyCode[] defaultControllerInputs = new KeyCode[]
+    public static readonly ControllerBinds[] defaultControllerInputs = new ControllerBinds[]
     {
-        KeyCode.Keypad0,
-        KeyCode.Alpha0,
-        KeyCode.Keypad1,
-        KeyCode.Alpha1,
-        KeyCode.Joystick1Button0,
-        KeyCode.Joystick1Button2,
-        KeyCode.Joystick1Button7,
-        KeyCode.Joystick1Button1,
-        KeyCode.Keypad2,
-        KeyCode.Alpha2,
-        KeyCode.Keypad3,
-        KeyCode.Alpha3,
-        KeyCode.Joystick1Button6,
-        KeyCode.Joystick1Button2,
-        KeyCode.Joystick1Button7,
-        KeyCode.Joystick1Button3,
-        KeyCode.Joystick1Button14,
-        KeyCode.Joystick1Button12,
-        KeyCode.Joystick1Button15,
-        KeyCode.Joystick1Button5,
-        KeyCode.Joystick1Button4,
-        KeyCode.Joystick1Button13,
-        KeyCode.Joystick1Button9,
-        KeyCode.Joystick1Button8
+        ControllerBinds.LStickL,
+        ControllerBinds.LStickR,
+        ControllerBinds.LStickU,
+        ControllerBinds.LStickD,
+        ControllerBinds.FaceD,
+        ControllerBinds.FaceL,
+        ControllerBinds.FaceR,
+        ControllerBinds.FaceU,
+        ControllerBinds.RStickL,
+        ControllerBinds.RStickR,
+        ControllerBinds.RStickU,
+        ControllerBinds.RStickD,
+        ControllerBinds.FaceD,
+        ControllerBinds.RTrigger,
+        ControllerBinds.LTrigger,
+        ControllerBinds.FaceU,
+        ControllerBinds.DPadL,
+        ControllerBinds.DPadU,
+        ControllerBinds.DPadR,
+        ControllerBinds.RBumper,
+        ControllerBinds.LBumper,
+        ControllerBinds.Select,
+        ControllerBinds.Start,
+        ControllerBinds.FaceR
     };
 
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
@@ -125,7 +154,7 @@ public class Control
 
     public static bool[] conPressed = new bool[defaultControllerInputs.Length];
 
-    public const float STICK_DEADZONE = 0.25f;
+    public const float STICK_DEADZONE = 0.5f;
 
     public static bool lastInputIsCon = false;
 
@@ -418,12 +447,14 @@ public class Control
     public static bool CheckKey(Keyboard input, bool pressed = false, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         int index = (int)input;
-        bool output;
-        if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
-            output = virtualKey[index];
-        else
+        bool output = false;
+        if (!(PlayState.paralyzed && !overrideParalyze))
             output = (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
                 Input.GetKey(PlayState.generalData.keyboardInputs[index])) || (!ignoreVirtual && virtualKey[index]);
+        else
+            return output;
+        if (!ignoreVirtual)
+            output = output || virtualKey[(int)input];
         if (output)
             lastInputIsCon = false;
         return output;
@@ -433,50 +464,96 @@ public class Control
     {
         if (!PlayState.IsControllerConnected())
             return false;
-        int index = (int)input;
-        bool output = false;
-        if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
-            output = virtualCon[index];
-        else
+        //int index = (int)input;
+        //bool output = false;
+        //if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
+        //    output = virtualCon[index];
+        //else
+        //{
+        //    string inputName = PlayState.generalData.controllerInputs[index].ToString();
+        //    bool inputDown;
+        //    if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
+        //    {
+        //        char ID = inputName[inputName.Length - 1];
+        //        bool positive = inputName.Contains("Alpha");
+        //        float stickValue = ID switch
+        //        {
+        //            '0' => Input.GetAxis("LStickX"),
+        //            '1' => Input.GetAxis("LStickY"),
+        //            '2' => Input.GetAxis("RStickX"),
+        //            _ => Input.GetAxis("RStickY")
+        //        };
+        //        inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
+        //    }
+        //    else
+        //        inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
+        //    if (inputDown)
+        //    {
+        //        if (conPressed[index] && !pressed)
+        //            output = true;
+        //        else if (!conPressed[index])
+        //        {
+        //            conPressed[index] = true;
+        //            output = true;
+        //        }
+        //        else if (!ignoreVirtual)
+        //            output = virtualCon[index];
+        //    }
+        //    else
+        //    {
+        //        conPressed[index] = false;
+        //        if (!ignoreVirtual)
+        //            output = virtualCon[index];
+        //    }
+        //}
+        //if (output)
+        //    lastInputIsCon = true;
+        //return output;
+
+        InputAction bind = controllerInputs[(int)input] switch
         {
-            string inputName = PlayState.generalData.controllerInputs[index].ToString();
-            bool inputDown;
-            if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
+            ControllerBinds.LStickU => conInput.Controller.StickL,
+            ControllerBinds.LStickD => conInput.Controller.StickL,
+            ControllerBinds.LStickL => conInput.Controller.StickL,
+            ControllerBinds.LStickR => conInput.Controller.StickL,
+            ControllerBinds.LStickClick => conInput.Controller.StickLClick,
+            ControllerBinds.RStickU => conInput.Controller.StickR,
+            ControllerBinds.RStickD => conInput.Controller.StickR,
+            ControllerBinds.RStickL => conInput.Controller.StickR,
+            ControllerBinds.RStickR => conInput.Controller.StickR,
+            ControllerBinds.RStickClick => conInput.Controller.StickRClick,
+            ControllerBinds.FaceU => conInput.Controller.FaceU,
+            ControllerBinds.FaceD => conInput.Controller.FaceD,
+            ControllerBinds.FaceL => conInput.Controller.FaceL,
+            ControllerBinds.FaceR => conInput.Controller.FaceR,
+            ControllerBinds.DPadU => conInput.Controller.DPadU,
+            ControllerBinds.DPadD => conInput.Controller.DPadD,
+            ControllerBinds.DPadL => conInput.Controller.DPadL,
+            ControllerBinds.DPadR => conInput.Controller.DPadR,
+            ControllerBinds.LBumper => conInput.Controller.BumperL,
+            ControllerBinds.LTrigger => conInput.Controller.TriggerL,
+            ControllerBinds.RBumper => conInput.Controller.BumperR,
+            ControllerBinds.RTrigger => conInput.Controller.TriggerR,
+            ControllerBinds.Start => conInput.Controller.Start,
+            ControllerBinds.Select => conInput.Controller.Select,
+            _ => conInput.Controller.FaceD,
+        };
+        bool output = false;
+        if (!(PlayState.paralyzed && !overrideParalyze))
+        {
+            output = controllerInputs[(int)input] switch
             {
-                char ID = inputName[inputName.Length - 1];
-                bool positive = inputName.Contains("Alpha");
-                float stickValue = ID switch
-                {
-                    '0' => Input.GetAxis("LStickX"),
-                    '1' => Input.GetAxis("LStickY"),
-                    '2' => Input.GetAxis("RStickX"),
-                    _ => Input.GetAxis("RStickY")
-                };
-                inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
-            }
-            else
-                inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
-            if (inputDown)
-            {
-                if (conPressed[index] && !pressed)
-                    output = true;
-                else if (!conPressed[index])
-                {
-                    conPressed[index] = true;
-                    output = true;
-                }
-                else if (!ignoreVirtual)
-                    output = virtualCon[index];
-            }
-            else
-            {
-                conPressed[index] = false;
-                if (!ignoreVirtual)
-                    output = virtualCon[index];
-            }
+                ControllerBinds.LStickU or ControllerBinds.RStickU => bind.ReadValue<Vector2>().y > STICK_DEADZONE,
+                ControllerBinds.LStickD or ControllerBinds.RStickD => bind.ReadValue<Vector2>().y < -STICK_DEADZONE,
+                ControllerBinds.LStickL or ControllerBinds.RStickL => bind.ReadValue<Vector2>().x < -STICK_DEADZONE,
+                ControllerBinds.LStickR or ControllerBinds.RStickR => bind.ReadValue<Vector2>().x > STICK_DEADZONE,
+                _ => pressed ? bind.WasPressedThisFrame() : bind.WasPerformedThisFrame()
+            };
         }
-        if (output)
-            lastInputIsCon = true;
+        else
+            return output;
+        if (!ignoreVirtual)
+            output = output || virtualCon[(int)input];
         return output;
     }
 
@@ -565,35 +642,34 @@ public class Control
     {
         return ParseButtonName(PlayState.generalData.controllerInputs[(int)buttonID], shortForm);
     }
-    public static string ParseButtonName(KeyCode button, bool shortForm = false)
+    public static string ParseButtonName(ControllerBinds button, bool shortForm = false)
     {
         return button switch
         {
-            KeyCode.Alpha0 => shortForm ? "L +x" : "L stick right",
-            KeyCode.Keypad0 => shortForm ? "L -x" : "L stick left",
-            KeyCode.Alpha1 => shortForm ? "L +y" : "L stick down",
-            KeyCode.Keypad1 => shortForm ? "L -y" : "L stick up",
-            KeyCode.Alpha2 => shortForm ? "R +x" : "R stick right",
-            KeyCode.Keypad2 => shortForm ? "R -x" : "R stick left",
-            KeyCode.Alpha3 => shortForm ? "R +y" : "R stick down",
-            KeyCode.Keypad3 => shortForm ? "R -y" : "R stick up",
-            KeyCode.Joystick1Button0 => PlayState.generalData.controllerFaceType switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
-            KeyCode.Joystick1Button1 => PlayState.generalData.controllerFaceType switch { 1 => "A", 2 => shortForm ? "CIR" : "Circle", 3 => "A", _ => "B" },
-            KeyCode.Joystick1Button2 => PlayState.generalData.controllerFaceType switch { 1 => "Y", 2 => shortForm ? "SQR" : "Square", 3 => "U", _ => "X" },
-            KeyCode.Joystick1Button3 => PlayState.generalData.controllerFaceType switch { 1 => "X", 2 => shortForm ? "TRI" : "Triangle", 3 => "Y", _ => "Y" },
-            KeyCode.Joystick1Button4 => PlayState.generalData.controllerFaceType switch { 1 => "L", _ => "L1" },
-            KeyCode.Joystick1Button5 => PlayState.generalData.controllerFaceType switch { 1 => "R", _ => "R1" },
-            KeyCode.Joystick1Button6 => PlayState.generalData.controllerFaceType switch { 1 => "ZL", _ => "L2" },
-            KeyCode.Joystick1Button7 => PlayState.generalData.controllerFaceType switch { 1 => "ZR", _ => "R2" },
-            KeyCode.Joystick1Button8 => PlayState.generalData.controllerFaceType switch { 0 => "View", 1 => "-", _ => shortForm ? "SEL" : "Select" },
-            KeyCode.Joystick1Button9 => PlayState.generalData.controllerFaceType switch { 0 => "Menu", 1 => "+", _ => shortForm ? "ST" : "Start" },
-            KeyCode.Joystick1Button10 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
-            KeyCode.Joystick1Button11 => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
-            KeyCode.Joystick1Button12 => "Up",
-            KeyCode.Joystick1Button13 => "Down",
-            KeyCode.Joystick1Button14 => "Left",
-            KeyCode.Joystick1Button15 => "Right",
-            KeyCode.Joystick1Button16 => "Home",
+            ControllerBinds.LStickR => shortForm ? "(L)>" : "L stick right",
+            ControllerBinds.LStickL => shortForm ? "(L)<" : "L stick left",
+            ControllerBinds.LStickD => shortForm ? "(L)V" : "L stick down",
+            ControllerBinds.LStickU => shortForm ? "(L)^" : "L stick up",
+            ControllerBinds.RStickR => shortForm ? "(R)>" : "R stick right",
+            ControllerBinds.RStickL => shortForm ? "(R)<" : "R stick left",
+            ControllerBinds.RStickD => shortForm ? "(R)V" : "R stick down",
+            ControllerBinds.RStickU => shortForm ? "(R)^" : "R stick up",
+            ControllerBinds.FaceD => PlayState.generalData.controllerFaceType switch { 1 => "B", 2 => "X", 3 => "O", _ => "A" },
+            ControllerBinds.FaceR => PlayState.generalData.controllerFaceType switch { 1 => "A", 2 => shortForm ? "CIR" : "Circle", 3 => "A", _ => "B" },
+            ControllerBinds.FaceL => PlayState.generalData.controllerFaceType switch { 1 => "Y", 2 => shortForm ? "SQR" : "Square", 3 => "U", _ => "X" },
+            ControllerBinds.FaceU => PlayState.generalData.controllerFaceType switch { 1 => "X", 2 => shortForm ? "TRI" : "Triangle", 3 => "Y", _ => "Y" },
+            ControllerBinds.LBumper => PlayState.generalData.controllerFaceType switch { 1 => "L", _ => "L1" },
+            ControllerBinds.RBumper => PlayState.generalData.controllerFaceType switch { 1 => "R", _ => "R1" },
+            ControllerBinds.LTrigger => PlayState.generalData.controllerFaceType switch { 1 => "ZL", _ => "L2" },
+            ControllerBinds.RTrigger => PlayState.generalData.controllerFaceType switch { 1 => "ZR", _ => "R2" },
+            ControllerBinds.Select => PlayState.generalData.controllerFaceType switch { 0 => "View", 1 => "-", _ => shortForm ? "SEL" : "Select" },
+            ControllerBinds.Start => PlayState.generalData.controllerFaceType switch { 0 => "Menu", 1 => "+", _ => shortForm ? "ST" : "Start" },
+            ControllerBinds.LStickClick => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "LB" : "L Stick Click", _ => "L3" },
+            ControllerBinds.RStickClick => PlayState.generalData.controllerFaceType switch { 1 => shortForm ? "RB" : "R Stick Click", _ => "R3" },
+            ControllerBinds.DPadU => shortForm ? "+^" : "+Up",
+            ControllerBinds.DPadD => shortForm ? "+V" : "+Down",
+            ControllerBinds.DPadL => shortForm ? "+<" : "+Left",
+            ControllerBinds.DPadR => shortForm ? "+>" : "+Right",
             _ => button.ToString()
         };
     }

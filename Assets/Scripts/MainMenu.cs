@@ -569,6 +569,18 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         break;
+                    case "openMap":
+                        TestForArrowAdjust(option, 4, 1);
+                        switch (menuVarFlags[4])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_no"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_yes"));
+                                break;
+                        }
+                        break;
                     case "shooting":
                         TestForArrowAdjust(option, 0, 1);
                         switch (menuVarFlags[0])
@@ -1078,63 +1090,63 @@ public class MainMenu : MonoBehaviour
             AddToOptionText(currentOptions[selectedOption], timer < 1 ? "." : (timer < 2 ? ".." : "..."));
             foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
             {
-                if (Input.GetKey(key))
+                if (Input.GetKey(key) && (int)key < 330)
                 {
-                    if (bindingController && (int)key >= 330)
-                    {
-                        PlayState.generalData.controllerInputs[controlID] = key;
-                        isRebinding = false;
-                    }
-                    else if (!bindingController && (int)key < 330)
-                    {
+                    //if (bindingController && (int)key >= 330)
+                    //{
+                    //    PlayState.generalData.controllerInputs[controlID] = key;
+                    //    isRebinding = false;
+                    //}
+                    //else if (!bindingController && (int)key < 330)
+                    //{
                         PlayState.generalData.keyboardInputs[controlID] = key;
                         isRebinding = false;
-                    }
+                    //}
                 }
             }
-            if (bindingController)
-            {
-                if (Input.GetAxis("LStickX") > 0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha0;
-                    isRebinding = false;
-                }
-                else if (Input.GetAxis("LStickX") < -0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad0;
-                    isRebinding = false;
-                }
-                if (Input.GetAxis("LStickY") > 0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha1;
-                    isRebinding = false;
-                }
-                else if (Input.GetAxis("LStickY") < -0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad1;
-                    isRebinding = false;
-                }
-                if (Input.GetAxis("RStickX") > 0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha2;
-                    isRebinding = false;
-                }
-                else if (Input.GetAxis("RStickX") < -0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad2;
-                    isRebinding = false;
-                }
-                if (Input.GetAxis("RStickY") > 0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha3;
-                    isRebinding = false;
-                }
-                else if (Input.GetAxis("RStickY") < -0.75f)
-                {
-                    PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad3;
-                    isRebinding = false;
-                }
-            }
+            //if (bindingController)
+            //{
+            //    if (Input.GetAxis("LStickX") > 0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha0;
+            //        isRebinding = false;
+            //    }
+            //    else if (Input.GetAxis("LStickX") < -0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad0;
+            //        isRebinding = false;
+            //    }
+            //    if (Input.GetAxis("LStickY") > 0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha1;
+            //        isRebinding = false;
+            //    }
+            //    else if (Input.GetAxis("LStickY") < -0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad1;
+            //        isRebinding = false;
+            //    }
+            //    if (Input.GetAxis("RStickX") > 0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha2;
+            //        isRebinding = false;
+            //    }
+            //    else if (Input.GetAxis("RStickX") < -0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad2;
+            //        isRebinding = false;
+            //    }
+            //    if (Input.GetAxis("RStickY") > 0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha3;
+            //        isRebinding = false;
+            //    }
+            //    else if (Input.GetAxis("RStickY") < -0.75f)
+            //    {
+            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad3;
+            //        isRebinding = false;
+            //    }
+            //}
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
         }
@@ -1322,9 +1334,10 @@ public class MainMenu : MonoBehaviour
             float letterDelay = 0;
             int disappearState = 0;
             introSkipText.SetText(string.Format(PlayState.GetText("intro_skip"), Control.lastInputIsCon ?
-                Control.ParseButtonName(Control.controllerInputs[(int)Control.Controller.Pause]) :
-                Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Pause])));
+                Control.ParseButtonName(Control.controllerInputs[(int)Control.Controller.Pause], true) :
+                Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Pause], true)));
             introSkipText.SetColor(new Color(1, 1, 1, 0));
+            TextObject debugText = introParent.Find("Debug Stuff").GetComponent<TextObject>();
             while (introState != IntroStates.fadeOut)
             {
                 modeElapsed += Time.deltaTime;
@@ -1602,8 +1615,10 @@ public class MainMenu : MonoBehaviour
                         storyCharIndex++;
                     }
                 }
-                if (Control.CheckKey(Control.Keyboard.Pause, true, true) || Control.CheckButton(Control.Controller.Pause, true, true))
+                if (Control.CheckKey(Control.Keyboard.Pause, false, true) || Control.CheckButton(Control.Controller.Pause, false, true))
                     introState = IntroStates.fadeOut;
+                debugText.SetText(string.Format("introState {0} | modeinitialized {1}\nstoryText.length {2} | modeElapsed {3}",
+                    introState.ToString(), modeInitialized.ToString(), storyText.Length.ToString(), modeElapsed.ToString()));
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -1807,7 +1822,7 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
-                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i });
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i, 4, 0 });
             else
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + PlayState.GetTimeString(data.gameTime) +
                     " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
@@ -1827,15 +1842,24 @@ public class MainMenu : MonoBehaviour
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true, "difficulty");
         if (PlayState.generalData.achievements[14])
-        {
+        //{
             AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true, "character");
-            AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true, "isRandomized");
-        }
+        //AddOption(PlayState.GetText("menu_option_newGame_randomized") + ": ", true, "isRandomized");
+        //}
+        //if (PlayState.generalData.achievements[7])
+        //    AddOption(PlayState.GetText("menu_option_newGame_randomizer"), true, NewGameRandoOptions);
+        if (PlayState.generalData.achievements[5])
+            AddOption(PlayState.GetText("menu_option_newGame_openMap") + ": ", true, "openMap");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_newGame_confirm"), true, StartNewSave);
         AddOption(PlayState.GetText("menu_option_profile_returnTo"), true, ProfileScreen);
         ForceSelect(2);
         backPage = ProfileScreen;
+    }
+
+    public void NewGameRandoOptions()
+    {
+
     }
 
     public void StartNewSave()
@@ -1849,6 +1873,16 @@ public class MainMenu : MonoBehaviour
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
+
+        if (menuVarFlags[4] == 1)
+        {
+            for (int i = 0; i < PlayState.currentProfile.exploredMap.Length; i++)
+            {
+                if (PlayState.currentProfile.exploredMap[i] >= 0)
+                    PlayState.currentProfile.exploredMap[i]++;
+            }
+        }
+
         PlayState.WriteSave(PlayState.currentProfileNumber, false);
         PlayState.LoadGame(PlayState.currentProfileNumber, true);
 
@@ -2216,7 +2250,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_controls_weaponPrev") + ":   ", true, TestForRebind, new int[] { 0, 20, 1, 1 }, "control_weaponPrev");
         AddOption(PlayState.GetText("menu_option_controls_map") + ":   ", true, TestForRebind, new int[] { 0, 21, 1, 1 }, "control_map");
         AddOption(PlayState.GetText("menu_option_controls_menu") + ":   ", true, TestForRebind, new int[] { 0, 22, 1, 1 }, "control_menu");
-        AddOption(PlayState.GetText("menu_option_controls_back") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 1 }, "control_back");
+        AddOption(PlayState.GetText("menu_option_controls_backButton") + ":   ", true, TestForRebind, new int[] { 0, 23, 1, 1 }, "control_back");
         AddOption(PlayState.GetText("menu_option_exitControlMenu"), true, ControlController);
         ForceSelect(0);
         backPage = ControlController;
@@ -2232,7 +2266,7 @@ public class MainMenu : MonoBehaviour
 
     public void ResetControllerControls()
     {
-        Control.controllerInputs = (KeyCode[])Control.defaultControllerInputs.Clone();
+        Control.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
         //for (int i = 0; i < Control.controllerInputs.Length; i++)
         //    Control.controllerInputs[i] = Control.defaultControllerInputs[i];
         //Debug.Log(Control.defaultControllerInputs[4] + ", " + Control.controllerInputs[4]);
@@ -2242,7 +2276,7 @@ public class MainMenu : MonoBehaviour
     public void SaveControls()
     {
         PlayState.generalData.keyboardInputs = (KeyCode[])Control.keyboardInputs.Clone();
-        PlayState.generalData.controllerInputs = (KeyCode[])Control.controllerInputs.Clone();
+        PlayState.generalData.controllerInputs = (Control.ControllerBinds[])Control.controllerInputs.Clone();
         PlayState.WriteSave(0, true);
         controlScreen = 0;
         ControlMain();
