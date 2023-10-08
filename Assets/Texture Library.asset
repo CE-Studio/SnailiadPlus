@@ -38,6 +38,8 @@ MonoBehaviour:
   - Bullets/PeashooterDev
   - Bullets/RainbowWave
   - Bullets/RainbowWaveDev
+  - Bullets/ShockBody
+  - Bullets/ShockWave
   - Endings/Ending100
   - Endings/EndingBackground
   - Endings/EndingBossRush
@@ -78,6 +80,7 @@ MonoBehaviour:
   - Entities/Fireball2
   - Entities/Floatspike1
   - Entities/Floatspike2
+  - Entities/ForTheFunny
   - Entities/Gear
   - Entities/GravTurtle1
   - Entities/GravTurtle2
@@ -145,6 +148,9 @@ MonoBehaviour:
   - Particles/IntroBGPatterns
   - Particles/Nom
   - Particles/Shield
+  - Particles/ShockChar
+  - Particles/ShockCharge
+  - Particles/ShockLaunch
   - Particles/Smoke
   - Particles/Snow
   - Particles/Splash

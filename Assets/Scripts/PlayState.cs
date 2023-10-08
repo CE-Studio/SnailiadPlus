@@ -122,6 +122,7 @@ public class PlayState {
     public static bool suppressPause = false;
     public static bool resetInducingFadeActive = false;
     public static int areaOfDeath = -1;
+    public static bool lastRoomWasSnelk = false;
 
     public static int importJobs = 0;
 
@@ -134,6 +135,7 @@ public class PlayState {
     public static Player playerScript;
     public static GameObject cam;
     public static GameObject camObj;
+    public static GameObject camBorder;
     public static Camera mainCam;
     public static CamMovement camScript;
     public static SpriteRenderer screenCover;
@@ -800,14 +802,23 @@ public class PlayState {
         }
     }
 
-    public static void PlayAreaSong(int area, int subzone)
+    public static void PlayAreaSong(int area, int subzone, bool isSnelk = false)
     {
         if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)) && areaOfDeath != area)
         {
-            if (area == currentArea && subzone != currentSubzone)
-                globalFunctions.UpdateMusic(area, subzone);
-            else if (area != currentArea)
-                globalFunctions.UpdateMusic(area, subzone, 1);
+            if (isSnelk && !lastRoomWasSnelk)
+            {
+                lastRoomWasSnelk = true;
+                globalFunctions.UpdateMusic(2 - musicLibrary.areaThemeOffset, 0, 1);
+            }
+            else
+            {
+                if (area == currentArea && subzone != currentSubzone)
+                    globalFunctions.UpdateMusic(area, subzone);
+                else if (area != currentArea || lastRoomWasSnelk)
+                    globalFunctions.UpdateMusic(area, subzone, 1);
+                lastRoomWasSnelk = false;
+            }
         }
         currentArea = area;
         currentSubzone = subzone;
@@ -1056,6 +1067,20 @@ public class PlayState {
                 case "shield":
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
+                    break;
+                case "shockcharge":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                        activateParticle = true;
+                    break;
+                case "shocklaunch":
+                    // Values:
+                    // 0 = the direction, according to EDirs
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                    }
                     break;
                 case "smoke":
                     if (generalData.particleState == 1 || generalData.particleState >= 4)
@@ -2121,6 +2146,12 @@ public class PlayState {
 
     public static bool IsControllerConnected()
     {
+        string[] controllers = Input.GetJoystickNames();
+        if (controllers.Length == 1)
+        {
+            if (controllers[0] == "" || controllers[0] == " ")
+                return false;
+        }
         return Input.GetJoystickNames().Length > 0;
     }
 }

@@ -9,9 +9,6 @@ public class Snelk : Enemy, IRoomObject
     public int facingState = 3; // 0 = right, 1 = left, 2 = either direction at random, 3 = facing player, 4 = facing away from player
     public Particle zzz;
 
-    private RaycastHit2D hCast;
-    private RaycastHit2D vCast;
-
     private readonly float[] hopHeights = new float[] { 2f, 1f, 1.9f, 1.2f, 2f, 0.4f, 1.2f, 2f, 0.3f };
     private int currentHop;
     private const float GRAVITY = 1.25f;
@@ -97,32 +94,33 @@ public class Snelk : Enemy, IRoomObject
         if (!(state == 2 && velocity.y == 0 && hasLandedOnce))
             velocity = new Vector2((hasLandedOnce ? (state == 1 ? SPEED_RUN : SPEED_NORMAL) * (facingLeft ? -1 : 1) : 0) * Time.deltaTime,
                 Mathf.Clamp(velocity.y - GRAVITY * Time.deltaTime, TERMINAL_VELOCITY, Mathf.Infinity));
-        UpdateBoxcasts();
 
         if (state != 2)
         {
-            if (hCast.collider != null && ((hCast.point.x > transform.position.x) ? !facingLeft : facingLeft))
+            float wallDis = GetDistance(facingLeft ? PlayState.EDirsSurface.WallL : PlayState.EDirsSurface.WallR);
+            if (wallDis < Mathf.Abs(velocity.x))
             {
-                transform.position = new Vector2(hCast.point.x + (0.75f * (facingLeft ? 1 : -1)), transform.position.y);
+                transform.position = new Vector2(transform.position.x + ((wallDis - PlayState.FRAC_32) * (facingLeft ? -1 : 1)), transform.position.y);
                 facingLeft = !facingLeft;
             }
             else
                 transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y);
-            UpdateBoxcasts();
         }
-        if (vCast.collider != null)
+        float vertDis = GetDistance(velocity.y > 0 ? PlayState.EDirsSurface.Ceiling : PlayState.EDirsSurface.Floor);
+        if (vertDis < Mathf.Abs(velocity.y))
         {
-            transform.position = new Vector2(transform.position.x, vCast.point.y + (0.75f * (velocity.y > 0 ? -1 : 1)));
+            transform.position = new Vector2(transform.position.x, transform.position.y + (vertDis - PlayState.FRAC_32) * (velocity.y > 0 ? 1 : -1));
             if (velocity.y > 0)
                 velocity.y = 0;
             else
             {
-                velocity.y = state == 2 ? 0 : hopHeights[currentHop] * Time.deltaTime * 16;
+                velocity.y = state == 2 ? 0 : hopHeights[currentHop] * Time.deltaTime * 16f;
                 currentHop = (currentHop + 1) % hopHeights.Length;
                 hasLandedOnce = true;
                 if (state != 2)
                 {
-                    facingLeft = state == 1 ? (PlayState.player.transform.position.x > transform.position.x) : (Random.Range(0f, 1f) > 0.8f ? !facingLeft : facingLeft);
+                    facingLeft = state == 1 ? (PlayState.player.transform.position.x > transform.position.x) :
+                        (Random.Range(0f, 1f) > 0.8f ? !facingLeft : facingLeft);
                     if (PlayState.OnScreen(transform.position, box) && Random.Range(0f, 1f) > 0.4f)
                         PlayState.PlaySound("Snelk");
                     anim.Play("Enemy_snelk_jump");
@@ -136,14 +134,6 @@ public class Snelk : Enemy, IRoomObject
             sprite.flipX = facingLeft;
         if (state == 2 && Vector2.Distance(transform.position, PlayState.player.transform.position) < 5f)
             SetState(1);
-
-        if (PlayState.IsTileSolid(transform.position))
-        {
-            while (PlayState.IsTileSolid(transform.position))
-            {
-                transform.position = new Vector2(transform.position.x, transform.position.y + 1);
-            }
-        }
 
         if (zzz != null)
             zzz.transform.position = new Vector2(transform.position.x + 1, transform.position.y + 0.25f);
@@ -181,29 +171,20 @@ public class Snelk : Enemy, IRoomObject
         state = newState;
     }
 
-    private void UpdateBoxcasts()
+    private float GetDistance(PlayState.EDirsSurface dir)
     {
-        if (box == null)
-            return;
-        hCast = Physics2D.BoxCast(
-            transform.position,
-            new Vector2(box.size.x, box.size.y - 0.25f),
-            0,
-            Vector2.right,
-            velocity.x,
-            playerCollide,
-            Mathf.Infinity,
-            Mathf.Infinity
-            );
-        vCast = Physics2D.BoxCast(
-            transform.position,
-            new Vector2(box.size.x - 0.25f, box.size.y),
-            0,
-            Vector2.up,
-            velocity.y,
-            playerCollide,
-            Mathf.Infinity,
-            Mathf.Infinity
-            );
+        Vector2 pos = transform.position;
+        Vector2 halfBox = box.size * 0.5f;
+        Vector2 a = dir switch
+        {
+            PlayState.EDirsSurface.Floor or PlayState.EDirsSurface.WallL => new Vector2(pos.x - halfBox.x, pos.y - halfBox.y),
+            _ => new Vector2(pos.x + halfBox.x, pos.y + halfBox.y)
+        };
+        Vector2 b = dir switch
+        {
+            PlayState.EDirsSurface.WallL or PlayState.EDirsSurface.Ceiling => new Vector2(pos.x - halfBox.x, pos.y + halfBox.y),
+            _ => new Vector2(pos.x + halfBox.x, pos.y - halfBox.y)
+        };
+        return PlayState.GetDistance(dir, a, b, 4, playerCollide);
     }
 }

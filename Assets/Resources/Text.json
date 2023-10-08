@@ -3981,6 +3981,11 @@
 			"value": 0
 		},
 		{
+			"name": "credits_entity_forthefunny",
+			"text": "",
+			"value": 0
+		},
+		{
 			"name": "credits_entity_you",
 			"text": "And you\n\n\nBecause seriously, why not\n\n\nAll the other games\nput \"And You\" in the credits\nso I figure, \"And You\" must be\nsomeone pretty cool\n\n\nThanks, And You!!",
 			"value": 0

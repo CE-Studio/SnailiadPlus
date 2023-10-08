@@ -40,6 +40,16 @@ public class Bullet : MonoBehaviour
             for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
                 anim.Add("Bullet_" + bulletTypes[i] + "_" + PlayState.DIRS_COMPASS[j]);
         }
+        string[] shockChars = new string[] { "snaily", "sluggy", "upside", "leggy", "blobby", "leechy" };
+        string[] shockDirs = new string[] { "N", "E", "S", "W" };
+        for (int i = 0; i < shockChars.Length; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < shockDirs.Length; k++)
+                    anim.Add(string.Format("Bullet_gravShock_{0}{1}_{2}", shockChars[i], j.ToString(), shockDirs[k]));
+            }
+        }
     }
 
     void FixedUpdate()
@@ -61,6 +71,9 @@ public class Bullet : MonoBehaviour
                 case 3:
                 case 6:
                     velocity += initialVelocity * 18f * Time.fixedDeltaTime;
+                    break;
+                case 7:
+                case 8:
                     break;
                 default:
                     velocity += 0.03f;
@@ -183,6 +196,20 @@ public class Bullet : MonoBehaviour
                 damage = 68;
                 rapidMult = 2f;
                 break;
+            case 7:
+                box.size = new Vector2(2.75f, 2.75f);
+                velocity = 0;
+                damage = 200;
+                rapidMult = 1f;
+                despawnOffScreen = false;
+                break;
+            case 8:
+                box.size = new Vector2(3f, 3f);
+                velocity = 0;
+                damage = 450;
+                rapidMult = 1f;
+                despawnOffScreen = false;
+                break;
         }
         direction = dir;
         initialVelocity = velocity;
@@ -205,6 +232,8 @@ public class Bullet : MonoBehaviour
             4 => "peashooterDev_",
             5 => "boomerangDev_",
             6 => "rainbowWaveDev_",
+            7 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "0_",
+            8 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "1_",
             _ => "rainbowWave_",
         };
         animToPlay += direction switch

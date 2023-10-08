@@ -1640,7 +1640,7 @@ public class MainMenu : MonoBehaviour
         lastRoomTrigger.DespawnEverything();
         PlayState.ResetAllParticles();
         PlayState.screenCover.sortingOrder = 999;
-        PlayState.SetCamFocus(PlayState.player.transform);
+        PlayState.SetCamFocus(PlayState.playerScript.camFocus);
         PlayState.cam.transform.position = spawnPos;
         PlayState.player.transform.position = spawnPos;
         PlayState.playerScript.ResetState();
@@ -2259,17 +2259,12 @@ public class MainMenu : MonoBehaviour
     public void ResetKeyboardControls()
     {
         Control.keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone();
-        //for (int i = 0; i < Control.keyboardInputs.Length; i++)
-        //    Control.keyboardInputs[i] = Control.defaultKeyboardInputs[i];
         SaveControls();
     }
 
     public void ResetControllerControls()
     {
         Control.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
-        //for (int i = 0; i < Control.controllerInputs.Length; i++)
-        //    Control.controllerInputs[i] = Control.defaultControllerInputs[i];
-        //Debug.Log(Control.defaultControllerInputs[4] + ", " + Control.controllerInputs[4]);
         SaveControls();
     }
 
@@ -2291,9 +2286,9 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_gameplay_frameLimit") + ": ", true, "frameLimit");
         AddOption(PlayState.GetText("menu_option_gameplay_screenShake") + ": ", true, "screenShake");
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, OptionsScreen);
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
-        backPage = OptionsScreen;
+        backPage = SaveOptions;
     }
 
     public void AssetPackMenu()

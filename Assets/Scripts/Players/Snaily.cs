@@ -38,6 +38,10 @@ public class Snaily : Player
         shellTurnaroundAdjust = 0.1667f;
         coyoteTime = 0.0625f;
         jumpBuffer = 0.125f;
+        gravShockChargeTime = 0.75f;
+        gravShockChargeMult = 0.5f;
+        gravShockSpeed = 40.0f;
+        gravShockSteering = 2.5f;
 
         int[] tempData = PlayState.GetAnim("Player_Snaily_data").frames;
         animData = new bool[tempData.Length];

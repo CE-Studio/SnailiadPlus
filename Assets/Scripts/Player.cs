@@ -52,6 +52,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
     private int[] shellShieldEffectOffset;
     public int forceFaceH = 0;
     public int forceFaceV = 0;
+    private Particle shieldEffect;
+    private Vector2 shieldOffset;
+    public int gravShockState = 0;
+    public float gravShockTimer = 0;
+    private Bullet gravShockBullet;
+    private Particle gravShockCharge;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -65,6 +71,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public LayerMask playerCollide;
     public LayerMask roomCollide;
+
+    public Transform camFocus;
+    private Vector2 camFocusOffset;
 
     // Movement control vars
     // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
@@ -100,6 +109,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float shellTurnaroundAdjust; // --------------------------- The amount the player's position is adjusted when turning around in the air while shelled
     public float coyoteTime; // -------------------------------------- How long after leaving the ground via falling the player is still able to jump for
     public float jumpBuffer; // -------------------------------------- How long after pressing the jump button the player will continue to try to jump, in case of an early press
+    public float gravShockChargeTime; // ----------------------------- How long it takes for Gravity Shock to fire off after charging
+    public float gravShockChargeMult; // ----------------------------- A fractional multiplier applied to Gravity Shock's charge time when Rapid Fire has been acquired
+    public float gravShockSpeed; // ---------------------------------- How fast Gravity Shock travels
+    public float gravShockSteering; // ------------------------------- How fast Gravity Shock can be steered perpendicular to its fire direction
     #endregion vars
 
     #region cutscene
@@ -170,6 +183,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         PlayState.globalFunctions.UpdateMusic(-1, -1, 3);
 
         shellShieldEffectOffset = PlayState.GetAnim("Shield_data").frames;
+
+        camFocus = GameObject.Find("Alt Player Focus").transform;
     }
 
     // Update(), called less frequently (every drawn frame), actually gets most of the inputs and converts them to what they should be given any current surface state
@@ -264,6 +279,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     idleParticles[0].transform.position = new Vector2(transform.position.x + 0.75f + ((gravityDir == Dirs.Floor || gravityDir == Dirs.Ceiling) && facingLeft ? 0.25f : 0),
                         transform.position.y + ((gravityDir == Dirs.WallL || gravityDir == Dirs.WallR) && facingDown ? 0.25f : 0));
             }
+
+            // Also real quick let's update our shield particle stuff
+            UpdateShieldParticleOffset();
+            if (shieldEffect != null)
+                if (shieldEffect.isActive)
+                    shieldEffect.transform.position = (Vector2)transform.position + (shieldOffset * PlayState.FRAC_16);
         }
     }
 
@@ -308,6 +329,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
             coyoteTimeCounter += Time.fixedDeltaTime;
         else
             coyoteTimeCounter = 0;
+        // We increment the Gravity Shock timer in case it happens to be active
+        gravShockTimer = gravShockState > 0 ? gravShockTimer + Time.fixedDeltaTime : 0;
         // And finally, we clear the collision list
         collisions.Clear();
     
@@ -343,14 +366,15 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 toggleModeActive = !toggleModeActive;
             else if (!PlayState.generalData.shootMode)
                 toggleModeActive = false;
-            if ((Control.ShootHold() || Control.StrafeHold() || toggleModeActive) && !PlayState.paralyzed)
+            if ((Control.ShootHold() || Control.StrafeHold() || toggleModeActive || Control.Aim() != Vector2.zero) && !PlayState.paralyzed)
             {
                 if (shelled)
                     ToggleShell();
                 Shoot();
             }
 
-            EjectFromCollisions();
+            if (gravShockState != 2)
+                EjectFromCollisions();
 
             // Hey, do we happen to be stuck falling on a corner here?
             if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame)
@@ -370,6 +394,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
             //Debug.DrawLine(new(transform.position.x - halfBox.x, transform.position.y + halfBox.y, 0),
             //    new(transform.position.x + halfBox.x, transform.position.y - halfBox.y, 0), Color.red, 3f);
         }
+
+        // Down here, we handle general Gravity Shock stuff
+        if (gravShockState > 0)
+        {
+            if (gravShockCharge != null)
+                gravShockCharge.transform.position = transform.position;
+            if (gravShockBullet != null)
+                gravShockBullet.transform.position = transform.position;
+        }
+
+        // Lastly, after all of that, we update the camera's focus point around the player
+        camFocus.position = (Vector2)transform.position + camFocusOffset;
+        Vector2 camBoundsX = new(
+            PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x,
+            PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y);
+        Vector2 camBoundsY = new(
+            PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x,
+            PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y);
+        float xDif = camBoundsX.y - camBoundsX.x;
+        float yDif = camBoundsY.y - camBoundsY.x;
+        camFocus.position = new(
+            xDif >= 0 ? Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
+            yDif >= 0 ? Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
     }
 
     public virtual void CaseDown()
@@ -381,6 +428,63 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Snaily remains attached to the wall they turn onto, considering the vertical check is run before the horizontal check
         bool performHorizCheck = true;
 
+        // Before we do any movement checks, let's check to see if Gravity Shock happens to be active
+        if (gravShockState > 0)
+        {
+            // State 1 means we're in the inital pullback before Gravity Shock launches
+            if (gravShockState == 1)
+            {
+                float riseSpeed = 0.5f * Time.fixedDeltaTime;
+                if (GetDistance(Dirs.Ceiling) < Mathf.Abs(riseSpeed))
+                    transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y + riseSpeed);
+                // FIRE!!
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                {
+                    gravShockState = 2;
+                    if (gravShockCharge != null)
+                        gravShockCharge.ResetParticle();
+                    gravShockCharge = null;
+                    gravShockBullet = Shoot(true);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
+                    PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 0 });
+                    camFocusOffset = new Vector2(0, -4);
+                }
+            }
+            // State 2 means we've successfully fired off
+            else
+            {
+                float fallSpeed = -gravShockSpeed * Time.fixedDeltaTime;
+                // This block checks if we've hit the floor and reverts us to normal if we have
+                GetDistance(Dirs.Floor, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                for (int i = 0; i < cols.Count; i++)
+                {
+                    if (colNames[i].Contains("Breakable Block"))
+                        cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                }
+                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
+                    PlayState.PlaySound("Stomp");
+                    gravShockBullet.Despawn();
+                    gravShockBullet = null;
+                    gravShockState = 0;
+                    camFocusOffset = Vector2.zero;
+                }
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y + fallSpeed);
+                float steering = Control.AxisX() * Time.deltaTime * gravShockSteering;
+                if (GetDistance(steering < 0 ? Dirs.WallL : Dirs.WallR) < Mathf.Abs(steering))
+                    transform.position = new Vector2(transform.position.x + ((lastDistance - PlayState.FRAC_32) * (steering < 0 ? -1 : 1)), transform.position.y);
+                else
+                    transform.position = new Vector2(transform.position.x + steering, transform.position.y);
+            }
+            return;
+        }
+
+        // Now that that's over...
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
@@ -562,13 +666,22 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // How about gravity jumping?
         if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
         {
-            if (CheckAbility(canGravityJumpOpposite) && ((Control.UpHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
+            // Jumping in the same direction you're falling (and triggering Gravity Shock)
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && Control.DownHold() && PlayState.CheckForItem(10))
+            {
+                gravShockState = 1;
+                gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                velocity = Vector2.zero;
+            }
+            // Jumping in the opposite direction
+            else if (CheckAbility(canGravityJumpOpposite) && ((Control.UpHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
             {
                 gravityDir = Dirs.Ceiling;
                 SwapDir(Dirs.Ceiling);
                 holdingShell = true;
             }
-            if (CheckAbility(canGravityJumpAdjacent) && Control.AxisX() != 0)
+            // Jumping to the left or right
+            else if (CheckAbility(canGravityJumpAdjacent) && Control.AxisX() != 0)
             {
                 Dirs newDir = Control.RightHold() ? Dirs.WallR : Dirs.WallL;
                 gravityDir = newDir;
@@ -609,6 +722,63 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Snaily remains attached to the wall they turn onto, considering the vertical check is run before the horizontal check
         bool performHorizCheck = true;
 
+        // Before we do any movement checks, let's check to see if Gravity Shock happens to be active
+        if (gravShockState > 0)
+        {
+            // State 1 means we're in the inital pullback before Gravity Shock launches
+            if (gravShockState == 1)
+            {
+                float riseSpeed = 0.5f * Time.fixedDeltaTime;
+                if (GetDistance(Dirs.WallR) < Mathf.Abs(riseSpeed))
+                    transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
+                else
+                    transform.position = new Vector2(transform.position.x + riseSpeed, transform.position.y);
+                // FIRE!!
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                {
+                    gravShockState = 2;
+                    if (gravShockCharge != null)
+                        gravShockCharge.ResetParticle();
+                    gravShockCharge = null;
+                    gravShockBullet = Shoot(true);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
+                    PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 1 });
+                    camFocusOffset = new Vector2(-6, 0);
+                }
+            }
+            // State 2 means we've successfully fired off
+            else
+            {
+                float fallSpeed = -gravShockSpeed * Time.fixedDeltaTime;
+                // This block checks if we've hit the floor and reverts us to normal if we have
+                GetDistance(Dirs.WallL, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                for (int i = 0; i < cols.Count; i++)
+                {
+                    if (colNames[i].Contains("Breakable Block"))
+                        cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                }
+                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                {
+                    transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
+                    PlayState.PlaySound("Stomp");
+                    gravShockBullet.Despawn();
+                    gravShockBullet = null;
+                    gravShockState = 0;
+                    camFocusOffset = Vector2.zero;
+                }
+                else
+                    transform.position = new Vector2(transform.position.x + fallSpeed, transform.position.y);
+                float steering = Control.AxisY() * Time.deltaTime * gravShockSteering;
+                if (GetDistance(steering < 0 ? Dirs.Floor : Dirs.Ceiling) < Mathf.Abs(steering))
+                    transform.position = new Vector2(transform.position.x, transform.position.y + ((lastDistance - PlayState.FRAC_32) * (steering < 0 ? -1 : 1)));
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y + steering);
+            }
+            return;
+        }
+
+        // Now that that's over...
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
@@ -789,12 +959,21 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // How about gravity jumping?
         if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
         {
+            // Jumping in the same direction you're falling (and triggering Gravity Shock)
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && Control.LeftHold() && PlayState.CheckForItem(10))
+            {
+                gravShockState = 1;
+                gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                velocity = Vector2.zero;
+            }
+            // Jumping in the opposite direction
             if (CheckAbility(canGravityJumpOpposite) && ((Control.RightHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
             {
                 gravityDir = Dirs.WallR;
                 SwapDir(Dirs.WallR);
                 holdingShell = true;
             }
+            // Jumping to the left or right
             if (CheckAbility(canGravityJumpAdjacent) && Control.AxisY() != 0)
             {
                 Dirs newDir = Control.UpHold() ? Dirs.Ceiling : Dirs.Floor;
@@ -836,6 +1015,63 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Snaily remains attached to the wall they turn onto, considering the vertical check is run before the horizontal check
         bool performHorizCheck = true;
 
+        // Before we do any movement checks, let's check to see if Gravity Shock happens to be active
+        if (gravShockState > 0)
+        {
+            // State 1 means we're in the inital pullback before Gravity Shock launches
+            if (gravShockState == 1)
+            {
+                float riseSpeed = 0.5f * Time.fixedDeltaTime;
+                if (GetDistance(Dirs.WallL) < Mathf.Abs(riseSpeed))
+                    transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
+                else
+                    transform.position = new Vector2(transform.position.x - riseSpeed, transform.position.y);
+                // FIRE!!
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                {
+                    gravShockState = 2;
+                    if (gravShockCharge != null)
+                        gravShockCharge.ResetParticle();
+                    gravShockCharge = null;
+                    gravShockBullet = Shoot(true);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
+                    PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 2 });
+                    camFocusOffset = new Vector2(6, 0);
+                }
+            }
+            // State 2 means we've successfully fired off
+            else
+            {
+                float fallSpeed = gravShockSpeed * Time.fixedDeltaTime;
+                // This block checks if we've hit the floor and reverts us to normal if we have
+                GetDistance(Dirs.WallR, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                for (int i = 0; i < cols.Count; i++)
+                {
+                    if (colNames[i].Contains("Breakable Block"))
+                        cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                }
+                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                {
+                    transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
+                    PlayState.PlaySound("Stomp");
+                    gravShockBullet.Despawn();
+                    gravShockBullet = null;
+                    gravShockState = 0;
+                    camFocusOffset = Vector2.zero;
+                }
+                else
+                    transform.position = new Vector2(transform.position.x + fallSpeed, transform.position.y);
+                float steering = Control.AxisY() * Time.deltaTime * gravShockSteering;
+                if (GetDistance(steering < 0 ? Dirs.Floor : Dirs.Ceiling) < Mathf.Abs(steering))
+                    transform.position = new Vector2(transform.position.x, transform.position.y + ((lastDistance - PlayState.FRAC_32) * (steering < 0 ? -1 : 1)));
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y + steering);
+            }
+            return;
+        }
+
+        // Now that that's over...
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
@@ -1016,12 +1252,21 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // How about gravity jumping?
         if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
         {
+            // Jumping in the same direction you're falling (and triggering Gravity Shock)
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && Control.RightHold() && PlayState.CheckForItem(10))
+            {
+                gravShockState = 1;
+                gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                velocity = Vector2.zero;
+            }
+            // Jumping in the opposite direction
             if (CheckAbility(canGravityJumpOpposite) && ((Control.LeftHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
             {
                 gravityDir = Dirs.WallL;
                 SwapDir(Dirs.WallL);
                 holdingShell = true;
             }
+            // Jumping to the left or right
             if (CheckAbility(canGravityJumpAdjacent) && Control.AxisY() != 0)
             {
                 Dirs newDir = Control.UpHold() ? Dirs.Ceiling : Dirs.Floor;
@@ -1063,6 +1308,63 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Snaily remains attached to the wall they turn onto, considering the vertical check is run before the horizontal check
         bool performHorizCheck = true;
 
+        // Before we do any movement checks, let's check to see if Gravity Shock happens to be active
+        if (gravShockState > 0)
+        {
+            // State 1 means we're in the inital pullback before Gravity Shock launches
+            if (gravShockState == 1)
+            {
+                float riseSpeed = 0.5f * Time.fixedDeltaTime;
+                if (GetDistance(Dirs.Floor) < Mathf.Abs(riseSpeed))
+                    transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y - riseSpeed);
+                // FIRE!!
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                {
+                    gravShockState = 2;
+                    if (gravShockCharge != null)
+                        gravShockCharge.ResetParticle();
+                    gravShockCharge = null;
+                    gravShockBullet = Shoot(true);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
+                    PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 3 });
+                    camFocusOffset = new Vector2(0, 4);
+                }
+            }
+            // State 2 means we've successfully fired off
+            else
+            {
+                float fallSpeed = gravShockSpeed * Time.fixedDeltaTime;
+                // This block checks if we've hit the floor and reverts us to normal if we have
+                GetDistance(Dirs.Ceiling, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                for (int i = 0; i < cols.Count; i++)
+                {
+                    if (colNames[i].Contains("Breakable Block"))
+                        cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                }
+                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
+                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
+                    PlayState.PlaySound("Stomp");
+                    gravShockBullet.Despawn();
+                    gravShockBullet = null;
+                    gravShockState = 0;
+                    camFocusOffset = Vector2.zero;
+                }
+                else
+                    transform.position = new Vector2(transform.position.x, transform.position.y + fallSpeed);
+                float steering = Control.AxisX() * Time.deltaTime * gravShockSteering;
+                if (GetDistance(steering < 0 ? Dirs.WallL : Dirs.WallR) < Mathf.Abs(steering))
+                    transform.position = new Vector2(transform.position.x + ((lastDistance - PlayState.FRAC_32) * (steering < 0 ? -1 : 1)), transform.position.y);
+                else
+                    transform.position = new Vector2(transform.position.x + steering, transform.position.y);
+            }
+            return;
+        }
+
+        // Now that that's over...
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
@@ -1243,12 +1545,21 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // How about gravity jumping?
         if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
         {
+            // Jumping in the same direction you're falling (and triggering Gravity Shock)
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && Control.UpHold() && PlayState.CheckForItem(10))
+            {
+                gravShockState = 1;
+                gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                velocity = Vector2.zero;
+            }
+            // Jumping in the opposite direction
             if (CheckAbility(canGravityJumpOpposite) && ((Control.DownHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
             {
                 gravityDir = Dirs.Floor;
                 SwapDir(Dirs.Floor);
                 holdingShell = true;
             }
+            // Jumping to the left or right
             if (CheckAbility(canGravityJumpAdjacent) && Control.AxisX() != 0)
             {
                 Dirs newDir = Control.RightHold() ? Dirs.WallR : Dirs.WallL;
@@ -1414,13 +1725,37 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public float GetDistance(Dirs dir)
     {
-        return GetDistance(dir, false, MAX_DIST_CASTS);
+        return GetDistance(dir, out _, out _, Mathf.Infinity, false, MAX_DIST_CASTS);
     }
     public float GetDistance(Dirs dir, int casts = MAX_DIST_CASTS)
     {
-        return GetDistance(dir, false, casts);
+        return GetDistance(dir, out _, out _, Mathf.Infinity, false, casts);
     }
-    public float GetDistance(Dirs dir, bool fromCenter = false, int casts = MAX_DIST_CASTS)
+    public float GetDistance(Dirs dir, bool fromCenter, int casts = MAX_DIST_CASTS)
+    {
+        return GetDistance(dir, out _, out _, Mathf.Infinity, fromCenter, casts);
+    }
+    public float GetDistance(Dirs dir, float maxDis, int casts = MAX_DIST_CASTS)
+    {
+        return GetDistance(dir, out _, out _, maxDis, false, casts);
+    }
+    public float GetDistance(Dirs dir, float maxDis, bool fromCenter, int casts = MAX_DIST_CASTS)
+    {
+        return GetDistance(dir, out _, out _, maxDis, fromCenter, casts);
+    }
+    public float GetDistance(Dirs dir, out List<Collider2D> cols, out List<string> colNames)
+    {
+        return GetDistance(dir, out cols, out colNames, Mathf.Infinity, false, MAX_DIST_CASTS);
+    }
+    public float GetDistance(Dirs dir, out List<Collider2D> cols, out List<string> colNames, float maxDis, int casts = MAX_DIST_CASTS)
+    {
+        return GetDistance(dir, out cols, out colNames, maxDis, false, casts);
+    }
+    public float GetDistance(Dirs dir, out List<Collider2D> cols, out List<string> colNames, int casts = MAX_DIST_CASTS)
+    {
+        return GetDistance(dir, out cols, out colNames, Mathf.Infinity, false, casts);
+    }
+    public float GetDistance(Dirs dir, out List<Collider2D> cols, out List<string> colNames, float maxDis, bool fromCenter, int casts = MAX_DIST_CASTS)
     {
         float shortestDis = Mathf.Infinity;
         lastCollision = null;
@@ -1428,6 +1763,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         Vector2 b = (Vector2)transform.position + (box.size * 0.5f) + new Vector2(DIST_CAST_EDGE_BUFFER, DIST_CAST_EDGE_BUFFER);
         Vector2 origin;
         RaycastHit2D hit;
+        cols = new List<Collider2D>();
+        colNames = new List<string>();
         for (int i = 0; i < casts; i++)
         {
             float t = (float)i / (float)(casts - 1);
@@ -1463,13 +1800,15 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     hit = Physics2D.Raycast(origin, Vector2.up, Mathf.Infinity, playerCollide);
                     break;
             }
-            if (hit.collider != null && !PlayState.IsPointPlayerCollidable(origin))
+            if (hit.collider != null && hit.distance < maxDis)
             {
-                if (shortestDis > hit.distance)
+                if (shortestDis > hit.distance && !PlayState.IsPointPlayerCollidable(origin))
                 {
                     shortestDis = hit.distance;
                     lastCollision = hit.collider;
                 }
+                cols.Add(hit.collider);
+                colNames.Add(hit.collider.name);
                 Debug.DrawLine(origin, hit.point, Color.white, 0);
             }
         }
@@ -1576,103 +1915,133 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Shell");
             if (PlayState.CheckForItem("Shell Shield"))
             {
-                int charID = PlayState.currentProfile.character switch
-                {
-                    "Snaily" => 0,
-                    "Sluggy" => 2,
-                    "Upside" => 4,
-                    "Leggy" => 6,
-                    "Blobby" => 8,
-                    "Leechy" => 10,
-                    _ => 0
-                };
-                int leftState = facingLeft ? -1 : 1;
-                int downState = facingDown ? -1 : 1;
-                Vector2 offset = gravityDir switch
-                {
-                    Dirs.Floor => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1]),
-                    Dirs.WallL => new(shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
-                    Dirs.WallR => new(-shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
-                    Dirs.Ceiling => new(shellShieldEffectOffset[charID] * leftState, -shellShieldEffectOffset[charID + 1]),
-                    _ => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1])
-                };
-                PlayState.RequestParticle((Vector2)transform.position + (offset * PlayState.FRAC_16), "shield");
+                UpdateShieldParticleOffset();
+                shieldEffect = PlayState.RequestParticle((Vector2)transform.position + (shieldOffset * PlayState.FRAC_16), "shield");
             }
         }
         shelled = !shelled;
         EjectFromCollisions();
     }
 
-    // This function handles activation of projectiles when the player presses either shoot button
-    public virtual void Shoot()
+    // This function updates the position offset of any existing Shell Shield particle so that it stays aligned with Snaily
+    private void UpdateShieldParticleOffset()
     {
-        if (fireCooldown == 0 && armed)
+        int charID = PlayState.currentProfile.character switch
+        {
+            "Snaily" => 0,
+            "Sluggy" => 2,
+            "Upside" => 4,
+            "Leggy" => 6,
+            "Blobby" => 8,
+            "Leechy" => 10,
+            _ => 0
+        };
+        int leftState = facingLeft ? -1 : 1;
+        int downState = facingDown ? -1 : 1;
+        shieldOffset = gravityDir switch
+        {
+            Dirs.Floor => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1]),
+            Dirs.WallL => new(shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
+            Dirs.WallR => new(-shellShieldEffectOffset[charID + 1], shellShieldEffectOffset[charID] * downState),
+            Dirs.Ceiling => new(shellShieldEffectOffset[charID] * leftState, -shellShieldEffectOffset[charID + 1]),
+            _ => new(shellShieldEffectOffset[charID] * leftState, shellShieldEffectOffset[charID + 1])
+        };
+    }
+
+    // This function handles activation of projectiles when the player presses either shoot button
+    public virtual Bullet Shoot(bool isShock = false)
+    {
+        if ((fireCooldown == 0 && armed) || isShock)
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
+            Vector2 aimDir = Control.Aim();
             int type = selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
             int dir = 0;
-            switch (inputDir.x + "" + inputDir.y)
+            if (isShock)
             {
-                case "-11":
-                    dir = 0;
-                    break;
-                case "01":
-                    dir = 1;
-                    break;
-                case "11":
-                    dir = 2;
-                    break;
-                case "-10":
-                    dir = 3;
-                    break;
-                case "10":
-                    dir = 4;
-                    break;
-                case "-1-1":
-                    dir = 5;
-                    break;
-                case "0-1":
-                    dir = 6;
-                    break;
-                case "1-1":
-                    dir = 7;
-                    break;
-                case "00":
-                    dir = -1;
-                    break;
+                type = PlayState.CheckForItem("Full-Metal Snail") ? 8 : 7;
+                dir = gravityDir switch
+                {
+                    Dirs.Floor => 6,
+                    Dirs.WallL => 3,
+                    Dirs.WallR => 4,
+                    Dirs.Ceiling => 1,
+                    _ => 6
+                };
+            }
+            else
+            {
+                string dirStr = inputDir.x + "" + inputDir.y;
+                if (aimDir != Vector2.zero)
+                    dirStr = aimDir.x + "" + aimDir.y;
+                switch (dirStr)
+                {
+                    case "-11":
+                        dir = 0;
+                        break;
+                    case "01":
+                        dir = 1;
+                        break;
+                    case "11":
+                        dir = 2;
+                        break;
+                    case "-10":
+                        dir = 3;
+                        break;
+                    case "10":
+                        dir = 4;
+                        break;
+                    case "-1-1":
+                        dir = 5;
+                        break;
+                    case "0-1":
+                        dir = 6;
+                        break;
+                    case "1-1":
+                        dir = 7;
+                        break;
+                    case "00":
+                        dir = -1;
+                        break;
+                }
+
+                if (type == 1 && grounded)
+                {
+                    if (gravityDir == Dirs.Floor && (dir == 5 || dir == 6 || dir == 7))
+                        dir = facingLeft ? 3 : 4;
+                    else if (gravityDir == Dirs.WallL && (dir == 0 || dir == 3 || dir == 5))
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.WallR && (dir == 2 || dir == 4 || dir == 7))
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.Ceiling && (dir == 0 || dir == 1 || dir == 2))
+                        dir = facingLeft ? 3 : 4;
+                }
+                if (dir == -1)
+                {
+                    if (gravityDir == Dirs.Floor && dir == -1)
+                        dir = facingLeft ? 3 : 4;
+                    else if (gravityDir == Dirs.WallL && dir == -1)
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.WallR && dir == -1)
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.Ceiling && dir == -1)
+                        dir = facingLeft ? 3 : 4;
+                }
             }
 
-            if (type == 1 && grounded)
-            {
-                if (gravityDir == Dirs.Floor && (dir == 5 || dir == 6 || dir == 7))
-                    dir = facingLeft ? 3 : 4;
-                else if (gravityDir == Dirs.WallL && (dir == 0 || dir == 3 || dir == 5))
-                    dir = facingDown ? 6 : 1;
-                else if (gravityDir == Dirs.WallR && (dir == 2 || dir == 4 || dir == 7))
-                    dir = facingDown ? 6 : 1;
-                else if (gravityDir == Dirs.Ceiling && (dir == 0 || dir == 1 || dir == 2))
-                    dir = facingLeft ? 3 : 4;
-            }
-            if (dir == -1)
-            {
-                if (gravityDir == Dirs.Floor && dir == -1)
-                    dir = facingLeft ? 3 : 4;
-                else if (gravityDir == Dirs.WallL && dir == -1)
-                    dir = facingDown ? 6 : 1;
-                else if (gravityDir == Dirs.WallR && dir == -1)
-                    dir = facingDown ? 6 : 1;
-                else if (gravityDir == Dirs.Ceiling && dir == -1)
-                    dir = facingLeft ? 3 : 4;
-            }
             if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
-                PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().Shoot(type, dir, applyRapidFireMultiplier == 1);
+                Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+                thisBullet.Shoot(type, dir, applyRapidFireMultiplier == 1);
                 bulletID++;
                 if (bulletID >= PlayState.globalFunctions.playerBulletPool.transform.childCount)
                     bulletID = 0;
-                bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
-                int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
-                fireCooldown = weaponCooldowns[fireRateIndex];
+                if (!isShock)
+                {
+                    bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
+                    int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
+                    fireCooldown = weaponCooldowns[fireRateIndex];
+                }
                 PlayState.PlaySound(type switch
                 {
                     1 => "ShotPeashooter",
@@ -1682,8 +2051,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     5 => "ShotBoomerangDev",
                     _ => "ShotRainbowDev"
                 });
+                return thisBullet;
             }
         }
+        return null;
     }
 
     private bool CanChangeGravWhileStunned()

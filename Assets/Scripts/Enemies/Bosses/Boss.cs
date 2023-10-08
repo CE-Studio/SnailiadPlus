@@ -141,7 +141,7 @@ public class Boss : Enemy
                 }
                 else if (introTimer > introTimestamps[3] && introTimer <= introTimestamps[4])
                 {
-                    PlayState.SetCamFocus(PlayState.player.transform);
+                    PlayState.SetCamFocus(PlayState.playerScript.camFocus);
                 }
             }
             yield return new WaitForEndOfFrame();

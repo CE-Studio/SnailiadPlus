@@ -82,6 +82,7 @@ public class CreditsEntity : MonoBehaviour
         GoldGuy,
         Discord,
         Xander,
+        ForTheFunny,
         TheEnd
     }
     public Entities type = Entities.None;
@@ -89,7 +90,7 @@ public class CreditsEntity : MonoBehaviour
     private readonly float[] entityHeights = new float[]
     {
         0, 16, 16, 10, 10, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 16, 16, 16, 24, 16, 24, 16, 16, 16, 16, 16, 16, 32, 32, 16, 32, 48, 48, 16, 16, 16, 16,
-        32, 32, 32, 48, 48, 24, 180, 156, 52, 52, 52, 156, 52, 52, 52, 128, 16, 44, 16, 16, 16, 16, 16, 16, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 122
+        32, 32, 32, 48, 48, 24, 180, 156, 52, 52, 52, 156, 52, 52, 52, 128, 16, 44, 16, 16, 16, 16, 16, 16, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 122
     };
 
     public SpriteRenderer sprite;

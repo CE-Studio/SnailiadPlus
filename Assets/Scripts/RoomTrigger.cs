@@ -32,6 +32,7 @@ public class RoomTrigger : MonoBehaviour
     // 6 = Shrine of Iris
     // 7 = Boss Rush
     public int areaSubzone = 0;
+    public bool isSnelkRoom = false;
 
     public Vector2[] waterLevel = new Vector2[] { };
 
@@ -306,7 +307,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.fg1Offset = offsetForeground1;
             PlayState.bgOffset = offsetBackground;
             PlayState.skyOffset = offsetSky;
-            PlayState.PlayAreaSong(areaID, areaSubzone);
+            PlayState.PlayAreaSong(areaID, areaSubzone, isSnelkRoom);
             PlayState.CloseDialogue();
             PlayState.isTalking = false;
 
@@ -401,8 +402,9 @@ public class RoomTrigger : MonoBehaviour
         GameObject playerPool = GameObject.Find("Player Bullet Pool");
         for (int i = 0; i < playerPool.transform.childCount; i++)
         {
-            if (playerPool.transform.GetChild(i).transform.GetComponent<Bullet>().isActive)
-                playerPool.transform.GetChild(i).transform.GetComponent<Bullet>().Despawn();
+            Bullet thisBullet = playerPool.transform.GetChild(i).transform.GetComponent<Bullet>();
+            if (thisBullet.isActive && thisBullet.bulletType < 7)
+                thisBullet.Despawn();
             playerPool.transform.GetChild(i).transform.position = Vector2.zero;
         }
         for (int i = 0; i < PlayState.enemyBulletPool.transform.childCount; i++)

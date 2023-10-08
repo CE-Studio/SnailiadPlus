@@ -135,8 +135,8 @@ public class Control
         ControllerBinds.RStickR,
         ControllerBinds.RStickU,
         ControllerBinds.RStickD,
-        ControllerBinds.FaceD,
         ControllerBinds.RTrigger,
+        ControllerBinds.FaceL,
         ControllerBinds.LTrigger,
         ControllerBinds.FaceU,
         ControllerBinds.DPadL,
@@ -149,12 +149,14 @@ public class Control
         ControllerBinds.FaceR
     };
 
+    public static int[] conFrames = new int[defaultControllerInputs.Length];
+
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
     public static bool[] virtualCon = new bool[defaultControllerInputs.Length];
 
     public static bool[] conPressed = new bool[defaultControllerInputs.Length];
 
-    public const float STICK_DEADZONE = 0.5f;
+    public const float STICK_DEADZONE = 0.375f;
 
     public static bool lastInputIsCon = false;
 
@@ -167,6 +169,12 @@ public class Control
     public static int AxisY(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
     {
         return 0 + (UpHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0) - (DownHold(player, overrideParalyze, ignoreVirtual) ? 1 : 0);
+    }
+
+    public static Vector2 Aim(bool overrideParalyze = false, bool ignoreVirtual = false)
+    {
+        return new Vector2(0 + (RightAim(overrideParalyze, ignoreVirtual) ? 1 : 0) - (LeftAim(overrideParalyze, ignoreVirtual) ? 1 : 0),
+            0 + (UpAim(overrideParalyze, ignoreVirtual) ? 1 : 0) - (DownAim(overrideParalyze, ignoreVirtual) ? 1 : 0));
     }
 
     public static bool LeftPress(int player = 0, bool overrideParalyze = false, bool ignoreVirtual = false)
@@ -464,97 +472,83 @@ public class Control
     {
         if (!PlayState.IsControllerConnected())
             return false;
-        //int index = (int)input;
-        //bool output = false;
-        //if (!overrideParalyze && PlayState.paralyzed && !ignoreVirtual)
-        //    output = virtualCon[index];
-        //else
-        //{
-        //    string inputName = PlayState.generalData.controllerInputs[index].ToString();
-        //    bool inputDown;
-        //    if (inputName.Contains("Alpha") || inputName.Contains("Keypad"))
-        //    {
-        //        char ID = inputName[inputName.Length - 1];
-        //        bool positive = inputName.Contains("Alpha");
-        //        float stickValue = ID switch
-        //        {
-        //            '0' => Input.GetAxis("LStickX"),
-        //            '1' => Input.GetAxis("LStickY"),
-        //            '2' => Input.GetAxis("RStickX"),
-        //            _ => Input.GetAxis("RStickY")
-        //        };
-        //        inputDown = (positive ? (stickValue > STICK_DEADZONE) : (stickValue < -STICK_DEADZONE)) || virtualCon[index];
-        //    }
-        //    else
-        //        inputDown = Input.GetKey(PlayState.generalData.controllerInputs[index]);
-        //    if (inputDown)
-        //    {
-        //        if (conPressed[index] && !pressed)
-        //            output = true;
-        //        else if (!conPressed[index])
-        //        {
-        //            conPressed[index] = true;
-        //            output = true;
-        //        }
-        //        else if (!ignoreVirtual)
-        //            output = virtualCon[index];
-        //    }
-        //    else
-        //    {
-        //        conPressed[index] = false;
-        //        if (!ignoreVirtual)
-        //            output = virtualCon[index];
-        //    }
-        //}
-        //if (output)
-        //    lastInputIsCon = true;
-        //return output;
-
-        InputAction bind = controllerInputs[(int)input] switch
-        {
-            ControllerBinds.LStickU => conInput.Controller.StickL,
-            ControllerBinds.LStickD => conInput.Controller.StickL,
-            ControllerBinds.LStickL => conInput.Controller.StickL,
-            ControllerBinds.LStickR => conInput.Controller.StickL,
-            ControllerBinds.LStickClick => conInput.Controller.StickLClick,
-            ControllerBinds.RStickU => conInput.Controller.StickR,
-            ControllerBinds.RStickD => conInput.Controller.StickR,
-            ControllerBinds.RStickL => conInput.Controller.StickR,
-            ControllerBinds.RStickR => conInput.Controller.StickR,
-            ControllerBinds.RStickClick => conInput.Controller.StickRClick,
-            ControllerBinds.FaceU => conInput.Controller.FaceU,
-            ControllerBinds.FaceD => conInput.Controller.FaceD,
-            ControllerBinds.FaceL => conInput.Controller.FaceL,
-            ControllerBinds.FaceR => conInput.Controller.FaceR,
-            ControllerBinds.DPadU => conInput.Controller.DPadU,
-            ControllerBinds.DPadD => conInput.Controller.DPadD,
-            ControllerBinds.DPadL => conInput.Controller.DPadL,
-            ControllerBinds.DPadR => conInput.Controller.DPadR,
-            ControllerBinds.LBumper => conInput.Controller.BumperL,
-            ControllerBinds.LTrigger => conInput.Controller.TriggerL,
-            ControllerBinds.RBumper => conInput.Controller.BumperR,
-            ControllerBinds.RTrigger => conInput.Controller.TriggerR,
-            ControllerBinds.Start => conInput.Controller.Start,
-            ControllerBinds.Select => conInput.Controller.Select,
-            _ => conInput.Controller.FaceD,
-        };
+        int index = (int)input;
         bool output = false;
         if (!(PlayState.paralyzed && !overrideParalyze))
         {
-            output = controllerInputs[(int)input] switch
-            {
-                ControllerBinds.LStickU or ControllerBinds.RStickU => bind.ReadValue<Vector2>().y > STICK_DEADZONE,
-                ControllerBinds.LStickD or ControllerBinds.RStickD => bind.ReadValue<Vector2>().y < -STICK_DEADZONE,
-                ControllerBinds.LStickL or ControllerBinds.RStickL => bind.ReadValue<Vector2>().x < -STICK_DEADZONE,
-                ControllerBinds.LStickR or ControllerBinds.RStickR => bind.ReadValue<Vector2>().x > STICK_DEADZONE,
-                _ => pressed ? bind.WasPressedThisFrame() : bind.WasPerformedThisFrame()
-            };
+            output = !ignoreVirtual && virtualCon[index];
+            if (pressed)
+                output = conFrames[index] == 1 || output;
+            else
+                output = conFrames[index] > 0 || output;
         }
-        else
-            return output;
-        if (!ignoreVirtual)
-            output = output || virtualCon[(int)input];
+        else if (!ignoreVirtual)
+            output = virtualCon[index];
+        if (output)
+            lastInputIsCon = true;
         return output;
+    }
+
+    public static IEnumerator HandleController()
+    {
+        while (true)
+        {
+            if (PlayState.IsControllerConnected())
+            {
+                for (int i = 0; i < controllerInputs.Length; i++)
+                {
+                    InputAction bind = controllerInputs[i] switch
+                    {
+                        ControllerBinds.LStickU => conInput.Controller.StickL,
+                        ControllerBinds.LStickD => conInput.Controller.StickL,
+                        ControllerBinds.LStickL => conInput.Controller.StickL,
+                        ControllerBinds.LStickR => conInput.Controller.StickL,
+                        ControllerBinds.LStickClick => conInput.Controller.StickLClick,
+                        ControllerBinds.RStickU => conInput.Controller.StickR,
+                        ControllerBinds.RStickD => conInput.Controller.StickR,
+                        ControllerBinds.RStickL => conInput.Controller.StickR,
+                        ControllerBinds.RStickR => conInput.Controller.StickR,
+                        ControllerBinds.RStickClick => conInput.Controller.StickRClick,
+                        ControllerBinds.FaceU => conInput.Controller.FaceU,
+                        ControllerBinds.FaceD => conInput.Controller.FaceD,
+                        ControllerBinds.FaceL => conInput.Controller.FaceL,
+                        ControllerBinds.FaceR => conInput.Controller.FaceR,
+                        ControllerBinds.DPadU => conInput.Controller.DPadU,
+                        ControllerBinds.DPadD => conInput.Controller.DPadD,
+                        ControllerBinds.DPadL => conInput.Controller.DPadL,
+                        ControllerBinds.DPadR => conInput.Controller.DPadR,
+                        ControllerBinds.LBumper => conInput.Controller.BumperL,
+                        ControllerBinds.LTrigger => conInput.Controller.TriggerL,
+                        ControllerBinds.RBumper => conInput.Controller.BumperR,
+                        ControllerBinds.RTrigger => conInput.Controller.TriggerR,
+                        ControllerBinds.Start => conInput.Controller.Start,
+                        ControllerBinds.Select => conInput.Controller.Select,
+                        _ => conInput.Controller.FaceD,
+                    };
+                    int thisState = controllerInputs[i] switch
+                    {
+                        ControllerBinds.LStickU or ControllerBinds.RStickU => bind.ReadValue<Vector2>().y > STICK_DEADZONE ? 1 : -1,
+                        ControllerBinds.LStickD or ControllerBinds.RStickD => bind.ReadValue<Vector2>().y < -STICK_DEADZONE ? 1 : -1,
+                        ControllerBinds.LStickL or ControllerBinds.RStickL => bind.ReadValue<Vector2>().x < -STICK_DEADZONE ? 1 : -1,
+                        ControllerBinds.LStickR or ControllerBinds.RStickR => bind.ReadValue<Vector2>().x > STICK_DEADZONE ? 1 : -1,
+                        _ => bind.WasPerformedThisFrame() ? 1 : (bind.WasReleasedThisFrame() ? -1 : 0)
+                    };
+                    if (conFrames[i] > 0)
+                    {
+                        if (thisState == -1)
+                            conFrames[i] = 0;
+                        else
+                            conFrames[i]++;
+                    }
+                    else
+                    {
+                        if (thisState == 1)
+                            conFrames[i]++;
+                    }
+                }
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public static string ParseKeyName(int keyID, bool shortForm = false)

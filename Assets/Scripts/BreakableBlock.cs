@@ -58,14 +58,19 @@ public class BreakableBlock : MonoBehaviour
             PlayState.breakablePositions.Remove(worldPos);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (requiredWeapon == -1)
             return;
 
         if (collision.CompareTag("PlayerBullet") && PlayState.OnScreen(transform.position, box))
         {
-            if (collision.GetComponent<Bullet>().bulletType >= requiredWeapon)
+            int thisWeaponType = collision.GetComponent<Bullet>().bulletType;
+            if (thisWeaponType == 7)
+                thisWeaponType = 3;
+            if (thisWeaponType == 8)
+                thisWeaponType = 6;
+            if (thisWeaponType >= requiredWeapon)
             {
                 if (!PlayState.explodePlayedThisFrame)
                 {
@@ -77,9 +82,9 @@ public class BreakableBlock : MonoBehaviour
                 PlayState.breakablePositions.Remove(worldPos);
                 Destroy(gameObject);
             }
-            else
+            else if (thisWeaponType < 6)
             {
-                if (collision.GetComponent<Bullet>().bulletType != 1)
+                if (thisWeaponType != 1)
                 {
                     if (!PlayState.armorPingPlayedThisFrame && !isSilent)
                     {

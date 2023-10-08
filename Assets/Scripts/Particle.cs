@@ -44,6 +44,11 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_white_big");
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
+        anim.Add("GravShock_charge");
+        anim.Add("GravShock_launch_up");
+        anim.Add("GravShock_launch_left");
+        anim.Add("GravShock_launch_down");
+        anim.Add("GravShock_launch_right");
         anim.Add("IntroPattern_1");
         anim.Add("IntroPattern_2");
         anim.Add("IntroPattern_3");
@@ -369,6 +374,12 @@ public class Particle : MonoBehaviour
                 break;
             case "shield":
                 anim.Play("Shield");
+                break;
+            case "shockcharge":
+                anim.Play("GravShock_charge");
+                break;
+            case "shocklaunch":
+                anim.Play("GravShock_launch_" + (vars[0] switch { 0 => "down", 1 => "left", 2 => "right", _ => "up" }));
                 break;
             case "smoke":
                 anim.Play("Smoke");

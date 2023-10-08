@@ -28,8 +28,8 @@ public class CamMovement : MonoBehaviour
             if (PlayState.gameState == PlayState.GameState.game)
             {
                 transform.position -= (Vector3)lastShakeOffset;
-                bool inBoundsX = ((camBoundsX.x <= (focus.x + 13.5f)) && ((focus.x - 13.5f) <= camBoundsX.y));
-                bool inBoundsY = ((camBoundsY.x <= (focus.y + 8.5f)) && ((focus.y - 8.5f) <= camBoundsY.y));
+                bool inBoundsX = (camBoundsX.x <= (focus.x + 13.5f)) && ((focus.x - 13.5f) <= camBoundsX.y);
+                bool inBoundsY = (camBoundsY.x <= (focus.y + 8.5f)) && ((focus.y - 8.5f) <= camBoundsY.y);
                 if (!(inBoundsX && inBoundsY) && !PlayState.playerScript.inDeathCutscene)
                 {
                     transform.position = new(
@@ -43,6 +43,7 @@ public class CamMovement : MonoBehaviour
                         yDif >= 0 ? Mathf.Clamp(Mathf.Lerp(transform.position.y, focus.y, camSpeed), camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
                 }
                 transform.position += (Vector3)PlayState.camShakeOffset;
+                PlayState.camBorder.transform.localPosition = PlayState.generalData.screenShake > 2 ? -PlayState.camShakeOffset : Vector2.zero;
                 lastShakeOffset = PlayState.camShakeOffset;
             }
             lastMove = (Vector2)transform.position - lastPos;

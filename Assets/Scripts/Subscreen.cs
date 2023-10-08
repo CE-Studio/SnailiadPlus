@@ -125,7 +125,7 @@ public class Subscreen : MonoBehaviour
 
     void Update()
     {
-        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && Control.Map())
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && PlayState.creditsState == 0 && Control.Map())
         {
             menuOpen = true;
             PlayState.gameState = PlayState.GameState.map;

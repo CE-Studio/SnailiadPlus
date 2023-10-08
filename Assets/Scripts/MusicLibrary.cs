@@ -24,6 +24,10 @@ public class MusicLibrary : ScriptableObject
         },
         new string[]
         {
+            "Snelk"
+        },
+        new string[]
+        {
             "Boss1"
         },
         new string[]
@@ -72,7 +76,7 @@ public class MusicLibrary : ScriptableObject
             "ShrineOfIris"
         }
     };
-    public int areaThemeOffset = 7;
+    public int areaThemeOffset = 8;
 
     public void BuildDefaultLibrary()
     {

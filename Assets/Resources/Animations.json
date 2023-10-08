@@ -4090,6 +4090,534 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Bullet_gravShock_snaily0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_snaily1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				26
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				25
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				24
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_sluggy1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				27
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_upside1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				18
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leggy1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				22
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				21
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				20
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				18
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_blobby1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy0_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy0_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy0_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy0_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy1_N",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				22
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy1_E",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				21
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy1_S",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				20
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Bullet_gravShock_leechy1_W",
+			"spriteName": "Bullets/ShockBody",
+			"framerate": 0.0,
+			"frames": [
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Bullet_enemy_peashooter",
 			"spriteName": "Bullets/Peashooter",
 			"framerate": 0.0,
@@ -14576,6 +15104,104 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "GravShock_charge",
+			"spriteName": "Particles/ShockCharge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				7,
+				4,
+				5,
+				10,
+				11,
+				8,
+				13,
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_launch_down",
+			"spriteName": "Particles/ShockLaunch",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				16,
+				17,
+				18,
+				19,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "GravShock_launch_up",
+			"spriteName": "Particles/ShockLaunch",
+			"framerate": 24.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11,
+				16,
+				17,
+				18,
+				19,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "GravShock_launch_left",
+			"spriteName": "Particles/ShockLaunch",
+			"framerate": 24.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "GravShock_launch_right",
+			"spriteName": "Particles/ShockLaunch",
+			"framerate": 24.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7,
+				16,
+				17,
+				18,
+				19,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "IntroPattern_1",
 			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,
@@ -18288,6 +18914,19 @@
 				0,
 				0,
 				13
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Credits_forthefunny",
+			"spriteName": "Entities/ForTheFunny",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				0
 			],
 			"loop": true,
 			"loopStartFrame": 2,

@@ -74,6 +74,7 @@ public class GlobalFunctions : MonoBehaviour
         DeclarePlayStateMono();
         conInput = new ControllerInput();
         Control.conInput = conInput;
+        StartCoroutine(Control.HandleController());
     }
 
     private void OnEnable()
@@ -130,6 +131,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.playerScript = PlayState.player.GetComponent<Player>();
         PlayState.cam = GameObject.Find("View");
         PlayState.camObj = PlayState.cam.transform.Find("Main Camera").gameObject;
+        PlayState.camBorder = PlayState.cam.transform.Find("Border").gameObject;
         PlayState.mainCam = PlayState.camObj.GetComponent<Camera>();
         PlayState.camScript = PlayState.cam.GetComponent<CamMovement>();
         PlayState.screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();

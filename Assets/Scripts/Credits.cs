@@ -742,7 +742,7 @@ public class Credits : MonoBehaviour
         background.sprite.color = new Color(1, 1, 1, 1);
         background.anim.Play("EndingBackground_credits");
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 1.4f);
-        PlayState.globalFunctions.UpdateMusic(-6, 0, 1);
+        PlayState.globalFunctions.UpdateMusic(1 - PlayState.musicLibrary.areaThemeOffset, 0, 1);
         creditsGenerateY = 0;
         creditsDone = false;
         creditsDoneTimer = CREDITS_DONE_TIMER;
@@ -962,6 +962,12 @@ public class Credits : MonoBehaviour
         creditsGenerateY -= 0.625f;
         AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Discord },
             new string[] { "credits_entity_discord" });
+        if (Random.Range(0f, 1f) >= 0.9f)
+        {
+            creditsGenerateY -= 0.625f;
+            AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.ForTheFunny },
+                new string[] { "credits_entity_forthefunny" });
+        }
         creditsGenerateY -= 4.375f;
         AddCreditsEntry("credits_entity_you");
         creditsGenerateY -= 2.5f;

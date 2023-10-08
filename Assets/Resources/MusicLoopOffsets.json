@@ -1,6 +1,10 @@
 {
 	"offsetArray": [
 		{
+			"name": "Snelk",
+			"offset": 4.013
+		},
+		{
 			"name": "Boss1",
 			"offset": 0.0
 		},

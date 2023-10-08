@@ -13,7 +13,7 @@ public class Spinnygear : Enemy
     private bool isActive = false;
     private bool canAttack = true;
 
-    private bool alignCornerToTile = true;
+    private readonly bool alignCornerToTile = true;
 
     private BoxCollider2D box;
     private Vector2 halfBox;

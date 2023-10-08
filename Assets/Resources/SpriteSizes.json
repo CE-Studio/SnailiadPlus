@@ -127,6 +127,16 @@
             "width": 48,
             "height": 48
         },
+		{
+            "name": "Bullets/ShockBody",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Bullets/ShockWave",
+            "width": 8,
+            "height": 8
+        },
 		
 		{
 			"name": "Endings/Ending100",
@@ -323,6 +333,11 @@
             "name": "Entities/Floatspike2",
             "width": 16,
             "height": 16
+        },
+		{
+            "name": "Entities/ForTheFunny",
+            "width": 180,
+            "height": 32
         },
 		{
             "name": "Entities/Gear",
@@ -649,6 +664,21 @@
 		},
 		{
             "name": "Particles/Shield",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Particles/ShockChar",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Particles/ShockCharge",
+            "width": 20,
+            "height": 20
+        },
+		{
+            "name": "Particles/ShockLaunch",
             "width": 32,
             "height": 32
         },
