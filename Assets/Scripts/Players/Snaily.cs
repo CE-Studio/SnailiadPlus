@@ -51,7 +51,7 @@ public class Snaily : Player
         PlayState.currentProfile.character = "Snaily";
 
         string[] animDirections = new string[] { "floor_right", "floor_left", "ceiling_right", "ceiling_left", "wallR_down", "wallR_up", "wallL_down", "wallL_up" };
-        string[] animStates = new string[] { "idle", "move", "shell", "air" };
+        string[] animStates = new string[] { "idle", "move", "shell", "air", "shock" };
         for (int i = 0; i <= 3; i++)
         {
             for (int j = 0; j < animDirections.Length; j++)
@@ -157,8 +157,10 @@ public class Snaily : Player
             else
                 currentState += "right_";
         }
-    
-        if (shelled)
+
+        if (gravShockState > 0)
+            currentState += "shock";
+        else if (shelled)
             currentState += "shell";
         else if (!grounded && animData[2])
             currentState += "air";

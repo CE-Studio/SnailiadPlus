@@ -178,7 +178,7 @@ public class PlayState {
     public struct Breakable {
         public Vector2 pos;
         public int[] tiles;
-        public int weaponLevel;
+        public int blockType;
         public bool isSilent;
     }
 
@@ -435,6 +435,8 @@ public class PlayState {
         public int screenShake;             // Screen shake (0 = off, 1 = minimal, 2 = full, 3 = minimal w/ no HUD shake, 4 = full w/ no HUD shake)
         public bool paletteFilterState;     // Palette filter
         public int controllerFaceType;      // Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
+        public int gravSwapType;            // Method of swapping gravity (0 = hold dir mid-air and jump, 1 = hold jump mid-air and tap dir, 2 = double-tap dir)
+        public int gravKeepType;            // How gravity state is retained (0 = swap fall dir on any grav change, 1 = swap fall dir on deliberate gravity jump)
         public KeyCode[] keyboardInputs;
         public Control.ControllerBinds[] controllerInputs;
 
@@ -1072,9 +1074,39 @@ public class PlayState {
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
                     break;
+                case "shockcharmain":
+                    // Values:
+                    // 0 = the current player
+                    // 1 = the shell state as considered by Gravity Shock
+                    // 2 = the direction, according to EDirsSurface
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                        particleScript.vars[1] = values[1];
+                        particleScript.vars[2] = values[2];
+                    }
+                    break;
+                case "shockcharsub":
+                    // Values:
+                    // 0 = the current player
+                    // 1 = the shell state as considered by Gravity Shock
+                    // 2 = the direction, according to EDirsSurface
+                    // 3 = the frame index offset
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                        particleScript.vars[1] = values[1];
+                        particleScript.vars[2] = values[2];
+                        particleScript.vars[3] = values[3];
+                    }
+                    break;
                 case "shocklaunch":
                     // Values:
-                    // 0 = the direction, according to EDirs
+                    // 0 = the direction, according to EDirsSurface
 
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                     {
@@ -1141,7 +1173,7 @@ public class PlayState {
         foreach (Transform particle in particlePool.transform)
         {
             Particle particleScript = particle.GetComponent<Particle>();
-            if (particle.gameObject.activeSelf)
+            if (particle.gameObject.activeSelf && particleScript.type != "shockcharmain")
                 particleScript.ResetParticle();
         }
     }
@@ -1621,6 +1653,8 @@ public class PlayState {
             generalData.screenShake = newData.screenShake;
             generalData.paletteFilterState = newData.paletteFilterState;
             generalData.controllerFaceType = newData.controllerFaceType;
+            generalData.gravSwapType = newData.gravSwapType;
+            generalData.gravKeepType = newData.gravKeepType;
             if (newData.keyboardInputs != null)
                 generalData.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
             if (newData.controllerInputs != null)

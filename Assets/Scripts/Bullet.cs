@@ -50,6 +50,12 @@ public class Bullet : MonoBehaviour
                     anim.Add(string.Format("Bullet_gravShock_{0}{1}_{2}", shockChars[i], j.ToString(), shockDirs[k]));
             }
         }
+        string[] shockWaveDirs = new string[] { "floor_L", "floor_R", "wallL_D", "wallL_U", "wallR_D", "wallR_U", "ceiling_L", "ceiling_R" };
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < shockWaveDirs.Length; j++)
+                anim.Add(string.Format("Bullet_shockWave{0}_{1}", i == 0 ? "" : "Dev", shockWaveDirs[j]));
+        }
     }
 
     void FixedUpdate()
@@ -74,6 +80,10 @@ public class Bullet : MonoBehaviour
                     break;
                 case 7:
                 case 8:
+                    break;
+                case 9:
+                case 10:
+                    velocity += initialVelocity * 15f * Time.fixedDeltaTime;
                     break;
                 default:
                     velocity += 0.03f;
@@ -107,52 +117,57 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-        if ((lifeTimer > 3 || despawnOffScreen) && !PlayState.OnScreen(transform.position, box))
+        if ((lifeTimer > 3 || despawnOffScreen) && !PlayState.OnScreen(transform.position, box) && bulletType < 7)
             Despawn();
-        if (bulletType == 1 && PlayState.IsTileSolid(transform.position))
+        if ((bulletType == 1 || bulletType == 9 || bulletType == 10) && PlayState.IsTileSolid(transform.position))
             Despawn(PlayState.OnScreen(transform.position, box));
     }
 
-    public void Shoot(int type, int dir, bool applyRapidMult)
+    public void Shoot(int type, int dir, bool applyRapidMult, float posOverrideX = Mathf.Infinity, float posOverrideY = Mathf.Infinity)
     {
         isActive = true;
         sprite.enabled = true;
         box.enabled = true;
-        transform.position = new Vector2(
-            player.transform.position.x + player.GetComponent<Player>().box.offset.x,
-            player.transform.position.y + player.GetComponent<Player>().box.offset.y) + PlayState.playerScript.gravityDir switch
-            {
-                Player.Dirs.WallL => new Vector2(-0.0625f, 0),
-                Player.Dirs.WallR => new Vector2(0.0625f, 0),
-                Player.Dirs.Ceiling => new Vector2(0, 0.0625f),
-                _ => new Vector2(0, -0.0625f)
-            };
-        switch (dir)
+        if (!(posOverrideX == Mathf.Infinity && posOverrideY == Mathf.Infinity))
+            transform.position = new Vector2(posOverrideX, posOverrideY);
+        else
         {
-            case 0:
-                transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y + 0.2f);
-                break;
-            case 1:
-                transform.position = new Vector2(transform.position.x, transform.position.y + 0.2f);
-                break;
-            case 2:
-                transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y + 0.2f);
-                break;
-            case 3:
-                transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y);
-                break;
-            case 4:
-                transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y);
-                break;
-            case 5:
-                transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y - 0.2f);
-                break;
-            case 6:
-                transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f);
-                break;
-            case 7:
-                transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y - 0.2f);
-                break;
+            transform.position = new Vector2(
+                player.transform.position.x + player.GetComponent<Player>().box.offset.x,
+                player.transform.position.y + player.GetComponent<Player>().box.offset.y) + PlayState.playerScript.gravityDir switch
+                {
+                    Player.Dirs.WallL => new Vector2(-0.0625f, 0),
+                    Player.Dirs.WallR => new Vector2(0.0625f, 0),
+                    Player.Dirs.Ceiling => new Vector2(0, 0.0625f),
+                    _ => new Vector2(0, -0.0625f)
+                };
+            switch (dir)
+            {
+                case 0:
+                    transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y + 0.2f);
+                    break;
+                case 1:
+                    transform.position = new Vector2(transform.position.x, transform.position.y + 0.2f);
+                    break;
+                case 2:
+                    transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y + 0.2f);
+                    break;
+                case 3:
+                    transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y);
+                    break;
+                case 4:
+                    transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y);
+                    break;
+                case 5:
+                    transform.position = new Vector2(transform.position.x - 0.4f, transform.position.y - 0.2f);
+                    break;
+                case 6:
+                    transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f);
+                    break;
+                case 7:
+                    transform.position = new Vector2(transform.position.x + 0.4f, transform.position.y - 0.2f);
+                    break;
+            }
         }
         bulletType = type;
         switch (type)
@@ -210,6 +225,18 @@ public class Bullet : MonoBehaviour
                 rapidMult = 1f;
                 despawnOffScreen = false;
                 break;
+            case 9:
+                box.size = new Vector2(0.45f, 0.45f);
+                velocity = 0.05f;
+                damage = 68;
+                rapidMult = 1f;
+                break;
+            case 10:
+                box.size = new Vector2(0.95f, 0.95f);
+                velocity = 0.085f;
+                damage = 128;
+                rapidMult = 1f;
+                break;
         }
         direction = dir;
         initialVelocity = velocity;
@@ -234,20 +261,73 @@ public class Bullet : MonoBehaviour
             6 => "rainbowWaveDev_",
             7 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "0_",
             8 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "1_",
+            9 => ShockWaveAnimSubroutine(false),
+            10 => ShockWaveAnimSubroutine(true),
             _ => "rainbowWave_",
         };
-        animToPlay += direction switch
+        if (bulletType != 9 && bulletType != 10)
         {
-            1 => "N",
-            2 => "NE",
-            3 => "W",
-            4 => "E",
-            5 => "SW",
-            6 => "S",
-            7 => "SE",
-            _ => "NW"
-        };
+            animToPlay += direction switch
+            {
+                1 => "N",
+                2 => "NE",
+                3 => "W",
+                4 => "E",
+                5 => "SW",
+                6 => "S",
+                7 => "SE",
+                _ => "NW"
+            };
+        }
         anim.Play(animToPlay);
+    }
+
+    private string ShockWaveAnimSubroutine(bool devVariant)
+    {
+        string output = string.Format("shockWave{0}_", devVariant ? "Dev" : "");
+        string var1;
+        string var2;
+        switch (direction)
+        {
+            default:
+            case 5: // SW
+                var1 = "floor_L";
+                var2 = "wallL_D";
+                break;
+            case 7: // SE
+                var1 = "floor_R";
+                var2 = "wallR_D";
+                break;
+            case 8: // NW
+                var1 = "ceiling_L";
+                var2 = "wallL_U";
+                break;
+            case 2: // NE
+                var1 = "ceiling_R";
+                var2 = "wallR_U";
+                break;
+        }
+        if (PlayState.playerScript.gravityDir == Player.Dirs.Floor || PlayState.playerScript.gravityDir == Player.Dirs.Ceiling)
+        {
+            output += var1;
+            direction = direction switch
+            {
+                5 => 3,
+                8 => 3,
+                _ => 4
+            };
+        }
+        else
+        {
+            output += var2;
+            direction = direction switch
+            {
+                5 => 6,
+                7 => 6,
+                _ => 1
+            };
+        }
+        return output;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -268,34 +348,35 @@ public class Bullet : MonoBehaviour
                 switch (bulletType)
                 {
                     case 1:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.25f, transform.position.x + 0.25f),
-                            Random.Range(transform.position.y - 0.25f, transform.position.y + 0.25f)), "explosion", new float[] { 1 });
+                        CallExplosion(0.25f, 1, 1);
                         break;
                     case 2:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        CallExplosion(0.5f, 5, 1);
                         break;
                     case 3:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 7 });
+                        CallExplosion(0.5f, 7, 1);
                         break;
                     case 4:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 5 });
+                        CallExplosion(0.5f, 5, 4);
                         break;
                     case 5:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 6 });
+                        CallExplosion(0.5f, 6, 1);
                         break;
                     case 6:
-                        PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
-                            Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 8 });
+                        CallExplosion(0.5f, 8, 1);
+                        break;
+                    case 7:
+                        CallExplosion(1.25f, 2, 3);
+                        break;
+                    case 8:
+                        CallExplosion(1.25f, 2, 2);
+                        CallExplosion(1.25f, 3, 2);
+                        break;
+                    case 9:
+                    case 10:
+                        CallExplosion(0.5f, 2, 1);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -362,5 +443,12 @@ public class Bullet : MonoBehaviour
             7 => new(PlayState.ANGLE_DIAG.x, -PlayState.ANGLE_DIAG.y),
             _ => Vector2.right
         };
+    }
+
+    private void CallExplosion(float buffer, int type, int count)
+    {
+        for (int i = 0; i < count; i++)
+            PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - buffer, transform.position.x + buffer),
+                Random.Range(transform.position.y - buffer, transform.position.y + buffer)), "explosion", new float[] { type });
     }
 }

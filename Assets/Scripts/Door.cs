@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door:MonoBehaviour, IRoomObject {
+public class Door:MonoBehaviour, IRoomObject
+{
     [SerializeField] private int doorWeapon;
     [SerializeField] private int bossLock;
     [SerializeField] private bool locked;
@@ -18,7 +19,16 @@ public class Door:MonoBehaviour, IRoomObject {
 
     public Sprite[] editorSprites;
 
-    public Dictionary<string, object> resave() {
+    private readonly List<List<int>> bulletsThatOpenMe = new()
+    {
+        new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 },  // Peashooter
+        new List<int> { 2, 3, 4, 5, 6, 7, 8 },     // Boomerang
+        new List<int> { 3, 4, 5, 6, 7, 8 },        // Rainbow Wave
+        new List<int> { 4, 5, 6, 8 }               // Devastator
+    };
+
+    public Dictionary<string, object> resave()
+    {
         return null;
     }
 
@@ -30,7 +40,8 @@ public class Door:MonoBehaviour, IRoomObject {
         }
     }
 
-    public Dictionary<string, object> save() {
+    public Dictionary<string, object> save()
+    {
         Dictionary<string, object> content = new();
         content["doorWeapon"] = doorWeapon;
         content["bossLock"] = bossLock;
@@ -39,7 +50,8 @@ public class Door:MonoBehaviour, IRoomObject {
         return content;
     }
 
-    public void load(Dictionary<string, object> content) {
+    public void load(Dictionary<string, object> content)
+    {
         doorWeapon = (int)content["doorWeapon"];
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
@@ -150,54 +162,57 @@ public class Door:MonoBehaviour, IRoomObject {
     }
 
     // State 0 is for doors that are opened from being shot
-    public void SetState0() {
+    public void SetState0()
+    {
         PlayAnim("open");
         PlayState.PlaySound("DoorOpen");
         box.enabled = false;
     }
 
     // State 1 is for doors that are opened for a limited time before closing or despawning as a result of being entered through
-    public void SetState1() {
+    public void SetState1()
+    {
         sprite.enabled = false;
         box.enabled = false;
         StartCoroutine(nameof(WaitForClose));
     }
 
     // State 2 is for doors that are closed upon spawning
-    public void SetState2() {
+    public void SetState2()
+    {
         sprite.enabled = true;
         PlayAnim("holdClosed");
         box.enabled = true;
     }
 
     // State 3 is for doors that are closed only after being entered through
-    public void SetState3() {
+    public void SetState3()
+    {
         box.enabled = true;
         sprite.enabled = true;
         PlayAnim("close");
         PlayState.PlaySound("DoorClose");
     }
 
-    public void SetStateDespawn() {
+    public void SetStateDespawn()
+    {
         gameObject.SetActive(false);
     }
 
-    private IEnumerator WaitForClose() {
-        while (Vector2.Distance(transform.position, player.transform.position) < 4 && gameObject.activeSelf && !PlayState.inBossFight) {
+    private IEnumerator WaitForClose()
+    {
+        while (Vector2.Distance(transform.position, player.transform.position) < 4 && gameObject.activeSelf && !PlayState.inBossFight)
             yield return new WaitForEndOfFrame();
-        }
-        if (!gameObject.activeSelf) {
+        if (!gameObject.activeSelf)
             SetStateDespawn();
-        } else {
+        else
             SetState3();
-        }
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerBullet")) {
-            if (!locked && ((collision.GetComponent<Bullet>().bulletType > doorWeapon && doorWeapon != 3) || (collision.GetComponent<Bullet>().bulletType >= 4 && doorWeapon == 3))) {
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerBullet"))
+            if (!locked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
-            }
-        }
     }
 }

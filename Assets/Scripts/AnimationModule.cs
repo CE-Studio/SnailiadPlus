@@ -9,8 +9,8 @@ public class AnimationModule : MonoBehaviour
     public string currentAnimName = "";
     public string lastAnimName = "";
     public PlayState.AnimationData currentAnim;
-    public Dictionary<string, PlayState.AnimationData> animList = new Dictionary<string, PlayState.AnimationData>();
-    public List<string> listKeys = new List<string>();
+    public Dictionary<string, PlayState.AnimationData> animList = new();
+    public List<string> listKeys = new();
     public bool stopAtBlankFrame = false;
     public bool blankOnNonLoopEnd = false;
     public bool updateSprite = true;
@@ -25,7 +25,7 @@ public class AnimationModule : MonoBehaviour
     private bool smallBlank = false;
 
     private SpriteRenderer sprite;
-    private List<SpriteMask> masks = new List<SpriteMask>();
+    private List<SpriteMask> masks = new();
 
     void Awake()
     {
@@ -103,9 +103,9 @@ public class AnimationModule : MonoBehaviour
 
     public void Play(string animName, bool useSmallBlank)
     {
-        Play(animName, 1, useSmallBlank);
+        Play(animName, 1f, 0, useSmallBlank);
     }
-    public void Play(string animName, float newSpeed = 1, bool useSmallBlank = false)
+    public void Play(string animName, float newSpeed = 1f, int transposeFrames = 0, bool useSmallBlank = false)
     {
         if (sprite == null)
             sprite = GetComponent<SpriteRenderer>();
@@ -115,6 +115,15 @@ public class AnimationModule : MonoBehaviour
             currentAnim = animList[animName];
             currentAnimName = animName;
             lastAnimName = animName;
+
+            if (transposeFrames != 0)
+            {
+                int[] newFrames = (int[])currentAnim.frames.Clone();
+                for (int i = 0; i < newFrames.Length; i++)
+                    if (newFrames[i] != -1)
+                        newFrames[i] += transposeFrames;
+                currentAnim.frames = newFrames;
+            }
 
             timerMax = 1 / currentAnim.framerate;
             animTimer = timerMax;

@@ -137,6 +137,11 @@
             "width": 8,
             "height": 8
         },
+		{
+            "name": "Bullets/ShockWaveDev",
+            "width": 16,
+            "height": 16
+        },
 		
 		{
 			"name": "Endings/Ending100",

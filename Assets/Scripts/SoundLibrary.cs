@@ -42,6 +42,8 @@ public class SoundLibrary : ScriptableObject
         "Ping",
         "Save",
         "Shell",
+        "ShockCharge",
+        "ShockLaunch",
         "ShotBoomerang",
         "ShotBoomerangDev",
         "ShotEnemyDonut",

@@ -681,6 +681,16 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_gameplay_gravSwap",
+			"text": "Swap grav on",
+			"value": 0
+		},
+		{
+			"name": "menu_option_gameplay_gravKeep",
+			"text": "Keep grav until",
+			"value": 0
+		},
+		{
 			"name": "menu_option_assets_texture",
 			"text": "Texture packs",
 			"value": 0
@@ -1846,6 +1856,31 @@
 			"value": 0
 		},
 		{
+			"name": "menu_add_gravSwap_onJump",
+			"text": "Hold dir, tap jump",
+			"value": 0
+		},
+		{
+			"name": "menu_add_gravSwap_onDir",
+			"text": "Hold jump, tap dir",
+			"value": 0
+		},
+		{
+			"name": "menu_add_gravSwap_onDoubleTap",
+			"text": "Double-tap dir",
+			"value": 0
+		},
+		{
+			"name": "menu_add_gravKeep_onState",
+			"text": "Wall stick",
+			"value": 0
+		},
+		{
+			"name": "menu_add_gravKeep_onJump",
+			"text": "Grav jump",
+			"value": 0
+		},
+		{
 			"name": "intro_skip",
 			"text": "{0} to skip",
 			"value": 0
@@ -2342,7 +2377,7 @@
 		},
 		{
 			"name": "room_01_tower1",
-			"text": "Not Brinstar",
+			"text": "Brineshore",
 			"value": 0
 		},
 		{
@@ -2412,7 +2447,7 @@
 		},
 		{
 			"name": "room_01_tower3",
-			"text": "Still Not|Brinstar",
+			"text": "Upper|Brineshore",
 			"value": 0
 		},
 		{
@@ -3432,7 +3467,12 @@
 		},
 		{
 			"name": "npc_36_default_0",
-			"text": "{P}?  {p|0.2}How did you get in{nl}here??  {p|0.25}This area isn't supposed{nl}to be finished yet!!",
+			"text": "Heya, {P}!  {p|0.15}{col|0209}Gravity Shock{col|0312}{nl}upgrades your {col|0207}gravity jump{col|0312}!{nl}{p|0.25}Pretty neat, huh?",
+			"value": 1
+		},
+		{
+			"name": "npc_36_default_1",
+			"text": "While falling, {p|0.2}{col|0309}gravity jump in{nl}the same direction you're falling {col|0312}{nl}to unleash a powerful attack!!",
 			"value": 1
 		},
 		{

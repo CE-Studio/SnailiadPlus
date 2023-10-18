@@ -20,8 +20,8 @@ public class EnemyBullet : MonoBehaviour
     private float turnSpeed;
     private bool despawnOffscreen;
 
-    private bool[] playerBulletsDestroyedByMe = new bool[6];
-    private bool[] playerBulletsThatDestroyMe = new bool[6];
+    private bool[] playerBulletsDestroyedByMe = new bool[10];
+    private bool[] playerBulletsThatDestroyMe = new bool[10];
     private int bulletInteraction = 0;
     // 0 = always destroy
     // 1 = destroy parallel
@@ -278,8 +278,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotRainbowDev";
-                SetDestroyableLevels("111111", false);
-                SetDestroyableLevels("111111", true);
+                SetDestroyableLevels("1111110000", false);
+                SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 0;
                 break;
             case BulletType.gigaWave:
@@ -292,7 +292,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyGigaWave";
-                SetDestroyableLevels("111111", true);
+                SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 2;
                 break;
         }

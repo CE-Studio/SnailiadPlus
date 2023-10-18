@@ -44,6 +44,9 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_white_big");
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
+        anim.Add("GravShock_char_base1");
+        anim.Add("GravShock_char_base2");
+        anim.Add("GravShock_char_base3");
         anim.Add("GravShock_charge");
         anim.Add("GravShock_launch_up");
         anim.Add("GravShock_launch_left");
@@ -76,6 +79,13 @@ public class Particle : MonoBehaviour
         anim.Add("Transformation_corkscrew");
         anim.Add("Transformation_angel");
         anim.Add("Zzz");
+
+        foreach (string character in new string[] { "snaily" })
+        {
+            for (int i = 0; i <= 1; i++)
+                foreach (string dir in new string[] { "down", "up", "left", "right" })
+                    anim.Add(string.Format("GravShock_char_{0}{1}_{2}", character, i.ToString(), dir));
+        }
     }
 
     public void Update()
@@ -203,6 +213,9 @@ public class Particle : MonoBehaviour
                     case "nom":
                         internalVars[0] += Time.deltaTime;
                         transform.position = new(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
+                        break;
+                    case "shockcharmain":
+                        PlayState.RequestParticle(transform.position, "shockcharsub", new float[] { vars[0], vars[1], vars[2], anim.GetCurrentFrameValue() });
                         break;
                     case "snow":
                         transform.position = new(transform.position.x + (Mathf.Sin(vars[1] * 4) - 1) * 2.5f * Time.deltaTime,
@@ -378,6 +391,16 @@ public class Particle : MonoBehaviour
             case "shockcharge":
                 anim.Play("GravShock_charge");
                 break;
+            case "shockcharmain":
+                sprite.enabled = false;
+                anim.Play(string.Format(
+                    "GravShock_char_{0}{1}_{2}",
+                    vars[0] switch { 0 => "snaily", 1 => "sluggy", 2 => "upside", 3 => "leggy", 4 => "blobby", 5 => "leechy", _ => "snaily" },
+                    vars[1], vars[2] switch { 0 => "down", 1 => "left", 2 => "right", 3 => "up", _ => "down" }));
+                break;
+            case "shockcharsub":
+                anim.Play("GravShock_char_base" + Random.Range(1, 4).ToString(), 1f, (int)vars[3]);
+                break;
             case "shocklaunch":
                 anim.Play("GravShock_launch_" + (vars[0] switch { 0 => "down", 1 => "left", 2 => "right", _ => "up" }));
                 break;
@@ -417,6 +440,8 @@ public class Particle : MonoBehaviour
             "gigastar" => -96,
             "gigatrail" => -51,
             "intropattern" => 1002,
+            "shocklaunch" => -10,
+            "shockcharsub" => -14,
             _ => -15
         };
         sprite.color = animType switch
@@ -451,6 +476,7 @@ public class Particle : MonoBehaviour
         transform.position = Vector2.zero;
         type = "";
         anim.Stop(true);
+        sprite.enabled = true;
         sprite.sprite = sprites.blank;
         sprite.flipX = false;
         sprite.flipY = false;

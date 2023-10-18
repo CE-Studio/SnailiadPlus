@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BreakableBlock : MonoBehaviour
 {
-    public int requiredWeapon;
+    public int type;
     public bool isSilent;
     private bool hasBeenHit;
     public BoxCollider2D box;
@@ -14,6 +14,21 @@ public class BreakableBlock : MonoBehaviour
     GameObject fg2Sprite;
 
     private Vector2 worldPos;
+
+    private readonly List<List<int>> bulletsThatBreakMe = new()
+    {
+        new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },      // Peashooter
+        new List<int> { 2, 3, 4, 5, 6, 7, 8 },                // Boomerang
+        new List<int> { 3, 4, 5, 6, 7, 8 },                   // Rainbow Wave
+        new List<int> { 4, 5, 6, 8 }                          // Devastator
+    };
+    private readonly List<List<int>> bulletsIShouldIgnore = new()
+    {
+        new List<int> { },
+        new List<int> { 1 },
+        new List<int> { 1 },
+        new List<int> { 1 }
+    };
     
     void Awake()
     {
@@ -34,7 +49,7 @@ public class BreakableBlock : MonoBehaviour
     public void Instantiate(PlayState.Breakable data, bool isFinalBossTile = false)
     {
         transform.position = data.pos;
-        requiredWeapon = data.weaponLevel;
+        type = data.blockType;
         isSilent = data.isSilent;
         worldPos = new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y));
         for (int i = 0; i < data.tiles.Length; i++)
@@ -60,17 +75,13 @@ public class BreakableBlock : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (requiredWeapon == -1)
+        if (type == -1)
             return;
 
         if (collision.CompareTag("PlayerBullet") && PlayState.OnScreen(transform.position, box))
         {
             int thisWeaponType = collision.GetComponent<Bullet>().bulletType;
-            if (thisWeaponType == 7)
-                thisWeaponType = 3;
-            if (thisWeaponType == 8)
-                thisWeaponType = 6;
-            if (thisWeaponType >= requiredWeapon)
+            if (bulletsThatBreakMe[type].Contains(thisWeaponType))
             {
                 if (!PlayState.explodePlayedThisFrame)
                 {
@@ -82,29 +93,24 @@ public class BreakableBlock : MonoBehaviour
                 PlayState.breakablePositions.Remove(worldPos);
                 Destroy(gameObject);
             }
-            else if (thisWeaponType < 6)
+            else if (!bulletsIShouldIgnore[type].Contains(thisWeaponType))
             {
-                if (thisWeaponType != 1)
+                if (!PlayState.armorPingPlayedThisFrame && !isSilent)
                 {
-                    if (!PlayState.armorPingPlayedThisFrame && !isSilent)
+                    PlayState.PlaySound("Ping");
+                    PlayState.armorPingPlayedThisFrame = true;
+                }
+                if ((PlayState.generalData.breakableState == 1 && !isSilent) || (PlayState.generalData.breakableState == 2 && isSilent))
+                {
+                    if (!hasBeenHit)
                     {
-                        PlayState.PlaySound("Ping");
-                        PlayState.armorPingPlayedThisFrame = true;
-                    }
-                    if ((PlayState.generalData.breakableState == 1 && !isSilent) || (PlayState.generalData.breakableState == 2 && isSilent))
-                    {
-                        if (!hasBeenHit)
+                        foreach (SpriteRenderer sprite in sprites)
                         {
-                            foreach (SpriteRenderer sprite in sprites)
-                            {
-                                if (sprite.sprite != PlayState.BlankTexture())
-                                    sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", requiredWeapon - 1);
-                            }
+                            if (sprite.sprite != PlayState.BlankTexture())
+                                sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", type);
                         }
                     }
                 }
-                else
-                    collision.GetComponent<Bullet>().Despawn(PlayState.OnScreen(collision.transform.position, collision.GetComponent<BoxCollider2D>()));
             }
             hasBeenHit = true;
         }

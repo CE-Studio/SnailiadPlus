@@ -936,6 +936,35 @@ public class MainMenu : MonoBehaviour
                         }
                         PlayState.generalData.screenShake = menuVarFlags[4];
                         break;
+                    case "gravSwap":
+                        TestForArrowAdjust(option, 5, 2);
+                        switch (menuVarFlags[5])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_gravSwap_onJump"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_gravSwap_onDir"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_gravSwap_onDoubleTap"));
+                                break;
+                        }
+                        PlayState.generalData.gravSwapType = menuVarFlags[5];
+                        break;
+                    case "gravKeep":
+                        TestForArrowAdjust(option, 6, 1);
+                        switch (menuVarFlags[6])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_gravKeep_onState"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_gravKeep_onJump"));
+                                break;
+                        }
+                        PlayState.generalData.gravSwapType = menuVarFlags[6];
+                        break;
                     case "slot":
                         TestForArrowAdjust(option, 0, 9);
                         AddToOptionText(option, (menuVarFlags[0] + 1).ToString() +
@@ -2071,7 +2100,8 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
             { 0, PlayState.generalData.shootMode ? 1 : 0, 1, PlayState.generalData.breakableState,
                 2, PlayState.generalData.secretMapTilesVisible ? 1 : 0, 3, PlayState.generalData.frameLimiter,
-                4, PlayState.generalData.screenShake });
+                4, PlayState.generalData.screenShake, 5, PlayState.generalData.gravSwapType,
+                6, PlayState.generalData.gravKeepType });
         if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
@@ -2285,6 +2315,8 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_gameplay_secretTiles") + ": ", true, "secretTiles");
         AddOption(PlayState.GetText("menu_option_gameplay_frameLimit") + ": ", true, "frameLimit");
         AddOption(PlayState.GetText("menu_option_gameplay_screenShake") + ": ", true, "screenShake");
+        AddOption(PlayState.GetText("menu_option_gameplay_gravSwap") + ": ", true, "gravSwap");
+        AddOption(PlayState.GetText("menu_option_gameplay_gravKeep") + ": ", true, "gravKeep");
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);

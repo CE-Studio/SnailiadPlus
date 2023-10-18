@@ -58,6 +58,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float gravShockTimer = 0;
     private Bullet gravShockBullet;
     private Particle gravShockCharge;
+    private Particle gravShockBody;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -204,6 +205,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Noclip!!!
             if (PlayState.noclipMode)
             {
+                camFocus.position = (Vector2)transform.position + camFocusOffset;
                 if (Control.ShootHold())
                 {
                     if (Control.UpPress())
@@ -400,6 +402,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (gravShockCharge != null)
                 gravShockCharge.transform.position = transform.position;
+            if (gravShockBody != null)
+                gravShockBody.transform.position = transform.position;
             if (gravShockBullet != null)
                 gravShockBullet.transform.position = transform.position;
         }
@@ -446,6 +450,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (gravShockCharge != null)
                         gravShockCharge.ResetParticle();
                     gravShockCharge = null;
+                    gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
+                    {
+                        PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
+                        PlayState.CheckForItem(9) ? 1 : 0,
+                        (int)gravityDir
+                    });
                     gravShockBullet = Shoot(true);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 0 });
@@ -462,15 +472,19 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                    if (colNames[i].Contains("Door"))
+                        cols[i].GetComponent<Door>().SetState0();
                 }
                 if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
                 {
                     transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
                     PlayState.PlaySound("Stomp");
-                    gravShockBullet.Despawn();
+                    gravShockBody.ResetParticle();
+                    gravShockBullet.Despawn(true);
                     gravShockBullet = null;
                     gravShockState = 0;
+                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
                 }
                 else
@@ -671,6 +685,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
             }
             // Jumping in the opposite direction
@@ -740,6 +755,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (gravShockCharge != null)
                         gravShockCharge.ResetParticle();
                     gravShockCharge = null;
+                    gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
+                    {
+                        PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
+                        PlayState.CheckForItem(9) ? 1 : 0,
+                        (int)gravityDir
+                    });
                     gravShockBullet = Shoot(true);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 1 });
@@ -756,15 +777,19 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                    if (colNames[i].Contains("Door"))
+                        cols[i].GetComponent<Door>().SetState0();
                 }
                 if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
                 {
                     transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
                     PlayState.PlaySound("Stomp");
-                    gravShockBullet.Despawn();
+                    gravShockBody.ResetParticle();
+                    gravShockBullet.Despawn(true);
                     gravShockBullet = null;
                     gravShockState = 0;
+                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
                 }
                 else
@@ -964,6 +989,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
             }
             // Jumping in the opposite direction
@@ -1033,6 +1059,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (gravShockCharge != null)
                         gravShockCharge.ResetParticle();
                     gravShockCharge = null;
+                    gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
+                    {
+                        PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
+                        PlayState.CheckForItem(9) ? 1 : 0,
+                        (int)gravityDir
+                    });
                     gravShockBullet = Shoot(true);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 2 });
@@ -1049,15 +1081,19 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                    if (colNames[i].Contains("Door"))
+                        cols[i].GetComponent<Door>().SetState0();
                 }
                 if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
                 {
                     transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
                     PlayState.PlaySound("Stomp");
-                    gravShockBullet.Despawn();
+                    gravShockBody.ResetParticle();
+                    gravShockBullet.Despawn(true);
                     gravShockBullet = null;
                     gravShockState = 0;
+                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
                 }
                 else
@@ -1257,6 +1293,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
             }
             // Jumping in the opposite direction
@@ -1326,6 +1363,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     if (gravShockCharge != null)
                         gravShockCharge.ResetParticle();
                     gravShockCharge = null;
+                    gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
+                    {
+                        PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
+                        PlayState.CheckForItem(9) ? 1 : 0,
+                        (int)gravityDir
+                    });
                     gravShockBullet = Shoot(true);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 3 });
@@ -1342,15 +1385,19 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
+                    if (colNames[i].Contains("Door"))
+                        cols[i].GetComponent<Door>().SetState0();
                 }
                 if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
                 {
                     transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
                     PlayState.PlaySound("Stomp");
-                    gravShockBullet.Despawn();
+                    gravShockBody.ResetParticle();
+                    gravShockBullet.Despawn(true);
                     gravShockBullet = null;
                     gravShockState = 0;
+                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
                 }
                 else
@@ -1550,6 +1597,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
+                PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
             }
             // Jumping in the opposite direction
@@ -1951,7 +1999,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     // This function handles activation of projectiles when the player presses either shoot button
     public virtual Bullet Shoot(bool isShock = false)
     {
-        if ((fireCooldown == 0 && armed) || isShock)
+        if ((fireCooldown == 0 && armed && gravShockState == 0) || isShock)
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
             Vector2 aimDir = Control.Aim();
@@ -2033,9 +2081,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier == 1);
-                bulletID++;
-                if (bulletID >= PlayState.globalFunctions.playerBulletPool.transform.childCount)
-                    bulletID = 0;
+                bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
                 if (!isShock)
                 {
                     bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
@@ -2049,12 +2095,62 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     3 => "ShotRainbow",
                     4 => "ShotPeashooterDev",
                     5 => "ShotBoomerangDev",
-                    _ => "ShotRainbowDev"
+                    6 => "ShotRainbowDev",
+                    7 => "ShockLaunch",
+                    8 => "ShockLaunch",
+                    _ => "ShotRainbow"
                 });
                 return thisBullet;
             }
         }
         return null;
+    }
+
+    public virtual void SpawnShockWaves()
+    {
+        float nonDevAdjust = PlayState.CheckForItem("Devastator") ? 0 : 0.25f;
+        Vector2 target1;
+        Vector2 target2;
+        int dir1;
+        int dir2;
+        switch (gravityDir)
+        {
+            default:
+            case Dirs.Floor:
+                target1 = new(transform.position.x - 0.75f, Mathf.Floor(transform.position.y) + 0.5f - nonDevAdjust);
+                target2 = new(transform.position.x + 0.75f, Mathf.Floor(transform.position.y) + 0.5f - nonDevAdjust);
+                dir1 = 5;
+                dir2 = 7;
+                break;
+            case Dirs.WallL:
+                target1 = new(Mathf.Floor(transform.position.x) + 0.5f - nonDevAdjust, transform.position.y - 0.75f);
+                target2 = new(Mathf.Floor(transform.position.x) + 0.5f - nonDevAdjust, transform.position.y + 0.75f);
+                dir1 = 5;
+                dir2 = 8;
+                break;
+            case Dirs.WallR:
+                target1 = new(Mathf.Floor(transform.position.x) + 0.5f + nonDevAdjust, transform.position.y - 0.75f);
+                target2 = new(Mathf.Floor(transform.position.x) + 0.5f + nonDevAdjust, transform.position.y + 0.75f);
+                dir1 = 7;
+                dir2 = 2;
+                break;
+            case Dirs.Ceiling:
+                target1 = new(transform.position.x - 0.75f, Mathf.Floor(transform.position.y) + 0.5f + nonDevAdjust);
+                target2 = new(transform.position.x + 0.75f, Mathf.Floor(transform.position.y) + 0.5f + nonDevAdjust);
+                dir1 = 8;
+                dir2 = 2;
+                break;
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            Vector2 pos = i == 0 ? target1 : target2;
+            if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
+            {
+                Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+                thisBullet.Shoot(PlayState.CheckForItem("Devastator") ? 10 : 9, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
+                bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
+            }
+        }
     }
 
     private bool CanChangeGravWhileStunned()
@@ -2095,6 +2191,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
         if (shelled)
             ToggleShell();
+        if (gravShockState == 1)
+        {
+            gravShockState = 0;
+            gravShockTimer = 0;
+            if (gravShockCharge != null)
+            {
+                gravShockCharge.ResetParticle();
+                gravShockCharge = null;
+            }
+        }
         stunned = true;
         if (!CheckAbility(stickToWallsWhenHurt))
             CorrectGravity(true, false);
@@ -2126,6 +2232,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         PlayState.globalFunctions.UpdateHearts();
         inDeathCutscene = true;
         box.enabled = false;
+        gravShockState = 0;
         PlayState.paralyzed = true;
         PlayState.PlaySound("Death");
         PlayState.areaOfDeath = PlayState.currentArea;
@@ -2282,14 +2389,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             velocity.y = 0;
         else
             velocity.x = 0;
-    }
-
-    public void AdjustPosIntoRoom(Vector2 target)
-    {
-        //RaycastHit2D roomTest = Physics2D.Raycast(lastPosition, velocity - (Vector2)transform.position, Mathf.Infinity, roomCollide);
-        //Debug.DrawLine(lastPosition, lastPosition + ((velocity - (Vector2)transform.position) * 4), Color.red, 5);
-        //if (roomTest.collider != null)
-        //    transform.position += -1 * (Vector3)roomTest.normal.normalized;
     }
 
     #endregion Player utilities

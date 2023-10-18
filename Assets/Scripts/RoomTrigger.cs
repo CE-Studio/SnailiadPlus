@@ -404,8 +404,10 @@ public class RoomTrigger : MonoBehaviour
         {
             Bullet thisBullet = playerPool.transform.GetChild(i).transform.GetComponent<Bullet>();
             if (thisBullet.isActive && thisBullet.bulletType < 7)
+            {
                 thisBullet.Despawn();
-            playerPool.transform.GetChild(i).transform.position = Vector2.zero;
+                thisBullet.transform.position = Vector2.zero;
+            }
         }
         for (int i = 0; i < PlayState.enemyBulletPool.transform.childCount; i++)
         {
@@ -981,7 +983,7 @@ public class RoomTrigger : MonoBehaviour
                 if (currentTile != null) {
                     PlayState.Breakable newBreakable = new() {
                         pos = worldPos,
-                        weaponLevel = 2,
+                        blockType = 0,
                         isSilent = false
                     };
 
@@ -992,20 +994,20 @@ public class RoomTrigger : MonoBehaviour
                             isBreakableTileHere = false;
                             break;
                         case 72:
-                            newBreakable.weaponLevel = 2;
+                            newBreakable.blockType = 1;
                             break;
                         case 73:
-                            newBreakable.weaponLevel = 3;
+                            newBreakable.blockType = 2;
                             break;
                         case 74:
-                            newBreakable.weaponLevel = 4;
+                            newBreakable.blockType = 3;
                             break;
                         case 439:
-                            newBreakable.weaponLevel = 4;
+                            newBreakable.blockType = 3;
                             newBreakable.isSilent = true;
                             break;
                         case 460:
-                            newBreakable.weaponLevel = -1;
+                            newBreakable.blockType = -1;
                             newBreakable.isSilent = true;
                             isFinalBossTile = true;
                             break;

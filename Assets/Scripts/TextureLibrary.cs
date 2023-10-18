@@ -41,6 +41,7 @@ public class TextureLibrary : ScriptableObject
         "Bullets/RainbowWaveDev",
         "Bullets/ShockBody",
         "Bullets/ShockWave",
+        "Bullets/ShockWaveDev",
 
         "Endings/Ending100",
         "Endings/EndingBackground",

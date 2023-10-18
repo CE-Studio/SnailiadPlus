@@ -41,6 +41,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1b17fadb66cd1624fa7d300f12f36ffd, type: 3}
   - {fileID: 8300000, guid: b91b5ef257a91b6408516552437fb83b, type: 3}
   - {fileID: 8300000, guid: 9e02dacb0ab01b847bee5870ece648e3, type: 3}
+  - {fileID: 8300000, guid: 1e3da474d6263cd49ad6b0c062e45530, type: 3}
+  - {fileID: 8300000, guid: 5231f4a55d7878e42b34dcbac7a5eed6, type: 3}
   - {fileID: 8300000, guid: d2e9bfbc3edfbb64ab76271e52d9edab, type: 3}
   - {fileID: 8300000, guid: 934fd6b903b69914a90e1b2b9346d162, type: 3}
   - {fileID: 8300000, guid: adb6a124f48942345ad4e800b63f1d2e, type: 3}
@@ -84,6 +86,8 @@ MonoBehaviour:
   - Ping
   - Save
   - Shell
+  - ShockCharge
+  - ShockLaunch
   - ShotBoomerang
   - ShotBoomerangDev
   - ShotEnemyDonut
