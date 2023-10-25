@@ -23,6 +23,12 @@ public class ControlPopup : MonoBehaviour
         Control.Keyboard.Speak1, Control.Keyboard.Jump2, Control.Keyboard.Shoot2, Control.Keyboard.Up2, Control.Keyboard.Left2, Control.Keyboard.Down2,
         Control.Keyboard.Right2, Control.Keyboard.Speak2
     };
+    private readonly List<Control.Controller> controllerControlIDs = new()
+    {
+        Control.Controller.Jump1, Control.Controller.Shoot1, Control.Controller.Up, Control.Controller.Left, Control.Controller.Down,
+        Control.Controller.Right, Control.Controller.Speak1, Control.Controller.Jump2, Control.Controller.Shoot2, Control.Controller.AimU,
+        Control.Controller.AimL, Control.Controller.AimD, Control.Controller.AimR, Control.Controller.Speak2
+    };
 
     private Sprite[] controlSprites;
 
@@ -79,6 +85,18 @@ public class ControlPopup : MonoBehaviour
             anim.Play("Controls_controller_" + (showWeapon ? "weapon" : "base"));
             keyParent.gameObject.SetActive(false);
             conParent.gameObject.SetActive(true);
+            for (int i = 0; i < conControls.Count; i++)
+            {
+                if (!showWeapon && new List<int> { 1, 8, 9, 10, 11, 12 }.Contains(i))
+                    conControls[i].enabled = false;
+                else
+                {
+                    conControls[i].enabled = true;
+                    Control.Controller thisInput = controllerControlIDs[i];
+                    int spriteID = Control.GetButtonSpriteIcon(PlayState.generalData.controllerInputs[(int)thisInput]);
+                    conControls[i].sprite = controlSprites[spriteID];
+                }
+            }
         }
         else
         {
@@ -93,8 +111,7 @@ public class ControlPopup : MonoBehaviour
                 {
                     keyControls[i].enabled = true;
                     Control.Keyboard thisInput = keyboardControlIDs[i];
-                    KeyCode thisKey = PlayState.generalData.keyboardInputs[(int)thisInput];
-                    int spriteID = keyboardIDs.IndexOf(thisKey);
+                    int spriteID = Control.GetKeySpriteIcon(PlayState.generalData.keyboardInputs[(int)thisInput]);
                     keyControls[i].sprite = controlSprites[spriteID];
                 }
             }

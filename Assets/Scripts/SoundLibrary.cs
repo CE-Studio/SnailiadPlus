@@ -16,6 +16,7 @@ public class SoundLibrary : ScriptableObject
     {
         "BossHPBleep",
         "Cannon",
+        "CheatSkyfish",
         "Chirp",
         "Death",
         "Dialogue0",

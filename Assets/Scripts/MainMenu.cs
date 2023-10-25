@@ -963,7 +963,7 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_gravKeep_onJump"));
                                 break;
                         }
-                        PlayState.generalData.gravSwapType = menuVarFlags[6];
+                        PlayState.generalData.gravKeepType = menuVarFlags[6];
                         break;
                     case "slot":
                         TestForArrowAdjust(option, 0, 9);
@@ -1121,61 +1121,10 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetKey(key) && (int)key < 330)
                 {
-                    //if (bindingController && (int)key >= 330)
-                    //{
-                    //    PlayState.generalData.controllerInputs[controlID] = key;
-                    //    isRebinding = false;
-                    //}
-                    //else if (!bindingController && (int)key < 330)
-                    //{
                         PlayState.generalData.keyboardInputs[controlID] = key;
                         isRebinding = false;
-                    //}
                 }
             }
-            //if (bindingController)
-            //{
-            //    if (Input.GetAxis("LStickX") > 0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha0;
-            //        isRebinding = false;
-            //    }
-            //    else if (Input.GetAxis("LStickX") < -0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad0;
-            //        isRebinding = false;
-            //    }
-            //    if (Input.GetAxis("LStickY") > 0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha1;
-            //        isRebinding = false;
-            //    }
-            //    else if (Input.GetAxis("LStickY") < -0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad1;
-            //        isRebinding = false;
-            //    }
-            //    if (Input.GetAxis("RStickX") > 0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha2;
-            //        isRebinding = false;
-            //    }
-            //    else if (Input.GetAxis("RStickX") < -0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad2;
-            //        isRebinding = false;
-            //    }
-            //    if (Input.GetAxis("RStickY") > 0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Alpha3;
-            //        isRebinding = false;
-            //    }
-            //    else if (Input.GetAxis("RStickY") < -0.75f)
-            //    {
-            //        PlayState.generalData.controllerInputs[controlID] = KeyCode.Keypad3;
-            //        isRebinding = false;
-            //    }
-            //}
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
         }
@@ -1687,6 +1636,7 @@ public class MainMenu : MonoBehaviour
         PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
+        PlayState.isInBossRush = false;
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
@@ -1702,15 +1652,18 @@ public class MainMenu : MonoBehaviour
             introPicture2Anim.Stop(true);
             introPicture2Sprite.color = new Color(1, 1, 1, 0);
             introParent.gameObject.SetActive(false);
-            PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(false, false);
+            PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(false, Control.lastInputIsCon);
         }
 
         PlayState.playerScript.holdingJump = true;
-        if (PlayState.lastLoadedWeapon != 0)
-            PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon - 1);
-        else
-            PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
-                (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        if (!runIntro)
+        {
+            if (PlayState.lastLoadedWeapon != 0)
+                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon - 1);
+            else
+                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
+                    (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+        }
     }
 
     public void SetTextComponentOrigins()
@@ -1822,7 +1775,7 @@ public class MainMenu : MonoBehaviour
         }
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.generalData.achievements[3])
-            AddOption(PlayState.GetText("menu_option_main_bossRush"), true);
+            AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm);
         //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
@@ -2082,6 +2035,18 @@ public class MainMenu : MonoBehaviour
         PlayState.EraseGame(menuVarFlags[0]);
         PlayState.currentProfile = PlayState.blankProfile;
         ReturnToMenu();
+    }
+
+    public void BossRushConfirm()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_bossRush_header1"), false);
+        AddOption(PlayState.GetText("menu_option_bossRush_header2"), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_bossRush_confirm"), true);
+        AddOption(PlayState.GetText("menu_option_bossRush_cancel"), true, PageMain);
+        ForceSelect(4);
+        backPage = PageMain;
     }
 
     public void OptionsScreen()

@@ -350,6 +350,7 @@ public class DialogueBox : MonoBehaviour
     {
         char thisChar = textList[(int)pointer.x][(int)pointer.y];
         bool advanceChar = true;
+        int conID = -1;
 
         while (thisChar == '{')
         {
@@ -384,9 +385,9 @@ public class DialogueBox : MonoBehaviour
                         timer = float.Parse(args[1], CultureInfo.InvariantCulture);
                         advanceChar = false;
                         break;
-                    case "ctrl":  // Parse keybind to string
-                        textList[(int)pointer.x] = textList[(int)pointer.x].Insert((int)pointer.y + command.Length + 2,
-                            Control.ParseKeyName(int.Parse(args[1])));
+                    case "ctrl":  // Parse keybind to control icon
+                        textList[(int)pointer.x] = textList[(int)pointer.x].Insert((int)pointer.y + command.Length + 2, " ");
+                        conID = int.Parse(args[1]);
                         break;
                     default:
                         Debug.LogWarning("Unknown command prefix \"" + args[0].ToLower() + "\".");
@@ -405,13 +406,22 @@ public class DialogueBox : MonoBehaviour
             newLetter.transform.localPosition = posPointer;
             TextObject newLetterScript = newLetter.GetComponent<TextObject>();
             newLetterScript.position = posPointer;
-            newLetterScript.CreateShadow();
-            newLetterScript.SetText(thisChar.ToString());
+            if (conID != -1)
+            {
+                newLetterScript.SetText("");
+                newLetterScript.SetIcon(Control.ActionIDToSpriteID(conID));
+                posPointer.x += 1;
+            }
+            else
+            {
+                newLetterScript.CreateShadow();
+                newLetterScript.SetText(thisChar.ToString());
+                font.RequestCharactersInTexture(thisChar.ToString());
+                font.GetCharacterInfo(thisChar, out CharacterInfo info);
+                posPointer.x += info.advance * PlayState.FRAC_16;
+            }
             newLetterScript.SetColor(PlayState.GetColor(currentColor));
             newLetterScript.SetMovement((TextObject.MoveEffects)System.Enum.Parse(typeof(TextObject.MoveEffects), currentEffect));
-            font.RequestCharactersInTexture(thisChar.ToString());
-            font.GetCharacterInfo(thisChar, out CharacterInfo info);
-            posPointer.x += info.advance * PlayState.FRAC_16;
 
             if (mute)
                 playSound = false;

@@ -25,6 +25,10 @@ public class Subscreen : MonoBehaviour
     private const float BOTTOM_BUTTON_OFF_Y = 13.5f;
     private float mapButtonPos = 0;
     private float mapButtonOriginY;
+    private float radarSparkleTimer = -1f;
+    private const float SPARKLE_TIMER_SPEED = 3f;
+    private Vector2 radarSparkleOrigin = Vector2.zero;
+    private Vector2 radarSparkleRadii = new(4, 1);
 
     AnimationModule anim;
     AnimationModule mapAnim;
@@ -248,6 +252,15 @@ public class Subscreen : MonoBehaviour
                 cellSelector.transform.localPosition = new Vector2(topLeftCell.x + (currentlySelectedCell % PlayState.WORLD_SIZE.x) * 0.5f,
                     topLeftCell.y - Mathf.Floor(currentlySelectedCell / PlayState.WORLD_SIZE.x) * 0.5f);
             }
+
+            radarSparkleOrigin = (Vector2)texts[22].transform.position + new Vector2(texts[22].GetWidth(true) * 0.5f, -0.375f);
+            if (radarSparkleTimer >= 0)
+            {
+                radarSparkleTimer = (radarSparkleTimer + SPARKLE_TIMER_SPEED * Time.deltaTime) % Mathf.PI;
+                Vector2 spawnRadius = new(Mathf.Cos(radarSparkleTimer) * radarSparkleRadii.x, -Mathf.Sin(radarSparkleTimer) * radarSparkleRadii.y);
+                PlayState.RequestParticle(radarSparkleOrigin + spawnRadius, "sparkle");
+                PlayState.RequestParticle(radarSparkleOrigin - spawnRadius, "sparkle");
+            }
         }
     }
 
@@ -405,10 +418,15 @@ public class Subscreen : MonoBehaviour
                         break;
                     }
                     int[] itemData = PlayState.GetAreaItemRate(PlayState.currentArea);
-                    newText = PlayState.IsBossAlive(3) ? "" : string.Format(PlayState.GetText("subscreen_areaItemRate"), itemData[0], itemData[1]);
+                    newText = PlayState.IsBossAlive(3) ? "" : string.Format(PlayState.GetText("subscreen_areaItemRate"), itemData[0], itemData[1],
+                        itemData[2] == 1 ? "?" : "");
+                    radarSparkleTimer = itemData[3] == 1 ? 0 : -1;
+                    //radarSparkleTimer = 0;
                     break;
             }
             texts[i].SetText(newText);
+            if (i == 22)
+                radarSparkleRadii = new Vector2(texts[22].GetWidth(true) * 0.5f + 0.25f, 0.75f);
         }
     }
 

@@ -508,7 +508,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                     "Upside" => "magneticFoot",
                                     "Leggy" => "corkscrewJump",
                                     "Blobby" => "angelJump",
-                                    _ => "gravSnail"
+                                    _ => "gravSnail" + PlayState.generalData.gravSwapType.ToString()
                                 });
                             }
                             else

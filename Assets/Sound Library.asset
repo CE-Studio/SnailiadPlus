@@ -15,6 +15,7 @@ MonoBehaviour:
   library:
   - {fileID: 8300000, guid: cfa105eaedf81aa49be768660328b539, type: 3}
   - {fileID: 8300000, guid: 83ff8c3722b28a642a4450ab648ca72c, type: 3}
+  - {fileID: 8300000, guid: 331d16259a899e14282453d1fbd824a5, type: 3}
   - {fileID: 8300000, guid: 5fc3789c4a47c214883e667438b8bf95, type: 3}
   - {fileID: 8300000, guid: 2d51383e8ac72ff4582a885fe27cf668, type: 3}
   - {fileID: 8300000, guid: 884caa321890a3443b907f7c698b01e9, type: 3}
@@ -60,6 +61,7 @@ MonoBehaviour:
   referenceList:
   - BossHPBleep
   - Cannon
+  - CheatSkyfish
   - Chirp
   - Death
   - Dialogue0

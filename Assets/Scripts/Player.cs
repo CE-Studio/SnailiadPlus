@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public enum Dirs { Floor, WallL, WallR, Ceiling };
     public Dirs gravityDir = Dirs.Floor;
     public Dirs lastGravity = Dirs.Floor;
+    public Dirs homeGravity = Dirs.Floor;
 
     public const int MAX_DIST_CASTS = 4;
     public const int THIN_TUNNEL_ENTRANCE_STEPS = 16;
@@ -332,7 +333,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
             coyoteTimeCounter = 0;
         // We increment the Gravity Shock timer in case it happens to be active
+        if (gravShockState < 0)
+            gravShockState++;
         gravShockTimer = gravShockState > 0 ? gravShockTimer + Time.fixedDeltaTime : 0;
+        // We update our home direction assuming gravity keep behavior is set to any state change
+        if (PlayState.generalData.gravKeepType != 1)
+            homeGravity = defaultGravityDir;
         // And finally, we clear the collision list
         collisions.Clear();
     
@@ -502,7 +508,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
-            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            if ((gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne)) || CheckForHomeDirRequirements())
             {
                 CorrectGravity(false);
                 if (defaultGravityDir != Dirs.Ceiling)
@@ -663,7 +669,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
-                if (CheckAbility(retainGravityOnAirborne))
+                if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
                     velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
                 else
                 {
@@ -678,31 +684,57 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Jump");
         }
         // How about gravity jumping?
-        if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
+        int swapType = PlayState.generalData.gravSwapType;
+        float maxSecs = Control.MAX_DOUBLE_TAP_SECONDS;
+        if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && Control.DownHold() && PlayState.CheckForItem(10))
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+                (swapType == 0 && Control.DownHold()) ||
+                (swapType == 1 && Control.DownHold() && !holdingShell) ||
+                (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)))
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
                 PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
+                coyoteTimeCounter = coyoteTime;
             }
             // Jumping in the opposite direction
-            else if (CheckAbility(canGravityJumpOpposite) && ((Control.UpHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
+            else if (CheckAbility(canGravityJumpOpposite) && ((CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && Control.UpHold()) ||
+                (swapType == 1 && Control.UpHold() && !holdingShell) ||
+                (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)
+                )) || (!CheckAbility(canGravityJumpAdjacent) && (
+                swapType < 2 || (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)
+                ))))
             {
                 gravityDir = Dirs.Ceiling;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = Dirs.Ceiling;
                 SwapDir(Dirs.Ceiling);
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] = maxSecs;
             }
             // Jumping to the left or right
-            else if (CheckAbility(canGravityJumpAdjacent) && Control.AxisX() != 0)
+            else if (CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && (Control.LeftHold() || Control.RightHold())) ||
+                (swapType == 1 && (Control.LeftHold() || Control.RightHold()) && !holdingShell) ||
+                (swapType == 2 && ((Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs) ||
+                    (Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)))
+                ))
             {
                 Dirs newDir = Control.RightHold() ? Dirs.WallR : Dirs.WallL;
                 gravityDir = newDir;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallR] = maxSecs;
             }
         }
         if (Control.JumpHold() && !holdingJump)
@@ -807,7 +839,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
-            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            if ((gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne)) || CheckForHomeDirRequirements())
             {
                 CorrectGravity(false);
                 if (defaultGravityDir != Dirs.WallR)
@@ -967,7 +999,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
-                if (CheckAbility(retainGravityOnAirborne))
+                if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
                     velocity.x = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
                 else
                 {
@@ -982,31 +1014,57 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Jump");
         }
         // How about gravity jumping?
-        if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
+        int swapType = PlayState.generalData.gravSwapType;
+        float maxSecs = Control.MAX_DOUBLE_TAP_SECONDS;
+        if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && Control.LeftHold() && PlayState.CheckForItem(10))
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+                (swapType == 0 && Control.LeftHold()) ||
+                (swapType == 1 && Control.LeftHold() && !holdingShell) ||
+                (swapType == 2 && Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs)))
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
                 PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
+                coyoteTimeCounter = coyoteTime;
             }
             // Jumping in the opposite direction
-            if (CheckAbility(canGravityJumpOpposite) && ((Control.RightHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
+            else if (CheckAbility(canGravityJumpOpposite) && ((CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && Control.RightHold()) ||
+                (swapType == 1 && Control.RightHold() && !holdingShell) ||
+                (swapType == 2 && Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)
+                )) || (!CheckAbility(canGravityJumpAdjacent) && (
+                swapType < 2 || (swapType == 2 && Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)
+                ))))
             {
                 gravityDir = Dirs.WallR;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = Dirs.WallR;
                 SwapDir(Dirs.WallR);
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallR] = maxSecs;
             }
             // Jumping to the left or right
-            if (CheckAbility(canGravityJumpAdjacent) && Control.AxisY() != 0)
+            else if (CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && (Control.DownHold() || Control.UpHold())) ||
+                (swapType == 1 && (Control.DownHold() || Control.UpHold()) && !holdingShell) ||
+                (swapType == 2 && ((Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs) ||
+                    (Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
+                ))
             {
                 Dirs newDir = Control.UpHold() ? Dirs.Ceiling : Dirs.Floor;
                 gravityDir = newDir;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
+                Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] = maxSecs;
             }
         }
         if (Control.JumpHold() && !holdingJump)
@@ -1111,7 +1169,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
-            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            if ((gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne)) || CheckForHomeDirRequirements())
             {
                 CorrectGravity(false);
                 if (defaultGravityDir != Dirs.WallL)
@@ -1271,7 +1329,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
-                if (CheckAbility(retainGravityOnAirborne))
+                if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
                     velocity.x = -jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
                 else
                 {
@@ -1286,31 +1344,57 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Jump");
         }
         // How about gravity jumping?
-        if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
+        int swapType = PlayState.generalData.gravSwapType;
+        float maxSecs = Control.MAX_DOUBLE_TAP_SECONDS;
+        if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && Control.RightHold() && PlayState.CheckForItem(10))
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+                (swapType == 0 && Control.RightHold()) ||
+                (swapType == 1 && Control.RightHold() && !holdingShell) ||
+                (swapType == 2 && Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)))
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
                 PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
+                coyoteTimeCounter = coyoteTime;
             }
             // Jumping in the opposite direction
-            if (CheckAbility(canGravityJumpOpposite) && ((Control.LeftHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
+            else if (CheckAbility(canGravityJumpOpposite) && ((CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && Control.LeftHold()) ||
+                (swapType == 1 && Control.LeftHold() && !holdingShell) ||
+                (swapType == 2 && Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs)
+                )) || (!CheckAbility(canGravityJumpAdjacent) && (
+                swapType < 2 || (swapType == 2 && Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs)
+                ))))
             {
                 gravityDir = Dirs.WallL;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = Dirs.WallL;
                 SwapDir(Dirs.WallL);
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
             }
             // Jumping to the left or right
-            if (CheckAbility(canGravityJumpAdjacent) && Control.AxisY() != 0)
+            else if (CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && (Control.DownHold() || Control.UpHold())) ||
+                (swapType == 1 && (Control.DownHold() || Control.UpHold()) && !holdingShell) ||
+                (swapType == 2 && ((Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs) ||
+                    (Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
+                ))
             {
                 Dirs newDir = Control.UpHold() ? Dirs.Ceiling : Dirs.Floor;
                 gravityDir = newDir;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
+                Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] = maxSecs;
             }
         }
         if (Control.JumpHold() && !holdingJump)
@@ -1415,7 +1499,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // First, we perform relatively vertical checks. Jumping and falling.
         if (!grounded)
         {
-            if (gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne))
+            if ((gravityDir != defaultGravityDir && !CheckAbility(retainGravityOnAirborne)) || CheckForHomeDirRequirements())
             {
                 CorrectGravity(false);
                 if (defaultGravityDir != Dirs.Floor)
@@ -1575,7 +1659,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
-                if (CheckAbility(retainGravityOnAirborne))
+                if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
                     velocity.y = -jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
                 else
                 {
@@ -1590,31 +1674,57 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.PlaySound("Jump");
         }
         // How about gravity jumping?
-        if (Control.JumpHold() && !holdingJump && !grounded && CheckAbility(canSwapGravity))
+        int swapType = PlayState.generalData.gravSwapType;
+        float maxSecs = Control.MAX_DOUBLE_TAP_SECONDS;
+        if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && Control.UpHold() && PlayState.CheckForItem(10))
+            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+                (swapType == 0 && Control.UpHold()) ||
+                (swapType == 1 && Control.UpHold() && !holdingShell) ||
+                (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
             {
                 gravShockState = 1;
                 gravShockCharge = PlayState.RequestParticle(transform.position, "shockcharge");
                 PlayState.PlaySound("ShockCharge");
                 velocity = Vector2.zero;
+                coyoteTimeCounter = coyoteTime;
             }
             // Jumping in the opposite direction
-            if (CheckAbility(canGravityJumpOpposite) && ((Control.DownHold() && CheckAbility(canGravityJumpAdjacent)) || !CheckAbility(canGravityJumpAdjacent)))
+            else if (CheckAbility(canGravityJumpOpposite) && ((CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && Control.DownHold()) ||
+                (swapType == 1 && Control.DownHold() && !holdingShell) ||
+                (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)
+                )) || (!CheckAbility(canGravityJumpAdjacent) && (
+                swapType < 2 || (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)
+                ))))
             {
                 gravityDir = Dirs.Floor;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = Dirs.Floor;
                 SwapDir(Dirs.Floor);
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
             }
             // Jumping to the left or right
-            if (CheckAbility(canGravityJumpAdjacent) && Control.AxisX() != 0)
+            else if (CheckAbility(canGravityJumpAdjacent) && (
+                (swapType == 0 && (Control.LeftHold() || Control.RightHold())) ||
+                (swapType == 1 && (Control.LeftHold() || Control.RightHold()) && !holdingShell) ||
+                (swapType == 2 && ((Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs) ||
+                    (Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)))
+                ))
             {
                 Dirs newDir = Control.RightHold() ? Dirs.WallR : Dirs.WallL;
                 gravityDir = newDir;
+                if (PlayState.generalData.gravKeepType == 1)
+                    homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
                 holdingShell = true;
+                coyoteTimeCounter = coyoteTime;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
+                Control.secondsSinceLastDirTap[(int)Dirs.WallR] = maxSecs;
             }
         }
         if (Control.JumpHold() && !holdingJump)
@@ -1707,16 +1817,22 @@ public class Player : MonoBehaviour, ICutsceneObject {
         };
     }
 
-    public void CorrectGravity(bool eject, bool zeroVel = true)
+    private bool CheckForHomeDirRequirements()
     {
-        bool swapAxis = defaultGravityDir == GetDirAdjacentLeft(gravityDir) || defaultGravityDir == GetDirAdjacentRight(gravityDir);
+        return PlayState.generalData.gravKeepType == 1 && gravityDir != homeGravity;
+    }
+
+    public void CorrectGravity(bool eject, bool zeroVel = true, bool useDefaultGravity = false)
+    {
+        Dirs intendedHomeDir = useDefaultGravity ? defaultGravityDir : homeGravity;
+        bool swapAxis = intendedHomeDir == GetDirAdjacentLeft(gravityDir) || intendedHomeDir == GetDirAdjacentRight(gravityDir);
         if (swapAxis)
             SwitchSurfaceAxis();
         if (eject)
             EjectFromCollisions();
-        SwapDir(defaultGravityDir);
-        gravityDir = defaultGravityDir;
-        if (defaultGravityDir switch { Dirs.WallL => Control.LeftHold(), Dirs.WallR => Control.RightHold(),
+        SwapDir(intendedHomeDir);
+        gravityDir = intendedHomeDir;
+        if (intendedHomeDir switch { Dirs.WallL => Control.LeftHold(), Dirs.WallR => Control.RightHold(),
             Dirs.Ceiling => Control.UpHold(), _ => Control.DownHold() })
             holdingShell = true;
         if (zeroVel)

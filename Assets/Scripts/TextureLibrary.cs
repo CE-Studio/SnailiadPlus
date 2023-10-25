@@ -169,6 +169,7 @@ public class TextureLibrary : ScriptableObject
         "UI/AchievementPanel",
         "UI/BossHealthBar",
         "UI/ControlHelp",
+        "UI/ControlIcons",
         "UI/DebugIcons",
         "UI/DebugKey",
         "UI/DialogueBox",

@@ -109,11 +109,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 160
         width: 336
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -130,11 +130,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 128
         width: 336
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -151,6 +151,69 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 96
+        width: 336
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 953ce4d0766b6614c8e971109261b4eb
+      internalID: -111352617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ControlHelp_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 336
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce141df33c5dec40a2ad8117e26cb19
+      internalID: -2049223269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ControlHelp_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 336
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b138a92c727230d4eb47e5a091e9cc8b
+      internalID: 67613687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ControlHelp_5
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 336
         height: 32
@@ -161,8 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 953ce4d0766b6614c8e971109261b4eb
-      internalID: -111352617
+      spriteID: 18fd5a17d18ed124cb62c9af4a93780a
+      internalID: -1761942056
       vertices: []
       indices: 
       edges: []
@@ -181,6 +244,9 @@ TextureImporter:
       ControlHelp_0: 1960867539
       ControlHelp_1: 724650019
       ControlHelp_2: -111352617
+      ControlHelp_3: -2049223269
+      ControlHelp_4: 67613687
+      ControlHelp_5: -1761942056
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

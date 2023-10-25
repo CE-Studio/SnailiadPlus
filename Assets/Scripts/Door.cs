@@ -7,6 +7,7 @@ public class Door:MonoBehaviour, IRoomObject
     [SerializeField] private int doorWeapon;
     [SerializeField] private int bossLock;
     [SerializeField] private bool locked;
+    [SerializeField] private bool alwaysLocked;
     [SerializeField] private int direction;
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
@@ -46,6 +47,7 @@ public class Door:MonoBehaviour, IRoomObject
         content["doorWeapon"] = doorWeapon;
         content["bossLock"] = bossLock;
         content["locked"] = locked;
+        content["alwaysLocked"] = alwaysLocked;
         content["direction"] = direction;
         return content;
     }
@@ -55,6 +57,7 @@ public class Door:MonoBehaviour, IRoomObject
         doorWeapon = (int)content["doorWeapon"];
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
+        alwaysLocked = (bool)content["alwaysLocked"];
         direction = (int)content["direction"];
         Spawn();
     }
@@ -113,7 +116,7 @@ public class Door:MonoBehaviour, IRoomObject
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        if (locked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat)
+        if (locked && !alwaysLocked && !PlayState.IsBossAlive(bossLock) && !openAfterBossDefeat)
         {
             bossUnlockDelay -= Time.deltaTime;
             if (bossUnlockDelay < 0)
@@ -138,7 +141,7 @@ public class Door:MonoBehaviour, IRoomObject
         {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            if (locked)
+            if (locked || alwaysLocked)
                 animToPlay += "locked_";
             else
             {
@@ -212,7 +215,7 @@ public class Door:MonoBehaviour, IRoomObject
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
-            if (!locked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
+            if (!locked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
     }
 }

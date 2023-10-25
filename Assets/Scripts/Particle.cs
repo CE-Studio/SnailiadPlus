@@ -10,6 +10,7 @@ public class Particle : MonoBehaviour
     public string type = "";
     public float[] vars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+    private bool runInMenu = false;
     public ParticleSpriteCollection sprites;
 
     public void Awake()
@@ -35,6 +36,9 @@ public class Particle : MonoBehaviour
         anim.Add("Dot_heat_tiny");
         anim.Add("Dot_heat_small");
         anim.Add("Dot_heat_medium");
+        anim.Add("Dot_sparkle_short");
+        anim.Add("Dot_sparkle_medium");
+        anim.Add("Dot_sparkle_long");
         anim.Add("Dust");
         anim.Add("Explosion_tiny");
         anim.Add("Explosion_small");
@@ -90,7 +94,8 @@ public class Particle : MonoBehaviour
 
     public void Update()
     {
-        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.credits)
+        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.menu ||
+            PlayState.gameState == PlayState.GameState.credits || runInMenu)
         {
             if (!anim.isPlaying)
                 anim.Resume();
@@ -231,6 +236,9 @@ public class Particle : MonoBehaviour
                             transform.position = new(transform.position.x, transform.position.y + 16);
                         while (transform.position.y > PlayState.cam.transform.position.y + 8)
                             transform.position = new(transform.position.x, transform.position.y - 16);
+                        break;
+                    case "sparkle":
+                        transform.position += new Vector3(vars[0] * Time.deltaTime, vars[1] * Time.deltaTime, 0);
                         break;
                     case "star":
                         float centerDis = Vector2.Distance(transform.position, PlayState.cam.transform.position);
@@ -410,6 +418,11 @@ public class Particle : MonoBehaviour
             case "snow":
                 anim.Play("Snow" + Random.Range(1, 5).ToString());
                 break;
+            case "sparkle":
+                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
+                anim.pauseOnMenu = false;
+                runInMenu = true;
+                break;
             case "splash":
                 anim.Play("Splash");
                 break;
@@ -442,15 +455,18 @@ public class Particle : MonoBehaviour
             "intropattern" => 1002,
             "shocklaunch" => -10,
             "shockcharsub" => -14,
+            "sparkle" => 10,
             _ => -15
         };
         sprite.color = animType switch
         {
             "heat" => PlayState.GetColor(Random.Range(0, 7) switch { 0 => "0209", 1 => "0210", 2 => "0211", 3=> "0309", 4 => "0310", 5 => "0311", _ => "0312"}),
+            "sparkle" => PlayState.GetColor(Random.Range(0, 4) switch { 0 => "0304", 1 => "0206", 2 => "0309", _ => "0312" }),
             _ => Color.white
         };
         anim.SetSpeed(animType switch {
             "heat" => Random.Range(0.5f, 1.5f),
+            "sparkle" => Random.Range(0.5f, 1.5f),
             _ => 1f
         });
     }
@@ -476,6 +492,8 @@ public class Particle : MonoBehaviour
         transform.position = Vector2.zero;
         type = "";
         anim.Stop(true);
+        anim.pauseOnMenu = true;
+        runInMenu = true;
         sprite.enabled = true;
         sprite.sprite = sprites.blank;
         sprite.flipX = false;

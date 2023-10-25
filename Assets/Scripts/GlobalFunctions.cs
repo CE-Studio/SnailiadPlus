@@ -69,6 +69,10 @@ public class GlobalFunctions : MonoBehaviour
     // Controller input mono
     public ControllerInput conInput;
 
+    // Last sixteen keyboard inputs, for cheat codes
+    public KeyCode[] cheatInputs = new KeyCode[16];
+    public bool addedCheatInputThisFrame = false;
+
     public void Awake()
     {
         DeclarePlayStateMono();
@@ -225,6 +229,21 @@ public class GlobalFunctions : MonoBehaviour
                 }
             }
 
+            // Cheat management
+            addedCheatInputThisFrame = false;
+
+            // Skyfish cheat
+            bool skyfishActive = false;
+            if (PlayState.currentArea == 0)
+            {
+                if (CheckCheatCode(new KeyCode[] { KeyCode.S, KeyCode.K, KeyCode.Y, KeyCode.F, KeyCode.I, KeyCode.S, KeyCode.H }))
+                {
+                    for (int i = 0; i < PlayState.currentProfile.bossStates.Length; i++)
+                        PlayState.currentProfile.bossStates[i] = 1;
+                    skyfishActive = true;
+                }
+            }
+
             // Area name text
             if (lastAreaID != PlayState.currentArea)
             {
@@ -267,7 +286,8 @@ public class GlobalFunctions : MonoBehaviour
                 {
                     int[] itemData = PlayState.GetAreaItemRate(lastAreaID);
                     if (itemData[1] > 0)
-                        radarText.SetText(string.Format(PlayState.GetText("hud_radar"), itemData[0].ToString(), itemData[1].ToString()));
+                        radarText.SetText(string.Format(PlayState.GetText("hud_radar"), itemData[0].ToString(), itemData[1].ToString(),
+                            itemData[2] == 1 ? "?" : ""));
                 }
             }
             else if (currentBossName != "" && currentBossName != PlayState.GetText("boss_gigaSnail") && !flashedBossName)
@@ -292,6 +312,12 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 currentBossName = "";
                 flashedBossName = false;
+            }
+            else if (skyfishActive)
+            {
+                areaText.SetText(PlayState.GetText("cheat_skyfish"));
+                areaTextTimer = 0;
+                PlayState.PlaySound("CheatSkyfish");
             }
             areaTextTimer = Mathf.Clamp(areaTextTimer + Time.deltaTime, 0, 10);
             Color textColor;
@@ -1246,5 +1272,48 @@ public class GlobalFunctions : MonoBehaviour
         yield return new WaitForEndOfFrame();
         PlayState.FadeMusicBackIn();
         PlayState.paralyzed = false;
+    }
+
+    public void OnGUI()
+    {
+        if (Input.anyKeyDown && PlayState.gameState == PlayState.GameState.game && !addedCheatInputThisFrame)
+        {
+            KeyCode thisKey = Event.current.keyCode;
+            if ((int)thisKey < 330 && thisKey != KeyCode.None)
+            {
+                AddNewCheatInput(thisKey);
+                addedCheatInputThisFrame = true;
+            }
+        }
+    }
+
+    public void AddNewCheatInput(KeyCode input)
+    {
+        if (cheatInputs.Length > 1)
+            for (int i = cheatInputs.Length - 2; i >= 0; i--)
+                cheatInputs[i + 1] = cheatInputs[i];
+        if (cheatInputs.Length > 0)
+            cheatInputs[0] = input;
+    }
+
+    public bool CheckCheatCode(KeyCode[] code)
+    {
+        if (code.Length > cheatInputs.Length)
+            return false;
+        int inputIndex = 0;
+        bool matched = true;
+        for (int i = code.Length - 1; i >= 0; i--)
+        {
+            if (code[i] == cheatInputs[inputIndex])
+                inputIndex++;
+            else
+            {
+                matched = false;
+                i = -1;
+            }
+        }
+        if (matched)
+            cheatInputs = new KeyCode[cheatInputs.Length];
+        return matched;
     }
 }

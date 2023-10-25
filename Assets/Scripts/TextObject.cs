@@ -10,16 +10,20 @@ public class TextObject : MonoBehaviour
     private Font font;
     private readonly float[] lineSpacings = new float[] { 0.89f, 1f };
     private float animTimer = 0;
+    private bool isConIcon = false;
 
     private const int FONT_SIZE = 40;
     private const float PIXEL = 0.0625f;
     private const float WAVE_SPEED = 8f;
     private const float WAVE_AMPLITUDE = 0.125f;
     private const float SHAKE_INTENSITY = 0.046875f;
+    private const float CONTROL_ICON_X = 0.5625f;
+    private const float CONTROL_ICON_Y = -0.6875f;
 
     public TextMesh thisText;
     private List<TextMesh> childText = new();
     public GameObject textObj;
+    public SpriteRenderer controlIcon;
 
     public enum MoveEffects
     {
@@ -37,13 +41,20 @@ public class TextObject : MonoBehaviour
     public void Initialize()
     {
         thisText = GetComponent<TextMesh>();
+        Transform iconObj = transform.Find("Control Sprite");
+        if (iconObj != null)
+        {
+            controlIcon = iconObj.GetComponent<SpriteRenderer>();
+            controlIcon.enabled = false;
+        }
         position = transform.localPosition;
         if (textObj == null)
             textObj = Resources.Load<GameObject>("Objects/Text Object (No Script)");
         font = thisText.font;
         childText.Clear();
         for (int i = 0; i < transform.childCount; i++)
-            childText.Add(transform.GetChild(i).GetComponent<TextMesh>());
+            if (transform.GetChild(i).TryGetComponent(out TextMesh newText))
+                childText.Add(newText);
         for (int i = 0; i < lineSpacings.Length; i++)
             if (lineSpacings[i] == thisText.lineSpacing)
                 size = i + 1;
@@ -109,12 +120,14 @@ public class TextObject : MonoBehaviour
         thisText.color = color;
         foreach (TextMesh text in childText)
             text.color = new Color(0, 0, 0, color.a);
+        controlIcon.color = color;
     }
     public void SetColor(Color32 color)
     {
         thisText.color = color;
         foreach (TextMesh text in childText)
             text.color = new Color32(0, 0, 0, color.a);
+        controlIcon.color = color;
     }
 
     public void SetAlignment(string alignment)
@@ -130,6 +143,7 @@ public class TextObject : MonoBehaviour
                     text.anchor = TextAnchor.UpperLeft;
                     text.alignment = TextAlignment.Left;
                 }
+                controlIcon.transform.localPosition = new Vector2(CONTROL_ICON_X, CONTROL_ICON_Y);
                 break;
             case "center":
                 thisText.anchor = TextAnchor.UpperCenter;
@@ -139,6 +153,7 @@ public class TextObject : MonoBehaviour
                     text.anchor = TextAnchor.UpperCenter;
                     text.alignment = TextAlignment.Center;
                 }
+                controlIcon.transform.localPosition = new Vector2(0, CONTROL_ICON_Y);
                 break;
             case "right":
                 thisText.anchor = TextAnchor.UpperRight;
@@ -148,6 +163,7 @@ public class TextObject : MonoBehaviour
                     text.anchor = TextAnchor.UpperRight;
                     text.alignment = TextAlignment.Right;
                 }
+                controlIcon.transform.localPosition = new Vector2(-CONTROL_ICON_X, CONTROL_ICON_Y);
                 break;
         }
     }
@@ -157,6 +173,17 @@ public class TextObject : MonoBehaviour
         currentEffect = effect;
     }
 
+    public void SetIcon(int ID)
+    {
+        if (ID < 0)
+            controlIcon.enabled = false;
+        else
+        {
+            controlIcon.enabled = true;
+            controlIcon.sprite = PlayState.GetSprite("UI/ControlIcons", ID);
+        }
+    }
+
     public string GetText()
     {
         return thisText.text;
@@ -164,6 +191,8 @@ public class TextObject : MonoBehaviour
 
     public float GetWidth(bool convertToUnitFloat = false)
     {
+        if (isConIcon)
+            return convertToUnitFloat ? 1 : 16;
         if (thisText.text.Length == 0)
             return 0;
 

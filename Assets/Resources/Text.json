@@ -336,6 +336,26 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_bossRush_header1",
+			"text": "Are you sure?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_bossRush_header2",
+			"text": "Boss Rush is really hard!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_bossRush_confirm",
+			"text": "Yes, I'm ready!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_bossRush_cancel",
+			"text": "No, I'm afraid:(",
+			"value": 0
+		},
+		{
 			"name": "menu_option_options_sound",
 			"text": "Sound options",
 			"value": 0
@@ -1962,7 +1982,7 @@
 		},
 		{
 			"name": "hud_radar",
-			"text": "(Items found: {0}/{1})",
+			"text": "(Items found: {0}/{1}{2})",
 			"value": 0
 		},
 		{
@@ -2027,7 +2047,12 @@
 		},
 		{
 			"name": "subscreen_areaItemRate",
-			"text": "Area items found: {0}/{1}",
+			"text": "Area items found: {0}/{1}{2}",
+			"value": 0
+		},
+		{
+			"name": "cheat_skyfish",
+			"text": "- Skyfish Flies Again -",
 			"value": 0
 		},
 		{
@@ -2902,7 +2927,7 @@
 		},
 		{
 			"name": "npc_0_explainWallClimb_0",
-			"text": "Hi, {P}!!  {p|0.25}Why don't you try{nl}climbing up the walls?{nl}    {p|0.25}Just {col|0309}hold \"{ctrl|2}\" and \"{ctrl|1}\"{col|0312}.",
+			"text": "Hi, {P}!!  {p|0.25}Why don't you try{nl}climbing up the walls?{nl}    {p|0.25}Just {col|0309}hold \"{ctrl|0}\" and \"{ctrl|3}\"{col|0312}.",
 			"value": 1
 		},
 		{
@@ -2932,7 +2957,7 @@
 		},
 		{
 			"name": "npc_1_promptJump_0",
-			"text": "Hiya, {P}!  {p|0.125}Did you know you{nl}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|4}\"{col|0312}!",
+			"text": "Hiya, {P}!  {p|0.125}Did you know you{nl}can jump?  {p|0.125}Just {col|0309}press \"{ctrl|8}\"{col|0312}!",
 			"value": 1
 		},
 		{
@@ -3102,12 +3127,12 @@
 		},
 		{
 			"name": "npc_11_default_0",
-			"text": "Don't forget!{nl}{p|0.15}Press {col|0309}\"{ctrl|5}\" {col|0312} to shoot your{nl}weapon at stuff!!",
+			"text": "Don't forget!{nl}{p|0.15}Press {col|0309}\"{ctrl|9}\" {col|0312} to shoot your{nl}weapon at stuff!!",
 			"value": 1
 		},
 		{
 			"name": "npc_11_explainPeashooter_0",
-			"text": "{P}, {p|0.125}it's dangerous to go{nl}alone!  {p|0.15}Take this Pea Shooter!{nl}{p|0.3}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!!",
+			"text": "{P}, {p|0.125}it's dangerous to go{nl}alone!  {p|0.15}Take this Pea Shooter!{nl}{p|0.3}Press {col|0309}\"{ctrl|9}\" {col|0312}to shoot with it!!",
 			"value": 1
 		},
 		{
@@ -3227,12 +3252,12 @@
 		},
 		{
 			"name": "npc_18_default_0",
-			"text": "You found the {eff|Wave}super secret{nl}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot with it!",
+			"text": "You found the {eff|Wave}super secret{nl}boomerang!  {eff|None}{p|0.125}Way to go!{p|0.25}{nl}Press {col|0309}\"{ctrl|9}\" {col|0312}to shoot with it!",
 			"value": 1
 		},
 		{
 			"name": "npc_18_remindShoot_0",
-			"text": "Don't forget!{p|0.25}{nl}Press {col|0309}\"{ctrl|5}\" {col|0312}to shoot your{nl}weapon at stuff!!",
+			"text": "Don't forget!{p|0.25}{nl}Press {col|0309}\"{ctrl|9}\" {col|0312}to shoot your{nl}weapon at stuff!!",
 			"value": 1
 		},
 		{
@@ -3262,7 +3287,7 @@
 		},
 		{
 			"name": "npc_21_default_0",
-			"text": "By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing keys{nl}like \"{ctrl|16}\" and \"{ctrl|17}\"{col|0312}!",
+			"text": "By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing keys{nl}like \"{ctrl|11}\" and \"{ctrl|12}\"{col|0312}!",
 			"value": 1
 		},
 		{
@@ -3292,7 +3317,7 @@
 		},
 		{
 			"name": "npc_23_loadGame_0",
-			"text": "Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl}{col|0309}{ctrl|22} {col|0312}and load your game from{nl}town!  {p|0.125}You won't lose any items!",
+			"text": "Hey, {p|0.125}if you get stuck, {p|0.125}just hit{nl}{col|0309}{ctrl|17} {col|0312}and load your game from{nl}town!  {p|0.125}You won't lose any items!",
 			"value": 1
 		},
 		{
@@ -3312,7 +3337,7 @@
 		},
 		{
 			"name": "npc_25_explainMap_0",
-			"text": "Have you tried hitting {col|0309}\"{ctrl|21}\"{col|0312}{nl}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}\"{ctrl|22}\" {col|0312}for the menu!",
+			"text": "Have you tried hitting {col|0309}\"{ctrl|16}\"{col|0312}{nl}yet?  {p|0.25}It makes the map big!  {p|0.25}Oh,{nl}{p|0.125}and hit {col|0309}\"{ctrl|17}\" {col|0312}for the menu!",
 			"value": 1
 		},
 		{
@@ -3346,8 +3371,18 @@
 			"value": 1
 		},
 		{
-			"name": "npc_28_gravSnail_0",
+			"name": "npc_28_gravSnail0_0",
 			"text": "{P}, you can {col|0207}gravity jump{col|0312}!{nl}{p|0.25}{col|0309}Jump in the air, {p|0.1}then hold any{nl}direction and press jump again{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_gravSnail1_0",
+			"text": "{P}, you can {col|0207}gravity jump{col|0312}!{nl}{p|0.25}{col|0309}Jump, {p|0.1}then hold the jump{nl}button and press any direction{col|0312}!",
+			"value": 1
+		},
+		{
+			"name": "npc_28_gravSnail2_0",
+			"text": "{P}, you can {col|0207}gravity jump{col|0312}!{nl}{p|0.25}{col|0309}Jump in the air, {p|0.1}then double-tap{nl}any direction{col|0312}!",
 			"value": 1
 		},
 		{
@@ -3657,7 +3692,7 @@
 		},
 		{
 			"name": "npc_50_default_0",
-			"text": "Have you tried {col|0309}hitting the{nl}\"{ctrl|6}\" key{col|0312} yet?  {p|0.15}It lets you{nl}shoot while holding still!",
+			"text": "Have you tried {col|0309}hitting the{nl}\"{ctrl|10}\" key{col|0312} yet?  {p|0.15}It lets you{nl}shoot while holding still!",
 			"value": 1
 		},
 		{

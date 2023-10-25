@@ -31,6 +31,7 @@ public class PlayState {
     public static GameState gameState = GameState.preload;
 
     public static bool isMenuOpen = false;
+    public static bool isInBossRush = false;
     public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, overwriteOldTime, fadeOut };
     public static CreditsStates creditsState = CreditsStates.none;
 
@@ -744,12 +745,17 @@ public class PlayState {
         bossLocations.Clear();
         itemLocations.Clear();
         foreach (Transform area in roomTriggerParent.transform) {
-            foreach (Transform room in area) {
-                foreach (Transform entity in room) {
-                    if (entity.CompareTag("SavePoint"))
-                        saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
-                    if (entity.CompareTag("Item"))
-                        itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
+            if (!area.name.ToLower().Contains("boss rush"))
+            {
+                foreach (Transform room in area)
+                {
+                    foreach (Transform entity in room)
+                    {
+                        if (entity.CompareTag("SavePoint"))
+                            saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
+                        if (entity.CompareTag("Item"))
+                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
+                    }
                 }
             }
         }
@@ -1125,6 +1131,14 @@ public class PlayState {
                         particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * Mathf.PI * 2;    // Sine loop start
                     }
                     break;
+                case "sparkle":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                        particleScript.vars[1] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                    }
+                    break;
                 case "splash":
                     if (generalData.particleState == 1 || generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
@@ -1225,7 +1239,7 @@ public class PlayState {
     public static void SetPlayer(string newPlayer)
     {
         playerScript.GetComponent<Snaily>().enabled = newPlayer == "Snaily";
-        //playerScript.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
+        playerScript.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
         //playerScript.GetComponent<Upside>().enabled = newPlayer == "Upside";
         //playerScript.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
         //playerScript.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
@@ -1526,18 +1540,37 @@ public class PlayState {
     {
         int collectedItems = 0;
         int totalItems = 0;
+        int totalCounted = 0;
+        int collectedUncounted = 0;
         int target = Math.Clamp(areaID, 0, 6);
+        bool hint = false;
         for (int i = 0; i < itemAreas[target].Count; i++)
         {
-            if (GetItemAvailabilityThisDifficulty(itemAreas[target][i]) && GetItemAvailabilityThisCharacter(itemAreas[target][i])
-                && countedItems[itemAreas[target][i]])
+            if (GetItemAvailabilityThisDifficulty(itemAreas[target][i]) && GetItemAvailabilityThisCharacter(itemAreas[target][i]))
             {
-                totalItems++;
-                if (currentProfile.items[itemAreas[target][i]] == 1)
+                bool isCounted = countedItems[itemAreas[target][i]];
+                bool isCollected = currentProfile.items[itemAreas[target][i]] == 1;
+                if (isCounted)
+                {
+                    totalCounted++;
+                    if (isCollected)
+                        collectedItems++;
+                }
+                else if (isCollected && !isCounted)
+                {
                     collectedItems++;
+                    collectedUncounted++;
+                }
+                totalItems++;
             }
         }
-        return new int[] { collectedItems, totalItems };
+        if (totalCounted != totalItems)
+        {
+            if ((collectedItems == totalCounted && collectedItems < totalItems) || (collectedItems < totalItems && collectedUncounted > 0))
+                hint = true;
+        }
+        Debug.Log(string.Format("Found {0} items ({1} of which are counted) out of {2} total items ({3} counted)", collectedItems, collectedItems - collectedUncounted, totalItems, totalCounted));
+        return new int[] { collectedItems, totalCounted + collectedUncounted, hint ? 1 : 0, collectedItems == totalItems ? 1 : 0 };
     }
 
     public static int GetNPCVar(NPCVarIDs ID)

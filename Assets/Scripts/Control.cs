@@ -149,6 +149,8 @@ public class Control
         ControllerBinds.FaceR
     };
 
+    public static float[] secondsSinceLastDirTap = new float[4];
+
     public static int[] conFrames = new int[defaultControllerInputs.Length];
 
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
@@ -157,6 +159,7 @@ public class Control
     public static bool[] conPressed = new bool[defaultControllerInputs.Length];
 
     public const float STICK_DEADZONE = 0.375f;
+    public const float MAX_DOUBLE_TAP_SECONDS = 0.2f;
 
     public static bool lastInputIsCon = false;
 
@@ -459,8 +462,6 @@ public class Control
         if (!(PlayState.paralyzed && !overrideParalyze))
             output = (pressed ? Input.GetKeyDown(PlayState.generalData.keyboardInputs[index]) :
                 Input.GetKey(PlayState.generalData.keyboardInputs[index])) || (!ignoreVirtual && virtualKey[index]);
-        else
-            return output;
         if (!ignoreVirtual)
             output = output || virtualKey[(int)input];
         if (output)
@@ -547,8 +548,35 @@ public class Control
                     }
                 }
             }
+            bool[] holdStates = new bool[] { DownHold(), LeftHold(), RightHold(), UpHold() };
+            for (int i = 0; i < secondsSinceLastDirTap.Length; i++)
+            {
+                if (holdStates[i])
+                    secondsSinceLastDirTap[i] = 0;
+                else
+                    secondsSinceLastDirTap[i] += Time.deltaTime;
+            }
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    //  0 -- Move up       1 -- Move down       2 -- Move left       3 -- Move right       4 -- Aim up       5 -- Aim down       6 -- Aim left       7 -- Aim right
+    //  8 -- Jump          9 -- Shoot          10 -- Strafe         11 -- Weapon 1        12 -- Weapon 2    13 -- Weapon 3      14 -- Next weapon   15 -- Previous weapon
+    // 16 -- Map          17 -- Pause
+    public static int ActionIDToSpriteID(int action)
+    {
+        int output = 0;
+        Keyboard[] keyActions = new Keyboard[] { Keyboard.Up1, Keyboard.Down1, Keyboard.Left1, Keyboard.Right1, Keyboard.Up2, Keyboard.Down2, Keyboard.Left2,
+            Keyboard.Right2, Keyboard.Jump1, Keyboard.Shoot1, Keyboard.Strafe1, Keyboard.Weapon1, Keyboard.Weapon2, Keyboard.Weapon3, Keyboard.NextWeapon,
+            Keyboard.PrevWeapon, Keyboard.Map, Keyboard.Pause };
+        Controller[] conActions = new Controller[] { Controller.Up, Controller.Down, Controller.Left, Controller.Right, Controller.AimU, Controller.AimD,
+            Controller.AimL, Controller.AimR, Controller.Jump1, Controller.Shoot1, Controller.Strafe1, Controller.Weapon1, Controller.Weapon2,
+            Controller.Weapon3, Controller.NextWeapon, Controller.PrevWeapon, Controller.Map, Controller.Pause };
+        if (lastInputIsCon)
+            output = GetButtonSpriteIcon(conActions[action]);
+        else
+            output = GetKeySpriteIcon(keyActions[action]);
+        return output;
     }
 
     public static string ParseKeyName(int keyID, bool shortForm = false)
@@ -692,6 +720,146 @@ public class Control
             "App" => keyNameFinal + "Apple",
             "Win" => keyNameFinal + "Wndw",
             _ => "Unknown key",
+        };
+    }
+
+    public static int GetKeySpriteIcon(Keyboard key)
+    {
+        return GetKeySpriteIcon(keyboardInputs[(int)key]);
+    }
+    public static int GetKeySpriteIcon(KeyCode key)
+    {
+        return key switch
+        {
+            KeyCode.A => 1,
+            KeyCode.B => 2,
+            KeyCode.C => 3,
+            KeyCode.D => 4,
+            KeyCode.E => 5,
+            KeyCode.F => 6,
+            KeyCode.G => 7,
+            KeyCode.H => 8,
+            KeyCode.I => 9,
+            KeyCode.J => 10,
+            KeyCode.K => 11,
+            KeyCode.L => 12,
+            KeyCode.M => 13,
+            KeyCode.N => 14,
+            KeyCode.O => 15,
+            KeyCode.P => 16,
+            KeyCode.Q => 17,
+            KeyCode.R => 18,
+            KeyCode.S => 19,
+            KeyCode.T => 20,
+            KeyCode.U => 21,
+            KeyCode.V => 22,
+            KeyCode.W => 23,
+            KeyCode.X => 24,
+            KeyCode.Y => 25,
+            KeyCode.Z => 26,
+            KeyCode.BackQuote => 27,
+            KeyCode.Alpha1 => 28,
+            KeyCode.Alpha2 => 29,
+            KeyCode.Alpha3 => 30,
+            KeyCode.Alpha4 => 31,
+            KeyCode.Alpha5 => 32,
+            KeyCode.Alpha6 => 33,
+            KeyCode.Alpha7 => 34,
+            KeyCode.Alpha8 => 35,
+            KeyCode.Alpha9 => 36,
+            KeyCode.Alpha0 => 37,
+            KeyCode.Minus => 38,
+            KeyCode.Equals => 39,
+            KeyCode.Backspace => 40,
+            KeyCode.Tab => 41,
+            KeyCode.LeftBracket => 42,
+            KeyCode.RightBracket => 43,
+            KeyCode.Semicolon => 44,
+            KeyCode.Quote => 45,
+            KeyCode.Slash => 46,
+            KeyCode.Backslash => 47,
+            KeyCode.Comma => 48,
+            KeyCode.Period => 49,
+            KeyCode.DoubleQuote => 50,
+            KeyCode.Colon => 51,
+            KeyCode.LeftControl or KeyCode.RightControl => 52,
+            //KeyCode. => 53,
+            KeyCode.LeftWindows or KeyCode.RightWindows or KeyCode.LeftApple or KeyCode.RightApple or KeyCode.LeftMeta or KeyCode.RightMeta => 54,
+            KeyCode.LeftAlt or KeyCode.RightAlt => 55,
+            KeyCode.LeftShift or KeyCode.RightShift => 56,
+            KeyCode.Return => 57,
+            KeyCode.Space => 58,
+            KeyCode.UpArrow => 59,
+            KeyCode.LeftArrow => 60,
+            KeyCode.DownArrow => 61,
+            KeyCode.RightArrow => 62,
+            KeyCode.Escape => 63,
+            KeyCode.F1 => 64,
+            KeyCode.F2 => 65,
+            KeyCode.F3 => 66,
+            KeyCode.F4 => 67,
+            KeyCode.F5 => 68,
+            KeyCode.F6 => 69,
+            KeyCode.F7 => 70,
+            KeyCode.F8 => 71,
+            KeyCode.F9 => 72,
+            KeyCode.F10 => 73,
+            KeyCode.F11 => 74,
+            KeyCode.F12 => 75,
+            KeyCode.Keypad0 => 76,
+            KeyCode.Keypad1 => 77,
+            KeyCode.Keypad2 => 78,
+            KeyCode.Keypad3 => 79,
+            KeyCode.Keypad4 => 80,
+            KeyCode.Keypad5 => 81,
+            KeyCode.Keypad6 => 82,
+            KeyCode.Keypad7 => 83,
+            KeyCode.Keypad8 => 84,
+            KeyCode.Keypad9 => 85,
+            KeyCode.KeypadPlus => 86,
+            KeyCode.KeypadMinus => 87,
+            KeyCode.KeypadMultiply => 88,
+            KeyCode.KeypadDivide => 89,
+            KeyCode.KeypadEnter => 90,
+            KeyCode.Delete => 91,
+            _ => 0
+        };
+    }
+
+    public static int GetButtonSpriteIcon(Controller button)
+    {
+        return GetButtonSpriteIcon(controllerInputs[(int)button]);
+    }
+    public static int GetButtonSpriteIcon(ControllerBinds button)
+    {
+        int type = PlayState.generalData.controllerFaceType;
+        return button switch
+        {
+            ControllerBinds.LStickU => 106,
+            ControllerBinds.LStickD => 110,
+            ControllerBinds.LStickL => 108,
+            ControllerBinds.LStickR => 112,
+            ControllerBinds.LStickClick => 126,
+            ControllerBinds.RStickU => 107,
+            ControllerBinds.RStickD => 111,
+            ControllerBinds.RStickL => 109,
+            ControllerBinds.RStickR => 113,
+            ControllerBinds.RStickClick => 127,
+            ControllerBinds.FaceU => type switch { 1 => 94, 2 => 100, 3 => 95, _ => 95 },
+            ControllerBinds.FaceD => type switch { 1 => 93, 2 => 101, 3 => 96, _ => 92 },
+            ControllerBinds.FaceL => type switch { 1 => 95, 2 => 98, 3 => 97, _ => 94 },
+            ControllerBinds.FaceR => type switch { 1 => 92, 2 => 99, 3 => 92, _ => 93 },
+            ControllerBinds.DPadU => 102,
+            ControllerBinds.DPadD => 104,
+            ControllerBinds.DPadL => 103,
+            ControllerBinds.DPadR => 105,
+            ControllerBinds.LBumper => 122,
+            ControllerBinds.LTrigger=> 123,
+            ControllerBinds.RBumper => 124,
+            ControllerBinds.RTrigger => 125,
+            ControllerBinds.Start => type switch { 1 => 118, 2 => 117, 3 => 114, _ => 120 },
+            ControllerBinds.Select => type switch { 1 => 119, 2 => 116, 3 => 115, _ => 121 },
+            _ => 0
         };
     }
 }

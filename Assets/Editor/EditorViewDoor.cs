@@ -12,6 +12,7 @@ public class EditorViewDoor : Editor
 
     private SerializedProperty sWeapon;
     private SerializedProperty sLocked;
+    private SerializedProperty sPermLocked;
     private SerializedProperty sBoss;
     private SerializedProperty sDir;
 
@@ -22,6 +23,7 @@ public class EditorViewDoor : Editor
 
         sWeapon = serializedObject.FindProperty("doorWeapon");
         sLocked = serializedObject.FindProperty("locked");
+        sPermLocked = serializedObject.FindProperty("alwaysLocked");
         sBoss = serializedObject.FindProperty("bossLock");
         sDir = serializedObject.FindProperty("direction");
     }
@@ -32,6 +34,10 @@ public class EditorViewDoor : Editor
 
         sWeapon.intValue = EditorGUILayout.Popup("Required weapon: ", sWeapon.intValue, new string[] { "Peashooter", "Boomerang", "Rainbow Wave", "Devastator" });
         sLocked.boolValue = EditorGUILayout.Toggle("Is this door locked?", sLocked.boolValue);
+        if (sLocked.boolValue)
+            sPermLocked.boolValue = EditorGUILayout.Toggle("Permanently locked?", sPermLocked.boolValue);
+        else
+            sPermLocked.boolValue = false;
         sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
 
