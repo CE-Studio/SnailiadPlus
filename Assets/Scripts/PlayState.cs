@@ -1569,7 +1569,6 @@ public class PlayState {
             if ((collectedItems == totalCounted && collectedItems < totalItems) || (collectedItems < totalItems && collectedUncounted > 0))
                 hint = true;
         }
-        Debug.Log(string.Format("Found {0} items ({1} of which are counted) out of {2} total items ({3} counted)", collectedItems, collectedItems - collectedUncounted, totalItems, totalCounted));
         return new int[] { collectedItems, totalCounted + collectedUncounted, hint ? 1 : 0, collectedItems == totalItems ? 1 : 0 };
     }
 

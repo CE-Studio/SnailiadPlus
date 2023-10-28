@@ -22,6 +22,7 @@ public class Item:MonoBehaviour, IRoomObject {
     public AudioClip majorJingle;
 
     private readonly bool legacyGravCutscene = true;
+    private bool isRushItem = false;
 
     private const float UNIQUE_ITEM_CUTSCENE_TIME = 3.5f;
 
@@ -39,15 +40,15 @@ public class Item:MonoBehaviour, IRoomObject {
 
     public Dictionary<string, object> save()
     {
-        if (PlayState.itemData.Length == 0)
-            PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
-        PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
-        if (PlayState.countedItems.Length == 0)
-            PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
-        PlayState.countedItems[itemID] = countedInPercentage;
         int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
         if (areaID < 7)
         {
+            if (PlayState.itemData.Length == 0)
+                PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
+            PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
+            if (PlayState.countedItems.Length == 0)
+                PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
+            PlayState.countedItems[itemID] = countedInPercentage;
             if (areaID == 6)
                 areaID = 5;
             if (!PlayState.itemAreas[areaID].Contains(itemID))
@@ -63,7 +64,8 @@ public class Item:MonoBehaviour, IRoomObject {
         return content;
     }
 
-    public void load(Dictionary<string, object> content) {
+    public void load(Dictionary<string, object> content)
+    {
         countedInPercentage = (bool)content["countedInPercentage"];
         collected = (bool)content["collected"];
         itemID = (int)content["itemID"];
@@ -71,25 +73,27 @@ public class Item:MonoBehaviour, IRoomObject {
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
 
-        int charCheck = (PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 });
-        if (PlayState.currentProfile.items[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentProfile.difficulty] || !PlayState.itemData[itemID][charCheck]) {
+        int charCheck = PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
+        if (PlayState.currentProfile.items[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentProfile.difficulty] || !PlayState.itemData[itemID][charCheck])
             Spawn();
-        } else {
+        else
             Destroy(gameObject);
-        }
-
     }
 
-    void Awake() {
-        if (PlayState.gameState == PlayState.GameState.game) {
+    void Awake()
+    {
+        if (PlayState.gameState == PlayState.GameState.game)
+        {
             anim = GetComponent<AnimationModule>();
             box = GetComponent<BoxCollider2D>();
             sprite = GetComponent<SpriteRenderer>();
             sfx = GetComponent<AudioSource>();
 
             originPos = transform.localPosition;
+            isRushItem = transform.parent.GetComponent<RoomTrigger>().areaID == 7;
 
-            if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch {
+            if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch
+            {
                 "Snaily" => 0,
                 "Sluggy" => 1,
                 "Upside" => 2,
@@ -203,13 +207,20 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.globalFunctions.RenderNewHearts();
             }
-            if (isSuperUnique) {
+            if (isSuperUnique)
+            {
                 PlayState.MuteMusic();
                 PlayState.PlayMusic(0, 2);
                 PlayState.paralyzed = true;
                 PlayState.playerScript.ZeroWalkVelocity();
-            } else
-                PlayState.PlayMusic(0, 1);
+            }
+            else
+            {
+                if (isRushItem)
+                    PlayState.PlaySound("PowerNom");
+                else
+                    PlayState.PlayMusic(0, 1);
+            }
             switch (itemID) {
                 case 0:
                     if (PlayState.playerScript.selectedWeapon == 0)
@@ -259,16 +270,19 @@ public class Item:MonoBehaviour, IRoomObject {
                     break;
             }
             FlashItemText();
-            if (PlayState.GetItemPercentage() == 100)
+            if (!isRushItem)
             {
-                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.completion);
-                PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Items100);
+                if (PlayState.GetItemPercentage() == 100)
+                {
+                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.completion);
+                    PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Items100);
+                }
+                else
+                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.collection);
+                PlayState.currentProfile.percentage = PlayState.GetItemPercentage();
+                PlayState.WriteSave(PlayState.currentProfileNumber, true);
             }
-            else
-                PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.collection);
             StartCoroutine(nameof(HoverOverPlayer));
-            PlayState.currentProfile.percentage = PlayState.GetItemPercentage();
-            PlayState.WriteSave(PlayState.currentProfileNumber, true);
         }
     }
 
@@ -283,8 +297,16 @@ public class Item:MonoBehaviour, IRoomObject {
 
     private string IDToName()
     {
+        return IDToName(itemID);
+    }
+    public static string IDToName(int thisID)
+    {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
-        return itemID switch
+        if (thisID >= PlayState.OFFSET_FRAGMENTS)
+            return string.Format(PlayState.GetText("item_helixFragment"), thisID - PlayState.OFFSET_FRAGMENTS + 1);
+        if (thisID >= PlayState.OFFSET_HEARTS)
+            return string.Format(PlayState.GetText("item_heartContainer"), thisID - PlayState.OFFSET_HEARTS + 1);
+        return thisID switch
         {
             1 => PlayState.GetText("item_boomerang"),
             2 => PlayState.GetText("item_rainbowWave"),
