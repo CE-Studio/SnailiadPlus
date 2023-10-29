@@ -51,6 +51,10 @@
 		{
 			"name": "ShrineOfIris",
 			"offset": 0.0
+		},
+		{
+			"name": "BossRush",
+			"offset": 0.0
 		}
 	]
 }

@@ -891,7 +891,8 @@ public class GlobalFunctions : MonoBehaviour
     {
         item,
         collection,
-        completion,
+        areaCompletion,
+        totalCompletion,
         save,
         bestTime,
         unlock
@@ -955,7 +956,31 @@ public class GlobalFunctions : MonoBehaviour
                 }
                 itemPercentageText.SetColor(new Color(1, 1, 1, 0));
                 break;
-            case TextTypes.completion:
+            case TextTypes.areaCompletion:
+                itemCompletionText.SetText(PlayState.GetText("hud_areaComplete"));
+                while (timer < 3.5f)
+                {
+                    alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
+                    if (colorCooldown <= 0)
+                    {
+                        itemCompletionText.SetColor(colorPointer switch
+                        {
+                            0 => new Color32(189, 191, 198, alpha),
+                            1 => new Color32(247, 198, 223, alpha),
+                            2 => new Color32(252, 214, 136, alpha),
+                            _ => new Color32(170, 229, 214, alpha)
+                        });
+                        colorPointer = (colorPointer + 1) % 4;
+                        colorCooldown = 2;
+                    }
+                    else
+                        colorCooldown--;
+                    yield return new WaitForEndOfFrame();
+                    timer += Time.deltaTime;
+                }
+                itemCompletionText.SetColor(new Color(1, 1, 1, 0));
+                break;
+            case TextTypes.totalCompletion:
                 string thisText = PlayState.GetText("hud_collectedAllItems");
                 if (!PlayState.generalData.achievements[7] && !Application.version.ToLower().Contains("demo"))
                     thisText += "\n" + PlayState.GetText("hud_unlockRandoMode");

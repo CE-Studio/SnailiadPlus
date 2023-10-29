@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class AchievementPanel : MonoBehaviour
     public Sprite blankIcon;
     public Sprite[] achIconArray;
     public AnimationModule anim;
+    public AnimationModule iconAnim;
     public AudioSource sfx;
     public AudioClip jingle;
 
@@ -38,7 +40,8 @@ public class AchievementPanel : MonoBehaviour
         MazeBirds,             // (Find them)
         FlashTestRooms,        // (Find the original test rooms)
         WinInsane,             // (Beat the game on insane difficulty)
-        WinRandomizer          // (Beat the game on a randomized seed)
+        WinRandomizer,         // (Beat the game on a randomized seed)
+        GravityShock,          // (Find Gravity Shock)
     };
     public Achievements currentAchievement;
     public List<Achievements> popupQueue = new();
@@ -55,6 +58,7 @@ public class AchievementPanel : MonoBehaviour
         anim = GetComponent<AnimationModule>();
         frameSprite = GetComponent<SpriteRenderer>();
         iconSprite = transform.Find("Achievement Icon").GetComponent<SpriteRenderer>();
+        iconAnim = iconSprite.GetComponent<AnimationModule>();
         text = transform.Find("Achievement Text").GetComponent<TextObject>();
         sfx = GetComponent<AudioSource>();
         jingle = (AudioClip)Resources.Load("Sounds/Music/AchievementJingle");
@@ -63,6 +67,10 @@ public class AchievementPanel : MonoBehaviour
         anim.Add("AchievementPanel_hold");
         anim.Add("AchievementPanel_close");
         anim.pauseOnMenu = false;
+
+        string[] animNames = Enum.GetNames(typeof(Achievements));
+        for (int i = 0; i < animNames.Length; i++)
+            iconAnim.Add("Achievement_" + animNames[i].ToLower());
 
         text.SetText("");
         iconSprite.enabled = false;
@@ -132,7 +140,7 @@ public class AchievementPanel : MonoBehaviour
     public void DisplayAchievement()
     {
         iconSprite.enabled = true;
-        iconSprite.sprite = PlayState.GetSprite("AchievementIcons", (int)currentAchievement + 1);
+        iconAnim.Play("Achievement_" + Enum.GetNames(typeof(Achievements))[(int)currentAchievement]);
         text.SetText(PlayState.GetText("hud_achievement"));
     }
 

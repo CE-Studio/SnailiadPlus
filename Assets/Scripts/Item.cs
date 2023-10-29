@@ -272,11 +272,14 @@ public class Item:MonoBehaviour, IRoomObject {
             FlashItemText();
             if (!isRushItem)
             {
+                int[] areaItemData = PlayState.GetAreaItemRate(transform.parent.GetComponent<RoomTrigger>().areaID);
                 if (PlayState.GetItemPercentage() == 100)
                 {
-                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.completion);
+                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.totalCompletion);
                     PlayState.QueueAchievementPopup(AchievementPanel.Achievements.Items100);
                 }
+                else if (areaItemData[3] == 1)
+                    PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.areaCompletion);
                 else
                     PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.collection);
                 PlayState.currentProfile.percentage = PlayState.GetItemPercentage();

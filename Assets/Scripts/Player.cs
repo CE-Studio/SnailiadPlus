@@ -2276,7 +2276,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public void HitFor(int damage)
     {
-        if ((stunned && damage > 0) || inDeathCutscene || (PlayState.paralyzed && !PlayState.overrideParalysisInvulnerability))
+        if ((stunned && damage > 0) || inDeathCutscene || (PlayState.paralyzed && !PlayState.overrideParalysisInvulnerability) || gravShockState == 2)
             return;
 
         if (damage < 0)

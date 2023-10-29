@@ -3978,6 +3978,17 @@
 			"randomizeStartFrame": false
         },
 		{
+            "name": "Achievement_gravityshock",
+			"spriteName": "AchievementIcons",
+            "framerate": 0.0,
+            "frames": [
+                25
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+		{
             "name": "Door_data",
 			"spriteName": "Door",
             "framerate": 0.0,

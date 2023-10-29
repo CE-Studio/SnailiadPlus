@@ -420,8 +420,10 @@ public class Subscreen : MonoBehaviour
                     int[] itemData = PlayState.GetAreaItemRate(PlayState.currentArea);
                     newText = PlayState.IsBossAlive(3) ? "" : string.Format(PlayState.GetText("subscreen_areaItemRate"), itemData[0], itemData[1],
                         itemData[2] == 1 ? "?" : "");
-                    radarSparkleTimer = itemData[3] == 1 ? 0 : -1;
-                    //radarSparkleTimer = 0;
+                    if (!PlayState.IsBossAlive(3))
+                        radarSparkleTimer = itemData[3] == 1 ? 0 : -1;
+                    else
+                        radarSparkleTimer = -1;
                     break;
             }
             texts[i].SetText(newText);

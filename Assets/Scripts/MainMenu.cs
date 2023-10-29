@@ -3092,25 +3092,33 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         int[] counts = ToggleAchievementInterface(true);
-        AddOption(string.Format(PlayState.GetText("menu_option_achievements_progress"), counts[0], counts[1]), false);
+        AddOption(string.Format(PlayState.GetText("menu_option_achievements_progress"), counts[0], counts[1],
+            Control.lastInputIsCon ? Control.ParseButtonName(Control.controllerInputs[(int)Control.Controller.Jump1]) :
+                                     Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Jump1])), false);
         currentOptions[0].textScript.SetSize(1);
         AddOption("", false);
         AddOption("", false);
         AddOption("", false);
         if (PlayState.generalData.achievements[0])
         {
-            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_title", achievements[0].ToLower())), true, "achievements");
+            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_title", achievements[0].ToLower())), true, ShowAchievementHint, "achievements");
             AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_desc", achievements[0].ToLower())), false);
         }
         else
         {
-            AddOption(PlayState.GetText("menu_option_achievements_locked_title"), true, "achievements");
+            AddOption(PlayState.GetText("menu_option_achievements_locked_title"), true, ShowAchievementHint, "achievements");
             AddOption(PlayState.GetText("menu_option_achievements_locked_desc"), false);
         }
         currentOptions[5].textScript.SetSize(1);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(4);
         backPage = RecordsScreen;
+    }
+
+    public void ShowAchievementHint()
+    {
+        if (!PlayState.generalData.achievements[menuVarFlags[0]])
+            currentOptions[5].textScript.SetText(PlayState.GetText(string.Format("menu_option_achievements_{0}_hint", achievements[menuVarFlags[0]].ToLower())));
     }
 
     public void GalleryScreen()

@@ -204,6 +204,7 @@ public class PlayState {
     public static readonly Vector2 WORLD_SIZE = new(26, 22); // The number of screens wide and tall the world is
     public static readonly Vector2 WORLD_SPAWN = new(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
     public static readonly Vector2 ROOM_SIZE = new(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
+    public static readonly Vector2 BOSS_RUSH_SPAWN = new(163, 42.5f); // Where the player starts in Boss Rush
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene;
 
@@ -1698,6 +1699,19 @@ public class PlayState {
             if (newData.timeVers != null)
                 generalData.timeVers = (int[])newData.timeVers.Clone();
         }
+
+        int currentLength = generalData.achievements.Length;
+        int intendedLength = Enum.GetNames(typeof(AchievementPanel.Achievements)).Length;
+        if (currentLength < intendedLength)
+        {
+            List<bool> newList = new();
+            for (int i = 0; i < currentLength - 1; i++)
+                newList.Add(generalData.achievements[i]);
+            while (newList.Count < intendedLength)
+                newList.Add(false);
+            generalData.achievements = newList.ToArray();
+        }
+
         if (Control.keyboardInputs.Length != Control.defaultKeyboardInputs.Length)
         {
             Control.keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone();
