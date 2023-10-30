@@ -1257,21 +1257,38 @@ public class PlayState {
         currentProfile.items[TranslateItemNameToID(itemName)] = 1;
     }
 
-    public static void AssignProperCollectibleIDs() {
+    public static void AssignProperCollectibleIDs()
+    {
         Transform roomTriggerArray = GameObject.Find("Room Triggers").transform;
         int currentHelixCount = 0;
         int currentHeartCount = 0;
+        int rushHelixCount = 0;
+        int rushHeartCount = 0;
 
-        foreach (Transform area in roomTriggerArray) {
-            foreach (Transform room in area) {
-                foreach (Transform entity in room) {
-                    if (entity.name == "Item") {
-                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS) {
-                            entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + currentHelixCount;
-                            currentHelixCount++;
-                        } else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS) {
-                            entity.GetComponent<Item>().itemID = OFFSET_HEARTS + currentHeartCount;
-                            currentHeartCount++;
+        foreach (Transform area in roomTriggerArray)
+        {
+            bool isRush = area.name.ToLower().Contains("boss rush");
+            foreach (Transform room in area)
+            {
+                foreach (Transform entity in room)
+                {
+                    if (entity.name == "Item")
+                    {
+                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS)
+                        {
+                            entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + (isRush ? rushHelixCount : currentHelixCount);
+                            if (isRush)
+                                rushHelixCount++;
+                            else
+                                currentHelixCount++;
+                        }
+                        else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS)
+                        {
+                            entity.GetComponent<Item>().itemID = OFFSET_HEARTS + (isRush ? rushHeartCount : currentHeartCount);
+                            if (isRush)
+                                rushHeartCount++;
+                            else
+                                currentHeartCount++;
                         }
                     }
                 }

@@ -1775,7 +1775,7 @@ public class MainMenu : MonoBehaviour
         }
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.generalData.achievements[3])
-            AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm);
+            AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm, new int[] { 0, 0 });
         //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
@@ -1855,6 +1855,7 @@ public class MainMenu : MonoBehaviour
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
+        PlayState.isInBossRush = false;
 
         if (menuVarFlags[4] == 1)
         {
@@ -1900,6 +1901,7 @@ public class MainMenu : MonoBehaviour
             PlayState.LoadGame(menuVarFlags[0], true);
         PlayState.currentProfileNumber = menuVarFlags[0];
         PlayState.SetPlayer(PlayState.currentProfile.character);
+        PlayState.isInBossRush = false;
 
         StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.currentProfile.saveCoords));
     }
@@ -2043,10 +2045,46 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_bossRush_header1"), false);
         AddOption(PlayState.GetText("menu_option_bossRush_header2"), false);
         AddOption("", false);
-        AddOption(PlayState.GetText("menu_option_bossRush_confirm"), true);
+        AddOption(PlayState.GetText("menu_option_bossRush_confirm"), true, StartBossRushSave);
         AddOption(PlayState.GetText("menu_option_bossRush_cancel"), true, PageMain);
         ForceSelect(4);
         backPage = PageMain;
+    }
+
+    public void StartBossRushSave()
+    {
+        //if (PlayState.currentProfileNumber != 0)
+        //    ReturnToMenu();
+        PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
+        PlayState.currentProfileNumber = 0;
+        PlayState.currentProfile = PlayState.blankProfile;
+        PlayState.currentProfile.difficulty = 1;
+        PlayState.SetPlayer(CharacterIDToName(menuVarFlags[0]));
+        PlayState.playerScript.selectedWeapon = 0;
+        PlayState.currentProfile.isEmpty = false;
+        PlayState.isInBossRush = true;
+
+        //if (menuVarFlags[4] == 1)
+        //{
+        //    for (int i = 0; i < PlayState.currentProfile.exploredMap.Length; i++)
+        //    {
+        //        if (PlayState.currentProfile.exploredMap[i] >= 0)
+        //            PlayState.currentProfile.exploredMap[i]++;
+        //    }
+        //}
+
+        //PlayState.WriteSave(PlayState.currentProfileNumber, false);
+        //PlayState.LoadGame(PlayState.currentProfileNumber, true);
+
+        if (PlayState.gameState == PlayState.GameState.pause)
+        {
+            Transform lastRoom = PlayState.roomTriggerParent.transform.GetChild((int)PlayState.positionOfLastRoom.x).GetChild((int)PlayState.positionOfLastRoom.y);
+            lastRoom.GetComponent<Collider2D>().enabled = true;
+            lastRoom.GetComponent<RoomTrigger>().active = true;
+            lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
+        }
+
+        StartCoroutine(LoadFade(PlayState.BOSS_RUSH_SPAWN, false));
     }
 
     public void OptionsScreen()

@@ -1247,7 +1247,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winblobby_hint",
-			"text": "I'm serious! Let me have my fun!",
+			"text": "I'm serious! Stop poking around!",
 			"value": 0
 		},
 		{
@@ -1442,7 +1442,7 @@
 		},
 		{
 			"name": "menu_option_achievements_gravityshock_hint",
-			"text": "Everything deserves a second chance",
+			"text": "Everything deserves a second chance, shocking as it may be",
 			"value": 0
 		},
 		{
@@ -2346,8 +2346,18 @@
 			"value": 0
 		},
 		{
+			"name": "item_heartContainer_noNum",
+			"text": "Heart Container",
+			"value": 0
+		},
+		{
 			"name": "item_helixFragment",
 			"text": "Helix Fragment #{0}",
+			"value": 0
+		},
+		{
+			"name": "item_helixFragment_noNum",
+			"text": "Helix Fragment",
 			"value": 0
 		},
 		{

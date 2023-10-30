@@ -108,8 +108,15 @@ public class Item:MonoBehaviour, IRoomObject {
         }
     }
 
-    public void Spawn() {
+    public void Spawn()
+    {
         string animName;
+
+        if (itemID == 10 && transform.parent.GetComponent<RoomTrigger>().areaID == 7 && !PlayState.generalData.achievements[24])
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS) {
             animName = "Item_helixFragment";
@@ -217,7 +224,7 @@ public class Item:MonoBehaviour, IRoomObject {
             else
             {
                 if (isRushItem)
-                    PlayState.PlaySound("PowerNom");
+                    PlayState.PlaySound("EatPowerGrass");
                 else
                     PlayState.PlayMusic(0, 1);
             }
@@ -290,25 +297,27 @@ public class Item:MonoBehaviour, IRoomObject {
     }
 
     public void FlashItemText() {
-        string itemName = IDToName();
-        if (itemID >= PlayState.OFFSET_FRAGMENTS)
-            itemName = string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString());
-        else if (itemID >= PlayState.OFFSET_HEARTS)
-            itemName = string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString());
-        PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.item, itemName);
+        //string itemName = IDToName();
+        //if (itemID >= PlayState.OFFSET_FRAGMENTS)
+        //    itemName = string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString());
+        //else if (itemID >= PlayState.OFFSET_HEARTS)
+        //    itemName = string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString());
+        PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.item, IDToName());
     }
 
     private string IDToName()
     {
-        return IDToName(itemID);
+        return IDToName(itemID, !isRushItem);
     }
-    public static string IDToName(int thisID)
+    public static string IDToName(int thisID, bool numberHeartsAndHelixes = true)
     {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
         if (thisID >= PlayState.OFFSET_FRAGMENTS)
-            return string.Format(PlayState.GetText("item_helixFragment"), thisID - PlayState.OFFSET_FRAGMENTS + 1);
+            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString())
+                : PlayState.GetText("item_helixFragment_noNum");
         if (thisID >= PlayState.OFFSET_HEARTS)
-            return string.Format(PlayState.GetText("item_heartContainer"), thisID - PlayState.OFFSET_HEARTS + 1);
+            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString())
+                : PlayState.GetText("item_heartContainer_noNum");
         return thisID switch
         {
             1 => PlayState.GetText("item_boomerang"),
