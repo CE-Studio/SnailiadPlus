@@ -172,10 +172,11 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.hudPause = GameObject.Find("View/Bottom Keys/Pause").GetComponent<TextObject>();
         PlayState.hudMap = GameObject.Find("View/Bottom Keys/Map").GetComponent<TextObject>();
         PlayState.hudRoomName = GameObject.Find("View/Minimap Panel/Room Name").GetComponent<TextObject>();
+        PlayState.hudRushTime = GameObject.Find("View/Boss Rush Time").GetComponent<TextObject>();
 
         PlayState.palette = (Texture2D)Resources.Load("Images/Palette");
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < Enum.GetValues(typeof(PlayState.Areas)).Length; i++)
             PlayState.itemAreas.Add(new List<int>());
 
         PlayState.TogglableHUDElements = new GameObject[]
@@ -197,7 +198,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject.Find("View/New Best Time"),             // 14
             GameObject.Find("View/Mode Unlocks"),              // 15
             GameObject.Find("View/Item Completion"),           // 16
-            GameObject.Find("View/Control Guide")              // 17
+            GameObject.Find("View/Control Guide"),             // 17
+            GameObject.Find("View/Boss Rush Time"),            // 18
         };
 
         PlayState.respawnScene = SceneManager.GetActiveScene();
@@ -234,7 +236,7 @@ public class GlobalFunctions : MonoBehaviour
 
             // Skyfish cheat
             bool skyfishActive = false;
-            if (PlayState.currentArea == 0)
+            if (PlayState.currentArea == (int)PlayState.Areas.SnailTown)
             {
                 if (CheckCheatCode(new KeyCode[] { KeyCode.S, KeyCode.K, KeyCode.Y, KeyCode.F, KeyCode.I, KeyCode.S, KeyCode.H }))
                 {
@@ -249,31 +251,28 @@ public class GlobalFunctions : MonoBehaviour
             {
                 lastAreaID = PlayState.currentArea;
                 string areaName = PlayState.GetText("area_?");
-                switch (lastAreaID)
+                switch ((PlayState.Areas)lastAreaID)
                 {
-                    case 0:
+                    case PlayState.Areas.SnailTown:
                         areaName = PlayState.GetText("area_00");
                         break;
-                    case 1:
+                    case PlayState.Areas.MareCarelia:
                         areaName = PlayState.GetText("area_01");
                         break;
-                    case 2:
+                    case PlayState.Areas.SpiralisSilere:
                         areaName = PlayState.GetText("area_02");
                         break;
-                    case 3:
+                    case PlayState.Areas.AmastridaAbyssus:
                         areaName = PlayState.GetText("area_03");
                         break;
-                    case 4:
+                    case PlayState.Areas.LuxLirata:
                         areaName = PlayState.GetText("area_04");
                         break;
-                    case 5:
+                    case PlayState.Areas.ShrineOfIris:
                         if (PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1)
                             areaName = PlayState.GetText("area_iris");
                         break;
-                    case 6:
-                        areaName = PlayState.GetText("area_iris");
-                        break;
-                    case 7:
+                    case PlayState.Areas.BossRush:
                         areaName = PlayState.GetText("area_bossRush");
                         break;
                 }
@@ -391,8 +390,8 @@ public class GlobalFunctions : MonoBehaviour
         // Update bottom keys
         if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.map)
         {
-            PlayState.TogglableHUDElements[11].SetActive(PlayState.generalData.bottomKeyState == 2);
-            PlayState.TogglableHUDElements[3].SetActive(PlayState.generalData.bottomKeyState >= 1);
+            PlayState.TogglableHUDElements[11].SetActive(PlayState.generalData.bottomKeyState == 2 && !PlayState.isInBossRush);
+            PlayState.TogglableHUDElements[3].SetActive(PlayState.generalData.bottomKeyState >= 1 && !PlayState.isInBossRush);
             if (Control.lastInputIsCon && !bottomKeysAreCon)
             {
                 PlayState.hudPause.SetText(Control.ParseButtonName(Control.Controller.Pause, true));
@@ -424,8 +423,10 @@ public class GlobalFunctions : MonoBehaviour
         // Game time counter
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            PlayState.currentProfile.gameTime[2] += Time.deltaTime;
-            PlayState.TogglableHUDElements[9].SetActive(PlayState.generalData.timeState);
+            if (!PlayState.isInBossRush || (PlayState.isInBossRush && PlayState.incrementRushTimer))
+                PlayState.currentProfile.gameTime[2] += Time.deltaTime;
+            PlayState.TogglableHUDElements[9].SetActive(PlayState.generalData.timeState && !PlayState.isInBossRush);
+            PlayState.TogglableHUDElements[18].SetActive(PlayState.isInBossRush);
         }
         if (PlayState.currentProfile.gameTime[2] >= 60)
         {
@@ -437,7 +438,12 @@ public class GlobalFunctions : MonoBehaviour
             PlayState.currentProfile.gameTime[1] -= 60;
             PlayState.currentProfile.gameTime[0] += 1;
         }
-        PlayState.hudTime.SetText(PlayState.GetTimeString());
+        if (PlayState.isInBossRush && PlayState.incrementRushTimer)
+            PlayState.hudRushTime.SetText(PlayState.GetTimeString(true, true));
+        else if (!PlayState.isInBossRush)
+            PlayState.hudTime.SetText(PlayState.GetTimeString());
+        if (PlayState.isInBossRush)
+            PlayState.hudRushTime.SetColor(PlayState.incrementRushTimer ? PlayState.GetColor("0312") : PlayState.GetColor("0112"));
     }
 
     public void UpdateMusic(int area, int subzone, int resetFlag = 0)

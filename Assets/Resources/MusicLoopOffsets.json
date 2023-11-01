@@ -53,6 +53,10 @@
 			"offset": 0.0
 		},
 		{
+			"name": "UnknownArea",
+			"offset": 0.0
+		},
+		{
 			"name": "BossRush",
 			"offset": 0.0
 		}

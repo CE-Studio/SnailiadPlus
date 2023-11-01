@@ -424,9 +424,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
             PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y);
         float xDif = camBoundsX.y - camBoundsX.x;
         float yDif = camBoundsY.y - camBoundsY.x;
-        camFocus.position = new(
-            xDif >= 0 ? Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
-            yDif >= 0 ? Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
+        if (transform.position.x > camBoundsX.x && transform.position.x < camBoundsX.y && transform.position.y > camBoundsY.x && transform.position.y < camBoundsY.y)
+            camFocus.position = new(
+                xDif >= 0 ? Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
+                yDif >= 0 ? Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
     }
 
     public virtual void CaseDown()

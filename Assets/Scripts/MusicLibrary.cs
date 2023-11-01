@@ -69,11 +69,8 @@ public class MusicLibrary : ScriptableObject
         },
         new string[]
         {
-            "ShrineOfIris"
-        },
-        new string[]
-        {
-            "ShrineOfIris"
+            "ShrineOfIris",
+            "UnknownArea"
         },
         new string[]
         {

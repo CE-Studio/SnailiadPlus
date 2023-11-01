@@ -49,8 +49,6 @@ public class Item:MonoBehaviour, IRoomObject {
             if (PlayState.countedItems.Length == 0)
                 PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
             PlayState.countedItems[itemID] = countedInPercentage;
-            if (areaID == 6)
-                areaID = 5;
             if (!PlayState.itemAreas[areaID].Contains(itemID))
                 PlayState.itemAreas[areaID].Add(itemID);
         }
@@ -90,7 +88,7 @@ public class Item:MonoBehaviour, IRoomObject {
             sfx = GetComponent<AudioSource>();
 
             originPos = transform.localPosition;
-            isRushItem = transform.parent.GetComponent<RoomTrigger>().areaID == 7;
+            isRushItem = transform.parent.GetComponent<RoomTrigger>().areaID == (int)PlayState.Areas.BossRush;
 
             if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch
             {
@@ -112,7 +110,7 @@ public class Item:MonoBehaviour, IRoomObject {
     {
         string animName;
 
-        if (itemID == 10 && transform.parent.GetComponent<RoomTrigger>().areaID == 7 && !PlayState.generalData.achievements[24])
+        if (itemID == 10 && transform.parent.GetComponent<RoomTrigger>().areaID == (int)PlayState.Areas.BossRush && !PlayState.generalData.achievements[24])
         {
             Destroy(gameObject);
             return;

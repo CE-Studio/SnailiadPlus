@@ -356,6 +356,16 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_bossRush_restart",
+			"text": "Restart Boss Rush",
+			"value": 0
+		},
+		{
+			"name": "menu_option_bossRush_exit",
+			"text": "Exit Boss Rush",
+			"value": 0
+		},
+		{
 			"name": "menu_option_options_sound",
 			"text": "Sound options",
 			"value": 0
@@ -3061,7 +3071,7 @@
 			"value": 0
 		},
 		{
-			"name": "room_06_shrine",
+			"name": "room_05_shrine",
 			"text": "Shrine of Iris",
 			"value": 0
 		},
@@ -3437,7 +3447,7 @@
 		},
 		{
 			"name": "npc_21_default_0",
-			"text": "By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing keys{nl}like \"{ctrl|11}\" and \"{ctrl|12}\"{col|0312}!",
+			"text": "By the way, {p|0.1}you can switch{nl}weapons by {col|0309}pressing inputs{nl}like \"{ctrl|11}\" and \"{ctrl|12}\"{col|0312}!",
 			"value": 1
 		},
 		{
@@ -3842,7 +3852,7 @@
 		},
 		{
 			"name": "npc_50_default_0",
-			"text": "Have you tried {col|0309}hitting the{nl}\"{ctrl|10}\" key{col|0312} yet?  {p|0.15}It lets you{nl}shoot while holding still!",
+			"text": "Have you tried {col|0309}hitting{nl}\"{ctrl|10}\" {col|0312} yet?  {p|0.15}It lets you{nl}shoot while holding still!",
 			"value": 1
 		},
 		{

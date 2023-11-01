@@ -817,7 +817,7 @@ public class Credits : MonoBehaviour
         Destroy(endImage.obj);
         Destroy(imageBg.obj);
         PlayState.ToggleHUD(true);
-        if (PlayState.currentArea == 6)
+        if (PlayState.currentArea == (int)PlayState.Areas.ShrineOfIris)
             PlayState.globalFunctions.UpdateMusic(PlayState.currentArea, PlayState.currentSubzone, 1);
         else
             PlayState.globalFunctions.DelayStartAreaTheme(PlayState.currentArea, PlayState.currentSubzone, 4f);

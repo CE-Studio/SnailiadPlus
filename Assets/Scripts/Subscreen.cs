@@ -129,7 +129,7 @@ public class Subscreen : MonoBehaviour
 
     void Update()
     {
-        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && PlayState.creditsState == 0 && Control.Map())
+        if (!buttonDown && PlayState.gameState == PlayState.GameState.game && PlayState.creditsState == 0 && Control.Map() && !PlayState.isInBossRush)
         {
             menuOpen = true;
             PlayState.gameState = PlayState.GameState.map;
@@ -412,7 +412,7 @@ public class Subscreen : MonoBehaviour
                     newText = "X " + PlayState.CountFragments();
                     break;
                 case 22:
-                    if (PlayState.currentArea > 6)
+                    if (PlayState.currentArea >= (int)PlayState.Areas.BossRush)
                     {
                         newText = "";
                         break;

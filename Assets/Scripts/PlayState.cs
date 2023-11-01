@@ -32,6 +32,7 @@ public class PlayState {
 
     public static bool isMenuOpen = false;
     public static bool isInBossRush = false;
+    public static bool incrementRushTimer = false;
     public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, overwriteOldTime, fadeOut };
     public static CreditsStates creditsState = CreditsStates.none;
 
@@ -213,6 +214,7 @@ public class PlayState {
     public static TextObject hudPause;
     public static TextObject hudMap;
     public static TextObject hudRoomName;
+    public static TextObject hudRushTime;
 
     public enum TargetTypes
     {
@@ -498,6 +500,17 @@ public class PlayState {
     public static ProfileData profile3 = blankProfile;
     public static ProfileData currentProfile = blankProfile;
     public static GeneralData generalData = blankData;
+
+    public enum Areas
+    {
+        SnailTown,
+        MareCarelia,
+        SpiralisSilere,
+        AmastridaAbyssus,
+        LuxLirata,
+        ShrineOfIris,
+        BossRush
+    }
 
     public static Sprite BlankTexture(bool useSmallBlank = false) {
         return useSmallBlank ? globalFunctions.blankSmall : globalFunctions.blank;
@@ -813,7 +826,8 @@ public class PlayState {
 
     public static void PlayAreaSong(int area, int subzone, bool isSnelk = false)
     {
-        if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)) && areaOfDeath != area)
+        //if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)) && areaOfDeath != area)
+        if (areaOfDeath != area)
         {
             if (isSnelk && !lastRoomWasSnelk)
             {
@@ -885,14 +899,19 @@ public class PlayState {
         return roomTriggerParent.transform.GetChild((int)positionOfLastRoom.x).GetChild((int)positionOfLastRoom.y).GetComponent<RoomTrigger>();
     }
 
-    public static void ToggleHUD(bool state) {
-        foreach (GameObject element in TogglableHUDElements) {
+    public static void ToggleHUD(bool state)
+    {
+        foreach (GameObject element in TogglableHUDElements)
+        {
             element.SetActive(state);
-            if (state) {
+            if (state)
+            {
                 if (element.name == "Minimap Panel")
-                    element.SetActive(!inBossFight);
+                    element.SetActive(!inBossFight && !isInBossRush);
                 if (element.name == "Boss Health Bar")
                     element.SetActive(true);
+                if (element.name == "Boss Rush Time")
+                    element.SetActive(isInBossRush);
             }
         }
     }
@@ -2063,7 +2082,7 @@ public class PlayState {
                 globalFunctions.displayDefeatText = true;
             }
         }
-        if (currentArea != 7) {
+        if (currentArea != (int)Areas.BossRush) {
             if (state)
                 globalFunctions.UpdateMusic(musicID, 0, 1);
             else if (musicID == -1)

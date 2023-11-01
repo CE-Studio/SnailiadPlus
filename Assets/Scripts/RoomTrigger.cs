@@ -342,7 +342,11 @@ public class RoomTrigger : MonoBehaviour
                         newRoomName += character;
                 }
             }
-            PlayState.hudRoomName.SetText((PlayState.currentArea != 5 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1) ? newRoomName : "");
+            //PlayState.hudRoomName.SetText((PlayState.currentArea != (int)PlayState.Areas.ShrineOfIris ||
+            //    PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1) ? newRoomName : "");
+            if (PlayState.currentArea == (int)PlayState.Areas.ShrineOfIris && PlayState.currentSubzone == 1 && PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
+                newRoomName = "";
+            PlayState.hudRoomName.SetText(newRoomName);
 
             PlayState.breakablePositions.Clear();
             CheckSpecialLayer();

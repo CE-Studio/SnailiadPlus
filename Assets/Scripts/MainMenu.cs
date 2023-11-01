@@ -1080,6 +1080,19 @@ public class MainMenu : MonoBehaviour
         };
     }
 
+    public int CharacterNameToID(string ID)
+    {
+        return ID switch
+        {
+            "Sluggy" => 1,
+            "Upside" => 2,
+            "Leggy" => 3,
+            "Blobby" => 4,
+            "Leechy" => 5,
+            _ => 0,
+        };
+    }
+
     public bool TestForArrowAdjust(MenuOption option, int varSlot, int max)
     {
         if (selectedOption == currentOptions.IndexOf(option))
@@ -1636,7 +1649,6 @@ public class MainMenu : MonoBehaviour
         PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
-        PlayState.isInBossRush = false;
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
@@ -1664,13 +1676,17 @@ public class MainMenu : MonoBehaviour
                 PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
                     (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
         }
+        if (PlayState.isInBossRush)
+            PlayState.TogglableHUDElements[0].SetActive(false);
     }
 
     public void SetTextComponentOrigins()
     {
+        bool inRush = PlayState.isInBossRush;
         PlayState.hudPause.position = new Vector2(-12.4375f, -6.875f + (PlayState.generalData.keymapState ? 2 : (
             PlayState.generalData.timeState && PlayState.generalData.FPSState ? 1 : (!PlayState.generalData.timeState && !PlayState.generalData.FPSState ? 0 : 0.5f))));
-        PlayState.hudFps.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, PlayState.generalData.timeState ? -6.375f : -6.875f);
+        PlayState.hudFps.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f,
+            (PlayState.generalData.timeState && !inRush) ? -6.375f : -6.875f);
         PlayState.hudTime.position = new Vector2(PlayState.generalData.keymapState ? -10.4375f : -12.4375f, -6.875f);
     }
 
@@ -1774,7 +1790,12 @@ public class MainMenu : MonoBehaviour
             returnAvailable = true;
         }
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
-        if (PlayState.generalData.achievements[3])
+        if (PlayState.isInBossRush)
+        {
+            menuVarFlags[0] = CharacterNameToID(PlayState.currentProfile.character);
+            AddOption(PlayState.GetText("menu_option_bossRush_restart"), true, StartBossRushSave);
+        }
+        else if (PlayState.generalData.achievements[3])
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm, new int[] { 0, 0 });
         //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
@@ -1784,7 +1805,10 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_main_records"), true, RecordsScreen);
         if (returnAvailable)
         {
-            AddOption(PlayState.GetText("menu_option_main_returnTo"), true, MenuReturnConfirm);
+            if (PlayState.isInBossRush)
+                AddOption(PlayState.GetText("menu_option_bossRush_exit"), true, ReturnToMenu);
+            else
+                AddOption(PlayState.GetText("menu_option_main_returnTo"), true, MenuReturnConfirm);
             backPage = Unpause;
         }
         else
@@ -2053,8 +2077,6 @@ public class MainMenu : MonoBehaviour
 
     public void StartBossRushSave()
     {
-        //if (PlayState.currentProfileNumber != 0)
-        //    ReturnToMenu();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = 0;
         PlayState.currentProfile = PlayState.blankProfile;
@@ -2063,18 +2085,8 @@ public class MainMenu : MonoBehaviour
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
         PlayState.isInBossRush = true;
-
-        //if (menuVarFlags[4] == 1)
-        //{
-        //    for (int i = 0; i < PlayState.currentProfile.exploredMap.Length; i++)
-        //    {
-        //        if (PlayState.currentProfile.exploredMap[i] >= 0)
-        //            PlayState.currentProfile.exploredMap[i]++;
-        //    }
-        //}
-
-        //PlayState.WriteSave(PlayState.currentProfileNumber, false);
-        //PlayState.LoadGame(PlayState.currentProfileNumber, true);
+        PlayState.incrementRushTimer = false;
+        PlayState.hudRushTime.SetText("");
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {

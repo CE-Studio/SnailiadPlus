@@ -108,7 +108,7 @@ public class Boss : Enemy
             1 => "stompy",
             2 => "spaceBox",
             _ => isFinalBoss ? "gigaSnail" : "moonSnail"
-        } + (PlayState.currentArea == 7 ? "_rush" : ""));
+        } + (PlayState.currentArea == (int)PlayState.Areas.BossRush ? "_rush" : ""));
 
         int playBeep = 0;
         while (introTimer <= introTimestamps[4])

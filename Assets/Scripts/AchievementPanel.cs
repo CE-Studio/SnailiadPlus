@@ -140,7 +140,7 @@ public class AchievementPanel : MonoBehaviour
     public void DisplayAchievement()
     {
         iconSprite.enabled = true;
-        iconAnim.Play("Achievement_" + Enum.GetNames(typeof(Achievements))[(int)currentAchievement]);
+        iconAnim.Play("Achievement_" + Enum.GetNames(typeof(Achievements))[(int)currentAchievement].ToLower());
         text.SetText(PlayState.GetText("hud_achievement"));
     }
 
