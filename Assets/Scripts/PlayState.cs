@@ -1168,8 +1168,8 @@ public class PlayState {
                     {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
-                        particleScript.vars[1] = (UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f) * Time.fixedDeltaTime;
-                        particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
+                        particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f;
+                        particleScript.vars[2] = UnityEngine.Random.Range(0f, 1f) * 6f + 3f;
                     }
                     break;
                 case "transformation":
@@ -1521,19 +1521,22 @@ public class PlayState {
             secondsF = (int)secondsF;
 
         string minutes = minutesI.ToString();
-        if (minutesI < 10)
+        if (minutesI < 10 && !trimBlankHours)
             minutes = "0" + minutes;
         string seconds = secondsF.ToString();
         if (secondsF < 10f)
             seconds = "0" + seconds;
-        seconds += seconds.Length switch
+        if (!dropSecondDecimal)
         {
-            2 => ".00",
-            4 => "0",
-            _ => ""
-        };
-        if (seconds.Length > 5)
-            seconds = seconds.Substring(0, 5);
+            seconds += seconds.Length switch
+            {
+                2 => ".00",
+                4 => "0",
+                _ => ""
+            };
+            if (seconds.Length > 5)
+                seconds = seconds.Substring(0, 5);
+        }
 
         if (trimBlankHours && hours == 0)
             return string.Format("{0}:{1}", minutes, seconds);
@@ -2065,7 +2068,7 @@ public class PlayState {
     public static void ToggleBossfightState(bool state, int musicID, bool snapDespawnBar = false)
     {
         inBossFight = state;
-        TogglableHUDElements[0].SetActive(!state);
+        TogglableHUDElements[0].SetActive(!state && !isInBossRush);
         if (!state)
         {
             if (snapDespawnBar)

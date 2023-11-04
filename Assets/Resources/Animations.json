@@ -7694,6 +7694,118 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Bullet_enemy_lightWave_N",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				0,
+				8,
+				16,
+				24
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_NE",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				1,
+				9,
+				17,
+				25
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_E",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				2,
+				10,
+				18,
+				26
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_SE",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				3,
+				11,
+				19,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_S",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				4,
+				12,
+				20,
+				28
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_SW",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				5,
+				13,
+				21,
+				29
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_W",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				6,
+				14,
+				22,
+				30
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Bullet_enemy_lightWave_NW",
+			"spriteName": "Bullets/EnemyLightWave",
+			"framerate": 18.0,
+			"frames": [
+				7,
+				15,
+				23,
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Bullet_enemy_shadowWave_N",
 			"spriteName": "Bullets/EnemyShadowWave",
 			"framerate": 0.0,
@@ -14083,6 +14195,5157 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "RushBoss_shellbreaker_normal1",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_normal2",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_normal3",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_fire1",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_fire2",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_fire3",
+			"spriteName": "Entities/Boss1Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_normal1",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_normal2",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_normal3",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_fire1",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_fire2",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_eyes_fire3",
+			"spriteName": "Entities/Boss1RushEyes",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_hand_1",
+			"spriteName": "Entities/Boss1RushHand",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_hand_2",
+			"spriteName": "Entities/Boss1RushHand",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_shellbreaker_hand_3",
+			"spriteName": "Entities/Boss1RushHand",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_data",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL0_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR0_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL0_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR0_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL0_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR0_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL1_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR1_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL1_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR1_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL1_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR1_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL2_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR2_ground",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL2_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR2_rise",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footL2_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_footR2_fall",
+			"spriteName": "Entities/Boss2RushFoot",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeL0",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeR0",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeL1",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeR1",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeL2",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyeR2",
+			"spriteName": "Entities/Boss2RushEye",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilL0",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilR0",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilL1",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilR1",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilL2",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_pupilR2",
+			"spriteName": "Entities/Boss2RushPupil",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL0_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR0_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL0_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR0_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL0_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR0_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				3,
+				6,
+				3,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL1_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR1_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL1_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR1_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL1_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR1_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				1,
+				4,
+				7,
+				4,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL2_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR2_open",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL2_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR2_close",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidL2_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_stompy_eyelidR2_blink",
+			"spriteName": "Entities/Boss2RushEyelid",
+			"framerate": 20.0,
+			"frames": [
+				2,
+				5,
+				8,
+				5,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_idle0",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_N",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_N",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_NE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_NE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_E",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_E",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_SE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_SE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_S",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_S",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_SW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_SW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_W",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_W",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge0_NW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit0_NW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_waitSpawn0",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_idle1",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_N",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_N",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_NE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_NE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_E",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_E",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_SE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_SE",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_S",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_S",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_SW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_SW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_W",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_W",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_charge1_NW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_hit1_NW",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_waitSpawn1",
+			"spriteName": "Entities/Boss3Rush",
+			"framerate": 0.0,
+			"frames": [
+				17
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield0_inactive",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield0_spawn",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield0_hit",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield0_turnBlue",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield1_spawn",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_shield1_hit",
+			"spriteName": "Entities/Boss3RushShield",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_babybox0_spawn",
+			"spriteName": "Entities/Boss3RushBabybox",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_babybox0_hit",
+			"spriteName": "Entities/Boss3RushBabybox",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_babybox0_turnBlue",
+			"spriteName": "Entities/Boss3RushBabybox",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_babybox1_spawn",
+			"spriteName": "Entities/Boss3RushBabybox",
+			"framerate": 20.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_spaceBox_babybox1_hit",
+			"spriteName": "Entities/Boss3RushBabybox",
+			"framerate": 0.0,
+			"frames": [
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_data",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1,
+				0,
+				0,
+				0,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle1_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move1_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump1_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				3,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot1_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell1_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_idle2_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_move2_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_jump2_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				9,
+				10
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shoot2_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 3.0,
+			"frames": [
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_floor_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_floor_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_wallL_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_wallL_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_wallR_D",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_wallR_U",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_ceiling_L",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shell2_ceiling_R",
+			"spriteName": "Entities/Boss4Rush",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shadowBall1",
+			"spriteName": "Entities/Boss4RushShadowBall",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				4,
+				8,
+				13,
+				1,
+				6,
+				10,
+				15,
+				3,
+				7,
+				10,
+				14,
+				1,
+				5,
+				8,
+				12,
+				0,
+				5,
+				9,
+				14,
+				2,
+				7,
+				11,
+				15,
+				2,
+				6,
+				9,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_moonSnail_shadowBall2",
+			"spriteName": "Entities/Boss4RushShadowBall",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				1,
+				2,
+				2,
+				3,
+				3,
+				3,
+				2,
+				2,
+				1,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_data",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1,
+				1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_intro",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_idle1",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_strafe1",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_N",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_NE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_E",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_SE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_S",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_SW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_W",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_NW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_N",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_NE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_E",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_SE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_S",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_SW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_W",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash1_collide_NW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_shelled",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_unshelled_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep1_land",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_unshell_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_idle_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turn_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_jump_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnAir_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_flip_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_land_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_shell_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRed_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp1_turnRedAir_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_idle2",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_strafe2",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_N",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_NE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_E",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_SE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_S",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_SW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_W",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_NW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_N",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_NE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_E",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_SE",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_S",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_SW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_W",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_smash2_collide_NW",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_shelled",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_unshelled_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_sleep2_land",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_floor_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_floor_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_wallL_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_wallL_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_wallR_D",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_wallR_U",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_unshell_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_idle_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turn_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_jump_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_turnAir_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_flip_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_land_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_ceiling_L",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_stomp2_shell_ceiling_R",
+			"spriteName": "Entities/Boss4RushSecondForm",
+			"framerate": 16.0,
+			"frames": [
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_spawn",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_N",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_NE",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_E",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_SE",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_S",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_SW",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_W",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "RushBoss_gigaSnail_zzz_attack_NW",
+			"spriteName": "Entities/Boss4RushZzz",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
 		
 		{
 			"name": "EndingMoonSnail_data",
@@ -17606,6 +22869,118 @@
 				13,
 				14,
 				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy0_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy0_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy0_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy0_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy1_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy1_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy1_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_sluggy1_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
 			],
 			"loop": true,
 			"loopStartFrame": 0,

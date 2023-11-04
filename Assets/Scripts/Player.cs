@@ -286,8 +286,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Also real quick let's update our shield particle stuff
             UpdateShieldParticleOffset();
             if (shieldEffect != null)
+            {
                 if (shieldEffect.isActive)
                     shieldEffect.transform.position = (Vector2)transform.position + (shieldOffset * PlayState.FRAC_16);
+                else
+                    shieldEffect = null;
+            }
         }
     }
 

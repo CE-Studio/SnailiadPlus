@@ -84,7 +84,7 @@ public class Particle : MonoBehaviour
         anim.Add("Transformation_angel");
         anim.Add("Zzz");
 
-        foreach (string character in new string[] { "snaily" })
+        foreach (string character in new string[] { "snaily", "sluggy" })
         {
             for (int i = 0; i <= 1; i++)
                 foreach (string dir in new string[] { "down", "up", "left", "right" })
@@ -291,7 +291,7 @@ public class Particle : MonoBehaviour
                                     break;
                             }
                         }
-                        transform.position += new Vector3(internalVars[0], internalVars[1]);
+                        transform.position += Time.deltaTime * new Vector3(internalVars[0], internalVars[1]);
                         if (vars[0] == 8)
                         {
                             if (centerDis < Vector2.Distance(transform.position, PlayState.cam.transform.position))

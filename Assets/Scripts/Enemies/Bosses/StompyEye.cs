@@ -194,11 +194,11 @@ public class StompyEye : Enemy
         stunInvulnerability = true;
         if (playSound)
             PlayState.PlaySound("Explode" + Random.Range(1, 5));
-        yield return new WaitForSeconds(0.0125f);
+        yield return new WaitForFixedUpdate();
         mask.enabled = false;
         pupil.mask.enabled = false;
         eyelid.mask.enabled = false;
-        yield return new WaitForSeconds(0.0125f);
+        yield return new WaitForFixedUpdate();
         stunInvulnerability = false;
     }
 

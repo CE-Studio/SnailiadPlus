@@ -32,6 +32,7 @@ MonoBehaviour:
   - Bullets/EnemyGigaPeashooter
   - Bullets/EnemyGigaWave
   - Bullets/EnemyLaser
+  - Bullets/EnemyLightWave
   - Bullets/EnemyShadowWave
   - Bullets/EnemySpikeBall
   - Bullets/Peashooter
@@ -55,17 +56,31 @@ MonoBehaviour:
   - Entities/Boss1
   - Entities/Boss1Eyes
   - Entities/Boss1Hand
+  - Entities/Boss1Rush
+  - Entities/Boss1RushEyes
+  - Entities/Boss1RushHand
   - Entities/Boss2Eye
   - Entities/Boss2Eyelid
   - Entities/Boss2Foot
   - Entities/Boss2Pupil
+  - Entities/Boss2RushEye
+  - Entities/Boss2RushEyelid
+  - Entities/Boss2RushFoot
+  - Entities/Boss2RushPupil
   - Entities/Boss3
   - Entities/Boss3Babybox
   - Entities/Boss3Shield
+  - Entities/Boss3Rush
+  - Entities/Boss3RushBabybox
+  - Entities/Boss3RushShield
   - Entities/Boss4
   - Entities/Boss4SecondForm
   - Entities/Boss4ShadowBall
   - Entities/Boss4Zzz
+  - Entities/Boss4Rush
+  - Entities/Boss4RushSecondForm
+  - Entities/Boss4RushShadowBall
+  - Entities/Boss4RushZzz
   - Entities/BreakableIcons
   - Entities/Cannon1
   - Entities/Cannon1Base

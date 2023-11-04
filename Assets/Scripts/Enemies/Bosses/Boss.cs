@@ -76,7 +76,8 @@ public class Boss : Enemy
     public override void Kill()
     {
         PlayState.currentProfile.bossStates[ID] = 0;
-        PlayState.WriteSave(PlayState.currentProfileNumber, false);
+        if (PlayState.currentArea != (int)PlayState.Areas.BossRush)
+            PlayState.WriteSave(PlayState.currentProfileNumber, false);
         PlayState.ToggleBossfightState(false, 0);
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 2.7f, 0, true);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
@@ -90,11 +91,14 @@ public class Boss : Enemy
         {
             PlayState.paralyzed = true;
             PlayState.playerScript.ZeroWalkVelocity();
-            PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
+            if (!PlayState.isInBossRush)
+                PlayState.globalFunctions.UpdateMusic(songIndeces[ID], 0, 1);
             PlayState.ToggleBossfightState(true, songIndeces[ID]);
         }
         else
             PlayState.ToggleBossfightState(true, -1);
+        if (PlayState.isInBossRush)
+            PlayState.incrementRushTimer = false;
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = true;
         PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
         barMask.GetComponent<SpriteMask>().sprite = PlayState.GetSprite("UI/BossHealthBar", barData[4]);
@@ -152,5 +156,7 @@ public class Boss : Enemy
             PlayState.paralyzed = false;
         introDone = true;
         barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
+        if (PlayState.isInBossRush)
+            PlayState.incrementRushTimer = true;
     }
 }

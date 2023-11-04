@@ -18,8 +18,6 @@ public class Enemy : MonoBehaviour
     public bool invulnerable = false;
     public bool canDamage = true;
 
-    private const float HITSTUN_DURATION = 0.025f;
-
     public Collider2D col;
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
@@ -168,10 +166,9 @@ public class Enemy : MonoBehaviour
         stunInvulnerability = true;
         if (playSound)
             PlayState.PlaySound("Explode" + Random.Range(1, 5));
-        float halfDuration = HITSTUN_DURATION * 0.5f;
-        yield return new WaitForSeconds(halfDuration);
+        yield return new WaitForFixedUpdate();
         mask.enabled = false;
-        yield return new WaitForSeconds(halfDuration);
+        yield return new WaitForFixedUpdate();
         stunInvulnerability = false;
     }
 

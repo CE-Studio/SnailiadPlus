@@ -98,6 +98,11 @@
             "height": 6
         },
 		{
+            "name": "Bullets/EnemyLightWave",
+            "width": 48,
+            "height": 48
+        },
+		{
             "name": "Bullets/EnemyShadowWave",
             "width": 48,
             "height": 48
@@ -215,6 +220,21 @@
             "height": 24
         },
 		{
+            "name": "Entities/Boss1Rush",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Boss1RushEyes",
+            "width": 48,
+            "height": 48
+        },
+		{
+            "name": "Entities/Boss1RushHand",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "Entities/Boss2Eye",
             "width": 100,
             "height": 52
@@ -235,6 +255,26 @@
             "height": 52
         },
 		{
+            "name": "Entities/Boss2RushEye",
+            "width": 100,
+            "height": 52
+        },
+		{
+            "name": "Entities/Boss2RushEyelid",
+            "width": 100,
+            "height": 52
+        },
+		{
+            "name": "Entities/Boss2RushFoot",
+            "width": 190,
+            "height": 156
+        },
+		{
+            "name": "Entities/Boss2RushPupil",
+            "width": 100,
+            "height": 52
+        },
+		{
             "name": "Entities/Boss3",
             "width": 128,
             "height": 128
@@ -246,6 +286,21 @@
         },
 		{
             "name": "Entities/Boss3Shield",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Entities/Boss3Rush",
+            "width": 128,
+            "height": 128
+        },
+		{
+            "name": "Entities/Boss3RushBabybox",
+            "width": 64,
+            "height": 64
+        },
+		{
+            "name": "Entities/Boss3RushShield",
             "width": 16,
             "height": 16
         },
@@ -266,6 +321,26 @@
         },
 		{
             "name": "Entities/Boss4Zzz",
+            "width": 24,
+            "height": 32
+        },
+		{
+            "name": "Entities/Boss4Rush",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Entities/Boss4RushSecondForm",
+            "width": 80,
+            "height": 80
+        },
+		{
+            "name": "Entities/Boss4RushShadowBall",
+            "width": 24,
+            "height": 24
+        },
+		{
+            "name": "Entities/Boss4RushZzz",
             "width": 24,
             "height": 32
         },

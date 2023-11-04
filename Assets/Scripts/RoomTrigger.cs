@@ -529,6 +529,18 @@ public class RoomTrigger : MonoBehaviour
                         case 31:
                             PlayState.RequestParticle(worldPos, "smoke");
                             break;
+                        case 358:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Super Shellbreaker"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 359:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Vis Vires"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 360:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Time Cube"), worldPos, Quaternion.identity, transform);
+                            break;
+                        case 361:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Bosses/Sun Snail"), worldPos, Quaternion.identity, transform);
+                            break;
                         case 376:
                             GameObject block = new() { name = "Enemy-Collidable Tile", layer = 9 };
                             block.transform.parent = transform;
