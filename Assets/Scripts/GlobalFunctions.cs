@@ -289,7 +289,8 @@ public class GlobalFunctions : MonoBehaviour
                             itemData[2] == 1 ? "?" : ""));
                 }
             }
-            else if (currentBossName != "" && currentBossName != PlayState.GetText("boss_gigaSnail") && !flashedBossName)
+            else if (currentBossName != "" && !flashedBossName &&
+                currentBossName != PlayState.GetText("boss_gigaSnail") && currentBossName != PlayState.GetText("boss_gigaSnail_rush"))
             {
                 areaText.SetText(currentBossName);
                 radarText.SetText("");
@@ -298,13 +299,15 @@ public class GlobalFunctions : MonoBehaviour
             }
             else if (!PlayState.inBossFight && currentBossName != "")
             {
-                if (currentBossName != PlayState.GetText("boss_moonSnail"))
+                if (currentBossName != PlayState.GetText("boss_moonSnail") && currentBossName != PlayState.GetText("boss_moonSnail_rush"))
                 {
                     if (displayDefeatText)
                     {
                         string thisBossName = currentBossName;
                         if (thisBossName == PlayState.GetText("boss_gigaSnail"))
                             thisBossName = PlayState.GetText("boss_moonSnail");
+                        if (thisBossName == PlayState.GetText("boss_gigaSnail_rush"))
+                            thisBossName = PlayState.GetText("boss_moonSnail_rush");
                         areaText.SetText(string.Format(PlayState.GetText("boss_defeated"), thisBossName));
                         areaTextTimer = 0;
                     }
@@ -1229,7 +1232,8 @@ public class GlobalFunctions : MonoBehaviour
                 case 2: // Shoot once and jump
                     preGravJumpFrames++;
                     Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
-                    if (PlayState.player.transform.position.y - itemOrigin.y > 3f)
+                    //if (PlayState.player.transform.position.y - itemOrigin.y > 3f)
+                    if (PlayState.playerScript.velocity.y < 0)
                     {
                         step++;
                         stepElapsed = 0;
@@ -1346,5 +1350,246 @@ public class GlobalFunctions : MonoBehaviour
         if (matched)
             cheatInputs = new KeyCode[cheatInputs.Length];
         return matched;
+    }
+
+    public void RunBossRushResults()
+    {
+        StartCoroutine(nameof(BossRushResults));
+    }
+
+    public IEnumerator BossRushResults()
+    {
+        int state = 0;
+        float stateTime = 0;
+        string charName = PlayState.currentProfile.character;
+        PlayState.TimeIndeces thisTime = charName switch
+        {
+            "Sluggy" => PlayState.TimeIndeces.sluggyRush,
+            "Upside" => PlayState.TimeIndeces.upsideRush,
+            "Leggy" => PlayState.TimeIndeces.leggyRush,
+            "Blobby" => PlayState.TimeIndeces.blobbyRush,
+            "Leechy" => PlayState.TimeIndeces.leechyRush,
+            _ => PlayState.TimeIndeces.snailyRush
+        };
+        bool isFirstTime = !PlayState.generalData.achievements[(int)AchievementPanel.Achievements.BossRush];
+        PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BossRush);
+        bool isNewTime = (PlayState.CompareTimes(PlayState.currentProfile.gameTime, new float[] { 0, 0, 0 }) == 1 &&
+            PlayState.CompareTimes(PlayState.currentProfile.gameTime, thisTime) == -1) || (PlayState.CompareTimes(thisTime, new float[] { 0, 0, 0 }) == 0);
+
+        Transform endingParent = GameObject.Find("View/Boss Rush Ending Parent").transform;
+
+        GameObject endingBg = new("Ending Background");
+        SpriteRenderer bgSprite = endingBg.AddComponent<SpriteRenderer>();
+        AnimationModule bgAnim = endingBg.AddComponent<AnimationModule>();
+        bgSprite.color = new Color(1, 1, 1, 0);
+        bgSprite.sortingOrder = -5;
+        bgAnim.Add("Ending_background");
+        bgAnim.Play("Ending_background");
+        GameObject endingPic = new("Ending Background");
+        SpriteRenderer picSprite = endingPic.AddComponent<SpriteRenderer>();
+        AnimationModule picAnim = endingPic.AddComponent<AnimationModule>();
+        picSprite.color = new Color(1, 1, 1, 0);
+        picSprite.sortingOrder = -4;
+        picAnim.Add("Ending_bossRush");
+        picAnim.Play("Ending_bossRush");
+
+        GameObject textObj = Resources.Load<GameObject>("Objects/Text Object");
+        TextObject header = Instantiate(textObj).GetComponent<TextObject>();
+        header.SetAlignment("center");
+        header.CreateBoth();
+        header.SetText("");
+        TextObject timeStats = Instantiate(textObj).GetComponent<TextObject>();
+        timeStats.SetSize(1);
+        timeStats.CreateOutline();
+        timeStats.SetText("");
+        TextObject itemStats = Instantiate(textObj).GetComponent<TextObject>();
+        itemStats.SetSize(1);
+        itemStats.SetAlignment("right");
+        itemStats.CreateOutline();
+        itemStats.SetText("");
+
+        List<Transform> itemSprites = new();
+        for (int i = 0; i < PlayState.currentProfile.items.Length; i++)
+        {
+            if (PlayState.currentProfile.items[i] == 1)
+            {
+                GameObject newItemSprite = new("Item sprite " + (i + 1));
+                newItemSprite.AddComponent<SpriteRenderer>();
+                AnimationModule itemAnim = newItemSprite.AddComponent<AnimationModule>();
+
+                string animName = i switch
+                {
+                    0 => "Item_peashooter",
+                    1 or 11 => "Item_boomerang",
+                    2 or 12 => "Item_rainbowWave",
+                    3 => "Item_devastator",
+                    4 => charName switch { "Blobby" => "Item_wallGrab", _ => "Item_highJump" },
+                    5 => charName switch { "Blobby" => "Item_shelmet", _ => "Item_shellShield" },
+                    6 => charName switch { "Leechy" => "Item_backfire", _ => "Item_rapidFire" },
+                    7 => "Item_iceSnail",
+                    8 => charName switch { "Upside" => "Item_magneticFoot", "Leggy" => "Item_corkscrewJump", "Blobby" => "Item_angelJump", _ => "Item_gravitySnail" },
+                    9 => "Item_fullMetalSnail",
+                    10 => "Item_gravityShock",
+                    _ => "Item_heartContainer"
+                };
+                itemAnim.Add(animName);
+                itemAnim.Play(animName);
+                itemSprites.Add(newItemSprite.transform);
+            }
+        }
+
+        while (state < 5)
+        {
+            switch (state)
+            {
+                default:
+                case 0: // Setup
+                    endingBg.transform.parent = endingParent;
+                    endingBg.transform.localPosition = new Vector2(26, 2);
+                    endingPic.transform.parent = endingParent;
+                    endingPic.transform.localPosition = new Vector2(-26, 2);
+                    header.transform.parent = endingParent;
+                    header.position = new Vector2(0, 2);
+                    timeStats.transform.parent = endingParent;
+                    timeStats.position = new Vector2(-26, 0);
+                    itemStats.transform.parent = endingParent;
+                    itemStats.position = new Vector2(26, 0);
+                    for (int i = 0; i < itemSprites.Count; i++)
+                    {
+                        itemSprites[i].transform.parent = endingParent;
+                        itemSprites[i].transform.localPosition = new Vector2(-10.75f + (i * 2.075f), -15);
+                    }
+
+                    header.SetText(string.Format(PlayState.GetText("ending_rush_header" + (isFirstTime ? "_unlockChars" : (isNewTime ? "_newBest" : ""))),
+                        PlayState.GetText("char_" + charName.ToLower()), PlayState.GetTimeString()));
+                    header.SetColor(new Color(1, 1, 1, 0));
+
+                    string compiledTimeData = "";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        float baseTime;
+                        string bossName;
+                        switch (i)
+                        {
+                            default:
+                            case 0:
+                                baseTime = PlayState.activeRushData.ssbTime;
+                                bossName = PlayState.GetText("boss_shellbreaker_rush");
+                                break;
+                            case 1:
+                                baseTime = PlayState.activeRushData.visTime;
+                                bossName = PlayState.GetText("boss_stompy_rush");
+                                break;
+                            case 2:
+                                baseTime = PlayState.activeRushData.cubeTime;
+                                bossName = PlayState.GetText("boss_spaceBox_rush");
+                                break;
+                            case 3:
+                                baseTime = PlayState.activeRushData.sunTime;
+                                bossName = PlayState.GetText("boss_moonSnail_rush");
+                                break;
+                            case 4:
+                                baseTime = PlayState.activeRushData.gigaTime;
+                                bossName = PlayState.GetText("boss_gigaSnail_rush");
+                                break;
+                        }
+                        float[] newTime = new float[] { 0, 0, baseTime };
+                        while (newTime[2] >= 3600)
+                        {
+                            newTime[2] -= 3600;
+                            newTime[0]++;
+                        }
+                        while (newTime[2] >= 60)
+                        {
+                            newTime[2] -= 60;
+                            newTime[1]++;
+                        }
+                        compiledTimeData += string.Format("{0} - {1}\n", bossName, PlayState.GetTimeString(newTime));
+                    }
+                    timeStats.SetText(compiledTimeData);
+
+                    string compiledItemData = "";
+                    if (PlayState.CheckForItem("Peashooter"))
+                        compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_peashooter"), PlayState.activeRushData.peasFired) + "\n";
+                    if (PlayState.CheckForItem("Boomerang"))
+                        compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_boomerang"), PlayState.activeRushData.boomsFired) + "\n";
+                    if (PlayState.CheckForItem("Rainbow Wave"))
+                        compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_rainbowWave"), PlayState.activeRushData.wavesFired) + "\n";
+                    if (PlayState.CheckForItem("Gravity Shock"))
+                        compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_gravityShock"), PlayState.activeRushData.shocksFired) + "\n";
+                    if (PlayState.CheckForItem("Shell Shield"))
+                        compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_shellShield"), PlayState.activeRushData.parries) + "\n";
+                    compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_health"), PlayState.activeRushData.healthLost);
+                    itemStats.SetText(compiledItemData);
+
+                    stateTime = 0;
+                    state = 1;
+                    break;
+                case 1: // Fade header
+                    float newVal = Mathf.Clamp(stateTime - 1.25f, 0f, 1f);
+                    header.SetColor(new Color(1, 1, 1, newVal));
+                    if (stateTime > 2.5f)
+                    {
+                        header.SetColor(new Color(1, 1, 1, 1));
+                        stateTime = 0;
+                        state = 2;
+                    }
+                    break;
+                case 2: // Fade ending pic
+                    float layerX = Mathf.Clamp(30f - (stateTime * 10f), 0, Mathf.Infinity);
+                    endingBg.transform.localPosition = layerX * PlayState.FRAC_16 * Vector3.right;
+                    endingPic.transform.localPosition = layerX * PlayState.FRAC_16 * Vector3.left;
+                    bgSprite.color = new Color(1, 1, 1, stateTime * 0.35f);
+                    picSprite.color = new Color(1, 1, 1, stateTime * 0.35f);
+                    if (stateTime > 3.5f)
+                    {
+                        PlayState.paralyzed = true;
+                        stateTime = 0;
+                        state = 3;
+                    }
+                    break;
+                case 3: // Summon stats and await input
+                    float lerpScale = 6;
+                    header.position.y = Mathf.Lerp(header.position.y, 5f, lerpScale * Time.deltaTime);
+                    timeStats.position.x = Mathf.Lerp(timeStats.position.x, -11f, lerpScale * Time.deltaTime);
+                    itemStats.position.x = Mathf.Lerp(itemStats.position.x, 11f, lerpScale * Time.deltaTime);
+                    for (int i = 0; i < itemSprites.Count; i++)
+                    {
+                        if (stateTime > i * 0.125f)
+                            itemSprites[i].localPosition = new Vector2(itemSprites[i].localPosition.x, Mathf.Lerp(itemSprites[i].localPosition.y,
+                                -5, lerpScale * Time.deltaTime));
+                    }
+                    if (stateTime > 1f)
+                    {
+                        if (Control.JumpHold(0, true, true) || Control.Pause(true, true))
+                        {
+                            PlayState.PlaySound("MenuBeep2");
+                            PlayState.globalFunctions.ExecuteCoverCommand("Custom Fade", 0, 0, 0, 255, 2);
+                            if (isNewTime)
+                            {
+                                PlayState.SetTime(thisTime, PlayState.currentProfile.gameTime);
+                                PlayState.WriteSave(0, true);
+                            }
+                            stateTime = 0;
+                            state = 4;
+                        }
+                    }
+                    break;
+                case 4: // Fade back to menu
+                    PlayState.fader = Mathf.InverseLerp(2, 0, stateTime);
+                    if (stateTime > 2.5f)
+                    {
+                        PlayState.fader = 1;
+                        for (int i = endingParent.childCount - 1; i >= 0; i--)
+                            Destroy(endingParent.GetChild(i).gameObject);
+                        PlayState.ToggleHUD(false);
+                        PlayState.mainMenu.MenuOutOfBossRush();
+                        state = 5;
+                    }
+                    break;
+            }
+            stateTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

@@ -133,8 +133,8 @@ public class Bullet : MonoBehaviour
         else
         {
             transform.position = new Vector2(
-                player.transform.position.x + player.GetComponent<Player>().box.offset.x,
-                player.transform.position.y + player.GetComponent<Player>().box.offset.y) + PlayState.playerScript.gravityDir switch
+                player.transform.position.x + PlayState.playerScript.box.offset.x,
+                player.transform.position.y + PlayState.playerScript.box.offset.y) + PlayState.playerScript.gravityDir switch
                 {
                     Player.Dirs.WallL => new Vector2(-0.0625f, 0),
                     Player.Dirs.WallR => new Vector2(0.0625f, 0),

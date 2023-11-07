@@ -565,7 +565,7 @@ public class Control
     // 16 -- Map          17 -- Pause
     public static int ActionIDToSpriteID(int action)
     {
-        int output = 0;
+        int output;
         Keyboard[] keyActions = new Keyboard[] { Keyboard.Up1, Keyboard.Down1, Keyboard.Left1, Keyboard.Right1, Keyboard.Up2, Keyboard.Down2, Keyboard.Left2,
             Keyboard.Right2, Keyboard.Jump1, Keyboard.Shoot1, Keyboard.Strafe1, Keyboard.Weapon1, Keyboard.Weapon2, Keyboard.Weapon3, Keyboard.NextWeapon,
             Keyboard.PrevWeapon, Keyboard.Map, Keyboard.Pause };

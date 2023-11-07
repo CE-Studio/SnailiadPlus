@@ -512,6 +512,38 @@ public class PlayState {
         BossRush
     }
 
+    public struct BossRushData
+    {
+        public float ssbTime;
+        public float visTime;
+        public float cubeTime;
+        public float sunTime;
+        public float gigaTime;
+        public int peasFired;
+        public int boomsFired;
+        public int wavesFired;
+        public int parries;
+        public int shocksFired;
+        public int healthLost;
+    }
+
+    public static readonly BossRushData defaultRushData = new()
+    {
+        ssbTime = 0,
+        visTime = 0,
+        cubeTime = 0,
+        sunTime = 0,
+        gigaTime = 0,
+        peasFired = 0,
+        boomsFired = 0,
+        wavesFired = 0,
+        parries = 0,
+        shocksFired = 0,
+        healthLost = 0
+    };
+
+    public static BossRushData activeRushData;
+
     public static Sprite BlankTexture(bool useSmallBlank = false) {
         return useSmallBlank ? globalFunctions.blankSmall : globalFunctions.blank;
     }
@@ -1092,6 +1124,24 @@ public class PlayState {
                         particleScript.vars[0] = position.y;
                     }
                     break;
+                case "parry":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                        activateParticle = true;
+                    break;
+                case "rushgigatrail":
+                    // Values:
+                    // 0 = sprite ID
+                    // 1 = flip sprite X
+                    // 2 = flip sprite Y
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];
+                        particleScript.vars[1] = values[1];
+                        particleScript.vars[2] = values[2];
+                    }
+                    break;
                 case "shield":
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
@@ -1258,14 +1308,22 @@ public class PlayState {
 
     public static void SetPlayer(string newPlayer)
     {
-        playerScript.GetComponent<Snaily>().enabled = newPlayer == "Snaily";
-        playerScript.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
-        //playerScript.GetComponent<Upside>().enabled = newPlayer == "Upside";
-        //playerScript.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
-        //playerScript.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
-        //playerScript.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
+        player.GetComponent<Snaily>().enabled = newPlayer == "Snaily";
+        player.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
+        //player.GetComponent<Upside>().enabled = newPlayer == "Upside";
+        //player.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
+        //player.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
+        //player.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
         currentProfile.character = newPlayer;
-        playerScript = player.GetComponent<Player>();
+        playerScript = newPlayer switch
+        {
+            "Sluggy" => player.GetComponent<Sluggy>(),
+            //"Upside" => player.GetComponent<Upside>(),
+            //"Leggy" => player.GetComponent<Leggy>(),
+            //"Blobby" => player.GetComponent<Blobby>(),
+            //"Leechy" => player.GetComponent<Leechy>(),
+            _ => player.GetComponent<Snaily>()
+        };
     }
 
     public static void AddItem(int itemID) {
@@ -2076,7 +2134,8 @@ public class PlayState {
                 TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = false;
                 TogglableHUDElements[12].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
                 globalFunctions.displayDefeatText = false;
-                globalFunctions.RemoveGigaBackgroundLayers();
+                if (!isInBossRush)
+                    globalFunctions.RemoveGigaBackgroundLayers();
             }
             else
             {

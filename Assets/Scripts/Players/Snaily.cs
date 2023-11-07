@@ -5,9 +5,9 @@ using UnityEngine;
 public class Snaily : Player
 {
     // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
-    public override void Start()
+    public override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
 
         defaultGravityDir = Dirs.Floor;
         canJump = new int[][] { new int[] { -1 } };
@@ -42,6 +42,7 @@ public class Snaily : Player
         gravShockChargeMult = 0.5f;
         gravShockSpeed = 40.0f;
         gravShockSteering = 2.5f;
+        healthGainFromParry = 4;
 
         int[] tempData = PlayState.GetAnim("Player_Snaily_data").frames;
         animData = new bool[tempData.Length];
@@ -50,6 +51,7 @@ public class Snaily : Player
 
         PlayState.currentProfile.character = "Snaily";
 
+        anim.ClearList();
         string[] animDirections = new string[] { "floor_right", "floor_left", "ceiling_right", "ceiling_left", "wallR_down", "wallR_up", "wallL_down", "wallL_up" };
         string[] animStates = new string[] { "idle", "move", "shell", "air", "shock" };
         for (int i = 0; i <= 3; i++)
@@ -63,6 +65,8 @@ public class Snaily : Player
             }
             anim.Add("Player_Snaily" + i + "_die");
         }
+
+        PlayState.SetCamFocus(camFocus);
     }
 
     public override void IdleAnim()
@@ -75,6 +79,9 @@ public class Snaily : Player
     // LateUpdate() is called after everything else a frame needs has been handled. Here, it's used for animations
     public override void LateUpdate()
     {
+        if (PlayState.gameState != PlayState.GameState.game)
+            return;
+
         /*\
          *   ANIMATION DATA VALUES
          * 0 - Update animation on move

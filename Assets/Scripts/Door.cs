@@ -107,7 +107,7 @@ public class Door:MonoBehaviour, IRoomObject
             sprite.flipX = true;
         }
 
-        if (bossLock == 3)
+        if (bossLock == 3 && !PlayState.isInBossRush)
             bossUnlockDelay += 9f;
     }
 

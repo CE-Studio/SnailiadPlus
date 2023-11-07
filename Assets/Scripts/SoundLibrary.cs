@@ -40,6 +40,7 @@ public class SoundLibrary : ScriptableObject
         "Jump",
         "MenuBeep1",
         "MenuBeep2",
+        "Parry",
         "Ping",
         "Save",
         "Shell",

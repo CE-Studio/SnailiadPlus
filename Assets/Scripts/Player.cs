@@ -60,6 +60,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     private Bullet gravShockBullet;
     private Particle gravShockCharge;
     private Particle gravShockBody;
+    private float timeSinceShell = 0;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -115,6 +116,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float gravShockChargeMult; // ----------------------------- A fractional multiplier applied to Gravity Shock's charge time when Rapid Fire has been acquired
     public float gravShockSpeed; // ---------------------------------- How fast Gravity Shock travels
     public float gravShockSteering; // ------------------------------- How fast Gravity Shock can be steered perpendicular to its fire direction
+    public int healthGainFromParry; // ------------------------------- How much health you recover from a Perfect Parry
     #endregion vars
 
     #region cutscene
@@ -166,8 +168,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
     #endregion cutscene
 
-    // Start() is called at the very beginning of the script's lifetime. It's used to initialize certain variables and states for components to be in.
-    public virtual void Start()
+    // OnEnable() is called every time this script instance is activated. It's used here to initialize certain variables and states for components to be in.
+    public virtual void OnEnable()
     {
         // All this does is set Snaily's components to simpler variables that can be more easily called
         anim = GetComponent<AnimationModule>();
@@ -179,10 +181,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
-
-        PlayState.globalFunctions.RunDebugKeys();
-
-        PlayState.globalFunctions.UpdateMusic(-1, -1, 3);
 
         shellShieldEffectOffset = PlayState.GetAnim("Shield_data").frames;
 
@@ -292,6 +290,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     shieldEffect = null;
             }
+
+            // Speaking of shields...
+            if (shelled)
+                timeSinceShell += Time.deltaTime;
         }
     }
 
@@ -2068,6 +2070,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 box.offset = new Vector2(hitboxOffset_normal.x * (facingLeft ? -1 : 1), hitboxOffset_normal.y * (facingDown ? -1 : 1));
                 box.size = hitboxSize_normal;
             }
+            timeSinceShell = 0;
         }
         else
         {
@@ -2221,6 +2224,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     8 => "ShockLaunch",
                     _ => "ShotRainbow"
                 });
+                if (PlayState.isInBossRush)
+                {
+                    switch (type)
+                    {
+                        case 1: case 4: PlayState.activeRushData.peasFired++; break;
+                        case 2: case 5: PlayState.activeRushData.boomsFired++; break;
+                        case 3: case 6: PlayState.activeRushData.wavesFired++; break;
+                        case 7: case 8: PlayState.activeRushData.shocksFired++; break;
+                    }
+                }
                 return thisBullet;
             }
         }
@@ -2293,22 +2306,40 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             if (PlayState.CheckForItem("Full-Metal Snail"))
                 damage = Mathf.FloorToInt(damage * 0.5f);
+            if (shelled && PlayState.CheckForItem("Shell Shield"))
+            {
+                if (timeSinceShell <= 0.05f)
+                {
+                    health = Mathf.Clamp(health + healthGainFromParry, 0, maxHealth);
+                    PlayState.globalFunctions.UpdateHearts();
+                    PlayState.PlaySound("Parry");
+                    PlayState.RequestParticle(transform.position, "parry");
+                }
+                else
+                    PlayState.PlaySound("Ping");
+                if (PlayState.isInBossRush)
+                    PlayState.activeRushData.parries++;
+                damage = 0;
+            }
             if (health - damage <= 0)
                 StartCoroutine(nameof(DieAndRespawn));
             else
+            {
+                stunned = true;
                 StartCoroutine(StunTimer(damage));
+            }
         }
     }
 
     public IEnumerator StunTimer(int damage)
     {
-        if (shelled && PlayState.CheckForItem("Shell Shield"))
-            PlayState.PlaySound("Ping");
-        else
+        if (damage > 0)
         {
             health = Mathf.RoundToInt(Mathf.Clamp(health - damage, 0, Mathf.Infinity));
             PlayState.globalFunctions.UpdateHearts();
             PlayState.PlaySound("Hurt");
+            if (PlayState.isInBossRush)
+                PlayState.activeRushData.healthLost += damage;
         }
         if (shelled)
             ToggleShell();
@@ -2322,7 +2353,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 gravShockCharge = null;
             }
         }
-        stunned = true;
         if (!CheckAbility(stickToWallsWhenHurt))
             CorrectGravity(true, false);
         float timer = 0;

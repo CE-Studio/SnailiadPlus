@@ -743,6 +743,16 @@
 			"height": 4
 		},
 		{
+			"name": "Particles/Parry",
+			"width": 32,
+			"height": 32
+		},
+		{
+            "name": "Particles/RushGigaTrail",
+            "width": 48,
+            "height": 48
+        },
+		{
             "name": "Particles/Shield",
             "width": 32,
             "height": 32

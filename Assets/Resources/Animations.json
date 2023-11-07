@@ -23187,6 +23187,47 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "Parry",
+			"spriteName": "Particles/Parry",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				8,
+				8,
+				8,
+				8,
+				8,
+				8,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
         {
             "name": "Shield",
 			"spriteName": "Particles/Shield",
@@ -25572,6 +25613,67 @@
 			"frames": [
 				0,
 				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Sluggy",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				48,
+				49
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Upside",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				80,
+				81
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Leggy",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				128,
+				129,
+				128,
+				130
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Blobby",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				176
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Title_selector_Leechy",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				220,
+				221
 			],
 			"loop": true,
 			"loopStartFrame": 0,

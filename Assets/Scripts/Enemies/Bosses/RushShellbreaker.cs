@@ -89,6 +89,8 @@ public class RushShellbreaker : Boss
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
+        PlayState.activeRushData.ssbTime += Time.deltaTime;
+
         lifeState = health <= maxHealth * 0.3333f ? 3 : (health <= maxHealth * 0.6667f ? 2 : 1);
         shotMax = lifeState == 3 ? 44 : (lifeState == 2 ? 17 : 8);
         turboMultiplier = lifeState == 3 ? 0.19f : (lifeState == 2 ? 0.28f : 0.6f);

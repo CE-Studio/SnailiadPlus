@@ -169,6 +169,8 @@ public class TextureLibrary : ScriptableObject
         "Particles/GigaTrail",
         "Particles/IntroBGPatterns",
         "Particles/Nom",
+        "Particles/Parry",
+        "Particles/RushGigaTrail",
         "Particles/Shield",
         "Particles/ShockChar",
         "Particles/ShockCharge",

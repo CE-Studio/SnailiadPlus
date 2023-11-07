@@ -33,7 +33,7 @@ public class EnemyBullet : MonoBehaviour
     public AnimationModule anim;
     public BoxCollider2D box;
 
-    public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave, gigaWave }
+    public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave, gigaWave, lightWave }
     
     void Start()
     {
@@ -48,6 +48,7 @@ public class EnemyBullet : MonoBehaviour
             anim.Add("Bullet_enemy_boomerang1_" + dir);
             anim.Add("Bullet_enemy_boomerang2_" + dir);
             anim.Add("Bullet_enemy_donut_linear_" + dir);
+            anim.Add("Bullet_enemy_lightWave_" + dir);
             anim.Add("Bullet_enemy_spikeball_" + dir);
             anim.Add("Bullet_enemy_shadowWave_" + dir);
         }
@@ -138,6 +139,11 @@ public class EnemyBullet : MonoBehaviour
                     speed += initialSpeed * 18f * Time.fixedDeltaTime;
                     break;
                 case BulletType.gigaWave:
+                    transform.position = new Vector2(transform.position.x + (direction.x * speed),
+                        transform.position.y + (direction.y * speed));
+                    speed += initialSpeed * 18f * Time.fixedDeltaTime;
+                    break;
+                case BulletType.lightWave:
                     transform.position = new Vector2(transform.position.x + (direction.x * speed),
                         transform.position.y + (direction.y * speed));
                     speed += initialSpeed * 18f * Time.fixedDeltaTime;
@@ -284,7 +290,7 @@ public class EnemyBullet : MonoBehaviour
                 break;
             case BulletType.gigaWave:
                 anim.Play("Bullet_enemy_gigaWave_" + PlayState.VectorToCardinal(new Vector2(dirVelVars[1], dirVelVars[2])));
-                damage = 12;
+                damage = PlayState.isInBossRush ? 6 : 12;
                 maxLifetime = 2f;
                 box.size = new Vector2(2f, 5.9f);
                 speed = dirVelVars[0];
@@ -294,6 +300,20 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotEnemyGigaWave";
                 SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 2;
+                break;
+            case BulletType.lightWave:
+                anim.Play("Bullet_enemy_lightWave_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
+                damage = 2;
+                maxLifetime = 2f;
+                box.size = new Vector2(2.4f, 2.4f);
+                speed = dirVelVars[0];
+                direction = new Vector2(dirVelVars[1], dirVelVars[2]);
+                despawnOffscreen = true;
+                if (playSound)
+                    soundID = "ShotRainbowDev";
+                SetDestroyableLevels("1111110000", false);
+                SetDestroyableLevels("1111110000", true);
+                bulletInteraction = 0;
                 break;
         }
         initialSpeed = speed;

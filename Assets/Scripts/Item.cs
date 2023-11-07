@@ -294,12 +294,8 @@ public class Item:MonoBehaviour, IRoomObject {
         }
     }
 
-    public void FlashItemText() {
-        //string itemName = IDToName();
-        //if (itemID >= PlayState.OFFSET_FRAGMENTS)
-        //    itemName = string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString());
-        //else if (itemID >= PlayState.OFFSET_HEARTS)
-        //    itemName = string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString());
+    public void FlashItemText()
+    {
         PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.item, IDToName());
     }
 

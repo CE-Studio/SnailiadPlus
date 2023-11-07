@@ -342,8 +342,6 @@ public class RoomTrigger : MonoBehaviour
                         newRoomName += character;
                 }
             }
-            //PlayState.hudRoomName.SetText((PlayState.currentArea != (int)PlayState.Areas.ShrineOfIris ||
-            //    PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 1) ? newRoomName : "");
             if (PlayState.currentArea == (int)PlayState.Areas.ShrineOfIris && PlayState.currentSubzone == 1 && PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1)
                 newRoomName = "";
             PlayState.hudRoomName.SetText(newRoomName);
@@ -370,6 +368,24 @@ public class RoomTrigger : MonoBehaviour
                         AchievementPanel.Achievements thisAchievement =
                             (AchievementPanel.Achievements)System.Enum.Parse(typeof(AchievementPanel.Achievements), command[1]);
                         PlayState.QueueAchievementPopup(thisAchievement);
+                        break;
+                    case "resetbossrush":
+                        if (areaID == (int)PlayState.Areas.BossRush && PlayState.isInBossRush)
+                        {
+                            for (int j = 0; j < PlayState.currentProfile.bossStates.Length; j++)
+                                PlayState.currentProfile.bossStates[j] = 1;
+                            for (int j = 0; j < PlayState.currentProfile.gameTime.Length; j++)
+                                PlayState.currentProfile.gameTime[j] = 0;
+                            PlayState.incrementRushTimer = false;
+                            PlayState.hudRushTime.SetText("");
+                            PlayState.activeRushData = PlayState.defaultRushData;
+                            PlayState.globalFunctions.RemoveGigaBackgroundLayers();
+                        }
+                        break;
+                    case "endbossrush":
+                        PlayState.player.transform.position += 2f * (PlayState.playerScript.facingLeft ? Vector3.left : Vector3.right);
+                        PlayState.suppressPause = true;
+                        PlayState.globalFunctions.RunBossRushResults();
                         break;
                 }
             }

@@ -4231,6 +4231,51 @@
 			"value": 0
 		},
 		{
+			"name": "ending_rush_header",
+			"text": "Boss rush complete!!\n{0} - {1}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_header_unlockChars",
+			"text": "Boss rush complete!!\n{0} - {1}\n(Character select unlocked!)",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_header_newBest",
+			"text": "Boss rush complete!!\n{0} - {1}\n(New best time!)",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_peashooter",
+			"text": "Peas shot - {0}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_boomerang",
+			"text": "Boomerangs tossed - {0}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_rainbowWave",
+			"text": "Rainbows fired - {0}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_shellShield",
+			"text": "Successful shields - {0}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_gravityShock",
+			"text": "Shocks Charged - {0}",
+			"value": 0
+		},
+		{
+			"name": "ending_rush_stats_health",
+			"text": "Health lost - {0}",
+			"value": 0
+		},
+		{
 			"name": "ending_promptOverwrite",
 			"text": "Would you like to overwrite\nyour previous best of\n{0} (from ver. {1})?",
 			"value": 0

@@ -65,6 +65,7 @@ public class Particle : MonoBehaviour
         anim.Add("IntroPattern_7");
         anim.Add("IntroPattern_8");
         anim.Add("Nom");
+        anim.Add("Parry");
         anim.Add("Shield");
         anim.Add("Smoke");
         anim.Add("Snow1");
@@ -219,6 +220,11 @@ public class Particle : MonoBehaviour
                         internalVars[0] += Time.deltaTime;
                         transform.position = new(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
                         break;
+                    case "rushgigatrail":
+                        sprite.color = new Color(1, 1, 1, sprite.color.a - Time.deltaTime * 2f);
+                        if (sprite.color.a <= 0)
+                            ResetParticle();
+                        break;
                     case "shockcharmain":
                         PlayState.RequestParticle(transform.position, "shockcharsub", new float[] { vars[0], vars[1], vars[2], anim.GetCurrentFrameValue() });
                         break;
@@ -338,7 +344,7 @@ public class Particle : MonoBehaviour
                         break;
                 }
 
-                if (!anim.isPlaying && isActive && !(type == "bubble" || type == "gigatrail"))
+                if (!anim.isPlaying && isActive && !(type == "bubble" || type == "gigatrail" || type == "rushgigatrail"))
                     ResetParticle();
             }
         }
@@ -392,6 +398,12 @@ public class Particle : MonoBehaviour
                 break;
             case "nom":
                 anim.Play("Nom");
+                break;
+            case "parry":
+                anim.Play("Parry");
+                break;
+            case "rushgigatrail":
+                sprite.sprite = PlayState.GetSprite("Particles/RushGigaTrail", (int)vars[0]);
                 break;
             case "shield":
                 anim.Play("Shield");
@@ -453,9 +465,11 @@ public class Particle : MonoBehaviour
             "gigastar" => -96,
             "gigatrail" => -51,
             "intropattern" => 1002,
+            "rushgigatrail" => -51,
             "shocklaunch" => -10,
             "shockcharsub" => -14,
             "sparkle" => 10,
+            "parry" => -45,
             _ => -15
         };
         sprite.color = animType switch

@@ -34,15 +34,15 @@ public class TextObjectUtilities : Editor
         GUILayout.Space(10);
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear Formatting"))
-            script.ClearChildText();
+            script.EditorClearChildText();
         if (GUILayout.Button("Add Shadow"))
-            script.CreateShadow();
+            script.EditorCreateShadow();
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Outline"))
-            script.CreateOutline();
+            script.EditorCreateOutline();
         if (GUILayout.Button("Add Both"))
-            script.CreateBoth();
+            script.EditorCreateBoth();
         GUILayout.EndHorizontal();
 
         GUILayout.Space(10);

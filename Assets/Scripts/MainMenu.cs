@@ -203,16 +203,24 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Selection Pointer/Left Snaily"),
             GameObject.Find("Selection Pointer/Right Snaily")
         };
-        selector[1].GetComponent<AnimationModule>().pauseOnMenu = false;
-        selector[2].GetComponent<AnimationModule>().pauseOnMenu = false;
-        selector[1].GetComponent<AnimationModule>().Add("Title_selector_Snaily");
-        selector[2].GetComponent<AnimationModule>().Add("Title_selector_Snaily");
-        selector[1].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
-        selector[2].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
+        for (int i = 0; i < 2; i++)
+        {
+            AnimationModule thisSelectAnim = selector[i + 1].GetComponent<AnimationModule>();
+            thisSelectAnim.pauseOnMenu = false;
+            thisSelectAnim.Add("Title_selector_Snaily");
+            thisSelectAnim.Add("Title_selector_Sluggy");
+            thisSelectAnim.Add("Title_selector_Upside");
+            thisSelectAnim.Add("Title_selector_Leggy");
+            thisSelectAnim.Add("Title_selector_Blobby");
+            thisSelectAnim.Add("Title_selector_Leechy");
+            thisSelectAnim.Play("Title_selector_Snaily");
+        }
 
         PlayState.AssignProperCollectibleIDs();
         PlayState.BuildMapMarkerArrays();
         PlayState.credits.BuildEntityRollCall();
+        PlayState.globalFunctions.RunDebugKeys();
+        PlayState.globalFunctions.UpdateMusic(-1, -1, 3);
 
         foreach (Transform area in PlayState.roomTriggerParent.transform)
         {
@@ -534,26 +542,56 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                     case "character":
-                        TestForArrowAdjust(option, 1, 5);
+                        bool swapChar = TestForArrowAdjust(option, 1, 1);
                         switch (menuVarFlags[1])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("char_snaily"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
+                                }
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("char_sluggy"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Sluggy");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Sluggy");
+                                }
                                 break;
                             case 2:
                                 AddToOptionText(option, PlayState.GetText("char_upside"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Upside");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Upside");
+                                }
                                 break;
                             case 3:
                                 AddToOptionText(option, PlayState.GetText("char_leggy"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Leggy");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Leggy");
+                                }
                                 break;
                             case 4:
                                 AddToOptionText(option, PlayState.GetText("char_blobby"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Blobby");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Blobby");
+                                }
                                 break;
                             case 5:
                                 AddToOptionText(option, PlayState.GetText("char_leechy"));
+                                if (swapChar)
+                                {
+                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Leechy");
+                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Leechy");
+                                }
                                 break;
                         }
                         break;
@@ -1122,7 +1160,6 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator RebindKey(int controlID, int keyOrCon)
     {
-        bool bindingController = keyOrCon == 1;
         while (Control.AnyInputDown())
             yield return new WaitForEndOfFrame();
         float timer = 0;
@@ -1134,8 +1171,8 @@ public class MainMenu : MonoBehaviour
             {
                 if (Input.GetKey(key) && (int)key < 330)
                 {
-                        PlayState.generalData.keyboardInputs[controlID] = key;
-                        isRebinding = false;
+                    PlayState.generalData.keyboardInputs[controlID] = key;
+                    isRebinding = false;
                 }
             }
             yield return new WaitForEndOfFrame();
@@ -2087,6 +2124,7 @@ public class MainMenu : MonoBehaviour
         PlayState.isInBossRush = true;
         PlayState.incrementRushTimer = false;
         PlayState.hudRushTime.SetText("");
+        PlayState.currentProfile.saveCoords = PlayState.BOSS_RUSH_SPAWN;
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {
@@ -3007,46 +3045,30 @@ public class MainMenu : MonoBehaviour
         backPage = PageMain;
     }
 
+    private string FormatTime(string character, PlayState.TimeIndeces index)
+    {
+        return string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_" + character),
+            PlayState.GetTimeString(index) + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(index)) == 0 ? "" :
+            " (" + PlayState.GetTimeVersion(index) + ")"));
+    }
+
     public void NormalTimes()
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_normal"), false);
 
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.snailyNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.snailyNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.snailyNormal) + ")"), false);
-
+            AddOption(FormatTime("snaily", PlayState.TimeIndeces.snailyNormal), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.sluggyNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.sluggyNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.sluggyNormal) + ")"), false);
-
+            AddOption(FormatTime("sluggy", PlayState.TimeIndeces.sluggyNormal), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.upsideNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.upsideNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.upsideNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.upsideNormal) + ")"), false);
-
+            AddOption(FormatTime("upside", PlayState.TimeIndeces.upsideNormal), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leggyNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leggyNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.leggyNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.leggyNormal) + ")"), false);
-
+            AddOption(FormatTime("leggy", PlayState.TimeIndeces.leggyNormal), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.blobbyNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.blobbyNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.blobbyNormal) + ")"), false);
-
+            AddOption(FormatTime("blobby", PlayState.TimeIndeces.blobbyNormal), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leechyNormal))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leechyNormal))
-                + (PlayState.CompareVersions(Application.version, PlayState.GetTimeVersion(PlayState.TimeIndeces.leechyNormal)) == 0 ?
-                "" : " (" + PlayState.GetTimeVersion(PlayState.TimeIndeces.leechyNormal) + ")"), false);
+            AddOption(FormatTime("leechy", PlayState.TimeIndeces.leechyNormal), false);
 
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
@@ -3058,24 +3080,20 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_insane"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.snailyInsane)), false);
+            AddOption(FormatTime("snaily", PlayState.TimeIndeces.snailyInsane), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.sluggyInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyInsane)), false);
+            AddOption(FormatTime("sluggy", PlayState.TimeIndeces.sluggyInsane), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.upsideInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.upsideInsane)), false);
+            AddOption(FormatTime("upside", PlayState.TimeIndeces.upsideInsane), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leggyInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leggyInsane)), false);
+            AddOption(FormatTime("leggy", PlayState.TimeIndeces.leggyInsane), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.blobbyInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyInsane)), false);
+            AddOption(FormatTime("blobby", PlayState.TimeIndeces.blobbyInsane), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leechyInsane))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leechyInsane)), false);
+            AddOption(FormatTime("leechy", PlayState.TimeIndeces.leechyInsane), false);
+
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(currentOptions.Count - 1);
@@ -3086,24 +3104,20 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_100"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.snaily100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.snaily100)), false);
+            AddOption(FormatTime("snaily", PlayState.TimeIndeces.snaily100), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.sluggy100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.sluggy100)), false);
+            AddOption(FormatTime("sluggy", PlayState.TimeIndeces.sluggy100), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.upside100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.upside100)), false);
+            AddOption(FormatTime("upside", PlayState.TimeIndeces.upside100), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leggy100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leggy100)), false);
+            AddOption(FormatTime("leggy", PlayState.TimeIndeces.leggy100), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.blobby100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.blobby100)), false);
+            AddOption(FormatTime("blobby", PlayState.TimeIndeces.blobby100), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leechy100))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leechy100)), false);
+            AddOption(FormatTime("leechy", PlayState.TimeIndeces.leechy100), false);
+
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(currentOptions.Count - 1);
@@ -3114,24 +3128,20 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_records_bossRush"), false);
+
         if (PlayState.HasTime(PlayState.TimeIndeces.snailyRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_snaily"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.snailyRush)), false);
+            AddOption(FormatTime("snaily", PlayState.TimeIndeces.snailyRush), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.sluggyRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_sluggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.sluggyRush)), false);
+            AddOption(FormatTime("sluggy", PlayState.TimeIndeces.sluggyRush), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.upsideRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_upside"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.upsideRush)), false);
+            AddOption(FormatTime("upside", PlayState.TimeIndeces.upsideRush), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leggyRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leggy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leggyRush)), false);
+            AddOption(FormatTime("leggy", PlayState.TimeIndeces.leggyRush), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.blobbyRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_blobby"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.blobbyRush)), false);
+            AddOption(FormatTime("blobby", PlayState.TimeIndeces.blobbyRush), false);
         if (PlayState.HasTime(PlayState.TimeIndeces.leechyRush))
-            AddOption(string.Format(PlayState.GetText("menu_option_records_time"), PlayState.GetText("char_leechy"),
-                PlayState.GetTimeString(PlayState.TimeIndeces.leechyRush)), false);
+            AddOption(FormatTime("leechy", PlayState.TimeIndeces.leechyRush), false);
+
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(currentOptions.Count - 1);
@@ -3253,9 +3263,30 @@ public class MainMenu : MonoBehaviour
         ReturnToMenu();
     }
 
+    public void MenuOutOfBossRush()
+    {
+        PlayState.isInBossRush = false;
+        PlayState.isMenuOpen = true;
+        PlayState.ToggleHUD(false);
+        ToggleHUD(true);
+        ReturnToMenu();
+        currentPointInIndex = 0;
+        moveTimer = 0;
+        isMoving = true;
+        int i = 0;
+        while (!currentOptions[i].selectable && i < currentOptions.Count)
+            i++;
+        selectedOption = i;
+        GetNewSnailOffset();
+        selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
+        selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
+        CreateTitle();
+    }
+
     public void ReturnToMenu()
     {
         PlayState.gameState = PlayState.GameState.menu;
+        PlayState.screenCover.sortingOrder = 1001;
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0, 0);
         cam.position = panPoints[0];
         PageMain();

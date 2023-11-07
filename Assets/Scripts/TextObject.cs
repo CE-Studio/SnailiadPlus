@@ -235,7 +235,7 @@ public class TextObject : MonoBehaviour
         {
             GameObject textToDestroy = childText[i].gameObject;
             childText.RemoveAt(i);
-            DestroyImmediate(textToDestroy);
+            Destroy(textToDestroy);
         }
     }
 
@@ -245,7 +245,7 @@ public class TextObject : MonoBehaviour
         {
             GameObject newText = Instantiate(textObj, transform);
             for (int j = newText.transform.childCount - 1; j >= 0; j--)
-                DestroyImmediate(newText.transform.GetChild(j).gameObject);
+                Destroy(newText.transform.GetChild(j).gameObject);
             newText.transform.localPosition = Vector2.zero;
             newText.GetComponent<TextObject>().enabled = false;
             TextMesh newMesh = newText.GetComponent<TextMesh>();
@@ -277,6 +277,61 @@ public class TextObject : MonoBehaviour
     {
         ClearChildText();
         CreateNewChildText(5);
+        childText[0].transform.position += new Vector3(PIXEL * 2, -PIXEL * 2, 0);
+        childText[1].transform.position += PIXEL * Vector3.up;
+        childText[2].transform.position += PIXEL * Vector3.left;
+        childText[3].transform.position += PIXEL * Vector3.down;
+        childText[4].transform.position += PIXEL * Vector3.right;
+    }
+
+    public void EditorClearChildText()
+    {
+        for (int i = childText.Count - 1; i >= 0; i--)
+        {
+            GameObject textToDestroy = childText[i].gameObject;
+            childText.RemoveAt(i);
+            DestroyImmediate(textToDestroy);
+        }
+    }
+
+    public void EditorCreateNewChildText(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject newText = Instantiate(textObj, transform);
+            for (int j = newText.transform.childCount - 1; j >= 0; j--)
+                DestroyImmediate(newText.transform.GetChild(j).gameObject);
+            newText.transform.localPosition = Vector2.zero;
+            newText.GetComponent<TextObject>().enabled = false;
+            TextMesh newMesh = newText.GetComponent<TextMesh>();
+            newMesh.color = Color.black;
+            newMesh.text = thisText.text;
+            newMesh.offsetZ = -1;
+            childText.Add(newMesh);
+        }
+    }
+
+    public void EditorCreateShadow()
+    {
+        EditorClearChildText();
+        EditorCreateNewChildText(1);
+        childText[0].transform.position += new Vector3(PIXEL, -PIXEL, 0);
+    }
+
+    public void EditorCreateOutline()
+    {
+        EditorClearChildText();
+        EditorCreateNewChildText(4);
+        childText[0].transform.position += PIXEL * Vector3.up;
+        childText[1].transform.position += PIXEL * Vector3.left;
+        childText[2].transform.position += PIXEL * Vector3.down;
+        childText[3].transform.position += PIXEL * Vector3.right;
+    }
+
+    public void EditorCreateBoth()
+    {
+        EditorClearChildText();
+        EditorCreateNewChildText(5);
         childText[0].transform.position += new Vector3(PIXEL * 2, -PIXEL * 2, 0);
         childText[1].transform.position += PIXEL * Vector3.up;
         childText[2].transform.position += PIXEL * Vector3.left;

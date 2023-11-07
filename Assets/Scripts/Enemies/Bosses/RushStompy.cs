@@ -258,6 +258,8 @@ public class RushStompy : Boss
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
+        PlayState.activeRushData.visTime += Time.deltaTime;
+
         elapsed += Time.deltaTime * bossSpeed;
         while (elapsed > SEC_PER_TICK)
         {

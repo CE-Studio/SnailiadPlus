@@ -39,6 +39,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1833729db56346849a7ea64a62767286, type: 3}
   - {fileID: 8300000, guid: ec30a91fe2ce9fd4682e5d079900265c, type: 3}
   - {fileID: 8300000, guid: f2ad7dd6c9be5e8499b92c14f1160040, type: 3}
+  - {fileID: 8300000, guid: b95de5da199a94c4296ce53f197a181f, type: 3}
   - {fileID: 8300000, guid: 1b17fadb66cd1624fa7d300f12f36ffd, type: 3}
   - {fileID: 8300000, guid: b91b5ef257a91b6408516552437fb83b, type: 3}
   - {fileID: 8300000, guid: 9e02dacb0ab01b847bee5870ece648e3, type: 3}
@@ -85,6 +86,7 @@ MonoBehaviour:
   - Jump
   - MenuBeep1
   - MenuBeep2
+  - Parry
   - Ping
   - Save
   - Shell

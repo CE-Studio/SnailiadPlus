@@ -181,7 +181,7 @@ public class AnimationModule : MonoBehaviour
 
     public void ReloadList()
     {
-        Dictionary<string, PlayState.AnimationData> newDict = new Dictionary<string, PlayState.AnimationData>();
+        Dictionary<string, PlayState.AnimationData> newDict = new();
         for (int i = 0; i < animList.Count; i++)
         {
             PlayState.AnimationData newAnim = PlayState.GetAnim(listKeys[i]);
@@ -191,6 +191,12 @@ public class AnimationModule : MonoBehaviour
                 newDict.Add(listKeys[i], animList[listKeys[i]]);
         }
         animList = newDict;
+    }
+
+    public void ClearList()
+    {
+        Stop(true);
+        animList = new();
     }
 
     public void SetSpeed(float newSpeed = 1)

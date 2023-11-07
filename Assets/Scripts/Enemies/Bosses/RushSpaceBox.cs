@@ -161,6 +161,8 @@ public class RushSpaceBox : Boss
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
+        PlayState.activeRushData.cubeTime += Time.deltaTime;
+
         if (legacyCutscene && !introMovementsDone)
         {
             if (elapsed > 1.1f && elapsed < 2.5f)
