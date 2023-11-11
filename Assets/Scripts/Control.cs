@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -152,6 +153,7 @@ public class Control
     public static float[] secondsSinceLastDirTap = new float[4];
 
     public static int[] conFrames = new int[defaultControllerInputs.Length];
+    public static List<ControllerBinds> conInputsDownThisPass = new();
 
     public static bool[] virtualKey = new bool[defaultKeyboardInputs.Length];
     public static bool[] virtualCon = new bool[defaultControllerInputs.Length];
@@ -426,9 +428,19 @@ public class Control
         return Input.GetKeyDown(key);
     }
 
-    public static bool AnyInputDown()
+    public static bool AnyKeyDown()
     {
         return Input.anyKey;
+    }
+
+    public static bool AnyButtonDown()
+    {
+        return conInputsDownThisPass.Count > 0;
+    }
+
+    public static bool AnyInputDown()
+    {
+        return AnyKeyDown() || AnyButtonDown();
     }
 
     public static void SetVirtual(Keyboard input, bool state)
@@ -494,46 +506,14 @@ public class Control
     {
         while (true)
         {
+            conInputsDownThisPass.Clear();
             if (PlayState.IsControllerConnected())
             {
                 for (int i = 0; i < controllerInputs.Length; i++)
                 {
-                    InputAction bind = controllerInputs[i] switch
-                    {
-                        ControllerBinds.LStickU => conInput.Controller.StickL,
-                        ControllerBinds.LStickD => conInput.Controller.StickL,
-                        ControllerBinds.LStickL => conInput.Controller.StickL,
-                        ControllerBinds.LStickR => conInput.Controller.StickL,
-                        ControllerBinds.LStickClick => conInput.Controller.StickLClick,
-                        ControllerBinds.RStickU => conInput.Controller.StickR,
-                        ControllerBinds.RStickD => conInput.Controller.StickR,
-                        ControllerBinds.RStickL => conInput.Controller.StickR,
-                        ControllerBinds.RStickR => conInput.Controller.StickR,
-                        ControllerBinds.RStickClick => conInput.Controller.StickRClick,
-                        ControllerBinds.FaceU => conInput.Controller.FaceU,
-                        ControllerBinds.FaceD => conInput.Controller.FaceD,
-                        ControllerBinds.FaceL => conInput.Controller.FaceL,
-                        ControllerBinds.FaceR => conInput.Controller.FaceR,
-                        ControllerBinds.DPadU => conInput.Controller.DPadU,
-                        ControllerBinds.DPadD => conInput.Controller.DPadD,
-                        ControllerBinds.DPadL => conInput.Controller.DPadL,
-                        ControllerBinds.DPadR => conInput.Controller.DPadR,
-                        ControllerBinds.LBumper => conInput.Controller.BumperL,
-                        ControllerBinds.LTrigger => conInput.Controller.TriggerL,
-                        ControllerBinds.RBumper => conInput.Controller.BumperR,
-                        ControllerBinds.RTrigger => conInput.Controller.TriggerR,
-                        ControllerBinds.Start => conInput.Controller.Start,
-                        ControllerBinds.Select => conInput.Controller.Select,
-                        _ => conInput.Controller.FaceD,
-                    };
-                    int thisState = controllerInputs[i] switch
-                    {
-                        ControllerBinds.LStickU or ControllerBinds.RStickU => bind.ReadValue<Vector2>().y > STICK_DEADZONE ? 1 : -1,
-                        ControllerBinds.LStickD or ControllerBinds.RStickD => bind.ReadValue<Vector2>().y < -STICK_DEADZONE ? 1 : -1,
-                        ControllerBinds.LStickL or ControllerBinds.RStickL => bind.ReadValue<Vector2>().x < -STICK_DEADZONE ? 1 : -1,
-                        ControllerBinds.LStickR or ControllerBinds.RStickR => bind.ReadValue<Vector2>().x > STICK_DEADZONE ? 1 : -1,
-                        _ => bind.WasPerformedThisFrame() ? 1 : (bind.WasReleasedThisFrame() ? -1 : 0)
-                    };
+                    int thisState = CheckButtonState(controllerInputs[i]);
+                    if (thisState == 1)
+                        conInputsDownThisPass.Add(controllerInputs[i]);
                     if (conFrames[i] > 0)
                     {
                         if (thisState == -1)
@@ -548,6 +528,9 @@ public class Control
                     }
                 }
             }
+            for (int i = 0; i < (Enum.GetNames(typeof(ControllerBinds))).Length; i++)
+                if (CheckButtonState((ControllerBinds)i) == 1)
+                    conInputsDownThisPass.Add((ControllerBinds)i);
             bool[] holdStates = new bool[] { DownHold(), LeftHold(), RightHold(), UpHold() };
             for (int i = 0; i < secondsSinceLastDirTap.Length; i++)
             {
@@ -558,6 +541,47 @@ public class Control
             }
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    public static int CheckButtonState(ControllerBinds button)
+    {
+        InputAction bind = button switch
+        {
+            ControllerBinds.LStickU => conInput.Controller.StickL,
+            ControllerBinds.LStickD => conInput.Controller.StickL,
+            ControllerBinds.LStickL => conInput.Controller.StickL,
+            ControllerBinds.LStickR => conInput.Controller.StickL,
+            ControllerBinds.LStickClick => conInput.Controller.StickLClick,
+            ControllerBinds.RStickU => conInput.Controller.StickR,
+            ControllerBinds.RStickD => conInput.Controller.StickR,
+            ControllerBinds.RStickL => conInput.Controller.StickR,
+            ControllerBinds.RStickR => conInput.Controller.StickR,
+            ControllerBinds.RStickClick => conInput.Controller.StickRClick,
+            ControllerBinds.FaceU => conInput.Controller.FaceU,
+            ControllerBinds.FaceD => conInput.Controller.FaceD,
+            ControllerBinds.FaceL => conInput.Controller.FaceL,
+            ControllerBinds.FaceR => conInput.Controller.FaceR,
+            ControllerBinds.DPadU => conInput.Controller.DPadU,
+            ControllerBinds.DPadD => conInput.Controller.DPadD,
+            ControllerBinds.DPadL => conInput.Controller.DPadL,
+            ControllerBinds.DPadR => conInput.Controller.DPadR,
+            ControllerBinds.LBumper => conInput.Controller.BumperL,
+            ControllerBinds.LTrigger => conInput.Controller.TriggerL,
+            ControllerBinds.RBumper => conInput.Controller.BumperR,
+            ControllerBinds.RTrigger => conInput.Controller.TriggerR,
+            ControllerBinds.Start => conInput.Controller.Start,
+            ControllerBinds.Select => conInput.Controller.Select,
+            _ => conInput.Controller.FaceD,
+        };
+        int thisState = button switch
+        {
+            ControllerBinds.LStickU or ControllerBinds.RStickU => bind.ReadValue<Vector2>().y > STICK_DEADZONE ? 1 : -1,
+            ControllerBinds.LStickD or ControllerBinds.RStickD => bind.ReadValue<Vector2>().y < -STICK_DEADZONE ? 1 : -1,
+            ControllerBinds.LStickL or ControllerBinds.RStickL => bind.ReadValue<Vector2>().x < -STICK_DEADZONE ? 1 : -1,
+            ControllerBinds.LStickR or ControllerBinds.RStickR => bind.ReadValue<Vector2>().x > STICK_DEADZONE ? 1 : -1,
+            _ => bind.WasPerformedThisFrame() ? 1 : (bind.WasReleasedThisFrame() ? -1 : 0)
+        };
+        return thisState;
     }
 
     //  0 -- Move up       1 -- Move down       2 -- Move left       3 -- Move right       4 -- Aim up       5 -- Aim down       6 -- Aim left       7 -- Aim right

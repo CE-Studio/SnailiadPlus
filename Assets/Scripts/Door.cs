@@ -6,7 +6,7 @@ public class Door:MonoBehaviour, IRoomObject
 {
     [SerializeField] private int doorWeapon;
     [SerializeField] private int bossLock;
-    [SerializeField] private bool locked;
+    [SerializeField] public bool locked;
     [SerializeField] private bool alwaysLocked;
     [SerializeField] private int direction;
     private bool openAfterBossDefeat = false;
@@ -212,10 +212,12 @@ public class Door:MonoBehaviour, IRoomObject
             SetState3();
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
+        {
             if (!locked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
+        }
     }
 }

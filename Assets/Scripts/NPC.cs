@@ -347,7 +347,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 12:
-                            if (CheckForUncollectedItem(PlayState.OFFSET_HEARTS))
+                            if (CountItemsInRoom() > 0)
                                 AddText("funBlocks");
                             else
                                 AddText("default");
@@ -469,7 +469,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 24:
-                            if (CheckForUncollectedItem(PlayState.OFFSET_FRAGMENTS))
+                            if (CountItemsInRoom() > 0)
                                 AddText("offerHelixFragment");
                             else
                                 AddText("default");
@@ -563,7 +563,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             boxColor = "0002";
                             if (!PlayState.IsBossAlive(3))
                                 AddText("celebrate");
-                            else if (CheckForUncollectedItem(PlayState.OFFSET_HEARTS))
+                            else if (CountItemsInRoom() > 0)
                                 AddText("offerHeart");
                             else
                                 AddText("default");
@@ -878,5 +878,16 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             }
         }
         return foundItem;
+    }
+
+    private int CountItemsInRoom()
+    {
+        Transform room = transform.parent;
+        int count = 0;
+        for (int i = 0; i < room.childCount; i++)
+            if (room.GetChild(i).name.Contains("Item"))
+                if (!room.GetChild(i).GetComponent<Item>().collected)
+                    count++;
+        return count;
     }
 }

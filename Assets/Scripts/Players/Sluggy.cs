@@ -42,6 +42,7 @@ public class Sluggy : Player
         gravShockChargeMult = 0.5f;
         gravShockSpeed = 40.0f;
         gravShockSteering = 4f;
+        damageMultiplier = 1.75f;
         healthGainFromParry = 0;
 
         int[] tempData = PlayState.GetAnim("Player_Sluggy_data").frames;

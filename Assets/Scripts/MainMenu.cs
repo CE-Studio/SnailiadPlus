@@ -23,8 +23,10 @@ public class MainMenu : MonoBehaviour
     private List<MenuOption> currentOptions = new();
     private DestinationDelegate backPage;
     private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] returnVars = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
     private bool isRebinding = false;
+    private float rebindCooldown = 0;
     private bool pauseButtonDown = false;
     private bool fadingToIntro = false;
 
@@ -40,6 +42,7 @@ public class MainMenu : MonoBehaviour
     private const float INTRO_FADE_TIME = 1.25f;
     private const float INTRO_PICTURE_FADE_TIME = 2f;
     private const float INTRO_LETTER_DELAY = 0.067f;
+    private const float REBIND_COOLDOWN = 0.25f;
 
     private List<TextObject> activeOptions = new();
 
@@ -70,6 +73,8 @@ public class MainMenu : MonoBehaviour
     private Transform cursor;
     private Vector2 lastCursorPos;
     private int versionCompare = 0;
+    private bool isProfilePage = false;
+    private bool isBossRushPage = false;
 
     private enum IntroStates
     {
@@ -126,6 +131,7 @@ public class MainMenu : MonoBehaviour
     public GameObject titleLetter;
     public GameObject titlePlus;
     public GameObject[] selector;
+    public AnimationModule[] selectorAnims;
 
     public List<GameObject> letters = new();
 
@@ -203,9 +209,14 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Selection Pointer/Left Snaily"),
             GameObject.Find("Selection Pointer/Right Snaily")
         };
+        selectorAnims = new AnimationModule[]
+        {
+            selector[1].GetComponent<AnimationModule>(),
+            selector[2].GetComponent<AnimationModule>()
+        };
         for (int i = 0; i < 2; i++)
         {
-            AnimationModule thisSelectAnim = selector[i + 1].GetComponent<AnimationModule>();
+            AnimationModule thisSelectAnim = selectorAnims[i];
             thisSelectAnim.pauseOnMenu = false;
             thisSelectAnim.Add("Title_selector_Snaily");
             thisSelectAnim.Add("Title_selector_Sluggy");
@@ -354,8 +365,7 @@ public class MainMenu : MonoBehaviour
                 i++;
             selectedOption = i;
             GetNewSnailOffset();
-            selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
-            selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
+            SetSelectorChar(PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily");
         }
         if (PlayState.gameState == PlayState.GameState.menu)
         {
@@ -491,6 +501,7 @@ public class MainMenu : MonoBehaviour
                 {
                     if (backPage != null)
                     {
+                        menuVarFlags = (int[])returnVars.Clone();
                         backPage();
                         PlayState.PlaySound("MenuBeep2");
                     }
@@ -499,6 +510,7 @@ public class MainMenu : MonoBehaviour
                 {
                     if (currentOptions[selectedOption].menuParam != null)
                     {
+                        returnVars = (int[])menuVarFlags.Clone();
                         for (int i = 0; i < currentOptions[selectedOption].menuParam.Length; i += 2)
                             menuVarFlags[currentOptions[selectedOption].menuParam[i]] = currentOptions[selectedOption].menuParam[i + 1];
                     }
@@ -517,6 +529,8 @@ public class MainMenu : MonoBehaviour
                     viewingGallery = false;
                 }
             }
+            if (rebindCooldown > 0)
+                rebindCooldown -= Time.deltaTime;
 
             foreach (MenuOption option in currentOptions)
             {
@@ -548,50 +562,32 @@ public class MainMenu : MonoBehaviour
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("char_snaily"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Snaily");
-                                }
+                                    SetSelectorChar("Snaily");
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("char_sluggy"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Sluggy");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Sluggy");
-                                }
+                                    SetSelectorChar("Sluggy");
                                 break;
                             case 2:
                                 AddToOptionText(option, PlayState.GetText("char_upside"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Upside");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Upside");
-                                }
+                                    SetSelectorChar("Upside");
                                 break;
                             case 3:
                                 AddToOptionText(option, PlayState.GetText("char_leggy"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Leggy");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Leggy");
-                                }
+                                    SetSelectorChar("Leggy");
                                 break;
                             case 4:
                                 AddToOptionText(option, PlayState.GetText("char_blobby"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Blobby");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Blobby");
-                                }
+                                    SetSelectorChar("Blobby");
                                 break;
                             case 5:
                                 AddToOptionText(option, PlayState.GetText("char_leechy"));
                                 if (swapChar)
-                                {
-                                    selector[1].GetComponent<AnimationModule>().Play("Title_selector_Leechy");
-                                    selector[2].GetComponent<AnimationModule>().Play("Title_selector_Leechy");
-                                }
+                                    SetSelectorChar("Leechy");
                                 break;
                         }
                         break;
@@ -1076,6 +1072,21 @@ public class MainMenu : MonoBehaviour
                     currentOptions[selectedOption].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
             selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
             selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
+            if (isProfilePage && selectedOption >= 1 && selectedOption <= 3)
+            {
+                PlayState.ProfileData selectedProfile = selectedOption switch
+                {
+                    2 => PlayState.profile2,
+                    3 => PlayState.profile3,
+                    _ => PlayState.profile1
+                };
+                if (!selectedProfile.isEmpty)
+                    SetSelectorChar(selectedProfile.character);
+            }
+            else if (isBossRushPage)
+                SetSelectorChar(CharacterIDToName(menuVarFlags[1]));
+            else
+                SetSelectorChar(PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily");
 
             if (achievementIcons.Count != 0)
             {
@@ -1102,6 +1113,15 @@ public class MainMenu : MonoBehaviour
                 galleryImage.obj.transform.localPosition = Vector2.Lerp(galleryImage.obj.transform.localPosition, new Vector2(-26, 0), timeStep);
                 galleryImage.image.color = Color.Lerp(galleryImage.image.color, new Color(1, 1, 1, 0), timeStep);
             }
+        }
+    }
+
+    public void SetSelectorChar(string newChar)
+    {
+        if (selectorAnims[0].currentAnimName != "Title_selector_" + newChar)
+        {
+            selectorAnims[0].Play("Title_selector_" + newChar);
+            selectorAnims[1].Play("Title_selector_" + newChar);
         }
     }
 
@@ -1155,6 +1175,8 @@ public class MainMenu : MonoBehaviour
 
     public void TestForRebind()
     {
+        if (rebindCooldown > 0)
+            return;
         StartCoroutine(RebindKey(menuVarFlags[0], menuVarFlags[1]));
     }
 
@@ -1167,11 +1189,24 @@ public class MainMenu : MonoBehaviour
         while (timer < 3 && isRebinding)
         {
             AddToOptionText(currentOptions[selectedOption], timer < 1 ? "." : (timer < 2 ? ".." : "..."));
-            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
+            if (keyOrCon == 0)
             {
-                if (Input.GetKey(key) && (int)key < 330)
+                foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
                 {
-                    PlayState.generalData.keyboardInputs[controlID] = key;
+                    if (Input.GetKey(key) && (int)key < 330)
+                    {
+                        PlayState.generalData.keyboardInputs[controlID] = key;
+                        rebindCooldown = REBIND_COOLDOWN;
+                        isRebinding = false;
+                    }
+                }
+            }
+            else
+            {
+                if (Control.AnyButtonDown())
+                {
+                    PlayState.generalData.controllerInputs[controlID] = Control.conInputsDownThisPass[0];
+                    rebindCooldown = REBIND_COOLDOWN;
                     isRebinding = false;
                 }
             }
@@ -1268,6 +1303,8 @@ public class MainMenu : MonoBehaviour
             Destroy(option.textScript.gameObject);
         currentOptions.Clear();
         currentSpawnY = LIST_CENTER_Y;
+        isProfilePage = false;
+        isBossRushPage = false;
     }
 
     public void GetNewSnailOffset()
@@ -1691,6 +1728,7 @@ public class MainMenu : MonoBehaviour
         fadingToIntro = false;
         PlayState.fader = 1;
         music.Stop();
+        PlayState.stackWeaponMods = PlayState.isInBossRush;
 
         if (runIntro)
         {
@@ -1825,7 +1863,10 @@ public class MainMenu : MonoBehaviour
         {
             AddOption(PlayState.GetText("menu_option_main_return"), true, Unpause);
             returnAvailable = true;
+            SetSelectorChar(PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily");
         }
+        else
+            SetSelectorChar("Snaily");
         AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.isInBossRush)
         {
@@ -1833,7 +1874,7 @@ public class MainMenu : MonoBehaviour
             AddOption(PlayState.GetText("menu_option_bossRush_restart"), true, StartBossRushSave);
         }
         else if (PlayState.generalData.achievements[3])
-            AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm, new int[] { 0, 0 });
+            AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm, new int[] { 1, 0 });
         //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
@@ -1859,6 +1900,7 @@ public class MainMenu : MonoBehaviour
     public void ProfileScreen()
     {
         ClearOptions();
+        isProfilePage = true;
         PlayState.LoadAllProfiles();
         AddOption(PlayState.GetText("menu_option_profile_header"), false);
         for (int i = 1; i <= 3; i++)
@@ -1982,6 +2024,7 @@ public class MainMenu : MonoBehaviour
     public void CopyData()
     {
         ClearOptions();
+        isProfilePage = true;
         AddOption(PlayState.GetText("menu_option_copyGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
@@ -2003,6 +2046,7 @@ public class MainMenu : MonoBehaviour
     public void CopyData2()
     {
         ClearOptions();
+        isProfilePage = true;
         AddOption(PlayState.GetText("menu_option_copyGame_header2"), false);
         for (int i = 1; i <= 3; i++)
         {
@@ -2044,6 +2088,7 @@ public class MainMenu : MonoBehaviour
     public void EraseData()
     {
         ClearOptions();
+        isProfilePage = true;
         AddOption(PlayState.GetText("menu_option_eraseGame_header1"), false);
         for (int i = 1; i <= 3; i++)
         {
@@ -2103,12 +2148,15 @@ public class MainMenu : MonoBehaviour
     public void BossRushConfirm()
     {
         ClearOptions();
+        isBossRushPage = true;
         AddOption(PlayState.GetText("menu_option_bossRush_header1"), false);
         AddOption(PlayState.GetText("menu_option_bossRush_header2"), false);
         AddOption("", false);
+        if (PlayState.generalData.achievements[14])
+            AddOption(PlayState.GetText("menu_option_bossRush_character") + ": ", true, "character");
         AddOption(PlayState.GetText("menu_option_bossRush_confirm"), true, StartBossRushSave);
         AddOption(PlayState.GetText("menu_option_bossRush_cancel"), true, PageMain);
-        ForceSelect(4);
+        ForceSelect(4 - (PlayState.generalData.achievements[14] ? 1 : 0));
         backPage = PageMain;
     }
 
@@ -2118,7 +2166,7 @@ public class MainMenu : MonoBehaviour
         PlayState.currentProfileNumber = 0;
         PlayState.currentProfile = PlayState.blankProfile;
         PlayState.currentProfile.difficulty = 1;
-        PlayState.SetPlayer(CharacterIDToName(menuVarFlags[0]));
+        PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
         PlayState.isInBossRush = true;
@@ -2515,10 +2563,10 @@ public class MainMenu : MonoBehaviour
                     PlayState.textureLibrary.BuildDefaultAnimLibrary();
                     PlayState.textureLibrary.BuildDefaultLibrary();
                     PlayState.textureLibrary.BuildTilemap();
-                    selector[1].GetComponent<AnimationModule>().ReloadList();
-                    selector[1].GetComponent<AnimationModule>().ResetToStart();
-                    selector[2].GetComponent<AnimationModule>().ReloadList();
-                    selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    selectorAnims[1].ReloadList();
+                    selectorAnims[1].ResetToStart();
+                    selectorAnims[2].ReloadList();
+                    selectorAnims[2].ResetToStart();
                     CreateTitle();
                     break;
                 case "Sound":
@@ -2550,10 +2598,10 @@ public class MainMenu : MonoBehaviour
                     PlayState.textureLibrary.BuildSpriteSizeLibrary(packPath + "/SpriteSizes.json");
                     PlayState.textureLibrary.BuildAnimationLibrary(packPath + "/Animations.json");
                     PlayState.textureLibrary.BuildLibrary(packPath);
-                    selector[1].GetComponent<AnimationModule>().ReloadList();
-                    selector[1].GetComponent<AnimationModule>().ResetToStart();
-                    selector[2].GetComponent<AnimationModule>().ReloadList();
-                    selector[2].GetComponent<AnimationModule>().ResetToStart();
+                    selectorAnims[1].ReloadList();
+                    selectorAnims[1].ResetToStart();
+                    selectorAnims[2].ReloadList();
+                    selectorAnims[2].ResetToStart();
                     PlayState.minimapScript.RefreshAnims();
                     PlayState.subscreenScript.RefreshAnims();
                     PlayState.RefreshPoolAnims();
@@ -3278,8 +3326,7 @@ public class MainMenu : MonoBehaviour
             i++;
         selectedOption = i;
         GetNewSnailOffset();
-        selector[1].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
-        selector[2].GetComponent<AnimationModule>().Play("Title_selector_" + (PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily"));
+        SetSelectorChar("Snaily");
         CreateTitle();
     }
 

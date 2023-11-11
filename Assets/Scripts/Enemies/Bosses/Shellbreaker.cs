@@ -42,6 +42,7 @@ public class Shellbreaker : Boss
             SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentProfile.difficulty == 2 ? 1 : 0.88f)),
                 2, 3, true, 0, true);
             StartCoroutine(RunIntro());
+            PlayState.playerScript.CorrectGravity(true);
             eyes = transform.GetChild(0).gameObject;
             
             handCount *= (PlayState.currentProfile.difficulty == 2 ? 4 : 1) * ((PlayState.currentProfile.character == "Sluggy" ||

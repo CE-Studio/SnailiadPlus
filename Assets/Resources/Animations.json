@@ -3341,8 +3341,8 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				40,
-				41
+				88,
+				89
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -3353,8 +3353,8 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				40,
-				41
+				88,
+				89
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -3365,8 +3365,8 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				40,
-				41
+				88,
+				89
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -3377,8 +3377,8 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				40,
-				41
+				88,
+				89
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6359,7 +6359,7 @@
 			"spriteName": "Bullets/ShockBody",
 			"framerate": 0.0,
 			"frames": [
-				26
+				22
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -6370,7 +6370,7 @@
 			"spriteName": "Bullets/ShockBody",
 			"framerate": 0.0,
 			"frames": [
-				25
+				21
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -6381,7 +6381,7 @@
 			"spriteName": "Bullets/ShockBody",
 			"framerate": 0.0,
 			"frames": [
-				24
+				20
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -6392,7 +6392,7 @@
 			"spriteName": "Bullets/ShockBody",
 			"framerate": 0.0,
 			"frames": [
-				27
+				23
 			],
 			"loop": false,
 			"loopStartFrame": 0,

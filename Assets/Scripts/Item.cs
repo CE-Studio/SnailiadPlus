@@ -41,7 +41,7 @@ public class Item:MonoBehaviour, IRoomObject {
     public Dictionary<string, object> save()
     {
         int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
-        if (areaID < 7)
+        if (areaID != (int)PlayState.Areas.BossRush)
         {
             if (PlayState.itemData.Length == 0)
                 PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
@@ -71,8 +71,7 @@ public class Item:MonoBehaviour, IRoomObject {
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
 
-        int charCheck = PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 };
-        if (PlayState.currentProfile.items[itemID] == 0 || !PlayState.itemData[itemID][PlayState.currentProfile.difficulty] || !PlayState.itemData[itemID][charCheck])
+        if (PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
             Spawn();
         else
             Destroy(gameObject);
@@ -268,6 +267,11 @@ public class Item:MonoBehaviour, IRoomObject {
                         PlayState.globalFunctions.RunDustRing(3);
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
+                    break;
+                case 10:
+                    if (isSuperUnique)
+                        PlayState.globalFunctions.RunDustRing();
+                    PlayState.QueueAchievementPopup(AchievementPanel.Achievements.GravityShock);
                     break;
                 default:
                     if (isSuperUnique)

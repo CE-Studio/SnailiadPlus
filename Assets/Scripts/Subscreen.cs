@@ -285,7 +285,8 @@ public class Subscreen : MonoBehaviour
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
                 else if (PlayState.itemLocations.ContainsKey(i))
                 {
-                    if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0)
+                    if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0 && PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[i]) &&
+                        PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[i]))
                         cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
                     else
                         cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
@@ -309,7 +310,8 @@ public class Subscreen : MonoBehaviour
         playerMarker.transform.localPosition = new Vector2(topLeftCell.x + (playerCellPos.x * 0.5f), topLeftCell.y - (playerCellPos.y * 0.5f));
         int playerCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
         if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
-            (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0))
+            (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0 &&
+            PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[playerCellID]) && PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[playerCellID])))
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerHighlight");
         else
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerNormal");

@@ -42,6 +42,7 @@ public class Snaily : Player
         gravShockChargeMult = 0.5f;
         gravShockSpeed = 40.0f;
         gravShockSteering = 2.5f;
+        damageMultiplier = 1f;
         healthGainFromParry = 4;
 
         int[] tempData = PlayState.GetAnim("Player_Snaily_data").frames;

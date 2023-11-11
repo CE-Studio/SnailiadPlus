@@ -151,11 +151,20 @@ public class Minimap : MonoBehaviour
                             anims[i + 4].Play("Minimap_icon_save", true);
                         else if (PlayState.itemLocations.ContainsKey(thisMaskID))
                         {
-                            if (PlayState.currentProfile.items[PlayState.itemLocations[thisMaskID]] == 0)
-                                anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                            int itemID = PlayState.itemLocations[thisMaskID];
+                            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID))
+                            {
+                                if (PlayState.currentProfile.items[itemID] == 0)
+                                    anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                                else
+                                {
+                                    anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                                    highlightPlayerTile = false;
+                                }
+                            }
                             else
                             {
-                                anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                                anims[i + 4].Play("Minimap_icon_blank", true);
                                 highlightPlayerTile = false;
                             }
                         }

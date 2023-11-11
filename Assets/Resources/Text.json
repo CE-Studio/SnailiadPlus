@@ -356,6 +356,11 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_bossRush_character",
+			"text": "Character",
+			"value": 0
+		},
+		{
 			"name": "menu_option_bossRush_restart",
 			"text": "Restart Boss Rush",
 			"value": 0
@@ -1152,7 +1157,7 @@
 		},
 		{
 			"name": "menu_option_achievements_beatmoonsnailnofms_hint",
-			"text": "Equipment is merely a suggestion",
+			"text": "Defense is merely a suggestion",
 			"value": 0
 		},
 		{

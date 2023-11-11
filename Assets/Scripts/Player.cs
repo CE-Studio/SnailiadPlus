@@ -116,6 +116,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float gravShockChargeMult; // ----------------------------- A fractional multiplier applied to Gravity Shock's charge time when Rapid Fire has been acquired
     public float gravShockSpeed; // ---------------------------------- How fast Gravity Shock travels
     public float gravShockSteering; // ------------------------------- How fast Gravity Shock can be steered perpendicular to its fire direction
+    public float damageMultiplier; // -------------------------------- A fractional multiplier applied to any damage taken to increase/decrease characters' defense
     public int healthGainFromParry; // ------------------------------- How much health you recover from a Perfect Parry
     #endregion vars
 
@@ -423,17 +424,15 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // Lastly, after all of that, we update the camera's focus point around the player
         camFocus.position = (Vector2)transform.position + camFocusOffset;
         Vector2 camBoundsX = new(
-            PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x,
-            PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y);
+            PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x - 12.5f,
+            PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y + 12.5f);
         Vector2 camBoundsY = new(
-            PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x,
-            PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y);
-        float xDif = camBoundsX.y - camBoundsX.x;
-        float yDif = camBoundsY.y - camBoundsY.x;
+            PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x - 7.5f,
+            PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y + 7.5f);
         if (transform.position.x > camBoundsX.x && transform.position.x < camBoundsX.y && transform.position.y > camBoundsY.x && transform.position.y < camBoundsY.y)
             camFocus.position = new(
-                xDif >= 0 ? Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y) : camBoundsX.x + (xDif * 0.5f),
-                yDif >= 0 ? Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y) : camBoundsY.x + (yDif * 0.5f));
+                Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y),
+                Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y));
     }
 
     public virtual void CaseDown()
@@ -473,6 +472,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 0 });
                     camFocusOffset = new Vector2(0, -4);
+                    sprite.enabled = false;
                 }
             }
             // State 2 means we've successfully fired off
@@ -481,24 +481,33 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 float fallSpeed = -gravShockSpeed * Time.fixedDeltaTime;
                 // This block checks if we've hit the floor and reverts us to normal if we have
                 GetDistance(Dirs.Floor, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                bool hitDoor = false;
                 for (int i = 0; i < cols.Count; i++)
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
                     if (colNames[i].Contains("Door"))
-                        cols[i].GetComponent<Door>().SetState0();
+                    {
+                        cols[i].GetComponent<Door>().OnTriggerEnter2D(gravShockBullet.box);
+                        if (cols[i].GetComponent<Door>().locked)
+                            hitDoor = true;
+                    }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
                 {
                     transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
                     PlayState.PlaySound("Stomp");
                     gravShockBody.ResetParticle();
-                    gravShockBullet.Despawn(true);
-                    gravShockBullet = null;
+                    if (gravShockBullet != null)
+                    {
+                        gravShockBullet.Despawn(true);
+                        gravShockBullet = null;
+                    }
                     gravShockState = 0;
                     SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
+                    sprite.enabled = true;
                 }
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y + fallSpeed);
@@ -812,21 +821,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 float fallSpeed = -gravShockSpeed * Time.fixedDeltaTime;
                 // This block checks if we've hit the floor and reverts us to normal if we have
                 GetDistance(Dirs.WallL, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                bool hitDoor = false;
                 for (int i = 0; i < cols.Count; i++)
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
                     if (colNames[i].Contains("Door"))
-                        cols[i].GetComponent<Door>().SetState0();
+                    {
+                        cols[i].GetComponent<Door>().OnTriggerEnter2D(gravShockBullet.box);
+                        if (cols[i].GetComponent<Door>().locked)
+                            hitDoor = true;
+                    }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
                 {
                     transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
                     PlayState.PlaySound("Stomp");
                     gravShockBody.ResetParticle();
-                    gravShockBullet.Despawn(true);
-                    gravShockBullet = null;
+                    if (gravShockBullet != null)
+                    {
+                        gravShockBullet.Despawn(true);
+                        gravShockBullet = null;
+                    }
                     gravShockState = 0;
                     SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
@@ -1142,21 +1159,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 float fallSpeed = gravShockSpeed * Time.fixedDeltaTime;
                 // This block checks if we've hit the floor and reverts us to normal if we have
                 GetDistance(Dirs.WallR, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                bool hitDoor = false;
                 for (int i = 0; i < cols.Count; i++)
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
                     if (colNames[i].Contains("Door"))
-                        cols[i].GetComponent<Door>().SetState0();
+                    {
+                        cols[i].GetComponent<Door>().OnTriggerEnter2D(gravShockBullet.box);
+                        if (cols[i].GetComponent<Door>().locked)
+                            hitDoor = true;
+                    }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
                 {
                     transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
                     PlayState.PlaySound("Stomp");
                     gravShockBody.ResetParticle();
-                    gravShockBullet.Despawn(true);
-                    gravShockBullet = null;
+                    if (gravShockBullet != null)
+                    {
+                        gravShockBullet.Despawn(true);
+                        gravShockBullet = null;
+                    }
                     gravShockState = 0;
                     SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
@@ -1472,21 +1497,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 float fallSpeed = gravShockSpeed * Time.fixedDeltaTime;
                 // This block checks if we've hit the floor and reverts us to normal if we have
                 GetDistance(Dirs.Ceiling, out List<Collider2D> cols, out List<string> colNames, Mathf.Abs(fallSpeed));
+                bool hitDoor = false;
                 for (int i = 0; i < cols.Count; i++)
                 {
                     if (colNames[i].Contains("Breakable Block"))
                         cols[i].GetComponent<BreakableBlock>().OnTriggerStay2D(cols[i]);
                     if (colNames[i].Contains("Door"))
-                        cols[i].GetComponent<Door>().SetState0();
+                    {
+                        cols[i].GetComponent<Door>().OnTriggerEnter2D(gravShockBullet.box);
+                        if (cols[i].GetComponent<Door>().locked)
+                            hitDoor = true;
+                    }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && colNames.Contains("Ground"))
+                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
                 {
                     transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
                     PlayState.PlaySound("Stomp");
                     gravShockBody.ResetParticle();
-                    gravShockBullet.Despawn(true);
-                    gravShockBullet = null;
+                    if (gravShockBullet != null)
+                    {
+                        gravShockBullet.Despawn(true);
+                        gravShockBullet = null;
+                    }
                     gravShockState = 0;
                     SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
@@ -2304,6 +2337,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
         else
         {
+            damage = Mathf.FloorToInt(damage * damageMultiplier);
             if (PlayState.CheckForItem("Full-Metal Snail"))
                 damage = Mathf.FloorToInt(damage * 0.5f);
             if (shelled && PlayState.CheckForItem("Shell Shield"))
