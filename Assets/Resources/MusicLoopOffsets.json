@@ -1,6 +1,10 @@
 {
 	"offsetArray": [
 		{
+			"name": "EndingCredits",
+			"offset": 0.0
+		},
+		{
 			"name": "Snelk",
 			"offset": 4.013
 		},
@@ -25,10 +29,6 @@
 			"offset": 0.0
 		},
 		{
-			"name": "EndingCredits",
-			"offset": 0.0
-		},
-		{
 			"name": "SnailTown",
 			"offset": 0.0
 		},
@@ -50,10 +50,6 @@
 		},
 		{
 			"name": "ShrineOfIris",
-			"offset": 0.0
-		},
-		{
-			"name": "UnknownArea",
 			"offset": 0.0
 		},
 		{
