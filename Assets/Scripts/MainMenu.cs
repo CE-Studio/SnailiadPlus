@@ -3333,6 +3333,7 @@ public class MainMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         PlayState.gameState = PlayState.GameState.menu;
+        PlayState.isInBossRush = false;
         PlayState.screenCover.sortingOrder = 1001;
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.5f, 0, 0);
         cam.position = panPoints[0];
