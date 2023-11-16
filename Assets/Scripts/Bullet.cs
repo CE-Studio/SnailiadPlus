@@ -172,13 +172,13 @@ public class Bullet : MonoBehaviour
         bulletType = type;
         switch (type)
         {
-            case 1:
+            case 1: // Peashooter
                 box.size = new Vector2(0.25f, 0.25f);
                 velocity = 0.4625f;
                 damage = 10;
                 rapidMult = 2f;
                 break;
-            case 2:
+            case 2: // Boomerang
                 box.size = new Vector2(0.9f, 0.9f);
                 velocity = 0.4125f;
                 damage = 20;
@@ -186,55 +186,55 @@ public class Bullet : MonoBehaviour
                 despawnOffScreen = false;
                 break;
             default:
-            case 3:
+            case 3: // Rainbow Wave
                 box.size = new Vector2(1.9f, 1.9f);
                 velocity = 0.075f;
                 damage = 30;
                 rapidMult = 2f;
                 break;
-            case 4:
+            case 4: // Devastator Peashooter
                 box.size = new Vector2(1.4f, 1.4f);
                 velocity = 0.4625f;
                 damage = 45;
                 rapidMult = 2f;
                 break;
-            case 5:
+            case 5: // Devastator Boomerang
                 box.size = new Vector2(1.4f, 1.4f);
                 velocity = 0.4125f;
                 damage = 50;
                 rapidMult = 2f;
                 despawnOffScreen = false;
                 break;
-            case 6:
+            case 6: // Devastator Rainbow Wave
                 box.size = new Vector2(2.4f, 2.4f);
                 velocity = 0.075f;
                 damage = 68;
                 rapidMult = 2f;
                 break;
-            case 7:
+            case 7: // Gravity Shock
                 box.size = new Vector2(2.75f, 2.75f);
                 velocity = 0;
-                damage = 200;
+                damage = 300;
                 rapidMult = 1f;
                 despawnOffScreen = false;
                 break;
-            case 8:
+            case 8: // Full-Metal Gravity Shock
                 box.size = new Vector2(3f, 3f);
                 velocity = 0;
-                damage = 450;
+                damage = 650;
                 rapidMult = 1f;
                 despawnOffScreen = false;
                 break;
-            case 9:
+            case 9: // Shockwave
                 box.size = new Vector2(0.45f, 0.45f);
                 velocity = 0.05f;
                 damage = 68;
                 rapidMult = 1f;
                 break;
-            case 10:
+            case 10: // Devastator Shockwave
                 box.size = new Vector2(0.95f, 0.95f);
                 velocity = 0.085f;
-                damage = 128;
+                damage = 108;
                 rapidMult = 1f;
                 break;
         }

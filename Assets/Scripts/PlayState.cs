@@ -593,6 +593,25 @@ public class PlayState {
         }
     }
 
+    public static ProfileData BlankProfile()
+    {
+        return new ProfileData
+        {
+            isEmpty = blankProfile.isEmpty,
+            difficulty = blankProfile.difficulty,
+            gameTime = (float[])blankProfile.gameTime.Clone(),
+            saveCoords = blankProfile.saveCoords,
+            character = blankProfile.character,
+            items = (int[])blankProfile.items.Clone(),
+            weapon = blankProfile.weapon,
+            bossStates = (int[])blankProfile.bossStates.Clone(),
+            NPCVars = (int[])blankProfile.NPCVars.Clone(),
+            percentage = blankProfile.percentage,
+            exploredMap = (int[])defaultMinimapState.Clone(),
+            cutsceneStates = (int[])blankProfile.cutsceneStates
+        };
+    }
+
     public static AnimationData GetAnim(string name) {
         AnimationData foundData = new() {
             name = "NoAnim"
@@ -933,17 +952,69 @@ public class PlayState {
 
     public static void ToggleHUD(bool state)
     {
-        foreach (GameObject element in TogglableHUDElements)
+        for (int i = 0; i < TogglableHUDElements.Length; i++)
         {
-            element.SetActive(state);
-            if (state)
+            GameObject thisElement = TogglableHUDElements[i];
+            switch (i)
             {
-                if (element.name == "Minimap Panel")
-                    element.SetActive(!inBossFight && !isInBossRush);
-                if (element.name == "Boss Health Bar")
-                    element.SetActive(true);
-                if (element.name == "Boss Rush Time")
-                    element.SetActive(isInBossRush);
+                case 0: // Minimap
+                    thisElement.SetActive(state && generalData.minimapState > 0 && !inBossFight && !isInBossRush);
+                    hudRoomName.SetColor(generalData.minimapState == 2 ? Color.white : new Color(1, 1, 1, 0));
+                    break;
+                case 1: // Hearts
+                    thisElement.SetActive(state);
+                    break;
+                case 2: // Input display
+                    thisElement.SetActive(state && generalData.keymapState);
+                    break;
+                case 3: // Weapon icons
+                    thisElement.SetActive(state && generalData.bottomKeyState > 0);
+                    break;
+                case 4: // Saving text
+                    thisElement.SetActive(state);
+                    break;
+                case 5: // Area name text
+                    thisElement.SetActive(state);
+                    break;
+                case 6: // Item name text
+                    thisElement.SetActive(state);
+                    break;
+                case 7: // Completion percentage text
+                    thisElement.SetActive(state);
+                    break;
+                case 8: // Framerate display
+                    thisElement.SetActive(state && generalData.FPSState);
+                    break;
+                case 9: // In-game time display
+                    thisElement.SetActive(state && generalData.timeState);
+                    break;
+                case 10: // Dialogue box
+                    thisElement.SetActive(state);
+                    break;
+                case 11: // Bottom keys
+                    thisElement.SetActive(state && generalData.bottomKeyState == 2);
+                    break;
+                case 12: // Boss health bar
+                    thisElement.SetActive(state);
+                    break;
+                case 13: // Radar
+                    thisElement.SetActive(state);
+                    break;
+                case 14: // Best time text
+                    thisElement.SetActive(state);
+                    break;
+                case 15: // Mode unlock text
+                    thisElement.SetActive(state);
+                    break;
+                case 16: // Item completion text
+                    thisElement.SetActive(state);
+                    break;
+                case 17: // Control guide
+                    thisElement.SetActive(state);
+                    break;
+                case 18: // Boss Rush timer
+                    thisElement.SetActive(state && isInBossRush);
+                    break;
             }
         }
     }

@@ -38,7 +38,7 @@ public class Sluggy : Player
         shellTurnaroundAdjust = 0.1667f;
         coyoteTime = 0.0625f;
         jumpBuffer = 0.125f;
-        gravShockChargeTime = 0.75f;
+        gravShockChargeTime = 0.625f;
         gravShockChargeMult = 0.5f;
         gravShockSpeed = 40.0f;
         gravShockSteering = 4f;

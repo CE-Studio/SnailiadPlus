@@ -2607,7 +2607,7 @@
 		},
 		{
 			"name": "room_01_cave1",
-			"text": "Heart of the|Sea",
+			"text": "Heart of|the Sea",
 			"value": 0
 		},
 		{
@@ -2777,7 +2777,7 @@
 		},
 		{
 			"name": "room_02_iceTower",
-			"text": "The Ice Tower",
+			"text": "Ice Climb",
 			"value": 0
 		},
 		{
@@ -2792,12 +2792,12 @@
 		},
 		{
 			"name": "room_02_angryBlock",
-			"text": "In the Hall of|the Pouting Thing",
+			"text": "In the Hall|of the|Pouting Thing",
 			"value": 0
 		},
 		{
 			"name": "room_02_bossSave",
-			"text": "Leave your Shoes|in the Hall",
+			"text": "Leave your|Shoes in|the Hall",
 			"value": 0
 		},
 		{
@@ -2807,12 +2807,12 @@
 		},
 		{
 			"name": "room_02_rainbowWave",
-			"text": "Prismatic Prize",
+			"text": "Prismatic|Prize",
 			"value": 0
 		},
 		{
 			"name": "room_03_entrance",
-			"text": "Heated Gateway",
+			"text": "Heated|Gateway",
 			"value": 0
 		},
 		{
@@ -2822,17 +2822,17 @@
 		},
 		{
 			"name": "room_03_platTower1",
-			"text": "Elevator Shaft",
+			"text": "Elevator|Shaft",
 			"value": 0
 		},
 		{
 			"name": "room_03_snelk",
-			"text": "Scorching Snelks",
+			"text": "Scorching|Snelks",
 			"value": 0
 		},
 		{
 			"name": "room_03_grassy1",
-			"text": "Grassy Shortcut",
+			"text": "Grassy|Shortcut",
 			"value": 0
 		},
 		{
@@ -2852,7 +2852,7 @@
 		},
 		{
 			"name": "room_03_walleye",
-			"text": "Hidden Hideout",
+			"text": "Hidden|Hideout",
 			"value": 0
 		},
 		{
@@ -2877,22 +2877,22 @@
 		},
 		{
 			"name": "room_03_fireballItem",
-			"text": "The Furnace",
+			"text": "Furnace",
 			"value": 0
 		},
 		{
 			"name": "room_03_pinkTower1",
-			"text": "The Tower",
+			"text": "Firetower",
 			"value": 0
 		},
 		{
 			"name": "room_03_pinkTower2",
-			"text": "The Tower",
+			"text": "Firetower",
 			"value": 0
 		},
 		{
 			"name": "room_03_pinkTower3",
-			"text": "The Tower",
+			"text": "Firetower",
 			"value": 0
 		},
 		{
@@ -2902,7 +2902,7 @@
 		},
 		{
 			"name": "room_03_floatspikeMaze",
-			"text": "Floaty Fortress",
+			"text": "Floaty|Fortress",
 			"value": 0
 		},
 		{
@@ -2917,12 +2917,12 @@
 		},
 		{
 			"name": "room_03_basement",
-			"text": "Seafloor of Ire",
+			"text": "Seafloor|of Ire",
 			"value": 0
 		},
 		{
 			"name": "room_03_jellyCave",
-			"text": "Shocked Shell",
+			"text": "Shocked|Shell",
 			"value": 0
 		},
 		{
@@ -2952,7 +2952,7 @@
 		},
 		{
 			"name": "room_03_spaceBox",
-			"text": "Gravity Arena",
+			"text": "The Barycenter",
 			"value": 0
 		},
 		{

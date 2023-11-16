@@ -19,6 +19,8 @@ public class EnemyBullet : MonoBehaviour
     private float travelAngle;
     private float turnSpeed;
     private bool despawnOffscreen;
+    public Enemy sourceEnemy;
+    public bool hasBeenParried;
 
     private bool[] playerBulletsDestroyedByMe = new bool[10];
     private bool[] playerBulletsThatDestroyMe = new bool[10];

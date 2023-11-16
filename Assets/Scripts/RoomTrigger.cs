@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class RoomTrigger : MonoBehaviour
 {
     public BoxCollider2D box;
-    public bool active = true;
+    public bool active = true; // Kinda named backward. If this is true, the collider attached to this room is enabled, waiting for the player to enter the room
     private bool temporarilyActive = false;
     private float initializationBuffer = 0;
 
@@ -84,9 +84,9 @@ public class RoomTrigger : MonoBehaviour
         {
             if (box.enabled)
             {
-                active = false;
+                active = true;
                 return;
-            }    
+            }
 
             if (initializationBuffer > 0)
                 initializationBuffer -= Time.deltaTime;

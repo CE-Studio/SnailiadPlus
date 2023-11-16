@@ -493,19 +493,27 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             hitDoor = true;
                     }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
+                if ((lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || colNames.Contains("Platform") || hitDoor)) || !gravShockBullet.isActive)
                 {
-                    transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
-                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
-                    PlayState.PlaySound("Stomp");
-                    gravShockBody.ResetParticle();
-                    if (gravShockBullet != null)
+                    if (!gravShockBullet.isActive)
                     {
-                        gravShockBullet.Despawn(true);
                         gravShockBullet = null;
+                        HitFor(0);
                     }
+                    else
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y - lastDistance + PlayState.FRAC_32);
+                        PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
+                        PlayState.PlaySound("Stomp");
+                        if (gravShockBullet != null)
+                        {
+                            gravShockBullet.Despawn(true);
+                            gravShockBullet = null;
+                        }
+                        SpawnShockWaves();
+                    }
+                    gravShockBody.ResetParticle();
                     gravShockState = 0;
-                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
                     sprite.enabled = true;
                 }
@@ -813,6 +821,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 1 });
                     camFocusOffset = new Vector2(-6, 0);
+                    sprite.enabled = false;
                 }
             }
             // State 2 means we've successfully fired off
@@ -833,20 +842,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             hitDoor = true;
                     }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
+                if ((lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || colNames.Contains("Platform") || hitDoor)) || !gravShockBullet.isActive)
                 {
-                    transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
-                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
-                    PlayState.PlaySound("Stomp");
-                    gravShockBody.ResetParticle();
-                    if (gravShockBullet != null)
+                    if (!gravShockBullet.isActive)
                     {
-                        gravShockBullet.Despawn(true);
                         gravShockBullet = null;
+                        HitFor(0);
                     }
+                    else
+                    {
+                        transform.position = new Vector2(transform.position.x - lastDistance + PlayState.FRAC_32, transform.position.y);
+                        PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
+                        PlayState.PlaySound("Stomp");
+                        if (gravShockBullet != null)
+                        {
+                            gravShockBullet.Despawn(true);
+                            gravShockBullet = null;
+                        }
+                        SpawnShockWaves();
+                    }
+                    gravShockBody.ResetParticle();
                     gravShockState = 0;
-                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
+                    sprite.enabled = true;
                 }
                 else
                     transform.position = new Vector2(transform.position.x + fallSpeed, transform.position.y);
@@ -1151,6 +1169,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 2 });
                     camFocusOffset = new Vector2(6, 0);
+                    sprite.enabled = false;
                 }
             }
             // State 2 means we've successfully fired off
@@ -1171,20 +1190,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             hitDoor = true;
                     }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
+                if ((lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || colNames.Contains("Platform") || hitDoor)) || !gravShockBullet.isActive)
                 {
-                    transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
-                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
-                    PlayState.PlaySound("Stomp");
-                    gravShockBody.ResetParticle();
-                    if (gravShockBullet != null)
+                    if (!gravShockBullet.isActive)
                     {
-                        gravShockBullet.Despawn(true);
                         gravShockBullet = null;
+                        HitFor(0);
                     }
+                    else
+                    {
+                        transform.position = new Vector2(transform.position.x + lastDistance - PlayState.FRAC_32, transform.position.y);
+                        PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 0f, 5f);
+                        PlayState.PlaySound("Stomp");
+                        if (gravShockBullet != null)
+                        {
+                            gravShockBullet.Despawn(true);
+                            gravShockBullet = null;
+                        }
+                        SpawnShockWaves();
+                    }
+                    gravShockBody.ResetParticle();
                     gravShockState = 0;
-                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
+                    sprite.enabled = true;
                 }
                 else
                     transform.position = new Vector2(transform.position.x + fallSpeed, transform.position.y);
@@ -1489,6 +1517,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.globalFunctions.ScreenShake(new List<float> { 0.25f, 0f }, new List<float> { 0.25f });
                     PlayState.RequestParticle(transform.position, "shocklaunch", new float[] { 3 });
                     camFocusOffset = new Vector2(0, 4);
+                    sprite.enabled = false;
                 }
             }
             // State 2 means we've successfully fired off
@@ -1509,20 +1538,29 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             hitDoor = true;
                     }
                 }
-                if (lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || hitDoor))
+                if ((lastDistance < Mathf.Abs(fallSpeed) && (colNames.Contains("Ground") || colNames.Contains("Platform") || hitDoor)) || !gravShockBullet.isActive)
                 {
-                    transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
-                    PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
-                    PlayState.PlaySound("Stomp");
-                    gravShockBody.ResetParticle();
-                    if (gravShockBullet != null)
+                    if (!gravShockBullet.isActive)
                     {
-                        gravShockBullet.Despawn(true);
                         gravShockBullet = null;
+                        HitFor(0);
                     }
+                    else
+                    {
+                        transform.position = new Vector2(transform.position.x, transform.position.y + lastDistance - PlayState.FRAC_32);
+                        PlayState.globalFunctions.ScreenShake(new List<float> { 0.65f, 0f }, new List<float> { 0.75f }, 90f, 5f);
+                        PlayState.PlaySound("Stomp");
+                        if (gravShockBullet != null)
+                        {
+                            gravShockBullet.Despawn(true);
+                            gravShockBullet = null;
+                        }
+                        SpawnShockWaves();
+                    }
+                    gravShockBody.ResetParticle();
                     gravShockState = 0;
-                    SpawnShockWaves();
                     camFocusOffset = Vector2.zero;
+                    sprite.enabled = true;
                 }
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y + fallSpeed);
@@ -2070,7 +2108,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     // This function is called whenever a shelled character asks to enter/exit their shell
     public virtual void ToggleShell()
     {
-        if (stunned && !shelled)
+        if ((stunned && !shelled) || !CheckAbility(shellable))
             return;
         float[] disVars = new float[] { GetDistance(Dirs.Floor), GetDistance(Dirs.WallL), GetDistance(Dirs.WallR), GetDistance(Dirs.Ceiling) };
         if (shelled)
@@ -2325,7 +2363,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
         return !stunned || PlayState.CheckForItem(8) || (PlayState.stackShells && PlayState.GetShellLevel() > 1);
     }
 
-    public void HitFor(int damage)
+    public void HitFor(int damage, EnemyBullet enemyBullet = null)
+    {
+        HitFor(damage, null, enemyBullet);
+    }
+    public void HitFor(int damage, Enemy enemy, EnemyBullet enemyBullet = null)
     {
         if ((stunned && damage > 0) || inDeathCutscene || (PlayState.paralyzed && !PlayState.overrideParalysisInvulnerability) || gravShockState == 2)
             return;
@@ -2348,6 +2390,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.globalFunctions.UpdateHearts();
                     PlayState.PlaySound("Parry");
                     PlayState.RequestParticle(transform.position, "parry");
+                    if (enemy != null)
+                        enemy.parryDamage = damage * 32 * (PlayState.GetShellLevel() + 1);
+                    Debug.Log(enemy.parryDamage + " (" + damage + "), " + enemy.maxHealth);
                 }
                 else
                     PlayState.PlaySound("Ping");
@@ -2417,7 +2462,16 @@ public class Player : MonoBehaviour, ICutsceneObject {
         PlayState.globalFunctions.UpdateHearts();
         inDeathCutscene = true;
         box.enabled = false;
-        gravShockState = 0;
+        if (gravShockState > 0)
+        {
+            gravShockState = 0;
+            if (gravShockBullet != null)
+                gravShockBullet.Despawn();
+            gravShockBullet = null;
+            if (gravShockCharge != null)
+                gravShockCharge.ResetParticle();
+            gravShockCharge = null;
+        }
         PlayState.paralyzed = true;
         PlayState.PlaySound("Death");
         PlayState.areaOfDeath = PlayState.currentArea;

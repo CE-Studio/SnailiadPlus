@@ -541,7 +541,7 @@ public class MainMenu : MonoBehaviour
                             Debug.LogWarning("Menu option variable type \"" + option.varType + "\" is not recognized");
                         break;
                     case "difficulty":
-                        TestForArrowAdjust(option, 0, PlayState.generalData.achievements[14] ? 2 : 1);
+                        TestForArrowAdjust(option, 0, 1);// PlayState.generalData.achievements[14] ? 2 : 1);
                         switch (menuVarFlags[0])
                         {
                             case 0:
@@ -1867,7 +1867,8 @@ public class MainMenu : MonoBehaviour
         }
         else
             SetSelectorChar("Snaily");
-        AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
+        if (!PlayState.isInBossRush)
+            AddOption(PlayState.GetText("menu_option_main_profile"), true, ProfileScreen);
         if (PlayState.isInBossRush)
         {
             menuVarFlags[0] = CharacterNameToID(PlayState.currentProfile.character);
@@ -1951,9 +1952,11 @@ public class MainMenu : MonoBehaviour
     {
         if (PlayState.currentProfileNumber != 0)
             ReturnToMenu();
+        if (PlayState.isInBossRush)
+            MenuOutOfBossRush();
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = menuVarFlags[3];
-        PlayState.currentProfile = PlayState.blankProfile;
+        PlayState.currentProfile = PlayState.BlankProfile();
         PlayState.currentProfile.difficulty = menuVarFlags[0];
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
@@ -2141,7 +2144,7 @@ public class MainMenu : MonoBehaviour
     public void EraseAndBoot()
     {
         PlayState.EraseGame(menuVarFlags[0]);
-        PlayState.currentProfile = PlayState.blankProfile;
+        PlayState.currentProfile = PlayState.BlankProfile();
         ReturnToMenu();
     }
 
@@ -2164,7 +2167,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = 0;
-        PlayState.currentProfile = PlayState.blankProfile;
+        PlayState.currentProfile = PlayState.BlankProfile();
         PlayState.currentProfile.difficulty = 1;
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
@@ -3316,6 +3319,7 @@ public class MainMenu : MonoBehaviour
         PlayState.isInBossRush = false;
         PlayState.isMenuOpen = true;
         PlayState.ToggleHUD(false);
+        PlayState.currentProfile = PlayState.blankProfile;
         ToggleHUD(true);
         ReturnToMenu();
         currentPointInIndex = 0;

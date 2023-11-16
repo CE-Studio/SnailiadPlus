@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public string elementType; // Currently supports "ice" and "fire"
     public bool invulnerable = false;
     public bool canDamage = true;
+    public int parryDamage = 0;
 
     public Collider2D col;
     public Rigidbody2D rb;
@@ -75,14 +76,14 @@ public class Enemy : MonoBehaviour
                 (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
                 canHit = false;
             if (canHit)
-                PlayState.playerScript.HitFor(attack);
+                PlayState.playerScript.HitFor(attack, this);
         }
 
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
             List<Bullet> bulletsToDespawn = new();
             bool killFlag = false;
-            int maxDamage = 0;
+            int maxDamage = parryDamage;
             foreach (Bullet bullet in intersectingBullets)
             {
                 if (!immunities.Contains(bullet.bulletType) && bullet.damage - defense > 0)
@@ -112,6 +113,7 @@ public class Enemy : MonoBehaviour
                 else
                     StartCoroutine(Flash());
             }
+            parryDamage = 0;
             while (bulletsToDespawn.Count > 0)
             {
                 intersectingBullets.RemoveAt(0);
