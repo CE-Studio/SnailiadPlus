@@ -382,7 +382,7 @@ public class GigaSnail : Boss
         else
             direction = PlayState.player.transform.position.y < transform.position.y ? Vector2.down : Vector2.up;
 
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.gigaWave, new float[] { WAVE_SPEED * Time.fixedDeltaTime, direction.x, direction.y });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.gigaWave, new float[] { WAVE_SPEED * Time.fixedDeltaTime, direction.x, direction.y });
     }
 
     private void SetMode(BossMode newMode)
@@ -1115,7 +1115,7 @@ public class GigaSnail : Boss
 
     private void StrafeSingle(float angle, bool playSound)
     {
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.bigPea, new float[] { STRAFE_SPEED, Mathf.Cos(angle), Mathf.Sin(angle) }, playSound);
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.bigPea, new float[] { STRAFE_SPEED, Mathf.Cos(angle), Mathf.Sin(angle) }, playSound);
     }
 
     private void StrafeMulti()

@@ -41,7 +41,7 @@ public class Walleye : Enemy
     private void Shoot()
     {
         shotTimeout = SHOT_TIMEOUT;
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.laser, new float[] { SHOT_SPEED, facingLeft ? -1 : 1, 0 });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.laser, new float[] { SHOT_SPEED, facingLeft ? -1 : 1, 0 });
     }
 
     public void Face(bool left)

@@ -110,7 +110,7 @@ public class Spikey2 : Enemy
             if (PlayState.OnScreen(transform.position, box))
             {
                 Vector2 angle = PlayState.DirectionBetween(transform.position, PlayState.player.transform.position);
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.pea, new float[] { 5, angle.x, angle.y });
+                PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.pea, new float[] { 5, angle.x, angle.y });
             }
             stopTimeout = STOP_TIMEOUT;
             startTimeout = START_TIMEOUT + STOP_TIMEOUT;

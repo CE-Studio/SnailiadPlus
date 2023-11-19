@@ -239,13 +239,13 @@ public class FederationDrone : Enemy
 
     private void ShootLaser()
     {
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.laser, new float[] { LASER_SPEED, facingLeft ? -1 : 1, 0 });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.laser, new float[] { LASER_SPEED, facingLeft ? -1 : 1, 0 });
     }
 
     private void ShootDonuts()
     {
         for (int i = 0; i < DONUT_COUNT; i++)
-            PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutRotary,
+            PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.donutRotary,
                 new float[] { DONUT_SPEED_ORBIT, DONUT_SPEED_RADIUS, PlayState.TAU / DONUT_COUNT * i }, i == 0);
     }
 }

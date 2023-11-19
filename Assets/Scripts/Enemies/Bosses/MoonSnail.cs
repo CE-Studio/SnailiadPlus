@@ -203,7 +203,7 @@ public class MoonSnail : Boss
             float angle = Mathf.Atan2(transform.position.y - PlayState.player.transform.position.y,
                 transform.position.x - PlayState.player.transform.position.x);
             for (int i = 0; i < DONUT_COUNT; i++)
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutHybrid, new float[]
+                PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.donutHybrid, new float[]
                     { 0, angle, 0.2f, 1f, 2.2f, PlayState.TAU / DONUT_COUNT * i }, i == 0);
         }
     }
@@ -912,14 +912,14 @@ public class MoonSnail : Boss
         switch (currentWeapon)
         {
             case 0:
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.bigPea, new float[] { weaponSpeeds[0], fireAngle.x, fireAngle.y });
+                PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.bigPea, new float[] { weaponSpeeds[0], fireAngle.x, fireAngle.y });
                 break;
             case 1:
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.boomRed, new float[] { weaponSpeeds[1], fireAngle.x, fireAngle.y });
+                PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.boomRed, new float[] { weaponSpeeds[1], fireAngle.x, fireAngle.y });
                 break;
             default:
             case 2:
-                PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.shadowWave, new float[] { weaponSpeeds[2], fireAngle.x, fireAngle.y });
+                PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.shadowWave, new float[] { weaponSpeeds[2], fireAngle.x, fireAngle.y });
                 break;
         }
     }

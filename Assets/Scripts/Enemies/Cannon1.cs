@@ -59,7 +59,7 @@ public class Cannon1 : Enemy
     private void Shoot()
     {
         Vector2 normVel = velocity.normalized;
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.spikeball, new float[] { SHOT_SPEED * 0.0625f, normVel.x, normVel.y });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.spikeball, new float[] { SHOT_SPEED * 0.0625f, normVel.x, normVel.y });
     }
 
     public void Update()

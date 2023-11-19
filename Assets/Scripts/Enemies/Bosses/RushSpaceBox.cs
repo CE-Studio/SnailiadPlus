@@ -735,7 +735,7 @@ public class RushSpaceBox : Boss
 
     private void Shoot()
     {
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutRotary, new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * shotCount });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.donutRotary, new float[] { 3.75f, 4, PlayState.TAU / SHOT_COUNT * shotCount });
     }
 
     private void MakeBoxes()

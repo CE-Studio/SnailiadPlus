@@ -156,8 +156,11 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
-    public void Shoot(Vector2 newOrigin, BulletType type, float[] dirVelVars, bool playSound = true)
+    public void Shoot(Enemy newSourceEnemy, Vector2 newOrigin, BulletType type, float[] dirVelVars, bool playSound = true)
     {
+        if (sourceEnemy == null)
+            sourceEnemy = newSourceEnemy;
+
         sprite.enabled = true;
         box.enabled = true;
         isActive = true;
@@ -326,9 +329,15 @@ public class EnemyBullet : MonoBehaviour
             PlayState.PlaySound(soundID);
     }
 
+    public void Reshoot(Vector2 newOrigin, Vector2 newAngle, bool playSound = false)
+    {
+        Shoot(sourceEnemy, newOrigin, bulletType, new float[] { initialSpeed, newAngle.x, newAngle.y }, playSound);
+        lifeTimer = 0;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerBullet"))
+        if (collision.CompareTag("PlayerBullet") && !hasBeenParried)
         {
             Bullet bullet = collision.GetComponent<Bullet>();
             bool destroyFlag = false;
@@ -370,8 +379,8 @@ public class EnemyBullet : MonoBehaviour
         }
         else if ((collision.CompareTag("PlayerCollide") || collision.CompareTag("BreakableBlock")) && bulletType == 0)
             Despawn();
-        else if (collision.CompareTag("Player") && !PlayState.playerScript.stunned)
-            PlayState.playerScript.HitFor(damage);
+        else if (collision.CompareTag("Player") && !PlayState.playerScript.stunned && !hasBeenParried)
+            PlayState.playerScript.HitFor(damage, this);
     }
 
     public void Despawn()
@@ -386,6 +395,7 @@ public class EnemyBullet : MonoBehaviour
             SetDestroyableLevels("000000", false);
             SetDestroyableLevels("000000", true);
             bulletInteraction = 0;
+            hasBeenParried = false;
         }
     }
 

@@ -103,7 +103,7 @@ public class StompyEye : Enemy
     {
         float angleX = -Mathf.Cos(angle);
         float angleY = Mathf.Sin(angle);
-        PlayState.ShootEnemyBullet(pupil.transform.position, EnemyBullet.BulletType.donutLinear, new float[] { 2.5f, angleX, angleY });
+        PlayState.ShootEnemyBullet(this, pupil.transform.position, EnemyBullet.BulletType.donutLinear, new float[] { 2.5f, angleX, angleY });
     }
 
     private void Update()

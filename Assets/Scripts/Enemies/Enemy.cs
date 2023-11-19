@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     public Vector2 origin;
     private bool intersectingPlayer = false;
     protected List<Bullet> intersectingBullets = new();
+    protected List<EnemyBullet> intersectingEnemyBullets = new();
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
@@ -82,6 +83,7 @@ public class Enemy : MonoBehaviour
         if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
         {
             List<Bullet> bulletsToDespawn = new();
+            List<EnemyBullet> enemyBulletsToDespawn = new();
             bool killFlag = false;
             int maxDamage = parryDamage;
             foreach (Bullet bullet in intersectingBullets)
@@ -105,6 +107,29 @@ public class Enemy : MonoBehaviour
                 if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive)
                     bulletsToDespawn.Add(bullet);
             }
+            foreach (EnemyBullet bullet in intersectingEnemyBullets)
+            {
+                if (bullet.hasBeenParried)
+                {
+                    if (bullet.damage - defense > 0)
+                    {
+                        int thisDamage = Mathf.FloorToInt(bullet.damage - defense);
+                        if (thisDamage > maxDamage)
+                            maxDamage = thisDamage;
+                    }
+                    else
+                    {
+                        if (!PlayState.armorPingPlayedThisFrame && makeSoundOnPing)
+                        {
+                            PlayState.armorPingPlayedThisFrame = true;
+                            PlayState.PlaySound("Ping");
+                        }
+                        pingPlayer -= 1;
+                    }
+                    if (!letsPermeatingShotsBy || bullet.bulletType == EnemyBullet.BulletType.pea || !bullet.isActive)
+                        enemyBulletsToDespawn.Add(bullet);
+                }
+            }
             if (maxDamage > 0)
             {
                 health -= maxDamage;
@@ -117,8 +142,14 @@ public class Enemy : MonoBehaviour
             while (bulletsToDespawn.Count > 0)
             {
                 intersectingBullets.RemoveAt(0);
-                bulletsToDespawn[0].GetComponent<Bullet>().Despawn(true);
+                bulletsToDespawn[0].Despawn(true);
                 bulletsToDespawn.RemoveAt(0);
+            }
+            while (enemyBulletsToDespawn.Count > 0)
+            {
+                intersectingEnemyBullets.RemoveAt(0);
+                enemyBulletsToDespawn[0].Despawn();
+                enemyBulletsToDespawn.RemoveAt(0);
             }
             if (killFlag)
                 Kill();
@@ -142,6 +173,9 @@ public class Enemy : MonoBehaviour
             case "Player":
                 intersectingPlayer = true;
                 break;
+            case "EnemyBullet":
+                intersectingEnemyBullets.Add(collision.GetComponent<EnemyBullet>());
+                break;
             default:
                 break;
         }
@@ -156,6 +190,9 @@ public class Enemy : MonoBehaviour
                 break;
             case "Player":
                 intersectingPlayer = false;
+                break;
+            case "EnemyBullet":
+                intersectingEnemyBullets.Remove(collision.GetComponent<EnemyBullet>());
                 break;
             default:
                 break;

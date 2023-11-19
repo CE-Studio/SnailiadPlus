@@ -159,7 +159,7 @@ public class Snakey3 : Enemy
         {
             float angleX = -Mathf.Cos(angle);
             float angleY = Mathf.Sin(angle);
-            PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.donutLinear, new float[] { WEAPON_SPEED, angleX, angleY });
+            PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.donutLinear, new float[] { WEAPON_SPEED, angleX, angleY });
         }
     }
 

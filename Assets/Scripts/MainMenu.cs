@@ -18,6 +18,8 @@ public class MainMenu : MonoBehaviour
         public DestinationDelegate destinationPage;
         public TextObject textScript;
         public int[] menuParam;
+        public float selectY;
+        public bool forceScale;
     }
 
     private List<MenuOption> currentOptions = new();
@@ -1031,6 +1033,8 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                 }
+                if (!option.forceScale)
+                    SetOptionSize(option, option.textScript.GetWidth(true) * (option.textScript.size == 2 ? 1 : 2) > 23f);
             }
             GetNewSnailOffset();
         }
@@ -1069,7 +1073,7 @@ public class MainMenu : MonoBehaviour
         {
             selector[0].transform.localPosition = new Vector2(0,
                     Mathf.Lerp(selector[0].transform.localPosition.y,
-                    currentOptions[selectedOption].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
+                    currentOptions[selectedOption].selectY + SELECT_SNAIL_VERTICAL_OFFSET, 15 * Time.deltaTime));
             selector[1].transform.localPosition = new Vector2(Mathf.Lerp(selector[1].transform.localPosition.x, -selectSnailOffset, 15 * Time.deltaTime), 0);
             selector[2].transform.localPosition = new Vector2(Mathf.Lerp(selector[2].transform.localPosition.x, selectSnailOffset, 15 * Time.deltaTime), 0);
             if (isProfilePage && selectedOption >= 1 && selectedOption <= 3)
@@ -1223,30 +1227,53 @@ public class MainMenu : MonoBehaviour
 
     public void AddOption(string text = "", bool isSelectable = true)
     {
-        AddOption(text, isSelectable, null, null, "none");
+        AddOption(text, isSelectable, null, 0, null, "none");
+    }
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0)
+    {
+        AddOption(text, isSelectable, null, scaleOverride, null, "none");
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null)
     {
-        AddOption(text, isSelectable, destination, null, "none");
+        AddOption(text, isSelectable, destination, 0, null, "none");
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0)
+    {
+        AddOption(text, isSelectable, destination, scaleOverride, null, "none");
     }
     public void AddOption(string text = "", bool isSelectable = true, string variable = "none")
     {
-        AddOption(text, isSelectable, null, null, variable);
+        AddOption(text, isSelectable, null, 0, null, variable);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, string variable = "none")
+    {
+        AddOption(text, isSelectable, null, scaleOverride, null, variable);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, null, variable);
+        AddOption(text, isSelectable, destination, 0, null, variable);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, string variable = "none")
+    {
+        AddOption(text, isSelectable, destination, scaleOverride, null, variable);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
     {
-        AddOption(text, isSelectable, destination, paramChange, "none");
+        AddOption(text, isSelectable, destination, 0, paramChange, "none");
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null, string variable = "none")
     {
-        foreach (TextObject selectedText in activeOptions)
+        AddOption(text, isSelectable, destination, 0, paramChange, variable);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, int[] paramChange = null, string variable = "none")
+    {
+        for (int i = 0; i < currentOptions.Count; i++)
         {
-            selectedText.position += new Vector2(0f, LIST_OPTION_SPACING * 0.5f);
-            selectedText.transform.localPosition = selectedText.position;
+            MenuOption thisOption = currentOptions[i];
+            thisOption.textScript.position += new Vector2(0f, LIST_OPTION_SPACING * 0.5f);
+            thisOption.textScript.transform.localPosition = thisOption.textScript.position;
+            thisOption.selectY += LIST_OPTION_SPACING * 0.5f;
+            currentOptions[i] = thisOption;
         }
 
         MenuOption option = new()
@@ -1255,7 +1282,9 @@ public class MainMenu : MonoBehaviour
             optionID = currentOptions.Count,
             selectable = isSelectable,
             destinationPage = destination,
-            varType = variable
+            varType = variable,
+            selectY = currentSpawnY,
+            forceScale = scaleOverride != 0
         };
 
         GameObject newText = Instantiate(textObject);
@@ -1266,6 +1295,10 @@ public class MainMenu : MonoBehaviour
         option.textScript.CreateShadow();
         option.textScript.position = new Vector3(0, currentSpawnY);
         option.textScript.transform.localPosition = option.textScript.position;
+        if (scaleOverride != 0)
+            SetOptionSize(option, scaleOverride == 1);
+        if (option.textScript.GetWidth(true) > 23f)
+            SetOptionSize(option, true);
         activeOptions.Add(option.textScript);
         currentSpawnY -= LIST_OPTION_SPACING * 0.5f;
 
@@ -1275,6 +1308,27 @@ public class MainMenu : MonoBehaviour
         option.textScript.SetColor(option.selectable ? PlayState.GetColor("0312") : PlayState.GetColor("0309"));
 
         currentOptions.Add(option);
+    }
+
+    public void SetOptionSize(MenuOption option, bool setSmall)
+    {
+        if ((setSmall && option.textScript.size == 2) || (!setSmall && option.textScript.size == 1))
+        {
+            int newlines = 0;
+            for (int i = 0; i < option.optionText.Length; i++)
+                if (option.optionText[i] == '\n')
+                    newlines++;
+            if (setSmall)
+            {
+                option.textScript.SetSize(1);
+                option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
+            }
+            else
+            {
+                option.textScript.SetSize(2);
+                option.textScript.position.y = option.selectY + (0.5f * newlines);
+            }
+        }
     }
 
     public void ToggleHUD(bool state)
@@ -1319,7 +1373,7 @@ public class MainMenu : MonoBehaviour
     public void ForceSelect(int optionNum)
     {
         selectedOption = optionNum;
-        selector[0].transform.localPosition = new Vector2(0, currentOptions[optionNum].textScript.position.y + SELECT_SNAIL_VERTICAL_OFFSET);
+        selector[0].transform.localPosition = new Vector2(0, currentOptions[optionNum].selectY + SELECT_SNAIL_VERTICAL_OFFSET);
         GetNewSnailOffset();
         selector[1].transform.localPosition = new Vector2(-selectSnailOffset, 0);
         selector[2].transform.localPosition = new Vector2(selectSnailOffset, 0);
@@ -3205,22 +3259,21 @@ public class MainMenu : MonoBehaviour
         int[] counts = ToggleAchievementInterface(true);
         AddOption(string.Format(PlayState.GetText("menu_option_achievements_progress"), counts[0], counts[1],
             Control.lastInputIsCon ? Control.ParseButtonName(Control.controllerInputs[(int)Control.Controller.Jump1]) :
-                                     Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Jump1])), false);
-        currentOptions[0].textScript.SetSize(1);
+                                     Control.ParseKeyName(Control.keyboardInputs[(int)Control.Keyboard.Jump1])), false, 1);
+        currentOptions[0].textScript.position.y += 0.45f;
         AddOption("", false);
         AddOption("", false);
         AddOption("", false);
         if (PlayState.generalData.achievements[0])
         {
             AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_title", achievements[0].ToLower())), true, ShowAchievementHint, "achievements");
-            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_desc", achievements[0].ToLower())), false);
+            AddOption(PlayState.GetText(string.Format("menu_option_achievements_{0}_desc", achievements[0].ToLower())), false, 1);
         }
         else
         {
             AddOption(PlayState.GetText("menu_option_achievements_locked_title"), true, ShowAchievementHint, "achievements");
-            AddOption(PlayState.GetText("menu_option_achievements_locked_desc"), false);
+            AddOption(PlayState.GetText("menu_option_achievements_locked_desc"), false, 1);
         }
-        currentOptions[5].textScript.SetSize(1);
         AddOption(PlayState.GetText("menu_option_records_returnTo"), true, RecordsScreen);
         ForceSelect(4);
         backPage = RecordsScreen;

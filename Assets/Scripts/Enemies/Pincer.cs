@@ -368,7 +368,7 @@ public class Pincer : Enemy
 
         float angle = Mathf.Atan2(transform.position.y - PlayState.player.transform.position.y,
             transform.position.x - PlayState.player.transform.position.x);
-        PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.pea, new float[] { WEAPON_SPEED, -Mathf.Cos(angle), -Mathf.Sin(angle) });
+        PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.pea, new float[] { WEAPON_SPEED, -Mathf.Cos(angle), -Mathf.Sin(angle) });
     }
 
     private void PlayAnim(string action, bool lookState)

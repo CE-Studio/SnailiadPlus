@@ -146,7 +146,7 @@ public class Shellbreaker : Boss
                     3 => angle - (Mathf.PI / shotMax - Mathf.PI / 2f) * currentShotCount / 12f * Mathf.Rad2Deg,
                     _ => angle
                 };
-                if (PlayState.ShootEnemyBullet(transform.position, EnemyBullet.BulletType.boomBlue, angle, weaponSpeed))
+                if (PlayState.ShootEnemyBullet(this, transform.position, EnemyBullet.BulletType.boomBlue, angle, weaponSpeed))
                     currentShotCount++;
             }
             if (currentShotCount >= shotMax)

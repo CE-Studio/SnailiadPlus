@@ -227,7 +227,7 @@
 		},
 		{
 			"name": "menu_option_newGame_openMap",
-			"text": "Open map",
+			"text": "Revealed map",
 			"value": 0
 		},
 		{
@@ -717,12 +717,12 @@
 		},
 		{
 			"name": "menu_option_gameplay_gravSwap",
-			"text": "Swap grav on",
+			"text": "Swap gravity dir on",
 			"value": 0
 		},
 		{
 			"name": "menu_option_gameplay_gravKeep",
-			"text": "Keep grav until",
+			"text": "Keep gravity dir until",
 			"value": 0
 		},
 		{
@@ -1462,7 +1462,7 @@
 		},
 		{
 			"name": "menu_option_achievements_progress",
-			"text": "{0}/{1} unlocked.  Press {2} to show an achievement's hint",
+			"text": "{0}/{1} unlocked\nPress {2} to show an achievement's hint",
 			"value": 0
 		},
 		{
@@ -2027,27 +2027,27 @@
 		},
 		{
 			"name": "menu_add_gravSwap_onJump",
-			"text": "Hold dir, tap jump",
+			"text": "Hold direction, tap jump",
 			"value": 0
 		},
 		{
 			"name": "menu_add_gravSwap_onDir",
-			"text": "Hold jump, tap dir",
+			"text": "Hold jump, tap direction",
 			"value": 0
 		},
 		{
 			"name": "menu_add_gravSwap_onDoubleTap",
-			"text": "Double-tap dir",
+			"text": "Double-tap direction",
 			"value": 0
 		},
 		{
 			"name": "menu_add_gravKeep_onState",
-			"text": "Wall stick",
+			"text": "You stick to a wall",
 			"value": 0
 		},
 		{
 			"name": "menu_add_gravKeep_onJump",
-			"text": "Grav jump",
+			"text": "Gravity jump",
 			"value": 0
 		},
 		{

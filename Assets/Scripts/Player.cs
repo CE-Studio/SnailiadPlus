@@ -2384,7 +2384,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 damage = Mathf.FloorToInt(damage * 0.5f);
             if (shelled && PlayState.CheckForItem("Shell Shield"))
             {
-                if (timeSinceShell <= 0.05f)
+                if (timeSinceShell <= 0.075f)
                 {
                     health = Mathf.Clamp(health + healthGainFromParry, 0, maxHealth);
                     PlayState.globalFunctions.UpdateHearts();
@@ -2392,7 +2392,24 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     PlayState.RequestParticle(transform.position, "parry");
                     if (enemy != null)
                         enemy.parryDamage = damage * 32 * (PlayState.GetShellLevel() + 1);
-                    Debug.Log(enemy.parryDamage + " (" + damage + "), " + enemy.maxHealth);
+                    if (enemyBullet != null)
+                    {
+                        Vector2 bulletPos = enemyBullet.transform.position;
+                        Vector2 enemyPos = enemyBullet.sourceEnemy.transform.position;
+                        float angle = Mathf.Atan2(-(bulletPos.y - enemyPos.y), bulletPos.x - enemyPos.x);
+                        enemyBullet.Reshoot(bulletPos, new Vector2(-Mathf.Cos(angle), Mathf.Sin(angle)));
+
+                        float damageScaling = 8f;
+                        float healthRatio = Mathf.InverseLerp(0, maxHealth, health);
+                        float shellBonus = 1 + (0.25f * PlayState.GetShellLevel());
+                        float newDamage = enemyBullet.damage * damageScaling;
+                        newDamage *= 1 + (Mathf.InverseLerp(0.33f, 0, healthRatio) * 0.35f);
+                        newDamage *= shellBonus;
+                        enemyBullet.damage = Mathf.FloorToInt(newDamage);
+
+                        enemyBullet.hasBeenParried = true;
+                    }
+                    //Debug.Log(enemy.parryDamage + " (" + damage + "), " + enemy.maxHealth);
                 }
                 else
                     PlayState.PlaySound("Ping");
