@@ -972,6 +972,9 @@ public class RoomTrigger : MonoBehaviour
                                 directions = new PlayState.EDirsCompass[] { PlayState.EDirsCompass.None }
                             });
                             break;
+                        case 481:
+                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Angry Pink Block"), worldPos + new Vector2(2.5f, -1.5f), Quaternion.identity, transform);
+                            break;
                         case 1120:
                         case 1121:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Fire"), worldPos, Quaternion.identity, transform);

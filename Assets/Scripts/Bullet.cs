@@ -240,7 +240,7 @@ public class Bullet : MonoBehaviour
         }
         direction = dir;
         initialVelocity = velocity;
-        if (!PlayState.CheckForItem("Rapid Fire") || !applyRapidMult)
+        if (!((PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods)) && applyRapidMult))
             rapidMult = 1f;
         if (PlayState.damageMult)
             damage *= 10;

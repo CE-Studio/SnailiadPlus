@@ -675,21 +675,28 @@ public class GlobalFunctions : MonoBehaviour
     {
         if ((weaponID + 1 > PlayState.playerScript.selectedWeapon && activateThisWeapon) || !activateThisWeapon)
             PlayState.playerScript.selectedWeapon = weaponID + 1;
+        UpdateWeaponIcons();
+    }
+
+    public void UpdateWeaponIcons()
+    {
         for (int i = 0; i < weaponIcons.Length; i++)
         {
-            string animName = "WeaponIcon_" + (i + 1);
-            if (i switch { 1 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
-                2 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
-                _ => PlayState.CheckForItem(0) })
+            string animName = "WeaponIcon_" + (i + 1) + "_";
+            bool hasWeapon = i switch
             {
-                if (weaponID == i)
-                    animName += "_active";
-                else
-                    animName += "_inactive";
-            }
+                1 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
+                2 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
+                _ => PlayState.CheckForItem(0)
+            };
+            if (PlayState.playerScript.selectedWeapon - 1 == i && hasWeapon)
+                animName += "active";
+            else if (hasWeapon)
+                animName += "inactive";
             else
-                animName += "_locked";
-            weaponIcons[i].Play(animName);
+                animName += "locked";
+            if (weaponIcons[i].lastAnimName != animName)
+                weaponIcons[i].Play(animName);
         }
     }
 

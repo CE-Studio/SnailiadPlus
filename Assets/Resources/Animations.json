@@ -19433,6 +19433,140 @@
 		},
 		
 		{
+			"name": "Enemy_angryBlock_body",
+			"spriteName": "Entities/AngryBlock",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_idle",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_N",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_NE",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_E",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_SE",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_S",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_SW",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_W",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_NW",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Enemy_angryBlock_face_shoot",
+			"spriteName": "Entities/AngryBlockFace",
+			"framerate": 8.0,
+			"frames": [
+				1,
+				1,
+				1,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 3,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Enemy_babyfish1_normal",
 			"spriteName": "Entities/Babyfish",
 			"framerate": 0.0,

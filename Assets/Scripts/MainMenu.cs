@@ -1773,8 +1773,6 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
-        PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
-        PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
         SetTextComponentOrigins();
@@ -1782,7 +1780,6 @@ public class MainMenu : MonoBehaviour
         fadingToIntro = false;
         PlayState.fader = 1;
         music.Stop();
-        PlayState.stackWeaponMods = PlayState.isInBossRush;
 
         if (runIntro)
         {
@@ -2016,6 +2013,8 @@ public class MainMenu : MonoBehaviour
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
         PlayState.isInBossRush = false;
+        PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
+        PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
 
         if (menuVarFlags[4] == 1)
         {
@@ -2062,6 +2061,8 @@ public class MainMenu : MonoBehaviour
         PlayState.currentProfileNumber = menuVarFlags[0];
         PlayState.SetPlayer(PlayState.currentProfile.character);
         PlayState.isInBossRush = false;
+        PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
+        PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
 
         StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.currentProfile.saveCoords));
     }
@@ -2073,6 +2074,7 @@ public class MainMenu : MonoBehaviour
         ToggleHUD(false);
         pauseButtonDown = true;
         PlayState.minimapScript.RefreshMap();
+        PlayState.globalFunctions.UpdateWeaponIcons();
         SetTextComponentOrigins();
 
         PlayState.playerScript.holdingJump = true;
@@ -2227,6 +2229,8 @@ public class MainMenu : MonoBehaviour
         PlayState.playerScript.selectedWeapon = 0;
         PlayState.currentProfile.isEmpty = false;
         PlayState.isInBossRush = true;
+        PlayState.stackShells = false;
+        PlayState.stackWeaponMods = false;
         PlayState.incrementRushTimer = false;
         PlayState.hudRushTime.SetText("");
         PlayState.currentProfile.saveCoords = PlayState.BOSS_RUSH_SPAWN;

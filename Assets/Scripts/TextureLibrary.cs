@@ -52,6 +52,8 @@ public class TextureLibrary : ScriptableObject
         "Endings/EndingSub30",
         "Endings/TheEnd",
 
+        "Entities/AngryBlock",
+        "Entities/AngryBlockFace",
         "Entities/Babyfish",
         "Entities/BalloonBuster",
         "Entities/Bat",

@@ -28,7 +28,7 @@ public class Sluggy : Player
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
         weaponCooldowns = new float[] { 0.046f, 0.23f, 0.13f, 0.023f, 0.115f, 0.065f };
-        applyRapidFireMultiplier = 1;
+        applyRapidFireMultiplier = true;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);
         hitboxSize_shell = new Vector2(0.75f, 0.96f);

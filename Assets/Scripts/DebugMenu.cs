@@ -102,6 +102,7 @@ public class DebugMenu : MonoBehaviour
                 obj.SetActive(false);
             PlayState.ToggleHUD(true);
             PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 0.25f, 0, 999);
+            PlayState.globalFunctions.UpdateWeaponIcons();
             buttonDown = true;
         }
         if (buttonDown && !Control.Generic(terminalKey, true) && !Control.Pause(true))
