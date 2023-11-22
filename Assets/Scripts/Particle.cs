@@ -10,7 +10,7 @@ public class Particle : MonoBehaviour
     public string type = "";
     public float[] vars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-    private bool runInMenu = false;
+    public bool runInMenu = false;
     public ParticleSpriteCollection sprites;
 
     public void Awake()
@@ -95,8 +95,9 @@ public class Particle : MonoBehaviour
 
     public void Update()
     {
-        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.menu ||
-            PlayState.gameState == PlayState.GameState.credits || runInMenu)
+        if (PlayState.gameState == PlayState.GameState.game || PlayState.gameState == PlayState.GameState.credits ||
+            ((PlayState.gameState == PlayState.GameState.menu || PlayState.gameState == PlayState.GameState.map ||
+            PlayState.gameState == PlayState.GameState.pause || PlayState.gameState == PlayState.GameState.debug) && runInMenu))
         {
             if (!anim.isPlaying)
                 anim.Resume();

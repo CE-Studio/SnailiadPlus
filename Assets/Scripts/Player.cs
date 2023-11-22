@@ -196,9 +196,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
             rb.WakeUp();
 
             // Making sure we have weapons
-            int[] weaponIDs = new int[] { 0, 1, 2, 11, 12 };
             armed = false;
-            foreach (int weapon in weaponIDs)
+            foreach (int weapon in new int[] { 0, 1, 2, 11, 12 })
                 if (PlayState.CheckForItem(weapon))
                     armed = true;
 
@@ -560,6 +559,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     {
                         gravityDir = Dirs.Ceiling;
                         SwapDir(Dirs.Ceiling);
+                        UpdateHitbox();
                         grounded = true;
                         ungroundedViaHop = false;
                         holdingShell = true;
@@ -600,6 +600,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         gravityDir = facingLeft ? Dirs.WallR : Dirs.WallL;
                         SwapDir(gravityDir);
                         SwitchSurfaceAxis();
+                        UpdateHitbox();
                         velocity = new((GetDistance(facingLeft ? Dirs.WallL : Dirs.WallR) * (facingLeft ? -1 : 1)) +
                             (PlayState.FRAC_128 * Mathf.Sign(Control.AxisX())), -PlayState.FRAC_16);
                         performHorizCheck = false;
@@ -663,6 +664,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         if (Control.UpHold())
                             SwapDir(Dirs.Ceiling);
                         gravityDir = facingLeft ? Dirs.WallL : Dirs.WallR;
+                        UpdateHitbox();
                         grounded = true;
                     }
                 }
@@ -737,6 +739,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (PlayState.generalData.gravKeepType == 1)
                     homeGravity = Dirs.Ceiling;
                 SwapDir(Dirs.Ceiling);
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] = maxSecs;
@@ -755,6 +758,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
@@ -909,6 +913,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     {
                         gravityDir = Dirs.WallR;
                         SwapDir(Dirs.WallR);
+                        UpdateHitbox();
                         grounded = true;
                         ungroundedViaHop = false;
                         holdingShell = true;
@@ -949,6 +954,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         gravityDir = facingDown ? Dirs.Ceiling : Dirs.Floor;
                         SwapDir(gravityDir);
                         SwitchSurfaceAxis();
+                        UpdateHitbox();
                         velocity = new(-PlayState.FRAC_16, (GetDistance(facingDown ? Dirs.Floor : Dirs.Ceiling) * (facingDown ? -1 : 1)) +
                             (PlayState.FRAC_128 * Mathf.Sign(Control.AxisY())));
                         performHorizCheck = false;
@@ -1011,6 +1017,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         if (Control.RightHold())
                             SwapDir(Dirs.WallR);
                         gravityDir = facingDown ? Dirs.Floor : Dirs.Ceiling;
+                        UpdateHitbox();
                         grounded = true;
                     }
                 }
@@ -1085,6 +1092,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (PlayState.generalData.gravKeepType == 1)
                     homeGravity = Dirs.WallR;
                 SwapDir(Dirs.WallR);
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.WallR] = maxSecs;
@@ -1103,6 +1111,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
@@ -1257,6 +1266,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     {
                         gravityDir = Dirs.WallL;
                         SwapDir(Dirs.WallL);
+                        UpdateHitbox();
                         grounded = true;
                         ungroundedViaHop = false;
                         holdingShell = true;
@@ -1297,6 +1307,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         gravityDir = facingDown ? Dirs.Ceiling : Dirs.Floor;
                         SwapDir(gravityDir);
                         SwitchSurfaceAxis();
+                        UpdateHitbox();
                         velocity = new(PlayState.FRAC_16, (GetDistance(facingDown ? Dirs.Floor : Dirs.Ceiling) * (facingDown ? -1 : 1)) +
                             (PlayState.FRAC_128 * Mathf.Sign(Control.AxisY())));
                         performHorizCheck = false;
@@ -1359,6 +1370,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         if (Control.LeftHold())
                             SwapDir(Dirs.WallL);
                         gravityDir = facingDown ? Dirs.Floor : Dirs.Ceiling;
+                        UpdateHitbox();
                         grounded = true;
                     }
                 }
@@ -1433,6 +1445,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (PlayState.generalData.gravKeepType == 1)
                     homeGravity = Dirs.WallL;
                 SwapDir(Dirs.WallL);
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
@@ -1451,6 +1464,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
@@ -1605,6 +1619,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     {
                         gravityDir = Dirs.Floor;
                         SwapDir(Dirs.Floor);
+                        UpdateHitbox();
                         grounded = true;
                         ungroundedViaHop = false;
                         holdingShell = true;
@@ -1645,6 +1660,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         gravityDir = facingLeft ? Dirs.WallR : Dirs.WallL;
                         SwapDir(gravityDir);
                         SwitchSurfaceAxis();
+                        UpdateHitbox();
                         velocity = new((GetDistance(facingLeft ? Dirs.WallL : Dirs.WallR) * (facingLeft ? -1 : 1)) +
                             (PlayState.FRAC_128 * Mathf.Sign(Control.AxisX())), PlayState.FRAC_16);
                         performHorizCheck = false;
@@ -1707,6 +1723,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         if (Control.DownHold())
                             SwapDir(Dirs.Floor);
                         gravityDir = facingLeft ? Dirs.WallL : Dirs.WallR;
+                        UpdateHitbox();
                         grounded = true;
                     }
                 }
@@ -1781,6 +1798,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 if (PlayState.generalData.gravKeepType == 1)
                     homeGravity = Dirs.Floor;
                 SwapDir(Dirs.Floor);
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
@@ -1799,6 +1817,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     homeGravity = newDir;
                 SwapDir(newDir);
                 SwitchSurfaceAxis();
+                UpdateHitbox();
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.WallL] = maxSecs;
@@ -1910,6 +1929,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             EjectFromCollisions();
         SwapDir(intendedHomeDir);
         gravityDir = intendedHomeDir;
+        UpdateHitbox();
         if (intendedHomeDir switch { Dirs.WallL => Control.LeftHold(), Dirs.WallR => Control.RightHold(),
             Dirs.Ceiling => Control.UpHold(), _ => Control.DownHold() })
             holdingShell = true;
@@ -2124,8 +2144,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     transform.position = new Vector2(transform.position.x,
                         transform.position.y + (0.675f - disVars[(int)Dirs.Floor] - (facingDown ? 0 : 0.25f)));
 
-                box.offset = new Vector2(hitboxOffset_normal.y * (facingLeft ? -1 : 1), hitboxOffset_normal.x * (facingDown ? -1 : 1));
-                box.size = new Vector2(hitboxSize_normal.y, hitboxSize_normal.x);
+                //box.offset = new Vector2(hitboxOffset_normal.y * (facingLeft ? -1 : 1), hitboxOffset_normal.x * (facingDown ? -1 : 1));
+                //box.size = new Vector2(hitboxSize_normal.y, hitboxSize_normal.x);
             }
             else
             {
@@ -2138,23 +2158,23 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     transform.position = new Vector2(transform.position.x + (0.675f - disVars[(int)Dirs.WallL] - (facingLeft ? 0 : 0.25f)),
                         transform.position.y);
 
-                box.offset = new Vector2(hitboxOffset_normal.x * (facingLeft ? -1 : 1), hitboxOffset_normal.y * (facingDown ? -1 : 1));
-                box.size = hitboxSize_normal;
+                //box.offset = new Vector2(hitboxOffset_normal.x * (facingLeft ? -1 : 1), hitboxOffset_normal.y * (facingDown ? -1 : 1));
+                //box.size = hitboxSize_normal;
             }
             timeSinceShell = 0;
         }
         else
         {
-            if (gravityDir == Dirs.WallL || gravityDir == Dirs.WallR)
-            {
-                box.offset = new Vector2(hitboxOffset_shell.y * (facingLeft ? -1 : 1), hitboxOffset_shell.x * (facingDown ? -1 : 1));
-                box.size = new Vector2(hitboxSize_shell.y, hitboxSize_shell.x);
-            }
-            else
-            {
-                box.offset = new Vector2(hitboxOffset_shell.x * (facingLeft ? -1 : 1), hitboxOffset_shell.y * (facingDown ? -1 : 1));
-                box.size = hitboxSize_shell;
-            }
+            //if (gravityDir == Dirs.WallL || gravityDir == Dirs.WallR)
+            //{
+            //    box.offset = new Vector2(hitboxOffset_shell.y * (facingLeft ? -1 : 1), hitboxOffset_shell.x * (facingDown ? -1 : 1));
+            //    box.size = new Vector2(hitboxSize_shell.y, hitboxSize_shell.x);
+            //}
+            //else
+            //{
+            //    box.offset = new Vector2(hitboxOffset_shell.x * (facingLeft ? -1 : 1), hitboxOffset_shell.y * (facingDown ? -1 : 1));
+            //    box.size = hitboxSize_shell;
+            //}
             PlayState.PlaySound("Shell");
             if (PlayState.CheckForItem("Shell Shield"))
             {
@@ -2163,6 +2183,34 @@ public class Player : MonoBehaviour, ICutsceneObject {
             }
         }
         shelled = !shelled;
+        UpdateHitbox();
+        EjectFromCollisions();
+    }
+
+    private void UpdateHitbox()
+    {
+        Vector2 newSize = shelled ? hitboxSize_shell : hitboxSize_normal;
+        Vector2 newOffset = shelled ? hitboxOffset_shell : hitboxOffset_normal;
+        newOffset.x *= facingLeft ? -1 : 1;
+        newOffset.y *= facingDown ? 1 : -1;
+        if (gravityDir == Dirs.WallL || gravityDir == Dirs.WallR)
+        {
+            newSize = new(newSize.y, newSize.x);
+            newOffset = new(newOffset.y, newOffset.x);
+        }
+        box.size = newSize;
+        box.offset = newOffset;
+    }
+
+    public void RemoteSetGravity(Dirs newDir)
+    {
+        if (gravityDir == newDir)
+            return;
+        if (newDir != GetDirOpposite(gravityDir))
+            SwitchSurfaceAxis();
+        gravityDir = newDir;
+        SwapDir(newDir);
+        UpdateHitbox();
         EjectFromCollisions();
     }
 
@@ -2520,7 +2568,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 deathLocation.GetComponent<RoomTrigger>().active = true;
                 deathLocation.GetComponent<RoomTrigger>().DespawnEverything();
             }
-            PlayState.ToggleBossfightState(false, 0, true);
+            if (PlayState.inBossFight)
+                PlayState.ToggleBossfightState(false, 0, true);
             transform.position = PlayState.currentProfile.saveCoords;
             inDeathCutscene = false;
             box.enabled = true;

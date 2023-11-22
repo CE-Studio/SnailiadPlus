@@ -339,7 +339,7 @@ public class MainMenu : MonoBehaviour
     {
         if (PlayState.gameState == PlayState.GameState.preload)
         {
-            PlayState.titleRoom.RemoteActivateRoom();
+            PlayState.titleRoom.RemoteActivateRoom(true);
             PlayState.gameState = PlayState.GameState.menu;
         }
 
@@ -1481,6 +1481,7 @@ public class MainMenu : MonoBehaviour
                                 {
                                     int isOddTile = (x + y) % 2;
                                     Particle newPattern = PlayState.RequestParticle(origin + new Vector2(size.x * x, size.y * y), "introPattern", new float[] { isOddTile });
+                                    newPattern.runInMenu = true;
                                     newPattern.sprite.color = new Color(1, 1, 1, 0);
                                     introBGPatterns.Add(newPattern);
                                 }
@@ -3416,7 +3417,7 @@ public class MainMenu : MonoBehaviour
         PlayState.currentProfileNumber = 0;
         PlayState.currentProfile = PlayState.blankProfile;
 
-        PlayState.titleRoom.RemoteActivateRoom();
+        PlayState.titleRoom.RemoteActivateRoom(true);
 
         music.Play();
     }

@@ -192,6 +192,9 @@ public class RoomTrigger : MonoBehaviour
                 }
                 effectVarIndex++;
             }
+            if (temporarilyActive)
+                foreach (Particle particle in effectParticles)
+                    particle.runInMenu = true;
 
             if (waterLevel.Length > 0)
             {

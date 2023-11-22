@@ -1462,7 +1462,7 @@
 		},
 		{
 			"name": "menu_option_achievements_progress",
-			"text": "{0}/{1} unlocked\nPress {2} to show an achievement's hint",
+			"text": "{0}/{1} unlocked.  Press {2} to show an achievement's hint",
 			"value": 0
 		},
 		{
@@ -2182,7 +2182,7 @@
 		},
 		{
 			"name": "subscreen_markers",
-			"text": "Press \"{0}\" to\nset markers",
+			"text": "Press \"{0}\" to set markers",
 			"value": 0
 		},
 		{

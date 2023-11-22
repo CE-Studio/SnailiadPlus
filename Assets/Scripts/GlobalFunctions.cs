@@ -1208,7 +1208,7 @@ public class GlobalFunctions : MonoBehaviour
         float stepElapsed = 0;
         float totalElapsed = 0;
         bool sceneActive = true;
-        int preGravJumpFrames = 0;
+        //int preGravJumpFrames = 0;
         while (sceneActive)
         {
             stepElapsed += Time.deltaTime;
@@ -1231,56 +1231,61 @@ public class GlobalFunctions : MonoBehaviour
                         ChangeActiveWeapon(2);
                         Control.SetVirtual(Control.Keyboard.Right1, false);
                         Control.SetVirtual(Control.Keyboard.Jump1, true);
-                        PlayState.playerScript.Shoot();
                         step++;
                         stepElapsed = 0;
                     }
                     break;
-                case 2: // Shoot once and jump
-                    preGravJumpFrames++;
-                    Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
-                    //if (PlayState.player.transform.position.y - itemOrigin.y > 3f)
+                case 2: // Shoot and jump
+                    //preGravJumpFrames++;
+                    //Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
+                    PlayState.playerScript.Shoot();
                     if (PlayState.playerScript.velocity.y < 0)
                     {
+                        Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        Control.SetVirtual(Control.Keyboard.Up1, false);
+                        PlayState.playerScript.RemoteSetGravity(Player.Dirs.Ceiling);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 3: // Grav up
-                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.y - itemOrigin.y > 16.5f)
                     {
-                        Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        Control.SetVirtual(Control.Keyboard.Up1, false);
-                        Control.SetVirtual(Control.Keyboard.Left1, true);
+                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        //Control.SetVirtual(Control.Keyboard.Up1, false);
+                        //Control.SetVirtual(Control.Keyboard.Left1, true);
+                        PlayState.playerScript.RemoteSetGravity(Player.Dirs.WallL);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 4: // Grav left
-                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.x - itemOrigin.x < -3.5f)
                     {
-                        Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        Control.SetVirtual(Control.Keyboard.Left1, false);
-                        Control.SetVirtual(Control.Keyboard.Right1, true);
+                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        //Control.SetVirtual(Control.Keyboard.Left1, false);
+                        //Control.SetVirtual(Control.Keyboard.Right1, true);
+                        PlayState.playerScript.RemoteSetGravity(Player.Dirs.WallR);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 5: // Grav right
-                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.x - itemOrigin.x > 3f)
                     {
-                        Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        Control.SetVirtual(Control.Keyboard.Right1, false);
-                        Control.SetVirtual(Control.Keyboard.Down1, true);
+                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
+                        //Control.SetVirtual(Control.Keyboard.Right1, false);
+                        //Control.SetVirtual(Control.Keyboard.Down1, true);
+                        PlayState.playerScript.RemoteSetGravity(Player.Dirs.Floor);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 6: // Grav down
-                    Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
+                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.playerScript.grounded)
                         sceneActive = false;
                     break;
