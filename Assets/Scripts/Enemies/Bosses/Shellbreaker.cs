@@ -30,7 +30,8 @@ public class Shellbreaker : Boss
     private float turboMultiplier = 0.6f;
     private float stateTimeout = 0f;
     private int currentShotCount = 0;
-
+    private bool hasBeenShocked = false;
+    private Vector2 shockDir = Vector2.zero;
 
     void Awake()
     {
@@ -69,18 +70,13 @@ public class Shellbreaker : Boss
             }
 
             eyeAnim = eyes.GetComponent<AnimationModule>();
-            anim.Add("Boss_shellbreaker_normal1");
-            anim.Add("Boss_shellbreaker_normal2");
-            anim.Add("Boss_shellbreaker_normal3");
-            anim.Add("Boss_shellbreaker_fire1");
-            anim.Add("Boss_shellbreaker_fire2");
-            anim.Add("Boss_shellbreaker_fire3");
-            eyeAnim.Add("Boss_shellbreaker_eyes_normal1");
-            eyeAnim.Add("Boss_shellbreaker_eyes_normal2");
-            eyeAnim.Add("Boss_shellbreaker_eyes_normal3");
-            eyeAnim.Add("Boss_shellbreaker_eyes_fire1");
-            eyeAnim.Add("Boss_shellbreaker_eyes_fire2");
-            eyeAnim.Add("Boss_shellbreaker_eyes_fire3");
+            for (int i = 1; i <= 3; i++)
+            {
+                foreach (string type in new string[] { "normal", "fire", "shockedN", "shockedE", "shockedS", "shockedW" })
+                    anim.Add(string.Format("Boss_shellbreaker_{0}{1}", type, i));
+                foreach (string type in new string[] { "normal", "fire" })
+                    eyeAnim.Add(string.Format("Boss_shellbreaker_eyes_{0}{1}", type, i));
+            }
             foreach(AnimationModule handAnim in handAnims)
             {
                 handAnim.Add("Boss_shellbreaker_hand_1");
@@ -98,6 +94,15 @@ public class Shellbreaker : Boss
     {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
+
+        if (hasBeenShocked)
+        {
+            if (PlayState.playerScript.gravShockState == 2)
+                transform.position = (Vector2)PlayState.player.transform.position + (0.8f * shockDir);
+            else
+                Kill();
+            return;
+        }
 
         lifeState = health <= maxHealth * 0.3333f ? 3 : (health <= maxHealth * 0.6667f ? 2 : 1);
         shotMax = lifeState == 3 ? 41 : (lifeState == 2 ? 14 : 5);
@@ -160,9 +165,135 @@ public class Shellbreaker : Boss
             }
         }
     }
+    public override void LateUpdate()
+    {
+        if ((PlayState.gameState != PlayState.GameState.game && !PlayState.playerScript.inDeathCutscene) || hasBeenShocked)
+            return;
+
+        if (intersectingPlayer && !PlayState.playerScript.stunned && canDamage)
+        {
+            bool canHit = true;
+            if ((elementType.ToLower() == "ice" && PlayState.CheckShellLevel(1) && PlayState.currentProfile.difficulty != 2) ||
+                (elementType.ToLower() == "fire" && PlayState.CheckShellLevel(3)))
+                canHit = false;
+            if (canHit)
+                PlayState.playerScript.HitFor(attack, this);
+        }
+
+        if (!stunInvulnerability && PlayState.OnScreen(transform.position, col) && !invulnerable)
+        {
+            List<Bullet> bulletsToDespawn = new();
+            List<EnemyBullet> enemyBulletsToDespawn = new();
+            bool killFlag = false;
+            int maxDamage = parryDamage;
+            foreach (Bullet bullet in intersectingBullets)
+            {
+                int thisDamage = bullet.damage;
+                if (bullet.bulletType == 7 || bullet.bulletType == 8)
+                {
+                    hasBeenShocked = true;
+                    for (int i = 0; i < hands.Count; i++)
+                        hands[i].GetComponent<Enemy>().Kill();
+                    shockDir = PlayState.playerScript.gravityDir switch
+                    {
+                        Player.Dirs.Floor => Vector2.down,
+                        Player.Dirs.WallL => Vector2.left,
+                        Player.Dirs.WallR => Vector2.right,
+                        _ => Vector2.up
+                    };
+                    PlayAnim("shocked");
+                    return;
+                }    
+                if (!immunities.Contains(bullet.bulletType) && bullet.damage - defense > 0)
+                {
+                    thisDamage = Mathf.FloorToInt((bullet.damage - defense) *
+                        (weaknesses.Contains(bullet.bulletType) ? 2 : 1) * (resistances.Contains(bullet.bulletType) ? 0.5f : 1));
+                    if (thisDamage > maxDamage)
+                        maxDamage = thisDamage;
+                }
+                else
+                {
+                    if (!PlayState.armorPingPlayedThisFrame && makeSoundOnPing)
+                    {
+                        PlayState.armorPingPlayedThisFrame = true;
+                        PlayState.PlaySound("Ping");
+                    }
+                    pingPlayer -= 1;
+                }
+                if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive)
+                    bulletsToDespawn.Add(bullet);
+            }
+            foreach (EnemyBullet bullet in intersectingEnemyBullets)
+            {
+                if (bullet.hasBeenParried)
+                {
+                    if (bullet.damage - defense > 0)
+                    {
+                        int thisDamage = Mathf.FloorToInt(bullet.damage - defense);
+                        if (thisDamage > maxDamage)
+                            maxDamage = thisDamage;
+                    }
+                    else
+                    {
+                        if (!PlayState.armorPingPlayedThisFrame && makeSoundOnPing)
+                        {
+                            PlayState.armorPingPlayedThisFrame = true;
+                            PlayState.PlaySound("Ping");
+                        }
+                        pingPlayer -= 1;
+                    }
+                    if (!letsPermeatingShotsBy || bullet.bulletType == EnemyBullet.BulletType.pea || !bullet.isActive)
+                        enemyBulletsToDespawn.Add(bullet);
+                }
+            }
+            if (maxDamage > 0)
+            {
+                health -= maxDamage;
+                if (health <= 0)
+                    killFlag = true;
+                else
+                    StartCoroutine(Flash());
+            }
+            parryDamage = 0;
+            while (bulletsToDespawn.Count > 0)
+            {
+                intersectingBullets.RemoveAt(0);
+                bulletsToDespawn[0].Despawn(true);
+                bulletsToDespawn.RemoveAt(0);
+            }
+            while (enemyBulletsToDespawn.Count > 0)
+            {
+                intersectingEnemyBullets.RemoveAt(0);
+                enemyBulletsToDespawn[0].Despawn();
+                enemyBulletsToDespawn.RemoveAt(0);
+            }
+            if (killFlag)
+                Kill();
+        }
+
+        if (intersectingBullets.Count == 0)
+        {
+            pingPlayer = 0;
+        }
+
+        mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
+    }
 
     private void PlayAnim(string newAnim)
     {
+        if (newAnim == "shocked")
+        {
+            string dir = PlayState.playerScript.gravityDir switch
+            {
+                Player.Dirs.Floor => "S",
+                Player.Dirs.WallL => "W",
+                Player.Dirs.WallR => "E",
+                _ => "N"
+            };
+            anim.Play("Boss_shellbreaker_" + newAnim + dir + lifeState);
+            eyes.SetActive(false);
+            return;
+        }
         anim.Play("Boss_shellbreaker_" + newAnim + lifeState);
         eyeAnim.Play("Boss_shellbreaker_eyes_" + newAnim + lifeState);
         if (handAnims[0].currentAnimName == "" || handAnims[0].currentAnimName[handAnims[0].currentAnimName.Length - 1].ToString() != lifeState.ToString())

@@ -9074,7 +9074,7 @@
 			"spriteName": "Entities/Boss1",
 			"framerate": 0.0,
 			"frames": [
-				2
+				6
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -9085,7 +9085,7 @@
 			"spriteName": "Entities/Boss1",
 			"framerate": 0.0,
 			"frames": [
-				4
+				12
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -9107,7 +9107,7 @@
 			"spriteName": "Entities/Boss1",
 			"framerate": 0.0,
 			"frames": [
-				3
+				7
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -9118,7 +9118,139 @@
 			"spriteName": "Entities/Boss1",
 			"framerate": 0.0,
 			"frames": [
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedN1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedE1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedS1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedW1",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
 				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedN2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedE2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedS2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedW2",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedN3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedE3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedS3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				16
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Boss_shellbreaker_shockedW3",
+			"spriteName": "Entities/Boss1",
+			"framerate": 0.0,
+			"frames": [
+				17
 			],
 			"loop": false,
 			"loopStartFrame": 0,

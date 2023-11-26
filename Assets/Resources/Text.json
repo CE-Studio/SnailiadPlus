@@ -2701,6 +2701,11 @@
 			"value": 0
 		},
 		{
+			"name": "room_02_hub1ALT",
+			"text": "Unassuming Plaza",
+			"value": 0
+		},
+		{
 			"name": "room_02_towerHub",
 			"text": "Perpendicular|Path",
 			"value": 0
