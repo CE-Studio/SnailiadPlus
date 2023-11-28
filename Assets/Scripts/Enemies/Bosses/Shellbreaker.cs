@@ -165,6 +165,7 @@ public class Shellbreaker : Boss
             }
         }
     }
+
     public override void LateUpdate()
     {
         if ((PlayState.gameState != PlayState.GameState.game && !PlayState.playerScript.inDeathCutscene) || hasBeenShocked)
@@ -277,6 +278,11 @@ public class Shellbreaker : Boss
         }
 
         mask.transform.localScale = new Vector2(sprite.flipX ? -1 : 1, sprite.flipY ? -1 : 1);
+
+        if (introTimer >= introTimestamps[4])
+            barMask.transform.localPosition = new Vector2(
+                Mathf.Floor(Mathf.Lerp(barPointLeft, barPointRight, Mathf.InverseLerp(0, maxHealth, health)) * 16) * 0.0625f,
+                barMask.transform.localPosition.y);
     }
 
     private void PlayAnim(string newAnim)

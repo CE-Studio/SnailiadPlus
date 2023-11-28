@@ -579,13 +579,16 @@ public class GlobalFunctions : MonoBehaviour
     
     private IEnumerator DelayStartThemeCoroutine(int area, int subzone, float delayTime)
     {
-        while (delayTime > 0 && !PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
+        int profileStartedOn = PlayState.currentProfileNumber;
+        while (delayTime > 0 && !PlayState.resetInducingFadeActive)
         {
             if (PlayState.gameState == PlayState.GameState.game)
                 delayTime -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        if (!PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game)
+        while (PlayState.gameState != PlayState.GameState.game && PlayState.gameState != PlayState.GameState.menu)
+            yield return new WaitForEndOfFrame();
+        if (!PlayState.resetInducingFadeActive && PlayState.gameState == PlayState.GameState.game && PlayState.currentProfileNumber == profileStartedOn)
             UpdateMusic(area, subzone, 1);
     }
 
@@ -1239,7 +1242,7 @@ public class GlobalFunctions : MonoBehaviour
                     //preGravJumpFrames++;
                     //Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
                     PlayState.playerScript.Shoot();
-                    if (PlayState.playerScript.velocity.y < 0)
+                    if (PlayState.playerScript.velocity.y <= 0)
                     {
                         Control.SetVirtual(Control.Keyboard.Jump1, false);
                         Control.SetVirtual(Control.Keyboard.Up1, false);

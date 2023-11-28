@@ -1780,6 +1780,7 @@ public class MainMenu : MonoBehaviour
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
         PlayState.fader = 1;
+        PlayState.FadeMusicBackIn();
         music.Stop();
 
         if (runIntro)

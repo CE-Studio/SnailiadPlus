@@ -13,6 +13,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
     public bool chatting = false;
     public bool needsSpace = false; // On the off chance that two snails are close enough to each other to trigger simultaneously, like 06 and 17
+    public bool hasLongDialogue = false;
     public bool buttonDown = false;
     public List<Color32> colors = new();
     public List<int> portraitStateList = new();         // 0 for the player, any other positive number for whatever other NPC is speaking
@@ -215,14 +216,17 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                 }
             }
 
-            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace) {
-                if (!PlayState.isTalking) {
+            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace)
+            {
+                if (!PlayState.isTalking)
+                {
                     int boxShape = 0;
                     string boxColor = "0005";
                     textToSend.Clear();
                     portraitStateList.Clear();
                     bool intentionallyEmpty = false;
-                    switch (ID) {
+                    switch (ID)
+                    {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainWallClimb");
@@ -240,10 +244,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 1:
                             nexted = 1;
-                            if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang")) {
+                            if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                            {
                                 nexted = 0;
                                 AddText("promptJump");
-                            } else if (!PlayState.CheckForItem("Peashooter"))
+                            }
+                            else if (!PlayState.CheckForItem("Peashooter"))
                                 AddText("promptStory");
                             else if (PlayState.GetItemPercentage() < 100)
                                 AddText("smallTalk");
@@ -369,8 +375,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         case 15:
                             if (PlayState.GetItemPercentage() < 20)
                                 AddText("hintSecret");
-                            else if (PlayState.GetItemPercentage() < 40) {
-                                switch (PlayState.currentProfile.character) {
+                            else if (PlayState.GetItemPercentage() < 40)
+                            {
+                                switch (PlayState.currentProfile.character)
+                                {
                                     case "Snaily":
                                         AddText("hintSnaily");
                                         break;
@@ -390,7 +398,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                         AddText("hintLeechy");
                                         break;
                                 }
-                            } else if (PlayState.GetItemPercentage() < 60)
+                            }
+                            else if (PlayState.GetItemPercentage() < 60)
                                 AddText("hintMissedSecret");
                             else if (PlayState.GetItemPercentage() < 80)
                                 AddText("hintEarlyHighJump");
@@ -401,12 +410,14 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 16:
-                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang")) {
+                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                            {
                                 if (PlayState.currentProfile.character == "Leechy")
                                     AddText("healTipLeechy");
                                 else
                                     AddText("healTipGeneric");
-                            } else if (transform.localPosition.y > origin.y - 21)
+                            }
+                            else if (transform.localPosition.y > origin.y - 21)
                                 AddText("ride");
                             else
                                 AddText("default");
@@ -725,10 +736,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 55:
-                            if (nexted == 0) {
+                            if (nexted == 0)
+                            {
                                 AddText("default");
                                 nexted++;
-                            } else
+                            }
+                            else
                                 AddText("second");
                             break;
 
@@ -746,31 +759,46 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         return;
                     if (textToSend.Count == 0)
                         textToSend.Add(PlayState.GetText("npc_?"));
-                    if (textToSend.Count > 1) {
+                    hasLongDialogue = false;
+                    if (textToSend.Count > 1)
+                    {
                         if (!speechBubbleSprite.enabled)
                             speechBubbleSprite.enabled = true;
                         ToggleBubble(true);
-                        if (Control.SpeakPress()) {
+                        hasLongDialogue = true;
+                        if (Control.SpeakPress())
+                        {
                             chatting = true;
                             PlayState.isTalking = true;
                             PlayState.paralyzed = true;
                             PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         chatting = true;
                         PlayState.isTalking = true;
                         PlayState.OpenDialogue(2, ID, textToSend, boxShape, boxColor);
                     }
-                } else
+                }
+                else
                     needsSpace = true;
-            } else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && chatting) {
+            }
+            else if (hasLongDialogue && chatting && !PlayState.dialogueOpen)
+            {
+                chatting = false;
+                needsSpace = false;
+                PlayState.isTalking = false;
+            }
+            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && chatting)
+            {
                 chatting = false;
                 PlayState.CloseDialogue();
-            } else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && needsSpace)
-                needsSpace = false;
-            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed)) {
-                ToggleBubble(false);
             }
+            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 7 && needsSpace)
+                needsSpace = false;
+            else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed))
+                ToggleBubble(false);
 
             switch (ID) {
                 default:
@@ -838,16 +866,21 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         chatting = false;
     }
 
-    public void ToggleBubble(bool state) {
-        if (speechBubbleAnim.animList.Count == 0) {
+    public void ToggleBubble(bool state)
+    {
+        if (speechBubbleAnim.animList.Count == 0)
+        {
             speechBubbleAnim.Add("NPC_bubble_open");
             speechBubbleAnim.Add("NPC_bubble_close");
         }
-        if (state && !bubbleState) {
+        if (state && !bubbleState)
+        {
             speechBubbleSprite.enabled = true;
             speechBubbleAnim.Play("NPC_bubble_open");
             bubbleState = true;
-        } else if (!state && bubbleState) {
+        }
+        else if (!state && bubbleState)
+        {
             speechBubbleAnim.Play("NPC_bubble_close");
             bubbleState = false;
         }

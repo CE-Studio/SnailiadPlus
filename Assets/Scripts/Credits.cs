@@ -692,6 +692,7 @@ public class Credits : MonoBehaviour
         PlayState.gameState = PlayState.GameState.credits;
         startDelay = START_DELAY;
         backgroundDelay = BG_START_DELAY;
+        PlayState.camShakeOffset = Vector2.zero;
     }
 
     public void RunMoonCutscene()
@@ -702,6 +703,7 @@ public class Credits : MonoBehaviour
         PlayState.ResetAllParticles();
         PlayState.creditsState = PlayState.CreditsStates.moonScene;
         PlayState.cam.transform.position = PlayState.moonCutsceneRoom.transform.position;
+        PlayState.camBorder.transform.localPosition = Vector2.zero;
         PlayState.ToggleHUD(false);
         PlayState.moonCutsceneRoom.RemoteActivateRoom(true);
         PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 255, 0, 0, -75);

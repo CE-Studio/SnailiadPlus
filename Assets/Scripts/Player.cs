@@ -2324,7 +2324,6 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
-                bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
                 if (!isShock)
                 {
                     bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
@@ -2355,6 +2354,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
                 return thisBullet;
             }
+            bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
         }
         return null;
     }
@@ -2401,8 +2401,8 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
                 thisBullet.Shoot(PlayState.CheckForItem("Devastator") ? 10 : 9, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
-                bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
             }
+            bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
         }
     }
 

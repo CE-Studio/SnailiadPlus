@@ -508,7 +508,7 @@ public class Particle : MonoBehaviour
         type = "";
         anim.Stop(true);
         anim.pauseOnMenu = true;
-        runInMenu = true;
+        runInMenu = false;
         sprite.enabled = true;
         sprite.sprite = sprites.blank;
         sprite.flipX = false;
