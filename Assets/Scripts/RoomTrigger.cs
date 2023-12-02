@@ -367,6 +367,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.fg1Offset = offsetForeground1;
             PlayState.bgOffset = offsetBackground;
             PlayState.skyOffset = offsetSky;
+            PlayState.SetDarkness(darknessLevel);
             PlayState.PlayAreaSong(areaID, areaSubzone, isSnelkRoom);
             PlayState.CloseDialogue();
             PlayState.isTalking = false;

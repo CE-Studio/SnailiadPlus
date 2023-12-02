@@ -162,6 +162,7 @@ public class PlayState {
     public static GameObject dialogueBox;
     public static DialogueBox dialogueScript;
     public static GameObject titleParent;
+    public static SpriteRenderer darknessLayer;
 
     public static RoomTrigger titleRoom;
     public static RoomTrigger moonCutsceneRoom;
@@ -545,6 +546,8 @@ public class PlayState {
     public static BossRushData activeRushData;
 
     public static Color entityColor = Color.white;
+
+    public static float currentDarkness = 0f;
 
     public static Sprite BlankTexture(bool useSmallBlank = false) {
         return useSmallBlank ? globalFunctions.blankSmall : globalFunctions.blank;
@@ -1079,6 +1082,12 @@ public class PlayState {
                 globalFunctions.ExecuteCoverCommand(type, (byte)red, (byte)green, (byte)blue, (byte)alpha, maxTime, delay, sortingOrder);
                 break;
         }
+    }
+
+    public static void SetDarkness(float newValue)
+    {
+        currentDarkness = newValue;
+        darknessLayer.color = new Color(0, 0, 0, newValue);
     }
 
     public static void ResetTilemapColors()

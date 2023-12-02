@@ -74,6 +74,9 @@ public class GlobalFunctions : MonoBehaviour
     public KeyCode[] cheatInputs = new KeyCode[16];
     public bool addedCheatInputThisFrame = false;
 
+    // Light mask object
+    public static GameObject lightMask;
+
     public void Awake()
     {
         DeclarePlayStateMono();
@@ -120,6 +123,9 @@ public class GlobalFunctions : MonoBehaviour
         radarText.SetColor(new Color(1, 1, 1, 0));
 
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
+
+        lightMask = Resources.Load<GameObject>("Objects/Light Mask");
+        CreateLightMask(14, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
     }
 
     private void DeclarePlayStateMono()
@@ -162,6 +168,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.dialogueBox = PlayState.cam.transform.Find("Dialogue Box").gameObject;
         PlayState.dialogueScript = PlayState.dialogueBox.GetComponent<DialogueBox>();
         PlayState.titleParent = GameObject.Find("View/Title Parent");
+        PlayState.darknessLayer = GameObject.Find("View/Darkness Layer").GetComponent<SpriteRenderer>();
 
         PlayState.titleRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Title").GetComponent<RoomTrigger>();
         PlayState.moonCutsceneRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Moon Snail Cutscene").GetComponent<RoomTrigger>();
@@ -903,6 +910,17 @@ public class GlobalFunctions : MonoBehaviour
     {
         for (int i = PlayState.gigaBGLayers.Count - 1; i >= 0; i--)
             Destroy(PlayState.gigaBGLayers[i]);
+    }
+
+    public static GameObject CreateLightMask(int lightLevel, Vector2 position)
+    {
+        lightLevel = Mathf.Clamp(lightLevel, 0, 15);
+        GameObject newMask = Instantiate(lightMask, position, Quaternion.identity);
+        string animName = "LightMask_" + lightLevel.ToString();
+        AnimationModule maskAnim = newMask.GetComponent<AnimationModule>();
+        maskAnim.Add(animName);
+        maskAnim.Play(animName);
+        return newMask;
     }
 
     public void FlashHUDText(TextTypes textType, string textValue = "No text")
