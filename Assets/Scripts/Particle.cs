@@ -44,6 +44,7 @@ public class Particle : MonoBehaviour
         anim.Add("Explosion_white_big");
         anim.Add("Explosion_rainbow_small");
         anim.Add("Explosion_rainbow_big");
+        anim.Add("Fog");
         anim.Add("GravShock_char_base1");
         anim.Add("GravShock_char_base2");
         anim.Add("GravShock_char_base3");
@@ -117,6 +118,17 @@ public class Particle : MonoBehaviour
                         transform.position = new Vector2(vars[1] + 2 * Mathf.Sin(vars[0] / 1.2f) * 0.0625f, transform.position.y + vars[3] * Time.deltaTime * 0.25f);
                         if (transform.position.y > vars[2] - 0.25f)
                             ResetParticle();
+                        break;
+                    case "fog":
+                        transform.position += Time.deltaTime * new Vector3(0.75f, 0.0625f, 0) + (0.25f * (Vector3)PlayState.camScript.lastMove);
+                        while (transform.position.x < PlayState.cam.transform.position.x - 24)
+                            transform.position = new(transform.position.x + 48, transform.position.y);
+                        while (transform.position.x > PlayState.cam.transform.position.x + 24)
+                            transform.position = new(transform.position.x - 48, transform.position.y);
+                        while (transform.position.y < PlayState.cam.transform.position.y - 16)
+                            transform.position = new(transform.position.x, transform.position.y + 32);
+                        while (transform.position.y > PlayState.cam.transform.position.y + 16)
+                            transform.position = new(transform.position.x, transform.position.y - 32);
                         break;
                     case "gigastar":
                         for (int i = 2; i < 7; i++)
@@ -389,6 +401,10 @@ public class Particle : MonoBehaviour
                     _ => "small"
                 });
                 break;
+            case "fog":
+                anim.Play("Fog");
+                anim.affectedByGlobalEntityColor = false;
+                break;
             case "gigastar":
                 anim.Play("Star" + Random.Range(1, 5).ToString());
                 break;
@@ -482,18 +498,20 @@ public class Particle : MonoBehaviour
             "gigatrail" => -51,
             "intropattern" => 1002,
             "rushgigatrail" => -51,
-            "shocklaunch" => -10,
+            "shocklaunch" => -11,
             "shockcharsub" => -14,
             "sparkle" => 10,
             "parry" => -45,
             "rain" => -115,
             "lightning" => -116,
+            "fog" => -9,
             _ => -15
         };
         sprite.color = animType switch
         {
             "heat" => PlayState.GetColor(Random.Range(0, 7) switch { 0 => "0209", 1 => "0210", 2 => "0211", 3=> "0309", 4 => "0310", 5 => "0311", _ => "0312"}),
             "sparkle" => PlayState.GetColor(Random.Range(0, 4) switch { 0 => "0304", 1 => "0206", 2 => "0309", _ => "0312" }),
+            "fog" => new Color(1, 1, 1, 0.45f),
             _ => Color.white
         };
         anim.SetSpeed(animType switch {

@@ -107,6 +107,7 @@ MonoBehaviour:
   - Entities/Jellyfish
   - Entities/Kitty
   - Entities/Kitty2
+  - Entities/LightMask
   - Entities/Muck
   - Entities/Pincer
   - Entities/PixelPeople
@@ -162,6 +163,7 @@ MonoBehaviour:
   - Particles/Dust
   - Particles/EndingZzz
   - Particles/Explosion
+  - Particles/Fog
   - Particles/GigaTrail
   - Particles/IntroBGPatterns
   - Particles/Lightning

@@ -169,6 +169,7 @@ public class TextureLibrary : ScriptableObject
         "Particles/Dust",
         "Particles/EndingZzz",
         "Particles/Explosion",
+        "Particles/Fog",
         "Particles/GigaTrail",
         "Particles/IntroBGPatterns",
         "Particles/Lightning",

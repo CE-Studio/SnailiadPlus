@@ -743,6 +743,11 @@
             "height": 64
         },
 		{
+            "name": "Particles/Fog",
+            "width": 256,
+            "height": 256
+        },
+		{
             "name": "Particles/GigaTrail",
             "width": 48,
             "height": 48

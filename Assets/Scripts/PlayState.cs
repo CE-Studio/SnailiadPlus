@@ -1152,6 +1152,10 @@ public class PlayState {
                         particleScript.vars[0] = values[0];
                     }
                     break;
+                case "fog":
+                    if (generalData.particleState == 1 || generalData.particleState == 5)
+                        activateParticle = true;
+                    break;
                 case "gigastar":
                     if (generalData.particleState == 4 || generalData.particleState == 1 || generalData.particleState == 5)
                     {

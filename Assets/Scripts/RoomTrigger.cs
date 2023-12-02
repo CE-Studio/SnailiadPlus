@@ -139,6 +139,18 @@ public class RoomTrigger : MonoBehaviour
                             }
                         }
                         break;
+                    case "fog":
+                        if (!initializedEffects)
+                        {
+                            Vector2 randPos = (Vector2)PlayState.cam.transform.position + new Vector2(Random.Range(-24f, -8f), Random.Range(0f, 16f));
+                            PlayState.RequestParticle(randPos, "fog");
+                            PlayState.RequestParticle(randPos + (Vector2.right * 16), "fog");
+                            PlayState.RequestParticle(randPos + (Vector2.right * 32), "fog");
+                            PlayState.RequestParticle(randPos + (Vector2.down * 16), "fog");
+                            PlayState.RequestParticle(randPos + new Vector2(16, -16), "fog");
+                            PlayState.RequestParticle(randPos + new Vector2(32, -16), "fog");
+                        }
+                        break;
                     case "heat":
                         if (!initializedEffects)
                             effectVars.Add(Random.Range(0f, 1f) * 0.5f);

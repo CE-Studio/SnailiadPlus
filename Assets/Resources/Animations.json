@@ -23277,6 +23277,17 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Fog",
+			"spriteName": "Particles/Fog",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "GravShock_char_base1",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
