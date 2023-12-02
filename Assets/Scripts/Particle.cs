@@ -12,6 +12,7 @@ public class Particle : MonoBehaviour
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     public bool runInMenu = false;
     public ParticleSpriteCollection sprites;
+    private GameObject lightMask;
 
     public void Awake()
     {
@@ -519,6 +520,17 @@ public class Particle : MonoBehaviour
             "sparkle" => Random.Range(0.5f, 1.5f),
             _ => 1f
         });
+        int lightSize = animType switch
+        {
+            "explosion" => vars[0] switch { 1 => 8, 2 or 5 => 12, 3 or 6 or 7 => 15, 4 or 8 => 21, _ => 8 },
+            "heat" => 5,
+            _ => -1
+        };
+        if (lightSize != -1)
+        {
+            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
+            lightMask.transform.parent = transform;
+        }
     }
 
     public void PlaySound()
@@ -555,6 +567,8 @@ public class Particle : MonoBehaviour
         for (int i = 0; i < internalVars.Length; i++)
             internalVars[i] = 0;
         MoveToMainPool();
+        if (lightMask != null)
+            Destroy(lightMask);
         gameObject.SetActive(false);
     }
 

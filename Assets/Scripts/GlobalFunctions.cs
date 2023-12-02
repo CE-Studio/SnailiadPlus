@@ -125,7 +125,7 @@ public class GlobalFunctions : MonoBehaviour
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
 
         lightMask = Resources.Load<GameObject>("Objects/Light Mask");
-        CreateLightMask(14, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
+        CreateLightMask(18, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
     }
 
     private void DeclarePlayStateMono()
@@ -912,9 +912,9 @@ public class GlobalFunctions : MonoBehaviour
             Destroy(PlayState.gigaBGLayers[i]);
     }
 
-    public static GameObject CreateLightMask(int lightLevel, Vector2 position)
+    public GameObject CreateLightMask(int lightLevel, Vector2 position)
     {
-        lightLevel = Mathf.Clamp(lightLevel, 0, 15);
+        lightLevel = Mathf.Clamp(lightLevel, 0, 23);
         GameObject newMask = Instantiate(lightMask, position, Quaternion.identity);
         string animName = "LightMask_" + lightLevel.ToString();
         AnimationModule maskAnim = newMask.GetComponent<AnimationModule>();

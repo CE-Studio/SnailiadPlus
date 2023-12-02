@@ -475,6 +475,11 @@
             "height": 128
         },
 		{
+            "name": "Entities/LightMaskLarge",
+            "width": 256,
+            "height": 256
+        },
+		{
             "name": "Entities/Muck",
             "width": 16,
             "height": 16

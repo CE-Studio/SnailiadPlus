@@ -22954,6 +22954,122 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
 		},
+		{
+			"name": "LightMask_16",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_17",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_18",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_19",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_20",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_21",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_22",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_23",
+			"spriteName": "Entities/LightMaskLarge",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Bubble1",
