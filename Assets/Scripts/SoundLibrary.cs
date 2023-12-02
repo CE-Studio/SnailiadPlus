@@ -59,6 +59,7 @@ public class SoundLibrary : ScriptableObject
         "Snelk",
         "Splash",
         "Stomp",
+        "Thunder",
         "Transformation"
     };
 

@@ -22658,6 +22658,302 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": true
 		},
+		{
+			"name": "LightMask_0",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_1",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_2",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_3",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_4",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_5",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_6",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_7",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_8",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_9",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_10",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_11",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_12",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_13",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_14",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "LightMask_15",
+			"spriteName": "Entities/LightMask",
+			"framerate": 30.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
 		
 		{
 			"name": "Bubble1",
@@ -23439,6 +23735,129 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Lightning_data",
+			"spriteName": "Particles/Lightning",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Lightning1",
+			"spriteName": "Particles/Lightning",
+			"framerate": 24.0,
+			"frames": [
+				0,
+				2,
+				0,
+				1,
+				0,
+				1,
+				2,
+				1,
+				1,
+				3,
+				2,
+				2,
+				4,
+				3,
+				3,
+				4,
+				4,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Lightning2",
+			"spriteName": "Particles/Lightning",
+			"framerate": 24.0,
+			"frames": [
+				5,
+				7,
+				5,
+				6,
+				5,
+				6,
+				7,
+				6,
+				6,
+				8,
+				7,
+				7,
+				9,
+				8,
+				8,
+				9,
+				9,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Lightning3",
+			"spriteName": "Particles/Lightning",
+			"framerate": 24.0,
+			"frames": [
+				10,
+				12,
+				10,
+				11,
+				10,
+				11,
+				12,
+				11,
+				11,
+				13,
+				12,
+				12,
+				14,
+				13,
+				13,
+				14,
+				14,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Lightning4",
+			"spriteName": "Particles/Lightning",
+			"framerate": 24.0,
+			"frames": [
+				15,
+				17,
+				15,
+				16,
+				15,
+				16,
+				17,
+				16,
+				16,
+				18,
+				17,
+				17,
+				19,
+				18,
+				18,
+				19,
+				19,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Nom",
 			"spriteName": "Particles/Nom",
 			"framerate": 5.0,
@@ -23494,6 +23913,50 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+        {
+            "name": "Rain1",
+			"spriteName": "Particles/Rain",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Rain2",
+			"spriteName": "Particles/Rain",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Rain3",
+			"spriteName": "Particles/Rain",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Rain4",
+			"spriteName": "Particles/Rain",
+            "framerate": 0.0,
+            "frames": [
+                0
+            ],
+            "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
         {
             "name": "Shield",
 			"spriteName": "Particles/Shield",

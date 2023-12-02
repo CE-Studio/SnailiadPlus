@@ -16,6 +16,7 @@ public class AnimationModule : MonoBehaviour
     public bool updateSprite = true;
     public bool pauseOnMenu = true;
     public bool updateMask = false;
+    public bool affectedByGlobalEntityColor = true;
     
     private float animTimer = 0;
     private float timerMax = 0;
@@ -86,6 +87,9 @@ public class AnimationModule : MonoBehaviour
                 foreach (SpriteMask mask in masks)
                     mask.sprite = sprite.sprite;
             }
+
+            if (affectedByGlobalEntityColor)
+                sprite.color = PlayState.entityColor;
         }
     }
 

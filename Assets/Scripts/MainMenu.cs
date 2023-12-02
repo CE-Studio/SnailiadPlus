@@ -220,6 +220,7 @@ public class MainMenu : MonoBehaviour
         {
             AnimationModule thisSelectAnim = selectorAnims[i];
             thisSelectAnim.pauseOnMenu = false;
+            thisSelectAnim.affectedByGlobalEntityColor = false;
             thisSelectAnim.Add("Title_selector_Snaily");
             thisSelectAnim.Add("Title_selector_Sluggy");
             thisSelectAnim.Add("Title_selector_Upside");
@@ -1847,6 +1848,7 @@ public class MainMenu : MonoBehaviour
                 thisIcon.frameAnim.Add("AchievementFrame_idle");
                 thisIcon.frameAnim.Add("AchievementFrame_selected");
                 thisIcon.frameAnim.Play(i == 0 ? "AchievementFrame_selected" : "AchievementFrame_idle");
+                thisIcon.frameAnim.affectedByGlobalEntityColor = false;
 
                 string iconAnimName = "Achievement_locked";
                 if (PlayState.generalData.achievements[i])
@@ -1856,6 +1858,7 @@ public class MainMenu : MonoBehaviour
                 }
                 thisIcon.iconAnim.Add(iconAnimName);
                 thisIcon.iconAnim.Play(iconAnimName);
+                thisIcon.iconAnim.affectedByGlobalEntityColor = false;
             }
             return new int[] { collectedAchievementCount, totalAchievementCount };
         }
@@ -3404,6 +3407,8 @@ public class MainMenu : MonoBehaviour
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.globalFunctions.StopMusic();
         PlayState.ResetAllParticles();
+        PlayState.entityColor = Color.white;
+        PlayState.ResetTilemapColors();
 
         PlayState.skyLayer.transform.localPosition = Vector2.zero;
         PlayState.bgLayer.transform.localPosition = Vector2.zero;

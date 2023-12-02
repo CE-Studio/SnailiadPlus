@@ -241,14 +241,14 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 PlayState.globalFunctions.ChangeActiveWeapon(1);
             if (Control.Weapon3() && weaponStates[2])
                 PlayState.globalFunctions.ChangeActiveWeapon(2);
-            if (Control.NextWeapon())
+            if (Control.NextWeapon() && selectedWeapon > 0)
             {
                 int thisIndex = (selectedWeapon) % weaponStates.Length;
                 while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)
                     thisIndex = (thisIndex + 1) % weaponStates.Length;
                 PlayState.globalFunctions.ChangeActiveWeapon(thisIndex);
             }
-            if (Control.PreviousWeapon())
+            if (Control.PreviousWeapon() && selectedWeapon > 0)
             {
                 int thisIndex = (selectedWeapon - 2) < 0 ? selectedWeapon - 2 + weaponStates.Length : selectedWeapon - 2;
                 while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)

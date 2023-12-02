@@ -28,9 +28,8 @@ public class RoomTrigger : MonoBehaviour
     // 2 = Spiralis Silere
     // 3 = Amastrida Abyssus
     // 4 = Lux Lirata
-    // 5 = ???
-    // 6 = Shrine of Iris
-    // 7 = Boss Rush
+    // 5 = Shrine of Iris
+    // 6 = Boss Rush
     public int areaSubzone = 0;
     public bool isSnelkRoom = false;
 
@@ -44,13 +43,14 @@ public class RoomTrigger : MonoBehaviour
     // - snow
     // - rain
     // - thunder
-    // - dark
     // - fog
     // - heat
     private List<float> effectVars = new();
     private bool initializedEffects = false;
     private float splashTimeout = 0;
     private List<Particle> effectParticles = new();
+
+    public float darknessLevel = 0f;
 
     public struct RoomCommand {
         public string name;
@@ -153,6 +153,18 @@ public class RoomTrigger : MonoBehaviour
                             }
                         }
                         break;
+                    case "rain":
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 32; i++)
+                            {
+                                Vector2 rainPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
+                                    Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
+                                effectParticles.Add(PlayState.RequestParticle(rainPos, "rain"));
+                            }
+                            effectVars.Add(0);
+                        }
+                        break;
                     case "snow":
                         if (!initializedEffects)
                         {
@@ -162,6 +174,7 @@ public class RoomTrigger : MonoBehaviour
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
                                 effectParticles.Add(PlayState.RequestParticle(snowPos, "snow"));
                             }
+                            effectVars.Add(0);
                         }
                         break;
                     case "star":
@@ -187,6 +200,36 @@ public class RoomTrigger : MonoBehaviour
                                     Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
                                 effectParticles.Add(PlayState.RequestParticle(starPos, "star", new float[] { typeID }));
                             }
+                            effectVars.Add(0);
+                        }
+                        break;
+                    case "thunder":
+                        if (!initializedEffects)
+                        {
+                            for (int i = 0; i < 52; i++)
+                            {
+                                Vector2 rainPos = new(Random.Range(PlayState.cam.transform.position.x - 13f, PlayState.cam.transform.position.x + 13f),
+                                    Random.Range(PlayState.cam.transform.position.y - 8f, PlayState.cam.transform.position.y + 8f));
+                                effectParticles.Add(PlayState.RequestParticle(rainPos, "rain"));
+                            }
+                            effectVars.Add(Random.Range(5f, 10f));
+                        }
+                        else if ((PlayState.generalData.particleState == 1 || PlayState.generalData.particleState == 5) && PlayState.gameState == PlayState.GameState.game)
+                        {
+                            effectVars[effectVarIndex] -= Time.deltaTime;
+                            if (effectVars[effectVarIndex] <= 0)
+                            {
+                                effectVars[effectVarIndex] = Random.Range(5f, 10f);
+                                PlayState.RequestParticle(PlayState.cam.transform.position + new Vector3(Random.Range(-11f, 11f), 3.5f, 0), "lightning");
+                                PlayState.PlaySound("Thunder");
+                                PlayState.entityColor = Color.black;
+                            }
+                            float colAdd = Time.deltaTime * 0.5f;
+                            PlayState.entityColor = new Color(PlayState.entityColor.r + colAdd, PlayState.entityColor.g + colAdd, PlayState.entityColor.b + colAdd);
+                            PlayState.bgLayer.color = PlayState.entityColor;
+                            PlayState.groundLayer.color = PlayState.entityColor;
+                            PlayState.fg1Layer.color = PlayState.entityColor;
+                            PlayState.fg2Layer.color = PlayState.entityColor;
                         }
                         break;
                 }
@@ -298,6 +341,8 @@ public class RoomTrigger : MonoBehaviour
         if (collision.CompareTag("Player") && active && PlayState.gameState == PlayState.GameState.game)
         {
             PlayState.ResetAllParticles();
+            PlayState.entityColor = Color.white;
+            PlayState.ResetTilemapColors();
             effectVars.Clear();
             PlayState.camCenter = new Vector2(transform.position.x, transform.position.y);
             PlayState.camBoundaryBuffers = new Vector2((box.size.x + 0.5f) * 0.5f - 12.5f, (box.size.y + 0.5f) * 0.5f - 7.5f);

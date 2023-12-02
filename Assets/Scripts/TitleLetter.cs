@@ -15,7 +15,7 @@ public class TitleLetter : MonoBehaviour
 
     private const float X_SCALE = 80;
 
-    private readonly List<char> acceptedLetters = new List<char>
+    private readonly List<char> acceptedLetters = new()
     {
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '+'
     };
@@ -25,9 +25,11 @@ public class TitleLetter : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
         anim.pauseOnMenu = false;
+        anim.affectedByGlobalEntityColor = false;
         colorAnim = transform.GetChild(0).GetComponent<AnimationModule>();
         colorAnim.updateSprite = false;
         colorAnim.pauseOnMenu = false;
+        colorAnim.affectedByGlobalEntityColor = false;
         colorAnim.Add("Title_letterFlash_intro");
         colorAnim.Add("Title_letterFlash_hold");
         sprite.enabled = false;

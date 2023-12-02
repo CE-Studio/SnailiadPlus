@@ -56,9 +56,11 @@ public class Subscreen : MonoBehaviour
         anim.Add("Subscreen_blobby");
         anim.Add("Subscreen_leechy");
         anim.pauseOnMenu = false;
+        anim.affectedByGlobalEntityColor = false;
         mapAnim.Add("Minimap");
         mapAnim.Play("Minimap");
-        anim.pauseOnMenu = false;
+        mapAnim.pauseOnMenu = false;
+        mapAnim.affectedByGlobalEntityColor = false;
 
         playerMarker = new GameObject("Player Marker");
         playerMarker.transform.parent = map.transform;
@@ -68,6 +70,7 @@ public class Subscreen : MonoBehaviour
         playerAnim.Add("Minimap_icon_playerNormal");
         playerAnim.Add("Minimap_icon_playerHighlight");
         playerAnim.pauseOnMenu = false;
+        playerAnim.affectedByGlobalEntityColor = false;
 
         cellSelector = new GameObject("Selector");
         cellSelector.transform.parent = map.transform;
@@ -76,6 +79,7 @@ public class Subscreen : MonoBehaviour
         selectorAnim = cellSelector.AddComponent<AnimationModule>();
         selectorAnim.Add("GenericSelector_8");
         selectorAnim.pauseOnMenu = false;
+        selectorAnim.affectedByGlobalEntityColor = false;
         cellSelector.SetActive(false);
 
         for (int i = 2; i < transform.childCount; i++)
@@ -86,6 +90,7 @@ public class Subscreen : MonoBehaviour
         helixAnim = helixIcon.GetComponent<AnimationModule>();
         helixAnim.Add("Item_helixFragment");
         helixAnim.pauseOnMenu = false;
+        helixAnim.affectedByGlobalEntityColor = false;
         helixCountOriginYs.Add(helixIcon.transform.localPosition.y);
         helixCountOriginYs.Add(helixCount.position.y);
         helixIcon.transform.localPosition = new Vector2(helixIcon.transform.localPosition.x, helixCountOriginYs[0] + HELIX_COUNT_OFF_Y);
@@ -116,6 +121,7 @@ public class Subscreen : MonoBehaviour
                 cellAnim.Add("Minimap_icon_unknown");
                 cellAnim.Add("Minimap_icon_marker");
                 cellAnim.pauseOnMenu = false;
+                cellAnim.affectedByGlobalEntityColor = false;
                 newCell.transform.localPosition = new Vector2(topLeftCell.x + (x * 0.5f), topLeftCell.y - (y * 0.5f));
                 cells.Add(newCell);
                 cellID++;

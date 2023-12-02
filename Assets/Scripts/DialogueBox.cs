@@ -80,6 +80,7 @@ public class DialogueBox : MonoBehaviour
     void Start()
     {
         anim = GetComponent<AnimationModule>();
+        anim.affectedByGlobalEntityColor = false;
         sfx = GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>();
         cam = transform.parent.gameObject;
@@ -95,8 +96,10 @@ public class DialogueBox : MonoBehaviour
 
         portraitFrame = portrait.GetComponent<SpriteRenderer>();
         portraitFrameAnim = portrait.GetComponent<AnimationModule>();
+        portraitFrameAnim.affectedByGlobalEntityColor = false;
         portraitChar = portrait.transform.GetChild(0).GetComponent<SpriteRenderer>();
         portraitCharAnim = portrait.transform.GetChild(0).GetComponent<AnimationModule>();
+        portraitCharAnim.affectedByGlobalEntityColor = false;
         portraitFrame.color = PlayState.GetColor("0006");
 
         for (int i = 0; i < boxShapeIDs.Length; i++)

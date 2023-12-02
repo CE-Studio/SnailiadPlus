@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using UnityEngine.Tilemaps;
 
 public class GlobalFunctions : MonoBehaviour
 {
@@ -98,6 +99,7 @@ public class GlobalFunctions : MonoBehaviour
             weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_inactive");
             weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_active");
             weaponIcons[i].Play("WeaponIcon_" + (i + 1) + "_locked");
+            weaponIcons[i].affectedByGlobalEntityColor = false;
         }
 
         itemText = GameObject.Find("View/Item Get").GetComponent<TextObject>();
@@ -139,12 +141,12 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.mainCam = PlayState.camObj.GetComponent<Camera>();
         PlayState.camScript = PlayState.cam.GetComponent<CamMovement>();
         PlayState.screenCover = GameObject.Find("View/Cover").GetComponent<SpriteRenderer>();
-        PlayState.groundLayer = GameObject.Find("Grid/Ground");
-        PlayState.fg2Layer = GameObject.Find("Grid/Foreground 2");
-        PlayState.fg1Layer = GameObject.Find("Grid/Foreground");
-        PlayState.bgLayer = GameObject.Find("Grid/Background");
-        PlayState.skyLayer = GameObject.Find("Grid/Sky");
-        PlayState.specialLayer = GameObject.Find("Grid/Special");
+        PlayState.groundLayer = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
+        PlayState.fg2Layer = GameObject.Find("Grid/Foreground 2").GetComponent<Tilemap>();
+        PlayState.fg1Layer = GameObject.Find("Grid/Foreground").GetComponent<Tilemap>();
+        PlayState.bgLayer = GameObject.Find("Grid/Background").GetComponent<Tilemap>();
+        PlayState.skyLayer = GameObject.Find("Grid/Sky").GetComponent<Tilemap>();
+        PlayState.specialLayer = GameObject.Find("Grid/Special").GetComponent<Tilemap>();
         PlayState.minimap = GameObject.Find("View/Minimap Panel/Minimap");
         PlayState.minimapScript = PlayState.minimap.transform.parent.GetComponent<Minimap>();
         PlayState.achievement = GameObject.Find("View/Achievement Panel");
@@ -201,6 +203,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject.Find("View/Control Guide"),             // 17
             GameObject.Find("View/Boss Rush Time"),            // 18
         };
+        PlayState.TogglableHUDElements[12].GetComponent<AnimationModule>().affectedByGlobalEntityColor = false;
+        PlayState.TogglableHUDElements[12].transform.GetChild(0).GetComponent<AnimationModule>().affectedByGlobalEntityColor = false;
 
         PlayState.respawnScene = SceneManager.GetActiveScene();
 
@@ -710,6 +714,7 @@ public class GlobalFunctions : MonoBehaviour
             anim.Add("DebugKey_idle");
             anim.Add("DebugKey_pressed");
             anim.Play("DebugKey_idle");
+            anim.affectedByGlobalEntityColor = false;
         }
         StartCoroutine(DebugKeys());
     }
@@ -820,9 +825,7 @@ public class GlobalFunctions : MonoBehaviour
         if (hearts.transform.childCount != 0)
         {
             for (int i = hearts.transform.childCount - 1; i > -1; i--)
-            {
                 Destroy(hearts.transform.GetChild(i).gameObject);
-            }
         }
         int max = PlayState.CountHearts() + 3;
         for (int i = 0; i < max; i++)
@@ -841,6 +844,7 @@ public class GlobalFunctions : MonoBehaviour
                 heartAnim.Add("Heart_insane_" + j);
             heartAnim.Play(PlayState.currentProfile.difficulty == 2 ? "Heart_insane_2" :
                 (PlayState.currentProfile.difficulty == 1 ? "Heart_normal_4" : "Heart_easy_8"));
+            heartAnim.affectedByGlobalEntityColor = false;
             NewHeart.GetComponent<SpriteRenderer>().sortingOrder = -1;
             NewHeart.name = "Heart " + (i + 1) + " (HP " + (i * 4) + "-" + (i * 4 + 4) + ")";
         }
@@ -1239,8 +1243,6 @@ public class GlobalFunctions : MonoBehaviour
                     }
                     break;
                 case 2: // Shoot and jump
-                    //preGravJumpFrames++;
-                    //Control.SetVirtual(Control.Keyboard.Jump1, preGravJumpFrames < 3);
                     PlayState.playerScript.Shoot();
                     if (PlayState.playerScript.velocity.y <= 0)
                     {
@@ -1252,43 +1254,30 @@ public class GlobalFunctions : MonoBehaviour
                     }
                     break;
                 case 3: // Grav up
-                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.y - itemOrigin.y > 16.5f)
                     {
-                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        //Control.SetVirtual(Control.Keyboard.Up1, false);
-                        //Control.SetVirtual(Control.Keyboard.Left1, true);
                         PlayState.playerScript.RemoteSetGravity(Player.Dirs.WallL);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 4: // Grav left
-                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.x - itemOrigin.x < -3.5f)
                     {
-                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        //Control.SetVirtual(Control.Keyboard.Left1, false);
-                        //Control.SetVirtual(Control.Keyboard.Right1, true);
                         PlayState.playerScript.RemoteSetGravity(Player.Dirs.WallR);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 5: // Grav right
-                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.player.transform.position.x - itemOrigin.x > 3f)
                     {
-                        //Control.SetVirtual(Control.Keyboard.Jump1, false);
-                        //Control.SetVirtual(Control.Keyboard.Right1, false);
-                        //Control.SetVirtual(Control.Keyboard.Down1, true);
                         PlayState.playerScript.RemoteSetGravity(Player.Dirs.Floor);
                         step++;
                         stepElapsed = 0;
                     }
                     break;
                 case 6: // Grav down
-                    //Control.SetVirtual(Control.Keyboard.Jump1, stepElapsed < 0.125f);
                     if (PlayState.playerScript.grounded)
                         sceneActive = false;
                     break;

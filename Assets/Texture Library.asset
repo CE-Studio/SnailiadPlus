@@ -164,8 +164,10 @@ MonoBehaviour:
   - Particles/Explosion
   - Particles/GigaTrail
   - Particles/IntroBGPatterns
+  - Particles/Lightning
   - Particles/Nom
   - Particles/Parry
+  - Particles/Rain
   - Particles/RushGigaTrail
   - Particles/Shield
   - Particles/ShockChar

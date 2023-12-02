@@ -44,6 +44,8 @@ public class BreakableBlock : MonoBehaviour
     {
         fg1Sprite.transform.localPosition = PlayState.fg1Layer.transform.position;
         fg2Sprite.transform.localPosition = PlayState.fg2Layer.transform.position;
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].color = PlayState.entityColor;
     }
 
     public void Instantiate(PlayState.Breakable data, bool isFinalBossTile = false)

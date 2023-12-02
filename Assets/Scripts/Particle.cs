@@ -29,10 +29,6 @@ public class Particle : MonoBehaviour
 
     public void AddAnims()
     {
-        anim.Add("Bubble1");
-        anim.Add("Bubble2");
-        anim.Add("Bubble3");
-        anim.Add("Bubble4");
         anim.Add("Dot_heat_tiny");
         anim.Add("Dot_heat_small");
         anim.Add("Dot_heat_medium");
@@ -68,15 +64,7 @@ public class Particle : MonoBehaviour
         anim.Add("Parry");
         anim.Add("Shield");
         anim.Add("Smoke");
-        anim.Add("Snow1");
-        anim.Add("Snow2");
-        anim.Add("Snow3");
-        anim.Add("Snow4");
         anim.Add("Splash");
-        anim.Add("Star1");
-        anim.Add("Star2");
-        anim.Add("Star3");
-        anim.Add("Star4");
         anim.Add("Transformation_ice");
         anim.Add("Transformation_gravity");
         anim.Add("Transformation_fullMetal");
@@ -90,6 +78,11 @@ public class Particle : MonoBehaviour
             for (int i = 0; i <= 1; i++)
                 foreach (string dir in new string[] { "down", "up", "left", "right" })
                     anim.Add(string.Format("GravShock_char_{0}{1}_{2}", character, i.ToString(), dir));
+        }
+        foreach (string variantAnim in new string[] { "Bubble", "Lightning", "Rain", "Snow", "Star" })
+        {
+            for (int i = 1; i <= 4; i++)
+                anim.Add(variantAnim + i.ToString());
         }
     }
 
@@ -220,6 +213,17 @@ public class Particle : MonoBehaviour
                     case "nom":
                         internalVars[0] += Time.deltaTime;
                         transform.position = new(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
+                        break;
+                    case "rain":
+                        transform.position -= Time.deltaTime * new Vector3(vars[1], vars[0], 0);
+                        while (transform.position.x < PlayState.cam.transform.position.x - 14)
+                            transform.position = new(transform.position.x + 28, transform.position.y);
+                        while (transform.position.x > PlayState.cam.transform.position.x + 14)
+                            transform.position = new(transform.position.x - 28, transform.position.y);
+                        while (transform.position.y < PlayState.cam.transform.position.y - 9)
+                            transform.position = new(transform.position.x, transform.position.y + 18);
+                        while (transform.position.y > PlayState.cam.transform.position.y + 9)
+                            transform.position = new(transform.position.x, transform.position.y - 18);
                         break;
                     case "rushgigatrail":
                         sprite.color = new Color(1, 1, 1, sprite.color.a - Time.deltaTime * 2f);
@@ -397,11 +401,21 @@ public class Particle : MonoBehaviour
             case "intropattern":
                 anim.Play("IntroPattern_" + (vars[0] == 1 ? Random.Range(5, 9) : Random.Range(1, 5)));
                 break;
+            case "lightning":
+                anim.Play("Lightning" + Random.Range(1, 5).ToString());
+                if (PlayState.GetAnim("Lightning_data").frames[0] == 1)
+                    sprite.flipX = Random.Range(0, 2) == 1;
+                anim.affectedByGlobalEntityColor = false;
+                MoveToCamSynced();
+                break;
             case "nom":
                 anim.Play("Nom");
                 break;
             case "parry":
                 anim.Play("Parry");
+                break;
+            case "rain":
+                anim.Play("Rain" + Random.Range(1, 5).ToString());
                 break;
             case "rushgigatrail":
                 sprite.sprite = PlayState.GetSprite("Particles/RushGigaTrail", (int)vars[0]);
@@ -434,6 +448,7 @@ public class Particle : MonoBehaviour
             case "sparkle":
                 anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
                 anim.pauseOnMenu = false;
+                anim.affectedByGlobalEntityColor = false;
                 runInMenu = true;
                 break;
             case "splash":
@@ -471,6 +486,8 @@ public class Particle : MonoBehaviour
             "shockcharsub" => -14,
             "sparkle" => 10,
             "parry" => -45,
+            "rain" => -115,
+            "lightning" => -116,
             _ => -15
         };
         sprite.color = animType switch
@@ -508,6 +525,7 @@ public class Particle : MonoBehaviour
         type = "";
         anim.Stop(true);
         anim.pauseOnMenu = true;
+        anim.affectedByGlobalEntityColor = true;
         runInMenu = false;
         sprite.enabled = true;
         sprite.sprite = sprites.blank;

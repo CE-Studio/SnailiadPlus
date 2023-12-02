@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 949453bc04cb8fd4aa914cd7c9cb654e, type: 3}
   - {fileID: 8300000, guid: 615a6b2d651c84a49b3b1ecbe4af9a27, type: 3}
   - {fileID: 8300000, guid: a13f53e66b5261b418876e402437ae6b, type: 3}
+  - {fileID: 8300000, guid: 589649ba9671f2240988797984bb0a09, type: 3}
   - {fileID: 8300000, guid: 8c88f15a4f5480247935dd15ce21f501, type: 3}
   referenceList:
   - BossHPBleep
@@ -105,4 +106,5 @@ MonoBehaviour:
   - Snelk
   - Splash
   - Stomp
+  - Thunder
   - Transformation

@@ -141,12 +141,12 @@ public class PlayState {
     public static Camera mainCam;
     public static CamMovement camScript;
     public static SpriteRenderer screenCover;
-    public static GameObject groundLayer;
-    public static GameObject fg2Layer;
-    public static GameObject fg1Layer;
-    public static GameObject bgLayer;
-    public static GameObject skyLayer;
-    public static GameObject specialLayer;
+    public static Tilemap groundLayer;
+    public static Tilemap fg2Layer;
+    public static Tilemap fg1Layer;
+    public static Tilemap bgLayer;
+    public static Tilemap skyLayer;
+    public static Tilemap specialLayer;
     public static GameObject minimap;
     public static Minimap minimapScript;
     public static GameObject achievement;
@@ -544,6 +544,8 @@ public class PlayState {
 
     public static BossRushData activeRushData;
 
+    public static Color entityColor = Color.white;
+
     public static Sprite BlankTexture(bool useSmallBlank = false) {
         return useSmallBlank ? globalFunctions.blankSmall : globalFunctions.blank;
     }
@@ -608,7 +610,7 @@ public class PlayState {
             NPCVars = (int[])blankProfile.NPCVars.Clone(),
             percentage = blankProfile.percentage,
             exploredMap = (int[])defaultMinimapState.Clone(),
-            cutsceneStates = (int[])blankProfile.cutsceneStates
+            cutsceneStates = (int[])blankProfile.cutsceneStates.Clone()
         };
     }
 
@@ -1079,6 +1081,15 @@ public class PlayState {
         }
     }
 
+    public static void ResetTilemapColors()
+    {
+        skyLayer.color = Color.white;
+        bgLayer.color = Color.white;
+        groundLayer.color = Color.white;
+        fg1Layer.color = Color.white;
+        fg2Layer.color = Color.white;
+    }
+
     public static Particle RequestParticle(Vector2 position, string type) {
         return RequestParticle(position, type, new float[] { 0 }, false);
     }
@@ -1185,6 +1196,10 @@ public class PlayState {
                         particleScript.vars[0] = values[0];
                     }
                     break;
+                case "lightning":
+                    if (generalData.particleState == 1 || generalData.particleState == 5)
+                        activateParticle = true;
+                    break;
                 case "nom":
                     // Values:
                     // 0 = Start Y
@@ -1198,6 +1213,14 @@ public class PlayState {
                 case "parry":
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
+                    break;
+                case "rain":
+                    if (generalData.particleState == 1 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = 28.75f + UnityEngine.Random.Range(0f, 1f) * 12f;  // Downward velocity
+                        particleScript.vars[1] = 14f + UnityEngine.Random.Range(0f, 1f) * 6f;   // Leftward velocity
+                    }
                     break;
                 case "rushgigatrail":
                     // Values:

@@ -17,6 +17,7 @@ public class RoomUtilities : Editor
     SerializedProperty sID;
     SerializedProperty sSubID;
     SerializedProperty sSnelk;
+    SerializedProperty sDarkness;
     SerializedProperty sParFG2;
     SerializedProperty sParFG1;
     SerializedProperty sParBG1;
@@ -33,6 +34,7 @@ public class RoomUtilities : Editor
         sID = serializedObject.FindProperty("areaID");
         sSubID = serializedObject.FindProperty("areaSubzone");
         sSnelk = serializedObject.FindProperty("isSnelkRoom");
+        sDarkness = serializedObject.FindProperty("darknessLevel");
         sParFG2 = serializedObject.FindProperty("parallaxForeground2Modifier");
         sParFG1 = serializedObject.FindProperty("parallaxForeground1Modifier");
         sParBG1 = serializedObject.FindProperty("parallaxBackgroundModifier");
@@ -53,6 +55,7 @@ public class RoomUtilities : Editor
         sID.intValue = EditorGUILayout.IntField("Area ID", sID.intValue);
         sSubID.intValue = EditorGUILayout.IntField("Subzone ID", sSubID.intValue);
         sSnelk.boolValue = EditorGUILayout.Toggle("Snelk room", sSnelk.boolValue);
+        sDarkness.floatValue = EditorGUILayout.FloatField("Darkness level", Mathf.Clamp(sDarkness.floatValue, 0f, 1f));
         GUILayout.Space(15);
 
         if (GUILayout.Button("Snap position to nearest tile"))

@@ -74,6 +74,8 @@ public class Minimap : MonoBehaviour
             anims[i].Add("Minimap_icon_marker");
         }
         anims[3].Play("Minimap_icon_playerNormal");
+        for (int i = 0; i < anims.Length; i++)
+            anims[i].affectedByGlobalEntityColor = false;
 
         foreach (int cell in PlayState.defaultMinimapState)
             if (cell == 0)

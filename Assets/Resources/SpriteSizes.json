@@ -470,6 +470,11 @@
             "height": 16
         },
 		{
+            "name": "Entities/LightMask",
+            "width": 128,
+            "height": 128
+        },
+		{
             "name": "Entities/Muck",
             "width": 16,
             "height": 16
@@ -748,6 +753,11 @@
             "height": 48
         },
 		{
+			"name": "Particles/Lightning",
+			"width": 96,
+			"height": 128
+		},
+		{
 			"name": "Particles/Nom",
 			"width": 16,
 			"height": 4
@@ -757,6 +767,11 @@
 			"width": 32,
 			"height": 32
 		},
+		{
+            "name": "Particles/Rain",
+            "width": 18,
+            "height": 32
+        },
 		{
             "name": "Particles/RushGigaTrail",
             "width": 48,
