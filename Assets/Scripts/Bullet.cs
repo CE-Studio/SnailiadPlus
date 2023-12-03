@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public BoxCollider2D box;
+    public GameObject lightMask;
 
     public GameObject player;
     public GameObject cam;
@@ -170,6 +171,7 @@ public class Bullet : MonoBehaviour
             }
         }
         bulletType = type;
+        int lightSize = -1;
         switch (type)
         {
             case 1: // Peashooter
@@ -191,6 +193,7 @@ public class Bullet : MonoBehaviour
                 velocity = 0.075f;
                 damage = 30;
                 rapidMult = 2f;
+                lightSize = 13;
                 break;
             case 4: // Devastator Peashooter
                 box.size = new Vector2(1.4f, 1.4f);
@@ -210,6 +213,7 @@ public class Bullet : MonoBehaviour
                 velocity = 0.075f;
                 damage = 68;
                 rapidMult = 2f;
+                lightSize = 17;
                 break;
             case 7: // Gravity Shock
                 box.size = new Vector2(2.75f, 2.75f);
@@ -230,12 +234,14 @@ public class Bullet : MonoBehaviour
                 velocity = 0.05f;
                 damage = 68;
                 rapidMult = 1f;
+                lightSize = 9;
                 break;
             case 10: // Devastator Shockwave
                 box.size = new Vector2(0.95f, 0.95f);
                 velocity = 0.085f;
                 damage = 108;
                 rapidMult = 1f;
+                lightSize = 11;
                 break;
         }
         direction = dir;
@@ -246,6 +252,11 @@ public class Bullet : MonoBehaviour
             damage *= 10;
         velocity *= rapidMult;
         PlayAnim();
+        if (lightSize != -1 && lightMask == null)
+        {
+            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
+            lightMask.transform.parent = transform;
+        }
     }
 
     void PlayAnim()
@@ -386,6 +397,8 @@ public class Bullet : MonoBehaviour
             despawnOffScreen = true;
             lifeTimer = 0;
             transform.position = Vector2.zero;
+            if (lightMask != null)
+                Destroy(lightMask);
         }
     }
 

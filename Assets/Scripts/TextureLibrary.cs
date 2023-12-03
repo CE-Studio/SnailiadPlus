@@ -111,6 +111,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Kitty",
         "Entities/Kitty2",
         "Entities/LightMask",
+        "Entities/LightMaskLarge",
         "Entities/Muck",
         "Entities/Pincer",
         "Entities/PixelPeople",

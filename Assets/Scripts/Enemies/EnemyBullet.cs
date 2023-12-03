@@ -34,6 +34,7 @@ public class EnemyBullet : MonoBehaviour
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public BoxCollider2D box;
+    public GameObject lightMask;
 
     public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave, gigaWave, lightWave }
     
@@ -170,6 +171,7 @@ public class EnemyBullet : MonoBehaviour
 
         bulletType = type;
         string soundID = "";
+        int lightSize = -1;
         switch (type)
         {
             case BulletType.pea:
@@ -229,6 +231,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyLaser";
+                lightSize = 9;
                 break;
             case BulletType.donutLinear:
                 anim.Play("Bullet_enemy_donut_linear_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -240,6 +243,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyDonut";
+                lightSize = 11;
                 break;
             case BulletType.donutRotary:
                 anim.Play("Bullet_enemy_donut_rotary_" + (dirVelVars[1] > 0 ? "CW" : "CCW"));
@@ -252,6 +256,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyDonut";
+                lightSize = 11;
                 break;
             case BulletType.donutHybrid:
                 anim.Play("Bullet_enemy_donut_hybrid_" + (dirVelVars[4] > 0 ? "CW" : "CCW"));
@@ -267,6 +272,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyDonut";
+                lightSize = 11;
                 break;
             case BulletType.spikeball:
                 anim.Play("Bullet_enemy_spikeball_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -292,6 +298,7 @@ public class EnemyBullet : MonoBehaviour
                 SetDestroyableLevels("1111110000", false);
                 SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 0;
+                lightSize = 17;
                 break;
             case BulletType.gigaWave:
                 anim.Play("Bullet_enemy_gigaWave_" + PlayState.VectorToCardinal(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -305,6 +312,7 @@ public class EnemyBullet : MonoBehaviour
                     soundID = "ShotEnemyGigaWave";
                 SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 2;
+                lightSize = 21;
                 break;
             case BulletType.lightWave:
                 anim.Play("Bullet_enemy_lightWave_" + PlayState.VectorToCompass(new Vector2(dirVelVars[1], dirVelVars[2])));
@@ -319,6 +327,7 @@ public class EnemyBullet : MonoBehaviour
                 SetDestroyableLevels("1111110000", false);
                 SetDestroyableLevels("1111110000", true);
                 bulletInteraction = 0;
+                lightSize = 19;
                 break;
         }
         initialSpeed = speed;
@@ -327,6 +336,12 @@ public class EnemyBullet : MonoBehaviour
             Despawn();
         else if (playSound)
             PlayState.PlaySound(soundID);
+
+        if (lightSize != -1 && lightMask == null)
+        {
+            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
+            lightMask.transform.parent = transform;
+        }
     }
 
     public void Reshoot(Vector2 newOrigin, Vector2 newAngle, bool playSound = false)
@@ -396,6 +411,8 @@ public class EnemyBullet : MonoBehaviour
             SetDestroyableLevels("000000", true);
             bulletInteraction = 0;
             hasBeenParried = false;
+            if (lightMask != null)
+                Destroy(lightMask);
         }
     }
 

@@ -22659,32 +22659,44 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "LightMask_data",
+			"spriteName": "Entities/LightMask",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "LightMask_0",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_1",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_2",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22692,12 +22704,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_3",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22706,12 +22718,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_4",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22721,12 +22733,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_5",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22737,12 +22749,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_6",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22754,12 +22766,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_7",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22772,12 +22784,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_8",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22791,12 +22803,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_9",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22811,12 +22823,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_10",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22832,12 +22844,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_11",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22854,12 +22866,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_12",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22877,12 +22889,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_13",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22901,12 +22913,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_14",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22926,12 +22938,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_15",
 			"spriteName": "Entities/LightMask",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22952,35 +22964,35 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_16",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_17",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_18",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -22988,12 +23000,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_19",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -23002,12 +23014,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_20",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -23017,12 +23029,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_21",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -23033,12 +23045,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_22",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -23050,12 +23062,12 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		{
 			"name": "LightMask_23",
 			"spriteName": "Entities/LightMaskLarge",
-			"framerate": 30.0,
+			"framerate": 50.0,
 			"frames": [
 				0,
 				1,
@@ -23068,7 +23080,7 @@
 			],
 			"loop": false,
 			"loopStartFrame": 0,
-			"randomizeStartFrame": true
+			"randomizeStartFrame": false
 		},
 		
 		{

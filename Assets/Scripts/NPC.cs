@@ -51,19 +51,23 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     }
     #endregion cutscene
 
-    public Dictionary<string, object> resave() {
+    public Dictionary<string, object> resave()
+    {
         return null;
     }
 
     public string myType = "NPC";
 
-    public string objType {
-        get {
+    public string objType
+    {
+        get
+        {
             return myType;
         }
     }
 
-    public Dictionary<string, object> save() {
+    public Dictionary<string, object> save()
+    {
         Dictionary<string, object> content = new();
         content["ID"] = ID;
         content["lookMode"] = lookMode;
@@ -73,7 +77,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         return content;
     }
 
-    public void load(Dictionary<string, object> content) {
+    public void load(Dictionary<string, object> content)
+    {
         ID = (int)content["ID"];
         lookMode = (int)content["lookMode"];
         upsideDown = (bool)content["upsideDown"];
@@ -82,7 +87,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         Spawn();
     }
 
-    public virtual void Awake() {
+    public virtual void Awake()
+    {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
@@ -111,9 +117,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             Mathf.Infinity,
             Mathf.Infinity
             );
+
+        PlayState.globalFunctions.CreateLightMask(12, transform.position).transform.parent = transform;
     }
 
-    public virtual void Spawn() {
+    public virtual void Spawn()
+    {
         CreateNewSprites();
         anim.Add("NPC_" + animationSet + "_idle");
         anim.Add("NPC_" + animationSet + "_shell");
@@ -145,7 +154,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         }
     }
 
-    public virtual void FixedUpdate() {
+    public virtual void FixedUpdate()
+    {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
@@ -193,24 +203,35 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         }
     }
 
-    public virtual void Update() {
-        if (PlayState.gameState == PlayState.GameState.game) {
+    public virtual void Update()
+    {
+        if (PlayState.gameState == PlayState.GameState.game)
+        {
             if (anim.isPlaying)
                 sprite.sprite = sprites[anim.GetCurrentFrameValue()];
 
-            if (!PlayState.cutsceneActive) {
-                if (lookMode == 0) {
-                    if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep") {
+            if (!PlayState.cutsceneActive)
+            {
+                if (lookMode == 0)
+                {
+                    if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
+                    {
                         sprite.flipX = true;
                         speechBubbleSprite.flipX = false;
-                    } else {
+                    }
+                    else
+                    {
                         sprite.flipX = false;
                         speechBubbleSprite.flipX = true;
                     }
-                } else if (lookMode == 1) {
+                }
+                else if (lookMode == 1)
+                {
                     sprite.flipX = true;
                     speechBubbleSprite.flipX = false;
-                } else {
+                }
+                else
+                {
                     sprite.flipX = false;
                     speechBubbleSprite.flipX = true;
                 }

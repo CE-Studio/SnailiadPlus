@@ -26,14 +26,17 @@ public class Item:MonoBehaviour, IRoomObject {
 
     private const float UNIQUE_ITEM_CUTSCENE_TIME = 3.5f;
 
-    public Dictionary<string, object> resave() {
+    public Dictionary<string, object> resave()
+    {
         return null;
     }
 
     public static readonly string myType = "Item";
 
-    public string objType {
-        get {
+    public string objType
+    {
+        get
+        {
             return myType;
         }
     }
@@ -102,6 +105,8 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.currentProfile.items[itemID] = -1;
                 Destroy(gameObject);
             }
+
+            PlayState.globalFunctions.CreateLightMask(14, transform.position).transform.parent = transform;
         }
     }
 

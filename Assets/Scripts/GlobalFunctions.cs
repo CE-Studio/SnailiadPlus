@@ -125,7 +125,7 @@ public class GlobalFunctions : MonoBehaviour
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
 
         lightMask = Resources.Load<GameObject>("Objects/Light Mask");
-        CreateLightMask(18, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
+        CreateLightMask(12, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
     }
 
     private void DeclarePlayStateMono()

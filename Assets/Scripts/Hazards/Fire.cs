@@ -11,5 +11,7 @@ public class Fire : Hazard
         string newAnim = "Hazard_fire" + (Mathf.Abs(Mathf.Floor(transform.position.x) % 4) + 1);
         anim.Add(newAnim);
         anim.Play(newAnim);
+
+        PlayState.globalFunctions.CreateLightMask(15, transform.position).transform.parent = transform;
     }
 }
