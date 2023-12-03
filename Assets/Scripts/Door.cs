@@ -85,6 +85,7 @@ public class Door:MonoBehaviour, IRoomObject
         }
 
         flipStates = PlayState.GetAnim("Door_data").frames;
+        PlayState.globalFunctions.CreateLightMask(15, transform.position).transform.parent = transform;
     }
 
     public void Spawn()

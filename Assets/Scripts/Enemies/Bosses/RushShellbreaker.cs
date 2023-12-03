@@ -80,6 +80,8 @@ public class RushShellbreaker : Boss
             }
 
             PlayAnim("normal");
+
+            PlayState.globalFunctions.CreateLightMask(20, transform.position).transform.parent = transform;
         }
         else
             Destroy(gameObject);

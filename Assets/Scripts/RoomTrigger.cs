@@ -45,6 +45,7 @@ public class RoomTrigger : MonoBehaviour
     // - thunder
     // - fog
     // - heat
+    // - glitch
     private List<float> effectVars = new();
     private bool initializedEffects = false;
     private float splashTimeout = 0;

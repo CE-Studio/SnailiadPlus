@@ -261,6 +261,8 @@ public class GigaSnail : Boss
         zzzObj = Resources.Load<GameObject>("Objects/Enemies/Bosses/Giga Zzz");
 
         CollectTargetPoints();
+
+        PlayState.globalFunctions.CreateLightMask(18, transform.position).transform.parent = transform;
     }
 
     private void UpdateBackground(string newState)

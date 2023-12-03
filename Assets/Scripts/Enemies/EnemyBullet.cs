@@ -21,6 +21,7 @@ public class EnemyBullet : MonoBehaviour
     private bool despawnOffscreen;
     public Enemy sourceEnemy;
     public bool hasBeenParried;
+    private float[] shootVarBackup;
 
     private bool[] playerBulletsDestroyedByMe = new bool[10];
     private bool[] playerBulletsThatDestroyMe = new bool[10];
@@ -331,6 +332,7 @@ public class EnemyBullet : MonoBehaviour
                 break;
         }
         initialSpeed = speed;
+        shootVarBackup = (float[])dirVelVars.Clone();
 
         if (despawnOffscreen && !PlayState.OnScreen(transform.position, box))
             Despawn();
@@ -346,7 +348,10 @@ public class EnemyBullet : MonoBehaviour
 
     public void Reshoot(Vector2 newOrigin, Vector2 newAngle, bool playSound = false)
     {
-        Shoot(sourceEnemy, newOrigin, bulletType, new float[] { initialSpeed, newAngle.x, newAngle.y }, playSound);
+        List<float> newShootVals = new() { initialSpeed, newAngle.x, newAngle.y };
+        while (newShootVals.Count < shootVarBackup.Length)
+            newShootVals.Add(shootVarBackup[newShootVals.Count]);
+        Shoot(sourceEnemy, newOrigin, bulletType, newShootVals.ToArray(), playSound);
         lifeTimer = 0;
     }
 

@@ -19,6 +19,8 @@ public class RushSpaceBoxShield : Enemy
         anim.Add("RushBoss_spaceBox_shield0_inactive");
 
         SetActive(false);
+
+        PlayState.globalFunctions.CreateLightMask(7, transform.position).transform.parent = transform;
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

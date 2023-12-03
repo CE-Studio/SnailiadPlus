@@ -160,6 +160,8 @@ public class MoonSnail : Boss
                 col.TryGetComponent(out box);
                 boxSize = box.size;
             }
+
+            PlayState.globalFunctions.CreateLightMask(12, transform.position).transform.parent = transform;
         }
         else
             Destroy(gameObject);
