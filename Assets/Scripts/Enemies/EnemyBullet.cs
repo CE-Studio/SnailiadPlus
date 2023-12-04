@@ -35,7 +35,7 @@ public class EnemyBullet : MonoBehaviour
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public BoxCollider2D box;
-    public GameObject lightMask;
+    public LightMask lightMask;
 
     public enum BulletType { pea, bigPea, boomBlue, boomRed, laser, donutLinear, donutRotary, donutHybrid, spikeball, shadowWave, gigaWave, lightWave }
     
@@ -69,6 +69,8 @@ public class EnemyBullet : MonoBehaviour
 
         sprite.enabled = false;
         box.enabled = false;
+
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     void FixedUpdate()
@@ -339,11 +341,7 @@ public class EnemyBullet : MonoBehaviour
         else if (playSound)
             PlayState.PlaySound(soundID);
 
-        if (lightSize != -1 && lightMask == null)
-        {
-            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
-            lightMask.transform.parent = transform;
-        }
+        lightMask.SetSize(lightSize);
     }
 
     public void Reshoot(Vector2 newOrigin, Vector2 newAngle, bool playSound = false)
@@ -416,8 +414,7 @@ public class EnemyBullet : MonoBehaviour
             SetDestroyableLevels("000000", true);
             bulletInteraction = 0;
             hasBeenParried = false;
-            if (lightMask != null)
-                Destroy(lightMask);
+            lightMask.SetSize(-1);
         }
     }
 

@@ -12,7 +12,7 @@ public class Particle : MonoBehaviour
     private float[] internalVars = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     public bool runInMenu = false;
     public ParticleSpriteCollection sprites;
-    private GameObject lightMask;
+    private LightMask lightMask;
 
     public void Awake()
     {
@@ -26,6 +26,7 @@ public class Particle : MonoBehaviour
     {
         if (anim.animList.Count == 0)
             AddAnims();
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     public void AddAnims()
@@ -526,11 +527,8 @@ public class Particle : MonoBehaviour
             "heat" => 5,
             _ => -1
         };
-        if (lightSize != -1)
-        {
-            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
-            lightMask.transform.parent = transform;
-        }
+        if (lightMask != null)
+            lightMask.SetSize(lightSize);
     }
 
     public void PlaySound()
@@ -567,8 +565,7 @@ public class Particle : MonoBehaviour
         for (int i = 0; i < internalVars.Length; i++)
             internalVars[i] = 0;
         MoveToMainPool();
-        if (lightMask != null)
-            Destroy(lightMask);
+        lightMask.SetSize(-1);
         gameObject.SetActive(false);
     }
 

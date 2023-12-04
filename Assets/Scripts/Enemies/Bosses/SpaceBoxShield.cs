@@ -6,6 +6,7 @@ public class SpaceBoxShield : Enemy
 {
     public SpaceBox parentBoss;
     private bool active;
+    private LightMask lightMask;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class SpaceBoxShield : Enemy
 
         SetActive(false);
 
-        PlayState.globalFunctions.CreateLightMask(7, transform.position).transform.parent = transform;
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -41,7 +42,10 @@ public class SpaceBoxShield : Enemy
         active = state;
         col.enabled = state;
         if (state)
+        {
+            lightMask.SetSize(7);
             anim.Play("Boss_spaceBox_shield" + parentBoss.attackMode.ToString() + "_spawn");
+        }
         else
             anim.Play("Boss_spaceBox_shield0_inactive");
     }

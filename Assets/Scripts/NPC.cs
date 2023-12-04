@@ -118,7 +118,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             Mathf.Infinity
             );
 
-        PlayState.globalFunctions.CreateLightMask(12, transform.position).transform.parent = transform;
+        PlayState.globalFunctions.CreateLightMask(12, transform);
     }
 
     public virtual void Spawn()

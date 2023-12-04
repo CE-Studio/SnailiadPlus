@@ -17,6 +17,7 @@ public class Item:MonoBehaviour, IRoomObject {
     public BoxCollider2D box;
     public SpriteRenderer sprite;
     public AudioSource sfx;
+    public LightMask lightMask;
 
     public AudioClip minorJingle;
     public AudioClip majorJingle;
@@ -106,7 +107,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 Destroy(gameObject);
             }
 
-            PlayState.globalFunctions.CreateLightMask(14, transform.position).transform.parent = transform;
+            lightMask = PlayState.globalFunctions.CreateLightMask(14, transform);
         }
     }
 
@@ -356,6 +357,7 @@ public class Item:MonoBehaviour, IRoomObject {
         transform.localPosition = originPos;
         box.enabled = false;
         sprite.enabled = false;
+        lightMask.SetSize(-1);
     }
 
     public IEnumerator HoverOverPlayer()

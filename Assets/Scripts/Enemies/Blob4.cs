@@ -41,6 +41,8 @@ public class Blob4 : Enemy
         shotTimeout = SHOT_TIMEOUT;
 
         UpdateBoxcasts();
+
+        PlayState.globalFunctions.CreateLightMask(9, transform);
     }
 
     void FixedUpdate()

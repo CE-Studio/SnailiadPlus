@@ -89,7 +89,11 @@ public class AnimationModule : MonoBehaviour
             }
 
             if (affectedByGlobalEntityColor)
-                sprite.color = PlayState.entityColor;
+            {
+                Color newEntityColor = PlayState.entityColor;
+                newEntityColor.a = sprite.color.a;
+                sprite.color = newEntityColor;
+            }
         }
     }
 
@@ -152,6 +156,16 @@ public class AnimationModule : MonoBehaviour
             Debug.LogWarning("Animation \"" + animName + "\" is not present in this module's animation list.");
     }
 
+    public void AddAndPlay(string animName, bool useSmallBlank)
+    {
+        AddAndPlay(animName, 1f, 0, useSmallBlank);
+    }
+    public void AddAndPlay(string animName, float newSpeed = 1f, int transposeFrames = 0, bool useSmallBlank = false)
+    {
+        Add(animName);
+        Play(animName, newSpeed, transposeFrames, useSmallBlank);
+    }
+
     public void Pause()
     {
         isPlaying = false;
@@ -168,7 +182,11 @@ public class AnimationModule : MonoBehaviour
         isPlaying = false;
         currentAnimName = "";
         if (setBlank)
+        {
             sprite.sprite = PlayState.BlankTexture(smallBlank);
+            for (int i = 0; i < masks.Count; i++)
+                masks[i].sprite = PlayState.BlankTexture(smallBlank);
+        }
     }
 
     public void ResetToStart()

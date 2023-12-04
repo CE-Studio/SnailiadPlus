@@ -263,6 +263,7 @@ public class Credits : MonoBehaviour
                 if (modeTimer > 0.9f && !startedFade)
                 {
                     startedFade = true;
+                    PlayState.SetTempDarkness(0);
                     PlayState.ScreenFlash("Custom Fade", 0, 0, 0, 0, 1, 0, -75);
                     PlayState.PlayMusic(0, 4);
                 }
@@ -819,8 +820,9 @@ public class Credits : MonoBehaviour
         Destroy(endImage.obj);
         Destroy(imageBg.obj);
         PlayState.ToggleHUD(true);
+        PlayState.SetTempDarkness(PlayState.currentDarkness);
         if (PlayState.currentArea == (int)PlayState.Areas.ShrineOfIris)
-            PlayState.globalFunctions.UpdateMusic(PlayState.currentArea, PlayState.currentSubzone, 1);
+            PlayState.globalFunctions.DelayStartAreaTheme(PlayState.currentArea, PlayState.currentSubzone, 0.25f);
         else
             PlayState.globalFunctions.DelayStartAreaTheme(PlayState.currentArea, PlayState.currentSubzone, 4f);
     }

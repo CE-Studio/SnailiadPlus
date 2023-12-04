@@ -125,7 +125,7 @@ public class GlobalFunctions : MonoBehaviour
         paletteShader = GameObject.Find("View/Main Camera").transform.GetComponent<Assets.Scripts.Cam.Effects.RetroPixelMax>();
 
         lightMask = Resources.Load<GameObject>("Objects/Light Mask");
-        CreateLightMask(12, PlayState.player.transform.position).transform.parent = PlayState.player.transform;
+        CreateLightMask(12, PlayState.player.transform);
     }
 
     private void DeclarePlayStateMono()
@@ -912,15 +912,17 @@ public class GlobalFunctions : MonoBehaviour
             Destroy(PlayState.gigaBGLayers[i]);
     }
 
-    public GameObject CreateLightMask(int lightLevel, Vector2 position)
+    public LightMask CreateLightMask(int lightLevel, Vector2 position)
     {
-        lightLevel = Mathf.Clamp(lightLevel, 0, 23);
-        GameObject newMask = Instantiate(lightMask, position, Quaternion.identity);
-        string animName = "LightMask_" + lightLevel.ToString();
-        AnimationModule maskAnim = newMask.GetComponent<AnimationModule>();
-        maskAnim.Add(animName);
-        maskAnim.Play(animName);
-        return newMask;
+        LightMask newMask = Instantiate(lightMask, position, Quaternion.identity).GetComponent<LightMask>();
+        newMask.Instance(lightLevel, position);
+        return newMask.GetComponent<LightMask>();
+    }
+    public LightMask CreateLightMask(int lightLevel, Transform parent)
+    {
+        LightMask newMask = Instantiate(lightMask, parent.position, Quaternion.identity).GetComponent<LightMask>();
+        newMask.Instance(lightLevel, parent);
+        return newMask.GetComponent<LightMask>();
     }
 
     public void FlashHUDText(TextTypes textType, string textValue = "No text")

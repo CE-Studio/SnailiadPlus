@@ -144,6 +144,8 @@ public class GigaSnail : Boss
 
     private List<Particle> bgStars = new();
 
+    private LightMask lightMask;
+
     private struct BGObj
     {
         public GameObject obj;
@@ -262,7 +264,7 @@ public class GigaSnail : Boss
 
         CollectTargetPoints();
 
-        PlayState.globalFunctions.CreateLightMask(18, transform.position).transform.parent = transform;
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     private void UpdateBackground(string newState)
@@ -428,6 +430,7 @@ public class GigaSnail : Boss
         else if (elapsed > 3 && introTimer == 0)
         {
             sprite.color = new Color32(255, 255, 255, 255);
+            lightMask.SetSize(18);
             StartCoroutine(RunIntro(true, true, true));
         }
         if (introTimer >= 1f && lastBGState == "fadeIn")

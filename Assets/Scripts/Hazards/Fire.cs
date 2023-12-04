@@ -12,6 +12,6 @@ public class Fire : Hazard
         anim.Add(newAnim);
         anim.Play(newAnim);
 
-        PlayState.globalFunctions.CreateLightMask(15, transform.position).transform.parent = transform;
+        PlayState.globalFunctions.CreateLightMask(15, transform);
     }
 }

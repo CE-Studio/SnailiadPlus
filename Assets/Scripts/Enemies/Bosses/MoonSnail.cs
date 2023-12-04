@@ -23,6 +23,7 @@ public class MoonSnail : Boss
     private const float AIM_DETECT_RADIUS_HORIZONTAL = 3.125f;
     private const float AIM_DETECT_RADIUS_VERTICAL = 12.5f;
     private const int CAST_COUNT = 4;
+    private const int LIGHT_SIZE = 12;
 
     private readonly float[] weaponTimeouts = new float[] { 0.05f, 0.15f, 0.0775f };
     private readonly float[] weaponSpeeds = new float[] { 0.925f, 16.875f, 0.15f };
@@ -90,6 +91,7 @@ public class MoonSnail : Boss
 
     private BoxCollider2D box;
     private Vector2 boxSize;
+    private LightMask lightMask;
 
     private int[] animData;
     /*\
@@ -161,7 +163,7 @@ public class MoonSnail : Boss
                 boxSize = box.size;
             }
 
-            PlayState.globalFunctions.CreateLightMask(12, transform.position).transform.parent = transform;
+            lightMask = PlayState.globalFunctions.CreateLightMask(LIGHT_SIZE, transform);
         }
         else
             Destroy(gameObject);
@@ -362,6 +364,7 @@ public class MoonSnail : Boss
                 if (animData[5] == 1)
                     shadowBallAnims[i].Play("Boss_moonSnail_shadowBall" + (attackPhase + 1).ToString());
             }
+            lightMask.SetSize(-1);
         }
         float teleElapsed = NormalizedSigmoid(modeElapsed / TELEPORT_TIME);
         if (teleElapsed <= 0.5)
@@ -386,7 +389,10 @@ public class MoonSnail : Boss
         ReleaseAllInputs();
         grounded = false;
         if (modeElapsed / TELEPORT_TIME >= 1)
+        {
+            lightMask.SetSize(LIGHT_SIZE);
             SetMode(BossMode.Attack, true);
+        }
     }
 
     private void UpdateAIAttack()

@@ -53,7 +53,7 @@ public class Fireball1 : Enemy
 
         updateAnimOnTurn = PlayState.GetAnim("Enemy_fireball1_data").frames[0] == 1;
 
-        PlayState.globalFunctions.CreateLightMask(15, transform.position).transform.parent = transform;
+        PlayState.globalFunctions.CreateLightMask(15, transform);
     }
 
     void FixedUpdate()

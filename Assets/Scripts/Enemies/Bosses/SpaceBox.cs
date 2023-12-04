@@ -151,7 +151,7 @@ public class SpaceBox : Boss
             if (spawnAtCorner)
                 transform.position += new Vector3(3.5f, -3.5f, 0);
 
-            PlayState.globalFunctions.CreateLightMask(23, transform.position).transform.parent = transform;
+            PlayState.globalFunctions.CreateLightMask(23, transform);
         }
         else
             Destroy(gameObject);

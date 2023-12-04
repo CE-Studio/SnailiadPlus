@@ -1090,6 +1090,11 @@ public class PlayState {
         darknessLayer.color = new Color(0, 0, 0, newValue);
     }
 
+    public static void SetTempDarkness(float newValue)
+    {
+        darknessLayer.color = new Color(0, 0, 0, newValue);
+    }
+
     public static void ResetTilemapColors()
     {
         skyLayer.color = Color.white;

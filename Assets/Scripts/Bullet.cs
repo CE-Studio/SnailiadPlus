@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     public SpriteRenderer sprite;
     public AnimationModule anim;
     public BoxCollider2D box;
-    public GameObject lightMask;
+    public LightMask lightMask;
 
     public GameObject player;
     public GameObject cam;
@@ -57,6 +57,8 @@ public class Bullet : MonoBehaviour
             for (int j = 0; j < shockWaveDirs.Length; j++)
                 anim.Add(string.Format("Bullet_shockWave{0}_{1}", i == 0 ? "" : "Dev", shockWaveDirs[j]));
         }
+
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     void FixedUpdate()
@@ -252,11 +254,7 @@ public class Bullet : MonoBehaviour
             damage *= 10;
         velocity *= rapidMult;
         PlayAnim();
-        if (lightSize != -1 && lightMask == null)
-        {
-            lightMask = PlayState.globalFunctions.CreateLightMask(lightSize, transform.position);
-            lightMask.transform.parent = transform;
-        }
+        lightMask.SetSize(lightSize);
     }
 
     void PlayAnim()
@@ -397,8 +395,7 @@ public class Bullet : MonoBehaviour
             despawnOffScreen = true;
             lifeTimer = 0;
             transform.position = Vector2.zero;
-            if (lightMask != null)
-                Destroy(lightMask);
+            lightMask.SetSize(-1);
         }
     }
 

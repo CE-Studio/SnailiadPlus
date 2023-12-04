@@ -17,6 +17,7 @@ public class Door:MonoBehaviour, IRoomObject
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public GameObject player;
+    public LightMask lightMask;
 
     public Sprite[] editorSprites;
 
@@ -85,7 +86,7 @@ public class Door:MonoBehaviour, IRoomObject
         }
 
         flipStates = PlayState.GetAnim("Door_data").frames;
-        PlayState.globalFunctions.CreateLightMask(15, transform.position).transform.parent = transform;
+        lightMask = PlayState.globalFunctions.CreateLightMask(-1, transform);
     }
 
     public void Spawn()
@@ -93,7 +94,10 @@ public class Door:MonoBehaviour, IRoomObject
         if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 2)
             SetState1();
         else
+        {
+            lightMask.SetSize(15);
             SetState2();
+        }
 
         if (direction == 1 || direction == 3 && flipStates[1] == 1)
         {
@@ -196,6 +200,7 @@ public class Door:MonoBehaviour, IRoomObject
         sprite.enabled = true;
         PlayAnim("close");
         PlayState.PlaySound("DoorClose");
+        lightMask.SetSize(15);
     }
 
     public void SetStateDespawn()

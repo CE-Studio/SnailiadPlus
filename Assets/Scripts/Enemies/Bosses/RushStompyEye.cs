@@ -39,7 +39,7 @@ public class RushStompyEye : Enemy
         pupilAnim = transform.Find("Pupil").GetComponent<AnimationModule>();
         eyelidAnim = transform.Find("Eyelid").GetComponent<AnimationModule>();
 
-        PlayState.globalFunctions.CreateLightMask(16, transform.position).transform.parent = transform;
+        PlayState.globalFunctions.CreateLightMask(16, transform);
     }
 
     public override void LateUpdate()

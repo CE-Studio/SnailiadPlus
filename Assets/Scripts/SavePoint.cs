@@ -46,7 +46,7 @@ public class SavePoint:MonoBehaviour, IRoomObject
         else
             anim.Play("Save_inactive");
 
-        PlayState.globalFunctions.CreateLightMask(16, transform.position).transform.parent = transform;
+        PlayState.globalFunctions.CreateLightMask(16, transform);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
