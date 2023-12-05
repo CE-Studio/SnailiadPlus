@@ -783,8 +783,8 @@ public class MainMenu : MonoBehaviour
                         PlayState.generalData.FPSState = menuVarFlags[5] == 1;
                         break;
                     case "particles":
-                        TestForArrowAdjust(option, 6, 5);
-                        switch (menuVarFlags[6])
+                        TestForArrowAdjust(option, 0, 5);
+                        switch (menuVarFlags[0])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_none"));
@@ -805,7 +805,48 @@ public class MainMenu : MonoBehaviour
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_all"));
                                 break;
                         }
-                        PlayState.generalData.particleState = menuVarFlags[6];
+                        PlayState.generalData.particleState = menuVarFlags[0];
+                        break;
+                    case "screenShake":
+                        TestForArrowAdjust(option, 1, 4);
+                        switch (menuVarFlags[1])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minimal"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                break;
+                            case 3:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minNoHud"));
+                                break;
+                            case 4:
+                                AddToOptionText(option, PlayState.GetText("menu_add_shake_noHud"));
+                                break;
+                        }
+                        PlayState.generalData.screenShake = menuVarFlags[1];
+                        break;
+                    case "darkness":
+                        TestForArrowAdjust(option, 2, 3);
+                        switch (menuVarFlags[2])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_none"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_darkness_minor"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_darkness_half"));
+                                break;
+                            case 3:
+                                AddToOptionText(option, PlayState.GetText("menu_add_darkness_full"));
+                                break;
+                        }
+                        PlayState.generalData.darknessLevel = menuVarFlags[2];
                         break;
                     case "paletteShader":
                         TestForArrowAdjust(option, 7, 1);
@@ -950,28 +991,6 @@ public class MainMenu : MonoBehaviour
                                 break;
                         }
                         PlayState.generalData.controllerFaceType = menuVarFlags[0];
-                        break;
-                    case "screenShake":
-                        TestForArrowAdjust(option, 4, 4);
-                        switch (menuVarFlags[4])
-                        {
-                            case 0:
-                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
-                                break;
-                            case 1:
-                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minimal"));
-                                break;
-                            case 2:
-                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
-                                break;
-                            case 3:
-                                AddToOptionText(option, PlayState.GetText("menu_add_shake_minNoHud"));
-                                break;
-                            case 4:
-                                AddToOptionText(option, PlayState.GetText("menu_add_shake_noHud"));
-                                break;
-                        }
-                        PlayState.generalData.screenShake = menuVarFlags[4];
                         break;
                     case "gravSwap":
                         TestForArrowAdjust(option, 5, 2);
@@ -2080,6 +2099,7 @@ public class MainMenu : MonoBehaviour
         pauseButtonDown = true;
         PlayState.minimapScript.RefreshMap();
         PlayState.globalFunctions.UpdateWeaponIcons();
+        PlayState.SetTempDarkness(PlayState.currentDarkness);
         SetTextComponentOrigins();
 
         PlayState.playerScript.holdingJump = true;
@@ -2256,19 +2276,19 @@ public class MainMenu : MonoBehaviour
         ClearOptions();
         menuVarFlags[0] = PlayState.generalData.shootMode ? 1 : 0;
         AddOption(PlayState.GetText("menu_option_options_sound"), true, SoundOptions, new int[] { 0, PlayState.generalData.soundVolume, 1, PlayState.generalData.musicVolume });
-        AddOption(PlayState.GetText("menu_option_options_display"), true, DisplayOptions, new int[]
+        AddOption(PlayState.GetText("menu_option_options_display"), true, DisplayOptions1, new int[]
         {
             0, PlayState.generalData.windowSize, 1, PlayState.generalData.minimapState,
             2, PlayState.generalData.bottomKeyState, 3, PlayState.generalData.keymapState ? 1 : 0,
-            4, PlayState.generalData.timeState ? 1 : 0, 5, PlayState.generalData.FPSState ? 1 : 0,
-            6, PlayState.generalData.particleState, 7, PlayState.generalData.paletteFilterState ? 1 : 0
+            4, PlayState.generalData.timeState ? 1 : 0, 5, PlayState.generalData.FPSState ? 1 : 0
         });
         AddOption(PlayState.GetText("menu_option_options_controls"), true, ControlMain);
         AddOption(PlayState.GetText("menu_option_options_gameplay"), true, GameplayScreen, new int[]
-            { 0, PlayState.generalData.shootMode ? 1 : 0, 1, PlayState.generalData.breakableState,
-                2, PlayState.generalData.secretMapTilesVisible ? 1 : 0, 3, PlayState.generalData.frameLimiter,
-                4, PlayState.generalData.screenShake, 5, PlayState.generalData.gravSwapType,
-                6, PlayState.generalData.gravKeepType });
+        {
+            0, PlayState.generalData.shootMode ? 1 : 0, 1, PlayState.generalData.breakableState,
+            2, PlayState.generalData.secretMapTilesVisible ? 1 : 0, 3, PlayState.generalData.frameLimiter,
+            4, PlayState.generalData.gravSwapType, 5, PlayState.generalData.gravKeepType
+        });
         if (PlayState.gameState == PlayState.GameState.menu)
             AddOption(PlayState.GetText("menu_option_options_assets"), true, AssetPackMenu);
         else
@@ -2291,7 +2311,7 @@ public class MainMenu : MonoBehaviour
         backPage = SaveOptions;
     }
 
-    public void DisplayOptions()
+    public void DisplayOptions1()
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_display_resolution") + ": ", true, "resolution");
@@ -2300,9 +2320,31 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_display_keymap") + ": ", true, "keymap");
         AddOption(PlayState.GetText("menu_option_display_gameTime") + ": ", true, "gameTime");
         AddOption(PlayState.GetText("menu_option_display_fps") + ": ", true, "fps");
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_display_nextPage"), true, DisplayOptions2, new int[]
+        {
+            0, PlayState.generalData.particleState, 1, PlayState.generalData.screenShake,
+            2, PlayState.generalData.darknessLevel
+        });
+        AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
+        ForceSelect(0);
+        backPage = SaveOptions;
+    }
+
+    public void DisplayOptions2()
+    {
+        ClearOptions();
         AddOption(PlayState.GetText("menu_option_display_particles") + ": ", true, "particles");
+        AddOption(PlayState.GetText("menu_option_display_screenShake") + ": ", true, "screenShake");
+        AddOption(PlayState.GetText("menu_option_display_darkness") + ": ", true, "darkness");
         //AddOption(PlayState.GetText("menu_option_display_paletteShader") + ": ", true, "paletteShader");
         AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_display_prevPage"), true, DisplayOptions1, new int[]
+        {
+            0, PlayState.generalData.windowSize, 1, PlayState.generalData.minimapState,
+            2, PlayState.generalData.bottomKeyState, 3, PlayState.generalData.keymapState ? 1 : 0,
+            4, PlayState.generalData.timeState ? 1 : 0, 5, PlayState.generalData.FPSState ? 1 : 0
+        });
         AddOption(PlayState.GetText("menu_option_options_returnTo"), true, SaveOptions);
         ForceSelect(0);
         backPage = SaveOptions;
@@ -2481,7 +2523,6 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_gameplay_breakables") + ": ", true, "showBreakables");
         AddOption(PlayState.GetText("menu_option_gameplay_secretTiles") + ": ", true, "secretTiles");
         AddOption(PlayState.GetText("menu_option_gameplay_frameLimit") + ": ", true, "frameLimit");
-        AddOption(PlayState.GetText("menu_option_gameplay_screenShake") + ": ", true, "screenShake");
         AddOption(PlayState.GetText("menu_option_gameplay_gravSwap") + ": ", true, "gravSwap");
         AddOption(PlayState.GetText("menu_option_gameplay_gravKeep") + ": ", true, "gravKeep");
         AddOption("", false);

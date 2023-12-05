@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class PlayState {
+public class PlayState
+{
     public const float TAU = Mathf.PI * 2;
     public const float PI_OVER_EIGHT = Mathf.PI * 0.125f;
     public const float PI_OVER_FOUR = Mathf.PI * 0.25f;
@@ -40,7 +41,8 @@ public class PlayState {
     public static bool damageMult = false;
 
     [Serializable]
-    public struct AnimationData {
+    public struct AnimationData
+    {
         public string name;
         public string spriteName;
         public float framerate;
@@ -51,20 +53,23 @@ public class PlayState {
     }
 
     [Serializable]
-    public struct SpriteFrameSize {
+    public struct SpriteFrameSize
+    {
         public string name;
         public int width;
         public int height;
     }
 
     [Serializable]
-    public struct MusicLoopOffset {
+    public struct MusicLoopOffset
+    {
         public string name;
         public float offset;
     }
 
     [Serializable]
-    public struct TextDict {
+    public struct TextDict
+    {
         public string name;
         public string text;
         public int value;
@@ -442,6 +447,7 @@ public class PlayState {
         public int controllerFaceType;      // Controller face button type (0 = Xbox, 1 = Nintendo, 2 = PlayStation, 3 = Ouya)
         public int gravSwapType;            // Method of swapping gravity (0 = hold dir mid-air and jump, 1 = hold jump mid-air and tap dir, 2 = double-tap dir)
         public int gravKeepType;            // How gravity state is retained (0 = swap fall dir on any grav change, 1 = swap fall dir on deliberate gravity jump)
+        public int darknessLevel;           // The level of which darkness is induced (0 = none, 1 = minor, 2 = half, 3 = full)
         public KeyCode[] keyboardInputs;
         public Control.ControllerBinds[] controllerInputs;
 
@@ -489,6 +495,9 @@ public class PlayState {
         screenShake = 4,
         paletteFilterState = false,
         controllerFaceType = 0,
+        gravSwapType = 0,
+        gravKeepType = 0,
+        darknessLevel = 3,
         keyboardInputs = (KeyCode[])Control.defaultKeyboardInputs.Clone(),
         controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone(),
         achievements = new bool[Enum.GetNames(typeof(AchievementPanel.Achievements)).Length],
@@ -1086,12 +1095,14 @@ public class PlayState {
 
     public static void SetDarkness(float newValue)
     {
+        newValue *= generalData.darknessLevel switch { 0 => 0f, 1 => 0.2f, 2 => 0.5f, _ => 1f };
         currentDarkness = newValue;
         darknessLayer.color = new Color(0, 0, 0, newValue);
     }
 
     public static void SetTempDarkness(float newValue)
     {
+        newValue *= generalData.darknessLevel switch { 0 => 0f, 1 => 0.2f, 2 => 0.5f, _ => 1f };
         darknessLayer.color = new Color(0, 0, 0, newValue);
     }
 
@@ -1897,6 +1908,7 @@ public class PlayState {
             generalData.controllerFaceType = newData.controllerFaceType;
             generalData.gravSwapType = newData.gravSwapType;
             generalData.gravKeepType = newData.gravKeepType;
+            generalData.darknessLevel = newData.darknessLevel;
             if (newData.keyboardInputs != null)
                 generalData.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
             if (newData.controllerInputs != null)

@@ -461,6 +461,26 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_display_screenShake",
+			"text": "Screen shake",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_darkness",
+			"text": "Darkness level",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_nextPage",
+			"text": "Next page",
+			"value": 0
+		},
+		{
+			"name": "menu_option_display_prevPage",
+			"text": "Previous page",
+			"value": 0
+		},
+		{
 			"name": "menu_option_controls_main_keyboard",
 			"text": "Keyboard inputs",
 			"value": 0
@@ -708,11 +728,6 @@
 		{
 			"name": "menu_option_gameplay_frameLimit",
 			"text": "Frame limiter",
-			"value": 0
-		},
-		{
-			"name": "menu_option_gameplay_screenShake",
-			"text": "Screen shake",
 			"value": 0
 		},
 		{
@@ -2033,6 +2048,21 @@
 		{
 			"name": "menu_add_gravSwap_onDir",
 			"text": "Hold jump, tap direction",
+			"value": 0
+		},
+		{
+			"name": "menu_add_darkness_minor",
+			"text": "Minor",
+			"value": 0
+		},
+		{
+			"name": "menu_add_darkness_half",
+			"text": "Half",
+			"value": 0
+		},
+		{
+			"name": "menu_add_darkness_full",
+			"text": "Full",
 			"value": 0
 		},
 		{
