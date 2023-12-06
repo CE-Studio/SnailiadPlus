@@ -7113,21 +7113,7 @@
 			"randomizeStartFrame": false
         },
 		{
-			"name": "Save_active",
-			"spriteName": "SavePoint",
-			"framerate": 3.0,
-			"frames": [
-				4,
-				5,
-				6,
-				7
-			],
-			"loop": true,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "Save_inactive",
+			"name": "Save_inactive_floor",
 			"spriteName": "SavePoint",
 			"framerate": 3.0,
 			"frames": [
@@ -7141,7 +7127,21 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Save_last",
+			"name": "Save_inactive_wallR",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_inactive_ceiling",
 			"spriteName": "SavePoint",
 			"framerate": 3.0,
 			"frames": [
@@ -7149,6 +7149,132 @@
 				9,
 				10,
 				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_inactive_wallL",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				12,
+				13,
+				14,
+				15
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_active_floor",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				16,
+				17,
+				18,
+				19
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_active_wallR",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				20,
+				21,
+				22,
+				23
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_active_ceiling",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_active_wallL",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				28,
+				29,
+				30,
+				31
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_last_floor",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				32,
+				33,
+				34,
+				35
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_last_wallR",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_last_ceiling",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				40,
+				41,
+				42,
+				43
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Save_last_wallL",
+			"spriteName": "SavePoint",
+			"framerate": 3.0,
+			"frames": [
+				44,
+				45,
+				46,
+				47
 			],
 			"loop": true,
 			"loopStartFrame": 0,

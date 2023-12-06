@@ -2091,7 +2091,8 @@ public class MainMenu : MonoBehaviour
         PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
         PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
 
-        StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.WORLD_SPAWN : PlayState.currentProfile.saveCoords));
+        StartCoroutine(LoadFade(menuVarFlags[1] == 1 ? PlayState.PLAYER_SPAWNS[CharacterNameToID(PlayState.currentProfile.character)]
+            : PlayState.currentProfile.saveCoords));
     }
 
     public void Unpause()

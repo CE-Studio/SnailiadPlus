@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 53339fee99ca0d74faf8e1d636d922fd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - script: {instanceID: 0}
+  - sprite: {instanceID: 0}
+  - saveD: {fileID: 3485538886809574342, guid: 88c2cd9d982936442a60406d16d3a804, type: 3}
+  - saveL: {fileID: -289015825, guid: 88c2cd9d982936442a60406d16d3a804, type: 3}
+  - saveR: {fileID: -1074704772147787669, guid: 88c2cd9d982936442a60406d16d3a804,
+      type: 3}
+  - saveU: {fileID: 1556396352468909699, guid: 88c2cd9d982936442a60406d16d3a804, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
