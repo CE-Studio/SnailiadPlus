@@ -215,6 +215,16 @@ public class PlayState
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene;
 
+    public static readonly Vector2[] PLAYER_SPAWNS = new Vector2[]
+    {
+        new(-37, 10.5f),    // Snaily
+        new(-37, 10.5f),    // Sluggy
+        new(-19f, 38.5f), // Upside
+        new(-37, 10.5f),    // Leggy
+        new(-37, 10.5f),    // Blobby
+        new(-37, 10.5f)     // Leechy
+    };
+
     public static TextObject hudFps;
     public static TextObject hudTime;
     public static TextObject hudPause;
@@ -1433,7 +1443,7 @@ public class PlayState
     {
         player.GetComponent<Snaily>().enabled = newPlayer == "Snaily";
         player.GetComponent<Sluggy>().enabled = newPlayer == "Sluggy";
-        //player.GetComponent<Upside>().enabled = newPlayer == "Upside";
+        player.GetComponent<Upside>().enabled = newPlayer == "Upside";
         //player.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
         //player.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
         //player.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
@@ -1441,7 +1451,7 @@ public class PlayState
         playerScript = newPlayer switch
         {
             "Sluggy" => player.GetComponent<Sluggy>(),
-            //"Upside" => player.GetComponent<Upside>(),
+            "Upside" => player.GetComponent<Upside>(),
             //"Leggy" => player.GetComponent<Leggy>(),
             //"Blobby" => player.GetComponent<Blobby>(),
             //"Leechy" => player.GetComponent<Leechy>(),

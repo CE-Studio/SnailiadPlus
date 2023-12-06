@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
     private Vector2 lastCursorPos;
     private int versionCompare = 0;
     private bool isProfilePage = false;
-    private bool isBossRushPage = false;
+    private bool isCharSelectPage = false;
 
     private enum IntroStates
     {
@@ -559,7 +559,7 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                     case "character":
-                        bool swapChar = TestForArrowAdjust(option, 1, 1);
+                        bool swapChar = TestForArrowAdjust(option, 1, 2);
                         switch (menuVarFlags[1])
                         {
                             case 0:
@@ -1107,7 +1107,7 @@ public class MainMenu : MonoBehaviour
                 if (!selectedProfile.isEmpty)
                     SetSelectorChar(selectedProfile.character);
             }
-            else if (isBossRushPage)
+            else if (isCharSelectPage)
                 SetSelectorChar(CharacterIDToName(menuVarFlags[1]));
             else
                 SetSelectorChar(PlayState.currentProfileNumber != 0 ? PlayState.currentProfile.character : "Snaily");
@@ -1378,7 +1378,7 @@ public class MainMenu : MonoBehaviour
         currentOptions.Clear();
         currentSpawnY = LIST_CENTER_Y;
         isProfilePage = false;
-        isBossRushPage = false;
+        isCharSelectPage = false;
     }
 
     public void GetNewSnailOffset()
@@ -1999,6 +1999,7 @@ public class MainMenu : MonoBehaviour
     public void StartNewGame()
     {
         ClearOptions();
+        isCharSelectPage = true;
         AddOption(PlayState.GetText("menu_option_newGame_header"), false);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_newGame_difficulty") + ": ", true, "difficulty");
@@ -2039,6 +2040,8 @@ public class MainMenu : MonoBehaviour
         PlayState.isInBossRush = false;
         PlayState.stackShells = PlayState.currentProfile.difficulty != 2;
         PlayState.stackWeaponMods = PlayState.currentProfile.difficulty != 2;
+        PlayState.respawnCoords = PlayState.PLAYER_SPAWNS[CharacterNameToID(PlayState.currentProfile.character)];
+        PlayState.currentProfile.saveCoords = PlayState.respawnCoords;
 
         if (menuVarFlags[4] == 1)
         {
@@ -2060,7 +2063,7 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        StartCoroutine(LoadFade(PlayState.WORLD_SPAWN, true));
+        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
     }
 
     public void PickSpawn()
@@ -2232,7 +2235,7 @@ public class MainMenu : MonoBehaviour
     public void BossRushConfirm()
     {
         ClearOptions();
-        isBossRushPage = true;
+        isCharSelectPage = true;
         AddOption(PlayState.GetText("menu_option_bossRush_header1"), false);
         AddOption(PlayState.GetText("menu_option_bossRush_header2"), false);
         AddOption("", false);

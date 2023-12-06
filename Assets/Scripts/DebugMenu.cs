@@ -178,12 +178,13 @@ public class DebugMenu : MonoBehaviour
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[1]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
                                     //PlayState.currentProfile.character = "Upside";
-                                    PlayState.SetPlayer("Snaily");
+                                    PlayState.SetPlayer("Upside");
                                 break;
                             case "Upside":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[2]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    PlayState.currentProfile.character = "Leggy";
+                                    //PlayState.currentProfile.character = "Leggy";
+                                    PlayState.SetPlayer("Snaily");
                                 break;
                             case "Leggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[3]);

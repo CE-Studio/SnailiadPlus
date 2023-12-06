@@ -123,6 +123,17 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
     public virtual void Spawn()
     {
+        List<int> IDsDeletedByCurrentChar = PlayState.currentProfile.character switch
+        {
+            "Upside" => new() { 17 },
+            _ => new() { }
+        };
+        if (IDsDeletedByCurrentChar.Contains(ID))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         CreateNewSprites();
         anim.Add("NPC_" + animationSet + "_idle");
         anim.Add("NPC_" + animationSet + "_shell");
@@ -327,7 +338,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 6:
-                            if (PlayState.CheckForItem(4) || PlayState.CheckForItem(8))
+                            if (PlayState.CheckForItem(4) || PlayState.CheckForItem(8) || PlayState.currentProfile.character == "Upside")
                                 AddText("treehouses");
                             else
                                 AddText("default");
