@@ -1247,7 +1247,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winupside_hint",
-			"text": "Hey, you're not trying to peek unfinished content, are you?",
+			"text": "Conquer with the inverted one",
 			"value": 0
 		},
 		{
@@ -1262,7 +1262,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winleggy_hint",
-			"text": "You better not be trying to spoil the new stuff!",
+			"text": "Conquer with the appendaged one",
 			"value": 0
 		},
 		{
@@ -1277,7 +1277,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winblobby_hint",
-			"text": "I'm serious! Stop poking around!",
+			"text": "Conquer with the odd one out",
 			"value": 0
 		},
 		{
@@ -1292,7 +1292,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winleechy_hint",
-			"text": "Stahp it.",
+			"text": "Conquer with the hungry one",
 			"value": 0
 		},
 		{
@@ -1412,7 +1412,7 @@
 		},
 		{
 			"name": "menu_option_achievements_mazebirds_hint",
-			"text": "Reply hazy, try again",
+			"text": "It's just an 8-bit craze; just a side-scroller kind of phase",
 			"value": 0
 		},
 		{
@@ -1427,7 +1427,7 @@
 		},
 		{
 			"name": "menu_option_achievements_flashtestrooms_hint",
-			"text": "No secrets for you!",
+			"text": "Where it all REALLY began",
 			"value": 0
 		},
 		{
@@ -1442,7 +1442,7 @@
 		},
 		{
 			"name": "menu_option_achievements_wininsane_hint",
-			"text": "You shall not pass!",
+			"text": "You'd have to be truly crazy, utterly deranged,\nabsolutely nutty to go for this one",
 			"value": 0
 		},
 		{
@@ -1457,7 +1457,7 @@
 		},
 		{
 			"name": "menu_option_achievements_winrandomizer_hint",
-			"text": "Player, player, go away. Come again another day.",
+			"text": "Procedurally-generated replayability",
 			"value": 0
 		},
 		{
