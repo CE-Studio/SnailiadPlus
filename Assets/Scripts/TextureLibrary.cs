@@ -96,6 +96,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Dandelion",
         "Entities/Drone",
         "Entities/EndingMoonSnail",
+        "Entities/ExtraPlatform",
         "Entities/Fire",
         "Entities/Fireball",
         "Entities/Fireball2",

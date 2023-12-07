@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: c492a05d33622b34e9c4de45696003c7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - plat0: {fileID: -423702767, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat1: {fileID: 421300416, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat2: {fileID: -93598855, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat3: {fileID: 857187442, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat4: {fileID: -1522871635, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat5: {fileID: 887735419, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat6: {fileID: 1670966500, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat7: {fileID: -281796081, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat8: {fileID: -381384256, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat9: {fileID: -451564968, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat10: {fileID: 850126110, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat11: {fileID: 608876632, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat12: {fileID: -767141883, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat13: {fileID: 543862566, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat14: {fileID: 1597086338, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat15: {fileID: -1035959349, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat16: {fileID: -1834735250, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat17: {fileID: -728881511, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  - plat18: {fileID: 783396934, guid: 2ed31485f5a43ff4694ad4befda54c2e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

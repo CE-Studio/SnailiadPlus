@@ -2263,6 +2263,8 @@ public class MainMenu : MonoBehaviour
         PlayState.incrementRushTimer = false;
         PlayState.hudRushTime.SetText("");
         PlayState.currentProfile.saveCoords = PlayState.BOSS_RUSH_SPAWN;
+        if (PlayState.currentProfile.character == "Upside")
+            PlayState.playerScript.gravityDir = Player.Dirs.Floor;
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {
