@@ -15,6 +15,8 @@ public class Grass : MonoBehaviour
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public AnimationModule anim;
+
+    public bool isCeilingGrass = false;
     
     public void Start()
     {
@@ -26,9 +28,8 @@ public class Grass : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
         anim = GetComponent<AnimationModule>();
-        anim.Add("Grass_idle");
-        anim.Add("Grass_eaten");
-        anim.Play("Grass_idle");
+        anim.Add(string.Format("Grass_{0}_eaten", isCeilingGrass ? "ceiling" : "floor"));
+        anim.AddAndPlay(string.Format("Grass_{0}_idle", isCeilingGrass ? "ceiling" : "floor"));
 
         Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
@@ -44,7 +45,7 @@ public class Grass : MonoBehaviour
         if (timer == 0 && bitesRemaining == 0)
         {
             PlayState.PlaySound("GrassGrow");
-            anim.Play("Grass_idle");
+            anim.Play(string.Format("Grass_{0}_idle", isCeilingGrass ? "ceiling" : "floor"));
             bitesRemaining = totalBites[PlayState.currentProfile.difficulty];
         }
     }
@@ -60,7 +61,7 @@ public class Grass : MonoBehaviour
                 if (bitesRemaining == 0)
                 {
                     timer = regrowTimeout;
-                    anim.Play("Grass_eaten");
+                    anim.Play(string.Format("Grass_{0}_eaten", isCeilingGrass ? "ceiling" : "floor"));
                 }
                 else
                     timer = biteTimeout;

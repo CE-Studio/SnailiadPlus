@@ -10115,7 +10115,7 @@
 		},
 		
 		{
-			"name": "Grass_idle",
+			"name": "Grass_floor_idle",
 			"spriteName": "Entities/Grass",
 			"framerate": 0.0,
 			"frames": [
@@ -10126,7 +10126,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "Grass_eaten",
+			"name": "Grass_floor_eaten",
 			"spriteName": "Entities/Grass",
 			"framerate": 0.0,
 			"frames": [
@@ -10137,7 +10137,29 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "PowerGrass_idle",
+			"name": "Grass_ceiling_idle",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Grass_ceiling_eaten",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "PowerGrass_floor_idle",
 			"spriteName": "Entities/PowerGrass",
 			"framerate": 0.0,
 			"frames": [
@@ -10148,7 +10170,29 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "PowerGrass_eaten",
+			"name": "PowerGrass_floor_eaten",
+			"spriteName": "Entities/Grass",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "PowerGrass_ceiling_idle",
+			"spriteName": "Entities/PowerGrass",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "PowerGrass_ceiling_eaten",
 			"spriteName": "Entities/Grass",
 			"framerate": 0.0,
 			"frames": [

@@ -1037,6 +1037,14 @@ public class RoomTrigger : MonoBehaviour
                         case 481:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Angry Pink Block"), worldPos + new Vector2(2.5f, -1.5f), Quaternion.identity, transform);
                             break;
+                        case 482:
+                            GameObject ceilGrass = Instantiate(Resources.Load<GameObject>("Objects/Grass"), worldPos, Quaternion.identity, transform);
+                            ceilGrass.GetComponent<Grass>().isCeilingGrass = true;
+                            break;
+                        case 483:
+                            GameObject ceilPowerGrass = Instantiate(Resources.Load<GameObject>("Objects/Power grass"), worldPos, Quaternion.identity, transform);
+                            ceilPowerGrass.GetComponent<PowerGrass>().isCeilingGrass = true;
+                            break;
                         case 1120:
                         case 1121:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Fire"), worldPos, Quaternion.identity, transform);

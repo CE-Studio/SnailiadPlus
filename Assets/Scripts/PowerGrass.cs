@@ -16,6 +16,8 @@ public class PowerGrass : MonoBehaviour
     public BoxCollider2D box;
     public AnimationModule anim;
 
+    public bool isCeilingGrass = false;
+
     public GameObject player;
 
     public void Start()
@@ -26,9 +28,8 @@ public class PowerGrass : MonoBehaviour
             sprite = GetComponent<SpriteRenderer>();
             box = GetComponent<BoxCollider2D>();
             anim = GetComponent<AnimationModule>();
-            anim.Add("PowerGrass_idle");
-            anim.Add("PowerGrass_eaten");
-            anim.Play("PowerGrass_idle");
+            anim.Add(string.Format("PowerGrass_{0}_eaten", isCeilingGrass ? "ceiling" : "floor"));
+            anim.AddAndPlay(string.Format("PowerGrass_{0}_idle", isCeilingGrass ? "ceiling" : "floor"));
 
             Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
@@ -58,7 +59,7 @@ public class PowerGrass : MonoBehaviour
                 if (bitesRemaining == 0)
                 {
                     box.enabled = false;
-                    anim.Play("PowerGrass_eaten");
+                    anim.Play(string.Format("PowerGrass_{0}_eaten", isCeilingGrass ? "ceiling" : "floor"));
                 }
                 else
                     timer = biteTimeout;
