@@ -109,7 +109,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 80
         width: 32
         height: 16
       alignment: 0
@@ -130,7 +130,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 80
         width: 32
         height: 16
       alignment: 0
@@ -151,7 +151,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 80
         width: 32
         height: 16
       alignment: 0
@@ -172,7 +172,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 64
+        y: 80
         width: 32
         height: 16
       alignment: 0
@@ -192,8 +192,8 @@ TextureImporter:
       name: ExtraPlatform_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
+        x: 128
+        y: 80
         width: 32
         height: 16
       alignment: 0
@@ -213,8 +213,8 @@ TextureImporter:
       name: ExtraPlatform_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 48
+        x: 0
+        y: 64
         width: 32
         height: 16
       alignment: 0
@@ -234,8 +234,8 @@ TextureImporter:
       name: ExtraPlatform_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 48
+        x: 32
+        y: 64
         width: 32
         height: 16
       alignment: 0
@@ -255,8 +255,8 @@ TextureImporter:
       name: ExtraPlatform_7
       rect:
         serializedVersion: 2
-        x: 96
-        y: 48
+        x: 64
+        y: 64
         width: 32
         height: 16
       alignment: 0
@@ -276,8 +276,8 @@ TextureImporter:
       name: ExtraPlatform_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 96
+        y: 64
         width: 32
         height: 16
       alignment: 0
@@ -297,8 +297,8 @@ TextureImporter:
       name: ExtraPlatform_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 128
+        y: 64
         width: 32
         height: 16
       alignment: 0
@@ -318,8 +318,8 @@ TextureImporter:
       name: ExtraPlatform_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
+        x: 0
+        y: 48
         width: 32
         height: 16
       alignment: 0
@@ -339,8 +339,8 @@ TextureImporter:
       name: ExtraPlatform_11
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
+        x: 32
+        y: 48
         width: 32
         height: 16
       alignment: 0
@@ -360,8 +360,8 @@ TextureImporter:
       name: ExtraPlatform_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 64
+        y: 48
         width: 32
         height: 16
       alignment: 0
@@ -381,8 +381,8 @@ TextureImporter:
       name: ExtraPlatform_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 16
+        x: 96
+        y: 48
         width: 32
         height: 16
       alignment: 0
@@ -402,8 +402,8 @@ TextureImporter:
       name: ExtraPlatform_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 16
+        x: 128
+        y: 48
         width: 32
         height: 16
       alignment: 0
@@ -423,8 +423,8 @@ TextureImporter:
       name: ExtraPlatform_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 16
+        x: 0
+        y: 32
         width: 32
         height: 16
       alignment: 0
@@ -444,8 +444,8 @@ TextureImporter:
       name: ExtraPlatform_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 32
+        y: 32
         width: 32
         height: 16
       alignment: 0
@@ -465,8 +465,8 @@ TextureImporter:
       name: ExtraPlatform_17
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 64
+        y: 32
         width: 32
         height: 16
       alignment: 0
@@ -486,8 +486,8 @@ TextureImporter:
       name: ExtraPlatform_18
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 96
+        y: 32
         width: 32
         height: 16
       alignment: 0
@@ -499,6 +499,237 @@ TextureImporter:
       bones: []
       spriteID: b0e1aa21e57995e44b7348eb3d1b1857
       internalID: 783396934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_19
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6375c37d749576f44b2ee48e49b1898e
+      internalID: 1932634185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05a4f58d272dea74b920049527af3d7f
+      internalID: -1903392481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_21
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0fa16e4166cb1544b0f3bad5c0d7f38
+      internalID: 279205235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df3dadf32192c4d47aef7fdb7562a91d
+      internalID: -1459272289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_23
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a3f18ac9a0fa7418f53f5800337ab3
+      internalID: -1364464316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_24
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 16
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ce434966b665834da097a3deb00f5cd
+      internalID: 184714385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee3eb73c2c3b42c47847b05db4b21e52
+      internalID: 599377324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9546719631e20049950ff4a641ed092
+      internalID: -947203383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fce3432385cef6b4eaef84140c6785a2
+      internalID: -59639107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_28
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d8f86bc4564af548aa39c0444005193
+      internalID: 1087770513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraPlatform_29
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 458c2b7883b1ed044a8b5033c701456c
+      internalID: 997177524
       vertices: []
       indices: 
       edges: []
@@ -525,7 +756,18 @@ TextureImporter:
       ExtraPlatform_16: -1834735250
       ExtraPlatform_17: -728881511
       ExtraPlatform_18: 783396934
+      ExtraPlatform_19: 1932634185
       ExtraPlatform_2: -93598855
+      ExtraPlatform_20: -1903392481
+      ExtraPlatform_21: 279205235
+      ExtraPlatform_22: -1459272289
+      ExtraPlatform_23: -1364464316
+      ExtraPlatform_24: 184714385
+      ExtraPlatform_25: 599377324
+      ExtraPlatform_26: -947203383
+      ExtraPlatform_27: -59639107
+      ExtraPlatform_28: 1087770513
+      ExtraPlatform_29: 997177524
       ExtraPlatform_3: 857187442
       ExtraPlatform_4: -1522871635
       ExtraPlatform_5: 887735419

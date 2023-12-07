@@ -10704,6 +10704,127 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Object_extraPlatform_19",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				19
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_20",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				20
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_21",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				21
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_22",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				22
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_23",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				23
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_24",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				24
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_25",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				25
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_26",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				26
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_27",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				27
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_28",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				28
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_extraPlatform_29",
+			"spriteName": "Entities/ExtraPlatform",
+			"framerate": 0.0,
+			"frames": [
+				29
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Object_platform1_1_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
