@@ -76,7 +76,7 @@ public class Particle : MonoBehaviour
         anim.Add("Transformation_angel");
         anim.Add("Zzz");
 
-        foreach (string character in new string[] { "snaily", "sluggy" })
+        foreach (string character in new string[] { "snaily", "sluggy", "upside" })
         {
             for (int i = 0; i <= 1; i++)
                 foreach (string dir in new string[] { "down", "up", "left", "right" })

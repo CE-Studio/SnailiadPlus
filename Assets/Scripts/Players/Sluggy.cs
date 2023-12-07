@@ -15,6 +15,7 @@ public class Sluggy : Player
         retainGravityOnAirborne = new int[][] { new int[] { 8 } };
         canGravityJumpOpposite = new int[][] { new int[] { 8 } };
         canGravityJumpAdjacent = new int[][] { new int[] { 8 } };
+        canGravityShock = new int[][] { new int[] { -1 } };
         shellable = new int[][] { new int[] { -2 } };
         hopWhileMoving = new int[][] { new int[] { -2 } };
         hopPower = 0;

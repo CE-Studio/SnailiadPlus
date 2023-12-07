@@ -15,6 +15,7 @@ public class Upside : Player
         retainGravityOnAirborne = new int[][] { new int[] { -2 } };
         canGravityJumpOpposite = new int[][] { new int[] { -2 } };
         canGravityJumpAdjacent = new int[][] { new int[] { -2 } };
+        canGravityShock = new int[][] { new int[] { -1 } };
         shellable = new int[][] { new int[] { -1 } };
         hopWhileMoving = new int[][] { new int[] { -2 } };
         hopPower = 0;

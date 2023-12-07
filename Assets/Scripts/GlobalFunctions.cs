@@ -1235,7 +1235,6 @@ public class GlobalFunctions : MonoBehaviour
         float stepElapsed = 0;
         float totalElapsed = 0;
         bool sceneActive = true;
-        //int preGravJumpFrames = 0;
         while (sceneActive)
         {
             stepElapsed += Time.deltaTime;
@@ -1314,9 +1313,75 @@ public class GlobalFunctions : MonoBehaviour
 
     private IEnumerator LegacyGravCutsceneUpside(Vector2 itemOrigin)
     {
-        yield return new WaitForEndOfFrame();
+        int step = 0;
+        float stepElapsed = 0;
+        float totalElapsed = 0;
+        bool sceneActive = true;
+        while (sceneActive)
+        {
+            stepElapsed += Time.deltaTime;
+            totalElapsed += Time.deltaTime;
+            PlayState.paralyzed = true;
+            switch (step)
+            {
+                case 0: // Initial delay
+                    if (stepElapsed > 3.5f)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 1: // If not on ceiling, jump
+                    if (PlayState.playerScript.gravityDir != Player.Dirs.Ceiling)
+                        Control.SetVirtual(Control.Keyboard.Jump1, true);
+                    step++;
+                    stepElapsed = 0;
+                    break;
+                case 2: // Move right
+                    Control.SetVirtual(Control.Keyboard.Right1, true);
+                    Control.SetVirtual(Control.Keyboard.Down1, true);
+                    if (PlayState.player.transform.position.x > itemOrigin.x + 4)
+                    {
+                        ChangeActiveWeapon(2);
+                        Control.SetVirtual(Control.Keyboard.Down1, false);
+                        Control.SetVirtual(Control.Keyboard.Up1, true);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 3: // Move up right and shoot
+                    PlayState.playerScript.Shoot();
+                    if (PlayState.player.transform.position.y > itemOrigin.y + 8.5f)
+                    {
+
+                        Control.SetVirtual(Control.Keyboard.Right1, false);
+                        Control.SetVirtual(Control.Keyboard.Left1, true);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 4: // Move up left and shoot
+                    PlayState.playerScript.Shoot();
+                    if (PlayState.playerScript.gravityDir == Player.Dirs.Floor)
+                    {
+                        Control.SetVirtual(Control.Keyboard.Up1, false);
+                        step++;
+                        stepElapsed = 0;
+                    }
+                    break;
+                case 5: // Move left until you reach the NPC
+                    if (PlayState.player.transform.position.x < itemOrigin.x + 4.5f)
+                        sceneActive = false;
+                    break;
+            }
+            if (totalElapsed > 10f)
+                sceneActive = false;
+            yield return new WaitForEndOfFrame();
+        }
+        Control.ClearVirtual(true, true);
         PlayState.FadeMusicBackIn();
         PlayState.paralyzed = false;
+        PlayState.suppressPause = false;
     }
 
     private IEnumerator LegacyGravCutsceneLeggy(Vector2 itemOrigin)

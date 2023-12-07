@@ -88,6 +88,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public int[][] retainGravityOnAirborne; // --------------------- I Determines whether or not player keeps their current gravity when in the air
     public int[][] canGravityJumpOpposite; // ---------------------- I Determines if the player can change their gravity mid-air to the opposite direction
     public int[][] canGravityJumpAdjacent; // ---------------------- I Determines if the player can change their gravity mid-air relatively left or relatively right
+    public int[][] canGravityShock; // ----------------------------- I Determines if the player is capable of using Gravity Shock
     public int[][] shellable; // ----------------------------------- I Determines if the player can retract into a shell
     public int[][] hopWhileMoving; // ------------------------------ I Determines if the player bounces along the ground when they move
     public float hopPower; // ---------------------------------------- The power of a walking bounce
@@ -715,7 +716,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
                 (swapType == 0 && Control.DownHold()) ||
                 (swapType == 1 && Control.DownHold() && !holdingShell) ||
                 (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)))
@@ -1068,7 +1069,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
                 (swapType == 0 && Control.LeftHold()) ||
                 (swapType == 1 && Control.LeftHold() && !holdingShell) ||
                 (swapType == 2 && Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs)))
@@ -1421,7 +1422,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
                 (swapType == 0 && Control.RightHold()) ||
                 (swapType == 1 && Control.RightHold() && !holdingShell) ||
                 (swapType == 2 && Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)))
@@ -1774,7 +1775,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if ((CheckAbility(canGravityJumpAdjacent) || CheckAbility(canGravityJumpOpposite)) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
                 (swapType == 0 && Control.UpHold()) ||
                 (swapType == 1 && Control.UpHold() && !holdingShell) ||
                 (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
