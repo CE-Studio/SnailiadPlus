@@ -164,20 +164,32 @@ public class SpaceBox : Boss
 
         if (legacyCutscene && !introMovementsDone)
         {
-            if (PlayState.currentProfile.difficulty == 2)
+            float moveStart;
+            float moveEnd;
+            if (PlayState.currentProfile.difficulty == 2 && PlayState.currentProfile.character == "Upside")
             {
-                if (elapsed > 2.2f && elapsed < 2.9f)
-                    Control.SetVirtual(Control.Keyboard.Right1, true);
-                else if (elapsed >= 2.9f)
-                    PlayState.paralyzed = false;
+                moveStart = 1.5f;
+                moveEnd = 2.9f;
+            }
+            else if (PlayState.currentProfile.difficulty == 2)
+            {
+                moveStart = 2.2f;
+                moveEnd = 2.9f;
+            }
+            else if (PlayState.currentProfile.character == "Upside")
+            {
+                moveStart = 2.2f;
+                moveEnd = 3.4f;
             }
             else
             {
-                if (elapsed > 2.7f && elapsed < 3.4f)
-                    Control.SetVirtual(Control.Keyboard.Right1, true);
-                else if (elapsed >= 3.4f)
-                    PlayState.paralyzed = false;
+                moveStart = 2.7f;
+                moveEnd = 3.4f;
             }
+            if (elapsed > moveStart && elapsed < moveEnd)
+                Control.SetVirtual(Control.Keyboard.Right1, true);
+            else if (elapsed >= moveEnd)
+                PlayState.paralyzed = false;
         }
         else if (introMovementsDone && !haltedIntroPlayerMovement)
         {

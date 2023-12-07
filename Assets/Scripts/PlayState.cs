@@ -211,7 +211,7 @@ public class PlayState
     public static readonly Vector2 WORLD_SIZE = new(26, 22); // The number of screens wide and tall the world is
     public static readonly Vector2 WORLD_SPAWN = new(-37, 10.5f); // Use (-37, 10.5f) for Snail Town spawn, (84, 88.5f) for debug room spawn
     public static readonly Vector2 ROOM_SIZE = new(26, 16); // The number of tiles wide and tall each screen is, counting the buffer space that makes up room borders
-    public static readonly Vector2 BOSS_RUSH_SPAWN = new(163, 42.5f); // Where the player starts in Boss Rush
+    public static readonly Vector2 BOSS_RUSH_SPAWN = new(163, 41.5f); // Where the player starts in Boss Rush
     public static Vector2 respawnCoords = WORLD_SPAWN;
     public static Scene respawnScene;
 

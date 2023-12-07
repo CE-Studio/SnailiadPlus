@@ -169,7 +169,7 @@ public class RushSpaceBox : Boss
         {
             if (elapsed > 1.1f && elapsed < 2.5f)
             {
-                if (elapsed < 1.2f + (PlayState.CheckForItem("Gravity Snail") ? 0 : 0.1f))
+                if ((elapsed < 1.2f + (PlayState.CheckForItem("Gravity Snail") ? 0 : 0.1f)) || PlayState.currentProfile.character == "Upside")
                     Control.SetVirtual(Control.Keyboard.Right1, true);
                 else
                 {

@@ -185,4 +185,19 @@ public class Upside : Player
         sprite.flipX = forceFaceH != 1 && (forceFaceH == -1 || sprite.flipX);
         sprite.flipY = forceFaceV == 1 || (forceFaceV != -1 && sprite.flipY);
     }
+
+    public override void ResetState()
+    {
+        stunned = false;
+        facingLeft = false;
+        if (shelled)
+            ToggleShell();
+        CorrectGravity(false);
+        if (PlayState.isInBossRush)
+        {
+            SwapDir(Dirs.Floor);
+            gravityDir = Dirs.Floor;
+            grounded = true;
+        }
+    }
 }
