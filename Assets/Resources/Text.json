@@ -3131,6 +3131,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_0_explainLeggyFlip_0",
+			"text": "{P}!!  {p|0.25}{col|0309}Jump in the air {col|0312}to{nl}channel your inner Gravity{nl}Turtle and take to the skies!!",
+			"value": 1
+		},
+		{
 			"name": "npc_0_explainPeashooter_0",
 			"text": "Oh, {p|0.0625}nice pea shooter!  {p|0.125}I heard{nl}you can shoot a {col|0104}blue door {col|0312}open{nl}with one of those!",
 			"value": 1

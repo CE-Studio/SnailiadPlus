@@ -6303,10 +6303,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6317,10 +6317,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6331,10 +6331,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6345,10 +6345,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6359,10 +6359,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6373,10 +6373,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6387,10 +6387,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6401,10 +6401,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6415,10 +6415,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6429,10 +6429,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6443,10 +6443,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6457,10 +6457,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6471,10 +6471,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6485,10 +6485,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6499,10 +6499,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6513,10 +6513,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6527,7 +6527,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				163
+				159
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6538,7 +6538,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				163
+				159
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6549,7 +6549,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				163
+				159
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6560,7 +6560,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				163
+				159
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6571,7 +6571,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				167
+				163
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6582,7 +6582,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				167
+				163
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6593,7 +6593,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				167
+				163
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6604,7 +6604,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				167
+				163
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6615,10 +6615,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6629,10 +6629,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6643,10 +6643,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6657,10 +6657,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				160,
-				161,
-				160,
-				162
+				156,
+				157,
+				156,
+				158
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6671,10 +6671,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6685,10 +6685,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6699,10 +6699,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6713,10 +6713,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				164,
-				165,
-				164,
-				166
+				160,
+				161,
+				160,
+				162
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6727,10 +6727,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6741,10 +6741,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6755,10 +6755,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6769,10 +6769,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6783,10 +6783,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6797,10 +6797,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6811,10 +6811,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6825,10 +6825,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6839,10 +6839,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				171,
-				170,
-				169,
-				168
+				167,
+				166,
+				165,
+				164
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6853,10 +6853,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6867,10 +6867,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6881,10 +6881,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6895,10 +6895,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6909,10 +6909,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6923,10 +6923,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6937,10 +6937,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6951,10 +6951,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6965,10 +6965,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6979,10 +6979,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -6993,10 +6993,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7007,10 +7007,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7021,10 +7021,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7035,10 +7035,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7049,10 +7049,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7063,10 +7063,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7077,7 +7077,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				179
+				171
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7088,7 +7088,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				179
+				171
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7099,7 +7099,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				179
+				171
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7110,7 +7110,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				179
+				171
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7121,7 +7121,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				183
+				175
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7132,7 +7132,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				183
+				175
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7143,7 +7143,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				183
+				175
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7154,7 +7154,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				183
+				175
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7165,10 +7165,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7179,10 +7179,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7193,10 +7193,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7207,10 +7207,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				176,
-				177,
-				176,
-				178
+				168,
+				169,
+				168,
+				170
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7221,10 +7221,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7235,10 +7235,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7249,10 +7249,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7263,10 +7263,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				180,
-				181,
-				180,
-				182
+				172,
+				173,
+				172,
+				174
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7277,10 +7277,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7291,10 +7291,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7305,10 +7305,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7319,10 +7319,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7333,10 +7333,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7347,10 +7347,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7361,10 +7361,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7375,10 +7375,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7389,10 +7389,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				187,
-				186,
-				185,
-				184
+				179,
+				178,
+				177,
+				176
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7403,10 +7403,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7417,10 +7417,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7431,10 +7431,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7445,10 +7445,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7459,10 +7459,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7473,10 +7473,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7487,10 +7487,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7501,10 +7501,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7515,10 +7515,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7529,10 +7529,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7543,10 +7543,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7557,10 +7557,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7571,10 +7571,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7585,10 +7585,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7599,10 +7599,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7613,10 +7613,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7627,7 +7627,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				195
+				183
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7638,7 +7638,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				195
+				183
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7649,7 +7649,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				195
+				183
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7660,7 +7660,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				195
+				183
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7671,7 +7671,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				199
+				187
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7682,7 +7682,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				199
+				187
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7693,7 +7693,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				199
+				187
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7704,7 +7704,7 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				199
+				187
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7715,10 +7715,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7729,10 +7729,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7743,10 +7743,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7757,10 +7757,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				192,
-				193,
-				192,
-				194
+				180,
+				181,
+				180,
+				182
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7771,10 +7771,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7785,10 +7785,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7799,10 +7799,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7813,10 +7813,10 @@
 			"spriteName": "Player",
 			"framerate": 3.0,
 			"frames": [
-				196,
-				197,
-				196,
-				198
+				184,
+				185,
+				184,
+				186
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7827,10 +7827,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7841,10 +7841,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7855,10 +7855,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7869,10 +7869,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7883,10 +7883,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7897,10 +7897,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7911,10 +7911,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7925,10 +7925,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -7939,10 +7939,10 @@
 			"spriteName": "Player",
 			"framerate": 30.0,
 			"frames": [
-				203,
-				202,
-				201,
-				200
+				191,
+				190,
+				189,
+				188
 			],
 			"loop": true,
 			"loopStartFrame": 0,
@@ -28546,7 +28546,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside0_down",
+			"name": "GravShock_char_leggy0_down",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28560,7 +28560,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside0_up",
+			"name": "GravShock_char_leggy0_up",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28574,7 +28574,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside0_left",
+			"name": "GravShock_char_leggy0_left",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28588,7 +28588,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside0_right",
+			"name": "GravShock_char_leggy0_right",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28602,7 +28602,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside1_down",
+			"name": "GravShock_char_leggy1_down",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28616,7 +28616,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside1_up",
+			"name": "GravShock_char_leggy1_up",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28630,7 +28630,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside1_left",
+			"name": "GravShock_char_leggy1_left",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [
@@ -28644,7 +28644,7 @@
 			"randomizeStartFrame": true
 		},
 		{
-			"name": "GravShock_char_upside1_right",
+			"name": "GravShock_char_leggy1_right",
 			"spriteName": "Particles/ShockChar",
 			"framerate": 30.0,
 			"frames": [

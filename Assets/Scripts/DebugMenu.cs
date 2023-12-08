@@ -184,12 +184,13 @@ public class DebugMenu : MonoBehaviour
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[2]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
                                     //PlayState.currentProfile.character = "Leggy";
-                                    PlayState.SetPlayer("Snaily");
+                                    PlayState.SetPlayer("Leggy");
                                 break;
                             case "Leggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[3]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    PlayState.currentProfile.character = "Blobby";
+                                    //PlayState.currentProfile.character = "Blobby";
+                                    PlayState.SetPlayer("Snaily");
                                 break;
                             case "Blobby":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[4]);

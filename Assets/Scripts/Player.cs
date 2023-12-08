@@ -50,17 +50,17 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public float coyoteTimeCounter = 0;
     public float lastPointBeforeHop = 0;
     public bool[] animData;
-    private int[] shellShieldEffectOffset;
+    protected int[] shellShieldEffectOffset;
     public int forceFaceH = 0;
     public int forceFaceV = 0;
-    private Particle shieldEffect;
-    private Vector2 shieldOffset;
+    protected Particle shieldEffect;
+    protected Vector2 shieldOffset;
     public int gravShockState = 0;
     public float gravShockTimer = 0;
-    private Bullet gravShockBullet;
-    private Particle gravShockCharge;
-    private Particle gravShockBody;
-    private float timeSinceShell = 0;
+    protected Bullet gravShockBullet;
+    protected Particle gravShockCharge;
+    protected Particle gravShockBody;
+    protected float timeSinceShell = 0;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     public LayerMask roomCollide;
 
     public Transform camFocus;
-    private Vector2 camFocusOffset;
+    protected Vector2 camFocusOffset;
 
     // Movement control vars
     // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
@@ -1848,7 +1848,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             holdingShell = false;
     }
 
-    private bool CheckAbility(int[][] ability)
+    protected bool CheckAbility(int[][] ability)
     {
         bool fullCheck = false;
         for (int i = 0; i < ability.Length; i++)
@@ -1915,7 +1915,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         };
     }
 
-    private bool CheckForHomeDirRequirements()
+    protected bool CheckForHomeDirRequirements()
     {
         return PlayState.generalData.gravKeepType == 1 && gravityDir != homeGravity;
     }
@@ -2188,7 +2188,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         EjectFromCollisions();
     }
 
-    private void UpdateHitbox()
+    protected void UpdateHitbox()
     {
         Vector2 newSize = shelled ? hitboxSize_shell : hitboxSize_normal;
         Vector2 newOffset = shelled ? hitboxOffset_shell : hitboxOffset_normal;
@@ -2216,7 +2216,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     }
 
     // This function updates the position offset of any existing Shell Shield particle so that it stays aligned with Snaily
-    private void UpdateShieldParticleOffset()
+    protected void UpdateShieldParticleOffset()
     {
         int charID = PlayState.currentProfile.character switch
         {
@@ -2407,7 +2407,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         }
     }
 
-    private bool CanChangeGravWhileStunned()
+    protected bool CanChangeGravWhileStunned()
     {
         return !stunned || PlayState.CheckForItem(8) || (PlayState.stackShells && PlayState.GetShellLevel() > 1);
     }

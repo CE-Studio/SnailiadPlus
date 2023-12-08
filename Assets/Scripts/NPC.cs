@@ -126,6 +126,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         List<int> IDsDeletedByCurrentChar = PlayState.currentProfile.character switch
         {
             "Upside" => new() { 17 },
+            "Leggy" => new() { 56 },
             _ => new() { }
         };
         if (IDsDeletedByCurrentChar.Contains(ID))
@@ -261,7 +262,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                     {
                         case 0:
                             if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
-                                AddText("explainWallClimb");
+                            {
+                                if (PlayState.currentProfile.character == "Leggy")
+                                    AddText("explainLeggyFlip");
+                                else
+                                    AddText("explainWallClimb");
+                            }
                             else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("explainPeashooter");
                             else if (!PlayState.CheckForItem("Rainbow Wave") && !PlayState.CheckForItem("Debug Rainbow Wave"))
