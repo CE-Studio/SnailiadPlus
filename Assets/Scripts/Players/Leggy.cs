@@ -25,8 +25,8 @@ public class Leggy : Player
         canRoundOuterCorners = new int[][] { new int[] { -2 } };
         canRoundOppositeOuterCorners = new int[][] { new int[] { -2 } };
         stickToWallsWhenHurt = new int[][] { new int[] { -1 } };
-        runSpeed = new float[] { 7.6667f, 7.6667f, 7.6667f, 10 };
-        jumpPower = new float[] { 23f, 23f, 23f, 23f, 30f, 30f, 30f, 30f };
+        runSpeed = new float[] { 7.8f, 7.8f, 7.8f, 10 };
+        jumpPower = new float[] { 23.5f, 23.5f, 23.5f, 23.5f, 30f, 30f, 30f, 30f };
         gravity = new float[] { 1.5f, 1.5f, 1.5f, 1.5f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
