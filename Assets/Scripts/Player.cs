@@ -392,7 +392,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 EjectFromCollisions();
 
             // Hey, do we happen to be stuck falling on a corner here?
-            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame)
+            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame && (gravityDir != lastGravity))
             {
                 transform.position += PlayState.FRAC_64 * gravityDir switch
                 {
@@ -2321,9 +2321,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
 
+            Bullet thisBullet = null;
             if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
-                Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+                thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
                 if (!isShock)
                 {
@@ -2353,9 +2354,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         case 7: case 8: PlayState.activeRushData.shocksFired++; break;
                     }
                 }
-                return thisBullet;
             }
             bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
+            return thisBullet;
         }
         return null;
     }
