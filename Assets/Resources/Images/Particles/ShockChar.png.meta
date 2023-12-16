@@ -3195,7 +3195,7 @@ TextureImporter:
       name: ShockChar_147
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 96
         width: 32
         height: 32
@@ -3216,7 +3216,7 @@ TextureImporter:
       name: ShockChar_148
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 96
         width: 32
         height: 32
@@ -3237,7 +3237,7 @@ TextureImporter:
       name: ShockChar_149
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 96
         width: 32
         height: 32
@@ -3258,7 +3258,7 @@ TextureImporter:
       name: ShockChar_150
       rect:
         serializedVersion: 2
-        x: 256
+        x: 192
         y: 96
         width: 32
         height: 32
@@ -3279,7 +3279,7 @@ TextureImporter:
       name: ShockChar_151
       rect:
         serializedVersion: 2
-        x: 288
+        x: 224
         y: 96
         width: 32
         height: 32
@@ -3300,7 +3300,7 @@ TextureImporter:
       name: ShockChar_152
       rect:
         serializedVersion: 2
-        x: 320
+        x: 256
         y: 96
         width: 32
         height: 32
@@ -3321,8 +3321,8 @@ TextureImporter:
       name: ShockChar_153
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -3342,8 +3342,8 @@ TextureImporter:
       name: ShockChar_154
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 320
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -3363,8 +3363,8 @@ TextureImporter:
       name: ShockChar_155
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
+        x: 352
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -3384,7 +3384,7 @@ TextureImporter:
       name: ShockChar_156
       rect:
         serializedVersion: 2
-        x: 128
+        x: 0
         y: 64
         width: 32
         height: 32
@@ -3405,7 +3405,7 @@ TextureImporter:
       name: ShockChar_157
       rect:
         serializedVersion: 2
-        x: 160
+        x: 32
         y: 64
         width: 32
         height: 32
@@ -3426,7 +3426,7 @@ TextureImporter:
       name: ShockChar_158
       rect:
         serializedVersion: 2
-        x: 192
+        x: 64
         y: 64
         width: 32
         height: 32
@@ -3447,7 +3447,7 @@ TextureImporter:
       name: ShockChar_159
       rect:
         serializedVersion: 2
-        x: 256
+        x: 96
         y: 64
         width: 32
         height: 32
@@ -3468,7 +3468,7 @@ TextureImporter:
       name: ShockChar_160
       rect:
         serializedVersion: 2
-        x: 288
+        x: 128
         y: 64
         width: 32
         height: 32
@@ -3489,7 +3489,7 @@ TextureImporter:
       name: ShockChar_161
       rect:
         serializedVersion: 2
-        x: 320
+        x: 160
         y: 64
         width: 32
         height: 32
@@ -3510,8 +3510,8 @@ TextureImporter:
       name: ShockChar_162
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 192
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3531,8 +3531,8 @@ TextureImporter:
       name: ShockChar_163
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 224
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3552,8 +3552,8 @@ TextureImporter:
       name: ShockChar_164
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
+        x: 256
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3573,8 +3573,8 @@ TextureImporter:
       name: ShockChar_165
       rect:
         serializedVersion: 2
-        x: 128
-        y: 32
+        x: 288
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3594,8 +3594,8 @@ TextureImporter:
       name: ShockChar_166
       rect:
         serializedVersion: 2
-        x: 160
-        y: 32
+        x: 320
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3615,8 +3615,8 @@ TextureImporter:
       name: ShockChar_167
       rect:
         serializedVersion: 2
-        x: 192
-        y: 32
+        x: 352
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -3636,7 +3636,7 @@ TextureImporter:
       name: ShockChar_168
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 32
         width: 32
         height: 32
@@ -3657,7 +3657,7 @@ TextureImporter:
       name: ShockChar_169
       rect:
         serializedVersion: 2
-        x: 288
+        x: 32
         y: 32
         width: 32
         height: 32
@@ -3678,7 +3678,7 @@ TextureImporter:
       name: ShockChar_170
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 32
         width: 32
         height: 32
@@ -3699,8 +3699,8 @@ TextureImporter:
       name: ShockChar_171
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 96
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3720,8 +3720,8 @@ TextureImporter:
       name: ShockChar_172
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 128
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3741,8 +3741,8 @@ TextureImporter:
       name: ShockChar_173
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 160
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3762,8 +3762,8 @@ TextureImporter:
       name: ShockChar_174
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 192
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3783,8 +3783,8 @@ TextureImporter:
       name: ShockChar_175
       rect:
         serializedVersion: 2
-        x: 160
-        y: 0
+        x: 224
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3804,8 +3804,8 @@ TextureImporter:
       name: ShockChar_176
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
+        x: 256
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3825,8 +3825,8 @@ TextureImporter:
       name: ShockChar_177
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 288
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3846,8 +3846,8 @@ TextureImporter:
       name: ShockChar_178
       rect:
         serializedVersion: 2
-        x: 288
-        y: 0
+        x: 320
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3867,8 +3867,8 @@ TextureImporter:
       name: ShockChar_179
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
+        x: 352
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -3880,6 +3880,258 @@ TextureImporter:
       bones: []
       spriteID: fa22c2a917a556d43ae5e937e992f96f
       internalID: -689216341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_180
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80eae55f58283534a9e1242da3a0c992
+      internalID: 2052960333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_181
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f744cf386e0dc5c458ded300ca3397f1
+      internalID: -1844259928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_182
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f718f4de4b051746a70386b706b3679
+      internalID: -119559501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_183
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 080802dd1564c834cab7c4e65127703b
+      internalID: -1670793368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_184
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dad2b08fd89530646b106c5e5af64d4a
+      internalID: 1116555263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_185
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a62ceddca43c1f4ca8adf97c9d908f9
+      internalID: -999416143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_186
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee3eb1218001674d852f72bc70477fe
+      internalID: 761704720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_187
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ee5cd4d28549f4c811e9efb27ac544
+      internalID: -1077870026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_188
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 000636964a6333243a44919612d234ce
+      internalID: 152377898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_189
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 206bf06ef5abf474fba5e385cae97c45
+      internalID: 500549642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_190
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d5e2f14e171cf439d875f14560f610
+      internalID: -1854728869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShockChar_191
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 273eb04a828ce864fac86c7a6cbf9545
+      internalID: 479262871
       vertices: []
       indices: 
       edges: []
@@ -3986,7 +4238,19 @@ TextureImporter:
       ShockChar_178: 2137623764
       ShockChar_179: -689216341
       ShockChar_18: 745391661
+      ShockChar_180: 2052960333
+      ShockChar_181: -1844259928
+      ShockChar_182: -119559501
+      ShockChar_183: -1670793368
+      ShockChar_184: 1116555263
+      ShockChar_185: -999416143
+      ShockChar_186: 761704720
+      ShockChar_187: -1077870026
+      ShockChar_188: 152377898
+      ShockChar_189: 500549642
       ShockChar_19: 236516643
+      ShockChar_190: -1854728869
+      ShockChar_191: 479262871
       ShockChar_2: 690312894
       ShockChar_20: -750766280
       ShockChar_21: -1267892167

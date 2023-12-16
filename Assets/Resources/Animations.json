@@ -7949,6 +7949,2537 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Player_Blobby_data",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 12.0,
+			"frames": [
+				193,
+				194,
+				195,
+				192,
+				193,
+				194,
+				195,
+				192,
+				193,
+				193,
+				194,
+				194,
+				195,
+				195,
+				192,
+				192,
+				193,
+				193,
+				193,
+				194,
+				194,
+				194,
+				195,
+				195,
+				195,
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				193,
+				194,
+				195,
+				192,
+				193,
+				194,
+				195,
+				192,
+				193,
+				193,
+				194,
+				194,
+				195,
+				195,
+				192,
+				192,
+				193,
+				193,
+				193,
+				194,
+				194,
+				194,
+				195,
+				195,
+				195,
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				192
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				195
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				195
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				195
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				195
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				196
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				196
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				196
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				197
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				197
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0A_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 12.0,
+			"frames": [
+				199,
+				200,
+				201,
+				198,
+				199,
+				200,
+				201,
+				198,
+				199,
+				199,
+				200,
+				200,
+				201,
+				201,
+				198,
+				198,
+				199,
+				199,
+				199,
+				200,
+				200,
+				200,
+				201,
+				201,
+				201,
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				199,
+				200,
+				201,
+				198,
+				199,
+				200,
+				201,
+				198,
+				199,
+				199,
+				200,
+				200,
+				201,
+				201,
+				198,
+				198,
+				199,
+				199,
+				199,
+				200,
+				200,
+				200,
+				201,
+				201,
+				201,
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				198
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				203
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				203
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				201
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				201
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				201
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				201
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				202
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				202
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				202
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				197
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				197
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby0B_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				205,
+				206,
+				207,
+				204,
+				205,
+				206,
+				207,
+				204,
+				205,
+				205,
+				206,
+				206,
+				207,
+				207,
+				204,
+				204,
+				205,
+				205,
+				205,
+				206,
+				206,
+				206,
+				207,
+				207,
+				207,
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				205,
+				206,
+				207,
+				204,
+				205,
+				206,
+				207,
+				204,
+				205,
+				205,
+				206,
+				206,
+				207,
+				207,
+				204,
+				204,
+				205,
+				205,
+				205,
+				206,
+				206,
+				206,
+				207,
+				207,
+				207,
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				204
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				207
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				207
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				207
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				207
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				208
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				208
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				208
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				209
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				209
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1A_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				211,
+				212,
+				213,
+				210,
+				211,
+				212,
+				213,
+				210,
+				211,
+				211,
+				212,
+				212,
+				213,
+				213,
+				210,
+				210,
+				211,
+				211,
+				211,
+				212,
+				212,
+				212,
+				213,
+				213,
+				213,
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				211,
+				212,
+				213,
+				210,
+				211,
+				212,
+				213,
+				210,
+				211,
+				211,
+				212,
+				212,
+				213,
+				213,
+				210,
+				210,
+				211,
+				211,
+				211,
+				212,
+				212,
+				212,
+				213,
+				213,
+				213,
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				210
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				215
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				215
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				213
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				213
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				213
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				213
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				214
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				214
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				214
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				209
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				209
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby1B_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				217,
+				218,
+				219,
+				216,
+				217,
+				218,
+				219,
+				216,
+				217,
+				217,
+				218,
+				218,
+				219,
+				219,
+				216,
+				216,
+				217,
+				217,
+				217,
+				218,
+				218,
+				218,
+				219,
+				219,
+				219,
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				217,
+				218,
+				219,
+				216,
+				217,
+				218,
+				219,
+				216,
+				217,
+				217,
+				218,
+				218,
+				219,
+				219,
+				216,
+				216,
+				217,
+				217,
+				217,
+				218,
+				218,
+				218,
+				219,
+				219,
+				219,
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				216
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				219
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				219
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				219
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				219
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				220
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				220
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				220
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				221
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				221
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2A_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-25
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				223,
+				224,
+				225,
+				222,
+				223,
+				224,
+				225,
+				222,
+				223,
+				223,
+				224,
+				224,
+				225,
+				225,
+				222,
+				222,
+				223,
+				223,
+				223,
+				224,
+				224,
+				224,
+				225,
+				225,
+				225,
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				223,
+				224,
+				225,
+				222,
+				223,
+				224,
+				225,
+				222,
+				223,
+				223,
+				224,
+				224,
+				225,
+				225,
+				222,
+				222,
+				223,
+				223,
+				223,
+				224,
+				224,
+				224,
+				225,
+				225,
+				225,
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				222
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				227
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				227
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				225
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				225
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				225
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				225
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				226
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				226
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				226
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				221
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				221
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby2B_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				229,
+				230,
+				231,
+				228,
+				229,
+				230,
+				231,
+				228,
+				229,
+				229,
+				230,
+				230,
+				231,
+				231,
+				228,
+				228,
+				229,
+				229,
+				229,
+				230,
+				230,
+				230,
+				231,
+				231,
+				231,
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				229,
+				230,
+				231,
+				228,
+				229,
+				230,
+				231,
+				228,
+				229,
+				229,
+				230,
+				230,
+				231,
+				231,
+				228,
+				228,
+				229,
+				229,
+				229,
+				230,
+				230,
+				230,
+				231,
+				231,
+				231,
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				228
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				231
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				231
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				231
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				231
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				232
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				232
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				232
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				233
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				233
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3A_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-37
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				235,
+				236,
+				237,
+				234,
+				235,
+				236,
+				237,
+				234,
+				235,
+				235,
+				236,
+				236,
+				237,
+				237,
+				234,
+				234,
+				235,
+				235,
+				235,
+				236,
+				236,
+				236,
+				237,
+				237,
+				237,
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				235,
+				236,
+				237,
+				234,
+				235,
+				236,
+				237,
+				234,
+				235,
+				235,
+				236,
+				236,
+				237,
+				237,
+				234,
+				234,
+				235,
+				235,
+				235,
+				236,
+				236,
+				236,
+				237,
+				237,
+				237,
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_hop",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_jump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_wallJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_ceilJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_angelJump",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				234
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_right_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				239
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_floor_left_shell",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				239
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_wallL_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				237
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_wallR_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				237
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_wallL_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				237
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_wallR_slide",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				237
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_ceiling_settle",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				238
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_ceiling_slideL",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				238
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_ceiling_slideR",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				238
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_shock_right",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				233
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_shock_left",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				233
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Blobby3B_die",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
             "name": "Achievement_locked",
 			"spriteName": "AchievementIcons",
             "framerate": 0.0,
@@ -28652,6 +31183,118 @@
 				97,
 				98,
 				99
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby0_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				156,
+				157,
+				158,
+				157
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby0_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				156,
+				157,
+				158,
+				157
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby0_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				144,
+				145,
+				146,
+				145
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby0_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				144,
+				145,
+				146,
+				145
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby1_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				180,
+				181,
+				182,
+				181
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby1_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				180,
+				181,
+				182,
+				181
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby1_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				168,
+				169,
+				170,
+				169
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_blobby1_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				168,
+				169,
+				170,
+				169
 			],
 			"loop": true,
 			"loopStartFrame": 0,
