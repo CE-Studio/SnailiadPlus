@@ -559,7 +559,7 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                     case "character":
-                        bool swapChar = TestForArrowAdjust(option, 1, 3);
+                        bool swapChar = TestForArrowAdjust(option, 1, 4);
                         switch (menuVarFlags[1])
                         {
                             case 0:

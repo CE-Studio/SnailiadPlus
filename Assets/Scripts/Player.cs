@@ -678,7 +678,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     grounded = false;
                     ungroundedViaHop = true;
-                    velocity.y = hopPower;
+                    velocity.y = hopPower * jumpMod * Time.fixedDeltaTime;
                     lastPointBeforeHop = transform.position.y;
                 }
             }
@@ -693,6 +693,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (shelled)
                 ToggleShell();
             grounded = false;
+            ungroundedViaHop = false;
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
@@ -1031,7 +1032,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     grounded = false;
                     ungroundedViaHop = true;
-                    velocity.x = hopPower;
+                    velocity.x = hopPower * jumpMod * Time.fixedDeltaTime;
                     lastPointBeforeHop = transform.position.x;
                 }
             }
@@ -1046,6 +1047,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (shelled)
                 ToggleShell();
             grounded = false;
+            ungroundedViaHop = false;
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
@@ -1384,7 +1386,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     grounded = false;
                     ungroundedViaHop = true;
-                    velocity.x = -hopPower;
+                    velocity.x = -hopPower * jumpMod * Time.fixedDeltaTime;
                     lastPointBeforeHop = transform.position.x;
                 }
             }
@@ -1399,6 +1401,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (shelled)
                 ToggleShell();
             grounded = false;
+            ungroundedViaHop = false;
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
@@ -1737,7 +1740,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 {
                     grounded = false;
                     ungroundedViaHop = true;
-                    velocity.y = -hopPower;
+                    velocity.y = -hopPower * jumpMod * Time.fixedDeltaTime;
                     lastPointBeforeHop = transform.position.y;
                 }
             }
@@ -1752,6 +1755,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (shelled)
                 ToggleShell();
             grounded = false;
+            ungroundedViaHop = false;
             holdingJump = true;
             if (gravityDir != defaultGravityDir)
             {
