@@ -8003,7 +8003,7 @@
 		{
 			"name": "Player_Blobby0A_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				193,
 				192,
@@ -8295,7 +8295,7 @@
 		{
 			"name": "Player_Blobby0B_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				199,
 				198,
@@ -8551,7 +8551,7 @@
 		{
 			"name": "Player_Blobby1A_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				205,
 				204,
@@ -8587,7 +8587,7 @@
 		{
 			"name": "Player_Blobby1A_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				205,
 				204,
@@ -8843,7 +8843,7 @@
 		{
 			"name": "Player_Blobby1B_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				211,
 				210,
@@ -8879,7 +8879,7 @@
 		{
 			"name": "Player_Blobby1B_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				211,
 				210,
@@ -9135,7 +9135,7 @@
 		{
 			"name": "Player_Blobby2A_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				217,
 				216,
@@ -9171,7 +9171,7 @@
 		{
 			"name": "Player_Blobby2A_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				217,
 				216,
@@ -9427,7 +9427,7 @@
 		{
 			"name": "Player_Blobby2B_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				223,
 				222,
@@ -9463,7 +9463,7 @@
 		{
 			"name": "Player_Blobby2B_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				223,
 				222,
@@ -9719,7 +9719,7 @@
 		{
 			"name": "Player_Blobby3A_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				229,
 				228,
@@ -9755,7 +9755,7 @@
 		{
 			"name": "Player_Blobby3A_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				229,
 				228,
@@ -10011,7 +10011,7 @@
 		{
 			"name": "Player_Blobby3B_floor_right_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				235,
 				234,
@@ -10047,7 +10047,7 @@
 		{
 			"name": "Player_Blobby3B_floor_left_idle",
 			"spriteName": "Player",
-			"framerate": 0.0,
+			"framerate": 12.0,
 			"frames": [
 				235,
 				234,

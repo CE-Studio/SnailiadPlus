@@ -96,7 +96,10 @@ public class Boss : Enemy
             PlayState.ToggleBossfightState(true, songIndeces[ID]);
         }
         else
+        {
             PlayState.ToggleBossfightState(true, -1);
+            PlayState.suppressPause = true;
+        }
         if (PlayState.isInBossRush)
             PlayState.incrementRushTimer = false;
         PlayState.TogglableHUDElements[12].GetComponent<SpriteRenderer>().enabled = true;
@@ -155,6 +158,7 @@ public class Boss : Enemy
         if (endParalysisOnEnd)
             PlayState.paralyzed = false;
         introDone = true;
+        PlayState.suppressPause = false;
         barMask.transform.localPosition = new Vector2(barPointRight, barMask.transform.localPosition.y);
         if (PlayState.isInBossRush)
             PlayState.incrementRushTimer = true;

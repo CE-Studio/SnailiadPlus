@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Blobby : Player
 {
+    private const float WALL_SLIDE_ACCEL = 0.125f;
+    private const float WALL_SLIDE_MAX = 4.5f;
+    private const float WALL_JUMP_VEL = 4.5f;
+
+    private float wallJumpTempVel = 0;
+
     // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
     public override void OnEnable()
     {
@@ -26,7 +32,7 @@ public class Blobby : Player
         runSpeed = new float[] { 8.3333f, 8.3333f, 8.3333f, 10.5f };
         jumpPower = new float[] { 29.5f, 29.5f, 29.5f, 29.5f, 29.5f, 29.5f, 29.5f, 29.5f };
         gravity = new float[] { 1.5f, 1.5f, 1.5f, 1.5f };
-        terminalVelocity = new float[] { -1.5208f, -1.5208f, -1.5208f, -1.5208f };
+        terminalVelocity = new float[] { -0.7208f, -0.7208f, -0.7208f, -0.7208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
         weaponCooldowns = new float[] { 0.095f, 0.35f, 0.185f, 0.0475f, 0.175f, 0.0925f };
         applyRapidFireMultiplier = true;
@@ -169,6 +175,176 @@ public class Blobby : Player
         sprite.flipX = forceFaceH != 1 && (forceFaceH == -1 || sprite.flipX);
         sprite.flipY = forceFaceV == 1 || (forceFaceV != -1 && sprite.flipY);
     }
+    public override void FixedUpdate()
+    {
+        if (PlayState.gameState != PlayState.GameState.game || PlayState.noclipMode)
+            return;
+
+        // To start things off, we mark our current position as the last position we took. Same with our hitbox size
+        // Among other things, this is used to test for ground when we're airborne
+        lastPosition = new Vector2(transform.position.x + box.offset.x, transform.position.y + box.offset.y);
+        lastSize = box.size;
+        lastGravity = gravityDir;
+        groundedLastFrame = grounded;
+        // We ensure we're not clipping inside any ground
+        EjectFromCollisions();
+        // Next, we decrease the fire cooldown
+        fireCooldown = Mathf.Clamp(fireCooldown - Time.fixedDeltaTime, 0, Mathf.Infinity);
+        // Then, we reset the flag marking if Snaily is airborne and shoving their face into a wall
+        againstWallFlag = false;
+        // We increment the jump buffer and coyote time values if necessary
+        if (Control.JumpHold())
+            jumpBufferCounter += Time.fixedDeltaTime;
+        else
+            jumpBufferCounter = 0;
+        if (!grounded)
+            coyoteTimeCounter += Time.fixedDeltaTime;
+        else
+            coyoteTimeCounter = 0;
+        // We increment the Gravity Shock timer in case it happens to be active
+        if (gravShockState < 0)
+            gravShockState++;
+        gravShockTimer = gravShockState > 0 ? gravShockTimer + Time.fixedDeltaTime : 0;
+        // We update our home direction assuming gravity keep behavior is set to any state change
+        if (PlayState.generalData.gravKeepType != 1)
+            homeGravity = defaultGravityDir;
+        // And finally, we clear the collision list
+        collisions.Clear();
+
+        // Next, we run different blocks of movement code based on our gravity state. They're largely the same, but are kept separate
+        // so that things can stay different between them if needed, like Blobby's entire wall-grabbing gimmick
+        if (!inDeathCutscene)
+        {
+            readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
+            readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
+
+            switch (gravityDir)
+            {
+                case Dirs.Floor:
+                    CaseDown();
+                    break;
+                case Dirs.WallL:
+                    CaseLeft();
+                    break;
+                case Dirs.WallR:
+                    CaseRight();
+                    break;
+                case Dirs.Ceiling:
+                    CaseUp();
+                    break;
+            }
+            if (velocity.x == Mathf.Infinity || velocity.x == -Mathf.Infinity)
+                velocity.x = 0;
+            if (velocity.y == Mathf.Infinity || velocity.y == -Mathf.Infinity)
+                velocity.y = 0;
+            velocity.x += wallJumpTempVel * Time.deltaTime;
+            transform.position += (Vector3)velocity;
+            if (wallJumpTempVel != 0)
+                wallJumpTempVel = grounded ? 0 : Mathf.Lerp(wallJumpTempVel, 0, 0.4f);
+
+            if (Control.ShootPress() && PlayState.generalData.shootMode)
+                toggleModeActive = !toggleModeActive;
+            else if (!PlayState.generalData.shootMode)
+                toggleModeActive = false;
+            if ((Control.ShootHold() || Control.StrafeHold() || toggleModeActive || Control.Aim() != Vector2.zero) && !PlayState.paralyzed)
+            {
+                if (shelled)
+                    ToggleShell();
+                Shoot();
+            }
+
+            if (gravShockState != 2)
+                EjectFromCollisions();
+
+            // Hey, do we happen to be stuck falling on a corner here?
+            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame && (gravityDir == lastGravity))
+            {
+                transform.position += PlayState.FRAC_64 * gravityDir switch
+                {
+                    Dirs.Floor => new Vector3(1, Control.AxisX(), 0),
+                    Dirs.WallL => new Vector3(Control.AxisY(), 1, 0),
+                    Dirs.WallR => new Vector3(Control.AxisY(), -1, 0),
+                    _ => new Vector3(-1, Control.AxisX(), 0)
+                };
+            }
+
+            //Vector2 halfBox = box.size * 0.5f;
+            //Debug.DrawLine(new(transform.position.x - halfBox.x, transform.position.y - halfBox.y, 0),
+            //    new(transform.position.x + halfBox.x, transform.position.y + halfBox.y, 0), Color.red, 3f);
+            //Debug.DrawLine(new(transform.position.x - halfBox.x, transform.position.y + halfBox.y, 0),
+            //    new(transform.position.x + halfBox.x, transform.position.y - halfBox.y, 0), Color.red, 3f);
+        }
+
+        // Down here, we handle general Gravity Shock stuff
+        if (gravShockState > 0)
+        {
+            if (gravShockCharge != null)
+                gravShockCharge.transform.position = transform.position;
+            if (gravShockBody != null)
+                gravShockBody.transform.position = transform.position;
+            if (gravShockBullet != null)
+                gravShockBullet.transform.position = transform.position;
+        }
+
+        // Lastly, after all of that, we update the camera's focus point around the player
+        camFocus.position = (Vector2)transform.position + camFocusOffset;
+        Vector2 camBoundsX = new(
+            PlayState.camCenter.x - PlayState.camBoundaryBuffers.x + PlayState.camTempBuffersX.x - 12.5f,
+            PlayState.camCenter.x + PlayState.camBoundaryBuffers.x - PlayState.camTempBuffersX.y + 12.5f);
+        Vector2 camBoundsY = new(
+            PlayState.camCenter.y - PlayState.camBoundaryBuffers.y + PlayState.camTempBuffersY.x - 7.5f,
+            PlayState.camCenter.y + PlayState.camBoundaryBuffers.y - PlayState.camTempBuffersY.y + 7.5f);
+        if (transform.position.x > camBoundsX.x && transform.position.x < camBoundsX.y && transform.position.y > camBoundsY.x && transform.position.y < camBoundsY.y)
+            camFocus.position = new(
+                Mathf.Clamp(camFocus.position.x, camBoundsX.x, camBoundsX.y),
+                Mathf.Clamp(camFocus.position.y, camBoundsY.x, camBoundsY.y));
+    }
+
+    public override void CaseLeft()
+    {
+        // Blobby has unique cases for most of their gravity states
+        // The left state is a simple "stick to the wall, slide down, jump up" type deal
+
+        // Firstly, we'll handle going down
+        if (Control.DownHold())
+            velocity.y = Mathf.Clamp(velocity.y - WALL_SLIDE_ACCEL * Time.fixedDeltaTime, -WALL_SLIDE_MAX * Time.fixedDeltaTime, 0);
+        else
+            velocity.y = 0;
+        // Have we hit the ground?
+        if (Mathf.Abs(velocity.y) > GetDistance(Dirs.Floor))
+        {
+            gravityDir = Dirs.Floor;
+            holdingShell = true;
+        }
+        // We have not. This lets us jump
+        else if (Control.JumpHold() && GetDistance(Dirs.Ceiling) > 0.25f)
+        {
+            gravityDir = Dirs.Floor;
+            grounded = false;
+            ungroundedViaHop = false;
+            velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
+            wallJumpTempVel = WALL_JUMP_VEL;
+        }
+        // Do we happen to be ungrounded by this event?
+        if (GetDistance(Dirs.WallL) > 0.25f && grounded)
+        {
+            gravityDir = Dirs.Floor;
+            holdingShell = true;
+            grounded = false;
+            ungroundedViaHop = false;
+        }
+    }
+
+    public override void CaseRight()
+    {
+        base.CaseRight();
+    }
+
+    public override void CaseUp()
+    {
+        base.CaseUp();
+    }
+
     public override IEnumerator DieAndRespawn()
     {
         if (shelled)
@@ -191,7 +367,7 @@ public class Blobby : Player
         PlayState.paralyzed = true;
         PlayState.PlaySound("Death");
         PlayState.areaOfDeath = PlayState.currentArea;
-        for (int i = Random.Range(1, 4); i > 0; i--)
+        for (int i = 4; i > 0; i--)
             PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
                 Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 2 });
         float timer = 0;

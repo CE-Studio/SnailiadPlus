@@ -392,7 +392,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 EjectFromCollisions();
 
             // Hey, do we happen to be stuck falling on a corner here?
-            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame && (gravityDir != lastGravity))
+            if (lastPosition == (Vector2)transform.position && !grounded && !groundedLastFrame && (gravityDir == lastGravity))
             {
                 transform.position += PlayState.FRAC_64 * gravityDir switch
                 {
