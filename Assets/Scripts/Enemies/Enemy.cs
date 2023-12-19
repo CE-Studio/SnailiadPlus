@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public string elementType; // Currently supports "ice" and "fire"
     public bool invulnerable = false;
     public bool canDamage = true;
+    public bool shieldTypeEntity = false;
     public int parryDamage = 0;
 
     public Collider2D col;
@@ -107,7 +108,7 @@ public class Enemy : MonoBehaviour
                     }
                     pingPlayer -= 1;
                 }
-                if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive)
+                if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive || shieldTypeEntity)
                     bulletsToDespawn.Add(bullet);
             }
             foreach (EnemyBullet bullet in intersectingEnemyBullets)
@@ -133,7 +134,7 @@ public class Enemy : MonoBehaviour
                         enemyBulletsToDespawn.Add(bullet);
                 }
             }
-            if (maxDamage > 0)
+            if (maxDamage > 0 && !shieldTypeEntity)
             {
                 health -= maxDamage;
                 if (health <= 0)

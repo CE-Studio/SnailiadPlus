@@ -11,6 +11,7 @@ public class SpaceBoxShield : Enemy
     private void Awake()
     {
         Spawn(100, 4, 1000, false);
+        shieldTypeEntity = true;
 
         anim.Add("Boss_spaceBox_shield0_spawn");
         anim.Add("Boss_spaceBox_shield1_spawn");
