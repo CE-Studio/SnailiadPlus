@@ -1210,6 +1210,7 @@ public class RushGigaSnail : Boss
     private void SetBoxState(int state)
     {
         box.size = new Vector2(state == 1 ? boxSize.x : boxSize.y, state == -1 ? boxSize.x : boxSize.y);
+        halfBox = box.size * 0.5f;
     }
 
     public override void Kill()
