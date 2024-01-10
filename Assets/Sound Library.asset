@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sound Library
   m_EditorClassIdentifier: 
   library:
+  - {fileID: 8300000, guid: a061d883c6d56b34bbb43558aefc881b, type: 3}
   - {fileID: 8300000, guid: cfa105eaedf81aa49be768660328b539, type: 3}
   - {fileID: 8300000, guid: 83ff8c3722b28a642a4450ab648ca72c, type: 3}
   - {fileID: 8300000, guid: 331d16259a899e14282453d1fbd824a5, type: 3}
@@ -61,6 +62,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 589649ba9671f2240988797984bb0a09, type: 3}
   - {fileID: 8300000, guid: 8c88f15a4f5480247935dd15ce21f501, type: 3}
   referenceList:
+  - AngelJump
   - BossHPBleep
   - Cannon
   - CheatSkyfish

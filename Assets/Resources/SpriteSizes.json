@@ -728,6 +728,11 @@
         },
 		
 		{
+            "name": "Particles/AngelJumpEffect",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Particles/Bubble",
             "width": 8,
             "height": 8

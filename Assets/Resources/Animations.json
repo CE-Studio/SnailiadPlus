@@ -30182,6 +30182,50 @@
 		},
 		
 		{
+			"name": "AngelJumpEffect_data",
+			"spriteName": "Particles/AngelJumpEffect",
+			"framerate": 0.0,
+			"frames": [
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "AngelJumpEffect0",
+			"spriteName": "Particles/AngelJumpEffect",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "AngelJumpEffect1",
+			"spriteName": "Particles/AngelJumpEffect",
+			"framerate": 20.0,
+			"frames": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Bubble1",
 			"spriteName": "Particles/Bubble",
 			"framerate": 0.0,

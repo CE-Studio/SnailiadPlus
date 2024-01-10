@@ -1486,9 +1486,74 @@ public class GlobalFunctions : MonoBehaviour
 
     private IEnumerator LegacyGravCutsceneBlobby(Vector2 itemOrigin)
     {
-        yield return new WaitForEndOfFrame();
+        int step = 0;
+        float stepElapsed = 0;
+        float totalElapsed = 0;
+        bool sceneActive = true;
+        while (sceneActive)
+        {
+
+            stepElapsed += Time.deltaTime;
+            totalElapsed += Time.deltaTime;
+            PlayState.paralyzed = true;
+            switch (step)
+            {
+
+                case 0: // Initial delay + grav correction
+                    if (PlayState.playerScript.gravityDir != Player.Dirs.Floor)
+                    {
+                        if (PlayState.playerScript.gravityDir != Player.Dirs.Ceiling)
+                            PlayState.playerScript.SwitchSurfaceAxis();
+                        PlayState.playerScript.gravityDir = Player.Dirs.Floor;
+                        PlayState.playerScript.SwapDir(Player.Dirs.Floor);
+                    }
+                    if (stepElapsed > 3.5f)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                        Control.SetVirtual(Control.Keyboard.Right1, true);
+                        if (PlayState.playerScript.transform.position.x < itemOrigin.x - 1.125f)
+                            Control.SetVirtual(Control.Keyboard.Jump1, true);
+                    }
+                    break;
+                case 1: // Move right, jumping when needed
+                    Control.SetVirtual(Control.Keyboard.Jump1, PlayState.playerScript.lastPosition.x == PlayState.playerScript.transform.position.x);
+                    if (PlayState.playerScript.transform.position.x > itemOrigin.x + 9.5f)
+                        Control.SetVirtual(Control.Keyboard.Right1, false);
+                    if (PlayState.playerScript.velocity.x == 0 && PlayState.playerScript.grounded && !PlayState.playerScript.ungroundedViaHop)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                        Control.SetVirtual(Control.Keyboard.Up1, true);
+                    }
+                    break;
+                case 2: // Jump up to gain height
+                    if (!PlayState.playerScript.holdingJump)
+                        Control.SetVirtual(Control.Keyboard.Jump1, true);
+                    else
+                        Control.SetVirtual(Control.Keyboard.Jump1, PlayState.playerScript.velocity.y >= 0);
+                    if (PlayState.playerScript.transform.position.y < itemOrigin.y + 7)
+                        PlayState.playerScript.Shoot();
+                    if (PlayState.playerScript.transform.position.y > itemOrigin.y + 15)
+                    {
+                        step++;
+                        stepElapsed = 0;
+                        Control.SetVirtual(Control.Keyboard.Left1, true);
+                    }
+                    break;
+                case 3: // Move to NPC
+                    if (PlayState.playerScript.transform.position.x < itemOrigin.x + 4)
+                        sceneActive = false;
+                    break;
+            }
+            if (totalElapsed > 10f)
+                sceneActive = false;
+            yield return new WaitForEndOfFrame();
+        }
+        Control.ClearVirtual(true, true);
         PlayState.FadeMusicBackIn();
         PlayState.paralyzed = false;
+        PlayState.suppressPause = false;
     }
 
     public void OnGUI()

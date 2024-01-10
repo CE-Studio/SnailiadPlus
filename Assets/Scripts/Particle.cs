@@ -31,6 +31,8 @@ public class Particle : MonoBehaviour
 
     public void AddAnims()
     {
+        anim.Add("AngelJumpEffect0");
+        anim.Add("AngelJumpEffect1");
         anim.Add("Dot_heat_tiny");
         anim.Add("Dot_heat_small");
         anim.Add("Dot_heat_medium");
@@ -76,7 +78,7 @@ public class Particle : MonoBehaviour
         anim.Add("Transformation_angel");
         anim.Add("Zzz");
 
-        foreach (string character in new string[] { "snaily", "sluggy", "upside", "leggy" })
+        foreach (string character in new string[] { "snaily", "sluggy", "upside", "leggy", "blobby" })
         {
             for (int i = 0; i <= 1; i++)
                 foreach (string dir in new string[] { "down", "up", "left", "right" })
@@ -382,6 +384,11 @@ public class Particle : MonoBehaviour
         switch (animType)
         {
             default:
+                break;
+            case "angeljumpeffect":
+                anim.Play("AngelJumpEffect" + vars[0]);
+                if (PlayState.GetAnim("AngelJumpEffect_data").frames[(int)vars[0]] == 1)
+                    sprite.flipX = Random.Range(0, 2) == 1;
                 break;
             case "bubble":
                 anim.Play("Bubble" + Random.Range(1, 5).ToString());

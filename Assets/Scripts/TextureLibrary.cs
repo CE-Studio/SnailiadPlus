@@ -166,6 +166,7 @@ public class TextureLibrary : ScriptableObject
         "Items/Shelmet",
         "Items/WallGrab",
 
+        "Particles/AngelJumpEffect",
         "Particles/Bubble",
         "Particles/Dot",
         "Particles/Dust",

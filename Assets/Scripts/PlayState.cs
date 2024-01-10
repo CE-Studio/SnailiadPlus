@@ -1160,12 +1160,20 @@ public class PlayState
             switch (type.ToLower()) { // Particle settings - 0 = none, 1 = environments only, 2 = Flash entities, 3 = all entities, 4 = Flash, 5 = all
                 default:
                     break;
+                case "angeljumpeffect":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = CheckForItem(9) ? 1 : 0;
+                    }
+                    break;
                 case "bubble":
                     // Values:
                     // 0 = Water level
                     // 1 = Boolean to initialize particle with random velocity or not
 
-                    if (generalData.particleState == 1 || generalData.particleState >= 4) {
+                    if (generalData.particleState == 1 || generalData.particleState >= 4)
+                    {
                         activateParticle = true;
                         particleScript.vars[0] = UnityEngine.Random.Range(0, 2 * Mathf.PI);       // Animation cycle
                         particleScript.vars[1] = position.x;                                      // Origin X
@@ -1182,7 +1190,8 @@ public class PlayState
                     // Values:
                     // 0 = Size
 
-                    if ((generalData.particleState > 1 && values[0] <= 4) || ((generalData.particleState == 3 || generalData.particleState == 5) && values[0] > 4)) {
+                    if ((generalData.particleState > 1 && values[0] <= 4) || ((generalData.particleState == 3 || generalData.particleState == 5) && values[0] > 4))
+                    {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
                     }
