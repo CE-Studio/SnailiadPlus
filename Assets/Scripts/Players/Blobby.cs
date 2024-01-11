@@ -568,37 +568,39 @@ public class Blobby : Player
 
         // Now, let's see if we can jump
         if (CheckAbility(canJump) && Control.JumpHold() && (grounded || (coyoteTimeCounter < coyoteTime) || (ungroundedViaHop && (transform.position.y > lastPointBeforeHop))
-            || jumpsLeft > 0) && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0)) && GetDistance(Dirs.Ceiling) > 0.95f)
+            || (jumpsLeft > 0 && (grounded || ungroundedViaHop || !holdingJump))) && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0))
+            && GetDistance(Dirs.Ceiling) > 0.95f)
         {
-            if (!grounded && !ungroundedViaHop && Control.DownHold() && Control.AxisX() == 0 && PlayState.CheckForItem(10))
-                return;
-            if (shelled)
-                ToggleShell();
-            if ((PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) && !grounded && !ungroundedViaHop)
+            if (!(!grounded && !ungroundedViaHop && Control.DownHold() && Control.AxisX() == 0 && PlayState.CheckForItem(10)))
             {
-                PlayState.RequestParticle(transform.position, "AngelJumpEffect");
-                PlayState.PlaySound("AngelJump");
-            }
-            else
-                PlayState.PlaySound("Jump");
-            grounded = false;
-            ungroundedViaHop = false;
-            holdingJump = true;
-            jumpsLeft--;
-            if (gravityDir != defaultGravityDir)
-            {
-                if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
-                    velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
-                else
+                if (shelled)
+                    ToggleShell();
+                if ((PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) && !grounded && !ungroundedViaHop)
                 {
-                    CorrectGravity(false);
-                    if (defaultGravityDir != Dirs.Ceiling)
-                        EjectFromCollisions(Dirs.Floor);
-                    jumpBufferCounter = jumpBuffer;
+                    PlayState.RequestParticle(transform.position, "AngelJumpEffect");
+                    PlayState.PlaySound("AngelJump");
                 }
+                else
+                    PlayState.PlaySound("Jump");
+                grounded = false;
+                ungroundedViaHop = false;
+                holdingJump = true;
+                jumpsLeft--;
+                if (gravityDir != defaultGravityDir)
+                {
+                    if (CheckAbility(retainGravityOnAirborne) && !CheckForHomeDirRequirements())
+                        velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
+                    else
+                    {
+                        CorrectGravity(false);
+                        if (defaultGravityDir != Dirs.Ceiling)
+                            EjectFromCollisions(Dirs.Floor);
+                        jumpBufferCounter = jumpBuffer;
+                    }
+                }
+                else
+                    velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
             }
-            else
-                velocity.y = jumpPower[readIDJump] * jumpMod * Time.fixedDeltaTime;
         }
         // How about gravity jumping?
         int swapType = PlayState.generalData.gravSwapType;
@@ -694,12 +696,14 @@ public class Blobby : Player
         if (Mathf.Abs(velocity.y) > GetDistance(Dirs.Floor))
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallR);
             holdingShell = true;
         }
         // We have not. This lets us jump
         else if (Control.JumpHold() && !holdingJump && GetDistance(Dirs.Ceiling) > 0.25f)
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallR);
             grounded = false;
             ungroundedViaHop = false;
             coyoteTimeCounter = coyoteTime;
@@ -712,6 +716,7 @@ public class Blobby : Player
         if (GetDistance(Dirs.WallL) > 0.25f)
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallR);
             holdingShell = true;
             grounded = false;
             ungroundedViaHop = false;
@@ -735,12 +740,14 @@ public class Blobby : Player
         if (Mathf.Abs(velocity.y) > GetDistance(Dirs.Floor))
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallL);
             holdingShell = true;
         }
         // We have not. This lets us jump
         else if (Control.JumpHold() && !holdingJump && GetDistance(Dirs.Ceiling) > 0.25f)
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallL);
             grounded = false;
             ungroundedViaHop = false;
             coyoteTimeCounter = coyoteTime;
@@ -753,6 +760,7 @@ public class Blobby : Player
         if (GetDistance(Dirs.WallR) > 0.25f)
         {
             gravityDir = Dirs.Floor;
+            SwapDir(Dirs.WallL);
             holdingShell = true;
             grounded = false;
             ungroundedViaHop = false;

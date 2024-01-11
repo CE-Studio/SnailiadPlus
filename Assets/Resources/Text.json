@@ -3402,7 +3402,7 @@
 		},
 		{
 			"name": "npc_15_hintBlobby_0",
-			"text": "Hi, {P}!  {p|0.125}Here's a little tip:{p|0.125}{nl}You can still jump after a side{nl}hop!  {p|0.125}It's called \"Coyote Time\"!!",
+			"text": "Hi, {P}!  {p|0.125}Here's a little tip:{p|0.125}{nl}You don't have to be on the{nl}ground to jump!",
 			"value": 1
 		},
 		{
