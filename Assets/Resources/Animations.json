@@ -10301,6 +10301,1681 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Player_Leechy_data",
+			"spriteName": "Player",
+			"framerate": 0.0,
+			"frames": [
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+        {
+			"name": "Player_Leechy0_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				240,
+				241
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				244,
+				245
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy0_floor_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_floor_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_ceiling_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_ceiling_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_wallL_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_wallL_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_wallR_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_wallR_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy0_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				251,
+				250,
+				249,
+				248
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				252,
+				253
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				256,
+				257
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy1_floor_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_floor_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_ceiling_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_ceiling_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_wallL_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_wallL_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_wallR_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_wallR_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy1_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				263,
+				262,
+				261,
+				260
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				264,
+				265
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				268,
+				269
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy2_floor_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_floor_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_ceiling_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_ceiling_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_wallL_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_wallL_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_wallR_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_wallR_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy2_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				275,
+				274,
+				273,
+				272
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_floor_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_right_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_left_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_down_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_up_idle",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_right_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_left_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_down_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_up_move",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_right_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_ceiling_left_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				276,
+				277
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallR_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_down_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_wallL_up_air",
+			"spriteName": "Player",
+			"framerate": 3.0,
+			"frames": [
+				280,
+				281
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Player_Leechy3_floor_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_floor_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_ceiling_right_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_ceiling_left_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_wallL_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_wallL_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_wallR_down_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_wallR_up_shock",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Player_Leechy3_die",
+			"spriteName": "Player",
+			"framerate": 30.0,
+			"frames": [
+				287,
+				286,
+				285,
+				284
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
             "name": "Achievement_locked",
 			"spriteName": "AchievementIcons",
             "framerate": 0.0,
@@ -31160,6 +32835,118 @@
 				169,
 				170,
 				169
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy0_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy0_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy0_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy0_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				24,
+				25,
+				26,
+				27
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy1_down",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy1_up",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy1_left",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "GravShock_char_leechy1_right",
+			"spriteName": "Particles/ShockChar",
+			"framerate": 30.0,
+			"frames": [
+				36,
+				37,
+				38,
+				39
 			],
 			"loop": true,
 			"loopStartFrame": 0,

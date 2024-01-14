@@ -1455,7 +1455,7 @@ public class PlayState
         player.GetComponent<Upside>().enabled = newPlayer == "Upside";
         player.GetComponent<Leggy>().enabled = newPlayer == "Leggy";
         player.GetComponent<Blobby>().enabled = newPlayer == "Blobby";
-        //player.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
+        player.GetComponent<Leechy>().enabled = newPlayer == "Leechy";
         currentProfile.character = newPlayer;
         playerScript = newPlayer switch
         {
@@ -1463,7 +1463,7 @@ public class PlayState
             "Upside" => player.GetComponent<Upside>(),
             "Leggy" => player.GetComponent<Leggy>(),
             "Blobby" => player.GetComponent<Blobby>(),
-            //"Leechy" => player.GetComponent<Leechy>(),
+            "Leechy" => player.GetComponent<Leechy>(),
             _ => player.GetComponent<Snaily>()
         };
     }

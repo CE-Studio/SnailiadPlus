@@ -171,37 +171,32 @@ public class DebugMenu : MonoBehaviour
                             case "Snaily":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[0]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    //PlayState.currentProfile.character = "Sluggy";
                                     PlayState.SetPlayer("Sluggy");
                                 break;
                             case "Sluggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[1]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    //PlayState.currentProfile.character = "Upside";
                                     PlayState.SetPlayer("Upside");
                                 break;
                             case "Upside":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[2]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    //PlayState.currentProfile.character = "Leggy";
                                     PlayState.SetPlayer("Leggy");
                                 break;
                             case "Leggy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[3]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    //PlayState.currentProfile.character = "Blobby";
                                     PlayState.SetPlayer("Blobby");
                                 break;
                             case "Blobby":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[4]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    //PlayState.currentProfile.character = "Leechy";
-                                    PlayState.SetPlayer("Snaily");
+                                    PlayState.SetPlayer("Leechy");
                                 break;
                             case "Leechy":
                                 button.sprite.sprite = GetSprite(button.spriteIndeces[5]);
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
-                                    PlayState.currentProfile.character = "Snaily";
+                                    PlayState.SetPlayer("Snaily");
                                 break;
                         }
                         break;

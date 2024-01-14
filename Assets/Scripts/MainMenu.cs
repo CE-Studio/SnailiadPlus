@@ -559,7 +559,7 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                     case "character":
-                        bool swapChar = TestForArrowAdjust(option, 1, 4);
+                        bool swapChar = TestForArrowAdjust(option, 1, 5);
                         switch (menuVarFlags[1])
                         {
                             case 0:
@@ -2342,6 +2342,9 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_display_screenShake") + ": ", true, "screenShake");
         AddOption(PlayState.GetText("menu_option_display_darkness") + ": ", true, "darkness");
         //AddOption(PlayState.GetText("menu_option_display_paletteShader") + ": ", true, "paletteShader");
+        AddOption("", false);
+        AddOption("", false);
+        AddOption("", false);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_display_prevPage"), true, DisplayOptions1, new int[]
         {
