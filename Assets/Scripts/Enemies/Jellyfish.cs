@@ -14,7 +14,7 @@ public class Jellyfish : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(350, 3, 50, true);
+        Spawn(350, 3, 50, true, 6);
         theta = transform.position.x * 0.7f + transform.position.y * 1.3f;
 
         anim.Add("Enemy_jellyfish_normal");

@@ -170,7 +170,7 @@ public class GigaSnail : Boss
 
     public void Awake()
     {
-        SpawnBoss(34000, 6, 0, true, 3, false);
+        SpawnBoss(34000, 6, 0, true, 112, 3, false);
 
         PlayState.globalFunctions.RefillPlayerHealth(HEAL_TIMEOUT, HEAL_DELAY,
             PlayState.currentProfile.difficulty switch { 2 => 1, 1 => 2, _ => 4}, true, true);

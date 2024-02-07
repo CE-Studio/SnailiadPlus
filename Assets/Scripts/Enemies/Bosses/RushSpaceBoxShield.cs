@@ -10,7 +10,7 @@ public class RushSpaceBoxShield : Enemy
 
     private void Awake()
     {
-        Spawn(100, 3, 1000, false);
+        Spawn(100, 3, 1000, false, 0);
         shieldTypeEntity = true;
 
         anim.Add("RushBoss_spaceBox_shield0_spawn");

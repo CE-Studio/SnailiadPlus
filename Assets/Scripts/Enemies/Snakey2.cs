@@ -26,7 +26,7 @@ public class Snakey2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(450, 4, 10, true);
+        Spawn(450, 4, 10, true, 6);
         col.TryGetComponent(out box);
         halfBox = box.size * 0.5f;
         lastX = transform.position.x;

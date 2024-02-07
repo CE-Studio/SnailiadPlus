@@ -24,7 +24,7 @@ public class PowerGrass : MonoBehaviour
     {
         if (PlayState.gameState == PlayState.GameState.game)
         {
-            bitesRemaining = totalBites;
+            bitesRemaining = PlayState.currentProfile.character == "Leechy" ? 3 : totalBites;
             sprite = GetComponent<SpriteRenderer>();
             box = GetComponent<BoxCollider2D>();
             anim = GetComponent<AnimationModule>();
@@ -50,7 +50,7 @@ public class PowerGrass : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !PlayState.paralyzed)
+        if (collision.CompareTag("Player") && !PlayState.paralyzed && !(PlayState.currentProfile.character == "Leechy" && PlayState.playerScript.stunned))
         {
             if (timer == 0)
             {
@@ -63,7 +63,7 @@ public class PowerGrass : MonoBehaviour
                 }
                 else
                     timer = biteTimeout;
-                PlayState.playerScript.HitFor(-healthPerBite);
+                PlayState.playerScript.HitFor(-healthPerBite * (PlayState.currentProfile.character == "Leechy" ? -1 : 1));
                 if (PlayState.generalData.particleState > 1)
                     PlayState.RequestParticle(new Vector2(transform.position.x, transform.position.y + 0.25f), "nom");
             }

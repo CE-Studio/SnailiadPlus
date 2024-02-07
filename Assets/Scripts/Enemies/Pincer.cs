@@ -40,7 +40,7 @@ public class Pincer : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(850, 6, 10, true);
+        Spawn(850, 6, 10, true, 3);
 
         for (int i = 0; i < 2; i++)
         {

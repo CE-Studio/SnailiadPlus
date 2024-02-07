@@ -50,7 +50,7 @@ public class FederationDrone : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(1850, 4, 10, true);
+        Spawn(1850, 4, 10, true, 8);
         if (PlayState.currentProfile.difficulty == 2)
         {
             MOVE_TIME = 1.3f;

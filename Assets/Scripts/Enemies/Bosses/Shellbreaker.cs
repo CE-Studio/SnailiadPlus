@@ -41,7 +41,7 @@ public class Shellbreaker : Boss
         if (PlayState.IsBossAlive(0))
         {
             SpawnBoss(Mathf.FloorToInt(450 * (PlayState.currentProfile.difficulty == 2 ? 1 : 0.88f)),
-                2, 3, true, 0, true);
+                2, 3, true, 20, 0, true);
             StartCoroutine(RunIntro());
             PlayState.playerScript.CorrectGravity(true);
             eyes = transform.GetChild(0).gameObject;

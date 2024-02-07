@@ -23,7 +23,7 @@ public class Spinnygear : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(500, 4, 1, true);
+        Spawn(500, 4, 1, true, 5);
         col.TryGetComponent(out box);
         halfBox = box.size * 0.5f;
 

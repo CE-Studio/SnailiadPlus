@@ -18,7 +18,7 @@ public class GigaZzz : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(100, 6, 0, true);
+        Spawn(100, 6, 0, true, 0);
         invulnerable = true;
         origin = transform.position;
 

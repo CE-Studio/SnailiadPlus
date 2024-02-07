@@ -39,7 +39,7 @@ public class RushShellbreaker : Boss
 
         if (PlayState.IsBossAlive(0))
         {
-            SpawnBoss(10000, 2, 3, true, 0, true);
+            SpawnBoss(10000, 2, 3, true, 20, 0, true);
             StartCoroutine(RunIntro());
             PlayState.playerScript.CorrectGravity(true);
             eyes = transform.GetChild(0).gameObject;

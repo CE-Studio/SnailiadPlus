@@ -6,7 +6,7 @@ public class ShellbreakerHand : Enemy
 {
     private void Awake()
     {
-        Spawn(100, 1, 1000, false);
+        Spawn(100, 1, 1000, false, 0);
         makeSoundOnPing = false;
     }
 }

@@ -23,7 +23,7 @@ public class Tallfish1 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(500, 4, 10, true);
+        Spawn(500, 4, 10, true, 5);
 
         moveTimeout = MOVE_TIMEOUT * 0.125f;
         anim.Add("Enemy_tallfish_green_idle");

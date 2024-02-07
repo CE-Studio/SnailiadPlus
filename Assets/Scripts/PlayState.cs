@@ -28,6 +28,8 @@ public class PlayState
     public enum EDirsCardinal { Up, Down, Left, Right, None };
     public enum EDirsSurface { Floor, WallL, WallR, Ceiling, None };
 
+    public static readonly int[] HEALTH_ORB_VALUES = new int[] { 1, 2, 4 };
+
     public enum GameState { preload, game, menu, pause, map, debug, dialogue, error, credits }
     public static GameState gameState = GameState.preload;
 
@@ -1222,6 +1224,17 @@ public class PlayState
                         particleScript.vars[1] = values[1];
                         particleScript.vars[2] = values[2];
                     }
+                    break;
+                case "healthorb":
+                    // Values:
+                    // 0 = size
+
+                    activateParticle = true;
+                    particleScript.vars[0] = values[0];                           // Size
+                    particleScript.vars[1] = UnityEngine.Random.Range(0f, TAU);   // Initial angle
+                    particleScript.vars[2] = UnityEngine.Random.Range(3f, 5f);    // Initial velocity
+                    particleScript.vars[3] = UnityEngine.Random.Range(5f, 8f);    // Deceleration
+                    particleScript.vars[4] = UnityEngine.Random.Range(12f, 18f);  // Acceleration
                     break;
                 case "heat":
                     if (generalData.particleState == 1 || generalData.particleState == 5)

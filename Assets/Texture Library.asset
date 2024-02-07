@@ -104,7 +104,6 @@ MonoBehaviour:
   - Entities/GravTurtle1
   - Entities/GravTurtle2
   - Entities/Grass
-  - Entities/HealthOrb
   - Entities/IceSpike
   - Entities/Jellyfish
   - Entities/Kitty
@@ -169,6 +168,7 @@ MonoBehaviour:
   - Particles/Explosion
   - Particles/Fog
   - Particles/GigaTrail
+  - Particles/HealthOrb
   - Particles/IntroBGPatterns
   - Particles/Lightning
   - Particles/Nom

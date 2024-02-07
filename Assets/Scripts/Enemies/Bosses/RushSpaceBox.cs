@@ -100,7 +100,7 @@ public class RushSpaceBox : Boss
 
         if (PlayState.IsBossAlive(2))
         {
-            SpawnBoss(9000, 3, 9, true, 2, true);
+            SpawnBoss(9000, 3, 9, true, 20, 2, true);
             StartCoroutine(RunIntro(true, false));
             PlayState.playerScript.CorrectGravity(true);
 

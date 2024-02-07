@@ -30,7 +30,7 @@ public class Fireball2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(50, 3, 25, true);
+        Spawn(50, 3, 25, true, 4);
         col.TryGetComponent(out box);
         speed = PlayState.currentProfile.difficulty == 2 ? 0.14f : 0.08f;
         elementType = "ice";

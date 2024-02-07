@@ -17,7 +17,7 @@ public class Chirpy1 : Enemy
 
     public void Awake()
     {
-        Spawn(1, 2, 0, true);
+        Spawn(1, 2, 0, true, 1);
         anim.Add("Enemy_chirpy1_up");
         anim.Add("Enemy_chirpy1_down");
         originY = transform.position.y;

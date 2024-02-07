@@ -21,7 +21,7 @@ public class Cannon1 : Enemy
 
     public void Awake()
     {
-        Spawn(2000, 0, 0, true);
+        Spawn(2000, 0, 0, true, 6);
         canDamage = false;
         baseObj = transform.GetChild(0).gameObject;
         baseAnim = baseObj.GetComponent<AnimationModule>();

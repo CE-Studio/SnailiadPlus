@@ -36,7 +36,7 @@ public class RushSpaceBoxBabybox : Enemy
 
     private void Awake()
     {
-        Spawn(450, 2, 9, true);
+        Spawn(450, 2, 9, true, 4);
 
         anim.Add("RushBoss_spaceBox_babybox0_spawn");
         anim.Add("RushBoss_spaceBox_babybox1_spawn");

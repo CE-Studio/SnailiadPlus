@@ -29,7 +29,7 @@ public class Kitty2 : Enemy
 
     void Awake()
     {
-        Spawn(900, 2, 1, true);
+        Spawn(900, 2, 1, true, 9);
         col.TryGetComponent(out box);
 
         anim.Add("Enemy_kitty2_idle");

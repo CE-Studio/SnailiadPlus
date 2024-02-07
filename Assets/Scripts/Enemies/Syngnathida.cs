@@ -44,7 +44,7 @@ public class Syngnathida : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(250, 2, 10, true);
+        Spawn(250, 2, 10, true, 7);
         if (PlayState.currentProfile.difficulty == 2)
         {
             MOVE_TIME = 1.3f;

@@ -60,7 +60,7 @@ public class AngryBlock : Enemy, IRoomObject
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(1500, 0, 32, true);
+        Spawn(1500, 0, 32, true, 20);
         canDamage = false;
 
         face = transform.GetChild(0).GetComponent<AnimationModule>();

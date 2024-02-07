@@ -31,7 +31,7 @@ public class Spider1 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(500, 3, 10, true);
+        Spawn(500, 3, 10, true, 2);
         PlayState.enemyGlobalMoveIndex = (PlayState.enemyGlobalMoveIndex + 1) % waitTable.Length;
         moveIndex = PlayState.enemyGlobalMoveIndex;
         moveTimeout = waitTable[moveIndex] * MOVE_TIMEOUT;

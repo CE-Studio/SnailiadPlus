@@ -51,7 +51,7 @@ public class Snakey3 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(450, 4, 10, true);
+        Spawn(450, 4, 10, true, 7);
 
         int indexID = Mathf.RoundToInt((transform.position.x * 0.0625f) + (transform.position.y * 0.25f));
         thetaOffsetIndex = indexID % thetaOffsets.Length;

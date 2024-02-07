@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public bool canDamage = true;
     public bool shieldTypeEntity = false;
     public int parryDamage = 0;
+    public int healthOrbValue = 0;
 
     public Collider2D col;
     public Rigidbody2D rb;
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
     public LayerMask playerCollide;
     public LayerMask enemyCollide;
     
-    public void Spawn(int hp, int atk, int def, bool piercable, List<int> wea = null, List<int> res = null, List<int> imm = null)
+    public void Spawn(int hp, int atk, int def, bool piercable, int orbValue, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
         TryGetComponent(out col);
         TryGetComponent(out rb);
@@ -57,6 +58,7 @@ public class Enemy : MonoBehaviour
         resistances = res;
         immunities = imm;
         letsPermeatingShotsBy = piercable;
+        healthOrbValue = orbValue;
 
         if (weaknesses == null)
             weaknesses = new List<int> { -1 };
@@ -221,7 +223,35 @@ public class Enemy : MonoBehaviour
         for (int i = Random.Range(1, 4); i > 0; i--)
             PlayState.RequestParticle(new Vector2(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
                 Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f)), "explosion", new float[] { 2 });
+        if (PlayState.currentProfile.character == "Leechy")
+            SpawnHealthOrbs();
         Destroy(gameObject);
+    }
+
+    private void SpawnHealthOrbs()
+    {
+        while (healthOrbValue > 0)
+        {
+            if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[2])
+            {
+                int thisVal = Random.Range(0, 3);
+                PlayState.RequestParticle(transform.position, "healthorb", new float[] { thisVal });
+                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[thisVal];
+            }
+            else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[1])
+            {
+                int thisVal = Random.Range(0, 2);
+                PlayState.RequestParticle(transform.position, "healthorb", new float[] { thisVal });
+                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[thisVal];
+            }
+            else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[0])
+            {
+                PlayState.RequestParticle(transform.position, "healthorb", new float[] { 0 });
+                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[0];
+            }
+            else
+                healthOrbValue = 0;
+        }
     }
 
     private void BuildMask()

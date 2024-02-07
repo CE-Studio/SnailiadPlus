@@ -99,7 +99,7 @@ public class SpaceBox : Boss
 
         if (PlayState.IsBossAlive(2))
         {
-            SpawnBoss(5100, 4, 9, true, 2, true);
+            SpawnBoss(5100, 4, 9, true, 40, 2, true);
             StartCoroutine(RunIntro(true, false));
             PlayState.playerScript.CorrectGravity(true);
 

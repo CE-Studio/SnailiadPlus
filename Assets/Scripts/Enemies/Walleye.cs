@@ -18,7 +18,7 @@ public class Walleye : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(400, 0, 0, true);
+        Spawn(400, 0, 0, true, 0);
         canDamage = false;
         invulnerable = true;
         col.TryGetComponent(out box);

@@ -31,9 +31,9 @@ public class Boss : Enemy
     protected float barPointLeft;
     protected float barPointRight;
 
-    public void SpawnBoss(int hp, int atk, int def, bool piercable, int bossID, bool shiftPlayer, List<int> wea = null, List<int> res = null, List<int> imm = null)
+    public void SpawnBoss(int hp, int atk, int def, bool piercable, int orbVal, int bossID, bool shiftPlayer, List<int> wea = null, List<int> res = null, List<int> imm = null)
     {
-        Spawn(hp, atk, def, piercable, wea, res, imm);
+        Spawn(hp, atk, def, piercable, orbVal, wea, res, imm);
         ID = bossID;
         barData = PlayState.GetAnim("BossBar_data").frames;
         frameAnim = PlayState.TogglableHUDElements[12].GetComponent<AnimationModule>();

@@ -16,7 +16,7 @@ public class Babyfish : Enemy
 
     private void Awake()
     {
-        Spawn(40, 0, 0, true);
+        Spawn(40, 0, 0, true, 0);
         invulnerable = true;
         canDamage = false;
 

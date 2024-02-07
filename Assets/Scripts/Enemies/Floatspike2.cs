@@ -11,7 +11,7 @@ public class Floatspike2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(5, 6, 250, true);
+        Spawn(5, 6, 250, true, 2);
 
         theta = origin.x * origin.x * 1.1f + origin.y * 3.2f + 0.7f;
 

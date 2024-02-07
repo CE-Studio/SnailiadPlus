@@ -16,7 +16,7 @@ public class BalloonBuster : Enemy
 
     private void Awake()
     {
-        Spawn(50, 3, 1, true);
+        Spawn(50, 3, 1, true, 4);
         originX = transform.position.x;
         anim.Add("Enemy_balloon_floatL");
         anim.Add("Enemy_balloon_floatR");

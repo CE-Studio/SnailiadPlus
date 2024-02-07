@@ -23,7 +23,7 @@ public class Blob1 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(50, 2, 1, true);
+        Spawn(50, 2, 1, true, 3);
         col.TryGetComponent(out box);
 
         anim.Add("Enemy_blob1_normal");

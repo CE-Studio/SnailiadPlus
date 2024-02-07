@@ -34,7 +34,7 @@ public class Spikey2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(PlayState.currentProfile.difficulty == 2 ? 720 : 340, 4, 0, true);
+        Spawn(PlayState.currentProfile.difficulty == 2 ? 720 : 340, 4, 0, true, 5);
         col.TryGetComponent(out box);
         if (PlayState.currentProfile.difficulty == 2)
         {

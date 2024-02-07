@@ -122,7 +122,7 @@ public class Stompy : Boss
         {
             SpawnBoss(Mathf.FloorToInt(2000f * (PlayState.currentProfile.difficulty == 2 ? 2f :
                 (PlayState.currentProfile.character == "Sluggy" ? 1.4f : 1f))),
-                2, 5, true, 1, false);
+                2, 5, true, 30, 1, false);
             if (PlayState.currentProfile.difficulty == 2)
                 bossSpeed = 1f;
             else if (PlayState.currentProfile.character == "Sluggy")

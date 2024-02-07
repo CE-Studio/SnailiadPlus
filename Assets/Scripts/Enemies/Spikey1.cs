@@ -29,7 +29,7 @@ public class Spikey1 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(70, 2, 0, true);
+        Spawn(70, 2, 0, true, 2);
         col.TryGetComponent(out box);
 
         anim.Add("Enemy_spikey_blue_down");

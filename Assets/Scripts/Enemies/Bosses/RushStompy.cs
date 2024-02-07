@@ -120,7 +120,7 @@ public class RushStompy : Boss
 
         if (PlayState.IsBossAlive(1))
         {
-            SpawnBoss(Mathf.FloorToInt(10000f * (PlayState.currentProfile.character == "Sluggy" ? 1.3f : 1f)), 2, 5, true, 1, false);
+            SpawnBoss(Mathf.FloorToInt(10000f * (PlayState.currentProfile.character == "Sluggy" ? 1.3f : 1f)), 2, 5, true, 20, 1, false);
             if (PlayState.currentProfile.character == "Sluggy")
                 bossSpeed += 0.35f;
             transform.position -= Vector3.up * 2.5625f;

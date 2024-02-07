@@ -13,7 +13,7 @@ public class Dandelion : Enemy
 
     private void Awake()
     {
-        Spawn(50, 3, 1, true);
+        Spawn(50, 3, 1, true, 1);
         originX = transform.position.x;
         anim.Add("Enemy_dandelion_left");
         anim.Add("Enemy_dandelion_right");

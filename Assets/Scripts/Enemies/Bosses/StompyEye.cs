@@ -30,12 +30,12 @@ public class StompyEye : Enemy
 
     private void Awake()
     {
-        Spawn(50000, 0, 0, true);
+        Spawn(50000, 0, 0, true, 0);
         boss = transform.parent.GetComponent<Stompy>();
         pupil = transform.Find("Pupil").GetComponent<Enemy>();
-        pupil.Spawn(50000, 0, 0, true);
+        pupil.Spawn(50000, 0, 0, true, 0);
         eyelid = transform.Find("Eyelid").GetComponent<Enemy>();
-        eyelid.Spawn(50000, 0, 0, true);
+        eyelid.Spawn(50000, 0, 0, true, 0);
         pupilAnim = transform.Find("Pupil").GetComponent<AnimationModule>();
         eyelidAnim = transform.Find("Eyelid").GetComponent<AnimationModule>();
 

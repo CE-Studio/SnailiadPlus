@@ -33051,6 +33051,48 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "HealthOrb_small",
+			"spriteName": "Particles/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "HealthOrb_medium",
+			"spriteName": "Particles/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "HealthOrb_large",
+			"spriteName": "Particles/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "IntroPattern_1",
 			"spriteName": "Particles/IntroBGPatterns",
 			"framerate": 0.0,

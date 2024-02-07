@@ -61,7 +61,7 @@ public class GravTurtle2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(200, 2, 20, true);
+        Spawn(200, 2, 20, true, 7);
         col.TryGetComponent(out box);
 
         boxSize = box.size;

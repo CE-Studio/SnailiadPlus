@@ -24,6 +24,8 @@ public class Grass : MonoBehaviour
             return;
 
         totalBites = new int[] { 6, 3, 1 };
+        if (PlayState.currentProfile.character == "Leechy")
+            totalBites = new int[] { 1, 1, 3 };
 
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
@@ -52,7 +54,7 @@ public class Grass : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !PlayState.paralyzed)
+        if (collision.CompareTag("Player") && !PlayState.paralyzed && !(PlayState.currentProfile.character == "Leechy" && PlayState.playerScript.stunned))
         {
             if (timer == 0)
             {
@@ -65,7 +67,7 @@ public class Grass : MonoBehaviour
                 }
                 else
                     timer = biteTimeout;
-                PlayState.playerScript.HitFor(-healthPerBite);
+                PlayState.playerScript.HitFor(-healthPerBite * (PlayState.currentProfile.character == "Leechy" ? -1 : 1));
                 if (PlayState.generalData.particleState > 1)
                     PlayState.RequestParticle(new Vector2(transform.position.x, transform.position.y + 0.25f), "nom");
             }

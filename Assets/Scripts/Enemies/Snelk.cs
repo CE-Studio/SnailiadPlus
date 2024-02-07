@@ -75,7 +75,7 @@ public class Snelk : Enemy, IRoomObject
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(50, 2, 1, true);
+        Spawn(50, 2, 1, true, 0);
         col.TryGetComponent(out box);
         invulnerable = true;
         canDamage = false;
