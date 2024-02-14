@@ -17115,6 +17115,48 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "Object_healthOrb_small",
+			"spriteName": "Entities/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Object_healthOrb_medium",
+			"spriteName": "Entities/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				4,
+				5,
+				6,
+				7
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
+			"name": "Object_healthOrb_large",
+			"spriteName": "Entities/HealthOrb",
+			"framerate": 20.0,
+			"frames": [
+				8,
+				9,
+				10,
+				11
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Object_platform1_1_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,
@@ -33049,48 +33091,6 @@
 			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
-		},
-		{
-			"name": "HealthOrb_small",
-			"spriteName": "Particles/HealthOrb",
-			"framerate": 20.0,
-			"frames": [
-				0,
-				1,
-				2,
-				3
-			],
-			"loop": true,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": true
-		},
-		{
-			"name": "HealthOrb_medium",
-			"spriteName": "Particles/HealthOrb",
-			"framerate": 20.0,
-			"frames": [
-				4,
-				5,
-				6,
-				7
-			],
-			"loop": true,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": true
-		},
-		{
-			"name": "HealthOrb_large",
-			"spriteName": "Particles/HealthOrb",
-			"framerate": 20.0,
-			"frames": [
-				8,
-				9,
-				10,
-				11
-			],
-			"loop": true,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": true
 		},
 		{
 			"name": "IntroPattern_1",

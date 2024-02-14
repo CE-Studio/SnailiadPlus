@@ -228,29 +228,25 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void SpawnHealthOrbs()
+    protected void SpawnHealthOrbs()
     {
         while (healthOrbValue > 0)
         {
+            int randRange = 0;
             if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[2])
-            {
-                int thisVal = Random.Range(0, 3);
-                PlayState.RequestParticle(transform.position, "healthorb", new float[] { thisVal });
-                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[thisVal];
-            }
+                randRange = 3;
             else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[1])
-            {
-                int thisVal = Random.Range(0, 2);
-                PlayState.RequestParticle(transform.position, "healthorb", new float[] { thisVal });
-                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[thisVal];
-            }
+                randRange = 3;
             else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[0])
-            {
-                PlayState.RequestParticle(transform.position, "healthorb", new float[] { 0 });
-                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[0];
-            }
-            else
+                randRange = 3;
+            if (randRange == 0)
                 healthOrbValue = 0;
+            else
+            {
+                int orbSize = Random.Range(0, randRange);
+                PlayState.GetHealthOrb(orbSize, transform.position);
+                healthOrbValue -= PlayState.HEALTH_ORB_VALUES[orbSize];
+            }
         }
     }
 

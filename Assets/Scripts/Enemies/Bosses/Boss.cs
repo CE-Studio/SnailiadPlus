@@ -82,6 +82,8 @@ public class Boss : Enemy
         PlayState.globalFunctions.RequestQueuedExplosion(transform.position, 2.7f, 0, true);
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
+        if (PlayState.currentProfile.character == "Leechy")
+            SpawnHealthOrbs();
         Destroy(gameObject);
     }
 

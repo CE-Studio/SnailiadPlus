@@ -132,6 +132,7 @@ public class PlayState
     public static bool resetInducingFadeActive = false;
     public static int areaOfDeath = -1;
     public static bool lastRoomWasSnelk = false;
+    public static int healthOrbPointer = 0;
 
     public static int importJobs = 0;
 
@@ -170,6 +171,7 @@ public class PlayState
     public static DialogueBox dialogueScript;
     public static GameObject titleParent;
     public static SpriteRenderer darknessLayer;
+    public static GameObject healthOrbPool;
 
     public static RoomTrigger titleRoom;
     public static RoomTrigger moonCutsceneRoom;
@@ -664,6 +666,8 @@ public class PlayState
         foreach (Transform obj in globalFunctions.playerBulletPool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
         foreach (Transform obj in enemyBulletPool.transform)
+            obj.GetComponent<AnimationModule>().ReloadList();
+        foreach (Transform obj in healthOrbPool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
     }
 
@@ -1225,17 +1229,6 @@ public class PlayState
                         particleScript.vars[2] = values[2];
                     }
                     break;
-                case "healthorb":
-                    // Values:
-                    // 0 = size
-
-                    activateParticle = true;
-                    particleScript.vars[0] = values[0];                           // Size
-                    particleScript.vars[1] = UnityEngine.Random.Range(0f, TAU);   // Initial angle
-                    particleScript.vars[2] = UnityEngine.Random.Range(3f, 5f);    // Initial velocity
-                    particleScript.vars[3] = UnityEngine.Random.Range(5f, 8f);    // Deceleration
-                    particleScript.vars[4] = UnityEngine.Random.Range(12f, 18f);  // Acceleration
-                    break;
                 case "heat":
                     if (generalData.particleState == 1 || generalData.particleState == 5)
                     {
@@ -1414,6 +1407,25 @@ public class PlayState
             Particle particleScript = particle.GetComponent<Particle>();
             if (particle.gameObject.activeSelf && particleScript.type != "shockcharmain")
                 particleScript.ResetParticle();
+        }
+    }
+
+    public static void GetHealthOrb(int size, Vector2 position)
+    {
+        bool found = false;
+        int attemptsMade = 0;
+        while (!found && attemptsMade < healthOrbPool.transform.childCount)
+        {
+            HealthOrb thisOrb = healthOrbPool.transform.GetChild(healthOrbPointer).GetComponent<HealthOrb>();
+            if (!thisOrb.isActive)
+            {
+                found = true;
+                thisOrb.Activate(size);
+                thisOrb.transform.position = position;
+            }
+            healthOrbPointer++;
+            if (healthOrbPointer >= healthOrbPool.transform.childCount)
+                healthOrbPointer -= healthOrbPool.transform.childCount;
         }
     }
 

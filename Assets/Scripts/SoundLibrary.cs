@@ -28,6 +28,7 @@ public class SoundLibrary : ScriptableObject
         "DoorClose",
         "DoorOpen",
         "EatGrass",
+        "EatHealthOrb",
         "EatPowerGrass",
         "EnemyKilled1",
         "EnemyKilled2",

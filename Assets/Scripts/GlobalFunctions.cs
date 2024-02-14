@@ -169,6 +169,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.dialogueScript = PlayState.dialogueBox.GetComponent<DialogueBox>();
         PlayState.titleParent = GameObject.Find("View/Title Parent");
         PlayState.darknessLayer = GameObject.Find("View/Darkness Layer").GetComponent<SpriteRenderer>();
+        PlayState.healthOrbPool = GameObject.Find("Health Orb Pool");
 
         PlayState.titleRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Title").GetComponent<RoomTrigger>();
         PlayState.moonCutsceneRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Moon Snail Cutscene").GetComponent<RoomTrigger>();

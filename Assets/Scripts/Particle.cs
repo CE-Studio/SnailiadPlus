@@ -57,9 +57,6 @@ public class Particle : MonoBehaviour
         anim.Add("GravShock_launch_left");
         anim.Add("GravShock_launch_down");
         anim.Add("GravShock_launch_right");
-        anim.Add("HealthOrb_small");
-        anim.Add("HealthOrb_medium");
-        anim.Add("HealthOrb_large");
         anim.Add("IntroPattern_1");
         anim.Add("IntroPattern_2");
         anim.Add("IntroPattern_3");
@@ -212,25 +209,6 @@ public class Particle : MonoBehaviour
                         sprite.color = new Color(1, 1, 1, sprite.color.a - Time.deltaTime * 2f);
                         if (sprite.color.a <= 0)
                             ResetParticle();
-                        break;
-                    case "healthorb":
-                        if (vars[2] > 0)
-                        {
-                            Vector3 initVel = vars[2] * Time.deltaTime * new Vector2(Mathf.Cos(vars[1]), Mathf.Sin(vars[1]));
-                            transform.position += initVel;
-                            vars[2] -= vars[3] * Time.deltaTime;
-                        }
-                        if (vars[2] < 1.5f)
-                        {
-                            Vector3 accelDir = PlayState.playerScript.transform.position - transform.position;
-                            transform.position += internalVars[0] * Time.deltaTime * accelDir.normalized;
-                            internalVars[0] += vars[4] * Time.deltaTime;
-                            if (Vector2.Distance(transform.position, PlayState.player.transform.position) < internalVars[0] * Time.deltaTime)
-                            {
-                                PlayState.PlaySound("EatGrass");
-                                ResetParticle();
-                            }
-                        }
                         break;
                     case "heat":
                         vars[0] += Time.deltaTime * vars[4];

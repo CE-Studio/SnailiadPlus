@@ -455,6 +455,11 @@
             "height": 16
         },
 		{
+            "name": "Entities/HealthOrb",
+            "width": 8,
+            "height": 8
+        },
+		{
             "name": "Entities/IceSpike",
             "width": 16,
             "height": 16
@@ -766,11 +771,6 @@
             "name": "Particles/GigaTrail",
             "width": 48,
             "height": 48
-        },
-		{
-            "name": "Particles/HealthOrb",
-            "width": 8,
-            "height": 8
         },
 		{
             "name": "Particles/IntroBGPatterns",
