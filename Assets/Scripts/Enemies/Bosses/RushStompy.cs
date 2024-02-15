@@ -704,6 +704,7 @@ public class RushStompy : Boss
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatStompy);
+        SpawnHealthOrbs();
         Destroy(gameObject);
     }
 

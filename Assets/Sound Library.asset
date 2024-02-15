@@ -27,6 +27,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0e365b3df404ffa448bdcc172516d622, type: 3}
   - {fileID: 8300000, guid: d6288a3cde5452644bd8cc6e8e2dce0e, type: 3}
   - {fileID: 8300000, guid: d153f66040e9f424a9f4706302e04083, type: 3}
+  - {fileID: 8300000, guid: 5806497a032baa84eb2f6796e9ef01c2, type: 3}
   - {fileID: 8300000, guid: 9770986177031084383b819b61a74453, type: 3}
   - {fileID: 8300000, guid: cb9ba99fc8146db4099b3464477054cb, type: 3}
   - {fileID: 8300000, guid: 19cee2458fb86b040bf49408e3fc23ad, type: 3}
@@ -76,6 +77,7 @@ MonoBehaviour:
   - DoorClose
   - DoorOpen
   - EatGrass
+  - EatHealthOrb
   - EatPowerGrass
   - EnemyKilled1
   - EnemyKilled2

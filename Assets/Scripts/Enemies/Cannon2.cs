@@ -95,5 +95,6 @@ public class Cannon2 : Enemy
         col.enabled = false;
         isAlive = false;
         baseAnim.Play("Enemy_cannon2_baseDestroyed_" + baseDir);
+        SpawnHealthOrbs();
     }
 }

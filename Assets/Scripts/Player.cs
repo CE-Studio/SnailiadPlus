@@ -2325,10 +2325,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 }
             }
 
-            Bullet thisBullet = null;
-            if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
+            Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+            if (!thisBullet.isActive)
             {
-                thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
                 if (!isShock)
                 {

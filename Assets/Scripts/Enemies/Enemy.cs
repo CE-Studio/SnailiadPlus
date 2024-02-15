@@ -230,15 +230,16 @@ public class Enemy : MonoBehaviour
 
     protected void SpawnHealthOrbs()
     {
+        healthOrbValue = Mathf.CeilToInt(healthOrbValue * PlayState.HEALTH_ORB_MULTS[PlayState.currentProfile.difficulty]);
         while (healthOrbValue > 0)
         {
             int randRange = 0;
             if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[2])
                 randRange = 3;
             else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[1])
-                randRange = 3;
+                randRange = 2;
             else if (healthOrbValue >= PlayState.HEALTH_ORB_VALUES[0])
-                randRange = 3;
+                randRange = 1;
             if (randRange == 0)
                 healthOrbValue = 0;
             else

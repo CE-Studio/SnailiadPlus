@@ -29,6 +29,7 @@ public class PlayState
     public enum EDirsSurface { Floor, WallL, WallR, Ceiling, None };
 
     public static readonly int[] HEALTH_ORB_VALUES = new int[] { 1, 2, 4 };
+    public static readonly float[] HEALTH_ORB_MULTS = new float[] { 1.25f, 0.6f, 0.125f };
 
     public enum GameState { preload, game, menu, pause, map, debug, dialogue, error, credits }
     public static GameState gameState = GameState.preload;

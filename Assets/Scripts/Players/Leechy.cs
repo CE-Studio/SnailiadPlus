@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Leechy : Player
 {
+    private bool shouldBackfire = false;
+
     // This function is called the moment the script is loaded. I use it to initialize a lot of variables and such
     public override void OnEnable()
     {
@@ -28,7 +30,7 @@ public class Leechy : Player
         gravity = new float[] { 1.125f, 1.125f, 1.125f, 1.125f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        weaponCooldowns = new float[] { 0.046f, 0.23f, 0.13f, 0.023f, 0.115f, 0.065f };
+        weaponCooldowns = new float[] { 0.046f, 0.23f, 0.13f, 0.0414f, 0.207f, 0.117f };
         applyRapidFireMultiplier = true;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);
@@ -180,5 +182,150 @@ public class Leechy : Player
 
         sprite.flipX = forceFaceH != 1 && (forceFaceH == -1 || sprite.flipX);
         sprite.flipY = forceFaceV == 1 || (forceFaceV != -1 && sprite.flipY);
+    }
+
+    public override Bullet Shoot(bool isShock = false)
+    {
+        if ((fireCooldown == 0 && armed && gravShockState == 0) || isShock)
+        {
+            Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
+            Vector2 aimDir = Control.Aim();
+            int type = selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
+            int dir = 0;
+            if (isShock)
+            {
+                type = PlayState.CheckForItem("Full-Metal Snail") ? 8 : 7;
+                dir = gravityDir switch
+                {
+                    Dirs.Floor => 6,
+                    Dirs.WallL => 3,
+                    Dirs.WallR => 4,
+                    Dirs.Ceiling => 1,
+                    _ => 6
+                };
+            }
+            else
+            {
+                string dirStr = inputDir.x + "" + inputDir.y;
+                if (aimDir != Vector2.zero)
+                    dirStr = aimDir.x + "" + aimDir.y;
+                switch (dirStr)
+                {
+                    case "-11":
+                        dir = 0;
+                        break;
+                    case "01":
+                        dir = 1;
+                        break;
+                    case "11":
+                        dir = 2;
+                        break;
+                    case "-10":
+                        dir = 3;
+                        break;
+                    case "10":
+                        dir = 4;
+                        break;
+                    case "-1-1":
+                        dir = 5;
+                        break;
+                    case "0-1":
+                        dir = 6;
+                        break;
+                    case "1-1":
+                        dir = 7;
+                        break;
+                    case "00":
+                        dir = -1;
+                        break;
+                }
+
+                if (type == 1 && grounded)
+                {
+                    if (gravityDir == Dirs.Floor && (dir == 5 || dir == 6 || dir == 7))
+                        dir = facingLeft ? 3 : 4;
+                    else if (gravityDir == Dirs.WallL && (dir == 0 || dir == 3 || dir == 5))
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.WallR && (dir == 2 || dir == 4 || dir == 7))
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.Ceiling && (dir == 0 || dir == 1 || dir == 2))
+                        dir = facingLeft ? 3 : 4;
+                }
+                if (dir == -1)
+                {
+                    if (gravityDir == Dirs.Floor && dir == -1)
+                        dir = facingLeft ? 3 : 4;
+                    else if (gravityDir == Dirs.WallL && dir == -1)
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.WallR && dir == -1)
+                        dir = facingDown ? 6 : 1;
+                    else if (gravityDir == Dirs.Ceiling && dir == -1)
+                        dir = facingLeft ? 3 : 4;
+                }
+            }
+
+            Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+            if (!thisBullet.isActive)
+            {
+                thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
+                if (!isShock)
+                {
+                    bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
+                    int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
+                    fireCooldown = weaponCooldowns[fireRateIndex];
+                }
+                PlayState.PlaySound(type switch
+                {
+                    1 => "ShotPeashooter",
+                    2 => "ShotBoomerang",
+                    3 => "ShotRainbow",
+                    4 => "ShotPeashooterDev",
+                    5 => "ShotBoomerangDev",
+                    6 => "ShotRainbowDev",
+                    7 => "ShockLaunch",
+                    8 => "ShockLaunch",
+                    _ => "ShotRainbow"
+                });
+                if (PlayState.isInBossRush)
+                {
+                    switch (type)
+                    {
+                        case 1: case 4: PlayState.activeRushData.peasFired++; break;
+                        case 2: case 5: PlayState.activeRushData.boomsFired++; break;
+                        case 3: case 6: PlayState.activeRushData.wavesFired++; break;
+                        case 7: case 8: PlayState.activeRushData.shocksFired++; break;
+                    }
+                }
+            }
+            bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
+
+            if (PlayState.CheckForItem("Rapid Fire"))
+            {
+                if (shouldBackfire && !isShock)
+                {
+                    Bullet otherBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
+                    if (!otherBullet.isActive)
+                    {
+                        int backDir = dir switch
+                        {
+                            0 => 7,
+                            1 => 6,
+                            2 => 5,
+                            3 => 4,
+                            4 => 3,
+                            5 => 2,
+                            6 => 1,
+                            _ => 0
+                        };
+                        otherBullet.Shoot(type, backDir, applyRapidFireMultiplier);
+                        bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
+                    }
+                }
+                shouldBackfire = !shouldBackfire;
+            }
+
+            return thisBullet;
+        }
+        return null;
     }
 }
