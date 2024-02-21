@@ -3458,6 +3458,7 @@ public class MainMenu : MonoBehaviour
         PlayState.entityColor = Color.white;
         PlayState.ResetTilemapColors();
         PlayState.SetDarkness(0);
+        PlayState.globalFunctions.RemoveGigaBackgroundLayers();
 
         PlayState.skyLayer.transform.localPosition = Vector2.zero;
         PlayState.bgLayer.transform.localPosition = Vector2.zero;

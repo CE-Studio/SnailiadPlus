@@ -48,7 +48,7 @@ public class RushSpaceBox : Boss
     };
     private BossMode mode = BossMode.Wait;
     private BossMode lastMode = BossMode.Wait;
-    private readonly BossMode[] introSteps = new BossMode[] { BossMode.Down, BossMode.Left };
+    private BossMode[] introSteps = new BossMode[] { BossMode.Down, BossMode.Left };
     private int introStepID = 0;
     private bool introMovementsDone = false;
     private bool advanceIntroState = false;
@@ -114,6 +114,9 @@ public class RushSpaceBox : Boss
             shotTimeout = SHOT_TIMEOUT;
             clusterTimeout = CLUSTER_TIMEOUT;
 
+            if (PlayState.currentProfile.character == "Blobby")
+                introSteps = new BossMode[] { BossMode.Left, BossMode.Down };
+
             string[] bossAnimTypes = new string[] { "idle#", "charge#_$", "hit#_$", "waitSpawn#" };
             for (int i = 0; i < 2; i++)
             {
@@ -169,13 +172,14 @@ public class RushSpaceBox : Boss
         {
             if (elapsed > 1.1f && elapsed < 2.5f)
             {
-                if ((elapsed < 1.2f + (PlayState.CheckForItem("Gravity Snail") ? 0 : 0.1f)) || PlayState.currentProfile.character == "Upside")
+                if ((elapsed < 1.2f + (PlayState.CheckForItem("Gravity Snail") ? 0 : 0.1f)) || PlayState.currentProfile.character == "Upside"
+                    || PlayState.currentProfile.character == "Blobby")
                     Control.SetVirtual(Control.Keyboard.Right1, true);
                 else
                 {
                     if (!advanceIntroState)
                     {
-                        if (PlayState.CheckForItem("Gravity Snail"))
+                        if (PlayState.CheckForItem("Gravity Snail") || PlayState.currentProfile.character == "Leggy")
                         {
                             PlayState.PlaySound("Jump");
                             PlayState.playerScript.gravityDir = Player.Dirs.Ceiling;
@@ -774,6 +778,19 @@ public class RushSpaceBox : Boss
         for (int i = babyboxes.Count - 1; i >= 0; i--)
             babyboxes[i].Kill();
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatSpaceBox);
+
+        if (PlayState.currentProfile.character == "Blobby")
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                Platform exitPlat = Instantiate(Resources.Load<Platform>("Objects/Platform"), transform.parent);
+                exitPlat.transform.position = i == 1 ? new Vector2(239f, -4.5f) : new Vector2(236f, -10.5f);
+                exitPlat.pathName = "BlobbyRushPlat";
+                exitPlat.speed = 1f;
+                exitPlat.Spawn();
+            }
+        }
+
         base.Kill();
     }
 }

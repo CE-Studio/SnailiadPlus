@@ -75,7 +75,7 @@ public class Platform : MonoBehaviour, IRoomObject
         }
     }
 
-    void Spawn()
+    public void Spawn()
     {
         box.size = new Vector2(size, 1);
         PlayAnim();
