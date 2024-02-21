@@ -236,6 +236,41 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_newGame_returnTo",
+			"text": "Back to new game",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_header",
+			"text": "Randomizer options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_items",
+			"text": "Item shuffle",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_areas",
+			"text": "Area shuffle",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_music",
+			"text": "Music shuffle",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_hints",
+			"text": "Snails carry hints",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_seed",
+			"text": "Custom seed",
+			"value": 0
+		},
+		{
 			"name": "menu_option_loadGame_header1",
 			"text": "Okay, where would you",
 			"value": 0
@@ -1941,6 +1976,36 @@
 			"value": 0
 		},
 		{
+			"name": "menu_add_rando_items_none",
+			"text": "none",
+			"value": 0
+		},
+		{
+			"name": "menu_add_rando_items_easy",
+			"text": "split",
+			"value": 0
+		},
+		{
+			"name": "menu_add_rando_items_normal",
+			"text": "full",
+			"value": 0
+		},
+		{
+			"name": "menu_add_rando_items_hard",
+			"text": "pro",
+			"value": 0
+		},
+		{
+			"name": "menu_add_rando_music_areas",
+			"text": "areas only",
+			"value": 0
+		},
+		{
+			"name": "menu_add_rando_music_full",
+			"text": "all music",
+			"value": 0
+		},
+		{
 			"name": "menu_add_shooting_normal",
 			"text": "normal",
 			"value": 0
@@ -2078,6 +2143,66 @@
 		{
 			"name": "menu_add_gravKeep_onJump",
 			"text": "Gravity jump",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_items_none",
+			"text": "Items will not be shuffled",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_items_easy",
+			"text": "Items will be shuffled amongst locations of similar importance\nMajor items at major locations, and minor items at minor locations",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_items_normal",
+			"text": "Items will be shuffled to any viable location on the map",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_items_hard",
+			"text": "Items will be shuffled to any viable location on the map,\nincluding knowledge checks likes hidden rooms and shortcuts",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_areas_off",
+			"text": "The order in which you visit each area will not be touched",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_areas_on",
+			"text": "The order in which you visit each area will be shuffled,\nwith a few added boss doors to gate progression",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_music_off",
+			"text": "Game music will play where it normally does",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_music_areas",
+			"text": "Area themes will be shuffled amongst other areas",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_music_full",
+			"text": "Any theme can play in any location",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_npcs_off",
+			"text": "Snail dialogue will remain untouched",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_npcs_on",
+			"text": "Snails can occasionally provide the location of an item\nwhen spoken to, but will otherwise say something random",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_seed",
+			"text": "Create your own ten-digit seed",
 			"value": 0
 		},
 		{

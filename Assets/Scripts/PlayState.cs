@@ -435,6 +435,16 @@ public class PlayState
     \*/
 
     [Serializable]
+    public struct ProfileRandoData
+    {
+        public int seed;              // Ten-digit seed that all randomization was based on
+        public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
+        public int[] areaOrder;       // All area IDs, in order of intended visitation
+        public int[] musicList;       // All music IDs, in order relative to the actual music ID list
+        public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
+    }
+
+    [Serializable]
     public struct GeneralData
     {
         public string gameVersion;
