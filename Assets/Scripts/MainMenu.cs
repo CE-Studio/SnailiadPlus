@@ -24,8 +24,8 @@ public class MainMenu : MonoBehaviour
 
     private List<MenuOption> currentOptions = new();
     private DestinationDelegate backPage;
-    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private int[] returnVars = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] returnVars = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int controlScreen = 0;
     private bool isRebinding = false;
     private float rebindCooldown = 0;
@@ -601,81 +601,161 @@ public class MainMenu : MonoBehaviour
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_rando_items_none"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_items_none"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_items_none"));
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("menu_add_rando_items_easy"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_items_easy"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_items_easy"));
                                 break;
                             case 2:
                                 AddToOptionText(option, PlayState.GetText("menu_add_rando_items_normal"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_items_normal"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_items_normal"));
                                 break;
                             case 3:
                                 AddToOptionText(option, PlayState.GetText("menu_add_rando_items_hard"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_items_hard"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_items_hard"));
                                 break;
                         }
                         break;
-                    case "randoAreas":
+                    case "randoProgressives":
                         TestForArrowAdjust(option, 6, 1);
                         switch (menuVarFlags[6])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_areas_off"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_progressives_off"));
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_areas_on"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_progressives_on"));
                                 break;
                         }
                         break;
-                    case "randoMusic":
-                        TestForArrowAdjust(option, 7, 2);
+                    case "randoBroom":
+                        TestForArrowAdjust(option, 7, 1);
                         switch (menuVarFlags[7])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_music_off"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_broom_off"));
                                 break;
                             case 1:
-                                AddToOptionText(option, PlayState.GetText("menu_add_rando_music_areas"));
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_music_areas"));
-                                break;
-                            case 2:
-                                AddToOptionText(option, PlayState.GetText("menu_add_rando_music_full"));
-                                if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_music_full"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_broom_on"));
                                 break;
                         }
                         break;
-                    case "randoHints":
+                    case "randoTraps":
                         TestForArrowAdjust(option, 8, 1);
                         switch (menuVarFlags[8])
                         {
                             case 0:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_npcs_off"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_traps_off"));
                                 break;
                             case 1:
                                 AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
                                 if (selectedOption == option.optionID)
-                                    currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_npcs_on"));
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_traps_on"));
+                                break;
+                        }
+                        break;
+                    case "randoMasked":
+                        TestForArrowAdjust(option, 9, 1);
+                        switch (menuVarFlags[9])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_maskedItems_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_maskedItems_on"));
+                                break;
+                        }
+                        break;
+                    case "randoAreas":
+                        TestForArrowAdjust(option, 10, 1);
+                        switch (menuVarFlags[10])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_areas_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_areas_on"));
+                                break;
+                        }
+                        break;
+                    case "randoLocks":
+                        TestForArrowAdjust(option, 11, 1);
+                        switch (menuVarFlags[11])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_helixLocks_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_helixLocks_on"));
+                                break;
+                        }
+                        break;
+                    case "randoMusic":
+                        TestForArrowAdjust(option, 12, 2);
+                        switch (menuVarFlags[12])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_music_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_rando_music_areas"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_music_areas"));
+                                break;
+                            case 2:
+                                AddToOptionText(option, PlayState.GetText("menu_add_rando_music_full"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_music_full"));
+                                break;
+                        }
+                        break;
+                    case "randoHints":
+                        TestForArrowAdjust(option, 13, 1);
+                        switch (menuVarFlags[13])
+                        {
+                            case 0:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_off"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_npcs_off"));
+                                break;
+                            case 1:
+                                AddToOptionText(option, PlayState.GetText("menu_add_generic_on"));
+                                if (selectedOption == option.optionID)
+                                    currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_npcs_on"));
                                 break;
                         }
                         break;
                     case "randoSeed":
                         if (selectedOption == option.optionID)
-                            currentOptions[7].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
+                            currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
                         AddToOptionText(option, "0000000000");
                         break;
                     case "openMap":
@@ -2055,7 +2135,8 @@ public class MainMenu : MonoBehaviour
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
             if (data.isEmpty)
-                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame, new int[] { 0, 1, 1, 0, 2, 0, 3, i, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0 });
+                AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame,
+                    new int[] { 0, 1, 1, 0, 2, 0, 3, i, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0, 11, 0, 12, 0, 13, 0, 14, 0 });
             else
                 AddOption(data.character + " | " + ConvertDifficultyToString(data.difficulty) + " | " + PlayState.GetTimeString(data.gameTime) +
                     " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
@@ -2078,7 +2159,7 @@ public class MainMenu : MonoBehaviour
         if (PlayState.generalData.achievements[14])
             AddOption(PlayState.GetText("menu_option_newGame_character") + ": ", true, "character");
         if (PlayState.generalData.achievements[7])
-            AddOption(PlayState.GetText("menu_option_newGame_randomizer"), true, NewGameRandoOptions);
+            AddOption(PlayState.GetText("menu_option_newGame_randomizer"), true, NewGameRandoOptions1);
         if (PlayState.generalData.achievements[5])
             AddOption(PlayState.GetText("menu_option_newGame_openMap") + ": ", true, "openMap");
         AddOption("", false);
@@ -2088,22 +2169,37 @@ public class MainMenu : MonoBehaviour
         backPage = ProfileScreen;
     }
 
-    public void NewGameRandoOptions()
+    public void NewGameRandoOptions1()
     {
         ClearOptions();
         isCharSelectPage = true;
         AddOption(PlayState.GetText("menu_option_rando_header"), false);
-        AddOption("", false);
         AddOption(PlayState.GetText("menu_option_rando_items") + ": ", true, "randoItems");
-        // Progressive items
-        // Start with broom
-        AddOption(PlayState.GetText("menu_option_rando_areas") + ": ", true, "randoAreas"); // Add open areas
+        AddOption(PlayState.GetText("menu_option_rando_progressives") + ": ", true, "randoProgressives");
+        AddOption(PlayState.GetText("menu_option_rando_broom") + ": ", true, "randoBroom");
+        AddOption(PlayState.GetText("menu_option_rando_traps") + ": ", true, "randoTraps");
+        AddOption(PlayState.GetText("menu_option_rando_maskedItems") + ": ", true, "randoMasked");
+        AddOption("", false, 1);
+        AddOption(PlayState.GetText("menu_option_rando_nextPage"), true, NewGameRandoOptions2);
+        AddOption(PlayState.GetText("menu_option_newGame_returnTo"), true, StartNewGame);
+        ForceSelect(1);
+        backPage = StartNewGame;
+    }
+
+    public void NewGameRandoOptions2()
+    {
+        ClearOptions();
+        isCharSelectPage = true;
+        AddOption(PlayState.GetText("menu_option_rando_header"), false);
+        AddOption(PlayState.GetText("menu_option_rando_areas") + ": ", true, "randoAreas");
+        AddOption(PlayState.GetText("menu_option_rando_helixLocks") + ": ", true, "randoLocks");
         AddOption(PlayState.GetText("menu_option_rando_music") + ": ", true, "randoMusic");
         AddOption(PlayState.GetText("menu_option_rando_hints") + ": ", true, "randoHints");
         AddOption(PlayState.GetText("menu_option_rando_seed") + ": ", true, "randoSeed");
         AddOption("", false, 1);
+        AddOption(PlayState.GetText("menu_option_rando_prevPage"), true, NewGameRandoOptions1);
         AddOption(PlayState.GetText("menu_option_newGame_returnTo"), true, StartNewGame);
-        ForceSelect(2);
+        ForceSelect(1);
         backPage = StartNewGame;
     }
 

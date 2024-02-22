@@ -251,8 +251,33 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_rando_progressives",
+			"text": "Progressive items",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_broom",
+			"text": "Start with Broom",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_traps",
+			"text": "Shuffle trap items",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_maskedItems",
+			"text": "Masked items",
+			"value": 0
+		},
+		{
 			"name": "menu_option_rando_areas",
-			"text": "Area shuffle",
+			"text": "Open areas",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_helixLocks",
+			"text": "Helix locks",
 			"value": 0
 		},
 		{
@@ -268,6 +293,16 @@
 		{
 			"name": "menu_option_rando_seed",
 			"text": "Custom seed",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_nextPage",
+			"text": "Next page",
+			"value": 0
+		},
+		{
+			"name": "menu_option_rando_prevPage",
+			"text": "Previous page",
 			"value": 0
 		},
 		{
@@ -2147,7 +2182,7 @@
 		},
 		{
 			"name": "menu_rando_hint_items_none",
-			"text": "Items will not be shuffled",
+			"text": "Items will not be shuffled. Leaving this set to \"None\"\nwill leave this profile vanilla and unrandomized",
 			"value": 0
 		},
 		{
@@ -2162,17 +2197,67 @@
 		},
 		{
 			"name": "menu_rando_hint_items_hard",
-			"text": "Items will be shuffled to any viable location on the map,\nincluding knowledge checks likes hidden rooms and shortcuts",
+			"text": "Items will be shuffled to any viable location on the map,\nincluding knowledge checks like super secret rooms and shortcuts",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_progressives_off",
+			"text": "Items of the same class will appear as normal, and able to be\ncollected out of order",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_progressives_on",
+			"text": "Items of the same class will be rolled into a single progressive\nitem, granting the next-highest level of gear for each item collected",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_broom_off",
+			"text": "You will start with no weaponry, needing to go find something\nto defend yourself with",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_broom_on",
+			"text": "You will start with a Broom, capable of dealing\nmelee damage and opening peashooter doors",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_traps_off",
+			"text": "Trap items will not be generated",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_traps_on",
+			"text": "Any number of trap items will be placed in the world where applicable",
 			"value": 0
 		},
 		{
 			"name": "menu_rando_hint_areas_off",
-			"text": "The order in which you visit each area will not be touched",
+			"text": "You need to defeat each boss to unlock each area, as normal",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_maskedItems_off",
+			"text": "Items appear with their normal sprites",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_maskedItems_on",
+			"text": "All items are shown as the same sprite,\nonly showing what they are when collected",
 			"value": 0
 		},
 		{
 			"name": "menu_rando_hint_areas_on",
-			"text": "The order in which you visit each area will be shuffled,\nwith a few added boss doors to gate progression",
+			"text": "All area-gating boss doors are unlocked from the start,\nallowing full access to the map",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_helixLocks_off",
+			"text": "Boss room doors will spawn like normal,\njust requiring the right weapon to open",
+			"value": 0
+		},
+		{
+			"name": "menu_rando_hint_helixLocks_on",
+			"text": "Boss room doors will be locked until a certain number of Helix\nFragments has been collected, viewable by walking up to the door",
 			"value": 0
 		},
 		{

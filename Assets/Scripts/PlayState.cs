@@ -439,7 +439,12 @@ public class PlayState
     {
         public int seed;              // Ten-digit seed that all randomization was based on
         public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
-        public int[] areaOrder;       // All area IDs, in order of intended visitation
+        public bool progressivesOn;   // Whether or not progressive items is turned on
+        public bool broomStart;       // Whether or not the player starts with a Broom
+        public bool trapsActive;      // Whether or not trap items have been shuffled into the pool
+        public bool maskedItems;      // Whether or not items are masked as the same sprite
+        public bool openAreas;        // Whether or not all areas are open from the start
+        public bool bossesLocked;     // Whether or not Helix Locks have been applied to boss doors
         public int[] musicList;       // All music IDs, in order relative to the actual music ID list
         public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
     }
