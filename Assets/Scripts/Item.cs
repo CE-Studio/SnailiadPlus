@@ -49,12 +49,17 @@ public class Item:MonoBehaviour, IRoomObject {
         {
             if (PlayState.itemData.Length == 0)
                 PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
-            PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
-            if (PlayState.countedItems.Length == 0)
-                PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
-            PlayState.countedItems[itemID] = countedInPercentage;
+            if (itemID != -1)
+            {
+                PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
+                if (PlayState.countedItems.Length == 0)
+                    PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
+                PlayState.countedItems[itemID] = countedInPercentage;
+            }
             if (!PlayState.itemAreas[areaID].Contains(itemID))
                 PlayState.itemAreas[areaID].Add(itemID);
+
+            PlayState.baseItemLocations.Add(itemID);
         }
         Dictionary<string, object> content = new();
         content["countedInPercentage"] = countedInPercentage;
@@ -75,7 +80,9 @@ public class Item:MonoBehaviour, IRoomObject {
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
 
-        if (PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
+        if (itemID == -1)
+            Destroy(gameObject);
+        else if (PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
             Spawn();
         else
             Destroy(gameObject);
@@ -194,6 +201,7 @@ public class Item:MonoBehaviour, IRoomObject {
                     break;
                 default:
                     animName = "Item_helixFragment";
+                    sprite.enabled = false;
                     box.size = new Vector2(0.95f, 0.95f);
                     break;
             }
@@ -205,7 +213,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && itemID != -1)
         {
             collected = true;
             if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
@@ -348,7 +356,7 @@ public class Item:MonoBehaviour, IRoomObject {
             10 => PlayState.GetText("item_gravityShock"),
             11 => PlayState.GetText("item_boomerang_secret"),
             12 => PlayState.GetText("item_rainbowWave_secret"),
-            _ => PlayState.GetText("item_peashooter"),
+            _ => PlayState.GetText("item_nothing"),
         };
     }
 

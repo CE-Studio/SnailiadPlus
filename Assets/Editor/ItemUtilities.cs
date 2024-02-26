@@ -34,7 +34,7 @@ public class ItemUtilities : Editor
 
         sID.intValue = EditorGUILayout.Popup("Item type: ", sID.intValue == 24 ? 15 : sID.intValue + 1, new string[]
         {
-            "Select one",
+            "Nothing",
             "Peashooter",
             "Boomerang",
             "Rainbow Wave",

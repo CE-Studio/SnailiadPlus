@@ -541,6 +541,8 @@ public class PlayState
     public static ProfileData currentProfile = blankProfile;
     public static GeneralData generalData = blankData;
 
+    public static List<int> baseItemLocations = new();
+
     public enum Areas
     {
         SnailTown,
@@ -1723,20 +1725,28 @@ public class PlayState
 
     public static bool GetItemAvailabilityThisDifficulty(int itemID)
     {
+        if (itemID == -1)
+            return false;
         return itemData[itemID][currentProfile.difficulty];
     }
     public static bool GetItemAvailabilityThisDifficulty(int itemID, int difficulty)
     {
+        if (itemID == -1)
+            return false;
         return itemData[itemID][difficulty];
     }
 
     public static bool GetItemAvailabilityThisCharacter(int itemID)
     {
+        if (itemID == -1)
+            return false;
         int charCheck = currentProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
         return itemData[itemID][charCheck];
     }
     public static bool GetItemAvailabilityThisCharacter(int itemID, string character)
     {
+        if (itemID == -1)
+            return false;
         int charCheck = character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
         return itemData[itemID][charCheck];
     }

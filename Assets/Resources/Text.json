@@ -2491,6 +2491,11 @@
 			"value": 0
 		},
 		{
+			"name": "item_nothing",
+			"text": "Nothing",
+			"value": 0
+		},
+		{
 			"name": "item_peashooter",
 			"text": "Pea Shooter",
 			"value": 0

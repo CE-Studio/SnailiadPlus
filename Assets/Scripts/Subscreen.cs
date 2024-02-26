@@ -289,7 +289,7 @@ public class Subscreen : MonoBehaviour
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
                 else if (PlayState.saveLocations.Contains(i))
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
-                else if (PlayState.itemLocations.ContainsKey(i))
+                else if (PlayState.itemLocations.ContainsKey(i) && PlayState.itemLocations[i] != -1)
                 {
                     if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0 && PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[i]) &&
                         PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[i]))
