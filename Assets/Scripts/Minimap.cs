@@ -153,21 +153,24 @@ public class Minimap : MonoBehaviour
                             anims[i + 4].Play("Minimap_icon_save", true);
                         else if (PlayState.itemLocations.ContainsKey(thisMaskID))
                         {
-                            int itemID = PlayState.itemLocations[thisMaskID];
-                            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID))
+                            int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[thisMaskID]];
+                            if (thisItemId != -1)
                             {
-                                if (PlayState.currentProfile.items[itemID] == 0)
-                                    anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                                if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
+                                {
+                                    if (PlayState.currentProfile.items[thisItemId] == 0)
+                                        anims[i + 4].Play("Minimap_icon_itemNormal", true);
+                                    else
+                                    {
+                                        anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                                        highlightPlayerTile = false;
+                                    }
+                                }
                                 else
                                 {
-                                    anims[i + 4].Play("Minimap_icon_itemCollected", true);
+                                    anims[i + 4].Play("Minimap_icon_blank", true);
                                     highlightPlayerTile = false;
                                 }
-                            }
-                            else
-                            {
-                                anims[i + 4].Play("Minimap_icon_blank", true);
-                                highlightPlayerTile = false;
                             }
                         }
                         else

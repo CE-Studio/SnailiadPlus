@@ -39,6 +39,7 @@ public class PlayState
     public static bool incrementRushTimer = false;
     public enum CreditsStates { none, fadeIn, startDelay, moonScene, fadeToCredits, credits, fadeToTime, time, overwriteOldTime, fadeOut };
     public static CreditsStates creditsState = CreditsStates.none;
+    public static bool isRandomGame = false;
 
     public static bool noclipMode = false;
     public static bool damageMult = false;
@@ -857,6 +858,7 @@ public class PlayState
         saveLocations.Clear();
         bossLocations.Clear();
         itemLocations.Clear();
+        int itemLocationID = 0;
         foreach (Transform area in roomTriggerParent.transform) {
             if (!area.name.ToLower().Contains("boss rush"))
             {
@@ -867,7 +869,8 @@ public class PlayState
                         if (entity.CompareTag("SavePoint"))
                             saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
                         if (entity.CompareTag("Item"))
-                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
+                            itemLocations.Add(WorldPosToMapGridID(entity.transform.position), itemLocationID++);
+                        //itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
                     }
                 }
             }

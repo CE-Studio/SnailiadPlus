@@ -10,6 +10,7 @@ public class Item:MonoBehaviour, IRoomObject {
     [SerializeField] private bool isSuperUnique = false;
     public bool[] difficultiesPresentIn = new bool[] { true, true, true };
     public bool[] charactersPresentFor = new bool[] { true, true, true, true, true, true };
+    public int locationID = -1;
 
     public Vector2 originPos;
 
@@ -59,6 +60,7 @@ public class Item:MonoBehaviour, IRoomObject {
             if (!PlayState.itemAreas[areaID].Contains(itemID))
                 PlayState.itemAreas[areaID].Add(itemID);
 
+            locationID = PlayState.baseItemLocations.Count;
             PlayState.baseItemLocations.Add(itemID);
         }
         Dictionary<string, object> content = new();
@@ -68,6 +70,7 @@ public class Item:MonoBehaviour, IRoomObject {
         content["isSuperUnique"] = isSuperUnique;
         content["difficultiesPresentIn"] = difficultiesPresentIn;
         content["charactersPresentFor"] = charactersPresentFor;
+        content["locationID"] = locationID;
         return content;
     }
 
@@ -79,6 +82,7 @@ public class Item:MonoBehaviour, IRoomObject {
         isSuperUnique = (bool)content["isSuperUnique"];
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
+        locationID = (int)content["locationID"];
 
         if (itemID == -1)
             Destroy(gameObject);
@@ -120,13 +124,22 @@ public class Item:MonoBehaviour, IRoomObject {
 
     public void Spawn()
     {
-        string animName;
-
-        if (itemID == 10 && transform.parent.GetComponent<RoomTrigger>().areaID == (int)PlayState.Areas.BossRush && !PlayState.generalData.achievements[24])
+        RoomTrigger parentRoom = transform.parent.GetComponent<RoomTrigger>();
+        if (parentRoom.areaID != (int)PlayState.Areas.BossRush && PlayState.isRandomGame)
+            itemID = PlayState.baseItemLocations[locationID];
+        if (itemID == -1)
         {
             Destroy(gameObject);
             return;
         }
+        if (!(PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
+            || (itemID == 10 && parentRoom.areaID == (int)PlayState.Areas.BossRush && !PlayState.generalData.achievements[24]))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        string animName;
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS) {
             animName = "Item_helixFragment";

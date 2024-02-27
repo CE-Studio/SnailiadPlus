@@ -289,16 +289,20 @@ public class Subscreen : MonoBehaviour
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
                 else if (PlayState.saveLocations.Contains(i))
                     cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
-                else if (PlayState.itemLocations.ContainsKey(i) && PlayState.itemLocations[i] != -1)
+                else if (PlayState.itemLocations.ContainsKey(i))
                 {
-                    if (PlayState.currentProfile.items[PlayState.itemLocations[i]] == 0 && PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[i]) &&
-                        PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[i]))
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
+                    int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
+                    if (thisItemId != -1)
+                    {
+                        if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&
+                            PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
+                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
+                        else
+                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                    }
                     else
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
                 }
-                else
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
             }
             else
             {
