@@ -914,6 +914,11 @@
 			"height": 16
 		},
 		{
+			"name": "UI/GeneratorLoading",
+			"width": 80,
+			"height": 48
+		},
+		{
 			"name": "UI/GenericHighlightBox",
 			"width": 20,
 			"height": 20

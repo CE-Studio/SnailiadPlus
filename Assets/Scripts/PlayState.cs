@@ -438,6 +438,7 @@ public class PlayState
     [Serializable]
     public struct ProfileRandoData
     {
+        public int randoLevel;        // Whether or not this profile is even randomized, and to what extent
         public int seed;              // Ten-digit seed that all randomization was based on
         public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
         public bool progressivesOn;   // Whether or not progressive items is turned on
@@ -504,6 +505,21 @@ public class PlayState
         cutsceneStates = new int[] { }
     };
 
+    public static readonly ProfileRandoData blankRando = new()
+    {
+        randoLevel = 0,
+        seed = 0,
+        itemLocations = new int[] { }, 
+        progressivesOn = false,
+        broomStart = false,
+        trapsActive = false,
+        maskedItems = false,
+        openAreas = false,
+        bossesLocked = false,
+        musicList = new int[] { },
+        npcTextIndeces = new int[] { }
+    };
+
     public static GeneralData blankData = new()
     {
         soundVolume = 10,
@@ -540,6 +556,10 @@ public class PlayState
     public static ProfileData profile2 = blankProfile;
     public static ProfileData profile3 = blankProfile;
     public static ProfileData currentProfile = blankProfile;
+    public static ProfileRandoData rando1 = blankRando;
+    public static ProfileRandoData rando2 = blankRando;
+    public static ProfileRandoData rando3 = blankRando;
+    public static ProfileRandoData currentRando = blankRando;
     public static GeneralData generalData = blankData;
 
     public static List<int> baseItemLocations = new();
@@ -656,6 +676,24 @@ public class PlayState
             percentage = blankProfile.percentage,
             exploredMap = (int[])defaultMinimapState.Clone(),
             cutsceneStates = (int[])blankProfile.cutsceneStates.Clone()
+        };
+    }
+
+    public static ProfileRandoData BlankRando()
+    {
+        return new ProfileRandoData
+        {
+            randoLevel = blankRando.randoLevel,
+            seed = blankRando.seed,
+            itemLocations = (int[])blankRando.itemLocations.Clone(),
+            progressivesOn = blankRando.progressivesOn,
+            broomStart = blankRando.broomStart,
+            trapsActive = blankRando.trapsActive,
+            maskedItems = blankRando.maskedItems,
+            openAreas = blankRando.openAreas,
+            bossesLocked = blankRando.bossesLocked,
+            musicList = (int[])blankRando.musicList.Clone(),
+            npcTextIndeces = (int[])blankRando.npcTextIndeces.Clone()
         };
     }
 
@@ -1876,7 +1914,8 @@ public class PlayState
         currentProfile.NPCVars[(int)ID] = value;
     }
 
-    public static void WriteSave(int profileID, bool saveGeneral) {
+    public static void WriteSave(int profileID, bool saveGeneral)
+    {
         switch (profileID)
         {
             case 1:
@@ -1904,33 +1943,69 @@ public class PlayState
         File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_OptionsAndRecords.json", JsonUtility.ToJson(generalData));
     }
 
+    public static void SaveRando(int profileID)
+    {
+        switch (profileID)
+        {
+            case 1:
+                rando1 = currentRando;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData1.json", JsonUtility.ToJson(rando1));
+                break;
+            case 2:
+                rando2 = currentRando;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData2.json", JsonUtility.ToJson(rando2));
+                break;
+            case 3:
+                rando3 = currentRando;
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData3.json", JsonUtility.ToJson(rando3));
+                break;
+        }
+    }
+
     public static void CopySave(int copiedDataID, int destinationID)
     {
         if (copiedDataID > 0 && copiedDataID <= 3)
+        {
             File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + destinationID + ".json",
                 JsonUtility.ToJson(copiedDataID switch { 1 => profile1, 2 => profile2, _ => profile3 }));
+            File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData" + destinationID + ".json",
+                JsonUtility.ToJson(copiedDataID switch { 1 => rando1, 2 => rando2, _ => rando3 }));
+        }
     }
 
     public static ProfileData LoadGame(int profile, bool setAsCurrent)
     {
         ProfileData thisProfile = blankProfile;
-        string path = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + profile + ".json";
-        if (File.Exists(path))
+        string gamePath = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + profile + ".json";
+        if (File.Exists(gamePath))
         {
-            thisProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(path));
+            thisProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
             if (setAsCurrent)
                 currentProfile = thisProfile;
         }
+
+        ProfileRandoData thisRandoData = blankRando;
+        string randoPath = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData" + profile + ".json";
+        if (File.Exists(randoPath))
+        {
+            thisRandoData = JsonUtility.FromJson<ProfileRandoData>(File.ReadAllText(randoPath));
+            if (setAsCurrent)
+                currentRando = thisRandoData;
+        }
+
         switch (profile)
         {
             case 1:
                 profile1 = thisProfile;
+                rando1 = thisRandoData;
                 break;
             case 2:
                 profile2 = thisProfile;
+                rando2 = thisRandoData;
                 break;
             case 3:
                 profile3 = thisProfile;
+                rando3 = thisRandoData;
                 break;
         }
         return thisProfile;
@@ -2029,14 +2104,17 @@ public class PlayState
             case 1:
                 profile1 = blankProfile;
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile1.json", JsonUtility.ToJson(profile1));
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData1.json", JsonUtility.ToJson(rando1));
                 break;
             case 2:
                 profile2 = blankProfile;
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile2.json", JsonUtility.ToJson(profile2));
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData2.json", JsonUtility.ToJson(rando2));
                 break;
             case 3:
                 profile3 = blankProfile;
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile3.json", JsonUtility.ToJson(profile3));
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData3.json", JsonUtility.ToJson(rando3));
                 break;
         }
     }

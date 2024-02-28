@@ -203,6 +203,7 @@ public class TextureLibrary : ScriptableObject
         "UI/DialogueIcon2",
         "UI/DialoguePortrait",
         "UI/FontSprites",
+        "UI/GeneratorLoading",
         "UI/GenericHighlightBox",
         "UI/Heart",
         "UI/LoadingIcon",

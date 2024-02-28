@@ -31,6 +31,7 @@ public class MainMenu : MonoBehaviour
     private float rebindCooldown = 0;
     private bool pauseButtonDown = false;
     private bool fadingToIntro = false;
+    private bool suppressInput = false;
 
     private const float LIST_CENTER_Y = -1.25f;
     private const float LIST_OPTION_SPACING = 1.25f;
@@ -160,6 +161,9 @@ public class MainMenu : MonoBehaviour
             if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_Profile" + i + ".json"))
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_Profile" + i + ".json",
                     JsonUtility.ToJson(PlayState.blankProfile));
+            if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_RandoData" + i + ".json"))
+                File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_RandoData" + i + ".json",
+                    JsonUtility.ToJson(PlayState.blankRando));
         }
         if (!File.Exists(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json"))
             File.WriteAllText(Application.persistentDataPath + "/Saves/" + PlayState.SAVE_FILE_PREFIX + "_OptionsAndRecords.json",
@@ -476,7 +480,7 @@ public class MainMenu : MonoBehaviour
                 }
             }
 
-            if (!isRebinding && !fadingToIntro && !viewingGallery)
+            if (!isRebinding && !fadingToIntro && !viewingGallery && !suppressInput)
             {
                 if (Control.UpPress(1, true, true) || Control.DownPress(1, true, true))
                 {
@@ -524,7 +528,7 @@ public class MainMenu : MonoBehaviour
                     }
                 }
             }
-            else if (!isRebinding && !fadingToIntro && viewingGallery)
+            else if (!isRebinding && !fadingToIntro && viewingGallery && !suppressInput)
             {
                 if (Control.JumpPress(0, true, true) || Control.Pause(true, true))
                 {
@@ -756,7 +760,7 @@ public class MainMenu : MonoBehaviour
                     case "randoSeed":
                         if (selectedOption == option.optionID)
                             currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
-                        AddToOptionText(option, "0000000000");
+                        AddToOptionText(option, "00000000");
                         break;
                     case "openMap":
                         TestForArrowAdjust(option, 4, 1);
@@ -1607,6 +1611,7 @@ public class MainMenu : MonoBehaviour
             PlayState.titleRoom.active = true;
         }
 
+        suppressInput = false;
         fadingToIntro = true;
 
         if (runIntro)
@@ -1980,6 +1985,20 @@ public class MainMenu : MonoBehaviour
             PlayState.TogglableHUDElements[0].SetActive(false);
     }
 
+    public IEnumerator GenerateRandoGame()
+    {
+        GameObject loadingIcon = new("Generator Loading Icon");
+        loadingIcon.transform.parent = transform;
+        loadingIcon.transform.localPosition = new Vector2(0f, -2f);
+        SpriteRenderer loadingSprite = loadingIcon.AddComponent<SpriteRenderer>();
+        loadingSprite.sortingOrder = 1000;
+        AnimationModule loadingAnim = loadingIcon.AddComponent<AnimationModule>();
+        loadingAnim.pauseOnMenu = false;
+        loadingAnim.AddAndPlay("GeneratorLoadingIcon");
+
+        yield return null;
+    }
+
     public void SetTextComponentOrigins()
     {
         bool inRush = PlayState.isInBossRush;
@@ -2134,6 +2153,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 1; i <= 3; i++)
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            PlayState.ProfileRandoData randoData = i switch { 1 => PlayState.rando1, 2 => PlayState.rando2, _ => PlayState.rando3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame,
                     new int[] { 0, 1, 1, 0, 2, 0, 3, i, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0, 11, 0, 12, 0, 13, 0, 14, 0 });
@@ -2212,6 +2232,7 @@ public class MainMenu : MonoBehaviour
         PlayState.player.GetComponent<BoxCollider2D>().enabled = false;
         PlayState.currentProfileNumber = menuVarFlags[3];
         PlayState.currentProfile = PlayState.BlankProfile();
+        PlayState.currentRando = PlayState.BlankRando();
         PlayState.currentProfile.difficulty = menuVarFlags[0];
         PlayState.SetPlayer(CharacterIDToName(menuVarFlags[1]));
         PlayState.playerScript.selectedWeapon = 0;
@@ -2231,6 +2252,19 @@ public class MainMenu : MonoBehaviour
             }
         }
 
+        if (menuVarFlags[5] != 0)
+        {
+            PlayState.currentRando.randoLevel = menuVarFlags[5];
+            PlayState.currentRando.progressivesOn = menuVarFlags[6] == 1;
+            PlayState.currentRando.broomStart = menuVarFlags[7] == 1;
+            PlayState.currentRando.trapsActive = menuVarFlags[8] == 1;
+            PlayState.currentRando.maskedItems = menuVarFlags[9] == 1;
+            PlayState.currentRando.openAreas = menuVarFlags[10] == 1;
+            PlayState.currentRando.bossesLocked = menuVarFlags[11] == 1;
+            PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
+        }
+        PlayState.SaveRando(PlayState.currentProfileNumber);
+
         PlayState.WriteSave(PlayState.currentProfileNumber, false);
         PlayState.LoadGame(PlayState.currentProfileNumber, true);
 
@@ -2242,7 +2276,25 @@ public class MainMenu : MonoBehaviour
             lastRoom.GetComponent<RoomTrigger>().DespawnEverything();
         }
 
-        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
+        if (PlayState.currentRando.randoLevel != 0)
+            GenerateRandoSeed();
+        else
+            StartCoroutine(LoadFade(PlayState.respawnCoords, true));
+    }
+
+    public void GenerateRandoSeed()
+    {
+        suppressInput = true;
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_generateRando_header"), false);
+        AddOption("", false);
+        AddOption("", false);
+        AddOption("", false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_generateRando_footer"), false);
+        ForceSelect(5);
+        backPage = null;
+        StartCoroutine(GenerateRandoGame());
     }
 
     public void PickSpawn()
@@ -2296,6 +2348,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 1; i <= 3; i++)
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            PlayState.ProfileRandoData randoData = i switch { 1 => PlayState.rando1, 2 => PlayState.rando2, _ => PlayState.rando3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else
@@ -2318,6 +2371,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 1; i <= 3; i++)
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            PlayState.ProfileRandoData randoData = i switch { 1 => PlayState.rando1, 2 => PlayState.rando2, _ => PlayState.rando3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
             else
@@ -2360,6 +2414,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 1; i <= 3; i++)
         {
             PlayState.ProfileData data = i switch { 1 => PlayState.profile1, 2 => PlayState.profile2, _ => PlayState.profile3 };
+            PlayState.ProfileRandoData randoData = i switch { 1 => PlayState.rando1, 2 => PlayState.rando2, _ => PlayState.rando3 };
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else

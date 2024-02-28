@@ -406,6 +406,16 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_generateRando_header",
+			"text": "Generating a world!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_footer",
+			"text": "Please be patient...",
+			"value": 0
+		},
+		{
 			"name": "menu_option_bossRush_header1",
 			"text": "Are you sure?",
 			"value": 0
@@ -2287,7 +2297,7 @@
 		},
 		{
 			"name": "menu_rando_hint_seed",
-			"text": "Create your own ten-digit seed",
+			"text": "Create your own eight-digit seed",
 			"value": 0
 		},
 		{
