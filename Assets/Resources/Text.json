@@ -416,6 +416,166 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_generateRando_flavor1",
+			"text": "Putting snails in their shells...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor2",
+			"text": "Polishing shells...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor3",
+			"text": "Hiding secrets...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor4",
+			"text": "Growing grass...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor5",
+			"text": "Giving Kitty pets...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor6",
+			"text": "Feeding snelks...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor7",
+			"text": "Placing just one more Helix Fragment...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor8",
+			"text": "Praying to Iris...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor9",
+			"text": "Getting distracted...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor10",
+			"text": "Loading more flavor text...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor11",
+			"text": "Thinking of ideas...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor12",
+			"text": "Nomming pizza...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor13",
+			"text": "Writing more puns...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor14",
+			"text": "Growing peas...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor15",
+			"text": "Replenishing boomerang reserves...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor16",
+			"text": "Doubling rainbows...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor17",
+			"text": "Repairing broken blocks...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor18",
+			"text": "Staring at trees...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor19",
+			"text": "Charting course...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor20",
+			"text": "Staying up late...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor21",
+			"text": "Checking the time...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor22",
+			"text": "Double-checking logic...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor23",
+			"text": "Consulting the server...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor24",
+			"text": "Consulting the devs...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor25",
+			"text": "Consulting Iris...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor26",
+			"text": "Thinking up more flavor text...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor27",
+			"text": "Snailing out...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor28",
+			"text": "Checking the map...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor29",
+			"text": "Wondering where to go...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor30",
+			"text": "Procrastinating...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor31",
+			"text": "Cultivating the perfect grass...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor32",
+			"text": "Triple-checking placement...",
+			"value": 0
+		},
+		{
 			"name": "menu_option_bossRush_header1",
 			"text": "Are you sure?",
 			"value": 0
