@@ -225,7 +225,7 @@ public class PlayState
     {
         new(-37, 10.5f),    // Snaily
         new(-37, 10.5f),    // Sluggy
-        new(-19f, 38.5f), // Upside
+        new(-19f, 38.5f),   // Upside
         new(-37, 10.5f),    // Leggy
         new(-37, 10.5f),    // Blobby
         new(-37, 10.5f)     // Leechy

@@ -2007,7 +2007,7 @@ public class MainMenu : MonoBehaviour
             textTimer -= Time.deltaTime;
             if (textTimer <= 0)
             {
-                activeOptions[1].SetText(PlayState.GetText("menu_option_generateRando_flavor" + UnityEngine.Random.Range(1, 33)));
+                activeOptions[1].SetText(PlayState.GetText("menu_option_generateRando_flavor" + UnityEngine.Random.Range(1, 44)));
                 textTimer = 2.3f;
             }
             yield return new WaitForEndOfFrame();

@@ -576,6 +576,66 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_generateRando_flavor33",
+			"text": "Converting snails to slugs...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor34",
+			"text": "Converting slugs to snails...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor35",
+			"text": "Polishing tiles...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor36",
+			"text": "Consoling the angry block...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor37",
+			"text": "Tuning difficulty...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor38",
+			"text": "Jamming out...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor39",
+			"text": "Double-checking water pH...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor40",
+			"text": "Removing Snerobrine...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor41",
+			"text": "Achieving sentence...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor42",
+			"text": "Achieving sentience...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor43",
+			"text": "Ensuring BK...",
+			"value": 0
+		},
+		{
+			"name": "menu_option_generateRando_flavor44",
+			"text": "Placing at vanilla...",
+			"value": 0
+		},
+		{
 			"name": "menu_option_bossRush_header1",
 			"text": "Are you sure?",
 			"value": 0
