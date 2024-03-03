@@ -7,66 +7,54 @@ public class Randomizer : MonoBehaviour
     public bool isShuffling = false;
     private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items, 3 = music, 4 = dialogue
 
-    private enum Locks
-    {
-        BlueDoor,
-        PinkDoor,
-        RedDoor,
-        GreeDoor,
-        L1Blocks,
-        L2Blocks,
-        L3Blocks,
-        Jump,
-        Ice,
-        Fly,
-        Metal,
-        Health,
-        Shock,
-        Snaily,
-        Sluggy,
-        Upside,
-        Leggy,
-        Blobby,
-        Leechy,
-        Knowledge
-    };
-    private bool[] lockStates = new bool[] { };
+    private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
+
+    private bool[] lockStates = new bool[24];
+
+    private int[] locations = new int[] { };
+    private bool hasPlacedDevastator = false;
 
     public void StartGeneration()
     {
         isShuffling = true;
         randoPhase = 1;
         
-        lockStates = new bool[System.Enum.GetValues(typeof(Locks)).Length];
         if (PlayState.currentRando.broomStart)
-            lockStates[(int)Locks.BlueDoor] = true;
-        lockStates[(int)(PlayState.currentProfile.character switch
+            lockStates[0] = true;
+        lockStates[PlayState.currentProfile.character switch
         {
-            "Sluggy" => Locks.Sluggy,
-            "Upside" => Locks.Sluggy,
-            "Leggy" => Locks.Sluggy,
-            "Blobby" => Locks.Sluggy,
-            "Leechy" => Locks.Sluggy,
-            _ => Locks.Snaily
-        })] = true;
+            "Sluggy" => 14,
+            "Upside" => 15,
+            "Leggy" => 16,
+            "Blobby" => 17,
+            "Leechy" => 18,
+            _ => 13
+        }] = true;
         if (PlayState.currentRando.randoLevel == 3)
-            lockStates[(int)Locks.Knowledge] = true;
+            lockStates[19] = true;
+        if (PlayState.currentRando.openAreas)
+        {
+            lockStates[20] = true;
+            lockStates[21] = true;
+            lockStates[22] = true;
+            lockStates[23] = true;
+        }
 
         StartCoroutine(GenerateWorld());
     }
 
     public IEnumerator GenerateWorld()
     {
-        float currentSeed = PlayState.currentRando.seed * 0.00000001f;
-        int[] locations = new int[PlayState.baseItemLocations.Count];
-        List<int> itemsToAdd = new List<int>();
+        Random.InitState(PlayState.currentRando.seed);
+        locations = new int[PlayState.baseItemLocations.Count];
+        List<int> itemsToAdd = new();
         int progWeapons = 0;
         int progMods = 0;
         int progShells = 0;
         int placedHelixes = 0;
         int placedHearts = 0;
 
-        if (isShuffling)
+        while (isShuffling)
         {
             switch (randoPhase)
             {
@@ -79,14 +67,61 @@ public class Randomizer : MonoBehaviour
                     progShells = 0;
                     placedHelixes = 0;
                     placedHearts = 0;
-                    itemsToAdd = new List<int>
+                    hasPlacedDevastator = false;
+                    itemsToAdd = new();
+                    for (int i = 0; i < majorWeights.Length; i++)
                     {
-                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-                        30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48
-                    };
+                        for (int j = 0; j < majorWeights[i]; j++)
+                            itemsToAdd.Add(i);
+                    }
+                    for (int i = 0; i < PlayState.MAX_HEARTS; i++)
+                        for (int j = 0; j < 3; j++)
+                            itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
+                    for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
+                        for (int j = 0; j < 3; j++)
+                            itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
+                    randoPhase = 2;
                     break;
 
                 case 2: // Items
+                    List<int> availableLocations = GetLocations();
+                    if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
+                        randoPhase = 1;
+                    else if (itemsToAdd.Count > 0)
+                    {
+                        int locationPointer = Mathf.FloorToInt(Random.value * availableLocations.Count);
+                        int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                        TweakLocks(itemToPlace);
+                        while (itemsToAdd.Contains(itemToPlace))
+                            itemsToAdd.Remove(itemToPlace);
+                        locations[locationPointer] = itemToPlace;
+                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
+                            placedHelixes++;
+                        else if (itemToPlace >= PlayState.OFFSET_HEARTS)
+                            placedHearts++;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < locations.Length; i++)
+                        {
+                            if (locations[i] == -2)
+                            {
+                                if (placedHelixes < 30)
+                                {
+                                    List<int> possibleItems = new() { -1 };
+                                    for (int j = PlayState.OFFSET_FRAGMENTS + placedHelixes; j < PlayState.OFFSET_FRAGMENTS + PlayState.MAX_FRAGMENTS; j++)
+                                        possibleItems.Add(j);
+                                    int itemToPlace = Mathf.FloorToInt(Random.value * possibleItems.Count);
+                                    locations[i] = itemToPlace;
+                                }
+                                else
+                                    locations[i] = -1;
+                            }
+                        }
+                        PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                        randoPhase = 0;
+                        isShuffling = false;
+                    }
                     break;
 
                 case 3: // Music
@@ -96,6 +131,196 @@ public class Randomizer : MonoBehaviour
                     break;
             }
             yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private List<int> GetLocations()
+    {
+        List<int> newLocations = new();
+
+        for (int i = 0; i < PlayState.baseItemLocations.Count; i++)
+        {
+            if (i switch
+            {
+                0 => Knowledge() && L2Blocks() && (Jump() || Upside() || Leggy()),                                             // Original Testing Room
+                1 => L1Blocks(),                                                                                               // Leggy Snail's Tunnel
+                2 => L1Blocks() || (Jump() && Knowledge()) || ((Sluggy() || Upside() || Leggy() || Leechy()) && Knowledge()),  // Town Overtunnel
+                3 => Knowledge() && (L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                     // Super Secret Alcove
+                4 => L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy(),                                      // Love Snail's Alcove
+                5 => L2Blocks(),                                                                                               // Suspicious Tree
+                6 => L2Blocks(),                                                                                               // Anger Management Room
+                7 => L2Blocks(),                                                                                               // Percentage Snail's Hidey Hole
+                8 => true,                                                                                                     // Digging Grounds
+                9 => true,                                                                                                     // Cave Snail's Cave
+                10 => L2Blocks(),                                                                                              // Fragment Cave
+                11 => true,                                                                                                    // Discombobulatory Alcove
+                12 => true,                                                                                                    // Seabed Caves
+                13 => true,                                                                                                    // Fine Dining (Peashooter)
+                14 => L2Blocks(),                                                                                              // Fine Dining (Fragment)
+                15 => L1Blocks(),                                                                                              // The Maze Room
+                16 => L1Blocks(),                                                                                              // Monument of Greatness
+                17 => RedDoor(),                                                                                               // Heart of the Sea
+                18 => PinkDoor() || Knowledge(),                                                                               // Daily Helping of Calcium
+                19 => GreenDoor(),                                                                                             // Dig, Snaily, Dig
+                20 => L1Blocks(),                                                                                              // Skywatcher's Loot
+                21 => Boss1(),                                                                                                 // Signature Croissants (Boomerang)
+                22 => Boss1() && L1Blocks(),                                                                                   // Signature Croissants (Heart)
+                23 => Knowledge() && (Fly() || Upside() || Leggy()),                                                           // Squared Snelks
+                24 => PinkDoor(),                                                                                              // Frost Shrine
+                25 => Ice() && L1Blocks(),                                                                                     // Sweater Required
+                26 => PinkDoor(),                                                                                              // A Secret to Snowbody
+                27 => GreenDoor(),                                                                                             // Devil's Alcove
+                28 => Knowledge() || (Jump() || Fly() || Ice() || Upside() || Leggy()),                                        // Ice Climb
+                29 => L2Blocks(),                                                                                              // The Labyrinth (Fragment)
+                30 => Knowledge() || L2Blocks(),                                                                               // The Labyrinth (High Jump)
+                31 => RedDoor(),                                                                                               // Sneaky, Sneaky
+                32 => Boss2() || RedDoor(),                                                                                    // Prismatic Prize (Rainbow Wave)
+                33 => RedDoor(),                                                                                               // Prismatic Prize (Heart)
+                34 => (Metal() || Health()) && (PinkDoor() || RedDoor()),                                                      // Hall of Fire
+                35 => Knowledge() && Metal() && (Fly() || L3Blocks() || RedDoor()),                                            // Scorching Snelks
+                36 => Knowledge() && (Fly() || L3Blocks()),                                                                    // Hidden Hideout
+                37 => RedDoor() || L3Blocks(),                                                                                 // Green Cache
+                38 => L2Blocks(),                                                                                              // Furnace
+                39 => RedDoor(),                                                                                               // Slitherine Grove
+                40 => PinkDoor() && (Fly() || Upside() || Leggy()),                                                            // Floaty Fortress (Top Left)
+                41 => PinkDoor() && (Fly() || Upside() || Leggy()),                                                            // Floaty Fortress (Bottom Right)
+                42 => L2Blocks(),                                                                                              // Woah Mama
+                43 => L2Blocks() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                                   // Shocked Shell
+                44 => L2Blocks(),                                                                                              // Gravity Shrine
+                45 => Fly() || (Knowledge() && RedDoor()),                                                                     // Fast Food
+                46 => Boss3() || (RedDoor() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy())),                       // The Bridge
+                47 => L3Blocks(),                                                                                              // Transit 90
+                48 => RedDoor() && (Metal() || Health()),                                                                      // Steel Shrine
+                49 => L3Blocks() && (Metal() || Health()),                                                                     // Space Balcony (Heart)
+                50 => L3Blocks() && (Metal() || Health()),                                                                     // Space Balcony (Fragment)
+                51 => RedDoor() && (Metal() || Health()),                                                                      // The Vault
+                52 => RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                        // Holy Hideaway
+                53 => RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                        // Arctic Alcove
+                54 => Knowledge() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),         // Lost Loot
+                55 => GreenDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                      // Reinforcements
+                56 => PinkDoor(),                                                                                              // Glitched Goodies
+                _ => false
+            } && locations[i] == -2)
+                newLocations.Add(i);
+        }
+
+        return newLocations;
+    }
+
+    private bool BlueDoor() { return lockStates[0]; }
+    private bool PinkDoor() { return lockStates[1]; }
+    private bool RedDoor() { return lockStates[2]; }
+    private bool GreenDoor() { return lockStates[3]; }
+    private bool L1Blocks() { return lockStates[4]; }
+    private bool L2Blocks() { return lockStates[5]; }
+    private bool L3Blocks() { return lockStates[6]; }
+    private bool Jump() { return lockStates[7]; }
+    private bool Ice() { return lockStates[8]; }
+    private bool Fly() { return lockStates[9]; }
+    private bool Metal() { return lockStates[10]; }
+    private bool Health() { return lockStates[11]; }
+    private bool Shock() { return lockStates[12]; }
+    private bool Snaily() { return lockStates[13]; }
+    private bool Sluggy() { return lockStates[14]; }
+    private bool Upside() { return lockStates[15]; }
+    private bool Leggy() { return lockStates[16]; }
+    private bool Blobby() { return lockStates[17]; }
+    private bool Leechy() { return lockStates[18]; }
+    private bool Knowledge() { return lockStates[19]; }
+    private bool Boss1() { return lockStates[20]; }
+    private bool Boss2() { return lockStates[21]; }
+    private bool Boss3() { return lockStates[22]; }
+    private bool Boss4() { return lockStates[23]; }
+
+    private void TweakLocks(int itemID)
+    {
+        switch (itemID)
+        {
+            case 0: // Peashooter
+                lockStates[0] = true;  // BlueDoor
+                lockStates[20] = true; // Boss1
+                if (hasPlacedDevastator)
+                {
+                    lockStates[1] = true;  // PinkDoor
+                    lockStates[2] = true;  // RedDoor
+                    lockStates[3] = true;  // GreenDoor
+                    lockStates[4] = true;  // L1Blocks
+                    lockStates[5] = true;  // L2Blocks
+                    lockStates[6] = true;  // L3Blocks
+                    lockStates[21] = true; // Boss2
+                    lockStates[22] = true; // Boss3
+                    lockStates[23] = true; // Boss4
+                }
+                break;
+            case 1: // Boomerang
+                lockStates[0] = true;  // BlueDoor
+                lockStates[1] = true;  // PinkDoor
+                lockStates[4] = true;  // L1Blocks
+                lockStates[20] = true; // Boss1
+                lockStates[21] = true; // Boss2
+                if (hasPlacedDevastator)
+                {
+                    lockStates[2] = true;  // RedDoor
+                    lockStates[3] = true;  // GreenDoor
+                    lockStates[5] = true;  // L2Blocks
+                    lockStates[6] = true;  // L3Blocks
+                    lockStates[22] = true; // Boss3
+                    lockStates[23] = true; // Boss4
+                }
+                break;
+            case 2: // Rainbow Wave
+                lockStates[0] = true;  // BlueDoor
+                lockStates[1] = true;  // PinkDoor
+                lockStates[2] = true;  // RedDoor
+                lockStates[4] = true;  // L1Blocks
+                lockStates[5] = true;  // L2Blocks
+                lockStates[20] = true; // Boss1
+                lockStates[21] = true; // Boss2
+                lockStates[22] = true; // Boss3
+                if (hasPlacedDevastator)
+                {
+                    lockStates[6] = true;  // L3Blocks
+                    lockStates[3] = true;  // GreenDoor
+                    lockStates[23] = true; // Boss4
+                }
+                break;
+            case 3: // Devastator
+                if (BlueDoor() || PinkDoor() || RedDoor())
+                {
+                    lockStates[0] = true;  // BlueDoor
+                    lockStates[1] = true;  // PinkDoor
+                    lockStates[2] = true;  // RedDoor
+                    lockStates[4] = true;  // L1Blocks
+                    lockStates[5] = true;  // L2Blocks
+                    lockStates[6] = true;  // L3Blocks
+                    lockStates[3] = true;  // GreenDoor
+                    lockStates[20] = true; // Boss1
+                    lockStates[21] = true; // Boss2
+                    lockStates[22] = true; // Boss3
+                    lockStates[23] = true; // Boss4
+                }
+                hasPlacedDevastator = true;
+                break;
+            case 4: // High Jump
+                lockStates[7] = true;  // Jump
+                break;
+            case 5: // Shell Shield
+                break;
+            case 6: // Rapid Fire
+                break;
+            case 7: // Ice Snail
+                lockStates[8] = true;  // Ice
+                break;
+            case 8: // Gravity Snail
+                lockStates[7] = true;  // Jump
+                lockStates[9] = true;  // Gravity
+                break;
+            case 9: // Full Metal Snail
+                lockStates[10] = true; // Metal
+                break;
+            case 10: // Gravity Shock
+                lockStates[12] = true; // Shock
+                break;
         }
     }
 }

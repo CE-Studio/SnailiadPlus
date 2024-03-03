@@ -125,8 +125,9 @@ public class Item:MonoBehaviour, IRoomObject {
     public void Spawn()
     {
         RoomTrigger parentRoom = transform.parent.GetComponent<RoomTrigger>();
-        if (parentRoom.areaID != (int)PlayState.Areas.BossRush && PlayState.isRandomGame)
-            itemID = PlayState.baseItemLocations[locationID];
+        Debug.Log(PlayState.currentRando.itemLocations.Length);
+        if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
+            itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
         if (itemID == -1)
         {
             Destroy(gameObject);
@@ -282,9 +283,12 @@ public class Item:MonoBehaviour, IRoomObject {
                     if (isSuperUnique)
                     {
                         PlayState.globalFunctions.RunDustRing(2);
-                        PlayState.suppressPause = true;
-                        if (legacyGravCutscene)
-                            PlayState.globalFunctions.RunLegacyGravCutscene(transform.position);
+                        if (!PlayState.isRandomGame)
+                        {
+                            PlayState.suppressPause = true;
+                            if (legacyGravCutscene)
+                                PlayState.globalFunctions.RunLegacyGravCutscene(transform.position);
+                        }
                     }
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();

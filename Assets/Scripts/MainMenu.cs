@@ -1957,6 +1957,7 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
+        PlayState.isRandomGame = PlayState.currentRando.randoLevel != 0;
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;
@@ -2012,6 +2013,10 @@ public class MainMenu : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
+
+        PlayState.SaveRando(PlayState.currentProfileNumber);
+        Destroy(loadingIcon);
+        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
     }
 
     public void SetTextComponentOrigins()
