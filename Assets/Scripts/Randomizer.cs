@@ -85,6 +85,11 @@ public class Randomizer : MonoBehaviour
 
                 case 2: // Items
                     List<int> availableLocations = GetLocations();
+                    //Debug.Log(availableLocations.Count);
+                    string availLocationOutput = "";
+                    for (int i = 0; i < availableLocations.Count; i++)
+                        availLocationOutput += availableLocations[i] + ", ";
+                    Debug.Log(availLocationOutput);
                     if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
                         randoPhase = 1;
                     else if (itemsToAdd.Count > 0)
@@ -94,7 +99,7 @@ public class Randomizer : MonoBehaviour
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
-                        locations[locationPointer] = itemToPlace;
+                        locations[availableLocations[locationPointer]] = itemToPlace;
                         if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
@@ -111,7 +116,9 @@ public class Randomizer : MonoBehaviour
                                     List<int> possibleItems = new() { -1 };
                                     for (int j = PlayState.OFFSET_FRAGMENTS + placedHelixes; j < PlayState.OFFSET_FRAGMENTS + PlayState.MAX_FRAGMENTS; j++)
                                         possibleItems.Add(j);
-                                    int itemToPlace = Mathf.FloorToInt(Random.value * possibleItems.Count);
+                                    int itemToPlace = possibleItems[Mathf.FloorToInt(Random.value * possibleItems.Count)];
+                                    if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < PlayState.OFFSET_FRAGMENTS + PlayState.MAX_FRAGMENTS)
+                                        placedHelixes++;
                                     locations[i] = itemToPlace;
                                 }
                                 else
@@ -122,6 +129,10 @@ public class Randomizer : MonoBehaviour
                         randoPhase = 0;
                         isShuffling = false;
                     }
+                    string locationOutput = "";
+                    for (int i = 0; i < locations.Length; i++)
+                        locationOutput += locations[i] + ", ";
+                    Debug.Log(locationOutput);
                     break;
 
                 case 3: // Music
@@ -200,8 +211,9 @@ public class Randomizer : MonoBehaviour
                 55 => GreenDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                      // Reinforcements
                 56 => PinkDoor(),                                                                                              // Glitched Goodies
                 _ => false
-            } && locations[i] == -2)
-                newLocations.Add(i);
+            })
+                if (locations[i] == -2)
+                    newLocations.Add(i);
         }
 
         return newLocations;

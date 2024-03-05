@@ -125,7 +125,6 @@ public class Item:MonoBehaviour, IRoomObject {
     public void Spawn()
     {
         RoomTrigger parentRoom = transform.parent.GetComponent<RoomTrigger>();
-        Debug.Log(PlayState.currentRando.itemLocations.Length);
         if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
         if (itemID == -1)
