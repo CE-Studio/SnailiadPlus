@@ -75,17 +75,16 @@ public class Randomizer : MonoBehaviour
                             itemsToAdd.Add(i);
                     }
                     for (int i = 0; i < PlayState.MAX_HEARTS; i++)
-                        for (int j = 0; j < 3; j++)
+                        for (int j = 0; j < 4; j++)
                             itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
                     for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
-                        for (int j = 0; j < 3; j++)
+                        for (int j = 0; j < 4; j++)
                             itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
                     randoPhase = 2;
                     break;
 
                 case 2: // Items
                     List<int> availableLocations = GetLocations();
-                    //Debug.Log(availableLocations.Count);
                     string availLocationOutput = "";
                     for (int i = 0; i < availableLocations.Count; i++)
                         availLocationOutput += availableLocations[i] + ", ";
@@ -104,27 +103,26 @@ public class Randomizer : MonoBehaviour
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
                             placedHearts++;
+                        switch (itemToPlace)
+                        {
+                            case 0: case 1: case 2: progWeapons++; break;
+                            case 7: case 8: case 9: progShells++; break;
+                            case 6: case 3: progMods++; break;
+                            default: break;
+                        }
                     }
                     else
                     {
-                        for (int i = 0; i < locations.Length; i++)
+                        while (placedHelixes < PlayState.MAX_FRAGMENTS)
                         {
-                            if (locations[i] == -2)
-                            {
-                                if (placedHelixes < 30)
-                                {
-                                    List<int> possibleItems = new() { -1 };
-                                    for (int j = PlayState.OFFSET_FRAGMENTS + placedHelixes; j < PlayState.OFFSET_FRAGMENTS + PlayState.MAX_FRAGMENTS; j++)
-                                        possibleItems.Add(j);
-                                    int itemToPlace = possibleItems[Mathf.FloorToInt(Random.value * possibleItems.Count)];
-                                    if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < PlayState.OFFSET_FRAGMENTS + PlayState.MAX_FRAGMENTS)
-                                        placedHelixes++;
-                                    locations[i] = itemToPlace;
-                                }
-                                else
-                                    locations[i] = -1;
-                            }
+                            List<int> remainingLocations = GetLocations();
+                            int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                            locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                            placedHelixes++;
                         }
+                        for (int i = 0; i < locations.Length; i++)
+                            if (locations[i] == -2)
+                                locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         randoPhase = 0;
                         isShuffling = false;
