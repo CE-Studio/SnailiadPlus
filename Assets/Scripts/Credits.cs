@@ -964,6 +964,9 @@ public class Credits : MonoBehaviour
         AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Xander },
             new string[] { "credits_entity_xander" });
         creditsGenerateY -= 0.625f;
+        AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Zed },
+            new string[] { "credits_entity_zed" });
+        creditsGenerateY -= 0.625f;
         AddCreditsEntry(new CreditsEntity.Entities[] { CreditsEntity.Entities.Discord },
             new string[] { "credits_entity_discord" });
         if (Random.Range(0f, 1f) >= 0.75f)

@@ -37114,6 +37114,19 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Credits_zed",
+			"spriteName": "Entities/PixelPeople",
+			"framerate": 1.0,
+			"frames": [
+				0,
+				0,
+				14
+			],
+			"loop": true,
+			"loopStartFrame": 2,
+			"randomizeStartFrame": true
+		},
+		{
 			"name": "Credits_forthefunny",
 			"spriteName": "Entities/ForTheFunny",
 			"framerate": 1.0,

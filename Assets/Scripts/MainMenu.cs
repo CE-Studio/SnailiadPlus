@@ -1954,10 +1954,12 @@ public class MainMenu : MonoBehaviour
         PlayState.playerScript.health = PlayState.playerScript.maxHealth;
         PlayState.globalFunctions.RenderNewHearts();
         PlayState.globalFunctions.UpdateHearts();
-        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
         PlayState.isRandomGame = PlayState.currentRando.randoLevel != 0;
+        PlayState.stackShells = !PlayState.isRandomGame;
+        PlayState.stackWeaponMods = !PlayState.isRandomGame;
+        PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
         SetTextComponentOrigins();
         Control.ClearVirtual(true, true);
         fadingToIntro = false;

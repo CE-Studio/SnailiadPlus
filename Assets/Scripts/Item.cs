@@ -86,8 +86,15 @@ public class Item:MonoBehaviour, IRoomObject {
 
         if (itemID == -1)
             Destroy(gameObject);
-        else if (PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
-            Spawn();
+        else if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
+        {
+            if (!PlayState.isRandomGame && PlayState.currentProfile.items[itemID] == 0)
+                Spawn();
+            else if (PlayState.isRandomGame && PlayState.currentRando.itemLocations[itemID] == 0)
+                Spawn();
+            else
+                Destroy(gameObject);
+        }
         else
             Destroy(gameObject);
     }
@@ -348,6 +355,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 : PlayState.GetText("item_heartContainer_noNum");
         return thisID switch
         {
+            0 => PlayState.GetText("item_peashooter"),
             1 => PlayState.GetText("item_boomerang"),
             2 => PlayState.GetText("item_rainbowWave"),
             3 => PlayState.GetText("item_devastator"),

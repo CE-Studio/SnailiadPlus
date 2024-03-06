@@ -162,14 +162,14 @@ public class Randomizer : MonoBehaviour
                 8 => true,                                                                                                     // Digging Grounds
                 9 => true,                                                                                                     // Cave Snail's Cave
                 10 => L2Blocks(),                                                                                              // Fragment Cave
-                11 => true,                                                                                                    // Discombobulatory Alcove
+                11 => Knowledge() || Fly() || Upside() || Leggy(),                                                             // Discombobulatory Alcove
                 12 => true,                                                                                                    // Seabed Caves
                 13 => true,                                                                                                    // Fine Dining (Peashooter)
                 14 => L2Blocks(),                                                                                              // Fine Dining (Fragment)
                 15 => L1Blocks(),                                                                                              // The Maze Room
                 16 => L1Blocks(),                                                                                              // Monument of Greatness
                 17 => RedDoor(),                                                                                               // Heart of the Sea
-                18 => PinkDoor() || Knowledge(),                                                                               // Daily Helping of Calcium
+                18 => BlueDoor() && (PinkDoor() || Knowledge()),                                                               // Daily Helping of Calcium
                 19 => GreenDoor(),                                                                                             // Dig, Snaily, Dig
                 20 => L1Blocks(),                                                                                              // Skywatcher's Loot
                 21 => Boss1(),                                                                                                 // Signature Croissants (Boomerang)

@@ -154,6 +154,8 @@ public class Minimap : MonoBehaviour
                         else if (PlayState.itemLocations.ContainsKey(thisMaskID))
                         {
                             int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[thisMaskID]];
+                            if (PlayState.isRandomGame)
+                                thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[thisMaskID]];
                             if (thisItemId != -1)
                             {
                                 if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))

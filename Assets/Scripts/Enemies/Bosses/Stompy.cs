@@ -701,7 +701,8 @@ public class Stompy : Boss
         foreach (Transform bullet in PlayState.enemyBulletPool.transform)
             bullet.GetComponent<EnemyBullet>().Despawn();
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatStompy);
-        SpawnHealthOrbs();
+        if (PlayState.currentProfile.character == "Leechy")
+            SpawnHealthOrbs();
         Destroy(gameObject);
     }
 

@@ -4706,6 +4706,11 @@
 			"value": 0
 		},
 		{
+			"name": "credits_entity_zed",
+			"text": "Ehseezed\n(Heading official\nArchipelago integration!)",
+			"value": 0
+		},
+		{
 			"name": "credits_entity_forthefunny",
 			"text": "",
 			"value": 0

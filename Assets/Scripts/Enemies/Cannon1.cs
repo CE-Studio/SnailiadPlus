@@ -95,6 +95,7 @@ public class Cannon1 : Enemy
         col.enabled = false;
         isAlive = false;
         baseAnim.Play("Enemy_cannon1_baseDestroyed_" + baseDir);
-        SpawnHealthOrbs();
+        if (PlayState.currentProfile.character == "Leechy")
+            SpawnHealthOrbs();
     }
 }
