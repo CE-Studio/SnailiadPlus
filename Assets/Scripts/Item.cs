@@ -25,6 +25,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
     private readonly bool legacyGravCutscene = true;
     private bool isRushItem = false;
+    private RoomTrigger parentRoom;
 
     private const float UNIQUE_ITEM_CUTSCENE_TIME = 3.5f;
 
@@ -84,13 +85,13 @@ public class Item:MonoBehaviour, IRoomObject {
         charactersPresentFor = (bool[])content["charactersPresentFor"];
         locationID = (int)content["locationID"];
 
-        if (itemID == -1)
-            Destroy(gameObject);
-        else if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
+        parentRoom = transform.parent.GetComponent<RoomTrigger>();
+        if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
+            itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
+        
+        if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
         {
-            if (!PlayState.isRandomGame && PlayState.currentProfile.items[itemID] == 0)
-                Spawn();
-            else if (PlayState.isRandomGame && PlayState.currentRando.itemLocations[itemID] == 0)
+            if (PlayState.currentProfile.items[itemID] == 0)
                 Spawn();
             else
                 Destroy(gameObject);
@@ -131,16 +132,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
     public void Spawn()
     {
-        RoomTrigger parentRoom = transform.parent.GetComponent<RoomTrigger>();
-        if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
-            itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
-        if (itemID == -1)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        if (!(PlayState.currentProfile.items[itemID] == 0 && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
-            || (itemID == 10 && parentRoom.areaID == (int)PlayState.Areas.BossRush && !PlayState.generalData.achievements[24]))
+        if (itemID == -1 || (itemID == 10 && parentRoom.areaID == (int)PlayState.Areas.BossRush && !PlayState.generalData.achievements[24]))
         {
             Destroy(gameObject);
             return;
@@ -236,8 +228,8 @@ public class Item:MonoBehaviour, IRoomObject {
         if (collision.CompareTag("Player") && itemID != -1)
         {
             collected = true;
-            if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
-                PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
+            //if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
+            //    PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
             PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
             if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {

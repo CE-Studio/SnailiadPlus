@@ -294,6 +294,7 @@ public class Subscreen : MonoBehaviour
                     int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
                     if (PlayState.isRandomGame)
                         thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[i]];
+                    Debug.Log(Item.IDToName(thisItemId));
                     if (thisItemId != -1)
                     {
                         if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&

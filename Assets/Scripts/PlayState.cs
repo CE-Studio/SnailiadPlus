@@ -2097,22 +2097,26 @@ public class PlayState
         if (currentProfileNumber == profile)
         {
             currentProfileNumber = 0;
-            currentProfile = blankProfile;
+            currentProfile = BlankProfile();
+            currentRando = BlankRando();
         }    
         switch (profile)
         {
             case 1:
-                profile1 = blankProfile;
+                profile1 = BlankProfile();
+                rando1 = BlankRando();
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile1.json", JsonUtility.ToJson(profile1));
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData1.json", JsonUtility.ToJson(rando1));
                 break;
             case 2:
-                profile2 = blankProfile;
+                profile2 = BlankProfile();
+                rando2 = BlankRando();
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile2.json", JsonUtility.ToJson(profile2));
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData2.json", JsonUtility.ToJson(rando2));
                 break;
             case 3:
-                profile3 = blankProfile;
+                profile3 = BlankProfile();
+                rando3 = BlankRando();
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile3.json", JsonUtility.ToJson(profile3));
                 File.WriteAllText(Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_RandoData3.json", JsonUtility.ToJson(rando3));
                 break;
