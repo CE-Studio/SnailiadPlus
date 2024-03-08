@@ -228,10 +228,8 @@ public class Item:MonoBehaviour, IRoomObject {
         if (collision.CompareTag("Player") && itemID != -1)
         {
             collected = true;
-            //if (PlayState.itemLocations.ContainsKey(PlayState.WorldPosToMapGridID(transform.position)))
-            //    PlayState.itemLocations.Remove(PlayState.WorldPosToMapGridID(transform.position));
-            PlayState.minimapScript.RefreshMap();
             PlayState.AddItem(itemID);
+            PlayState.minimapScript.RefreshMap();
             if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;

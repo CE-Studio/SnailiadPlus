@@ -294,7 +294,6 @@ public class Subscreen : MonoBehaviour
                     int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
                     if (PlayState.isRandomGame)
                         thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[i]];
-                    Debug.Log(Item.IDToName(thisItemId));
                     if (thisItemId != -1)
                     {
                         if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&
@@ -322,9 +321,22 @@ public class Subscreen : MonoBehaviour
         Vector2 playerCellPos = PlayState.WorldPosToMapPos(PlayState.player.transform.position);
         playerMarker.transform.localPosition = new Vector2(topLeftCell.x + (playerCellPos.x * 0.5f), topLeftCell.y - (playerCellPos.y * 0.5f));
         int playerCellID = PlayState.WorldPosToMapGridID(PlayState.player.transform.position);
-        if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
-            (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0 &&
-            PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[playerCellID]) && PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[playerCellID])))
+        bool isItemCell = false;
+        if (PlayState.itemLocations.ContainsKey(playerCellID))
+        {
+            //if (PlayState.GetItemAvailabilityThisCharacter(PlayState.isRandomGame ? PlayState.currentRando.itemLocations[playerCellID] : PlayState.baseItemLocations[playerCellID]) &&
+            //    PlayState.GetItemAvailabilityThisDifficulty(PlayState.isRandomGame ? PlayState.currentRando.itemLocations[playerCellID] : PlayState.baseItemLocations[playerCellID]))
+            //    isItemCell = true;
+            int locationID = PlayState.itemLocations[playerCellID];
+            int itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
+            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 1)
+                isItemCell = true;
+        }
+        //if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
+        //    (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0 &&
+        //    PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[playerCellID]) && PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[playerCellID])))
+        if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) ||
+            PlayState.saveLocations.Contains(playerCellID) || isItemCell)
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerHighlight");
         else
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerNormal");
