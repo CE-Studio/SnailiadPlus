@@ -68,7 +68,7 @@ public class Item:MonoBehaviour, IRoomObject {
         content["countedInPercentage"] = countedInPercentage;
         content["collected"] = collected;
         content["itemID"] = itemID;
-        content["isSuperUnique"] = isSuperUnique && PlayState.isRandomGame;
+        content["isSuperUnique"] = isSuperUnique && !PlayState.isRandomGame;
         content["difficultiesPresentIn"] = difficultiesPresentIn;
         content["charactersPresentFor"] = charactersPresentFor;
         content["locationID"] = locationID;
@@ -137,6 +137,8 @@ public class Item:MonoBehaviour, IRoomObject {
             Destroy(gameObject);
             return;
         }
+
+        Debug.Log(string.Format("{0}, {1}", PlayState.isRandomGame, itemID));
 
         string animName;
 

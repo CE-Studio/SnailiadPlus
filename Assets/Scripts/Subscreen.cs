@@ -329,8 +329,9 @@ public class Subscreen : MonoBehaviour
             //    isItemCell = true;
             int locationID = PlayState.itemLocations[playerCellID];
             int itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
-            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 1)
+            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 0)
                 isItemCell = true;
+            Debug.Log(string.Format("{0}, {1}, {2}, {3}, {4}", PlayState.isRandomGame, locationID, itemID, PlayState.currentProfile.items[itemID], isItemCell));
         }
         //if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
         //    (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0 &&

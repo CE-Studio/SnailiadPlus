@@ -250,6 +250,10 @@ public class MainMenu : MonoBehaviour
                 room.GetComponent<RoomTrigger>().LogBreakables();
             }
         }
+        string output = "";
+        for (int i = 0; i < PlayState.baseItemLocations.Count; i++)
+            output += PlayState.baseItemLocations[i] + ", ";
+        Debug.Log(output);
 
         menuHUDElements = new GameObject[]
         {

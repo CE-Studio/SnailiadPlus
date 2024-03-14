@@ -78,7 +78,7 @@ public class Randomizer : MonoBehaviour
                         for (int j = 0; j < 4; j++)
                             itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
                     for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
-                        for (int j = 0; j < 4; j++)
+                        for (int j = 0; j < 5; j++)
                             itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
                     randoPhase = 2;
                     break;
@@ -103,6 +103,8 @@ public class Randomizer : MonoBehaviour
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
                             placedHearts++;
+                        if (placedHearts >= 4)
+                            lockStates[11] = true; // Health
                         switch (itemToPlace)
                         {
                             case 0: case 1: case 2: progWeapons++; break;
@@ -176,7 +178,7 @@ public class Randomizer : MonoBehaviour
                 22 => Boss1() && L1Blocks(),                                                                                   // Signature Croissants (Heart)
                 23 => Knowledge() && (Fly() || Upside() || Leggy()),                                                           // Squared Snelks
                 24 => PinkDoor(),                                                                                              // Frost Shrine
-                25 => Ice() && L1Blocks(),                                                                                     // Sweater Required
+                25 => (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks(),                                               // Sweater Required
                 26 => PinkDoor(),                                                                                              // A Secret to Snowbody
                 27 => GreenDoor(),                                                                                             // Devil's Alcove
                 28 => Knowledge() || (Jump() || Fly() || Ice() || Upside() || Leggy()),                                        // Ice Climb
