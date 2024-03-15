@@ -138,8 +138,6 @@ public class Item:MonoBehaviour, IRoomObject {
             return;
         }
 
-        Debug.Log(string.Format("{0}, {1}", PlayState.isRandomGame, itemID));
-
         string animName;
 
         if (itemID >= PlayState.OFFSET_FRAGMENTS) {

@@ -1055,20 +1055,24 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    public void MoveEntitiesToInternalList() {
+    public void MoveEntitiesToInternalList()
+    {
         List<Dictionary<string, object>> newContent = new();
         List<string> newTypes = new();
         List<Vector3> newPos = new();
-        for (int i = transform.childCount - 1; i >= 0; i--) {
+        for (int i = 0; i < transform.childCount; i++)
+        {
             GameObject obj = transform.GetChild(i).gameObject;
             IRoomObject roomObject = (IRoomObject)obj.GetComponent(typeof(IRoomObject));
-            if (roomObject != null) {
+            if (roomObject != null)
+            {
                 newContent.Add(roomObject.save());
                 newTypes.Add(roomObject.objType);
                 newPos.Add(obj.transform.position);
             }
-            Destroy(obj);
         }
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
         roomContent = newContent.ToArray();
         roomContentTypes = newTypes.ToArray();
         roomContentPos = newPos.ToArray();

@@ -250,10 +250,6 @@ public class MainMenu : MonoBehaviour
                 room.GetComponent<RoomTrigger>().LogBreakables();
             }
         }
-        string output = "";
-        for (int i = 0; i < PlayState.baseItemLocations.Count; i++)
-            output += PlayState.baseItemLocations[i] + ", ";
-        Debug.Log(output);
 
         menuHUDElements = new GameObject[]
         {
@@ -2087,6 +2083,14 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private string ParseSeed(int seed)
+    {
+        string seedStr = seed.ToString();
+        while (seedStr.Length < 8)
+            seedStr = "0" + seedStr;
+        return seedStr;
+    }
+
     public void PageIntro()
     {
         ClearOptions();
@@ -2184,7 +2188,7 @@ public class MainMenu : MonoBehaviour
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, StartNewGame,
                     new int[] { 0, 1, 1, 0, 2, 0, 3, i, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0, 11, 0, 12, 0, 13, 0, 14, 0 });
             else
-                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? randoData.seed.ToString() : ConvertDifficultyToString(data.difficulty))
+                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? ParseSeed(randoData.seed) : ConvertDifficultyToString(data.difficulty))
                     + " | " + PlayState.GetTimeString(data.gameTime) + " | " + data.percentage + "%", true, PickSpawn, new int[] { 0, i });
         }
         AddOption("", false);
@@ -2378,7 +2382,7 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else
-                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? randoData.seed.ToString() : ConvertDifficultyToString(data.difficulty))
+                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? ParseSeed(randoData.seed) : ConvertDifficultyToString(data.difficulty))
                     + " | " + PlayState.GetTimeString(data.gameTime) + " | " + data.percentage + "%", true, CopyData2, new int[] { 0, i });
         }
         AddOption("", false);
@@ -2402,7 +2406,7 @@ public class MainMenu : MonoBehaviour
                 AddOption(PlayState.GetText("menu_option_profile_empty"), true, CopyConfirm, new int[] { 1, i });
             else
                 AddOption((menuVarFlags[0] == i ? "> " : "") + data.character + " | " +
-                    (randoData.randoLevel != 0 ? randoData.seed.ToString() : ConvertDifficultyToString(data.difficulty)) +
+                    (randoData.randoLevel != 0 ? ParseSeed(randoData.seed) : ConvertDifficultyToString(data.difficulty)) +
                     " | " + PlayState.GetTimeString(data.gameTime) + " | " + data.percentage + "%" + (menuVarFlags[0] == i ? " <" : ""),
                     menuVarFlags[0] != i && PlayState.currentProfileNumber != i, CopyConfirm, new int[] { 1, i });
         }
@@ -2445,7 +2449,7 @@ public class MainMenu : MonoBehaviour
             if (data.isEmpty)
                 AddOption(PlayState.GetText("menu_option_profile_empty"), false);
             else
-                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? randoData.seed.ToString() : ConvertDifficultyToString(data.difficulty))
+                AddOption(data.character + " | " + (randoData.randoLevel != 0 ? ParseSeed(randoData.seed) : ConvertDifficultyToString(data.difficulty))
                     + " | " + PlayState.GetTimeString(data.gameTime) + " | " + data.percentage + "%", true, ConfirmErase, new int[] { 0, i });
         }
         AddOption("", false);
