@@ -118,9 +118,14 @@ public class Randomizer : MonoBehaviour
                         while (placedHelixes < PlayState.MAX_FRAGMENTS)
                         {
                             List<int> remainingLocations = GetLocations();
-                            int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                            locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
-                            placedHelixes++;
+                            if (remainingLocations.Count == 0)
+                                placedHelixes = PlayState.MAX_FRAGMENTS;
+                            else
+                            {
+                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                placedHelixes++;
+                            }
                         }
                         for (int i = 0; i < locations.Length; i++)
                             if (locations[i] == -2)
