@@ -160,12 +160,12 @@ public class Randomizer : MonoBehaviour
                 4 => L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy(),                                      // Love Snail's Alcove
                 5 => L2Blocks(),                                                                                               // Suspicious Tree
                 6 => L2Blocks(),                                                                                               // Anger Management Room
-                7 => L2Blocks(),                                                                                               // Percentage Snail's Hidey Hole
+                7 => L2Blocks() && ((Blobby() && Jump()) || !Blobby()),                                                        // Percentage Snail's Hidey Hole
                 8 => true,                                                                                                     // Digging Grounds
                 9 => true,                                                                                                     // Cave Snail's Cave
                 10 => L2Blocks(),                                                                                              // Fragment Cave
-                11 => Knowledge() || Fly() || Upside() || Leggy(),                                                             // Discombobulatory Alcove
-                12 => true,                                                                                                    // Seabed Caves
+                11 => (Knowledge() && ((Blobby() && Jump()) || !Blobby())) || Fly() || Upside() || Leggy(),                    // Discombobulatory Alcove
+                12 => (Blobby() && Jump()) || !Blobby(),                                                                       // Seabed Caves
                 13 => true,                                                                                                    // Fine Dining (Peashooter)
                 14 => L2Blocks(),                                                                                              // Fine Dining (Fragment)
                 15 => L1Blocks(),                                                                                              // The Maze Room
@@ -178,7 +178,7 @@ public class Randomizer : MonoBehaviour
                 22 => Boss1() && L1Blocks(),                                                                                   // Signature Croissants (Heart)
                 23 => Knowledge() && (Fly() || Upside() || Leggy()),                                                           // Squared Snelks
                 24 => PinkDoor(),                                                                                              // Frost Shrine
-                25 => (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks(),                                               // Sweater Required
+                25 => (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks() && ((Blobby() && Jump()) || !Blobby()),        // Sweater Required
                 26 => PinkDoor(),                                                                                              // A Secret to Snowbody
                 27 => GreenDoor(),                                                                                             // Devil's Alcove
                 28 => Knowledge() || (Jump() || Fly() || Ice() || Upside() || Leggy()),                                        // Ice Climb
