@@ -1500,13 +1500,21 @@ public class MainMenu : MonoBehaviour
                     newlines++;
             if (setSmall)
             {
-                option.textScript.SetSize(1);
-                option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
+                if (newlines == 0)
+                {
+                    option.textScript.SetSize(1);
+                    option.textScript.gameObject.transform.localScale = new Vector3(1, 2, 1);
+                    option.textScript.childText[0].transform.localPosition = new Vector2(PlayState.FRAC_16, -PlayState.FRAC_32);
+                }
+                else
+                    option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
             }
             else
             {
                 option.textScript.SetSize(2);
+                option.textScript.gameObject.transform.localScale = new Vector3(1, 1, 1);
                 option.textScript.position.y = option.selectY + (0.5f * newlines);
+                option.textScript.childText[0].transform.localPosition = new Vector2(PlayState.FRAC_16, -PlayState.FRAC_16);
             }
         }
     }

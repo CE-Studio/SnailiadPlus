@@ -21,7 +21,7 @@ public class TextObject : MonoBehaviour
     private const float CONTROL_ICON_Y = -0.6875f;
 
     public TextMesh thisText;
-    private List<TextMesh> childText = new();
+    public List<TextMesh> childText = new();
     public GameObject textObj;
     public SpriteRenderer controlIcon;
 

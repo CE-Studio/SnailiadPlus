@@ -85,10 +85,6 @@ public class Randomizer : MonoBehaviour
 
                 case 2: // Items
                     List<int> availableLocations = GetLocations();
-                    string availLocationOutput = "";
-                    for (int i = 0; i < availableLocations.Count; i++)
-                        availLocationOutput += availableLocations[i] + ", ";
-                    Debug.Log(availLocationOutput);
                     if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
                         randoPhase = 1;
                     else if (itemsToAdd.Count > 0)
@@ -134,10 +130,6 @@ public class Randomizer : MonoBehaviour
                         randoPhase = 0;
                         isShuffling = false;
                     }
-                    string locationOutput = "";
-                    for (int i = 0; i < locations.Length; i++)
-                        locationOutput += locations[i] + ", ";
-                    Debug.Log(locationOutput);
                     break;
 
                 case 3: // Music
