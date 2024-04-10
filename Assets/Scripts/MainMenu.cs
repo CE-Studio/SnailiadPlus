@@ -627,6 +627,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_items_hard"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoProgressives":
                         TestForArrowAdjust(option, 6, 1);
@@ -643,6 +644,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_progressives_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoBroom":
                         TestForArrowAdjust(option, 7, 1);
@@ -659,6 +661,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_broom_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoTraps":
                         TestForArrowAdjust(option, 8, 1);
@@ -675,6 +678,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_traps_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoMasked":
                         TestForArrowAdjust(option, 9, 1);
@@ -691,6 +695,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_maskedItems_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoAreas":
                         TestForArrowAdjust(option, 10, 1);
@@ -707,6 +712,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_areas_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoLocks":
                         TestForArrowAdjust(option, 11, 1);
@@ -723,6 +729,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_helixLocks_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoMusic":
                         TestForArrowAdjust(option, 12, 2);
@@ -744,6 +751,7 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_music_full"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoHints":
                         TestForArrowAdjust(option, 13, 1);
@@ -760,11 +768,13 @@ public class MainMenu : MonoBehaviour
                                     currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_npcs_on"));
                                 break;
                         }
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "randoSeed":
                         if (selectedOption == option.optionID)
                             currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
                         AddToOptionText(option, "00000000");
+                        SetOptionSize(currentOptions[6], true);
                         break;
                     case "openMap":
                         TestForArrowAdjust(option, 4, 1);
@@ -1492,31 +1502,22 @@ public class MainMenu : MonoBehaviour
 
     public void SetOptionSize(MenuOption option, bool setSmall)
     {
+        int newlines = 0;
+        string optionText = option.textScript.GetText();
+        for (int i = 0; i < optionText.Length; i++)
+            if (optionText[i] == '\n')
+                newlines++;
         if ((setSmall && option.textScript.size == 2) || (!setSmall && option.textScript.size == 1))
         {
-            int newlines = 0;
-            for (int i = 0; i < option.optionText.Length; i++)
-                if (option.optionText[i] == '\n')
-                    newlines++;
             if (setSmall)
-            {
                 option.textScript.SetSize(1);
-                if (newlines == 0)
-                {
-                    option.textScript.gameObject.transform.localScale = new Vector3(1, 2, 1);
-                    option.textScript.childText[0].transform.localPosition = new Vector2(PlayState.FRAC_16, -PlayState.FRAC_32);
-                }
-                else
-                    option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
-            }
             else
-            {
                 option.textScript.SetSize(2);
-                option.textScript.gameObject.transform.localScale = new Vector3(1, 1, 1);
-                option.textScript.position.y = option.selectY + (0.5f * newlines);
-                option.textScript.childText[0].transform.localPosition = new Vector2(PlayState.FRAC_16, -PlayState.FRAC_16);
-            }
         }
+        if (option.textScript.size == 1)
+            option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
+        else if (option.textScript.size == 2)
+            option.textScript.position.y = option.selectY + (0.5f * newlines);
     }
 
     public void ToggleHUD(bool state)
@@ -2950,10 +2951,10 @@ public class MainMenu : MonoBehaviour
                     PlayState.textureLibrary.BuildDefaultAnimLibrary();
                     PlayState.textureLibrary.BuildDefaultLibrary();
                     PlayState.textureLibrary.BuildTilemap();
+                    selectorAnims[0].ReloadList();
+                    selectorAnims[0].ResetToStart();
                     selectorAnims[1].ReloadList();
                     selectorAnims[1].ResetToStart();
-                    selectorAnims[2].ReloadList();
-                    selectorAnims[2].ResetToStart();
                     CreateTitle();
                     break;
                 case "Sound":
@@ -2982,13 +2983,12 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                 case "Texture":
-                    PlayState.textureLibrary.BuildSpriteSizeLibrary(packPath + "/SpriteSizes.json");
                     PlayState.textureLibrary.BuildAnimationLibrary(packPath + "/Animations.json");
                     PlayState.textureLibrary.BuildLibrary(packPath);
+                    selectorAnims[0].ReloadList();
+                    selectorAnims[0].ResetToStart();
                     selectorAnims[1].ReloadList();
                     selectorAnims[1].ResetToStart();
-                    selectorAnims[2].ReloadList();
-                    selectorAnims[2].ResetToStart();
                     PlayState.minimapScript.RefreshAnims();
                     PlayState.subscreenScript.RefreshAnims();
                     PlayState.RefreshPoolAnims();

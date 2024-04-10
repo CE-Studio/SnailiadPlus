@@ -272,6 +272,7 @@ public class TextureLibrary : ScriptableObject
 
     public void BuildDefaultLibrary()
     {
+        BuildDefaultSpriteSizeLibrary();
         List<Sprite[]> newLibrary = new();
         for (int i = 0; i < referenceList.Length; i++)
         {
@@ -338,6 +339,7 @@ public class TextureLibrary : ScriptableObject
     public void BuildLibrary(string folderPath = null)
     {
         BuildDefaultLibrary();
+        BuildSpriteSizeLibrary(folderPath + "/SpriteSizes.json");
         if (folderPath != null)
         {
             string[] tempArray = Directory.GetDirectories(folderPath);

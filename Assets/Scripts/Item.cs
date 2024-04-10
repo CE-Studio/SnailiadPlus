@@ -68,7 +68,7 @@ public class Item:MonoBehaviour, IRoomObject {
         content["countedInPercentage"] = countedInPercentage;
         content["collected"] = collected;
         content["itemID"] = itemID;
-        content["isSuperUnique"] = isSuperUnique && !PlayState.isRandomGame;
+        content["isSuperUnique"] = isSuperUnique;
         content["difficultiesPresentIn"] = difficultiesPresentIn;
         content["charactersPresentFor"] = charactersPresentFor;
         content["locationID"] = locationID;
@@ -80,7 +80,7 @@ public class Item:MonoBehaviour, IRoomObject {
         countedInPercentage = (bool)content["countedInPercentage"];
         collected = (bool)content["collected"];
         itemID = (int)content["itemID"];
-        isSuperUnique = (bool)content["isSuperUnique"];
+        isSuperUnique = (bool)content["isSuperUnique"] && !PlayState.isRandomGame;
         difficultiesPresentIn = (bool[])content["difficultiesPresentIn"];
         charactersPresentFor = (bool[])content["charactersPresentFor"];
         locationID = (int)content["locationID"];
