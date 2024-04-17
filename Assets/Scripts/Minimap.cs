@@ -174,6 +174,11 @@ public class Minimap : MonoBehaviour
                                     highlightPlayerTile = false;
                                 }
                             }
+                            else
+                            {
+                                anims[i + 4].Play("Minimap_icon_blank", true);
+                                highlightPlayerTile = false;
+                            }
                         }
                         else
                         {
