@@ -11,6 +11,7 @@ public class Randomizer : MonoBehaviour
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
 
     private bool[] lockStates = new bool[24];
+    private bool[] defaultLocksThisGen = new bool[24];
 
     private int[] locations = new int[] { };
     private bool hasPlacedDevastator = false;
@@ -19,10 +20,11 @@ public class Randomizer : MonoBehaviour
     {
         isShuffling = true;
         randoPhase = 1;
-        
+
+        defaultLocksThisGen = new bool[24];
         if (PlayState.currentRando.broomStart)
-            lockStates[0] = true;
-        lockStates[PlayState.currentProfile.character switch
+            defaultLocksThisGen[0] = true;
+        defaultLocksThisGen[PlayState.currentProfile.character switch
         {
             "Sluggy" => 14,
             "Upside" => 15,
@@ -32,13 +34,13 @@ public class Randomizer : MonoBehaviour
             _ => 13
         }] = true;
         if (PlayState.currentRando.randoLevel == 3)
-            lockStates[19] = true;
+            defaultLocksThisGen[19] = true;
         if (PlayState.currentRando.openAreas)
         {
-            lockStates[20] = true;
-            lockStates[21] = true;
-            lockStates[22] = true;
-            lockStates[23] = true;
+            defaultLocksThisGen[20] = true;
+            defaultLocksThisGen[21] = true;
+            defaultLocksThisGen[22] = true;
+            defaultLocksThisGen[23] = true;
         }
 
         StartCoroutine(GenerateWorld());
@@ -71,6 +73,7 @@ public class Randomizer : MonoBehaviour
                     hasPlacedDevastator = false;
                     itemsToAdd = new();
                     randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
+                    lockStates = (bool[])defaultLocksThisGen.Clone();
                     Debug.Log("Starting shuffle");
 
                     for (int i = 0; i < majorWeights.Length; i++)
@@ -125,7 +128,7 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
-                        Debug.Log(string.Format("Placed {0} at {1}", itemToPlace, availableSplitLocations[locationPointer]));
+                        PrintPlacement(itemToPlace, availableSplitLocations[locationPointer]);
                     }
                     else
                     {
@@ -400,5 +403,85 @@ public class Randomizer : MonoBehaviour
                 lockStates[12] = true; // Shock
                 break;
         }
+    }
+
+    private void PrintPlacement(int itemID, int locationID)
+    {
+        Debug.Log(string.Format("Placed {0} at {1}",
+            itemID switch {
+                0 => "Peashooter",
+                1 => "Boomerang",
+                2 => "Rainbow Wave",
+                3 => "Devastator",
+                4 => "High Jump",
+                5 => "Shell Shield",
+                6 => "Rapid Fire",
+                7 => "Ice Snail",
+                8 => "Gravity Snail",
+                9 => "Full Metal Snail",
+                10 => "Gravity Shock",
+                _ => "Nothing"
+            },
+            locationID switch {
+                0 => "Original Testing Room",
+                1 => "Leggy Snail's Tunnel",
+                2 => "Town Overtunnel",
+                3 => "Super Secret Alcove",
+                4 => "Love Snail's Alcove",
+                5 => "Suspicious Tree",
+                6 => "Anger Management Room",
+                7 => "Percentage Snail's Hidey Hole",
+                8 => "Digging Grounds",
+                9 => "Cave Snail's Cave",
+                10 => "Fragment Cave",
+                11 => "Discombobulatory Alcove",
+                12 => "Seabed Caves",
+                13 => "Fine Dining (Peashooter)",
+                14 => "Fine Dining (Fragment)",
+                15 => "The Maze Room",
+                16 => "Monument of Greatness",
+                17 => "Heart of the Sea",
+                18 => "Daily Helping of Calcium",
+                19 => "Dig, Snaily, Dig",
+                20 => "Skywatcher's Loot",
+                21 => "Signature Croissants (Boomerang)",
+                22 => "Signature Croissants (Heart)",
+                23 => "Squared Snelks",
+                24 => "Frost Shrine",
+                25 => "Sweater Required",
+                26 => "A Secret to Snowbody",
+                27 => "Devil's Alcove",
+                28 => "Ice Climb",
+                29 => "The Labyrinth (Fragment)",
+                30 => "The Labyrinth (High Jump)",
+                31 => "Sneaky, Sneaky",
+                32 => "Prismatic Prize (Rainbow Wave)",
+                33 => "Prismatic Prize (Heart)",
+                34 => "Hall of Fire",
+                35 => "Scorching Snelks",
+                36 => "Hidden Hideout",
+                37 => "Green Cache",
+                38 => "Furnace",
+                39 => "Slitherine Grove",
+                40 => "Floaty Fortress (Top Left)",
+                41 => "Floaty Fortress (Bottom Right)",
+                42 => "Woah Mama",
+                43 => "Shocked Shell",
+                44 => "Gravity Shrine",
+                45 => "Fast Food",
+                46 => "The Bridge",
+                47 => "Transit 90",
+                48 => "Steel Shrine",
+                49 => "Space Balcony (Heart)",
+                50 => "Space Balcony (Fragment)",
+                51 => "The Vault",
+                52 => "Holy Hideaway",
+                53 => "Arctic Alcove",
+                54 => "Lost Loot",
+                55 => "Reinforcements",
+                56 => "Glitched Goodies",
+                _ => "Nowhere"
+            })
+            );
     }
 }
