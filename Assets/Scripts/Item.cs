@@ -140,14 +140,25 @@ public class Item:MonoBehaviour, IRoomObject {
 
         string animName;
 
-        if (itemID >= PlayState.OFFSET_FRAGMENTS) {
+        if (PlayState.isRandomGame && PlayState.currentRando.maskedItems)
+        {
+            animName = "Item_masked";
+            box.size = new Vector2(1.95f, 1.95f);
+        }
+        else if (itemID >= PlayState.OFFSET_FRAGMENTS)
+        {
             animName = "Item_helixFragment";
             box.size = new Vector2(0.95f, 0.95f);
-        } else if (itemID >= PlayState.OFFSET_HEARTS) {
+        }
+        else if (itemID >= PlayState.OFFSET_HEARTS)
+        {
             animName = "Item_heartContainer";
             box.size = new Vector2(1.95f, 1.95f);
-        } else {
-            switch (itemID) {
+        }
+        else
+        {
+            switch (itemID)
+            {
                 case 0:
                     animName = "Item_peashooter";
                     box.size = new Vector2(1.825f, 1.825f);
@@ -174,10 +185,13 @@ public class Item:MonoBehaviour, IRoomObject {
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
                 case 5:
-                    if (PlayState.currentProfile.character == "Blobby") {
+                    if (PlayState.currentProfile.character == "Blobby")
+                    {
                         animName = "Item_shelmet";
                         box.size = new Vector2(1.45f, 1.825f);
-                    } else {
+                    }
+                    else
+                    {
                         animName = "Item_shellShield";
                         box.size = new Vector2(1.45f, 1.675f);
                     }

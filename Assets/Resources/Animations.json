@@ -16783,6 +16783,20 @@
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
+		{
+			"name": "Item_masked",
+			"spriteName": "Items/MaskedItem",
+			"framerate": 14,
+			"frames": [
+				0,
+				1,
+				2,
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
 		
 		{
 			"name": "Object_extraPlatform_0",

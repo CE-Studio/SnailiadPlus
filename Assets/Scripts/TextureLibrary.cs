@@ -159,6 +159,7 @@ public class TextureLibrary : ScriptableObject
         "Items/HelixFragment",
         "Items/HighJump",
         "Items/IceSnail",
+        "Items/MaskedItem",
         "Items/MagneticFoot",
         "Items/Peashooter",
         "Items/RainbowWave",

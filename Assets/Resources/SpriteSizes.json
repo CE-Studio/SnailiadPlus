@@ -697,6 +697,11 @@
             "height": 32
         },
 		{
+            "name": "Items/MaskedItem",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Items/MagneticFoot",
             "width": 32,
             "height": 32
