@@ -3671,6 +3671,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_2_rando_0",
+			"text": "Yeah, {p|0.25}I have no idea what's going{nl}on here.  {p|0.4}You're on your own, {nl}{P}!",
+			"value": 1
+		},
+		{
 			"name": "npc_2_predictIris_0",
 			"text": "{col|0303}I can see the future, {P}!{col|0312}{p|0.3}{nl}I see you heading precisely two{nl}screens to the left of here!!",
 			"value": 1
@@ -3911,6 +3916,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_18_rando_0",
+			"text": "{eff|Shake}EEEK!!  {p|0.5}{eff|None}You found me!",
+			"value": 1
+		},
+		{
 			"name": "npc_19_default_0",
 			"text": "{col|0204}Up, {p|0.125}up, {p|0.125}down, {p|0.125}down, {p|0.125}left,{p|0.25}{nl}{spd|0.03}right...  {p|0.25}{spd|0.02}{col|0312}Wait, {p|0.125}never mind,{p|0.25}{nl}that's for some other game.",
 			"value": 1
@@ -3943,6 +3953,11 @@
 		{
 			"name": "npc_21_boomerang_0",
 			"text": "Yay, {P}, it's you!! {nl}{p|0.2}Take this boomerang and break{nl}some walls open!!",
+			"value": 1
+		},
+		{
+			"name": "npc_21_rando_0",
+			"text": "{P}, it's you!! {nl}{p|0.2}That door's been locking me in{nl}here for far too long.  {p|0.2}Thanks!!",
 			"value": 1
 		},
 		{
@@ -3981,6 +3996,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_24_rando_0",
+			"text": "I heard that some doors in the{nl}world can only be opened with{nl}small amounts of {col|0302}Iris{col|0312}' power!",
+			"value": 1
+		},
+		{
 			"name": "npc_25_default_0",
 			"text": "Hey {P}, {p|0.125}I'm hungry!  {p|0.25}Know{nl}any good plants around town?",
 			"value": 1
@@ -3998,6 +4018,16 @@
 		{
 			"name": "npc_26_blobby_0",
 			"text": "Take this \"Shelmet\"! {p|0.25}You{nl}can hide in it to avoid{nl}taking damage!",
+			"value": 1
+		},
+		{
+			"name": "npc_26_offerRando_0",
+			"text": "Here, take this{spd|0.12}... {p|0.25}{spd|0.02}thing!  {p|0.3}{nl}I'm not sure what it is, {p|0.25}but{nl}surely it's helpful!  {p|0.5}Right?",
+			"value": 1
+		},
+		{
+			"name": "npc_26_emptyRando_0",
+			"text": "I'll be honest, {p|0.15}it's kinda{nl}cold in here.",
 			"value": 1
 		},
 		{
@@ -4061,6 +4091,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_30_default_0",
+			"text": "Congratulations, {P}!!  {p|0.2}{col|0204}Moon{nl}Snail {col|0312}is saved!!  {p|0.4}Wait, {p|0.2}is he a{nl}moon snail or a sun snail?",
+			"value": 1
+		},
+		{
 			"name": "npc_30_underpowered_0",
 			"text": "Be careful, {P}!  {p|0.25}With only{nl}the powers you have now, {col|0204}Moon{nl}Snail {col|0312}will eat you for lunch!!",
 			"value": 1
@@ -4076,8 +4111,8 @@
 			"value": 1
 		},
 		{
-			"name": "npc_30_default_0",
-			"text": "Congratulations, {P}!!  {p|0.2}{col|0204}Moon{nl}Snail {col|0312}is saved!!  {p|0.4}Wait, {p|0.2}is he a{nl}moon snail or a sun snail?",
+			"name": "npc_31_default_0",
+			"text": "Don't moon snails live in the{nl}ocean?  {p|0.25}{eff|Shake}{sfx|3}HEY, {p|0.2}{eff|None}{sfx|0}THIS GAME ISN'T{nl}REALISTIC!!  {p|0.2}WHAT GIVES??",
 			"value": 1
 		},
 		{
@@ -4091,8 +4126,8 @@
 			"value": 1
 		},
 		{
-			"name": "npc_31_default_0",
-			"text": "Don't moon snails live in the{nl}ocean?  {p|0.25}{eff|Shake}{sfx|3}HEY, {p|0.2}{eff|None}{sfx|0}THIS GAME ISN'T{nl}REALISTIC!!  {p|0.2}WHAT GIVES??",
+			"name": "npc_32_default_0",
+			"text": "Amazing work, {P}!!  {p|0.5}Hey,{nl}{p|0.25}how'd we get into outer space,{nl}anyway?",
 			"value": 1
 		},
 		{
@@ -4116,8 +4151,8 @@
 			"value": 1
 		},
 		{
-			"name": "npc_32_default_0",
-			"text": "Amazing work, {P}!!  {p|0.5}Hey,{nl}{p|0.25}how'd we get into outer space,{nl}anyway?",
+			"name": "npc_33_default_0",
+			"text": "Good luck, {P}!!",
 			"value": 1
 		},
 		{
@@ -4131,18 +4166,23 @@
 			"value": 1
 		},
 		{
-			"name": "npc_33_default_0",
-			"text": "Good luck, {P}!!",
+			"name": "npc_33_offerHeart_0",
+			"text": "{P}, take this heart!  {p|0.1}You'll{nl}need all the help you can get{nl}to defeat {col|0204}Moon Snail{col|0312}!",
 			"value": 1
 		},
 		{
-			"name": "npc_34_findFragments_0",
-			"text": "{P}, {p|0.15}search for the {col|0302}Helix{nl}Fragments!{col|0312}  {p|0.25}Once you have them{nl}all, {p|0.15}find the {col|0302}Shrine of Iris{col|0312}!",
+			"name": "npc_33_offerRando_0",
+			"text": "{P}, take this item!  {p|0.1}You'll{nl}need all the help you can get{nl}to defeat {col|0204}Moon Snail{col|0312}!",
 			"value": 1
 		},
 		{
 			"name": "npc_34_default_0",
 			"text": "Amazing work, {P}!!  {p|0.25}You've{nl}saved {col|0309}Sun Snail {col|0312}using the power{nl}of {col|0302}Iris{col|0312}!!",
+			"value": 1
+		},
+		{
+			"name": "npc_34_findFragments_0",
+			"text": "{P}, {p|0.15}search for the {col|0302}Helix{nl}Fragments!{col|0312}  {p|0.25}Once you have them{nl}all, {p|0.15}find the {col|0302}Shrine of Iris{col|0312}!",
 			"value": 1
 		},
 		{
@@ -4158,6 +4198,11 @@
 		{
 			"name": "npc_36_default_1",
 			"text": "While falling, {p|0.2}{col|0309}gravity jump in{nl}the same direction you're falling {col|0312}{nl}to unleash a powerful attack!!",
+			"value": 1
+		},
+		{
+			"name": "npc_36_rando_0",
+			"text": "I don't get many visitors out{nl}here.  {p|0.25}Admittedly, it gets kinda{nl}lonely.  {p|0.3}Thanks for stopping by.",
 			"value": 1
 		},
 		{
@@ -4271,6 +4316,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_43_default_0",
+			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
+			"value": 1
+		},
+		{
 			"name": "npc_43_cantCorner_0",
 			"text": "I can't seem to crawl around{nl}these corners! {p|0.3}I wonder if{nl}I'll ever be able to do it...",
 			"value": 1
@@ -4291,8 +4341,8 @@
 			"value": 1
 		},
 		{
-			"name": "npc_43_default_0",
-			"text": "Ooh, {P}, {p|0.15}can you crawl{nl}around ceiling corners now??{p|0.4}{nl}I wish I were a Gravity Snail!",
+			"name": "npc_45_default_0",
+			"text": "Hey, {P}!  {p|0.15}If you grab the{nl}{col|0301}powerup {col|0312}ahead, {p|0.1}you'll only take{nl}half damage from enemies!!",
 			"value": 1
 		},
 		{
@@ -4311,8 +4361,13 @@
 			"value": 1
 		},
 		{
-			"name": "npc_45_default_0",
-			"text": "Hey, {P}!  {p|0.15}If you grab the{nl}{col|0301}powerup {col|0312}ahead, {p|0.1}you'll only take{nl}half damage from enemies!!",
+			"name": "npc_45_offerRando_0",
+			"text": "There's a powerup ahead, {P}!{nl}{p|0.2}Why don't you take it?",
+			"value": 1
+		},
+		{
+			"name": "npc_45_emptyRando_0",
+			"text": "Oh, {p|0.2}hi, {P}!  {p|0.15}What's up?",
 			"value": 1
 		},
 		{
@@ -4326,6 +4381,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_48_default_0",
+			"text": "{eff|Wave}Whew!!  {eff|None}{p|0.25}That was scary!!",
+			"value": 1
+		},
+		{
 			"name": "npc_48_greet_0",
 			"text": "Hey, {P}, what's up?",
 			"value": 1
@@ -4333,11 +4393,6 @@
 		{
 			"name": "npc_48_scream_0",
 			"text": "{eff|Shake}{sfx|3}{spd|0.01}YEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE{nl}EEEEEEEEEEEEEEEEEEEEEEEEEEE",
-			"value": 1
-		},
-		{
-			"name": "npc_48_default_0",
-			"text": "{eff|Wave}Whew!!  {eff|None}{p|0.25}That was scary!!",
 			"value": 1
 		},
 		{
@@ -4376,6 +4431,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_53_default_0",
+			"text": "Hey, {P}!  {p|0.25}Seems you've found{nl}an unfinished area.  {p|0.15}Not much{nl}going on in here right now.",
+			"value": 1
+		},
+		{
 			"name": "npc_53_attention",
 			"text": "{P}!  {p|0.2}Up here!!",
 			"value": 1
@@ -4398,11 +4458,6 @@
 		{
 			"name": "npc_53_postScene_0",
 			"text": "Y'know, {p|0.1}now that I think about{nl}it... {p|0.15}would this freeze over the{nl}rooms around us?  {p|0.2}I hope not!",
-			"value": 1
-		},
-		{
-			"name": "npc_53_default_0",
-			"text": "Hey, {P}!  {p|0.25}Seems you've found{nl}an unfinished area.  {p|0.15}Not much{nl}going on in here right now.",
 			"value": 1
 		},
 		{

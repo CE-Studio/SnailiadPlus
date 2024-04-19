@@ -296,7 +296,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 2:
-                            if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("predictPeashooter");
                             else if (PlayState.IsBossAlive(0) && PlayState.IsBossAlive(1))
                                 AddText("predictShellbreaker");
@@ -391,7 +393,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 12:
-                            if (CountItemsInRoom() > 0)
+                            if (CountItemsInRoom() > 0 && !PlayState.isRandomGame)
                                 AddText("funBlocks");
                             else
                                 AddText("default");
@@ -471,7 +473,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 18:
-                            if (PlayState.CheckForItem("Super Secret Boomerang"))
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else if (PlayState.CheckForItem("Super Secret Boomerang"))
                                 AddText("remindShoot");
                             else
                                 AddText("default");
@@ -494,7 +498,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 21:
-                            if (!PlayState.CheckForItem("Boomerang"))
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else if (!PlayState.CheckForItem("Boomerang"))
                                 AddText("boomerang");
                             else
                                 AddText("default");
@@ -518,7 +524,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 24:
-                            if (CountItemsInRoom() > 0)
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else if (CountItemsInRoom() > 0)
                                 AddText("offerHelixFragment");
                             else
                                 AddText("default");
@@ -532,7 +540,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 26:
-                            if (PlayState.currentProfile.character == "Blobby")
+                            if (PlayState.isRandomGame && CountItemsInRoom() > 0)
+                                AddText("offerRando");
+                            else if (PlayState.isRandomGame)
+                                AddText("emptyRando");
+                            else if (PlayState.currentProfile.character == "Blobby")
                                 AddText("blobby");
                             else if (PlayState.currentProfile.character == "Snaily" || PlayState.currentProfile.character == "Upside" || PlayState.currentProfile.character == "Leggy")
                                 AddText("default");
@@ -612,6 +624,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             boxColor = "0002";
                             if (!PlayState.IsBossAlive(3))
                                 AddText("celebrate");
+                            else if (PlayState.isRandomGame && CountItemsInRoom() > 0)
+                                AddText("offerRando");
                             else if (CountItemsInRoom() > 0)
                                 AddText("offerHeart");
                             else
@@ -633,7 +647,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 36:
                             boxColor = "0002";
-                            AddText("default");
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else
+                                AddText("default");
                             break;
 
                         case 37:
@@ -719,7 +736,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                         case 45:
                             boxColor = "0002";
-                            if (PlayState.CheckForItem("Full-Metal Snail"))
+                            if (PlayState.isRandomGame && CountItemsInRoom() > 0)
+                                AddText("offerRando");
+                            else if (PlayState.isRandomGame)
+                                AddText("emptyRando");
+                            else if (PlayState.CheckForItem("Full-Metal Snail"))
                             {
                                 AddText(PlayState.currentProfile.character switch
                                 {
@@ -957,7 +978,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         int count = 0;
         for (int i = 0; i < room.childCount; i++)
             if (room.GetChild(i).name.Contains("Item"))
-                if (!room.GetChild(i).GetComponent<Item>().collected)
+                if (!room.GetChild(i).GetComponent<Item>().collected && room.GetChild(i).GetComponent<Item>().itemID != -1)
                     count++;
         return count;
     }

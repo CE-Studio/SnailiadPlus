@@ -74,7 +74,6 @@ public class Randomizer : MonoBehaviour
                     itemsToAdd = new();
                     randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
                     lockStates = (bool[])defaultLocksThisGen.Clone();
-                    Debug.Log("Starting shuffle");
 
                     for (int i = 0; i < majorWeights.Length; i++)
                     {
@@ -101,10 +100,6 @@ public class Randomizer : MonoBehaviour
 
                 case 2: // Items (Split shuffle)
                     List<int> availableSplitLocations = GetLocations(true);
-                    string output = "";
-                    for (int i = 0; i < availableSplitLocations.Count; i++)
-                        output += availableSplitLocations[i] + ", ";
-                    Debug.Log(output + hasPlacedDevastator);
                     if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
                         randoPhase = 1;
                     else if (itemsToAdd.Count > 0)
@@ -128,7 +123,7 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
-                        PrintPlacement(itemToPlace, availableSplitLocations[locationPointer]);
+                        //PrintPlacement(itemToPlace, availableSplitLocations[locationPointer]);
                     }
                     else
                     {
