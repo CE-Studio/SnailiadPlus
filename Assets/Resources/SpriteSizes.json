@@ -712,6 +712,21 @@
             "height": 32
         },
 		{
+            "name": "Items/ProgressiveShell",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/ProgressiveWeapon",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Items/ProgressiveWeaponMod",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Items/RainbowWave",
             "width": 32,
             "height": 32

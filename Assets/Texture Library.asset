@@ -157,6 +157,9 @@ MonoBehaviour:
   - Items/MaskedItem
   - Items/MagneticFoot
   - Items/Peashooter
+  - Items/ProgressiveShell
+  - Items/ProgressiveWeapon
+  - Items/ProgressiveWeaponMod
   - Items/RainbowWave
   - Items/RapidFire
   - Items/ShellShield

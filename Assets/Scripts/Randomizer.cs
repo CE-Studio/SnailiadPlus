@@ -106,6 +106,16 @@ public class Randomizer : MonoBehaviour
                     {
                         int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
                         int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                        if (PlayState.currentRando.progressivesOn)
+                        {
+                            itemToPlace = itemToPlace switch
+                            {
+                                0 or 1 or 2 => progWeapons,
+                                3 or 6 => progMods == 0 ? 6 : 3,
+                                7 or 8 or 9 => 7 + progShells,
+                                _ => itemToPlace
+                            };
+                        }
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
@@ -154,6 +164,16 @@ public class Randomizer : MonoBehaviour
                     {
                         int locationPointer = Mathf.FloorToInt(Random.value * availableLocations.Count);
                         int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                        if (PlayState.currentRando.progressivesOn)
+                        {
+                            itemToPlace = itemToPlace switch
+                            {
+                                0 or 1 or 2 => progWeapons,
+                                3 or 6 => progMods == 0 ? 6 : 3,
+                                7 or 8 or 9 => 7 + progShells,
+                                _ => itemToPlace
+                            };
+                        }
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);

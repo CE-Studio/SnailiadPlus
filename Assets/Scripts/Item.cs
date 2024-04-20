@@ -162,20 +162,40 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 0:
                     animName = "Item_peashooter";
                     box.size = new Vector2(1.825f, 1.825f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                    {
+                        animName = "Item_progressiveWeapon";
+                        box.size = new Vector2(1.95f, 1.95f);
+                    }
                     break;
                 case 1:
                 case 11:
                     animName = "Item_boomerang";
                     box.size = new Vector2(1.25f, 1.825f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                    {
+                        animName = "Item_progressiveWeapon";
+                        box.size = new Vector2(1.95f, 1.95f);
+                    }
                     break;
                 case 2:
                 case 12:
                     animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                    {
+                        animName = "Item_progressiveWeapon";
+                        box.size = new Vector2(1.95f, 1.95f);
+                    }
                     break;
                 case 3:
                     animName = "Item_devastator";
                     box.size = new Vector2(2.95f, 1.95f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                    {
+                        animName = "Item_progressiveWeaponMod";
+                        box.size = new Vector2(1.95f, 1.95f);
+                    }
                     break;
                 case 4:
                     if (PlayState.currentProfile.character == "Blobby")
@@ -202,10 +222,14 @@ public class Item:MonoBehaviour, IRoomObject {
                     else
                         animName = "Item_rapidFire";
                     box.size = new Vector2(1.95f, 1.95f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                        animName = "Item_progressiveWeaponMod";
                     break;
                 case 7:
                     animName = "Item_iceSnail";
                     box.size = new Vector2(1.95f, 1.95f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                        animName = "Item_progressiveShell";
                     break;
                 case 8:
                     animName = PlayState.currentProfile.character switch
@@ -216,10 +240,14 @@ public class Item:MonoBehaviour, IRoomObject {
                         _ => "Item_gravitySnail"
                     };
                     box.size = new Vector2(1.95f, 1.95f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                        animName = "Item_progressiveShell";
                     break;
                 case 9:
                     animName = "Item_fullMetalSnail";
                     box.size = new Vector2(1.95f, 1.95f);
+                    if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+                        animName = "Item_progressiveShell";
                     break;
                 case 10:
                     animName = "Item_gravityShock";
@@ -359,28 +387,32 @@ public class Item:MonoBehaviour, IRoomObject {
                 : PlayState.GetText("item_heartContainer_noNum");
         return thisID switch
         {
-            0 => PlayState.GetText("item_peashooter"),
-            1 => PlayState.GetText("item_boomerang"),
-            2 => PlayState.GetText("item_rainbowWave"),
-            3 => PlayState.GetText("item_devastator"),
+            0 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeapon") : PlayState.GetText("item_peashooter"),
+            1 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeapon") : PlayState.GetText("item_boomerang"),
+            2 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeapon") : PlayState.GetText("item_rainbowWave"),
+            3 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeaponMod") : PlayState.GetText("item_devastator"),
             4 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_wallGrab" : "item_highJump"),
             5 => PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield"),
-            6 => PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire"),
-            7 => string.Format(PlayState.GetText("item_iceSnail"), species),
-            8 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch
-            {
-                "Upside" => "item_magneticFoot",
-                "Leggy" => "item_corkscrewJump",
-                "Blobby" => "item_angelJump",
-                _ => "item_gravitySnail"
-            }), species),
-            9 => string.Format(PlayState.GetText(PlayState.currentProfile.character switch
-            {
-                "Sluggy" => "item_fullMetalSnail_noShell",
-                "Blobby" => "item_fullMetalSnail_blob",
-                "Leechy" => "item_fullMetalSnail_noShell",
-                _ => "item_fullMetalSnail_generic"
-            }), species),
+            6 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeaponMod") :
+                PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire"),
+            7 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveShell") :
+                string.Format(PlayState.GetText("item_iceSnail"), species),
+            8 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveShell") :
+                string.Format(PlayState.GetText(PlayState.currentProfile.character switch
+                {
+                    "Upside" => "item_magneticFoot",
+                    "Leggy" => "item_corkscrewJump",
+                    "Blobby" => "item_angelJump",
+                    _ => "item_gravitySnail"
+                }), species),
+            9 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveShell") :
+                string.Format(PlayState.GetText(PlayState.currentProfile.character switch
+                {
+                    "Sluggy" => "item_fullMetalSnail_noShell",
+                    "Blobby" => "item_fullMetalSnail_blob",
+                    "Leechy" => "item_fullMetalSnail_noShell",
+                    _ => "item_fullMetalSnail_generic"
+                }), species),
             10 => PlayState.GetText("item_gravityShock"),
             11 => PlayState.GetText("item_boomerang_secret"),
             12 => PlayState.GetText("item_rainbowWave_secret"),

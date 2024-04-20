@@ -2851,6 +2851,21 @@
 			"value": 0
 		},
 		{
+			"name": "item_progressiveShell",
+			"text": "Progressive Shell",
+			"value": 0
+		},
+		{
+			"name": "item_progressiveWeapon",
+			"text": "Progressive Weapon",
+			"value": 0
+		},
+		{
+			"name": "item_progressiveWeaponMod",
+			"text": "Progressive Weapon Mod",
+			"value": 0
+		},
+		{
 			"name": "boss_shellbreaker",
 			"text": "Shellbreaker",
 			"value": 0
