@@ -12327,6 +12327,22 @@
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
+        {
+            "name": "Door_blue_helixLocked_L",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                0,
+				0,
+				5,
+				10,
+				10,
+				5
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
 		{
             "name": "Door_blue_close_R",
 			"spriteName": "Door",
@@ -12378,6 +12394,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_blue_helixLocked_R",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                0,
+				0,
+				5,
+				10,
+				10,
+				5
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12441,6 +12473,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_blue_helixLocked_U",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                15,
+				15,
+				20,
+				25,
+				25,
+				20
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_blue_close_D",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -12491,6 +12539,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_blue_helixLocked_D",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                15,
+				15,
+				20,
+				25,
+				25,
+				20
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12549,6 +12613,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_green_helixLocked_L",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                3,
+				3,
+				8,
+				13,
+				13,
+				8
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_green_close_R",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -12599,6 +12679,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_green_helixLocked_R",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                3,
+				3,
+				8,
+				13,
+				13,
+				8
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12657,6 +12753,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_green_helixLocked_U",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                18,
+				18,
+				23,
+				28,
+				28,
+				23
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_green_close_D",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -12707,6 +12819,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_green_helixLocked_D",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                18,
+				18,
+				23,
+				28,
+				28,
+				23
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12765,6 +12893,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_locked_helixLocked_L",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                4,
+				4,
+				9,
+				14,
+				14,
+				9
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_locked_close_R",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -12815,6 +12959,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_locked_helixLocked_R",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                4,
+				4,
+				9,
+				14,
+				14,
+				9
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12873,6 +13033,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_locked_helixLocked_U",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                19,
+				19,
+				24,
+				29,
+				29,
+				24
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_locked_close_D",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -12923,6 +13099,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_locked_helixLocked_D",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                19,
+				19,
+				24,
+				29,
+				29,
+				24
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -12981,6 +13173,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_purple_helixLocked_L",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                1,
+				1,
+				6,
+				11,
+				11,
+				6
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_purple_close_R",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -13031,6 +13239,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_purple_helixLocked_R",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                1,
+				1,
+				6,
+				11,
+				11,
+				6
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -13089,6 +13313,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_purple_helixLocked_U",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                16,
+				16,
+				21,
+				26,
+				26,
+				21
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_purple_close_D",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -13139,6 +13379,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_purple_helixLocked_D",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                16,
+				16,
+				21,
+				26,
+				26,
+				21
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -13197,6 +13453,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_red_helixLocked_L",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                2,
+				2,
+				7,
+				12,
+				12,
+				7
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_red_close_R",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -13247,6 +13519,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_red_helixLocked_R",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                2,
+				2,
+				7,
+				12,
+				12,
+				7
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },
@@ -13305,6 +13593,22 @@
 			"randomizeStartFrame": false
         },
         {
+            "name": "Door_red_helixLocked_U",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                17,
+				17,
+				22,
+				27,
+				27,
+				22
+            ],
+            "loop": true,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
             "name": "Door_red_close_D",
 			"spriteName": "Door",
             "framerate": 30.0,
@@ -13355,6 +13659,22 @@
                 -1
             ],
             "loop": false,
+            "loopStartFrame": 0,
+			"randomizeStartFrame": false
+        },
+        {
+            "name": "Door_red_helixLocked_D",
+			"spriteName": "HelixLockedDoor",
+            "framerate": 4.0,
+            "frames": [
+                17,
+				17,
+				22,
+				27,
+				27,
+				22
+            ],
+            "loop": true,
             "loopStartFrame": 0,
 			"randomizeStartFrame": false
         },

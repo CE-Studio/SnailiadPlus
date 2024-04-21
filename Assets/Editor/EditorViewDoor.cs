@@ -15,6 +15,7 @@ public class EditorViewDoor : Editor
     private SerializedProperty sPermLocked;
     private SerializedProperty sBoss;
     private SerializedProperty sDir;
+    private SerializedProperty sFragments;
 
     private void OnEnable()
     {
@@ -26,6 +27,7 @@ public class EditorViewDoor : Editor
         sPermLocked = serializedObject.FindProperty("alwaysLocked");
         sBoss = serializedObject.FindProperty("bossLock");
         sDir = serializedObject.FindProperty("direction");
+        sFragments = serializedObject.FindProperty("requiredFragments");
     }
 
     public override void OnInspectorGUI()
@@ -40,6 +42,7 @@ public class EditorViewDoor : Editor
             sPermLocked.boolValue = false;
         sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
+        sFragments.intValue = EditorGUILayout.IntField("Required Helix Fragments to open in rando: ", sFragments.intValue);
 
         serializedObject.ApplyModifiedProperties();
 

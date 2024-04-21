@@ -11,6 +11,11 @@
             "height": 48
         },
 		{
+            "name": "HelixLockedDoor",
+            "width": 48,
+            "height": 48
+        },
+		{
             "name": "MapTiles",
             "width": 8,
             "height": 8

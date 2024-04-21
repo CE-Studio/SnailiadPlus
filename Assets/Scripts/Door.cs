@@ -9,6 +9,7 @@ public class Door:MonoBehaviour, IRoomObject
     [SerializeField] public bool locked;
     [SerializeField] private bool alwaysLocked;
     [SerializeField] private int direction;
+    [SerializeField] private int requiredFragments;
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
     private int[] flipStates;
@@ -50,6 +51,7 @@ public class Door:MonoBehaviour, IRoomObject
         content["locked"] = locked;
         content["alwaysLocked"] = alwaysLocked;
         content["direction"] = direction;
+        content["requiredFragments"] = requiredFragments;
         return content;
     }
 
@@ -60,6 +62,7 @@ public class Door:MonoBehaviour, IRoomObject
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
         direction = (int)content["direction"];
+        requiredFragments = (int)content["requiredFragments"];
         Spawn();
     }
 
@@ -75,7 +78,7 @@ public class Door:MonoBehaviour, IRoomObject
 
         string[] doorDirs = new string[] { "L", "R", "U", "D" };
         string[] doorColors = new string[] { "blue", "purple", "red", "green", "locked" };
-        string[] doorStates = new string[] { "open", "holdOpen", "close", "holdClosed" };
+        string[] doorStates = new string[] { "open", "holdOpen", "close", "holdClosed", "helixLocked" };
         for (int i = 0; i < doorColors.Length; i++)
         {
             for (int j = 0; j < doorStates.Length; j++)

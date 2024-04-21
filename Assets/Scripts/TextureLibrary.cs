@@ -14,6 +14,7 @@ public class TextureLibrary : ScriptableObject
     {
         "AchievementIcons",
         "Door",
+        "HelixLockedDoor",
         "MapTiles",
         "MenuPlus",
         "Player",

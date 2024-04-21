@@ -15,6 +15,7 @@ MonoBehaviour:
   referenceList:
   - AchievementIcons
   - Door
+  - HelixLockedDoor
   - MapTiles
   - MenuPlus
   - Player
