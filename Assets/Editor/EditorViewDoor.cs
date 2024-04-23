@@ -42,7 +42,9 @@ public class EditorViewDoor : Editor
             sPermLocked.boolValue = false;
         sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
-        sFragments.intValue = EditorGUILayout.IntField("Required Helix Fragments to open in rando: ", sFragments.intValue);
+        GUILayout.Space(5);
+        GUILayout.Label("Required Helix Fragments to open in\nrandomizer (when the option is turned on):");
+        sFragments.intValue = EditorGUILayout.IntField(sFragments.intValue);
 
         serializedObject.ApplyModifiedProperties();
 

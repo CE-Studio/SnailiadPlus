@@ -17649,6 +17649,54 @@
 			"randomizeStartFrame": true
 		},
 		{
+			"name": "Object_helixLockPopup_data",
+			"spriteName": "Entities/HelixLockPopup",
+			"framerate": 22.0,
+			"frames": [
+				5,
+				0,
+				304
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_helixLockPopup_appear",
+			"spriteName": "Entities/HelixLockPopup",
+			"framerate": 22.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "Object_helixLockPopup_disappear",
+			"spriteName": "Entities/HelixLockPopup",
+			"framerate": 22.0,
+			"frames": [
+				4,
+				3,
+				2,
+				1,
+				0,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Object_platform1_1_idle",
 			"spriteName": "Entities/Platform",
 			"framerate": 0.0,

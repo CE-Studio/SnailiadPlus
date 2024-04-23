@@ -13,12 +13,21 @@ public class Door:MonoBehaviour, IRoomObject
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
     private int[] flipStates;
+    private bool helixLocked;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
     public BoxCollider2D box;
     public GameObject player;
     public LightMask lightMask;
+
+    private GameObject lockPopup;
+    private AnimationModule lockAnim;
+    private TextObject lockText;
+    private int[] lockData = new int[] { };
+    private bool popupActive = false;
+    private const float POPUP_DIST = 2.5f;
+    private const float POPUP_TRIGGER_DIST = 4.5f;
 
     public Sprite[] editorSprites;
 
@@ -94,6 +103,31 @@ public class Door:MonoBehaviour, IRoomObject
 
     public void Spawn()
     {
+        helixLocked = PlayState.isRandomGame && PlayState.currentRando.bossesLocked && PlayState.CountFragments() < requiredFragments;
+        if (helixLocked)
+        {
+            lockData = PlayState.GetAnim("Object_helixLockPopup_data").frames;
+            lockPopup = Instantiate(Resources.Load<GameObject>("Objects/Helix Lock Popup"), transform);
+            lockPopup.transform.localPosition = direction switch
+            {
+                0 => Vector3.left,
+                1 => Vector3.up,
+                2 => Vector3.right,
+                3 => Vector3.down,
+                _ => Vector3.zero
+            } * POPUP_DIST;
+            lockPopup.GetComponent<SpriteRenderer>().sprite = PlayState.BlankTexture();
+            lockAnim = lockPopup.GetComponent<AnimationModule>();
+            lockAnim.Add("Object_helixLockPopup_appear");
+            lockAnim.Add("Object_helixLockPopup_disappear");
+            lockText = lockPopup.transform.GetChild(0).GetComponent<TextObject>();
+            lockText.SetText("");
+            string lockTextColor = lockData[2].ToString();
+            while (lockTextColor.Length < 4)
+                lockTextColor = "0" + lockTextColor;
+            lockText.SetColor(PlayState.GetColor(lockTextColor));
+        }
+
         if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 2)
             SetState1();
         else
@@ -134,6 +168,27 @@ public class Door:MonoBehaviour, IRoomObject
             }
             if (!box.enabled && !anim.isPlaying)
                 anim.Play("holdOpen");
+        }
+        if (helixLocked)
+        {
+            float playerDis = Vector2.Distance(lockPopup.transform.position, PlayState.player.transform.position);
+            if (playerDis <= POPUP_TRIGGER_DIST && !popupActive)
+            {
+                popupActive = true;
+                lockText.SetText("");
+                lockAnim.Play("Object_helixLockPopup_appear");
+            }
+            else if (playerDis > POPUP_TRIGGER_DIST && popupActive)
+            {
+                popupActive = false;
+                lockAnim.Play("Object_helixLockPopup_disappear");
+            }
+            if (popupActive && lockText.GetText() == "")
+                if (lockAnim.GetCurrentFrame() >= lockData[0])
+                    lockText.SetText(requiredFragments.ToString());
+            if (!popupActive && lockText.GetText() != "")
+                if (lockAnim.GetCurrentFrame() >= lockData[1])
+                    lockText.SetText("");
         }
     }
 
@@ -192,7 +247,7 @@ public class Door:MonoBehaviour, IRoomObject
     public void SetState2()
     {
         sprite.enabled = true;
-        PlayAnim("holdClosed");
+        PlayAnim(helixLocked ? "helixLocked" : "holdClosed");
         box.enabled = true;
     }
 
@@ -225,7 +280,9 @@ public class Door:MonoBehaviour, IRoomObject
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            if (!locked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
+            if (helixLocked)
+                PlayState.PlaySound("Ping");
+            else if (!locked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
         }
     }

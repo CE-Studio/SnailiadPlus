@@ -803,7 +803,15 @@ public class PlayState
 
     public static Color32 GetColor(string ID)
     {
-        return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
+        if (ID.Length == 2)
+        {
+            ID = ID.ToLower();
+            int x = ID[0] switch { 'a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, _ => int.Parse(ID.Substring(0, 1)) };
+            int y = ID[1] switch { 'a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, _ => int.Parse(ID.Substring(1, 1)) };
+            return palette.GetPixel(x % 4, y % 14);
+        }
+        else
+            return palette.GetPixel(int.Parse(ID.Substring(0, 2)) % 4, int.Parse(ID.Substring(2, 2)) % 14);
     }
     public static Color32 GetColor(Vector2 ID)
     {

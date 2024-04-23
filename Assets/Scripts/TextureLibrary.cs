@@ -109,6 +109,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/GravTurtle2",
         "Entities/Grass",
         "Entities/HealthOrb",
+        "Entities/HelixLockPopup",
         "Entities/IceSpike",
         "Entities/Jellyfish",
         "Entities/Kitty",

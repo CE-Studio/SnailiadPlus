@@ -465,6 +465,11 @@
             "height": 8
         },
 		{
+            "name": "Entities/HelixLockPopup",
+            "width": 40,
+            "height": 32
+        },
+		{
             "name": "Entities/IceSpike",
             "width": 16,
             "height": 16
