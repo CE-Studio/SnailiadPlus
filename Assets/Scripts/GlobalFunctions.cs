@@ -77,6 +77,27 @@ public class GlobalFunctions : MonoBehaviour
     // Light mask object
     public static GameObject lightMask;
 
+    // Raw text popup timers
+    public int textColorPointer;
+    public int textColorCooldown;
+    public Color32 textPopupColor;
+    public float popupTimerItem;
+    public float popupTimerCollection;
+    public float popupTimerCompletion;
+    public float popupTimerSave;
+    public float popupTimerBestTime;
+    public float popupTimerUnlock;
+    public enum TextTypes
+    {
+        item,
+        collection,
+        areaCompletion,
+        totalCompletion,
+        save,
+        bestTime,
+        unlock
+    }
+
     public void Awake()
     {
         DeclarePlayStateMono();
@@ -345,6 +366,83 @@ public class GlobalFunctions : MonoBehaviour
                 textColor = new Color(1, 1, 1, 0);
             areaText.SetColor(textColor);
             radarText.SetColor(textColor);
+        }
+
+        // All raw text popup timers
+        textColorCooldown--;
+        if (textColorCooldown <= 0)
+        {
+            textColorCooldown = 2;
+            textPopupColor = textColorPointer switch
+            {
+                0 => new Color32(189, 191, 198, 255),
+                1 => new Color32(247, 198, 223, 255),
+                2 => new Color32(252, 214, 136, 255),
+                _ => new Color32(170, 229, 214, 255)
+            };
+            textColorPointer = (textColorPointer + 1) % 4;
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            bool useColor = false;
+            bool useAreaTextColor = false;
+            TextObject targetText = itemText;
+            float fadeDeadzone = 0;
+            float fadeTime = 0;
+            switch (i)
+            {
+                case 0: // Item
+                    targetText = itemText;
+                    useColor = true;
+                    fadeDeadzone = 0.7f;
+                    fadeTime = popupTimerItem;
+                    if (popupTimerItem >= 0)
+                        popupTimerItem -= Time.deltaTime;
+                    break;
+                case 1: // Collection
+                    targetText = itemPercentageText;
+                    useColor = true;
+                    fadeDeadzone = 0.7f;
+                    fadeTime = popupTimerCollection;
+                    if (popupTimerCollection >= 0)
+                        popupTimerCollection -= Time.deltaTime;
+                    break;
+                case 2: // Area/total completion
+                    targetText = itemCompletionText;
+                    useColor = true;
+                    fadeDeadzone = 0.7f;
+                    fadeTime = popupTimerCompletion;
+                    if (popupTimerCompletion >= 0)
+                        popupTimerCompletion -= Time.deltaTime;
+                    break;
+                case 3: // Game saved
+                    targetText = gameSaveText;
+                    fadeDeadzone = 0.7f;
+                    fadeTime = popupTimerSave;
+                    if (popupTimerSave >= 0)
+                        popupTimerSave -= Time.deltaTime;
+                    break;
+                case 4: // Best time
+                    targetText = newBestTimeText;
+                    useAreaTextColor = true;
+                    fadeTime = popupTimerBestTime;
+                    if (popupTimerBestTime >= 0)
+                        popupTimerBestTime -= Time.deltaTime;
+                    break;
+                case 5: // Unlocks
+                    targetText = newUnlocksText;
+                    useAreaTextColor = true;
+                    fadeTime = popupTimerUnlock;
+                    if (popupTimerUnlock >= 0)
+                        popupTimerUnlock -= Time.deltaTime;
+                    break;
+            }
+            float alpha = useAreaTextColor ? areaText.GetColor().a : Mathf.InverseLerp(0, fadeDeadzone, fadeTime);
+            Color thisColor = useColor ? textPopupColor : Color.white;
+            thisColor.a = alpha;
+            targetText.SetColor(thisColor);
+            if (useAreaTextColor && fadeTime < 0)
+                targetText.SetText("");
         }
 
         // Audiosource volume control
@@ -928,167 +1026,196 @@ public class GlobalFunctions : MonoBehaviour
 
     public void FlashHUDText(TextTypes textType, string textValue = "No text")
     {
-        StartCoroutine(FlashText(textType, textValue));
-    }
-
-    public enum TextTypes
-    {
-        item,
-        collection,
-        areaCompletion,
-        totalCompletion,
-        save,
-        bestTime,
-        unlock
-    }
-    public IEnumerator FlashText(TextTypes textType, string textValue)
-    {
-        float timer = 0;
-        int colorPointer = 0;
-        int colorCooldown = 0;
-        byte alpha;
+        //StartCoroutine(FlashText(textType, textValue));
         switch (textType)
         {
-            default:
-                yield return new WaitForEndOfFrame();
-                break;
             case TextTypes.item:
+                popupTimerItem = 3.5f;
                 itemText.SetText(textValue);
-                while (timer < 3.5f)
-                {
-                    alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
-                    if (colorCooldown <= 0)
-                    {
-                        itemText.SetColor(colorPointer switch
-                        {
-                            0 => new Color32(189, 191, 198, alpha),
-                            1 => new Color32(247, 198, 223, alpha),
-                            2 => new Color32(252, 214, 136, alpha),
-                            _ => new Color32(170, 229, 214, alpha)
-                        });
-                        colorPointer = (colorPointer + 1) % 4;
-                        colorCooldown = 2;
-                    }
-                    else
-                        colorCooldown--;
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                itemText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.collection:
+                popupTimerCollection = 2.5f;
                 itemPercentageText.SetText(string.Format(PlayState.GetText("hud_collectedItemPercentage"), PlayState.GetItemPercentage().ToString()));
-                while (timer < 2.5f)
-                {
-                    alpha = timer > 1.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(1.8f, 2.5f, timer))) : (byte)255;
-                    if (colorCooldown <= 0)
-                    {
-                        itemPercentageText.SetColor(colorPointer switch
-                        {
-                            0 => new Color32(189, 191, 198, alpha),
-                            1 => new Color32(247, 198, 223, alpha),
-                            2 => new Color32(252, 214, 136, alpha),
-                            _ => new Color32(170, 229, 214, alpha)
-                        });
-                        colorPointer = (colorPointer + 1) % 4;
-                        colorCooldown = 2;
-                    }
-                    else
-                        colorCooldown--;
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                itemPercentageText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.areaCompletion:
+                popupTimerCompletion = 3.5f;
                 itemCompletionText.SetText(PlayState.GetText("hud_areaComplete"));
-                while (timer < 3.5f)
-                {
-                    alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
-                    if (colorCooldown <= 0)
-                    {
-                        itemCompletionText.SetColor(colorPointer switch
-                        {
-                            0 => new Color32(189, 191, 198, alpha),
-                            1 => new Color32(247, 198, 223, alpha),
-                            2 => new Color32(252, 214, 136, alpha),
-                            _ => new Color32(170, 229, 214, alpha)
-                        });
-                        colorPointer = (colorPointer + 1) % 4;
-                        colorCooldown = 2;
-                    }
-                    else
-                        colorCooldown--;
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                itemCompletionText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.totalCompletion:
+                popupTimerCompletion = 8.5f;
                 string thisText = PlayState.GetText("hud_collectedAllItems");
                 if (!PlayState.generalData.achievements[7] && !Application.version.ToLower().Contains("demo"))
                     thisText += "\n" + PlayState.GetText("hud_unlockRandoMode");
                 itemCompletionText.SetText(thisText);
-                while (timer < 8.5f)
-                {
-                    alpha = timer > 7.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(7.8f, 8.5f, timer))) : (byte)255;
-                    if (colorCooldown <= 0)
-                    {
-                        itemCompletionText.SetColor(colorPointer switch
-                        {
-                            0 => new Color32(189, 191, 198, alpha),
-                            1 => new Color32(247, 198, 223, alpha),
-                            2 => new Color32(252, 214, 136, alpha),
-                            _ => new Color32(170, 229, 214, alpha)
-                        });
-                        colorPointer = (colorPointer + 1) % 4;
-                        colorCooldown = 2;
-                    }
-                    else
-                        colorCooldown--;
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                itemCompletionText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.save:
+                popupTimerSave = 2.5f;
                 gameSaveText.SetText(PlayState.GetText("hud_gameSaved"));
-                while (timer < 2.5f)
-                {
-                    gameSaveText.SetColor(new Color(1, 1, 1, timer > 1.8f ? Mathf.Lerp(1, 0, Mathf.InverseLerp(1.8f, 2.5f, timer)) : 1));
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                gameSaveText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.bestTime:
+                popupTimerBestTime = 4f;
                 string character = PlayState.GetText(PlayState.currentProfile.character.ToLower());
                 string diff = PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" });
                 string time = PlayState.GetTimeString();
                 newBestTimeText.SetText(string.Format(PlayState.GetText("hud_newBestTime"), character, diff, time));
-                while (timer < 4f)
-                {
-                    newBestTimeText.SetColor(areaText.thisText.color);
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                newBestTimeText.SetColor(new Color(1, 1, 1, 0));
                 break;
             case TextTypes.unlock:
+                popupTimerUnlock = 4f;
                 if (Application.version.ToLower().Contains("demo"))
                     break;
                 newUnlocksText.SetText(PlayState.GetText("hud_unlock" + textValue));
-                while (timer < 4f)
-                {
-                    newUnlocksText.SetColor(areaText.thisText.color);
-                    yield return new WaitForEndOfFrame();
-                    timer += Time.deltaTime;
-                }
-                newUnlocksText.SetColor(new Color(1, 1, 1, 0));
                 break;
         }
-        yield return new WaitForEndOfFrame();
     }
+
+    //public IEnumerator FlashText(TextTypes textType, string textValue)
+    //{
+    //    float timer = 0;
+    //    int colorPointer = 0;
+    //    int colorCooldown = 0;
+    //    byte alpha;
+    //    switch (textType)
+    //    {
+    //        default:
+    //            yield return new WaitForEndOfFrame();
+    //            break;
+    //        case TextTypes.item:
+    //            itemText.SetText(textValue);
+    //            while (timer < 3.5f)
+    //            {
+    //                alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
+    //                if (colorCooldown <= 0)
+    //                {
+    //                    itemText.SetColor(colorPointer switch
+    //                    {
+    //                        0 => new Color32(189, 191, 198, alpha),
+    //                        1 => new Color32(247, 198, 223, alpha),
+    //                        2 => new Color32(252, 214, 136, alpha),
+    //                        _ => new Color32(170, 229, 214, alpha)
+    //                    });
+    //                    colorPointer = (colorPointer + 1) % 4;
+    //                    colorCooldown = 2;
+    //                }
+    //                else
+    //                    colorCooldown--;
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            itemText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.collection:
+    //            itemPercentageText.SetText(string.Format(PlayState.GetText("hud_collectedItemPercentage"), PlayState.GetItemPercentage().ToString()));
+    //            while (timer < 2.5f)
+    //            {
+    //                alpha = timer > 1.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(1.8f, 2.5f, timer))) : (byte)255;
+    //                if (colorCooldown <= 0)
+    //                {
+    //                    itemPercentageText.SetColor(colorPointer switch
+    //                    {
+    //                        0 => new Color32(189, 191, 198, alpha),
+    //                        1 => new Color32(247, 198, 223, alpha),
+    //                        2 => new Color32(252, 214, 136, alpha),
+    //                        _ => new Color32(170, 229, 214, alpha)
+    //                    });
+    //                    colorPointer = (colorPointer + 1) % 4;
+    //                    colorCooldown = 2;
+    //                }
+    //                else
+    //                    colorCooldown--;
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            itemPercentageText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.areaCompletion:
+    //            itemCompletionText.SetText(PlayState.GetText("hud_areaComplete"));
+    //            while (timer < 3.5f)
+    //            {
+    //                alpha = timer > 2.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(2.8f, 3.5f, timer))) : (byte)255;
+    //                if (colorCooldown <= 0)
+    //                {
+    //                    itemCompletionText.SetColor(colorPointer switch
+    //                    {
+    //                        0 => new Color32(189, 191, 198, alpha),
+    //                        1 => new Color32(247, 198, 223, alpha),
+    //                        2 => new Color32(252, 214, 136, alpha),
+    //                        _ => new Color32(170, 229, 214, alpha)
+    //                    });
+    //                    colorPointer = (colorPointer + 1) % 4;
+    //                    colorCooldown = 2;
+    //                }
+    //                else
+    //                    colorCooldown--;
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            itemCompletionText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.totalCompletion:
+    //            string thisText = PlayState.GetText("hud_collectedAllItems");
+    //            if (!PlayState.generalData.achievements[7] && !Application.version.ToLower().Contains("demo"))
+    //                thisText += "\n" + PlayState.GetText("hud_unlockRandoMode");
+    //            itemCompletionText.SetText(thisText);
+    //            while (timer < 8.5f)
+    //            {
+    //                alpha = timer > 7.8f ? (byte)Mathf.RoundToInt(Mathf.Lerp(255, 0, Mathf.InverseLerp(7.8f, 8.5f, timer))) : (byte)255;
+    //                if (colorCooldown <= 0)
+    //                {
+    //                    itemCompletionText.SetColor(colorPointer switch
+    //                    {
+    //                        0 => new Color32(189, 191, 198, alpha),
+    //                        1 => new Color32(247, 198, 223, alpha),
+    //                        2 => new Color32(252, 214, 136, alpha),
+    //                        _ => new Color32(170, 229, 214, alpha)
+    //                    });
+    //                    colorPointer = (colorPointer + 1) % 4;
+    //                    colorCooldown = 2;
+    //                }
+    //                else
+    //                    colorCooldown--;
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            itemCompletionText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.save:
+    //            gameSaveText.SetText(PlayState.GetText("hud_gameSaved"));
+    //            while (timer < 2.5f)
+    //            {
+    //                gameSaveText.SetColor(new Color(1, 1, 1, timer > 1.8f ? Mathf.Lerp(1, 0, Mathf.InverseLerp(1.8f, 2.5f, timer)) : 1));
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            gameSaveText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.bestTime:
+    //            string character = PlayState.GetText(PlayState.currentProfile.character.ToLower());
+    //            string diff = PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" });
+    //            string time = PlayState.GetTimeString();
+    //            newBestTimeText.SetText(string.Format(PlayState.GetText("hud_newBestTime"), character, diff, time));
+    //            while (timer < 4f)
+    //            {
+    //                newBestTimeText.SetColor(areaText.thisText.color);
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            newBestTimeText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //        case TextTypes.unlock:
+    //            if (Application.version.ToLower().Contains("demo"))
+    //                break;
+    //            newUnlocksText.SetText(PlayState.GetText("hud_unlock" + textValue));
+    //            while (timer < 4f)
+    //            {
+    //                newUnlocksText.SetColor(areaText.thisText.color);
+    //                yield return new WaitForEndOfFrame();
+    //                timer += Time.deltaTime;
+    //            }
+    //            newUnlocksText.SetColor(new Color(1, 1, 1, 0));
+    //            break;
+    //    }
+    //    yield return new WaitForEndOfFrame();
+    //}
 
     public void LoadClip(string path, string name, Vector2 location)
     {

@@ -130,6 +130,15 @@ public class TextObject : MonoBehaviour
         controlIcon.color = color;
     }
 
+    public Color GetColor()
+    {
+        return thisText.color;
+    }
+    public Color32 GetColor32()
+    {
+        return thisText.color;
+    }
+
     public void SetAlignment(string alignment)
     {
         switch (alignment)

@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 5387
+  controlID: 8293
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 5388
+  controlID: 8294
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 5333
+  controlID: 8295
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -569,9 +569,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 221.86963, y: -85.52487, z: -4.4045134}
+    m_Target: {x: 158.53178, y: -101.613434, z: -6.075341}
     speed: 2
-    m_Value: {x: 221.86963, y: -85.52487, z: -4.4045134}
+    m_Value: {x: 158.53178, y: -101.613434, z: -6.075341}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -622,9 +622,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 26.168043
+    m_Target: 76.21689
     speed: 2
-    m_Value: 26.168043
+    m_Value: 76.21689
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_Zoom: -1
   m_ScrollPosition: {x: 0, y: 0}
   m_SelectedObject: {fileID: 0}
-  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
+  m_SelectedSpriteRectGUID: 5e97eb03825dee720800000000000000
   m_LastUsedModuleTypeName: 
 --- !u!114 &11
 MonoBehaviour:
@@ -1247,7 +1247,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 32716
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 5389
+  controlID: 8258
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1385,21 +1385,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Objects
+    - Assets/Resources/Images
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Objects
+  - Assets/Resources/Images
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\james\Documents\Unity projects\Snailiad Unity remake
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 138.20001}
-    m_SelectedIDs: 02e30000
-    m_LastClickedID: 58114
+    m_SelectedIDs: 94dd0000
+    m_LastClickedID: 56724
     m_ExpandedIDs: 0000000068a600006aa6000078a6000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1453,8 +1453,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: cc7f0000
+    m_LastClickedInstanceID: 32716
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300004216000074a600008ebc030008990000a4b1030018790000fe7f000004800000
     m_RenameOverlay:
@@ -1480,7 +1480,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 36.200012}
+    m_ScrollPosition: {x: 0, y: 275}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 151
