@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     public int damage;
     public float rapidMult;
     private bool despawnOffScreen = true;
+    private bool singleFrameHitFlag = false;
 
     public SpriteRenderer sprite;
     public AnimationModule anim;
@@ -35,7 +36,7 @@ public class Bullet : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         cam = GameObject.Find("View");
 
-        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev" };
+        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev", "broom" };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
             for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
@@ -88,6 +89,20 @@ public class Bullet : MonoBehaviour
                 case 10:
                     velocity += initialVelocity * 15f * Time.fixedDeltaTime;
                     break;
+                case 11:
+                case 12:
+                    transform.position = PlayState.player.transform.position;
+                    if (box.enabled)
+                        box.enabled = false;
+                    else if (!singleFrameHitFlag)
+                    {
+                        if (anim.GetCurrentFrame() >= (PlayState.CheckForItem("Rapid Fire") ? 3 : 4))
+                        {
+                            singleFrameHitFlag = true;
+                            box.enabled = true;
+                        }
+                    }
+                    break;
                 default:
                     velocity += 0.03f;
                     break;
@@ -131,6 +146,7 @@ public class Bullet : MonoBehaviour
         isActive = true;
         sprite.enabled = true;
         box.enabled = true;
+        singleFrameHitFlag = false;
         if (!(posOverrideX == Mathf.Infinity && posOverrideY == Mathf.Infinity))
             transform.position = new Vector2(posOverrideX, posOverrideY);
         else
@@ -245,6 +261,15 @@ public class Bullet : MonoBehaviour
                 rapidMult = 1f;
                 lightSize = 11;
                 break;
+            case 11: // Broom
+                box.size = new Vector2(1.95f, 1.95f);
+                velocity = 2f;
+                damage = 10;
+                rapidMult = 2f;
+                box.enabled = false;
+                break;
+            case 12: // Devastator Broom
+                break;
         }
         direction = dir;
         initialVelocity = velocity;
@@ -272,6 +297,8 @@ public class Bullet : MonoBehaviour
             8 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "1_",
             9 => ShockWaveAnimSubroutine(false),
             10 => ShockWaveAnimSubroutine(true),
+            11 => "broom_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
+            12 => "broomDev_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
             _ => "rainbowWave_",
         };
         if (bulletType != 9 && bulletType != 10)

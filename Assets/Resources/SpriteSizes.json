@@ -73,6 +73,16 @@
             "height": 24
         },
 		{
+            "name": "Bullets/Broom",
+            "width": 32,
+            "height": 32
+        },
+		{
+            "name": "Bullets/BroomDev",
+            "width": 64,
+            "height": 64
+        },
+		{
             "name": "Bullets/EnemyBoomerangBlue",
             "width": 24,
             "height": 24
