@@ -30,7 +30,7 @@ public class Leechy : Player
         gravity = new float[] { 1.125f, 1.125f, 1.125f, 1.125f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        weaponCooldowns = new float[] { 0.046f, 0.23f, 0.13f, 0.0414f, 0.207f, 0.117f };
+        weaponCooldowns = new float[] { 0.54f, 0.405f, 0.046f, 0.0414f, 0.23f, 0.207f, 0.13f, 0.117f, 0f, 0f };
         applyRapidFireMultiplier = true;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);

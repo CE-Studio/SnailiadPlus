@@ -1992,10 +1992,10 @@ public class MainMenu : MonoBehaviour
         if (!runIntro)
         {
             if (PlayState.lastLoadedWeapon != 0)
-                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon - 1);
+                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon);
             else
-                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 2 :
-                    (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 1 : 0));
+                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 3 :
+                    (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 2 : (PlayState.CheckForItem(0) ? 1 : 0)));
         }
         if (PlayState.isInBossRush)
             PlayState.TogglableHUDElements[0].SetActive(false);
@@ -2303,6 +2303,8 @@ public class MainMenu : MonoBehaviour
             PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
         }
         PlayState.SaveRando(PlayState.currentProfileNumber);
+        if (PlayState.currentRando.broomStart)
+            PlayState.playerScript.armed = true;
 
         PlayState.WriteSave(PlayState.currentProfileNumber, false);
         PlayState.LoadGame(PlayState.currentProfileNumber, true);

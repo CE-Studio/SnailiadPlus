@@ -33,10 +33,10 @@ public class Door:MonoBehaviour, IRoomObject
 
     private readonly List<List<int>> bulletsThatOpenMe = new()
     {
-        new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 },  // Peashooter
-        new List<int> { 2, 3, 4, 5, 6, 7, 8 },     // Boomerang
-        new List<int> { 3, 4, 5, 6, 7, 8 },        // Rainbow Wave
-        new List<int> { 4, 5, 6, 8 }               // Devastator
+        new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },  // Peashooter
+        new List<int> { 1, 3, 4, 5, 6, 7, 8, 9 },        // Boomerang
+        new List<int> { 1, 3, 5, 6, 7, 8, 9 },           // Rainbow Wave
+        new List<int> { 1, 3, 5, 7, 9 }                  // Devastator
     };
 
     public Dictionary<string, object> resave()

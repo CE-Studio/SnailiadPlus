@@ -37,7 +37,7 @@ public class Blobby : Player
         gravity = new float[] { 1.5f, 1.5f, 1.5f, 1.5f };
         terminalVelocity = new float[] { -0.7208f, -0.7208f, -0.7208f, -0.7208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        weaponCooldowns = new float[] { 0.095f, 0.35f, 0.185f, 0.0475f, 0.175f, 0.0925f };
+        weaponCooldowns = new float[] { 0.54f, 0.405f, 0.095f, 0.0475f, 0.35f, 0.175f, 0.185f, 0.0925f, 0f, 0f };
         applyRapidFireMultiplier = true;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(0.96f, 0.96f);

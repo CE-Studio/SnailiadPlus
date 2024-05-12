@@ -30,7 +30,7 @@ public class GlobalFunctions : MonoBehaviour
     public AnimationModule[] keySprites = new AnimationModule[7];
 
     // Weapon icons
-    public AnimationModule[] weaponIcons = new AnimationModule[3];
+    public AnimationModule[] weaponIcons = new AnimationModule[4];
     private bool bottomKeysAreCon = false;
 
     // Health
@@ -119,10 +119,10 @@ public class GlobalFunctions : MonoBehaviour
     {
         for (int i = 0; i < weaponIcons.Length; i++)
         {
-            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_locked");
-            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_inactive");
-            weaponIcons[i].Add("WeaponIcon_" + (i + 1) + "_active");
-            weaponIcons[i].Play("WeaponIcon_" + (i + 1) + "_locked");
+            weaponIcons[i].Add("WeaponIcon_" + i + "_locked");
+            weaponIcons[i].Add("WeaponIcon_" + i + "_inactive");
+            weaponIcons[i].Add("WeaponIcon_" + i + "_active");
+            weaponIcons[i].Play("WeaponIcon_" + i + "_locked");
             weaponIcons[i].affectedByGlobalEntityColor = false;
         }
 
@@ -786,8 +786,14 @@ public class GlobalFunctions : MonoBehaviour
 
     public void ChangeActiveWeapon(int weaponID, bool activateThisWeapon = false)
     {
-        if ((weaponID + 1 > PlayState.playerScript.selectedWeapon && activateThisWeapon) || !activateThisWeapon)
-            PlayState.playerScript.selectedWeapon = weaponID + 1;
+        if ((weaponID > PlayState.playerScript.selectedWeapon && activateThisWeapon) || !activateThisWeapon)
+        {
+            //if (!activateThisWeapon && PlayState.playerScript.selectedWeapon == weaponID + 1 && PlayState.isRandomGame && PlayState.currentRando.broomStart)
+            //    PlayState.playerScript.selectedWeapon = 0;
+            //else
+            //    PlayState.playerScript.selectedWeapon = weaponID + 1;
+            PlayState.playerScript.selectedWeapon = weaponID;
+        }
         UpdateWeaponIcons();
     }
 
@@ -795,14 +801,18 @@ public class GlobalFunctions : MonoBehaviour
     {
         for (int i = 0; i < weaponIcons.Length; i++)
         {
-            string animName = "WeaponIcon_" + (i + 1) + "_";
+            string animName = "WeaponIcon_" + i + "_";
             bool hasWeapon = i switch
             {
-                1 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
-                2 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
+                0 => PlayState.isRandomGame && PlayState.currentRando.broomStart,
+                1 => PlayState.CheckForItem(0),
+                2 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
+                3 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
                 _ => PlayState.CheckForItem(0)
             };
-            if (PlayState.playerScript.selectedWeapon - 1 == i && hasWeapon)
+            if (i == 0)
+                weaponIcons[i].GetSpriteRenderer().enabled = PlayState.isRandomGame && PlayState.currentRando.broomStart;
+            if (PlayState.playerScript.selectedWeapon == i && hasWeapon)
                 animName += "active";
             else if (hasWeapon)
                 animName += "inactive";
@@ -1382,7 +1392,7 @@ public class GlobalFunctions : MonoBehaviour
                     Control.SetVirtual(Control.Keyboard.Up1, true);
                     if (PlayState.player.transform.position.x - itemOrigin.x > 9.5f)
                     {
-                        ChangeActiveWeapon(2);
+                        ChangeActiveWeapon(3);
                         Control.SetVirtual(Control.Keyboard.Right1, false);
                         Control.SetVirtual(Control.Keyboard.Jump1, true);
                         step++;
@@ -1470,7 +1480,7 @@ public class GlobalFunctions : MonoBehaviour
                     Control.SetVirtual(Control.Keyboard.Down1, true);
                     if (PlayState.player.transform.position.x > itemOrigin.x + 4)
                     {
-                        ChangeActiveWeapon(2);
+                        ChangeActiveWeapon(3);
                         Control.SetVirtual(Control.Keyboard.Down1, false);
                         Control.SetVirtual(Control.Keyboard.Up1, true);
                         step++;
@@ -1551,6 +1561,7 @@ public class GlobalFunctions : MonoBehaviour
                     }
                     if (PlayState.playerScript.transform.position.x > itemOrigin.x + 9.5f)
                     {
+                        ChangeActiveWeapon(3);
                         Control.SetVirtual(Control.Keyboard.Right1, false);
                         step++;
                         stepElapsed = 0;
@@ -1650,9 +1661,10 @@ public class GlobalFunctions : MonoBehaviour
                         Control.SetVirtual(Control.Keyboard.Right1, false);
                     if (PlayState.playerScript.velocity.x == 0 && PlayState.playerScript.grounded && !PlayState.playerScript.ungroundedViaHop)
                     {
+                        ChangeActiveWeapon(3);
+                        Control.SetVirtual(Control.Keyboard.Up1, true);
                         step++;
                         stepElapsed = 0;
-                        Control.SetVirtual(Control.Keyboard.Up1, true);
                     }
                     break;
                 case 2: // Jump up to gain height

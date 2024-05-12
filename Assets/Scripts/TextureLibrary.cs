@@ -28,6 +28,8 @@ public class TextureLibrary : ScriptableObject
 
         "Bullets/Boomerang",
         "Bullets/BoomerangDev",
+        "Bullets/Broom",
+        "Bullets/BroomDev",
         "Bullets/EnemyBoomerangBlue",
         "Bullets/EnemyBoomerangRed",
         "Bullets/EnemyDonut",

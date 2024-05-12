@@ -36,7 +36,10 @@ public class Bullet : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         cam = GameObject.Find("View");
 
-        string[] bulletTypes = new string[] { "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev", "broom" };
+        string[] bulletTypes = new string[]
+        {
+            "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev", "broom", "broom_rapid"
+        };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
             for (int j = 0; j < PlayState.DIRS_COMPASS.Length; j++)
@@ -71,26 +74,8 @@ public class Bullet : MonoBehaviour
             lifeTimer += Time.fixedDeltaTime;
             switch (bulletType)
             {
-                case 1:
-                case 4:
-                    break;
-                case 2:
-                case 5:
-                    velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime * rapidMult;
-                    break;
-                case 3:
-                case 6:
-                    velocity += initialVelocity * 18f * Time.fixedDeltaTime;
-                    break;
-                case 7:
-                case 8:
-                    break;
-                case 9:
-                case 10:
-                    velocity += initialVelocity * 15f * Time.fixedDeltaTime;
-                    break;
-                case 11:
-                case 12:
+                case 0: // Broom
+                case 1: // Dev Broom
                     transform.position = PlayState.player.transform.position;
                     if (box.enabled)
                         box.enabled = false;
@@ -102,6 +87,24 @@ public class Bullet : MonoBehaviour
                             box.enabled = true;
                         }
                     }
+                    break;
+                case 2: // Peashooter
+                case 3: // Dev Peashooter
+                    break;
+                case 4: // Boomerang
+                case 5: // Dev Boomerang
+                    velocity -= initialVelocity * 1.5f * Time.fixedDeltaTime * rapidMult;
+                    break;
+                case 6: // Rainbow Wave
+                case 7: // Dev Rainbow Wave
+                    velocity += initialVelocity * 18f * Time.fixedDeltaTime;
+                    break;
+                case 8: // Gravity Shock (Gravity)
+                case 9: // Gravity Shock (Full Metal)
+                    break;
+                case 10: // Shockwave
+                case 11: // Dev Shockwave
+                    velocity += initialVelocity * 15f * Time.fixedDeltaTime;
                     break;
                 default:
                     velocity += 0.03f;
@@ -135,10 +138,12 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-        if ((lifeTimer > 3 || despawnOffScreen) && !PlayState.OnScreen(transform.position, box) && bulletType < 7)
+        if ((lifeTimer > 3 || despawnOffScreen) && !PlayState.OnScreen(transform.position, box) && bulletType < 8)
             Despawn();
-        if ((bulletType == 1 || bulletType == 9 || bulletType == 10) && PlayState.IsTileSolid(transform.position))
+        if ((bulletType == 2 || bulletType == 10 || bulletType == 11) && PlayState.IsTileSolid(transform.position))
             Despawn(PlayState.OnScreen(transform.position, box));
+        if ((bulletType == 0 || bulletType == 1) && !anim.isPlaying)
+            Despawn();
     }
 
     public void Shoot(int type, int dir, bool applyRapidMult, float posOverrideX = Mathf.Infinity, float posOverrideY = Mathf.Infinity)
@@ -192,32 +197,38 @@ public class Bullet : MonoBehaviour
         int lightSize = -1;
         switch (type)
         {
-            case 1: // Peashooter
+            case 0: // Broom
+                box.size = new Vector2(2.45f, 2.45f);
+                velocity = 1f;
+                damage = 25;
+                rapidMult = 1f;
+                box.enabled = false;
+                break;
+            case 1: // Devastator Broom
+                box.size = new Vector2(4.95f, 4.95f);
+                velocity = 1f;
+                damage = 80;
+                rapidMult = 1f;
+                box.enabled = false;
+                break;
+            case 2: // Peashooter
                 box.size = new Vector2(0.25f, 0.25f);
                 velocity = 0.4625f;
                 damage = 10;
                 rapidMult = 2f;
                 break;
-            case 2: // Boomerang
+            case 3: // Devastator Peashooter
+                box.size = new Vector2(1.4f, 1.4f);
+                velocity = 0.4625f;
+                damage = 45;
+                rapidMult = 2f;
+                break;
+            case 4: // Boomerang
                 box.size = new Vector2(0.9f, 0.9f);
                 velocity = 0.4125f;
                 damage = 20;
                 rapidMult = 2f;
                 despawnOffScreen = false;
-                break;
-            default:
-            case 3: // Rainbow Wave
-                box.size = new Vector2(1.9f, 1.9f);
-                velocity = 0.075f;
-                damage = 30;
-                rapidMult = 2f;
-                lightSize = 13;
-                break;
-            case 4: // Devastator Peashooter
-                box.size = new Vector2(1.4f, 1.4f);
-                velocity = 0.4625f;
-                damage = 45;
-                rapidMult = 2f;
                 break;
             case 5: // Devastator Boomerang
                 box.size = new Vector2(1.4f, 1.4f);
@@ -226,49 +237,48 @@ public class Bullet : MonoBehaviour
                 rapidMult = 2f;
                 despawnOffScreen = false;
                 break;
-            case 6: // Devastator Rainbow Wave
+            default:
+            case 6: // Rainbow Wave
+                box.size = new Vector2(1.9f, 1.9f);
+                velocity = 0.075f;
+                damage = 30;
+                rapidMult = 2f;
+                lightSize = 13;
+                break;
+            case 7: // Devastator Rainbow Wave
                 box.size = new Vector2(2.4f, 2.4f);
                 velocity = 0.075f;
                 damage = 68;
                 rapidMult = 2f;
                 lightSize = 17;
                 break;
-            case 7: // Gravity Shock
+            case 8: // Gravity Shock
                 box.size = new Vector2(2.75f, 2.75f);
                 velocity = 0;
                 damage = 300;
                 rapidMult = 1f;
                 despawnOffScreen = false;
                 break;
-            case 8: // Full-Metal Gravity Shock
+            case 9: // Full-Metal Gravity Shock
                 box.size = new Vector2(3f, 3f);
                 velocity = 0;
                 damage = 650;
                 rapidMult = 1f;
                 despawnOffScreen = false;
                 break;
-            case 9: // Shockwave
+            case 10: // Shockwave
                 box.size = new Vector2(0.45f, 0.45f);
                 velocity = 0.05f;
                 damage = 68;
                 rapidMult = 1f;
                 lightSize = 9;
                 break;
-            case 10: // Devastator Shockwave
+            case 11: // Devastator Shockwave
                 box.size = new Vector2(0.95f, 0.95f);
                 velocity = 0.085f;
                 damage = 108;
                 rapidMult = 1f;
                 lightSize = 11;
-                break;
-            case 11: // Broom
-                box.size = new Vector2(1.95f, 1.95f);
-                velocity = 2f;
-                damage = 10;
-                rapidMult = 2f;
-                box.enabled = false;
-                break;
-            case 12: // Devastator Broom
                 break;
         }
         direction = dir;
@@ -287,18 +297,18 @@ public class Bullet : MonoBehaviour
         string animToPlay = "Bullet_";
         animToPlay += bulletType switch
         {
-            1 => "peashooter_",
-            2 => "boomerang_",
-            3 => "rainbowWave_",
-            4 => "peashooterDev_",
+            0 => "broom_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
+            1 => "broomDev_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
+            2 => "peashooter_",
+            3 => "peashooterDev_",
+            4 => "boomerang_",
             5 => "boomerangDev_",
-            6 => "rainbowWaveDev_",
-            7 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "0_",
-            8 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "1_",
-            9 => ShockWaveAnimSubroutine(false),
-            10 => ShockWaveAnimSubroutine(true),
-            11 => "broom_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
-            12 => "broomDev_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
+            6 => "rainbowWave_",
+            7 => "rainbowWaveDev_",
+            8 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "0_",
+            9 => "gravShock_" + PlayState.currentProfile.character.ToLower() + "1_",
+            10 => ShockWaveAnimSubroutine(false),
+            11 => ShockWaveAnimSubroutine(true),
             _ => "rainbowWave_",
         };
         if (bulletType != 9 && bulletType != 10)

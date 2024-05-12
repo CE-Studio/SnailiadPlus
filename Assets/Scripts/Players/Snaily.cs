@@ -28,7 +28,7 @@ public class Snaily : Player
         gravity = new float[] { 1.5f, 1.5f, 1.5f, 1.5f };
         terminalVelocity = new float[] { -0.5208f, -0.5208f, -0.5208f, -0.5208f };
         jumpFloatiness = new float[] { 4, 4, 4, 4, 4, 4, 4, 4 };
-        weaponCooldowns = new float[] { 0.085f, 0.0425f, 0.3f, 0.15f, 0.17f, 0.085f, 0.54f, 0.405f }; // TODO finish weapon cooldown rework for broom
+        weaponCooldowns = new float[] { 0.54f, 0.405f, 0.085f, 0.0425f, 0.3f, 0.15f, 0.17f, 0.085f, 0f, 0f };
         applyRapidFireMultiplier = true;
         idleTimer = 30;
         hitboxSize_normal = new Vector2(1.467508f, 0.96f);

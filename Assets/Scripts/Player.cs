@@ -198,9 +198,12 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
             // Making sure we have weapons
             armed = false;
-            foreach (int weapon in new int[] { 0, 1, 2, 11, 12 })
-                if (PlayState.CheckForItem(weapon))
-                    armed = true;
+            if (PlayState.isRandomGame && PlayState.currentRando.broomStart)
+                armed = true;
+            else
+                foreach (int weapon in new int[] { 0, 1, 2, 11, 12 })
+                    if (PlayState.CheckForItem(weapon))
+                        armed = true;
 
             // Noclip!!!
             if (PlayState.noclipMode)
@@ -237,24 +240,24 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 PlayState.CheckForItem(2) || PlayState.CheckForItem(12)
             };
             if (Control.Weapon1() && weaponStates[0])
-                PlayState.globalFunctions.ChangeActiveWeapon(0);
-            if (Control.Weapon2() && weaponStates[1])
                 PlayState.globalFunctions.ChangeActiveWeapon(1);
-            if (Control.Weapon3() && weaponStates[2])
+            if (Control.Weapon2() && weaponStates[1])
                 PlayState.globalFunctions.ChangeActiveWeapon(2);
+            if (Control.Weapon3() && weaponStates[2])
+                PlayState.globalFunctions.ChangeActiveWeapon(3);
             if (Control.NextWeapon() && selectedWeapon > 0)
             {
-                int thisIndex = (selectedWeapon) % weaponStates.Length;
+                int thisIndex = selectedWeapon % weaponStates.Length;
                 while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)
                     thisIndex = (thisIndex + 1) % weaponStates.Length;
-                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex);
+                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex + 1);
             }
             if (Control.PreviousWeapon() && selectedWeapon > 0)
             {
-                int thisIndex = (selectedWeapon - 2) < 0 ? selectedWeapon - 2 + weaponStates.Length : selectedWeapon - 2;
+                int thisIndex = selectedWeapon % weaponStates.Length;
                 while (!weaponStates[thisIndex] && thisIndex != selectedWeapon - 1)
-                    thisIndex = (thisIndex - 1) < 0 ? thisIndex - 1 + weaponStates.Length : thisIndex - 1;
-                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex);
+                    thisIndex = (thisIndex - 1 + weaponStates.Length) % weaponStates.Length;
+                PlayState.globalFunctions.ChangeActiveWeapon(thisIndex + 1);
             }
 
             // Sleep code! Don't do anything for thirty seconds and Snaily takes a nap!
@@ -2251,11 +2254,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
             Vector2 aimDir = Control.Aim();
-            int type = selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
+            int type = selectedWeapon * 2 + (PlayState.CheckForItem("Devastator") ? 1 : 0);
             int dir = 0;
             if (isShock)
             {
-                type = PlayState.CheckForItem("Full-Metal Snail") ? 8 : 7;
+                type = PlayState.CheckForItem("Full-Metal Snail") ? 9 : 8;
                 dir = gravityDir switch
                 {
                     Dirs.Floor => 6,
@@ -2329,32 +2332,32 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (!thisBullet.isActive)
             {
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
-                if (!isShock)
-                {
-                    bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
-                    int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
-                    fireCooldown = weaponCooldowns[fireRateIndex];
-                }
+                int fireRateIndex = type;
+                if (PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods))
+                    fireRateIndex++;
+                fireCooldown = weaponCooldowns[fireRateIndex];
                 PlayState.PlaySound(type switch
                 {
-                    1 => "ShotPeashooter",
-                    2 => "ShotBoomerang",
-                    3 => "ShotRainbow",
-                    4 => "ShotPeashooterDev",
+                    0 => "ShotBroom",
+                    1 => "ShotBroomDev",
+                    2 => "ShotPeashooter",
+                    3 => "ShotPeashooterDev",
+                    4 => "ShotBoomerang",
                     5 => "ShotBoomerangDev",
-                    6 => "ShotRainbowDev",
-                    7 => "ShockLaunch",
+                    6 => "ShotRainbow",
+                    7 => "ShotRainbowDev",
                     8 => "ShockLaunch",
+                    9 => "ShockLaunch",
                     _ => "ShotRainbow"
                 });
                 if (PlayState.isInBossRush)
                 {
                     switch (type)
                     {
-                        case 1: case 4: PlayState.activeRushData.peasFired++; break;
-                        case 2: case 5: PlayState.activeRushData.boomsFired++; break;
-                        case 3: case 6: PlayState.activeRushData.wavesFired++; break;
-                        case 7: case 8: PlayState.activeRushData.shocksFired++; break;
+                        case 2: case 3: PlayState.activeRushData.peasFired++; break;
+                        case 4: case 5: PlayState.activeRushData.boomsFired++; break;
+                        case 6: case 7: PlayState.activeRushData.wavesFired++; break;
+                        case 8: case 9: PlayState.activeRushData.shocksFired++; break;
                     }
                 }
             }
@@ -2405,7 +2408,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
                 Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
-                thisBullet.Shoot(PlayState.CheckForItem("Devastator") ? 10 : 9, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
+                thisBullet.Shoot(PlayState.CheckForItem("Devastator") ? 11 : 10, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
             }
             bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
         }

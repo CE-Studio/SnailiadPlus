@@ -15648,7 +15648,7 @@
 		{
 			"name": "Bullet_broom_N",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				0,
 				1,
@@ -15671,7 +15671,7 @@
 		{
 			"name": "Bullet_broom_rapid_N",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				12,
 				13,
@@ -15691,7 +15691,7 @@
 		{
 			"name": "Bullet_broom_NE",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				21,
 				22,
@@ -15714,7 +15714,7 @@
 		{
 			"name": "Bullet_broom_rapid_NE",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				33,
 				34,
@@ -15734,7 +15734,7 @@
 		{
 			"name": "Bullet_broom_E",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				42,
 				43,
@@ -15757,7 +15757,7 @@
 		{
 			"name": "Bullet_broom_rapid_E",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				54,
 				55,
@@ -15777,7 +15777,7 @@
 		{
 			"name": "Bullet_broom_SE",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				63,
 				64,
@@ -15800,7 +15800,7 @@
 		{
 			"name": "Bullet_broom_rapid_SE",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				75,
 				76,
@@ -15820,7 +15820,7 @@
 		{
 			"name": "Bullet_broom_S",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				84,
 				85,
@@ -15843,7 +15843,7 @@
 		{
 			"name": "Bullet_broom_rapid_S",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				96,
 				97,
@@ -15863,7 +15863,7 @@
 		{
 			"name": "Bullet_broom_SW",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				105,
 				106,
@@ -15886,7 +15886,7 @@
 		{
 			"name": "Bullet_broom_rapid_SW",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				117,
 				118,
@@ -15906,7 +15906,7 @@
 		{
 			"name": "Bullet_broom_W",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				126,
 				127,
@@ -15929,7 +15929,7 @@
 		{
 			"name": "Bullet_broom_rapid_W",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				138,
 				139,
@@ -15949,7 +15949,7 @@
 		{
 			"name": "Bullet_broom_NW",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				147,
 				148,
@@ -15972,7 +15972,7 @@
 		{
 			"name": "Bullet_broom_rapid_NW",
 			"spriteName": "Bullets/Broom",
-			"framerate": 22.0,
+			"framerate": 24.0,
 			"frames": [
 				159,
 				160,
@@ -36799,7 +36799,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				3
+				4
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -36832,7 +36832,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				4
+				5
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -36865,7 +36865,40 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				5
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "WeaponIcon_0_locked",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "WeaponIcon_0_inactive",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "WeaponIcon_0_active",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				7
 			],
 			"loop": false,
 			"loopStartFrame": 0,

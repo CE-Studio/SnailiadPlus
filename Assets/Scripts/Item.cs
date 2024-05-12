@@ -295,13 +295,13 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 0:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
-                    PlayState.globalFunctions.ChangeActiveWeapon(0, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(1, true);
                     break;
                 case 1:
                 case 11:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
-                    PlayState.globalFunctions.ChangeActiveWeapon(1, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(2, true);
                     if (itemID == 11)
                         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SuperSecretBoom);
                     break;
@@ -309,7 +309,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 case 12:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
-                    PlayState.globalFunctions.ChangeActiveWeapon(2, true);
+                    PlayState.globalFunctions.ChangeActiveWeapon(3, true);
                     break;
                 case 7:
                     if (isSuperUnique)
