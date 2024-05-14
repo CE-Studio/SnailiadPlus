@@ -8,6 +8,7 @@ public class Door:MonoBehaviour, IRoomObject
     [SerializeField] private int bossLock;
     [SerializeField] public bool locked;
     [SerializeField] private bool alwaysLocked;
+    [SerializeField] private bool randoLocked;
     [SerializeField] private int direction;
     [SerializeField] private int requiredFragments;
     private bool openAfterBossDefeat = false;
@@ -59,6 +60,7 @@ public class Door:MonoBehaviour, IRoomObject
         content["bossLock"] = bossLock;
         content["locked"] = locked;
         content["alwaysLocked"] = alwaysLocked;
+        content["randoLocked"] = randoLocked;
         content["direction"] = direction;
         content["requiredFragments"] = requiredFragments;
         return content;
@@ -70,6 +72,7 @@ public class Door:MonoBehaviour, IRoomObject
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
+        randoLocked = (bool)content["randoLocked"];
         direction = (int)content["direction"];
         requiredFragments = (int)content["requiredFragments"];
         Spawn();
@@ -204,7 +207,7 @@ public class Door:MonoBehaviour, IRoomObject
         {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            if (locked || alwaysLocked)
+            if (locked || (randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) || alwaysLocked)
                 animToPlay += "locked_";
             else
             {
@@ -282,7 +285,8 @@ public class Door:MonoBehaviour, IRoomObject
         {
             if (helixLocked)
                 PlayState.PlaySound("Ping");
-            else if (!locked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
+            else if (!locked && !(randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) && !alwaysLocked &&
+                bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
         }
     }

@@ -1583,6 +1583,8 @@ public class MainMenu : MonoBehaviour
             Destroy(letters[i]);
 
         string title = PlayState.GetText("menu_title").ToLower();
+        if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
+            title = PlayState.GetText(string.Format("menu_title_rare{0}", UnityEngine.Random.Range(1, 5))).ToLower();
         GetNewLetterPixelWidths();
         int titleLength = 0;
         for (int i = 0; i < title.Length; i++)

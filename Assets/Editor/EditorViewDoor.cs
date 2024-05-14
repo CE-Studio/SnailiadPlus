@@ -13,6 +13,7 @@ public class EditorViewDoor : Editor
     private SerializedProperty sWeapon;
     private SerializedProperty sLocked;
     private SerializedProperty sPermLocked;
+    private SerializedProperty sRandoLocked;
     private SerializedProperty sBoss;
     private SerializedProperty sDir;
     private SerializedProperty sFragments;
@@ -25,6 +26,7 @@ public class EditorViewDoor : Editor
         sWeapon = serializedObject.FindProperty("doorWeapon");
         sLocked = serializedObject.FindProperty("locked");
         sPermLocked = serializedObject.FindProperty("alwaysLocked");
+        sRandoLocked = serializedObject.FindProperty("randoLocked");
         sBoss = serializedObject.FindProperty("bossLock");
         sDir = serializedObject.FindProperty("direction");
         sFragments = serializedObject.FindProperty("requiredFragments");
@@ -37,9 +39,15 @@ public class EditorViewDoor : Editor
         sWeapon.intValue = EditorGUILayout.Popup("Required weapon: ", sWeapon.intValue, new string[] { "Peashooter", "Boomerang", "Rainbow Wave", "Devastator" });
         sLocked.boolValue = EditorGUILayout.Toggle("Is this door locked?", sLocked.boolValue);
         if (sLocked.boolValue)
-            sPermLocked.boolValue = EditorGUILayout.Toggle("Permanently locked?", sPermLocked.boolValue);
+        {
+            sPermLocked.boolValue = EditorGUILayout.Toggle("   Permanently?", sPermLocked.boolValue);
+            sRandoLocked.boolValue = EditorGUILayout.Toggle("   Only in rando?", sRandoLocked.boolValue);
+        }
         else
+        {
             sPermLocked.boolValue = false;
+            sRandoLocked.boolValue = false;
+        }
         sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
         GUILayout.Space(5);
@@ -48,7 +56,7 @@ public class EditorViewDoor : Editor
 
         serializedObject.ApplyModifiedProperties();
 
-        int id = (sLocked.boolValue ? 4 : sWeapon.intValue) + ((sDir.intValue == 1 || sDir.intValue == 3) ? 5 : 0);
+        int id = ((sLocked.boolValue && !sRandoLocked.boolValue) ? 4 : sWeapon.intValue) + ((sDir.intValue == 1 || sDir.intValue == 3) ? 5 : 0);
         sprite.sprite = script.editorSprites[id];
         sprite.flipX = false;
         sprite.flipY = false;

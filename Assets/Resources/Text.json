@@ -6,6 +6,26 @@
 			"value": 0
 		},
 		{
+			"name": "menu_title_rare1",
+			"text": "Snaliad+",
+			"value": 0
+		},
+		{
+			"name": "menu_title_rare2",
+			"text": "Snailaid+",
+			"value": 0
+		},
+		{
+			"name": "menu_title_rare3",
+			"text": "Snailidad+",
+			"value": 0
+		},
+		{
+			"name": "menu_title_rare4",
+			"text": "Snailad+",
+			"value": 0
+		},
+		{
 			"name": "menu_version_header",
 			"text": "Engine version",
 			"value": 0
