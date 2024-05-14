@@ -240,11 +240,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 PlayState.CheckForItem(2) || PlayState.CheckForItem(12)
             };
             if (Control.Weapon1() && weaponStates[0])
-                PlayState.globalFunctions.ChangeActiveWeapon(1);
+                PlayState.globalFunctions.ChangeActiveWeapon((selectedWeapon == 1 && PlayState.isRandomGame && PlayState.currentRando.broomStart) ? 0 : 1);
             if (Control.Weapon2() && weaponStates[1])
-                PlayState.globalFunctions.ChangeActiveWeapon(2);
+                PlayState.globalFunctions.ChangeActiveWeapon((selectedWeapon == 2 && PlayState.isRandomGame && PlayState.currentRando.broomStart) ? 0 : 2);
             if (Control.Weapon3() && weaponStates[2])
-                PlayState.globalFunctions.ChangeActiveWeapon(3);
+                PlayState.globalFunctions.ChangeActiveWeapon((selectedWeapon == 3 && PlayState.isRandomGame && PlayState.currentRando.broomStart) ? 0 : 3);
             if (Control.NextWeapon() && selectedWeapon > 0)
             {
                 int thisIndex = selectedWeapon % weaponStates.Length;
@@ -2304,7 +2304,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                         break;
                 }
 
-                if (type == 1 && grounded)
+                if (type == 2 && grounded)
                 {
                     if (gravityDir == Dirs.Floor && (dir == 5 || dir == 6 || dir == 7))
                         dir = facingLeft ? 3 : 4;
@@ -2332,7 +2332,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (!thisBullet.isActive)
             {
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
-                int fireRateIndex = type;
+                int fireRateIndex = Mathf.FloorToInt(type * 0.5f) * 2;
                 if (PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods))
                     fireRateIndex++;
                 fireCooldown = weaponCooldowns[fireRateIndex];

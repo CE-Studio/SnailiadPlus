@@ -24,7 +24,9 @@ public class Bullet : MonoBehaviour
     public GameObject cam;
 
     private readonly Vector2 diagonalAim = PlayState.ANGLE_DIAG;
-    
+    private readonly List<int> typesThatHitWalls = new() { 2 };
+    public readonly List<int> typesThatHitEnemies = new() { 2 };
+
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -38,7 +40,7 @@ public class Bullet : MonoBehaviour
 
         string[] bulletTypes = new string[]
         {
-            "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev", "broom", "broom_rapid"
+            "peashooter", "boomerang", "rainbowWave", "peashooterDev", "boomerangDev", "rainbowWaveDev", "broom", "broom_rapid", "broomDev", "broomDev_rapid"
         };
         for (int i = 0; i < bulletTypes.Length; i++)
         {
@@ -378,10 +380,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerCollide") && bulletType == 1)
-        {
+        if (collision.CompareTag("PlayerCollide") && typesThatHitWalls.Contains(bulletType))
             Despawn(true);
-        }
     }
 
     public void Despawn(bool loudly = false)
@@ -393,33 +393,33 @@ public class Bullet : MonoBehaviour
                 PlayState.PlaySound("ShotHit");
                 switch (bulletType)
                 {
-                    case 1:
+                    case 2:
                         CallExplosion(0.25f, 1, 1);
                         break;
-                    case 2:
-                        CallExplosion(0.5f, 5, 1);
-                        break;
                     case 3:
-                        CallExplosion(0.5f, 7, 1);
+                        CallExplosion(0.5f, 5, 4);
                         break;
                     case 4:
-                        CallExplosion(0.5f, 5, 4);
+                        CallExplosion(0.5f, 5, 1);
                         break;
                     case 5:
                         CallExplosion(0.5f, 6, 1);
                         break;
                     case 6:
-                        CallExplosion(0.5f, 8, 1);
+                        CallExplosion(0.5f, 7, 1);
                         break;
                     case 7:
-                        CallExplosion(1.25f, 2, 3);
+                        CallExplosion(0.5f, 8, 1);
                         break;
                     case 8:
+                        CallExplosion(1.25f, 2, 3);
+                        break;
+                    case 9:
                         CallExplosion(1.25f, 2, 2);
                         CallExplosion(1.25f, 3, 2);
                         break;
-                    case 9:
                     case 10:
+                    case 11:
                         CallExplosion(0.5f, 2, 1);
                         break;
                     default:

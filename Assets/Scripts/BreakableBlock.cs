@@ -17,17 +17,17 @@ public class BreakableBlock : MonoBehaviour
 
     private readonly List<List<int>> bulletsThatBreakMe = new()
     {
-        new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },      // Peashooter
-        new List<int> { 2, 3, 4, 5, 6, 7, 8 },                // Boomerang
-        new List<int> { 3, 4, 5, 6, 7, 8 },                   // Rainbow Wave
-        new List<int> { 4, 5, 6, 8 }                          // Devastator
+        new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },  // Peashooter
+        new List<int> { 1, 3, 4, 5, 6, 7, 8, 9 },        // Boomerang
+        new List<int> { 1, 3, 5, 6, 7, 8, 9 },           // Rainbow Wave
+        new List<int> { 1, 3, 5, 7, 9 }                  // Devastator
     };
     private readonly List<List<int>> bulletsIShouldIgnore = new()
     {
         new List<int> { },
-        new List<int> { 1 },
-        new List<int> { 1 },
-        new List<int> { 1 }
+        new List<int> { 2 },
+        new List<int> { 2 },
+        new List<int> { 2 }
     };
     
     void Awake()
@@ -73,6 +73,16 @@ public class BreakableBlock : MonoBehaviour
             PlayState.breakablePositions.Add(worldPos);
         else
             PlayState.breakablePositions.Remove(worldPos);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (type == -1)
+            return;
+
+        if (collision.CompareTag("PlayerBullet") && PlayState.OnScreen(transform.position, box))
+            if (collision.GetComponent<Bullet>().bulletType == 1)
+                OnTriggerStay2D(collision);
     }
 
     public void OnTriggerStay2D(Collider2D collision)

@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
                     }
                     pingPlayer -= 1;
                 }
-                if (!letsPermeatingShotsBy || bullet.bulletType == 1 || !bullet.isActive || shieldTypeEntity)
+                if (!letsPermeatingShotsBy || bullet.typesThatHitEnemies.Contains(bullet.bulletType) || !bullet.isActive || shieldTypeEntity)
                     bulletsToDespawn.Add(bullet);
             }
             foreach (EnemyBullet bullet in intersectingEnemyBullets)
