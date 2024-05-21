@@ -168,6 +168,7 @@ MonoBehaviour:
   - Items/RapidFire
   - Items/ShellShield
   - Items/Shelmet
+  - Items/TrapItem
   - Items/WallGrab
   - Particles/AngelJumpEffect
   - Particles/Bubble

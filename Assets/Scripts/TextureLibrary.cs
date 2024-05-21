@@ -173,6 +173,7 @@ public class TextureLibrary : ScriptableObject
         "Items/RapidFire",
         "Items/ShellShield",
         "Items/Shelmet",
+        "Items/TrapItem",
         "Items/WallGrab",
 
         "Particles/AngelJumpEffect",

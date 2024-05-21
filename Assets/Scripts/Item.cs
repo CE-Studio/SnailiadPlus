@@ -88,14 +88,33 @@ public class Item:MonoBehaviour, IRoomObject {
         parentRoom = transform.parent.GetComponent<RoomTrigger>();
         if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
-        
-        if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID))
+
+        //if ((PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID)) || itemID >= 1000)
+        //{
+        //    if (itemID >= 1000)
+        //    {
+        //        if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
+        //            Spawn();
+        //        else
+        //            Destroy(gameObject);
+        //    }
+        //    else if (PlayState.currentProfile.items[itemID] == 0)
+        //        Spawn();
+        //    else
+        //        Destroy(gameObject);
+        //}
+        //else
+        //    Destroy(gameObject);
+        if (itemID >= 1000)
         {
-            if (PlayState.currentProfile.items[itemID] == 0)
+            if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
                 Spawn();
             else
                 Destroy(gameObject);
         }
+        else if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID)
+            && PlayState.currentProfile.items[itemID] == 0)
+            Spawn();
         else
             Destroy(gameObject);
     }
@@ -125,6 +144,7 @@ public class Item:MonoBehaviour, IRoomObject {
                 PlayState.currentProfile.items[itemID] = -1;
                 Destroy(gameObject);
             }
+            UpdateIDAsProgressive();
 
             lightMask = PlayState.globalFunctions.CreateLightMask(14, transform);
         }
@@ -144,6 +164,11 @@ public class Item:MonoBehaviour, IRoomObject {
         {
             animName = "Item_masked";
             box.size = new Vector2(1.95f, 1.95f);
+        }
+        else if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && itemID >= 1000)
+        {
+            animName = "Item_trap";
+            box.size = new Vector2(0.95f, 0.95f);
         }
         else if (itemID >= PlayState.OFFSET_FRAGMENTS)
         {
@@ -269,6 +294,7 @@ public class Item:MonoBehaviour, IRoomObject {
     {
         if (collision.CompareTag("Player") && itemID != -1)
         {
+            UpdateIDAsProgressive();
             collected = true;
             PlayState.AddItem(itemID);
             PlayState.minimapScript.RefreshMap();
@@ -416,6 +442,11 @@ public class Item:MonoBehaviour, IRoomObject {
             10 => PlayState.GetText("item_gravityShock"),
             11 => PlayState.GetText("item_boomerang_secret"),
             12 => PlayState.GetText("item_rainbowWave_secret"),
+            1000 => PlayState.GetText("item_trapWeapon"),
+            1001 => PlayState.GetText("item_trapGravity"),
+            1002 => PlayState.GetText("item_trapLullaby"),
+            1003 => PlayState.GetText("item_trapSpider"),
+            1004 => PlayState.GetText("item_trapWarp"),
             _ => PlayState.GetText("item_nothing"),
         };
     }
@@ -466,6 +497,25 @@ public class Item:MonoBehaviour, IRoomObject {
             if (!(itemID == 8 && legacyGravCutscene))
                 PlayState.FadeMusicBackIn();
             PlayState.paralyzed = false;
+        }
+    }
+
+    private void UpdateIDAsProgressive()
+    {
+        if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+        {
+            switch (itemID)
+            {
+                case 0: case 1: case 2:
+                    itemID = PlayState.CheckForItem("Boomerang") ? 2 : (PlayState.CheckForItem("Peashooter") ? 1 : 0);
+                    break;
+                case 3: case 6:
+                    itemID = PlayState.CheckForItem("Rapid Fire") ? 3 : 6;
+                    break;
+                case 7: case 8: case 9:
+                    itemID = 7 + PlayState.GetShellLevel();
+                    break;
+            }
         }
     }
 }

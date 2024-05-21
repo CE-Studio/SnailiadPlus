@@ -1563,12 +1563,21 @@ public class PlayState
         };
     }
 
-    public static void AddItem(int itemID) {
-        currentProfile.items[itemID] = 1;
+    public static void AddItem(int itemID)
+    {
+        if (itemID >= 1000)
+        {
+            currentRando.trapLocations[itemID - 1000] = 1;
+            SaveRando(currentProfileNumber);
+        }
+        else
+            currentProfile.items[itemID] = 1;
     }
 
-    public static void AddItem(string itemName) {
-        currentProfile.items[TranslateItemNameToID(itemName)] = 1;
+    public static void AddItem(string itemName)
+    {
+        //currentProfile.items[TranslateItemNameToID(itemName)] = 1;
+        AddItem(TranslateItemNameToID(itemName));
     }
 
     public static void AssignProperCollectibleIDs()

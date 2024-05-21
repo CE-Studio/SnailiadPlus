@@ -2886,6 +2886,31 @@
 			"value": 0
 		},
 		{
+			"name": "item_trapWeapon",
+			"text": "Weapon Lock",
+			"value": 0
+		},
+		{
+			"name": "item_trapGravity",
+			"text": "Gravity Lock",
+			"value": 0
+		},
+		{
+			"name": "item_trapLullaby",
+			"text": "Lullaby Trap",
+			"value": 0
+		},
+		{
+			"name": "item_trapSpider",
+			"text": "Spider Ambush",
+			"value": 0
+		},
+		{
+			"name": "item_trapWarp",
+			"text": "Warp Trap",
+			"value": 0
+		},
+		{
 			"name": "boss_shellbreaker",
 			"text": "Shellbreaker",
 			"value": 0

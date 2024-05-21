@@ -2001,6 +2001,7 @@ public class MainMenu : MonoBehaviour
         }
         if (PlayState.isInBossRush)
             PlayState.TogglableHUDElements[0].SetActive(false);
+        PlayState.globalFunctions.UpdateWeaponIcons();
     }
 
     public IEnumerator StartGeneration()

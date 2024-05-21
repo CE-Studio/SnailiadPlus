@@ -158,9 +158,23 @@ public class Minimap : MonoBehaviour
                                 thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[thisMaskID]];
                             if (thisItemId != -1)
                             {
-                                if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
+                                bool markItem = false;
+                                bool markCollected = false;
+                                if (thisItemId >= 1000)
                                 {
-                                    if (PlayState.currentProfile.items[thisItemId] == 0)
+                                    markItem = true;
+                                    if (PlayState.currentRando.trapLocations[thisItemId - 1000] == 1)
+                                        markCollected = true;
+                                }
+                                else if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
+                                {
+                                    markItem = true;
+                                    if (PlayState.currentProfile.items[thisItemId] == 1)
+                                        markCollected = true;
+                                }
+                                if (markItem)
+                                {
+                                    if (!markCollected)
                                         anims[i + 4].Play("Minimap_icon_itemNormal", true);
                                     else
                                     {

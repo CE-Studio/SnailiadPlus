@@ -275,20 +275,24 @@ public class Subscreen : MonoBehaviour
         cellsWithMarkers.Clear();
         for (int i = 0; i < cells.Count; i++)
         {
+            SpriteMask cellMask = cells[i].GetComponent<SpriteMask>();
+            SpriteRenderer cellSprite = cells[i].GetComponent<SpriteRenderer>();
+            AnimationModule cellAnim = cells[i].GetComponent<AnimationModule>();
+
             int thisCellValue = (PlayState.currentProfile.exploredMap[i] < 10) ? PlayState.currentProfile.exploredMap[i] : (PlayState.currentProfile.exploredMap[i] - 10);
             if (thisCellValue == 1 || thisCellValue == 11 || ((thisCellValue == 3 || thisCellValue == 13) && PlayState.generalData.secretMapTilesVisible))
             {
-                cells[i].GetComponent<SpriteMask>().enabled = false;
-                cells[i].GetComponent<SpriteRenderer>().color = PlayState.GetColor("0312");
+                cellMask.enabled = false;
+                cellSprite.color = PlayState.GetColor("0312");
                 if (PlayState.playerMarkerLocations.ContainsKey(i))
                 {
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
-                    cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
+                    cellAnim.Play("Minimap_icon_marker", true);
+                    cellsWithMarkers.Add(cellSprite);
                 }
                 else if (PlayState.bossLocations.Contains(i))
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_boss", true);
+                    cellAnim.Play("Minimap_icon_boss", true);
                 else if (PlayState.saveLocations.Contains(i))
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_save", true);
+                    cellAnim.Play("Minimap_icon_save", true);
                 else if (PlayState.itemLocations.ContainsKey(i))
                 {
                     int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
@@ -296,25 +300,30 @@ public class Subscreen : MonoBehaviour
                         thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[i]];
                     if (thisItemId != -1)
                     {
-                        if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&
+                        if (thisItemId >= 1000)
+                            if (PlayState.currentRando.itemLocations[thisItemId - 1000] == 0)
+                                cellAnim.Play("Minimap_icon_itemNormal", true);
+                            else
+                                cellAnim.Play("Minimap_icon_itemCollected", true);
+                        else if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&
                             PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
-                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemNormal", true);
+                            cellAnim.Play("Minimap_icon_itemNormal", true);
                         else
-                            cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_itemCollected", true);
+                            cellAnim.Play("Minimap_icon_itemCollected", true);
                     }
                     else
-                        cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
+                        cellAnim.Play("Minimap_icon_blank", true);
                 }
             }
             else
             {
-                cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_blank", true);
+                cellAnim.Play("Minimap_icon_blank", true);
                 if (PlayState.playerMarkerLocations.ContainsKey(i))
                 {
-                    cells[i].GetComponent<AnimationModule>().Play("Minimap_icon_marker", true);
-                    cellsWithMarkers.Add(cells[i].GetComponent<SpriteRenderer>());
+                    cellAnim.Play("Minimap_icon_marker", true);
+                    cellsWithMarkers.Add(cellSprite);
                 }
-                cells[i].GetComponent<SpriteMask>().enabled = thisCellValue != -1 || thisCellValue != 9;
+                cellMask.enabled = thisCellValue != -1 || thisCellValue != 9;
             }
         }
 
@@ -324,18 +333,14 @@ public class Subscreen : MonoBehaviour
         bool isItemCell = false;
         if (PlayState.itemLocations.ContainsKey(playerCellID))
         {
-            //if (PlayState.GetItemAvailabilityThisCharacter(PlayState.isRandomGame ? PlayState.currentRando.itemLocations[playerCellID] : PlayState.baseItemLocations[playerCellID]) &&
-            //    PlayState.GetItemAvailabilityThisDifficulty(PlayState.isRandomGame ? PlayState.currentRando.itemLocations[playerCellID] : PlayState.baseItemLocations[playerCellID]))
-            //    isItemCell = true;
             int locationID = PlayState.itemLocations[playerCellID];
             int itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
-            if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 0)
+            if (itemID >= 1000)
+                if (PlayState.currentRando.trapLocations[itemID - 1000] == 0)
+                    isItemCell = true;
+            else if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 0)
                 isItemCell = true;
-            //Debug.Log(string.Format("{0}, {1}, {2}, {3}, {4}", PlayState.isRandomGame, locationID, itemID, PlayState.currentProfile.items[itemID], isItemCell));
         }
-        //if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) || PlayState.saveLocations.Contains(playerCellID) ||
-        //    (PlayState.itemLocations.ContainsKey(playerCellID) && PlayState.currentProfile.items[PlayState.itemLocations[playerCellID]] == 0 &&
-        //    PlayState.GetItemAvailabilityThisCharacter(PlayState.itemLocations[playerCellID]) && PlayState.GetItemAvailabilityThisDifficulty(PlayState.itemLocations[playerCellID])))
         if (PlayState.playerMarkerLocations.ContainsKey(playerCellID) || PlayState.bossLocations.Contains(playerCellID) ||
             PlayState.saveLocations.Contains(playerCellID) || isItemCell)
             playerMarker.GetComponent<AnimationModule>().Play("Minimap_icon_playerHighlight");

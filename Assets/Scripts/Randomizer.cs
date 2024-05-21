@@ -15,7 +15,6 @@ public class Randomizer : MonoBehaviour
     private bool[] defaultLocksThisGen = new bool[24];
 
     private int[] locations = new int[] { };
-    private int[] trapLocations = new int[] { };
     private bool hasPlacedDevastator = false;
 
     public enum TrapItems
@@ -102,9 +101,8 @@ public class Randomizer : MonoBehaviour
                         if (PlayState.currentRando.trapsActive)
                         {
                             int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
-                            trapLocations = new int[trapTypes];
                             for (int i = 0; i < trapTypes; i++)
-                                itemsToAdd.Add((i + 1) * -1);
+                                itemsToAdd.Add(1000 + i);
                         }
                     }
                     else
@@ -156,9 +154,8 @@ public class Randomizer : MonoBehaviour
                             if (PlayState.currentRando.trapsActive)
                             {
                                 int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
-                                trapLocations = new int[trapTypes];
                                 for (int i = 0; i < trapTypes; i++)
-                                    itemsToAdd.Add((i + 1) * -1);
+                                    itemsToAdd.Add(1000 + i);
                             }
                             splitPhase = 2;
                         }
@@ -169,10 +166,7 @@ public class Randomizer : MonoBehaviour
                         int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
-                        if (itemToPlace < 0)
-                            trapLocations[Mathf.Abs(itemToPlace) - 1] = availableSplitLocations[locationPointer];
-                        else
-                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
+                        locations[availableSplitLocations[locationPointer]] = itemToPlace;
                         if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
@@ -198,6 +192,7 @@ public class Randomizer : MonoBehaviour
                             if (locations[i] == -2)
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapItems)).Length];
                         randoPhase = 0;
                         isShuffling = false;
                     }
@@ -224,10 +219,7 @@ public class Randomizer : MonoBehaviour
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
-                        if (itemToPlace < 0)
-                            trapLocations[Mathf.Abs(itemToPlace) - 1] = availableLocations[locationPointer];
-                        else
-                            locations[availableLocations[locationPointer]] = itemToPlace;
+                        locations[availableLocations[locationPointer]] = itemToPlace;
                         if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
@@ -260,6 +252,7 @@ public class Randomizer : MonoBehaviour
                             if (locations[i] == -2)
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapItems)).Length];
                         randoPhase = 0;
                         isShuffling = false;
                     }
