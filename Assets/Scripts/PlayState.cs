@@ -441,6 +441,7 @@ public class PlayState
         public int randoLevel;        // Whether or not this profile is even randomized, and to what extent
         public int seed;              // Ten-digit seed that all randomization was based on
         public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
+        public int[] trapLocations;   // Location IDs for all possible trap items. If set to -1, that trap is not in the world
         public bool progressivesOn;   // Whether or not progressive items is turned on
         public bool broomStart;       // Whether or not the player starts with a Broom
         public bool trapsActive;      // Whether or not trap items have been shuffled into the pool
@@ -509,7 +510,8 @@ public class PlayState
     {
         randoLevel = 0,
         seed = 0,
-        itemLocations = new int[] { }, 
+        itemLocations = new int[] { },
+        trapLocations = new int[] { },
         progressivesOn = false,
         broomStart = false,
         trapsActive = false,
@@ -686,6 +688,7 @@ public class PlayState
             randoLevel = blankRando.randoLevel,
             seed = blankRando.seed,
             itemLocations = (int[])blankRando.itemLocations.Clone(),
+            trapLocations = (int[])blankRando.trapLocations.Clone(),
             progressivesOn = blankRando.progressivesOn,
             broomStart = blankRando.broomStart,
             trapsActive = blankRando.trapsActive,

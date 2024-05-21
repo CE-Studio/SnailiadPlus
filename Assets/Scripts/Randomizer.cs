@@ -6,6 +6,7 @@ public class Randomizer : MonoBehaviour
 {
     public bool isShuffling = false;
     private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items, 3 = music, 4 = dialogue
+    private int splitPhase = 0; // 1 = majors, 2 = minors
 
     private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
@@ -14,7 +15,17 @@ public class Randomizer : MonoBehaviour
     private bool[] defaultLocksThisGen = new bool[24];
 
     private int[] locations = new int[] { };
+    private int[] trapLocations = new int[] { };
     private bool hasPlacedDevastator = false;
+
+    public enum TrapItems
+    {
+        WeaponLock,   // Locks you to one of your lower-power weapons for 10-30 seconds
+        GravityLock,  // Locks you to a random gravity state for 10-30 seconds
+        Lullaby,      // Puts your character to sleep for 10-15 seconds or until damage is taken
+        SpiderAmbush, // Spawns a horde of 8-12 Spiders randomly around the screen. Spiders have a 10% chance to spawn as Spider Mamas
+        Warp          // Warps you back to Snail Town. Blame Zed
+    };
 
     public void StartGeneration()
     {
@@ -88,6 +99,13 @@ public class Randomizer : MonoBehaviour
                         for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
                             for (int j = 0; j < 5; j++)
                                 itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
+                        if (PlayState.currentRando.trapsActive)
+                        {
+                            int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
+                            trapLocations = new int[trapTypes];
+                            for (int i = 0; i < trapTypes; i++)
+                                itemsToAdd.Add((i + 1) * -1);
+                        }
                     }
                     else
                     {
@@ -95,14 +113,15 @@ public class Randomizer : MonoBehaviour
                             itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
                         foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
                             locations[i] = -1;
+                        splitPhase = 1;
                     }
                     break;
 
                 case 2: // Items (Split shuffle)
-                    List<int> availableSplitLocations = GetLocations(true);
+                    List<int> availableSplitLocations = GetLocations(splitPhase == 1);
                     if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
                         randoPhase = 1;
-                    else if (itemsToAdd.Count > 0)
+                    else if (itemsToAdd.Count > 0 && splitPhase == 1)
                     {
                         int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
                         int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
@@ -120,12 +139,6 @@ public class Randomizer : MonoBehaviour
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
                         locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
-                            placedHelixes++;
-                        else if (itemToPlace >= PlayState.OFFSET_HEARTS)
-                            placedHearts++;
-                        if (placedHearts >= 4)
-                            lockStates[11] = true; // Health
                         switch (itemToPlace)
                         {
                             case 0: case 1: case 2: progWeapons++; break;
@@ -133,23 +146,57 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
+
+                        if (itemsToAdd.Count == 0)
+                        {
+                            for (int j = 0; j < PlayState.MAX_HEARTS; j++)
+                                itemsToAdd.Add(j + PlayState.OFFSET_HEARTS);
+                            for (int j = 0; j < PlayState.MAX_FRAGMENTS - 5; j++)
+                                itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
+                            if (PlayState.currentRando.trapsActive)
+                            {
+                                int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
+                                trapLocations = new int[trapTypes];
+                                for (int i = 0; i < trapTypes; i++)
+                                    itemsToAdd.Add((i + 1) * -1);
+                            }
+                            splitPhase = 2;
+                        }
+                    }
+                    else if (itemsToAdd.Count > 0 && splitPhase == 2)
+                    {
+                        int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
+                        int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                        while (itemsToAdd.Contains(itemToPlace))
+                            itemsToAdd.Remove(itemToPlace);
+                        if (itemToPlace < 0)
+                            trapLocations[Mathf.Abs(itemToPlace) - 1] = availableSplitLocations[locationPointer];
+                        else
+                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
+                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
+                            placedHelixes++;
+                        else if (itemToPlace >= PlayState.OFFSET_HEARTS)
+                            placedHearts++;
+                        if (placedHearts >= 4)
+                            lockStates[11] = true; // Health
                     }
                     else
                     {
-                        for (int j = 0; j < PlayState.MAX_HEARTS; j++)
-                            itemsToAdd.Add(j + PlayState.OFFSET_HEARTS);
-                        for (int j = 0; j < PlayState.MAX_FRAGMENTS; j++)
-                            itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
-                        for (int j = 0; j < locations.Length; j++)
+                        while (placedHelixes < PlayState.MAX_FRAGMENTS)
                         {
-                            if (locations[j] == -2 && itemsToAdd.Count > 0)
+                            List<int> remainingLocations = GetLocations();
+                            if (remainingLocations.Count == 0)
+                                placedHelixes = PlayState.MAX_FRAGMENTS;
+                            else
                             {
-                                int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                                itemsToAdd.Remove(itemToPlace);
-                                locations[j] = itemToPlace;
+                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                placedHelixes++;
                             }
                         }
-
+                        for (int i = 0; i < locations.Length; i++)
+                            if (locations[i] == -2)
+                                locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         randoPhase = 0;
                         isShuffling = false;
@@ -177,7 +224,10 @@ public class Randomizer : MonoBehaviour
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
-                        locations[availableLocations[locationPointer]] = itemToPlace;
+                        if (itemToPlace < 0)
+                            trapLocations[Mathf.Abs(itemToPlace) - 1] = availableLocations[locationPointer];
+                        else
+                            locations[availableLocations[locationPointer]] = itemToPlace;
                         if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
@@ -415,6 +465,8 @@ public class Randomizer : MonoBehaviour
                 break;
             case 10: // Gravity Shock
                 lockStates[12] = true; // Shock
+                break;
+            default:
                 break;
         }
     }
