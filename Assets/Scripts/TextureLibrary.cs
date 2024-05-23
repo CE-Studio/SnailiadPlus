@@ -221,6 +221,7 @@ public class TextureLibrary : ScriptableObject
         "UI/MinimapMask",
         "UI/MinimapPanel",
         "UI/Subscreen",
+        "UI/TrapTimer",
         "UI/WeaponIcons"
     };
 

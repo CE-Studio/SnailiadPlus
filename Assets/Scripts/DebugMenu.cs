@@ -47,6 +47,7 @@ public class DebugMenu : MonoBehaviour
 
         Vector2 itemGridZero = new(-4.5f, 2);
         Vector2 bossGridZero = new(1.5f, 2);
+        Vector2 trapGridZero = new(0.5f, -2);
 
         AddButton(itemGridZero, "peashooter", "item_0", new int[] { 2, 3 }, new string[] { "noclip", "shellShield", "moonSnail", "boomerang" });
         AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y), "boomerang", "item_1", new int[] { 4, 5 }, new string[] { "damage", "rapidFire", "peashooter", "rainbowWave" });
@@ -62,17 +63,23 @@ public class DebugMenu : MonoBehaviour
         AddButton(new Vector2(itemGridZero.x + 1, itemGridZero.y - 2), "superSecretBoomerang", "item_11", new int[] { 24, 25 }, new string[] { "rapidFire", "damage", "gravityShock", "debugRainbowWave" });
         AddButton(new Vector2(itemGridZero.x + 2, itemGridZero.y - 2), "debugRainbowWave", "item_12", new int[] { 26, 27 }, new string[] { "iceSnail", "damage", "superSecretBoomerang", "heartContainer" });
         AddButton(new Vector2(itemGridZero.x + 3, itemGridZero.y - 2), "heartContainer", "item_13", new int[] { 28, 29 }, new string[] { "gravitySnail", "damage", "debugRainbowWave", "helixFragment" });
-        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y - 2), "helixFragment", "item_14", new int[] { 30, 31 }, new string[] { "fullMetalSnail", "damage", "heartContainer", "player" });
+        AddButton(new Vector2(itemGridZero.x + 4, itemGridZero.y - 2), "helixFragment", "item_14", new int[] { 30, 31 }, new string[] { "fullMetalSnail", "weaponTrap", "heartContainer", "player" });
 
-        AddButton(bossGridZero, "shellbreaker", "boss_0", new int[] { 32, 33 }, new string[] { "player", "player", "highJump", "stompy" });
-        AddButton(new Vector2(bossGridZero.x + 1, bossGridZero.y), "stompy", "boss_1", new int[] { 34, 35 }, new string[] { "player", "player", "shellbreaker", "spaceBox" });
-        AddButton(new Vector2(bossGridZero.x + 2, bossGridZero.y), "spaceBox", "boss_2", new int[] { 36, 37 }, new string[] { "player", "player", "stompy", "moonSnail" });
-        AddButton(new Vector2(bossGridZero.x + 3, bossGridZero.y), "moonSnail", "boss_3", new int[] { 38, 39 }, new string[] { "player", "player", "spaceBox", "peashooter" });
+        AddButton(bossGridZero, "shellbreaker", "boss_0", new int[] { 32, 33 }, new string[] { "gravityTrap", "player", "highJump", "stompy" });
+        AddButton(new Vector2(bossGridZero.x + 1, bossGridZero.y), "stompy", "boss_1", new int[] { 34, 35 }, new string[] { "lullabyTrap", "player", "shellbreaker", "spaceBox" });
+        AddButton(new Vector2(bossGridZero.x + 2, bossGridZero.y), "spaceBox", "boss_2", new int[] { 36, 37 }, new string[] { "spiderTrap", "player", "stompy", "moonSnail" });
+        AddButton(new Vector2(bossGridZero.x + 3, bossGridZero.y), "moonSnail", "boss_3", new int[] { 38, 39 }, new string[] { "warpTrap", "player", "spaceBox", "peashooter" });
 
-        AddButton(new Vector2(1.5f, 0), "player", "player", new int[] { 40, 41, 42, 43, 44, 45 }, new string[] { "shellbreaker", "shellbreaker", "helixFragment", "gravityShock" });
+        AddButton(new Vector2(1.5f, 0), "player", "player", new int[] { 40, 41, 42, 43, 44, 45 }, new string[] { "shellbreaker", "gravityTrap", "helixFragment", "gravityShock" });
 
-        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 0, 1 }, new string[] { "gravityShock", "peashooter", "damage", "damage" });
-        AddButton(new Vector2(-3.5f, -2), "damage", "option", new int[] { 0, 1 }, new string[] { "superSecretBoomerang", "boomerang", "noclip", "noclip" });
+        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 0, 1 }, new string[] { "gravityShock", "peashooter", "warpTrap", "damage" });
+        AddButton(new Vector2(-3.5f, -2), "damage", "option", new int[] { 0, 1 }, new string[] { "superSecretBoomerang", "boomerang", "noclip", "weaponTrap" });
+
+        AddButton(trapGridZero, "weaponTrap", "trap_0", new int[] { 46, 47 }, new string[] { "helixFragment", "highJump", "damage", "gravityTrap" });
+        AddButton(new Vector2(trapGridZero.x + 1, trapGridZero.y), "gravityTrap", "trap_1", new int[] { 48, 49 }, new string[] { "player", "shellbreaker", "weaponTrap", "lullabyTrap" });
+        AddButton(new Vector2(trapGridZero.x + 2, trapGridZero.y), "lullabyTrap", "trap_2", new int[] { 50, 51 }, new string[] { "player", "stompy", "gravityTrap", "spiderTrap" });
+        AddButton(new Vector2(trapGridZero.x + 3, trapGridZero.y), "spiderTrap", "trap_3", new int[] { 52, 53 }, new string[] { "player", "spaceBox", "lullabyTrap", "warpTrap" });
+        AddButton(new Vector2(trapGridZero.x + 4, trapGridZero.y), "warpTrap", "trap_4", new int[] { 54, 55 }, new string[] { "player", "moonSnail", "spiderTrap", "noclip" });
 
         selector.transform.localPosition = buttonPosArray[currentSelected];
         foreach (GameObject obj in menuObjects)
@@ -217,6 +224,9 @@ public class DebugMenu : MonoBehaviour
                                 button.sprite.sprite = PlayState.damageMult ? GetSprite(1) : GetSprite(0);
                                 break;
                         }
+                        break;
+                    case "trap":
+                        
                         break;
                 }
             }

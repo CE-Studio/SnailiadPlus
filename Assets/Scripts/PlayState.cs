@@ -174,6 +174,7 @@ public class PlayState
     public static GameObject titleParent;
     public static SpriteRenderer darknessLayer;
     public static GameObject healthOrbPool;
+    public static TrapManager trapManager;
 
     public static RoomTrigger titleRoom;
     public static RoomTrigger moonCutsceneRoom;

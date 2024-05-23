@@ -88,23 +88,8 @@ public class Item:MonoBehaviour, IRoomObject {
         parentRoom = transform.parent.GetComponent<RoomTrigger>();
         if (parentRoom.areaID != (int)PlayState.Areas.BossRush)
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
+        UpdateIDAsProgressive();
 
-        //if ((PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID)) || itemID >= 1000)
-        //{
-        //    if (itemID >= 1000)
-        //    {
-        //        if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
-        //            Spawn();
-        //        else
-        //            Destroy(gameObject);
-        //    }
-        //    else if (PlayState.currentProfile.items[itemID] == 0)
-        //        Spawn();
-        //    else
-        //        Destroy(gameObject);
-        //}
-        //else
-        //    Destroy(gameObject);
         if (itemID >= 1000)
         {
             if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
@@ -131,20 +116,23 @@ public class Item:MonoBehaviour, IRoomObject {
             originPos = transform.localPosition;
             isRushItem = transform.parent.GetComponent<RoomTrigger>().areaID == (int)PlayState.Areas.BossRush;
 
-            if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch
+            if (!PlayState.isRandomGame)
             {
-                "Snaily" => 0,
-                "Sluggy" => 1,
-                "Upside" => 2,
-                "Leggy" => 3,
-                "Blobby" => 4,
-                "Leechy" => 5,
-                _ => 0
-            }]) {
-                PlayState.currentProfile.items[itemID] = -1;
-                Destroy(gameObject);
+                if (!difficultiesPresentIn[PlayState.currentProfile.difficulty] || !charactersPresentFor[PlayState.currentProfile.character switch
+                {
+                    "Snaily" => 0,
+                    "Sluggy" => 1,
+                    "Upside" => 2,
+                    "Leggy" => 3,
+                    "Blobby" => 4,
+                    "Leechy" => 5,
+                    _ => 0
+                }])
+                {
+                    PlayState.currentProfile.items[itemID] = -1;
+                    Destroy(gameObject);
+                }
             }
-            UpdateIDAsProgressive();
 
             lightMask = PlayState.globalFunctions.CreateLightMask(14, transform);
         }
@@ -405,12 +393,15 @@ public class Item:MonoBehaviour, IRoomObject {
     public static string IDToName(int thisID, bool numberHeartsAndHelixes = true)
     {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
-        if (thisID >= PlayState.OFFSET_FRAGMENTS)
-            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString())
-                : PlayState.GetText("item_helixFragment_noNum");
-        if (thisID >= PlayState.OFFSET_HEARTS)
-            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString())
-                : PlayState.GetText("item_heartContainer_noNum");
+        if (thisID < 1000)
+        {
+            if (thisID >= PlayState.OFFSET_FRAGMENTS)
+                return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString())
+                    : PlayState.GetText("item_helixFragment_noNum");
+            if (thisID >= PlayState.OFFSET_HEARTS)
+                return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString())
+                    : PlayState.GetText("item_heartContainer_noNum");
+        }
         return thisID switch
         {
             0 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeapon") : PlayState.GetText("item_peashooter"),

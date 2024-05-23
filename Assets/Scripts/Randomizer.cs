@@ -17,15 +17,6 @@ public class Randomizer : MonoBehaviour
     private int[] locations = new int[] { };
     private bool hasPlacedDevastator = false;
 
-    public enum TrapItems
-    {
-        WeaponLock,   // Locks you to one of your lower-power weapons for 10-30 seconds
-        GravityLock,  // Locks you to a random gravity state for 10-30 seconds
-        Lullaby,      // Puts your character to sleep for 10-15 seconds or until damage is taken
-        SpiderAmbush, // Spawns a horde of 8-12 Spiders randomly around the screen. Spiders have a 10% chance to spawn as Spider Mamas
-        Warp          // Warps you back to Snail Town. Blame Zed
-    };
-
     public void StartGeneration()
     {
         isShuffling = true;
@@ -100,9 +91,17 @@ public class Randomizer : MonoBehaviour
                                 itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
                         if (PlayState.currentRando.trapsActive)
                         {
-                            int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
+                            int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
+                            List<int> trapsToAdd = new();
                             for (int i = 0; i < trapTypes; i++)
-                                itemsToAdd.Add(1000 + i);
+                                trapsToAdd.Add(1000 + i);
+                            int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
+                            for (int i = 0; i < numberOfTraps; i++)
+                            {
+                                int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
+                                itemsToAdd.Add(trapsToAdd[trapID]);
+                                trapsToAdd.RemoveAt(trapID);
+                            }
                         }
                     }
                     else
@@ -153,9 +152,17 @@ public class Randomizer : MonoBehaviour
                                 itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
                             if (PlayState.currentRando.trapsActive)
                             {
-                                int trapTypes = System.Enum.GetNames(typeof(TrapItems)).Length;
+                                int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
+                                List<int> trapsToAdd = new();
                                 for (int i = 0; i < trapTypes; i++)
-                                    itemsToAdd.Add(1000 + i);
+                                    trapsToAdd.Add(1000 + i);
+                                int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
+                                for (int i = 0; i < numberOfTraps; i++)
+                                {
+                                    int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
+                                    itemsToAdd.Add(trapsToAdd[trapID]);
+                                    trapsToAdd.RemoveAt(trapID);
+                                }
                             }
                             splitPhase = 2;
                         }
@@ -192,7 +199,7 @@ public class Randomizer : MonoBehaviour
                             if (locations[i] == -2)
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapItems)).Length];
+                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                         randoPhase = 0;
                         isShuffling = false;
                     }
@@ -252,7 +259,7 @@ public class Randomizer : MonoBehaviour
                             if (locations[i] == -2)
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapItems)).Length];
+                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                         randoPhase = 0;
                         isShuffling = false;
                     }
