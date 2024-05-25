@@ -37163,7 +37163,7 @@
 				8,
 				8
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -37207,7 +37207,7 @@
 				8,
 				8
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -37251,7 +37251,7 @@
 				8,
 				8
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -37295,7 +37295,7 @@
 				8,
 				8
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
@@ -37339,7 +37339,7 @@
 				8,
 				8
 			],
-			"loop": false,
+			"loop": true,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},

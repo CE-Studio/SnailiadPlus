@@ -19,8 +19,6 @@ public class TrapManager : MonoBehaviour
         public AnimationModule frameAnim;
         public AnimationModule bgAnim;
         public AnimationModule maskAnim;
-        public float duration;
-        public float thisMaxDuration;
     }
 
     public List<Timer> timers = new();
@@ -28,10 +26,13 @@ public class TrapManager : MonoBehaviour
     public float[] trapDurations = new float[] { };
     private float[] currentMaxDurations = new float[] { };
 
-    private readonly float[] minDurations = new float[] { 10f, 10f, 10f, 3f, 3f };
-    private readonly float[] maxDurations = new float[] { 20f, 20f, 15f, 3f, 3f };
+    private readonly float[] minDurations = new float[] { 15f, 15f, 10f, 3f, 3f };
+    private readonly float[] maxDurations = new float[] { 30f, 30f, 15f, 3f, 3f };
 
-    private const float SPACE_BUFFER = 1.25f;
+    private const float SPACE_BUFFER = 1.75f;
+    private const float ACTIVE_Y = -2.5f;
+    private const float ACTIVE_Y_BOSS = -4f;
+    private const float LERP_RATE = 10f;
     private List<int> trapQueue = new();
 
     void Start()
@@ -47,14 +48,13 @@ public class TrapManager : MonoBehaviour
                 obj = thisTimer.transform,
                 frameAnim = thisTimer.GetComponent<AnimationModule>(),
                 bgAnim = thisTimer.transform.GetChild(0).GetComponent<AnimationModule>(),
-                maskAnim = thisTimer.transform.GetChild(1).GetComponent<AnimationModule>(),
-                duration = 0f,
-                thisMaxDuration = 0f
+                maskAnim = thisTimer.transform.GetChild(1).GetComponent<AnimationModule>()
             });
             timers[i].frameAnim.Add(GetAnim(i, 0));
             timers[i].bgAnim.Add(GetAnim(i, 1));
             timers[i].maskAnim.Add(GetAnim(i, 2));
             timers[i].maskAnim.updateMask = true;
+            timers[i].maskAnim.GetSpriteRenderer().color = new Color(0, 0, 0, 0);
         }
     }
 
@@ -65,9 +65,23 @@ public class TrapManager : MonoBehaviour
 
         for (int i = 0; i < timers.Count; i++)
         {
-            if (timers[i].duration > 0)
+            trapDurations[i] -= Time.deltaTime;
+            Vector2 timerPos = timers[i].obj.transform.localPosition;
+            if (trapDurations[i] > 0)
             {
-                timers[i].obj.localPosition = new Vector2();
+                float timerX = (SPACE_BUFFER * trapQueue.IndexOf(i)) - (SPACE_BUFFER * (trapQueue.Count - 1) * 0.5f);
+                float timerY = PlayState.inBossFight ? ACTIVE_Y_BOSS : ACTIVE_Y;
+                timers[i].obj.transform.localPosition = Vector2.Lerp(timerPos, new Vector2(timerX, timerY), LERP_RATE * Time.deltaTime);
+                timers[i].maskAnim.transform.localPosition = Vector2.Lerp(Vector2.zero, Vector2.down, Mathf.InverseLerp(currentMaxDurations[i], 0, trapDurations[i]));
+                float maskY = timers[i].maskAnim.transform.localPosition.y;
+                maskY = Mathf.FloorToInt(maskY * 16) * 0.0625f;
+                timers[i].maskAnim.transform.localPosition = new Vector2(0, maskY);
+            }
+            else
+            {
+                timers[i].obj.transform.localPosition = Vector2.Lerp(timerPos, new Vector2(timerPos.x, 0), LERP_RATE * Time.deltaTime);
+                if (trapQueue.Contains(i))
+                    trapQueue.Remove(i);
             }
         }
     }
@@ -88,8 +102,8 @@ public class TrapManager : MonoBehaviour
         timers[trapID].maskAnim.Play(GetAnim(trapID, 2));
         if (!trapQueue.Contains(trapID))
         {
+            timers[trapID].obj.localPosition = new Vector2(SPACE_BUFFER * trapQueue.Count * 0.5f, 0);
             trapQueue.Add(trapID);
-            timers[trapID].obj.localPosition = new Vector2(SPACE_BUFFER * trapQueue.Count, 0);
         }
     }
 }
