@@ -191,7 +191,7 @@ public class GlobalFunctions : MonoBehaviour
         PlayState.titleParent = GameObject.Find("View/Title Parent");
         PlayState.darknessLayer = GameObject.Find("View/Darkness Layer").GetComponent<SpriteRenderer>();
         PlayState.healthOrbPool = GameObject.Find("Health Orb Pool");
-        PlayState.trapManager = GameObject.Find("View/Trap Timer Parent").GetComponent<TrapManager>();
+        PlayState.trapManager = GameObject.Find("View/Trap Timers").GetComponent<TrapManager>();
 
         PlayState.titleRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Title").GetComponent<RoomTrigger>();
         PlayState.moonCutsceneRoom = PlayState.roomTriggerParent.transform.Find("Backdrop Rooms/Moon Snail Cutscene").GetComponent<RoomTrigger>();
