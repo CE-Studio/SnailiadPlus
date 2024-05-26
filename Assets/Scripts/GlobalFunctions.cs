@@ -804,7 +804,7 @@ public class GlobalFunctions : MonoBehaviour
                 2 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
                 3 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
                 _ => PlayState.CheckForItem(0)
-            };
+            } && !PlayState.trapManager.lockedWeapons.Contains(i);
             if (i == 0)
                 weaponIcons[i].GetSpriteRenderer().enabled = PlayState.isRandomGame && PlayState.currentRando.broomStart;
             if (PlayState.playerScript.selectedWeapon == i && hasWeapon)

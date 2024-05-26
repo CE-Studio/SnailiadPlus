@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, ICutsceneObject {
     #region vars
-    public enum Dirs { Floor, WallL, WallR, Ceiling };
+    public enum Dirs { Floor, WallL, WallR, Ceiling, None };
     public Dirs gravityDir = Dirs.Floor;
     public Dirs lastGravity = Dirs.Floor;
     public Dirs homeGravity = Dirs.Floor;

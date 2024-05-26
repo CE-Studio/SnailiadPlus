@@ -226,9 +226,15 @@ public class DebugMenu : MonoBehaviour
                         }
                         break;
                     case "trap":
+                        int trapID = int.Parse(typeParts[1]);
                         if (Control.JumpPress(0, true) && button.label == currentSelected)
-                            PlayState.trapManager.ActivateTrap(int.Parse(typeParts[1]));
-                        button.sprite.sprite = GetSprite(PlayState.trapManager.trapDurations[int.Parse(typeParts[1])] > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
+                        {
+                            if (PlayState.trapManager.trapDurations[trapID] > 0)
+                                PlayState.trapManager.DeactivateTrap(trapID);
+                            else
+                                PlayState.trapManager.ActivateTrap(trapID);
+                        }
+                        button.sprite.sprite = GetSprite(PlayState.trapManager.trapDurations[trapID] > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                         break;
                 }
             }

@@ -35,6 +35,10 @@ public class TrapManager : MonoBehaviour
     private const float LERP_RATE = 10f;
     private List<int> trapQueue = new();
 
+    public List<int> lockedWeapons = new();
+    private int lastSelectedWeapon = 0;
+    public Player.Dirs lockedGravity = Player.Dirs.None;
+
     void Start()
     {
         int totalTrapCount = System.Enum.GetNames(typeof(TrapItems)).Length;
@@ -74,14 +78,14 @@ public class TrapManager : MonoBehaviour
                 timers[i].obj.transform.localPosition = Vector2.Lerp(timerPos, new Vector2(timerX, timerY), LERP_RATE * Time.deltaTime);
                 timers[i].maskAnim.transform.localPosition = Vector2.Lerp(Vector2.zero, Vector2.down, Mathf.InverseLerp(currentMaxDurations[i], 0, trapDurations[i]));
                 float maskY = timers[i].maskAnim.transform.localPosition.y;
-                maskY = Mathf.FloorToInt(maskY * 16) * 0.0625f;
+                maskY = Mathf.RoundToInt(maskY * 16) * 0.0625f;
                 timers[i].maskAnim.transform.localPosition = new Vector2(0, maskY);
             }
             else
             {
                 timers[i].obj.transform.localPosition = Vector2.Lerp(timerPos, new Vector2(timerPos.x, 0), LERP_RATE * Time.deltaTime);
                 if (trapQueue.Contains(i))
-                    trapQueue.Remove(i);
+                    DeactivateTrap(i);
             }
         }
     }
@@ -104,6 +108,78 @@ public class TrapManager : MonoBehaviour
         {
             timers[trapID].obj.localPosition = new Vector2(SPACE_BUFFER * trapQueue.Count * 0.5f, 0);
             trapQueue.Add(trapID);
+        }
+        switch (trapID)
+        {
+            case 0:
+                lastSelectedWeapon = PlayState.playerScript.selectedWeapon;
+                List<int> currentLoadout = new();
+                if (PlayState.isRandomGame && PlayState.currentRando.broomStart)
+                    currentLoadout.Add(0);
+                if (PlayState.CheckForItem(0))
+                    currentLoadout.Add(1);
+                if (PlayState.CheckForItem(1))
+                    currentLoadout.Add(2);
+                if (PlayState.CheckForItem(2))
+                    currentLoadout.Add(3);
+                int weaponCountToLock = Mathf.FloorToInt(currentLoadout.Count * 0.5f);
+                int currentCheckedID = currentLoadout.Count - 1;
+                while (weaponCountToLock > 0 && currentCheckedID >= 0)
+                {
+                    lockedWeapons.Add(currentLoadout[currentCheckedID]);
+                    weaponCountToLock--;
+                    currentCheckedID--;
+                    if (weaponCountToLock == 0)
+                        PlayState.globalFunctions.ChangeActiveWeapon(currentLoadout[currentCheckedID]);
+                }
+                break;
+            case 1:
+                lockedGravity = (Player.Dirs)Random.Range(0, 4);
+                break;
+            case 2:
+                PlayState.playerScript.sleepTimer = 0;
+                PlayState.paralyzed = true;
+                break;
+            case 3:
+                int spiderCount = Random.Range(8, 13);
+                for (int i = 0; i < spiderCount; i++)
+                {
+                    float spiderX = Random.Range(PlayState.cam.transform.position.x - 12.5f, PlayState.cam.transform.position.x + 12.5f);
+                    float spiderY = Random.Range(PlayState.cam.transform.position.y - 7.5f, PlayState.cam.transform.position.y + 7.5f);
+                    if (Random.Range(0f, 1f) <= 0.1f)
+                        Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spider Mama"), new Vector2(spiderX, spiderY),
+                            Quaternion.identity, PlayState.currentRoom.transform);
+                    else
+                        Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spider"), new Vector2(spiderX, spiderY),
+                            Quaternion.identity, PlayState.currentRoom.transform);
+                    PlayState.RequestParticle(new Vector2(spiderX, spiderY), "explosion", new float[] { 2 });
+                }
+                break;
+            case 4:
+                PlayState.player.transform.position = PlayState.PLAYER_SPAWNS[PlayState.mainMenu.CharacterNameToID(PlayState.currentProfile.character)];
+                break;
+        }
+    }
+
+    public void DeactivateTrap(int trapID)
+    {
+        trapDurations[trapID] = 0;
+        if (trapQueue.Contains(trapID))
+            trapQueue.Remove(trapID);
+        switch (trapID)
+        {
+            case 0:
+                lockedWeapons.Clear();
+                PlayState.globalFunctions.ChangeActiveWeapon(lastSelectedWeapon);
+                break;
+            case 1:
+                lockedGravity = Player.Dirs.None;
+                break;
+            case 2:
+                PlayState.paralyzed = false;
+                break;
+            default:
+                break;
         }
     }
 }

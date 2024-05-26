@@ -28,7 +28,7 @@ public class Spider1 : Enemy
 
     private void Awake()
     {
-        if (PlayState.gameState != PlayState.GameState.game)
+        if (PlayState.gameState != PlayState.GameState.game && PlayState.gameState != PlayState.GameState.debug)
             return;
 
         Spawn(500, 3, 10, true, 2);

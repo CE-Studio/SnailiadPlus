@@ -163,6 +163,7 @@ public class PlayState
     public static GameObject particlePool;
     public static GameObject camParticlePool;
     public static GameObject roomTriggerParent;
+    public static RoomTrigger currentRoom;
     public static MainMenu mainMenu;
     public static Credits credits;
     public static GameObject loadingIcon;

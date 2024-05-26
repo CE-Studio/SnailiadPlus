@@ -372,6 +372,7 @@ public class RoomTrigger : MonoBehaviour
             PlayState.PlayAreaSong(areaID, areaSubzone, isSnelkRoom);
             PlayState.CloseDialogue();
             PlayState.isTalking = false;
+            PlayState.currentRoom = this;
 
             if (!box.bounds.Contains(PlayState.player.transform.position))
             {
