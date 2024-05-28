@@ -1998,6 +1998,7 @@ public class MainMenu : MonoBehaviour
             else
                 PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 3 :
                     (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 2 : (PlayState.CheckForItem(0) ? 1 : 0)));
+            PlayState.isRandomGame = PlayState.currentRando.randoLevel > 0;
         }
         if (PlayState.isInBossRush)
             PlayState.TogglableHUDElements[0].SetActive(false);
@@ -2164,8 +2165,8 @@ public class MainMenu : MonoBehaviour
         }
         else if (PlayState.generalData.achievements[3])
             AddOption(PlayState.GetText("menu_option_main_bossRush"), true, BossRushConfirm, new int[] { 1, 0 });
-        //AddOption(PlayState.GetText("menu_option_main_multiplayer"), true);
-        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_main_multiplayer"), true, MultiplayerScreen);
+        //AddOption("", false);
         AddOption(PlayState.GetText("menu_option_main_options"), true, OptionsScreen);
         AddOption(PlayState.GetText("menu_option_main_credits"), true, CreditsPage1);
         if (PlayState.HasTime() || PlayState.HasAchievemements())
@@ -2542,6 +2543,7 @@ public class MainMenu : MonoBehaviour
         PlayState.incrementRushTimer = false;
         PlayState.hudRushTime.SetText("");
         PlayState.currentProfile.saveCoords = PlayState.BOSS_RUSH_SPAWN;
+        PlayState.isRandomGame = false;
 
         if (PlayState.gameState == PlayState.GameState.pause)
         {
@@ -2552,6 +2554,39 @@ public class MainMenu : MonoBehaviour
         }
 
         StartCoroutine(LoadFade(PlayState.BOSS_RUSH_SPAWN, false));
+    }
+
+    public void MultiplayerScreen()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_multiplayer_base"), false);
+        AddOption(PlayState.GetText("menu_option_multiplayer_ap"), true, ArchipelagoScreen);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_multiplayer_options"), true, MultiplayerOptions);
+        AddOption("", false);
+        AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
+        ForceSelect(1);
+        backPage = PageMain;
+    }
+
+    public void ArchipelagoScreen()
+    {
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_ap_header"), false);
+        AddOption(PlayState.GetText("menu_option_ap_ip") + ":\n", true, 1);
+        AddOption(PlayState.GetText("menu_option_ap_port") + ":\n", true, 1);
+        AddOption(PlayState.GetText("menu_option_ap_password") + ":\n", true, 1);
+        AddOption(PlayState.GetText("menu_option_ap_slot") + ":\n", true, 1);
+        AddOption(PlayState.GetText("menu_option_ap_connect"), true);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_multiplayer_returnTo"), true, MultiplayerScreen);
+        ForceSelect(1);
+        backPage = MultiplayerScreen;
+    }
+
+    public void MultiplayerOptions()
+    {
+
     }
 
     public void OptionsScreen()

@@ -691,6 +691,56 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_multiplayer_base",
+			"text": "Native multiplayer",
+			"value": 0
+		},
+		{
+			"name": "menu_option_multiplayer_ap",
+			"text": "Connect to Archipelago",
+			"value": 0
+		},
+		{
+			"name": "menu_option_multiplayer_options",
+			"text": "Multiplayer options",
+			"value": 0
+		},
+		{
+			"name": "menu_option_multiplayer_returnTo",
+			"text": "Back to multiplayer menu",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_header",
+			"text": "Write or paste the details of your session into each field",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_ip",
+			"text": "Server IP",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_port",
+			"text": "Port",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_password",
+			"text": "Password",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_slot",
+			"text": "Slot name",
+			"value": 0
+		},
+		{
+			"name": "menu_option_ap_connect",
+			"text": "Connect",
+			"value": 0
+		},
+		{
 			"name": "menu_option_options_sound",
 			"text": "Sound options",
 			"value": 0
