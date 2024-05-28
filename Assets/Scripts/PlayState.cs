@@ -1283,8 +1283,8 @@ public class PlayState
                     {
                         activateParticle = true;
                         particleScript.vars[0] = 0;
-                        particleScript.vars[1] = (UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f) * Time.fixedDeltaTime;
-                        particleScript.vars[2] = (UnityEngine.Random.Range(0f, 1f) * 6f + 3f) * Time.fixedDeltaTime;
+                        particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f;
+                        particleScript.vars[2] = UnityEngine.Random.Range(0f, 1f) * 6f + 3f;
                     }
                     break;
                 case "gigatrail":

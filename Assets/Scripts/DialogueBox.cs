@@ -133,7 +133,7 @@ public class DialogueBox : MonoBehaviour
         {
             sfx.volume = PlayState.generalData.soundVolume * 0.1f;
 
-            timer = Mathf.Clamp(timer - Time.deltaTime, 0, Mathf.Infinity);
+            timer -= Time.deltaTime;
 
             if (dialogueType != 3)
             {
@@ -272,19 +272,15 @@ public class DialogueBox : MonoBehaviour
                             {
                                 if (forcedClosed)
                                     break;
-                                if (timer == 0)
-                                {
+                                if (timer <= 0)
                                     ParseNextChar();
-                                }
                                 if (!Control.SpeakHold(0, true) && buttonDown)
                                     buttonDown = false;
                                 if (Control.SpeakPress(0, true) && !buttonDown && dialogueType == 3)
                                 {
                                     buttonDown = true;
                                     while (pointer.y < textList[(int)pointer.x].Length)
-                                    {
                                         ParseNextChar(true);
-                                    }
                                     break;
                                 }
                             }
@@ -454,7 +450,7 @@ public class DialogueBox : MonoBehaviour
                 }
             }
             pointer.y++;
-            timer = currentTimerMax;
+            timer += currentTimerMax;
         }
     }
 

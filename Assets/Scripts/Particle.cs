@@ -161,7 +161,7 @@ public class Particle : MonoBehaviour
                         internalVars[0] += Mathf.Abs(PlayState.ANGLE_DIAG.x * vars[1]) * internalVars[5] * linearMod;
                         internalVars[1] += -Mathf.Abs(PlayState.ANGLE_DIAG.y * vars[1]) * internalVars[5] * linearMod;
                         // Sleep - don't move at all
-                        transform.position += new Vector3(internalVars[0], internalVars[1]);
+                        transform.position += Time.deltaTime * new Vector3(internalVars[0], internalVars[1]);
                         if (internalVars[2] > 0.25f)
                         {
                             if (gigaCenterDis < Vector2.Distance(transform.position, PlayState.cam.transform.position))

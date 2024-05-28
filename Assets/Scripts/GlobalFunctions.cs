@@ -48,8 +48,8 @@ public class GlobalFunctions : MonoBehaviour
     readonly float updateRate = 4;
 
     // Global sound flag stuff
-    int pingTimer = 0;
-    int explodeTimer = 0;
+    float pingTimer = 0;
+    float explodeTimer = 0;
 
     // Area name text
     float areaTextTimer = 0;
@@ -248,19 +248,19 @@ public class GlobalFunctions : MonoBehaviour
             // Global sound timers
             if (PlayState.armorPingPlayedThisFrame)
             {
-                pingTimer--;
+                pingTimer -= Time.deltaTime;
                 if (pingTimer <= 0)
                 {
-                    pingTimer = Application.targetFrameRate switch { 30 => 1, 60 => 2, 120 => 4, _ => 8 };
+                    pingTimer = 0.025f;
                     PlayState.armorPingPlayedThisFrame = false;
                 }
             }
             if (PlayState.explodePlayedThisFrame)
             {
-                explodeTimer--;
+                explodeTimer -= Time.deltaTime;
                 if (explodeTimer <= 0)
                 {
-                    explodeTimer = Application.targetFrameRate switch { 30 => 1, 60 => 2, 120 => 4, _ => 8 };
+                    explodeTimer = 0.025f;
                     PlayState.explodePlayedThisFrame = false;
                 }
             }

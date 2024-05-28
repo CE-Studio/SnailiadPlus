@@ -80,6 +80,9 @@ public class ControlPopup : MonoBehaviour
 
     public void RunPopup(bool showWeapon, bool isController)
     {
+        if (PlayState.isInBossRush || PlayState.isRandomGame)
+            return;
+
         if (isController)
         {
             anim.Play("Controls_controller_" + (showWeapon ? "weapon" : "base"));

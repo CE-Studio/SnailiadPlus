@@ -220,8 +220,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = false;
                 if (playSound)
                     soundID = "ShotBoomerangDev";
-                SetDestroyableLevels("111111", false);
-                SetDestroyableLevels("111111", true);
+                SetDestroyableLevels("0011111100", false);
+                SetDestroyableLevels("0011111100", true);
                 bulletInteraction = 0;
                 break;
             case BulletType.laser:
@@ -298,8 +298,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotRainbowDev";
-                SetDestroyableLevels("1111110000", false);
-                SetDestroyableLevels("1111110000", true);
+                SetDestroyableLevels("0011111100", false);
+                SetDestroyableLevels("0011111100", true);
                 bulletInteraction = 0;
                 lightSize = 17;
                 break;
@@ -313,7 +313,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyGigaWave";
-                SetDestroyableLevels("1111110000", true);
+                SetDestroyableLevels("0011111100", true);
                 bulletInteraction = 2;
                 lightSize = 21;
                 break;
@@ -327,8 +327,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotRainbowDev";
-                SetDestroyableLevels("1111110000", false);
-                SetDestroyableLevels("1111110000", true);
+                SetDestroyableLevels("0011111100", false);
+                SetDestroyableLevels("0011111100", true);
                 bulletInteraction = 0;
                 lightSize = 19;
                 break;
@@ -410,8 +410,8 @@ public class EnemyBullet : MonoBehaviour
             box.enabled = false;
             lifeTimer = 0;
             transform.position = Vector2.zero;
-            SetDestroyableLevels("000000", false);
-            SetDestroyableLevels("000000", true);
+            SetDestroyableLevels("0000000000", false);
+            SetDestroyableLevels("0000000000", true);
             bulletInteraction = 0;
             hasBeenParried = false;
             lightMask.SetSize(-1);
