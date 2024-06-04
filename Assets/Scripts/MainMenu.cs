@@ -20,18 +20,32 @@ public class MainMenu : MonoBehaviour
         public int[] menuParam;
         public float selectY;
         public bool forceScale;
+        public MenuString targetString;
     }
 
     private List<MenuOption> currentOptions = new();
     private DestinationDelegate backPage;
     private int[] menuVarFlags = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int[] returnVars = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private string[] menuVarStrings = new string[] { "", "", "", "", "", "" };
     private int controlScreen = 0;
     private bool isRebinding = false;
     private float rebindCooldown = 0;
     private bool pauseButtonDown = false;
     private bool fadingToIntro = false;
     private bool suppressInput = false;
+    private float stringCursorTimer = 0;
+
+    public enum MenuString
+    {
+        randoSeed,
+        apID,
+        apPort,
+        apPass,
+        apSlot,
+        multiName,
+        none
+    }
 
     private const float LIST_CENTER_Y = -1.25f;
     private const float LIST_OPTION_SPACING = 1.25f;
@@ -149,6 +163,74 @@ public class MainMenu : MonoBehaviour
         { 'i', 6 }, { 'j', 24 }, { 'k', 24 }, { 'l', 6 }, { 'm', 32 }, { 'n', 24 }, { 'o', 28 }, { 'p', 28 },
         { 'q', 28 }, { 'r', 24 }, { 's', 25 }, { 't', 24 }, { 'u', 28 }, { 'v', 24 }, { 'w', 32 }, { 'x', 28 },
         { 'y', 24 }, { 'z', 24 }, { ' ', 12 }, { '+', 24 }
+    };
+
+    private Dictionary<KeyCode, char[]> acceptedStringChars = new()
+    {
+        { KeyCode.Space, new char[] { ' ', ' ' } },
+        { KeyCode.Keypad0, new char[] { '0', '0' } },
+        { KeyCode.Keypad1, new char[] { '1', '1' } },
+        { KeyCode.Keypad2, new char[] { '2', '2' } },
+        { KeyCode.Keypad3, new char[] { '3', '3' } },
+        { KeyCode.Keypad4, new char[] { '4', '4' } },
+        { KeyCode.Keypad5, new char[] { '5', '5' } },
+        { KeyCode.Keypad6, new char[] { '6', '6' } },
+        { KeyCode.Keypad7, new char[] { '7', '7' } },
+        { KeyCode.Keypad8, new char[] { '8', '8' } },
+        { KeyCode.Keypad9, new char[] { '9', '9' } },
+        { KeyCode.KeypadPeriod, new char[] { '.', '.' } },
+        { KeyCode.KeypadDivide, new char[] { '/', '/' } },
+        { KeyCode.KeypadMultiply, new char[] { '*', '*' } },
+        { KeyCode.KeypadMinus, new char[] { '-', '-' } },
+        { KeyCode.KeypadPlus, new char[] { '+', '+' } },
+        { KeyCode.KeypadEquals, new char[] { '=', '=' } },
+        { KeyCode.Alpha0, new char[] { '0', '!' } },
+        { KeyCode.Alpha1, new char[] { '1', '@' } },
+        { KeyCode.Alpha2, new char[] { '2', '#' } },
+        { KeyCode.Alpha3, new char[] { '3', '$' } },
+        { KeyCode.Alpha4, new char[] { '4', '%' } },
+        { KeyCode.Alpha5, new char[] { '5', '^' } },
+        { KeyCode.Alpha6, new char[] { '6', '&' } },
+        { KeyCode.Alpha7, new char[] { '7', '*' } },
+        { KeyCode.Alpha8, new char[] { '8', '(' } },
+        { KeyCode.Alpha9, new char[] { '9', ')' } },
+        { KeyCode.BackQuote, new char[] { '`', '~' } },
+        { KeyCode.Minus, new char[] { '-', '_' } },
+        { KeyCode.Equals, new char[] { '=', '+' } },
+        { KeyCode.LeftBracket, new char[] { '[', '{' } },
+        { KeyCode.RightBracket, new char[] { ']', '}' } },
+        { KeyCode.Backslash, new char[] { '\\', '|' } },
+        { KeyCode.Semicolon, new char[] { ';', ':' } },
+        { KeyCode.Quote, new char[] { '\'', '\"' } },
+        { KeyCode.Comma, new char[] { ',', '<' } },
+        { KeyCode.Period, new char[] { '.', '>' } },
+        { KeyCode.Slash, new char[] { '/', '?' } },
+        { KeyCode.A, new char[] { 'a', 'A' } },
+        { KeyCode.B, new char[] { 'b', 'B' } },
+        { KeyCode.C, new char[] { 'c', 'C' } },
+        { KeyCode.D, new char[] { 'd', 'D' } },
+        { KeyCode.E, new char[] { 'e', 'E' } },
+        { KeyCode.F, new char[] { 'f', 'F' } },
+        { KeyCode.G, new char[] { 'g', 'G' } },
+        { KeyCode.H, new char[] { 'h', 'H' } },
+        { KeyCode.I, new char[] { 'i', 'I' } },
+        { KeyCode.J, new char[] { 'j', 'J' } },
+        { KeyCode.K, new char[] { 'k', 'K' } },
+        { KeyCode.L, new char[] { 'l', 'L' } },
+        { KeyCode.M, new char[] { 'm', 'M' } },
+        { KeyCode.N, new char[] { 'n', 'N' } },
+        { KeyCode.O, new char[] { 'o', 'O' } },
+        { KeyCode.P, new char[] { 'p', 'P' } },
+        { KeyCode.Q, new char[] { 'q', 'Q' } },
+        { KeyCode.R, new char[] { 'r', 'R' } },
+        { KeyCode.S, new char[] { 's', 'S' } },
+        { KeyCode.T, new char[] { 't', 'T' } },
+        { KeyCode.U, new char[] { 'u', 'U' } },
+        { KeyCode.V, new char[] { 'v', 'V' } },
+        { KeyCode.W, new char[] { 'w', 'W' } },
+        { KeyCode.X, new char[] { 'x', 'X' } },
+        { KeyCode.Y, new char[] { 'y', 'Y' } },
+        { KeyCode.Z, new char[] { 'z', 'Z' } }
     };
 
     void Start()
@@ -352,6 +434,8 @@ public class MainMenu : MonoBehaviour
             PlayState.gameState = PlayState.GameState.menu;
         }
 
+        stringCursorTimer = (stringCursorTimer + Time.deltaTime) % 1f;
+
         if (lerpLetterOffsetToZero && letterOffsetForIntro != 0)
         {
             letterOffsetForIntro = Mathf.Lerp(letterOffsetForIntro, 0, 10f * Time.deltaTime);
@@ -517,6 +601,8 @@ public class MainMenu : MonoBehaviour
                         PlayState.PlaySound("MenuBeep2");
                     }
                 }
+                else if (currentOptions[selectedOption].targetString != MenuString.none)
+                    HandleStringOptions(currentOptions[selectedOption]);
                 else if (Control.JumpPress(1, true, true) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 {
                     if (currentOptions[selectedOption].menuParam != null)
@@ -773,7 +859,7 @@ public class MainMenu : MonoBehaviour
                     case "randoSeed":
                         if (selectedOption == option.optionID)
                             currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
-                        AddToOptionText(option, "00000000");
+                        AddToOptionText(option, menuVarStrings[(int)MenuString.randoSeed]);
                         SetOptionSize(currentOptions[6], true);
                         break;
                     case "openMap":
@@ -1223,6 +1309,8 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                 }
+                if (option.targetString != MenuString.none)
+                    AddToOptionText(option, option.targetString);
                 if (!option.forceScale)
                     SetOptionSize(option, option.textScript.GetWidth(true) * (option.textScript.size == 2 ? 1 : 2) > 23f);
             }
@@ -1412,50 +1500,60 @@ public class MainMenu : MonoBehaviour
 
     public void AddToOptionText(MenuOption option, string text)
     {
-        option.textScript.SetText((option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : ""));
+        //option.textScript.SetText((option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : ""));
+        option.textScript.SetText(string.Concat(option.optionID == selectedOption ? "< " : "", option.optionText, text, option.optionID == selectedOption ? " >" : ""));
+    }
+    public void AddToOptionText(MenuOption option, MenuString str)
+    {
+        //option.textScript.SetText(option.optionText + ((option.optionID == selectedOption && stringCursorTimer >= 0.5f) ? "_" : ""));
+        option.textScript.SetText(string.Concat(option.optionText, menuVarStrings[(int)str], option.optionID == selectedOption ? (stringCursorTimer >= 0.5f ? "_" : " ") : ""));
     }
 
     public void AddOption(string text = "", bool isSelectable = true)
     {
-        AddOption(text, isSelectable, null, 0, null, "none");
+        AddOption(text, isSelectable, null, 0, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0)
     {
-        AddOption(text, isSelectable, null, scaleOverride, null, "none");
+        AddOption(text, isSelectable, null, scaleOverride, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null)
     {
-        AddOption(text, isSelectable, destination, 0, null, "none");
+        AddOption(text, isSelectable, destination, 0, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0)
     {
-        AddOption(text, isSelectable, destination, scaleOverride, null, "none");
+        AddOption(text, isSelectable, destination, scaleOverride, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, string variable = "none")
     {
-        AddOption(text, isSelectable, null, 0, null, variable);
+        AddOption(text, isSelectable, null, 0, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, string variable = "none")
     {
-        AddOption(text, isSelectable, null, scaleOverride, null, variable);
+        AddOption(text, isSelectable, null, scaleOverride, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, 0, null, variable);
+        AddOption(text, isSelectable, destination, 0, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, scaleOverride, null, variable);
+        AddOption(text, isSelectable, destination, scaleOverride, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
     {
-        AddOption(text, isSelectable, destination, 0, paramChange, "none");
+        AddOption(text, isSelectable, destination, 0, paramChange, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, 0, paramChange, variable);
+        AddOption(text, isSelectable, destination, 0, paramChange, variable, MenuString.none);
     }
-    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, int[] paramChange = null, string variable = "none")
+    public void AddOption(string text = "", bool isSelectable = true, MenuString targetString = MenuString.none)
+    {
+        AddOption(text, isSelectable, null, 0, null, "none", targetString);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, int[] paramChange = null, string variable = "none", MenuString targetString = MenuString.none)
     {
         for (int i = 0; i < currentOptions.Count; i++)
         {
@@ -1474,7 +1572,8 @@ public class MainMenu : MonoBehaviour
             destinationPage = destination,
             varType = variable,
             selectY = currentSpawnY,
-            forceScale = scaleOverride != 0
+            forceScale = scaleOverride != 0,
+            targetString = targetString
         };
 
         GameObject newText = Instantiate(textObject);
@@ -2104,6 +2203,65 @@ public class MainMenu : MonoBehaviour
         return seedStr;
     }
 
+    private void HandleStringOptions(MenuOption currentOption)
+    {
+        string thisString = menuVarStrings[(int)currentOption.targetString];
+        string fetchedChar = "";
+        int clipboardState = 0; // 0 = no action, 1 = copy, 2 = paste
+        if (Control.AnyKeyDown())
+        {
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                if (thisString.Length > 0)
+                    thisString = thisString.Substring(0, thisString.Length - 1);
+            }
+            else
+            {
+                bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+                bool controlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+                foreach (KeyValuePair<KeyCode, char[]> entry in acceptedStringChars)
+                {
+                    if (fetchedChar == "")
+                    {
+                        if (controlDown)
+                        {
+                            switch (entry.Key)
+                            {
+                                case KeyCode.C:
+                                    break;
+                                case KeyCode.V:
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else if (Input.GetKeyDown(entry.Key))
+                            fetchedChar = entry.Value[shiftDown ? 1 : 0].ToString();
+                    }
+                }
+                Debug.Log(fetchedChar);
+            }
+        }
+        switch (currentOption.targetString)
+        {
+            case MenuString.randoSeed:
+                if (fetchedChar != "")
+                    if ("1234567890".Contains(fetchedChar[0]) && thisString.Length < 8)
+                        string.Concat(menuVarStrings[(int)MenuString.randoSeed], fetchedChar);
+                currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
+                break;
+            case MenuString.apID:
+                break;
+            case MenuString.apPort:
+                break;
+            case MenuString.apPass:
+                break;
+            case MenuString.apSlot:
+                break;
+        }
+        menuVarStrings[(int)currentOption.targetString] = thisString;
+    }
+
     public void PageIntro()
     {
         ClearOptions();
@@ -2210,6 +2368,8 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText(PlayState.currentProfileNumber != 0 ? "menu_option_sub_returnTo" : "menu_option_main_returnTo"), true, PageMain);
         ForceSelect(1);
         backPage = PageMain;
+
+        menuVarStrings[(int)MenuString.randoSeed] = "";
     }
 
     public void StartNewGame()
@@ -2230,6 +2390,14 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_profile_returnTo"), true, ProfileScreen);
         ForceSelect(2);
         backPage = ProfileScreen;
+
+        if (menuVarStrings[(int)MenuString.randoSeed] == "")
+        {
+            string randomSeed = UnityEngine.Random.Range(0, 100000000).ToString();
+            while (randomSeed.Length < 8)
+                randomSeed = string.Concat("0", randomSeed);
+            menuVarStrings[(int)MenuString.randoSeed] = randomSeed;
+        }
     }
 
     public void NewGameRandoOptions1()
@@ -2258,7 +2426,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_rando_helixLocks") + ": ", true, "randoLocks");
         AddOption(PlayState.GetText("menu_option_rando_music") + ": ", true, "randoMusic");
         AddOption(PlayState.GetText("menu_option_rando_hints") + ": ", true, "randoHints");
-        AddOption(PlayState.GetText("menu_option_rando_seed") + ": ", true, "randoSeed");
+        AddOption(PlayState.GetText("menu_option_rando_seed") + ": ", true, MenuString.randoSeed);
         AddOption("", false, 1);
         AddOption(PlayState.GetText("menu_option_rando_prevPage"), true, NewGameRandoOptions1);
         AddOption(PlayState.GetText("menu_option_newGame_returnTo"), true, StartNewGame);
@@ -2304,7 +2472,11 @@ public class MainMenu : MonoBehaviour
             PlayState.currentRando.maskedItems = menuVarFlags[9] == 1;
             PlayState.currentRando.openAreas = menuVarFlags[10] == 1;
             PlayState.currentRando.bossesLocked = menuVarFlags[11] == 1;
-            PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
+            //PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
+            if (menuVarStrings[(int)MenuString.randoSeed] == "")
+                PlayState.currentRando.seed = UnityEngine.Random.Range(0, 100000000);
+            else
+                PlayState.currentRando.seed = int.Parse(menuVarStrings[(int)MenuString.randoSeed]);
         }
         PlayState.SaveRando(PlayState.currentProfileNumber);
         if (PlayState.currentRando.broomStart)

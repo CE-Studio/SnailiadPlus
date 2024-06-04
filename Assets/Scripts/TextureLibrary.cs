@@ -152,6 +152,8 @@ public class TextureLibrary : ScriptableObject
         "Intro/Intro4F",
 
         "Items/AngelJump",
+        "Items/APMajor",
+        "Items/APMinor",
         "Items/Backfire",
         "Items/Boomerang",
         "Items/CorkscrewJump",
@@ -177,6 +179,8 @@ public class TextureLibrary : ScriptableObject
         "Items/WallGrab",
 
         "Particles/AngelJumpEffect",
+        "Particles/APItemDust",
+        "Particles/APItemFlash",
         "Particles/Bubble",
         "Particles/Dot",
         "Particles/Dust",
