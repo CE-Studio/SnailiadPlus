@@ -135,6 +135,9 @@ public class TrapManager : MonoBehaviour
                 break;
             case 1:
                 lockedGravity = (Player.Dirs)Random.Range(0, 4);
+                if (!PlayState.CheckForItem("Gravity Snail"))
+                    lockedGravity = PlayState.playerScript.defaultGravityDir;
+                PlayState.playerScript.RemoteSetGravity(lockedGravity);
                 break;
             case 2:
                 PlayState.playerScript.sleepTimer = 0;

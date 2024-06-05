@@ -13,7 +13,7 @@ public class Leggy : Player
 
         defaultGravityDir = Dirs.Floor;
         canJump = new int[][] { new int[] { -1 } };
-        canSwapGravity = new int[][] { new int[] { -1 } };
+        canSwapGravity = new int[][] { new int[] { -1, -3 } };
         retainGravityOnAirborne = new int[][] { new int[] { -1 } };
         canGravityJumpOpposite = new int[][] { new int[] { -1 } };
         canGravityJumpAdjacent = new int[][] { new int[] { -2 } };

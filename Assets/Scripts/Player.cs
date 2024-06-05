@@ -79,7 +79,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
     protected Vector2 camFocusOffset;
 
     // Movement control vars
-    // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound
+    // Any var tagged with "I" (as in "item") follows this scheme: -1 = always, -2 = never, any item ID = item-bound, -3 = disabled by Gravity Lock
     // Item scheme variables can contain multiple values, denoting an assortment of items that can fulfill a given check
     // Example: setting hopWhileMoving to { { 4, 7 }, 8 } will make Snaily hop along the ground if they find either (High Jump AND Ice Snail) OR Gravity Snail
     public Dirs defaultGravityDir; // -------------------------------- Determines the default direction gravity pulls the player
@@ -1871,6 +1871,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                             break;
                         case -2:
                             thisCheck = false;
+                            break;
+                        case -3:
+                            if (PlayState.trapManager.lockedGravity != Dirs.None)
+                                thisCheck = false;
                             break;
                         default:
                             int thisItem = ability[i][j];

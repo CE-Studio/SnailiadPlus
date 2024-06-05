@@ -13,7 +13,7 @@ public class Leechy : Player
 
         defaultGravityDir = Dirs.Floor;
         canJump = new int[][] { new int[] { -1 } };
-        canSwapGravity = new int[][] { new int[] { -1 } };
+        canSwapGravity = new int[][] { new int[] { -1, -3 } };
         retainGravityOnAirborne = new int[][] { new int[] { 8 } };
         canGravityJumpOpposite = new int[][] { new int[] { 8 } };
         canGravityJumpAdjacent = new int[][] { new int[] { 8 } };

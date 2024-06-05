@@ -20,7 +20,7 @@ public class Blobby : Player
 
         defaultGravityDir = Dirs.Floor;
         canJump = new int[][] { new int[] { -1 } };
-        canSwapGravity = new int[][] { new int[] { 4 } };
+        canSwapGravity = new int[][] { new int[] { 4, -3 } };
         retainGravityOnAirborne = new int[][] { new int[] { -2 } };
         canGravityJumpOpposite = new int[][] { new int[] { -2 } };
         canGravityJumpAdjacent = new int[][] { new int[] { -2 } };
