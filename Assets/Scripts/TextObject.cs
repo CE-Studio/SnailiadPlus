@@ -177,6 +177,11 @@ public class TextObject : MonoBehaviour
         }
     }
 
+    public TextAlignment GetAlignment()
+    {
+        return thisText.alignment;
+    }
+
     public void SetMovement(MoveEffects effect)
     {
         currentEffect = effect;

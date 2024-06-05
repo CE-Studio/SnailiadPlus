@@ -1313,6 +1313,16 @@ public class MainMenu : MonoBehaviour
                     AddToOptionText(option, option.targetString);
                 if (!option.forceScale)
                     SetOptionSize(option, option.textScript.GetWidth(true) * (option.textScript.size == 2 ? 1 : 2) > 23f);
+
+                if (option.textScript.GetAlignment() == TextAlignment.Center)
+                    option.textScript.position.x = 0;
+                else
+                {
+                    float adjustAmount = option.textScript.GetWidth(true) * 0.5f;
+                    if (option.textScript.GetAlignment() == TextAlignment.Left)
+                        adjustAmount *= -1;
+                    option.textScript.position.x = adjustAmount;
+                }
             }
             GetNewSnailOffset();
         }
@@ -1500,60 +1510,117 @@ public class MainMenu : MonoBehaviour
 
     public void AddToOptionText(MenuOption option, string text)
     {
-        //option.textScript.SetText((option.optionID == selectedOption ? "< " : "") + option.optionText + text + (option.optionID == selectedOption ? " >" : ""));
-        option.textScript.SetText(string.Concat(option.optionID == selectedOption ? "< " : "", option.optionText, text, option.optionID == selectedOption ? " >" : ""));
+        string newString = string.Concat(option.optionID == selectedOption ? "< " : "", option.optionText, text, option.optionID == selectedOption ? " >" : "");
+        option.textScript.SetText(newString);
     }
     public void AddToOptionText(MenuOption option, MenuString str)
     {
-        //option.textScript.SetText(option.optionText + ((option.optionID == selectedOption && stringCursorTimer >= 0.5f) ? "_" : ""));
-        option.textScript.SetText(string.Concat(option.optionText, menuVarStrings[(int)str], option.optionID == selectedOption ? (stringCursorTimer >= 0.5f ? "_" : " ") : ""));
+        string inputString = menuVarStrings[(int)str];
+        if (str == MenuString.apPass)
+        {
+            string censoredString = "";
+            for (int i = 0; i < inputString.Length; i++)
+                censoredString = string.Concat(censoredString, "*");
+            inputString = censoredString;
+        }
+        string newString = string.Concat(option.optionText, inputString, option.optionID == selectedOption ? (stringCursorTimer >= 0.5f ? "_" : " ") : "");
+        option.textScript.SetText(newString);
     }
 
     public void AddOption(string text = "", bool isSelectable = true)
     {
-        AddOption(text, isSelectable, null, 0, null, "none", MenuString.none);
+        AddOption(text, isSelectable, null, 0, TextAlignment.Center, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0)
     {
-        AddOption(text, isSelectable, null, scaleOverride, null, "none", MenuString.none);
+        AddOption(text, isSelectable, null, scaleOverride, TextAlignment.Center, null, "none", MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, TextAlignment alignOverride = TextAlignment.Center)
+    {
+        AddOption(text, isSelectable, null, 0, alignOverride, null, "none", MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, TextAlignment alignOverride = TextAlignment.Center)
+    {
+        AddOption(text, isSelectable, null, scaleOverride, alignOverride, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null)
     {
-        AddOption(text, isSelectable, destination, 0, null, "none", MenuString.none);
+        AddOption(text, isSelectable, destination, 0, TextAlignment.Center, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0)
     {
-        AddOption(text, isSelectable, destination, scaleOverride, null, "none", MenuString.none);
+        AddOption(text, isSelectable, destination, scaleOverride, TextAlignment.Center, null, "none", MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, TextAlignment alignOverride = TextAlignment.Center)
+    {
+        AddOption(text, isSelectable, destination, 0, alignOverride, null, "none", MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null,
+        int scaleOverride = 0, TextAlignment alignOverride = TextAlignment.Center)
+    {
+        AddOption(text, isSelectable, destination, scaleOverride, alignOverride, null, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, string variable = "none")
     {
-        AddOption(text, isSelectable, null, 0, null, variable, MenuString.none);
+        AddOption(text, isSelectable, null, 0, TextAlignment.Center, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, string variable = "none")
     {
-        AddOption(text, isSelectable, null, scaleOverride, null, variable, MenuString.none);
+        AddOption(text, isSelectable, null, scaleOverride, TextAlignment.Center, null, variable, MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, TextAlignment alignOverride = TextAlignment.Center, string variable = "none")
+    {
+        AddOption(text, isSelectable, null, 0, alignOverride, null, variable, MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, TextAlignment alignOverride = TextAlignment.Center, string variable = "none")
+    {
+        AddOption(text, isSelectable, null, scaleOverride, alignOverride, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, 0, null, variable, MenuString.none);
+        AddOption(text, isSelectable, destination, 0, TextAlignment.Center, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, scaleOverride, null, variable, MenuString.none);
+        AddOption(text, isSelectable, destination, scaleOverride, TextAlignment.Center, null, variable, MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null,
+        TextAlignment alignOverride = TextAlignment.Center, string variable = "none")
+    {
+        AddOption(text, isSelectable, destination, 0, alignOverride, null, variable, MenuString.none);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null,
+        int scaleOverride = 0, TextAlignment alignOverride = TextAlignment.Center, string variable = "none")
+    {
+        AddOption(text, isSelectable, destination, scaleOverride, alignOverride, null, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null)
     {
-        AddOption(text, isSelectable, destination, 0, paramChange, "none", MenuString.none);
+        AddOption(text, isSelectable, destination, 0, TextAlignment.Center, paramChange, "none", MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int[] paramChange = null, string variable = "none")
     {
-        AddOption(text, isSelectable, destination, 0, paramChange, variable, MenuString.none);
+        AddOption(text, isSelectable, destination, 0, TextAlignment.Center, paramChange, variable, MenuString.none);
     }
     public void AddOption(string text = "", bool isSelectable = true, MenuString targetString = MenuString.none)
     {
-        AddOption(text, isSelectable, null, 0, null, "none", targetString);
+        AddOption(text, isSelectable, null, 0, TextAlignment.Center, null, "none", targetString);
     }
-    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0, int[] paramChange = null, string variable = "none", MenuString targetString = MenuString.none)
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0, MenuString targetString = MenuString.none)
+    {
+        AddOption(text, isSelectable, null, scaleOverride, TextAlignment.Center, null, "none", targetString);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, TextAlignment alignOverride = TextAlignment.Center, MenuString targetString = MenuString.none)
+    {
+        AddOption(text, isSelectable, null, 0, alignOverride, null, "none", targetString);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, int scaleOverride = 0,
+        TextAlignment alignOverride = TextAlignment.Center, MenuString targetString = MenuString.none)
+    {
+        AddOption(text, isSelectable, null, scaleOverride, alignOverride, null, "none", targetString);
+    }
+    public void AddOption(string text = "", bool isSelectable = true, DestinationDelegate destination = null, int scaleOverride = 0,
+        TextAlignment alignOverride = TextAlignment.Center, int[] paramChange = null, string variable = "none", MenuString targetString = MenuString.none)
     {
         for (int i = 0; i < currentOptions.Count; i++)
         {
@@ -1586,6 +1653,8 @@ public class MainMenu : MonoBehaviour
         option.textScript.transform.localPosition = option.textScript.position;
         if (scaleOverride != 0)
             SetOptionSize(option, scaleOverride == 1);
+        if (alignOverride != TextAlignment.Center)
+            SetOptionAlignment(option, alignOverride);
         if (option.textScript.GetWidth(true) > 23f)
             SetOptionSize(option, true);
         activeOptions.Add(option.textScript);
@@ -1617,6 +1686,17 @@ public class MainMenu : MonoBehaviour
             option.textScript.position.y = option.selectY - 0.3f + (0.25f * newlines);
         else if (option.textScript.size == 2)
             option.textScript.position.y = option.selectY + (0.5f * newlines);
+    }
+
+    public void SetOptionAlignment(MenuOption option, TextAlignment alignment)
+    {
+        string alignStr = alignment switch
+        {
+            TextAlignment.Left => "left",
+            TextAlignment.Right => "right",
+            _ => "center",
+        };
+        option.textScript.SetAlignment(alignStr);
     }
 
     public void ToggleHUD(bool state)
@@ -2208,12 +2288,13 @@ public class MainMenu : MonoBehaviour
         string thisString = menuVarStrings[(int)currentOption.targetString];
         string fetchedChar = "";
         int clipboardState = 0; // 0 = no action, 1 = copy, 2 = paste
-        if (Control.AnyKeyDown())
+        if (Input.anyKeyDown)
         {
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 if (thisString.Length > 0)
                     thisString = thisString.Substring(0, thisString.Length - 1);
+                PlayState.PlaySound("MenuBeep2");
             }
             else
             {
@@ -2223,43 +2304,108 @@ public class MainMenu : MonoBehaviour
                 {
                     if (fetchedChar == "")
                     {
-                        if (controlDown)
+                        if (Input.GetKeyDown(entry.Key))
                         {
-                            switch (entry.Key)
+                            if (controlDown)
                             {
-                                case KeyCode.C:
-                                    break;
-                                case KeyCode.V:
-                                    break;
-                                default:
-                                    break;
+                                switch (entry.Key)
+                                {
+                                    case KeyCode.C:
+                                        clipboardState = 1;
+                                        PlayState.PlaySound("GrassGrow");
+                                        break;
+                                    case KeyCode.V:
+                                        clipboardState = 2;
+                                        if (GUIUtility.systemCopyBuffer.GetType() == Type.GetType("System.String"))
+                                            PlayState.PlaySound("CheatSkyfish");
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
+                            else
+                                fetchedChar = entry.Value[shiftDown ? 1 : 0].ToString();
                         }
-                        else if (Input.GetKeyDown(entry.Key))
-                            fetchedChar = entry.Value[shiftDown ? 1 : 0].ToString();
                     }
                 }
-                Debug.Log(fetchedChar);
             }
         }
         switch (currentOption.targetString)
         {
             case MenuString.randoSeed:
-                if (fetchedChar != "")
-                    if ("1234567890".Contains(fetchedChar[0]) && thisString.Length < 8)
-                        string.Concat(menuVarStrings[(int)MenuString.randoSeed], fetchedChar);
+                if (clipboardState == 1)
+                    GUIUtility.systemCopyBuffer = thisString;
+                else if (clipboardState == 2)
+                {
+                    if (GUIUtility.systemCopyBuffer.Length != 0 && GUIUtility.systemCopyBuffer.GetType() == Type.GetType("System.String"))
+                    {
+                        thisString = "";
+                        string pastedString = GUIUtility.systemCopyBuffer;
+                        for (int i = 0; i < pastedString.Length; i++)
+                            if (char.IsDigit(pastedString[i]))
+                                thisString = string.Concat(thisString, pastedString[i].ToString());
+                        if (thisString.Length >= 8)
+                            thisString = thisString.Substring(0, 8);
+                    }
+                }
+                else if (fetchedChar != "")
+                {
+                    if (char.IsDigit(fetchedChar[0]) && thisString.Length < 8)
+                    {
+                        thisString = string.Concat(thisString, fetchedChar);
+                        PlayState.PlaySound("MenuBeep1");
+                    }
+                }
                 currentOptions[6].textScript.SetText(PlayState.GetText("menu_rando_hint_seed"));
                 break;
-            case MenuString.apID:
-                break;
             case MenuString.apPort:
+                if (clipboardState == 1)
+                    GUIUtility.systemCopyBuffer = thisString;
+                else if (clipboardState == 2)
+                {
+                    if (GUIUtility.systemCopyBuffer.Length != 0 && GUIUtility.systemCopyBuffer.GetType() == Type.GetType("System.String"))
+                    {
+                        thisString = "";
+                        string pastedString = GUIUtility.systemCopyBuffer;
+                        for (int i = 0; i < pastedString.Length; i++)
+                            if (char.IsDigit(pastedString[i]))
+                                thisString = string.Concat(thisString, pastedString[i].ToString());
+                        if (thisString.Length >= 5)
+                            thisString = thisString.Substring(0, 5);
+                    }
+                }
+                else if (fetchedChar != "")
+                {
+                    if (char.IsDigit(fetchedChar[0]) && thisString.Length < 5)
+                    {
+                        thisString = string.Concat(thisString, fetchedChar);
+                        PlayState.PlaySound("MenuBeep1");
+                    }
+                }
                 break;
+            case MenuString.apID:
             case MenuString.apPass:
-                break;
             case MenuString.apSlot:
+                if (clipboardState == 1)
+                    GUIUtility.systemCopyBuffer = thisString;
+                else if (clipboardState == 2)
+                {
+                    if (GUIUtility.systemCopyBuffer.Length != 0 && GUIUtility.systemCopyBuffer.GetType() == Type.GetType("System.String"))
+                        thisString = GUIUtility.systemCopyBuffer;
+                }
+                else if (fetchedChar != "")
+                {
+                    thisString = string.Concat(thisString, fetchedChar);
+                    PlayState.PlaySound("MenuBeep1");
+                }
                 break;
         }
         menuVarStrings[(int)currentOption.targetString] = thisString;
+    }
+
+    public string GetString(MenuString targetString)
+    {
+        return menuVarStrings[(int)targetString];
     }
 
     public void PageIntro()
@@ -2745,10 +2891,10 @@ public class MainMenu : MonoBehaviour
     {
         ClearOptions();
         AddOption(PlayState.GetText("menu_option_ap_header"), false);
-        AddOption(PlayState.GetText("menu_option_ap_ip") + ":\n", true, 1);
-        AddOption(PlayState.GetText("menu_option_ap_port") + ":\n", true, 1);
-        AddOption(PlayState.GetText("menu_option_ap_password") + ":\n", true, 1);
-        AddOption(PlayState.GetText("menu_option_ap_slot") + ":\n", true, 1);
+        AddOption(PlayState.GetText("menu_option_ap_ip") + ":\n", true, 1, TextAlignment.Left, MenuString.apID);
+        AddOption(PlayState.GetText("menu_option_ap_port") + ":\n", true, 1, TextAlignment.Left, MenuString.apPort);
+        AddOption(PlayState.GetText("menu_option_ap_password") + ":\n", true, 1, TextAlignment.Left, MenuString.apPass);
+        AddOption(PlayState.GetText("menu_option_ap_slot") + ":\n", true, 1, TextAlignment.Left, MenuString.apSlot);
         AddOption(PlayState.GetText("menu_option_ap_connect"), true);
         AddOption("", false);
         AddOption(PlayState.GetText("menu_option_multiplayer_returnTo"), true, MultiplayerScreen);
