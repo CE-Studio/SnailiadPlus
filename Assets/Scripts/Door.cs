@@ -72,7 +72,7 @@ public class Door:MonoBehaviour, IRoomObject
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
-        randoLocked = (bool)content["randoLocked"];
+        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock);
         direction = (int)content["direction"];
         requiredFragments = (int)content["requiredFragments"];
         Spawn();

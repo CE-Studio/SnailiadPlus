@@ -356,6 +356,21 @@ public class Item:MonoBehaviour, IRoomObject {
                         PlayState.globalFunctions.RunDustRing();
                     PlayState.QueueAchievementPopup(AchievementPanel.Achievements.GravityShock);
                     break;
+                case 1000:
+                    PlayState.trapManager.ActivateTrap(0);
+                    break;
+                case 1001:
+                    PlayState.trapManager.ActivateTrap(1);
+                    break;
+                case 1002:
+                    PlayState.trapManager.ActivateTrap(2);
+                    break;
+                case 1003:
+                    PlayState.trapManager.ActivateTrap(3);
+                    break;
+                case 1004:
+                    PlayState.trapManager.ActivateTrap(4);
+                    break;
                 default:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing();

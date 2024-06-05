@@ -313,7 +313,7 @@ public class Bullet : MonoBehaviour
             11 => ShockWaveAnimSubroutine(true),
             _ => "rainbowWave_",
         };
-        if (bulletType != 9 && bulletType != 10)
+        if (bulletType != 10 && bulletType != 11)
         {
             animToPlay += direction switch
             {
