@@ -9,6 +9,7 @@ public class BreakableBlock : MonoBehaviour
     private bool hasBeenHit;
     public BoxCollider2D box;
     public SpriteRenderer[] sprites = new SpriteRenderer[] { };
+    public AnimationModule anim;
 
     GameObject fg1Sprite;
     GameObject fg2Sprite;
@@ -36,6 +37,7 @@ public class BreakableBlock : MonoBehaviour
         fg2Sprite = transform.GetChild(1).gameObject;
 
         box = GetComponent<BoxCollider2D>();
+        anim = GetComponent<AnimationModule>();
 
         sprites = new SpriteRenderer[] { GetComponent<SpriteRenderer>(), fg1Sprite.GetComponent<SpriteRenderer>(), fg2Sprite.GetComponent<SpriteRenderer>() };
     }
@@ -112,14 +114,25 @@ public class BreakableBlock : MonoBehaviour
                     PlayState.PlaySound("Ping");
                     PlayState.armorPingPlayedThisFrame = true;
                 }
-                if ((PlayState.generalData.breakableState == 1 && !isSilent) || (PlayState.generalData.breakableState == 2 && isSilent))
+                if ((PlayState.generalData.breakableState == 1 && !isSilent) || (PlayState.generalData.breakableState == 2))
                 {
                     if (!hasBeenHit)
                     {
                         foreach (SpriteRenderer sprite in sprites)
+                            sprite.sprite = PlayState.BlankTexture();
+                        switch (type)
                         {
-                            if (sprite.sprite != PlayState.BlankTexture())
-                                sprite.sprite = PlayState.GetSprite("Entities/BreakableIcons", type);
+                            case 1:
+                                anim.AddAndPlay("Object_breakable_boom");
+                                break;
+                            case 2:
+                                anim.AddAndPlay("Object_breakable_wave");
+                                break;
+                            case 3:
+                                anim.AddAndPlay("Object_breakable_dev");
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }

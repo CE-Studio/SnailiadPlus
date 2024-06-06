@@ -89,6 +89,7 @@ public class TextureLibrary : ScriptableObject
         "Entities/Boss4RushSecondForm",
         "Entities/Boss4RushShadowBall",
         "Entities/Boss4RushZzz",
+        "Entities/BossBlocks",
         "Entities/BreakableIcons",
         "Entities/Cannon1",
         "Entities/Cannon1Base",

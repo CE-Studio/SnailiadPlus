@@ -522,17 +522,23 @@ public class RoomTrigger : MonoBehaviour
         effectParticles.Clear();
     }
 
-    private void CheckSpecialLayer() {
+    private void CheckSpecialLayer()
+    {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
 
-        for (int x = -limitX; x <= limitX; x++) {
-            for (int y = -limitY; y <= limitY; y++) {
+        for (int x = -limitX; x <= limitX; x++)
+        {
+            for (int y = -limitY; y <= limitY; y++)
+            {
                 Vector3Int tilePos = new((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
                 Vector2 worldPos = new(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
-                if (currentTile != null) {
-                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
+                if (currentTile != null)
+                {
+                    int tileID = int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1]);
+                    switch (tileID)
+                    {
                         default:
                             break;
                         case 4:
@@ -1046,6 +1052,19 @@ public class RoomTrigger : MonoBehaviour
                             GameObject ceilPowerGrass = Instantiate(Resources.Load<GameObject>("Objects/Power grass"), worldPos, Quaternion.identity, transform);
                             ceilPowerGrass.GetComponent<PowerGrass>().isCeilingGrass = true;
                             break;
+                        case 484:
+                        case 485:
+                        case 486:
+                        case 487:
+                            int bossID = tileID switch { 484 => 0, 485 => 1, 486 => 2, _ => 483 };
+                            if (PlayState.IsBossAlive(bossID) && PlayState.isRandomGame && !PlayState.currentRando.openAreas)
+                            {
+                                GameObject newBossBlock = Instantiate(Resources.Load<GameObject>("Objects/Breakable Block"), worldPos, Quaternion.identity, transform);
+                                BreakableBlock bossBlockScript = newBossBlock.GetComponent<BreakableBlock>();
+                                bossBlockScript.Instantiate(new PlayState.Breakable { blockType = -1, isSilent = true, pos = worldPos, tiles = new int[] { tileID, -1, -1 } });
+                                bossBlockScript.anim.AddAndPlay("Object_bossBlock_" + bossID);
+                            }
+                            break;
                         case 1120:
                         case 1121:
                             Instantiate(Resources.Load<GameObject>("Objects/Hazards/Fire"), worldPos, Quaternion.identity, transform);
@@ -1079,19 +1098,24 @@ public class RoomTrigger : MonoBehaviour
         roomContentPos = newPos.ToArray();
     }
 
-    public void LogBreakables() {
+    public void LogBreakables()
+    {
         int limitX = (int)Mathf.Round((box.size.x + 0.5f) * 0.5f + 1);
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
         List<PlayState.Breakable> newBreakableList = new();
         List<PlayState.Breakable> newFinalBossList = new();
 
-        for (int x = -limitX; x <= limitX; x++) {
-            for (int y = -limitY; y <= limitY; y++) {
+        for (int x = -limitX; x <= limitX; x++)
+        {
+            for (int y = -limitY; y <= limitY; y++)
+            {
                 Vector3Int tilePos = new((int)Mathf.Round(transform.position.x) + x, (int)Mathf.Round(transform.position.y) + y, 0);
                 Vector2 worldPos = new(tilePos.x + 0.5f, tilePos.y + 0.5f);
                 TileBase currentTile = specialMap.GetTile(tilePos);
-                if (currentTile != null) {
-                    PlayState.Breakable newBreakable = new() {
+                if (currentTile != null)
+                {
+                    PlayState.Breakable newBreakable = new()
+                    {
                         pos = worldPos,
                         blockType = 0,
                         isSilent = false
@@ -1099,7 +1123,8 @@ public class RoomTrigger : MonoBehaviour
 
                     bool isBreakableTileHere = true;
                     bool isFinalBossTile = false;
-                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1])) {
+                    switch (int.Parse(specialMap.GetSprite(tilePos).name.Split('_')[1]))
+                    {
                         default:
                             isBreakableTileHere = false;
                             break;
