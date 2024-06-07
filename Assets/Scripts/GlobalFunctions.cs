@@ -1031,7 +1031,6 @@ public class GlobalFunctions : MonoBehaviour
 
     public void FlashHUDText(TextTypes textType, string textValue = "No text")
     {
-        //StartCoroutine(FlashText(textType, textValue));
         switch (textType)
         {
             case TextTypes.item:

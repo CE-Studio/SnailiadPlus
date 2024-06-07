@@ -264,8 +264,8 @@ public class Subscreen : MonoBehaviour
             {
                 radarSparkleTimer = (radarSparkleTimer + SPARKLE_TIMER_SPEED * Time.deltaTime) % Mathf.PI;
                 Vector2 spawnRadius = new(Mathf.Cos(radarSparkleTimer) * radarSparkleRadii.x, -Mathf.Sin(radarSparkleTimer) * radarSparkleRadii.y);
-                PlayState.RequestParticle(radarSparkleOrigin + spawnRadius, "sparkle");
-                PlayState.RequestParticle(radarSparkleOrigin - spawnRadius, "sparkle");
+                PlayState.RequestParticle(radarSparkleOrigin + spawnRadius, "radarsparkle");
+                PlayState.RequestParticle(radarSparkleOrigin - spawnRadius, "radarsparkle");
             }
         }
     }

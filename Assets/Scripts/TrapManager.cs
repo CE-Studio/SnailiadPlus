@@ -80,6 +80,11 @@ public class TrapManager : MonoBehaviour
                 float maskY = timers[i].maskAnim.transform.localPosition.y;
                 maskY = Mathf.RoundToInt(maskY * 16) * 0.0625f;
                 timers[i].maskAnim.transform.localPosition = new Vector2(0, maskY);
+                if (i == 2)
+                {
+                    if (PlayState.playerScript.stunned)
+                        DeactivateTrap(i);
+                }
             }
             else
             {
@@ -142,6 +147,7 @@ public class TrapManager : MonoBehaviour
             case 2:
                 PlayState.playerScript.sleepTimer = 0;
                 PlayState.paralyzed = true;
+                PlayState.overrideParalysisInvulnerability = true;
                 break;
             case 3:
                 int spiderCount = Random.Range(8, 13);
@@ -159,7 +165,7 @@ public class TrapManager : MonoBehaviour
                 }
                 break;
             case 4:
-                PlayState.player.transform.position = PlayState.PLAYER_SPAWNS[PlayState.mainMenu.CharacterNameToID(PlayState.currentProfile.character)];
+                StartCoroutine(WarpSequence());
                 break;
         }
     }
@@ -180,9 +186,43 @@ public class TrapManager : MonoBehaviour
                 break;
             case 2:
                 PlayState.paralyzed = false;
+                PlayState.overrideParalysisInvulnerability = false;
                 break;
             default:
                 break;
         }
+    }
+
+    private IEnumerator WarpSequence()
+    {
+        while (PlayState.gameState != PlayState.GameState.game)
+            yield return new WaitForEndOfFrame();
+        PlayState.PlaySound("Warp");
+        PlayState.paralyzed = true;
+        Vector2 playerPos = PlayState.player.transform.position;
+        float timer = 0;
+        bool hasStartedFade = false;
+        for (int i = 0; i < 64; i++)
+            PlayState.RequestParticle(PlayState.player.transform.position, "warpsparkle");
+        while (timer < 3)
+        {
+            timer += Time.deltaTime;
+            PlayState.playerScript.sprite.enabled = false;
+            PlayState.playerScript.velocity = Vector2.zero;
+            PlayState.player.transform.position = playerPos;
+            if (timer >= 2.5f && !hasStartedFade)
+            {
+                hasStartedFade = true;
+                PlayState.ScreenFlash("Solid Color", 0, 63, 125, 0);
+                PlayState.ScreenFlash("Custom Fade", 0, 63, 125, 255, 0.5f);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        PlayState.player.transform.position = PlayState.PLAYER_SPAWNS[PlayState.mainMenu.CharacterNameToID(PlayState.currentProfile.character)];
+        PlayState.playerScript.sprite.enabled = true;
+        PlayState.paralyzed = false;
+        if (PlayState.inBossFight)
+            PlayState.ToggleBossfightState(false, 0);
+        PlayState.ScreenFlash("Room Transition");
     }
 }

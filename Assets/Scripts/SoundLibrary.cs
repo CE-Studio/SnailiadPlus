@@ -64,7 +64,8 @@ public class SoundLibrary : ScriptableObject
         "Splash",
         "Stomp",
         "Thunder",
-        "Transformation"
+        "Transformation",
+        "Warp"
     };
 
     public void BuildDictionary()

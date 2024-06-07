@@ -1340,6 +1340,14 @@ public class PlayState
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
                     break;
+                case "radarsparkle":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                        particleScript.vars[1] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                    }
+                    break;
                 case "rain":
                     if (generalData.particleState == 1 || generalData.particleState == 5)
                     {
@@ -1421,14 +1429,6 @@ public class PlayState
                         particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * Mathf.PI * 2;    // Sine loop start
                     }
                     break;
-                case "sparkle":
-                    if (generalData.particleState == 3 || generalData.particleState == 5)
-                    {
-                        activateParticle = true;
-                        particleScript.vars[0] = UnityEngine.Random.Range(-0.25f, 0.25f);
-                        particleScript.vars[1] = UnityEngine.Random.Range(-0.25f, 0.25f);
-                    }
-                    break;
                 case "splash":
                     if (generalData.particleState == 1 || generalData.particleState == 3 || generalData.particleState == 5)
                         activateParticle = true;
@@ -1446,9 +1446,19 @@ public class PlayState
                     // Values:
                     // 0 = Type
 
-                    if (generalData.particleState == 3 || generalData.particleState == 5) {
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
                         activateParticle = true;
                         particleScript.vars[0] = values[0];
+                    }
+                    break;
+                case "warpsparkle":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = UnityEngine.Random.Range(0f, TAU);
+                        particleScript.vars[1] = UnityEngine.Random.Range(0.25f, 2f);
+                        particleScript.vars[2] = 3f;
                     }
                     break;
                 case "zzz":

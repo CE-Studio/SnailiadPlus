@@ -230,6 +230,9 @@ public class Particle : MonoBehaviour
                         internalVars[0] += Time.deltaTime;
                         transform.position = new(transform.position.x, Mathf.Lerp(vars[0], vars[0] + 1.25f, internalVars[0] * 1.2f));
                         break;
+                    case "radarsparkle":
+                        transform.position += new Vector3(vars[0] * Time.deltaTime, vars[1] * Time.deltaTime, 0);
+                        break;
                     case "rain":
                         transform.position -= Time.deltaTime * new Vector3(vars[1], vars[0], 0);
                         while (transform.position.x < PlayState.cam.transform.position.x - 14)
@@ -263,9 +266,6 @@ public class Particle : MonoBehaviour
                             transform.position = new(transform.position.x, transform.position.y + 16);
                         while (transform.position.y > PlayState.cam.transform.position.y + 8)
                             transform.position = new(transform.position.x, transform.position.y - 16);
-                        break;
-                    case "sparkle":
-                        transform.position += new Vector3(vars[0] * Time.deltaTime, vars[1] * Time.deltaTime, 0);
                         break;
                     case "star":
                         float centerDis = Vector2.Distance(transform.position, PlayState.cam.transform.position);
@@ -363,6 +363,10 @@ public class Particle : MonoBehaviour
                         }
                         MoveToCamSynced();
                         break;
+                    case "warpsparkle":
+                        transform.position += vars[2] * Time.deltaTime * new Vector3(Mathf.Sin(vars[0]), Mathf.Cos(vars[0]), 0);
+                        vars[2] = Mathf.Lerp(vars[2], 0, vars[1] * Time.deltaTime);
+                        break;
                 }
 
                 if (!anim.isPlaying && isActive && !(type == "bubble" || type == "gigatrail" || type == "rushgigatrail"))
@@ -442,6 +446,12 @@ public class Particle : MonoBehaviour
             case "parry":
                 anim.Play("Parry");
                 break;
+            case "radarsparkle":
+                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
+                anim.pauseOnMenu = false;
+                anim.affectedByGlobalEntityColor = false;
+                runInMenu = true;
+                break;
             case "rain":
                 anim.Play("Rain" + Random.Range(1, 5).ToString());
                 break;
@@ -473,12 +483,6 @@ public class Particle : MonoBehaviour
             case "snow":
                 anim.Play("Snow" + Random.Range(1, 5).ToString());
                 break;
-            case "sparkle":
-                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
-                anim.pauseOnMenu = false;
-                anim.affectedByGlobalEntityColor = false;
-                runInMenu = true;
-                break;
             case "splash":
                 anim.Play("Splash");
                 break;
@@ -497,6 +501,10 @@ public class Particle : MonoBehaviour
                     _ => "ice"
                 });
                 break;
+            case "warpsparkle":
+                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
+                anim.affectedByGlobalEntityColor = false;
+                break;
             case "zzz":
                 anim.Play("Zzz");
                 break;
@@ -512,7 +520,7 @@ public class Particle : MonoBehaviour
             "rushgigatrail" => -51,
             "shocklaunch" => -11,
             "shockcharsub" => -14,
-            "sparkle" => 10,
+            "radarsparkle" => 10,
             "parry" => -45,
             "rain" => -115,
             "lightning" => -116,
@@ -522,13 +530,14 @@ public class Particle : MonoBehaviour
         sprite.color = animType switch
         {
             "heat" => PlayState.GetColor(Random.Range(0, 7) switch { 0 => "0209", 1 => "0210", 2 => "0211", 3=> "0309", 4 => "0310", 5 => "0311", _ => "0312"}),
-            "sparkle" => PlayState.GetColor(Random.Range(0, 4) switch { 0 => "0304", 1 => "0206", 2 => "0309", _ => "0312" }),
+            "radarsparkle" or "warpsparkle" => PlayState.GetColor(Random.Range(0, 4) switch { 0 => "0304", 1 => "0206", 2 => "0309", _ => "0312" }),
             "fog" => new Color(1, 1, 1, 0.45f),
             _ => Color.white
         };
         anim.SetSpeed(animType switch {
             "heat" => Random.Range(0.5f, 1.5f),
-            "sparkle" => Random.Range(0.5f, 1.5f),
+            "radarsparkle" => Random.Range(0.5f, 1.5f),
+            "warpsparkle" => Random.Range(0.125f, 0.4f),
             _ => 1f
         });
         int lightSize = animType switch

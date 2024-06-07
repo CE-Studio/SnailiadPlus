@@ -2195,14 +2195,28 @@ public class MainMenu : MonoBehaviour
         loadingAnim.pauseOnMenu = false;
         loadingAnim.AddAndPlay("GeneratorLoadingIcon");
 
+        int flavorCount = 44;
+        List<int> initialFlavor = new();
+        for (int i = 0; i < flavorCount; i++)
+            initialFlavor.Add(i + 1);
+        int[] shuffledFlavor = new int[flavorCount];
+        for (int i = 0; i < flavorCount; i++)
+        {
+            int flavorID = Mathf.FloorToInt(UnityEngine.Random.Range(0f, 1f) * initialFlavor.Count);
+            shuffledFlavor[i] = initialFlavor[flavorID];
+            initialFlavor.RemoveAt(flavorID);
+        }
+
         float textTimer = 0;
+        int textPointer = 0;
         randoScript.StartGeneration();
         while (randoScript.isShuffling)
         {
             textTimer -= Time.deltaTime;
             if (textTimer <= 0)
             {
-                activeOptions[1].SetText(PlayState.GetText("menu_option_generateRando_flavor" + UnityEngine.Random.Range(1, 44)));
+                activeOptions[1].SetText(PlayState.GetText("menu_option_generateRando_flavor" + shuffledFlavor[textPointer]));
+                textPointer = (textPointer + 1) % shuffledFlavor.Length;
                 textTimer = 2.3f;
             }
             yield return new WaitForEndOfFrame();

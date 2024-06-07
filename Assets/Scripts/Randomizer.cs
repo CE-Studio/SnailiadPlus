@@ -52,6 +52,7 @@ public class Randomizer : MonoBehaviour
         Random.InitState(PlayState.currentRando.seed);
         locations = new int[PlayState.baseItemLocations.Count];
         List<int> itemsToAdd = new();
+        List<int> unplacedTraps = new();
         int progWeapons = 0;
         int progMods = 0;
         int progShells = 0;
@@ -95,6 +96,7 @@ public class Randomizer : MonoBehaviour
                             List<int> trapsToAdd = new();
                             for (int i = 0; i < trapTypes; i++)
                                 trapsToAdd.Add(1000 + i);
+                            unplacedTraps = trapsToAdd;
                             int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
                             for (int i = 0; i < numberOfTraps; i++)
                             {
@@ -109,7 +111,7 @@ public class Randomizer : MonoBehaviour
                         while (itemsToAdd.Contains(10))
                             itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
                         foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
-                            locations[i] = -1;
+                            locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
                         splitPhase = 1;
                     }
                     break;
@@ -156,6 +158,7 @@ public class Randomizer : MonoBehaviour
                                 List<int> trapsToAdd = new();
                                 for (int i = 0; i < trapTypes; i++)
                                     trapsToAdd.Add(1000 + i);
+                                unplacedTraps = trapsToAdd;
                                 int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
                                 for (int i = 0; i < numberOfTraps; i++)
                                 {
@@ -173,8 +176,10 @@ public class Randomizer : MonoBehaviour
                         int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
+                        if (unplacedTraps.Contains(itemToPlace))
+                            unplacedTraps.Remove(itemToPlace);
                         locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
+                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
                             placedHearts++;
@@ -193,6 +198,19 @@ public class Randomizer : MonoBehaviour
                                 int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
                                 locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
                                 placedHelixes++;
+                            }
+                        }
+                        while (unplacedTraps.Count > 0)
+                        {
+                            List<int> remainingLocations = GetLocations();
+                            if (remainingLocations.Count == 0)
+                                unplacedTraps.Clear();
+                            else
+                            {
+                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
+                                locations[remainingLocations[locationID]] = unplacedTraps[trapID];
+                                unplacedTraps.RemoveAt(trapID);
                             }
                         }
                         for (int i = 0; i < locations.Length; i++)
@@ -226,8 +244,10 @@ public class Randomizer : MonoBehaviour
                         TweakLocks(itemToPlace);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
+                        if (unplacedTraps.Contains(itemToPlace))
+                            unplacedTraps.Remove(itemToPlace);
                         locations[availableLocations[locationPointer]] = itemToPlace;
-                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS)
+                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
                             placedHelixes++;
                         else if (itemToPlace >= PlayState.OFFSET_HEARTS)
                             placedHearts++;
@@ -240,6 +260,7 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
+                        PrintPlacement(itemToPlace, locations[availableLocations[locationPointer]]);
                     }
                     else
                     {
@@ -255,6 +276,19 @@ public class Randomizer : MonoBehaviour
                                 placedHelixes++;
                             }
                         }
+                        while (unplacedTraps.Count > 0)
+                        {
+                            List<int> remainingLocations = GetLocations();
+                            if (remainingLocations.Count == 0)
+                                unplacedTraps.Clear();
+                            else
+                            {
+                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
+                                locations[remainingLocations[locationID]] = unplacedTraps[trapID];
+                                unplacedTraps.RemoveAt(trapID);
+                            }
+                        }
                         for (int i = 0; i < locations.Length; i++)
                             if (locations[i] == -2)
                                 locations[i] = -1;
@@ -262,6 +296,15 @@ public class Randomizer : MonoBehaviour
                         PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                         randoPhase = 0;
                         isShuffling = false;
+
+                        //List<int> printedLocations = new();
+                        //for (int i = 0; i < locations.Length; i++)
+                        //    printedLocations.Add(locations[i]);
+                        //printedLocations.Sort();
+                        //string output = "";
+                        //for (int i = 0; i < printedLocations.Count; i++)
+                        //    output += printedLocations[i] + ", ";
+                        //Debug.Log(output);
                     }
                     break;
 
