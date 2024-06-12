@@ -2691,6 +2691,11 @@
 			"value": 0
 		},
 		{
+			"name": "hud_ap_sender",
+			"text": "Received from {0}",
+			"value": 0
+		},
+		{
 			"name": "subscreen_header_name",
 			"text": "Name",
 			"value": 0
@@ -4589,6 +4594,186 @@
 			"name": "npc_56_default_0",
 			"text": "After this game is over, {p|0.125}I'm{nl|}going to get some pizza!!",
 			"value": 1
+		},
+		{
+			"name": "npc_rando_hint_0",
+			"text": "Y'know, {p|0.15}I heard somewhere that a{nl}{0} can{nl}be found {1}...",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_hint_1",
+			"text": "Did you know, {P}?  {p|0.15}There's a{nl}{0} you{nl}can find {1}!!",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_hint_2",
+			"text": "There's a place {1}{nl}where you can find a{nl}{0}.",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_hint_3",
+			"text": "I heard there's a {nl}{0}{nl}{1}.",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_hint_4",
+			"text": "If you look {1},{nl}I heard you might find{nl}a {0}!!",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_0",
+			"text": "{col|0207}peashooter{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_1",
+			"text": "{col|0309}boomerang{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_2",
+			"text": "{col|0211}rainbow wave{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_3",
+			"text": "{col|0111}devastator{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_4a",
+			"text": "{col|0207}high jump{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_4b",
+			"text": "{col|0203}wall grab{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_5a",
+			"text": "{col|0212}shell shield{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_5b",
+			"text": "{col|0303}shelmet{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_6a",
+			"text": "{col|0211}rapid fire{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_6b",
+			"text": "{col|0311}backfire{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_7",
+			"text": "{col|0305}ice {S}{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_8a",
+			"text": "{col|0307}gravity {S}{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_8b",
+			"text": "{col|0211}magnetic foot{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_8c",
+			"text": "{col|0309}corkscrew jump{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_8d",
+			"text": "{col|0304}angel jump{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_9a",
+			"text": "{col|0300}full metal {S}{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_9b",
+			"text": "{col|0300}full power {S}{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_9c",
+			"text": "{col|0300}non-neutonian {S}{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_item_10",
+			"text": "{col|0310}gravity shock{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_0",
+			"text": "{col|0207}around town{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_1",
+			"text": "{col|0204}somewhere cold{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_2",
+			"text": "{col|0202}somewhere dark{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_3",
+			"text": "{col|0211}somewhere hot{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_4",
+			"text": "{col|0212}in the sky{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_area_5",
+			"text": "{col|0313}somewhere unknown{col|0312}",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_0",
+			"text": "Hey {P}, {p|0.125}I'm hungry!  {p|0.25}Know{nl}any good pizza places?",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_1",
+			"text": "Sometimes{spd|0.6}... {p|0.25}{spd|0.02}I dream about{nl}cheese.",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_2",
+			"text": "Hey {P}, {p|0.1}I heard there's a{nl}secret around here!{nl}{p|0.3}{spd|0.06}...{spd|0.02}Don't remember where though.",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_3",
+			"text": "Darn, my node graph is out of{nl}date!  {p|0.25}Now I gotta go{nl}rebuild it...",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_4",
+			"text": "Hey {P}, how does my papier-mâché{nl}shell look?  {p|0.15}Pretty{nl}convining, huh?",
+			"value": 0
+		},
+		{
+			"name": "npc_rando_flavor_5",
+			"text": "Hey, {P}?  {p|0.2}What's a \"zip\"?",
+			"value": 0
 		},
 		{
 			"name": "ending_moon1",

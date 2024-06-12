@@ -12,9 +12,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571015afd15eeac4cbf6fe518d77decc, type: 3}
   m_Name: Sound Library
   m_EditorClassIdentifier: 
-  library: []
+  library:
+  - {fileID: 8300000, guid: a061d883c6d56b34bbb43558aefc881b, type: 3}
+  - {fileID: 8300000, guid: e37fc113d09c9164b94ca04f259393c9, type: 3}
+  - {fileID: 8300000, guid: cfa105eaedf81aa49be768660328b539, type: 3}
+  - {fileID: 8300000, guid: 83ff8c3722b28a642a4450ab648ca72c, type: 3}
+  - {fileID: 8300000, guid: 331d16259a899e14282453d1fbd824a5, type: 3}
+  - {fileID: 8300000, guid: 5fc3789c4a47c214883e667438b8bf95, type: 3}
+  - {fileID: 8300000, guid: 2d51383e8ac72ff4582a885fe27cf668, type: 3}
+  - {fileID: 8300000, guid: 884caa321890a3443b907f7c698b01e9, type: 3}
+  - {fileID: 8300000, guid: cd7c3815d9fe56c46b29d9722596d36b, type: 3}
+  - {fileID: 8300000, guid: 706d6f824c17a7b4e919bdc655d3c176, type: 3}
+  - {fileID: 8300000, guid: 13444d2e6b53601429b54d19e356c7ce, type: 3}
+  - {fileID: 8300000, guid: f90570f7b2b58c24f9dde2cb82189cb1, type: 3}
+  - {fileID: 8300000, guid: 0e365b3df404ffa448bdcc172516d622, type: 3}
+  - {fileID: 8300000, guid: d6288a3cde5452644bd8cc6e8e2dce0e, type: 3}
+  - {fileID: 8300000, guid: d153f66040e9f424a9f4706302e04083, type: 3}
+  - {fileID: 8300000, guid: 5806497a032baa84eb2f6796e9ef01c2, type: 3}
+  - {fileID: 8300000, guid: 9770986177031084383b819b61a74453, type: 3}
+  - {fileID: 8300000, guid: cb9ba99fc8146db4099b3464477054cb, type: 3}
+  - {fileID: 8300000, guid: 19cee2458fb86b040bf49408e3fc23ad, type: 3}
+  - {fileID: 8300000, guid: f754f87e8a0d35643b9b47e44dc78f54, type: 3}
+  - {fileID: 8300000, guid: 62f5bb4418970a44f94a5847ef71655d, type: 3}
+  - {fileID: 8300000, guid: f97f4a657037430499c896c2ad3ece51, type: 3}
+  - {fileID: 8300000, guid: 146b2619f69bbc042beb9c2a9754c555, type: 3}
+  - {fileID: 8300000, guid: 1a4260886aa150d4287494628fdb2021, type: 3}
+  - {fileID: 8300000, guid: 7cc3dfac89f4b5f41a8c7e66aaf656b3, type: 3}
+  - {fileID: 8300000, guid: aea2d15c509e82a4cb9e1dde506466b7, type: 3}
+  - {fileID: 8300000, guid: 1833729db56346849a7ea64a62767286, type: 3}
+  - {fileID: 8300000, guid: ec30a91fe2ce9fd4682e5d079900265c, type: 3}
+  - {fileID: 8300000, guid: f2ad7dd6c9be5e8499b92c14f1160040, type: 3}
+  - {fileID: 8300000, guid: b95de5da199a94c4296ce53f197a181f, type: 3}
+  - {fileID: 8300000, guid: 1b17fadb66cd1624fa7d300f12f36ffd, type: 3}
+  - {fileID: 8300000, guid: b91b5ef257a91b6408516552437fb83b, type: 3}
+  - {fileID: 8300000, guid: 9e02dacb0ab01b847bee5870ece648e3, type: 3}
+  - {fileID: 8300000, guid: 1e3da474d6263cd49ad6b0c062e45530, type: 3}
+  - {fileID: 8300000, guid: 5231f4a55d7878e42b34dcbac7a5eed6, type: 3}
+  - {fileID: 8300000, guid: d2e9bfbc3edfbb64ab76271e52d9edab, type: 3}
+  - {fileID: 8300000, guid: 934fd6b903b69914a90e1b2b9346d162, type: 3}
+  - {fileID: 8300000, guid: cce8846598b0b2447a61b9efcf80ae7c, type: 3}
+  - {fileID: 8300000, guid: f8fdb87490b4e0047b7ef16f99d127f4, type: 3}
+  - {fileID: 8300000, guid: adb6a124f48942345ad4e800b63f1d2e, type: 3}
+  - {fileID: 8300000, guid: 56996c240da872b41a8780f4563cd34a, type: 3}
+  - {fileID: 8300000, guid: f123ec6613b02b24e92007ddf5cc72e8, type: 3}
+  - {fileID: 8300000, guid: 7c3cf0eed7aef6d489e5cff0489214f7, type: 3}
+  - {fileID: 8300000, guid: 366fb1c4d522a164abf166b5e0db46e2, type: 3}
+  - {fileID: 8300000, guid: c73f45884e35c42469074777694b2c07, type: 3}
+  - {fileID: 8300000, guid: a5927ee6e28d97f4e886a9d7b625d778, type: 3}
+  - {fileID: 8300000, guid: ab8ed55b4e54ad94a90083919c0ea000, type: 3}
+  - {fileID: 8300000, guid: 949453bc04cb8fd4aa914cd7c9cb654e, type: 3}
+  - {fileID: 8300000, guid: 615a6b2d651c84a49b3b1ecbe4af9a27, type: 3}
+  - {fileID: 8300000, guid: a13f53e66b5261b418876e402437ae6b, type: 3}
+  - {fileID: 8300000, guid: 589649ba9671f2240988797984bb0a09, type: 3}
+  - {fileID: 8300000, guid: 8c88f15a4f5480247935dd15ce21f501, type: 3}
+  - {fileID: 8300000, guid: 8a3058e181451a8479ef741e2160f164, type: 3}
   referenceList:
   - AngelJump
+  - APDust
   - BossHPBleep
   - Cannon
   - CheatSkyfish
@@ -65,3 +119,4 @@ MonoBehaviour:
   - Stomp
   - Thunder
   - Transformation
+  - Warp

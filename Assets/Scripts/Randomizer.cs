@@ -260,7 +260,6 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
-                        PrintPlacement(itemToPlace, locations[availableLocations[locationPointer]]);
                     }
                     else
                     {

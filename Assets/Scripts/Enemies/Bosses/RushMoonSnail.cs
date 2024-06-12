@@ -113,7 +113,7 @@ public class RushMoonSnail : Boss
 
         if (PlayState.IsBossAlive(3))
         {
-            SpawnBoss(12500, 0, 30, true, 0, 3, true);
+            SpawnBoss(12500, 0, 0, true, 0, 3, true);
             if (debugSkipToGiga)
                 StartCoroutine(DelayedSkipToGiga());
             else

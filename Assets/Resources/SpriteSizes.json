@@ -778,6 +778,16 @@
             "height": 32
         },
 		{
+            "name": "Particles/APItemDust",
+            "width": 16,
+            "height": 16
+        },
+		{
+            "name": "Particles/APItemFlash",
+            "width": 32,
+            "height": 32
+        },
+		{
             "name": "Particles/Bubble",
             "width": 8,
             "height": 8

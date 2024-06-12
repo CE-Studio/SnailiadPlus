@@ -33379,6 +33379,95 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "APItemDust0",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemDust1",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				1
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemDust2",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				2
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemDust3",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				3
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemDust4",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemDust5",
+			"spriteName": "Particles/APItemDust",
+			"framerate": 0.0,
+			"frames": [
+				5
+			],
+			"loop": true,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "APItemFlash",
+			"spriteName": "Particles/APItemFlash",
+			"framerate": 16.0,
+			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				5,
+				6,
+				6,
+				7,
+				7,
+				7,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "Bubble1",
 			"spriteName": "Particles/Bubble",
 			"framerate": 0.0,

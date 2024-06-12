@@ -98,6 +98,10 @@ public class GlobalFunctions : MonoBehaviour
         unlock
     }
 
+    // AP item cutscene
+    public List<int> queuedAPItemIDs = new();
+    public int apItemCutsceneState = 0; // 0 = inactive, 1 = intro dust, 2 = displaying items
+
     public void Awake()
     {
         DeclarePlayStateMono();
@@ -245,6 +249,9 @@ public class GlobalFunctions : MonoBehaviour
     {
         if (PlayState.gameState == PlayState.GameState.game)
         {
+            if (Input.GetKeyDown(KeyCode.I))
+                RunAPItemAnim(0, "Ehseezed");
+
             // Global sound timers
             if (PlayState.armorPingPlayedThisFrame)
             {
@@ -780,6 +787,117 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
+    public void RunAPItemAnim(int itemID, string sender)
+    {
+        if (queuedAPItemIDs.Count == 0)
+            StartCoroutine(APItemAnim(sender));
+        queuedAPItemIDs.Add(itemID);
+    }
+
+    private IEnumerator APItemAnim(string sender)
+    {
+        apItemCutsceneState = 1;
+        PlayState.PlaySound("APDust");
+
+        int[] trailColors = new int[] { 211, 307, 201, 310, 204, 308 };
+        List<Particle> dustRing = new();
+        float spinSpeed = Mathf.PI * 1.9f;
+        float radius = 14.625f;
+        float inwardSpeed = 0.125f;
+        float spinMod = 0f;
+        float radiusMod = radius;
+
+        if (shellAnimTimer == 0)
+        {
+            if (!(PlayState.generalData.particleState == 3 || PlayState.generalData.particleState == 5))
+                shellStateBuffer = PlayState.GetShellLevel();
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 thisDustPos = new(
+                    PlayState.player.transform.position.x + (Mathf.Sin((i / 6) * PlayState.TAU) * radius),
+                    PlayState.player.transform.position.y + 2 + (Mathf.Cos((i / 6) * PlayState.TAU) * radius)
+                    );
+                dustRing.Add(PlayState.RequestParticle(thisDustPos, "apitemdust", new float[] { i }));
+            }
+        }
+        while (apItemCutsceneState == 1)
+        {
+            for (int i = 0; i < dustRing.Count; i++)
+            {
+                float thisCurve = PlayState.TAU / dustRing.Count * i + spinMod * spinSpeed;
+                dustRing[i].transform.position = new Vector2(
+                    PlayState.player.transform.position.x + Mathf.Cos(thisCurve) * radiusMod,
+                    PlayState.player.transform.position.y + 2 - Mathf.Sin(thisCurve) * radiusMod
+                    );
+                PlayState.RequestParticle(dustRing[i].transform.position, "tintedsparkle", new float[] { trailColors[i] });
+            }
+            spinMod += Time.deltaTime;
+            spinMod = spinMod > PlayState.TAU ? spinMod - PlayState.TAU : spinMod;
+            radiusMod -= inwardSpeed * 60 * Time.deltaTime;
+            if (radiusMod <= 0)
+            {
+                for (int i = 0; i < dustRing.Count; i++)
+                    dustRing[i].ResetParticle();
+                apItemCutsceneState = 2;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        while (queuedAPItemIDs.Count > 0)
+        {
+            PlayState.PlayMusic(0, 6);
+            PlayState.RequestParticle(PlayState.player.transform.position + (2 * Vector3.up), "apitemflash");
+            FlashHUDText(TextTypes.item, Item.IDToName(queuedAPItemIDs[0]));
+            FlashHUDText(TextTypes.collection, sender);
+
+            float itemTimer = 0;
+            GameObject item = new("AP Item");
+            item.AddComponent<SpriteRenderer>().sortingOrder = -50;
+            string itemAnim;
+            if (queuedAPItemIDs[0] >= 1000)
+                itemAnim = "Item_trap";
+            else if (queuedAPItemIDs[0] >= PlayState.OFFSET_FRAGMENTS)
+                itemAnim = "Item_helixFragment";
+            else if (queuedAPItemIDs[0] >= PlayState.OFFSET_HEARTS)
+                itemAnim = "Item_heartContainer";
+            else
+            {
+                bool prog = PlayState.currentRando.progressivesOn;
+                string name = PlayState.currentProfile.character;
+                itemAnim = queuedAPItemIDs[0] switch
+                {
+                    0 => prog ? "Item_progressiveWeapon" : "Item_peashooter",
+                    1 => prog ? "Item_progressiveWeapon" : "Item_boomerang",
+                    2 => prog ? "Item_progressiveWeapon" : "Item_rainbowWave",
+                    3 => prog ? "Item_progressiveWeaponMod" : "Item_devastator",
+                    4 => name == "Blobby" ? "Item_wallGrab" : "Item_highJump",
+                    5 => name == "Blobby" ? "Item_shelmet" : "Item_shellShield",
+                    6 => prog ? "Item_progressiveWeaponMod" : (name == "Leechy" ? "Item_backfire" : "Item_rapidFire"),
+                    7 => prog ? "Item_progressiveShell" : "Item_iceSnail",
+                    8 => prog ? "Item_progressiveShell" : name switch
+                        { "Upside" => "Item_magneticFoot", "Leggy" => "Item_corkscrewJump", "Blobby" => "Item_angelJump", _ => "Item_gravitySnail" },
+                    9 => prog ? "Item_progressiveShell" : "Item_fullMetalSnail",
+                    10 => "Item_gravityShock",
+                    _ => "Item_helixFragment"
+                };
+            }
+            item.AddComponent<AnimationModule>().AddAndPlay(itemAnim);
+            item.transform.position = PlayState.player.transform.position + (2 * Vector3.up);
+            while (itemTimer < 2)
+            {
+                itemTimer += Time.deltaTime;
+                float heightAbovePlayer = 2;
+                if (itemTimer >= 1.5f)
+                    heightAbovePlayer = Mathf.Cos((itemTimer - 1.5f) * Mathf.PI) * 2;
+                item.transform.position = Vector2.Lerp(item.transform.position,
+                    PlayState.player.transform.position + (heightAbovePlayer * Vector3.up), 15 * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            Destroy(item);
+            PlayState.RequestParticle(PlayState.player.transform.position, "apitemflash");
+            queuedAPItemIDs.RemoveAt(0);
+        }
+    }
+
     public void InitializeWeaponIcons()
     {
         
@@ -1029,7 +1147,7 @@ public class GlobalFunctions : MonoBehaviour
         return newMask.GetComponent<LightMask>();
     }
 
-    public void FlashHUDText(TextTypes textType, string textValue = "No text")
+    public void FlashHUDText(TextTypes textType, string textValue = "")
     {
         switch (textType)
         {
@@ -1039,7 +1157,10 @@ public class GlobalFunctions : MonoBehaviour
                 break;
             case TextTypes.collection:
                 popupTimerCollection = 2.5f;
-                itemPercentageText.SetText(string.Format(PlayState.GetText("hud_collectedItemPercentage"), PlayState.GetItemPercentage().ToString()));
+                if (textValue == "")
+                    itemPercentageText.SetText(string.Format(PlayState.GetText("hud_collectedItemPercentage"), PlayState.GetItemPercentage().ToString()));
+                else
+                    itemPercentageText.SetText(string.Format(PlayState.GetText("hud_ap_sender"), textValue));
                 break;
             case TextTypes.areaCompletion:
                 popupTimerCompletion = 3.5f;

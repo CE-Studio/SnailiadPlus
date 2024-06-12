@@ -421,6 +421,11 @@ public class PlayState
      |  12  - - Debug Rainbow Wave
      |  13-23 - Heart Containers
      |  24-53 - Helix Fragments
+     |  1000  - Weapon Lock
+     |  1001  - Gravity Lock
+     |  1002  - Lullaby Trap
+     |  1003  - Spider Trap
+     |  1004  - Warp Trap
     \*/
 
     /*\
@@ -821,6 +826,17 @@ public class PlayState
     public static Color32 GetColor(Vector2 ID)
     {
         return palette.GetPixel((int)ID.x % 4, (int)ID.y % 14);
+    }
+    public static Color32 GetColor(int ID)
+    {
+        string idStr = ID.ToString();
+        while (idStr.Length < 4)
+            idStr = string.Concat("0", idStr);
+        return GetColor(idStr);
+    }
+    public static Color32 GetColor(float ID)
+    {
+        return GetColor(Mathf.RoundToInt(ID));
     }
 
     public static string GetText(string ID) {
@@ -1245,6 +1261,20 @@ public class PlayState
                         particleScript.vars[0] = CheckForItem(9) ? 1 : 0;
                     }
                     break;
+                case "apitemdust":
+                    // Values:
+                    // 0 = Color
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = values[0];  // Color
+                    }
+                    break;
+                case "apitemflash":
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                        activateParticle = true;
+                    break;
                 case "bubble":
                     // Values:
                     // 0 = Water level
@@ -1440,6 +1470,18 @@ public class PlayState
                         particleScript.vars[0] = values[0];
                         particleScript.vars[1] = UnityEngine.Random.Range(0f, 1f) * 5f - 0.5f;
                         particleScript.vars[2] = UnityEngine.Random.Range(0f, 1f) * 6f + 3f;
+                    }
+                    break;
+                case "tintedsparkle":
+                    // Values:
+                    // 0 = Color
+
+                    if (generalData.particleState == 3 || generalData.particleState == 5)
+                    {
+                        activateParticle = true;
+                        particleScript.vars[0] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                        particleScript.vars[1] = UnityEngine.Random.Range(-0.25f, 0.25f);
+                        particleScript.vars[2] = values[0];
                     }
                     break;
                 case "transformation":

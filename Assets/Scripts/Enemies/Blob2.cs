@@ -11,7 +11,7 @@ public class Blob2 : Enemy
     private float hopTimeout = 0;
     private Vector2 velocity = Vector2.zero;
     private bool facingRight = false;
-    private readonly Vector2 jumpVelocity = new Vector2(6.25f, 15f);
+    private readonly Vector2 jumpVelocity = new(6.25f, 15f);
 
     private RaycastHit2D hCast;
     private RaycastHit2D vCast;
@@ -23,7 +23,7 @@ public class Blob2 : Enemy
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        Spawn(270, 10, 2, true, 5, new List<int>(), new List<int>(), new List<int> { 1 });
+        Spawn(270, 2, 10, true, 5);
         col.TryGetComponent(out box);
 
         anim.Add("Enemy_blob2_normal");

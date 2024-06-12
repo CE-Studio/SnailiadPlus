@@ -33,6 +33,13 @@ public class Particle : MonoBehaviour
     {
         anim.Add("AngelJumpEffect0");
         anim.Add("AngelJumpEffect1");
+        anim.Add("APItemDust0");
+        anim.Add("APItemDust1");
+        anim.Add("APItemDust2");
+        anim.Add("APItemDust3");
+        anim.Add("APItemDust4");
+        anim.Add("APItemDust5");
+        anim.Add("APItemFlash");
         anim.Add("Dot_heat_tiny");
         anim.Add("Dot_heat_small");
         anim.Add("Dot_heat_medium");
@@ -394,6 +401,12 @@ public class Particle : MonoBehaviour
                 if (PlayState.GetAnim("AngelJumpEffect_data").frames[(int)vars[0]] == 1)
                     sprite.flipX = Random.Range(0, 2) == 1;
                 break;
+            case "apitemdust":
+                anim.Play("APItemDust" + vars[0]);
+                break;
+            case "apitemflash":
+                anim.Play("APItemFlash");
+                break;
             case "bubble":
                 anim.Play("Bubble" + Random.Range(1, 5).ToString());
                 break;
@@ -489,6 +502,10 @@ public class Particle : MonoBehaviour
             case "star":
                 anim.Play("Star" + Random.Range(1, 5).ToString());
                 break;
+            case "tintedsparkle":
+                anim.Play(Random.Range(0, 3) switch { 1 => "Dot_sparkle_medium", 2 => "Dot_sparkle_long", _ => "Dot_sparkle_short" });
+                anim.affectedByGlobalEntityColor = false;
+                break;
             case "transformation":
                 anim.Play("Transformation_" + vars[0] switch
                 {
@@ -525,6 +542,7 @@ public class Particle : MonoBehaviour
             "rain" => -115,
             "lightning" => -116,
             "fog" => -9,
+            "tintedsparkle" => -20,
             _ => -15
         };
         sprite.color = animType switch
@@ -532,11 +550,12 @@ public class Particle : MonoBehaviour
             "heat" => PlayState.GetColor(Random.Range(0, 7) switch { 0 => "0209", 1 => "0210", 2 => "0211", 3=> "0309", 4 => "0310", 5 => "0311", _ => "0312"}),
             "radarsparkle" or "warpsparkle" => PlayState.GetColor(Random.Range(0, 4) switch { 0 => "0304", 1 => "0206", 2 => "0309", _ => "0312" }),
             "fog" => new Color(1, 1, 1, 0.45f),
+            "tintedsparkle" => PlayState.GetColor(vars[2]),
             _ => Color.white
         };
         anim.SetSpeed(animType switch {
             "heat" => Random.Range(0.5f, 1.5f),
-            "radarsparkle" => Random.Range(0.5f, 1.5f),
+            "radarsparkle" or "tintedsparkle" => Random.Range(0.5f, 1.5f),
             "warpsparkle" => Random.Range(0.125f, 0.4f),
             _ => 1f
         });
