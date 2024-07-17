@@ -1488,6 +1488,7 @@ public class MainMenu : MonoBehaviour
                     if (Input.GetKey(key) && (int)key < 330)
                     {
                         PlayState.generalData.keyboardInputs[controlID] = key;
+                        Control.keyboardInputs[controlID] = key;
                         rebindCooldown = REBIND_COOLDOWN;
                         isRebinding = false;
                     }
@@ -1498,6 +1499,7 @@ public class MainMenu : MonoBehaviour
                 if (Control.AnyButtonDown())
                 {
                     PlayState.generalData.controllerInputs[controlID] = Control.conInputsDownThisPass[0];
+                    Control.controllerInputs[controlID] = Control.conInputsDownThisPass[0];
                     rebindCooldown = REBIND_COOLDOWN;
                     isRebinding = false;
                 }
