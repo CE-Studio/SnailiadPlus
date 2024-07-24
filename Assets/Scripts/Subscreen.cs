@@ -298,7 +298,7 @@ public class Subscreen : MonoBehaviour
                     int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
                     if (PlayState.isRandomGame)
                         thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[i]];
-                    if (thisItemId != -1)
+                    if (thisItemId != -1 && PlayState.currentProfile.locations[PlayState.itemLocations[i]] == 0)
                     {
                         if (thisItemId >= 1000)
                             if (PlayState.currentRando.itemLocations[thisItemId - 1000] == 0)

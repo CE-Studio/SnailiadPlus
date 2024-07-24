@@ -156,7 +156,7 @@ public class Minimap : MonoBehaviour
                             int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[thisMaskID]];
                             if (PlayState.isRandomGame)
                                 thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[thisMaskID]];
-                            if (thisItemId != -1)
+                            if (thisItemId != -1 && PlayState.currentProfile.locations[PlayState.itemLocations[thisMaskID]] == 0)
                             {
                                 bool markItem = false;
                                 bool markCollected = false;
