@@ -942,7 +942,6 @@ public class PlayState
                             saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
                         if (entity.CompareTag("Item"))
                             itemLocations.Add(WorldPosToMapGridID(entity.transform.position), itemLocationID++);
-                        //itemLocations.Add(WorldPosToMapGridID(entity.transform.position), entity.GetComponent<Item>().itemID);
                     }
                 }
             }

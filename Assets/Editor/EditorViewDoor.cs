@@ -16,7 +16,8 @@ public class EditorViewDoor : Editor
     private SerializedProperty sRandoLocked;
     private SerializedProperty sBoss;
     private SerializedProperty sDir;
-    private SerializedProperty sFragments;
+    private SerializedProperty sFragmentsMin;
+    private SerializedProperty sFragmentsMaj;
 
     private void OnEnable()
     {
@@ -29,7 +30,8 @@ public class EditorViewDoor : Editor
         sRandoLocked = serializedObject.FindProperty("randoLocked");
         sBoss = serializedObject.FindProperty("bossLock");
         sDir = serializedObject.FindProperty("direction");
-        sFragments = serializedObject.FindProperty("requiredFragments");
+        sFragmentsMin = serializedObject.FindProperty("requiredFragmentsMin");
+        sFragmentsMaj = serializedObject.FindProperty("requiredFragmentsMaj");
     }
 
     public override void OnInspectorGUI()
@@ -52,7 +54,8 @@ public class EditorViewDoor : Editor
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
         GUILayout.Space(5);
         GUILayout.Label("Required Helix Fragments to open in\nrandomizer (when the option is turned on):");
-        sFragments.intValue = EditorGUILayout.IntField(sFragments.intValue);
+        sFragmentsMin.intValue = EditorGUILayout.IntField("Set area prog.", sFragmentsMin.intValue);
+        sFragmentsMaj.intValue = EditorGUILayout.IntField("Open area prog.", sFragmentsMaj.intValue);
 
         serializedObject.ApplyModifiedProperties();
 
