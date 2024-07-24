@@ -90,7 +90,9 @@ public class Item:MonoBehaviour, IRoomObject {
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
         UpdateIDAsProgressive();
 
-        if (itemID >= 1000)
+        if (PlayState.currentProfile.locations[locationID] == 1)
+            Destroy(gameObject);
+        else if (itemID >= 1000)
         {
             if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
                 Spawn();
@@ -282,9 +284,10 @@ public class Item:MonoBehaviour, IRoomObject {
     {
         if (collision.CompareTag("Player") && itemID != -1)
         {
-            UpdateIDAsProgressive();
+            //UpdateIDAsProgressive();
             collected = true;
             PlayState.AddItem(itemID);
+            PlayState.currentProfile.locations[locationID] = 1;
             PlayState.minimapScript.RefreshMap();
             if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
@@ -508,7 +511,7 @@ public class Item:MonoBehaviour, IRoomObject {
 
     private void UpdateIDAsProgressive()
     {
-        if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
+        if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn && PlayState.currentRando.itemLocations[locationID] != -99)
         {
             switch (itemID)
             {

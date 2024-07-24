@@ -2634,6 +2634,8 @@ public class MainMenu : MonoBehaviour
             PlayState.currentRando.maskedItems = menuVarFlags[9] == 1;
             PlayState.currentRando.openAreas = menuVarFlags[10] == 1;
             PlayState.currentRando.bossesLocked = menuVarFlags[11] == 1;
+            PlayState.currentRando.musicShuffled = menuVarFlags[12] == 1;
+            PlayState.currentRando.npcTextShuffled = menuVarFlags[13] == 1;
             //PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
             if (menuVarStrings[(int)MenuString.randoSeed] == "")
                 PlayState.currentRando.seed = UnityEngine.Random.Range(0, 100000000);

@@ -218,7 +218,7 @@ public class Randomizer : MonoBehaviour
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                        randoPhase = 0;
+                        randoPhase = 4;
                         isShuffling = false;
                     }
                     break;
@@ -293,7 +293,7 @@ public class Randomizer : MonoBehaviour
                                 locations[i] = -1;
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                        randoPhase = 0;
+                        randoPhase = 4;
                         isShuffling = false;
 
                         //List<int> printedLocations = new();
@@ -308,9 +308,19 @@ public class Randomizer : MonoBehaviour
                     break;
 
                 case 4: // Music
+                    if (!PlayState.currentRando.musicShuffled)
+                    {
+                        randoPhase = 5;
+                        break;
+                    }
                     break;
 
                 case 5: // Dialogue
+                    if (!PlayState.currentRando.npcTextShuffled)
+                    {
+                        randoPhase = 0;
+                        break;
+                    }
                     break;
             }
             yield return new WaitForEndOfFrame();

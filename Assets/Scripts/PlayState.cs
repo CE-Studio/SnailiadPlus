@@ -395,6 +395,7 @@ public class PlayState
         public Vector2 saveCoords;    // X and Y coordinates of the last save point the player touched (or the start of the campaign if none has been touched)
         public string character;      // Snaily, Sluggy, Upside, Leggy, Blobby, and Leechy (case-sensitive)
         public int[] items;           // See below item table (0 = uncollected, 1 = collected)
+        public int[] locations;       // Similar to item table, but denotes the actual item locations instead (0 = uncollected, 1 = collected)
         public int weapon;            // Last selected weapon ID
         public int[] bossStates;      // Length-4 array tracking which bosses have been defeated (0 = defeated, 1 = alive)
         public int[] NPCVars;         // Variable-length array tracking certain variables NPC read and write, such as Cave Snail and Iris
@@ -455,7 +456,9 @@ public class PlayState
         public bool maskedItems;      // Whether or not items are masked as the same sprite
         public bool openAreas;        // Whether or not all areas are open from the start
         public bool bossesLocked;     // Whether or not Helix Locks have been applied to boss doors
+        public bool musicShuffled;    // Whether or not music should be shuffled
         public int[] musicList;       // All music IDs, in order relative to the actual music ID list
+        public bool npcTextShuffled;  // Whether or not NPC dialogue should be randomized
         public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
     }
 
@@ -505,6 +508,7 @@ public class PlayState
         saveCoords = WORLD_SPAWN,
         character = "Snaily",
         items = new int[54],
+        locations = new int[57],
         weapon = -1,
         bossStates = new int[] { 1, 1, 1, 1 },
         NPCVars = new int[] { 0, 0, 0 },
@@ -679,6 +683,7 @@ public class PlayState
             saveCoords = blankProfile.saveCoords,
             character = blankProfile.character,
             items = (int[])blankProfile.items.Clone(),
+            locations = (int[])blankProfile.locations.Clone(),
             weapon = blankProfile.weapon,
             bossStates = (int[])blankProfile.bossStates.Clone(),
             NPCVars = (int[])blankProfile.NPCVars.Clone(),
@@ -1630,7 +1635,6 @@ public class PlayState
 
     public static void AddItem(string itemName)
     {
-        //currentProfile.items[TranslateItemNameToID(itemName)] = 1;
         AddItem(TranslateItemNameToID(itemName));
     }
 
@@ -2053,7 +2057,10 @@ public class PlayState
         string gamePath = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + profile + ".json";
         if (File.Exists(gamePath))
         {
-            thisProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
+            ProfileData newProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
+            if (newProfile.locations == null) // This check is in place to update any profiles created before release
+                newProfile.locations = (int[])newProfile.items.Clone();
+            thisProfile = newProfile;
             if (setAsCurrent)
                 currentProfile = thisProfile;
         }

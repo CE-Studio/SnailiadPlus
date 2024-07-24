@@ -882,18 +882,33 @@ public class GlobalFunctions : MonoBehaviour
             }
             item.AddComponent<AnimationModule>().AddAndPlay(itemAnim);
             item.transform.position = PlayState.player.transform.position + (2 * Vector3.up);
-            while (itemTimer < 2)
+            bool descendOntoPlayer = false;
+            if (descendOntoPlayer)
             {
-                itemTimer += Time.deltaTime;
-                float heightAbovePlayer = 2;
-                if (itemTimer >= 1.5f)
-                    heightAbovePlayer = Mathf.Cos((itemTimer - 1.5f) * Mathf.PI) * 2;
-                item.transform.position = Vector2.Lerp(item.transform.position,
-                    PlayState.player.transform.position + (heightAbovePlayer * Vector3.up), 15 * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
+                while (itemTimer < 2)
+                {
+                    itemTimer += Time.deltaTime;
+                    float heightAbovePlayer = 2;
+                    if (itemTimer >= 1.5f)
+                        heightAbovePlayer = Mathf.Cos((itemTimer - 1.5f) * Mathf.PI) * 2;
+                    item.transform.position = Vector2.Lerp(item.transform.position,
+                        PlayState.player.transform.position + (heightAbovePlayer * Vector3.up), 15 * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            else
+            {
+                while (itemTimer < 1.75)
+                {
+                    itemTimer += Time.deltaTime;
+                    item.transform.position = Vector2.Lerp(item.transform.position,
+                        PlayState.player.transform.position + (2 * Vector3.up), 15 * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
             }
             Destroy(item);
-            PlayState.RequestParticle(PlayState.player.transform.position, "apitemflash");
+            if (descendOntoPlayer)
+                PlayState.RequestParticle(PlayState.player.transform.position, "apitemflash");
             queuedAPItemIDs.RemoveAt(0);
         }
     }
