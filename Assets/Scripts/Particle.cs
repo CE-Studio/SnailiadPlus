@@ -605,7 +605,8 @@ public class Particle : MonoBehaviour
         for (int i = 0; i < internalVars.Length; i++)
             internalVars[i] = 0;
         MoveToMainPool();
-        lightMask.SetSize(-1);
+        if (lightMask != null)
+            lightMask.SetSize(-1);
         gameObject.SetActive(false);
     }
 

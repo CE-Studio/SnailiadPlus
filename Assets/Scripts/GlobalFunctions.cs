@@ -605,6 +605,22 @@ public class GlobalFunctions : MonoBehaviour
         }
         if (resetFlag != 3) // Change song
         {
+            if (PlayState.isRandomGame && PlayState.currentRando.musicShuffled > 0 && !PlayState.isInBossRush)
+            {
+                int indexID = area switch
+                {
+                    -7 => 0,
+                    -6 => 1,
+                    -5 or -4 or -3 or -2 => 2,
+                    _ => area + 4
+                };
+                area = PlayState.currentRando.musicList[indexID];
+                if (area >= 0)
+                    subzone %= PlayState.musicLibrary.library[area].Length;
+                else
+                    subzone = 0;
+            }
+
             offsetID = area + PlayState.musicLibrary.areaThemeOffset - 1;
             if (resetFlag >= 1)
             {

@@ -13,6 +13,7 @@ public class Randomizer : MonoBehaviour
 
     private bool[] lockStates = new bool[24];
     private bool[] defaultLocksThisGen = new bool[24];
+    private readonly List<int> defaultMusicList = new() { -7, -6, -5, -1, 0, 1, 2, 3, 4, 5, 6 };
 
     private int[] locations = new int[] { };
     private bool hasPlacedDevastator = false;
@@ -219,7 +220,6 @@ public class Randomizer : MonoBehaviour
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                         randoPhase = 4;
-                        isShuffling = false;
                     }
                     break;
 
@@ -294,7 +294,6 @@ public class Randomizer : MonoBehaviour
                         PlayState.currentRando.itemLocations = (int[])locations.Clone();
                         PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                         randoPhase = 4;
-                        isShuffling = false;
 
                         //List<int> printedLocations = new();
                         //for (int i = 0; i < locations.Length; i++)
@@ -308,17 +307,43 @@ public class Randomizer : MonoBehaviour
                     break;
 
                 case 4: // Music
-                    if (!PlayState.currentRando.musicShuffled)
+                    PlayState.currentRando.musicList = defaultMusicList.ToArray();
+                    if (PlayState.currentRando.musicShuffled == 0)
                     {
                         randoPhase = 5;
                         break;
                     }
+
+                    List<int> songsToAdd;
+                    if (PlayState.currentRando.musicShuffled == 1)
+                    {
+                        songsToAdd = new() { 0, 1, 2, 3, 4, 5 };
+                        for (int i = 0; i < 6; i++)
+                        {
+                            int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                            PlayState.currentRando.musicList[i + 4] = songsToAdd[randomIndex];
+                            songsToAdd.RemoveAt(randomIndex);
+                        }
+                    }
+                    else
+                    {
+                        songsToAdd = defaultMusicList;
+                        //for (int i = 0; i < defaultMusicList.Count; i++)
+                        while (songsToAdd.Count > 0) // This wasn't working as a for loop for some reason
+                        {
+                            int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                            PlayState.currentRando.musicList[songsToAdd.Count - 1] = songsToAdd[randomIndex];
+                            songsToAdd.RemoveAt(randomIndex);
+                        }
+                    }
+                    randoPhase = 5;
                     break;
 
                 case 5: // Dialogue
                     if (!PlayState.currentRando.npcTextShuffled)
                     {
                         randoPhase = 0;
+                        isShuffling = false;
                         break;
                     }
                     break;

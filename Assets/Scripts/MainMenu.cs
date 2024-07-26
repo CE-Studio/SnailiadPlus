@@ -2131,6 +2131,7 @@ public class MainMenu : MonoBehaviour
         PlayState.resetInducingFadeActive = false;
 
         lastRoomTrigger.DespawnEverything();
+        PlayState.isRandomGame = PlayState.currentRando.randoLevel != 0;
         PlayState.ResetAllParticles();
         PlayState.screenCover.sortingOrder = 999;
         PlayState.SetCamFocus(PlayState.playerScript.camFocus);
@@ -2148,7 +2149,6 @@ public class MainMenu : MonoBehaviour
         PlayState.globalFunctions.UpdateHearts();
         PlayState.ToggleBossfightState(false, 0, true);
         PlayState.hasJumped = false;
-        PlayState.isRandomGame = PlayState.currentRando.randoLevel != 0;
         PlayState.stackShells = !PlayState.isRandomGame;
         PlayState.stackWeaponMods = !PlayState.isRandomGame;
         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
@@ -2572,7 +2572,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_rando_broom") + ": ", true, "randoBroom");
         AddOption(PlayState.GetText("menu_option_rando_traps") + ": ", true, "randoTraps");
         AddOption(PlayState.GetText("menu_option_rando_maskedItems") + ": ", true, "randoMasked");
-        AddOption("", false, 1);
+        AddOption("", false, 1, TextAlignment.Left);
         AddOption(PlayState.GetText("menu_option_rando_nextPage"), true, NewGameRandoOptions2);
         AddOption(PlayState.GetText("menu_option_newGame_returnTo"), true, StartNewGame);
         ForceSelect(1);
@@ -2589,7 +2589,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_rando_music") + ": ", true, "randoMusic");
         AddOption(PlayState.GetText("menu_option_rando_hints") + ": ", true, "randoHints");
         AddOption(PlayState.GetText("menu_option_rando_seed") + ": ", true, MenuString.randoSeed);
-        AddOption("", false, 1);
+        AddOption("", false, 1, TextAlignment.Left);
         AddOption(PlayState.GetText("menu_option_rando_prevPage"), true, NewGameRandoOptions1);
         AddOption(PlayState.GetText("menu_option_newGame_returnTo"), true, StartNewGame);
         ForceSelect(1);
@@ -2634,7 +2634,7 @@ public class MainMenu : MonoBehaviour
             PlayState.currentRando.maskedItems = menuVarFlags[9] == 1;
             PlayState.currentRando.openAreas = menuVarFlags[10] == 1;
             PlayState.currentRando.bossesLocked = menuVarFlags[11] == 1;
-            PlayState.currentRando.musicShuffled = menuVarFlags[12] == 1;
+            PlayState.currentRando.musicShuffled = menuVarFlags[12];
             PlayState.currentRando.npcTextShuffled = menuVarFlags[13] == 1;
             //PlayState.currentRando.seed = PlayState.currentRando.seed == 0 ? UnityEngine.Random.Range(0, 100000000) : PlayState.currentRando.seed;
             if (menuVarStrings[(int)MenuString.randoSeed] == "")

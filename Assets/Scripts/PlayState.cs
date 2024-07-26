@@ -456,7 +456,7 @@ public class PlayState
         public bool maskedItems;      // Whether or not items are masked as the same sprite
         public bool openAreas;        // Whether or not all areas are open from the start
         public bool bossesLocked;     // Whether or not Helix Locks have been applied to boss doors
-        public bool musicShuffled;    // Whether or not music should be shuffled
+        public int musicShuffled;     // Whether or not music should be shuffled, and to what extent
         public int[] musicList;       // All music IDs, in order relative to the actual music ID list
         public bool npcTextShuffled;  // Whether or not NPC dialogue should be randomized
         public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
@@ -529,7 +529,9 @@ public class PlayState
         maskedItems = false,
         openAreas = false,
         bossesLocked = false,
+        musicShuffled = 0,
         musicList = new int[] { },
+        npcTextShuffled = false,
         npcTextIndeces = new int[] { }
     };
 
@@ -707,7 +709,9 @@ public class PlayState
             maskedItems = blankRando.maskedItems,
             openAreas = blankRando.openAreas,
             bossesLocked = blankRando.bossesLocked,
+            musicShuffled = blankRando.musicShuffled,
             musicList = (int[])blankRando.musicList.Clone(),
+            npcTextShuffled = blankRando.npcTextShuffled,
             npcTextIndeces = (int[])blankRando.npcTextIndeces.Clone()
         };
     }
@@ -999,7 +1003,6 @@ public class PlayState
 
     public static void PlayAreaSong(int area, int subzone, bool isSnelk = false)
     {
-        //if (!((area == 5 && currentArea == 6) || (area == 6 && currentArea == 5)) && areaOfDeath != area)
         if (areaOfDeath != area)
         {
             if (isSnelk && !lastRoomWasSnelk)
@@ -2056,10 +2059,14 @@ public class PlayState
         string gamePath = Application.persistentDataPath + "/Saves/" + SAVE_FILE_PREFIX + "_Profile" + profile + ".json";
         if (File.Exists(gamePath))
         {
-            ProfileData newProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
-            if (newProfile.locations == null) // This check is in place to update any profiles created before release
-                newProfile.locations = (int[])newProfile.items.Clone();
-            thisProfile = newProfile;
+            thisProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
+            if (thisProfile.locations == null)
+            {
+                int[] oldLocations = (int[])thisProfile.items.Clone();
+                thisProfile.locations = new int[blankProfile.locations.Length];
+                for (int i = 0; i < oldLocations.Length; i++)
+                    thisProfile.locations[i] = oldLocations[i];
+            }
             if (setAsCurrent)
                 currentProfile = thisProfile;
         }
@@ -2171,6 +2178,8 @@ public class PlayState
             Control.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
             generalData.controllerInputs = (Control.ControllerBinds[])Control.defaultControllerInputs.Clone();
         }
+
+        SaveAll();
     }
 
     public static void EraseGame(int profile) {

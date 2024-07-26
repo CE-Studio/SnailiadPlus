@@ -90,7 +90,7 @@ public class Item:MonoBehaviour, IRoomObject {
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
         UpdateIDAsProgressive();
 
-        if (PlayState.currentProfile.locations[locationID] == 1)
+        if (!PlayState.isInBossRush && PlayState.currentProfile.locations[locationID] == 1)
             Destroy(gameObject);
         else if (itemID >= 1000)
         {
@@ -284,10 +284,10 @@ public class Item:MonoBehaviour, IRoomObject {
     {
         if (collision.CompareTag("Player") && itemID != -1)
         {
-            //UpdateIDAsProgressive();
             collected = true;
             PlayState.AddItem(itemID);
-            PlayState.currentProfile.locations[locationID] = 1;
+            if (!PlayState.isInBossRush)
+                PlayState.currentProfile.locations[locationID] = 1;
             PlayState.minimapScript.RefreshMap();
             if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
