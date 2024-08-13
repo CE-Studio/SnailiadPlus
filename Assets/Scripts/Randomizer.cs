@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Randomizer : MonoBehaviour
@@ -115,6 +116,7 @@ public class Randomizer : MonoBehaviour
                             locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
                         splitPhase = 1;
                     }
+                    //Debug.Log("-------------------------------------------------");
                     break;
 
                 case 2: // Items (Split shuffle)
@@ -260,6 +262,7 @@ public class Randomizer : MonoBehaviour
                             case 6: case 3: progMods++; break;
                             default: break;
                         }
+                        //PrintPlacement(itemToPlace, availableLocations[locationPointer]);
                     }
                     else
                     {
@@ -350,6 +353,7 @@ public class Randomizer : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
+        CreateSpoilerMap();
     }
 
     private List<int> GetLocations(bool majorsOnly = false)
@@ -362,63 +366,63 @@ public class Randomizer : MonoBehaviour
             {
                 if (i switch
                 {
-                    0 => Knowledge() && L2Blocks() && (Jump() || Upside() || Leggy()),                                             // Original Testing Room
-                    1 => L1Blocks(),                                                                                               // Leggy Snail's Tunnel
-                    2 => L1Blocks() || (Jump() && Knowledge()) || ((Sluggy() || Upside() || Leggy() || Leechy()) && Knowledge()),  // Town Overtunnel
-                    3 => Knowledge() && (L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                     // Super Secret Alcove
-                    4 => L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy(),                                      // Love Snail's Alcove
-                    5 => L2Blocks(),                                                                                               // Suspicious Tree
-                    6 => L2Blocks(),                                                                                               // Anger Management Room
-                    7 => L2Blocks() && ((Blobby() && Jump()) || !Blobby()),                                                        // Percentage Snail's Hidey Hole
-                    8 => true,                                                                                                     // Digging Grounds
-                    9 => true,                                                                                                     // Cave Snail's Cave
-                    10 => L2Blocks(),                                                                                              // Fragment Cave
-                    11 => (Knowledge() && ((Blobby() && Jump()) || !Blobby())) || Fly() || Upside() || Leggy(),                    // Discombobulatory Alcove
-                    12 => (Blobby() && Jump()) || !Blobby(),                                                                       // Seabed Caves
-                    13 => true,                                                                                                    // Fine Dining (Peashooter)
-                    14 => L2Blocks(),                                                                                              // Fine Dining (Fragment)
-                    15 => L1Blocks(),                                                                                              // The Maze Room
-                    16 => L1Blocks(),                                                                                              // Monument of Greatness
-                    17 => RedDoor(),                                                                                               // Heart of the Sea
-                    18 => BlueDoor() && (PinkDoor() || Knowledge()),                                                               // Daily Helping of Calcium
-                    19 => GreenDoor(),                                                                                             // Dig, Snaily, Dig
-                    20 => L1Blocks(),                                                                                              // Skywatcher's Loot
-                    21 => Boss1(),                                                                                                 // Signature Croissants (Boomerang)
-                    22 => Boss1() && L1Blocks(),                                                                                   // Signature Croissants (Heart)
-                    23 => Knowledge() && (Fly() || Upside() || Leggy()),                                                           // Squared Snelks
-                    24 => PinkDoor(),                                                                                              // Frost Shrine
-                    25 => (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks() && ((Blobby() && Jump()) || !Blobby()),        // Sweater Required
-                    26 => PinkDoor(),                                                                                              // A Secret to Snowbody
-                    27 => GreenDoor(),                                                                                             // Devil's Alcove
-                    28 => Knowledge() || (Jump() || Fly() || Ice() || Upside() || Leggy()),                                        // Ice Climb
-                    29 => L2Blocks(),                                                                                              // The Labyrinth (Fragment)
-                    30 => (Knowledge() && !Upside()) || L2Blocks(),                                                                // The Labyrinth (High Jump)
-                    31 => RedDoor(),                                                                                               // Sneaky, Sneaky
-                    32 => Boss2() || RedDoor(),                                                                                    // Prismatic Prize (Rainbow Wave)
-                    33 => RedDoor(),                                                                                               // Prismatic Prize (Heart)
-                    34 => (Metal() || Health()) && (PinkDoor() || RedDoor()),                                                      // Hall of Fire
-                    35 => Knowledge() && Metal() && (Fly() || L3Blocks() || RedDoor()),                                            // Scorching Snelks
-                    36 => Knowledge() && (Fly() || L3Blocks()),                                                                    // Hidden Hideout
-                    37 => RedDoor() || L3Blocks(),                                                                                 // Green Cache
-                    38 => L2Blocks(),                                                                                              // Furnace
-                    39 => RedDoor(),                                                                                               // Slitherine Grove
-                    40 => PinkDoor() && (Fly() || Upside() || Leggy()),                                                            // Floaty Fortress (Top Left)
-                    41 => PinkDoor() && (Fly() || Upside() || Leggy()),                                                            // Floaty Fortress (Bottom Right)
-                    42 => L2Blocks(),                                                                                              // Woah Mama
-                    43 => L2Blocks() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                                   // Shocked Shell
-                    44 => L2Blocks(),                                                                                              // Gravity Shrine
-                    45 => Fly() || (Knowledge() && RedDoor()),                                                                     // Fast Food
-                    46 => Boss3() || (RedDoor() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy())),                       // The Bridge
-                    47 => L3Blocks(),                                                                                              // Transit 90
-                    48 => RedDoor() && (Metal() || Health()),                                                                      // Steel Shrine
-                    49 => L3Blocks() && (Metal() || Health()),                                                                     // Space Balcony (Heart)
-                    50 => L3Blocks() && (Metal() || Health()),                                                                     // Space Balcony (Fragment)
-                    51 => RedDoor() && (Metal() || Health()),                                                                      // The Vault
-                    52 => RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                        // Holy Hideaway
-                    53 => RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                        // Arctic Alcove
-                    54 => Knowledge() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),         // Lost Loot
-                    55 => GreenDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                      // Reinforcements
-                    56 => PinkDoor(),                                                                                              // Glitched Goodies
+                    0 => Knowledge() && L2Blocks() && (Jump() || Upside() || Leggy()),                                                  // Original Testing Room
+                    1 => L1Blocks(),                                                                                                    // Leggy Snail's Tunnel
+                    2 => L1Blocks() || (Jump() && Knowledge()) || ((Sluggy() || Upside() || Leggy() || Leechy()) && Knowledge()),       // Town Overtunnel
+                    3 => Knowledge() && (L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                          // Super Secret Alcove
+                    4 => L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy(),                                           // Love Snail's Alcove
+                    5 => L2Blocks(),                                                                                                    // Suspicious Tree
+                    6 => L2Blocks(),                                                                                                    // Anger Management Room
+                    7 => L2Blocks() && ((Blobby() && Jump()) || !Blobby()),                                                             // Percentage Snail's Hidey Hole
+                    8 => true,                                                                                                          // Digging Grounds
+                    9 => true,                                                                                                          // Cave Snail's Cave
+                    10 => L2Blocks(),                                                                                                   // Fragment Cave
+                    11 => (Knowledge() && ((Blobby() && Jump()) || !Blobby())) || Fly() || Upside() || Leggy(),                         // Discombobulatory Alcove
+                    12 => (Blobby() && Jump()) || !Blobby(),                                                                            // Seabed Caves
+                    13 => true,                                                                                                         // Fine Dining (Peashooter)
+                    14 => L2Blocks(),                                                                                                   // Fine Dining (Fragment)
+                    15 => L1Blocks(),                                                                                                   // The Maze Room
+                    16 => L1Blocks(),                                                                                                   // Monument of Greatness
+                    17 => RedDoor(),                                                                                                    // Heart of the Sea
+                    18 => BlueDoor() && (PinkDoor() || Knowledge()),                                                                    // Daily Helping of Calcium
+                    19 => GreenDoor(),                                                                                                  // Dig, Snaily, Dig
+                    20 => L1Blocks(),                                                                                                   // Skywatcher's Loot
+                    21 => Boss1(),                                                                                                      // Signature Croissants (Boomerang)
+                    22 => Boss1() && L1Blocks(),                                                                                        // Signature Croissants (Heart)
+                    23 => Boss1() && Knowledge() && (Fly() || Upside() || Leggy()),                                                     // Squared Snelks
+                    24 => Boss1() && PinkDoor(),                                                                                        // Frost Shrine
+                    25 => Boss1() && (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks() && ((Blobby() && Jump()) || !Blobby()),  // Sweater Required
+                    26 => Boss1() && PinkDoor(),                                                                                        // A Secret to Snowbody
+                    27 => Boss1() && GreenDoor(),                                                                                       // Devil's Alcove
+                    28 => Boss1() && (Knowledge() || Jump() || Fly() || Ice() || Upside() || Leggy()),                                  // Ice Climb
+                    29 => Boss1() && L2Blocks(),                                                                                        // The Labyrinth (Fragment)
+                    30 => (Boss1() && L2Blocks()) || (Knowledge() && !Upside()),                                                        // The Labyrinth (High Jump)
+                    31 => Boss1() && RedDoor(),                                                                                         // Sneaky, Sneaky
+                    32 => Boss2() || RedDoor(),                                                                                         // Prismatic Prize (Rainbow Wave)
+                    33 => Boss2() && RedDoor(),                                                                                         // Prismatic Prize (Heart)
+                    34 => Boss2() && (Metal() || Health()) && (PinkDoor() || RedDoor()),                                                // Hall of Fire
+                    35 => Boss2() && Knowledge() && Metal() && (Fly() || L3Blocks() || RedDoor()),                                      // Scorching Snelks
+                    36 => Boss2() && Knowledge() && (Fly() || L3Blocks()),                                                              // Hidden Hideout
+                    37 => Boss2() && RedDoor() || L3Blocks(),                                                                           // Green Cache
+                    38 => Boss2() && L2Blocks(),                                                                                        // Furnace
+                    39 => Boss2() && RedDoor(),                                                                                         // Slitherine Grove
+                    40 => Boss2() && PinkDoor() && (Fly() || Upside() || Leggy()),                                                      // Floaty Fortress (Top Left)
+                    41 => Boss2() && PinkDoor() && (Fly() || Upside() || Leggy()),                                                      // Floaty Fortress (Bottom Right)
+                    42 => Boss2() && L2Blocks(),                                                                                        // Woah Mama
+                    43 => Boss2() && L2Blocks() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                             // Shocked Shell
+                    44 => Boss2() && L2Blocks(),                                                                                        // Gravity Shrine
+                    45 => Boss2() && Fly() || (Knowledge() && RedDoor()),                                                               // Fast Food
+                    46 => Boss3() || (RedDoor() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy())),                            // The Bridge
+                    47 => Boss3() && L3Blocks(),                                                                                        // Transit 90
+                    48 => Boss3() && RedDoor() && (Metal() || Health()),                                                                // Steel Shrine
+                    49 => Boss3() && L3Blocks() && (Metal() || Health()),                                                               // Space Balcony (Heart)
+                    50 => Boss3() && L3Blocks() && (Metal() || Health()),                                                               // Space Balcony (Fragment)
+                    51 => Boss3() && RedDoor() && (Metal() || Health()),                                                                // The Vault
+                    52 => Boss3() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                  // Holy Hideaway
+                    53 => Boss3() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                  // Arctic Alcove
+                    54 => Boss3() && Knowledge() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),   // Lost Loot
+                    55 => Boss3() && GreenDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                // Reinforcements
+                    56 => PinkDoor(),                                                                                                   // Glitched Goodies
                     _ => false
                 })
                     if (locations[i] == -2)
@@ -626,5 +630,54 @@ public class Randomizer : MonoBehaviour
                 _ => "Nowhere"
             })
             );
+    }
+
+    public void CreateSpoilerMap()
+    {
+        Sprite mapSprite = Resources.Load<Sprite>("Images/UI/Minimap");
+        Texture2D mapTexture = mapSprite.texture;
+        Texture2D map = new(mapTexture.width, mapTexture.height);
+        map.SetPixels32(mapTexture.GetPixels32());
+        Sprite[] icons = PlayState.textureLibrary.Unpack(Resources.Load<Sprite>("Images/SpoilerLogIcons").texture, 8, 8, "MapIcon");
+
+        for (int mapX = 0; mapX < PlayState.WORLD_SIZE.x; mapX++)
+        {
+            for (int mapY = 0; mapY < PlayState.WORLD_SIZE.y; mapY++)
+            {
+                int cellID = Mathf.RoundToInt((mapY * PlayState.WORLD_SIZE.x) + mapX);
+                if (PlayState.itemLocations.ContainsKey(cellID))
+                {
+                    int itemID = PlayState.currentRando.itemLocations[PlayState.itemLocations[cellID]];
+                    if (itemID != -1)
+                    {
+                        int iconID;
+                        if (itemID >= 1000)
+                            iconID = 13;
+                        else if (itemID >= PlayState.OFFSET_FRAGMENTS)
+                            iconID = 12;
+                        else if (itemID >= PlayState.OFFSET_HEARTS)
+                            iconID = 11;
+                        else
+                            iconID = itemID;
+                        Debug.Log(iconID + ", " + icons[iconID].name);
+
+                        Vector2 originPixel = new(mapX * 8, mapY * 8);
+                        Color[] iconPixels = icons[iconID].texture.GetPixels();
+                        for (int i = 0; i < 64; i++)
+                        {
+                            if (iconPixels[i].a != 0)
+                            {
+                                Vector2 targetPixel = new(originPixel.x + (i % 8), originPixel.y + Mathf.FloorToInt(i * 0.125f));
+                                map.SetPixel((int)targetPixel.x, Mathf.Abs((int)targetPixel.y - ((int)PlayState.WORLD_SIZE.y * 8)) - 1, iconPixels[i]);
+                            }
+                        }
+                        // TODO: icons are drawing as the same nonexistent icon despite pulling different sprites. Fix
+                    }
+                }
+            }
+        }
+
+        byte[] mapBytes = map.EncodeToPNG();
+        File.WriteAllBytes(string.Format("{0}/Saves/Spoiler Map {1}.png", Application.persistentDataPath, PlayState.currentRando.seed), mapBytes);
     }
 }

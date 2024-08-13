@@ -3906,6 +3906,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_11_rando_0",
+			"text": "{P}, {p|0.125}it's dangerous to go{nl}alone!  {p|0.15}Take this item!{nl}{p|0.3}I'm sure it'll be useful!",
+			"value": 1
+		},
+		{
 			"name": "npc_12_default_0",
 			"text": "Isn't breaking blocks {eff|Wave}fun!?",
 			"value": 1

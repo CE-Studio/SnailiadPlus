@@ -67,7 +67,7 @@ public class SavePoint:MonoBehaviour, IRoomObject
         anim.Add("Save_active_" + surfaceString);
         anim.Add("Save_last_" + surfaceString);
 
-        if (PlayState.currentProfile.saveCoords == new Vector2(transform.position.x, transform.position.y + 0.5f))
+        if (PlayState.currentProfile.saveCoords == (Vector2)transform.position + DirToVector())
             anim.Play("Save_last_" + surfaceString);
         else
             anim.Play("Save_inactive_" + surfaceString);
@@ -85,10 +85,21 @@ public class SavePoint:MonoBehaviour, IRoomObject
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active_" + surfaceString);
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.save);
-                PlayState.currentProfile.saveCoords = new Vector2(transform.position.x, transform.position.y + 0.5f);
+                PlayState.currentProfile.saveCoords = (Vector2)transform.position + DirToVector();
                 PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
                 PlayState.WriteSave(PlayState.currentProfileNumber, true);
             }
         }
+    }
+
+    private Vector2 DirToVector()
+    {
+        return surface switch
+        {
+            (int)Player.Dirs.Floor => Vector2.up,
+            (int)Player.Dirs.WallL => Vector2.right,
+            (int)Player.Dirs.WallR => Vector2.left,
+            _ => Vector2.down
+        } * 0.5f;
     }
 }

@@ -23,8 +23,8 @@ public class EnemyBullet : MonoBehaviour
     public bool hasBeenParried;
     private float[] shootVarBackup;
 
-    private bool[] playerBulletsDestroyedByMe = new bool[10];
-    private bool[] playerBulletsThatDestroyMe = new bool[10];
+    private bool[] playerBulletsDestroyedByMe = new bool[12];
+    private bool[] playerBulletsThatDestroyMe = new bool[12];
     private int bulletInteraction = 0;
     // 0 = always destroy
     // 1 = destroy parallel
@@ -220,8 +220,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = false;
                 if (playSound)
                     soundID = "ShotBoomerangDev";
-                SetDestroyableLevels("0011111100", false);
-                SetDestroyableLevels("0011111100", true);
+                SetDestroyableLevels("001111110000", false);
+                SetDestroyableLevels("001111110000", true);
                 bulletInteraction = 0;
                 break;
             case BulletType.laser:
@@ -298,8 +298,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotRainbowDev";
-                SetDestroyableLevels("0011111100", false);
-                SetDestroyableLevels("0011111100", true);
+                SetDestroyableLevels("001111110000", false);
+                SetDestroyableLevels("001111110000", true);
                 bulletInteraction = 0;
                 lightSize = 17;
                 break;
@@ -313,7 +313,7 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotEnemyGigaWave";
-                SetDestroyableLevels("0011111100", true);
+                SetDestroyableLevels("001111110000", true);
                 bulletInteraction = 2;
                 lightSize = 21;
                 break;
@@ -327,8 +327,8 @@ public class EnemyBullet : MonoBehaviour
                 despawnOffscreen = true;
                 if (playSound)
                     soundID = "ShotRainbowDev";
-                SetDestroyableLevels("0011111100", false);
-                SetDestroyableLevels("0011111100", true);
+                SetDestroyableLevels("001111110000", false);
+                SetDestroyableLevels("001111110000", true);
                 bulletInteraction = 0;
                 lightSize = 19;
                 break;
@@ -388,7 +388,7 @@ public class EnemyBullet : MonoBehaviour
             }
             if (destroyFlag)
             {
-                int bulletType = bullet.bulletType - 1;
+                int bulletType = bullet.bulletType;
                 if (playerBulletsDestroyedByMe[bulletType])
                     bullet.Despawn(true);
                 if (playerBulletsThatDestroyMe[bulletType])
@@ -410,8 +410,8 @@ public class EnemyBullet : MonoBehaviour
             box.enabled = false;
             lifeTimer = 0;
             transform.position = Vector2.zero;
-            SetDestroyableLevels("0000000000", false);
-            SetDestroyableLevels("0000000000", true);
+            SetDestroyableLevels("000000000000", false);
+            SetDestroyableLevels("000000000000", true);
             bulletInteraction = 0;
             hasBeenParried = false;
             lightMask.SetSize(-1);

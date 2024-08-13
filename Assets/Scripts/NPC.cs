@@ -386,7 +386,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             break;
 
                         case 11:
-                            if (!PlayState.CheckForItem("Peashooter"))
+                            if (PlayState.isRandomGame)
+                                AddText("rando");
+                            else if (!PlayState.CheckForItem("Peashooter"))
                                 AddText("explainPeashooter");
                             else
                                 AddText("default");
