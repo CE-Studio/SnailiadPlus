@@ -638,7 +638,9 @@ public class Randomizer : MonoBehaviour
         Texture2D mapTexture = mapSprite.texture;
         Texture2D map = new(mapTexture.width, mapTexture.height);
         map.SetPixels32(mapTexture.GetPixels32());
-        Sprite[] icons = PlayState.textureLibrary.Unpack(Resources.Load<Sprite>("Images/SpoilerLogIcons").texture, 8, 8, "MapIcon");
+        Sprite iconSprite = Resources.Load<Sprite>("Images/SpoilerLogIcons");
+        Texture2D icons = iconSprite.texture;
+        Vector2Int iconDimensions = new(Mathf.RoundToInt(icons.width * 0.125f), Mathf.RoundToInt(icons.height * 0.125f));
 
         for (int mapX = 0; mapX < PlayState.WORLD_SIZE.x; mapX++)
         {
@@ -659,19 +661,20 @@ public class Randomizer : MonoBehaviour
                             iconID = 11;
                         else
                             iconID = itemID;
-                        Debug.Log(iconID + ", " + icons[iconID].name);
 
-                        Vector2 originPixel = new(mapX * 8, mapY * 8);
-                        Color[] iconPixels = icons[iconID].texture.GetPixels();
-                        for (int i = 0; i < 64; i++)
+                        Vector2Int originPixel = new(mapX * 8, Mathf.Abs((mapY * 8) - ((int)PlayState.WORLD_SIZE.y * 8)) - 8);
+                        Vector2Int iconOriginPixel = new((iconID % iconDimensions.x) * 8,
+                            Mathf.Abs(Mathf.FloorToInt(iconID / iconDimensions.x) - iconDimensions.y + 1) * 8);
+                        Debug.Log(string.Format("{0}, ({1}, {2})", iconID, iconOriginPixel.x, iconOriginPixel.y));
+                        for (int iconX = 0; iconX < 8; iconX++)
                         {
-                            if (iconPixels[i].a != 0)
+                            for (int iconY = 0; iconY < 8; iconY++)
                             {
-                                Vector2 targetPixel = new(originPixel.x + (i % 8), originPixel.y + Mathf.FloorToInt(i * 0.125f));
-                                map.SetPixel((int)targetPixel.x, Mathf.Abs((int)targetPixel.y - ((int)PlayState.WORLD_SIZE.y * 8)) - 1, iconPixels[i]);
+                                Color iconPixel = icons.GetPixel(iconOriginPixel.x + iconX, iconOriginPixel.y + iconY);
+                                if (iconPixel.a != 0)
+                                    map.SetPixel(originPixel.x + iconX, originPixel.y + iconY, iconPixel);
                             }
                         }
-                        // TODO: icons are drawing as the same nonexistent icon despite pulling different sprites. Fix
                     }
                 }
             }
