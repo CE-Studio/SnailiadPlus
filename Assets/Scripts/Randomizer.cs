@@ -665,7 +665,6 @@ public class Randomizer : MonoBehaviour
                         Vector2Int originPixel = new(mapX * 8, Mathf.Abs((mapY * 8) - ((int)PlayState.WORLD_SIZE.y * 8)) - 8);
                         Vector2Int iconOriginPixel = new((iconID % iconDimensions.x) * 8,
                             Mathf.Abs(Mathf.FloorToInt(iconID / iconDimensions.x) - iconDimensions.y + 1) * 8);
-                        Debug.Log(string.Format("{0}, ({1}, {2})", iconID, iconOriginPixel.x, iconOriginPixel.y));
                         for (int iconX = 0; iconX < 8; iconX++)
                         {
                             for (int iconY = 0; iconY < 8; iconY++)

@@ -2227,7 +2227,7 @@ public class MainMenu : MonoBehaviour
 
         PlayState.SaveRando(PlayState.currentProfileNumber);
         Destroy(loadingIcon);
-        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
+        PromptSpoilerMap();
     }
 
     public void SetTextComponentOrigins()
@@ -2677,6 +2677,39 @@ public class MainMenu : MonoBehaviour
         ForceSelect(5);
         backPage = null;
         StartCoroutine(StartGeneration());
+    }
+
+    public void PromptSpoilerMap()
+    {
+        suppressInput = false;
+        ClearOptions();
+        AddOption(PlayState.GetText("menu_option_randoSuccess_header1"), false);
+        AddOption(PlayState.GetText("menu_option_randoSuccess_header2"), false);
+        AddOption(PlayState.GetText("menu_option_randoSuccess_header3"), false);
+        AddOption("", false);
+        AddOption(PlayState.GetText("menu_option_randoSuccess_confirm1"), true, MakeSpoilerMapAndLoad);
+        AddOption(PlayState.GetText("menu_option_randoSuccess_confirm2"), true, MakeSpoilerMapOpenExplorerAndLoad);
+        AddOption(PlayState.GetText("menu_option_randoSuccess_cancel"), true, NoMapPleaseJustLoad);
+        ForceSelect(4);
+        backPage = NoMapPleaseJustLoad;
+    }
+
+    public void MakeSpoilerMapAndLoad()
+    {
+        randoScript.CreateSpoilerMap();
+        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
+    }
+
+    public void MakeSpoilerMapOpenExplorerAndLoad()
+    {
+        randoScript.CreateSpoilerMap();
+        Application.OpenURL("file:///" + Application.persistentDataPath + "/Saves");
+        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
+    }
+
+    public void NoMapPleaseJustLoad()
+    {
+        StartCoroutine(LoadFade(PlayState.respawnCoords, true));
     }
 
     public void PickSpawn()

@@ -656,6 +656,36 @@
 			"value": 0
 		},
 		{
+			"name": "menu_option_randoSuccess_header1",
+			"text": "Seed generated successfully!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_randoSuccess_header2",
+			"text": "Wanna save a spoiler map",
+			"value": 0
+		},
+		{
+			"name": "menu_option_randoSuccess_header3",
+			"text": "to your saves folder?",
+			"value": 0
+		},
+		{
+			"name": "menu_option_randoSuccess_confirm1",
+			"text": "Yeah!!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_randoSuccess_confirm2",
+			"text": "Yeah!!  And take me there too!",
+			"value": 0
+		},
+		{
+			"name": "menu_option_randoSuccess_cancel",
+			"text": "No thanks",
+			"value": 0
+		},
+		{
 			"name": "menu_option_bossRush_header1",
 			"text": "Are you sure?",
 			"value": 0
