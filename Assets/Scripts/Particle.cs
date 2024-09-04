@@ -227,7 +227,7 @@ public class Particle : MonoBehaviour
                             transform.position = new(transform.position.x - 26, transform.position.y);
                         break;
                     case "intropattern":
-                        transform.position += new Vector3(-0.0425f, 0.0425f);
+                        transform.position += Time.deltaTime * new Vector3(-2.125f, 2.125f);
                         if (transform.position.x < PlayState.cam.transform.position.x - 14)
                             transform.position += 30 * Vector3.right;
                         if (transform.position.y > PlayState.cam.transform.position.y + 9)
