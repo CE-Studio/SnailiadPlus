@@ -2781,6 +2781,56 @@
 			"value": 0
 		},
 		{
+			"name": "subscreen_randoData_base",
+			"text": "- {0} -\n\n{1}\n{2}\n{3}{4}{5}{6}",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_shuffle1",
+			"text": "Split shuffle",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_shuffle2",
+			"text": "Full shuffle",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_shuffle3",
+			"text": "Pro shuffle",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_openAreas1",
+			"text": "Locked areas",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_openAreas2",
+			"text": "Open areas",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_helixLocks",
+			"text": "Helix locks",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_progressives",
+			"text": "Progressives",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_broom",
+			"text": "Starting broom",
+			"value": 0
+		},
+		{
+			"name": "subscreen_randoData_traps",
+			"text": "Traps active",
+			"value": 0
+		},
+		{
 			"name": "cheat_skyfish",
 			"text": "- Skyfish Flies Again -",
 			"value": 0

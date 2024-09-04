@@ -447,7 +447,7 @@ public class PlayState
     public struct ProfileRandoData
     {
         public int randoLevel;        // Whether or not this profile is even randomized, and to what extent
-        public int seed;              // Ten-digit seed that all randomization was based on
+        public int seed;              // Eight-digit seed that all randomization was based on
         public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
         public int[] trapLocations;   // Location IDs for all possible trap items. If set to -1, that trap is not in the world
         public bool progressivesOn;   // Whether or not progressive items is turned on

@@ -679,7 +679,21 @@ public class Randomizer : MonoBehaviour
             }
         }
 
-        byte[] mapBytes = map.EncodeToPNG();
-        File.WriteAllBytes(string.Format("{0}/Saves/Spoiler Map {1}.png", Application.persistentDataPath, PlayState.currentRando.seed), mapBytes);
+        int upscaleRate = 3;
+        float downscaleRate = 1f / (float)upscaleRate; // Doing this so the game only has to perform one division operation
+        Texture2D upscaledMap = new(map.width * upscaleRate, map.height * upscaleRate);
+        for (int upX = 0; upX < upscaledMap.width; upX++)
+        {
+            for (int upY = 0; upY < upscaledMap.height; upY++)
+            {
+                Vector2Int mapCoord = new(Mathf.FloorToInt(upX * downscaleRate), Mathf.FloorToInt(upY * downscaleRate));
+                Color mapColor = map.GetPixel(mapCoord.x, mapCoord.y);
+                upscaledMap.SetPixel(upX, upY, mapColor);
+            }
+        }
+
+        byte[] mapBytes = upscaledMap.EncodeToPNG();
+        File.WriteAllBytes(string.Format("{0}/Saves/Spoiler Map {1}.png", Application.persistentDataPath,
+            PlayState.mainMenu.ParseSeed(PlayState.currentRando.seed)), mapBytes);
     }
 }

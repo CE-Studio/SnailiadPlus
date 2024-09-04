@@ -458,6 +458,22 @@ public class Subscreen : MonoBehaviour
                     else
                         radarSparkleTimer = -1;
                     break;
+                case 23:
+                    if (PlayState.isRandomGame)
+                    {
+                        newText = string.Format(PlayState.GetText("subscreen_randoData_base"),
+                            PlayState.mainMenu.ParseSeed(PlayState.currentRando.seed),
+                            PlayState.GetText("subscreen_randoData_shuffle" + PlayState.currentRando.randoLevel.ToString()),
+                            PlayState.GetText("subscreen_randoData_openAreas" + (PlayState.currentRando.openAreas ? "2" : "1")),
+                            PlayState.currentRando.bossesLocked ? PlayState.GetText("subscreen_randoData_helixLocks") + "\n" : "",
+                            PlayState.currentRando.progressivesOn ? PlayState.GetText("subscreen_randoData_progressives") + "\n" : "",
+                            PlayState.currentRando.broomStart ? PlayState.GetText("subscreen_randoData_broom") + "\n" : "",
+                            PlayState.currentRando.trapsActive ? PlayState.GetText("subscreen_randoData_traps") + "\n" : ""
+                            );
+                    }
+                    else
+                        newText = "";
+                    break;
             }
             texts[i].SetText(newText);
             if (i == 22)
