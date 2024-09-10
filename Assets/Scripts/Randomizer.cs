@@ -137,7 +137,7 @@ public class Randomizer : MonoBehaviour
                                 _ => itemToPlace
                             };
                         }
-                        TweakLocks(itemToPlace);
+                        TweakLocks(itemToPlace, placedHelixes);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
                         locations[availableSplitLocations[locationPointer]] = itemToPlace;
@@ -243,7 +243,7 @@ public class Randomizer : MonoBehaviour
                                 _ => itemToPlace
                             };
                         }
-                        TweakLocks(itemToPlace);
+                        TweakLocks(itemToPlace, placedHelixes);
                         while (itemsToAdd.Contains(itemToPlace))
                             itemsToAdd.Remove(itemToPlace);
                         if (unplacedTraps.Contains(itemToPlace))
@@ -458,13 +458,14 @@ public class Randomizer : MonoBehaviour
     private bool Boss3() { return lockStates[22]; }
     private bool Boss4() { return lockStates[23]; }
 
-    private void TweakLocks(int itemID)
+    private void TweakLocks(int itemID, int helixCount)
     {
         switch (itemID)
         {
             case 0: // Peashooter
                 lockStates[0] = true;  // BlueDoor
-                lockStates[20] = true; // Boss1
+                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    lockStates[20] = true; // Boss1
                 if (hasPlacedDevastator)
                 {
                     lockStates[1] = true;  // PinkDoor
@@ -473,25 +474,34 @@ public class Randomizer : MonoBehaviour
                     lockStates[4] = true;  // L1Blocks
                     lockStates[5] = true;  // L2Blocks
                     lockStates[6] = true;  // L3Blocks
-                    lockStates[21] = true; // Boss2
-                    lockStates[22] = true; // Boss3
-                    lockStates[23] = true; // Boss4
+                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    {
+                        lockStates[21] = true; // Boss2
+                        lockStates[22] = true; // Boss3
+                        lockStates[23] = true; // Boss4
+                    }
                 }
                 break;
             case 1: // Boomerang
                 lockStates[0] = true;  // BlueDoor
                 lockStates[1] = true;  // PinkDoor
                 lockStates[4] = true;  // L1Blocks
-                lockStates[20] = true; // Boss1
-                lockStates[21] = true; // Boss2
+                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                {
+                    lockStates[20] = true; // Boss1
+                    lockStates[21] = true; // Boss2
+                }
                 if (hasPlacedDevastator)
                 {
                     lockStates[2] = true;  // RedDoor
                     lockStates[3] = true;  // GreenDoor
                     lockStates[5] = true;  // L2Blocks
                     lockStates[6] = true;  // L3Blocks
-                    lockStates[22] = true; // Boss3
-                    lockStates[23] = true; // Boss4
+                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    {
+                        lockStates[22] = true; // Boss3
+                        lockStates[23] = true; // Boss4
+                    }
                 }
                 break;
             case 2: // Rainbow Wave
@@ -500,14 +510,18 @@ public class Randomizer : MonoBehaviour
                 lockStates[2] = true;  // RedDoor
                 lockStates[4] = true;  // L1Blocks
                 lockStates[5] = true;  // L2Blocks
-                lockStates[20] = true; // Boss1
-                lockStates[21] = true; // Boss2
-                lockStates[22] = true; // Boss3
+                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                {
+                    lockStates[20] = true; // Boss1
+                    lockStates[21] = true; // Boss2
+                    lockStates[22] = true; // Boss3
+                }
                 if (hasPlacedDevastator)
                 {
                     lockStates[6] = true;  // L3Blocks
                     lockStates[3] = true;  // GreenDoor
-                    lockStates[23] = true; // Boss4
+                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                        lockStates[23] = true; // Boss4
                 }
                 break;
             case 3: // Devastator
@@ -520,10 +534,13 @@ public class Randomizer : MonoBehaviour
                     lockStates[5] = true;  // L2Blocks
                     lockStates[6] = true;  // L3Blocks
                     lockStates[3] = true;  // GreenDoor
-                    lockStates[20] = true; // Boss1
-                    lockStates[21] = true; // Boss2
-                    lockStates[22] = true; // Boss3
-                    lockStates[23] = true; // Boss4
+                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    {
+                        lockStates[20] = true; // Boss1
+                        lockStates[21] = true; // Boss2
+                        lockStates[22] = true; // Boss3
+                        lockStates[23] = true; // Boss4
+                    }
                 }
                 hasPlacedDevastator = true;
                 break;
@@ -548,6 +565,17 @@ public class Randomizer : MonoBehaviour
                 lockStates[12] = true; // Shock
                 break;
             default:
+                if (PlayState.currentRando.bossesLocked)
+                {
+                    if (helixCount >= 5)
+                        lockStates[20] = true; // Boss 1
+                    if (helixCount >= 10)
+                        lockStates[21] = true; // Boss 2
+                    if (helixCount >= 15)
+                        lockStates[22] = true; // Boss 3
+                    if (helixCount >= 25)
+                        lockStates[23] = true; // Boss 4
+                }
                 break;
         }
     }

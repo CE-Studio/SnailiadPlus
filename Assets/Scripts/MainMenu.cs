@@ -2691,6 +2691,7 @@ public class MainMenu : MonoBehaviour
         AddOption(PlayState.GetText("menu_option_randoSuccess_cancel"), true, NoMapPleaseJustLoad);
         ForceSelect(4);
         backPage = NoMapPleaseJustLoad;
+        PlayState.PlayMusic(0, 3);
     }
 
     public void MakeSpoilerMapAndLoad()
