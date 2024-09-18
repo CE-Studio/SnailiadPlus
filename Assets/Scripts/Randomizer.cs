@@ -349,6 +349,16 @@ public class Randomizer : MonoBehaviour
                         isShuffling = false;
                         break;
                     }
+
+                    List<int> newIndeces = new();
+                    int flavorCount = 47;
+                    for (int i = 0; i < PlayState.npcCount; i++)
+                    {
+                        newIndeces.Add(Mathf.FloorToInt(Random.value * flavorCount));
+                    }
+                    PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
+                    randoPhase = 0;
+                    isShuffling = false;
                     break;
             }
             yield return new WaitForEndOfFrame();

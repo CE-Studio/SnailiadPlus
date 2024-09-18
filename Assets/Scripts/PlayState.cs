@@ -294,6 +294,8 @@ public class PlayState
 
     public static bool[][] itemData = new bool[][] { };
     public static bool[] countedItems = new bool[] { };
+
+    public static int npcCount = 0;
     
     public static readonly float[] timeDefault = new float[]
     {
@@ -946,6 +948,8 @@ public class PlayState
                             saveLocations.Add(WorldPosToMapGridID(entity.transform.position));
                         if (entity.CompareTag("Item"))
                             itemLocations.Add(WorldPosToMapGridID(entity.transform.position), itemLocationID++);
+                        if (entity.CompareTag("NPC"))
+                            npcCount++;
                     }
                 }
             }

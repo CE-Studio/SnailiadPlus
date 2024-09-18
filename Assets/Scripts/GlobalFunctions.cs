@@ -1342,7 +1342,7 @@ public class GlobalFunctions : MonoBehaviour
             }
         }
         else
-            Debug.Log("Unable to parse screen shake command. Expected time count - intensity count difference of 0 or 1, but got " + (times.Count - intensities.Count));
+            Debug.Log("Unable to parse screen shake command. Expected (time count - intensity count) difference of 0 or 1, but got " + (times.Count - intensities.Count));
     }
 
     public void RunLegacyGravCutscene(Vector2 itemOrigin)

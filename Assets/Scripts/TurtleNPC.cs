@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TurtleNPC:NPC {
 
+    /// DEPRECATED! Turtles are built into the base NPC script as part of the alternate spriteset feature now
+
     public override void Awake() {
         myType = "Turtle NPC";
         ID = 52;
@@ -83,7 +85,7 @@ public class TurtleNPC:NPC {
         }
     }
 
-    public override void AddText(string textID) {
+    public override void AddText(string textID, string extraInfo = "") {
         bool locatedAll = false;
         int i = 0;
         while (!locatedAll) {

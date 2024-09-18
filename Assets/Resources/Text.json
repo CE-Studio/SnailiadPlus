@@ -4382,7 +4382,7 @@
 		},
 		{
 			"name": "npc_34_findFragments_0",
-			"text": "{P}, {p|0.15}search for the {col|0302}Helix{nl}Fragments!{col|0312}  {p|0.25}Once you have them{nl}all, {p|0.15}find the {col|0302}Shrine of Iris{col|0312}!",
+			"text": "{P}, {p|0.15}search for the {col|0302}Helix{nl}Fragments{col|0312}!  {p|0.25}Once you have them{nl}all, {p|0.15}find the {col|0302}Shrine of Iris{col|0312}!",
 			"value": 1
 		},
 		{
@@ -4683,182 +4683,407 @@
 		{
 			"name": "npc_rando_hint_0",
 			"text": "Y'know, {p|0.15}I heard somewhere that a{nl}{0} can{nl}be found {1}...",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_1",
 			"text": "Did you know, {P}?  {p|0.15}There's a{nl}{0} you{nl}can find {1}!!",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_2",
 			"text": "There's a place {1}{nl}where you can find a{nl}{0}.",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_3",
 			"text": "I heard there's a {nl}{0}{nl}{1}.",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_4",
 			"text": "If you look {1},{nl}I heard you might find{nl}a {0}!!",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_0",
 			"text": "{col|0207}peashooter{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_1",
 			"text": "{col|0309}boomerang{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_2",
 			"text": "{col|0211}rainbow wave{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_3",
 			"text": "{col|0111}devastator{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_4a",
 			"text": "{col|0207}high jump{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_4b",
 			"text": "{col|0203}wall grab{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_5a",
 			"text": "{col|0212}shell shield{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_5b",
 			"text": "{col|0303}shelmet{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_6a",
 			"text": "{col|0211}rapid fire{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_6b",
 			"text": "{col|0311}backfire{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_7",
 			"text": "{col|0305}ice {S}{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_8a",
 			"text": "{col|0307}gravity {S}{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_8b",
 			"text": "{col|0211}magnetic foot{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_8c",
 			"text": "{col|0309}corkscrew jump{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_8d",
 			"text": "{col|0304}angel jump{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_9a",
 			"text": "{col|0300}full metal {S}{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_9b",
 			"text": "{col|0300}full power {S}{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_9c",
 			"text": "{col|0300}non-neutonian {S}{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_item_10",
 			"text": "{col|0310}gravity shock{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_0",
 			"text": "{col|0207}around town{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_1",
 			"text": "{col|0204}somewhere cold{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_2",
 			"text": "{col|0202}somewhere dark{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_3",
 			"text": "{col|0211}somewhere hot{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_4",
 			"text": "{col|0212}in the sky{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
 			"name": "npc_rando_area_5",
 			"text": "{col|0313}somewhere unknown{col|0312}",
-			"value": 0
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_0",
+			"name": "npc_rando_flavor_0_0",
 			"text": "Hey {P}, {p|0.125}I'm hungry!  {p|0.25}Know{nl}any good pizza places?",
-			"value": 0
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_1",
-			"text": "Sometimes{spd|0.6}... {p|0.25}{spd|0.02}I dream about{nl}cheese.",
-			"value": 0
+			"name": "npc_rando_flavor_1_0",
+			"text": "Sometimes{spd|0.6}... {spd|0.02}{p|0.25}I dream about{nl}cheese.",
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_2",
+			"name": "npc_rando_flavor_2_0",
 			"text": "Hey {P}, {p|0.1}I heard there's a{nl}secret around here!{nl}{p|0.3}{spd|0.06}...{spd|0.02}Don't remember where though.",
-			"value": 0
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_3",
-			"text": "Darn, my node graph is out of{nl}date!  {p|0.25}Now I gotta go{nl}rebuild it...",
-			"value": 0
+			"name": "npc_rando_flavor_3_0",
+			"text": "Darn, my node graph is out of{nl}date!  {p|0.25}Now I gotta go rebuild it...",
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_4",
-			"text": "Hey {P}, how does my papier-mâché{nl}shell look?  {p|0.15}Pretty{nl}convining, huh?",
-			"value": 0
+			"name": "npc_rando_flavor_4_0",
+			"text": "Hey {P}, how does my{nl}papier-mâché shell look?  {p|0.15}{nl}Pretty convining, huh?",
+			"value": 1
 		},
 		{
-			"name": "npc_rando_flavor_5",
+			"name": "npc_rando_flavor_5_0",
 			"text": "Hey, {P}?  {p|0.2}What's a \"zip\"?",
-			"value": 0
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_6_0",
+			"text": "Is this even randomized, {P}?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_7_0",
+			"text": "I heard a rumor about some kind{nl}of... {p|0.15}{col|0302}shrine clip{col|0312}?  {p|0.2}And the number{nl}2011?  {p|0.3}Yeah, I don't get it either.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_8_0",
+			"text": "Call me crazy, {P},{p|0.15} but I{nl}SWEAR I saw birds in the maze{nl}room!  {p|0.3}Shame I was half-asleep.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_9_0",
+			"text": "Speak, {S}, and enter.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_10_0",
+			"text": "What are you looking at?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_11_0",
+			"text": "What are you looking at?{nl}{nl}{p|0.35}...Can I look too?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_12_0",
+			"text": "I AM ERROR",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_13_0",
+			"text": "Sometimes it's nice to stop{nl}and snail the roses.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_14_0",
+			"text": "Stay a while and listen.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_15_0",
+			"text": "Ever get the feeling that{nl}things aren't how they're meant{nl}to be?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_15_1",
+			"text": "Like, somebody's moved all the furniture,{nl}{p|0.15}but it still fits right?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_15_2",
+			"text": "{spd|0.04}...{nl}{p|0.15}{spd|0.02}Oh, that reminds me!  I wanted to{nl}buy a new houseplant today.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_16_0",
+			"text": "Hey, {P}! I, uh{spd|0.06}...{nl}{nl}{p|0.2}...{spd|0.02}forgot what I was gonna say.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_17_0",
+			"text": "I hope we can get that repair{nl}guy in soon.  {p|0.2}The fourth wall{nl}isn't gonna fix itself!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_18_0",
+			"text": "Hey {P}, do you ever wonder{nl}what it means to be creative?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_18_1",
+			"text": "Is it to create something no{nl}one has ever seen...",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_18_2",
+			"text": "...or is it to take something{nl}someone else made and make it{nl}subjectively better?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_19_0",
+			"text": "I saw what looked like magic{nl}pancakes around here.{nl}{p|0.2}What's that all about??",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_20_0",
+			"text": "III III IIIIIIIII III   III   IIIIIIIII  III IIIIII{nl}IIIIIIIII IIIIII  III   III   III III     III{nl}III III IIIIIIIII IIIIIIIII IIIIIIIII IIIIIIIII  III IIIIII",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_21_0",
+			"text": "Would you believe me if I{nl}told you how sticky these walls are?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_22_0",
+			"text": "Rumor has it that blobs are{nl}made out of discarded snail goo!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_23_0",
+			"text": "I like the grass, {p|0.2}but it could{nl}use something extra...  {p|0.3}like a{nl}garnish!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_24_0",
+			"text": "I am moving from this spot,{nl}{P}!{nl}{p|0.4}Just... {p|0.3}very slowly!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_25_0",
+			"text": "I'm very good at snailing around.{nl}{p|0.15}Stay a while and watch me snail!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_26_0",
+			"text": "Do you go to snurch on Sundays,{nl}{P}?  {p|0.2}It's ok if you don't!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_27_0",
+			"text": "{col|0303}{spd|0.05}Legend has it that...{nl}{p|0.2}{col|0312}{spd|0.02}No, {p|0.1}wait, {p|0.1}I forgot.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_28_0",
+			"text": "You're really cool, {P}!!{nl}{p|0.25}I wish I could do all the things{nl}you do!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_29_0",
+			"text": "Imagine a big green field where{nl}we could all munch on grass{nl}together...",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_30_0",
+			"text": "{col|0201}Pink grass {col|0312}is rich in, uhh...{nl}{p|0.4}{spd|0.3}\"P\" for protein...?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_31_0",
+			"text": "I just had the {eff|Shake}BIGGEST{eff|None} sneeze,{nl}{P}!! {p|0.25}{spd|0.01}{eff|Shake}SLIME {p|0.3}EVERYWHERE!!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_32_0",
+			"text": "Let's trade items, {P}!{nl}{p|0.4}...Just kidding!  I don't have{nl}anything for you.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_33_0",
+			"text": "Do you ever wonder who puts{nl}the breakable walls back after{nl}they're broken, {P}?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_34_0",
+			"text": "How do you move so quickly,{nl}{P}?  {p|0.25}Is it a well-balanced{nl}diet?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_35_0",
+			"text": "If you get through this next{nl}room really quick, {p|0.15}it'll look{nl}{eff|Wave}so cool{eff|None} in a replay!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_36_0",
+			"text": "I know where the next big item{nl}you need is, {p|0.15}but I'm not{nl}telling!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_37_0",
+			"text": "I want to be a biologist, {P}!{nl}{p|0.2}Look at all the neat{nl}creatures that live here!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_38_0",
+			"text": "My favorite part of Snailiad is{nl}when they {S} all over the{nl}place.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_39_0",
+			"text": "Hi!  {p|0.15}I'm the person who jumbles{nl}all the items around.  {p|0.2}It's hard{nl}work!!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_40_0",
+			"text": "Check out my new OC, {P}!{nl}{p|0.2}They have a snake's head, and{nl}an elk's body!",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_41_0",
+			"text": "I'm trying makeup, {P}!{nl}{p|0.2}Did you noticce my black outline?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_42_0",
+			"text": "01011111 01000000 01011111{nl}01110110 00100001 00100001",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_43_0",
+			"text": "Do you think we can ever be{nl}friends with the blobs one day?",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_44_0",
+			"text": "I could really go for some{nl}tuna right now.",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_45_0",
+			"text": "// TODO: Fix impossible seeds",
+			"value": 1
+		},
+		{
+			"name": "npc_rando_flavor_46_0",
+			"text": "/* Useless hints go here in the{nl}table so they can be picked{nl}randomly to replace certain{nl}text in randomizer mode.{nl}Multiworld game specific joke{nl}hints go elsewhere.{nl}See AP.cs L#69-L#420 */",
+			"value": 1
 		},
 		{
 			"name": "ending_moon1",
