@@ -25,6 +25,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     public GameObject speechBubble;
     public SpriteRenderer speechBubbleSprite;
     public AnimationModule speechBubbleAnim;
+    public TextObject speechBubbleControl;
     public bool bubbleState = false;
     public Vector2 origin;
     public float velocity;
@@ -35,6 +36,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
     private const float GRAVITY = 1.25f;
     private const float TERMINAL_VELOCITY = -0.5208f;
     private float floatTheta = 0;
+    private int bubbleControlAppearFrame;
     #endregion vars
 
     #region cutscene
@@ -92,9 +94,11 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         if (PlayState.gameState != PlayState.GameState.game)
             return;
 
-        speechBubble = transform.Find("Speech bubble").gameObject;
+        speechBubble = transform.Find("Speech Bubble").gameObject;
         speechBubbleSprite = speechBubble.GetComponent<SpriteRenderer>();
         speechBubbleAnim = speechBubble.GetComponent<AnimationModule>();
+        speechBubbleControl = speechBubble.transform.Find("Control Icon").GetComponent<TextObject>();
+        bubbleControlAppearFrame = PlayState.GetAnim("NPC_bubble_data").frames[0];
 
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<AnimationModule>();
@@ -149,11 +153,16 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         }
         else
             anim.Play("NPC_" + animationSet + "_idle");
-        if (upsideDown) {
+        if (upsideDown)
+        {
             sprite.flipY = true;
-            speechBubbleSprite.flipY = true;
-            speechBubble.transform.localPosition = new Vector2(0, -0.75f);
+            //speechBubbleSprite.flipY = true;
+            //speechBubble.transform.localPosition = new Vector2(0, -0.75f);
+            speechBubble.transform.localPosition = new Vector2(0, -speechBubble.transform.localPosition.y);
         }
+        speechBubbleAnim.Add(string.Format("NPC_bubble_open_{0}", upsideDown ? "up" : "down"));
+        speechBubbleAnim.Add(string.Format("NPC_bubble_close_{0}", upsideDown ? "up" : "down"));
+        speechBubbleControl.gameObject.SetActive(false);
         if (ID == 38)
         {
             if (PlayState.IsBossAlive(3))
@@ -224,29 +233,33 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
             if (!PlayState.cutsceneActive)
             {
+                //if (lookMode == 0)
+                //{
+                //    if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
+                //    {
+                //        sprite.flipX = true;
+                //        speechBubbleSprite.flipX = false;
+                //    }
+                //    else
+                //    {
+                //        sprite.flipX = false;
+                //        speechBubbleSprite.flipX = true;
+                //    }
+                //}
+                //else if (lookMode == 1)
+                //{
+                //    sprite.flipX = true;
+                //    speechBubbleSprite.flipX = false;
+                //}
+                //else
+                //{
+                //    sprite.flipX = false;
+                //    speechBubbleSprite.flipX = true;
+                //}
                 if (lookMode == 0)
-                {
-                    if (PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep")
-                    {
-                        sprite.flipX = true;
-                        speechBubbleSprite.flipX = false;
-                    }
-                    else
-                    {
-                        sprite.flipX = false;
-                        speechBubbleSprite.flipX = true;
-                    }
-                }
-                else if (lookMode == 1)
-                {
-                    sprite.flipX = true;
-                    speechBubbleSprite.flipX = false;
-                }
+                    sprite.flipX = PlayState.player.transform.position.x < transform.position.x && anim.currentAnimName != "NPC_sleep";
                 else
-                {
-                    sprite.flipX = false;
-                    speechBubbleSprite.flipX = true;
-                }
+                    sprite.flipX = lookMode == 2;
             }
 
             if (Vector2.Distance(transform.position, PlayState.player.transform.position) < 1.5f && !chatting && !needsSpace)
@@ -830,7 +843,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                     {
                         if (!speechBubbleSprite.enabled)
                             speechBubbleSprite.enabled = true;
-                        ToggleBubble(true);
+                        if (!PlayState.isTalking)
+                            ToggleBubble(true);
                         hasLongDialogue = true;
                         if (Control.SpeakPress())
                         {
@@ -838,6 +852,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             PlayState.isTalking = true;
                             PlayState.paralyzed = true;
                             PlayState.OpenDialogue(3, ID, textToSend, boxShape, boxColor, portraitStateList, PlayState.player.transform.position.x < transform.position.x);
+                            ToggleBubble(false);
                         }
                     }
                     else
@@ -865,6 +880,12 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                 needsSpace = false;
             else if (Vector2.Distance(transform.position, PlayState.player.transform.position) > 1.5f && (!chatting || PlayState.paralyzed))
                 ToggleBubble(false);
+
+            if (bubbleState && !speechBubbleControl.isActiveAndEnabled && speechBubbleAnim.GetCurrentFrame() >= bubbleControlAppearFrame)
+            {
+                speechBubbleControl.gameObject.SetActive(true);
+                speechBubbleControl.SetIcon(Control.ActionIDToSpriteID(18));
+            }
 
             switch (ID) {
                 default:
@@ -946,21 +967,22 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
     public void ToggleBubble(bool state)
     {
-        if (speechBubbleAnim.animList.Count == 0)
-        {
-            speechBubbleAnim.Add("NPC_bubble_open");
-            speechBubbleAnim.Add("NPC_bubble_close");
-        }
+        //if (speechBubbleAnim.animList.Count == 0)
+        //{
+        //    speechBubbleAnim.Add("NPC_bubble_open");
+        //    speechBubbleAnim.Add("NPC_bubble_close");
+        //}
         if (state && !bubbleState)
         {
             speechBubbleSprite.enabled = true;
-            speechBubbleAnim.Play("NPC_bubble_open");
+            speechBubbleAnim.Play(string.Format("NPC_bubble_open_{0}", upsideDown ? "up" : "down"));
             bubbleState = true;
         }
         else if (!state && bubbleState)
         {
-            speechBubbleAnim.Play("NPC_bubble_close");
+            speechBubbleAnim.Play(string.Format("NPC_bubble_close_{0}", upsideDown ? "up" : "down"));
             bubbleState = false;
+            speechBubbleControl.gameObject.SetActive(false);
         }
     }
 

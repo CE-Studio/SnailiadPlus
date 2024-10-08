@@ -4852,7 +4852,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_4_0",
-			"text": "Hey {P}, how does my{nl}papier-mâché shell look?  {p|0.15}{nl}Pretty convining, huh?",
+			"text": "Hey {P}, how does my{nl}papier-mâché shell look?  {p|0.15}{nl}Pretty convincing, huh?",
 			"value": 1
 		},
 		{

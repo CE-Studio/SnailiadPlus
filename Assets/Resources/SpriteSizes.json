@@ -1004,6 +1004,11 @@
             "height": 40
         },
 		{
+            "name": "UI/SpeechBubble",
+            "width": 24,
+            "height": 24
+        },
+		{
             "name": "UI/Subscreen",
             "width": 400,
             "height": 240

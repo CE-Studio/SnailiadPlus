@@ -586,16 +586,16 @@ public class Control
 
     //  0 -- Move up       1 -- Move down       2 -- Move left       3 -- Move right       4 -- Aim up       5 -- Aim down       6 -- Aim left       7 -- Aim right
     //  8 -- Jump          9 -- Shoot          10 -- Strafe         11 -- Weapon 1        12 -- Weapon 2    13 -- Weapon 3      14 -- Next weapon   15 -- Previous weapon
-    // 16 -- Map          17 -- Pause
+    // 16 -- Map          17 -- Pause          18 -- Speak
     public static int ActionIDToSpriteID(int action)
     {
         int output;
         Keyboard[] keyActions = new Keyboard[] { Keyboard.Up1, Keyboard.Down1, Keyboard.Left1, Keyboard.Right1, Keyboard.Up2, Keyboard.Down2, Keyboard.Left2,
             Keyboard.Right2, Keyboard.Jump1, Keyboard.Shoot1, Keyboard.Strafe1, Keyboard.Weapon1, Keyboard.Weapon2, Keyboard.Weapon3, Keyboard.NextWeapon,
-            Keyboard.PrevWeapon, Keyboard.Map, Keyboard.Pause };
+            Keyboard.PrevWeapon, Keyboard.Map, Keyboard.Pause, Keyboard.Speak1 };
         Controller[] conActions = new Controller[] { Controller.Up, Controller.Down, Controller.Left, Controller.Right, Controller.AimU, Controller.AimD,
             Controller.AimL, Controller.AimR, Controller.Jump1, Controller.Shoot1, Controller.Strafe1, Controller.Weapon1, Controller.Weapon2,
-            Controller.Weapon3, Controller.NextWeapon, Controller.PrevWeapon, Controller.Map, Controller.Pause };
+            Controller.Weapon3, Controller.NextWeapon, Controller.PrevWeapon, Controller.Map, Controller.Pause, Controller.Speak1 };
         if (lastInputIsCon)
             output = GetButtonSpriteIcon(conActions[action]);
         else

@@ -19287,21 +19287,80 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "NPC_bubble_open",
-			"spriteName": "UI/DialogueIcon2",
+			"name": "NPC_bubble_data",
+			"spriteName": "UI/SpeechBubble",
 			"framerate": 0.0,
 			"frames": [
-				0
+				6
 			],
 			"loop": false,
 			"loopStartFrame": 0,
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "NPC_bubble_close",
-			"spriteName": "UI/DialogueIcon2",
-			"framerate": 0.0,
+			"name": "NPC_bubble_open_down",
+			"spriteName": "UI/SpeechBubble",
+			"framerate": 16.0,
 			"frames": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_bubble_close_down",
+			"spriteName": "UI/SpeechBubble",
+			"framerate": 16.0,
+			"frames": [
+				6,
+				5,
+				4,
+				3,
+				2,
+				1,
+				0,
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_bubble_open_up",
+			"spriteName": "UI/SpeechBubble",
+			"framerate": 16.0,
+			"frames": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "NPC_bubble_close_up",
+			"spriteName": "UI/SpeechBubble",
+			"framerate": 16.0,
+			"frames": [
+				13,
+				12,
+				11,
+				10,
+				9,
+				8,
+				7,
 				-1
 			],
 			"loop": false,
