@@ -266,11 +266,30 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             {
                 if (!PlayState.isTalking)
                 {
-                    int boxShape = 0;
-                    string boxColor = "0005";
                     textToSend.Clear();
                     portraitStateList.Clear();
                     bool intentionallyEmpty = false;
+
+                    // Box shape
+                    int boxShape = ID switch
+                    {
+                        38 or 39 => 4,
+                        17 => PlayState.GetAnim("Dialogue_characterShapes").frames[2],
+                        56 => PlayState.GetAnim("Dialogue_characterShapes").frames[3],
+                        _ => 0
+                    };
+
+                    // Box color
+                    string boxColor = ID switch
+                    {
+                        29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 45 or 47 => "0002",
+                        38 => "0009",
+                        39 => "0102",
+                        17 => PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[2]),
+                        56 => PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[3]),
+                        _ => "0005"
+                    };
+
                     if (PlayState.isRandomGame && PlayState.currentRando.npcTextShuffled && ID < PlayState.currentRando.npcTextIndeces.Length)
                         AddText("FLAVOR");
                     else
@@ -483,8 +502,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 17:
-                                boxShape = PlayState.GetAnim("Dialogue_characterShapes").frames[2];
-                                boxColor = PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[2]);
                                 if (PlayState.GetItemPercentage() < 100)
                                     AddText("secret");
                                 else
@@ -596,7 +613,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 29:
-                                boxColor = "0002";
                                 if (PlayState.currentProfile.difficulty == 2)
                                     AddText("insane");
                                 else
@@ -604,7 +620,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 30:
-                                boxColor = "0002";
                                 if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
                                     AddText("underpowered");
                                 else if (PlayState.IsBossAlive(3))
@@ -616,7 +631,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 31:
-                                boxColor = "0002";
                                 if (PlayState.IsBossAlive(3))
                                     AddText("discussMoonSnail");
                                 else if (PlayState.CountFragments() < 30 && (!PlayState.IsBossAlive(3) || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) != 1))
@@ -626,7 +640,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 32:
-                                boxColor = "0002";
                                 if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
                                     AddText("underpowered");
                                 else if (PlayState.CountFragments() < 30 && PlayState.IsBossAlive(3))
@@ -640,7 +653,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 33:
-                                boxColor = "0002";
                                 if (!PlayState.IsBossAlive(3))
                                     AddText("celebrate");
                                 else if (PlayState.isRandomGame && CountItemsInRoom() > 0)
@@ -652,7 +664,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 34:
-                                boxColor = "0002";
                                 if (PlayState.CountFragments() < 30 || PlayState.GetNPCVar(PlayState.NPCVarIDs.HasSeenIris) == 0)
                                     AddText("findFragments");
                                 else
@@ -660,12 +671,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 35:
-                                boxColor = "0002";
                                 AddText("default");
                                 break;
 
                             case 36:
-                                boxColor = "0002";
                                 if (PlayState.isRandomGame)
                                     AddText("rando");
                                 else
@@ -673,13 +682,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 37:
-                                boxColor = "0002";
                                 AddText("default");
                                 break;
 
                             case 38:
-                                boxColor = "0009";
-                                boxShape = 4;
                                 if (PlayState.CountFragments() == PlayState.MAX_FRAGMENTS)
                                     AddText("thank");
                                 else
@@ -687,8 +693,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 39:
-                                boxColor = "0102";
-                                boxShape = 4;
                                 PlayState.SetNPCVar(PlayState.NPCVarIDs.HasSeenIris, 1);
                                 int helixes = PlayState.CountFragments();
                                 int helixesLeft = PlayState.MAX_FRAGMENTS - PlayState.CountFragments();
@@ -754,7 +758,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 45:
-                                boxColor = "0002";
                                 if (PlayState.isRandomGame && CountItemsInRoom() > 0)
                                     AddText("offerRando");
                                 else if (PlayState.isRandomGame)
@@ -824,8 +827,6 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 56:
-                                boxShape = PlayState.GetAnim("Dialogue_characterShapes").frames[3];
-                                boxColor = PlayState.ParseColorCodeToString(PlayState.GetAnim("Dialogue_characterColors").frames[3]);
                                 AddText("default");
                                 break;
 

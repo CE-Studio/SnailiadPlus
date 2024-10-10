@@ -351,10 +351,20 @@ public class Randomizer : MonoBehaviour
                     }
 
                     List<int> newIndeces = new();
+                    List<int> availableIndeces = new();
                     int flavorCount = 47;
+                    for (int i = 0; i < flavorCount; i++)
+                        availableIndeces.Add(i);
                     for (int i = 0; i < PlayState.npcCount; i++)
                     {
-                        newIndeces.Add(Mathf.FloorToInt(Random.value * flavorCount));
+                        if (availableIndeces.Count == 0)
+                            i = PlayState.npcCount;
+                        else
+                        {
+                            int indexIndex = Mathf.FloorToInt(Random.value * availableIndeces.Count);
+                            newIndeces.Add(availableIndeces[indexIndex]);
+                            availableIndeces.RemoveAt(indexIndex);
+                        }
                     }
                     PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
                     randoPhase = 0;
