@@ -350,6 +350,24 @@ public class Randomizer : MonoBehaviour
                         break;
                     }
 
+                    int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
+                    List<int> availableHints = new();
+                    int hintCount = 5;
+                    for (int i = 0; i < hintCount; i++)
+                        availableHints.Add(i);
+                    for (int i = 0; i < finalHintCount; i++)
+                    {
+                        int itemID = -1;
+                        int areaID = -1;
+                        while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
+                        {
+                            int locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
+                            itemID = PlayState.currentRando.itemLocations[locationID];
+                            // If block for area
+                        }
+                        // Assemble hint data here
+                    }
+
                     List<int> newIndeces = new();
                     List<int> availableIndeces = new();
                     int flavorCount = 47;

@@ -55,15 +55,13 @@ public class DialogueBox : MonoBehaviour
     private List<string> textList = new();
     private List<int> states = new();
     private bool left = false;
-    private const float INITIALIZATION_MAX = 0.027f;
-    private float initializationCooldown;
+    private bool initialized = false;
 
     private float currentTimerMax = 0.02f;
     private float timer = 0;
     private int currentSound = 0;
     private Vector2 currentColor = new(3, 12);
     private string currentEffect = "none";
-    public bool boxOpenAnimComplete = false;
 
     private readonly string[] boxShapeIDs = new string[]
     {
@@ -104,9 +102,9 @@ public class DialogueBox : MonoBehaviour
 
         for (int i = 0; i < boxShapeIDs.Length; i++)
         {
-            anim.Add("Dialogue_" + boxShapeIDs[i] + "_open");
-            anim.Add("Dialogue_" + boxShapeIDs[i]);
-            anim.Add("Dialogue_" + boxShapeIDs[i] + "_close");
+            anim.Add(string.Format("Dialogue_{0}_open", boxShapeIDs[i]));
+            anim.Add(string.Format("Dialogue_{0}", boxShapeIDs[i]));
+            anim.Add(string.Format("Dialogue_{0}_close", boxShapeIDs[i]));
         }
 
         portraitFrameAnim.Add("Dialogue_portrait_frame");
@@ -116,12 +114,12 @@ public class DialogueBox : MonoBehaviour
         portraitCharAnim.Add("Dialogue_portrait_turtle");
         for (int i = 0; i <= 3; i++)
         {
-            portraitCharAnim.Add("Dialogue_portrait_Snaily" + i);
-            portraitCharAnim.Add("Dialogue_portrait_Sluggy" + i);
-            portraitCharAnim.Add("Dialogue_portrait_Upside" + i);
-            portraitCharAnim.Add("Dialogue_portrait_Leggy" + i);
-            portraitCharAnim.Add("Dialogue_portrait_Blobby" + i);
-            portraitCharAnim.Add("Dialogue_portrait_Leechy" + i);
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Snaily{0}", i));
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Sluggy{0}", i));
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Upside{0}", i));
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Leggy{0}", i));
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Blobby{0}", i));
+            portraitCharAnim.Add(string.Format("Dialogue_portrait_Leechy{0}", i));
         }
 
         charWidths = PlayState.GetAnim("TextWidth").frames;
@@ -193,46 +191,44 @@ public class DialogueBox : MonoBehaviour
             // Case 4 = static box for single-page dialogue
             {
                 case 0:
-                    anim.Play("Dialogue_" + boxShapeIDs[currentShape] + "_open");
-                    boxState = 1;
-                    playSound = true;
-                    if (dialogueType == 3)
+                    if (!initialized)
                     {
-                        portrait.SetActive(true);
-                        buttonDown = true;
-                        GenerateColorizedPortraitSprites();
+                        anim.Play(string.Format("Dialogue_{0}_open", boxShapeIDs[currentShape]));
+                        playSound = true;
+                        portraitPos = 1;
+                        portrait.transform.localPosition = new Vector2(-10, portraitPos);
+                        currentTimerMax = 0.02f;
+                        currentSound = FindSpeakerException(currentSpeaker);
+                        currentColor = new Vector2(3, 12);
+                        currentEffect = "none";
+                        initialized = true;
                     }
-                    portraitPos = 1;
-                    currentTimerMax = 0.02f;
-                    currentSound = 0;
-                    currentColor = new Vector2(3, 12);
-                    currentEffect = "none";
-                    initializationCooldown = INITIALIZATION_MAX;
+                    if (!anim.isPlaying)
+                    {
+                        anim.Play(string.Format("Dialogue_{0}", boxShapeIDs[currentShape]));
+                        if (dialogueType == 3)
+                        {
+                            portrait.SetActive(true);
+                            buttonDown = true;
+                            GenerateColorizedPortraitSprites();
+                        }
+                        boxState = 1;
+                    }
                     break;
                 case 1:
-                    if (initializationCooldown == 0)
-                        boxOpenAnimComplete = true;
-                    else
-                        initializationCooldown = Mathf.Clamp(initializationCooldown - Time.deltaTime, 0, Mathf.Infinity);
                     if (dialogueType == 3)
                     {
                         if (states[(int)pointer.x] != 0)
                         {
                             UpdatePortrait("npc", 0);
-                            if (left)
-                                portraitChar.flipX = true;
-                            else
-                                portraitChar.flipX = false;
-                            currentSound = 0;
+                            portraitChar.flipX = left;
+                            currentSound = FindSpeakerException(currentSpeaker);
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
                             UpdatePortrait(PlayState.currentProfile.character,
                                 PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
-                            if (left)
-                                portraitChar.flipX = false;
-                            else
-                                portraitChar.flipX = true;
+                            portraitChar.flipX = !left;
                             switch (PlayState.currentProfile.character)
                             {
                                 case "Snaily":
@@ -266,36 +262,33 @@ public class DialogueBox : MonoBehaviour
                     }
                     else
                     {
-                        if (boxOpenAnimComplete)
+                        if (pointer.y < textList[(int)pointer.x].Length)
                         {
-                            if (pointer.y < textList[(int)pointer.x].Length)
+                            if (forcedClosed)
+                                break;
+                            if (timer <= 0)
+                                ParseNextChar();
+                            if (!Control.SpeakHold(0, true) && buttonDown)
+                                buttonDown = false;
+                            if (Control.SpeakPress(0, true) && !buttonDown && dialogueType == 3)
                             {
-                                if (forcedClosed)
-                                    break;
-                                if (timer <= 0)
-                                    ParseNextChar();
-                                if (!Control.SpeakHold(0, true) && buttonDown)
-                                    buttonDown = false;
-                                if (Control.SpeakPress(0, true) && !buttonDown && dialogueType == 3)
-                                {
-                                    buttonDown = true;
-                                    while (pointer.y < textList[(int)pointer.x].Length)
-                                        ParseNextChar(true);
-                                    break;
-                                }
+                                buttonDown = true;
+                                while (pointer.y < textList[(int)pointer.x].Length)
+                                    ParseNextChar(true);
+                                break;
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (dialogueType == 2)
                             {
-                                if (dialogueType == 2)
-                                {
-                                    boxState = 4;
-                                }
-                                else if (dialogueType == 3)
-                                {
-                                    pointer.x++;
-                                    pointer.y = 0;
-                                    boxState = 2;
-                                }
+                                boxState = 4;
+                            }
+                            else if (dialogueType == 3)
+                            {
+                                pointer.x++;
+                                pointer.y = 0;
+                                boxState = 2;
                             }
                         }
                     }
@@ -454,6 +447,15 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
+    private int FindSpeakerException(int speaker)
+    {
+        return speaker switch
+        {
+            39 => 5,
+            _ => 0
+        };
+    }
+
     public void RunBox(int type, int speaker, List<string> text, int shape, string boxColor = "0005", List<int> stateList = null, bool facingLeft = false)
     {
         boxState = 0;
@@ -509,7 +511,8 @@ public class DialogueBox : MonoBehaviour
         PlayState.dialogueOpen = false;
         dialogueType = 0;
         timer = 0;
-        boxOpenAnimComplete = false;
+        //boxOpenAnimComplete = false;
+        initialized = false;
         active = false;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
@@ -536,7 +539,7 @@ public class DialogueBox : MonoBehaviour
     private void UpdatePortrait(string state, int value)
     {
         PlayState.AnimationData currentAnim = PlayState.GetAnim("Dialogue_portrait_" + (state.ToLower() == "npc" ?
-            (value == 2 ? "turtle" : (value == 1 ? "upsideDownSnail" : "snail")) : state[0].ToString().ToUpper() + state.Substring(1, state.Length - 1).ToLower() + value));
+            (value == 2 ? "turtle" : (value == 1 ? "upsideDownSnail" : "snail")) : state[0].ToString().ToUpper() + state[1..].ToLower() + value));
 
         if (state.ToLower() == "npc" && (value == 0 || value == 1))
             portraitCharAnim.updateSprite = false;

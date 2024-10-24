@@ -4422,47 +4422,47 @@
 		},
 		{
 			"name": "npc_39_default_0",
-			"text": "{sfx|5}{col|0204}{spd|0.04}Moon Snail {col|0312}rests fitfully{nl}upon the shrine steps...  {p|0.3}{spd|0.02}Find {HelixLeft}{nl}more {col|0302}fragments{col|0312}, {PF}!",
+			"text": "{col|0204}{spd|0.04}Moon Snail {col|0312}rests fitfully{nl}upon the shrine steps...  {p|0.3}{spd|0.02}Find {HelixLeft}{nl}more {col|0302}fragments{col|0312}, {PF}!",
 			"value": 1
 		},
 		{
 			"name": "npc_39_find1More_0",
-			"text": "{sfx|5}{col|0204}{spd|0.04}Moon Snail {col|0312}rests fitfully{nl}upon the shrine steps...  {p|0.3}{spd|0.02}Find 1{nl}more {col|0302}fragment{col|0312}, {PF}!",
+			"text": "{col|0204}{spd|0.04}Moon Snail {col|0312}rests fitfully{nl}upon the shrine steps...  {p|0.3}{spd|0.02}Find 1{nl}more {col|0302}fragment{col|0312}, {PF}!",
 			"value": 1
 		},
 		{
 			"name": "npc_39_noFragments_0",
-			"text": "{sfx|5}Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But without the {col|0302}Helix{nl}Fragments{col|0312}, {p|0.15}I am powerless...",
+			"text": "Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But without the {col|0302}Helix{nl}Fragments{col|0312}, {p|0.15}I am powerless...",
 			"value": 1
 		},
 		{
 			"name": "npc_39_oneFragment_0",
-			"text": "{sfx|5}Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But with only 1 {col|0302}Helix{nl}Fragment{col|0312}, {p|0.15}I am powerless...",
+			"text": "Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But with only 1 {col|0302}Helix{nl}Fragment{col|0312}, {p|0.15}I am powerless...",
 			"value": 1
 		},
 		{
 			"name": "npc_39_someFragments_0",
-			"text": "{sfx|5}Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But with only {Helix} {col|0302}Helix{nl}Fragments{col|0312}, {p|0.15}I am powerless...",
+			"text": "Hello, {P}!  {p|0.2}I am {col|0302}Iris, the{nl}Godsnail{col|0312}.  {p|0.25}But with only {Helix} {col|0302}Helix{nl}Fragments{col|0312}, {p|0.15}I am powerless...",
 			"value": 1
 		},
 		{
 			"name": "npc_39_mostFragments_0",
-			"text": "{sfx|5}I can feel my power returning!{nl}{p|0.25}With {HelixLeft} more {col|0302}Helix Fragments{col|0312},{nl}{p|0.15}perhaps we can save {col|0204}Moon Snail{col|0312}!",
+			"text": "I can feel my power returning!{nl}{p|0.25}With {HelixLeft} more {col|0302}Helix Fragments{col|0312},{nl}{p|0.15}perhaps we can save {col|0204}Moon Snail{col|0312}!",
 			"value": 1
 		},
 		{
 			"name": "npc_39_almostAllFragments_0",
-			"text": "{sfx|5}I can feel my power returning!{nl}{p|0.25}With 1 more {col|0302}Helix Fragment{col|0312},{nl}{p|0.15}perhaps we can save {col|0204}Moon Snail{col|0312}!",
+			"text": "I can feel my power returning!{nl}{p|0.25}With 1 more {col|0302}Helix Fragment{col|0312},{nl}{p|0.15}perhaps we can save {col|0204}Moon Snail{col|0312}!",
 			"value": 1
 		},
 		{
 			"name": "npc_39_allFragments_0",
-			"text": "{sfx|5}My power has returned!  {p|0.25}Now go,{nl}{p|0.1}{P}, {p|0.15}and defeat {col|0204}Moon Snail!{col|0312}{nl}{p|0.25}My power will restore him!",
+			"text": "My power has returned!  {p|0.25}Now go,{nl}{p|0.1}{P}, {p|0.15}and defeat {col|0204}Moon Snail!{col|0312}{nl}{p|0.25}My power will restore him!",
 			"value": 1
 		},
 		{
 			"name": "npc_39_restoredSun_0",
-			"text": "{sfx|5}Congratulations, {P}! {p|0.25}Thanks{nl}to you, {col|0204}Moon Snail {col|0312}is restored,{nl}{p|0.15}and is now the {col|0309}Sun Snail{col|0312}!",
+			"text": "Congratulations, {P}! {p|0.25}Thanks{nl}to you, {col|0204}Moon Snail {col|0312}is restored,{nl}{p|0.15}and is now the {col|0309}Sun Snail{col|0312}!",
 			"value": 1
 		},
 		{
@@ -4957,7 +4957,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_21_0",
-			"text": "Would you believe me if I{nl}told you how sticky these walls are?",
+			"text": "Would you believe me if I{nl}told you how sticky these walls{nl}are?",
 			"value": 1
 		},
 		{
@@ -4982,7 +4982,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_26_0",
-			"text": "Do you go to snurch on Sundays,{nl}{P}?  {p|0.2}It's ok if you don't!",
+			"text": "Do you go to snurch on{nl}Sundays, {P}?{nl}{p|0.2}It's ok if you don't!",
 			"value": 1
 		},
 		{
@@ -5002,7 +5002,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_30_0",
-			"text": "{col|0201}Pink grass {col|0312}is rich in, uhh...{nl}{p|0.4}{spd|0.3}\"P\" for protein...?",
+			"text": "{col|0201}Pink grass {col|0312}is rich in, uhh...{nl}{p|0.4}{spd|0.03}\"P\" for protein...?",
 			"value": 1
 		},
 		{
