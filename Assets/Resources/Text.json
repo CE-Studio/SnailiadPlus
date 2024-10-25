@@ -4151,6 +4151,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_21_default_1",
+			"text": "If you're using a controller,{nl}{p|0.15}you can {col|0309}use {ctrl|4}{ctrl|5}{ctrl|6}{ctrl|7} to aim your{nl}weapon while moving around{col|0312}!",
+			"value": 1
+		},
+		{
 			"name": "npc_21_boomerang_0",
 			"text": "Yay, {P}, it's you!! {nl}{p|0.2}Take this boomerang and break{nl}some walls open!!",
 			"value": 1
@@ -4681,27 +4686,27 @@
 			"value": 1
 		},
 		{
-			"name": "npc_rando_hint_0",
+			"name": "npc_rando_hint_0_0",
 			"text": "Y'know, {p|0.15}I heard somewhere that a{nl}{0} can{nl}be found {1}...",
 			"value": 1
 		},
 		{
-			"name": "npc_rando_hint_1",
+			"name": "npc_rando_hint_1_0",
 			"text": "Did you know, {P}?  {p|0.15}There's a{nl}{0} you{nl}can find {1}!!",
 			"value": 1
 		},
 		{
-			"name": "npc_rando_hint_2",
+			"name": "npc_rando_hint_2_0",
 			"text": "There's a place {1}{nl}where you can find a{nl}{0}.",
 			"value": 1
 		},
 		{
-			"name": "npc_rando_hint_3",
+			"name": "npc_rando_hint_3_0",
 			"text": "I heard there's a {nl}{0}{nl}{1}.",
 			"value": 1
 		},
 		{
-			"name": "npc_rando_hint_4",
+			"name": "npc_rando_hint_4_0",
 			"text": "If you look {1},{nl}I heard you might find{nl}a {0}!!",
 			"value": 1
 		},

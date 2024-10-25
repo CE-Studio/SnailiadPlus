@@ -60,6 +60,9 @@ public class Item:MonoBehaviour, IRoomObject {
             }
             if (!PlayState.itemAreas[areaID].Contains(itemID))
                 PlayState.itemAreas[areaID].Add(itemID);
+            while (PlayState.totaItemsPerArea.Count <= areaID)
+                PlayState.totaItemsPerArea.Add(0);
+            PlayState.totaItemsPerArea[areaID]++;
 
             locationID = PlayState.baseItemLocations.Count;
             PlayState.baseItemLocations.Add(itemID);

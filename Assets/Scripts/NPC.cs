@@ -290,9 +290,30 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         _ => "0005"
                     };
 
-                    if (PlayState.isRandomGame && PlayState.currentRando.npcTextShuffled && ID < PlayState.currentRando.npcTextIndeces.Length)
-                        AddText("FLAVOR");
-                    else
+                    bool useRandoDialogue = false;
+                    if (PlayState.isRandomGame && PlayState.currentRando.npcTextShuffled)
+                    {
+                        int hintID = -1;
+                        for (int i = 0; i < PlayState.currentRando.npcHintData.Length; i++)
+                        {
+                            if (PlayState.currentRando.npcHintData[i][0] == ID)
+                            {
+                                hintID = i;
+                                i = PlayState.currentRando.npcHintData.Length;
+                            }
+                        }
+                        if (hintID != -1)
+                        {
+                            AddText(string.Format("HINT|{0}", hintID));
+                            useRandoDialogue = true;
+                        }
+                        if (ID < PlayState.currentRando.npcTextIndeces.Length)
+                        {
+                            AddText("FLAVOR");
+                            useRandoDialogue = true;
+                        }
+                    }
+                    if (!useRandoDialogue)
                     {
                         switch (ID)
                         {
@@ -929,14 +950,36 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             bool locatedAll = false;
             int i = 0;
             string baseID;
-            if (textID == "FLAVOR")
+            string hintItemID = "";
+            string hintAreaID = "";
+            if (textID.Substring(0, 4) == "HINT")
+            {
+                int hintID = int.Parse(textID.Split('|')[1]);
+                baseID = string.Format("npc_rando_hint_{0}_", PlayState.currentRando.npcHintData[hintID][1]);
+                hintItemID = string.Format("npc_rando_item_{0}", PlayState.currentRando.npcHintData[hintID][2] switch
+                {
+                    4 => PlayState.currentProfile.character == "Blobby" ? "4b" : "4a",
+                    5 => PlayState.currentProfile.character == "Blobby" ? "5b" : "5a",
+                    6 => PlayState.currentProfile.character == "Leechy" ? "6b" : "6a",
+                    8 => PlayState.currentProfile.character switch { "Upside" => "8b", "Leggy" => "8c", "Blobby" => "8d", _ => "8a" },
+                    9 => PlayState.currentProfile.character switch { "Sluggy" or "Leechy" => "9b", "Blobby" => "9c", _ => "9a" },
+                    _ => PlayState.currentRando.npcHintData[hintID][2]
+                });
+                hintAreaID = PlayState.currentRando.npcHintData[hintID][3].ToString();
+            }
+            else if (textID == "FLAVOR")
                 baseID = string.Format("npc_rando_flavor_{0}_", PlayState.currentRando.npcTextIndeces[ID]);
             else
                 baseID = string.Format("npc_{0}_{1}_", ID.ToString(), textID);
             while (!locatedAll)
             {
                 string fullID = string.Concat(baseID, i.ToString());
-                string newText = PlayState.GetText(fullID);
+                string newText;
+                Debug.Log(fullID);
+                if (hintItemID == "")
+                    newText = string.Format(PlayState.GetText(fullID), PlayState.GetText(hintItemID), PlayState.GetText(hintAreaID));
+                else
+                    newText = PlayState.GetText(fullID);
                 if (newText != fullID)
                 {
                     textToSend.Add(newText);

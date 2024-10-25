@@ -291,6 +291,7 @@ public class PlayState
     public static Dictionary<int, int> itemLocations = new();
     public static Dictionary<int, string> playerMarkerLocations = new();
     public static List<List<int>> itemAreas = new();
+    public static List<int> totaItemsPerArea = new();
 
     public static bool[][] itemData = new bool[][] { };
     public static bool[] countedItems = new bool[] { };
@@ -535,7 +536,8 @@ public class PlayState
         musicShuffled = 0,
         musicList = new int[] { },
         npcTextShuffled = false,
-        npcTextIndeces = new int[] { }
+        npcTextIndeces = new int[] { },
+        npcHintData = new int[][] { }
     };
 
     public static GeneralData blankData = new()
@@ -715,7 +717,8 @@ public class PlayState
             musicShuffled = blankRando.musicShuffled,
             musicList = (int[])blankRando.musicList.Clone(),
             npcTextShuffled = blankRando.npcTextShuffled,
-            npcTextIndeces = (int[])blankRando.npcTextIndeces.Clone()
+            npcTextIndeces = (int[])blankRando.npcTextIndeces.Clone(),
+            npcHintData = (int[][])blankRando.npcHintData.Clone()
         };
     }
 

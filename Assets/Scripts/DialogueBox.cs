@@ -349,7 +349,7 @@ public class DialogueBox : MonoBehaviour
             string command = "";
             for (float i = pointer.y + 1; textList[(int)pointer.x][(int)i] != '}' && i < textList[(int)pointer.x].Length; i++)
                 command += textList[(int)pointer.x][(int)i];
-            if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}')
+            if (textList[(int)pointer.x][(int)(pointer.y + command.Length + 1)] == '}' && command != "")
             {
                 string[] args;
                 if (command.Contains("|"))
@@ -386,7 +386,8 @@ public class DialogueBox : MonoBehaviour
                         break;
                 }
                 pointer.y += command.Length + 2;
-                thisChar = textList[(int)pointer.x][(int)pointer.y];
+                if (pointer.y < textList[(int)pointer.x].Length)
+                    thisChar = textList[(int)pointer.x][(int)pointer.y];
             }
             else
                 break;

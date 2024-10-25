@@ -596,7 +596,7 @@ public class Control
         Controller[] conActions = new Controller[] { Controller.Up, Controller.Down, Controller.Left, Controller.Right, Controller.AimU, Controller.AimD,
             Controller.AimL, Controller.AimR, Controller.Jump1, Controller.Shoot1, Controller.Strafe1, Controller.Weapon1, Controller.Weapon2,
             Controller.Weapon3, Controller.NextWeapon, Controller.PrevWeapon, Controller.Map, Controller.Pause, Controller.Speak1 };
-        if (lastInputIsCon)
+        if (lastInputIsCon || action == 4 || action == 5 || action == 6 || action == 7)
             output = GetButtonSpriteIcon(conActions[action]);
         else
             output = GetKeySpriteIcon(keyActions[action]);

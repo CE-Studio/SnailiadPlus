@@ -350,23 +350,49 @@ public class Randomizer : MonoBehaviour
                         break;
                     }
 
+                    List<int[]> totalHints = new();
                     int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
                     List<int> availableHints = new();
                     int hintCount = 5;
                     for (int i = 0; i < hintCount; i++)
                         availableHints.Add(i);
+                    List<int> availableNPCs = new();
+                    for (int i = 0; i < PlayState.npcCount; i++)
+                        availableNPCs.Add(i);
                     for (int i = 0; i < finalHintCount; i++)
                     {
                         int itemID = -1;
                         int areaID = -1;
+                        int locationID = 0;
                         while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
                         {
-                            int locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
+                            locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
                             itemID = PlayState.currentRando.itemLocations[locationID];
-                            // If block for area
                         }
-                        // Assemble hint data here
+                        int countedUpItems = 0;
+                        int potentialArea = 0;
+                        while (areaID == -1) // This whole thing assumes the areas are in order. Which they should be
+                        {
+                            countedUpItems += PlayState.totaItemsPerArea[potentialArea];
+                            if (locationID < countedUpItems)
+                                areaID = potentialArea;
+                            else
+                                potentialArea++;
+                        }
+
+                        int[] newHintData = new int[4];
+                        int npcIndex = Mathf.FloorToInt(Random.value * availableNPCs.Count);
+                        newHintData[0] = availableNPCs[npcIndex];
+                        availableNPCs.RemoveAt(npcIndex);
+                        int hintIndex = Mathf.FloorToInt(Random.value * availableHints.Count);
+                        newHintData[1] = availableHints[hintIndex];
+                        availableHints.RemoveAt(hintIndex);
+                        newHintData[2] = itemID;
+                        newHintData[3] = areaID;
+                        totalHints.Add(newHintData);
                     }
+                    PlayState.currentRando.npcHintData = totalHints.ToArray();
+                    // TODO: hint data isn't saving
 
                     List<int> newIndeces = new();
                     List<int> availableIndeces = new();
