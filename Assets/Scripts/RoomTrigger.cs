@@ -719,7 +719,8 @@ public class RoomTrigger : MonoBehaviour
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Federation Drone"), worldPos, Quaternion.identity, transform);
                             break;
                         case 405:
-                            Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
+                            GameObject walleyeRight = Instantiate(Resources.Load<GameObject>("Objects/Enemies/Walleye"), worldPos, Quaternion.identity, transform);
+                            walleyeRight.GetComponent<Walleye>().Face(false);
                             break;
                         case 406:
                             Instantiate(Resources.Load<GameObject>("Objects/Enemies/Spider"), worldPos, Quaternion.identity, transform);
