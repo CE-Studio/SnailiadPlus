@@ -1,18 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class Randomizer : MonoBehaviour
 {
     public bool isShuffling = false;
-    private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items, 3 = music, 4 = dialogue
+    private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items (split), 3 = items (pro/full), 4 = music, 5 = dialogue
     private int splitPhase = 0; // 1 = majors, 2 = minors
 
     private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
+    private readonly int[] progMajorWeights = new int[] { 1, 1, 1, 1, 3, 4, 2, 1, 1, 1, 1 };
+    private const int HEART_WEIGHT = 2;
+    private const int HELIX_WEIGHT = 3;
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
+    private const int STEPS_PER_FRAME = 3;
 
-    private bool[] lockStates = new bool[24];
+    //private bool[] locks = new bool[24];
+    private Dictionary<string, bool> locks = new()
+    {
+        { "BlueDoor", false },
+        { "PinkDoor", false },
+        { "RedDoor", false },
+        { "GreenDoor", false },
+        { "L1Blocks", false },
+        { "L2Blocks", false },
+        { "L3Blocks", false },
+        { "Jump", false },
+        { "Ice", false },
+        { "Fly", false },
+        { "Metal", false },
+        { "Health", false },
+        { "Shock", false },
+        { "Snaily", false },
+        { "Sluggy", false },
+        { "Upside", false },
+        { "Leggy", false },
+        { "Blobby", false },
+        { "Leechy", false },
+        { "Knowledge", false },
+        { "Boss1", false },
+        { "Boss2", false },
+        { "Boss3", false },
+        { "Boss4", false },
+    };
     private bool[] defaultLocksThisGen = new bool[24];
     private readonly List<int> defaultMusicList = new() { -7, -6, -5, -1, 0, 1, 2, 3, 4, 5, 6 };
 
@@ -63,98 +95,41 @@ public class Randomizer : MonoBehaviour
 
         while (isShuffling)
         {
-            switch (randoPhase)
+            for (int step = 0; step < STEPS_PER_FRAME; step++)
             {
-                default:
-                case 1: // Initiate item shuffle
-                    for (int i = 0; i < locations.Length; i++)
-                        locations[i] = -2;
-                    progWeapons = 0;
-                    progMods = 0;
-                    progShells = 0;
-                    placedHelixes = 0;
-                    placedHearts = 0;
-                    hasPlacedDevastator = false;
-                    itemsToAdd = new();
-                    randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
-                    lockStates = (bool[])defaultLocksThisGen.Clone();
+                switch (randoPhase)
+                {
+                    default:
+                    case 1: // Initiate item shuffle
+                        for (int i = 0; i < locations.Length; i++)
+                            locations[i] = -2;
+                        progWeapons = 0;
+                        progMods = 0;
+                        progShells = 0;
+                        placedHelixes = 0;
+                        placedHearts = 0;
+                        hasPlacedDevastator = false;
+                        itemsToAdd = new();
+                        randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
+                        //locks = (bool[])defaultLocksThisGen.Clone();
+                        string[] tempKeys = locks.Keys.ToArray();
+                        foreach (string key in tempKeys)
+                            locks[key] = false;
 
-                    for (int i = 0; i < majorWeights.Length; i++)
-                    {
-                        for (int j = 0; j < majorWeights[i]; j++)
-                            itemsToAdd.Add(i);
-                    }
-                    if (randoPhase == 3)
-                    {
-                        for (int i = 0; i < PlayState.MAX_HEARTS; i++)
-                            for (int j = 0; j < 4; j++)
-                                itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
-                        for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
-                            for (int j = 0; j < 5; j++)
-                                itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
-                        if (PlayState.currentRando.trapsActive)
+                        int[] currentMajorWeights = PlayState.currentRando.progressivesOn ? (int[])progMajorWeights.Clone() : (int[])majorWeights.Clone();
+                        for (int i = 0; i < currentMajorWeights.Length; i++)
                         {
-                            int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
-                            List<int> trapsToAdd = new();
-                            for (int i = 0; i < trapTypes; i++)
-                                trapsToAdd.Add(1000 + i);
-                            unplacedTraps = trapsToAdd;
-                            int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
-                            for (int i = 0; i < numberOfTraps; i++)
-                            {
-                                int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
-                                itemsToAdd.Add(trapsToAdd[trapID]);
-                                trapsToAdd.RemoveAt(trapID);
-                            }
+                            for (int j = 0; j < currentMajorWeights[i]; j++)
+                                itemsToAdd.Add(i);
                         }
-                    }
-                    else
-                    {
-                        while (itemsToAdd.Contains(10))
-                            itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
-                        foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
-                            locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
-                        splitPhase = 1;
-                    }
-                    //Debug.Log("-------------------------------------------------");
-                    break;
-
-                case 2: // Items (Split shuffle)
-                    List<int> availableSplitLocations = GetLocations(splitPhase == 1);
-                    if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
-                        randoPhase = 1;
-                    else if (itemsToAdd.Count > 0 && splitPhase == 1)
-                    {
-                        int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
-                        int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                        if (PlayState.currentRando.progressivesOn)
+                        if (randoPhase == 3)
                         {
-                            itemToPlace = itemToPlace switch
-                            {
-                                0 or 1 or 2 => progWeapons,
-                                3 or 6 => progMods == 0 ? 6 : 3,
-                                7 or 8 or 9 => 7 + progShells,
-                                _ => itemToPlace
-                            };
-                        }
-                        TweakLocks(itemToPlace, placedHelixes);
-                        while (itemsToAdd.Contains(itemToPlace))
-                            itemsToAdd.Remove(itemToPlace);
-                        locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                        switch (itemToPlace)
-                        {
-                            case 0: case 1: case 2: progWeapons++; break;
-                            case 7: case 8: case 9: progShells++; break;
-                            case 6: case 3: progMods++; break;
-                            default: break;
-                        }
-
-                        if (itemsToAdd.Count == 0)
-                        {
-                            for (int j = 0; j < PlayState.MAX_HEARTS; j++)
-                                itemsToAdd.Add(j + PlayState.OFFSET_HEARTS);
-                            for (int j = 0; j < PlayState.MAX_FRAGMENTS - 5; j++)
-                                itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
+                            for (int i = 0; i < PlayState.MAX_HEARTS; i++)
+                                for (int j = 0; j < HEART_WEIGHT; j++)
+                                    itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
+                            for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
+                                for (int j = 0; j < HELIX_WEIGHT; j++)
+                                    itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
                             if (PlayState.currentRando.trapsActive)
                             {
                                 int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
@@ -170,254 +145,316 @@ public class Randomizer : MonoBehaviour
                                     trapsToAdd.RemoveAt(trapID);
                                 }
                             }
-                            splitPhase = 2;
                         }
-                    }
-                    else if (itemsToAdd.Count > 0 && splitPhase == 2)
-                    {
-                        int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
-                        int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                        while (itemsToAdd.Contains(itemToPlace))
-                            itemsToAdd.Remove(itemToPlace);
-                        if (unplacedTraps.Contains(itemToPlace))
-                            unplacedTraps.Remove(itemToPlace);
-                        locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
-                            placedHelixes++;
-                        else if (itemToPlace >= PlayState.OFFSET_HEARTS)
-                            placedHearts++;
-                        if (placedHearts >= 4)
-                            lockStates[11] = true; // Health
-                    }
-                    else
-                    {
-                        while (placedHelixes < PlayState.MAX_FRAGMENTS)
+                        else
                         {
-                            List<int> remainingLocations = GetLocations();
-                            if (remainingLocations.Count == 0)
-                                placedHelixes = PlayState.MAX_FRAGMENTS;
-                            else
+                            while (itemsToAdd.Contains(10))
+                                itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
+                            foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
+                                locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
+                            splitPhase = 1;
+                        }
+                        //Debug.Log("-------------------------------------------------");
+                        break;
+
+                    case 2: // Items (Split shuffle)
+                        List<int> availableSplitLocations = GetLocations(splitPhase == 1);
+                        if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
+                            randoPhase = 1;
+                        else if (itemsToAdd.Count > 0 && splitPhase == 1)
+                        {
+                            int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
+                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                            if (PlayState.currentRando.progressivesOn)
                             {
-                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                itemToPlace = itemToPlace switch
+                                {
+                                    0 or 1 or 2 => progWeapons,
+                                    3 or 6 => progMods == 0 ? 6 : 3,
+                                    7 or 8 or 9 => 7 + progShells,
+                                    _ => itemToPlace
+                                };
+                            }
+                            TweakLocks(itemToPlace, placedHelixes);
+                            while (itemsToAdd.Contains(itemToPlace))
+                                itemsToAdd.Remove(itemToPlace);
+                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
+                            switch (itemToPlace)
+                            {
+                                case 0: case 1: case 2: progWeapons++; break;
+                                case 7: case 8: case 9: progShells++; break;
+                                case 6: case 3: progMods++; break;
+                                default: break;
+                            }
+
+                            if (itemsToAdd.Count == 0)
+                            {
+                                for (int j = 0; j < PlayState.MAX_HEARTS; j++)
+                                    itemsToAdd.Add(j + PlayState.OFFSET_HEARTS);
+                                for (int j = 0; j < PlayState.MAX_FRAGMENTS - 5; j++)
+                                    itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
+                                if (PlayState.currentRando.trapsActive)
+                                {
+                                    int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
+                                    List<int> trapsToAdd = new();
+                                    for (int i = 0; i < trapTypes; i++)
+                                        trapsToAdd.Add(1000 + i);
+                                    unplacedTraps = trapsToAdd;
+                                    int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
+                                    for (int i = 0; i < numberOfTraps; i++)
+                                    {
+                                        int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
+                                        itemsToAdd.Add(trapsToAdd[trapID]);
+                                        trapsToAdd.RemoveAt(trapID);
+                                    }
+                                }
+                                splitPhase = 2;
+                            }
+                        }
+                        else if (itemsToAdd.Count > 0 && splitPhase == 2)
+                        {
+                            int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
+                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                            while (itemsToAdd.Contains(itemToPlace))
+                                itemsToAdd.Remove(itemToPlace);
+                            if (unplacedTraps.Contains(itemToPlace))
+                                unplacedTraps.Remove(itemToPlace);
+                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
+                            if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
                                 placedHelixes++;
-                            }
+                            else if (itemToPlace >= PlayState.OFFSET_HEARTS)
+                                placedHearts++;
+                            if (placedHearts >= 4)
+                                locks["Health"] = true;
                         }
-                        while (unplacedTraps.Count > 0)
+                        else
                         {
-                            List<int> remainingLocations = GetLocations();
-                            if (remainingLocations.Count == 0)
-                                unplacedTraps.Clear();
-                            else
+                            while (placedHelixes < PlayState.MAX_FRAGMENTS)
                             {
-                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
-                                locations[remainingLocations[locationID]] = unplacedTraps[trapID];
-                                unplacedTraps.RemoveAt(trapID);
+                                List<int> remainingLocations = GetLocations();
+                                if (remainingLocations.Count == 0)
+                                    placedHelixes = PlayState.MAX_FRAGMENTS;
+                                else
+                                {
+                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                    locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                    placedHelixes++;
+                                }
                             }
+                            while (unplacedTraps.Count > 0)
+                            {
+                                List<int> remainingLocations = GetLocations();
+                                if (remainingLocations.Count == 0)
+                                    unplacedTraps.Clear();
+                                else
+                                {
+                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                    int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
+                                    locations[remainingLocations[locationID]] = unplacedTraps[trapID];
+                                    unplacedTraps.RemoveAt(trapID);
+                                }
+                            }
+                            for (int i = 0; i < locations.Length; i++)
+                                if (locations[i] == -2)
+                                    locations[i] = -1;
+                            PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                            PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
+                            randoPhase = 4;
                         }
-                        for (int i = 0; i < locations.Length; i++)
-                            if (locations[i] == -2)
-                                locations[i] = -1;
-                        PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                        randoPhase = 4;
-                    }
-                    break;
+                        break;
 
-                case 3: // Items (Full/Pro shuffle)
-                    List<int> availableLocations = GetLocations();
-                    if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
-                        randoPhase = 1;
-                    else if (itemsToAdd.Count > 0)
-                    {
-                        int locationPointer = Mathf.FloorToInt(Random.value * availableLocations.Count);
-                        int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                        if (PlayState.currentRando.progressivesOn)
+                    case 3: // Items (Full/Pro shuffle)
+                        List<int> availableLocations = GetLocations();
+                        if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
+                            randoPhase = 1;
+                        else if (itemsToAdd.Count > 0)
                         {
-                            itemToPlace = itemToPlace switch
+                            int locationPointer = Mathf.FloorToInt(Random.value * availableLocations.Count);
+                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
+                            if (PlayState.currentRando.progressivesOn)
                             {
-                                0 or 1 or 2 => progWeapons,
-                                3 or 6 => progMods == 0 ? 6 : 3,
-                                7 or 8 or 9 => 7 + progShells,
-                                _ => itemToPlace
-                            };
-                        }
-                        TweakLocks(itemToPlace, placedHelixes);
-                        while (itemsToAdd.Contains(itemToPlace))
-                            itemsToAdd.Remove(itemToPlace);
-                        if (unplacedTraps.Contains(itemToPlace))
-                            unplacedTraps.Remove(itemToPlace);
-                        locations[availableLocations[locationPointer]] = itemToPlace;
-                        if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
-                            placedHelixes++;
-                        else if (itemToPlace >= PlayState.OFFSET_HEARTS)
-                            placedHearts++;
-                        if (placedHearts >= 4)
-                            lockStates[11] = true; // Health
-                        switch (itemToPlace)
-                        {
-                            case 0: case 1: case 2: progWeapons++; break;
-                            case 7: case 8: case 9: progShells++; break;
-                            case 6: case 3: progMods++; break;
-                            default: break;
-                        }
-                        //PrintPlacement(itemToPlace, availableLocations[locationPointer]);
-                    }
-                    else
-                    {
-                        while (placedHelixes < PlayState.MAX_FRAGMENTS)
-                        {
-                            List<int> remainingLocations = GetLocations();
-                            if (remainingLocations.Count == 0)
-                                placedHelixes = PlayState.MAX_FRAGMENTS;
-                            else
-                            {
-                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                //int originalItem = itemToPlace;
+                                itemToPlace = itemToPlace switch
+                                {
+                                    0 or 1 or 2 => progWeapons,
+                                    3 or 6 => progMods == 0 ? 6 : 3,
+                                    7 or 8 or 9 => 7 + progShells,
+                                    _ => itemToPlace
+                                };
+                                //Debug.Log(string.Format("{0} => {1}", originalItem, itemToPlace));
+                            }
+                            TweakLocks(itemToPlace, placedHelixes);
+                            while (itemsToAdd.Contains(itemToPlace))
+                                itemsToAdd.Remove(itemToPlace);
+                            if (unplacedTraps.Contains(itemToPlace))
+                                unplacedTraps.Remove(itemToPlace);
+                            locations[availableLocations[locationPointer]] = itemToPlace;
+                            if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
                                 placedHelixes++;
-                            }
-                        }
-                        while (unplacedTraps.Count > 0)
-                        {
-                            List<int> remainingLocations = GetLocations();
-                            if (remainingLocations.Count == 0)
-                                unplacedTraps.Clear();
-                            else
+                            else if (itemToPlace >= PlayState.OFFSET_HEARTS)
+                                placedHearts++;
+                            if (placedHearts >= 4)
+                                locks["Health"] = true;
+                            switch (itemToPlace)
                             {
-                                int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
-                                locations[remainingLocations[locationID]] = unplacedTraps[trapID];
-                                unplacedTraps.RemoveAt(trapID);
+                                case 0: case 1: case 2: progWeapons++; break;
+                                case 7: case 8: case 9: progShells++; break;
+                                case 6: case 3: progMods++; break;
+                                default: break;
+                            }
+                            //PrintPlacement(itemToPlace, availableLocations[locationPointer]);
+                        }
+                        else
+                        {
+                            while (placedHelixes < PlayState.MAX_FRAGMENTS)
+                            {
+                                List<int> remainingLocations = GetLocations();
+                                if (remainingLocations.Count == 0)
+                                    placedHelixes = PlayState.MAX_FRAGMENTS;
+                                else
+                                {
+                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                    locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                    placedHelixes++;
+                                }
+                            }
+                            while (unplacedTraps.Count > 0)
+                            {
+                                List<int> remainingLocations = GetLocations();
+                                if (remainingLocations.Count == 0)
+                                    unplacedTraps.Clear();
+                                else
+                                {
+                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
+                                    int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
+                                    locations[remainingLocations[locationID]] = unplacedTraps[trapID];
+                                    unplacedTraps.RemoveAt(trapID);
+                                }
+                            }
+                            for (int i = 0; i < locations.Length; i++)
+                                if (locations[i] == -2)
+                                    locations[i] = -1;
+                            PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                            PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
+                            randoPhase = 4;
+
+                            //List<int> printedLocations = new();
+                            //for (int i = 0; i < locations.Length; i++)
+                            //    printedLocations.Add(locations[i]);
+                            //printedLocations.Sort();
+                            //string output = "";
+                            //for (int i = 0; i < printedLocations.Count; i++)
+                            //    output += printedLocations[i] + ", ";
+                            //Debug.Log(output);
+                        }
+                        break;
+
+                    case 4: // Music
+                        PlayState.currentRando.musicList = defaultMusicList.ToArray();
+                        if (PlayState.currentRando.musicShuffled == 0)
+                        {
+                            randoPhase = 5;
+                            break;
+                        }
+
+                        List<int> songsToAdd;
+                        if (PlayState.currentRando.musicShuffled == 1)
+                        {
+                            songsToAdd = new() { 0, 1, 2, 3, 4, 5 };
+                            for (int i = 0; i < 6; i++)
+                            {
+                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                                PlayState.currentRando.musicList[i + 4] = songsToAdd[randomIndex];
+                                songsToAdd.RemoveAt(randomIndex);
                             }
                         }
-                        for (int i = 0; i < locations.Length; i++)
-                            if (locations[i] == -2)
-                                locations[i] = -1;
-                        PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                        PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                        randoPhase = 4;
-
-                        //List<int> printedLocations = new();
-                        //for (int i = 0; i < locations.Length; i++)
-                        //    printedLocations.Add(locations[i]);
-                        //printedLocations.Sort();
-                        //string output = "";
-                        //for (int i = 0; i < printedLocations.Count; i++)
-                        //    output += printedLocations[i] + ", ";
-                        //Debug.Log(output);
-                    }
-                    break;
-
-                case 4: // Music
-                    PlayState.currentRando.musicList = defaultMusicList.ToArray();
-                    if (PlayState.currentRando.musicShuffled == 0)
-                    {
+                        else
+                        {
+                            songsToAdd = defaultMusicList;
+                            //for (int i = 0; i < defaultMusicList.Count; i++)
+                            while (songsToAdd.Count > 0) // This wasn't working as a for loop for some reason
+                            {
+                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                                PlayState.currentRando.musicList[songsToAdd.Count - 1] = songsToAdd[randomIndex];
+                                songsToAdd.RemoveAt(randomIndex);
+                            }
+                        }
                         randoPhase = 5;
                         break;
-                    }
 
-                    List<int> songsToAdd;
-                    if (PlayState.currentRando.musicShuffled == 1)
-                    {
-                        songsToAdd = new() { 0, 1, 2, 3, 4, 5 };
-                        for (int i = 0; i < 6; i++)
+                    case 5: // Dialogue
+                        if (!PlayState.currentRando.npcTextShuffled)
                         {
-                            int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
-                            PlayState.currentRando.musicList[i + 4] = songsToAdd[randomIndex];
-                            songsToAdd.RemoveAt(randomIndex);
+                            randoPhase = 0;
+                            isShuffling = false;
+                            break;
                         }
-                    }
-                    else
-                    {
-                        songsToAdd = defaultMusicList;
-                        //for (int i = 0; i < defaultMusicList.Count; i++)
-                        while (songsToAdd.Count > 0) // This wasn't working as a for loop for some reason
-                        {
-                            int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
-                            PlayState.currentRando.musicList[songsToAdd.Count - 1] = songsToAdd[randomIndex];
-                            songsToAdd.RemoveAt(randomIndex);
-                        }
-                    }
-                    randoPhase = 5;
-                    break;
 
-                case 5: // Dialogue
-                    if (!PlayState.currentRando.npcTextShuffled)
-                    {
+                        List<int> totalHints = new();
+                        int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
+                        List<int> availableHints = new();
+                        int hintCount = 5;
+                        for (int i = 0; i < hintCount; i++)
+                            availableHints.Add(i);
+                        List<int> availableNPCs = new();
+                        for (int i = 0; i < PlayState.npcCount; i++)
+                            availableNPCs.Add(i);
+                        for (int i = 0; i < finalHintCount; i++)
+                        {
+                            int itemID = -1;
+                            int areaID = -1;
+                            int locationID = 0;
+                            while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
+                            {
+                                locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
+                                itemID = PlayState.currentRando.itemLocations[locationID];
+                            }
+                            int countedUpItems = 0;
+                            int potentialArea = 0;
+                            while (areaID == -1) // This whole thing assumes the areas are in order. Which they should be
+                            {
+                                countedUpItems += PlayState.totaItemsPerArea[potentialArea];
+                                if (locationID < countedUpItems)
+                                    areaID = potentialArea;
+                                else
+                                    potentialArea++;
+                            }
+
+                            int npcIndex = Mathf.FloorToInt(Random.value * availableNPCs.Count);
+                            totalHints.Add(availableNPCs[npcIndex]);
+                            availableNPCs.RemoveAt(npcIndex);
+                            int hintIndex = Mathf.FloorToInt(Random.value * availableHints.Count);
+                            totalHints.Add(availableHints[hintIndex]);
+                            availableHints.RemoveAt(hintIndex);
+                            totalHints.Add(itemID);
+                            totalHints.Add(areaID);
+                        }
+                        PlayState.currentRando.npcHintData = totalHints.ToArray();
+
+                        List<int> newIndeces = new();
+                        List<int> availableIndeces = new();
+                        int flavorCount = 47;
+                        for (int i = 0; i < flavorCount; i++)
+                            availableIndeces.Add(i);
+                        for (int i = 0; i < PlayState.npcCount; i++)
+                        {
+                            if (availableIndeces.Count == 0)
+                                i = PlayState.npcCount;
+                            else
+                            {
+                                int indexIndex = Mathf.FloorToInt(Random.value * availableIndeces.Count);
+                                newIndeces.Add(availableIndeces[indexIndex]);
+                                availableIndeces.RemoveAt(indexIndex);
+                            }
+                        }
+                        PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
                         randoPhase = 0;
                         isShuffling = false;
                         break;
-                    }
-
-                    List<int[]> totalHints = new();
-                    int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
-                    List<int> availableHints = new();
-                    int hintCount = 5;
-                    for (int i = 0; i < hintCount; i++)
-                        availableHints.Add(i);
-                    List<int> availableNPCs = new();
-                    for (int i = 0; i < PlayState.npcCount; i++)
-                        availableNPCs.Add(i);
-                    for (int i = 0; i < finalHintCount; i++)
-                    {
-                        int itemID = -1;
-                        int areaID = -1;
-                        int locationID = 0;
-                        while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
-                        {
-                            locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
-                            itemID = PlayState.currentRando.itemLocations[locationID];
-                        }
-                        int countedUpItems = 0;
-                        int potentialArea = 0;
-                        while (areaID == -1) // This whole thing assumes the areas are in order. Which they should be
-                        {
-                            countedUpItems += PlayState.totaItemsPerArea[potentialArea];
-                            if (locationID < countedUpItems)
-                                areaID = potentialArea;
-                            else
-                                potentialArea++;
-                        }
-
-                        int[] newHintData = new int[4];
-                        int npcIndex = Mathf.FloorToInt(Random.value * availableNPCs.Count);
-                        newHintData[0] = availableNPCs[npcIndex];
-                        availableNPCs.RemoveAt(npcIndex);
-                        int hintIndex = Mathf.FloorToInt(Random.value * availableHints.Count);
-                        newHintData[1] = availableHints[hintIndex];
-                        availableHints.RemoveAt(hintIndex);
-                        newHintData[2] = itemID;
-                        newHintData[3] = areaID;
-                        totalHints.Add(newHintData);
-                    }
-                    PlayState.currentRando.npcHintData = totalHints.ToArray();
-                    // TODO: hint data isn't saving
-
-                    List<int> newIndeces = new();
-                    List<int> availableIndeces = new();
-                    int flavorCount = 47;
-                    for (int i = 0; i < flavorCount; i++)
-                        availableIndeces.Add(i);
-                    for (int i = 0; i < PlayState.npcCount; i++)
-                    {
-                        if (availableIndeces.Count == 0)
-                            i = PlayState.npcCount;
-                        else
-                        {
-                            int indexIndex = Mathf.FloorToInt(Random.value * availableIndeces.Count);
-                            newIndeces.Add(availableIndeces[indexIndex]);
-                            availableIndeces.RemoveAt(indexIndex);
-                        }
-                    }
-                    PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
-                    randoPhase = 0;
-                    isShuffling = false;
-                    break;
+                }
             }
             yield return new WaitForEndOfFrame();
         }
-        CreateSpoilerMap();
     }
 
     private List<int> GetLocations(bool majorsOnly = false)
@@ -430,63 +467,120 @@ public class Randomizer : MonoBehaviour
             {
                 if (i switch
                 {
-                    0 => Knowledge() && L2Blocks() && (Jump() || Upside() || Leggy()),                                                  // Original Testing Room
-                    1 => L1Blocks(),                                                                                                    // Leggy Snail's Tunnel
-                    2 => L1Blocks() || (Jump() && Knowledge()) || ((Sluggy() || Upside() || Leggy() || Leechy()) && Knowledge()),       // Town Overtunnel
-                    3 => Knowledge() && (L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                          // Super Secret Alcove
-                    4 => L1Blocks() || Jump() || Sluggy() || Upside() || Leggy() || Leechy(),                                           // Love Snail's Alcove
-                    5 => L2Blocks(),                                                                                                    // Suspicious Tree
-                    6 => L2Blocks(),                                                                                                    // Anger Management Room
-                    7 => L2Blocks() && ((Blobby() && Jump()) || !Blobby()),                                                             // Percentage Snail's Hidey Hole
-                    8 => true,                                                                                                          // Digging Grounds
-                    9 => true,                                                                                                          // Cave Snail's Cave
-                    10 => L2Blocks(),                                                                                                   // Fragment Cave
-                    11 => (Knowledge() && ((Blobby() && Jump()) || !Blobby())) || Fly() || Upside() || Leggy(),                         // Discombobulatory Alcove
-                    12 => (Blobby() && Jump()) || !Blobby(),                                                                            // Seabed Caves
-                    13 => true,                                                                                                         // Fine Dining (Peashooter)
-                    14 => L2Blocks(),                                                                                                   // Fine Dining (Fragment)
-                    15 => L1Blocks(),                                                                                                   // The Maze Room
-                    16 => L1Blocks(),                                                                                                   // Monument of Greatness
-                    17 => RedDoor(),                                                                                                    // Heart of the Sea
-                    18 => BlueDoor() && (PinkDoor() || Knowledge()),                                                                    // Daily Helping of Calcium
-                    19 => GreenDoor(),                                                                                                  // Dig, Snaily, Dig
-                    20 => L1Blocks(),                                                                                                   // Skywatcher's Loot
-                    21 => Boss1(),                                                                                                      // Signature Croissants (Boomerang)
-                    22 => Boss1() && L1Blocks(),                                                                                        // Signature Croissants (Heart)
-                    23 => Boss1() && Knowledge() && (Fly() || Upside() || Leggy()),                                                     // Squared Snelks
-                    24 => Boss1() && PinkDoor(),                                                                                        // Frost Shrine
-                    25 => Boss1() && (Ice() || (Health() && (Fly() || Leggy()))) && L1Blocks() && ((Blobby() && Jump()) || !Blobby()),  // Sweater Required
-                    26 => Boss1() && PinkDoor(),                                                                                        // A Secret to Snowbody
-                    27 => Boss1() && GreenDoor(),                                                                                       // Devil's Alcove
-                    28 => Boss1() && (Knowledge() || Jump() || Fly() || Ice() || Upside() || Leggy()),                                  // Ice Climb
-                    29 => Boss1() && L2Blocks(),                                                                                        // The Labyrinth (Fragment)
-                    30 => (Boss1() && L2Blocks()) || (Knowledge() && !Upside()),                                                        // The Labyrinth (High Jump)
-                    31 => Boss1() && RedDoor(),                                                                                         // Sneaky, Sneaky
-                    32 => Boss2() || RedDoor(),                                                                                         // Prismatic Prize (Rainbow Wave)
-                    33 => Boss2() && RedDoor(),                                                                                         // Prismatic Prize (Heart)
-                    34 => Boss2() && (Metal() || Health()) && (PinkDoor() || RedDoor()),                                                // Hall of Fire
-                    35 => Boss2() && Knowledge() && Metal() && (Fly() || L3Blocks() || RedDoor()),                                      // Scorching Snelks
-                    36 => Boss2() && Knowledge() && (Fly() || L3Blocks()),                                                              // Hidden Hideout
-                    37 => Boss2() && RedDoor() || L3Blocks(),                                                                           // Green Cache
-                    38 => Boss2() && L2Blocks(),                                                                                        // Furnace
-                    39 => Boss2() && RedDoor(),                                                                                         // Slitherine Grove
-                    40 => Boss2() && PinkDoor() && (Fly() || Upside() || Leggy()),                                                      // Floaty Fortress (Top Left)
-                    41 => Boss2() && PinkDoor() && (Fly() || Upside() || Leggy()),                                                      // Floaty Fortress (Bottom Right)
-                    42 => Boss2() && L2Blocks(),                                                                                        // Woah Mama
-                    43 => Boss2() && L2Blocks() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy()),                             // Shocked Shell
-                    44 => Boss2() && L2Blocks(),                                                                                        // Gravity Shrine
-                    45 => Boss2() && Fly() || (Knowledge() && RedDoor()),                                                               // Fast Food
-                    46 => Boss3() || (RedDoor() && (Jump() || Sluggy() || Upside() || Leggy() || Leechy())),                            // The Bridge
-                    47 => Boss3() && L3Blocks(),                                                                                        // Transit 90
-                    48 => Boss3() && RedDoor() && (Metal() || Health()),                                                                // Steel Shrine
-                    49 => Boss3() && L3Blocks() && (Metal() || Health()),                                                               // Space Balcony (Heart)
-                    50 => Boss3() && L3Blocks() && (Metal() || Health()),                                                               // Space Balcony (Fragment)
-                    51 => Boss3() && RedDoor() && (Metal() || Health()),                                                                // The Vault
-                    52 => Boss3() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                  // Holy Hideaway
-                    53 => Boss3() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                  // Arctic Alcove
-                    54 => Boss3() && Knowledge() && RedDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),   // Lost Loot
-                    55 => Boss3() && GreenDoor() && (Fly() || Upside() || Leggy() || Blobby()) && (Health() || Metal()),                // Reinforcements
-                    56 => PinkDoor(),                                                                                                   // Glitched Goodies
+                    0 => locks["Knowledge"] && locks["L2Blocks"] && (locks["Jump"] || locks["Upside"] || locks["Leggy"]),
+                                                                                                                            // Original Testing Room
+                    1 => locks["L1Blocks"],
+                                                                                                                            // Leggy Snail's Tunnel
+                    2 => locks["L1Blocks"] || (locks["Jump"] && locks["Knowledge"]) || ((locks["Sluggy"] || locks["Upside"] ||
+                        locks["Leggy"] || locks["Leechy"]) && locks["Knowledge"]),                                          // Town Overtunnel
+                    3 => locks["Knowledge"] && (locks["L1Blocks"] || locks["Jump"] || locks["Sluggy"] ||
+                        locks["Upside"] || locks["Leggy"] || locks["Leechy"]),                                              // Super Secret Alcove
+                    4 => locks["L1Blocks"] || locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"],
+                                                                                                                            // Love Snail's Alcove
+                    5 => locks["L2Blocks"],
+                                                                                                                            // Suspicious Tree
+                    6 => locks["L2Blocks"],
+                                                                                                                            // Anger Management Room
+                    7 => locks["L2Blocks"] && ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"]),
+                                                                                                                            // Percentage Snail's Hidey Hole
+                    8 => true,
+                                                                                                                            // Digging Grounds
+                    9 => true,
+                                                                                                                            // Cave Snail's Cave
+                    10 => locks["L2Blocks"],
+                                                                                                                            // Fragment Cave
+                    11 => (locks["Knowledge"] && ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"])) ||
+                        locks["Fly"] || locks["Upside"] || locks["Leggy"],                                                  // Discombobulatory Alcove
+                    12 => (locks["Blobby"] && locks["Jump"]) || !locks["Blobby"],
+                                                                                                                            // Seabed Caves
+                    13 => true,
+                                                                                                                            // Fine Dining (Peashooter)
+                    14 => locks["L2Blocks"],
+                                                                                                                            // Fine Dining (Fragment)
+                    15 => locks["L1Blocks"],
+                                                                                                                            // The Maze Room
+                    16 => locks["L1Blocks"],
+                                                                                                                            // Monument of Greatness
+                    17 => locks["RedDoor"],
+                                                                                                                            // Heart of the Sea
+                    18 => locks["BlueDoor"] && (locks["PinkDoor"] || locks["Knowledge"]),
+                                                                                                                            // Daily Helping of Calcium
+                    19 => locks["GreenDoor"],
+                                                                                                                            // Dig, Snaily, Dig
+                    20 => locks["L1Blocks"],
+                                                                                                                            // Skywatcher's Loot
+                    21 => locks["Boss1"],
+                                                                                                                            // Signature Croissants (Boomerang)
+                    22 => locks["Boss1"] && locks["L1Blocks"],
+                                                                                                                            // Signature Croissants (Heart)
+                    23 => locks["Boss1"] && locks["Knowledge"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                                                                                                                            // Squared Snelks
+                    24 => locks["Boss1"] && locks["PinkDoor"],
+                                                                                                                            // Frost Shrine
+                    25 => locks["Boss1"] && (locks["Ice"] || (locks["Health"] && (locks["Fly"] || locks["Leggy"]))) && locks["L1Blocks"] &&
+                        ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"]),                                           // Sweater Required
+                    26 => locks["Boss1"] && locks["PinkDoor"],
+                                                                                                                            // A Secret to Snowbody
+                    27 => locks["Boss1"] && locks["GreenDoor"],
+                                                                                                                            // Devil's Alcove
+                    28 => locks["Boss1"] && (locks["Knowledge"] || locks["Jump"] || locks["Fly"] || locks["Ice"] || locks["Upside"] || locks["Leggy"]),
+                                                                                                                            // Ice Climb
+                    29 => locks["Boss1"] && locks["L2Blocks"],
+                                                                                                                            // The Labyrinth (Fragment)
+                    30 => (locks["Boss1"] && locks["L2Blocks"]) || (locks["Knowledge"] && !locks["Upside"]),
+                                                                                                                            // The Labyrinth (High Jump)
+                    31 => locks["Boss1"] && locks["RedDoor"],
+                                                                                                                            // Sneaky, Sneaky
+                    32 => locks["Boss2"] || locks["RedDoor"],
+                                                                                                                            // Prismatic Prize (Rainbow Wave)
+                    33 => locks["Boss2"] && locks["RedDoor"],
+                                                                                                                            // Prismatic Prize (Heart)
+                    34 => locks["Boss2"] && (locks["Metal"] || locks["Health"]) && (locks["PinkDoor"] || locks["RedDoor"]),
+                                                                                                                            // Hall of Fire
+                    35 => locks["Boss2"] && locks["Knowledge"] && locks["Metal"] && (locks["Fly"] || locks["L3Blocks"] || locks["RedDoor"]),
+                                                                                                                            // Scorching Snelks
+                    36 => locks["Boss2"] && locks["Knowledge"] && (locks["Fly"] || locks["L3Blocks"]),
+                                                                                                                            // Hidden Hideout
+                    37 => locks["Boss2"] && locks["RedDoor"] || locks["L3Blocks"],
+                                                                                                                            // Green Cache
+                    38 => locks["Boss2"] && locks["L2Blocks"],
+                                                                                                                            // Furnace
+                    39 => locks["Boss2"] && locks["RedDoor"],
+                                                                                                                            // Slitherine Grove
+                    40 => locks["Boss2"] && locks["PinkDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                                                                                                                            // Floaty Fortress (Top Left)
+                    41 => locks["Boss2"] && locks["PinkDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                                                                                                                            // Floaty Fortress (Bottom Right)
+                    42 => locks["Boss2"] && locks["L2Blocks"],
+                                                                                                                            // Woah Mama
+                    43 => locks["Boss2"] && locks["L2Blocks"] && (locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"]),
+                                                                                                                            // Shocked Shell
+                    44 => locks["Boss2"] && locks["L2Blocks"],
+                                                                                                                            // Gravity Shrine
+                    45 => locks["Boss2"] && locks["Fly"] || (locks["Knowledge"] && locks["RedDoor"]),
+                                                                                                                            // Fast Food
+                    46 => locks["Boss3"] || (locks["RedDoor"] && (locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"])),
+                                                                                                                            // The Bridge
+                    47 => locks["Boss3"] && locks["L3Blocks"],
+                                                                                                                            // Transit 90
+                    48 => locks["Boss3"] && locks["RedDoor"] && (locks["Metal"] || locks["Health"]),
+                                                                                                                            // Steel Shrine
+                    49 => locks["Boss3"] && locks["L3Blocks"] && (locks["Metal"] || locks["Health"]),
+                                                                                                                            // Space Balcony (Heart)
+                    50 => locks["Boss3"] && locks["L3Blocks"] && (locks["Metal"] || locks["Health"]),
+                                                                                                                            // Space Balcony (Fragment)
+                    51 => locks["Boss3"] && locks["RedDoor"] && (locks["Metal"] || locks["Health"]),
+                                                                                                                            // The Vault
+                    52 => locks["Boss3"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
+                        (locks["Health"] || locks["Metal"]),                                                                // Holy Hideaway
+                    53 => locks["Boss3"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
+                        (locks["Health"] || locks["Metal"]),                                                                // Arctic Alcove
+                    54 => locks["Boss3"] && locks["Knowledge"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] ||
+                        locks["Blobby"]) && (locks["Health"] || locks["Metal"]),                                            // Lost Loot
+                    55 => locks["Boss3"] && locks["GreenDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
+                        (locks["Health"] || locks["Metal"]),                                                                // Reinforcements
+                    56 => locks["PinkDoor"],
+                                                                                                                            // Glitched Goodies
                     _ => false
                 })
                     if (locations[i] == -2)
@@ -497,148 +591,123 @@ public class Randomizer : MonoBehaviour
         return newLocations;
     }
 
-    private bool BlueDoor() { return lockStates[0]; }
-    private bool PinkDoor() { return lockStates[1]; }
-    private bool RedDoor() { return lockStates[2]; }
-    private bool GreenDoor() { return lockStates[3]; }
-    private bool L1Blocks() { return lockStates[4]; }
-    private bool L2Blocks() { return lockStates[5]; }
-    private bool L3Blocks() { return lockStates[6]; }
-    private bool Jump() { return lockStates[7]; }
-    private bool Ice() { return lockStates[8]; }
-    private bool Fly() { return lockStates[9]; }
-    private bool Metal() { return lockStates[10]; }
-    private bool Health() { return lockStates[11]; }
-    private bool Shock() { return lockStates[12]; }
-    private bool Snaily() { return lockStates[13]; }
-    private bool Sluggy() { return lockStates[14]; }
-    private bool Upside() { return lockStates[15]; }
-    private bool Leggy() { return lockStates[16]; }
-    private bool Blobby() { return lockStates[17]; }
-    private bool Leechy() { return lockStates[18]; }
-    private bool Knowledge() { return lockStates[19]; }
-    private bool Boss1() { return lockStates[20]; }
-    private bool Boss2() { return lockStates[21]; }
-    private bool Boss3() { return lockStates[22]; }
-    private bool Boss4() { return lockStates[23]; }
-
     private void TweakLocks(int itemID, int helixCount)
     {
         switch (itemID)
         {
             case 0: // Peashooter
-                lockStates[0] = true;  // BlueDoor
+                locks["BlueDoor"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
-                    lockStates[20] = true; // Boss1
+                    locks["Boss1"] = true;
                 if (hasPlacedDevastator)
                 {
-                    lockStates[1] = true;  // PinkDoor
-                    lockStates[2] = true;  // RedDoor
-                    lockStates[3] = true;  // GreenDoor
-                    lockStates[4] = true;  // L1Blocks
-                    lockStates[5] = true;  // L2Blocks
-                    lockStates[6] = true;  // L3Blocks
+                    locks["PinkDoor"] = true;
+                    locks["RedDoor"] = true;
+                    locks["GreenDoor"] = true;
+                    locks["L1Blocks"] = true;
+                    locks["L2Blocks"] = true;
+                    locks["L3Blocks"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        lockStates[21] = true; // Boss2
-                        lockStates[22] = true; // Boss3
-                        lockStates[23] = true; // Boss4
+                        locks["Boss2"] = true;
+                        locks["Boss3"] = true;
+                        locks["Boss4"] = true;
                     }
                 }
                 break;
             case 1: // Boomerang
-                lockStates[0] = true;  // BlueDoor
-                lockStates[1] = true;  // PinkDoor
-                lockStates[4] = true;  // L1Blocks
+                locks["BlueDoor"] = true;
+                locks["PinkDoor"] = true;
+                locks["L1Blocks"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                 {
-                    lockStates[20] = true; // Boss1
-                    lockStates[21] = true; // Boss2
+                    locks["Boss1"] = true;
+                    locks["Boss2"] = true;
                 }
                 if (hasPlacedDevastator)
                 {
-                    lockStates[2] = true;  // RedDoor
-                    lockStates[3] = true;  // GreenDoor
-                    lockStates[5] = true;  // L2Blocks
-                    lockStates[6] = true;  // L3Blocks
+                    locks["RedDoor"] = true;
+                    locks["GreenDoor"] = true;
+                    locks["L2Blocks"] = true;
+                    locks["L3Blocks"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        lockStates[22] = true; // Boss3
-                        lockStates[23] = true; // Boss4
+                        locks["Boss3"] = true;
+                        locks["Boss4"] = true;
                     }
                 }
                 break;
             case 2: // Rainbow Wave
-                lockStates[0] = true;  // BlueDoor
-                lockStates[1] = true;  // PinkDoor
-                lockStates[2] = true;  // RedDoor
-                lockStates[4] = true;  // L1Blocks
-                lockStates[5] = true;  // L2Blocks
+                locks["BlueDoor"] = true;
+                locks["PinkDoor"] = true;
+                locks["RedDoor"] = true;
+                locks["L1Blocks"] = true;
+                locks["L2Blocks"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                 {
-                    lockStates[20] = true; // Boss1
-                    lockStates[21] = true; // Boss2
-                    lockStates[22] = true; // Boss3
+                    locks["Boss1"] = true;
+                    locks["Boss2"] = true;
+                    locks["Boss3"] = true;
                 }
                 if (hasPlacedDevastator)
                 {
-                    lockStates[6] = true;  // L3Blocks
-                    lockStates[3] = true;  // GreenDoor
+                    locks["L3Blocks"] = true;
+                    locks["GreenDoor"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
-                        lockStates[23] = true; // Boss4
+                        locks["Boss4"] = true;
                 }
                 break;
             case 3: // Devastator
-                if (BlueDoor() || PinkDoor() || RedDoor())
+                if (locks["BlueDoor"] || locks["PinkDoor"] || locks["RedDoor"])
                 {
-                    lockStates[0] = true;  // BlueDoor
-                    lockStates[1] = true;  // PinkDoor
-                    lockStates[2] = true;  // RedDoor
-                    lockStates[4] = true;  // L1Blocks
-                    lockStates[5] = true;  // L2Blocks
-                    lockStates[6] = true;  // L3Blocks
-                    lockStates[3] = true;  // GreenDoor
+                    locks["BlueDoor"] = true;
+                    locks["PinkDoor"] = true;
+                    locks["RedDoor"] = true;
+                    locks["L1Blocks"] = true;
+                    locks["L2Blocks"] = true;
+                    locks["L3Blocks"] = true;
+                    locks["GreenDoor"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        lockStates[20] = true; // Boss1
-                        lockStates[21] = true; // Boss2
-                        lockStates[22] = true; // Boss3
-                        lockStates[23] = true; // Boss4
+                        locks["Boss1"] = true;
+                        locks["Boss2"] = true;
+                        locks["Boss3"] = true;
+                        locks["Boss4"] = true;
                     }
                 }
                 hasPlacedDevastator = true;
                 break;
             case 4: // High Jump
-                lockStates[7] = true;  // Jump
+                locks["Jump"] = true;
                 break;
             case 5: // Shell Shield
                 break;
             case 6: // Rapid Fire
                 break;
             case 7: // Ice Snail
-                lockStates[8] = true;  // Ice
+                locks["Ice"] = true;
                 break;
             case 8: // Gravity Snail
-                lockStates[7] = true;  // Jump
-                lockStates[9] = true;  // Gravity
+                locks["Jump"] = true;
+                locks["Fly"] = true;
                 break;
             case 9: // Full Metal Snail
-                lockStates[10] = true; // Metal
+                locks["Metal"] = true;
                 break;
             case 10: // Gravity Shock
-                lockStates[12] = true; // Shock
+                locks["Shock"] = true;
                 break;
             default:
                 if (PlayState.currentRando.bossesLocked)
                 {
                     if (helixCount >= 5)
-                        lockStates[20] = true; // Boss 1
+                        locks["Boss1"] = true;
                     if (helixCount >= 10)
-                        lockStates[21] = true; // Boss 2
+                        locks["Boss2"] = true;
                     if (helixCount >= 15)
-                        lockStates[22] = true; // Boss 3
+                        locks["Boss3"] = true;
                     if (helixCount >= 25)
-                        lockStates[23] = true; // Boss 4
+                        locks["Boss4"] = true;
                 }
                 break;
         }

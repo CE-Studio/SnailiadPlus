@@ -294,9 +294,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                     if (PlayState.isRandomGame && PlayState.currentRando.npcTextShuffled)
                     {
                         int hintID = -1;
-                        for (int i = 0; i < PlayState.currentRando.npcHintData.Length; i++)
+                        for (int i = 0; i < PlayState.currentRando.npcHintData.Length; i += 4)
                         {
-                            if (PlayState.currentRando.npcHintData[i][0] == ID)
+                            if (PlayState.currentRando.npcHintData[i] == ID)
                             {
                                 hintID = i;
                                 i = PlayState.currentRando.npcHintData.Length;
@@ -304,10 +304,10 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         }
                         if (hintID != -1)
                         {
-                            AddText(string.Format("HINT|{0}", hintID));
+                            AddText(string.Concat("HINT|", hintID));
                             useRandoDialogue = true;
                         }
-                        if (ID < PlayState.currentRando.npcTextIndeces.Length)
+                        else if (ID < PlayState.currentRando.npcTextIndeces.Length)
                         {
                             AddText("FLAVOR");
                             useRandoDialogue = true;
@@ -955,17 +955,17 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             if (textID.Substring(0, 4) == "HINT")
             {
                 int hintID = int.Parse(textID.Split('|')[1]);
-                baseID = string.Format("npc_rando_hint_{0}_", PlayState.currentRando.npcHintData[hintID][1]);
-                hintItemID = string.Format("npc_rando_item_{0}", PlayState.currentRando.npcHintData[hintID][2] switch
+                baseID = string.Format("npc_rando_hint_{0}_", PlayState.currentRando.npcHintData[hintID + 1]);
+                hintItemID = string.Concat("npc_rando_item_", PlayState.currentRando.npcHintData[hintID + 2] switch
                 {
                     4 => PlayState.currentProfile.character == "Blobby" ? "4b" : "4a",
                     5 => PlayState.currentProfile.character == "Blobby" ? "5b" : "5a",
                     6 => PlayState.currentProfile.character == "Leechy" ? "6b" : "6a",
                     8 => PlayState.currentProfile.character switch { "Upside" => "8b", "Leggy" => "8c", "Blobby" => "8d", _ => "8a" },
                     9 => PlayState.currentProfile.character switch { "Sluggy" or "Leechy" => "9b", "Blobby" => "9c", _ => "9a" },
-                    _ => PlayState.currentRando.npcHintData[hintID][2]
+                    _ => PlayState.currentRando.npcHintData[hintID + 2]
                 });
-                hintAreaID = PlayState.currentRando.npcHintData[hintID][3].ToString();
+                hintAreaID = string.Concat("npc_rando_area_", PlayState.currentRando.npcHintData[hintID + 3].ToString());
             }
             else if (textID == "FLAVOR")
                 baseID = string.Format("npc_rando_flavor_{0}_", PlayState.currentRando.npcTextIndeces[ID]);
@@ -974,14 +974,14 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
             while (!locatedAll)
             {
                 string fullID = string.Concat(baseID, i.ToString());
-                string newText;
-                Debug.Log(fullID);
-                if (hintItemID == "")
-                    newText = string.Format(PlayState.GetText(fullID), PlayState.GetText(hintItemID), PlayState.GetText(hintAreaID));
-                else
-                    newText = PlayState.GetText(fullID);
+                string newText = PlayState.GetText(fullID);
                 if (newText != fullID)
                 {
+                    if (hintItemID != "")
+                    {
+                        newText = newText.Replace("[0]", PlayState.GetText(hintItemID));
+                        newText = newText.Replace("[1]", PlayState.GetText(hintAreaID));
+                    }
                     textToSend.Add(newText);
                     portraitStateList.Add(PlayState.GetTextInfo(fullID).value);
                 }

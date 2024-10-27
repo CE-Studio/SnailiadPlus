@@ -463,7 +463,7 @@ public class PlayState
         public int[] musicList;       // All music IDs, in order relative to the actual music ID list
         public bool npcTextShuffled;  // Whether or not NPC dialogue should be randomized
         public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
-        public int[][] npcHintData;   // Any item hints that get generated. Sublists are structed: [NPC ID, hint text ID, item ID, area ID]
+        public int[] npcHintData;     // Any item hints that get generated. Values come in groups of four, ordered: [NPC ID, hint text ID, item ID, area ID]
     }
 
     [Serializable]
@@ -537,7 +537,7 @@ public class PlayState
         musicList = new int[] { },
         npcTextShuffled = false,
         npcTextIndeces = new int[] { },
-        npcHintData = new int[][] { }
+        npcHintData = new int[] { }
     };
 
     public static GeneralData blankData = new()
@@ -718,7 +718,7 @@ public class PlayState
             musicList = (int[])blankRando.musicList.Clone(),
             npcTextShuffled = blankRando.npcTextShuffled,
             npcTextIndeces = (int[])blankRando.npcTextIndeces.Clone(),
-            npcHintData = (int[][])blankRando.npcHintData.Clone()
+            npcHintData = (int[])blankRando.npcHintData.Clone()
         };
     }
 

@@ -4687,27 +4687,27 @@
 		},
 		{
 			"name": "npc_rando_hint_0_0",
-			"text": "Y'know, {p|0.15}I heard somewhere that a{nl}{0} can{nl}be found {1}...",
+			"text": "Y'know, {p|0.15}I heard somewhere that a{nl}[0] can{nl}be found [1]...",
 			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_1_0",
-			"text": "Did you know, {P}?  {p|0.15}There's a{nl}{0} you{nl}can find {1}!!",
+			"text": "Did you know, {P}?  {p|0.15}There's a{nl}[0] you{nl}can find [1]!!",
 			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_2_0",
-			"text": "There's a place {1}{nl}where you can find a{nl}{0}.",
+			"text": "There's a place [1]{nl}where you can find a{nl}[0].",
 			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_3_0",
-			"text": "I heard there's a {nl}{0}{nl}{1}.",
+			"text": "I heard there's a {nl}[0]{nl}[1].",
 			"value": 1
 		},
 		{
 			"name": "npc_rando_hint_4_0",
-			"text": "If you look {1},{nl}I heard you might find{nl}a {0}!!",
+			"text": "If you look [1],{nl}I heard you might find{nl}a [0]!!",
 			"value": 1
 		},
 		{
@@ -4852,7 +4852,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_3_0",
-			"text": "Darn, my node graph is out of{nl}date!  {p|0.25}Now I gotta go rebuild it...",
+			"text": "Darn, my node graph is out of{nl}date!  {p|0.25}Now I gotta go rebuild{nl}it...",
 			"value": 1
 		},
 		{
@@ -4872,7 +4872,7 @@
 		},
 		{
 			"name": "npc_rando_flavor_7_0",
-			"text": "I heard a rumor about some kind{nl}of... {p|0.15}{col|0302}shrine clip{col|0312}?  {p|0.2}And the number{nl}2011?  {p|0.3}Yeah, I don't get it either.",
+			"text": "I heard a rumor about some kind{nl}of... {p|0.15}{col|0302}shrine clip{col|0312}? {p|0.3}And the number{nl}2011?  {p|0.5}Yeah I don't get it either.",
 			"value": 1
 		},
 		{
@@ -4917,12 +4917,12 @@
 		},
 		{
 			"name": "npc_rando_flavor_15_1",
-			"text": "Like, somebody's moved all the furniture,{nl}{p|0.15}but it still fits right?",
+			"text": "Like, somebody's moved all the{nl}furniture, {p|0.15}but it still fits{nl}right?",
 			"value": 1
 		},
 		{
 			"name": "npc_rando_flavor_15_2",
-			"text": "{spd|0.04}...{nl}{p|0.15}{spd|0.02}Oh, that reminds me!  I wanted to{nl}buy a new houseplant today.",
+			"text": "{spd|0.08}...{nl}{p|0.2}{spd|0.02}Oh, that reminds me!  I wanted{nl}to buy a new houseplant today.",
 			"value": 1
 		},
 		{
@@ -5388,6 +5388,41 @@
 		{
 			"name": "ending_stats",
 			"text": "Congratulations!!\n\n{0} - {1}\nItems collected: {2}%\nClear time: {3}",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_rando",
+			"text": "Randomizer seed: {0}    Logic level: {1}    Progressives: {2}\nBroom start: {3}    Masked items: {4}    Open areas: {5}\nShuffled music: {6}    NPC hints: {7}",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_on",
+			"text": "On",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_off",
+			"text": "Off",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_musis_areas",
+			"text": "Areas only",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_shuffle_split",
+			"text": "Split",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_shuffle_full",
+			"text": "Full",
+			"value": 0
+		},
+		{
+			"name": "ending_stats_shuffle_pro",
+			"text": "Pro",
 			"value": 0
 		},
 		{

@@ -1242,10 +1242,12 @@ public class GigaSnail : Boss
             "Leechy" => AchievementPanel.Achievements.WinLeechy,
             _ => AchievementPanel.Achievements.BeatMoonSnail
         });
+        if (PlayState.isRandomGame)
+            PlayState.QueueAchievementPopup(AchievementPanel.Achievements.WinRandomizer);
         if (!PlayState.HasTime())
             unlocks = unlocks == "" ? "BossRush" : "BossRushAndInsane";
         PlayState.credits.StartCredits(PlayState.currentProfile.gameTime);
-        if (PlayState.currentProfile.difficulty != 0)
+        if (PlayState.currentProfile.difficulty != 0 && !PlayState.isRandomGame)
         {
             PlayState.TimeIndeces targetTime = PlayState.currentProfile.character switch
             {

@@ -76,6 +76,7 @@ public class Credits : MonoBehaviour
 
     private TextObject statsText;
     private TextObject overwriteText;
+    private TextObject randoStatsText;
 
     private Transform creditsParent;
 
@@ -232,6 +233,8 @@ public class Credits : MonoBehaviour
         statsText.SetColor(new Color(1, 1, 1, 0));
         overwriteText = transform.Find("Overwrite Prompt Text").GetComponent<TextObject>();
         overwriteText.SetColor(new Color(1, 1, 1, 0));
+        randoStatsText = transform.Find("Rando Data Text").GetComponent<TextObject>();
+        randoStatsText.SetColor(new Color(1, 1, 1, 0));
         creditsParent = transform.Find("Credits Roll").transform;
         textObj = Resources.Load<GameObject>("Objects/Text Object");
         creditsEntity = Resources.Load<GameObject>("Objects/Credits Entity");
@@ -524,6 +527,7 @@ public class Credits : MonoBehaviour
                 {
                     float tweakedTime = modeTimer - STATS_FADE_DELAY;
                     statsText.SetColor(new Color(1, 1, 1, tweakedTime));
+                    randoStatsText.SetColor(new Color(1, 1, 1, tweakedTime));
                 }
                 if (PlayState.creditsState == PlayState.CreditsStates.fadeOut)
                 {
@@ -536,6 +540,7 @@ public class Credits : MonoBehaviour
                 {
                     statsText.position = new Vector2(0, Mathf.Lerp(statsText.position.y, 6.5f, OVERWRITE_LERP_VALUE * Time.deltaTime));
                     overwriteText.position = new Vector2(0, Mathf.Lerp(overwriteText.position.y, -0.5f, OVERWRITE_LERP_VALUE * Time.deltaTime));
+                    randoStatsText.position = new Vector2(0, Mathf.Lerp(randoStatsText.position.y, 9.5f, OVERWRITE_LERP_VALUE * Time.deltaTime));
                     if (Control.LeftPress() || Control.RightPress())
                     {
                         confirmOverwrite = !confirmOverwrite;
@@ -797,6 +802,17 @@ public class Credits : MonoBehaviour
             PlayState.GetText("difficulty_" + PlayState.currentProfile.difficulty switch { 1 => "normal", 2 => "insane", _ => "easy" }),
             PlayState.currentProfile.percentage, PlayState.GetTimeString(completionTime)));
         statsText.position = new Vector2(0, 2.5f);
+        randoStatsText.SetText(string.Format(PlayState.GetText("ending_stats_rando"),
+            PlayState.currentRando.seed.ToString(),
+            PlayState.GetText(PlayState.currentRando.randoLevel switch { 1 => "ending_stats_shuffle_split", 2 => "ending_stats_shuffle_full", _ => "ending_stats_shuffle_pro" }),
+            PlayState.GetText(string.Concat("ending_stats_", PlayState.currentRando.progressivesOn ? "on" : "off")),
+            PlayState.GetText(string.Concat("ending_stats_", PlayState.currentRando.broomStart ? "on" : "off")),
+            PlayState.GetText(string.Concat("ending_stats_", PlayState.currentRando.maskedItems ? "on" : "off")),
+            PlayState.GetText(string.Concat("ending_stats_", PlayState.currentRando.openAreas ? "on" : "off")),
+            PlayState.GetText(PlayState.currentRando.musicShuffled switch { 1 => "ending_stats_music_areas", 2 => "ending_stats_on", _ => "ending_stats_off" }),
+            PlayState.GetText(string.Concat("ending_stats_", PlayState.currentRando.npcTextShuffled ? "on" : "off"))
+            ));
+        randoStatsText.position = new Vector2(-12.125f, 7.25f);
         if (oldTime != PlayState.TimeIndeces.none)
             overwriteString = string.Format(PlayState.GetText("ending_promptOverwrite"), PlayState.GetTimeString(oldTime), PlayState.GetTimeVersion(oldTime));
         overwriteText.position = new Vector2(0, -7.5f);
