@@ -275,6 +275,9 @@ public class GlobalFunctions : MonoBehaviour
             // Cheat management
             addedCheatInputThisFrame = false;
 
+            // Debug management
+            PlayState.specialLayer.color = new Color(1, 1, 1, PlayState.showSpLayer ? 0.5f : 0f);
+
             // Skyfish cheat
             bool skyfishActive = false;
             if (PlayState.currentArea == (int)PlayState.Areas.SnailTown)

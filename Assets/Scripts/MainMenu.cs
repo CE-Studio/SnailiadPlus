@@ -4142,6 +4142,10 @@ public class MainMenu : MonoBehaviour
         PlayState.SetDarkness(0);
         PlayState.globalFunctions.RemoveGigaBackgroundLayers();
 
+        PlayState.noclipMode = false;
+        PlayState.damageMult = false;
+        PlayState.showSpLayer = false;
+
         PlayState.skyLayer.transform.localPosition = Vector2.zero;
         PlayState.bgLayer.transform.localPosition = Vector2.zero;
         PlayState.fg1Layer.transform.localPosition = Vector2.zero;

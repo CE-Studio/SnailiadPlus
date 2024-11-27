@@ -51,6 +51,13 @@ public class Randomizer : MonoBehaviour
     private int[] locations = new int[] { };
     private bool hasPlacedDevastator = false;
 
+    private readonly int[][][] validMajorCombos = new int[][][]
+    {
+        new int[][] { // EARLYGAME
+            new int[] { 0 }
+        }
+    };
+
     public void StartGeneration()
     {
         isShuffling = true;
@@ -157,7 +164,115 @@ public class Randomizer : MonoBehaviour
                         //Debug.Log("-------------------------------------------------");
                         break;
 
-                    case 2: // Items (Split shuffle)
+                    case 2: // Items
+
+                        break;
+
+                    case 3: // Music
+                        PlayState.currentRando.musicList = defaultMusicList.ToArray();
+                        if (PlayState.currentRando.musicShuffled == 0)
+                        {
+                            randoPhase = 4;
+                            break;
+                        }
+
+                        List<int> songsToAdd;
+                        if (PlayState.currentRando.musicShuffled == 1)
+                        {
+                            songsToAdd = new() { 0, 1, 2, 3, 4, 5 };
+                            for (int i = 0; i < 6; i++)
+                            {
+                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                                PlayState.currentRando.musicList[i + 4] = songsToAdd[randomIndex];
+                                songsToAdd.RemoveAt(randomIndex);
+                            }
+                        }
+                        else
+                        {
+                            songsToAdd = defaultMusicList;
+                            //for (int i = 0; i < defaultMusicList.Count; i++)
+                            while (songsToAdd.Count > 0) // This wasn't working as a for loop for some reason
+                            {
+                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
+                                PlayState.currentRando.musicList[songsToAdd.Count - 1] = songsToAdd[randomIndex];
+                                songsToAdd.RemoveAt(randomIndex);
+                            }
+                        }
+                        randoPhase = 4;
+                        break;
+
+                    case 4: // Dialogue
+                        if (!PlayState.currentRando.npcTextShuffled)
+                        {
+                            randoPhase = 0;
+                            isShuffling = false;
+                            break;
+                        }
+
+                        List<int> totalHints = new();
+                        int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
+                        List<int> availableHints = new();
+                        int hintCount = 5;
+                        for (int i = 0; i < hintCount; i++)
+                            availableHints.Add(i);
+                        List<int> availableNPCs = new();
+                        for (int i = 0; i < PlayState.npcCount; i++)
+                            availableNPCs.Add(i);
+                        for (int i = 0; i < finalHintCount; i++)
+                        {
+                            int itemID = -1;
+                            int areaID = -1;
+                            int locationID = 0;
+                            while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
+                            {
+                                locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
+                                itemID = PlayState.currentRando.itemLocations[locationID];
+                            }
+                            int countedUpItems = 0;
+                            int potentialArea = 0;
+                            while (areaID == -1) // This whole thing assumes the areas are in order. Which they should be
+                            {
+                                countedUpItems += PlayState.totaItemsPerArea[potentialArea];
+                                if (locationID < countedUpItems)
+                                    areaID = potentialArea;
+                                else
+                                    potentialArea++;
+                            }
+
+                            int npcIndex = Mathf.FloorToInt(Random.value * availableNPCs.Count);
+                            totalHints.Add(availableNPCs[npcIndex]);
+                            availableNPCs.RemoveAt(npcIndex);
+                            int hintIndex = Mathf.FloorToInt(Random.value * availableHints.Count);
+                            totalHints.Add(availableHints[hintIndex]);
+                            availableHints.RemoveAt(hintIndex);
+                            totalHints.Add(itemID);
+                            totalHints.Add(areaID);
+                        }
+                        PlayState.currentRando.npcHintData = totalHints.ToArray();
+
+                        List<int> newIndeces = new();
+                        List<int> availableIndeces = new();
+                        int flavorCount = 47;
+                        for (int i = 0; i < flavorCount; i++)
+                            availableIndeces.Add(i);
+                        for (int i = 0; i < PlayState.npcCount; i++)
+                        {
+                            if (availableIndeces.Count == 0)
+                                i = PlayState.npcCount;
+                            else
+                            {
+                                int indexIndex = Mathf.FloorToInt(Random.value * availableIndeces.Count);
+                                newIndeces.Add(availableIndeces[indexIndex]);
+                                availableIndeces.RemoveAt(indexIndex);
+                            }
+                        }
+                        PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
+                        randoPhase = 0;
+                        isShuffling = false;
+                        break;
+
+                    #region LegacyShuffle
+                    case 5: // Items (Split shuffle) -- LEGACY
                         List<int> availableSplitLocations = GetLocations(splitPhase == 1);
                         if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
                             randoPhase = 1;
@@ -263,7 +378,7 @@ public class Randomizer : MonoBehaviour
                         }
                         break;
 
-                    case 3: // Items (Full/Pro shuffle)
+                    case 6: // Items (Full/Pro shuffle) -- LEGACY
                         List<int> availableLocations = GetLocations();
                         if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
                             randoPhase = 1;
@@ -348,109 +463,7 @@ public class Randomizer : MonoBehaviour
                             //Debug.Log(output);
                         }
                         break;
-
-                    case 4: // Music
-                        PlayState.currentRando.musicList = defaultMusicList.ToArray();
-                        if (PlayState.currentRando.musicShuffled == 0)
-                        {
-                            randoPhase = 5;
-                            break;
-                        }
-
-                        List<int> songsToAdd;
-                        if (PlayState.currentRando.musicShuffled == 1)
-                        {
-                            songsToAdd = new() { 0, 1, 2, 3, 4, 5 };
-                            for (int i = 0; i < 6; i++)
-                            {
-                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
-                                PlayState.currentRando.musicList[i + 4] = songsToAdd[randomIndex];
-                                songsToAdd.RemoveAt(randomIndex);
-                            }
-                        }
-                        else
-                        {
-                            songsToAdd = defaultMusicList;
-                            //for (int i = 0; i < defaultMusicList.Count; i++)
-                            while (songsToAdd.Count > 0) // This wasn't working as a for loop for some reason
-                            {
-                                int randomIndex = Mathf.FloorToInt(Random.value * songsToAdd.Count);
-                                PlayState.currentRando.musicList[songsToAdd.Count - 1] = songsToAdd[randomIndex];
-                                songsToAdd.RemoveAt(randomIndex);
-                            }
-                        }
-                        randoPhase = 5;
-                        break;
-
-                    case 5: // Dialogue
-                        if (!PlayState.currentRando.npcTextShuffled)
-                        {
-                            randoPhase = 0;
-                            isShuffling = false;
-                            break;
-                        }
-
-                        List<int> totalHints = new();
-                        int finalHintCount = Mathf.FloorToInt(Random.value * 3) + 2; // 2-5 hints per seed
-                        List<int> availableHints = new();
-                        int hintCount = 5;
-                        for (int i = 0; i < hintCount; i++)
-                            availableHints.Add(i);
-                        List<int> availableNPCs = new();
-                        for (int i = 0; i < PlayState.npcCount; i++)
-                            availableNPCs.Add(i);
-                        for (int i = 0; i < finalHintCount; i++)
-                        {
-                            int itemID = -1;
-                            int areaID = -1;
-                            int locationID = 0;
-                            while (!(itemID >= 0 && itemID <= 10)) // Only major items valid for hints
-                            {
-                                locationID = Mathf.FloorToInt(Random.value * PlayState.currentRando.itemLocations.Length);
-                                itemID = PlayState.currentRando.itemLocations[locationID];
-                            }
-                            int countedUpItems = 0;
-                            int potentialArea = 0;
-                            while (areaID == -1) // This whole thing assumes the areas are in order. Which they should be
-                            {
-                                countedUpItems += PlayState.totaItemsPerArea[potentialArea];
-                                if (locationID < countedUpItems)
-                                    areaID = potentialArea;
-                                else
-                                    potentialArea++;
-                            }
-
-                            int npcIndex = Mathf.FloorToInt(Random.value * availableNPCs.Count);
-                            totalHints.Add(availableNPCs[npcIndex]);
-                            availableNPCs.RemoveAt(npcIndex);
-                            int hintIndex = Mathf.FloorToInt(Random.value * availableHints.Count);
-                            totalHints.Add(availableHints[hintIndex]);
-                            availableHints.RemoveAt(hintIndex);
-                            totalHints.Add(itemID);
-                            totalHints.Add(areaID);
-                        }
-                        PlayState.currentRando.npcHintData = totalHints.ToArray();
-
-                        List<int> newIndeces = new();
-                        List<int> availableIndeces = new();
-                        int flavorCount = 47;
-                        for (int i = 0; i < flavorCount; i++)
-                            availableIndeces.Add(i);
-                        for (int i = 0; i < PlayState.npcCount; i++)
-                        {
-                            if (availableIndeces.Count == 0)
-                                i = PlayState.npcCount;
-                            else
-                            {
-                                int indexIndex = Mathf.FloorToInt(Random.value * availableIndeces.Count);
-                                newIndeces.Add(availableIndeces[indexIndex]);
-                                availableIndeces.RemoveAt(indexIndex);
-                            }
-                        }
-                        PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
-                        randoPhase = 0;
-                        isShuffling = false;
-                        break;
+                        #endregion
                 }
             }
             yield return new WaitForEndOfFrame();

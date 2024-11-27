@@ -43,6 +43,7 @@ public class PlayState
 
     public static bool noclipMode = false;
     public static bool damageMult = false;
+    public static bool showSpLayer = false;
 
     [Serializable]
     public struct AnimationData

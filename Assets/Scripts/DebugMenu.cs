@@ -72,10 +72,11 @@ public class DebugMenu : MonoBehaviour
 
         AddButton(new Vector2(1.5f, 0), "player", "player", new int[] { 40, 41, 42, 43, 44, 45 }, new string[] { "shellbreaker", "gravityTrap", "helixFragment", "gravityShock" });
 
-        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 0, 1 }, new string[] { "gravityShock", "peashooter", "warpTrap", "damage" });
-        AddButton(new Vector2(-3.5f, -2), "damage", "option", new int[] { 0, 1 }, new string[] { "superSecretBoomerang", "boomerang", "noclip", "weaponTrap" });
+        AddButton(new Vector2(-4.5f, -2), "noclip", "option", new int[] { 56, 57 }, new string[] { "gravityShock", "peashooter", "warpTrap", "damage" });
+        AddButton(new Vector2(-3.5f, -2), "damage", "option", new int[] { 58, 59 }, new string[] { "superSecretBoomerang", "boomerang", "noclip", "showSp" });
+        AddButton(new Vector2(-2.5f, -2), "showSp", "option", new int[] { 60, 61 }, new string[] { "debugRainbowWave", "rainbowWave", "damage", "weaponTrap" });
 
-        AddButton(trapGridZero, "weaponTrap", "trap_0", new int[] { 46, 47 }, new string[] { "helixFragment", "highJump", "damage", "gravityTrap" });
+        AddButton(trapGridZero, "weaponTrap", "trap_0", new int[] { 46, 47 }, new string[] { "helixFragment", "highJump", "showSp", "gravityTrap" });
         AddButton(new Vector2(trapGridZero.x + 1, trapGridZero.y), "gravityTrap", "trap_1", new int[] { 48, 49 }, new string[] { "player", "shellbreaker", "weaponTrap", "lullabyTrap" });
         AddButton(new Vector2(trapGridZero.x + 2, trapGridZero.y), "lullabyTrap", "trap_2", new int[] { 50, 51 }, new string[] { "player", "stompy", "gravityTrap", "spiderTrap" });
         AddButton(new Vector2(trapGridZero.x + 3, trapGridZero.y), "spiderTrap", "trap_3", new int[] { 52, 53 }, new string[] { "player", "spaceBox", "lullabyTrap", "warpTrap" });
@@ -216,12 +217,17 @@ public class DebugMenu : MonoBehaviour
                             case "noclip":
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
                                     PlayState.noclipMode = !PlayState.noclipMode;
-                                button.sprite.sprite = PlayState.noclipMode ? GetSprite(1) : GetSprite(0);
+                                button.sprite.sprite = PlayState.noclipMode ? GetSprite(57) : GetSprite(56);
                                 break;
                             case "damage":
                                 if (Control.JumpPress(0, true) && button.label == currentSelected)
                                     PlayState.damageMult = !PlayState.damageMult;
-                                button.sprite.sprite = PlayState.damageMult ? GetSprite(1) : GetSprite(0);
+                                button.sprite.sprite = PlayState.damageMult ? GetSprite(59) : GetSprite(58);
+                                break;
+                            case "showSp":
+                                if (Control.JumpPress(0, true) && button.label == currentSelected)
+                                    PlayState.showSpLayer = !PlayState.showSpLayer;
+                                button.sprite.sprite = PlayState.showSpLayer ? GetSprite(61) : GetSprite(60);
                                 break;
                         }
                         break;
