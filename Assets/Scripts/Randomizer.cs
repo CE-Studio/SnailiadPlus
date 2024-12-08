@@ -9,6 +9,7 @@ public class Randomizer : MonoBehaviour
     public bool isShuffling = false;
     private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items (split), 3 = items (pro/full), 4 = music, 5 = dialogue
     private int splitPhase = 0; // 1 = majors, 2 = minors
+    private int itemPhase = 0; // 1 = required majors, 2 = remaining majors, 3 = hearts, 4 = fragments
 
     private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
     private readonly int[] progMajorWeights = new int[] { 1, 1, 1, 1, 3, 4, 2, 1, 1, 1, 1 };
@@ -16,6 +17,26 @@ public class Randomizer : MonoBehaviour
     private const int HELIX_WEIGHT = 3;
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
     private const int STEPS_PER_FRAME = 3;
+
+    private enum Items
+    {
+        Peashooter,
+        Boomerang,
+        RainbowWave,
+        Devastator,
+        HighJump,
+        ShellShield,
+        RapidFire,
+        IceShell,
+        FlyShell,
+        MetalShell,
+        GravityShock,
+        SSBoomerang,
+        DebugRWave,
+        Heart,
+        Helix,
+        Broom
+    }
 
     //private bool[] locks = new bool[24];
     private Dictionary<string, bool> locks = new()
@@ -51,11 +72,66 @@ public class Randomizer : MonoBehaviour
     private int[] locations = new int[] { };
     private bool hasPlacedDevastator = false;
 
-    private readonly int[][][] validMajorCombos = new int[][][]
+    private readonly int[][][] validMajorCombos = new int[][][] // First number in each combo is that combo's weight
     {
-        new int[][] { // EARLYGAME
-            new int[] { 0 }
+        new int[][] { // EARLYGAME. Goal: Shellbreaker, minimum breakable weapon
+            new int[] { 50, (int)Items.Boomerang },
+            new int[] { 40, (int)Items.Peashooter, (int)Items.Boomerang },
+            new int[] { 40, (int)Items.RainbowWave },
+            new int[] { 25, (int)Items.Peashooter, (int)Items.Devastator },
+            new int[] { 30, (int)Items.Broom, (int)Items.Devastator },
+            new int[] { 20, (int)Items.HighJump, (int)Items.Boomerang },
+            new int[] { 15, (int)Items.HighJump, (int)Items.Peashooter, (int)Items.Boomerang },
+            new int[] { 12, (int)Items.HighJump, (int)Items.RainbowWave },
+            new int[] {  8, (int)Items.HighJump, (int)Items.Peashooter, (int)Items.Devastator },
+            new int[] { 10, (int)Items.HighJump, (int)Items.Broom, (int)Items.Devastator },
+            new int[] {  8, (int)Items.FlyShell, (int)Items.Boomerang },
+            new int[] {  4, (int)Items.FlyShell, (int)Items.Peashooter, (int)Items.Boomerang },
+            new int[] {  4, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  2, (int)Items.FlyShell, (int)Items.Peashooter, (int)Items.Devastator },
+            new int[] {  6, (int)Items.FlyShell, (int)Items.Broom, (int)Items.Devastator },
+            new int[] { 20, (int)Items.IceShell, (int)Items.HighJump, (int)Items.Boomerang },
+            new int[] { 15, (int)Items.IceShell, (int)Items.HighJump, (int)Items.Peashooter, (int)Items.Boomerang },
+            new int[] { 12, (int)Items.IceShell, (int)Items.HighJump, (int)Items.RainbowWave },
+            new int[] {  8, (int)Items.IceShell, (int)Items.HighJump, (int)Items.Peashooter, (int)Items.Devastator },
+            new int[] { 10, (int)Items.IceShell, (int)Items.HighJump, (int)Items.Broom, (int)Items.Devastator },
+            new int[] {  8, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.Boomerang },
+            new int[] {  4, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.Peashooter, (int)Items.Boomerang },
+            new int[] {  4, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  2, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.Peashooter, (int)Items.Devastator },
+            new int[] {  6, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.Broom, (int)Items.Devastator },
+        },
+        new int[][] { // MIDGAME. Goal: Stompy
+            new int[] { 10, (int)Items.Boomerang },
+            new int[] { 10, (int)Items.RainbowWave },
+            new int[] {  6, (int)Items.Devastator },
+            new int[] {  8, (int)Items.IceShell, (int)Items.Boomerang },
+            new int[] {  7, (int)Items.IceShell, (int)Items.RainbowWave },
+            new int[] {  4, (int)Items.IceShell, (int)Items.Devastator },
+            new int[] {  7, (int)Items.HighJump, (int)Items.Boomerang },
+            new int[] {  5, (int)Items.HighJump, (int)Items.RainbowWave },
+            new int[] {  3, (int)Items.HighJump, (int)Items.Devastator },
+            new int[] {  3, (int)Items.FlyShell, (int)Items.Boomerang },
+            new int[] {  2, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  1, (int)Items.FlyShell, (int)Items.Devastator },
+        },
+        new int[][] { // LATEGAME. Goal: Space Box, fly
+            new int[] {  5, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  3, (int)Items.FlyShell, (int)Items.Devastator },
+            new int[] {  3, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  2, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.Devastator },
+        },
+        new int[][] { // ENDGAME. Goal: Moon Snail, full weapons
+            new int[] {  1, (int)Items.Devastator, (int)Items.FlyShell },
         }
+    };
+
+    private int[][] locationPhases = new int[][]
+    {
+        new int[] {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 56 },
+        new int[] { 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33 },
+        new int[] { 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 },
+        new int[] { 47, 48, 49, 50, 51, 52, 53, 54, 55 }
     };
 
     public void StartGeneration()
@@ -252,7 +328,7 @@ public class Randomizer : MonoBehaviour
 
                         List<int> newIndeces = new();
                         List<int> availableIndeces = new();
-                        int flavorCount = 47;
+                        int flavorCount = 48;
                         for (int i = 0; i < flavorCount; i++)
                             availableIndeces.Add(i);
                         for (int i = 0; i < PlayState.npcCount; i++)

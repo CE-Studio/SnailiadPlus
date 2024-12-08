@@ -5091,6 +5091,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_rando_flavor_47_0",
+			"text": "Pronouns jumpscare",
+			"value": 1
+		},
+		{
 			"name": "ending_moon1",
 			"text": "     And so...",
 			"value": 0
