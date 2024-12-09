@@ -9,7 +9,7 @@ public class Randomizer : MonoBehaviour
     public bool isShuffling = false;
     private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items (split), 3 = items (pro/full), 4 = music, 5 = dialogue
     private int splitPhase = 0; // 1 = majors, 2 = minors
-    private int itemPhase = 0; // 1 = required majors, 2 = remaining majors, 3 = hearts, 4 = fragments
+    private int itemPhase = 0; // 1 = required majors, 2 = remaining majors, 3 = hearts, 4 = fragments/traps
 
     private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
     private readonly int[] progMajorWeights = new int[] { 1, 1, 1, 1, 3, 4, 2, 1, 1, 1, 1 };
@@ -170,11 +170,13 @@ public class Randomizer : MonoBehaviour
         locations = new int[PlayState.baseItemLocations.Count];
         List<int> itemsToAdd = new();
         List<int> unplacedTraps = new();
+        int currentSphere = 0;
         int progWeapons = 0;
         int progMods = 0;
         int progShells = 0;
         int placedHelixes = 0;
         int placedHearts = 0;
+        int[] currentMajorCombo = new int[0];
 
         while (isShuffling)
         {
@@ -194,6 +196,7 @@ public class Randomizer : MonoBehaviour
                         hasPlacedDevastator = false;
                         itemsToAdd = new();
                         randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
+                        itemPhase = 1;
                         //locks = (bool[])defaultLocksThisGen.Clone();
                         string[] tempKeys = locks.Keys.ToArray();
                         foreach (string key in tempKeys)
@@ -241,7 +244,24 @@ public class Randomizer : MonoBehaviour
                         break;
 
                     case 2: // Items
-
+                        switch (itemPhase)
+                        {
+                            case 1: // Required majors
+                                if (currentSphere >= validMajorCombos.Length)
+                                    itemPhase++;
+                                else
+                                {
+                                    if (currentMajorCombo.Length == 0)
+                                        currentMajorCombo = SelectNewMajorCombo(currentSphere);
+                                }
+                                break;
+                            case 2: // Remaining majors
+                                break;
+                            case 3: // Hearts
+                                break;
+                            case 4: // Fragments/traps
+                                break;
+                        }
                         break;
 
                     case 3: // Music
@@ -344,6 +364,7 @@ public class Randomizer : MonoBehaviour
                         }
                         PlayState.currentRando.npcTextIndeces = newIndeces.ToArray();
                         randoPhase = 0;
+                        itemPhase = 0;
                         isShuffling = false;
                         break;
 
@@ -544,6 +565,19 @@ public class Randomizer : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    private int[] SelectNewMajorCombo(int sphereID)
+    {
+        List<int> comboPool = new();
+        for (int i = 0; i < validMajorCombos[sphereID].Length; i++)
+            for (int j = 0; j < validMajorCombos[sphereID][i][0]; j++)
+                comboPool.Add(i);
+        int poolIndex = Mathf.FloorToInt(Random.value * comboPool.Count);
+        List<int> newCombo = new();
+        for (int i = 1; i < validMajorCombos[sphereID][poolIndex].Length; i++)
+            newCombo.Add(validMajorCombos[sphereID][poolIndex][i]);
+        return newCombo.ToArray();
     }
 
     private List<int> GetLocations(bool majorsOnly = false)
