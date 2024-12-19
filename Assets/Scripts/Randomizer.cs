@@ -35,7 +35,8 @@ public class Randomizer : MonoBehaviour
         DebugRWave,
         Heart,
         Helix,
-        Broom
+        Broom,
+        None
     }
 
     //private bool[] locks = new bool[24];
@@ -122,17 +123,21 @@ public class Randomizer : MonoBehaviour
             new int[] {  2, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.Devastator },
         },
         new int[][] { // ENDGAME. Goal: Moon Snail, full weapons
-            new int[] {  1, (int)Items.Devastator, (int)Items.FlyShell },
+            new int[] {  1, (int)Items.Devastator },
         }
     };
 
-    private int[][] locationPhases = new int[][]
+    private List<int>[] locationPhases = new List<int>[]
     {
-        new int[] {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 56 },
-        new int[] { 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33 },
-        new int[] { 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 },
-        new int[] { 47, 48, 49, 50, 51, 52, 53, 54, 55 }
+        new() {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 30, 56 },
+        new() { 23, 24, 25, 26, 27, 28, 29, 31, 32, 33 },
+        new() { 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 },
+        new() { 47, 48, 49, 50, 51, 52, 53, 54, 55 }
     };
+
+    private int[] sphereSplitLimits = new int[] { 3, 0, 0, 0 };
+
+    private List<int> proOnlyLocations = new() { 0, 3, 23, 35, 36, 54 };
 
     public void StartGeneration()
     {
@@ -169,6 +174,8 @@ public class Randomizer : MonoBehaviour
         Random.InitState(PlayState.currentRando.seed);
         locations = new int[PlayState.baseItemLocations.Count];
         List<int> itemsToAdd = new();
+        List<Items> majorsToAdd = new();
+        List<Items> majorsPlaced = new();
         List<int> unplacedTraps = new();
         int currentSphere = 0;
         int progWeapons = 0;
@@ -177,6 +184,7 @@ public class Randomizer : MonoBehaviour
         int placedHelixes = 0;
         int placedHearts = 0;
         int[] currentMajorCombo = new int[0];
+        bool initializedPhase = false;
 
         while (isShuffling)
         {
@@ -195,51 +203,58 @@ public class Randomizer : MonoBehaviour
                         placedHearts = 0;
                         hasPlacedDevastator = false;
                         itemsToAdd = new();
-                        randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
+                        //randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
+                        randoPhase = 2;
                         itemPhase = 1;
                         //locks = (bool[])defaultLocksThisGen.Clone();
                         string[] tempKeys = locks.Keys.ToArray();
                         foreach (string key in tempKeys)
                             locks[key] = false;
+                        if (PlayState.currentRando.broomStart)
+                        {
+                            majorsPlaced.Add(Items.Broom);
+                            TweakLocks(ItemEnumToID(Items.Broom), 0);
+                        }
 
-                        int[] currentMajorWeights = PlayState.currentRando.progressivesOn ? (int[])progMajorWeights.Clone() : (int[])majorWeights.Clone();
-                        for (int i = 0; i < currentMajorWeights.Length; i++)
-                        {
-                            for (int j = 0; j < currentMajorWeights[i]; j++)
-                                itemsToAdd.Add(i);
-                        }
-                        if (randoPhase == 3)
-                        {
-                            for (int i = 0; i < PlayState.MAX_HEARTS; i++)
-                                for (int j = 0; j < HEART_WEIGHT; j++)
-                                    itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
-                            for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
-                                for (int j = 0; j < HELIX_WEIGHT; j++)
-                                    itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
-                            if (PlayState.currentRando.trapsActive)
-                            {
-                                int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
-                                List<int> trapsToAdd = new();
-                                for (int i = 0; i < trapTypes; i++)
-                                    trapsToAdd.Add(1000 + i);
-                                unplacedTraps = trapsToAdd;
-                                int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
-                                for (int i = 0; i < numberOfTraps; i++)
-                                {
-                                    int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
-                                    itemsToAdd.Add(trapsToAdd[trapID]);
-                                    trapsToAdd.RemoveAt(trapID);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            while (itemsToAdd.Contains(10))
-                                itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
-                            foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
-                                locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
-                            splitPhase = 1;
-                        }
+
+                        //int[] currentMajorWeights = PlayState.currentRando.progressivesOn ? (int[])progMajorWeights.Clone() : (int[])majorWeights.Clone();
+                        //for (int i = 0; i < currentMajorWeights.Length; i++)
+                        //{
+                        //    for (int j = 0; j < currentMajorWeights[i]; j++)
+                        //        itemsToAdd.Add(i);
+                        //}
+                        //if (randoPhase == 3)
+                        //{
+                        //    for (int i = 0; i < PlayState.MAX_HEARTS; i++)
+                        //        for (int j = 0; j < HEART_WEIGHT; j++)
+                        //            itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
+                        //    for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
+                        //        for (int j = 0; j < HELIX_WEIGHT; j++)
+                        //            itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
+                        //    if (PlayState.currentRando.trapsActive)
+                        //    {
+                        //        int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
+                        //        List<int> trapsToAdd = new();
+                        //        for (int i = 0; i < trapTypes; i++)
+                        //            trapsToAdd.Add(1000 + i);
+                        //        unplacedTraps = trapsToAdd;
+                        //        int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
+                        //        for (int i = 0; i < numberOfTraps; i++)
+                        //        {
+                        //            int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
+                        //            itemsToAdd.Add(trapsToAdd[trapID]);
+                        //            trapsToAdd.RemoveAt(trapID);
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    while (itemsToAdd.Contains(10))
+                        //        itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
+                        //    foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
+                        //        locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
+                        //    splitPhase = 1;
+                        //}
                         //Debug.Log("-------------------------------------------------");
                         break;
 
@@ -247,15 +262,69 @@ public class Randomizer : MonoBehaviour
                         switch (itemPhase)
                         {
                             case 1: // Required majors
+                                Debug.Log(string.Format("{0}, {1}/{2}, {3}", initializedPhase, currentSphere, validMajorCombos.Length - 1, itemPhase));
+                                if (!initializedPhase)
+                                {
+                                    majorsToAdd = new List<Items>
+                                    {
+                                        Items.Peashooter, Items.Boomerang, Items.RainbowWave, Items.Devastator,
+                                        Items.IceShell, Items.FlyShell, Items.HighJump
+                                    };
+                                    initializedPhase = true;
+                                }
                                 if (currentSphere >= validMajorCombos.Length)
+                                {
                                     itemPhase++;
+                                    initializedPhase = false;
+                                }
                                 else
                                 {
                                     if (currentMajorCombo.Length == 0)
-                                        currentMajorCombo = SelectNewMajorCombo(currentSphere);
+                                        currentMajorCombo = SelectNewMajorCombo(currentSphere,
+                                            PlayState.currentRando.randoLevel == 1 ? sphereSplitLimits[currentSphere] : 0);
+
+                                    if (CheckIfFullComboPlaced(majorsToAdd, currentMajorCombo))
+                                    {
+                                        currentSphere++;
+                                        currentMajorCombo = new int[0];
+                                    }
+                                    else
+                                    {
+                                        List<int> currentOpenLocations = GetLocations(PlayState.currentRando.randoLevel == 1);
+                                        int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
+
+                                        int majorPointer = Mathf.FloorToInt(Random.value * currentMajorCombo.Length);
+                                        int pointerAdjustmentSign = Random.value <= 0.5f ? -1 : 1;
+                                        while (majorsPlaced.Contains(ItemIDToEnum(currentMajorCombo[majorPointer])))
+                                            majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+
+                                        // TODO: while loops keep breaking the game on split shuffle
+
+                                        bool validPlacement = false;
+                                        while (!validPlacement)
+                                        {
+                                            List<int> projectedOpenLocations = GetLocations(TweakLocks(currentMajorCombo[majorPointer], 0, false),
+                                                PlayState.currentRando.randoLevel == 1);
+                                            if (projectedOpenLocations.Count > 1 || CountUnplacedMajors(majorsToAdd, currentMajorCombo) == 1)
+                                                validPlacement = true;
+                                            else
+                                                majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                        }
+                                        int thisMajorID = currentMajorCombo[majorPointer];
+                                        Items thisMajorEnum = ItemIDToEnum(thisMajorID);
+                                        majorsPlaced.Add(thisMajorEnum);
+                                        majorsToAdd.Remove(thisMajorEnum);
+                                        locations[openLocationID] = thisMajorID;
+                                    }
                                 }
+                                Debug.Log(currentMajorCombo.Length);
                                 break;
                             case 2: // Remaining majors
+                                for (int i = 0; i < locations.Length; i++)
+                                    if (locations[i] == -2)
+                                        locations[i] = -1;
+                                PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                                randoPhase++;
                                 break;
                             case 3: // Hearts
                                 break;
@@ -567,142 +636,213 @@ public class Randomizer : MonoBehaviour
         }
     }
 
-    private int[] SelectNewMajorCombo(int sphereID)
+    private int[] SelectNewMajorCombo(int sphereID, int lengthLimit = 0)
     {
         List<int> comboPool = new();
         for (int i = 0; i < validMajorCombos[sphereID].Length; i++)
-            for (int j = 0; j < validMajorCombos[sphereID][i][0]; j++)
-                comboPool.Add(i);
+            if (lengthLimit == 0 || validMajorCombos[sphereID][i].Length <= lengthLimit)
+                for (int j = 0; j < validMajorCombos[sphereID][i][0]; j++)
+                    comboPool.Add(i);
+        
         int poolIndex = Mathf.FloorToInt(Random.value * comboPool.Count);
+        int chosenPoolID = comboPool[poolIndex];
+        
         List<int> newCombo = new();
-        for (int i = 1; i < validMajorCombos[sphereID][poolIndex].Length; i++)
-            newCombo.Add(validMajorCombos[sphereID][poolIndex][i]);
+        for (int i = 1; i < validMajorCombos[sphereID][chosenPoolID].Length; i++)
+            newCombo.Add(validMajorCombos[sphereID][chosenPoolID][i]);
         return newCombo.ToArray();
     }
 
+    private bool CheckIfFullComboPlaced(List<Items> currentUnplacedMajors, int[] currentCombo)
+    {
+        bool completelyPlaced = true;
+        for (int i = 0; i < currentCombo.Length; i++)
+            if (currentUnplacedMajors.Contains((Items)currentCombo[i]))
+                completelyPlaced = false;
+        return completelyPlaced;
+    }
+
+    private int CountUnplacedMajors(List<Items> currentUnplacedMajors, int[] currentCombo)
+    {
+        int unplacedInCombo = 0;
+        for (int i = 0; i < currentCombo.Length; i++)
+            if (currentUnplacedMajors.Contains(ItemIDToEnum(currentCombo[i])))
+                unplacedInCombo++;
+        return unplacedInCombo;
+    }
+
+    private int ItemEnumToID(Items item)
+    {
+        return item switch
+        {
+            Items.Peashooter => 0,
+            Items.Boomerang => 1,
+            Items.RainbowWave => 2,
+            Items.Devastator => 3,
+            Items.HighJump => 4,
+            Items.ShellShield => 5,
+            Items.RapidFire => 6,
+            Items.IceShell => 7,
+            Items.FlyShell => 8,
+            Items.MetalShell => 9,
+            Items.GravityShock => 10,
+            Items.SSBoomerang => 11,
+            Items.DebugRWave => 12,
+            Items.Broom => -1,
+            _ => -2
+        };
+    }
+    private Items ItemIDToEnum(int item)
+    {
+        return item switch
+        {
+            0 => Items.Peashooter,
+            1 => Items.Boomerang,
+            2 => Items.RainbowWave,
+            3 => Items.Devastator,
+            4 => Items.HighJump,
+            5 => Items.ShellShield,
+            6 => Items.RapidFire,
+            7 => Items.IceShell,
+            8 => Items.FlyShell,
+            9 => Items.MetalShell,
+            10 => Items.GravityShock,
+            11 => Items.SSBoomerang,
+            12 => Items.DebugRWave,
+            -1 => Items.Broom,
+            _ => Items.None
+        };
+    }
+
     private List<int> GetLocations(bool majorsOnly = false)
+    {
+        return GetLocations(locks, majorsOnly);
+    }
+    private List<int> GetLocations(Dictionary<string, bool> _locks, bool majorsOnly = false, int sphereConstraint = -1)
     {
         List<int> newLocations = new();
 
         for (int i = 0; i < PlayState.baseItemLocations.Count; i++)
         {
-            if (!majorsOnly || majorLocations.Contains(i))
+            if ((sphereConstraint == -1 || locationPhases[sphereConstraint].Contains(i)) &&
+                (PlayState.currentRando.randoLevel == 3 || !proOnlyLocations.Contains(i)) &&
+                (!majorsOnly || majorLocations.Contains(i)))
             {
                 if (i switch
                 {
-                    0 => locks["Knowledge"] && locks["L2Blocks"] && (locks["Jump"] || locks["Upside"] || locks["Leggy"]),
+                    0 => _locks["Knowledge"] && _locks["L2Blocks"] && (_locks["Jump"] || _locks["Upside"] || _locks["Leggy"]),
                                                                                                                             // Original Testing Room
-                    1 => locks["L1Blocks"],
+                    1 => _locks["L1Blocks"],
                                                                                                                             // Leggy Snail's Tunnel
-                    2 => locks["L1Blocks"] || (locks["Jump"] && locks["Knowledge"]) || ((locks["Sluggy"] || locks["Upside"] ||
-                        locks["Leggy"] || locks["Leechy"]) && locks["Knowledge"]),                                          // Town Overtunnel
-                    3 => locks["Knowledge"] && (locks["L1Blocks"] || locks["Jump"] || locks["Sluggy"] ||
-                        locks["Upside"] || locks["Leggy"] || locks["Leechy"]),                                              // Super Secret Alcove
-                    4 => locks["L1Blocks"] || locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"],
+                    2 => _locks["L1Blocks"] || (_locks["Jump"] && _locks["Knowledge"]) || ((_locks["Sluggy"] || _locks["Upside"] ||
+                        _locks["Leggy"] || _locks["Leechy"]) && _locks["Knowledge"]),                                       // Town Overtunnel
+                    3 => _locks["Knowledge"] && (_locks["L1Blocks"] || _locks["Jump"] || _locks["Sluggy"] ||
+                        _locks["Upside"] || _locks["Leggy"] || _locks["Leechy"]),                                           // Super Secret Alcove
+                    4 => _locks["L1Blocks"] || _locks["Jump"] || _locks["Sluggy"] || _locks["Upside"] || _locks["Leggy"] || _locks["Leechy"],
                                                                                                                             // Love Snail's Alcove
-                    5 => locks["L2Blocks"],
+                    5 => _locks["L2Blocks"],
                                                                                                                             // Suspicious Tree
-                    6 => locks["L2Blocks"],
+                    6 => _locks["L2Blocks"],
                                                                                                                             // Anger Management Room
-                    7 => locks["L2Blocks"] && ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"]),
+                    7 => _locks["L2Blocks"] && ((_locks["Blobby"] && _locks["Jump"]) || !_locks["Blobby"]),
                                                                                                                             // Percentage Snail's Hidey Hole
                     8 => true,
                                                                                                                             // Digging Grounds
                     9 => true,
                                                                                                                             // Cave Snail's Cave
-                    10 => locks["L2Blocks"],
+                    10 => _locks["L2Blocks"],
                                                                                                                             // Fragment Cave
-                    11 => (locks["Knowledge"] && ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"])) ||
-                        locks["Fly"] || locks["Upside"] || locks["Leggy"],                                                  // Discombobulatory Alcove
-                    12 => (locks["Blobby"] && locks["Jump"]) || !locks["Blobby"],
+                    11 => (_locks["Knowledge"] && ((_locks["Blobby"] && _locks["Jump"]) || !_locks["Blobby"])) ||
+                        _locks["Fly"] || _locks["Upside"] || _locks["Leggy"],                                               // Discombobulatory Alcove
+                    12 => (_locks["Blobby"] && _locks["Jump"]) || !_locks["Blobby"],
                                                                                                                             // Seabed Caves
                     13 => true,
                                                                                                                             // Fine Dining (Peashooter)
-                    14 => locks["L2Blocks"],
+                    14 => _locks["L2Blocks"],
                                                                                                                             // Fine Dining (Fragment)
-                    15 => locks["L1Blocks"],
+                    15 => _locks["L1Blocks"],
                                                                                                                             // The Maze Room
-                    16 => locks["L1Blocks"],
+                    16 => _locks["L1Blocks"],
                                                                                                                             // Monument of Greatness
-                    17 => locks["RedDoor"],
+                    17 => _locks["RedDoor"],
                                                                                                                             // Heart of the Sea
-                    18 => locks["BlueDoor"] && (locks["PinkDoor"] || locks["Knowledge"]),
+                    18 => _locks["BlueDoor"] && (_locks["PinkDoor"] || _locks["Knowledge"]),
                                                                                                                             // Daily Helping of Calcium
-                    19 => locks["GreenDoor"],
+                    19 => _locks["GreenDoor"],
                                                                                                                             // Dig, Snaily, Dig
-                    20 => locks["L1Blocks"],
+                    20 => _locks["L1Blocks"],
                                                                                                                             // Skywatcher's Loot
-                    21 => locks["Boss1"],
+                    21 => _locks["Boss1"],
                                                                                                                             // Signature Croissants (Boomerang)
-                    22 => locks["Boss1"] && locks["L1Blocks"],
+                    22 => _locks["Boss1"] && _locks["L1Blocks"],
                                                                                                                             // Signature Croissants (Heart)
-                    23 => locks["Boss1"] && locks["Knowledge"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                    23 => _locks["Boss1"] && _locks["Knowledge"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"]),
                                                                                                                             // Squared Snelks
-                    24 => locks["Boss1"] && locks["PinkDoor"],
+                    24 => _locks["Boss1"] && _locks["PinkDoor"],
                                                                                                                             // Frost Shrine
-                    25 => locks["Boss1"] && (locks["Ice"] || (locks["Health"] && (locks["Fly"] || locks["Leggy"]))) && locks["L1Blocks"] &&
-                        ((locks["Blobby"] && locks["Jump"]) || !locks["Blobby"]),                                           // Sweater Required
-                    26 => locks["Boss1"] && locks["PinkDoor"],
+                    25 => _locks["Boss1"] && (_locks["Ice"] || (_locks["Health"] && (_locks["Fly"] || _locks["Leggy"]))) && _locks["L1Blocks"] &&
+                        ((_locks["Blobby"] && _locks["Jump"]) || !_locks["Blobby"]),                                        // Sweater Required
+                    26 => _locks["Boss1"] && _locks["PinkDoor"],
                                                                                                                             // A Secret to Snowbody
-                    27 => locks["Boss1"] && locks["GreenDoor"],
+                    27 => _locks["Boss1"] && _locks["GreenDoor"],
                                                                                                                             // Devil's Alcove
-                    28 => locks["Boss1"] && (locks["Knowledge"] || locks["Jump"] || locks["Fly"] || locks["Ice"] || locks["Upside"] || locks["Leggy"]),
+                    28 => _locks["Boss1"] && (_locks["Knowledge"] || _locks["Jump"] || _locks["Fly"] || _locks["Ice"] || _locks["Upside"] || _locks["Leggy"]),
                                                                                                                             // Ice Climb
-                    29 => locks["Boss1"] && locks["L2Blocks"],
+                    29 => _locks["Boss1"] && _locks["L2Blocks"],
                                                                                                                             // The Labyrinth (Fragment)
-                    30 => (locks["Boss1"] && locks["L2Blocks"]) || (locks["Knowledge"] && !locks["Upside"]),
+                    30 => (_locks["Boss1"] && _locks["L2Blocks"]) || (_locks["Knowledge"] && !_locks["Upside"]),
                                                                                                                             // The Labyrinth (High Jump)
-                    31 => locks["Boss1"] && locks["RedDoor"],
+                    31 => _locks["Boss1"] && _locks["RedDoor"],
                                                                                                                             // Sneaky, Sneaky
-                    32 => locks["Boss2"] || locks["RedDoor"],
+                    32 => _locks["Boss2"] || _locks["RedDoor"],
                                                                                                                             // Prismatic Prize (Rainbow Wave)
-                    33 => locks["Boss2"] && locks["RedDoor"],
+                    33 => _locks["Boss2"] && _locks["RedDoor"],
                                                                                                                             // Prismatic Prize (Heart)
-                    34 => locks["Boss2"] && (locks["Metal"] || locks["Health"]) && (locks["PinkDoor"] || locks["RedDoor"]),
+                    34 => _locks["Boss2"] && (_locks["Metal"] || _locks["Health"]) && (_locks["PinkDoor"] || _locks["RedDoor"]),
                                                                                                                             // Hall of Fire
-                    35 => locks["Boss2"] && locks["Knowledge"] && locks["Metal"] && (locks["Fly"] || locks["L3Blocks"] || locks["RedDoor"]),
+                    35 => _locks["Boss2"] && _locks["Knowledge"] && _locks["Metal"] && (_locks["Fly"] || _locks["L3Blocks"] || _locks["RedDoor"]),
                                                                                                                             // Scorching Snelks
-                    36 => locks["Boss2"] && locks["Knowledge"] && (locks["Fly"] || locks["L3Blocks"]),
+                    36 => _locks["Boss2"] && _locks["Knowledge"] && (_locks["Fly"] || _locks["L3Blocks"]),
                                                                                                                             // Hidden Hideout
-                    37 => locks["Boss2"] && locks["RedDoor"] || locks["L3Blocks"],
+                    37 => _locks["Boss2"] && _locks["RedDoor"] || _locks["L3Blocks"],
                                                                                                                             // Green Cache
-                    38 => locks["Boss2"] && locks["L2Blocks"],
+                    38 => _locks["Boss2"] && _locks["L2Blocks"],
                                                                                                                             // Furnace
-                    39 => locks["Boss2"] && locks["RedDoor"],
+                    39 => _locks["Boss2"] && _locks["RedDoor"],
                                                                                                                             // Slitherine Grove
-                    40 => locks["Boss2"] && locks["PinkDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                    40 => _locks["Boss2"] && _locks["PinkDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"]),
                                                                                                                             // Floaty Fortress (Top Left)
-                    41 => locks["Boss2"] && locks["PinkDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"]),
+                    41 => _locks["Boss2"] && _locks["PinkDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"]),
                                                                                                                             // Floaty Fortress (Bottom Right)
-                    42 => locks["Boss2"] && locks["L2Blocks"],
+                    42 => _locks["Boss2"] && _locks["L2Blocks"],
                                                                                                                             // Woah Mama
-                    43 => locks["Boss2"] && locks["L2Blocks"] && (locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"]),
-                                                                                                                            // Shocked Shell
-                    44 => locks["Boss2"] && locks["L2Blocks"],
+                    43 => _locks["Boss2"] && _locks["L2Blocks"] && (_locks["Jump"] || _locks["Sluggy"] || _locks["Upside"]
+                        || _locks["Leggy"] || _locks["Leechy"]),                                                            // Shocked Shell
+                    44 => _locks["Boss2"] && _locks["L2Blocks"],
                                                                                                                             // Gravity Shrine
-                    45 => locks["Boss2"] && locks["Fly"] || (locks["Knowledge"] && locks["RedDoor"]),
+                    45 => _locks["Boss2"] && _locks["Fly"] || (_locks["Knowledge"] && _locks["RedDoor"]),
                                                                                                                             // Fast Food
-                    46 => locks["Boss3"] || (locks["RedDoor"] && (locks["Jump"] || locks["Sluggy"] || locks["Upside"] || locks["Leggy"] || locks["Leechy"])),
-                                                                                                                            // The Bridge
-                    47 => locks["Boss3"] && locks["L3Blocks"],
+                    46 => _locks["Boss3"] || (_locks["RedDoor"] && (_locks["Jump"] || _locks["Sluggy"] ||
+                        _locks["Upside"] || _locks["Leggy"] || _locks["Leechy"])),                                          // The Bridge
+                    47 => _locks["Boss3"] && _locks["L3Blocks"],
                                                                                                                             // Transit 90
-                    48 => locks["Boss3"] && locks["RedDoor"] && (locks["Metal"] || locks["Health"]),
+                    48 => _locks["Boss3"] && _locks["RedDoor"] && (_locks["Metal"] || _locks["Health"]),
                                                                                                                             // Steel Shrine
-                    49 => locks["Boss3"] && locks["L3Blocks"] && (locks["Metal"] || locks["Health"]),
+                    49 => _locks["Boss3"] && _locks["L3Blocks"] && (_locks["Metal"] || _locks["Health"]),
                                                                                                                             // Space Balcony (Heart)
-                    50 => locks["Boss3"] && locks["L3Blocks"] && (locks["Metal"] || locks["Health"]),
+                    50 => _locks["Boss3"] && _locks["L3Blocks"] && (_locks["Metal"] || _locks["Health"]),
                                                                                                                             // Space Balcony (Fragment)
-                    51 => locks["Boss3"] && locks["RedDoor"] && (locks["Metal"] || locks["Health"]),
+                    51 => _locks["Boss3"] && _locks["RedDoor"] && (_locks["Metal"] || _locks["Health"]),
                                                                                                                             // The Vault
-                    52 => locks["Boss3"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
-                        (locks["Health"] || locks["Metal"]),                                                                // Holy Hideaway
-                    53 => locks["Boss3"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
-                        (locks["Health"] || locks["Metal"]),                                                                // Arctic Alcove
-                    54 => locks["Boss3"] && locks["Knowledge"] && locks["RedDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] ||
-                        locks["Blobby"]) && (locks["Health"] || locks["Metal"]),                                            // Lost Loot
-                    55 => locks["Boss3"] && locks["GreenDoor"] && (locks["Fly"] || locks["Upside"] || locks["Leggy"] || locks["Blobby"]) &&
-                        (locks["Health"] || locks["Metal"]),                                                                // Reinforcements
-                    56 => locks["PinkDoor"],
+                    52 => _locks["Boss3"] && _locks["RedDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"] || _locks["Blobby"]) &&
+                        (_locks["Health"] || _locks["Metal"]),                                                              // Holy Hideaway
+                    53 => _locks["Boss3"] && _locks["RedDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"] || _locks["Blobby"]) &&
+                        (_locks["Health"] || _locks["Metal"]),                                                              // Arctic Alcove
+                    54 => _locks["Boss3"] && _locks["Knowledge"] && _locks["RedDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"] ||
+                        _locks["Blobby"]) && (_locks["Health"] || _locks["Metal"]),                                         // Lost Loot
+                    55 => _locks["Boss3"] && _locks["GreenDoor"] && (_locks["Fly"] || _locks["Upside"] || _locks["Leggy"] || _locks["Blobby"]) &&
+                        (_locks["Health"] || _locks["Metal"]),                                                              // Reinforcements
+                    56 => _locks["PinkDoor"],
                                                                                                                             // Glitched Goodies
                     _ => false
                 })
@@ -714,126 +854,136 @@ public class Randomizer : MonoBehaviour
         return newLocations;
     }
 
-    private void TweakLocks(int itemID, int helixCount)
+    private Dictionary<string, bool> TweakLocks(int itemID, int helixCount, bool writeToMainLockDict = true)
     {
+        Dictionary<string, bool> _locks = new(locks);
+
         switch (itemID)
         {
-            case 0: // Peashooter
-                locks["BlueDoor"] = true;
+            case -1: // Broom
+                _locks["BlueDoor"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
-                    locks["Boss1"] = true;
+                    _locks["Boss1"] = true;
+                break;
+            case 0: // Peashooter
+                _locks["BlueDoor"] = true;
+                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    _locks["Boss1"] = true;
                 if (hasPlacedDevastator)
                 {
-                    locks["PinkDoor"] = true;
-                    locks["RedDoor"] = true;
-                    locks["GreenDoor"] = true;
-                    locks["L1Blocks"] = true;
-                    locks["L2Blocks"] = true;
-                    locks["L3Blocks"] = true;
+                    _locks["PinkDoor"] = true;
+                    _locks["RedDoor"] = true;
+                    _locks["GreenDoor"] = true;
+                    _locks["L1Blocks"] = true;
+                    _locks["L2Blocks"] = true;
+                    _locks["L3Blocks"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        locks["Boss2"] = true;
-                        locks["Boss3"] = true;
-                        locks["Boss4"] = true;
+                        _locks["Boss2"] = true;
+                        _locks["Boss3"] = true;
+                        _locks["Boss4"] = true;
                     }
                 }
                 break;
             case 1: // Boomerang
-                locks["BlueDoor"] = true;
-                locks["PinkDoor"] = true;
-                locks["L1Blocks"] = true;
+                _locks["BlueDoor"] = true;
+                _locks["PinkDoor"] = true;
+                _locks["L1Blocks"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                 {
-                    locks["Boss1"] = true;
-                    locks["Boss2"] = true;
+                    _locks["Boss1"] = true;
+                    _locks["Boss2"] = true;
                 }
                 if (hasPlacedDevastator)
                 {
-                    locks["RedDoor"] = true;
-                    locks["GreenDoor"] = true;
-                    locks["L2Blocks"] = true;
-                    locks["L3Blocks"] = true;
+                    _locks["RedDoor"] = true;
+                    _locks["GreenDoor"] = true;
+                    _locks["L2Blocks"] = true;
+                    _locks["L3Blocks"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        locks["Boss3"] = true;
-                        locks["Boss4"] = true;
+                        _locks["Boss3"] = true;
+                        _locks["Boss4"] = true;
                     }
                 }
                 break;
             case 2: // Rainbow Wave
-                locks["BlueDoor"] = true;
-                locks["PinkDoor"] = true;
-                locks["RedDoor"] = true;
-                locks["L1Blocks"] = true;
-                locks["L2Blocks"] = true;
+                _locks["BlueDoor"] = true;
+                _locks["PinkDoor"] = true;
+                _locks["RedDoor"] = true;
+                _locks["L1Blocks"] = true;
+                _locks["L2Blocks"] = true;
                 if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                 {
-                    locks["Boss1"] = true;
-                    locks["Boss2"] = true;
-                    locks["Boss3"] = true;
+                    _locks["Boss1"] = true;
+                    _locks["Boss2"] = true;
+                    _locks["Boss3"] = true;
                 }
                 if (hasPlacedDevastator)
                 {
-                    locks["L3Blocks"] = true;
-                    locks["GreenDoor"] = true;
+                    _locks["L3Blocks"] = true;
+                    _locks["GreenDoor"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
-                        locks["Boss4"] = true;
+                        _locks["Boss4"] = true;
                 }
                 break;
             case 3: // Devastator
-                if (locks["BlueDoor"] || locks["PinkDoor"] || locks["RedDoor"])
+                if (_locks["BlueDoor"] || _locks["PinkDoor"] || _locks["RedDoor"])
                 {
-                    locks["BlueDoor"] = true;
-                    locks["PinkDoor"] = true;
-                    locks["RedDoor"] = true;
-                    locks["L1Blocks"] = true;
-                    locks["L2Blocks"] = true;
-                    locks["L3Blocks"] = true;
-                    locks["GreenDoor"] = true;
+                    _locks["BlueDoor"] = true;
+                    _locks["PinkDoor"] = true;
+                    _locks["RedDoor"] = true;
+                    _locks["L1Blocks"] = true;
+                    _locks["L2Blocks"] = true;
+                    _locks["L3Blocks"] = true;
+                    _locks["GreenDoor"] = true;
                     if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
                     {
-                        locks["Boss1"] = true;
-                        locks["Boss2"] = true;
-                        locks["Boss3"] = true;
-                        locks["Boss4"] = true;
+                        _locks["Boss1"] = true;
+                        _locks["Boss2"] = true;
+                        _locks["Boss3"] = true;
+                        _locks["Boss4"] = true;
                     }
                 }
                 hasPlacedDevastator = true;
                 break;
             case 4: // High Jump
-                locks["Jump"] = true;
+                _locks["Jump"] = true;
                 break;
             case 5: // Shell Shield
                 break;
             case 6: // Rapid Fire
                 break;
             case 7: // Ice Snail
-                locks["Ice"] = true;
+                _locks["Ice"] = true;
                 break;
             case 8: // Gravity Snail
-                locks["Jump"] = true;
-                locks["Fly"] = true;
+                _locks["Jump"] = true;
+                _locks["Fly"] = true;
                 break;
             case 9: // Full Metal Snail
-                locks["Metal"] = true;
+                _locks["Metal"] = true;
                 break;
             case 10: // Gravity Shock
-                locks["Shock"] = true;
+                _locks["Shock"] = true;
                 break;
             default:
                 if (PlayState.currentRando.bossesLocked)
                 {
                     if (helixCount >= 5)
-                        locks["Boss1"] = true;
+                        _locks["Boss1"] = true;
                     if (helixCount >= 10)
-                        locks["Boss2"] = true;
+                        _locks["Boss2"] = true;
                     if (helixCount >= 15)
-                        locks["Boss3"] = true;
+                        _locks["Boss3"] = true;
                     if (helixCount >= 25)
-                        locks["Boss4"] = true;
+                        _locks["Boss4"] = true;
                 }
                 break;
         }
+        if (writeToMainLockDict)
+            locks = new(_locks);
+        return _locks;
     }
 
     private void PrintPlacement(int itemID, int locationID)
