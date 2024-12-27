@@ -16,7 +16,7 @@ public class Randomizer : MonoBehaviour
     private const int HEART_WEIGHT = 2;
     private const int HELIX_WEIGHT = 3;
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
-    private const int STEPS_PER_FRAME = 3;
+    private const int STEPS_PER_FRAME = 2;
 
     private enum Items
     {
@@ -127,7 +127,7 @@ public class Randomizer : MonoBehaviour
         }
     };
 
-    private List<int>[] locationPhases = new List<int>[]
+    private readonly List<int>[] locationPhases = new List<int>[]
     {
         new() {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 30, 56 },
         new() { 23, 24, 25, 26, 27, 28, 29, 31, 32, 33 },
@@ -135,9 +135,11 @@ public class Randomizer : MonoBehaviour
         new() { 47, 48, 49, 50, 51, 52, 53, 54, 55 }
     };
 
-    private int[] sphereSplitLimits = new int[] { 3, 0, 0, 0 };
+    private readonly int[] sphereSplitLimits = new int[] { 3, 0, 0, 0 };
 
-    private List<int> proOnlyLocations = new() { 0, 3, 23, 35, 36, 54 };
+    private readonly float[] sphereHelixPercentageRequirements = new float[] { 0.75f, 0.8f, 0.85f, 0.9f };
+
+    private readonly List<int> proOnlyLocations = new() { 0, 3, 23, 35, 36, 54 };
 
     public void StartGeneration()
     {
@@ -262,7 +264,7 @@ public class Randomizer : MonoBehaviour
                         switch (itemPhase)
                         {
                             case 1: // Required majors
-                                Debug.Log(string.Format("{0}, {1}/{2}, {3}", initializedPhase, currentSphere, validMajorCombos.Length - 1, itemPhase));
+                                //Debug.Log(string.Format("Sphere {0}/{1}", currentSphere, validMajorCombos.Length - 1));
                                 if (!initializedPhase)
                                 {
                                     majorsToAdd = new List<Items>
@@ -298,37 +300,93 @@ public class Randomizer : MonoBehaviour
                                         while (majorsPlaced.Contains(ItemIDToEnum(currentMajorCombo[majorPointer])))
                                             majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
 
-                                        // TODO: while loops keep breaking the game on split shuffle
-
                                         bool validPlacement = false;
-                                        while (!validPlacement)
+                                        int pointerShiftsLeft = currentMajorCombo.Length;
+                                        while (!validPlacement && pointerShiftsLeft > 0)
                                         {
                                             List<int> projectedOpenLocations = GetLocations(TweakLocks(currentMajorCombo[majorPointer], 0, false),
                                                 PlayState.currentRando.randoLevel == 1);
-                                            if (projectedOpenLocations.Count > 1 || CountUnplacedMajors(majorsToAdd, currentMajorCombo) == 1)
+                                            if (projectedOpenLocations.Count > 0 || CountUnplacedMajors(majorsToAdd, currentMajorCombo) == 1)
                                                 validPlacement = true;
                                             else
+                                            {
                                                 majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                                pointerShiftsLeft--;
+                                            }
                                         }
-                                        int thisMajorID = currentMajorCombo[majorPointer];
-                                        Items thisMajorEnum = ItemIDToEnum(thisMajorID);
-                                        majorsPlaced.Add(thisMajorEnum);
-                                        majorsToAdd.Remove(thisMajorEnum);
-                                        locations[openLocationID] = thisMajorID;
+                                        if (validPlacement)
+                                        {
+                                            int thisMajorID = currentMajorCombo[majorPointer];
+                                            Items thisMajorEnum = ItemIDToEnum(thisMajorID);
+                                            majorsPlaced.Add(thisMajorEnum);
+                                            majorsToAdd.Remove(thisMajorEnum);
+                                            locations[currentOpenLocations[openLocationID]] = thisMajorID;
+                                            TweakLocks(thisMajorID, 0);
+                                            //PrintPlacement(thisMajorID, currentOpenLocations[openLocationID]);
+                                        }
                                     }
                                 }
-                                Debug.Log(currentMajorCombo.Length);
+                                //Debug.Log(string.Format("{0} major(s) left to place this sphere", CountUnplacedMajors(majorsToAdd, currentMajorCombo)));
                                 break;
                             case 2: // Remaining majors
+                                //for (int i = 0; i < locations.Length; i++)
+                                //    if (locations[i] == -2)
+                                //        locations[i] = -1;
+                                //PlayState.currentRando.itemLocations = (int[])locations.Clone();
+                                //randoPhase++;
+                                if (!initializedPhase)
+                                {
+                                    majorsToAdd = new();
+                                    List<Items> tempMajors = new() { Items.Peashooter, Items.Boomerang, Items.RainbowWave, Items.Devastator, Items.HighJump,
+                                        Items.ShellShield, Items.RapidFire, Items.IceShell, Items.FlyShell, Items.MetalShell, Items.GravityShock };
+                                    if (PlayState.currentRando.randoLevel == 1)
+                                        tempMajors.Remove(Items.GravityShock);
+                                    for (int i = 0; i < tempMajors.Count; i++)
+                                        if (!majorsPlaced.Contains(tempMajors[i]))
+                                            majorsToAdd.Add(tempMajors[i]);
+                                }
+                                
+                                if (majorsToAdd.Count > 0)
+                                {
+                                    List<int> currentOpenLocations = GetLocations(PlayState.currentRando.randoLevel == 1);
+                                    int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
+                                    int majorPointer = Mathf.FloorToInt(Random.value * majorsToAdd.Count);
+                                    Items thisMajorEnum = majorsToAdd[majorPointer];
+                                    int thisMajorID = ItemEnumToID(thisMajorEnum);
+                                    majorsPlaced.Add(thisMajorEnum);
+                                    majorsToAdd.Remove(thisMajorEnum);
+                                    locations[currentOpenLocations[openLocationID]] = thisMajorID;
+                                    TweakLocks(thisMajorID, 0);
+                                }
+                                else
+                                {
+                                    itemPhase++;
+                                    initializedPhase = false;
+                                }
+                                break;
+                            case 3: // Hearts
+                                if (placedHearts < PlayState.MAX_HEARTS)
+                                {
+                                    List<int> currentOpenLocations = GetLocations();
+                                    int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
+                                    locations[currentOpenLocations[openLocationID]] = PlayState.OFFSET_HEARTS + placedHearts;
+                                    placedHearts++;
+                                }
+                                else
+                                    itemPhase++;
+                                break;
+                            case 4: // Traps
+                                itemPhase++;
+                                break;
+                            case 5: // Fragments
+                                itemPhase++;
+                                break;
+                            case 6: // Finalization and export
                                 for (int i = 0; i < locations.Length; i++)
                                     if (locations[i] == -2)
                                         locations[i] = -1;
                                 PlayState.currentRando.itemLocations = (int[])locations.Clone();
                                 randoPhase++;
-                                break;
-                            case 3: // Hearts
-                                break;
-                            case 4: // Fragments/traps
                                 break;
                         }
                         break;
@@ -650,6 +708,12 @@ public class Randomizer : MonoBehaviour
         List<int> newCombo = new();
         for (int i = 1; i < validMajorCombos[sphereID][chosenPoolID].Length; i++)
             newCombo.Add(validMajorCombos[sphereID][chosenPoolID][i]);
+
+        //string output = "Selected combo ";
+        //for (int i = 0; i < newCombo.Count; i++)
+        //    output += ItemIDToEnum(newCombo[i]).ToString() + " ";
+        //Debug.Log(output);
+
         return newCombo.ToArray();
     }
 
@@ -862,12 +926,12 @@ public class Randomizer : MonoBehaviour
         {
             case -1: // Broom
                 _locks["BlueDoor"] = true;
-                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                     _locks["Boss1"] = true;
                 break;
             case 0: // Peashooter
                 _locks["BlueDoor"] = true;
-                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                     _locks["Boss1"] = true;
                 if (hasPlacedDevastator)
                 {
@@ -877,7 +941,7 @@ public class Randomizer : MonoBehaviour
                     _locks["L1Blocks"] = true;
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
-                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                     {
                         _locks["Boss2"] = true;
                         _locks["Boss3"] = true;
@@ -889,7 +953,7 @@ public class Randomizer : MonoBehaviour
                 _locks["BlueDoor"] = true;
                 _locks["PinkDoor"] = true;
                 _locks["L1Blocks"] = true;
-                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                 {
                     _locks["Boss1"] = true;
                     _locks["Boss2"] = true;
@@ -900,7 +964,7 @@ public class Randomizer : MonoBehaviour
                     _locks["GreenDoor"] = true;
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
-                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                     {
                         _locks["Boss3"] = true;
                         _locks["Boss4"] = true;
@@ -913,7 +977,7 @@ public class Randomizer : MonoBehaviour
                 _locks["RedDoor"] = true;
                 _locks["L1Blocks"] = true;
                 _locks["L2Blocks"] = true;
-                if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                 {
                     _locks["Boss1"] = true;
                     _locks["Boss2"] = true;
@@ -923,7 +987,7 @@ public class Randomizer : MonoBehaviour
                 {
                     _locks["L3Blocks"] = true;
                     _locks["GreenDoor"] = true;
-                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                         _locks["Boss4"] = true;
                 }
                 break;
@@ -937,7 +1001,7 @@ public class Randomizer : MonoBehaviour
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
                     _locks["GreenDoor"] = true;
-                    if (!PlayState.currentRando.bossesLocked && PlayState.currentRando.randoLevel > 1)
+                    if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
                     {
                         _locks["Boss1"] = true;
                         _locks["Boss2"] = true;
