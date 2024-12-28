@@ -848,7 +848,7 @@ public class GlobalFunctions : MonoBehaviour
                     PlayState.player.transform.position.x + Mathf.Cos(thisCurve) * radiusMod,
                     PlayState.player.transform.position.y + 2 - Mathf.Sin(thisCurve) * radiusMod
                     );
-                PlayState.RequestParticle(dustRing[i].transform.position, "tintedsparkle", new float[] { trailColors[i] });
+                PlayState.RequestParticle(dustRing[i].transform.position, "tintedsparkle", new float[] { trailColors[i], 0, 0 });
             }
             spinMod += Time.deltaTime;
             spinMod = spinMod > PlayState.TAU ? spinMod - PlayState.TAU : spinMod;

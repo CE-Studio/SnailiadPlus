@@ -1491,6 +1491,8 @@ public class PlayState
                 case "tintedsparkle":
                     // Values:
                     // 0 = Color
+                    // 1 = X velocity
+                    // 2 = Y velocity
 
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                     {
@@ -1498,6 +1500,8 @@ public class PlayState
                         particleScript.vars[0] = UnityEngine.Random.Range(-0.25f, 0.25f);
                         particleScript.vars[1] = UnityEngine.Random.Range(-0.25f, 0.25f);
                         particleScript.vars[2] = values[0];
+                        particleScript.vars[3] = values[1];
+                        particleScript.vars[4] = values[2];
                     }
                     break;
                 case "transformation":

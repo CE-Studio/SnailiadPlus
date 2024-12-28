@@ -84,6 +84,7 @@ public class SavePoint:MonoBehaviour, IRoomObject
                 hasBeenActivated = true;
                 PlayState.PlaySound("Save");
                 anim.Play("Save_active_" + surfaceString);
+                SpawnParticles();
                 PlayState.globalFunctions.FlashHUDText(GlobalFunctions.TextTypes.save);
                 PlayState.currentProfile.saveCoords = (Vector2)transform.position + DirToVector();
                 PlayState.positionOfLastSave = PlayState.positionOfLastRoom;
@@ -101,5 +102,28 @@ public class SavePoint:MonoBehaviour, IRoomObject
             (int)Player.Dirs.WallR => Vector2.left,
             _ => Vector2.down
         } * 0.5f;
+    }
+
+    private void SpawnParticles()
+    {
+        Vector2 aimDir = DirToVector();
+        bool horizontal = aimDir.y == 0;
+        int[] colors = new int[] { 309, 304, 206, 12 };
+        float topSpeed = 5f;
+        for (int i = 0; i < 32; i++)
+        {
+            if (horizontal)
+            {
+                Vector2 spawnPos = new(transform.position.x + (aimDir.x * -0.5f), transform.position.y + ((Random.value * 2f) - 1f));
+                int thisColor = colors[Mathf.FloorToInt(Random.value * colors.Length)];
+                PlayState.RequestParticle(spawnPos, "tintedSparkle", new float[] { thisColor, Random.value * topSpeed * Mathf.Sign(aimDir.x), 0f });
+            }
+            else
+            {
+                Vector2 spawnPos = new(transform.position.x + ((Random.value * 2f) - 1f), transform.position.y + (aimDir.y * -0.5f));
+                int thisColor = colors[Mathf.FloorToInt(Random.value * colors.Length)];
+                PlayState.RequestParticle(spawnPos, "tintedSparkle", new float[] { thisColor, 0f, Random.value * topSpeed * Mathf.Sign(aimDir.y) });
+            }
+        }
     }
 }

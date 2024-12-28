@@ -370,6 +370,9 @@ public class Particle : MonoBehaviour
                         }
                         MoveToCamSynced();
                         break;
+                    case "tintedsparkle":
+                        transform.position += Time.deltaTime * new Vector3(vars[3], vars[4], 0);
+                        break;
                     case "warpsparkle":
                         transform.position += vars[2] * Time.deltaTime * new Vector3(Mathf.Sin(vars[0]), Mathf.Cos(vars[0]), 0);
                         vars[2] = Mathf.Lerp(vars[2], 0, vars[1] * Time.deltaTime);
