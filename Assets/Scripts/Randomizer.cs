@@ -376,10 +376,23 @@ public class Randomizer : MonoBehaviour
                                     itemPhase++;
                                 break;
                             case 4: // Traps
-                                itemPhase++;
+                                if (PlayState.currentRando.trapsActive)
+                                {
+
+                                }
+                                else
+                                    itemPhase++;
                                 break;
                             case 5: // Fragments
-                                itemPhase++;
+                                List<int> currentLocations = GetLocations();
+                                if (placedHelixes < PlayState.MAX_FRAGMENTS && currentLocations.Count > 0)
+                                {
+                                    int locationID = Mathf.FloorToInt(Random.value * currentLocations.Count);
+                                    locations[currentLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                    placedHelixes++;
+                                }
+                                else
+                                    itemPhase++;
                                 break;
                             case 6: // Finalization and export
                                 for (int i = 0; i < locations.Length; i++)
