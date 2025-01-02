@@ -74,7 +74,7 @@ public class Door:MonoBehaviour, IRoomObject
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
-        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock);
+        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock) && PlayState.isRandomGame && PlayState.currentRando.bossesLocked;
         direction = (int)content["direction"];
         requiredFragmentsMin = (int)content["requiredFragmentsMin"];
         requiredFragmentsMaj = (int)content["requiredFragmentsMaj"];
@@ -109,8 +109,8 @@ public class Door:MonoBehaviour, IRoomObject
 
     public void Spawn()
     {
-        helixLocked = PlayState.isRandomGame && PlayState.currentRando.bossesLocked && PlayState.CountFragments() <
-            (PlayState.currentRando.openAreas ? requiredFragmentsMaj : requiredFragmentsMin);
+        helixLocked = randoLocked && PlayState.CountFragments() < PlayState.currentRando.helixesRequired[bossLock];
+            //(PlayState.currentRando.openAreas ? requiredFragmentsMaj : requiredFragmentsMin);
         if (helixLocked)
         {
             lockData = PlayState.GetAnim("Object_helixLockPopup_data").frames;
@@ -192,7 +192,8 @@ public class Door:MonoBehaviour, IRoomObject
             }
             if (popupActive && lockText.GetText() == "")
                 if (lockAnim.GetCurrentFrame() >= lockData[0])
-                    lockText.SetText(PlayState.currentRando.openAreas ? requiredFragmentsMaj.ToString() : requiredFragmentsMin.ToString());
+                    lockText.SetText(PlayState.currentRando.helixesRequired[bossLock].ToString());
+                    //lockText.SetText(PlayState.currentRando.openAreas ? requiredFragmentsMaj.ToString() : requiredFragmentsMin.ToString());
             if (!popupActive && lockText.GetText() != "")
                 if (lockAnim.GetCurrentFrame() >= lockData[1])
                     lockText.SetText("");
@@ -211,7 +212,8 @@ public class Door:MonoBehaviour, IRoomObject
         {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            if (locked || (randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) || alwaysLocked)
+            //if (locked || (randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) || alwaysLocked)
+            if ((locked || alwaysLocked) && !randoLocked)
                 animToPlay += "locked_";
             else
             {
@@ -289,8 +291,7 @@ public class Door:MonoBehaviour, IRoomObject
         {
             if (helixLocked)
                 PlayState.PlaySound("Ping");
-            else if (!locked && !(randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) && !alwaysLocked &&
-                bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
+            else if (!locked && !randoLocked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
         }
     }

@@ -60,6 +60,8 @@ public class EditorViewDoor : Editor
         serializedObject.ApplyModifiedProperties();
 
         int id = ((sLocked.boolValue && !sRandoLocked.boolValue) ? 4 : sWeapon.intValue) + ((sDir.intValue == 1 || sDir.intValue == 3) ? 5 : 0);
+        if (sLocked.boolValue && sRandoLocked.boolValue && !(id == 4 || id == 9))
+            id += 10;
         sprite.sprite = script.editorSprites[id];
         sprite.flipX = false;
         sprite.flipY = false;

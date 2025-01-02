@@ -450,21 +450,22 @@ public class PlayState
     [Serializable]
     public struct ProfileRandoData
     {
-        public int randoLevel;        // Whether or not this profile is even randomized, and to what extent
-        public int seed;              // Eight-digit seed that all randomization was based on
-        public int[] itemLocations;   // All item IDs, in order of location appearance in the hierarchy
-        public int[] trapLocations;   // Location IDs for all possible trap items. If set to -1, that trap is not in the world
-        public bool progressivesOn;   // Whether or not progressive items are turned on
-        public bool broomStart;       // Whether or not the player starts with a Broom
-        public bool trapsActive;      // Whether or not trap items have been shuffled into the pool
-        public bool maskedItems;      // Whether or not items are masked as the same sprite
-        public bool openAreas;        // Whether or not all areas are open from the start
-        public bool bossesLocked;     // Whether or not Helix Locks have been applied to boss doors
-        public int musicShuffled;     // Whether or not music should be shuffled, and to what extent
-        public int[] musicList;       // All music IDs, in order relative to the actual music ID list
-        public bool npcTextShuffled;  // Whether or not NPC dialogue should be randomized
-        public int[] npcTextIndeces;  // Pointers for each snail NPC into a bonus text table
-        public int[] npcHintData;     // Any item hints that get generated. Values come in groups of four, ordered: [NPC ID, hint text ID, item ID, area ID]
+        public int randoLevel;         // Whether or not this profile is even randomized, and to what extent
+        public int seed;               // Eight-digit seed that all randomization was based on
+        public int[] itemLocations;    // All item IDs, in order of location appearance in the hierarchy
+        public int[] trapLocations;    // Location IDs for all possible trap items. If set to -1, that trap is not in the world
+        public bool progressivesOn;    // Whether or not progressive items are turned on
+        public bool broomStart;        // Whether or not the player starts with a Broom
+        public bool trapsActive;       // Whether or not trap items have been shuffled into the pool
+        public bool maskedItems;       // Whether or not items are masked as the same sprite
+        public bool openAreas;         // Whether or not all areas are open from the start
+        public bool bossesLocked;      // Whether or not Helix Locks have been applied to boss doors
+        public int[] helixesRequired;  // The required number of Helix Framgents need to open the door to each boss
+        public int musicShuffled;      // Whether or not music should be shuffled, and to what extent
+        public int[] musicList;        // All music IDs, in order relative to the actual music ID list
+        public bool npcTextShuffled;   // Whether or not NPC dialogue should be randomized
+        public int[] npcTextIndeces;   // Pointers for each snail NPC into a bonus text table
+        public int[] npcHintData;      // Any item hints that get generated. Values come in groups of four, ordered: [NPC ID, hint text ID, item ID, area ID]
     }
 
     [Serializable]
@@ -534,6 +535,7 @@ public class PlayState
         maskedItems = false,
         openAreas = false,
         bossesLocked = false,
+        helixesRequired = new int[] { },
         musicShuffled = 0,
         musicList = new int[] { },
         npcTextShuffled = false,
@@ -715,6 +717,7 @@ public class PlayState
             maskedItems = blankRando.maskedItems,
             openAreas = blankRando.openAreas,
             bossesLocked = blankRando.bossesLocked,
+            helixesRequired = (int[])blankRando.helixesRequired.Clone(),
             musicShuffled = blankRando.musicShuffled,
             musicList = (int[])blankRando.musicList.Clone(),
             npcTextShuffled = blankRando.npcTextShuffled,
