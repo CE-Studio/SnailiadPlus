@@ -303,27 +303,34 @@ public class Randomizer : MonoBehaviour
                                     }
                                     else
                                     {
-                                        List<int> currentOpenLocations = GetLocations(PlayState.currentRando.randoLevel == 1);
+                                        List<int> currentOpenLocations = GetLocations(PlayState.currentRando.randoLevel == 1, currentSphere);
                                         int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
 
                                         int majorPointer = Mathf.FloorToInt(Random.value * currentMajorCombo.Length);
                                         int pointerAdjustmentSign = Random.value <= 0.5f ? -1 : 1;
-                                        // Something broke here. Fix it
                                         if (majorsPlaced.Count > 0)
+                                        {
                                             while (majorsPlaced.Contains(ItemIDToEnum(currentMajorCombo[majorPointer])))
+                                            {
                                                 majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                                if (majorPointer < 0)
+                                                    majorPointer += currentMajorCombo.Length;
+                                            }
+                                        }
 
                                         bool validPlacement = false;
                                         int pointerShiftsLeft = currentMajorCombo.Length;
                                         while (!validPlacement && pointerShiftsLeft > 0)
                                         {
                                             List<int> projectedOpenLocations = GetLocations(TweakLocks(currentMajorCombo[majorPointer], 0, false),
-                                                PlayState.currentRando.randoLevel == 1);
+                                                PlayState.currentRando.randoLevel == 1, currentSphere);
                                             if (projectedOpenLocations.Count > 0 || CountUnplacedMajors(majorsToAdd, currentMajorCombo) == 1)
                                                 validPlacement = true;
                                             else
                                             {
                                                 majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                                if (majorPointer < 0)
+                                                    majorPointer += currentMajorCombo.Length;
                                                 pointerShiftsLeft--;
                                             }
                                         }
@@ -333,7 +340,9 @@ public class Randomizer : MonoBehaviour
                                             Items thisMajorEnum = ItemIDToEnum(thisMajorID);
                                             majorsPlaced.Add(thisMajorEnum);
                                             majorsToAdd.Remove(thisMajorEnum);
+                                            Debug.Log(string.Format("{0}[{1}[{2}]]", locations.Length, currentOpenLocations.Count, openLocationID));
                                             locations[currentOpenLocations[openLocationID]] = thisMajorID;
+                                            // ^ Breaks. Fix. Seed: 23242996
                                             TweakLocks(thisMajorID, 0);
                                             //PrintPlacement(thisMajorID, currentOpenLocations[openLocationID]);
                                         }
@@ -847,9 +856,17 @@ public class Randomizer : MonoBehaviour
         };
     }
 
+    private List<int> GetLocations()
+    {
+        return GetLocations(locks, false, -1);
+    }
     private List<int> GetLocations(bool majorsOnly = false)
     {
-        return GetLocations(locks, majorsOnly);
+        return GetLocations(locks, majorsOnly, -1);
+    }
+    private List<int> GetLocations(bool majorsOnly = false, int sphereConstraint = -1)
+    {
+        return GetLocations(locks, majorsOnly, sphereConstraint);
     }
     private List<int> GetLocations(Dictionary<string, bool> _locks, bool majorsOnly = false, int sphereConstraint = -1)
     {
