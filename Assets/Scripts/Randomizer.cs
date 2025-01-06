@@ -229,6 +229,7 @@ public class Randomizer : MonoBehaviour
                             locks["Boss4"] = true;
                         }
                         locks[PlayState.currentProfile.character] = true;
+                        locks["Health"] = true;
 
                         //int[] currentMajorWeights = PlayState.currentRando.progressivesOn ? (int[])progMajorWeights.Clone() : (int[])majorWeights.Clone();
                         //for (int i = 0; i < currentMajorWeights.Length; i++)
@@ -342,7 +343,6 @@ public class Randomizer : MonoBehaviour
                                             majorsToAdd.Remove(thisMajorEnum);
                                             Debug.Log(string.Format("{0}[{1}[{2}]]", locations.Length, currentOpenLocations.Count, openLocationID));
                                             locations[currentOpenLocations[openLocationID]] = thisMajorID;
-                                            // ^ Breaks. Fix. Seed: 23242996
                                             TweakLocks(thisMajorID, 0);
                                             //PrintPlacement(thisMajorID, currentOpenLocations[openLocationID]);
                                         }

@@ -14,10 +14,10 @@ public class EditorViewDoor : Editor
     private SerializedProperty sLocked;
     private SerializedProperty sPermLocked;
     private SerializedProperty sRandoLocked;
+    private SerializedProperty sHelixLocked;
+    private SerializedProperty sTargetSphere;
     private SerializedProperty sBoss;
     private SerializedProperty sDir;
-    private SerializedProperty sFragmentsMin;
-    private SerializedProperty sFragmentsMaj;
 
     private void OnEnable()
     {
@@ -28,10 +28,10 @@ public class EditorViewDoor : Editor
         sLocked = serializedObject.FindProperty("locked");
         sPermLocked = serializedObject.FindProperty("alwaysLocked");
         sRandoLocked = serializedObject.FindProperty("randoLocked");
+        sHelixLocked = serializedObject.FindProperty("helixLocked");
+        sTargetSphere = serializedObject.FindProperty("helixLockTargetSphere");
         sBoss = serializedObject.FindProperty("bossLock");
         sDir = serializedObject.FindProperty("direction");
-        sFragmentsMin = serializedObject.FindProperty("requiredFragmentsMin");
-        sFragmentsMaj = serializedObject.FindProperty("requiredFragmentsMaj");
     }
 
     public override void OnInspectorGUI()
@@ -44,23 +44,29 @@ public class EditorViewDoor : Editor
         {
             sPermLocked.boolValue = EditorGUILayout.Toggle("   Permanently?", sPermLocked.boolValue);
             sRandoLocked.boolValue = EditorGUILayout.Toggle("   Only in rando?", sRandoLocked.boolValue);
+            sHelixLocked.boolValue = EditorGUILayout.Toggle("   Helix-locked?", sHelixLocked.boolValue);
+            if (sHelixLocked.boolValue)
+            {
+                GUILayout.Label("Item sphere to count fragments in\n" +
+                    "   (This determines how many are needed\n   to open by counting all fragments\n   in this and all previous spheres)");
+                sTargetSphere.intValue = EditorGUILayout.IntField(sTargetSphere.intValue);
+            }
         }
         else
         {
             sPermLocked.boolValue = false;
             sRandoLocked.boolValue = false;
+            sHelixLocked.boolValue = false;
         }
-        sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
+        if (sLocked.boolValue && !sPermLocked.boolValue && !sHelixLocked.boolValue)
+            sBoss.intValue = EditorGUILayout.Popup("Required boss: ", sBoss.intValue, new string[] { "Shellbreaker", "Stompy", "Space Box", "Moon Snail" });
         sDir.intValue = EditorGUILayout.Popup("Direction: ", sDir.intValue, new string[] { "Left", "Up", "Right", "Down" });
-        GUILayout.Space(5);
-        GUILayout.Label("Required Helix Fragments to open in\nrandomizer (when the option is turned on):");
-        sFragmentsMin.intValue = EditorGUILayout.IntField("Set area prog.", sFragmentsMin.intValue);
-        sFragmentsMaj.intValue = EditorGUILayout.IntField("Open area prog.", sFragmentsMaj.intValue);
 
         serializedObject.ApplyModifiedProperties();
 
-        int id = ((sLocked.boolValue && !sRandoLocked.boolValue) ? 4 : sWeapon.intValue) + ((sDir.intValue == 1 || sDir.intValue == 3) ? 5 : 0);
-        if (sLocked.boolValue && sRandoLocked.boolValue && !(id == 4 || id == 9))
+        int id = ((sLocked.boolValue && !sRandoLocked.boolValue && !sHelixLocked.boolValue) ? 4 : sWeapon.intValue)
+            + ((sDir.intValue == 1 || sDir.intValue == 3) ? 5 : 0);
+        if (sLocked.boolValue && sHelixLocked.boolValue && !(id == 4 || id == 9))
             id += 10;
         sprite.sprite = script.editorSprites[id];
         sprite.flipX = false;

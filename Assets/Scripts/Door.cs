@@ -9,13 +9,12 @@ public class Door:MonoBehaviour, IRoomObject
     [SerializeField] public bool locked;
     [SerializeField] private bool alwaysLocked;
     [SerializeField] private bool randoLocked;
+    [SerializeField] private bool helixLocked;
+    [SerializeField] private int helixLockTargetSphere;
     [SerializeField] private int direction;
-    [SerializeField] private int requiredFragmentsMin;
-    [SerializeField] private int requiredFragmentsMaj;
     private bool openAfterBossDefeat = false;
     private float bossUnlockDelay = 3.5f;
     private int[] flipStates;
-    private bool helixLocked;
 
     public AnimationModule anim;
     public SpriteRenderer sprite;
@@ -62,9 +61,9 @@ public class Door:MonoBehaviour, IRoomObject
         content["locked"] = locked;
         content["alwaysLocked"] = alwaysLocked;
         content["randoLocked"] = randoLocked;
+        content["helixLocked"] = helixLocked;
+        content["helixLockTargetSphere"] = helixLockTargetSphere;
         content["direction"] = direction;
-        content["requiredFragmentsMin"] = requiredFragmentsMin;
-        content["requiredFragmentsMaj"] = requiredFragmentsMaj;
         return content;
     }
 
@@ -74,10 +73,10 @@ public class Door:MonoBehaviour, IRoomObject
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
-        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock) && PlayState.isRandomGame && PlayState.currentRando.bossesLocked;
+        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock) && PlayState.isRandomGame;
+        helixLocked = (bool)content["helixLocked"] && PlayState.isRandomGame && PlayState.currentRando.bossesLocked;
+        helixLockTargetSphere = (int)content["helixLockTargetSphere"];
         direction = (int)content["direction"];
-        requiredFragmentsMin = (int)content["requiredFragmentsMin"];
-        requiredFragmentsMaj = (int)content["requiredFragmentsMaj"];
         Spawn();
     }
 
@@ -109,9 +108,7 @@ public class Door:MonoBehaviour, IRoomObject
 
     public void Spawn()
     {
-        helixLocked = randoLocked && PlayState.CountFragments() < PlayState.currentRando.helixesRequired[bossLock];
-            //(PlayState.currentRando.openAreas ? requiredFragmentsMaj : requiredFragmentsMin);
-        if (helixLocked)
+        if (helixLocked && PlayState.CountFragments() < PlayState.currentRando.helixesRequired[helixLockTargetSphere])
         {
             lockData = PlayState.GetAnim("Object_helixLockPopup_data").frames;
             lockPopup = Instantiate(Resources.Load<GameObject>("Objects/Helix Lock Popup"), transform);
@@ -192,8 +189,7 @@ public class Door:MonoBehaviour, IRoomObject
             }
             if (popupActive && lockText.GetText() == "")
                 if (lockAnim.GetCurrentFrame() >= lockData[0])
-                    lockText.SetText(PlayState.currentRando.helixesRequired[bossLock].ToString());
-                    //lockText.SetText(PlayState.currentRando.openAreas ? requiredFragmentsMaj.ToString() : requiredFragmentsMin.ToString());
+                    lockText.SetText(PlayState.currentRando.helixesRequired[helixLockTargetSphere].ToString());
             if (!popupActive && lockText.GetText() != "")
                 if (lockAnim.GetCurrentFrame() >= lockData[1])
                     lockText.SetText("");
@@ -212,8 +208,7 @@ public class Door:MonoBehaviour, IRoomObject
         {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            //if (locked || (randoLocked && PlayState.isRandomGame && !PlayState.currentRando.openAreas) || alwaysLocked)
-            if ((locked || alwaysLocked) && !randoLocked)
+            if ((locked || alwaysLocked) && !helixLocked)
                 animToPlay += "locked_";
             else
             {
