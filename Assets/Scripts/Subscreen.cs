@@ -335,9 +335,10 @@ public class Subscreen : MonoBehaviour
         {
             int locationID = PlayState.itemLocations[playerCellID];
             int itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
-            if (itemID >= 1000)
-                if (PlayState.currentRando.trapLocations[itemID - 1000] == 0)
-                    isItemCell = true;
+            //if (itemID >= 1000)
+            //    if (PlayState.currentRando.trapLocations[itemID - 1000] == 0)
+            if (itemID >= 1000 && PlayState.currentProfile.locations[locationID] == 0)
+                isItemCell = true;
             else if (PlayState.GetItemAvailabilityThisCharacter(itemID) && PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.currentProfile.items[itemID] == 0)
                 isItemCell = true;
         }

@@ -18,6 +18,10 @@ public class Randomizer : MonoBehaviour
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
     private const int STEPS_PER_FRAME = 2;
     private const int MINIMUM_TRAPS = 2;
+    private const int MAXIMUM_TRAPS = 6;
+    private readonly List<int> PROG_WEAPONS = new() { 0, 1, 2 };
+    private readonly List<int> PROG_MODS = new() { 6, 3 };
+    private readonly List<int> PROG_SHELLS = new() { 7, 8, 9 };
 
     private enum Items
     {
@@ -124,7 +128,7 @@ public class Randomizer : MonoBehaviour
             new int[] {  2, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.Devastator },
         },
         new int[][] { // ENDGAME. Goal: Moon Snail, full weapons
-            new int[] {  1, (int)Items.Devastator },
+            new int[] {  1, (int)Items.Devastator, (int)Items.RainbowWave },
         }
     };
 
@@ -187,7 +191,7 @@ public class Randomizer : MonoBehaviour
         int placedHelixes = 0;
         int placedHearts = 0;
         List<int> trapsToPlace = new();
-        int[] currentMajorCombo = new int[0];
+        List<int> currentMajorCombo = new();
         bool initializedPhase = false;
 
         while (isShuffling)
@@ -293,46 +297,82 @@ public class Randomizer : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (currentMajorCombo.Length == 0)
-                                        currentMajorCombo = SelectNewMajorCombo(currentSphere,
-                                            PlayState.currentRando.randoLevel == 1 ? sphereSplitLimits[currentSphere] : 0);
+                                    while (currentMajorCombo.Count == 0)
+                                    {
+                                        currentMajorCombo = new(SelectNewMajorCombo(currentSphere,
+                                            PlayState.currentRando.randoLevel == 1 ? sphereSplitLimits[currentSphere] : 0, out List<int> comboList));
+                                        if (PlayState.currentRando.progressivesOn)
+                                        {
+                                            bool validCombo = true;
+                                            //breaKING
+                                            if ((progWeapons == 0 && !comboList.Contains(0) && (comboList.Contains(1) || comboList.Contains(2))) ||
+                                                (progWeapons == 1 && !comboList.Contains(1) && comboList.Contains(2)))
+                                                validCombo = false;
+                                            if (progMods == 0 && !comboList.Contains(6) && comboList.Contains(3))
+                                                validCombo = false;
+                                            if ((progShells == 0 && !comboList.Contains(7) && (comboList.Contains(8) || comboList.Contains(9))) ||
+                                                (progShells == 1 && !comboList.Contains(8) && comboList.Contains(9)))
+                                                validCombo = false;
+
+                                            if (validCombo)
+                                            {
+                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                {
+                                                    if (PROG_WEAPONS.Contains(currentMajorCombo[i]))
+                                                        currentMajorCombo[i] = PROG_WEAPONS[Mathf.Clamp(progWeapons, 0, PROG_WEAPONS.Count - 1)];
+                                                    if (PROG_MODS.Contains(currentMajorCombo[i]))
+                                                        currentMajorCombo[i] = PROG_MODS[Mathf.Clamp(progWeapons, 0, PROG_MODS.Count - 1)];
+                                                    if (PROG_SHELLS.Contains(currentMajorCombo[i]))
+                                                        currentMajorCombo[i] = PROG_SHELLS[Mathf.Clamp(progWeapons, 0, PROG_SHELLS.Count - 1)];
+                                                }
+                                            }
+                                            else
+                                                currentMajorCombo = new();
+                                        }
+                                    }
 
                                     if (CheckIfFullComboPlaced(majorsToAdd, currentMajorCombo))
                                     {
                                         currentSphere++;
-                                        currentMajorCombo = new int[0];
+                                        currentMajorCombo = new();
                                     }
                                     else
                                     {
                                         List<int> currentOpenLocations = GetLocations(PlayState.currentRando.randoLevel == 1, currentSphere);
                                         int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
 
-                                        int majorPointer = Mathf.FloorToInt(Random.value * currentMajorCombo.Length);
+                                        int majorPointer = Mathf.FloorToInt(Random.value * currentMajorCombo.Count);
                                         int pointerAdjustmentSign = Random.value <= 0.5f ? -1 : 1;
                                         if (majorsPlaced.Count > 0)
                                         {
                                             while (majorsPlaced.Contains(ItemIDToEnum(currentMajorCombo[majorPointer])))
                                             {
-                                                majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                                majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Count;
                                                 if (majorPointer < 0)
-                                                    majorPointer += currentMajorCombo.Length;
+                                                    majorPointer += currentMajorCombo.Count;
                                             }
                                         }
 
                                         bool validPlacement = false;
-                                        int pointerShiftsLeft = currentMajorCombo.Length;
-                                        while (!validPlacement && pointerShiftsLeft > 0)
+                                        int pointerShiftsLeft = currentMajorCombo.Count;
+                                        int targetSphere = currentSphere;
+                                        while (!validPlacement && pointerShiftsLeft > 0 && targetSphere >= 0)
                                         {
                                             List<int> projectedOpenLocations = GetLocations(TweakLocks(currentMajorCombo[majorPointer], 0, false),
-                                                PlayState.currentRando.randoLevel == 1, currentSphere);
+                                                PlayState.currentRando.randoLevel == 1, targetSphere);
                                             if (projectedOpenLocations.Count > 0 || CountUnplacedMajors(majorsToAdd, currentMajorCombo) == 1)
                                                 validPlacement = true;
                                             else
                                             {
-                                                majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Length;
+                                                majorPointer = (majorPointer + (1 * pointerAdjustmentSign)) % currentMajorCombo.Count;
                                                 if (majorPointer < 0)
-                                                    majorPointer += currentMajorCombo.Length;
+                                                    majorPointer += currentMajorCombo.Count;
                                                 pointerShiftsLeft--;
+                                                if (pointerShiftsLeft == 0 && targetSphere >= 0)
+                                                {
+                                                    pointerShiftsLeft = currentMajorCombo.Count;
+                                                    targetSphere--;
+                                                }
                                             }
                                         }
                                         if (validPlacement)
@@ -341,10 +381,55 @@ public class Randomizer : MonoBehaviour
                                             Items thisMajorEnum = ItemIDToEnum(thisMajorID);
                                             majorsPlaced.Add(thisMajorEnum);
                                             majorsToAdd.Remove(thisMajorEnum);
-                                            Debug.Log(string.Format("{0}[{1}[{2}]]", locations.Length, currentOpenLocations.Count, openLocationID));
+                                            //Debug.Log(string.Format("{0}[{1}[{2}]]", locations.Length, currentOpenLocations.Count, openLocationID));
                                             locations[currentOpenLocations[openLocationID]] = thisMajorID;
                                             TweakLocks(thisMajorID, 0);
                                             //PrintPlacement(thisMajorID, currentOpenLocations[openLocationID]);
+                                            if (thisMajorEnum == Items.Peashooter || thisMajorEnum == Items.Boomerang || thisMajorEnum == Items.RainbowWave)
+                                            {
+                                                progWeapons++;
+                                                int timesSeen = 0;
+                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                {
+                                                    if (PROG_WEAPONS.Contains(currentMajorCombo[majorPointer]))
+                                                    {
+                                                        if (timesSeen >= progWeapons)
+                                                            currentMajorCombo[majorPointer] = PROG_WEAPONS[progWeapons];
+                                                        else
+                                                            timesSeen++;
+                                                    }
+                                                }
+                                            }
+                                            if (thisMajorEnum == Items.RapidFire || thisMajorEnum == Items.Devastator)
+                                            {
+                                                progMods++;
+                                                int timesSeen = 0;
+                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                {
+                                                    if (PROG_MODS.Contains(currentMajorCombo[majorPointer]))
+                                                    {
+                                                        if (timesSeen >= progMods)
+                                                            currentMajorCombo[majorPointer] = PROG_MODS[progMods];
+                                                        else
+                                                            timesSeen++;
+                                                    }
+                                                }
+                                            }
+                                            if (thisMajorEnum == Items.IceShell || thisMajorEnum == Items.FlyShell || thisMajorEnum == Items.MetalShell)
+                                            {
+                                                progShells++;
+                                                int timesSeen = 0;
+                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                {
+                                                    if (PROG_SHELLS.Contains(currentMajorCombo[majorPointer]))
+                                                    {
+                                                        if (timesSeen >= progShells)
+                                                            currentMajorCombo[majorPointer] = PROG_SHELLS[progShells];
+                                                        else
+                                                            timesSeen++;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -406,12 +491,13 @@ public class Randomizer : MonoBehaviour
                                         List<int> validTraps = new();
                                         for (int i = 0; i < totalTraps; i++)
                                             validTraps.Add(1000 + i);
-                                        int trapCount = Mathf.FloorToInt(Random.value * (validTraps.Count - MINIMUM_TRAPS)) + MINIMUM_TRAPS + 1;
+                                        //int trapCount = Mathf.FloorToInt(Random.value * (validTraps.Count - MINIMUM_TRAPS)) + MINIMUM_TRAPS + 1;
+                                        int trapCount = Mathf.FloorToInt(Mathf.Lerp(MINIMUM_TRAPS, MAXIMUM_TRAPS + 1, Random.value));
                                         for (int i = 0; i < trapCount; i++)
                                         {
                                             int trapIndex = Mathf.FloorToInt(Random.value * validTraps.Count);
                                             trapsToPlace.Add(validTraps[trapIndex]);
-                                            validTraps.RemoveAt(trapIndex);
+                                            //validTraps.RemoveAt(trapIndex);
                                         }
                                         initializedPhase = true;
                                     }
@@ -772,7 +858,7 @@ public class Randomizer : MonoBehaviour
         }
     }
 
-    private int[] SelectNewMajorCombo(int sphereID, int lengthLimit = 0)
+    private List<int> SelectNewMajorCombo(int sphereID, int lengthLimit, out List<int> newCombo)
     {
         List<int> comboPool = new();
         for (int i = 0; i < validMajorCombos[sphereID].Length; i++)
@@ -783,7 +869,7 @@ public class Randomizer : MonoBehaviour
         int poolIndex = Mathf.FloorToInt(Random.value * comboPool.Count);
         int chosenPoolID = comboPool[poolIndex];
         
-        List<int> newCombo = new();
+        newCombo = new();
         for (int i = 1; i < validMajorCombos[sphereID][chosenPoolID].Length; i++)
             newCombo.Add(validMajorCombos[sphereID][chosenPoolID][i]);
 
@@ -792,22 +878,22 @@ public class Randomizer : MonoBehaviour
         //    output += ItemIDToEnum(newCombo[i]).ToString() + " ";
         //Debug.Log(output);
 
-        return newCombo.ToArray();
+        return newCombo;
     }
 
-    private bool CheckIfFullComboPlaced(List<Items> currentUnplacedMajors, int[] currentCombo)
+    private bool CheckIfFullComboPlaced(List<Items> currentUnplacedMajors, List<int> currentCombo)
     {
         bool completelyPlaced = true;
-        for (int i = 0; i < currentCombo.Length; i++)
+        for (int i = 0; i < currentCombo.Count; i++)
             if (currentUnplacedMajors.Contains((Items)currentCombo[i]))
                 completelyPlaced = false;
         return completelyPlaced;
     }
 
-    private int CountUnplacedMajors(List<Items> currentUnplacedMajors, int[] currentCombo)
+    private int CountUnplacedMajors(List<Items> currentUnplacedMajors, List<int> currentCombo)
     {
         int unplacedInCombo = 0;
-        for (int i = 0; i < currentCombo.Length; i++)
+        for (int i = 0; i < currentCombo.Count; i++)
             if (currentUnplacedMajors.Contains(ItemIDToEnum(currentCombo[i])))
                 unplacedInCombo++;
         return unplacedInCombo;

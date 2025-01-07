@@ -96,12 +96,12 @@ public class Item:MonoBehaviour, IRoomObject {
         if (!PlayState.isInBossRush && PlayState.currentProfile.locations[locationID] == 1)
             Destroy(gameObject);
         else if (itemID >= 1000)
-        {
-            if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
+        //{
+        //    if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
                 Spawn();
-            else
-                Destroy(gameObject);
-        }
+        //    else
+        //        Destroy(gameObject);
+        //}
         else if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID)
             && PlayState.currentProfile.items[itemID] == 0)
             Spawn();

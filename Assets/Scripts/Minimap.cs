@@ -163,8 +163,8 @@ public class Minimap : MonoBehaviour
                                 if (thisItemId >= 1000)
                                 {
                                     markItem = true;
-                                    if (PlayState.currentRando.trapLocations[thisItemId - 1000] == 1)
-                                        markCollected = true;
+                                    //if (PlayState.currentRando.trapLocations[thisItemId - 1000] == 1)
+                                        //markCollected = true;
                                 }
                                 else if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
                                 {
