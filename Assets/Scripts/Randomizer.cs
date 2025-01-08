@@ -122,13 +122,14 @@ public class Randomizer : MonoBehaviour
             new int[] {  1, (int)Items.FlyShell, (int)Items.Devastator },
         },
         new int[][] { // LATEGAME. Goal: Space Box, fly
-            new int[] {  5, (int)Items.FlyShell, (int)Items.RainbowWave },
-            new int[] {  3, (int)Items.FlyShell, (int)Items.Devastator },
-            new int[] {  3, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.RainbowWave },
-            new int[] {  2, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.Devastator },
+            new int[] {  5, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  3, (int)Items.IceShell, (int)Items.FlyShell, (int)Items.Devastator },
+            new int[] {  3, (int)Items.IceShell, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.RainbowWave },
+            new int[] {  2, (int)Items.IceShell, (int)Items.HighJump, (int)Items.FlyShell, (int)Items.Devastator },
         },
         new int[][] { // ENDGAME. Goal: Moon Snail, full weapons
-            new int[] {  1, (int)Items.Devastator, (int)Items.RainbowWave },
+            new int[] {  1, (int)Items.RapidFire, (int)Items.Devastator, (int)Items.Peashooter, (int)Items.Boomerang, (int)Items.RainbowWave,
+                (int)Items.IceShell, (int)Items.FlyShell, (int)Items.MetalShell },
         }
     };
 
@@ -865,7 +866,7 @@ public class Randomizer : MonoBehaviour
             if (lengthLimit == 0 || validMajorCombos[sphereID][i].Length <= lengthLimit)
                 for (int j = 0; j < validMajorCombos[sphereID][i][0]; j++)
                     comboPool.Add(i);
-        
+
         int poolIndex = Mathf.FloorToInt(Random.value * comboPool.Count);
         int chosenPoolID = comboPool[poolIndex];
         
@@ -1329,6 +1330,16 @@ public class Randomizer : MonoBehaviour
                             iconID = 12;
                         else if (itemID >= PlayState.OFFSET_HEARTS)
                             iconID = 11;
+                        else if (PlayState.currentRando.progressivesOn)
+                        {
+                            iconID = itemID switch
+                            {
+                                0 or 1 or 2 => 15,
+                                6 or 3 => 16,
+                                7 or 8 or 9 => 17,
+                                _ => itemID
+                            };
+                        }
                         else
                             iconID = itemID;
 

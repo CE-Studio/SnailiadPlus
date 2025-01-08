@@ -109,7 +109,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -130,7 +130,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -151,7 +151,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -172,7 +172,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -193,7 +193,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -214,7 +214,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -234,7 +234,7 @@ TextureImporter:
       name: SpoilerLogIcons_6
       rect:
         serializedVersion: 2
-        x: 48
+        x: 0
         y: 8
         width: 8
         height: 8
@@ -255,8 +255,8 @@ TextureImporter:
       name: SpoilerLogIcons_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 8
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -276,8 +276,8 @@ TextureImporter:
       name: SpoilerLogIcons_8
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
+        x: 16
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -297,8 +297,8 @@ TextureImporter:
       name: SpoilerLogIcons_9
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
+        x: 24
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -318,8 +318,8 @@ TextureImporter:
       name: SpoilerLogIcons_10
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
+        x: 32
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -339,8 +339,8 @@ TextureImporter:
       name: SpoilerLogIcons_11
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 40
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -360,7 +360,7 @@ TextureImporter:
       name: SpoilerLogIcons_12
       rect:
         serializedVersion: 2
-        x: 40
+        x: 0
         y: 0
         width: 8
         height: 8
@@ -381,7 +381,7 @@ TextureImporter:
       name: SpoilerLogIcons_13
       rect:
         serializedVersion: 2
-        x: 48
+        x: 8
         y: 0
         width: 8
         height: 8
@@ -394,6 +394,90 @@ TextureImporter:
       bones: []
       spriteID: f74c5e8d8018e1b488e9e65058d81265
       internalID: -492866994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoilerLogIcons_14
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea9f2d2c9524b114c9f2fb3905f4d6f3
+      internalID: 2086633987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoilerLogIcons_15
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33f6152c6dcdd2b4ab179a513db832e1
+      internalID: 982688984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoilerLogIcons_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1275871f4317bb48827a19151c8cb1d
+      internalID: 1473681601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoilerLogIcons_17
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93315fdf8d7169b45930e0d24e27e11b
+      internalID: -27054600
       vertices: []
       indices: 
       edges: []
@@ -415,6 +499,10 @@ TextureImporter:
       SpoilerLogIcons_11: 530367299
       SpoilerLogIcons_12: -529588568
       SpoilerLogIcons_13: -492866994
+      SpoilerLogIcons_14: 2086633987
+      SpoilerLogIcons_15: 982688984
+      SpoilerLogIcons_16: 1473681601
+      SpoilerLogIcons_17: -27054600
       SpoilerLogIcons_2: -708962171
       SpoilerLogIcons_3: -21314547
       SpoilerLogIcons_4: 1326237337
