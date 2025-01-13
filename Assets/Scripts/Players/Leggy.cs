@@ -209,7 +209,7 @@ public class Leggy : Player
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y + riseSpeed);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -218,7 +218,7 @@ public class Leggy : Player
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -297,7 +297,10 @@ public class Leggy : Player
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.y -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y > 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.y = PlayState.Integrate(velocity.y, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.y = Mathf.Clamp(velocity.y, terminalVelocity[readIDSpeed], Mathf.Infinity);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -471,7 +474,7 @@ public class Leggy : Player
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.DownHold()) ||
                 (swapType == 1 && Control.DownHold() && !holdingShell) ||
                 (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)))
@@ -499,7 +502,7 @@ public class Leggy : Player
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] = maxSecs;
-                if (!PlayState.CheckForItem("Gravity Snail"))
+                if (!PlayState.CheckForItem(PlayState.Items.FlyShell))
                     hasSwappedOnce = true;
             }
             // Jumping to the left or right
@@ -567,7 +570,7 @@ public class Leggy : Player
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y - riseSpeed);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -576,7 +579,7 @@ public class Leggy : Player
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -655,7 +658,10 @@ public class Leggy : Player
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.y += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y < 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.y = PlayState.Integrate(velocity.y, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.y = Mathf.Clamp(velocity.y, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -828,7 +834,7 @@ public class Leggy : Player
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.UpHold()) ||
                 (swapType == 1 && Control.UpHold() && !holdingShell) ||
                 (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
@@ -856,7 +862,7 @@ public class Leggy : Player
                 holdingShell = true;
                 coyoteTimeCounter = coyoteTime;
                 Control.secondsSinceLastDirTap[(int)Dirs.Floor] = maxSecs;
-                if (!PlayState.CheckForItem("Gravity Snail"))
+                if (!PlayState.CheckForItem(PlayState.Items.FlyShell))
                     hasSwappedOnce = true;
             }
             // Jumping to the left or right

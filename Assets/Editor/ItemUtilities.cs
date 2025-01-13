@@ -32,7 +32,7 @@ public class ItemUtilities : Editor
     {
         serializedObject.Update();
 
-        sID.intValue = EditorGUILayout.Popup("Item type: ", sID.intValue == 24 ? 15 : sID.intValue + 1, new string[]
+        sID.intValue = EditorGUILayout.Popup("Item type: ", sID.intValue + 1, new string[]
         {
             "Nothing",
             "Peashooter",
@@ -49,11 +49,11 @@ public class ItemUtilities : Editor
             "Super Secret Boomerang",
             "Debug Rainbow Wave",
             "Heart Container",
-            "Helix Fragment"
+            "Helix Fragment",
+            "Radar Shell"
         }) - 1;
-        if (sID.intValue == 14)
-            sID.intValue = 24;
-        //GUILayout.Label("Item ID: " + script.itemID);
+        sprite.sprite = script.editorSprites[sID.intValue + 1];
+
         if (sID.intValue == 4)
             GUILayout.Label("Also corresponds to:\n- Wall Grab (Blobby)");
         if (sID.intValue == 5)

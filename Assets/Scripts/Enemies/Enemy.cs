@@ -92,7 +92,8 @@ public class Enemy : MonoBehaviour
             foreach (Bullet bullet in intersectingBullets)
             {
                 int thisDamage = bullet.damage;
-                if ((bullet.bulletType == 7 || bullet.bulletType == 8) && col.bounds.Contains(bullet.transform.position) && PlayState.CheckForItem(9))
+                if ((bullet.bulletType == 7 || bullet.bulletType == 8) && col.bounds.Contains(bullet.transform.position) &&
+                    PlayState.CheckForItem(PlayState.Items.MetalShell))
                     thisDamage = Mathf.CeilToInt(thisDamage * 1.35f);
                 if (!immunities.Contains(bullet.bulletType) && bullet.damage - defense > 0)
                 {

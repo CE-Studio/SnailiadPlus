@@ -121,11 +121,11 @@ public class TrapManager : MonoBehaviour
                 List<int> currentLoadout = new();
                 if (PlayState.isRandomGame && PlayState.currentRando.broomStart)
                     currentLoadout.Add(0);
-                if (PlayState.CheckForItem(0))
+                if (PlayState.CheckForItem(PlayState.Items.Peashooter))
                     currentLoadout.Add(1);
-                if (PlayState.CheckForItem(1))
+                if (PlayState.CheckForItem(PlayState.Items.Boomerang))
                     currentLoadout.Add(2);
-                if (PlayState.CheckForItem(2))
+                if (PlayState.CheckForItem(PlayState.Items.RainbowWave))
                     currentLoadout.Add(3);
                 int weaponCountToLock = Mathf.FloorToInt(currentLoadout.Count * 0.5f);
                 int currentCheckedID = currentLoadout.Count - 1;
@@ -140,7 +140,7 @@ public class TrapManager : MonoBehaviour
                 break;
             case 1:
                 lockedGravity = (Player.Dirs)Random.Range(0, 4);
-                if (!PlayState.CheckForItem("Gravity Snail"))
+                if (!PlayState.CheckForItem(PlayState.Items.FlyShell))
                     lockedGravity = PlayState.playerScript.defaultGravityDir;
                 PlayState.playerScript.RemoteSetGravity(lockedGravity);
                 break;

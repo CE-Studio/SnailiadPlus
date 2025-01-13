@@ -298,18 +298,18 @@ public class Subscreen : MonoBehaviour
                     int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[i]];
                     if (PlayState.isRandomGame)
                         thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[i]];
-                    if (thisItemId != -1 && PlayState.currentProfile.locations[PlayState.itemLocations[i]] == 0)
+                    if (thisItemId != -1)
                     {
-                        if (thisItemId >= 1000)
-                            if (PlayState.currentRando.itemLocations[thisItemId - 1000] == 0)
+                        if (thisItemId >= 100 ||
+                            (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId)))
+                        {
+                            if (PlayState.currentProfile.locations[PlayState.itemLocations[i]] == 0)
                                 cellAnim.Play("Minimap_icon_itemNormal", true);
                             else
                                 cellAnim.Play("Minimap_icon_itemCollected", true);
-                        else if (PlayState.currentProfile.items[thisItemId] == 0 && PlayState.GetItemAvailabilityThisCharacter(thisItemId) &&
-                            PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
-                            cellAnim.Play("Minimap_icon_itemNormal", true);
+                        }
                         else
-                            cellAnim.Play("Minimap_icon_itemCollected", true);
+                            cellAnim.Play("Minimap_icon_blank", true);
                     }
                     else
                         cellAnim.Play("Minimap_icon_blank", true);
@@ -370,15 +370,15 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_header_weapon");
                     break;
                 case 3:
-                    if (PlayState.CheckForItem("Peashooter"))
+                    if (PlayState.CheckForItem(PlayState.Items.Peashooter))
                         newText = PlayState.GetText("item_peashooter");
                     break;
                 case 4:
-                    if (PlayState.CheckForItem("Boomerang") || PlayState.CheckForItem("Super Secret Boomerang"))
+                    if (PlayState.CheckForItem(PlayState.Items.Boomerang) || PlayState.CheckForItem(PlayState.Items.SSBoom))
                         newText = PlayState.GetText("item_boomerang");
                     break;
                 case 5:
-                    if (PlayState.CheckForItem("Rainbow Wave") || PlayState.CheckForItem("Debug Rainbow Wave"))
+                    if (PlayState.CheckForItem(PlayState.Items.RainbowWave) || PlayState.CheckForItem(PlayState.Items.DebugRW))
                         newText = PlayState.GetText("item_rainbowWave");
                     break;
                 case 6:
@@ -390,11 +390,14 @@ public class Subscreen : MonoBehaviour
                         PlayState.GetText("species_leechy") : PlayState.GetText("subscreen_shell"))));
                     break;
                 case 8:
-                    if (PlayState.CheckForItem("Ice Snail") || PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                    //if (PlayState.CheckForItem("Ice Snail") || PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                    if (PlayState.CheckForItem(PlayState.Items.IceShell) || (PlayState.stackShells &&
+                        (PlayState.CheckForItem(PlayState.Items.FlyShell) || PlayState.CheckForItem(PlayState.Items.MetalShell))))
                         newText = string.Format(PlayState.GetText("item_iceSnail"), shell);
                     break;
                 case 9:
-                    if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                    //if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                    if (PlayState.CheckForItem(PlayState.Items.FlyShell) || (PlayState.stackShells && PlayState.CheckForItem(PlayState.Items.MetalShell)))
                         newText = string.Format(PlayState.GetText(PlayState.currentProfile.character switch {
                             "Upside" => "item_magneticFoot",
                             "Leggy" => "item_corkscrewJump",
@@ -403,7 +406,7 @@ public class Subscreen : MonoBehaviour
                         }), shell);
                     break;
                 case 10:
-                    if (PlayState.CheckForItem("Full-Metal Snail"))
+                    if (PlayState.CheckForItem(PlayState.Items.MetalShell))
                         newText = string.Format(PlayState.GetText(hasShell ? "item_fullMetalSnail_generic" : (PlayState.currentProfile.character == "Blobby" ?
                             "item_fullMetalSnail_blob" : "item_fullMetalSnail_noShell")), shell);
                     break;
@@ -411,23 +414,24 @@ public class Subscreen : MonoBehaviour
                     newText = PlayState.GetText("subscreen_header_ability");
                     break;
                 case 12:
-                    if (PlayState.CheckForItem("Shell Shield") && !(PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy"))
+                    if (PlayState.CheckForItem(PlayState.Items.ShellShield) &&
+                        !(PlayState.currentProfile.character == "Sluggy" || PlayState.currentProfile.character == "Leechy"))
                         newText = PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_shelmet" : "item_shellShield");
                     break;
                 case 13:
-                    if (PlayState.CheckForItem("High Jump"))
+                    if (PlayState.CheckForItem(PlayState.Items.HighJump))
                         newText = PlayState.GetText(PlayState.currentProfile.character == "Blobby" ? "item_wallGrab" : "item_highJump");
                     break;
                 case 14:
-                    if (PlayState.CheckForItem("Rapid Fire"))
+                    if (PlayState.CheckForItem(PlayState.Items.RapidFire))
                         newText = PlayState.GetText(PlayState.currentProfile.character == "Leechy" ? "item_backfire" : "item_rapidFire");
                     break;
                 case 15:
-                    if (PlayState.CheckForItem("Devastator"))
+                    if (PlayState.CheckForItem(PlayState.Items.Devastator))
                         newText = PlayState.GetText("item_devastator");
                     break;
                 case 16:
-                    if (PlayState.CheckForItem("Gravity Shock"))
+                    if (PlayState.CheckForItem(PlayState.Items.GravShock))
                         newText = PlayState.GetText("item_gravityShock");
                     break;
                 case 17:

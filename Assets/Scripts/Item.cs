@@ -29,6 +29,8 @@ public class Item:MonoBehaviour, IRoomObject {
 
     private const float UNIQUE_ITEM_CUTSCENE_TIME = 3.5f;
 
+    public Sprite[] editorSprites;
+
     public Dictionary<string, object> resave()
     {
         return null;
@@ -51,12 +53,15 @@ public class Item:MonoBehaviour, IRoomObject {
         {
             if (PlayState.itemData.Length == 0)
                 PlayState.itemData = new bool[PlayState.currentProfile.items.Length][];
-            if (itemID != -1)
+            if (itemID != -1 && itemID != (int)PlayState.Items.None)
             {
-                PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
+                if (PlayState.itemData[itemID] == null)
+                    PlayState.itemData[itemID] = difficultiesPresentIn.Concat(charactersPresentFor).ToArray();
                 if (PlayState.countedItems.Length == 0)
                     PlayState.countedItems = new bool[PlayState.currentProfile.items.Length];
                 PlayState.countedItems[itemID] = countedInPercentage;
+                if (countedInPercentage)
+                    PlayState.totalCountedItems++;
             }
             if (!PlayState.itemAreas[areaID].Contains(itemID))
                 PlayState.itemAreas[areaID].Add(itemID);
@@ -66,6 +71,11 @@ public class Item:MonoBehaviour, IRoomObject {
 
             locationID = PlayState.baseItemLocations.Count;
             PlayState.baseItemLocations.Add(itemID);
+        }
+        else
+        {
+            locationID = PlayState.rushItemLocations.Count;
+            PlayState.rushItemLocations.Add(itemID);
         }
         Dictionary<string, object> content = new();
         content["countedInPercentage"] = countedInPercentage;
@@ -93,17 +103,14 @@ public class Item:MonoBehaviour, IRoomObject {
             itemID = PlayState.isRandomGame ? PlayState.currentRando.itemLocations[locationID] : PlayState.baseItemLocations[locationID];
         UpdateIDAsProgressive();
 
-        if (!PlayState.isInBossRush && PlayState.currentProfile.locations[locationID] == 1)
+        if (PlayState.isInBossRush && PlayState.activeRushData.itemStates[locationID] == true)
             Destroy(gameObject);
-        else if (itemID >= 1000)
-        //{
-        //    if (PlayState.isRandomGame && PlayState.currentRando.trapsActive && PlayState.currentRando.trapLocations[itemID - 1000] == 0)
-                Spawn();
-        //    else
-        //        Destroy(gameObject);
-        //}
+        else if (!PlayState.isInBossRush && PlayState.currentProfile.locations[locationID] == 1)
+            Destroy(gameObject);
+        else if (itemID >= 100)
+            Spawn();
         else if (PlayState.GetItemAvailabilityThisDifficulty(itemID) && PlayState.GetItemAvailabilityThisCharacter(itemID)
-            && PlayState.currentProfile.items[itemID] == 0)
+            && PlayState.currentProfile.locations[locationID] == 0)
             Spawn();
         else
             Destroy(gameObject);
@@ -163,21 +170,11 @@ public class Item:MonoBehaviour, IRoomObject {
             animName = "Item_trap";
             box.size = new Vector2(0.95f, 0.95f);
         }
-        else if (itemID >= PlayState.OFFSET_FRAGMENTS)
-        {
-            animName = "Item_helixFragment";
-            box.size = new Vector2(0.95f, 0.95f);
-        }
-        else if (itemID >= PlayState.OFFSET_HEARTS)
-        {
-            animName = "Item_heartContainer";
-            box.size = new Vector2(1.95f, 1.95f);
-        }
         else
         {
-            switch (itemID)
+            switch ((PlayState.Items)itemID)
             {
-                case 0:
+                case PlayState.Items.Peashooter:
                     animName = "Item_peashooter";
                     box.size = new Vector2(1.825f, 1.825f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
@@ -186,8 +183,9 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.95f, 1.95f);
                     }
                     break;
-                case 1:
-                case 11:
+
+                case PlayState.Items.Boomerang:
+                case PlayState.Items.SSBoom:
                     animName = "Item_boomerang";
                     box.size = new Vector2(1.25f, 1.825f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
@@ -196,8 +194,9 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.95f, 1.95f);
                     }
                     break;
-                case 2:
-                case 12:
+
+                case PlayState.Items.RainbowWave:
+                case PlayState.Items.DebugRW:
                     animName = "Item_rainbowWave";
                     box.size = new Vector2(1.25f, 1.825f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
@@ -206,7 +205,8 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.95f, 1.95f);
                     }
                     break;
-                case 3:
+
+                case PlayState.Items.Devastator:
                     animName = "Item_devastator";
                     box.size = new Vector2(2.95f, 1.95f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
@@ -215,14 +215,16 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.95f, 1.95f);
                     }
                     break;
-                case 4:
+
+                case PlayState.Items.HighJump:
                     if (PlayState.currentProfile.character == "Blobby")
                         animName = "Item_wallGrab";
                     else
                         animName = "Item_highJump";
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
-                case 5:
+
+                case PlayState.Items.ShellShield:
                     if (PlayState.currentProfile.character == "Blobby")
                     {
                         animName = "Item_shelmet";
@@ -234,7 +236,8 @@ public class Item:MonoBehaviour, IRoomObject {
                         box.size = new Vector2(1.45f, 1.675f);
                     }
                     break;
-                case 6:
+
+                case PlayState.Items.RapidFire:
                     if (PlayState.currentProfile.character == "Leechy")
                         animName = "Item_backfire";
                     else
@@ -243,13 +246,15 @@ public class Item:MonoBehaviour, IRoomObject {
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
                         animName = "Item_progressiveWeaponMod";
                     break;
-                case 7:
+
+                case PlayState.Items.IceShell:
                     animName = "Item_iceSnail";
                     box.size = new Vector2(1.95f, 1.95f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
                         animName = "Item_progressiveShell";
                     break;
-                case 8:
+
+                case PlayState.Items.FlyShell:
                     animName = PlayState.currentProfile.character switch
                     {
                         "Upside" => "Item_magneticFoot",
@@ -261,16 +266,29 @@ public class Item:MonoBehaviour, IRoomObject {
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
                         animName = "Item_progressiveShell";
                     break;
-                case 9:
+
+                case PlayState.Items.MetalShell:
                     animName = "Item_fullMetalSnail";
                     box.size = new Vector2(1.95f, 1.95f);
                     if (PlayState.isRandomGame && PlayState.currentRando.progressivesOn)
                         animName = "Item_progressiveShell";
                     break;
-                case 10:
+
+                case PlayState.Items.GravShock:
                     animName = "Item_gravityShock";
                     box.size = new Vector2(1.95f, 1.95f);
                     break;
+
+                case PlayState.Items.Heart:
+                    animName = "Item_heartContainer";
+                    box.size = new Vector2(1.95f, 1.95f);
+                    break;
+
+                case PlayState.Items.Fragment:
+                    animName = "Item_helixFragment";
+                    box.size = new Vector2(0.95f, 0.95f);
+                    break;
+
                 default:
                     animName = "Item_helixFragment";
                     sprite.enabled = false;
@@ -285,14 +303,17 @@ public class Item:MonoBehaviour, IRoomObject {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && itemID != -1)
+        if (collision.CompareTag("Player") && itemID != -1 && itemID != (int)PlayState.Items.None)
         {
             collected = true;
-            PlayState.AddItem(itemID);
-            if (!PlayState.isInBossRush)
+            PlayState.AddItem((PlayState.Items)itemID);
+            if (PlayState.isInBossRush)
+                PlayState.activeRushData.itemStates[locationID] = true;
+            else
                 PlayState.currentProfile.locations[locationID] = 1;
             PlayState.minimapScript.RefreshMap();
-            if (itemID >= PlayState.OFFSET_HEARTS && itemID < PlayState.OFFSET_FRAGMENTS) {
+            if (itemID == (int)PlayState.Items.Heart)
+            {
                 PlayState.playerScript.maxHealth += PlayState.globalFunctions.hpPerHeart[PlayState.currentProfile.difficulty];
                 PlayState.playerScript.health = PlayState.playerScript.maxHealth;
                 PlayState.globalFunctions.RenderNewHearts();
@@ -311,33 +332,41 @@ public class Item:MonoBehaviour, IRoomObject {
                 else
                     PlayState.PlayMusic(0, 1);
             }
-            switch (itemID) {
-                case 0:
+
+            if (itemID >= 100)
+                PlayState.trapManager.ActivateTrap(itemID - 100);
+            switch ((PlayState.Items)itemID)
+            {
+                case PlayState.Items.Peashooter:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
                     PlayState.globalFunctions.ChangeActiveWeapon(1, true);
                     break;
-                case 1:
-                case 11:
+
+                case PlayState.Items.Boomerang:
+                case PlayState.Items.SSBoom:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
                     PlayState.globalFunctions.ChangeActiveWeapon(2, true);
-                    if (itemID == 11)
+                    if (itemID == (int)PlayState.Items.SSBoom)
                         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.SuperSecretBoom);
                     break;
-                case 2:
-                case 12:
+                
+                case PlayState.Items.RainbowWave:
+                case PlayState.Items.DebugRW:
                     if (PlayState.playerScript.selectedWeapon == 0)
                         PlayState.TogglableHUDElements[17].GetComponent<ControlPopup>().RunPopup(true, Control.lastInputIsCon);
                     PlayState.globalFunctions.ChangeActiveWeapon(3, true);
                     break;
-                case 7:
+                
+                case PlayState.Items.IceShell:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing(1);
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
-                case 8:
+                
+                case PlayState.Items.FlyShell:
                     if (isSuperUnique)
                     {
                         PlayState.globalFunctions.RunDustRing(2);
@@ -351,31 +380,18 @@ public class Item:MonoBehaviour, IRoomObject {
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
-                case 9:
+                
+                case PlayState.Items.MetalShell:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing(3);
                     else
                         PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                     break;
-                case 10:
+                
+                case PlayState.Items.GravShock:
                     if (isSuperUnique)
                         PlayState.globalFunctions.RunDustRing();
                     PlayState.QueueAchievementPopup(AchievementPanel.Achievements.GravityShock);
-                    break;
-                case 1000:
-                    PlayState.trapManager.ActivateTrap(0);
-                    break;
-                case 1001:
-                    PlayState.trapManager.ActivateTrap(1);
-                    break;
-                case 1002:
-                    PlayState.trapManager.ActivateTrap(2);
-                    break;
-                case 1003:
-                    PlayState.trapManager.ActivateTrap(3);
-                    break;
-                case 1004:
-                    PlayState.trapManager.ActivateTrap(4);
                     break;
                 default:
                     if (isSuperUnique)
@@ -414,15 +430,12 @@ public class Item:MonoBehaviour, IRoomObject {
     public static string IDToName(int thisID, bool numberHeartsAndHelixes = true)
     {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
-        if (thisID < 1000)
-        {
-            if (thisID >= PlayState.OFFSET_FRAGMENTS)
-                return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString())
-                    : PlayState.GetText("item_helixFragment_noNum");
-            if (thisID >= PlayState.OFFSET_HEARTS)
-                return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString())
-                    : PlayState.GetText("item_heartContainer_noNum");
-        }
+        if (thisID == (int)PlayState.Items.Fragment)
+            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_helixFragment"), PlayState.CountFragments().ToString())
+                : PlayState.GetText("item_helixFragment_noNum");
+        if (thisID == (int)PlayState.Items.Heart)
+            return numberHeartsAndHelixes ? string.Format(PlayState.GetText("item_heartContainer"), PlayState.CountHearts().ToString())
+                : PlayState.GetText("item_heartContainer_noNum");
         return thisID switch
         {
             0 => PlayState.currentRando.progressivesOn ? PlayState.GetText("item_progressiveWeapon") : PlayState.GetText("item_peashooter"),
@@ -519,10 +532,10 @@ public class Item:MonoBehaviour, IRoomObject {
             switch (itemID)
             {
                 case 0: case 1: case 2:
-                    itemID = PlayState.CheckForItem("Boomerang") ? 2 : (PlayState.CheckForItem("Peashooter") ? 1 : 0);
+                    itemID = PlayState.CheckForItem(PlayState.Items.Boomerang) ? 2 : (PlayState.CheckForItem(PlayState.Items.Peashooter) ? 1 : 0);
                     break;
                 case 3: case 6:
-                    itemID = PlayState.CheckForItem("Rapid Fire") ? 3 : 6;
+                    itemID = PlayState.CheckForItem(PlayState.Items.RapidFire) ? 3 : 6;
                     break;
                 case 7: case 8: case 9:
                     itemID = 7 + PlayState.GetShellLevel();

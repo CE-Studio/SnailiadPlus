@@ -442,6 +442,7 @@ public class RoomTrigger : MonoBehaviour
                             PlayState.incrementRushTimer = false;
                             PlayState.hudRushTime.SetText("");
                             PlayState.activeRushData = PlayState.defaultRushData;
+                            PlayState.activeRushData.itemStates = new bool[PlayState.rushItemLocations.Count];
                             PlayState.globalFunctions.RemoveGigaBackgroundLayers();
                         }
                         break;

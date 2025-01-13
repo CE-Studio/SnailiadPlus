@@ -83,7 +83,7 @@ public class Bullet : MonoBehaviour
                         box.enabled = false;
                     else if (!singleFrameHitFlag)
                     {
-                        if (anim.GetCurrentFrame() >= (PlayState.CheckForItem("Rapid Fire") ? 3 : 4))
+                        if (anim.GetCurrentFrame() >= (PlayState.CheckForItem(PlayState.Items.RapidFire) ? 3 : 4))
                         {
                             singleFrameHitFlag = true;
                             box.enabled = true;
@@ -285,7 +285,8 @@ public class Bullet : MonoBehaviour
         }
         direction = dir;
         initialVelocity = velocity;
-        if (!((PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods)) && applyRapidMult))
+        if (!((PlayState.CheckForItem(PlayState.Items.RapidFire) ||
+            (PlayState.CheckForItem(PlayState.Items.Devastator) && PlayState.stackWeaponMods)) && applyRapidMult))
             rapidMult = 1f;
         if (PlayState.damageMult)
             damage *= 10;
@@ -299,8 +300,8 @@ public class Bullet : MonoBehaviour
         string animToPlay = "Bullet_";
         animToPlay += bulletType switch
         {
-            0 => "broom_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
-            1 => "broomDev_" + (PlayState.CheckForItem("Rapid Fire") ? "rapid_" : ""),
+            0 => "broom_" + (PlayState.CheckForItem(PlayState.Items.RapidFire) ? "rapid_" : ""),
+            1 => "broomDev_" + (PlayState.CheckForItem(PlayState.Items.RapidFire) ? "rapid_" : ""),
             2 => "peashooter_",
             3 => "peashooterDev_",
             4 => "boomerang_",

@@ -156,20 +156,15 @@ public class Minimap : MonoBehaviour
                             int thisItemId = PlayState.baseItemLocations[PlayState.itemLocations[thisMaskID]];
                             if (PlayState.isRandomGame)
                                 thisItemId = PlayState.currentRando.itemLocations[PlayState.itemLocations[thisMaskID]];
-                            if (thisItemId != -1 && PlayState.currentProfile.locations[PlayState.itemLocations[thisMaskID]] == 0)
+                            if (thisItemId != -1)
                             {
                                 bool markItem = false;
                                 bool markCollected = false;
-                                if (thisItemId >= 1000)
+                                if (thisItemId >= 100 ||
+                                    (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId)))
                                 {
                                     markItem = true;
-                                    //if (PlayState.currentRando.trapLocations[thisItemId - 1000] == 1)
-                                        //markCollected = true;
-                                }
-                                else if (PlayState.GetItemAvailabilityThisCharacter(thisItemId) && PlayState.GetItemAvailabilityThisDifficulty(thisItemId))
-                                {
-                                    markItem = true;
-                                    if (PlayState.currentProfile.items[thisItemId] == 1)
+                                    if (PlayState.currentProfile.locations[PlayState.itemLocations[thisMaskID]] == 1)
                                         markCollected = true;
                                 }
                                 if (markItem)

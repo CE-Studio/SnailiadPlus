@@ -226,8 +226,7 @@ public class DialogueBox : MonoBehaviour
                         }
                         else if (states[(int)pointer.x] == 0)
                         {
-                            UpdatePortrait(PlayState.currentProfile.character,
-                                PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0)));
+                            UpdatePortrait(PlayState.currentProfile.character, PlayState.GetShellLevel());
                             portraitChar.flipX = !left;
                             switch (PlayState.currentProfile.character)
                             {

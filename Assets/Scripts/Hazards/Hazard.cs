@@ -36,11 +36,11 @@ public class Hazard : MonoBehaviour
             }
             else
             {
-                if (PlayState.CheckForItem(7) && damageValues[1] < thisDamage)
+                if (PlayState.CheckForItem(PlayState.Items.IceShell) && damageValues[1] < thisDamage)
                     thisDamage = damageValues[1];
-                if (PlayState.CheckForItem(8) && damageValues[2] < thisDamage)
+                if (PlayState.CheckForItem(PlayState.Items.FlyShell) && damageValues[2] < thisDamage)
                     thisDamage = damageValues[2];
-                if (PlayState.CheckForItem(9) && damageValues[3] < thisDamage)
+                if (PlayState.CheckForItem(PlayState.Items.MetalShell) && damageValues[3] < thisDamage)
                     thisDamage = damageValues[3];
             }
             if (thisDamage > 0)

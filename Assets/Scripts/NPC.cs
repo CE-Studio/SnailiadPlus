@@ -318,18 +318,19 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                         switch (ID)
                         {
                             case 0:
-                                if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Peashooter) &&
+                                    !PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                 {
                                     if (PlayState.currentProfile.character == "Leggy")
                                         AddText("explainLeggyFlip");
                                     else
                                         AddText("explainWallClimb");
                                 }
-                                else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("explainPeashooter");
-                                else if (!PlayState.CheckForItem("Rainbow Wave") && !PlayState.CheckForItem("Debug Rainbow Wave"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.RainbowWave) && !PlayState.CheckForItem(PlayState.Items.DebugRW))
                                     AddText("explainBoomerang");
-                                else if (!PlayState.CheckForItem("Devastator"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Devastator))
                                     AddText("explainRainbowWave");
                                 else if (PlayState.GetItemPercentage() < 100)
                                     AddText("explainDevastator");
@@ -339,12 +340,13 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
 
                             case 1:
                                 nexted = 1;
-                                if (!PlayState.hasJumped && !PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                if (!PlayState.hasJumped && !PlayState.CheckForItem(PlayState.Items.Peashooter) &&
+                                    !PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                 {
                                     nexted = 0;
                                     AddText("promptJump");
                                 }
-                                else if (!PlayState.CheckForItem("Peashooter"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Peashooter))
                                     AddText("promptStory");
                                 else if (PlayState.GetItemPercentage() < 100)
                                     AddText("smallTalk");
@@ -355,19 +357,20 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             case 2:
                                 if (PlayState.isRandomGame)
                                     AddText("rando");
-                                else if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Peashooter) &&
+                                    !PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("predictPeashooter");
                                 else if (PlayState.IsBossAlive(0) && PlayState.IsBossAlive(1))
                                     AddText("predictShellbreaker");
-                                else if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("predictBoomerang");
                                 else if (PlayState.IsBossAlive(1))
                                     AddText("predictStompy");
-                                else if (!PlayState.CheckForItem("Rainbow Wave"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.RainbowWave))
                                     AddText("predictRainbowWave");
                                 else if (PlayState.IsBossAlive(2))
                                     AddText("predictSpaceBox");
-                                else if (!PlayState.CheckForItem(6))
+                                else if (!PlayState.CheckForItem(PlayState.Items.RapidFire))
                                     AddText("predictRapidFire");
                                 else if (PlayState.IsBossAlive(3))
                                     AddText("predictMoonSnail");
@@ -380,9 +383,9 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 3:
-                                if (!PlayState.CheckForItem(8))
+                                if (!PlayState.CheckForItem(PlayState.Items.FlyShell))
                                     AddText("cantCorner");
-                                else if (!PlayState.CheckForItem("Full-Metal Snail"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.MetalShell))
                                     AddText("admireGravity");
                                 else
                                     AddText("default");
@@ -403,20 +406,21 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 6:
-                                if (PlayState.CheckForItem(4) || PlayState.CheckForItem(8) || PlayState.currentProfile.character == "Upside")
+                                if (PlayState.CheckForItem(PlayState.Items.HighJump) || PlayState.CheckForItem(PlayState.Items.FlyShell) ||
+                                    PlayState.currentProfile.character == "Upside")
                                     AddText("treehouses");
                                 else
                                     AddText("default");
                                 break;
 
                             case 7:
-                                if (!PlayState.CheckForItem("Peashooter"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Peashooter))
                                     AddText("save");
-                                else if (!PlayState.CheckForItem(1))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Boomerang))
                                     AddText("peashooter");
-                                else if (!PlayState.CheckForItem(2))
+                                else if (!PlayState.CheckForItem(PlayState.Items.RainbowWave))
                                     AddText("boomerang");
-                                else if (!PlayState.CheckForItem(3))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Devastator))
                                     AddText("rainbowWave");
                                 else if (PlayState.IsBossAlive(3))
                                     AddText("scared");
@@ -445,7 +449,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             case 11:
                                 if (PlayState.isRandomGame)
                                     AddText("rando");
-                                else if (!PlayState.isRandomGame && !PlayState.CheckForItem("Peashooter"))
+                                else if (!PlayState.isRandomGame && !PlayState.CheckForItem(PlayState.Items.Peashooter))
                                     AddText("explainPeashooter");
                                 else
                                     AddText("default");
@@ -509,7 +513,8 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 16:
-                                if (!PlayState.CheckForItem("Peashooter") && !PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Peashooter) &&
+                                    !PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                 {
                                     if (PlayState.currentProfile.character == "Leechy")
                                         AddText("healTipLeechy");
@@ -532,21 +537,21 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             case 18:
                                 if (PlayState.isRandomGame)
                                     AddText("rando");
-                                else if (PlayState.CheckForItem("Super Secret Boomerang"))
+                                else if (PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("remindShoot");
                                 else
                                     AddText("default");
                                 break;
 
                             case 19:
-                                if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("boomerang");
                                 else
                                     AddText("default");
                                 break;
 
                             case 20:
-                                if (!PlayState.CheckForItem("Boomerang") && !PlayState.CheckForItem("Super Secret Boomerang"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Boomerang) && !PlayState.CheckForItem(PlayState.Items.SSBoom))
                                     AddText("secret");
                                 else if (PlayState.GetItemPercentage() < 100)
                                     AddText("findSnails");
@@ -557,7 +562,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             case 21:
                                 if (PlayState.isRandomGame)
                                     AddText("rando");
-                                else if (!PlayState.CheckForItem("Boomerang"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Boomerang))
                                     AddText("boomerang");
                                 else
                                     AddText("default");
@@ -590,7 +595,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 25:
-                                if (!PlayState.CheckForItem("Peashooter"))
+                                if (!PlayState.CheckForItem(PlayState.Items.Peashooter))
                                     AddText("explainMap");
                                 else
                                     AddText("default");
@@ -603,23 +608,24 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                     AddText("emptyRando");
                                 else if (PlayState.currentProfile.character == "Blobby")
                                     AddText("blobby");
-                                else if (PlayState.currentProfile.character == "Snaily" || PlayState.currentProfile.character == "Upside" || PlayState.currentProfile.character == "Leggy")
+                                else if (PlayState.currentProfile.character == "Snaily" ||
+                                    PlayState.currentProfile.character == "Upside" || PlayState.currentProfile.character == "Leggy")
                                     AddText("default");
                                 else
                                     intentionallyEmpty = true;
                                 break;
 
                             case 27:
-                                if (PlayState.CheckForItem("Gravity Snail") || PlayState.CheckForItem("Full-Metal Snail"))
+                                if (PlayState.CheckForItem(PlayState.Items.FlyShell) || PlayState.CheckForItem(PlayState.Items.MetalShell))
                                     AddText("powerfulPlayer");
-                                else if (PlayState.CheckForItem("Ice Snail"))
+                                else if (PlayState.CheckForItem(PlayState.Items.IceShell))
                                     AddText("icyPlayer");
                                 else
                                     AddText("default");
                                 break;
 
                             case 28:
-                                if (PlayState.CheckForItem("Gravity Snail"))
+                                if (PlayState.CheckForItem(PlayState.Items.FlyShell))
                                 {
                                     AddText(PlayState.currentProfile.character switch
                                     {
@@ -641,7 +647,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 30:
-                                if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
+                                if (!PlayState.CheckForItem(PlayState.Items.MetalShell) || !PlayState.CheckForItem(PlayState.Items.RapidFire))
                                     AddText("underpowered");
                                 else if (PlayState.IsBossAlive(3))
                                     AddText("warnAboutMoonSnail");
@@ -661,7 +667,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 32:
-                                if (!PlayState.CheckForItem("Full-Metal Snail") || !PlayState.CheckForItem("Rapid Fire"))
+                                if (!PlayState.CheckForItem(PlayState.Items.MetalShell) || !PlayState.CheckForItem(PlayState.Items.RapidFire))
                                     AddText("underpowered");
                                 else if (PlayState.CountFragments() < 30 && PlayState.IsBossAlive(3))
                                     AddText("noIris");
@@ -748,7 +754,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                             case 41:
                                 if (PlayState.IsBossAlive(0))
                                     AddText("warnAboutSB");
-                                else if (!PlayState.CheckForItem("Boomerang"))
+                                else if (!PlayState.CheckForItem(PlayState.Items.Boomerang))
                                     AddText("greyDoor");
                                 else if (PlayState.IsBossAlive(3))
                                     AddText(PlayState.currentProfile.character switch { "Snaily" => "babySnails", "Upside" => "babySnails", _ => "goodLuck" });
@@ -757,7 +763,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 42:
-                                if (!PlayState.CheckForItem("Rapid Fire") && PlayState.currentProfile.character != "Leechy" && PlayState.IsBossAlive(2))
+                                if (!PlayState.CheckForItem(PlayState.Items.RapidFire) && PlayState.currentProfile.character != "Leechy" && PlayState.IsBossAlive(2))
                                     AddText("noRapidFire");
                                 else if (PlayState.IsBossAlive(2))
                                     AddText("pinkGrass");
@@ -766,7 +772,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 43:
-                                if (!PlayState.CheckForItem("Gravity Snail"))
+                                if (!PlayState.CheckForItem(PlayState.Items.FlyShell))
                                     AddText("cantCorner");
                                 else if (PlayState.currentProfile.character == "Upside")
                                     AddText("upside");
@@ -783,7 +789,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                     AddText("offerRando");
                                 else if (PlayState.isRandomGame)
                                     AddText("emptyRando");
-                                else if (PlayState.CheckForItem("Full-Metal Snail"))
+                                else if (PlayState.CheckForItem(PlayState.Items.MetalShell))
                                 {
                                     AddText(PlayState.currentProfile.character switch
                                     {
@@ -819,7 +825,7 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
                                 break;
 
                             case 51:
-                                if (PlayState.CheckForItem("Debug Rainbow Wave"))
+                                if (PlayState.CheckForItem(PlayState.Items.DebugRW))
                                     AddText("admireRainbowWave");
                                 else
                                     AddText("default");
@@ -1030,32 +1036,32 @@ public class NPC:MonoBehaviour, IRoomObject, ICutsceneObject {
         }
     }
 
-    private bool CheckForUncollectedItem(int ID, bool strictIDCheck = false)
-    {
-        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-        if (items.Length == 0)
-            return false;
-        bool foundItem = false;
-        foreach (GameObject obj in items)
-        {
-            Item objScript = obj.GetComponent<Item>();
-            if (strictIDCheck)
-            {
-                if (objScript.itemID == ID)
-                    foundItem = true;
-            }
-            else
-            {
-                if (objScript.itemID >= PlayState.OFFSET_FRAGMENTS && ID >= PlayState.OFFSET_FRAGMENTS)
-                    foundItem = true;
-                else if (objScript.itemID >= PlayState.OFFSET_HEARTS && ID >= PlayState.OFFSET_HEARTS)
-                    foundItem = true;
-                else if (objScript.itemID == ID)
-                    foundItem = true;
-            }
-        }
-        return foundItem;
-    }
+    //private bool CheckForUncollectedItem(int ID, bool strictIDCheck = false)
+    //{
+    //    GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+    //    if (items.Length == 0)
+    //        return false;
+    //    bool foundItem = false;
+    //    foreach (GameObject obj in items)
+    //    {
+    //        Item objScript = obj.GetComponent<Item>();
+    //        if (strictIDCheck)
+    //        {
+    //            if (objScript.itemID == ID)
+    //                foundItem = true;
+    //        }
+    //        else
+    //        {
+    //            if (objScript.itemID >= PlayState.OFFSET_FRAGMENTS && ID >= PlayState.OFFSET_FRAGMENTS)
+    //                foundItem = true;
+    //            else if (objScript.itemID >= PlayState.OFFSET_HEARTS && ID >= PlayState.OFFSET_HEARTS)
+    //                foundItem = true;
+    //            else if (objScript.itemID == ID)
+    //                foundItem = true;
+    //        }
+    //    }
+    //    return foundItem;
+    //}
 
     private int CountItemsInRoom()
     {

@@ -296,6 +296,7 @@ public class PlayState
 
     public static bool[][] itemData = new bool[][] { };
     public static bool[] countedItems = new bool[] { };
+    public static int totalCountedItems = 0;
 
     public static int npcCount = 0;
     
@@ -371,9 +372,7 @@ public class PlayState
         normal, insane, hundo, rush
     }
     
-    public const byte OFFSET_HEARTS = 13;
     public const byte MAX_HEARTS = 11;
-    public const byte OFFSET_FRAGMENTS = 24;
     public const byte MAX_FRAGMENTS = 30;
 
     public static int[] NPCvarDefault = new int[] { 0, 0, 0 };
@@ -388,6 +387,27 @@ public class PlayState
         HasSeenIris,
         TalkedToCaveSnail,
         SeenSunEnding
+    };
+
+    public enum Items
+    {
+        Peashooter,
+        Boomerang,
+        RainbowWave,
+        Devastator,
+        HighJump,
+        ShellShield,
+        RapidFire,
+        IceShell,
+        FlyShell,
+        MetalShell,
+        GravShock,
+        SSBoom,
+        DebugRW,
+        Heart,
+        Fragment,
+        RadarShell,
+        None
     };
 
     [Serializable]
@@ -411,26 +431,28 @@ public class PlayState
     /*\
      |  Item Table
      |
-     |   0  - - Peashooter
-     |   1  - - Boomerang
-     |   2  - - Rainbow Wave
-     |   3  - - Devastator
-     |   4  - - High Jump          Wall Grab
-     |   5  - - Shell Shield       Shelmet
-     |   6  - - Rapid Fire         Backfire
-     |   7  - - Ice Snail
-     |   8  - - Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
-     |   9  - - Full-Metal Snail
-     |  10  - - Gravity Shock
-     |  11  - - Super Secret Boomerang
-     |  12  - - Debug Rainbow Wave
-     |  13-23 - Heart Containers
-     |  24-53 - Helix Fragments
-     |  1000  - Weapon Lock
-     |  1001  - Gravity Lock
-     |  1002  - Lullaby Trap
-     |  1003  - Spider Trap
-     |  1004  - Warp Trap
+     |   0 - - Peashooter
+     |   1 - - Boomerang
+     |   2 - - Rainbow Wave
+     |   3 - - Devastator
+     |   4 - - High Jump          Wall Grab
+     |   5 - - Shell Shield       Shelmet
+     |   6 - - Rapid Fire         Backfire
+     |   7 - - Ice Snail
+     |   8 - - Gravity Snail      Magnetic Foot      Corkscrew Jump       Angel Jump
+     |   9 - - Full-Metal Snail
+     |  10 - - Gravity Shock
+     |  11 - - Super Secret Boomerang
+     |  12 - - Debug Rainbow Wave
+     |  13 - - Heart Containers
+     |  14 - - Helix Fragments
+     |  15 - - Radar Shell
+     |  16 - - None
+     |  100  - Weapon Lock
+     |  101  - Gravity Lock
+     |  102  - Lullaby Trap
+     |  103  - Spider Trap
+     |  104  - Warp Trap
     \*/
 
     /*\
@@ -453,7 +475,6 @@ public class PlayState
         public int randoLevel;         // Whether or not this profile is even randomized, and to what extent
         public int seed;               // Eight-digit seed that all randomization was based on
         public int[] itemLocations;    // All item IDs, in order of location appearance in the hierarchy
-        public int[] trapLocations;    // Location IDs for all possible trap items. If set to -1, that trap is not in the world
         public bool progressivesOn;    // Whether or not progressive items are turned on
         public bool broomStart;        // Whether or not the player starts with a Broom
         public bool trapsActive;       // Whether or not trap items have been shuffled into the pool
@@ -513,7 +534,7 @@ public class PlayState
         gameTime = new float[] { 0f, 0f, 0f },
         saveCoords = WORLD_SPAWN,
         character = "Snaily",
-        items = new int[54],
+        items = new int[16],
         locations = new int[57],
         weapon = -1,
         bossStates = new int[] { 1, 1, 1, 1 },
@@ -528,7 +549,6 @@ public class PlayState
         randoLevel = 0,
         seed = 0,
         itemLocations = new int[] { },
-        trapLocations = new int[] { },
         progressivesOn = false,
         broomStart = false,
         trapsActive = false,
@@ -586,6 +606,7 @@ public class PlayState
     public static GeneralData generalData = blankData;
 
     public static List<int> baseItemLocations = new();
+    public static List<int> rushItemLocations = new();
 
     public enum Areas
     {
@@ -611,6 +632,7 @@ public class PlayState
         public int parries;
         public int shocksFired;
         public int healthLost;
+        public bool[] itemStates;
     }
 
     public static readonly BossRushData defaultRushData = new()
@@ -625,7 +647,8 @@ public class PlayState
         wavesFired = 0,
         parries = 0,
         shocksFired = 0,
-        healthLost = 0
+        healthLost = 0,
+        itemStates = new bool[0]
     };
 
     public static BossRushData activeRushData;
@@ -710,7 +733,6 @@ public class PlayState
             randoLevel = blankRando.randoLevel,
             seed = blankRando.seed,
             itemLocations = (int[])blankRando.itemLocations.Clone(),
-            trapLocations = (int[])blankRando.trapLocations.Clone(),
             progressivesOn = blankRando.progressivesOn,
             broomStart = blankRando.broomStart,
             trapsActive = blankRando.trapsActive,
@@ -1277,7 +1299,7 @@ public class PlayState
                     if (generalData.particleState == 3 || generalData.particleState == 5)
                     {
                         activateParticle = true;
-                        particleScript.vars[0] = CheckForItem(9) ? 1 : 0;
+                        particleScript.vars[0] = CheckForItem(Items.MetalShell) ? 1 : 0;
                     }
                     break;
                 case "apitemdust":
@@ -1581,14 +1603,19 @@ public class PlayState
         return currentProfile.bossStates[bossID] == 1;
     }
 
-    public static bool CheckForItem(int itemID)
-    {
-        return currentProfile.items[itemID] == 1;
-    }
+    //public static bool CheckForItem(int itemID)
+    //{
+    //    return currentProfile.items[itemID] == 1;
+    //}
+    //
+    //public static bool CheckForItem(string itemName)
+    //{
+    //    return currentProfile.items[TranslateItemNameToID(itemName)] == 1;
+    //}
 
-    public static bool CheckForItem(string itemName)
+    public static bool CheckForItem(Items item)
     {
-        return currentProfile.items[TranslateItemNameToID(itemName)] == 1;
+        return currentProfile.items[(int)item] > 0;
     }
 
     public static bool CheckShellLevel(int level)
@@ -1598,18 +1625,18 @@ public class PlayState
         {
             meetsLevel = level switch
             {
-                2 => CheckForItem(8) || CheckForItem(9),
-                3 => CheckForItem(9),
-                _ => CheckForItem(7) || CheckForItem(8) || CheckForItem(9),
+                2 => CheckForItem(Items.FlyShell) || CheckForItem(Items.MetalShell),
+                3 => CheckForItem(Items.MetalShell),
+                _ => CheckForItem(Items.IceShell) || CheckForItem(Items.FlyShell) || CheckForItem(Items.MetalShell),
             };
         }
         else
         {
             meetsLevel = level switch
             {
-                2 => CheckForItem(8),
-                3 => CheckForItem(9),
-                _ => CheckForItem(7),
+                2 => CheckForItem(Items.FlyShell),
+                3 => CheckForItem(Items.MetalShell),
+                _ => CheckForItem(Items.IceShell),
             };
         }
         return meetsLevel;
@@ -1617,7 +1644,7 @@ public class PlayState
 
     public static int GetShellLevel()
     {
-        return CheckForItem(9) ? 3 : (CheckForItem(8) ? 2 : (CheckForItem(7) ? 1 : 0));
+        return CheckForItem(Items.MetalShell) ? 3 : (CheckForItem(Items.FlyShell) ? 2 : (CheckForItem(Items.IceShell) ? 1 : 0));
     }
 
     public static void SetPlayer(string newPlayer)
@@ -1640,185 +1667,10 @@ public class PlayState
         };
     }
 
-    public static void AddItem(int itemID)
+    public static void AddItem(Items itemID)
     {
-        if (itemID >= 1000)
-        {
-            currentRando.trapLocations[itemID - 1000] = 1;
-            SaveRando(currentProfileNumber);
-        }
-        else
-            currentProfile.items[itemID] = 1;
-    }
-
-    public static void AddItem(string itemName)
-    {
-        AddItem(TranslateItemNameToID(itemName));
-    }
-
-    public static void AssignProperCollectibleIDs()
-    {
-        Transform roomTriggerArray = GameObject.Find("Room Triggers").transform;
-        int currentHelixCount = 0;
-        int currentHeartCount = 0;
-        int rushHelixCount = 0;
-        int rushHeartCount = 0;
-
-        foreach (Transform area in roomTriggerArray)
-        {
-            bool isRush = area.name.ToLower().Contains("boss rush");
-            foreach (Transform room in area)
-            {
-                foreach (Transform entity in room)
-                {
-                    if (entity.name == "Item")
-                    {
-                        if (entity.GetComponent<Item>().itemID >= OFFSET_FRAGMENTS)
-                        {
-                            entity.GetComponent<Item>().itemID = OFFSET_FRAGMENTS + (isRush ? rushHelixCount : currentHelixCount);
-                            if (isRush)
-                                rushHelixCount++;
-                            else
-                                currentHelixCount++;
-                        }
-                        else if (entity.GetComponent<Item>().itemID >= OFFSET_HEARTS)
-                        {
-                            entity.GetComponent<Item>().itemID = OFFSET_HEARTS + (isRush ? rushHeartCount : currentHeartCount);
-                            if (isRush)
-                                rushHeartCount++;
-                            else
-                                currentHeartCount++;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public static byte TranslateItemNameToID(string itemName) {
-        byte id = 0;
-        switch (itemName) {
-            case "Peashooter":
-                id = 0;
-                break;
-            case "Boomerang":
-                id = 1;
-                break;
-            case "Rainbow Wave":
-                id = 2;
-                break;
-            case "Devastator":
-                id = 3;
-                break;
-            case "High Jump":
-            case "Wall Grab":
-                id = 4;
-                break;
-            case "Shell Shield":
-            case "Shelmet":
-                id = 5;
-                break;
-            case "Rapid Fire":
-            case "Backfire":
-                id = 6;
-                break;
-            case "Ice Snail":
-                id = 7;
-                break;
-            case "Gravity Snail":
-            case "Magnetic Foot":
-            case "Corkscrew Jump":
-            case "Angel Jump":
-                id = 8;
-                break;
-            case "Full-Metal Snail":
-                id = 9;
-                break;
-            case "Gravity Shock":
-                id = 10;
-                break;
-            case "Super Secret Boomerang":
-                id = 11;
-                break;
-            case "Debug Rainbow Wave":
-                id = 12;
-                break;
-            case "Heart Container":
-                id = byte.Parse(itemName.Substring(15, itemName.Length));
-                break;
-            case "Helix Fragment":
-                id = byte.Parse(itemName.Substring(14, itemName.Length));
-                break;
-        }
-        return id;
-    }
-
-    public static string TranslateIDToItemName(int itemID) {
-        string name = "";
-        if (itemID >= OFFSET_FRAGMENTS)
-            name = "Helix Fragment";
-        else if (itemID >= OFFSET_HEARTS)
-            name = "Heart Container";
-        else {
-            switch (itemID) {
-                case 0:
-                    name = "Peashooter";
-                    break;
-                case 1:
-                    name = "Boomerang";
-                    break;
-                case 2:
-                    name = "Rainbow Wave";
-                    break;
-                case 3:
-                    name = "Devastator";
-                    break;
-                case 4:
-                    if (currentProfile.character == "Blobby")
-                        name = "Wall Grab";
-                    else
-                        name = "High Jump";
-                    break;
-                case 5:
-                    if (currentProfile.character == "Blobby")
-                        name = "Shelmet";
-                    else
-                        name = "Shell Shield";
-                    break;
-                case 6:
-                    if (currentProfile.character == "Leechy")
-                        name = "Backfire";
-                    else
-                        name = "Rapid Fire";
-                    break;
-                case 7:
-                    name = "Ice Snail";
-                    break;
-                case 8:
-                    if (currentProfile.character == "Upside")
-                        name = "Magnetic Foot";
-                    else if (currentProfile.character == "Leggy")
-                        name = "Corkscrew Jump";
-                    else if (currentProfile.character == "Blobby")
-                        name = "Angel Jump";
-                    else
-                        name = "Gravity Snail";
-                    break;
-                case 9:
-                    name = "Full-Metal Snail";
-                    break;
-                case 10:
-                    name = "Gravity Shock";
-                    break;
-                case 11:
-                    name = "Super Secret Boomerang";
-                    break;
-                case 12:
-                    name = "Debug Rainbow Wave";
-                    break;
-            }
-        }
-        return name;
+        if ((int)itemID < currentProfile.items.Length)
+            currentProfile.items[(int)itemID]++;
     }
 
     public static int GetMapPercentage() {
@@ -1835,12 +1687,19 @@ public class PlayState
         return Mathf.FloorToInt(((float)explored / (float)total) * 100);
     }
 
-    public static int GetItemPercentage(int profileID = 0)
+    public static int GetItemPercentage(int profileID = 0, bool isRando = false)
     {
         int itemsFound = 0;
-        int totalCount = 0;
+        int totalCount = totalCountedItems;
         ProfileData targetProfile = profileID switch { 1 => profile1, 2 => profile2, 3 => profile3, _ => currentProfile };
+        ProfileRandoData targetRando = profileID switch { 1 => rando1, 2 => rando2, 3 => rando3, _ => currentRando };
         int charCheck = targetProfile.character switch { "Snaily" => 3, "Sluggy" => 4, "Upside" => 5, "Leggy" => 6, "Blobby" => 7, "Leechy" => 8, _ => 3 };
+        if (isRandomGame)
+        {
+            totalCount = 0;
+            for (int i = 0; i < targetProfile.locations.Length; i++)
+                totalCount += targetRando.itemLocations[i] > -1 ? 1 : 0;
+        }
         for (int i = 0; i < targetProfile.items.Length; i++)
         {
             if (countedItems[i])
@@ -1850,7 +1709,7 @@ public class PlayState
                     if (itemData[i][targetProfile.difficulty] && itemData[i][charCheck])
                     {
                         totalCount++;
-                        itemsFound += targetProfile.items[i] == 1 ? 1 : 0;
+                        itemsFound += targetProfile.items[i];
                     }
                 }
                 else
@@ -1948,20 +1807,12 @@ public class PlayState
 
     public static int CountHearts()
     {
-        int count = 0;
-        for (int i = OFFSET_HEARTS; i < OFFSET_HEARTS + MAX_HEARTS; i++)
-            if (currentProfile.items[i] == 1)
-                count++;
-        return count;
+        return currentProfile.items[(int)Items.Heart];
     }
 
     public static int CountFragments()
     {
-        int count = 0;
-        for (int i = OFFSET_FRAGMENTS; i < OFFSET_FRAGMENTS + MAX_FRAGMENTS; i++)
-            if (currentProfile.items[i] == 1)
-                count++;
-        return count;
+        return currentProfile.items[(int)Items.Fragment];
     }
 
     public static int[] GetAreaItemRate(int areaID)
@@ -2076,12 +1927,27 @@ public class PlayState
         if (File.Exists(gamePath))
         {
             thisProfile = JsonUtility.FromJson<ProfileData>(File.ReadAllText(gamePath));
+            int[] itemArray = (int[])thisProfile.items.Clone();
             if (thisProfile.locations == null)
             {
-                int[] oldLocations = (int[])thisProfile.items.Clone();
                 thisProfile.locations = new int[blankProfile.locations.Length];
-                for (int i = 0; i < oldLocations.Length; i++)
-                    thisProfile.locations[i] = oldLocations[i];
+                for (int i = 0; i < itemArray.Length; i++)
+                    thisProfile.locations[i] = itemArray[i];
+            }
+            if (itemArray.Length == 54) // The length of the item array up to v0.3.2 before the overhaul
+            {
+                int legacyOffsetHearts = 13;
+                int legacyMaxHearts = 11;
+                int legacyOffsetFragments = 24;
+                int legacyMaxFragments = 30;
+                int[] newItemArray = new int[16];
+                for (int i = 0; i < legacyOffsetHearts; i++)
+                    newItemArray[i] = itemArray[i];
+                for (int i = 0; i < legacyMaxHearts; i++)
+                    newItemArray[legacyOffsetHearts] += itemArray[legacyOffsetHearts + i];
+                for (int i = 0; i < legacyMaxFragments; i++)
+                    newItemArray[legacyMaxHearts + 1] += itemArray[legacyOffsetFragments + i];
+                thisProfile.items = newItemArray;
             }
             if (setAsCurrent)
                 currentProfile = thisProfile;

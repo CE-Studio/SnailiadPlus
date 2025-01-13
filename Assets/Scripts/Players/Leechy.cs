@@ -190,11 +190,11 @@ public class Leechy : Player
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
             Vector2 aimDir = Control.Aim();
-            int type = selectedWeapon + (PlayState.CheckForItem("Devastator") ? 3 : 0);
+            int type = selectedWeapon + (PlayState.CheckForItem(PlayState.Items.Devastator) ? 3 : 0);
             int dir = 0;
             if (isShock)
             {
-                type = PlayState.CheckForItem("Full-Metal Snail") ? 8 : 7;
+                type = PlayState.CheckForItem(PlayState.Items.MetalShell) ? 8 : 7;
                 dir = gravityDir switch
                 {
                     Dirs.Floor => 6,
@@ -270,7 +270,8 @@ public class Leechy : Player
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
                 if (!isShock)
                 {
-                    bool applyRapid = PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods);
+                    bool applyRapid = PlayState.CheckForItem(PlayState.Items.RapidFire) ||
+                        (PlayState.CheckForItem(PlayState.Items.Devastator) && PlayState.stackWeaponMods);
                     int fireRateIndex = type - 1 - (type > 3 ? 3 : 0) + (applyRapid ? 3 : 0);
                     fireCooldown = weaponCooldowns[fireRateIndex];
                 }
@@ -299,7 +300,7 @@ public class Leechy : Player
             }
             bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
 
-            if (PlayState.CheckForItem("Rapid Fire"))
+            if (PlayState.CheckForItem(PlayState.Items.RapidFire))
             {
                 if (shouldBackfire && !isShock)
                 {

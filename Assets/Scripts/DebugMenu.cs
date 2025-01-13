@@ -158,7 +158,7 @@ public class DebugMenu : MonoBehaviour
                                     PlayState.minimapScript.RefreshMap();
                                     PlayState.globalFunctions.shellStateBuffer = PlayState.GetShellLevel();
                                 }
-                                button.sprite.sprite = GetSprite(PlayState.CheckForItem(int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
+                                button.sprite.sprite = GetSprite(PlayState.CheckForItem((PlayState.Items)int.Parse(typeParts[1])) ? button.spriteIndeces[1] : button.spriteIndeces[0]);
                                 break;
                             case "heartContainer":
                                 button.sprite.sprite = GetSprite(PlayState.CountHearts() > 0 ? button.spriteIndeces[1] : button.spriteIndeces[0]);

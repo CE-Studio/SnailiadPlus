@@ -8,13 +8,8 @@ public class Randomizer : MonoBehaviour
 {
     public bool isShuffling = false;
     private int randoPhase = 0; // 1 = initiate item shuffle, 2 = items (split), 3 = items (pro/full), 4 = music, 5 = dialogue
-    private int splitPhase = 0; // 1 = majors, 2 = minors
     private int itemPhase = 0; // 1 = required majors, 2 = remaining majors, 3 = hearts, 4 = fragments/traps
 
-    private readonly int[] majorWeights = new int[] { 4, 3, 2, 1, 3, 4, 3, 2, 1, 1, 1 };
-    private readonly int[] progMajorWeights = new int[] { 1, 1, 1, 1, 3, 4, 2, 1, 1, 1, 1 };
-    private const int HEART_WEIGHT = 2;
-    private const int HELIX_WEIGHT = 3;
     private readonly List<int> majorLocations = new() { 13, 18, 21, 24, 30, 32, 44, 45, 48, 51 };
     private const int STEPS_PER_FRAME = 2;
     private const int MINIMUM_TRAPS = 2;
@@ -44,7 +39,6 @@ public class Randomizer : MonoBehaviour
         None
     }
 
-    //private bool[] locks = new bool[24];
     private Dictionary<string, bool> locks = new()
     {
         { "BlueDoor", false },
@@ -145,8 +139,6 @@ public class Randomizer : MonoBehaviour
 
     private readonly float[] sphereHelixPercentageRequirements = new float[] { 0.6f, 0.7f, 0.8f, 0.9f };
 
-    //private readonly List<int> proOnlyLocations = new() { 0, 3, 23, 35, 36, 54 };
-
     public void StartGeneration()
     {
         isShuffling = true;
@@ -181,10 +173,8 @@ public class Randomizer : MonoBehaviour
     {
         Random.InitState(PlayState.currentRando.seed);
         locations = new int[PlayState.baseItemLocations.Count];
-        List<int> itemsToAdd = new();
         List<Items> majorsToAdd = new();
         List<Items> majorsPlaced = new();
-        List<int> unplacedTraps = new();
         int currentSphere = 0;
         int progWeapons = 0;
         int progMods = 0;
@@ -211,11 +201,8 @@ public class Randomizer : MonoBehaviour
                         placedHelixes = 0;
                         placedHearts = 0;
                         hasPlacedDevastator = false;
-                        itemsToAdd = new();
-                        //randoPhase = PlayState.currentRando.randoLevel == 1 ? 2 : 3;
                         randoPhase = 2;
                         itemPhase = 1;
-                        //locks = (bool[])defaultLocksThisGen.Clone();
                         string[] tempKeys = locks.Keys.ToArray();
                         foreach (string key in tempKeys)
                             locks[key] = false;
@@ -235,53 +222,12 @@ public class Randomizer : MonoBehaviour
                         }
                         locks[PlayState.currentProfile.character] = true;
                         locks["Health"] = true;
-
-                        //int[] currentMajorWeights = PlayState.currentRando.progressivesOn ? (int[])progMajorWeights.Clone() : (int[])majorWeights.Clone();
-                        //for (int i = 0; i < currentMajorWeights.Length; i++)
-                        //{
-                        //    for (int j = 0; j < currentMajorWeights[i]; j++)
-                        //        itemsToAdd.Add(i);
-                        //}
-                        //if (randoPhase == 3)
-                        //{
-                        //    for (int i = 0; i < PlayState.MAX_HEARTS; i++)
-                        //        for (int j = 0; j < HEART_WEIGHT; j++)
-                        //            itemsToAdd.Add(i + PlayState.OFFSET_HEARTS);
-                        //    for (int i = 0; i < PlayState.MAX_FRAGMENTS - 5; i++)
-                        //        for (int j = 0; j < HELIX_WEIGHT; j++)
-                        //            itemsToAdd.Add(i + PlayState.OFFSET_FRAGMENTS);
-                        //    if (PlayState.currentRando.trapsActive)
-                        //    {
-                        //        int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
-                        //        List<int> trapsToAdd = new();
-                        //        for (int i = 0; i < trapTypes; i++)
-                        //            trapsToAdd.Add(1000 + i);
-                        //        unplacedTraps = trapsToAdd;
-                        //        int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
-                        //        for (int i = 0; i < numberOfTraps; i++)
-                        //        {
-                        //            int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
-                        //            itemsToAdd.Add(trapsToAdd[trapID]);
-                        //            trapsToAdd.RemoveAt(trapID);
-                        //        }
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    while (itemsToAdd.Contains(10))
-                        //        itemsToAdd.Remove(10); // Remove Gravity Shock from the pool on Split shuffle
-                        //    foreach (int i in new int[] { 0, 3, 23, 35, 36, 54 })
-                        //        locations[i] = -1; // Remove super secret items, snelk rooms, and test rooms as viable locations when not on Pro shuffle
-                        //    splitPhase = 1;
-                        //}
-                        //Debug.Log("-------------------------------------------------");
                         break;
 
                     case 2: // Items
                         switch (itemPhase)
                         {
                             case 1: // Required majors
-                                //Debug.Log(string.Format("Sphere {0}/{1}", currentSphere, validMajorCombos.Length - 1));
                                 if (!initializedPhase)
                                 {
                                     majorsToAdd = new List<Items>
@@ -305,7 +251,6 @@ public class Randomizer : MonoBehaviour
                                         if (PlayState.currentRando.progressivesOn)
                                         {
                                             bool validCombo = true;
-                                            //breaKING
                                             if ((progWeapons == 0 && !comboList.Contains(0) && (comboList.Contains(1) || comboList.Contains(2))) ||
                                                 (progWeapons == 1 && !comboList.Contains(1) && comboList.Contains(2)))
                                                 validCombo = false;
@@ -382,66 +327,61 @@ public class Randomizer : MonoBehaviour
                                             Items thisMajorEnum = ItemIDToEnum(thisMajorID);
                                             majorsPlaced.Add(thisMajorEnum);
                                             majorsToAdd.Remove(thisMajorEnum);
-                                            //Debug.Log(string.Format("{0}[{1}[{2}]]", locations.Length, currentOpenLocations.Count, openLocationID));
                                             locations[currentOpenLocations[openLocationID]] = thisMajorID;
                                             TweakLocks(thisMajorID, 0);
-                                            //PrintPlacement(thisMajorID, currentOpenLocations[openLocationID]);
-                                            if (thisMajorEnum == Items.Peashooter || thisMajorEnum == Items.Boomerang || thisMajorEnum == Items.RainbowWave)
+                                            if (PlayState.currentRando.progressivesOn)
                                             {
-                                                progWeapons++;
-                                                int timesSeen = 0;
-                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                if (thisMajorEnum == Items.Peashooter || thisMajorEnum == Items.Boomerang || thisMajorEnum == Items.RainbowWave)
                                                 {
-                                                    if (PROG_WEAPONS.Contains(currentMajorCombo[majorPointer]))
+                                                    progWeapons++;
+                                                    int timesSeen = 0;
+                                                    for (int i = 0; i < currentMajorCombo.Count; i++)
                                                     {
-                                                        if (timesSeen >= progWeapons)
-                                                            currentMajorCombo[majorPointer] = PROG_WEAPONS[progWeapons];
-                                                        else
-                                                            timesSeen++;
+                                                        if (PROG_WEAPONS.Contains(currentMajorCombo[majorPointer]))
+                                                        {
+                                                            if (timesSeen >= progWeapons)
+                                                                currentMajorCombo[majorPointer] = PROG_WEAPONS[progWeapons];
+                                                            else
+                                                                timesSeen++;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            if (thisMajorEnum == Items.RapidFire || thisMajorEnum == Items.Devastator)
-                                            {
-                                                progMods++;
-                                                int timesSeen = 0;
-                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                if (thisMajorEnum == Items.RapidFire || thisMajorEnum == Items.Devastator)
                                                 {
-                                                    if (PROG_MODS.Contains(currentMajorCombo[majorPointer]))
+                                                    progMods++;
+                                                    int timesSeen = 0;
+                                                    for (int i = 0; i < currentMajorCombo.Count; i++)
                                                     {
-                                                        if (timesSeen >= progMods)
-                                                            currentMajorCombo[majorPointer] = PROG_MODS[progMods];
-                                                        else
-                                                            timesSeen++;
+                                                        if (PROG_MODS.Contains(currentMajorCombo[majorPointer]))
+                                                        {
+                                                            if (timesSeen >= progMods)
+                                                                currentMajorCombo[majorPointer] = PROG_MODS[progMods];
+                                                            else
+                                                                timesSeen++;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            if (thisMajorEnum == Items.IceShell || thisMajorEnum == Items.FlyShell || thisMajorEnum == Items.MetalShell)
-                                            {
-                                                progShells++;
-                                                int timesSeen = 0;
-                                                for (int i = 0; i < currentMajorCombo.Count; i++)
+                                                if (thisMajorEnum == Items.IceShell || thisMajorEnum == Items.FlyShell || thisMajorEnum == Items.MetalShell)
                                                 {
-                                                    if (PROG_SHELLS.Contains(currentMajorCombo[majorPointer]))
+                                                    progShells++;
+                                                    int timesSeen = 0;
+                                                    for (int i = 0; i < currentMajorCombo.Count; i++)
                                                     {
-                                                        if (timesSeen >= progShells)
-                                                            currentMajorCombo[majorPointer] = PROG_SHELLS[progShells];
-                                                        else
-                                                            timesSeen++;
+                                                        if (PROG_SHELLS.Contains(currentMajorCombo[majorPointer]))
+                                                        {
+                                                            if (timesSeen >= progShells)
+                                                                currentMajorCombo[majorPointer] = PROG_SHELLS[progShells];
+                                                            else
+                                                                timesSeen++;
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                                //Debug.Log(string.Format("{0} major(s) left to place this sphere", CountUnplacedMajors(majorsToAdd, currentMajorCombo)));
                                 break;
                             case 2: // Remaining majors
-                                //for (int i = 0; i < locations.Length; i++)
-                                //    if (locations[i] == -2)
-                                //        locations[i] = -1;
-                                //PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                                //randoPhase++;
                                 if (!initializedPhase)
                                 {
                                     majorsToAdd = new();
@@ -477,7 +417,7 @@ public class Randomizer : MonoBehaviour
                                 {
                                     List<int> currentOpenLocations = GetLocations();
                                     int openLocationID = Mathf.FloorToInt(Random.value * currentOpenLocations.Count);
-                                    locations[currentOpenLocations[openLocationID]] = PlayState.OFFSET_HEARTS + placedHearts;
+                                    locations[currentOpenLocations[openLocationID]] = (int)PlayState.Items.Heart;
                                     placedHearts++;
                                 }
                                 else
@@ -492,13 +432,11 @@ public class Randomizer : MonoBehaviour
                                         List<int> validTraps = new();
                                         for (int i = 0; i < totalTraps; i++)
                                             validTraps.Add(1000 + i);
-                                        //int trapCount = Mathf.FloorToInt(Random.value * (validTraps.Count - MINIMUM_TRAPS)) + MINIMUM_TRAPS + 1;
                                         int trapCount = Mathf.FloorToInt(Mathf.Lerp(MINIMUM_TRAPS, MAXIMUM_TRAPS + 1, Random.value));
                                         for (int i = 0; i < trapCount; i++)
                                         {
                                             int trapIndex = Mathf.FloorToInt(Random.value * validTraps.Count);
                                             trapsToPlace.Add(validTraps[trapIndex]);
-                                            //validTraps.RemoveAt(trapIndex);
                                         }
                                         initializedPhase = true;
                                     }
@@ -525,7 +463,7 @@ public class Randomizer : MonoBehaviour
                                 if (placedHelixes < PlayState.MAX_FRAGMENTS && remainingLocations.Count > 0)
                                 {
                                     int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                    locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
+                                    locations[remainingLocations[locationID]] = (int)PlayState.Items.Fragment;
                                     placedHelixes++;
                                 }
                                 else
@@ -543,14 +481,13 @@ public class Randomizer : MonoBehaviour
                                     for (int j = 0; j < locationPhases[i].Count; j++)
                                     {
                                         int thisItemID = locations[locationPhases[i][j]];
-                                        if (thisItemID >= PlayState.OFFSET_FRAGMENTS && thisItemID < 1000)
+                                        if (thisItemID == (int)PlayState.Items.Fragment)
                                             helixesCounted++;
                                     }
                                     PlayState.currentRando.helixesRequired[i] = Mathf.FloorToInt((float)helixesCounted * sphereHelixPercentageRequirements[i]);
                                 }
 
                                 PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                                PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
                                 randoPhase++;
                                 break;
                         }
@@ -659,200 +596,6 @@ public class Randomizer : MonoBehaviour
                         itemPhase = 0;
                         isShuffling = false;
                         break;
-
-                    #region LegacyShuffle
-                    case 5: // Items (Split shuffle) -- LEGACY
-                        List<int> availableSplitLocations = GetLocations(splitPhase == 1);
-                        if (availableSplitLocations.Count == 0 && itemsToAdd.Count > 0)
-                            randoPhase = 1;
-                        else if (itemsToAdd.Count > 0 && splitPhase == 1)
-                        {
-                            int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
-                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                            if (PlayState.currentRando.progressivesOn)
-                            {
-                                itemToPlace = itemToPlace switch
-                                {
-                                    0 or 1 or 2 => progWeapons,
-                                    3 or 6 => progMods == 0 ? 6 : 3,
-                                    7 or 8 or 9 => 7 + progShells,
-                                    _ => itemToPlace
-                                };
-                            }
-                            TweakLocks(itemToPlace, placedHelixes);
-                            while (itemsToAdd.Contains(itemToPlace))
-                                itemsToAdd.Remove(itemToPlace);
-                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                            switch (itemToPlace)
-                            {
-                                case 0: case 1: case 2: progWeapons++; break;
-                                case 7: case 8: case 9: progShells++; break;
-                                case 6: case 3: progMods++; break;
-                                default: break;
-                            }
-
-                            if (itemsToAdd.Count == 0)
-                            {
-                                for (int j = 0; j < PlayState.MAX_HEARTS; j++)
-                                    itemsToAdd.Add(j + PlayState.OFFSET_HEARTS);
-                                for (int j = 0; j < PlayState.MAX_FRAGMENTS - 5; j++)
-                                    itemsToAdd.Add(j + PlayState.OFFSET_FRAGMENTS);
-                                if (PlayState.currentRando.trapsActive)
-                                {
-                                    int trapTypes = System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length;
-                                    List<int> trapsToAdd = new();
-                                    for (int i = 0; i < trapTypes; i++)
-                                        trapsToAdd.Add(1000 + i);
-                                    unplacedTraps = trapsToAdd;
-                                    int numberOfTraps = Mathf.CeilToInt(Random.value * trapTypes);
-                                    for (int i = 0; i < numberOfTraps; i++)
-                                    {
-                                        int trapID = Mathf.FloorToInt(Random.value * trapsToAdd.Count);
-                                        itemsToAdd.Add(trapsToAdd[trapID]);
-                                        trapsToAdd.RemoveAt(trapID);
-                                    }
-                                }
-                                splitPhase = 2;
-                            }
-                        }
-                        else if (itemsToAdd.Count > 0 && splitPhase == 2)
-                        {
-                            int locationPointer = Mathf.FloorToInt(Random.value * availableSplitLocations.Count);
-                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                            while (itemsToAdd.Contains(itemToPlace))
-                                itemsToAdd.Remove(itemToPlace);
-                            if (unplacedTraps.Contains(itemToPlace))
-                                unplacedTraps.Remove(itemToPlace);
-                            locations[availableSplitLocations[locationPointer]] = itemToPlace;
-                            if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
-                                placedHelixes++;
-                            else if (itemToPlace >= PlayState.OFFSET_HEARTS)
-                                placedHearts++;
-                            if (placedHearts >= 4)
-                                locks["Health"] = true;
-                        }
-                        else
-                        {
-                            while (placedHelixes < PlayState.MAX_FRAGMENTS)
-                            {
-                                List<int> remainingLocations = GetLocations();
-                                if (remainingLocations.Count == 0)
-                                    placedHelixes = PlayState.MAX_FRAGMENTS;
-                                else
-                                {
-                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                    locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
-                                    placedHelixes++;
-                                }
-                            }
-                            while (unplacedTraps.Count > 0)
-                            {
-                                List<int> remainingLocations = GetLocations();
-                                if (remainingLocations.Count == 0)
-                                    unplacedTraps.Clear();
-                                else
-                                {
-                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                    int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
-                                    locations[remainingLocations[locationID]] = unplacedTraps[trapID];
-                                    unplacedTraps.RemoveAt(trapID);
-                                }
-                            }
-                            for (int i = 0; i < locations.Length; i++)
-                                if (locations[i] == -2)
-                                    locations[i] = -1;
-                            PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                            PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                            randoPhase = 4;
-                        }
-                        break;
-
-                    case 6: // Items (Full/Pro shuffle) -- LEGACY
-                        List<int> availableLocations = GetLocations();
-                        if (availableLocations.Count == 0 && itemsToAdd.Count > 0)
-                            randoPhase = 1;
-                        else if (itemsToAdd.Count > 0)
-                        {
-                            int locationPointer = Mathf.FloorToInt(Random.value * availableLocations.Count);
-                            int itemToPlace = itemsToAdd[Mathf.FloorToInt(Random.value * itemsToAdd.Count)];
-                            if (PlayState.currentRando.progressivesOn)
-                            {
-                                //int originalItem = itemToPlace;
-                                itemToPlace = itemToPlace switch
-                                {
-                                    0 or 1 or 2 => progWeapons,
-                                    3 or 6 => progMods == 0 ? 6 : 3,
-                                    7 or 8 or 9 => 7 + progShells,
-                                    _ => itemToPlace
-                                };
-                                //Debug.Log(string.Format("{0} => {1}", originalItem, itemToPlace));
-                            }
-                            TweakLocks(itemToPlace, placedHelixes);
-                            while (itemsToAdd.Contains(itemToPlace))
-                                itemsToAdd.Remove(itemToPlace);
-                            if (unplacedTraps.Contains(itemToPlace))
-                                unplacedTraps.Remove(itemToPlace);
-                            locations[availableLocations[locationPointer]] = itemToPlace;
-                            if (itemToPlace >= PlayState.OFFSET_FRAGMENTS && itemToPlace < 1000)
-                                placedHelixes++;
-                            else if (itemToPlace >= PlayState.OFFSET_HEARTS)
-                                placedHearts++;
-                            if (placedHearts >= 4)
-                                locks["Health"] = true;
-                            switch (itemToPlace)
-                            {
-                                case 0: case 1: case 2: progWeapons++; break;
-                                case 7: case 8: case 9: progShells++; break;
-                                case 6: case 3: progMods++; break;
-                                default: break;
-                            }
-                            //PrintPlacement(itemToPlace, availableLocations[locationPointer]);
-                        }
-                        else
-                        {
-                            while (placedHelixes < PlayState.MAX_FRAGMENTS)
-                            {
-                                List<int> remainingLocations = GetLocations();
-                                if (remainingLocations.Count == 0)
-                                    placedHelixes = PlayState.MAX_FRAGMENTS;
-                                else
-                                {
-                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                    locations[remainingLocations[locationID]] = PlayState.OFFSET_FRAGMENTS + placedHelixes;
-                                    placedHelixes++;
-                                }
-                            }
-                            while (unplacedTraps.Count > 0)
-                            {
-                                List<int> remainingLocations = GetLocations();
-                                if (remainingLocations.Count == 0)
-                                    unplacedTraps.Clear();
-                                else
-                                {
-                                    int locationID = Mathf.FloorToInt(Random.value * remainingLocations.Count);
-                                    int trapID = Mathf.FloorToInt(Random.value * unplacedTraps.Count);
-                                    locations[remainingLocations[locationID]] = unplacedTraps[trapID];
-                                    unplacedTraps.RemoveAt(trapID);
-                                }
-                            }
-                            for (int i = 0; i < locations.Length; i++)
-                                if (locations[i] == -2)
-                                    locations[i] = -1;
-                            PlayState.currentRando.itemLocations = (int[])locations.Clone();
-                            PlayState.currentRando.trapLocations = new int[System.Enum.GetNames(typeof(TrapManager.TrapItems)).Length];
-                            randoPhase = 4;
-
-                            //List<int> printedLocations = new();
-                            //for (int i = 0; i < locations.Length; i++)
-                            //    printedLocations.Add(locations[i]);
-                            //printedLocations.Sort();
-                            //string output = "";
-                            //for (int i = 0; i < printedLocations.Count; i++)
-                            //    output += printedLocations[i] + ", ";
-                            //Debug.Log(output);
-                        }
-                        break;
-                        #endregion
                 }
             }
             yield return new WaitForEndOfFrame();
@@ -962,7 +705,6 @@ public class Randomizer : MonoBehaviour
         for (int i = 0; i < PlayState.baseItemLocations.Count; i++)
         {
             if ((sphereConstraint == -1 || locationPhases[sphereConstraint].Contains(i)) &&
-                //(PlayState.currentRando.randoLevel == 3 || !proOnlyLocations.Contains(i)) &&
                 (!majorsOnly || majorLocations.Contains(i)))
             {
                 if (i switch
@@ -1099,8 +841,7 @@ public class Randomizer : MonoBehaviour
         {
             case -1: // Broom
                 _locks["BlueDoor"] = true;
-                //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                    _locks["Boss1"] = true;
+                _locks["Boss1"] = true;
                 break;
             case 0: // Peashooter
                 _locks["BlueDoor"] = true;
@@ -1114,34 +855,25 @@ public class Randomizer : MonoBehaviour
                     _locks["L1Blocks"] = true;
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
-                    //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                    //{
-                        _locks["Boss2"] = true;
-                        _locks["Boss3"] = true;
-                        _locks["Boss4"] = true;
-                    //}
+                    _locks["Boss2"] = true;
+                    _locks["Boss3"] = true;
+                    _locks["Boss4"] = true;
                 }
                 break;
             case 1: // Boomerang
                 _locks["BlueDoor"] = true;
                 _locks["PinkDoor"] = true;
                 _locks["L1Blocks"] = true;
-                //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                //{
-                    _locks["Boss1"] = true;
-                    _locks["Boss2"] = true;
-                //}
+                _locks["Boss1"] = true;
+                _locks["Boss2"] = true;
                 if (hasPlacedDevastator)
                 {
                     _locks["RedDoor"] = true;
                     _locks["GreenDoor"] = true;
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
-                    //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                    //{
-                        _locks["Boss3"] = true;
-                        _locks["Boss4"] = true;
-                    //}
+                    _locks["Boss3"] = true;
+                    _locks["Boss4"] = true;
                 }
                 break;
             case 2: // Rainbow Wave
@@ -1150,18 +882,14 @@ public class Randomizer : MonoBehaviour
                 _locks["RedDoor"] = true;
                 _locks["L1Blocks"] = true;
                 _locks["L2Blocks"] = true;
-                //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                //{
-                    _locks["Boss1"] = true;
-                    _locks["Boss2"] = true;
-                    _locks["Boss3"] = true;
-                //}
+                _locks["Boss1"] = true;
+                _locks["Boss2"] = true;
+                _locks["Boss3"] = true;
                 if (hasPlacedDevastator)
                 {
                     _locks["L3Blocks"] = true;
                     _locks["GreenDoor"] = true;
-                    //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                        _locks["Boss4"] = true;
+                    _locks["Boss4"] = true;
                 }
                 break;
             case 3: // Devastator
@@ -1174,13 +902,10 @@ public class Randomizer : MonoBehaviour
                     _locks["L2Blocks"] = true;
                     _locks["L3Blocks"] = true;
                     _locks["GreenDoor"] = true;
-                    //if (!PlayState.currentRando.bossesLocked && !PlayState.currentRando.openAreas)
-                    //{
-                        _locks["Boss1"] = true;
-                        _locks["Boss2"] = true;
-                        _locks["Boss3"] = true;
-                        _locks["Boss4"] = true;
-                    //}
+                    _locks["Boss1"] = true;
+                    _locks["Boss2"] = true;
+                    _locks["Boss3"] = true;
+                    _locks["Boss4"] = true;
                 }
                 hasPlacedDevastator = true;
                 break;
@@ -1324,12 +1049,8 @@ public class Randomizer : MonoBehaviour
                     if (itemID != -1)
                     {
                         int iconID;
-                        if (itemID >= 1000)
+                        if (itemID >= 100)
                             iconID = 13;
-                        else if (itemID >= PlayState.OFFSET_FRAGMENTS)
-                            iconID = 12;
-                        else if (itemID >= PlayState.OFFSET_HEARTS)
-                            iconID = 11;
                         else if (PlayState.currentRando.progressivesOn)
                         {
                             iconID = itemID switch

@@ -108,7 +108,8 @@ public class Blobby : Player
          * 4 - Flip X on ceiling
          * 5 - Flip X on right wall
         \*/
-        string currentState = "Player_Blobby" + PlayState.globalFunctions.shellStateBuffer + (PlayState.CheckForItem(5) ? "B" : "A") + "_";
+        string currentState = "Player_Blobby" + PlayState.globalFunctions.shellStateBuffer +
+            (PlayState.CheckForItem(PlayState.Items.ShellShield) ? "B" : "A") + "_";
         if (inDeathCutscene)
         {
             anim.Play(currentState + "die");
@@ -218,8 +219,9 @@ public class Blobby : Player
         // so that things can stay different between them if needed, like Blobby's entire wall-grabbing gimmick
         if (!inDeathCutscene)
         {
-            readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
-            readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
+            //readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
+            readIDSpeed = PlayState.GetShellLevel();
+            readIDJump = readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0);
 
             switch (gravityDir)
             {
@@ -331,7 +333,7 @@ public class Blobby : Player
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y + riseSpeed);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -340,7 +342,7 @@ public class Blobby : Player
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -419,7 +421,10 @@ public class Blobby : Player
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.y -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y > 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.y = PlayState.Integrate(velocity.y, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.y = Mathf.Clamp(velocity.y, terminalVelocity[readIDSpeed], Mathf.Infinity);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -440,7 +445,8 @@ public class Blobby : Player
                         ungroundedViaHop = false;
                         holdingShell = true;
                         wallJumpTempVel = 0;
-                        jumpsLeft = (PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
+                        jumpsLeft = (PlayState.CheckForItem(PlayState.Items.FlyShell) ||
+                            (PlayState.CheckForItem(PlayState.Items.MetalShell) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
                         AddCollision(lastCollision);
                     }
                 }
@@ -450,7 +456,8 @@ public class Blobby : Player
                     velocity.y = -lastDistance + PlayState.FRAC_128;
                     grounded = true;
                     ungroundedViaHop = false;
-                    jumpsLeft = (PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
+                    jumpsLeft = (PlayState.CheckForItem(PlayState.Items.FlyShell) ||
+                        (PlayState.CheckForItem(PlayState.Items.MetalShell) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
                     AddCollision(lastCollision);
                 }
             }
@@ -546,7 +553,8 @@ public class Blobby : Player
                         gravityDir = facingLeft ? Dirs.WallL : Dirs.WallR;
                         UpdateHitbox();
                         grounded = true;
-                        jumpsLeft = (PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
+                        jumpsLeft = (PlayState.CheckForItem(PlayState.Items.FlyShell) ||
+                            (PlayState.CheckForItem(PlayState.Items.MetalShell) && PlayState.stackShells)) ? ANGEL_JUMP_COUNT : NON_ANGEL_JUMP_COUNT;
                     }
                 }
             }
@@ -571,11 +579,12 @@ public class Blobby : Player
             || (jumpsLeft > 0 && (grounded || ungroundedViaHop || !holdingJump))) && (!holdingJump || (jumpBufferCounter < jumpBuffer && velocity.y < 0))
             && GetDistance(Dirs.Ceiling) > 0.95f)
         {
-            if (!(!grounded && !ungroundedViaHop && Control.DownHold() && Control.AxisX() == 0 && PlayState.CheckForItem(10)))
+            if (!(!grounded && !ungroundedViaHop && Control.DownHold() && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock)))
             {
                 if (shelled)
                     ToggleShell();
-                if ((PlayState.CheckForItem(8) || (PlayState.CheckForItem(9) && PlayState.stackShells)) && !grounded && !ungroundedViaHop)
+                if ((PlayState.CheckForItem(PlayState.Items.FlyShell) ||
+                    (PlayState.CheckForItem(PlayState.Items.MetalShell) && PlayState.stackShells)) && !grounded && !ungroundedViaHop)
                 {
                     PlayState.RequestParticle(transform.position, "AngelJumpEffect");
                     PlayState.PlaySound("AngelJump");
@@ -608,7 +617,7 @@ public class Blobby : Player
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded)
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.DownHold()) ||
                 (swapType == 1 && Control.DownHold() && !holdingShell) ||
                 (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)))

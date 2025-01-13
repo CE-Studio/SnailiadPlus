@@ -318,7 +318,6 @@ public class MainMenu : MonoBehaviour
             thisSelectAnim.Play("Title_selector_Snaily");
         }
 
-        PlayState.AssignProperCollectibleIDs();
         PlayState.BuildMapMarkerArrays();
         PlayState.credits.BuildEntityRollCall();
         PlayState.globalFunctions.RunDebugKeys();
@@ -2177,8 +2176,9 @@ public class MainMenu : MonoBehaviour
             if (PlayState.lastLoadedWeapon != 0)
                 PlayState.globalFunctions.ChangeActiveWeapon(PlayState.lastLoadedWeapon);
             else
-                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(2) || PlayState.CheckForItem(12) ? 3 :
-                    (PlayState.CheckForItem(1) || PlayState.CheckForItem(11) ? 2 : (PlayState.CheckForItem(0) ? 1 : 0)));
+                PlayState.globalFunctions.ChangeActiveWeapon(PlayState.CheckForItem(PlayState.Items.RainbowWave) ||
+                    PlayState.CheckForItem(PlayState.Items.DebugRW) ? 3 : (PlayState.CheckForItem(PlayState.Items.Boomerang) ||
+                    PlayState.CheckForItem(PlayState.Items.SSBoom) ? 2 : (PlayState.CheckForItem(PlayState.Items.Peashooter) ? 1 : 0)));
             PlayState.isRandomGame = PlayState.currentRando.randoLevel > 0;
         }
         if (PlayState.isInBossRush)

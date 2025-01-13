@@ -201,7 +201,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (PlayState.isRandomGame && PlayState.currentRando.broomStart)
                 armed = true;
             else
-                foreach (int weapon in new int[] { 0, 1, 2, 11, 12 })
+                //foreach (int weapon in new int[] { 0, 1, 2, 11, 12 })
+                foreach (PlayState.Items weapon in new PlayState.Items[]
+                    { PlayState.Items.Peashooter, PlayState.Items.Boomerang, PlayState.Items.SSBoom, PlayState.Items.RainbowWave, PlayState.Items.DebugRW } )
                     if (PlayState.CheckForItem(weapon))
                         armed = true;
 
@@ -235,9 +237,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
             // Weapon swapping
             bool[] weaponStates = new bool[]
             {
-                PlayState.CheckForItem(0),
-                PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
-                PlayState.CheckForItem(2) || PlayState.CheckForItem(12)
+                PlayState.CheckForItem(PlayState.Items.Peashooter),
+                PlayState.CheckForItem(PlayState.Items.Boomerang) || PlayState.CheckForItem(PlayState.Items.SSBoom),
+                PlayState.CheckForItem(PlayState.Items.RainbowWave) || PlayState.CheckForItem(PlayState.Items.DebugRW)
             };
             if (Control.Weapon1() && weaponStates[0])
                 PlayState.globalFunctions.ChangeActiveWeapon((selectedWeapon == 1 && PlayState.isRandomGame && PlayState.currentRando.broomStart) ? 0 : 1);
@@ -356,8 +358,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
         // so that things can stay different between them if needed, like Blobby's entire wall-grabbing gimmick
         if (!inDeathCutscene)
         {
-            readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
-            readIDJump = readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0);
+            //readIDSpeed = PlayState.CheckForItem(9) ? 3 : (PlayState.CheckForItem(8) ? 2 : (PlayState.CheckForItem(7) ? 1 : 0));
+            readIDSpeed = PlayState.GetShellLevel();
+            readIDJump = readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0);
     
             switch (gravityDir)
             {
@@ -459,7 +462,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y + riseSpeed);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -468,7 +471,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -547,7 +550,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.y -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y > 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.y = PlayState.Integrate(velocity.y, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.RapidFire) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.y = Mathf.Clamp(velocity.y, terminalVelocity[readIDSpeed], Mathf.Infinity);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -720,7 +726,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.DownHold()) ||
                 (swapType == 1 && Control.DownHold() && !holdingShell) ||
                 (swapType == 2 && Control.DownPress() && Control.secondsSinceLastDirTap[(int)Dirs.Floor] < maxSecs)))
@@ -814,7 +820,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     transform.position = new Vector2(transform.position.x + riseSpeed, transform.position.y);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -823,7 +829,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -902,7 +908,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.x -= gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.x > 0 && !holdingJump)
-                    velocity.x = PlayState.Integrate(velocity.x, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.x = PlayState.Integrate(velocity.x, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.x = Mathf.Clamp(velocity.x, terminalVelocity[readIDSpeed], Mathf.Infinity);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -1074,7 +1083,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.LeftHold()) ||
                 (swapType == 1 && Control.LeftHold() && !holdingShell) ||
                 (swapType == 2 && Control.LeftPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallL] < maxSecs)))
@@ -1168,7 +1177,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     transform.position = new Vector2(transform.position.x - riseSpeed, transform.position.y);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -1177,7 +1186,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -1256,7 +1265,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.x += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.x < 0 && !holdingJump)
-                    velocity.x = PlayState.Integrate(velocity.x, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.x = PlayState.Integrate(velocity.x, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.x = Mathf.Clamp(velocity.x, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -1428,7 +1440,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisY() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.RightHold()) ||
                 (swapType == 1 && Control.RightHold() && !holdingShell) ||
                 (swapType == 2 && Control.RightPress() && Control.secondsSinceLastDirTap[(int)Dirs.WallR] < maxSecs)))
@@ -1522,7 +1534,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 else
                     transform.position = new Vector2(transform.position.x, transform.position.y - riseSpeed);
                 // FIRE!!
-                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem("Rapid Fire") ? gravShockChargeMult : 1))
+                if (gravShockTimer > gravShockChargeTime * (PlayState.CheckForItem(PlayState.Items.RapidFire) ? gravShockChargeMult : 1))
                 {
                     gravShockState = 2;
                     if (gravShockCharge != null)
@@ -1531,7 +1543,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
                     gravShockBody = PlayState.RequestParticle(transform.position, "shockcharmain", new float[]
                     {
                         PlayState.currentProfile.character switch { "Snaily" => 0, "Sluggy" => 1, "Upside" => 2, "Leggy" => 3, "Blobby" => 4, "Leechy" => 5, _ => 0 },
-                        PlayState.CheckForItem(9) ? 1 : 0,
+                        PlayState.CheckForItem(PlayState.Items.MetalShell) ? 1 : 0,
                         (int)gravityDir
                     });
                     gravShockBullet = Shoot(true);
@@ -1610,7 +1622,10 @@ public class Player : MonoBehaviour, ICutsceneObject {
                 // the player's fall is slowed, granting additional height for as long as the button is down
                 velocity.y += gravity[readIDSpeed] * gravityMod * Time.fixedDeltaTime;
                 if (velocity.y < 0 && !holdingJump)
-                    velocity.y = PlayState.Integrate(velocity.y, 0, jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(4) ? 4 : 0)], Time.fixedDeltaTime);
+                {
+                    velocity.y = PlayState.Integrate(velocity.y, 0,
+                        jumpFloatiness[readIDSpeed + (PlayState.CheckForItem(PlayState.Items.HighJump) ? 4 : 0)], Time.fixedDeltaTime);
+                }
                 velocity.y = Mathf.Clamp(velocity.y, -Mathf.Infinity, -terminalVelocity[readIDSpeed]);
 
                 // Real quick, in case we're running our face into a wall, let's check to see if there are any tunnels for us to slip into
@@ -1782,7 +1797,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
         if ((Control.JumpHold() || swapType == 2) && (!holdingJump || swapType > 0) && !grounded && CheckAbility(canSwapGravity))
         {
             // Jumping in the same direction you're falling (and triggering Gravity Shock)
-            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(10) && (
+            if (CheckAbility(canGravityShock) && Control.AxisX() == 0 && PlayState.CheckForItem(PlayState.Items.GravShock) && (
                 (swapType == 0 && Control.UpHold()) ||
                 (swapType == 1 && Control.UpHold() && !holdingShell) ||
                 (swapType == 2 && Control.UpPress() && Control.secondsSinceLastDirTap[(int)Dirs.Ceiling] < maxSecs)))
@@ -2188,7 +2203,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             //    box.size = hitboxSize_shell;
             //}
             PlayState.PlaySound("Shell");
-            if (PlayState.CheckForItem("Shell Shield"))
+            if (PlayState.CheckForItem(PlayState.Items.ShellShield))
             {
                 UpdateShieldParticleOffset();
                 shieldEffect = PlayState.RequestParticle((Vector2)transform.position + (shieldOffset * PlayState.FRAC_16), "shield");
@@ -2258,11 +2273,11 @@ public class Player : MonoBehaviour, ICutsceneObject {
         {
             Vector2 inputDir = new(Control.AxisX(), Control.AxisY());
             Vector2 aimDir = Control.Aim();
-            int type = selectedWeapon * 2 + (PlayState.CheckForItem("Devastator") ? 1 : 0);
+            int type = selectedWeapon * 2 + (PlayState.CheckForItem(PlayState.Items.Devastator) ? 1 : 0);
             int dir = 0;
             if (isShock)
             {
-                type = PlayState.CheckForItem("Full-Metal Snail") ? 9 : 8;
+                type = PlayState.CheckForItem(PlayState.Items.MetalShell) ? 9 : 8;
                 dir = gravityDir switch
                 {
                     Dirs.Floor => 6,
@@ -2337,7 +2352,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             {
                 thisBullet.Shoot(type, dir, applyRapidFireMultiplier);
                 int fireRateIndex = Mathf.FloorToInt(type * 0.5f) * 2;
-                if (PlayState.CheckForItem("Rapid Fire") || (PlayState.CheckForItem("Devastator") && PlayState.stackWeaponMods))
+                if (PlayState.CheckForItem(PlayState.Items.RapidFire) || (PlayState.CheckForItem(PlayState.Items.Devastator) && PlayState.stackWeaponMods))
                     fireRateIndex++;
                 fireCooldown = weaponCooldowns[fireRateIndex];
                 PlayState.PlaySound(type switch
@@ -2373,7 +2388,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     public virtual void SpawnShockWaves()
     {
-        float nonDevAdjust = PlayState.CheckForItem("Devastator") ? 0 : 0.25f;
+        float nonDevAdjust = PlayState.CheckForItem(PlayState.Items.Devastator) ? 0 : 0.25f;
         Vector2 target1;
         Vector2 target2;
         int dir1;
@@ -2412,7 +2427,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
             if (!PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>().isActive)
             {
                 Bullet thisBullet = PlayState.globalFunctions.playerBulletPool.transform.GetChild(bulletID).GetComponent<Bullet>();
-                thisBullet.Shoot(PlayState.CheckForItem("Devastator") ? 11 : 10, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
+                thisBullet.Shoot(PlayState.CheckForItem(PlayState.Items.Devastator) ? 11 : 10, i == 0 ? dir1 : dir2, false, pos.x, pos.y);
             }
             bulletID = (bulletID + 1) % PlayState.globalFunctions.playerBulletPool.transform.childCount;
         }
@@ -2420,7 +2435,7 @@ public class Player : MonoBehaviour, ICutsceneObject {
 
     protected bool CanChangeGravWhileStunned()
     {
-        return !stunned || PlayState.CheckForItem(8) || (PlayState.stackShells && PlayState.GetShellLevel() > 1);
+        return !stunned || PlayState.CheckForItem(PlayState.Items.FlyShell) || (PlayState.stackShells && PlayState.GetShellLevel() > 1);
     }
 
     public void HitFor(int damage, EnemyBullet enemyBullet = null)
@@ -2440,9 +2455,9 @@ public class Player : MonoBehaviour, ICutsceneObject {
         else
         {
             damage = Mathf.FloorToInt(damage * damageMultiplier);
-            if (PlayState.CheckForItem("Full-Metal Snail"))
+            if (PlayState.CheckForItem(PlayState.Items.MetalShell))
                 damage = Mathf.FloorToInt(damage * 0.5f);
-            if (shelled && PlayState.CheckForItem("Shell Shield"))
+            if (shelled && PlayState.CheckForItem(PlayState.Items.ShellShield))
             {
                 if (timeSinceShell <= 0.075f)
                 {

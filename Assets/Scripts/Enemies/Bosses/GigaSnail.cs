@@ -1226,7 +1226,7 @@ public class GigaSnail : Boss
 
         string unlocks = "";
         PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnail);
-        if (!PlayState.CheckForItem("Full-Metal Snail"))
+        if (!PlayState.CheckForItem(PlayState.Items.MetalShell))
             PlayState.QueueAchievementPopup(AchievementPanel.Achievements.BeatMoonSnailNoFMS);
         if (PlayState.currentProfile.gameTime[0] == 0 && PlayState.currentProfile.gameTime[1] < 30 && !PlayState.generalData.achievements[13])
         {

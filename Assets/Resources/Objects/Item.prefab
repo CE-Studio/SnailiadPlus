@@ -31,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,6 +47,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -147,17 +149,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countedInPercentage: 1
   collected: 0
-  itemID: 0
+  itemID: -1
   isSuperUnique: 0
   difficultiesPresentIn: 010101
   charactersPresentFor: 010101010101
+  locationID: -1
   originPos: {x: 0, y: 0}
   anim: {fileID: 0}
   box: {fileID: 0}
   sprite: {fileID: 0}
   sfx: {fileID: 0}
+  lightMask: {fileID: 0}
   minorJingle: {fileID: 8300000, guid: 93063938bc8abfe4f87c9518424a927c, type: 3}
   majorJingle: {fileID: 8300000, guid: 009b7ff378eb74042a39b9359f8246b4, type: 3}
+  editorSprites:
+  - {fileID: 21300000, guid: 5429a672237075f43961fa6a6c15c204, type: 3}
+  - {fileID: -3070453432627086885, guid: d18e1e13038772f4bb0f6cab161283e1, type: 3}
+  - {fileID: 8724570470484008886, guid: c5790ed6ebfbb72438eb61a7436cefab, type: 3}
+  - {fileID: -2125285009704309759, guid: 6b7f9522c6f8dfe4db4d9477a5f682bb, type: 3}
+  - {fileID: 580833114, guid: cd8ee977e0a76ae4d95c8ea1e2ef8e03, type: 3}
+  - {fileID: -7709586727018242510, guid: ac5868daf85358443b63d6a0c0ef4843, type: 3}
+  - {fileID: -1868893282227510861, guid: 188621a5510426a4ab35546eebed58bb, type: 3}
+  - {fileID: 51552871, guid: a931c229a636d1f4ca7482defdadb1d0, type: 3}
+  - {fileID: -5823680437909602291, guid: 09e2b50292f60e74e83d1ea25f98b827, type: 3}
+  - {fileID: -1595105835, guid: 8eb0b32aea07b9c48bf97c867aa39339, type: 3}
+  - {fileID: -1986432709, guid: 1a16fe417b269174582f7795c2d6185e, type: 3}
+  - {fileID: -835325833, guid: c3c895fbebb8a5b4cb482a1408d5d915, type: 3}
+  - {fileID: -6452553555457047717, guid: c5790ed6ebfbb72438eb61a7436cefab, type: 3}
+  - {fileID: -7036840917076082533, guid: 6b7f9522c6f8dfe4db4d9477a5f682bb, type: 3}
+  - {fileID: -5819027552190988165, guid: 11289530faa61c44ca17e6f73e5248da, type: 3}
+  - {fileID: 8133481742199807560, guid: 1c33dc6913c059149b21d285395548ef, type: 3}
+  - {fileID: -72562656, guid: 4afb4d06e105d58449c78065498418d6, type: 3}
 --- !u!114 &5508389706238201944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaying: 0
   currentAnimName: 
+  lastAnimName: 
   currentAnim:
     name: 
     spriteName: 
@@ -186,3 +209,4 @@ MonoBehaviour:
   updateSprite: 1
   pauseOnMenu: 1
   updateMask: 0
+  affectedByGlobalEntityColor: 1

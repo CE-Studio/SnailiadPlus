@@ -172,14 +172,14 @@ public class RushSpaceBox : Boss
         {
             if (elapsed > 1.1f && elapsed < 2.5f)
             {
-                if ((elapsed < 1.2f + (PlayState.CheckForItem("Gravity Snail") ? 0 : 0.1f)) || PlayState.currentProfile.character == "Upside"
+                if ((elapsed < 1.2f + (PlayState.CheckForItem(PlayState.Items.FlyShell) ? 0 : 0.1f)) || PlayState.currentProfile.character == "Upside"
                     || PlayState.currentProfile.character == "Blobby")
                     Control.SetVirtual(Control.Keyboard.Right1, true);
                 else
                 {
                     if (!advanceIntroState)
                     {
-                        if (PlayState.CheckForItem("Gravity Snail") || PlayState.currentProfile.character == "Leggy")
+                        if (PlayState.CheckForItem(PlayState.Items.FlyShell) || PlayState.currentProfile.character == "Leggy")
                         {
                             PlayState.PlaySound("Jump");
                             PlayState.playerScript.gravityDir = Player.Dirs.Ceiling;

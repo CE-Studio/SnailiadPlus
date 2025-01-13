@@ -73,8 +73,8 @@ public class Door:MonoBehaviour, IRoomObject
         bossLock = (int)content["bossLock"];
         locked = (bool)content["locked"] && PlayState.IsBossAlive(bossLock);
         alwaysLocked = (bool)content["alwaysLocked"];
-        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock) && PlayState.isRandomGame;
-        helixLocked = (bool)content["helixLocked"] && PlayState.isRandomGame && PlayState.currentRando.bossesLocked;
+        randoLocked = (bool)content["randoLocked"] && PlayState.IsBossAlive(bossLock);
+        helixLocked = (bool)content["helixLocked"] && PlayState.currentRando.bossesLocked;
         helixLockTargetSphere = (int)content["helixLockTargetSphere"];
         direction = (int)content["direction"];
         Spawn();
@@ -108,7 +108,7 @@ public class Door:MonoBehaviour, IRoomObject
 
     public void Spawn()
     {
-        if (helixLocked && PlayState.CountFragments() < PlayState.currentRando.helixesRequired[helixLockTargetSphere])
+        if (PlayState.isRandomGame && helixLocked && PlayState.CountFragments() < PlayState.currentRando.helixesRequired[helixLockTargetSphere])
         {
             lockData = PlayState.GetAnim("Object_helixLockPopup_data").frames;
             lockPopup = Instantiate(Resources.Load<GameObject>("Objects/Helix Lock Popup"), transform);
@@ -173,7 +173,7 @@ public class Door:MonoBehaviour, IRoomObject
             if (!box.enabled && !anim.isPlaying)
                 anim.Play("holdOpen");
         }
-        if (helixLocked)
+        if (helixLocked && PlayState.isRandomGame)
         {
             float playerDis = Vector2.Distance(lockPopup.transform.position, PlayState.player.transform.position);
             if (playerDis <= POPUP_TRIGGER_DIST && !popupActive)
@@ -208,7 +208,7 @@ public class Door:MonoBehaviour, IRoomObject
         {
             sprite.enabled = true;
             string animToPlay = "Door_";
-            if ((locked || alwaysLocked) && !helixLocked)
+            if ((locked || alwaysLocked) && !randoLocked && !helixLocked)
                 animToPlay += "locked_";
             else
             {
@@ -251,7 +251,7 @@ public class Door:MonoBehaviour, IRoomObject
     public void SetState2()
     {
         sprite.enabled = true;
-        PlayAnim(helixLocked ? "helixLocked" : "holdClosed");
+        PlayAnim((helixLocked && PlayState.isRandomGame) ? "helixLocked" : "holdClosed");
         box.enabled = true;
     }
 
@@ -284,9 +284,9 @@ public class Door:MonoBehaviour, IRoomObject
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            if (helixLocked)
+            if (alwaysLocked || (locked && !randoLocked && !PlayState.isRandomGame) || (locked && PlayState.isRandomGame))
                 PlayState.PlaySound("Ping");
-            else if (!locked && !randoLocked && !alwaysLocked && bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
+            else if (bulletsThatOpenMe[doorWeapon].Contains(collision.GetComponent<Bullet>().bulletType))
                 SetState0();
         }
     }

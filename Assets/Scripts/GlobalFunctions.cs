@@ -872,12 +872,8 @@ public class GlobalFunctions : MonoBehaviour
             GameObject item = new("AP Item");
             item.AddComponent<SpriteRenderer>().sortingOrder = -50;
             string itemAnim;
-            if (queuedAPItemIDs[0] >= 1000)
+            if (queuedAPItemIDs[0] >= 100)
                 itemAnim = "Item_trap";
-            else if (queuedAPItemIDs[0] >= PlayState.OFFSET_FRAGMENTS)
-                itemAnim = "Item_helixFragment";
-            else if (queuedAPItemIDs[0] >= PlayState.OFFSET_HEARTS)
-                itemAnim = "Item_heartContainer";
             else
             {
                 bool prog = PlayState.currentRando.progressivesOn;
@@ -896,6 +892,7 @@ public class GlobalFunctions : MonoBehaviour
                         { "Upside" => "Item_magneticFoot", "Leggy" => "Item_corkscrewJump", "Blobby" => "Item_angelJump", _ => "Item_gravitySnail" },
                     9 => prog ? "Item_progressiveShell" : "Item_fullMetalSnail",
                     10 => "Item_gravityShock",
+                    11 => "Item_heartContainer",
                     _ => "Item_helixFragment"
                 };
             }
@@ -952,10 +949,10 @@ public class GlobalFunctions : MonoBehaviour
             bool hasWeapon = i switch
             {
                 0 => PlayState.isRandomGame && PlayState.currentRando.broomStart,
-                1 => PlayState.CheckForItem(0),
-                2 => PlayState.CheckForItem(1) || PlayState.CheckForItem(11),
-                3 => PlayState.CheckForItem(2) || PlayState.CheckForItem(12),
-                _ => PlayState.CheckForItem(0)
+                1 => PlayState.CheckForItem(PlayState.Items.Peashooter),
+                2 => PlayState.CheckForItem(PlayState.Items.Boomerang) || PlayState.CheckForItem(PlayState.Items.SSBoom),
+                3 => PlayState.CheckForItem(PlayState.Items.RainbowWave) || PlayState.CheckForItem(PlayState.Items.DebugRW),
+                _ => PlayState.CheckForItem(PlayState.Items.Peashooter)
             } && !PlayState.trapManager.lockedWeapons.Contains(i);
             if (i == 0)
                 weaponIcons[i].GetSpriteRenderer().enabled = PlayState.isRandomGame && PlayState.currentRando.broomStart;
@@ -1896,15 +1893,15 @@ public class GlobalFunctions : MonoBehaviour
                     timeStats.SetText(compiledTimeData);
 
                     string compiledItemData = "";
-                    if (PlayState.CheckForItem("Peashooter"))
+                    if (PlayState.CheckForItem(PlayState.Items.Peashooter))
                         compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_peashooter"), PlayState.activeRushData.peasFired) + "\n";
-                    if (PlayState.CheckForItem("Boomerang"))
+                    if (PlayState.CheckForItem(PlayState.Items.Boomerang))
                         compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_boomerang"), PlayState.activeRushData.boomsFired) + "\n";
-                    if (PlayState.CheckForItem("Rainbow Wave"))
+                    if (PlayState.CheckForItem(PlayState.Items.RainbowWave))
                         compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_rainbowWave"), PlayState.activeRushData.wavesFired) + "\n";
-                    if (PlayState.CheckForItem("Gravity Shock"))
+                    if (PlayState.CheckForItem(PlayState.Items.GravShock))
                         compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_gravityShock"), PlayState.activeRushData.shocksFired) + "\n";
-                    if (PlayState.CheckForItem("Shell Shield"))
+                    if (PlayState.CheckForItem(PlayState.Items.ShellShield))
                         compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_shellShield"), PlayState.activeRushData.parries) + "\n";
                     compiledItemData += string.Format(PlayState.GetText("ending_rush_stats_health"), PlayState.activeRushData.healthLost);
                     itemStats.SetText(compiledItemData);
