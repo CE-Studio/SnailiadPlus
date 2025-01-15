@@ -2094,67 +2094,115 @@ public class PlayState
         }
     }
 
-    public static void LoadPacks() {
+    public static void LoadPacks()
+    {
+        string[] packNames = new string[] { generalData.texturePackID, generalData.soundPackID, generalData.musicPackID, generalData.textPackID };
         for (int i = 0; i < 4; i++)
         {
+            string thisPackName = packNames[i];
             string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
-            string[] packNames = new string[] { generalData.texturePackID, generalData.soundPackID, generalData.musicPackID, generalData.textPackID };
-            bool loadDefault = false;
+            string packPath = string.Format("{0}/{1}Packs/{2}", Application.persistentDataPath, packType, thisPackName);
+            bool usePack = thisPackName != "DEFAULT" && Directory.Exists(packPath);
 
-            if (packNames[i] != "DEFAULT")
+            switch (i)
             {
-                string path = Application.persistentDataPath + "/" + packType + "Packs/" + packNames[i];
-                if (Directory.Exists(path))
-                {
-                    switch (packType)
+                case 0:
+                    if (usePack)
+                        textureLibrary.BuildLibrary(packPath);
+                    else
                     {
-                        case "Texture":
-                            textureLibrary.BuildSpriteSizeLibrary(path + "/SpriteSizes.json");
-                            textureLibrary.BuildAnimationLibrary(path + "/Animations.json");
-                            textureLibrary.BuildLibrary(path);
-                            textureLibrary.BuildTilemap();
-                            break;
-                        case "Sound":
-                            soundLibrary.BuildLibrary(path);
-                            break;
-                        case "Music":
-                            musicLibrary.BuildOffsetLibrary(path + "/MusicLoopOffsets.json");
-                            musicLibrary.BuildLibrary(path);
-                            break;
-                        case "Text":
-                            textLibrary.BuildLibrary(path + "/Text.json");
-                            break;
-                    }
-                }
-                else
-                    loadDefault = true;
-            }
-            else
-                loadDefault = true;
-
-            if (loadDefault)
-            {
-                switch (packType)
-                {
-                    case "Texture":
                         textureLibrary.BuildDefaultSpriteSizeLibrary();
-                        textureLibrary.BuildDefaultLibrary();
                         textureLibrary.BuildDefaultAnimLibrary();
-                        textureLibrary.BuildTilemap();
-                        break;
-                    case "Sound":
+                        textureLibrary.BuildDefaultLibrary();
+                    }
+                    textureLibrary.BuildTilemap();
+                    break;
+                case 1:
+                    if (usePack)
+                        soundLibrary.BuildLibrary(packPath);
+                    else
                         soundLibrary.BuildDefaultLibrary();
-                        break;
-                    case "Music":
+                    break;
+                case 2:
+                    if (usePack)
+                    {
+                        musicLibrary.BuildOffsetLibrary(packPath + "/MusicLoopOffsets.json");
+                        musicLibrary.BuildLibrary(packPath);
+                    }
+                    else
+                    {
                         musicLibrary.BuildDefaultLibrary();
                         musicLibrary.BuildDefaultOffsetLibrary();
-                        break;
-                    case "Text":
+                    }
+                    break;
+                case 3:
+                    if (usePack)
+                        textLibrary.BuildLibrary(packPath + "/Text.json");
+                    else
                         textLibrary.BuildDefaultLibrary();
-                        break;
-                }
+                    break;
             }
         }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
+        //    string[] packNames = new string[] { generalData.texturePackID, generalData.soundPackID, generalData.musicPackID, generalData.textPackID };
+        //    bool loadDefault = false;
+        //
+        //    if (packNames[i] != "DEFAULT")
+        //    {
+        //        string path = Application.persistentDataPath + "/" + packType + "Packs/" + packNames[i];
+        //        if (Directory.Exists(path))
+        //        {
+        //            switch (packType)
+        //            {
+        //                case "Texture":
+        //                    textureLibrary.BuildSpriteSizeLibrary(path + "/SpriteSizes.json");
+        //                    textureLibrary.BuildAnimationLibrary(path + "/Animations.json");
+        //                    textureLibrary.BuildLibrary(path);
+        //                    textureLibrary.BuildTilemap();
+        //                    break;
+        //                case "Sound":
+        //                    soundLibrary.BuildLibrary(path);
+        //                    break;
+        //                case "Music":
+        //                    musicLibrary.BuildOffsetLibrary(path + "/MusicLoopOffsets.json");
+        //                    musicLibrary.BuildLibrary(path);
+        //                    break;
+        //                case "Text":
+        //                    textLibrary.BuildLibrary(path + "/Text.json");
+        //                    break;
+        //            }
+        //        }
+        //        else
+        //            loadDefault = true;
+        //    }
+        //    else
+        //        loadDefault = true;
+        //
+        //    if (loadDefault)
+        //    {
+        //        switch (packType)
+        //        {
+        //            case "Texture":
+        //                textureLibrary.BuildDefaultSpriteSizeLibrary();
+        //                textureLibrary.BuildDefaultLibrary();
+        //                textureLibrary.BuildDefaultAnimLibrary();
+        //                textureLibrary.BuildTilemap();
+        //                break;
+        //            case "Sound":
+        //                soundLibrary.BuildDefaultLibrary();
+        //                break;
+        //            case "Music":
+        //                musicLibrary.BuildDefaultLibrary();
+        //                musicLibrary.BuildDefaultOffsetLibrary();
+        //                break;
+        //            case "Text":
+        //                textLibrary.BuildDefaultLibrary();
+        //                break;
+        //        }
+        //    }
+        //}
     }
 
     public static void CheckControlsAreUpToDate() {

@@ -226,7 +226,7 @@ public class Minimap : MonoBehaviour
     {
         foreach (AnimationModule anim in anims)
         {
-            string animName = anim.name;
+            string animName = anim.currentAnimName;
             bool animPlaying = anim.isPlaying;
             if (animPlaying)
                 anim.Stop();

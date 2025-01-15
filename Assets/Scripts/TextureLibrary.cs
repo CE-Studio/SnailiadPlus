@@ -166,8 +166,8 @@ public class TextureLibrary : ScriptableObject
         "Items/HelixFragment",
         "Items/HighJump",
         "Items/IceSnail",
-        "Items/MaskedItem",
         "Items/MagneticFoot",
+        "Items/MaskedItem",
         "Items/Peashooter",
         "Items/ProgressiveShell",
         "Items/ProgressiveWeapon",
@@ -230,15 +230,6 @@ public class TextureLibrary : ScriptableObject
         "UI/TrapTimer",
         "UI/WeaponIcons"
     };
-
-    public Sprite[] Unpack(Sprite texture, int sliceWidth, int sliceHeight, string name)
-    {
-        Texture2D newTexture = new((int)texture.rect.width, (int)texture.rect.height);
-        newTexture.SetPixels(texture.texture.GetPixels((int)texture.textureRect.x, (int)texture.textureRect.y,
-            (int)texture.textureRect.width, (int)texture.textureRect.height));
-        newTexture.Apply();
-        return Unpack(newTexture, sliceWidth, sliceHeight, name);
-    }
 
     public Sprite[] Unpack(Texture2D texture, int sliceWidth, int sliceHeight, string name)
     {
@@ -356,6 +347,7 @@ public class TextureLibrary : ScriptableObject
     {
         BuildDefaultLibrary();
         BuildSpriteSizeLibrary(folderPath + "/SpriteSizes.json");
+        BuildAnimationLibrary(folderPath + "/Animations.json");
         if (folderPath != null)
         {
             string[] tempArray = Directory.GetDirectories(folderPath);
@@ -452,5 +444,43 @@ public class TextureLibrary : ScriptableObject
             index++;
         }
         return found;
+    }
+
+    public void BuildTemplatePack()
+    {
+        string mainPath = Application.persistentDataPath + "/TexturePacks";
+        string templatePath = mainPath + "/Template (" + PlayState.GetCurrentVersion() + ")";
+        Directory.CreateDirectory(templatePath);
+        for (int i = 0; i < referenceList.Length; i++)
+        {
+            string spritePath = referenceList[i];
+            string[] pathParts = spritePath.Split('/');
+            Texture2D sprite = (Texture2D)Resources.Load("Images/" + spritePath);
+            if (sprite.isReadable)
+            {
+                string directory = templatePath;
+                if (pathParts.Length > 1)
+                {
+                    for (int j = 0; j < pathParts.Length - 1; j++)
+                        directory += "/" + pathParts[j];
+                }
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                byte[] spriteBytes = sprite.EncodeToPNG();
+                File.WriteAllBytes(directory + "/" + pathParts[pathParts.Length - 1] + ".png", spriteBytes);
+            }
+        }
+        TextAsset animJson = Resources.Load<TextAsset>("Animations");
+        File.WriteAllText(templatePath + "/Animations.json", animJson.text);
+        TextAsset sizeJson = Resources.Load<TextAsset>("SpriteSizes");
+        File.WriteAllText(templatePath + "/SpriteSizes.json", sizeJson.text);
+        TextAsset infoText = new(
+            "AUTHOR (write your name here!)\n" +
+            "Unknown\n" +
+            "PACK VERSION\n" +
+            "0.0\n" +
+            "GAME VERSION\n" +
+            PlayState.GetCurrentVersion());
+        File.WriteAllText(templatePath + "/Info.txt", infoText.text);
     }
 }

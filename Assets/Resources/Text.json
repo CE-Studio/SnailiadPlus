@@ -5096,6 +5096,11 @@
 			"value": 1
 		},
 		{
+			"name": "npc_rando_flavor_48_0",
+			"text": "{spd|0.2}ミンナニ　ナイショダヨ",
+			"value": 1
+		},
+		{
 			"name": "ending_moon1",
 			"text": "     And so...",
 			"value": 0

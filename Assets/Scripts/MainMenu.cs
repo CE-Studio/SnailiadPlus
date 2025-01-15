@@ -255,10 +255,15 @@ public class MainMenu : MonoBehaviour
 
         if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TexturePacks");
+        if (!Directory.Exists(Application.persistentDataPath + "/TexturePacks/Template (" + PlayState.GetCurrentVersion() + ")"))
+            PlayState.textureLibrary.BuildTemplatePack();
+
         if (!Directory.Exists(Application.persistentDataPath + "/SoundPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/SoundPacks");
+
         if (!Directory.Exists(Application.persistentDataPath + "/MusicPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/MusicPacks");
+
         if (!Directory.Exists(Application.persistentDataPath + "/TextPacks"))
             Directory.CreateDirectory(Application.persistentDataPath + "/TextPacks");
 
