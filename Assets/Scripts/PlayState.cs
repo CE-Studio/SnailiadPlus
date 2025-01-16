@@ -748,12 +748,15 @@ public class PlayState
         };
     }
 
-    public static AnimationData GetAnim(string name) {
-        AnimationData foundData = new() {
+    public static AnimationData GetAnim(string name)
+    {
+        AnimationData foundData = new()
+        {
             name = "NoAnim"
         };
         int i = 0;
-        while (foundData.name == "NoAnim" && i < animationLibrary.Length) {
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
+        {
             if (animationLibrary[i].name == name)
                 foundData = animationLibrary[i];
             i++;
@@ -761,14 +764,16 @@ public class PlayState
         return foundData;
     }
 
-    public static void PrintAllAnims() {
+    public static void PrintAllAnims()
+    {
         string output = "";
         for (int i = 0; i < animationLibrary.Length; i++)
             output += animationLibrary[i].name + "\n";
         Debug.Log(output);
     }
 
-    public static void RefreshPoolAnims() {
+    public static void RefreshPoolAnims()
+    {
         foreach (Transform obj in particlePool.transform)
             obj.GetComponent<AnimationModule>().ReloadList();
         foreach (Transform obj in globalFunctions.playerBulletPool.transform)
@@ -779,16 +784,20 @@ public class PlayState
             obj.GetComponent<AnimationModule>().ReloadList();
     }
 
-    public static AnimationData GetAnim(int ID) {
+    public static AnimationData GetAnim(int ID)
+    {
         return animationLibrary[ID];
     }
 
-    public static int GetAnimID(string name) {
-        AnimationData foundData = new() {
+    public static int GetAnimID(string name)
+    {
+        AnimationData foundData = new()
+        {
             name = "NoAnim"
         };
         int i = 0;
-        while (foundData.name == "NoAnim" && i < animationLibrary.Length) {
+        while (foundData.name == "NoAnim" && i < animationLibrary.Length)
+        {
             if (animationLibrary[i].name == name)
                 foundData = animationLibrary[i];
             else
@@ -797,58 +806,99 @@ public class PlayState
         return i;
     }
 
-    public static Sprite GetSprite(string name, int ID = 0) {
+    public static Sprite GetSprite(string name)
+    {
         Sprite newSprite = MissingTexture();
         int i = 0;
         bool found = false;
-        while (i < textureLibrary.referenceList.Length && !found) {
+        while (i < textureLibrary.referenceList.Length && !found)
+        {
             if (textureLibrary.referenceList[i] == name)
                 found = true;
             i++;
         }
-        if (found) {
+        if (found)
+        {
+            if (generalData.texturePackID == "DEFAULT")
+                newSprite = Resources.Load<Sprite>("Images/" + name);
+            else
+            {
+                string packPath = string.Format("{0}/TexturePacks/{1}/{2}.png", Application.persistentDataPath, generalData.texturePackID, name);
+                byte[] rawSpriteData = File.ReadAllBytes(packPath);
+                Texture2D newTexture = new(128, 1);
+                newTexture.LoadImage(rawSpriteData);
+                Rect rect = new(0, 0, newTexture.width, newTexture.height);
+                newSprite = Sprite.Create(newTexture, rect, new(0.5f, 0.5f), 16);
+            }
+        }
+        newSprite.texture.filterMode = FilterMode.Point;
+        return newSprite;
+    }
+    public static Sprite GetSprite(string name, int ID = 0)
+    {
+        Sprite newSprite = MissingTexture();
+        int i = 0;
+        bool found = false;
+        while (i < textureLibrary.referenceList.Length && !found)
+        {
+            if (textureLibrary.referenceList[i] == name)
+                found = true;
+            i++;
+        }
+        if (found)
+        {
             if (ID < textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)].Length)
                 newSprite = textureLibrary.library[Array.IndexOf(textureLibrary.referenceList, name)][ID];
         }
+        newSprite.texture.filterMode = FilterMode.Point;
         return newSprite;
     }
 
-    public static AudioClip GetSound(string name) {
+    public static AudioClip GetSound(string name)
+    {
         return soundLibrary.library[soundLibrary.soundDict[name]];
     }
 
-    public static AudioClip GetMusic(int groupIndex, string name) {
+    public static AudioClip GetMusic(int groupIndex, string name)
+    {
         return musicLibrary.library[groupIndex][Array.IndexOf(musicLibrary.library[groupIndex], name)];
     }
-    public static AudioClip GetMusic(int groupIndex, int songIndex) {
+    public static AudioClip GetMusic(int groupIndex, int songIndex)
+    {
         return musicLibrary.library[groupIndex][songIndex];
     }
 
-    public static void PlaySound(string name) {
+    public static void PlaySound(string name)
+    {
         if (GetSound(name) != null)
             globalSFX.PlayOneShot(GetSound(name));
         else
             Debug.LogWarning("Audioclip \"" + name + "\" does not exist!");
     }
-    public static void PlaySound(AudioClip clip) {
+    public static void PlaySound(AudioClip clip)
+    {
         globalSFX.PlayOneShot(clip);
     }
 
-    public static void PlayMusic(int groupIndex, string name) {
+    public static void PlayMusic(int groupIndex, string name)
+    {
         if (GetMusic(groupIndex, name) != null)
             globalMusic.PlayOneShot(GetMusic(groupIndex, name));
         else
             Debug.LogWarning("Audipclip \"" + name + "\" does not exist!");
     }
-    public static void PlayMusic(int groupIndex, int songIndex) {
+    public static void PlayMusic(int groupIndex, int songIndex)
+    {
         globalMusic.PlayOneShot(GetMusic(groupIndex, songIndex));
     }
 
-    public static void MuteMusic() {
+    public static void MuteMusic()
+    {
         globalFunctions.musicMuted = true;
     }
 
-    public static void FadeMusicBackIn() {
+    public static void FadeMusicBackIn()
+    {
         globalFunctions.musicMuted = false;
     }
 
@@ -917,12 +967,12 @@ public class PlayState
         return "ID with text \"" + text + "\" not found";
     }
 
-    public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue) {
+    public static Sprite Colorize(string sprite, int spriteNum, string table, int tableValue)
+    {
         Texture2D colorTable = GetSprite(table).texture;
         Dictionary<Color32, int> referenceColors = new();
-        for (int i = 0; i < colorTable.width; i++) {
+        for (int i = 0; i < colorTable.width; i++)
             referenceColors.Add(colorTable.GetPixel(i, 0), i);
-        }
 
         Sprite oldSprite = GetSprite(sprite, spriteNum);
         Texture2D newSprite = new((int)oldSprite.rect.width, (int)oldSprite.rect.height);
@@ -930,7 +980,8 @@ public class PlayState
             (int)oldSprite.textureRect.y,
             (int)oldSprite.textureRect.width,
             (int)oldSprite.textureRect.height);
-        for (int j = 0; j < pixels.Length; j++) {
+        for (int j = 0; j < pixels.Length; j++)
+        {
             if (pixels[j].r == 0.9960785f && pixels[j].g == 0.9960785f && pixels[j].b == 0.9960785f)
                 pixels[j] = new Color(0, 0, 0, 0);
             else if (referenceColors.ContainsKey(pixels[j]))
@@ -939,7 +990,9 @@ public class PlayState
         newSprite.SetPixels(pixels);
         newSprite.Apply();
 
-        return Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16);
+        Sprite finalSprite = Sprite.Create(newSprite, new Rect(0, 0, newSprite.width, newSprite.height), new Vector2(0.5f, 0.5f), 16);
+        finalSprite.texture.filterMode = FilterMode.Point;
+        return finalSprite;
     }
 
     public static string ParseColorCodeToString(int colorData) {
@@ -2143,66 +2196,6 @@ public class PlayState
                     break;
             }
         }
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
-        //    string[] packNames = new string[] { generalData.texturePackID, generalData.soundPackID, generalData.musicPackID, generalData.textPackID };
-        //    bool loadDefault = false;
-        //
-        //    if (packNames[i] != "DEFAULT")
-        //    {
-        //        string path = Application.persistentDataPath + "/" + packType + "Packs/" + packNames[i];
-        //        if (Directory.Exists(path))
-        //        {
-        //            switch (packType)
-        //            {
-        //                case "Texture":
-        //                    textureLibrary.BuildSpriteSizeLibrary(path + "/SpriteSizes.json");
-        //                    textureLibrary.BuildAnimationLibrary(path + "/Animations.json");
-        //                    textureLibrary.BuildLibrary(path);
-        //                    textureLibrary.BuildTilemap();
-        //                    break;
-        //                case "Sound":
-        //                    soundLibrary.BuildLibrary(path);
-        //                    break;
-        //                case "Music":
-        //                    musicLibrary.BuildOffsetLibrary(path + "/MusicLoopOffsets.json");
-        //                    musicLibrary.BuildLibrary(path);
-        //                    break;
-        //                case "Text":
-        //                    textLibrary.BuildLibrary(path + "/Text.json");
-        //                    break;
-        //            }
-        //        }
-        //        else
-        //            loadDefault = true;
-        //    }
-        //    else
-        //        loadDefault = true;
-        //
-        //    if (loadDefault)
-        //    {
-        //        switch (packType)
-        //        {
-        //            case "Texture":
-        //                textureLibrary.BuildDefaultSpriteSizeLibrary();
-        //                textureLibrary.BuildDefaultLibrary();
-        //                textureLibrary.BuildDefaultAnimLibrary();
-        //                textureLibrary.BuildTilemap();
-        //                break;
-        //            case "Sound":
-        //                soundLibrary.BuildDefaultLibrary();
-        //                break;
-        //            case "Music":
-        //                musicLibrary.BuildDefaultLibrary();
-        //                musicLibrary.BuildDefaultOffsetLibrary();
-        //                break;
-        //            case "Text":
-        //                textLibrary.BuildDefaultLibrary();
-        //                break;
-        //        }
-        //    }
-        //}
     }
 
     public static void CheckControlsAreUpToDate() {

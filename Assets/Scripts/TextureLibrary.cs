@@ -308,34 +308,40 @@ public class TextureLibrary : ScriptableObject
 
     public void BuildTilemap()
     {
-        foreach (Transform layer in GameObject.Find("Grid").transform)
+        Sprite tilemap = PlayState.GetSprite("Tilesheet");
+        Transform grid = GameObject.Find("Grid").transform;
+        List<Tilemap> maps = new();
+        List<int> swappedIDs = new();
+        foreach (Transform layer in grid)
         {
             if (layer.name != "Special")
+                maps.Add(layer.GetComponent<Tilemap>());
+        }
+        foreach (Tilemap map in maps)
+        {
+            for (int y = 0; y < map.size.y; y++)
             {
-                Tilemap map = layer.GetComponent<Tilemap>();
-                List<int> swappedIDs = new();
-                for (int y = 0; y < map.size.y; y++)
+                for (int x = 0; x < map.size.x; x++)
                 {
-                    for (int x = 0; x < map.size.x; x++)
+                    Vector3Int worldPos = new(Mathf.RoundToInt(map.origin.x - (map.size.x * 0.5f) + x), Mathf.RoundToInt(map.origin.y - (map.size.y * 0.5f) + y), 0);
+                    if (map.GetSprite(worldPos) != null)
                     {
-                        Vector3Int worldPos = new(Mathf.RoundToInt(map.origin.x - (map.size.x * 0.5f) + x), Mathf.RoundToInt(map.origin.y - (map.size.y * 0.5f) + y), 0);
-                        if (map.GetSprite(worldPos) != null)
+                        Sprite tileSprite = map.GetSprite(worldPos);
+                        int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
+                        if (!swappedIDs.Contains(spriteID))
                         {
-                            Sprite tileSprite = map.GetSprite(worldPos);
-                            int spriteID = int.Parse(tileSprite.name.Split('_', ' ')[1]);
-                            if (!swappedIDs.Contains(spriteID))
-                            {
-                                TileBase tile = map.GetTile(worldPos);
-                                Tile newTile = CreateInstance<Tile>();
-                                Sprite newSprite = PlayState.GetSprite("Tilesheet", spriteID);
-                                newSprite.OverridePhysicsShape(new List<Vector2[]> {
-                                    new Vector2[] { new Vector2(0, 0), new Vector2(0, 16), new Vector2(16, 16), new Vector2(16, 0) }
-                                    });
-                                newTile.sprite = newSprite;
-                                newTile.name = "Tilesheet_" + spriteID;
-                                map.SwapTile(tile, newTile);
-                                swappedIDs.Add(spriteID);
-                            }
+                            TileBase tile = map.GetTile(worldPos);
+                            Tile newTile = CreateInstance<Tile>();
+                            Sprite newSprite = Sprite.Create(tilemap.texture, tileSprite.rect, new(0.5f, 0.5f), 16);
+                            newSprite.OverridePhysicsShape(new List<Vector2[]> {
+                                new Vector2[] { new Vector2(0, 0), new Vector2(0, 16), new Vector2(16, 16), new Vector2(16, 0) }
+                                });
+                            newSprite.name = "Tilesheet_" + spriteID;
+                            newTile.sprite = newSprite;
+                            newTile.name = "Tilesheet_" + spriteID;
+                            foreach (Tilemap thisMap in maps)
+                                thisMap.SwapTile(tile, newTile);
+                            swappedIDs.Add(spriteID);
                         }
                     }
                 }
