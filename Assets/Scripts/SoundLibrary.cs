@@ -81,7 +81,7 @@ public class SoundLibrary : ScriptableObject
     public void BuildDefaultLibrary()
     {
         BuildDictionary();
-        List<AudioClip> newLibrary = new List<AudioClip>();
+        List<AudioClip> newLibrary = new();
         for (int i = 0; i < referenceList.Length; i++)
             newLibrary.Add(Resources.Load<AudioClip>("Sounds/Sfx/" + referenceList[i]));
         library = newLibrary.ToArray();
@@ -90,7 +90,7 @@ public class SoundLibrary : ScriptableObject
     public void BuildLibrary(string folderPath = null)
     {
         BuildDefaultLibrary();
-        if (folderPath != null)
+        if (folderPath != null && Directory.Exists(folderPath))
         {
             string[] tempArray = Directory.GetDirectories(folderPath);
             string[] directories = new string[tempArray.Length + 1];

@@ -1106,6 +1106,7 @@ public class RoomTrigger : MonoBehaviour
         int limitY = (int)Mathf.Round((box.size.y + 0.5f) * 0.5f + 1);
         List<PlayState.Breakable> newBreakableList = new();
         List<PlayState.Breakable> newFinalBossList = new();
+        Texture tilesheet = PlayState.GetSprite("Tilesheet").texture;
 
         for (int x = -limitX; x <= limitX; x++)
         {
@@ -1150,15 +1151,24 @@ public class RoomTrigger : MonoBehaviour
                             break;
                     }
 
-                    newBreakable.tiles = new int[]
+                    Tilemap ground = PlayState.groundLayer.GetComponent<Tilemap>();
+                    Tilemap fg1 = PlayState.fg1Layer.GetComponent<Tilemap>();
+                    Tilemap fg2 = PlayState.fg2Layer.GetComponent<Tilemap>();
+                    newBreakable.tiles = new int[3];
+                    for (int i = 0; i < newBreakable.tiles.Length; i++)
                     {
-                        PlayState.groundLayer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
-                        int.Parse(PlayState.groundLayer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1,
-                        PlayState.fg1Layer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
-                        int.Parse(PlayState.fg1Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1,
-                        PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos) != null ?
-                        int.Parse(PlayState.fg2Layer.GetComponent<Tilemap>().GetTile(tilePos).name.Split('_')[1]) : -1
-                    };
+                        Tilemap thisMap = i switch { 1 => fg1, 2 => fg2, _ => ground };
+                        if (thisMap.GetTile(tilePos) == null)
+                            newBreakable.tiles[i] = -1;
+                        else
+                        {
+                            Rect tileRect = thisMap.GetSprite(tilePos).rect;
+                            Vector2 rectFromTopLeft = new(tileRect.x, Mathf.Abs(tileRect.y - tilesheet.height));
+                            int parsedX = Mathf.RoundToInt(rectFromTopLeft.x * PlayState.FRAC_16);
+                            int parsedY = Mathf.RoundToInt(rectFromTopLeft.y * PlayState.FRAC_16) - 1;
+                            newBreakable.tiles[i] = (parsedY * Mathf.RoundToInt(tilesheet.width * PlayState.FRAC_16)) + parsedX;
+                        }
+                    }
 
                     if (newBreakable.tiles != new int[] { -1, -1, -1 } && isBreakableTileHere)
                     {

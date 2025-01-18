@@ -354,7 +354,7 @@ public class TextureLibrary : ScriptableObject
         BuildDefaultLibrary();
         BuildSpriteSizeLibrary(folderPath + "/SpriteSizes.json");
         BuildAnimationLibrary(folderPath + "/Animations.json");
-        if (folderPath != null)
+        if (folderPath != null && Directory.Exists(folderPath))
         {
             string[] tempArray = Directory.GetDirectories(folderPath);
             string[] directories = new string[tempArray.Length + 1];
@@ -390,7 +390,7 @@ public class TextureLibrary : ScriptableObject
     public void BuildAnimationLibrary(string dataPath = null)
     {
         BuildDefaultAnimLibrary();
-        if (dataPath != null)
+        if (dataPath != null && File.Exists(dataPath))
         {
             PlayState.LoadNewAnimationLibrary(dataPath);
         }
@@ -399,7 +399,7 @@ public class TextureLibrary : ScriptableObject
     public void BuildSpriteSizeLibrary(string dataPath = null)
     {
         BuildDefaultSpriteSizeLibrary();
-        if (dataPath != null)
+        if (dataPath != null && File.Exists(dataPath))
         {
             PlayState.LoadNewSpriteSizeLibrary(dataPath);
         }

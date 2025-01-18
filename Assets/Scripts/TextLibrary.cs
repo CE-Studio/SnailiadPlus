@@ -21,7 +21,7 @@ public class TextLibrary : ScriptableObject
 
     public void BuildLibrary(string folderPath = null)
     {
-        if (folderPath != null)
+        if (folderPath != null && File.Exists(folderPath))
         {
             string fileText = File.ReadAllText(folderPath);
             TextCollective newDict = JsonUtility.FromJson<TextCollective>(fileText);

@@ -140,10 +140,10 @@ public class Door:MonoBehaviour, IRoomObject
             SetState2();
         }
 
-        if (direction == 1 || direction == 3 && flipStates[1] == 1)
+        if (direction == 1 || direction == 3)
         {
             box.size = new Vector2(3, 1);
-            if (direction == 3)
+            if (direction == 3 && flipStates[1] == 1)
             {
                 sprite.flipY = true;
             }

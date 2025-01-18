@@ -104,7 +104,7 @@ public class MusicLibrary : ScriptableObject
     public void BuildOffsetLibrary(string dataPath = null)
     {
         BuildDefaultOffsetLibrary();
-        if (dataPath != null)
+        if (dataPath != null && File.Exists(dataPath))
         {
             PlayState.LoadNewMusicOffsetLibrary(dataPath);
         }
@@ -113,7 +113,7 @@ public class MusicLibrary : ScriptableObject
     public void BuildLibrary(string folderPath = null)
     {
         BuildDefaultLibrary();
-        if (folderPath != null)
+        if (folderPath != null && Directory.Exists(folderPath))
         {
             string[] tempArray = Directory.GetDirectories(folderPath);
             string[] directories = new string[tempArray.Length + 1];

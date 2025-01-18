@@ -2154,8 +2154,8 @@ public class PlayState
         {
             string thisPackName = packNames[i];
             string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
-            string packPath = string.Format("{0}/{1}Packs/{2}", Application.persistentDataPath, packType, thisPackName);
-            bool usePack = thisPackName != "DEFAULT" && Directory.Exists(packPath);
+            string packPath = string.Format("{0}/{1}Packs/{2}/", Application.persistentDataPath, packType, thisPackName);
+            bool usePack = (thisPackName != "DEFAULT") && Directory.Exists(packPath);
 
             switch (i)
             {
@@ -2164,6 +2164,7 @@ public class PlayState
                         textureLibrary.BuildLibrary(packPath);
                     else
                     {
+                        generalData.texturePackID = "DEFAULT";
                         textureLibrary.BuildDefaultSpriteSizeLibrary();
                         textureLibrary.BuildDefaultAnimLibrary();
                         textureLibrary.BuildDefaultLibrary();
@@ -2174,7 +2175,10 @@ public class PlayState
                     if (usePack)
                         soundLibrary.BuildLibrary(packPath);
                     else
+                    {
+                        generalData.soundPackID = "DEFAULT";
                         soundLibrary.BuildDefaultLibrary();
+                    }
                     break;
                 case 2:
                     if (usePack)
@@ -2184,6 +2188,7 @@ public class PlayState
                     }
                     else
                     {
+                        generalData.musicPackID = "DEFAULT";
                         musicLibrary.BuildDefaultLibrary();
                         musicLibrary.BuildDefaultOffsetLibrary();
                     }
@@ -2192,7 +2197,10 @@ public class PlayState
                     if (usePack)
                         textLibrary.BuildLibrary(packPath + "/Text.json");
                     else
+                    {
+                        generalData.textPackID = "DEFAULT";
                         textLibrary.BuildDefaultLibrary();
+                    }
                     break;
             }
         }
