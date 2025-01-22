@@ -99,7 +99,7 @@ public class GlobalFunctions : MonoBehaviour
     }
 
     // AP item cutscene
-    public List<int> queuedAPItemIDs = new();
+    public List<PlayState.Items> queuedAPItemIDs = new();
     public int apItemCutsceneState = 0; // 0 = inactive, 1 = intro dust, 2 = displaying items
 
     public void Awake()
@@ -806,7 +806,7 @@ public class GlobalFunctions : MonoBehaviour
         }
     }
 
-    public void RunAPItemAnim(int itemID, string sender)
+    public void RunAPItemAnim(PlayState.Items itemID, string sender)
     {
         if (queuedAPItemIDs.Count == 0)
             StartCoroutine(APItemAnim(sender));
@@ -872,7 +872,7 @@ public class GlobalFunctions : MonoBehaviour
             GameObject item = new("AP Item");
             item.AddComponent<SpriteRenderer>().sortingOrder = -50;
             string itemAnim;
-            if (queuedAPItemIDs[0] >= 100)
+            if ((int)queuedAPItemIDs[0] >= 100)
                 itemAnim = "Item_trap";
             else
             {
@@ -880,19 +880,19 @@ public class GlobalFunctions : MonoBehaviour
                 string name = PlayState.currentProfile.character;
                 itemAnim = queuedAPItemIDs[0] switch
                 {
-                    0 => prog ? "Item_progressiveWeapon" : "Item_peashooter",
-                    1 => prog ? "Item_progressiveWeapon" : "Item_boomerang",
-                    2 => prog ? "Item_progressiveWeapon" : "Item_rainbowWave",
-                    3 => prog ? "Item_progressiveWeaponMod" : "Item_devastator",
-                    4 => name == "Blobby" ? "Item_wallGrab" : "Item_highJump",
-                    5 => name == "Blobby" ? "Item_shelmet" : "Item_shellShield",
-                    6 => prog ? "Item_progressiveWeaponMod" : (name == "Leechy" ? "Item_backfire" : "Item_rapidFire"),
-                    7 => prog ? "Item_progressiveShell" : "Item_iceSnail",
-                    8 => prog ? "Item_progressiveShell" : name switch
+                    PlayState.Items.Peashooter => prog ? "Item_progressiveWeapon" : "Item_peashooter",
+                    PlayState.Items.Boomerang => prog ? "Item_progressiveWeapon" : "Item_boomerang",
+                    PlayState.Items.RainbowWave => prog ? "Item_progressiveWeapon" : "Item_rainbowWave",
+                    PlayState.Items.Devastator => prog ? "Item_progressiveWeaponMod" : "Item_devastator",
+                    PlayState.Items.HighJump => name == "Blobby" ? "Item_wallGrab" : "Item_highJump",
+                    PlayState.Items.ShellShield => name == "Blobby" ? "Item_shelmet" : "Item_shellShield",
+                    PlayState.Items.RapidFire => prog ? "Item_progressiveWeaponMod" : (name == "Leechy" ? "Item_backfire" : "Item_rapidFire"),
+                    PlayState.Items.IceShell => prog ? "Item_progressiveShell" : "Item_iceSnail",
+                    PlayState.Items.FlyShell => prog ? "Item_progressiveShell" : name switch
                         { "Upside" => "Item_magneticFoot", "Leggy" => "Item_corkscrewJump", "Blobby" => "Item_angelJump", _ => "Item_gravitySnail" },
-                    9 => prog ? "Item_progressiveShell" : "Item_fullMetalSnail",
-                    10 => "Item_gravityShock",
-                    11 => "Item_heartContainer",
+                    PlayState.Items.MetalShell => prog ? "Item_progressiveShell" : "Item_fullMetalSnail",
+                    PlayState.Items.GravShock => "Item_gravityShock",
+                    PlayState.Items.Heart => "Item_heartContainer",
                     _ => "Item_helixFragment"
                 };
             }

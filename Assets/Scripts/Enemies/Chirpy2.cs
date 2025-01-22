@@ -19,7 +19,7 @@ public class Chirpy2 : Enemy
     {
         Spawn(1, 3, 0, true, 1);
         anim.Add("Enemy_chirpy2_up");
-        anim.Add("Enemy_chirpy2_down");
+        anim.AddAndPlay("Enemy_chirpy2_down");
         originY = transform.position.y;
         theta = (transform.position.x + transform.position.y * 13.7f) % (Mathf.PI * 2);
         thetaMultiplier += Mathf.Sin(transform.position.x * 1.732f - transform.position.y * 3.2f);

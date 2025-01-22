@@ -427,6 +427,10 @@ public class Item:MonoBehaviour, IRoomObject {
     {
         return IDToName(itemID, !isRushItem);
     }
+    public static string IDToName(PlayState.Items thisID, bool numberHeartsAndHelixes = true)
+    {
+        return IDToName((int)thisID, numberHeartsAndHelixes);
+    }
     public static string IDToName(int thisID, bool numberHeartsAndHelixes = true)
     {
         string species = PlayState.GetText("species_" + PlayState.currentProfile.character.ToLower());
@@ -467,11 +471,11 @@ public class Item:MonoBehaviour, IRoomObject {
             10 => PlayState.GetText("item_gravityShock"),
             11 => PlayState.GetText("item_boomerang_secret"),
             12 => PlayState.GetText("item_rainbowWave_secret"),
-            1000 => PlayState.GetText("item_trapWeapon"),
-            1001 => PlayState.GetText("item_trapGravity"),
-            1002 => PlayState.GetText("item_trapLullaby"),
-            1003 => PlayState.GetText("item_trapSpider"),
-            1004 => PlayState.GetText("item_trapWarp"),
+            100 => PlayState.GetText("item_trapWeapon"),
+            101 => PlayState.GetText("item_trapGravity"),
+            102 => PlayState.GetText("item_trapLullaby"),
+            103 => PlayState.GetText("item_trapSpider"),
+            104 => PlayState.GetText("item_trapWarp"),
             _ => PlayState.GetText("item_nothing"),
         };
     }

@@ -2080,9 +2080,15 @@ public class PlayState
             generalData.gravKeepType = newData.gravKeepType;
             generalData.darknessLevel = newData.darknessLevel;
             if (newData.keyboardInputs != null)
+            {
                 generalData.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
+                Control.keyboardInputs = (KeyCode[])newData.keyboardInputs.Clone();
+            }
             if (newData.controllerInputs != null)
+            {
                 generalData.controllerInputs = (Control.ControllerBinds[])newData.controllerInputs.Clone();
+                Control.controllerInputs = (Control.ControllerBinds[])newData.controllerInputs.Clone();
+            }
             if (newData.achievements != null)
                 generalData.achievements = (bool[])newData.achievements.Clone();
             if (newData.times != null)
@@ -2206,7 +2212,8 @@ public class PlayState
         }
     }
 
-    public static void CheckControlsAreUpToDate() {
+    public static void CheckControlsAreUpToDate()
+    {
         if (generalData.keyboardInputs.Length != Enum.GetNames(typeof(Control.Keyboard)).Length)
             generalData.keyboardInputs = Control.defaultKeyboardInputs;
         if (generalData.controllerInputs.Length != Enum.GetNames(typeof(Control.Controller)).Length)
