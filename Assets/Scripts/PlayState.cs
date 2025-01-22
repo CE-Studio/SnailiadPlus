@@ -2160,7 +2160,7 @@ public class PlayState
         {
             string thisPackName = packNames[i];
             string packType = i switch { 1 => "Sound", 2 => "Music", 3 => "Text", _ => "Texture" };
-            string packPath = string.Format("{0}/{1}Packs/{2}/", Application.persistentDataPath, packType, thisPackName);
+            string packPath = string.Format("{0}/{1}Packs/{2}", Application.persistentDataPath, packType, thisPackName);
             bool usePack = (thisPackName != "DEFAULT") && Directory.Exists(packPath);
 
             switch (i)
@@ -2171,8 +2171,6 @@ public class PlayState
                     else
                     {
                         generalData.texturePackID = "DEFAULT";
-                        textureLibrary.BuildDefaultSpriteSizeLibrary();
-                        textureLibrary.BuildDefaultAnimLibrary();
                         textureLibrary.BuildDefaultLibrary();
                     }
                     textureLibrary.BuildTilemap();

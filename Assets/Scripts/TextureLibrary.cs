@@ -235,20 +235,20 @@ public class TextureLibrary : ScriptableObject
     {
         List<Sprite> unpackedArray = new();
         int counter = 0;
-        if (texture.name == "Tilesheet")
-        {
-            Tile[] tiles = Resources.LoadAll<Tile>("Images/Tilesheet images");
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                Sprite oldSprite = Resources.Load<Tile>("Images/Tilesheet images/Tilesheet_" + i).sprite;
-                Sprite newSprite = Sprite.Create(texture, oldSprite.textureRect, new Vector2(0.5f, 0.5f), 16);
-                newSprite.name = oldSprite.name;
-                unpackedArray.Add(newSprite);
-                counter++;
-            }
-        }
-        else
-        {
+        //if (texture.name == "Tilesheet")
+        //{
+        //    Tile[] tiles = Resources.LoadAll<Tile>("Images/Tilesheet images");
+        //    for (int i = 0; i < tiles.Length; i++)
+        //    {
+        //        Sprite oldSprite = Resources.Load<Tile>("Images/Tilesheet images/Tilesheet_" + i).sprite;
+        //        Sprite newSprite = Sprite.Create(texture, oldSprite.textureRect, new Vector2(0.5f, 0.5f), 16);
+        //        newSprite.name = oldSprite.name;
+        //        unpackedArray.Add(newSprite);
+        //        counter++;
+        //    }
+        //}
+        //else
+        //{
             for (int i = texture.height - sliceHeight; i >= 0; i -= sliceHeight)
             {
                 for (int j = 0; j < texture.width; j += sliceWidth)
@@ -259,7 +259,7 @@ public class TextureLibrary : ScriptableObject
                     counter++;
                 }
             }
-        }
+        //}
         Sprite[] finalArray = unpackedArray.ToArray();
         return finalArray;
     }
@@ -280,6 +280,7 @@ public class TextureLibrary : ScriptableObject
     public void BuildDefaultLibrary()
     {
         BuildDefaultSpriteSizeLibrary();
+        BuildDefaultAnimLibrary();
         List<Sprite[]> newLibrary = new();
         for (int i = 0; i < referenceList.Length; i++)
         {

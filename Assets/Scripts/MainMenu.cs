@@ -3361,8 +3361,6 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                 case "Texture":
-                    PlayState.textureLibrary.BuildDefaultSpriteSizeLibrary();
-                    PlayState.textureLibrary.BuildDefaultAnimLibrary();
                     PlayState.textureLibrary.BuildDefaultLibrary();
                     PlayState.textureLibrary.BuildTilemap();
                     selectorAnims[0].ReloadList();
