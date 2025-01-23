@@ -37805,6 +37805,39 @@
 			"randomizeStartFrame": false
 		},
 		{
+			"name": "WeaponIcon_0_locked",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				-1
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "WeaponIcon_0_inactive",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				0
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
+			"name": "WeaponIcon_0_active",
+			"spriteName": "UI/WeaponIcons",
+			"framerate": 0.0,
+			"frames": [
+				4
+			],
+			"loop": false,
+			"loopStartFrame": 0,
+			"randomizeStartFrame": false
+		},
+		{
 			"name": "WeaponIcon_1_locked",
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
@@ -37820,7 +37853,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				0
+				1
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -37831,7 +37864,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				4
+				5
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -37853,7 +37886,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				1
+				2
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -37864,7 +37897,7 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				5
+				6
 			],
 			"loop": false,
 			"loopStartFrame": 0,
@@ -37886,39 +37919,6 @@
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
-				2
-			],
-			"loop": false,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "WeaponIcon_3_active",
-			"spriteName": "UI/WeaponIcons",
-			"framerate": 0.0,
-			"frames": [
-				6
-			],
-			"loop": false,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "WeaponIcon_0_locked",
-			"spriteName": "UI/WeaponIcons",
-			"framerate": 0.0,
-			"frames": [
-				-1
-			],
-			"loop": false,
-			"loopStartFrame": 0,
-			"randomizeStartFrame": false
-		},
-		{
-			"name": "WeaponIcon_0_inactive",
-			"spriteName": "UI/WeaponIcons",
-			"framerate": 0.0,
-			"frames": [
 				3
 			],
 			"loop": false,
@@ -37926,7 +37926,7 @@
 			"randomizeStartFrame": false
 		},
 		{
-			"name": "WeaponIcon_0_active",
+			"name": "WeaponIcon_3_active",
 			"spriteName": "UI/WeaponIcons",
 			"framerate": 0.0,
 			"frames": [
