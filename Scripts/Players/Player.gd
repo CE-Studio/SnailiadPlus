@@ -50,6 +50,7 @@ var force_face_y:int
 var grav_shock_state:int
 var grav_shock_timer:float
 var time_since_shell:float
+var box_difference:float
 #endregion
 
 
@@ -157,6 +158,8 @@ var box_shell:CollisionShape2D
 var sfx_jump:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
 var cast_group:Node2D
+var corner_cast:RayCast2D
+var ground_casts:Array
 
 
 # _ready() is called every time this script is instanced
@@ -173,6 +176,16 @@ func _ready():
 	sfx_jump = $"AudioGroup/Jump"
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
+	corner_cast = $"CastGroup/RoundCornerCast"
+	ground_casts = [
+		$"CastGroup/GroundCast0",
+		$"CastGroup/GroundCast1",
+		$"CastGroup/GroundCast2",
+		$"CastGroup/GroundCast3",
+	]
+	
+	var rect = box_normal.shape.get_rect()
+	box_difference = rect.size.x - rect.size.y
 
 
 # _process() is called every frame and is used to update various timers and equipped weaponry
@@ -205,10 +218,10 @@ func _physics_process(delta):
 		return
 	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
 	# Among other things, this is used to test for ground when we're airborne.
-	last_position = position + box_normal.position
-	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
-	last_gravity = gravity_dir
-	grounded_last_frame = body.is_on_floor() #grounded
+	#last_position = position + box_normal.position
+	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
+	#last_gravity = gravity_dir
+	#grounded_last_frame = body.is_on_floor() #grounded
 	# Next, we decrease the fire cooldown, and increase the coyote time and jump buffer as necessary
 	fire_cooldown = clampf(fire_cooldown, 0.0, INF)
 	if Input.is_action_pressed("Jump"):
@@ -251,6 +264,11 @@ func _physics_process(delta):
 			body.velocity.x = 0
 		if body.velocity.y == INF or body.velocity.y == -INF:
 			body.velocity.y = 0
+	
+	last_position = position + box_normal.position
+	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
+	last_gravity = gravity_dir
+	grounded_last_frame = grounded #body.is_on_floor() #grounded
 
 
 func _case_down(delta:float):
@@ -390,20 +408,33 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			if current_state != AnimStates.JUMP:
 				current_state = AnimStates.IDLE
 	else:
-		rel_vel.y += gravity[read_i_jump] * gravity_mod
-		if rel_vel.y < 0.0 and not Input.is_action_pressed("Jump"):
-			rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
-		rel_vel.y = clampf(rel_vel.y, -INF, terminal_velocity[read_i_jump])
-		if (rel_vel.y > 0.0 and
-		(current_state == AnimStates.IDLE or current_state == AnimStates.JUMP)):
-			current_state = AnimStates.FALL
-			_play_anim("fall")
-		if Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time):
-			rel_vel.y = jump_power[read_i_jump] * jump_mod
-			grounded = false
-			sfx_jump.play()
-			current_state = AnimStates.JUMP
-			_play_anim("jump")
+		if rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and corner_cast.is_colliding():
+			var opposite_dir = _get_dir_opposite(home_gravity)
+			var new_gravity = _get_dir_adjacent_ccw(surface) if facing_left else _get_dir_adjacent_cw(surface)
+			if (_check_ability(can_swap_gravity) and (
+			((gravity_dir == opposite_dir or new_gravity == opposite_dir) and _check_ability(can_round_opposite_outer_corners)) or 
+			((gravity_dir != opposite_dir and new_gravity != opposite_dir) and _check_ability(can_round_outer_corners)))):
+				_set_direction(new_gravity, facing_left)
+				var rel_wall = Statics.DirsSurface.RWALL if facing_left else Statics.DirsSurface.LWALL
+				body.call_deferred("translate", rel_vectors[rel_wall] * box_difference)
+				rel_vel.x = 0.0
+				grounded = true
+				_play_anim("walk")
+		if not _check_ground_casts():
+			rel_vel.y += gravity[read_i_jump] * gravity_mod
+			if rel_vel.y < 0.0 and not Input.is_action_pressed("Jump"):
+				rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
+			rel_vel.y = clampf(rel_vel.y, -INF, terminal_velocity[read_i_jump])
+			if (rel_vel.y > 0.0 and
+			(current_state == AnimStates.IDLE or current_state == AnimStates.JUMP)):
+				current_state = AnimStates.FALL
+				_play_anim("fall")
+			if Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time):
+				rel_vel.y = jump_power[read_i_jump] * jump_mod
+				grounded = false
+				sfx_jump.play()
+				current_state = AnimStates.JUMP
+				_play_anim("jump")
 	
 	if body.is_on_wall() and rel_axis.x != 0.0:
 		if (rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)
@@ -419,10 +450,9 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			else:
 				new_left = not facing_left
 			_set_direction(new_gravity, new_left)
-			var rect = box_normal.shape.get_rect()
-			var box_difference = rect.size.x - rect.size.y
 			var rel_against_wall = Statics.DirsSurface.LWALL if facing_left else Statics.DirsSurface.RWALL
-			body.translate(rel_vectors[rel_against_wall] * box_difference)
+			body.call_deferred("translate", rel_vectors[rel_against_wall] * box_difference)
+			grounded = true
 			current_state = AnimStates.WALK
 			_play_anim("walk" if grounded else "land")
 	
@@ -441,6 +471,10 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
+#	call_deferred("_finalize_move", surface, rel_axis)
+#
+#
+#func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2):
 	body.move_and_slide()
 	position = body.position
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
@@ -452,12 +486,11 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			grounded = true
 			current_state = AnimStates.IDLE
 			_play_anim("land")
-		elif rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
+		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
-			_set_direction(_get_dir_opposite(surface), facing_left)
+			_set_direction(_get_dir_opposite(surface), not facing_left)
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 			_play_anim("land")
-			# Broken! Fix this
 #endregion
 
 
@@ -467,6 +500,10 @@ func _check_ability(ability:Array) -> bool:
 		if Statics.is_number(i):
 			if i == -1:
 				found = true
+		else:
+			for j in i:
+				if j == -1:
+					found = true
 	return found
 
 
@@ -520,22 +557,18 @@ func _play_anim(action:String):
 	match gravity_dir:
 		Statics.DirsSurface.FLOOR:
 			full_action += "floor."
-			#full_action += "left." if facing_left else "right."
 		Statics.DirsSurface.LWALL:
 			full_action += "lwall."
-			#full_action += "up." if facing_left else "down."
 		Statics.DirsSurface.RWALL:
 			full_action += "rwall."
-			#full_action += "right." if facing_left else "left."
 		Statics.DirsSurface.CEILING:
 			full_action += "ceiling."
-			#full_action += "down." if facing_left else "up."
 	full_action += "left." if facing_left else "right."
 	
 	full_action += action
 	if sprite.action != full_action:
 		sprite.action = full_action
-	print(full_action)
+	#print(full_action)
 
 
 func _get_dir_adjacent_cw(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
@@ -578,6 +611,14 @@ func _get_dir_opposite(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 		Statics.DirsSurface.CEILING:
 			new_dir = Statics.DirsSurface.FLOOR
 	return new_dir
+
+
+func _check_ground_casts() -> bool:
+	var hit = false
+	for i in ground_casts:
+		if i.is_colliding():
+			hit = true
+	return hit
 
 
 #region Cutscene functions

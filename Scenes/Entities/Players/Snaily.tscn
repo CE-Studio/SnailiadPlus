@@ -46,6 +46,26 @@ position = Vector2(-12, 9)
 target_position = Vector2(-12, 0)
 hit_from_inside = true
 
+[node name="GroundCast0" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-12, 8)
+target_position = Vector2(0, 12)
+hit_from_inside = true
+
+[node name="GroundCast1" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-4, 8)
+target_position = Vector2(0, 12)
+hit_from_inside = true
+
+[node name="GroundCast2" type="RayCast2D" parent="CastGroup"]
+position = Vector2(4, 8)
+target_position = Vector2(0, 12)
+hit_from_inside = true
+
+[node name="GroundCast3" type="RayCast2D" parent="CastGroup"]
+position = Vector2(12, 8)
+target_position = Vector2(0, 12)
+hit_from_inside = true
+
 [node name="AudioGroup" type="Node" parent="."]
 
 [node name="Jump" type="AudioStreamPlayer" parent="AudioGroup"]
