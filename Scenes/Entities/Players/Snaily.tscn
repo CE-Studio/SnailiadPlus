@@ -66,6 +66,11 @@ position = Vector2(12, 8)
 target_position = Vector2(0, 12)
 hit_from_inside = true
 
+[node name="CeilingCast" type="RayCast2D" parent="CastGroup"]
+position = Vector2(10, -5)
+target_position = Vector2(0, -12)
+hit_from_inside = true
+
 [node name="AudioGroup" type="Node" parent="."]
 
 [node name="Jump" type="AudioStreamPlayer" parent="AudioGroup"]

@@ -160,6 +160,7 @@ var sfx_shell:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
+var ceil_cast:RayCast2D
 
 
 # _ready() is called every time this script is instanced
@@ -183,9 +184,10 @@ func _ready():
 		$"CastGroup/GroundCast2",
 		$"CastGroup/GroundCast3",
 	]
+	ceil_cast = $"CastGroup/CeilingCast"
 	
 	var rect = box_normal.shape.get_rect()
-	box_difference = rect.size.x - rect.size.y
+	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
 
 
 # _process() is called every frame and is used to update various timers and equipped weaponry
@@ -265,10 +267,14 @@ func _physics_process(delta):
 		if body.velocity.y == INF or body.velocity.y == -INF:
 			body.velocity.y = 0
 	
-	last_position = position + box_normal.position
-	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
-	last_gravity = gravity_dir
-	grounded_last_frame = grounded #body.is_on_floor() #grounded
+	#last_position = position + box_normal.position
+	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
+	#last_gravity = gravity_dir
+	#grounded_last_frame = grounded #body.is_on_floor() #grounded
+	set_deferred("last_position", position + box_normal.position)
+	set_deferred("last_box_size", box_shell.shape.size if shelled else box_normal.shape.size)
+	set_deferred("last_gravity", gravity_dir)
+	set_deferred("grounded_last_frame", grounded)
 
 
 func _case_down(delta:float):
@@ -288,7 +294,6 @@ func _case_up(delta:float):
 
 
 func _case_default(delta:float, surface:Statics.DirsSurface):
-	#region Set relative
 	var input_axis_x:float = Input.get_axis("Left", "Right")
 	var input_axis_y:float = Input.get_axis("Up", "Down")
 	var rel_axis:Vector2
@@ -296,6 +301,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	var rel_down_pressed:bool
 	var rel_vectors:Array
 	var remapped_dirs:Array
+	#region Set relative
 	match surface:
 		Statics.DirsSurface.FLOOR:
 			rel_axis = Vector2(input_axis_x, input_axis_y)
@@ -401,6 +407,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			sfx_jump.play()
 			current_state = AnimStates.JUMP
 			_play_anim("jump")
+			jump_buffer_counter = jump_buffer
+			coyote_time_counter = coyote_time
 			if shelled:
 				unshell_on_jump = true
 		if (rel_vel.x != 0.0 and shelled) or unshell_on_jump:
@@ -419,8 +427,19 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				body.call_deferred("translate", rel_vectors[rel_wall] * box_difference)
 				rel_vel.x = 0.0
 				grounded = true
-				_play_anim("walk")
-		if not _check_ground_casts():
+				_play_anim("shell" if shelled else "walk")
+		#if not _check_ground_casts():
+		# Basically, add a front-facing cast that gets the distance to the wall
+		if not _check_ability(retain_gravity_on_airborne) and surface != home_gravity and grounded_last_frame:
+			var new_left = facing_left
+			if _get_dir_opposite(surface) != home_gravity:
+				body.call_deferred("translate", rel_vectors[Statics.DirsSurface.FLOOR] * box_difference)
+				facing_left = not facing_left
+			_set_direction(home_gravity, new_left)
+			coyote_time_counter = coyote_time
+			jump_buffer_counter = jump_buffer
+			_play_anim("fall")
+		else:
 			rel_vel.y += gravity[read_i_jump] * gravity_mod
 			if rel_vel.y < 0.0 and not Input.is_action_pressed("Jump"):
 				rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
@@ -435,9 +454,11 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				sfx_jump.play()
 				current_state = AnimStates.JUMP
 				_play_anim("jump")
+				jump_buffer_counter = jump_buffer
+				coyote_time_counter = coyote_time
 	
 	if body.is_on_wall() and rel_axis.x != 0.0:
-		if (rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)
+		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not ceil_cast.is_colliding()
 		and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
 			var new_gravity
 			if facing_left:
@@ -471,10 +492,10 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
-#	call_deferred("_finalize_move", surface, rel_axis)
-#
-#
-#func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2):
+	call_deferred("_finalize_move", surface, rel_axis)
+
+
+func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2):
 	body.move_and_slide()
 	position = body.position
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
@@ -484,8 +505,9 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity.x = 0.0
 		if body.is_on_floor():
 			grounded = true
-			current_state = AnimStates.IDLE
-			_play_anim("land")
+			if not shelled:
+				current_state = AnimStates.IDLE
+				_play_anim("land")
 		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
 			_set_direction(_get_dir_opposite(surface), not facing_left)
@@ -613,12 +635,18 @@ func _get_dir_opposite(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	return new_dir
 
 
-func _check_ground_casts() -> bool:
+func _check_ground_casts() -> Array:
 	var hit = false
+	var distance = INF
 	for i in ground_casts:
 		if i.is_colliding():
 			hit = true
-	return hit
+			var origin = i.global_position
+			var collision = i.get_collision_point()
+			var new_distance = origin.distance_to(collision)
+			if new_distance < distance:
+				distance = new_distance
+	return [ hit, distance ]
 
 
 #region Cutscene functions
