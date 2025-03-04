@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://dgd76ibvdfk3c"]
 
-[ext_resource type="Script" path="res://Scripts/Players/Snaily.gd" id="1_k5eab"]
-[ext_resource type="Script" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_d17bl"]
+[ext_resource type="Script" uid="uid://d4nw14f3hljxw" path="res://Scripts/Players/Snaily.gd" id="1_k5eab"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_d17bl"]
 [ext_resource type="Texture2D" uid="uid://brv00uu770se5" path="res://Assets/Images/Players/Snaily.png" id="3_d2ww3"]
-[ext_resource type="Script" path="res://Editor/scripts/markersprite.gd" id="4_h84e5"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_h84e5"]
 [ext_resource type="AudioStream" uid="uid://q5frvpwnb3mn" path="res://Assets/Sounds/Sfx/Jump.ogg" id="5_usmsa"]
 [ext_resource type="AudioStream" uid="uid://cyyfofel3rwoj" path="res://Assets/Sounds/Sfx/Shell.ogg" id="6_7e564"]
 
@@ -44,6 +44,11 @@ script = ExtResource("4_h84e5")
 [node name="RoundCornerCast" type="RayCast2D" parent="CastGroup"]
 position = Vector2(-12, 9)
 target_position = Vector2(-12, 0)
+hit_from_inside = true
+
+[node name="FrontCast" type="RayCast2D" parent="CastGroup"]
+position = Vector2(12, 1)
+target_position = Vector2(12, 0)
 hit_from_inside = true
 
 [node name="GroundCast0" type="RayCast2D" parent="CastGroup"]

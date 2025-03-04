@@ -51,6 +51,12 @@ var grav_shock_state:int
 var grav_shock_timer:float
 var time_since_shell:float
 var box_difference:float
+var box_adjust:Array = [
+	Vector2.UP * 1.5,
+	Vector2.RIGHT * 1.5,
+	Vector2.LEFT * 1.5,
+	Vector2.DOWN * 1.5,
+]
 #endregion
 
 
@@ -159,6 +165,7 @@ var sfx_jump:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
+var front_cast:RayCast2D
 var ground_casts:Array
 var ceil_cast:RayCast2D
 
@@ -173,11 +180,12 @@ func _ready():
 	box_shell = $"CharacterBody2D/ShellRect"
 	Statics.player = self
 	body.position = position
-	box_shell.set_deferred("disabled", true)
+	box_shell.disabled = true
 	sfx_jump = $"AudioGroup/Jump"
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
 	corner_cast = $"CastGroup/RoundCornerCast"
+	front_cast = $"CastGroup/FrontCast"
 	ground_casts = [
 		$"CastGroup/GroundCast0",
 		$"CastGroup/GroundCast1",
@@ -190,14 +198,37 @@ func _ready():
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
 
 
-# _process() is called every frame and is used to update various timers and equipped weaponry
+## _process() is called every frame and is used to update various timers and equipped weaponry
+#func _process(delta):
+#	super(delta)
+#	
+#	# Noclip!!
+#	if Statics.noclip_mode:
+#		box_normal.set_deferred("disabled", true)
+#		box_shell.set_deferred("disabled", true)
+#		var move_speed:float = 160.0
+#		if Input.get_action_raw_strength("Jump"):
+#			move_speed = 400.0
+#		var move_dir = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
+#		body.velocity = move_dir * move_speed
+#		body.move_and_slide()
+#		position = body.position
+#	var ray:RayCast2D
+#	
+#	# Marking the "has jumped" flag for Snail NPC 01's dialogue
+#	#if Input.is_action_just_pressed("Jump"):
+#		#Statics.
+
+
+#region Movement
+# This function is called 60 times per second independent of framerate.
+# It's used here to control player movement
 func _process(delta):
 	super(delta)
 	
-	# Noclip!!
 	if Statics.noclip_mode:
-		box_normal.set_deferred("disabled", true)
-		box_shell.set_deferred("disabled", true)
+		box_normal.disabled = true
+		box_shell.disabled = true
 		var move_speed:float = 160.0
 		if Input.get_action_raw_strength("Jump"):
 			move_speed = 400.0
@@ -205,18 +236,6 @@ func _process(delta):
 		body.velocity = move_dir * move_speed
 		body.move_and_slide()
 		position = body.position
-	var ray:RayCast2D
-	
-	# Marking the "has jumped" flag for Snail NPC 01's dialogue
-	#if Input.is_action_just_pressed("Jump"):
-		#Statics.
-
-
-#region Movement
-# This function is called 60 times per second independent of framerate.
-# It's used here to control player movement
-func _physics_process(delta):
-	if Statics.noclip_mode:
 		return
 	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
 	# Among other things, this is used to test for ground when we're airborne.
@@ -271,10 +290,10 @@ func _physics_process(delta):
 	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
 	#last_gravity = gravity_dir
 	#grounded_last_frame = grounded #body.is_on_floor() #grounded
-	set_deferred("last_position", position + box_normal.position)
-	set_deferred("last_box_size", box_shell.shape.size if shelled else box_normal.shape.size)
-	set_deferred("last_gravity", gravity_dir)
-	set_deferred("grounded_last_frame", grounded)
+	last_position = position + box_normal.position
+	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
+	last_gravity = gravity_dir
+	grounded_last_frame = grounded
 
 
 func _case_down(delta:float):
@@ -397,12 +416,25 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				adjust_amount = -adjust_amount
 			body.translate(rel_vectors[Statics.DirsSurface.RWALL] * adjust_amount)
 	
-	if body.is_on_floor():
-		grounded = true
+	if grounded:#body.is_on_floor():
+		#grounded = true
 		var unshell_on_jump:bool = false
 		if (Input.is_action_just_pressed("Jump") or
 		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))):
-			rel_vel.y = jump_power[read_i_jump] * jump_mod
+			if (not _check_ability(retain_gravity_on_airborne)) and surface != home_gravity and grounded_last_frame:
+				var new_left = facing_left
+				if _get_dir_opposite(surface) != home_gravity:
+					#var surface_vector = rel_vectors[Statics.DirsSurface.FLOOR]
+					#var adjust_vector = (surface_vector * box_difference) + box_adjust[surface]
+					#body.call_deferred("translate", adjust_vector)
+					_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
+					facing_left = not facing_left
+				_set_direction(home_gravity, new_left)
+				coyote_time_counter = coyote_time
+				jump_buffer_counter = jump_buffer
+				rel_vel.y = 0.0
+			else:
+				rel_vel.y = jump_power[read_i_jump] * jump_mod
 			grounded = false
 			sfx_jump.play()
 			current_state = AnimStates.JUMP
@@ -415,25 +447,29 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			_toggle_shell()
 			if current_state != AnimStates.JUMP:
 				current_state = AnimStates.IDLE
-	else:
+		if not _check_ground_casts()[0]:
+			grounded = false
+	if not grounded:
 		if rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and corner_cast.is_colliding():
 			var opposite_dir = _get_dir_opposite(home_gravity)
 			var new_gravity = _get_dir_adjacent_ccw(surface) if facing_left else _get_dir_adjacent_cw(surface)
 			if (_check_ability(can_swap_gravity) and (
 			((gravity_dir == opposite_dir or new_gravity == opposite_dir) and _check_ability(can_round_opposite_outer_corners)) or 
 			((gravity_dir != opposite_dir and new_gravity != opposite_dir) and _check_ability(can_round_outer_corners)))):
-				_set_direction(new_gravity, facing_left)
 				var rel_wall = Statics.DirsSurface.RWALL if facing_left else Statics.DirsSurface.LWALL
-				body.call_deferred("translate", rel_vectors[rel_wall] * box_difference)
+				#var surface_vector = rel_vectors[rel_wall]
+				#var adjust_vector = (surface_vector * (box_difference + 4)) + box_adjust[surface]
+				#body.call_deferred("translate", adjust_vector)
+				_translate_adjust(surface, new_gravity, rel_vectors[rel_wall], 4)
+				_set_direction(new_gravity, facing_left)
 				rel_vel.x = 0.0
 				grounded = true
 				_play_anim("shell" if shelled else "walk")
-		#if not _check_ground_casts():
-		# Basically, add a front-facing cast that gets the distance to the wall
-		if not _check_ability(retain_gravity_on_airborne) and surface != home_gravity and grounded_last_frame:
+		if (not _check_ability(retain_gravity_on_airborne)) and surface != home_gravity and grounded_last_frame:
 			var new_left = facing_left
 			if _get_dir_opposite(surface) != home_gravity:
-				body.call_deferred("translate", rel_vectors[Statics.DirsSurface.FLOOR] * box_difference)
+				#body.call_deferred("translate", rel_vectors[Statics.DirsSurface.FLOOR] * box_difference)
+				_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
 				facing_left = not facing_left
 			_set_direction(home_gravity, new_left)
 			coyote_time_counter = coyote_time
@@ -470,9 +506,10 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				new_left = facing_left
 			else:
 				new_left = not facing_left
-			_set_direction(new_gravity, new_left)
 			var rel_against_wall = Statics.DirsSurface.LWALL if facing_left else Statics.DirsSurface.RWALL
-			body.call_deferred("translate", rel_vectors[rel_against_wall] * box_difference)
+			#body.call_deferred("translate", rel_vectors[rel_against_wall] * box_difference)
+			_translate_adjust(surface, new_gravity, rel_vectors[rel_against_wall])
+			_set_direction(new_gravity, new_left)
 			grounded = true
 			current_state = AnimStates.WALK
 			_play_anim("walk" if grounded else "land")
@@ -492,10 +529,10 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
-	call_deferred("_finalize_move", surface, rel_axis)
-
-
-func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2):
+#	call_deferred("_finalize_move", surface, rel_axis, rel_vectors)
+#
+#
+#func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2, rel_vectors:Array):
 	body.move_and_slide()
 	position = body.position
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
@@ -510,7 +547,9 @@ func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2):
 				_play_anim("land")
 		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
+			_translate_adjust(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
 			_set_direction(_get_dir_opposite(surface), not facing_left)
+			#body.call_deferred("translate", rel_vectors[_get_dir_opposite(surface)] * 2)
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 			_play_anim("land")
 #endregion
@@ -536,23 +575,23 @@ func _set_direction(surface:Statics.DirsSurface, flipped:bool, set_home:bool = f
 	facing_left = flipped
 	match surface:
 		Statics.DirsSurface.FLOOR:
-			body.set_deferred("rotation_degrees", 0.0)
-			body.set_deferred("up_direction", Vector2.UP)
-			cast_group.set_deferred("rotation_degrees", 0.0)
+			body.rotation_degrees = 0.0
+			body.up_direction = Vector2.UP
+			cast_group.rotation_degrees = 0.0
 		Statics.DirsSurface.LWALL:
-			body.set_deferred("rotation_degrees", 90.0)
-			body.set_deferred("up_direction", Vector2.RIGHT)
-			cast_group.set_deferred("rotation_degrees", 90.0)
+			body.rotation_degrees = 90.0
+			body.up_direction = Vector2.RIGHT
+			cast_group.rotation_degrees = 90.0
 		Statics.DirsSurface.CEILING:
-			body.set_deferred("rotation_degrees", 180.0)
-			body.set_deferred("up_direction", Vector2.DOWN)
-			cast_group.set_deferred("rotation_degrees", 180.0)
+			body.rotation_degrees = 180.0
+			body.up_direction = Vector2.DOWN
+			cast_group.rotation_degrees = 180.0
 		Statics.DirsSurface.RWALL:
-			body.set_deferred("rotation_degrees", 270.0)
-			body.set_deferred("up_direction", Vector2.LEFT)
-			cast_group.set_deferred("rotation_degrees", 270.0)
-	body.set_deferred("scale", Vector2(-1 if flipped else 1, 1))
-	cast_group.set_deferred("scale", Vector2(-1 if flipped else 1, 1))
+			body.rotation_degrees = 270.0
+			body.up_direction = Vector2.LEFT
+			cast_group.rotation_degrees = 270.0
+	body.scale = Vector2(-1 if flipped else 1, 1)
+	cast_group.scale = Vector2(-1 if flipped else 1, 1)
 
 
 func _toggle_shell():
@@ -561,14 +600,19 @@ func _toggle_shell():
 
 func _set_shell(state:bool):
 	shelled = state
-	box_normal.set_deferred("disabled", state)
-	box_shell.set_deferred("disabled", not state)
+	box_normal.disabled = state
+	box_shell.disabled = not state
 	if state:
 		sfx_shell.play()
 		_play_anim("shell")
 		current_state = AnimStates.SHELL
 	else:
 		_play_anim("unshell")
+
+
+func _translate_adjust(surface:Statics.DirsSurface, new_surface:Statics.DirsSurface, surface_vector:Vector2, adjustment:float = 0.0):
+	var adjust_vector = (surface_vector * (box_difference + adjustment)) + box_adjust[surface] - box_adjust[new_surface]
+	body.translate(adjust_vector)
 
 
 func _play_anim(action:String):
