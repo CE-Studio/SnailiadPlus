@@ -52,7 +52,7 @@ target_position = Vector2(12, 0)
 hit_from_inside = true
 
 [node name="GroundCast0" type="RayCast2D" parent="CastGroup"]
-position = Vector2(-12, 8)
+position = Vector2(-11, 8)
 target_position = Vector2(0, 12)
 hit_from_inside = true
 
@@ -67,7 +67,7 @@ target_position = Vector2(0, 12)
 hit_from_inside = true
 
 [node name="GroundCast3" type="RayCast2D" parent="CastGroup"]
-position = Vector2(12, 8)
+position = Vector2(11, 8)
 target_position = Vector2(0, 12)
 hit_from_inside = true
 

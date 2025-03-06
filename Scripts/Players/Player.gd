@@ -237,6 +237,9 @@ func _process(delta):
 		body.move_and_slide()
 		position = body.position
 		return
+	else:
+		box_normal.disabled = shelled
+		box_shell.disabled = not shelled
 	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
 	# Among other things, this is used to test for ground when we're airborne.
 	#last_position = position + box_normal.position
@@ -296,22 +299,33 @@ func _process(delta):
 	grounded_last_frame = grounded
 
 
+# The floor case for player movement
+# Input  - time since the last frame
 func _case_down(delta:float):
 	_case_default(delta, Statics.DirsSurface.FLOOR)
 
 
+# The left wall case for player movement
+# Input  - time since the last frame
 func _case_left(delta:float):
 	_case_default(delta, Statics.DirsSurface.LWALL)
 
 
+# The right wall case for player movement
+# Input  - time since the last frame
 func _case_right(delta:float):
 	_case_default(delta, Statics.DirsSurface.RWALL)
 
 
+# The ceiling case for player movement
+# Input  - time since the last frame
 func _case_up(delta:float):
 	_case_default(delta, Statics.DirsSurface.CEILING)
 
 
+# The default case for player movement, set up to be compatible with all four surfaces
+# Input  - time since the last frame
+#        - the surface to consider as relatively down
 func _case_default(delta:float, surface:Statics.DirsSurface):
 	var input_axis_x:float = Input.get_axis("Left", "Right")
 	var input_axis_y:float = Input.get_axis("Up", "Down")
@@ -421,15 +435,21 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		var unshell_on_jump:bool = false
 		if (Input.is_action_just_pressed("Jump") or
 		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))):
-			if (not _check_ability(retain_gravity_on_airborne)) and surface != home_gravity and grounded_last_frame:
-				var new_left = facing_left
+			if (not _check_ability(retain_gravity_on_airborne)) and gravity_dir != home_gravity and grounded_last_frame:
+				#var new_left = facing_left
+				var adjust_position = Vector2.ZERO
 				if _get_dir_opposite(surface) != home_gravity:
 					#var surface_vector = rel_vectors[Statics.DirsSurface.FLOOR]
 					#var adjust_vector = (surface_vector * box_difference) + box_adjust[surface]
 					#body.call_deferred("translate", adjust_vector)
-					_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
-					facing_left = not facing_left
-				_set_direction(home_gravity, new_left)
+					#_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
+					adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
+					print("^ Airborne from jump off wall or ceiling")
+					#facing_left = not facing_left
+				_set_direction(home_gravity, not facing_left)#new_left)
+				if adjust_position != Vector2.ZERO:
+					body.position = adjust_position
+					position = body.position
 				coyote_time_counter = coyote_time
 				jump_buffer_counter = jump_buffer
 				rel_vel.y = 0.0
@@ -449,8 +469,11 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				current_state = AnimStates.IDLE
 		if not _check_ground_casts()[0]:
 			grounded = false
+			print("We've left the ground")
 	if not grounded:
-		if rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and corner_cast.is_colliding():
+		var suppress_next_check:bool = false
+		if (rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and
+		corner_cast.is_colliding() and not _check_ground_casts()[0]):
 			var opposite_dir = _get_dir_opposite(home_gravity)
 			var new_gravity = _get_dir_adjacent_ccw(surface) if facing_left else _get_dir_adjacent_cw(surface)
 			if (_check_ability(can_swap_gravity) and (
@@ -460,18 +483,30 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				#var surface_vector = rel_vectors[rel_wall]
 				#var adjust_vector = (surface_vector * (box_difference + 4)) + box_adjust[surface]
 				#body.call_deferred("translate", adjust_vector)
-				_translate_adjust(surface, new_gravity, rel_vectors[rel_wall], 4)
+				#_translate_adjust(surface, new_gravity, rel_vectors[rel_wall], 4)
+				var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_wall])
+				print("^ Airborne from rounding outer corner")
 				_set_direction(new_gravity, facing_left)
+				body.position = adjust_position
+				position = body.position
 				rel_vel.x = 0.0
 				grounded = true
 				_play_anim("shell" if shelled else "walk")
-		if (not _check_ability(retain_gravity_on_airborne)) and surface != home_gravity and grounded_last_frame:
+				suppress_next_check = true
+		if ((not _check_ability(retain_gravity_on_airborne)) and
+		gravity_dir != home_gravity and grounded_last_frame and not suppress_next_check):
 			var new_left = facing_left
+			var adjust_position = Vector2.ZERO
 			if _get_dir_opposite(surface) != home_gravity:
 				#body.call_deferred("translate", rel_vectors[Statics.DirsSurface.FLOOR] * box_difference)
-				_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
+				#_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
+				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
+				print("^ Airborne from walking off wall or ceiling")
 				facing_left = not facing_left
 			_set_direction(home_gravity, new_left)
+			if adjust_position != Vector2.ZERO:
+				body.position = adjust_position
+				position = body.position
 			coyote_time_counter = coyote_time
 			jump_buffer_counter = jump_buffer
 			_play_anim("fall")
@@ -496,6 +531,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if body.is_on_wall() and rel_axis.x != 0.0:
 		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not ceil_cast.is_colliding()
 		and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
+			rel_vel.y = 0.0 # Something's causing a jump if a frame perfect wall grab on fall happens. Also other things are still broken
 			var new_gravity
 			if facing_left:
 				new_gravity = _get_dir_adjacent_cw(gravity_dir)
@@ -508,8 +544,12 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				new_left = not facing_left
 			var rel_against_wall = Statics.DirsSurface.LWALL if facing_left else Statics.DirsSurface.RWALL
 			#body.call_deferred("translate", rel_vectors[rel_against_wall] * box_difference)
-			_translate_adjust(surface, new_gravity, rel_vectors[rel_against_wall])
+			#_translate_adjust(surface, new_gravity, rel_vectors[rel_against_wall])
+			var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_against_wall])
+			print("^ Grounded from grabbing wall")
 			_set_direction(new_gravity, new_left)
+			body.position = adjust_position
+			position = body.position
 			grounded = true
 			current_state = AnimStates.WALK
 			_play_anim("walk" if grounded else "land")
@@ -534,7 +574,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 #
 #func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2, rel_vectors:Array):
 	body.move_and_slide()
-	position = body.position
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
 		if surface == Statics.DirsSurface.FLOOR or surface == Statics.DirsSurface.CEILING:
 			body.velocity.y = 0.0
@@ -547,14 +586,22 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				_play_anim("land")
 		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
-			_translate_adjust(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
+			#_translate_adjust(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
+			var adjust_position = _get_adjust_position(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
+			print("^ Grounded from grabbing ceiling")
 			_set_direction(_get_dir_opposite(surface), not facing_left)
+			body.position = adjust_position
 			#body.call_deferred("translate", rel_vectors[_get_dir_opposite(surface)] * 2)
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 			_play_anim("land")
+	position = body.position
 #endregion
 
 
+# Takes a character ability as an input and checks to see if the ability's values
+# allow for the ability to be executed.
+# Input  - an ability array
+# Output - true if the ability should be considered, false otherwise
 func _check_ability(ability:Array) -> bool:
 	var found = false
 	for i in ability:
@@ -568,6 +615,11 @@ func _check_ability(ability:Array) -> bool:
 	return found
 
 
+# Rotates and flips the character's hitboxes and raycasts to match any of the eight
+# valid directions a character can face
+# Input  - the surface the player should consider as relatively down
+#        - whether or not the player should face relatively left
+#        - whether or not the target surface should be set as the new "home" gravity
 func _set_direction(surface:Statics.DirsSurface, flipped:bool, set_home:bool = false):
 	gravity_dir = surface
 	if set_home:
@@ -594,10 +646,13 @@ func _set_direction(surface:Statics.DirsSurface, flipped:bool, set_home:bool = f
 	cast_group.scale = Vector2(-1 if flipped else 1, 1)
 
 
+# Inverts the player's current shell state
 func _toggle_shell():
 	_set_shell(not shelled)
 
 
+# Sets the player's current shell state to a specific
+# Input  - true to enter shell, false to exit shell
 func _set_shell(state:bool):
 	shelled = state
 	box_normal.disabled = state
@@ -610,11 +665,41 @@ func _set_shell(state:bool):
 		_play_anim("unshell")
 
 
+# Takes in specific surface data to figure out a vector to adjust the player's position by,
+# then translates the player's CharacterBody2D by that amount.
+# Usually called for gravity changes requiring a surface alignment.
+# Input  - the player's current surface, for keeping the hitbox centered
+#        - the player's target surface, for keeping the hitbox centered
+#        - the direction in which to apply the biggest nudge
+#        - any additional adjustment to the distance nudged
 func _translate_adjust(surface:Statics.DirsSurface, new_surface:Statics.DirsSurface, surface_vector:Vector2, adjustment:float = 0.0):
 	var adjust_vector = (surface_vector * (box_difference + adjustment)) + box_adjust[surface] - box_adjust[new_surface]
 	body.translate(adjust_vector)
 
 
+# Takes in specific surface data to figure out a vector to adjust the player's position by,
+# then outputs the position that a nudge from _translate_adjust() would place the CharacterBody2D
+# Usually called for gravity changes requiring a surface alignment.
+# Input  - the player's current surface, for keeping the hitbox centered
+#        - the player's target surface, for keeping the hitbox centered
+#        - the direction in which to apply the biggest nudge
+#        - any additional adjustment to the distance nudged
+# Output - the position a nudge performed by _translate_adjust() would place the CharacterBody2D at
+func _get_adjust_position(surface:Statics.DirsSurface, new_surface:Statics.DirsSurface, surface_vector:Vector2, adjustment:float = 0.0) -> Vector2:
+	var adjust_vector = Vector2.ZERO
+	if surface == new_surface or surface == _get_dir_opposite(new_surface):
+		adjust_vector = surface_vector * (1.0 if adjustment == 0.0 else adjustment)
+	else:
+		adjust_vector = surface_vector * (box_difference + adjustment)
+	adjust_vector += box_adjust[new_surface] - box_adjust[surface]
+	var target_pos = body.position + adjust_vector
+	print(adjust_vector)
+	return target_pos
+
+
+# Takes an action name, considers the current state of the player, and sets the player's
+# JsonSprite2D animation appropriately
+# Input  - the action to perform
 func _play_anim(action:String):
 	var full_action = ""
 	
@@ -637,6 +722,9 @@ func _play_anim(action:String):
 	#print(full_action)
 
 
+# Takes a surface direction and outputs the direction 90 degrees clockwise from it
+# Input  - the original surface
+# Output - the rotated surface
 func _get_dir_adjacent_cw(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	var new_dir
 	match old_dir:
@@ -651,6 +739,9 @@ func _get_dir_adjacent_cw(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	return new_dir
 
 
+# Takes a surface direction and outputs the direction 90 degrees counterclockwise from it
+# Input  - the original surface
+# Output - the rotated surface
 func _get_dir_adjacent_ccw(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	var new_dir
 	match old_dir:
@@ -665,6 +756,9 @@ func _get_dir_adjacent_ccw(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	return new_dir
 
 
+# Takes a surface direction and outputs the direction 180 degrees from it
+# Input  - the original surface
+# Output - the opposite surface
 func _get_dir_opposite(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	var new_dir
 	match old_dir:
@@ -679,6 +773,11 @@ func _get_dir_opposite(old_dir:Statics.DirsSurface) -> Statics.DirsSurface:
 	return new_dir
 
 
+# Queries the player's ground RayCast2Ds to see if any of them are colliding with
+# a floor, and at what distance if so
+# Output - an array of length 2 where
+#              [0] is true if a floor was found, false if not
+#              [1] is the shortest distance at which a floor was found. INF if no floor was found
 func _check_ground_casts() -> Array:
 	var hit = false
 	var distance = INF
