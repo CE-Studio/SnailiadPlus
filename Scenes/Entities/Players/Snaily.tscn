@@ -46,11 +46,6 @@ position = Vector2(-12, 9)
 target_position = Vector2(-12, 0)
 hit_from_inside = true
 
-[node name="FrontCast" type="RayCast2D" parent="CastGroup"]
-position = Vector2(12, 1)
-target_position = Vector2(12, 0)
-hit_from_inside = true
-
 [node name="GroundCast0" type="RayCast2D" parent="CastGroup"]
 position = Vector2(-11, 8)
 target_position = Vector2(0, 12)
@@ -69,6 +64,21 @@ hit_from_inside = true
 [node name="GroundCast3" type="RayCast2D" parent="CastGroup"]
 position = Vector2(11, 8)
 target_position = Vector2(0, 12)
+hit_from_inside = true
+
+[node name="FrontCast0" type="RayCast2D" parent="CastGroup"]
+position = Vector2(12, -4)
+target_position = Vector2(12, 0)
+hit_from_inside = true
+
+[node name="FrontCast1" type="RayCast2D" parent="CastGroup"]
+position = Vector2(12, 1.5)
+target_position = Vector2(12, 0)
+hit_from_inside = true
+
+[node name="FrontCast2" type="RayCast2D" parent="CastGroup"]
+position = Vector2(12, 7)
+target_position = Vector2(12, 0)
 hit_from_inside = true
 
 [node name="CeilingCast" type="RayCast2D" parent="CastGroup"]

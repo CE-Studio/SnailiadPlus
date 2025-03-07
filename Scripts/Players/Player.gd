@@ -165,8 +165,8 @@ var sfx_jump:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
-var front_cast:RayCast2D
 var ground_casts:Array
+var front_casts:Array
 var ceil_cast:RayCast2D
 
 
@@ -185,12 +185,17 @@ func _ready():
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
 	corner_cast = $"CastGroup/RoundCornerCast"
-	front_cast = $"CastGroup/FrontCast"
+	#front_cast = $"CastGroup/FrontCast"
 	ground_casts = [
 		$"CastGroup/GroundCast0",
 		$"CastGroup/GroundCast1",
 		$"CastGroup/GroundCast2",
 		$"CastGroup/GroundCast3",
+	]
+	front_casts = [
+		$"CastGroup/FrontCast0",
+		$"CastGroup/FrontCast1",
+		$"CastGroup/FrontCast2",
 	]
 	ceil_cast = $"CastGroup/CeilingCast"
 	
@@ -531,7 +536,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if body.is_on_wall() and rel_axis.x != 0.0:
 		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not ceil_cast.is_colliding()
 		and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
-			rel_vel.y = 0.0 # Something's causing a jump if a frame perfect wall grab on fall happens. Also other things are still broken
+			rel_vel = Vector2.ZERO
 			var new_gravity
 			if facing_left:
 				new_gravity = _get_dir_adjacent_cw(gravity_dir)
@@ -791,6 +796,24 @@ func _check_ground_casts() -> Array:
 				distance = new_distance
 	return [ hit, distance ]
 
+
+# Queries the player's front RayCast2Ds to see if any of them are colliding with
+# a wall, and at what distance if so
+# Output - an array of length 2 where
+#              [0] is true if a wall was found, false if not
+#              [1] is the shortest distance at which a floor was found. INF if no wall was found
+func _check_front_casts() -> Array:
+	var hit = false
+	var distance = INF
+	for i in front_casts:
+		if i.is_colliding():
+			hit = true
+			var origin = i.global_position
+			var collision = i.get_collision_point()
+			var new_distance = origin.distance_to(collision)
+			if new_distance < distance:
+				distance = new_distance
+	return [ hit, distance ]
 
 #region Cutscene functions
 func impulse(direction:Vector2) -> bool:
