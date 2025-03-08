@@ -1,5 +1,10 @@
-class_name Player
 extends CutsceneControllable
+class_name Player
+## The core script for all player characters.
+##
+## This core controls values that most if not all player characters are expected
+## to make use of, as well as the default movement behavior and any health
+## management
 
 
 #region Global control
@@ -8,10 +13,15 @@ const THIN_TUNNEL_ENTRANCE_STEPS:int = 16
 const DIST_CAST_EDGE_BUFFER:int = 0
 const STUCK_DETECT_MARGIN:float = Statics.FRAC_64
 
+## The position occupied by the player on the last frame.
 var last_position:Vector2
+## The size of the player's normal hitbox on the last frame.
 var last_box_size:Vector2
+## The direction the player character currently considers downward.
 var gravity_dir:Statics.DirsSurface
+## The gravity direction seen by the player on the last frame.
 var last_gravity:Statics.DirsSurface
+## The player's default gravity state to return to if circumstances require.
 var home_gravity:Statics.DirsSurface
 var current_surface:Statics.DirsSurface
 var facing_left:bool
