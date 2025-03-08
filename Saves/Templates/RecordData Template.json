@@ -1,0 +1,25 @@
+{
+	"times": {
+		"snaily_normal": [ 0.0, 0.0, 0.0 ],
+		"snaily_insane": [ 0.0, 0.0, 0.0 ],
+		"snaily_rush": [ 0.0, 0.0, 0.0 ],
+		"sluggy_normal": [ 0.0, 0.0, 0.0 ],
+		"sluggy_insane": [ 0.0, 0.0, 0.0 ],
+		"sluggy_rush": [ 0.0, 0.0, 0.0 ],
+		"upside_normal": [ 0.0, 0.0, 0.0 ],
+		"upside_insane": [ 0.0, 0.0, 0.0 ],
+		"upside_rush": [ 0.0, 0.0, 0.0 ],
+		"leggy_normal": [ 0.0, 0.0, 0.0 ],
+		"leggy_insane": [ 0.0, 0.0, 0.0 ],
+		"leggy_rush": [ 0.0, 0.0, 0.0 ],
+		"blobby_normal": [ 0.0, 0.0, 0.0 ],
+		"blobby_insane": [ 0.0, 0.0, 0.0 ],
+		"blobby_rush": [ 0.0, 0.0, 0.0 ],
+		"leechy_normal": [ 0.0, 0.0, 0.0 ],
+		"leechy_insane": [ 0.0, 0.0, 0.0 ],
+		"leechy_rush": [ 0.0, 0.0, 0.0 ],
+	},
+	"achievements": [ ],
+	"unlocks": [ ],
+	"bestiary": [ ]
+}
