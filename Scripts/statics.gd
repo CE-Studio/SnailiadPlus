@@ -25,21 +25,21 @@ enum DirsCompass {
 	SW,
 	W,
 	NW,
-	NONE,
+	NONE = -1,
 }
 enum DirsCardinal {
 	UP,
 	DOWN,
 	LEFT,
 	RIGHT,
-	NONE,
+	NONE = -1,
 }
 enum DirsSurface {
 	FLOOR,
 	LWALL,
 	RWALL,
 	CEILING,
-	NONE,
+	NONE = -1,
 }
 #endregion
 
@@ -86,7 +86,7 @@ enum Items {
 	HEART,
 	FRAGMENT,
 	RADARSHELL,
-	NONE,
+	NONE = -1,
 }
 #endregion
 
