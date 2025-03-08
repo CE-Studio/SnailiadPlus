@@ -98,6 +98,7 @@ static var data_profile1:Dictionary
 static var data_profile2:Dictionary
 static var data_profile3:Dictionary
 static var data_records:Dictionary
+static var SAVE_PREFIX:String = "snailyplus_saves"
 #endregion
 
 
@@ -128,14 +129,14 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 
 
 static func save_general():
-	var file = FileAccess.open("res://Saves/GeneralData.json", FileAccess.WRITE)
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/GeneralData.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_general, "\t", false))
 
 
 static func save_profile(profile:int):
 	if profile < 1 or profile > 3:
 		return
-	var file = FileAccess.open("res://Saves/Profile" + str(profile) + ".json", FileAccess.WRITE)
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/Profile" + str(profile) + ".json", FileAccess.WRITE_READ)
 	match profile:
 		1:
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
@@ -146,7 +147,7 @@ static func save_profile(profile:int):
 
 
 static func save_records():
-	var file = FileAccess.open("res://Saves/Records.json", FileAccess.WRITE)
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/Records.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_records, "\t", false))
 
 
