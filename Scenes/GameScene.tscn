@@ -1,11 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://dypiitm61n8rl"]
+[gd_scene load_steps=4 format=3 uid="uid://dypiitm61n8rl"]
 
 [ext_resource type="Script" uid="uid://2jmosr6mcjwx" path="res://Scripts/GameCore.gd" id="1_x87qo"]
+[ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="2_3mbwn"]
+[ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_x87qo")
 
 [node name="CameraLayer" type="Node2D" parent="."]
 position = Vector2(200, 120)
+script = ExtResource("2_3mbwn")
 
 [node name="Camera2D" type="Camera2D" parent="CameraLayer"]
+
+[node name="Snaily" parent="." instance=ExtResource("2_4bvgx")]
+position = Vector2(123, 69)
