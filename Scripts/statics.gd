@@ -25,21 +25,21 @@ enum DirsCompass {
 	SW,
 	W,
 	NW,
-	NONE,
+	NONE = -1,
 }
 enum DirsCardinal {
 	UP,
 	DOWN,
 	LEFT,
 	RIGHT,
-	NONE,
+	NONE = -1,
 }
 enum DirsSurface {
 	FLOOR,
 	LWALL,
 	RWALL,
 	CEILING,
-	NONE,
+	NONE = -1,
 }
 #endregion
 
@@ -86,13 +86,19 @@ enum Items {
 	HEART,
 	FRAGMENT,
 	RADARSHELL,
-	NONE,
+	NONE = -1,
 }
 #endregion
 
 
 #region Save info
 static var profile:String
+static var data_general:Dictionary
+static var data_profile1:Dictionary
+static var data_profile2:Dictionary
+static var data_profile3:Dictionary
+static var data_records:Dictionary
+static var SAVE_PREFIX:String = "snailyplus_saves"
 #endregion
 
 
@@ -120,3 +126,34 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 	if absf(num - target) < threshold:
 		num = target
 	return num
+
+
+static func save_general():
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/GeneralData.json", FileAccess.WRITE_READ)
+	file.store_string(JSON.stringify(data_general, "\t", false))
+
+
+static func save_profile(profile:int):
+	if profile < 1 or profile > 3:
+		return
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/Profile" + str(profile) + ".json", FileAccess.WRITE_READ)
+	match profile:
+		1:
+			file.store_string(JSON.stringify(data_profile1, "\t", false))
+		2:
+			file.store_string(JSON.stringify(data_profile2, "\t", false))
+		3:
+			file.store_string(JSON.stringify(data_profile3, "\t", false))
+
+
+static func save_records():
+	var file = FileAccess.open("user://" + SAVE_PREFIX + "/Records.json", FileAccess.WRITE_READ)
+	file.store_string(JSON.stringify(data_records, "\t", false))
+
+
+static func save_all():
+	save_general()
+	save_profile(1)
+	save_profile(2)
+	save_profile(3)
+	save_records()
