@@ -53,3 +53,7 @@ var core:GameCore
 
 func instance():
 	core = get_parent()
+
+
+func _process(delta):
+	pass

@@ -15,6 +15,7 @@ var target_point:Vector2 = Vector2.ZERO
 var target_entity:Node2D
 var player:Player
 var ease_rate:float = 4.0
+var offset:Vector2 = Vector2(200, 120)
 #endregion
 
 
@@ -22,7 +23,7 @@ func _process(delta):
 	match state:
 		CamStates.FOLLOW_FLASH:
 			if player != null:
-				position = position.lerp(player.position, ease_rate * delta)
+				position = position.lerp(player.position - offset, ease_rate * delta)
 		CamStates.FOLLOW_NEW:
 			pass
 		CamStates.TARGET_POINT:
