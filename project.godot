@@ -33,6 +33,10 @@ window/stretch/scale=2.0
 
 run/main_run_args="debug"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/cutprog/plugin.cfg")
+
 [gui]
 
 theme/custom="res://UI/uitheme.tres"

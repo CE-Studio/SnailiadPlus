@@ -1,0 +1,57 @@
+@tool
+extends Control
+
+
+@onready var files:ItemList = $HSplitContainer/ItemList
+@onready var blocks:Tree = $HSplitContainer/HSplitContainer/Tree
+
+
+var blocktree := {}
+
+
+enum {
+	ACTOR,
+	INT,
+	BOOL,
+	FLOAT,
+	TEXTURE2D,
+	STRING,
+	VECTOR2,
+	NODE2D,
+}
+
+
+const BTYPES = {
+	"Actors": [
+		["Actor...", ACTOR],
+		["Glide to", BOOL],
+		["Impulse", BOOL],
+		["Say", BOOL],
+		["Get Icon", TEXTURE2D],
+		["Fake Input", BOOL],
+		["Look at Position", BOOL],
+		["Look at Local Position", BOOL],
+		["Look at Node", BOOL],
+		["Lock inputs", BOOL],
+		["Can Perform Action", BOOL],
+		["Perform Action", BOOL],
+	],
+	"Tiles": [],
+	"Flow": [],
+	"Variables": [],
+}
+
+
+var ep:EditorPlugin
+
+
+func _ready() -> void:
+	blocktree["__ROOT__"] = blocks.create_item()
+	for i in BTYPES.keys():
+		var t := blocks.create_item(blocktree["__ROOT__"])
+		blocktree[i] = t
+		t.set_text(0, i)
+		for j in BTYPES[i]:
+			var b := blocks.create_item(t)
+			b.set_text(0, j[0])
+	pass
