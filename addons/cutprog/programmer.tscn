@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://davr2yiydq11b"]
+[gd_scene load_steps=3 format=3 uid="uid://davr2yiydq11b"]
 
 [ext_resource type="Script" uid="uid://cr53kpkunmye1" path="res://addons/cutprog/programmer.gd" id="1_4xkn1"]
+[ext_resource type="PackedScene" uid="uid://bhvl14npfluwo" path="res://addons/cutprog/blocks/block.tscn" id="2_5rr03"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -35,4 +36,10 @@ layout_mode = 2
 hide_root = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Control" parent="HSplitContainer/HSplitContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_5rr03")]
 layout_mode = 2
