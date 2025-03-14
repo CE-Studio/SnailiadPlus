@@ -33,6 +33,7 @@ const BTYPES = {
 	"Flow": [],
 	"Variables": [],
 }
+const BLOCK:PackedScene = preload("uid://bhvl14npfluwo")
 
 
 var blocktree := {}
@@ -41,6 +42,7 @@ var ep:EditorPlugin
 
 @onready var files:ItemList = $HSplitContainer/ItemList
 @onready var blocks:Tree = $HSplitContainer/HSplitContainer/Tree
+@onready var program:HBoxContainer = $HSplitContainer/HSplitContainer/HBoxContainer/VBoxContainer/program
 
 
 func _ready() -> void:

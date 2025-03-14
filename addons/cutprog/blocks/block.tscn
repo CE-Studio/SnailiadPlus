@@ -12,11 +12,12 @@ bg_color = Color(1, 1, 1, 1)
 border_width_bottom = 1
 border_color = Color(0.737163, 0.737163, 0.737163, 1)
 
-[node name="Control" type="HBoxContainer"]
+[node name="Block" type="HBoxContainer"]
 theme_override_constants/separation = 0
 script = ExtResource("1_k8stp")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("2_mhcgt")
@@ -44,7 +45,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_b68rl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Container/PanelContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -52,8 +52,25 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "&& Block &&"
 
+[node name="str" type="LineEdit" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="float" type="SpinBox" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="bool" type="OptionButton" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "True"
+popup/item_0/id = 0
+popup/item_1/text = "False"
+popup/item_1/id = 1
+
 [node name="Control" type="Control" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
-custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 
 [node name="sockets" type="VBoxContainer" parent="VBoxContainer/Container"]
@@ -86,6 +103,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ubmt2")
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/if/HBoxContainer/Panel"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
