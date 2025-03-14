@@ -4,27 +4,27 @@ extends Node
 # Initialize everything on load
 func _ready() -> void:
 	# Load data. If no data exists, create it
-	DirAccess.open("user://" + Statics.SAVE_PREFIX)
+	DirAccess.open("user://" + Statics.save_prefix)
 	if DirAccess.get_open_error() != 0:
-		DirAccess.make_dir_recursive_absolute("user://" + Statics.SAVE_PREFIX)
-	if FileAccess.file_exists("user://" + Statics.SAVE_PREFIX + "/GeneralData.json"):
-		Statics.data_general = _load_json_to_dict("user://" + Statics.SAVE_PREFIX + "/GeneralData.json")
+		DirAccess.make_dir_recursive_absolute("user://" + Statics.save_prefix)
+	if FileAccess.file_exists("user://" + Statics.save_prefix + "/GeneralData.json"):
+		Statics.data_general = _load_json_to_dict("user://" + Statics.save_prefix + "/GeneralData.json")
 	else:
 		Statics.data_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
-	if FileAccess.file_exists("user://" + Statics.SAVE_PREFIX + "/Profile1.json"):
-		Statics.data_profile1 = _load_json_to_dict("user://" + Statics.SAVE_PREFIX + "/Profile1.json")
+	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile1.json"):
+		Statics.data_profile1 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile1.json")
 	else:
 		Statics.data_profile1 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.SAVE_PREFIX + "/Profile2.json"):
-		Statics.data_profile2 = _load_json_to_dict("user://" + Statics.SAVE_PREFIX + "/Profile2.json")
+	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile2.json"):
+		Statics.data_profile2 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile2.json")
 	else:
 		Statics.data_profile2 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.SAVE_PREFIX + "/Profile3.json"):
-		Statics.data_profile3 = _load_json_to_dict("user://" + Statics.SAVE_PREFIX + "/Profile3.json")
+	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile3.json"):
+		Statics.data_profile3 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile3.json")
 	else:
 		Statics.data_profile3 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.SAVE_PREFIX + "/Records.json"):
-		Statics.data_records = _load_json_to_dict("user://" + Statics.SAVE_PREFIX + "/Records.json")
+	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Records.json"):
+		Statics.data_records = _load_json_to_dict("user://" + Statics.save_prefix + "/Records.json")
 	else:
 		Statics.data_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	Statics.save_general()

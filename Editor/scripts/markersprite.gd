@@ -1,5 +1,5 @@
-extends Sprite2D
 class_name MarkerSprite
+extends Sprite2D
 ## A temporary sprite that removes itself on scene load.
 
 

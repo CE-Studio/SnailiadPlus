@@ -1,6 +1,6 @@
 @icon("res://Editor/ico/Room.svg")
-extends Node2D
 class_name Room
+extends Node2D
 
 
 #region Variables
@@ -13,6 +13,7 @@ class_name Room
 @export var subarea_id:int = 0
 @export var is_bonus_room:bool = false
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
+
 
 @export_group("Layers")
 @export_subgroup("Parallax")
@@ -31,6 +32,9 @@ class_name Room
 
 
 #region Internals
+var core:GameCore
+
+
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity:Node2D = $"EntityLayer/Map"
 @onready var layer_fg2:Node2D = $"FG2Layer"
@@ -45,15 +49,9 @@ class_name Room
 @onready var map_bg2:Node2D = $"BG2Layer/Map"
 @onready var layer_sky:Node2D = $"SkyLayer"
 @onready var map_sky:Node2D = $"SkyLayer/Map"
-
-var core:GameCore
 #endregion
 #endregion
 
 
 func instance():
 	core = get_parent()
-
-
-func _process(delta):
-	pass

@@ -1,5 +1,5 @@
-extends CutsceneControllable
 class_name Player
+extends CutsceneControllable
 ## The core script for all player characters.
 ##
 ## This core controls values that most if not all player characters are expected
@@ -252,9 +252,10 @@ func _process(delta):
 		body.move_and_slide()
 		position = body.position
 		return
-	else:
-		box_normal.disabled = shelled
-		box_shell.disabled = not shelled
+
+
+	box_normal.disabled = shelled
+	box_shell.disabled = not shelled
 	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
 	# Among other things, this is used to test for ground when we're airborne.
 	#last_position = position + box_normal.position

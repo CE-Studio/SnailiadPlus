@@ -3,10 +3,6 @@ class_name JsonSprite2D
 extends Sprite2D
 
 
-static var _imgcache := {}
-static var _datcache := {}
-
-
 const _DATA_MATCH = {
 	"tiles": [0, 0],
 	"animations": {
@@ -26,18 +22,24 @@ const _DATA_MATCH = {
 
 
 @export_file("*.json") var texture_path:String
-var _timer := 0.0
 var data:Dictionary
 var is_ready := false
-var _has_action := false
-var _recheck := false
-var _index:int = 0
 var action:String:
 	set(value):
 		action = value
 		_index = 0
 		_timer = -2
 		_check_action()
+
+
+var _timer := 0.0
+var _has_action := false
+var _recheck := false
+var _index:int = 0
+
+
+static var _imgcache := {}
+static var _datcache := {}
 
 
 func _check_action():
@@ -57,8 +59,8 @@ func _ready() -> void:
 	if not texture_path.get_extension().to_lower() == "json":
 		assert(false, "Path is not a json file!")
 		return
-	
-	
+
+
 	if _imgcache.has(pathtrimmed):
 		texture = _imgcache[pathtrimmed]
 	else:
@@ -75,8 +77,8 @@ func _ready() -> void:
 		if not found:
 			assert(false, "Texture doesn't exist, or it hasn't been imported as a texture!")
 			return
-	
-	
+
+
 	if _datcache.has(pathtrimmed):
 		data = _datcache[pathtrimmed]
 	else:

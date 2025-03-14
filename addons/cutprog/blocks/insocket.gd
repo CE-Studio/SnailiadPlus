@@ -16,4 +16,4 @@ var type:int = 0:
 
 
 func _init() -> void:
-	add_theme_stylebox_override(&"panel", textures[type])
+	add_theme_stylebox_override(&"panel", TEXTURES[type])

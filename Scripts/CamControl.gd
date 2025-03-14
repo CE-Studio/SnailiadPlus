@@ -1,5 +1,5 @@
-extends Node2D
 class_name CamControl
+extends Node2D
 
 
 #region Variables
