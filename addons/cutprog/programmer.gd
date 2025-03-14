@@ -2,20 +2,13 @@
 extends Control
 
 
-@onready var files:ItemList = $HSplitContainer/ItemList
-@onready var blocks:Tree = $HSplitContainer/HSplitContainer/Tree
-
-
-var blocktree := {}
-
-
 enum {
+	BOOL,
+	STRING,
 	ACTOR,
 	INT,
-	BOOL,
 	FLOAT,
 	TEXTURE2D,
-	STRING,
 	VECTOR2,
 	NODE2D,
 }
@@ -42,7 +35,12 @@ const BTYPES = {
 }
 
 
+var blocktree := {}
 var ep:EditorPlugin
+
+
+@onready var files:ItemList = $HSplitContainer/ItemList
+@onready var blocks:Tree = $HSplitContainer/HSplitContainer/Tree
 
 
 func _ready() -> void:
@@ -54,4 +52,3 @@ func _ready() -> void:
 		for j in BTYPES[i]:
 			var b := blocks.create_item(t)
 			b.set_text(0, j[0])
-	pass
