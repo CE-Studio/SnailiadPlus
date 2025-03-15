@@ -2,13 +2,17 @@ class_name GameCore
 extends Node2D
 
 
-var player:Node2D
+var player:Player
 var cam_layer:Node2D
 var current_room:Node2D
 var current_room_name:String
 
 
+static var instance:GameCore
+
+
 func _ready() -> void:
+	instance = self
 	for child in get_children():
 		if child is Player:
 			player = child
@@ -33,15 +37,16 @@ func spawn_room_from_path(path:String, entrance:int = -1, offset:Vector2 = Vecto
 		for child in new_room.get_children():
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
-					player.global_position = child.exit_marker.global_position + offset
+					player.reset_position(child.exit_marker.global_position + offset)
 	player.set_box_disable_override(false)
 
 
-func spawn_room(room:Resource, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
+func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
+	print(path)
 	if current_room != null:
 		player.reparent(self)
 		current_room.queue_free()
-	var new_room = room.instantiate()
+	var new_room:Room = load(path).instantiate()
 	add_child(new_room)
 	current_room = new_room
 	player.reparent(new_room.layer_ground)
@@ -50,5 +55,5 @@ func spawn_room(room:Resource, entrance:int = -1, offset:Vector2 = Vector2.ZERO)
 		for child in new_room.get_children():
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
-					player.global_position = child.exit_marker.global_position + offset
+					player.reset_position(child.exit_marker.global_position + offset)
 	player.set_box_disable_override(false)
