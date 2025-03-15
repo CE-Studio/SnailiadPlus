@@ -1,5 +1,5 @@
-extends Node2D
 class_name GameCore
+extends Node2D
 
 
 var player:Node2D
