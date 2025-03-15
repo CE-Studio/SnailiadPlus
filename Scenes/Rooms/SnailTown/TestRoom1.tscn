@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=4 uid="uid://uef0mmwa2tuq"]
+[gd_scene load_steps=5 format=4 uid="uid://uef0mmwa2tuq"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
+[ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
+[ext_resource type="PackedScene" uid="uid://vvs4fclk0j13" path="res://Scenes/Rooms/SnailTown/TestRoom2.tscn" id="4_sg3tw"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_ropfo")
@@ -49,3 +51,13 @@ collision_enabled = false
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_jcf1i")
 collision_enabled = false
+
+[node name="RoomTransitionTrigger" parent="." instance=ExtResource("3_u3nms")]
+position = Vector2(-4, 104)
+rotation = 3.14159
+exit_room = ExtResource("4_sg3tw")
+
+[node name="RoomTransitionTrigger2" parent="." instance=ExtResource("3_u3nms")]
+position = Vector2(168, -4)
+rotation = -1.57079
+my_id = 1

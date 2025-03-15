@@ -67,6 +67,7 @@ var box_adjust:Array = [
 	Vector2.LEFT * 1.5,
 	Vector2.DOWN * 1.5,
 ]
+var override_box_disable:bool
 #endregion
 
 
@@ -252,10 +253,13 @@ func _process(delta):
 		body.move_and_slide()
 		position = body.position
 		return
-
-
-	box_normal.disabled = shelled
-	box_shell.disabled = not shelled
+	
+	if override_box_disable:
+		box_normal.disabled = true
+		box_shell.disabled = true
+	else:
+		box_normal.disabled = shelled
+		box_shell.disabled = not shelled
 	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
 	# Among other things, this is used to test for ground when we're airborne.
 	#last_position = position + box_normal.position
@@ -825,6 +829,16 @@ func _check_front_casts() -> Array:
 			if new_distance < distance:
 				distance = new_distance
 	return [ hit, distance ]
+
+
+func _set_box_disable_override(state:bool) -> void:
+	override_box_disable = state
+	if state == true:
+		box_normal.disabled = true
+		box_shell.disabled = true
+	else:
+		box_normal.disabled = shelled
+		box_shell.disabled = not shelled
 
 #region Cutscene functions
 func impulse(direction:Vector2) -> bool:
