@@ -831,7 +831,7 @@ func _check_front_casts() -> Array:
 	return [ hit, distance ]
 
 
-func _set_box_disable_override(state:bool) -> void:
+func set_box_disable_override(state:bool) -> void:
 	override_box_disable = state
 	if state == true:
 		box_normal.disabled = true

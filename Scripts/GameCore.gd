@@ -1,5 +1,5 @@
-extends Node2D
 class_name GameCore
+extends Node2D
 
 
 var player:Node2D
@@ -34,7 +34,7 @@ func spawn_room_from_path(path:String, entrance:int = -1, offset:Vector2 = Vecto
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
 					player.global_position = child.exit_marker.global_position + offset
-	player._set_box_disable_override(false)
+	player.set_box_disable_override(false)
 
 
 func spawn_room(room:Resource, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
@@ -51,4 +51,4 @@ func spawn_room(room:Resource, entrance:int = -1, offset:Vector2 = Vector2.ZERO)
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
 					player.global_position = child.exit_marker.global_position + offset
-	player._set_box_disable_override(false)
+	player.set_box_disable_override(false)
