@@ -32,3 +32,7 @@ func _process(delta):
 			pass
 		_:
 			pass
+
+
+func set_layer_position(new_pos:Vector2):
+	position = new_pos - offset
