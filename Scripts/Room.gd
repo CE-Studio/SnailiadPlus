@@ -55,12 +55,4 @@ func instance():
 
 
 func _process(delta):
-	_set_layer_parallax(map_fg2, fg2_parallax, fg2_offset)
-	_set_layer_parallax(map_fg1, fg1_parallax, fg1_offset)
-	_set_layer_parallax(map_bg1, bg1_parallax, bg1_offset)
-	_set_layer_parallax(map_bg2, bg2_parallax, bg2_offset)
-	_set_layer_parallax(map_sky, sky_parallax, sky_offset)
-
-
-func _set_layer_parallax(map:Node2D, parallax:Vector2, offset:Vector2):
-	map.position = (GameCore.instance.cam_layer.position * parallax) + offset
+	pass
