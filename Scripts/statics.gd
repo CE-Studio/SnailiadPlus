@@ -139,11 +139,11 @@ static func save_general():
 	file.store_string(JSON.stringify(data_general, "\t", false))
 
 
-static func save_profile(profile:int):
-	if profile < 1 or profile > 3:
+static func save_profile(iprofile:int):
+	if iprofile < 1 or iprofile > 3:
 		return
-	var file = FileAccess.open("user://" + save_prefix + "/Profile" + str(profile) + ".json", FileAccess.WRITE_READ)
-	match profile:
+	var file = FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
+	match iprofile:
 		1:
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
 		2:

@@ -319,6 +319,11 @@ func _process(delta):
 	grounded_last_frame = grounded
 
 
+func reset_position(pos:Vector2) -> void:
+	global_position = pos
+	body.global_position = pos
+
+
 # The floor case for player movement
 # Input  - time since the last frame
 func _case_down(delta:float):
@@ -831,7 +836,8 @@ func _check_front_casts() -> Array:
 	return [ hit, distance ]
 
 
-func _set_box_disable_override(state:bool) -> void:
+func set_box_disable_override(state:bool) -> void:
+	return
 	override_box_disable = state
 	if state == true:
 		box_normal.disabled = true
