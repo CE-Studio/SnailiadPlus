@@ -16,24 +16,43 @@ enum {
 
 const BTYPES = {
 	"Actors": [
-		["Actor...", ACTOR],
-		["Glide to", BOOL],
-		["Impulse", BOOL],
-		["Say", BOOL],
-		["Get Icon", TEXTURE2D],
-		["Fake Input", BOOL],
-		["Look at Position", BOOL],
-		["Look at Local Position", BOOL],
-		["Look at Node", BOOL],
-		["Lock inputs", BOOL],
-		["Can Perform Action", BOOL],
-		["Perform Action", BOOL],
+		Color.DODGER_BLUE,
+		[
+			["Actor...", ACTOR, [STRING], false, false],
+			["Glide to", BOOL, [VECTOR2], false, false],
+			["Impulse", BOOL, [VECTOR2], false, false],
+			["Say", BOOL, [TEXTURE2D, STRING], false, false],
+			["Get Icon", TEXTURE2D, [ACTOR], false, false],
+			["Fake Input", BOOL, [STRING], false, false],
+			["Look at Position", BOOL, [VECTOR2], false, false],
+			["Look at Local Position", BOOL, [VECTOR2], false, false],
+			["Look at Node", BOOL, [NODE2D], false, false],
+			["Lock inputs", BOOL, [BOOL], false, false],
+			["Can Perform Action", BOOL, [ACTOR], false, false],
+			["Perform Action", BOOL, [ACTOR], false, false],
+		],
 	],
-	"Tiles": [],
-	"Flow": [],
-	"Variables": [],
+	"Tiles": [
+		Color.BLUE_VIOLET,
+		[
+			
+		],
+	],
+	"Flow": [
+		Color.GOLDENROD,
+		[
+			
+		],
+	],
+	"Variables": [
+		Color.DARK_ORANGE,
+		[
+			
+		],
+	],
 }
 const BLOCK:PackedScene = preload("uid://bhvl14npfluwo")
+const CATE:PackedScene = preload("uid://j3ldjrsghpyr")
 
 
 var blocktree := {}
@@ -41,16 +60,19 @@ var ep:EditorPlugin
 
 
 @onready var files:ItemList = $HSplitContainer/ItemList
-@onready var blocks:Tree = $HSplitContainer/HSplitContainer/Tree
-@onready var program:HBoxContainer = $HSplitContainer/HSplitContainer/HBoxContainer/VBoxContainer/program
+@onready var program:VBoxContainer = $HSplitContainer/HSplitContainer/HBoxContainer/VBoxContainer/program
+@onready var holdpoint:Control = $held
+@onready var pallete:VBoxContainer = $HSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/VBoxContainer
 
 
 func _ready() -> void:
-	blocktree["__ROOT__"] = blocks.create_item()
-	for i in BTYPES.keys():
-		var t := blocks.create_item(blocktree["__ROOT__"])
-		blocktree[i] = t
-		t.set_text(0, i)
-		for j in BTYPES[i]:
-			var b := blocks.create_item(t)
-			b.set_text(0, j[0])
+	for i in BTYPES:
+		var item = BTYPES[i]
+		var cate:Cate = CATE.instantiate()
+		cate.setname(i, item[0])
+		pallete.add_child(cate)
+		for j in item[1]:
+			var blk:ProgramBlock = BLOCK.instantiate()
+			blk.simpsetup(j)
+			blk.modulate = item[0]
+			cate.add_item(blk)

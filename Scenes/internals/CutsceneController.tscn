@@ -21,7 +21,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:material:shader_parameter/fade")
+tracks/0/path = NodePath("CanvasLayer/Control/Panel:material:shader_parameter/fade")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -32,7 +32,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/MarginContainer:visible")
+tracks/1/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -49,7 +49,7 @@ step = 0.05
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:material:shader_parameter/fade")
+tracks/0/path = NodePath("CanvasLayer/Control/Panel:material:shader_parameter/fade")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -74,7 +74,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Control/MarginContainer:visible")
+tracks/2/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -94,7 +94,9 @@ _data = {
 process_mode = 3
 script = ExtResource("1_ssxem")
 
-[node name="Control" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
@@ -103,7 +105,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
 material = SubResource("ShaderMaterial_h4kkg")
 layout_mode = 1
 anchors_preset = 15
@@ -113,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_tnswa")
 
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -126,10 +128,10 @@ theme_override_constants/margin_top = 65
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 65
 
-[node name="Panel2" type="Panel" parent="Control/MarginContainer"]
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Panel2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/Panel2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -141,46 +143,45 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Panel2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="CenterContainer2" type="CenterContainer" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
 layout_mode = 2
 text = "Error!!"
 
-[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 layout_mode = 2
 texture = ExtResource("4_gc0g0")
 stretch_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "copy"
 
-[node name="Button2" type="Button" parent="Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button2" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "continue"
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
-layout_mode = 1
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 14.0
@@ -192,5 +193,5 @@ stream = ExtResource("4_8b4nq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_fv03o")
+&"": SubResource("AnimationLibrary_fv03o")
 }

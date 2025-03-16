@@ -320,7 +320,7 @@ func _process(delta):
 
 
 func reset_position(pos:Vector2) -> void:
-	global_position = pos
+	global_position = pos.round()
 	body.global_position = pos
 
 
@@ -619,7 +619,11 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			#body.call_deferred("translate", rel_vectors[_get_dir_opposite(surface)] * 2)
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 			_play_anim("land")
-	position = body.position
+	
+	if body.velocity == Vector2.ZERO:
+		position = body.position.round() #Stops strage jitter from camera smoothing
+	else:
+		position = body.position
 #endregion
 
 

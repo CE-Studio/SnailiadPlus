@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://j3ldjrsghpyr"]
+
+[ext_resource type="Script" uid="uid://c1v1xt1jb7xm" path="res://addons/cutprog/cate.gd" id="1_q2t0t"]
+
+[node name="Cate" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_q2t0t")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+toggle_mode = true
+text = "&& name &&"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
