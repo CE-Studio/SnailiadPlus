@@ -32,9 +32,6 @@ extends Node2D
 
 
 #region Internals
-var core:GameCore
-
-
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity:Node2D = $"EntityLayer/Map"
 @onready var layer_fg2:Node2D = $"FG2Layer"
@@ -54,4 +51,16 @@ var core:GameCore
 
 
 func instance():
-	core = get_parent()
+	pass
+
+
+func _process(delta):
+	_set_layer_parallax(map_fg2, fg2_parallax, fg2_offset)
+	_set_layer_parallax(map_fg1, fg1_parallax, fg1_offset)
+	_set_layer_parallax(map_bg1, bg1_parallax, bg1_offset)
+	_set_layer_parallax(map_bg2, bg2_parallax, bg2_offset)
+	_set_layer_parallax(map_sky, sky_parallax, sky_offset)
+
+
+func _set_layer_parallax(map:Node2D, parallax:Vector2, offset:Vector2):
+	map.position = (GameCore.instance.cam_layer.position * parallax) + offset

@@ -10,7 +10,6 @@ extends Node2D
 
 @onready var area:Area2D = $"Area2D"
 @onready var exit_marker:Marker2D = $"Marker2D"
-@onready var core:GameCore = $"/root/GameScene"
 
 
 var not_exiting := true
@@ -23,7 +22,6 @@ func _ready():
 func _on_player_enter(area):
 	if exit_room != "" && not_exiting:
 		not_exiting = false
-		core.player.set_box_disable_override(true)
-		var offset = core.player.global_position - area.global_position
-		#core.spawn_room(exit_room, exit_transition, offset)
-		core.call_deferred("spawn_room", exit_room, exit_transition, offset)
+		GameCore.instance.player.set_box_disable_override(true)
+		var offset = GameCore.instance.player.global_position - area.global_position
+		GameCore.instance.call_deferred("spawn_room", exit_room, exit_transition, offset)
