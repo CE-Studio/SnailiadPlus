@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://uef0mmwa2tuq"]
+[gd_scene load_steps=7 format=4 uid="uid://uef0mmwa2tuq"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_u3nms"]
+[ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
 
 [sub_resource type="Curve2D" id="Curve2D_sg3tw"]
 _data = {
@@ -71,3 +72,8 @@ exit_room = "uid://vvs4fclk0j13"
 position = Vector2(168, -4)
 rotation = -1.57079
 my_id = 1
+
+[node name="Item" parent="." instance=ExtResource("5_sg3tw")]
+position = Vector2(256, 64)
+counted_in_percentage = false
+type = 12
