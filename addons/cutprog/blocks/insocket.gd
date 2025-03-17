@@ -8,10 +8,10 @@ const TEXTURES = [
 	preload("uid://dbmsm68yejkx6"), #str
 	preload("uid://bskasrjl73ytt"), #ACTOR,
 	preload("uid://dp8jjyaborgsx"), #INT,
-	#FLOAT,
-	#TEXTURE2D,
-	#VECTOR2,
-	#NODE2D,
+	preload("uid://ciss6rwsgoeuc"), #FLOAT,
+	preload("uid://cv82jmuw4vldb"), #TEXTURE2D,
+	preload("uid://cuyx6v7gxokcl"), #VECTOR2,
+	preload("uid://b0h3c6qru72tw"), #NODE2D,
 ]
 
 

@@ -1,0 +1,6 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://ciss6rwsgoeuc"]
+
+[ext_resource type="Texture2D" uid="uid://pkhcb4515lx4" path="res://addons/cutprog/tex/flt1.png" id="1_uoxf8"]
+
+[resource]
+texture = ExtResource("1_uoxf8")

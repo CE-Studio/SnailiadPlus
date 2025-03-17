@@ -1,3 +1,4 @@
+@tool
 @icon("res://Editor/ico/Room.svg")
 class_name Room
 extends Node2D
@@ -13,6 +14,7 @@ extends Node2D
 @export var subarea_id:int = 0
 @export var is_bonus_room:bool = false
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
+@export var cutscenes:Array[Cutscene]
 
 
 @export_group("Layers")
@@ -54,5 +56,19 @@ func instance():
 	pass
 
 
-func _process(delta):
+func _process(_delta):
 	pass
+
+
+func get_actors() -> Array[CutsceneControllable]:
+	assert(Engine.is_editor_hint(), "Only intended to be used in the editor")
+	var arr:Array[CutsceneControllable] = []
+	_recur_extr(arr, self)
+	return arr
+
+
+func _recur_extr(arr:Array[CutsceneControllable], n:Node):
+	for i in n.get_children():
+		_recur_extr(arr, i)
+	if n is CutsceneControllable:
+		arr.append(n)
