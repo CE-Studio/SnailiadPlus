@@ -39,3 +39,5 @@ bus = &"Music"
 [node name="MajorJingle" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("6_rsoxw")
 bus = &"Music"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
