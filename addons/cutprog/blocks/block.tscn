@@ -60,7 +60,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="bool" type="OptionButton" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
+[node name="opt" type="OptionButton" parent="VBoxContainer/Container/PanelContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
 selected = 0

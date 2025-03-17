@@ -14,22 +14,23 @@ enum {
 }
 
 
-const BTYPES = {
+var BTYPES = {
 	"Actors": [
 		Color.DODGER_BLUE,
 		[
-			["Actor...", ACTOR, [STRING], false, false],
-			["Glide to", BOOL, [VECTOR2], false, false],
-			["Impulse", BOOL, [VECTOR2], false, false],
-			["Say", BOOL, [TEXTURE2D, STRING], false, false],
-			["Get Icon", TEXTURE2D, [ACTOR], false, false],
-			["Fake Input", BOOL, [STRING], false, false],
-			["Look at Position", BOOL, [VECTOR2], false, false],
-			["Look at Local Position", BOOL, [VECTOR2], false, false],
-			["Look at Node", BOOL, [NODE2D], false, false],
-			["Lock inputs", BOOL, [BOOL], false, false],
-			["Can Perform Action", BOOL, [ACTOR], false, false],
-			["Perform Action", BOOL, [ACTOR], false, false],
+			["Actor", ACTOR, [], false, false, actorsel],
+			["Actor...", ACTOR, [STRING], false, false, null],
+			["Glide to", BOOL, [VECTOR2], false, false, null],
+			["Impulse", BOOL, [VECTOR2], false, false, null],
+			["Say", BOOL, [TEXTURE2D, STRING], false, false, null],
+			["Get Icon", TEXTURE2D, [ACTOR], false, false, null],
+			["Fake Input", BOOL, [STRING], false, false, null],
+			["Look at Position", BOOL, [VECTOR2], false, false, null],
+			["Look at Local Position", BOOL, [VECTOR2], false, false, null],
+			["Look at Node", BOOL, [NODE2D], false, false, null],
+			["Lock inputs", BOOL, [BOOL], false, false, null],
+			["Can Perform Action", BOOL, [ACTOR], false, false, null],
+			["Perform Action", BOOL, [ACTOR], false, false, null],
 		],
 	],
 	"Tiles": [
@@ -41,10 +42,11 @@ const BTYPES = {
 	"Flow": [
 		Color.GOLDENROD,
 		[
-			
+			["If", BOOL, [BOOL], true, false, null],
+			["If", BOOL, [BOOL], true, true, null],
 		],
 	],
-	"Variables": [
+	"Data": [
 		Color.DARK_ORANGE,
 		[
 			
@@ -55,7 +57,7 @@ const BLOCK:PackedScene = preload("uid://bhvl14npfluwo")
 const CATE:PackedScene = preload("uid://j3ldjrsghpyr")
 
 
-var blocktree := {}
+var blocks:Array[ProgramBlock] = []
 var ep:EditorPlugin
 
 
@@ -65,7 +67,18 @@ var ep:EditorPlugin
 @onready var pallete:VBoxContainer = $HSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/VBoxContainer
 
 
+func actorsel(block:ProgramBlock) -> void:
+	block.opt.show()
+	block.opt.clear()
+
+
+func scene_changed(root:Node) -> void:
+	for i in blocks:
+		i.reset()
+
+
 func _ready() -> void:
+	ep.scene_changed.connect(scene_changed)
 	for i in BTYPES:
 		var item = BTYPES[i]
 		var cate:Cate = CATE.instantiate()
@@ -76,3 +89,4 @@ func _ready() -> void:
 			blk.simpsetup(j)
 			blk.modulate = item[0]
 			cate.add_item(blk)
+			blocks.append(blk)
