@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://cudp1y80hdc5x"]
+
+[ext_resource type="Script" uid="uid://elnjdf7pixyq" path="res://Scripts/Item.gd" id="1_foglj"]
+[ext_resource type="Texture2D" uid="uid://yoxnifvxoo04" path="res://Assets/Images/Items/ItemBoundaryVisual.png" id="2_qdhsi"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_ip5fe"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_ip5fe"]
+[ext_resource type="AudioStream" uid="uid://b6cebrmjxbn7u" path="res://Assets/Sounds/Music/MinorItemJingle.ogg" id="5_coo2r"]
+[ext_resource type="AudioStream" uid="uid://bqx5qjvh7aygo" path="res://Assets/Sounds/Music/MajorItemJingle.ogg" id="6_rsoxw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qdhsi"]
+size = Vector2(28, 28)
+
+[node name="Item" type="Node2D"]
+script = ExtResource("1_foglj")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_qdhsi")
+script = ExtResource("3_ip5fe")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qdhsi")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_ip5fe")
+texture_path = "res://Assets/Images/Items/ItemBoundaryVisual.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="MinorJingle" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_coo2r")
+bus = &"Music"
+
+[node name="MajorJingle" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("6_rsoxw")
+bus = &"Music"
