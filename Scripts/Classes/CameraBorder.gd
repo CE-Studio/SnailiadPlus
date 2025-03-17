@@ -5,6 +5,7 @@ extends Path2D
 
 func _ready() -> void:
 	assert(global_position == Vector2.ZERO, "Camera border node MUST be centered")
+	GameCore.instance.cam_layer.border = self
 
 
 func get_closest_point_to(pos:Vector2) -> Vector2:
