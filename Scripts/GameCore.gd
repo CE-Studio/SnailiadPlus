@@ -19,7 +19,7 @@ func _ready() -> void:
 	cam_layer = $"CameraLayer"
 	cam_layer.player = player
 	if current_room == null:
-		spawn_room("res://Scenes/Rooms/SnailTown/TestRoom2.tscn")
+		spawn_room("res://Scenes/Rooms/SnailTown/TestRoom1.tscn")
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:

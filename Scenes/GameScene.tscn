@@ -14,4 +14,4 @@ script = ExtResource("2_3mbwn")
 position = Vector2(200, 120)
 
 [node name="Snaily" parent="." instance=ExtResource("2_4bvgx")]
-position = Vector2(662, 94)
+position = Vector2(64, 96)

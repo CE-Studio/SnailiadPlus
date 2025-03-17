@@ -16,6 +16,7 @@ var target_entity:Node2D
 var player:Player
 var ease_rate:float = 4.0
 var offset:Vector2 = Vector2(200, 120)
+var border:CameraBorder = null
 #endregion
 
 
@@ -32,6 +33,8 @@ func _process(delta):
 			pass
 		_:
 			pass
+	if border != null:
+		position = border.get_closest_point_to(position + offset) - offset
 
 
 func set_layer_position(new_pos:Vector2):
