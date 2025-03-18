@@ -105,6 +105,7 @@ static var data_profile2:Dictionary
 static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
+static var current_profile:Dictionary
 #endregion
 
 

@@ -39,14 +39,17 @@ enum ItemTypes {
 
 @onready var jingle_minor:AudioStreamPlayer = $"AudioGroup/MinorJingle"
 @onready var jingle_major:AudioStreamPlayer = $"AudioGroup/MajorJingle"
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var sprite:JsonSprite2D
+@onready var timer:Timer = $"CollectTimer"
 
 var collected:bool = false
+
+const HOVER_DIS:int = 24
+const HOVER_EASE:float = 12.5
 #endregion
 
 
 func _ready() -> void:
-	pass
 	var id_str
 	match type:
 		ItemTypes.PEASHOOTER:
@@ -90,8 +93,36 @@ func _ready() -> void:
 			id_str = "TrapItem"
 		ItemTypes.WARP_TRAP:
 			id_str = "TrapItem"
-	
+	sprite = JsonSprite2D.new()
+	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
+	add_child.call_deferred(sprite)
+	sprite.action = "item"
+
+
+func _process(delta: float) -> void:
+	if collected:
+		var target_pos = GameCore.instance.player.position
+		match GameCore.instance.player.gravity_dir:
+			Statics.DirsSurface.FLOOR:
+				target_pos += HOVER_DIS * Vector2.UP
+			Statics.DirsSurface.LWALL:
+				target_pos += HOVER_DIS * Vector2.RIGHT
+			Statics.DirsSurface.RWALL:
+				target_pos += HOVER_DIS * Vector2.LEFT
+			Statics.DirsSurface.CEILING:
+				target_pos += HOVER_DIS * Vector2.DOWN
+		position = position.lerp(target_pos, HOVER_EASE * delta)
 
 
 func _on_player_entered(body: Node2D) -> void:
-	pass # Replace with function body.
+	if not collected:
+		collected = true
+		timer.start()
+		if is_super_unique:
+			jingle_major.play()
+		else:
+			jingle_minor.play()
+
+
+func _on_collect_timer_timeout() -> void:
+	queue_free()

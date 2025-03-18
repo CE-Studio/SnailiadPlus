@@ -28,6 +28,7 @@ func _ready() -> void:
 	else:
 		Statics.data_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	Statics.save_general()
+	Statics.current_profile = Statics.data_profile1
 
 
 func _load_json_to_dict(path:String) -> Dictionary:

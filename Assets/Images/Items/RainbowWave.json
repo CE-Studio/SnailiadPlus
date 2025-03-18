@@ -1,0 +1,37 @@
+{
+	"tiles": [8, 4],
+	"animations": {
+		"item": {
+			"fps": 22,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+				[7, 0, false, false],
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[2, 1, false, false],
+				[3, 1, false, false],
+				[4, 1, false, false],
+				[5, 1, false, false],
+				[6, 1, false, false],
+				[7, 1, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[6, 2, false, false],
+				[7, 2, false, false]
+			]
+		}
+	}
+}
