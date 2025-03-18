@@ -37,9 +37,10 @@ enum ItemTypes {
 @export_flags("Easy", "Normal", "Insane") var difficulty_reqs = 7
 @export_flags("Snaily", "Sluggy", "Upside", "Leggy", "Blobby", "Leechy") var character_reqs = 63
 
-@onready var jingle_minor:AudioStreamPlayer = $"AudioGroup/MinorJingle"
-@onready var jingle_major:AudioStreamPlayer = $"AudioGroup/MajorJingle"
+@onready var jingle_minor:AudioStream = load("res://Assets/Sounds/Music/MinorItemJingle.ogg")
+@onready var jingle_major:AudioStream = load("res://Assets/Sounds/Music/MajorItemJingle.ogg")
 @onready var sprite:JsonSprite2D
+@onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var timer:Timer = $"CollectTimer"
 
 var collected:bool = false
@@ -60,6 +61,7 @@ func _ready() -> void:
 			id_str = "RainbowWave"
 		ItemTypes.DEVASTATOR:
 			id_str = "Devastator"
+			box.shape.size = Vector2(44, 28)
 		ItemTypes.HIGH_JUMP:
 			id_str = "HighJump"
 		ItemTypes.SHELL_SHIELD:
@@ -82,6 +84,7 @@ func _ready() -> void:
 			id_str = "HeartContainer"
 		ItemTypes.HELIX_FRAGMENT:
 			id_str = "HelixFragment"
+			box.shape.size = Vector2(12, 12)
 		#ItemTypes.RADAR_SHELL:
 		ItemTypes.WEAPON_LOCK_TRAP:
 			id_str = "TrapItem"
@@ -119,9 +122,10 @@ func _on_player_entered(body: Node2D) -> void:
 		collected = true
 		timer.start()
 		if is_super_unique:
-			jingle_major.play()
+			Statics.play_sfx_disconnected(jingle_major)
 		else:
-			jingle_minor.play()
+			Statics.play_sfx_disconnected(jingle_minor)
+		Statics.add_item(type, 1)
 
 
 func _on_collect_timer_timeout() -> void:

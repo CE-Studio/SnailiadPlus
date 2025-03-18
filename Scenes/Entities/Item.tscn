@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cudp1y80hdc5x"]
+[gd_scene load_steps=5 format=3 uid="uid://cudp1y80hdc5x"]
 
 [ext_resource type="Script" uid="uid://elnjdf7pixyq" path="res://Scripts/Item.gd" id="1_foglj"]
 [ext_resource type="Texture2D" uid="uid://yoxnifvxoo04" path="res://Assets/Images/Items/ItemBoundaryVisual.png" id="2_qdhsi"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_ip5fe"]
-[ext_resource type="AudioStream" uid="uid://b6cebrmjxbn7u" path="res://Assets/Sounds/Music/MinorItemJingle.ogg" id="5_coo2r"]
-[ext_resource type="AudioStream" uid="uid://bqx5qjvh7aygo" path="res://Assets/Sounds/Music/MajorItemJingle.ogg" id="6_rsoxw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdhsi"]
 size = Vector2(28, 28)
@@ -23,16 +21,6 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_qdhsi")
-
-[node name="AudioGroup" type="Node" parent="."]
-
-[node name="MinorJingle" type="AudioStreamPlayer" parent="AudioGroup"]
-stream = ExtResource("5_coo2r")
-bus = &"Music"
-
-[node name="MajorJingle" type="AudioStreamPlayer" parent="AudioGroup"]
-stream = ExtResource("6_rsoxw")
-bus = &"Music"
 
 [node name="CollectTimer" type="Timer" parent="."]
 wait_time = 2.0

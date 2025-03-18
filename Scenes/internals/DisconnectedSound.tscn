@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cscnnpsomiw4i"]
+
+[ext_resource type="Script" uid="uid://cfb4ytrehjj7b" path="res://Scripts/DisconnectedSfx.gd" id="1_4ex6a"]
+
+[node name="DisconnectedSound" type="AudioStreamPlayer"]
+bus = &"Sfx"
+script = ExtResource("1_4ex6a")
+
+[connection signal="finished" from="." to="." method="_on_sound_finished"]

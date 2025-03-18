@@ -86,6 +86,9 @@ static var palette := preload("res://Assets/Images/Palette.png")
 static var missing := preload("res://Assets/Images/Missing.png")
 
 
+static var disconnected_sound := preload("res://Scenes/internals/DisconnectedSound.tscn")
+
+
 static var current_area:int = 0
 static var current_subarea:int = 0
 
@@ -109,30 +112,16 @@ static var current_profile:Dictionary
 #endregion
 
 
-static func is_number(value:Variant, consider_strings := false) -> bool:
-	if value is int:
-		return true
-	if value is float:
-		return true
-	if consider_strings:
-		if value is String:
-			if value.is_valid_float():
-				return true
-			if value.is_valid_int():
-				return true
-			if value.is_valid_hex_number():
-				return true
-			if value.is_valid_hex_number(true):
-				return true
-	return false
+#region Save functions
+static func add_item(id:int, count:int) -> void:
+	while id > len(current_profile["items"]):
+		current_profile["items"].append(0)
+	current_profile["items"][id] += count
 
 
-static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:
-	var scale = pow(0.1, speed)
-	num = num * pow(scale, elapsed) + target * (1.0 - pow(scale, elapsed))
-	if absf(num - target) < threshold:
-		num = target
-	return num
+static func remove_item(id:int, count:int) -> void:
+	if id < len(current_profile["items"]):
+		current_profile["items"][id] -= count
 
 
 static func save_general():
@@ -164,3 +153,37 @@ static func save_all():
 	save_profile(2)
 	save_profile(3)
 	save_records()
+#endregion
+
+
+static func is_number(value:Variant, consider_strings := false) -> bool:
+	if value is int:
+		return true
+	if value is float:
+		return true
+	if consider_strings:
+		if value is String:
+			if value.is_valid_float():
+				return true
+			if value.is_valid_int():
+				return true
+			if value.is_valid_hex_number():
+				return true
+			if value.is_valid_hex_number(true):
+				return true
+	return false
+
+
+static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:
+	var scale = pow(0.1, speed)
+	num = num * pow(scale, elapsed) + target * (1.0 - pow(scale, elapsed))
+	if absf(num - target) < threshold:
+		num = target
+	return num
+
+
+static func play_sfx_disconnected(sound:AudioStream) -> void:
+	var new_discon_sound = disconnected_sound.instantiate()
+	GameCore.instance.sfx_group.add_child(new_discon_sound)
+	new_discon_sound.load_and_play(sound)
+	

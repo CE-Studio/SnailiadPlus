@@ -6,6 +6,7 @@ var player:Player
 var cam_layer:Node2D
 var current_room:Node2D
 var current_room_name:String
+var sfx_group:Node
 
 
 static var instance:GameCore
@@ -13,6 +14,7 @@ static var instance:GameCore
 
 func _ready() -> void:
 	instance = self
+	sfx_group = $"SfxGroup"
 	for child in get_children():
 		if child is Player:
 			player = child

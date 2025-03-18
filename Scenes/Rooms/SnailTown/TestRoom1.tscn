@@ -51,7 +51,6 @@ tile_set = ExtResource("2_jcf1i")
 position = Vector2(256, 64)
 counted_in_percentage = false
 type = 12
-is_super_unique = true
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 
