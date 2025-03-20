@@ -78,7 +78,10 @@ static var is_random_game:bool = false
 
 static var noclip_mode:bool = false
 static var damage_mult:bool = false
-static var show_entity_layer:bool = false
+static var show_entity_layer:bool = true
+static var stack_shells:bool = true
+static var stack_weapons:bool = true
+static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer
 
@@ -122,6 +125,13 @@ static func add_item(id:int, count:int) -> void:
 static func remove_item(id:int, count:int) -> void:
 	if id < len(current_profile["items"]):
 		current_profile["items"][id] -= count
+
+
+static func check_item(id:int) -> int:
+	var output = 0
+	if id < len(current_profile["items"]):
+		output = current_profile["items"][id]
+	return output
 
 
 static func save_general():

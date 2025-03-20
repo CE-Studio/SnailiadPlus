@@ -20,11 +20,16 @@ var border:CameraBorder = null
 #endregion
 
 
+func instantiate() -> void:
+	player = GameCore.instance.player
+
+
 func _process(delta):
+	var pos = UICore.instance.position
 	match state:
 		CamStates.FOLLOW_FLASH:
 			if player != null:
-				position = position.lerp(player.position - offset, ease_rate * delta)
+				pos = pos.lerp(player.position - offset, ease_rate * delta)
 		CamStates.FOLLOW_NEW:
 			pass
 		CamStates.TARGET_POINT:
@@ -34,8 +39,9 @@ func _process(delta):
 		_:
 			pass
 	if border != null:
-		position = border.get_closest_point_to(position + offset) - offset
+		pos = border.get_closest_point_to(pos + offset) - offset
+	UICore.instance.position = pos
 
 
 func set_layer_position(new_pos:Vector2):
-	position = new_pos - offset
+	UICore.instance.position = new_pos - offset

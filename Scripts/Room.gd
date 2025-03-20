@@ -53,7 +53,10 @@ extends Node2D
 
 
 func instance():
-	pass
+	if Statics.show_entity_layer:
+		map_entity.modulate = Color(1, 1, 1, 0.5)
+	else:
+		map_entity.modulate = Color(1, 1, 1, 0)
 
 
 func _process(_delta):

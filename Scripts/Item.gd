@@ -5,27 +5,28 @@ class_name Item
 
 #region Variables
 enum ItemTypes {
-	PEASHOOTER,
-	BOOMERANG,
-	RAINBOW_WAVE,
-	DEVASTATOR,
-	HIGH_JUMP,
-	SHELL_SHIELD,
-	RAPID_FIRE,
-	ICE_SHELL,
-	GRAVITY_SHELL,
-	METAL_SHELL,
-	GRAVITY_SHOCK,
-	SECRET_BOOMERANG,
-	DEBUG_WAVE,
-	HEART_CONTAINER,
-	HELIX_FRAGMENT,
-	RADAR_SHELL,
-	WEAPON_LOCK_TRAP,
-	GRAVITY_LOCK_TRAP,
-	LULLABY_TRAP,
-	SPIDER_TRAP,
-	WARP_TRAP,
+	PEASHOOTER,        #  0
+	BOOMERANG,         #  1
+	RAINBOW_WAVE,      #  2
+	DEVASTATOR,        #  3
+	HIGH_JUMP,         #  4 - Wall Grab
+	SHELL_SHIELD,      #  5 - Shelmet
+	RAPID_FIRE,        #  6 - Backfire
+	ICE_SHELL,         #  7
+	GRAVITY_SHELL,     #  8 - Magnetic Foot - Corkscrew Jump - Angel Jump
+	METAL_SHELL,       #  9
+	GRAVITY_SHOCK,     # 10
+	SECRET_BOOMERANG,  # 11
+	DEBUG_WAVE,        # 12
+	HEART_CONTAINER,   # 13
+	HELIX_FRAGMENT,    # 14
+	RADAR_SHELL,       # 15
+	BROOM,             # 16
+	WEAPON_LOCK_TRAP,  # 17
+	GRAVITY_LOCK_TRAP, # 18
+	LULLABY_TRAP,      # 19
+	SPIDER_TRAP,       # 20
+	WARP_TRAP,         # 21
 	NONE = -1,
 }
 
@@ -96,6 +97,8 @@ func _ready() -> void:
 			id_str = "TrapItem"
 		ItemTypes.WARP_TRAP:
 			id_str = "TrapItem"
+		_:
+			id_str = "ItemBoundaryVisual"
 	sprite = JsonSprite2D.new()
 	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
 	add_child.call_deferred(sprite)

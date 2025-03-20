@@ -850,6 +850,15 @@ func set_box_disable_override(state:bool) -> void:
 		box_normal.disabled = shelled
 		box_shell.disabled = not shelled
 
+
+#region Bullet functions
+func _toggle_weapon(id:int) -> void:
+	if Statics.stack_weapons:
+		pass
+	else:
+		pass
+#endregion
+
 #region Cutscene functions
 func impulse(direction:Vector2) -> bool:
 	return false
