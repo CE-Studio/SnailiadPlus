@@ -39,4 +39,32 @@ func _process(delta: float) -> void:
 		var pos = weapon_icons[i].position
 		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
 		weapon_icons[i].position = pos
-		#TODO: add function to update weapon icons
+
+
+func update_weapon_icons() -> void:
+	for i in range(len(weapon_icons)):
+		var has:bool = false
+		var equipped:bool = false
+		match i:
+			0:
+				has = Statics.check_item(Item.ItemTypes.BROOM)
+				equipped = Statics.player.selected_weapon & 1 > 0
+			1:
+				has = Statics.check_item(Item.ItemTypes.PEASHOOTER)
+				equipped = Statics.player.selected_weapon & 2 > 0
+			2:
+				has = (Statics.check_item(Item.ItemTypes.BOOMERANG) or
+				Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG))
+				equipped = Statics.player.selected_weapon & 4 > 0
+			3:
+				has = (Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) or
+				Statics.check_item(Item.ItemTypes.DEBUG_WAVE))
+				equipped = Statics.player.selected_weapon & 8 > 0
+		if equipped:
+			if weapon_icon_states[i] != 2:
+				weapon_icons[i].action = str(i) + "_on"
+			weapon_icon_states[i] = 2
+		else:
+			if weapon_icon_states[i] == 2:
+				weapon_icons[i].action = str(i) + "_off"
+			weapon_icon_states[i] = 1 if has else 0

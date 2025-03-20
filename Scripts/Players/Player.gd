@@ -853,10 +853,14 @@ func set_box_disable_override(state:bool) -> void:
 
 #region Bullet functions
 func _toggle_weapon(id:int) -> void:
+	var shifted_id = 1 << id
 	if Statics.stack_weapons:
-		pass
+		if selected_weapon & shifted_id > 0:
+			selected_weapon -= shifted_id
+		else:
+			selected_weapon += shifted_id
 	else:
-		pass
+		selected_weapon = shifted_id
 #endregion
 
 #region Cutscene functions

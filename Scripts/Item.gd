@@ -129,6 +129,44 @@ func _on_player_entered(body: Node2D) -> void:
 		else:
 			Statics.play_sfx_disconnected(jingle_minor)
 		Statics.add_item(type, 1)
+		match type:
+			ItemTypes.PEASHOOTER:
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 1):
+					GameCore.instance.player._toggle_weapon(1)
+				UICore.instance.update_weapon_icons()
+			ItemTypes.BOOMERANG:
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+					GameCore.instance.player._toggle_weapon(2)
+				UICore.instance.update_weapon_icons()
+			ItemTypes.RAINBOW_WAVE:
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 3):
+					GameCore.instance.player._toggle_weapon(3)
+				UICore.instance.update_weapon_icons()
+			#ItemTypes.DEVASTATOR:
+			#ItemTypes.HIGH_JUMP:
+			#ItemTypes.SHELL_SHIELD:
+			#ItemTypes.RAPID_FIRE:
+			#ItemTypes.ICE_SHELL:
+			#ItemTypes.GRAVITY_SHELL:
+			#ItemTypes.METAL_SHELL:
+			#ItemTypes.GRAVITY_SHOCK:
+			ItemTypes.SECRET_BOOMERANG:
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+					GameCore.instance.player._toggle_weapon(2)
+				UICore.instance.update_weapon_icons()
+			ItemTypes.DEBUG_WAVE:
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 3):
+					GameCore.instance.player._toggle_weapon(3)
+				UICore.instance.update_weapon_icons()
+			#ItemTypes.HEART_CONTAINER:
+			#ItemTypes.HELIX_FRAGMENT:
+			#ItemTypes.RADAR_SHELL:
+			#ItemTypes.WEAPON_LOCK_TRAP:
+			#ItemTypes.GRAVITY_LOCK_TRAP:
+			#ItemTypes.LULLABY_TRAP:
+			#ItemTypes.SPIDER_TRAP:
+			#ItemTypes.WARP_TRAP:
+			#_:
 
 
 func _on_collect_timer_timeout() -> void:
