@@ -71,4 +71,4 @@ func update_weapon_icons() -> void:
 
 
 func get_cam_center_pos() -> Vector2:
-	return cam.position + cam.offset
+	return position + cam.offset

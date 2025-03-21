@@ -290,7 +290,27 @@ func _process(delta):
 	else:
 		fire_mode = Input.is_action_pressed("Shoot")
 	if (fire_mode or Input.is_action_pressed("Strafe")) and selected_weapon > 0 and fire_cooldown == 0.0:
-		fire_cooldown = _shoot(selected_weapon, Vector2.RIGHT)
+		#region Get direction
+		var vector_aim = Vector2(Input.get_axis("AimL", "AimR"), Input.get_axis("AimU", "AimD"))
+		var vector_raw = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
+		var vector_out:Vector2
+		if vector_aim != Vector2.ZERO:
+			vector_out = vector_aim
+		elif vector_raw != Vector2.ZERO:
+			vector_out = (Vector2(Statics.VECTOR_DIAG.x * vector_raw.x,
+			Statics.VECTOR_DIAG.y * vector_raw.y).normalized())
+		else:
+			match gravity_dir:
+				Statics.DirsSurface.FLOOR:
+					vector_out = Vector2.LEFT if facing_left else Vector2.RIGHT
+				Statics.DirsSurface.LWALL:
+					vector_out = Vector2.UP if facing_left else Vector2.DOWN
+				Statics.DirsSurface.RWALL:
+					vector_out = Vector2.DOWN if facing_left else Vector2.UP
+				Statics.DirsSurface.CEILING:
+					vector_out = Vector2.RIGHT if facing_left else Vector2.LEFT
+		#endregion
+		fire_cooldown = _shoot(selected_weapon, vector_out)
 	
 	#last_position = position + box_normal.position
 	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
@@ -858,6 +878,8 @@ func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posit
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
 	GameCore.instance.current_room.layer_fg1.add_child(new_bullet)
 	new_bullet.position = pos
+	if pos == body.position:
+		new_bullet.position += normalized_velocity * Statics.FRAC_8
 	var this_cooldown = new_bullet._spawn(normalized_velocity, 1.0, false)
 	return this_cooldown
 #endregion
