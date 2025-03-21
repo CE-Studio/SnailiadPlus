@@ -80,7 +80,7 @@ static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = true
 static var stack_shells:bool = true
-static var stack_weapons:bool = true
+static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer
@@ -166,6 +166,17 @@ static func save_all():
 #endregion
 
 
+static func get_shell_level() -> int:
+	if check_item(Item.ItemTypes.METAL_SHELL):
+		return 3
+	elif check_item(Item.ItemTypes.GRAVITY_SHELL):
+		return 2
+	elif check_item(Item.ItemTypes.ICE_SHELL):
+		return 1
+	else:
+		return 0
+
+
 static func is_number(value:Variant, consider_strings := false) -> bool:
 	if value is int:
 		return true
@@ -196,4 +207,16 @@ static func play_sfx_disconnected(sound:AudioStream) -> void:
 	var new_discon_sound = disconnected_sound.instantiate()
 	GameCore.instance.sfx_group.add_child(new_discon_sound)
 	new_discon_sound.load_and_play(sound)
-	
+
+
+static func is_box_on_screen(box:CollisionShape2D) -> bool:
+	var box_size:Vector2 = box.shape.size
+	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
+	var cam_offset:Vector2 = UICore.instance.cam.offset * 0.5
+	var pos_diff:Vector2 = box.position - cam_pos
+	var within_x = absf(pos_diff.x) < cam_offset.x + box_size.x
+	var within_y = absf(pos_diff.y) < cam_offset.y + box_size.y
+	if within_x and within_y:
+		return true
+	else:
+		return false

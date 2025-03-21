@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bayqvbwmnw6g8"
-path="res://.godot/imported/BroomDev.png-d2e82b5156ee31231ed2f62b8d155ca0.ctex"
+uid="uid://bdp16hu4wl7up"
+path="res://.godot/imported/Boomerang.png-3a90b2f090af506eb5b5a69b987b2000.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/BroomDev.png"
-dest_files=["res://.godot/imported/BroomDev.png-d2e82b5156ee31231ed2f62b8d155ca0.ctex"]
+source_file="res://Assets/Images/Bullets/Player/Boomerang.png"
+dest_files=["res://.godot/imported/Boomerang.png-3a90b2f090af506eb5b5a69b987b2000.ctex"]
 
 [params]
 

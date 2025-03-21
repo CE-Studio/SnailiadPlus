@@ -68,3 +68,7 @@ func update_weapon_icons() -> void:
 			if weapon_icon_states[i] == 2:
 				weapon_icons[i].action = str(i) + "_off"
 			weapon_icon_states[i] = 1 if has else 0
+
+
+func get_cam_center_pos() -> Vector2:
+	return cam.position + cam.offset

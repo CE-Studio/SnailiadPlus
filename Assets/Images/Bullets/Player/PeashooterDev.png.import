@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rrj68djji36h"
-path="res://.godot/imported/ShockWaveDev.png-7043054e92a2bef887a3750e0d6cccaa.ctex"
+uid="uid://b2l2ihm40pwta"
+path="res://.godot/imported/PeashooterDev.png-092149f21fede13836b618f6472c2630.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/ShockWaveDev.png"
-dest_files=["res://.godot/imported/ShockWaveDev.png-7043054e92a2bef887a3750e0d6cccaa.ctex"]
+source_file="res://Assets/Images/Bullets/Player/PeashooterDev.png"
+dest_files=["res://.godot/imported/PeashooterDev.png-092149f21fede13836b618f6472c2630.ctex"]
 
 [params]
 

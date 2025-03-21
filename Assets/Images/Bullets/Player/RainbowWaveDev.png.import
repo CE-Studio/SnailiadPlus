@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2l2ihm40pwta"
-path="res://.godot/imported/PeashooterDev.png-59fd57fe2cea4f11e6ff931e1355c164.ctex"
+uid="uid://b2i44lhv6udev"
+path="res://.godot/imported/RainbowWaveDev.png-4c1b1ed67c075f1eb5672cc63c70773a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/PeashooterDev.png"
-dest_files=["res://.godot/imported/PeashooterDev.png-59fd57fe2cea4f11e6ff931e1355c164.ctex"]
+source_file="res://Assets/Images/Bullets/Player/RainbowWaveDev.png"
+dest_files=["res://.godot/imported/RainbowWaveDev.png-4c1b1ed67c075f1eb5672cc63c70773a.ctex"]
 
 [params]
 

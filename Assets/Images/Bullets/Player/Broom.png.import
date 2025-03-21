@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddtm7h56jq1k4"
-path="res://.godot/imported/PlayerBullet_BD.png-c3e489c6a11b19d40e50d54e769295c2.ctex"
+uid="uid://bw67sctdjh0oq"
+path="res://.godot/imported/Broom.png-a34918b11fbf722a951dceec5646302a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/PlayerBullet_BD.png"
-dest_files=["res://.godot/imported/PlayerBullet_BD.png-c3e489c6a11b19d40e50d54e769295c2.ctex"]
+source_file="res://Assets/Images/Bullets/Player/Broom.png"
+dest_files=["res://.godot/imported/Broom.png-a34918b11fbf722a951dceec5646302a.ctex"]
 
 [params]
 

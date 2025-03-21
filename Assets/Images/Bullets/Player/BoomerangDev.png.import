@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb137vifsvb6u"
-path="res://.godot/imported/Peashooter.png-c640d104234e84f277229fd72043a92a.ctex"
+uid="uid://dguyldvncldsc"
+path="res://.godot/imported/BoomerangDev.png-a53b430c1e76c5e77f100d1cde9de2b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/Peashooter.png"
-dest_files=["res://.godot/imported/Peashooter.png-c640d104234e84f277229fd72043a92a.ctex"]
+source_file="res://Assets/Images/Bullets/Player/BoomerangDev.png"
+dest_files=["res://.godot/imported/BoomerangDev.png-a53b430c1e76c5e77f100d1cde9de2b6.ctex"]
 
 [params]
 

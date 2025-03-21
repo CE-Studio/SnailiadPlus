@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj667omyaohqf"
-path="res://.godot/imported/ShockBody.png-d9dc33148597d8608b0d45e433793aa2.ctex"
+uid="uid://r3f0wv6x7i4k"
+path="res://.godot/imported/ShockWave.png-ed5938399d854b7cbe7fa75909134c29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/ShockBody.png"
-dest_files=["res://.godot/imported/ShockBody.png-d9dc33148597d8608b0d45e433793aa2.ctex"]
+source_file="res://Assets/Images/Bullets/Player/ShockWave.png"
+dest_files=["res://.godot/imported/ShockWave.png-ed5938399d854b7cbe7fa75909134c29.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2i44lhv6udev"
-path="res://.godot/imported/RainbowWaveDev.png-571dc1bc6dcfe93e40c646f177e24a0a.ctex"
+uid="uid://ddtm7h56jq1k4"
+path="res://.godot/imported/PlayerBulletBD.png-260e22f5c729ee022854cac54665e1cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/RainbowWaveDev.png"
-dest_files=["res://.godot/imported/RainbowWaveDev.png-571dc1bc6dcfe93e40c646f177e24a0a.ctex"]
+source_file="res://Assets/Images/Bullets/Player/PlayerBulletBD.png"
+dest_files=["res://.godot/imported/PlayerBulletBD.png-260e22f5c729ee022854cac54665e1cd.ctex"]
 
 [params]
 
