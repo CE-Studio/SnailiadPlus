@@ -72,6 +72,8 @@ frame = 3
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
+[node name="Hearts" type="Node2D" parent="."]
+
 [node name="Border" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)

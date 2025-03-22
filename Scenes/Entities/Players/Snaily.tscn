@@ -81,8 +81,18 @@ position = Vector2(12, 7)
 target_position = Vector2(12, 0)
 hit_from_inside = true
 
-[node name="CeilingCast" type="RayCast2D" parent="CastGroup"]
-position = Vector2(10, -5)
+[node name="CeilingCast0" type="RayCast2D" parent="CastGroup"]
+position = Vector2(11, -5)
+target_position = Vector2(0, -12)
+hit_from_inside = true
+
+[node name="CeilingCast1" type="RayCast2D" parent="CastGroup"]
+position = Vector2(0, -5)
+target_position = Vector2(0, -12)
+hit_from_inside = true
+
+[node name="CeilingCast2" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-11, -5)
 target_position = Vector2(0, -12)
 hit_from_inside = true
 

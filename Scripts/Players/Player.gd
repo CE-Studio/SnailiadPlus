@@ -8,11 +8,6 @@ extends CutsceneControllable
 
 
 #region Global control
-const MAX_DIST_CASTS:int = 4
-const THIN_TUNNEL_ENTRANCE_STEPS:int = 16
-const DIST_CAST_EDGE_BUFFER:int = 0
-const STUCK_DETECT_MARGIN:float = Statics.FRAC_64
-
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
 ## The size of the player's normal hitbox on the last frame.
@@ -179,7 +174,7 @@ var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
 var front_casts:Array
-var ceil_cast:RayCast2D
+var ceil_casts:Array
 
 
 # _ready() is called every time this script is instanced
@@ -197,7 +192,6 @@ func _ready():
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
 	corner_cast = $"CastGroup/RoundCornerCast"
-	#front_cast = $"CastGroup/FrontCast"
 	ground_casts = [
 		$"CastGroup/GroundCast0",
 		$"CastGroup/GroundCast1",
@@ -209,10 +203,18 @@ func _ready():
 		$"CastGroup/FrontCast1",
 		$"CastGroup/FrontCast2",
 	]
-	ceil_cast = $"CastGroup/CeilingCast"
+	ceil_casts = [
+		$"CastGroup/CeilingCast0",
+		$"CastGroup/CeilingCast1",
+		$"CastGroup/CeilingCast2"
+	]
 	
 	var rect = box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
+	
+	max_health = 3 + Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
+	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
+	health = max_health
 
 
 #region Movement
@@ -312,10 +314,6 @@ func _process(delta):
 		#endregion
 		fire_cooldown = _shoot(selected_weapon, vector_out)
 	
-	#last_position = position + box_normal.position
-	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
-	#last_gravity = gravity_dir
-	#grounded_last_frame = grounded #body.is_on_floor() #grounded
 	last_position = position + box_normal.position
 	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
 	last_gravity = gravity_dir
@@ -362,6 +360,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	var rel_down_pressed:bool
 	var rel_vectors:Array
 	var remapped_dirs:Array
+	var suppress_wall_grab:bool = false
 	#region Set relative
 	match surface:
 		Statics.DirsSurface.FLOOR:
@@ -465,13 +464,14 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	
 	if grounded:
 		var unshell_on_jump:bool = false
-		if (Input.is_action_just_pressed("Jump") or
-		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))):
+		if ((Input.is_action_just_pressed("Jump") or
+		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))) and 
+		not _check_ceil_casts()[0]):
 			if (not _check_ability(retain_gravity_on_airborne)) and gravity_dir != home_gravity and grounded_last_frame:
 				var adjust_position = Vector2.ZERO
-				if _get_dir_opposite(surface) != home_gravity:
-					adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
-					print("^ Airborne from jump off wall or ceiling")
+				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
+				suppress_wall_grab = true
+				print("^ Airborne from jump off wall or ceiling")
 				_set_direction(home_gravity, not facing_left)
 				if adjust_position != Vector2.ZERO:
 					body.position = adjust_position
@@ -539,7 +539,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			(current_state == AnimStates.IDLE or current_state == AnimStates.JUMP)):
 				current_state = AnimStates.FALL
 				_play_anim("fall")
-			if Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time):
+			if (Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time) and 
+			not _check_ceil_casts()[0]):
 				rel_vel.y = jump_power[read_i_jump] * jump_mod
 				grounded = false
 				sfx_jump.play()
@@ -548,8 +549,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				jump_buffer_counter = jump_buffer
 				coyote_time_counter = coyote_time
 	
-	if body.is_on_wall() and rel_axis.x != 0.0:
-		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not ceil_cast.is_colliding()
+	if body.is_on_wall() and rel_axis.x != 0.0 and not suppress_wall_grab:
+		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not _check_ceil_casts()[0]
 		and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
 			rel_vel = Vector2.ZERO
 			var new_gravity
@@ -818,6 +819,25 @@ func _check_front_casts() -> Array:
 	var hit = false
 	var distance = INF
 	for i in front_casts:
+		if i.is_colliding():
+			hit = true
+			var origin = i.global_position
+			var collision = i.get_collision_point()
+			var new_distance = origin.distance_to(collision)
+			if new_distance < distance:
+				distance = new_distance
+	return [ hit, distance ]
+
+
+# Queries the player's ceiling RayCast2Ds to see if any of them are colliding with
+# a ceiling, and at what distance if so
+# Output - an array of length 2 where
+#              [0] is true if a ceiling was found, false if not
+#              [1] is the shortest distance at which a floor was found. INF if no ceiling was found
+func _check_ceil_casts() -> Array:
+	var hit = false
+	var distance = INF
+	for i in ceil_casts:
 		if i.is_colliding():
 			hit = true
 			var origin = i.global_position
