@@ -1,6 +1,6 @@
 @icon("res://Editor/ico/Item.svg")
-extends Node2D
 class_name Item
+extends Node2D
 
 
 #region Variables

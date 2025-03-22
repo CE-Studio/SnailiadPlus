@@ -66,6 +66,7 @@ const FRAC_128:float = 0.0078125
 const VECTOR_DIAG:Vector2 = Vector2(cos(deg_to_rad(40)), sin(deg_to_rad(40)))
 
 
+const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
 
@@ -169,12 +170,11 @@ static func save_all():
 static func get_shell_level() -> int:
 	if check_item(Item.ItemTypes.METAL_SHELL):
 		return 3
-	elif check_item(Item.ItemTypes.GRAVITY_SHELL):
+	if check_item(Item.ItemTypes.GRAVITY_SHELL):
 		return 2
-	elif check_item(Item.ItemTypes.ICE_SHELL):
+	if check_item(Item.ItemTypes.ICE_SHELL):
 		return 1
-	else:
-		return 0
+	return 0
 
 
 static func is_number(value:Variant, consider_strings := false) -> bool:
@@ -218,5 +218,4 @@ static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
 	var within_y = absf(pos_diff.y) < cam_offset.y + (box_size.y * 0.5)
 	if within_x and within_y:
 		return true
-	else:
-		return false
+	return false

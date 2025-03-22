@@ -16,14 +16,6 @@ size = Vector2(48, 48)
 [node name="PlayerBulletBD" type="Node2D"]
 script = ExtResource("1_yk50o")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_0nsho")
-hframes = 6
-vframes = 12
-frame = 2
-script = ExtResource("2_2r7l5")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("4_0nsho")
 texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBD.json"
@@ -48,3 +40,11 @@ bus = &"Sfx"
 [node name="Power" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("6_xq3d5")
 bus = &"Sfx"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_0nsho")
+hframes = 6
+vframes = 12
+frame = 2
+script = ExtResource("2_2r7l5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -52,11 +52,18 @@ extends Node2D
 #endregion
 
 
-func instance():
+func spawn(spawn_all:bool):
 	if Statics.show_entity_layer:
 		map_entity.modulate = Color(1, 1, 1, 0.5)
 	else:
 		map_entity.modulate = Color(1, 1, 1, 0)
+	# Properly spawn all objects in room
+	if spawn_all:
+		var layer_array = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
+		for layer in layer_array:
+			for child in layer.get_children():
+				if child is Door:
+					child.spawn()
 
 
 func _process(_delta):

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://vvs4fclk0j13"]
+[gd_scene load_steps=7 format=4 uid="uid://vvs4fclk0j13"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_qskkn"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_lmwas"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_hi3re"]
+[ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_jjgcd"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_hi3re"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjgcd"]
@@ -46,9 +47,17 @@ tile_set = ExtResource("2_lmwas")
 [node name="FG1Layer" type="Parallax2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
-tile_map_data = PackedByteArray("AAAeABQAAAAOAHEAAAAjABoAAAAOAHEAAAAXABQAAAALAHEAAAASABoAAAALAHEAAAAAAAYAAAAAAMsAAAAAAAcAAAAAAMsAAAAAAAgAAAAAAMsAAAAyAAUAAAAAAMsAAAAyAAYAAAAAAMsAAAAyAAcAAAAAAMsAAAA=")
+tile_map_data = PackedByteArray("AAAeABQAAAAOAHEAAAAjABoAAAAOAHEAAAAXABQAAAALAHEAAAASABoAAAALAHEAAAA=")
 tile_set = ExtResource("2_lmwas")
 collision_enabled = false
+
+[node name="Door" parent="FG1Layer" instance=ExtResource("3_jjgcd")]
+position = Vector2(8, 120)
+direction = 3
+lock_type = 0
+
+[node name="Door2" parent="FG1Layer" instance=ExtResource("3_jjgcd")]
+position = Vector2(808, 104)
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
 

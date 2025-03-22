@@ -1,9 +1,10 @@
 @icon("res://Editor/ico/PlayerBullet.svg")
-extends Node2D
 class_name PlayerBullet
+extends Node2D
 
 
 #region Variables
+var type:int = 0
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
 var velocity:float = 0.0
@@ -15,15 +16,15 @@ var powered:bool = false
 var despawn_offscreen:bool = false
 var single_frame_hit_flag:bool = false
 
+var collide_with_wall:bool
+var single_hit:bool
+
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var area:Area2D = $"Area2D"
 @onready var box_normal:CollisionShape2D = $"Area2D/Normal"
 @onready var box_power:CollisionShape2D = $"Area2D/Power"
 @onready var sfx_normal:AudioStreamPlayer = $"AudioGroup/Normal"
 @onready var sfx_power:AudioStreamPlayer = $"AudioGroup/Power"
-
-var collide_with_wall:bool
-var single_hit:bool
 #endregion
 
 

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
 
 [node name="GameScene" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_x87qo")
 
 [node name="SfxGroup" type="Node" parent="."]
