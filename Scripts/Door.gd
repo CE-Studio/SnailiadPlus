@@ -86,7 +86,7 @@ func _process(_delta: float) -> void:
 
 
 func _set_editor_marker():
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() or box_group == null:
 		return
 	var target_frame
 	var marker = $"MarkerSprite"
@@ -107,7 +107,8 @@ func _set_editor_marker():
 	marker.frame = target_frame
 
 
-func _on_bullet_entered(bullet:Area2D) -> void:
+func _on_bullet_entered(area:Area2D) -> void:
+	var bullet = area.get_parent()
 	if is_locked:
 		sfx_ping.play()
 	else:

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckorsdyiwbgow"]
+
+[ext_resource type="Script" uid="uid://d24ostoyx12ou" path="res://Scripts/Breakable.gd" id="1_btjpg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btjpg"]
+size = Vector2(16, 16)
+
+[node name="Breakable" type="Node2D"]
+script = ExtResource("1_btjpg")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_btjpg")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_bullet_entered"]

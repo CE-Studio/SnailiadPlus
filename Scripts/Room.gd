@@ -35,19 +35,21 @@ extends Node2D
 
 #region Internals
 @onready var layer_entity:Node2D = $"EntityLayer"
-@onready var map_entity:Node2D = $"EntityLayer/Map"
+@onready var map_entity:TileMapLayer = $"EntityLayer/Map"
 @onready var layer_fg2:Node2D = $"FG2Layer"
-@onready var map_fg2:Node2D = $"FG2Layer/Map"
+@onready var map_fg2:TileMapLayer = $"FG2Layer/Map"
 @onready var layer_fg1:Node2D = $"FG1Layer"
-@onready var map_fg1:Node2D = $"FG1Layer/Map"
+@onready var map_fg1:TileMapLayer = $"FG1Layer/Map"
 @onready var layer_ground:Node2D = $"GroundLayer"
-@onready var map_ground:Node2D = $"GroundLayer/Map"
+@onready var map_ground:TileMapLayer = $"GroundLayer/Map"
 @onready var layer_bg1:Node2D = $"BG1Layer"
-@onready var map_bg1:Node2D = $"BG1Layer/Map"
+@onready var map_bg1:TileMapLayer = $"BG1Layer/Map"
 @onready var layer_bg2:Node2D = $"BG2Layer"
-@onready var map_bg2:Node2D = $"BG2Layer/Map"
+@onready var map_bg2:TileMapLayer = $"BG2Layer/Map"
 @onready var layer_sky:Node2D = $"SkyLayer"
-@onready var map_sky:Node2D = $"SkyLayer/Map"
+@onready var map_sky:TileMapLayer = $"SkyLayer/Map"
+
+@onready var breakable_scene = load("res://Scenes/Entities/Breakable.tscn")
 #endregion
 #endregion
 
@@ -57,6 +59,32 @@ func spawn(spawn_all:bool):
 		map_entity.modulate = Color(1, 1, 1, 0.5)
 	else:
 		map_entity.modulate = Color(1, 1, 1, 0)
+	
+	# Get all entity tiles and spawn associated objects
+	for tile in map_entity.get_used_cells():
+		var tile_coords = map_entity.get_cell_atlas_coords(tile)
+		match tile_coords:
+			Vector2i(8, 4):
+				var boom_tile:Breakable = breakable_scene.instantiate()
+				layer_ground.add_child(boom_tile)
+				boom_tile.position = (tile * 16) + Vector2i(8, 8)
+				boom_tile.spawn(tile, Breakable.TileTypes.BOOMERANG, false)
+			Vector2i(9, 4):
+				var wave_tile:Breakable = breakable_scene.instantiate()
+				layer_ground.add_child(wave_tile)
+				wave_tile.position = (tile * 16) + Vector2i(8, 8)
+				wave_tile.spawn(tile, Breakable.TileTypes.RAINBOW_WAVE, false)
+			Vector2i(10, 4):
+				var dev_tile:Breakable = breakable_scene.instantiate()
+				layer_ground.add_child(dev_tile)
+				dev_tile.position = (tile * 16) + Vector2i(8, 8)
+				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, false)
+			Vector2i(1, 28):
+				var dev_tile:Breakable = breakable_scene.instantiate()
+				layer_ground.add_child(dev_tile)
+				dev_tile.position = (tile * 16) + Vector2i(8, 8)
+				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
+	
 	# Properly spawn all objects in room
 	if spawn_all:
 		var layer_array = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
