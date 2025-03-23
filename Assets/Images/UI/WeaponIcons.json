@@ -1,0 +1,77 @@
+{
+	"tiles": [4, 2],
+	"animations": {
+		"0_off": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"0_on": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false]
+			]
+		},
+		"1_off": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"1_on": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false]
+			]
+		},
+		"2_off": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"2_on": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false]
+			]
+		},
+		"3_off": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"3_on": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false]
+			]
+		}
+	}
+}

@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://d2uhssbtiipec"]
+
+[ext_resource type="Script" uid="uid://bbux3c3vr0y0j" path="res://Scripts/Bullets/Player/PlayerBulletBD.gd" id="1_yk50o"]
+[ext_resource type="Texture2D" uid="uid://ddtm7h56jq1k4" path="res://Assets/Images/Bullets/Player/PlayerBulletBD.png" id="2_0nsho"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_2r7l5"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_0nsho"]
+[ext_resource type="AudioStream" uid="uid://ci2wulxf6x53r" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBD.ogg" id="5_oohtp"]
+[ext_resource type="AudioStream" uid="uid://caydxn5jc7fqo" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBDPower.ogg" id="6_xq3d5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xooq3"]
+size = Vector2(48, 48)
+
+[node name="PlayerBulletBD" type="Node2D"]
+script = ExtResource("1_yk50o")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_0nsho")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBD.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 65
+
+[node name="Normal" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nsho")
+
+[node name="Power" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_xooq3")
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Normal" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_oohtp")
+bus = &"Sfx"
+
+[node name="Power" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("6_xq3d5")
+bus = &"Sfx"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_0nsho")
+hframes = 6
+vframes = 12
+frame = 2
+script = ExtResource("2_2r7l5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

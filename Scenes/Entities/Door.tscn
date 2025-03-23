@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://brx6hvienl8qy"]
+
+[ext_resource type="Script" uid="uid://d0tkoc84o7fdc" path="res://Scripts/Door.gd" id="1_yyb1i"]
+[ext_resource type="Texture2D" uid="uid://bnoc5snsu6wge" path="res://Assets/Images/Door.png" id="2_8i1hx"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_gt038"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_gt038"]
+[ext_resource type="AudioStream" uid="uid://4kkt8p8sasxi" path="res://Assets/Sounds/Sfx/DoorOpen.ogg" id="5_s521q"]
+[ext_resource type="AudioStream" uid="uid://6rd5btrpl36l" path="res://Assets/Sounds/Sfx/DoorClose.ogg" id="6_3w6cd"]
+[ext_resource type="AudioStream" uid="uid://da0tclibjxftr" path="res://Assets/Sounds/Sfx/Ping.ogg" id="7_p6ia1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rp22"]
+size = Vector2(16, 48)
+
+[node name="Door" type="Node2D"]
+script = ExtResource("1_yyb1i")
+
+[node name="BoxGroup" type="Node2D" parent="."]
+
+[node name="BulletBox" type="Area2D" parent="BoxGroup"]
+collision_layer = 16
+collision_mask = 33
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/BulletBox"]
+shape = SubResource("RectangleShape2D_5rp22")
+
+[node name="SolidBox" type="StaticBody2D" parent="BoxGroup"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/SolidBox"]
+shape = SubResource("RectangleShape2D_5rp22")
+disabled = true
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_gt038")
+texture_path = "res://Assets/Images/Door.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_8i1hx")
+hframes = 18
+vframes = 5
+script = ExtResource("3_gt038")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Open" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_s521q")
+bus = &"Sfx"
+
+[node name="Close" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("6_3w6cd")
+bus = &"Sfx"
+
+[node name="Ping" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("7_p6ia1")
+bus = &"Sfx"
+
+[connection signal="area_entered" from="BoxGroup/BulletBox" to="." method="_on_bullet_entered"]

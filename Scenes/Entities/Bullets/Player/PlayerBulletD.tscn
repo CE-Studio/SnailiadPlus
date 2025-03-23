@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvrifp0nton52"]
+
+[ext_resource type="Script" uid="uid://dbe1exqxfon5i" path="res://Scripts/Bullets/Player/PlayerBulletD.gd" id="1_0q70w"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_3xsxv"]
+
+[node name="PlayerBulletD" type="Node2D"]
+script = ExtResource("1_0q70w")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+script = ExtResource("2_3xsxv")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -1,0 +1,117 @@
+{
+	"tiles": [6, 12],
+	"animations": {
+		"normal_U": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[0, 1, false, false],
+				[0, 2, false, false],
+				[0, 3, false, false],
+				[0, 4, false, false],
+				[0, 5, false, false]
+			]
+		},
+		"normal_UR": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[1, 1, false, false],
+				[1, 2, false, false],
+				[1, 3, false, false],
+				[1, 4, false, false],
+				[1, 5, false, false]
+			]
+		},
+		"normal_R": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[2, 0, false, false],
+				[2, 1, false, false],
+				[2, 2, false, false],
+				[2, 3, false, false],
+				[2, 4, false, false],
+				[2, 5, false, false]
+			]
+		},
+		"normal_DR": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, true],
+				[1, 1, false, true],
+				[1, 2, false, true],
+				[1, 3, false, true],
+				[1, 4, false, true],
+				[1, 5, false, true]
+			]
+		},
+		"normal_D": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, true],
+				[0, 1, false, true],
+				[0, 2, false, true],
+				[0, 3, false, true],
+				[0, 4, false, true],
+				[0, 5, false, true]
+			]
+		},
+		"normal_DL": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, true, true],
+				[1, 1, true, true],
+				[1, 2, true, true],
+				[1, 3, true, true],
+				[1, 4, true, true],
+				[1, 5, true, true]
+			]
+		},
+		"normal_L": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[2, 0, true, false],
+				[2, 1, true, false],
+				[2, 2, true, false],
+				[2, 3, true, false],
+				[2, 4, true, false],
+				[2, 5, true, false]
+			]
+		},
+		"normal_UL": {
+			"fps": 14,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, true, false],
+				[1, 1, true, false],
+				[1, 2, true, false],
+				[1, 3, true, false],
+				[1, 4, true, false],
+				[1, 5, true, false]
+			]
+		}
+	}
+}

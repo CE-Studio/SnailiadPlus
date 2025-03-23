@@ -2,22 +2,24 @@ class_name GameCore
 extends Node2D
 
 
+static var instance:GameCore
+
+
 var player:Player
-var cam_layer:Node2D
+var cam_layer:UICore
 var current_room:Node2D
 var current_room_name:String
-
-
-static var instance:GameCore
+var sfx_group:Node
 
 
 func _ready() -> void:
 	instance = self
+	sfx_group = $"SfxGroup"
 	for child in get_children():
 		if child is Player:
 			player = child
 	cam_layer = $"CameraLayer"
-	cam_layer.player = player
+	cam_layer.instantiate()
 	if current_room == null:
 		spawn_room("res://Scenes/Rooms/SnailTown/TestRoom1.tscn")
 
@@ -28,13 +30,14 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 		current_room.queue_free()
 	var new_room:Room = load(path).instantiate()
 	add_child(new_room)
+	move_child(new_room, 0)
 	current_room = new_room
 	player.reparent(new_room.layer_ground)
-	new_room.instance()
 	if entrance != -1:
 		for child in new_room.get_children():
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
 					player.reset_position(child.exit_marker.global_position + offset)
-					cam_layer.set_layer_position(player.position)
+					cam_layer.cam.set_layer_position(player.position)
+	new_room.spawn(true)
 	player.set_box_disable_override(false)

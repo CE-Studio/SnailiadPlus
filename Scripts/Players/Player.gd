@@ -8,11 +8,6 @@ extends CutsceneControllable
 
 
 #region Global control
-const MAX_DIST_CASTS:int = 4
-const THIN_TUNNEL_ENTRANCE_STEPS:int = 16
-const DIST_CAST_EDGE_BUFFER:int = 0
-const STUCK_DETECT_MARGIN:float = Statics.FRAC_64
-
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
 ## The size of the player's normal hitbox on the last frame.
@@ -48,6 +43,7 @@ var holding_shell:bool = false
 var axis_flag:bool
 var against_wall:bool
 var fire_cooldown:float
+var fire_mode:bool = false
 var idle_timer:Timer
 var is_idling:bool
 var read_i_speed:int
@@ -178,7 +174,7 @@ var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
 var front_casts:Array
-var ceil_cast:RayCast2D
+var ceil_casts:Array
 
 
 # _ready() is called every time this script is instanced
@@ -196,7 +192,6 @@ func _ready():
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
 	corner_cast = $"CastGroup/RoundCornerCast"
-	#front_cast = $"CastGroup/FrontCast"
 	ground_casts = [
 		$"CastGroup/GroundCast0",
 		$"CastGroup/GroundCast1",
@@ -208,36 +203,22 @@ func _ready():
 		$"CastGroup/FrontCast1",
 		$"CastGroup/FrontCast2",
 	]
-	ceil_cast = $"CastGroup/CeilingCast"
+	ceil_casts = [
+		$"CastGroup/CeilingCast0",
+		$"CastGroup/CeilingCast1",
+		$"CastGroup/CeilingCast2"
+	]
 	
 	var rect = box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
-
-
-## _process() is called every frame and is used to update various timers and equipped weaponry
-#func _process(delta):
-#	super(delta)
-#	
-#	# Noclip!!
-#	if Statics.noclip_mode:
-#		box_normal.set_deferred("disabled", true)
-#		box_shell.set_deferred("disabled", true)
-#		var move_speed:float = 160.0
-#		if Input.get_action_raw_strength("Jump"):
-#			move_speed = 400.0
-#		var move_dir = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
-#		body.velocity = move_dir * move_speed
-#		body.move_and_slide()
-#		position = body.position
-#	var ray:RayCast2D
-#	
-#	# Marking the "has jumped" flag for Snail NPC 01's dialogue
-#	#if Input.is_action_just_pressed("Jump"):
-#		#Statics.
+	
+	max_health = 3 + Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
+	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
+	health = max_health
 
 
 #region Movement
-# This function is called 60 times per second independent of framerate.
+# This function is called once every frame
 # It's used here to control player movement
 func _process(delta):
 	super(delta)
@@ -260,14 +241,9 @@ func _process(delta):
 	else:
 		box_normal.disabled = shelled
 		box_shell.disabled = not shelled
-	# To start things off, we mark our current position as the last position we took. Same with our hitbox size.
-	# Among other things, this is used to test for ground when we're airborne.
-	#last_position = position + box_normal.position
-	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
-	#last_gravity = gravity_dir
-	#grounded_last_frame = body.is_on_floor() #grounded
-	# Next, we decrease the fire cooldown, and increase the coyote time and jump buffer as necessary
-	fire_cooldown = clampf(fire_cooldown, 0.0, INF)
+	# To start things off, we decrease the fire cooldown,
+	# and increase the coyote time and jump buffer as necessary
+	fire_cooldown = clampf(fire_cooldown - delta, 0.0, INF)
 	if Input.is_action_pressed("Jump"):
 		jump_buffer_counter += delta
 	else:
@@ -283,16 +259,17 @@ func _process(delta):
 		grav_shock_timer += delta
 	else:
 		grav_shock_timer = 0
-	# Home gravity thingy
+	# We update our home direction assuming gravity keep
+	# behavior is set to any state change
+	if Statics.data_general["grav_keep_type"] != 1:
+		home_gravity = default_gravity
 	
 	# Next, we target a different block of movement code dependent on our current gravity
 	# Under typical circumstances, each gravity case would be the same with just a few directionally-dependent values adjusted,
 	# but they're referenced separately like this in case a certain character needs a unique case for a particular direction
 	if not in_death_cutscene:
-		#read_i_speed = Statics.get_shell_level
-		#read_i_jump = read_i_speed + (4 if Statics.check_for_item(Statics.Items.HighJump) else 0)
-		read_i_speed = 0
-		read_i_jump = 0
+		read_i_speed = Statics.get_shell_level()
+		read_i_jump = read_i_speed + (4 if Statics.check_item(Item.ItemTypes.HIGH_JUMP) else 0)
 		match gravity_dir:
 			Statics.DirsSurface.FLOOR:
 				_case_down(delta)
@@ -309,10 +286,34 @@ func _process(delta):
 		if body.velocity.y == INF or body.velocity.y == -INF:
 			body.velocity.y = 0
 	
-	#last_position = position + box_normal.position
-	#last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
-	#last_gravity = gravity_dir
-	#grounded_last_frame = grounded #body.is_on_floor() #grounded
+	if Statics.data_general["shoot_mode"]:
+		if Input.is_action_just_pressed("Shoot"):
+			fire_mode = not fire_mode
+	else:
+		fire_mode = Input.is_action_pressed("Shoot")
+	if (fire_mode or Input.is_action_pressed("Strafe")) and selected_weapon > 0 and fire_cooldown == 0.0:
+		#region Get direction
+		var vector_aim = Vector2(Input.get_axis("AimL", "AimR"), Input.get_axis("AimU", "AimD"))
+		var vector_raw = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
+		var vector_out:Vector2
+		if vector_aim != Vector2.ZERO:
+			vector_out = vector_aim
+		elif vector_raw != Vector2.ZERO:
+			vector_out = (Vector2(Statics.VECTOR_DIAG.x * vector_raw.x,
+			Statics.VECTOR_DIAG.y * vector_raw.y).normalized())
+		else:
+			match gravity_dir:
+				Statics.DirsSurface.FLOOR:
+					vector_out = Vector2.LEFT if facing_left else Vector2.RIGHT
+				Statics.DirsSurface.LWALL:
+					vector_out = Vector2.UP if facing_left else Vector2.DOWN
+				Statics.DirsSurface.RWALL:
+					vector_out = Vector2.DOWN if facing_left else Vector2.UP
+				Statics.DirsSurface.CEILING:
+					vector_out = Vector2.RIGHT if facing_left else Vector2.LEFT
+		#endregion
+		fire_cooldown = _shoot(selected_weapon, vector_out)
+	
 	last_position = position + box_normal.position
 	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
 	last_gravity = gravity_dir
@@ -359,6 +360,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	var rel_down_pressed:bool
 	var rel_vectors:Array
 	var remapped_dirs:Array
+	var suppress_wall_grab:bool = false
 	#region Set relative
 	match surface:
 		Statics.DirsSurface.FLOOR:
@@ -455,23 +457,22 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				adjust_amount = -adjust_amount
 			body.translate(rel_vectors[Statics.DirsSurface.RWALL] * adjust_amount)
 	
-	if grounded:#body.is_on_floor():
-		#grounded = true
+	var aim_vector = Vector2(Input.get_axis("AimL", "AimR"), Input.get_axis("AimU", "AimD"))
+	if (shelled and (Input.is_action_pressed("Shoot") or Input.is_action_pressed("Strafe"))
+	or aim_vector != Vector2.ZERO):
+		_toggle_shell()
+	
+	if grounded:
 		var unshell_on_jump:bool = false
-		if (Input.is_action_just_pressed("Jump") or
-		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))):
+		if ((Input.is_action_just_pressed("Jump") or
+		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))) and 
+		not _check_ceil_casts()[0]):
 			if (not _check_ability(retain_gravity_on_airborne)) and gravity_dir != home_gravity and grounded_last_frame:
-				#var new_left = facing_left
 				var adjust_position = Vector2.ZERO
-				if _get_dir_opposite(surface) != home_gravity:
-					#var surface_vector = rel_vectors[Statics.DirsSurface.FLOOR]
-					#var adjust_vector = (surface_vector * box_difference) + box_adjust[surface]
-					#body.call_deferred("translate", adjust_vector)
-					#_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
-					adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
-					print("^ Airborne from jump off wall or ceiling")
-					#facing_left = not facing_left
-				_set_direction(home_gravity, not facing_left)#new_left)
+				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
+				suppress_wall_grab = true
+				print("^ Airborne from jump off wall or ceiling")
+				_set_direction(home_gravity, not facing_left)
 				if adjust_position != Vector2.ZERO:
 					body.position = adjust_position
 					position = body.position
@@ -505,10 +506,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			((gravity_dir == opposite_dir or new_gravity == opposite_dir) and _check_ability(can_round_opposite_outer_corners)) or 
 			((gravity_dir != opposite_dir and new_gravity != opposite_dir) and _check_ability(can_round_outer_corners)))):
 				var rel_wall = Statics.DirsSurface.RWALL if facing_left else Statics.DirsSurface.LWALL
-				#var surface_vector = rel_vectors[rel_wall]
-				#var adjust_vector = (surface_vector * (box_difference + 4)) + box_adjust[surface]
-				#body.call_deferred("translate", adjust_vector)
-				#_translate_adjust(surface, new_gravity, rel_vectors[rel_wall], 4)
 				var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_wall])
 				print("^ Airborne from rounding outer corner")
 				_set_direction(new_gravity, facing_left)
@@ -523,8 +520,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			var new_left = facing_left
 			var adjust_position = Vector2.ZERO
 			if _get_dir_opposite(surface) != home_gravity:
-				#body.call_deferred("translate", rel_vectors[Statics.DirsSurface.FLOOR] * box_difference)
-				#_translate_adjust(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
 				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
 				print("^ Airborne from walking off wall or ceiling")
 				facing_left = not facing_left
@@ -544,7 +539,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			(current_state == AnimStates.IDLE or current_state == AnimStates.JUMP)):
 				current_state = AnimStates.FALL
 				_play_anim("fall")
-			if Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time):
+			if (Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time) and 
+			not _check_ceil_casts()[0]):
 				rel_vel.y = jump_power[read_i_jump] * jump_mod
 				grounded = false
 				sfx_jump.play()
@@ -553,8 +549,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				jump_buffer_counter = jump_buffer
 				coyote_time_counter = coyote_time
 	
-	if body.is_on_wall() and rel_axis.x != 0.0:
-		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not ceil_cast.is_colliding()
+	if body.is_on_wall() and rel_axis.x != 0.0 and not suppress_wall_grab:
+		if ((rel_axis.y < 0.0 or (rel_axis.y > 0.0 and not grounded)) and not _check_ceil_casts()[0]
 		and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
 			rel_vel = Vector2.ZERO
 			var new_gravity
@@ -568,8 +564,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			else:
 				new_left = not facing_left
 			var rel_against_wall = Statics.DirsSurface.LWALL if facing_left else Statics.DirsSurface.RWALL
-			#body.call_deferred("translate", rel_vectors[rel_against_wall] * box_difference)
-			#_translate_adjust(surface, new_gravity, rel_vectors[rel_against_wall])
 			var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_against_wall])
 			print("^ Grounded from grabbing wall")
 			_set_direction(new_gravity, new_left)
@@ -594,10 +588,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
-#	call_deferred("_finalize_move", surface, rel_axis, rel_vectors)
-#
-#
-#func _finalize_move(surface:Statics.DirsSurface, rel_axis:Vector2, rel_vectors:Array):
 	body.move_and_slide()
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
 		if surface == Statics.DirsSurface.FLOOR or surface == Statics.DirsSurface.CEILING:
@@ -611,22 +601,21 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				_play_anim("land")
 		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
-			#_translate_adjust(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
 			var adjust_position = _get_adjust_position(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
 			print("^ Grounded from grabbing ceiling")
 			_set_direction(_get_dir_opposite(surface), not facing_left)
 			body.position = adjust_position
-			#body.call_deferred("translate", rel_vectors[_get_dir_opposite(surface)] * 2)
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 			_play_anim("land")
 	
 	if body.velocity == Vector2.ZERO:
-		position = body.position.round() #Stops strage jitter from camera smoothing
+		position = body.position.round() #Stops strange jitter from camera smoothing
 	else:
 		position = body.position
 #endregion
 
 
+#region Player utilities
 # Takes a character ability as an input and checks to see if the ability's values
 # allow for the ability to be executed.
 # Input  - an ability array
@@ -840,6 +829,25 @@ func _check_front_casts() -> Array:
 	return [ hit, distance ]
 
 
+# Queries the player's ceiling RayCast2Ds to see if any of them are colliding with
+# a ceiling, and at what distance if so
+# Output - an array of length 2 where
+#              [0] is true if a ceiling was found, false if not
+#              [1] is the shortest distance at which a floor was found. INF if no ceiling was found
+func _check_ceil_casts() -> Array:
+	var hit = false
+	var distance = INF
+	for i in ceil_casts:
+		if i.is_colliding():
+			hit = true
+			var origin = i.global_position
+			var collision = i.get_collision_point()
+			var new_distance = origin.distance_to(collision)
+			if new_distance < distance:
+				distance = new_distance
+	return [ hit, distance ]
+
+
 func set_box_disable_override(state:bool) -> void:
 	return
 	override_box_disable = state
@@ -849,6 +857,53 @@ func set_box_disable_override(state:bool) -> void:
 	else:
 		box_normal.disabled = shelled
 		box_shell.disabled = not shelled
+#endregion
+
+
+#region Bullet functions
+func _toggle_weapon(id:int) -> void:
+	var shifted_id = 1 << id
+	if Statics.stack_weapons:
+		if selected_weapon & shifted_id > 0:
+			selected_weapon -= shifted_id
+		else:
+			selected_weapon += shifted_id
+	else:
+		selected_weapon = shifted_id
+
+
+func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
+	var bullet_type:String = ""
+	#region Determine bullet type
+	if Statics.stack_weapons:
+		if selected_weapon & 1 > 0:
+			bullet_type += "A"
+		if selected_weapon & 2 > 0:
+			bullet_type += "B"
+		if selected_weapon & 4 > 0:
+			bullet_type += "C"
+		if selected_weapon & 8 > 0:
+			bullet_type += "D"
+	else:
+		if selected_weapon == 8:
+			bullet_type = "BD"
+		elif selected_weapon == 4:
+			bullet_type = "BC"
+		elif selected_weapon == 2:
+			bullet_type = "B"
+		elif selected_weapon == 1:
+			bullet_type = "A"
+	#endregion
+	var bullet_scene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
+	var new_bullet:PlayerBullet = bullet_scene.instantiate()
+	GameCore.instance.current_room.layer_fg1.add_child(new_bullet)
+	new_bullet.position = pos
+	if pos == body.position:
+		new_bullet.position += normalized_velocity * Statics.FRAC_8
+	var this_cooldown = new_bullet._spawn(normalized_velocity, 1.0, false)
+	return this_cooldown
+#endregion
+
 
 #region Cutscene functions
 func impulse(direction:Vector2) -> bool:
