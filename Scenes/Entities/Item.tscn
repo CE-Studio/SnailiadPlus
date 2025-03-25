@@ -24,6 +24,7 @@ shape = SubResource("RectangleShape2D_qdhsi")
 
 [node name="CollectTimer" type="Timer" parent="."]
 wait_time = 2.0
+one_shot = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
 [connection signal="timeout" from="CollectTimer" to="." method="_on_collect_timer_timeout"]

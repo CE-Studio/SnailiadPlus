@@ -78,6 +78,7 @@ collision_enabled = false
 [node name="EntityLayer" type="Node2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
+tile_map_data = PackedByteArray("AAAIAAkAAAALAAEAAAAMAA0AAAAOAAEAAAA=")
 tile_set = ExtResource("2_jcf1i")
 collision_enabled = false
 

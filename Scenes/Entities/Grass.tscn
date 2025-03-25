@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmunnfsuxjl88"]
+
+[ext_resource type="Script" uid="uid://dfddcqcr2qmml" path="res://Scripts/Grass.gd" id="1_56jc0"]
+[ext_resource type="Texture2D" uid="uid://oeib4xc4tku7" path="res://Assets/Images/Entities/Grass.png" id="2_qrpkj"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_u0pfo"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_qrpkj"]
+[ext_resource type="AudioStream" uid="uid://b4whedlpssk6c" path="res://Assets/Sounds/Sfx/GrassGrow.ogg" id="5_u0pfo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0pfo"]
+size = Vector2(16, 16)
+
+[node name="Grass" type="Node2D"]
+script = ExtResource("1_56jc0")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_qrpkj")
+hframes = 2
+vframes = 2
+script = ExtResource("3_u0pfo")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_u0pfo")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_qrpkj")
+texture_path = "res://Assets/Images/Entities/Grass.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Nom" type="AudioStreamPlayer" parent="AudioGroup"]
+bus = &"Sfx"
+
+[node name="Grow" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_u0pfo")
+bus = &"Sfx"
+
+[node name="RegrowTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_player_exited"]
+[connection signal="timeout" from="RegrowTimer" to="." method="_on_regrow_timer_timeout"]

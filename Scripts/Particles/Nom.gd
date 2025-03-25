@@ -1,0 +1,6 @@
+extends Particle
+
+
+func _process(delta: float) -> void:
+	position += Vector2.UP * 0.3333
+	super._process(delta)

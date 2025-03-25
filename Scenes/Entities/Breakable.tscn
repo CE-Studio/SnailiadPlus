@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckorsdyiwbgow"]
+[gd_scene load_steps=4 format=3 uid="uid://ckorsdyiwbgow"]
 
 [ext_resource type="Script" uid="uid://d24ostoyx12ou" path="res://Scripts/Breakable.gd" id="1_btjpg"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_5yyy2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_btjpg"]
 size = Vector2(16, 16)
@@ -14,5 +15,10 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_btjpg")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_5yyy2")
+texture_path = "res://Assets/Images/Entities/BreakableIcons.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_bullet_entered"]

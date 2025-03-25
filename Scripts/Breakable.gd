@@ -9,8 +9,13 @@ enum TileTypes {
 	BOOMERANG,
 	RAINBOW_WAVE,
 	DEVASTATOR,
-	MOON_REMOVE
+	MOON_REMOVE,
+	ENEMY_COLLIDE
 }
+
+@onready var area:Area2D = $"Area2D"
+@onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
+@onready var sprite:JsonSprite2D = $"JsonSprite2D"
 
 var coords:Vector2i
 var tile_data:Array
@@ -29,28 +34,39 @@ func spawn(tile_coords:Vector2i, tile_type:int, silent:bool):
 	is_silent = silent
 	for map in layers:
 		tile_data.append(map.get_cell_atlas_coords(coords))
+	if type == TileTypes.ENEMY_COLLIDE:
+		box.collision_layer = 2
+	sprite.visible = false
 
 
-func _on_bullet_entered(area:Area2D) -> void:
-	var bullet = area.get_parent()
-	var hit_hard_enough:bool = false
-	match type:
-		TileTypes.PEASHOOTER:
-			hit_hard_enough = true
-		TileTypes.BOOMERANG:
-			if bullet.type >= 4 or bullet.powered:
+func _on_bullet_entered(_area:Area2D) -> void:
+	if Statics.is_box_on_screen(box, position):
+		var bullet = _area.get_parent()
+		var hit_hard_enough:bool = false
+		var icon_anim:String = ""
+		match type:
+			TileTypes.PEASHOOTER:
+				icon_anim = "peashooter"
 				hit_hard_enough = true
-		TileTypes.RAINBOW_WAVE:
-			if bullet.type >= 8 or bullet.powered:
-				hit_hard_enough = true
-		TileTypes.DEVASTATOR:
-			if bullet.powered:
-				hit_hard_enough = true
-		TileTypes.MOON_REMOVE:
-			hit_hard_enough = false
-		_:
-			hit_hard_enough = true
-	if hit_hard_enough:
-		for map in layers:
-			map.set_cell(coords)
-		queue_free()
+			TileTypes.BOOMERANG:
+				icon_anim = "boomerang"
+				if bullet.type >= 4 or bullet.powered:
+					hit_hard_enough = true
+			TileTypes.RAINBOW_WAVE:
+				icon_anim = "rainbow_wave"
+				if bullet.type >= 8 or bullet.powered:
+					hit_hard_enough = true
+			TileTypes.DEVASTATOR:
+				icon_anim = "devastator"
+				if bullet.powered:
+					hit_hard_enough = true
+			_:
+				hit_hard_enough = false
+		if hit_hard_enough:
+			sprite.visible = false
+			for map in layers:
+				map.set_cell(coords)
+			queue_free()
+		elif icon_anim != "":
+			sprite.visible = true
+			sprite.action = icon_anim
