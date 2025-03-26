@@ -17,6 +17,11 @@ enum TileTypes {
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 
+var explode1:AudioStream = load("res://Assets/Sounds/Sfx/Explode1.ogg")
+var explode2:AudioStream = load("res://Assets/Sounds/Sfx/Explode2.ogg")
+var explode3:AudioStream = load("res://Assets/Sounds/Sfx/Explode3.ogg")
+var explode4:AudioStream = load("res://Assets/Sounds/Sfx/Explode4.ogg")
+
 var coords:Vector2i
 var tile_data:Array
 var type:int
@@ -66,7 +71,15 @@ func _on_bullet_entered(_area:Area2D) -> void:
 			sprite.visible = false
 			for map in layers:
 				map.set_cell(coords)
+			for i in range(2):
+				var pos = Vector2(randi_range(-16, 16), randi_range(-16, 16))
+				Statics.spawn_particle("ExplosionBig", Room.Layers.FG1, position + pos)
+			match randi_range(1, 4):
+				1: Statics.play_sfx_disconnected(explode1)
+				2: Statics.play_sfx_disconnected(explode2)
+				3: Statics.play_sfx_disconnected(explode3)
+				4: Statics.play_sfx_disconnected(explode4)
 			queue_free()
-		elif icon_anim != "":
+		elif icon_anim != "" and not is_silent:
 			sprite.visible = true
 			sprite.action = icon_anim

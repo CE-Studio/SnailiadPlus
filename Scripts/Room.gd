@@ -107,51 +107,54 @@ func _spawn_entities_from_layer() -> void:
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				layer_ground.add_child(grass)
-				_set_entity_position(grass, tile)
+				grass.position = _tile_coords_to_vector_pos(tile)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.FLOOR)
 			
 			Vector2i(14, 1): # Power grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				layer_ground.add_child(grass)
-				_set_entity_position(grass, tile)
+				grass.position = _tile_coords_to_vector_pos(tile)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.FLOOR)
+			
+			Vector2i(15, 1): # Smoke particle
+				Statics.spawn_particle("Smoke", Room.Layers.BG1, _tile_coords_to_vector_pos(tile))
 			
 			Vector2i(8, 4): # Boomerang breakable
 				var boom_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(boom_tile)
-				_set_entity_position(boom_tile, tile)
+				boom_tile.position = _tile_coords_to_vector_pos(tile)
 				boom_tile.spawn(tile, Breakable.TileTypes.BOOMERANG, false)
 			
 			Vector2i(9, 4): # Rainbow Wave breakable
 				var wave_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(wave_tile)
-				_set_entity_position(wave_tile, tile)
+				wave_tile.position = _tile_coords_to_vector_pos(tile)
 				wave_tile.spawn(tile, Breakable.TileTypes.RAINBOW_WAVE, false)
 			
 			Vector2i(10, 4): # Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(dev_tile)
-				_set_entity_position(dev_tile, tile)
+				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, false)
 			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(dev_tile)
-				_set_entity_position(dev_tile, tile)
+				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				layer_ground.add_child(grass)
-				_set_entity_position(grass, tile)
+				grass.position = _tile_coords_to_vector_pos(tile)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.CEILING)
 			
 			Vector2i(13, 30): # Hanging power grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				layer_ground.add_child(grass)
-				_set_entity_position(grass, tile)
+				grass.position = _tile_coords_to_vector_pos(tile)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.CEILING)
 
 
-func _set_entity_position(entity:Node, coords:Vector2i) -> void:
-	entity.position = (coords * 16) + Vector2i(8, 8)
+func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:
+	return (coords * 16) + Vector2i(8, 8)

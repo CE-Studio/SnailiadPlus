@@ -204,9 +204,14 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 
 
 static func play_sfx_disconnected(sound:AudioStream) -> void:
-	var new_discon_sound = disconnected_sound.instantiate()
-	GameCore.instance.sfx_group.add_child(new_discon_sound)
-	new_discon_sound.load_and_play(sound)
+	var active_sounds_of_type = 0
+	for sfx in GameCore.instance.sfx_group.get_children():
+		if sfx.stream == sound:
+			active_sounds_of_type += 1
+	if active_sounds_of_type < 2:
+		var new_discon_sound = disconnected_sound.instantiate()
+		GameCore.instance.sfx_group.add_child(new_discon_sound)
+		new_discon_sound.load_and_play(sound)
 
 
 static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
