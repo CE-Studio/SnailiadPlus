@@ -22,6 +22,7 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 	elif dir.x > 0.3827:
 		anim_name += "R"
 	sprite.action = anim_name
+	sprite._process(0.0)
 	#endregion
 	return cooldown
 
