@@ -857,6 +857,18 @@ func set_box_disable_override(state:bool) -> void:
 	else:
 		box_normal.disabled = shelled
 		box_shell.disabled = not shelled
+
+
+func adjust_health(amount:int) -> void:
+	health += amount
+	health = clampi(health, 0, max_health)
+	UICore.instance.update_hearts()
+	if health == 0:
+		die()
+
+
+func die() -> void:
+	pass
 #endregion
 
 
@@ -896,11 +908,12 @@ func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posit
 	#endregion
 	var bullet_scene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
+	var is_power = Statics.check_item(Item.ItemTypes.DEVASTATOR)
 	GameCore.instance.current_room.layer_fg1.add_child(new_bullet)
 	new_bullet.position = pos
 	if pos == body.position:
 		new_bullet.position += normalized_velocity * Statics.FRAC_8
-	var this_cooldown = new_bullet._spawn(normalized_velocity, 1.0, false)
+	var this_cooldown = new_bullet._spawn(normalized_velocity, 1.0, is_power)
 	return this_cooldown
 #endregion
 

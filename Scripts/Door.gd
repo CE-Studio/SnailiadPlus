@@ -50,6 +50,10 @@ var anim_prefix:String = ""
 #endregion
 
 
+func _ready() -> void:
+	_set_editor_marker()
+
+
 func spawn() -> void:
 	#Temp
 	if lock_type != LockTypes.UNLOCKED:
@@ -111,7 +115,7 @@ func _on_bullet_entered(area:Area2D) -> void:
 	var bullet = area.get_parent()
 	if is_locked:
 		sfx_ping.play()
-	else:
+	elif not is_open:
 		var hit_hard_enough:bool = false
 		match door_type:
 			1:

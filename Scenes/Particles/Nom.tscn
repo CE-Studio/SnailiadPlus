@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://csfa03gl75coc"]
+
+[ext_resource type="Script" uid="uid://dpf727osu1or6" path="res://Scripts/Particles/Nom.gd" id="1_pahfa"]
+[ext_resource type="Texture2D" uid="uid://dis4eq7srejmf" path="res://Assets/Images/Particles/Nom.png" id="2_pahfa"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_yyto7"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_kg7p8"]
+
+[node name="Nom" type="Node2D" node_paths=PackedStringArray("sprite", "timer")]
+script = ExtResource("1_pahfa")
+sprite = NodePath("JsonSprite2D")
+anim_name = "nom"
+timer = NodePath("Timer")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_pahfa")
+vframes = 4
+frame = 3
+script = ExtResource("3_kg7p8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_yyto7")
+texture_path = "res://Assets/Images/Particles/Nom.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true

@@ -1,0 +1,17 @@
+{
+	"tiles": [1, 4],
+	"animations": {
+		"nom": {
+			"fps": 5,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[0, 1, false, false],
+				[0, 2, false, false],
+				[0, 3, false, false]
+			]
+		}
+	}
+}

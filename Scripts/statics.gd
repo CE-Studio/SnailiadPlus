@@ -79,7 +79,7 @@ static var is_random_game:bool = false
 
 static var noclip_mode:bool = false
 static var damage_mult:bool = false
-static var show_entity_layer:bool = true
+static var show_entity_layer:bool = false
 static var stack_shells:bool = true
 static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true
@@ -204,9 +204,14 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 
 
 static func play_sfx_disconnected(sound:AudioStream) -> void:
-	var new_discon_sound = disconnected_sound.instantiate()
-	GameCore.instance.sfx_group.add_child(new_discon_sound)
-	new_discon_sound.load_and_play(sound)
+	var active_sounds_of_type = 0
+	for sfx in GameCore.instance.sfx_group.get_children():
+		if sfx.stream == sound:
+			active_sounds_of_type += 1
+	if active_sounds_of_type < 2:
+		var new_discon_sound = disconnected_sound.instantiate()
+		GameCore.instance.sfx_group.add_child(new_discon_sound)
+		new_discon_sound.load_and_play(sound)
 
 
 static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
@@ -219,3 +224,17 @@ static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
 	if within_x and within_y:
 		return true
 	return false
+
+
+static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
+	var new_particle = load("res://Scenes/Particles/" + name + ".tscn").instantiate()
+	match layer:
+		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
+		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)
+		Room.Layers.BG1: active_room.layer_bg1.add_child(new_particle)
+		Room.Layers.GROUND: active_room.layer_ground.add_child(new_particle)
+		Room.Layers.FG1: active_room.layer_fg1.add_child(new_particle)
+		Room.Layers.FG2: active_room.layer_fg2.add_child(new_particle)
+	new_particle.position = pos
+	new_particle._spawn(data)
+	return new_particle

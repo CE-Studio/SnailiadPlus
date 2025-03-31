@@ -32,6 +32,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	add_child(new_room)
 	move_child(new_room, 0)
 	current_room = new_room
+	Statics.active_room = current_room
 	player.reparent(new_room.layer_ground)
 	if entrance != -1:
 		for child in new_room.get_children():

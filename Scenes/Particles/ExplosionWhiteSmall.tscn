@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://876hcsm4famc"]
+
+[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_ql4ox"]
+[ext_resource type="Texture2D" uid="uid://hwgs04edt07o" path="res://Assets/Images/Particles/Explosion.png" id="2_3ovp2"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_2ksv8"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_h587t"]
+[ext_resource type="AudioStream" uid="uid://jy74nugtx5w1" path="res://Assets/Sounds/Sfx/ShotHit.ogg" id="5_6t55a"]
+
+[node name="ExplosionTiny" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+script = ExtResource("1_ql4ox")
+sprite = NodePath("JsonSprite2D")
+anim_name = "white_small"
+sound = NodePath("AudioStreamPlayer")
+timer = NodePath("Timer")
+metadata/_custom_type_script = "uid://bjoxx2waxewlf"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_3ovp2")
+hframes = 5
+vframes = 8
+frame = 22
+script = ExtResource("3_2ksv8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_h587t")
+texture_path = "res://Assets/Images/Particles/Explosion.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_6t55a")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

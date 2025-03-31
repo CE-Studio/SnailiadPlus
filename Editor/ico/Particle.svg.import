@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d240kqc4l0th1"
-path="res://.godot/imported/PowerGrass.png-c7e721231da61201054492f7034e41c3.ctex"
+uid="uid://cj52yl04km8ty"
+path="res://.godot/imported/Particle.svg-8549985683f48cc3c5fa53acc616bb2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/PowerGrass.png"
-dest_files=["res://.godot/imported/PowerGrass.png-c7e721231da61201054492f7034e41c3.ctex"]
+source_file="res://Editor/ico/Particle.svg"
+dest_files=["res://.godot/imported/Particle.svg-8549985683f48cc3c5fa53acc616bb2d.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

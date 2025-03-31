@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bj87ih0efoesd"
-path="res://.godot/imported/HelixLockedDoor.png-a32e9a6e7ba4a01429f10792238e53d5.ctex"
+uid="uid://clri6mau0epr2"
+path="res://.godot/imported/Interactable.svg-acbc401ecd9ce6496543d287a01b0f22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/HelixLockedDoor.png"
-dest_files=["res://.godot/imported/HelixLockedDoor.png-a32e9a6e7ba4a01429f10792238e53d5.ctex"]
+source_file="res://Editor/ico/Interactable.svg"
+dest_files=["res://.godot/imported/Interactable.svg-acbc401ecd9ce6496543d287a01b0f22.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
