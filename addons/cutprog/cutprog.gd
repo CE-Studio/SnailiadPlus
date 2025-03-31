@@ -7,7 +7,7 @@ var dock:Control
 
 func _enter_tree() -> void:
 	dock = preload("res://addons/cutprog/programmer.tscn").instantiate()
-	dock.ep= self
+	dock.ep = self
 	add_control_to_bottom_panel(dock, "Cutscene Programmer")
 
 
