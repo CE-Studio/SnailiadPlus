@@ -15,6 +15,7 @@ size = Vector2(12, 13)
 
 [node name="Snaily" type="Node2D"]
 script = ExtResource("1_k5eab")
+identifier = &"Player"
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("2_d17bl")

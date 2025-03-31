@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2ij4fpbb0yc7"
-path="res://.godot/imported/TurtleNpc.png-f0dbcb6754c3bf0014d0daf0fc46cd20.ctex"
+uid="uid://brdpjjdtvruut"
+path="res://.godot/imported/NPCColor.png-c4d9cf46e4d7de8ca0622a9ead857c16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/TurtleNpc.png"
-dest_files=["res://.godot/imported/TurtleNpc.png-f0dbcb6754c3bf0014d0daf0fc46cd20.ctex"]
+source_file="res://Assets/Images/Entities/NPCColor.png"
+dest_files=["res://.godot/imported/NPCColor.png-c4d9cf46e4d7de8ca0622a9ead857c16.ctex"]
 
 [params]
 
