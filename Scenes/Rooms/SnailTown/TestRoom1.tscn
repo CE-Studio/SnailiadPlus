@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
-[ext_resource type="Script" path="res://Scripts/Classes/cutscene.gd" id="2_w58g0"]
+[ext_resource type="Script" uid="uid://dnfyb1da418id" path="res://Scripts/Classes/cutscene.gd" id="2_w58g0"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_u3nms"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
@@ -11,6 +11,8 @@
 [sub_resource type="Resource" id="Resource_ybq4q"]
 resource_name = "cut1"
 script = ExtResource("2_w58g0")
+name = ""
+program = []
 metadata/_custom_type_script = "uid://dnfyb1da418id"
 
 [sub_resource type="Curve2D" id="Curve2D_sg3tw"]
