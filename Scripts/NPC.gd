@@ -16,6 +16,7 @@ var facing_left:bool = false
 
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var body:CharacterBody2D = $"CharacterBody2D"
+var colorized_sprite:Texture2D
 #endregion
 
 

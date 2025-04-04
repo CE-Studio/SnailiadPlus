@@ -478,7 +478,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 					position = body.position
 				coyote_time_counter = coyote_time
 				jump_buffer_counter = jump_buffer
-				rel_vel.y = 0.0
+				rel_vel = Vector2.ZERO
 			else:
 				rel_vel.y = jump_power[read_i_jump] * jump_mod
 			grounded = false
