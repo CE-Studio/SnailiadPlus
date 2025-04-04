@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://uef0mmwa2tuq"]
+[gd_scene load_steps=11 format=4 uid="uid://uef0mmwa2tuq"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
@@ -6,10 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_u3nms"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
+[ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="6_ntfxy"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="7_ybq4q"]
 
 [sub_resource type="Resource" id="Resource_ybq4q"]
-resource_name = "cut1"
 script = ExtResource("2_w58g0")
 name = ""
 program = []
@@ -63,6 +63,33 @@ direction = 3
 position = Vector2(168, 8)
 direction = 1
 lock_type = 0
+
+[node name="NPC" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
+position = Vector2(240, 216)
+identifier = &"One"
+
+[node name="NPC2" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
+position = Vector2(112, 216)
+animation_set = 6
+identifier = &"Two"
+
+[node name="NPC3" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
+position = Vector2(208, 152)
+surface = 3
+animation_set = 1
+identifier = &"Three"
+
+[node name="NPC4" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
+position = Vector2(312, 120)
+surface = 1
+animation_set = 2
+identifier = &"Four"
+
+[node name="NPC5" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
+position = Vector2(104, 64)
+surface = 2
+animation_set = 3
+identifier = &"Five"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

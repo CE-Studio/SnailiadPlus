@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcnffsfter41s"]
+
+[ext_resource type="Script" uid="uid://nb8y0k81l61i" path="res://Scripts/NPC.gd" id="1_4a2w1"]
+[ext_resource type="Texture2D" uid="uid://cp668vus8s3n0" path="res://Assets/Images/Entities/NPC.png" id="2_4a2w1"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_yb3dg"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_4a2w1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb3dg"]
+size = Vector2(24, 13)
+
+[node name="NPC" type="Node2D"]
+script = ExtResource("1_4a2w1")
+metadata/_custom_type_script = "uid://dh1qf0lsli2pl"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_4a2w1")
+hframes = 8
+vframes = 7
+script = ExtResource("3_yb3dg")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_4a2w1")
+texture_path = "res://Assets/Images/Entities/NPC.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_yb3dg")

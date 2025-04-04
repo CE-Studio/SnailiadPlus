@@ -78,7 +78,8 @@ func spawn(spawn_all:bool):
 		var layer_array = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
 		for layer in layer_array:
 			for child in layer.get_children():
-				if child is Door:
+				if (child is Door
+				or child is NPC):
 					child.spawn()
 
 
