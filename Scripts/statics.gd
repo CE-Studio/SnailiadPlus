@@ -238,3 +238,7 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 	new_particle.position = pos
 	new_particle._spawn(data)
 	return new_particle
+
+
+static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D) -> Texture2D:
+	return null
