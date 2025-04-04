@@ -23,8 +23,11 @@ func _ready():
 		has_item(Statics.Items.NONE)
 		can_perform_action("")
 		perform_action("", false)
-	while actors.has(null):
-		actors.erase(null)
+	var nr:Array[CutsceneControllable] = []
+	for i in actors:
+		if is_instance_valid(i):
+			nr.append(i)
+	actors = nr
 	for i in actors:
 		assert(not i.identifier == identifier, str(get_path()) + ": Identifier conflict! (" + identifier + ")")
 	actors.append(self)
