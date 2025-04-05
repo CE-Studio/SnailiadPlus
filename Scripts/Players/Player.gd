@@ -177,6 +177,9 @@ var front_casts:Array
 var ceil_casts:Array
 
 
+var debug_print_adjustments:bool = false
+
+
 # _ready() is called every time this script is instanced
 # It's used here to initialize certain variables and node references
 func _ready():
@@ -471,7 +474,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				var adjust_position = Vector2.ZERO
 				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.CEILING], 4.0)
 				suppress_wall_grab = true
-				print("^ Airborne from jump off wall or ceiling")
+				if debug_print_adjustments:
+					print("^ Airborne from jump off wall or ceiling")
 				_set_direction(home_gravity, not facing_left)
 				if adjust_position != Vector2.ZERO:
 					body.position = adjust_position
@@ -495,7 +499,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				current_state = AnimStates.IDLE
 		if not _check_ground_casts()[0]:
 			grounded = false
-			print("We've left the ground")
+			if debug_print_adjustments:
+				print("We've left the ground")
 	if not grounded:
 		var suppress_next_check:bool = false
 		if (rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and
@@ -507,7 +512,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			((gravity_dir != opposite_dir and new_gravity != opposite_dir) and _check_ability(can_round_outer_corners)))):
 				var rel_wall = Statics.DirsSurface.RWALL if facing_left else Statics.DirsSurface.LWALL
 				var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_wall])
-				print("^ Airborne from rounding outer corner")
+				if debug_print_adjustments:
+					print("^ Airborne from rounding outer corner")
 				_set_direction(new_gravity, facing_left)
 				body.position = adjust_position
 				position = body.position
@@ -521,7 +527,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			var adjust_position = Vector2.ZERO
 			if _get_dir_opposite(surface) != home_gravity:
 				adjust_position = _get_adjust_position(surface, home_gravity, rel_vectors[Statics.DirsSurface.FLOOR])
-				print("^ Airborne from walking off wall or ceiling")
+				if debug_print_adjustments:
+					print("^ Airborne from walking off wall or ceiling")
 				facing_left = not facing_left
 			_set_direction(home_gravity, new_left)
 			if adjust_position != Vector2.ZERO:
@@ -565,7 +572,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				new_left = not facing_left
 			var rel_against_wall = Statics.DirsSurface.LWALL if facing_left else Statics.DirsSurface.RWALL
 			var adjust_position = _get_adjust_position(surface, new_gravity, rel_vectors[rel_against_wall])
-			print("^ Grounded from grabbing wall")
+			if debug_print_adjustments:
+				print("^ Grounded from grabbing wall")
 			_set_direction(new_gravity, new_left)
 			body.position = adjust_position
 			position = body.position
@@ -602,7 +610,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		elif body.is_on_ceiling() and rel_axis.y < 0.0 and _check_ability(can_swap_gravity):
 			grounded = true
 			var adjust_position = _get_adjust_position(surface, _get_dir_opposite(surface), rel_vectors[_get_dir_opposite(surface)])
-			print("^ Grounded from grabbing ceiling")
+			if debug_print_adjustments:
+				print("^ Grounded from grabbing ceiling")
 			_set_direction(_get_dir_opposite(surface), not facing_left)
 			body.position = adjust_position
 			current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
@@ -711,7 +720,8 @@ func _get_adjust_position(surface:Statics.DirsSurface, new_surface:Statics.DirsS
 		adjust_vector = surface_vector * (box_difference + adjustment)
 	adjust_vector += box_adjust[new_surface] - box_adjust[surface]
 	var target_pos = body.position + adjust_vector
-	print(adjust_vector)
+	if debug_print_adjustments:
+		print(adjust_vector)
 	return target_pos
 
 

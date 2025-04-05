@@ -33,9 +33,7 @@ func _ready() -> void:
 
 func _load_json_to_dict(path:String) -> Dictionary:
 	var j := JSON.new()
-	print(path)
 	var f := FileAccess.open(path, FileAccess.READ)
-	print(FileAccess.get_open_error())
 	var out_dict:Dictionary = { }
 	if j.parse(f.get_as_text()) != OK:
 		f.close()

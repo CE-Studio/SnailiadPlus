@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/Boss4.ogg-d90de2dda708636f70bcbf9c9faab4aa.og
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
