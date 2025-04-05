@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Snailiad Plus"
 config/version="0.4.0"
+run/main_scene="uid://btkfrtgsq6p4g"
 config/features=PackedStringArray("4.4", "Double Precision", "Forward Plus")
 run/max_fps=60
 config/icon="res://Assets/Images/Icon.png"
@@ -28,6 +29,7 @@ window/size/viewport_height=480
 window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/scale=2.0
+mouse_cursor/custom_image="uid://btlcuqewcs61t"
 
 [editor]
 
