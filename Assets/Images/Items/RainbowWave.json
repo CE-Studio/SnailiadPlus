@@ -1,5 +1,7 @@
 {
 	"tiles": [8, 4],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"item": {
 			"fps": 22,

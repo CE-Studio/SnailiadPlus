@@ -1,5 +1,6 @@
 {
 	"tiles": [5, 5],
+	"layerize": false,
 	"animations": {
 		"peashooter": {
 			"fps": 22,

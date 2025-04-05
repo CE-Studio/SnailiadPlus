@@ -1,5 +1,7 @@
 {
 	"tiles": [8, 7],
+	"layerize": true,
+	"meta": {},
 	"animations": {
 		"0.floor.right.idle": {
 			"fps": 3,

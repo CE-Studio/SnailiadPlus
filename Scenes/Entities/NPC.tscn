@@ -21,6 +21,7 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("4_4a2w1")
+normal_npc = true
 texture_path = "res://Assets/Images/Entities/NPC.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 

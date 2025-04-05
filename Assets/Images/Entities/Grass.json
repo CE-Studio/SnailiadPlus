@@ -1,5 +1,7 @@
 {
 	"tiles": [2, 2],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"normal_ground_idle": {
 			"fps": 1,
