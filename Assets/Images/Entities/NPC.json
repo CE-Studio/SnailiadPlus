@@ -33,6 +33,7 @@
 		"0.floor.left.idle": {
 			"fps": 3,
 			"loop": true,
+			"colors": [255, 255, 4278190335, 255, 255],
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
