@@ -1,5 +1,7 @@
 {
 	"tiles": [18, 5],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"blue_left_closed": {
 			"fps": 1,

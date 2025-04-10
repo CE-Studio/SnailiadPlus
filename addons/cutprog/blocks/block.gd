@@ -44,7 +44,12 @@ func setup(nm:String, return_type:int, socket_types:Array, has_if:bool, has_else
 
 func reset() -> void:
 	if has_script:
-		av_script.call(self)
+		av_script.call(self, [])
+
+
+func scr_setup(arr:Array[CutsceneControllable]) -> void:
+	if has_script:
+		av_script.call(self, arr)
 
 
 func simpsetup(inp:Array) -> void:

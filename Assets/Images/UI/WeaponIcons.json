@@ -1,5 +1,7 @@
 {
 	"tiles": [4, 2],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"0_off": {
 			"fps": 1,

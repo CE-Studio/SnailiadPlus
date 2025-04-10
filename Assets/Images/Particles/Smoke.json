@@ -1,5 +1,7 @@
 {
 	"tiles": [3, 1],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"smoke": {
 			"fps": 3,

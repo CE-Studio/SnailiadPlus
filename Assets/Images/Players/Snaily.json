@@ -1,5 +1,7 @@
 {
 	"tiles": [12, 4],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"0.floor.right.idle": {
 			"fps": 3,
@@ -162,20 +164,22 @@
 			"frames": [ ]
 		},
 		"0.floor.right.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 0, false, false],
 				[3, 0, false, false]
 			]
 		},
 		"0.floor.left.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 0, true, false],
 				[3, 0, true, false]
 			]
 		},
@@ -372,20 +376,22 @@
 			"frames": [ ]
 		},
 		"0.lwall.right.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[6, 0, true, false],
 				[7, 0, true, false]
 			]
 		},
 		"0.lwall.left.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[6, 0, true, true],
 				[7, 0, true, true]
 			]
 		},
@@ -582,20 +588,22 @@
 			"frames": [ ]
 		},
 		"0.rwall.right.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[6, 0, false, true],
 				[7, 0, false, true]
 			]
 		},
 		"0.rwall.left.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[6, 0, false, false],
 				[7, 0, false, false]
 			]
 		},
@@ -792,20 +800,22 @@
 			"frames": [ ]
 		},
 		"0.ceiling.right.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 0, true, true],
 				[3, 0, true, true]
 			]
 		},
 		"0.ceiling.left.shell": {
-			"fps": 1,
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 0, false, true],
 				[3, 0, false, true]
 			]
 		},

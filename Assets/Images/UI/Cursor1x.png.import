@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp668vus8s3n0"
-path="res://.godot/imported/SnailNpc.png-fff3e2a6370c6d541a96d40922d48578.ctex"
+uid="uid://dhpakj4dmasgt"
+path="res://.godot/imported/Cursor1x.png-971585d0ee9354c543ce5772b4181b29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/SnailNpc.png"
-dest_files=["res://.godot/imported/SnailNpc.png-fff3e2a6370c6d541a96d40922d48578.ctex"]
+source_file="res://Assets/Images/UI/Cursor1x.png"
+dest_files=["res://.godot/imported/Cursor1x.png-971585d0ee9354c543ce5772b4181b29.ctex"]
 
 [params]
 

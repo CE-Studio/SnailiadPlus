@@ -5,8 +5,11 @@ extends Sprite2D
 
 const _DATA_MATCH = {
 	"tiles": [0, 0],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"an_action": {
+			"colors": [0],
 			"fps": 30,
 			"loop": true,
 			"loop_point": 0, #optional
@@ -21,6 +24,7 @@ const _DATA_MATCH = {
 }
 
 
+@export var normal_npc := false 
 @export_file("*.json") var texture_path:String
 var data:Dictionary
 var is_ready := false
@@ -30,12 +34,15 @@ var action:String:
 		_index = 0
 		_timer = -2
 		_check_action()
+var meta:Dictionary = {}
 
 
 var _timer := 0.0
 var _has_action := false
 var _recheck := false
 var _index:int = 0
+var _children:Array[Sprite2D] = []
+var _layers:Array[Texture2D] = []
 
 
 static var _imgcache := {}
@@ -60,8 +67,10 @@ func _ready() -> void:
 		assert(false, "Path is not a json file!")
 		return
 
-
-	if _imgcache.has(pathtrimmed):
+	
+	if normal_npc:
+		texture = preload("uid://cp668vus8s3n0")
+	elif _imgcache.has(pathtrimmed):
 		texture = _imgcache[pathtrimmed]
 	else:
 		var found := false
@@ -152,6 +161,37 @@ func _ready() -> void:
 	
 	hframes = data["tiles"][0]
 	vframes = data["tiles"][1]
+	meta = data["meta"]
+	
+	if data["layerize"]:
+		var layers:Dictionary[int, Image]
+		var img := texture.get_image()
+		var sz = img.get_size()
+		print(sz)
+		for x in sz.x:
+			for y in sz.y:
+				var col := img.get_pixel(x, y)
+				if col.a8 == 255:
+					var c32 := col.to_rgba32()
+					if not (c32 in layers):
+						print("%x" % c32)
+						layers[c32] = Image.create_empty(sz.x, sz.y, false, Image.FORMAT_RGBA8)
+						layers[c32].fill(Color.TRANSPARENT)
+					var l := layers[c32]
+					l.set_pixel(x, y, Color.WHITE)
+		print(layers)
+		var j := layers.keys()
+		j.sort()
+		for i in j:
+			_layers.append(ImageTexture.create_from_image(layers[i]))
+		for i in _layers.size() - 1:
+			var sp := Sprite2D.new()
+			sp.texture = _layers[i]
+			sp.hframes = hframes
+			sp.vframes = vframes
+			add_child(sp)
+			_children.append(sp)
+		texture = _layers[-1]
 	is_ready = true
 
 
@@ -164,6 +204,12 @@ func _process(delta: float) -> void:
 		var _fps:float = _action["fps"]
 		var _frames:Array = _action["frames"]
 		var _frametime = 1 / _fps
+		if _action.has("colors"):
+			for i in _action["colors"].size():
+				if i >= _children.size():
+					self_modulate = Color.hex(_action["colors"][i])
+				else:
+					_children[i].self_modulate = Color.hex(_action["colors"][i])
 		if (_frames.size() == 0):
 			if _action.has("autoplay_next"):
 				action = _action["autoplay_next"]
@@ -196,3 +242,7 @@ func _process(delta: float) -> void:
 			flip_h = frame[2]
 			flip_v = frame[3]
 			_index += 1
+	for i in _children:
+		i.frame = frame
+		i.flip_h = flip_h
+		i.flip_v = flip_v

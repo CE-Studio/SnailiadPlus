@@ -238,3 +238,21 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 	new_particle.position = pos
 	new_particle._spawn(data)
 	return new_particle
+
+
+static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int) -> Texture2D:
+	var color_count = palette.get_width()
+	var palette_image = palette.get_image()
+	var sprite_image = spritesheet.get_image()
+	var check_colors:Array = [ ]
+	for i in color_count:
+		check_colors.append(palette_image.get_pixel(i, 0))
+	for y in spritesheet.get_height():
+		for x in spritesheet.get_width():
+			if spritesheet.is_pixel_opaque(x, y):
+				var this_check_color = sprite_image.get_pixel(x, y)
+				if check_colors.has(this_check_color):
+					var color_id = check_colors.find(this_check_color)
+					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
+					sprite_image.set_pixel(x, y, new_color)
+	return ImageTexture.create_from_image(sprite_image)

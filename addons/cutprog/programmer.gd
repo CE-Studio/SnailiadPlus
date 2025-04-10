@@ -67,14 +67,21 @@ var ep:EditorPlugin
 @onready var pallete:VBoxContainer = $HSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/VBoxContainer
 
 
-func actorsel(block:ProgramBlock) -> void:
+func actorsel(block:ProgramBlock, arr:Array) -> void:
 	block.opt.show()
 	block.opt.clear()
+	block.opt.add_item("player")
+	for i:CutsceneControllable in arr:
+		block.opt.add_item(i.identifier)
 
 
 func scene_changed(root:Node) -> void:
 	for i in blocks:
 		i.reset()
+	if root is Room:
+		var ents:Array[CutsceneControllable] = root.get_actors()
+		for i in blocks:
+			i.scr_setup(ents)
 
 
 func _ready() -> void:
