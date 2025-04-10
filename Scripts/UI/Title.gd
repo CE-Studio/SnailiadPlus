@@ -3,8 +3,12 @@ extends Node2D
 
 
 #region Variables
-var title_string:String = "snailiad"
+const LETTER_SPACING:int = 4
+const LETTER_DELAY:float = PI / 11.0
+
+var title_string:String = "snailiad+"
 var letter:PackedScene = load("res://Scenes/UI/TitleLetter.tscn")
+var plus:PackedScene = load("res://Scenes/UI/TitlePlus.tscn")
 
 var valid_chars:Array = [
 	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -16,20 +20,30 @@ var valid_chars:Array = [
 func _ready() -> void:
 	title_string = title_string.to_lower()
 	var spawn_pos = Vector2.ZERO
+	var spawn_delay = 0.0
 	for i in title_string.length():
 		var char = title_string[i]
 		match char:
 			" ":
 				spawn_pos.x += 24
 			"+":
-				pass
+				var new_plus = plus.instantiate()
+				add_child(new_plus)
+				new_plus.position = spawn_pos
+				new_plus.position.x -= 4
+				new_plus.spawn(spawn_delay)
+				spawn_pos.x += 32 + LETTER_SPACING - 8
+				spawn_delay += LETTER_DELAY
+				if i != title_string.length() - 1:
+					position.x -= 16 + (LETTER_SPACING * 0.5) - 4
 			_:
 				if valid_chars.has(char):
 					var new_letter = letter.instantiate()
 					add_child(new_letter)
 					new_letter.position = spawn_pos
-					var advance_amount = new_letter.spawn(char, 0)
-					spawn_pos.x += advance_amount + 4
+					var advance_amount = new_letter.spawn(char, spawn_delay)
+					spawn_pos.x += advance_amount + LETTER_SPACING
+					spawn_delay += LETTER_DELAY
 					if i != title_string.length() - 1:
-						position.x -= (advance_amount * 0.5) + 2
-	position.x = roundi(position.x + 4)
+						position.x -= (advance_amount * 0.5) + (LETTER_SPACING * 0.5)
+	position.x = roundi(position.x + LETTER_SPACING)
