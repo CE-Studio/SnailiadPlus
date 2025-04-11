@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://cethpj66nvp1o"]
+
+[ext_resource type="Texture2D" uid="uid://dedrn6bpe28j4" path="res://Assets/Images/UI/Button.png" id="1_bd1a6"]
+[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_8kljt"]
+
+[node name="SnailyButton" type="Node2D"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = -40.0
+offset_top = -12.0
+offset_right = 40.0
+offset_bottom = 12.0
+texture = ExtResource("1_bd1a6")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="TextShadow" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -10.0
+offset_right = 41.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_8kljt")
+text = "Button!"
+horizontal_alignment = 1
+
+[node name="Text" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -11.0
+offset_right = 40.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_8kljt")
+text = "Button!"
+horizontal_alignment = 1

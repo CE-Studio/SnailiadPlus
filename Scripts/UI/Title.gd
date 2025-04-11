@@ -32,18 +32,16 @@ func _ready() -> void:
 				new_plus.position = spawn_pos
 				new_plus.position.x -= 4
 				new_plus.spawn(spawn_delay)
-				spawn_pos.x += 32 + LETTER_SPACING - 8
-				spawn_delay += LETTER_DELAY
 				if i != title_string.length() - 1:
-					position.x -= 16 + (LETTER_SPACING * 0.5) - 4
+					spawn_pos.x += 32 + LETTER_SPACING - 8
+				spawn_delay += LETTER_DELAY
 			_:
 				if valid_chars.has(char):
 					var new_letter = letter.instantiate()
 					add_child(new_letter)
 					new_letter.position = spawn_pos
 					var advance_amount = new_letter.spawn(char, spawn_delay)
-					spawn_pos.x += advance_amount + LETTER_SPACING
-					spawn_delay += LETTER_DELAY
 					if i != title_string.length() - 1:
-						position.x -= (advance_amount * 0.5) + (LETTER_SPACING * 0.5)
-	position.x = roundi(position.x + LETTER_SPACING)
+						spawn_pos.x += advance_amount + LETTER_SPACING
+					spawn_delay += LETTER_DELAY
+	position.x = roundi(position.x - (spawn_pos.x * 0.5) + LETTER_SPACING)
