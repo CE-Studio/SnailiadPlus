@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cethpj66nvp1o"]
+[gd_scene load_steps=4 format=3 uid="uid://cethpj66nvp1o"]
 
+[ext_resource type="Script" uid="uid://dbvscle5lnyqd" path="res://Scripts/Classes/SnailyButton.gd" id="1_a4l7p"]
 [ext_resource type="Texture2D" uid="uid://dedrn6bpe28j4" path="res://Assets/Images/UI/Button.png" id="1_bd1a6"]
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_8kljt"]
 
 [node name="SnailyButton" type="Node2D"]
+script = ExtResource("1_a4l7p")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 offset_left = -40.0
