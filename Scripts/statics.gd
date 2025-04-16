@@ -101,6 +101,8 @@ static var player:Player
 static var cam_layer:Node2D
 static var cam:Camera2D
 static var active_room:Node2D
+
+static var text_lib:Dictionary
 #endregion
 
 
@@ -165,6 +167,12 @@ static func save_all():
 	save_profile(3)
 	save_records()
 #endregion
+
+
+static func get_text(key:String) -> String:
+	if text_lib.has(key):
+		return text_lib[key]
+	return key
 
 
 static func get_shell_level() -> int:

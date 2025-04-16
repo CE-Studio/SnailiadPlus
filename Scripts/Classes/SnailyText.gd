@@ -1,3 +1,4 @@
+@tool
 @icon("res://Editor/ico/SnailyText.svg")
 class_name SnailyText
 extends Node2D
@@ -18,14 +19,6 @@ var max_width:int = 0
 #endregion
 
 
-func _ready() -> void:
-	set_text("Awesome text")
-	add_shadow(2)
-	add_border(1)
-	set_text("Come on, kid. Let's go save Snailiad... 2!")
-	#TODO: fix multiple lines causing issues
-
-
 func set_text(_text:String) -> void:
 	text.text = _text
 	for sub_label in sub_text:
@@ -38,18 +31,29 @@ func set_alignment(horiz:int, vert:int) -> void:
 	align_vert = vert
 	text.horizontal_alignment = align_horiz
 	text.vertical_alignment = align_vert
+	for sub_label in sub_text:
+		sub_label.horizontal_alignment = align_horiz
+		sub_label.vertical_alignment = align_vert
 
 
 func reset_label_size() -> void:
 	var string_size = font.get_string_size(text.text)
 	if max_width == 0 or string_size.x < max_width:
-		text.size.x = string_size.x
+		var longest_line = 0
+		var lines = text.text.split("\n")
+		for line in lines:
+			var line_length = font.get_string_size(line).x
+			if longest_line < line_length:
+				longest_line = line_length
+		text.size.x = longest_line
+		text.size.y = 22 * len(lines)
 	else:
 		text.size.x = max_width
+		text.size.y = 22 * text.get_line_count()
 	text.position.x = text.size.x * -0.5
 	for i in len(sub_text):
 		var sub_label = sub_text[i]
-		sub_label.size.x = text.size.x
+		sub_label.size = text.size
 		sub_label.position = text.position + sub_text_offsets[i]
 
 
@@ -87,7 +91,6 @@ func create_new_label() -> RichTextLabel:
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
 	move_child(new_label, 0)
-	#new_label.push_font(font)
 	new_label.set_anchors_preset(Control.PRESET_CENTER)
 	new_label.size = text.size
 	new_label.theme = theme

@@ -5,8 +5,9 @@ extends Node2D
 #region Variables
 const LETTER_SPACING:int = 4
 const LETTER_DELAY:float = PI / 11.0
+const RARE_CHANCE:float = 0.005
 
-var title_string:String = "snailiad+"
+var title_string:String = ""
 var letter:PackedScene = load("res://Scenes/UI/TitleLetter.tscn")
 var plus:PackedScene = load("res://Scenes/UI/TitlePlus.tscn")
 
@@ -18,6 +19,10 @@ var valid_chars:Array = [
 
 
 func _ready() -> void:
+	title_string = Statics.get_text("menu_title")
+	if randf() <= RARE_CHANCE:
+		var rare_id = ceili(randf() * 4)
+		title_string = Statics.get_text("menu_title_rare" + str(rare_id))
 	title_string = title_string.to_lower()
 	var spawn_pos = Vector2.ZERO
 	var spawn_delay = 0.0
