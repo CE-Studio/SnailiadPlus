@@ -14,6 +14,7 @@ focus_mode = 2
 script = ExtResource("1_a4l7p")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
 offset_left = -40.0
 offset_top = -12.0
 offset_right = 40.0
