@@ -104,6 +104,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Control"]
 material = SubResource("ShaderMaterial_h4kkg")
@@ -113,6 +114,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_tnswa")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
@@ -186,6 +188,7 @@ offset_left = 4.0
 offset_top = 4.0
 offset_right = 14.0
 offset_bottom = 14.0
+mouse_filter = 2
 texture = ExtResource("5_xegkh")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

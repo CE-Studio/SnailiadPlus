@@ -36,10 +36,7 @@ func setup(nm:String, return_type:int, socket_types:Array, has_if:bool, has_else
 	if has_else:
 		$VBoxContainer/VBoxContainer/else.show()
 		$VBoxContainer/VBoxContainer/if/HBoxContainer/Panel/Label.show()
-	if adv_script is Callable:
-		av_script = adv_script
-		av_script.call(self)
-		has_script = true
+	scr_setup([])
 
 
 func reset() -> void:

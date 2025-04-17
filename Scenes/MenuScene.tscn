@@ -25,4 +25,7 @@ tile_set = ExtResource("2_xx56i")
 position = Vector2(200, 50)
 
 [node name="SnailyButton" parent="." instance=ExtResource("4_vg0ck")]
-position = Vector2(200, 120)
+offset_left = 200.0
+offset_top = 120.0
+offset_right = 216.0
+offset_bottom = 136.0
