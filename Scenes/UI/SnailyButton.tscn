@@ -16,18 +16,19 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [node name="SnailyButton" type="PanelContainer"]
-custom_minimum_size = Vector2(16, 16)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -36.5
-offset_top = -11.0
-offset_right = 37.5
-offset_bottom = 11.0
+offset_left = -400.0
+offset_top = -240.0
+offset_right = -382.0
+offset_bottom = -224.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 focus_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ur6t0")
 script = ExtResource("1_a4l7p")
@@ -39,7 +40,6 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="MarginContainer" instance=ExtResource("3_a4l7p")]
-custom_minimum_size = Vector2(56, 0)
 layout_mode = 2
 autowrap_mode = 0
 max_width = 300
