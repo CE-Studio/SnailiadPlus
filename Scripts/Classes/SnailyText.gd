@@ -1,11 +1,11 @@
 @tool
 @icon("res://Editor/ico/SnailyText.svg")
 class_name SnailyText
-extends Node2D
+extends RichTextLabel
 
 
 #region Variables
-var theme:Theme = load("res://Resources/MenuTheme.tres")
+var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
@@ -13,14 +13,13 @@ var align_horiz:HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
 var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
 var max_width:int = 0
 
-@onready var text:RichTextLabel = $"MainText"
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
 #endregion
 
 
-func set_text(_text:String) -> void:
-	text.text = _text
+func set_snaily_text(_text:String) -> void:
+	self.text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
 	reset_label_size()
@@ -29,32 +28,32 @@ func set_text(_text:String) -> void:
 func set_alignment(horiz:int, vert:int) -> void:
 	align_horiz = horiz
 	align_vert = vert
-	text.horizontal_alignment = align_horiz
-	text.vertical_alignment = align_vert
+	self.horizontal_alignment = align_horiz
+	self.vertical_alignment = align_vert
 	for sub_label in sub_text:
 		sub_label.horizontal_alignment = align_horiz
 		sub_label.vertical_alignment = align_vert
 
 
 func reset_label_size() -> void:
-	var string_size = font.get_string_size(text.text)
+	var string_size = font.get_string_size(self.text)
 	if max_width == 0 or string_size.x < max_width:
 		var longest_line = 0
-		var lines = text.text.split("\n")
+		var lines = self.text.split("\n")
 		for line in lines:
 			var line_length = font.get_string_size(line).x
 			if longest_line < line_length:
 				longest_line = line_length
-		text.size.x = longest_line
-		text.size.y = 22 * len(lines)
+		self.size.x = longest_line
+		self.size.y = 22 * len(lines)
 	else:
-		text.size.x = max_width
-		text.size.y = 22 * text.get_line_count()
-	text.position.x = text.size.x * -0.5
+		self.size.x = max_width
+		self.size.y = 22 * self.get_line_count()
+	self.position.x = self.size.x * -0.5
 	for i in len(sub_text):
 		var sub_label = sub_text[i]
-		sub_label.size = text.size
-		sub_label.position = text.position + sub_text_offsets[i]
+		sub_label.size = self.size
+		sub_label.position = self.position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
@@ -68,7 +67,7 @@ func add_shadow(distance:int) -> void:
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
 	var offset = Vector2(distance, distance)
-	shadow.position = text.position + offset
+	shadow.position = self.position + offset
 	sub_text_offsets.append(offset)
 
 
@@ -83,16 +82,17 @@ func add_border(distance:int) -> void:
 			1: offset = Vector2(distance, 0)
 			2: offset = Vector2(0, distance)
 			3: offset = Vector2(-distance, 0)
-		border_part.position = text.position + offset
+		border_part.position = self.position + offset
 		sub_text_offsets.append(offset)
 
 
 func create_new_label() -> RichTextLabel:
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
-	move_child(new_label, 0)
+	#move_child(new_label, 0)
+	new_label.z_index = -1
 	new_label.set_anchors_preset(Control.PRESET_CENTER)
-	new_label.size = text.size
+	new_label.size = self.size
 	new_label.theme = theme
-	new_label.text = text.text
+	new_label.text = self.text
 	return new_label

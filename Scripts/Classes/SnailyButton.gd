@@ -1,7 +1,7 @@
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
 class_name SnailyButton
-extends Control
+extends PanelContainer
 
 #region Variables
 const FOCUS_HOVER_OFFSET:Vector2 = Vector2(0, -3)
@@ -26,9 +26,9 @@ func _ready() -> void:
 	focus_hover_rate = Vector2(randf_range(0.25, 1.0), randf_range(0.25, 1.0))
 	focus_hover_range = Vector2(randi_range(1, 5), randi_range(1, 3))
 	if text_id == "":
-		text.set_text("Text!!")
+		text.set_snaily_text("Text!!")
 	else:
-		text.set_text(Statics.get_text(text_id))
+		text.set_snaily_text(Statics.get_text(text_id))
 	text.add_shadow(1)
 
 
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 	if focused:
 		var focus_hover_pos = Vector2(sin(focus_hover_timers.x) * focus_hover_range.x,
 		cos(focus_hover_timers.y) * focus_hover_range.y)
-		position = position.lerp(position + focus_hover_pos + FOCUS_HOVER_OFFSET, MOVE_RATE)
+		position = position.lerp(origin + focus_hover_pos + FOCUS_HOVER_OFFSET, MOVE_RATE)
 
 
 func on_focus() -> void:
