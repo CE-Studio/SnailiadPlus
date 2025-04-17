@@ -8,16 +8,17 @@ extends RichTextLabel
 
 
 #region Variables
+@export var max_width:int = 0
+
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
 var align_horiz:HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
 var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
-@export var max_width:int = 0
 
 @onready var sub_text:Array = []
-@onready var sub_text_offsets:Array = []
+#@onready var sub_text_offsets:Array = []
 #endregion
 
 
@@ -39,15 +40,15 @@ func set_alignment(horiz:int, vert:int) -> void:
 
 
 func reset_label_size() -> void:
-	var string_size = font.get_string_size(self.text)
-	print(string_size.x)
-	if max_width == 0 or string_size.x < max_width:
-		var longest_line = 0
-		var lines = self.text.split("\n")
-		for line in lines:
-			var line_length = font.get_string_size(line).x
-			if longest_line < line_length:
-				longest_line = line_length
+	#var string_size = font.get_string_size(self.text)
+	#print(string_size.x)
+	var longest_line = 0
+	var lines = self.text.split("\n")
+	for line in lines:
+		var line_length = font.get_string_size(line).x
+		if longest_line < line_length:
+			longest_line = line_length
+	if max_width == 0 or longest_line < max_width:
 		self.custom_minimum_size.x = longest_line
 		print(self.custom_minimum_size.x)
 		#self.size.y = 22 * len(lines)
@@ -55,26 +56,27 @@ func reset_label_size() -> void:
 		self.custom_minimum_size.x = max_width
 		#self.size.y = 22 * self.get_line_count()
 	#self.position.x = self.size.x * -0.5
-	for i in len(sub_text):
-		var sub_label = sub_text[i]
+	for sub_label in sub_text:
+		#var sub_label = sub_text[i]
 		sub_label.size = self.size
-		sub_label.position = sub_text_offsets[i]
+		#sub_label.position = sub_text_offsets[i]
 		#sub_label.position = self.position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
 	for sub_label in sub_text:
 		sub_label.queue_free()
-	sub_text_offsets.clear()
+	#sub_text_offsets.clear()
 
 
 func add_shadow(distance:int) -> void:
 	var shadow = create_new_label()
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
-	var offset = Vector2(distance, distance)
-	shadow.position = self.position + offset
-	sub_text_offsets.append(offset)
+	#var offset = Vector2(distance, distance)
+	#shadow.position = self.position + offset
+	#sub_text_offsets.append(offset)
+	shadow.position = Vector2(distance, distance)
 
 
 func add_border(distance:int) -> void:
@@ -84,12 +86,12 @@ func add_border(distance:int) -> void:
 		sub_text.append(border_part)
 		var offset:Vector2
 		match i:
-			0: offset = Vector2(0, -distance)
-			1: offset = Vector2(distance, 0)
-			2: offset = Vector2(0, distance)
-			3: offset = Vector2(-distance, 0)
-		border_part.position = self.position + offset
-		sub_text_offsets.append(offset)
+			0: border_part.position = Vector2(0, -distance)
+			1: border_part.position = Vector2(distance, 0)
+			2: border_part.position = Vector2(0, distance)
+			3: border_part.position = Vector2(-distance, 0)
+		#border_part.position = self.position + offset
+		#sub_text_offsets.append(offset)
 
 
 func create_new_label() -> RichTextLabel:
@@ -97,6 +99,8 @@ func create_new_label() -> RichTextLabel:
 	add_child(new_label)
 	#move_child(new_label, 0)
 	new_label.z_index = -1
+	new_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	new_label.fit_content = true
 	new_label.set_anchors_preset(Control.PRESET_CENTER)
 	new_label.size = self.size
 	new_label.theme = theme
