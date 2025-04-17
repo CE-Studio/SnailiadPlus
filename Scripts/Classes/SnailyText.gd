@@ -18,15 +18,16 @@ var align_horiz:HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
 var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
 
 @onready var sub_text:Array = []
-#@onready var sub_text_offsets:Array = []
+@onready var sub_text_offsets:Array = []
 #endregion
 
 
 func set_snaily_text(_text:String) -> void:
+	print(_text)
 	self.text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
-	reset_label_size()
+	reset_label_size.call_deferred()
 
 
 func set_alignment(horiz:int, vert:int) -> void:
@@ -42,6 +43,7 @@ func set_alignment(horiz:int, vert:int) -> void:
 func reset_label_size() -> void:
 	#var string_size = font.get_string_size(self.text)
 	#print(string_size.x)
+	print("resize", text)
 	var longest_line = 0
 	var lines = self.text.split("\n")
 	for line in lines:
@@ -56,26 +58,26 @@ func reset_label_size() -> void:
 		self.custom_minimum_size.x = max_width
 		#self.size.y = 22 * self.get_line_count()
 	#self.position.x = self.size.x * -0.5
-	for sub_label in sub_text:
+	for i in sub_text.size():
 		#var sub_label = sub_text[i]
-		sub_label.size = self.size
-		#sub_label.position = sub_text_offsets[i]
+		sub_text[i].size = self.size
+		sub_text[i].position = sub_text_offsets[i]
 		#sub_label.position = self.position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
 	for sub_label in sub_text:
 		sub_label.queue_free()
-	#sub_text_offsets.clear()
+	sub_text_offsets.clear()
 
 
 func add_shadow(distance:int) -> void:
 	var shadow = create_new_label()
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
-	#var offset = Vector2(distance, distance)
-	#shadow.position = self.position + offset
-	#sub_text_offsets.append(offset)
+	var offset = Vector2(distance, distance)
+	shadow.position = self.position + offset
+	sub_text_offsets.append(offset)
 	shadow.position = Vector2(distance, distance)
 
 
@@ -91,10 +93,17 @@ func add_border(distance:int) -> void:
 			2: border_part.position = Vector2(0, distance)
 			3: border_part.position = Vector2(-distance, 0)
 		#border_part.position = self.position + offset
-		#sub_text_offsets.append(offset)
+		sub_text_offsets.append(offset)
+
+
+#func _input(event: InputEvent) -> void:
+#	if not Engine.is_editor_hint():
+#		if event is InputEventKey:
+#			reset_label_size()
 
 
 func create_new_label() -> RichTextLabel:
+	print("create", text)
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
 	#move_child(new_label, 0)
