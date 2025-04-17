@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cethpj66nvp1o"]
+
+[ext_resource type="Script" uid="uid://dbvscle5lnyqd" path="res://Scripts/Classes/SnailyButton.gd" id="1_a4l7p"]
+[ext_resource type="Texture2D" uid="uid://dedrn6bpe28j4" path="res://Assets/Images/UI/Button.png" id="1_bd1a6"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_a4l7p"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_ur6t0"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_beybx"]
+
+[node name="SnailyButton" type="Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_a4l7p")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = -40.0
+offset_top = -12.0
+offset_right = 40.0
+offset_bottom = 12.0
+texture = ExtResource("1_bd1a6")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="SnailyText" parent="." instance=ExtResource("3_a4l7p")]
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("4_ur6t0")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_beybx")
+bus = &"Sfx"
+
+[connection signal="mouse_entered" from="." to="." method="on_focus"]

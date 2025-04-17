@@ -3,9 +3,14 @@ extends Node2D
 
 
 #region Variables
+const POS_SCALE:int = 80
+const START_TIME:float = -2.5
+
 var letter:String
 var origin:Vector2
 var life_time:float
+var intro_anim_complete:bool = false
+var y_loop:float = 0.0
 
 var letter_ids:Dictionary = {
 	"a": 0,
@@ -43,7 +48,23 @@ var letter_ids:Dictionary = {
 func spawn(new_letter:String, delay:float) -> int:
 	letter = new_letter
 	sprite.action = letter + ".spawn"
+	sprite.modulate.a = 0.0
 	origin = position
-	life_time = -delay
+	life_time = START_TIME - delay
 	var letter_id = letter_ids[letter]
+	y_loop = randf_range(-0.5, 0.5)
 	return sprite.meta["widths"][letter_id]
+
+
+func  _process(delta: float) -> void:
+	if life_time < START_TIME:
+		pass
+	elif life_time < 0.0:
+		sprite.modulate.a = 1.0
+		position.x = origin.x - sin(-life_time * PI) * life_time * POS_SCALE
+		#position.y = origin.y - cos(-life_time * PI) * life_time * POS_SCALE * y_loop
+	elif not intro_anim_complete:
+		intro_anim_complete = true
+		sprite.action = letter + ".idle"
+		position = origin
+	life_time += delta

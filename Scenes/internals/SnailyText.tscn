@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dke6r2335reau"]
+
+[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="1_52xjo"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="1_kra6s"]
+
+[node name="SnailyText" type="Node2D"]
+script = ExtResource("1_kra6s")
+
+[node name="MainText" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -11.0
+offset_right = 55.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_52xjo")
+theme_override_font_sizes/normal_font_size = 0
+text = "Text!!"
