@@ -15,7 +15,7 @@ var focus_hover_rate:Vector2
 var focus_hover_range:Vector2
 var focus_hover_timers:Vector2
 
-@onready var text:SnailyText = $"SnailyText"
+@onready var text:SnailyText = $MarginContainer/SnailyText
 @onready var sfx_focus:AudioStreamPlayer = $"AudioGroup/Focus"
 @onready var sfx_select:AudioStreamPlayer = $"AudioGroup/Select"
 #endregion

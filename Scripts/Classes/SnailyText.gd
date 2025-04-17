@@ -4,6 +4,9 @@ class_name SnailyText
 extends RichTextLabel
 
 
+@export_tool_button("Force Update") var _blech:Callable = reset_label_size
+
+
 #region Variables
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
@@ -11,7 +14,7 @@ var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
 var align_horiz:HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
 var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
-var max_width:int = 0
+@export var max_width:int = 0
 
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
@@ -37,6 +40,7 @@ func set_alignment(horiz:int, vert:int) -> void:
 
 func reset_label_size() -> void:
 	var string_size = font.get_string_size(self.text)
+	print(string_size.x)
 	if max_width == 0 or string_size.x < max_width:
 		var longest_line = 0
 		var lines = self.text.split("\n")
@@ -44,16 +48,18 @@ func reset_label_size() -> void:
 			var line_length = font.get_string_size(line).x
 			if longest_line < line_length:
 				longest_line = line_length
-		self.size.x = longest_line
-		self.size.y = 22 * len(lines)
+		self.custom_minimum_size.x = longest_line
+		print(self.custom_minimum_size.x)
+		#self.size.y = 22 * len(lines)
 	else:
-		self.size.x = max_width
-		self.size.y = 22 * self.get_line_count()
-	self.position.x = self.size.x * -0.5
+		self.custom_minimum_size.x = max_width
+		#self.size.y = 22 * self.get_line_count()
+	#self.position.x = self.size.x * -0.5
 	for i in len(sub_text):
 		var sub_label = sub_text[i]
 		sub_label.size = self.size
-		sub_label.position = self.position + sub_text_offsets[i]
+		sub_label.position = sub_text_offsets[i]
+		#sub_label.position = self.position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
