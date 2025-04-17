@@ -26,4 +26,3 @@ position = Vector2(200, 50)
 
 [node name="SnailyButton" parent="." instance=ExtResource("4_vg0ck")]
 position = Vector2(200, 120)
-text_id = "menu_option_controls_buttonType_xbox"

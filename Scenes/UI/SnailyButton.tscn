@@ -6,7 +6,11 @@
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_ur6t0"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_beybx"]
 
-[node name="SnailyButton" type="Node2D"]
+[node name="SnailyButton" type="Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
 script = ExtResource("1_a4l7p")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -33,3 +37,5 @@ bus = &"Sfx"
 [node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("5_beybx")
 bus = &"Sfx"
+
+[connection signal="mouse_entered" from="." to="." method="on_focus"]
