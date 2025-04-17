@@ -32,8 +32,20 @@ focus_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ur6t0")
 script = ExtResource("1_a4l7p")
 
-[node name="SnailyText" parent="." instance=ExtResource("3_a4l7p")]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_top = -5
+theme_override_constants/margin_right = 2
+
+[node name="SnailyText" parent="MarginContainer" instance=ExtResource("3_a4l7p")]
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
+text = "aaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaaaaaa
+aaaa"
+max_width = 300
 
 [node name="AudioGroup" type="Node" parent="."]
 
