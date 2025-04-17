@@ -24,7 +24,7 @@ var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
 
 func set_snaily_text(_text:String) -> void:
 	print(_text)
-	self.text = _text
+	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
 	reset_label_size.call_deferred()
@@ -33,36 +33,36 @@ func set_snaily_text(_text:String) -> void:
 func set_alignment(horiz:int, vert:int) -> void:
 	align_horiz = horiz
 	align_vert = vert
-	self.horizontal_alignment = align_horiz
-	self.vertical_alignment = align_vert
+	horizontal_alignment = align_horiz
+	vertical_alignment = align_vert
 	for sub_label in sub_text:
 		sub_label.horizontal_alignment = align_horiz
 		sub_label.vertical_alignment = align_vert
 
 
 func reset_label_size() -> void:
-	#var string_size = font.get_string_size(self.text)
+	#var string_size = font.get_string_size(text)
 	#print(string_size.x)
 	print("resize", text)
 	var longest_line = 0
-	var lines = self.text.split("\n")
+	var lines = text.split("\n")
 	for line in lines:
 		var line_length = font.get_string_size(line).x
 		if longest_line < line_length:
 			longest_line = line_length
 	if max_width == 0 or longest_line < max_width:
-		self.custom_minimum_size.x = longest_line
-		print(self.custom_minimum_size.x)
-		#self.size.y = 22 * len(lines)
+		custom_minimum_size.x = longest_line
+		print(custom_minimum_size.x)
+		#size.y = 22 * len(lines)
 	else:
-		self.custom_minimum_size.x = max_width
-		#self.size.y = 22 * self.get_line_count()
-	#self.position.x = self.size.x * -0.5
+		custom_minimum_size.x = max_width
+		#size.y = 22 * get_line_count()
+	#position.x = size.x * -0.5
 	for i in sub_text.size():
 		#var sub_label = sub_text[i]
-		sub_text[i].size = self.size
+		sub_text[i].size = size
 		sub_text[i].position = sub_text_offsets[i]
-		#sub_label.position = self.position + sub_text_offsets[i]
+		#sub_label.position = position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
@@ -76,7 +76,7 @@ func add_shadow(distance:int) -> void:
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
 	var offset = Vector2(distance, distance)
-	shadow.position = self.position + offset
+	shadow.position = position + offset
 	sub_text_offsets.append(offset)
 	shadow.position = Vector2(distance, distance)
 
@@ -92,7 +92,7 @@ func add_border(distance:int) -> void:
 			1: border_part.position = Vector2(distance, 0)
 			2: border_part.position = Vector2(0, distance)
 			3: border_part.position = Vector2(-distance, 0)
-		#border_part.position = self.position + offset
+		#border_part.position = position + offset
 		sub_text_offsets.append(offset)
 
 
@@ -106,12 +106,14 @@ func create_new_label() -> RichTextLabel:
 	print("create", text)
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
-	#move_child(new_label, 0)
-	new_label.z_index = -1
+	new_label.bbcode_enabled = true
+	new_label.show_behind_parent = true
 	new_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	new_label.fit_content = true
 	new_label.set_anchors_preset(Control.PRESET_CENTER)
-	new_label.size = self.size
+	new_label.horizontal_alignment = horizontal_alignment
+	new_label.vertical_alignment = vertical_alignment
+	new_label.size = size
 	new_label.theme = theme
-	new_label.text = self.text
+	new_label.text = text
 	return new_label

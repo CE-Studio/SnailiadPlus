@@ -23,6 +23,7 @@ var focus_hover_timers:Vector2
 
 
 func _ready() -> void:
+	text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
 		origin = position

@@ -19,6 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_52xjo")
+bbcode_enabled = true
 fit_content = true
 scroll_active = false
 script = ExtResource("1_kra6s")
