@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=4 uid="uid://btkfrtgsq6p4g"]
+[gd_scene load_steps=6 format=4 uid="uid://btkfrtgsq6p4g"]
 
 [ext_resource type="AudioStream" uid="uid://cft3bobdl6g6j" path="res://Assets/Sounds/Music/TitleSong.ogg" id="1_36iol"]
+[ext_resource type="Script" uid="uid://xexpkncfjycg" path="res://Scripts/MainMenu.gd" id="1_u7fmy"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_xx56i"]
 [ext_resource type="PackedScene" uid="uid://dcat51drlm5u4" path="res://Scenes/UI/Title.tscn" id="3_rae6p"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="4_vg0ck"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_w4qjd"]
 
 [node name="MenuScene" type="Node2D"]
+script = ExtResource("1_u7fmy")
+is_main_menu = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(200, 120)
@@ -24,10 +27,12 @@ tile_set = ExtResource("2_xx56i")
 [node name="Title" parent="." instance=ExtResource("3_rae6p")]
 position = Vector2(200, 50)
 
-[node name="SnailyButton" parent="." instance=ExtResource("4_vg0ck")]
-offset_left = 171.0
-offset_top = 117.0
-offset_right = 245.0
-offset_bottom = 139.0
-text_id = "test"
-grab_focus_on_load = true
+[node name="ClickPlay" parent="." instance=ExtResource("5_w4qjd")]
+custom_minimum_size = Vector2(342, 0)
+offset_left = 30.0
+offset_top = 100.0
+offset_right = 368.0
+offset_bottom = 116.0
+text = "Click or press Z or A to play!!"
+horizontal_alignment = 1
+max_width = 360

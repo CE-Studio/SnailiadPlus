@@ -8,6 +8,8 @@ extends RichTextLabel
 
 
 #region Variables
+const MAGIC_VECTOR:Vector2 = Vector2(-9, 8)
+
 @export var max_width:int = 0
 
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
@@ -58,11 +60,16 @@ func reset_label_size() -> void:
 		custom_minimum_size.x = max_width
 		#size.y = 22 * get_line_count()
 	#position.x = size.x * -0.5
+	#print(position)
 	for i in sub_text.size():
 		#var sub_label = sub_text[i]
-		sub_text[i].size = size
-		sub_text[i].position = sub_text_offsets[i]
-		#sub_label.position = position + sub_text_offsets[i]
+		#sub_text[i].size = size
+		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
+		#sub_text[i].position = sub_text_offsets[i]
+		#sub_text[i].position = position + sub_text_offsets[i]
+		sub_text[i].position = sub_text_offsets[i] + MAGIC_VECTOR
+		# I don't know why things don't line up without this magic vector. They should. Why don't they.
+		#print(sub_text[i].position)
 
 
 func clear_sub_text() -> void:
@@ -76,9 +83,10 @@ func add_shadow(distance:int) -> void:
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
 	var offset = Vector2(distance, distance)
-	shadow.position = position + offset
+	#shadow.position = position + offset
+	shadow.position = offset + MAGIC_VECTOR
 	sub_text_offsets.append(offset)
-	shadow.position = Vector2(distance, distance)
+	#shadow.position = Vector2(distance, distance)
 
 
 func add_border(distance:int) -> void:
@@ -88,11 +96,15 @@ func add_border(distance:int) -> void:
 		sub_text.append(border_part)
 		var offset:Vector2
 		match i:
-			0: border_part.position = Vector2(0, -distance)
-			1: border_part.position = Vector2(distance, 0)
-			2: border_part.position = Vector2(0, distance)
-			3: border_part.position = Vector2(-distance, 0)
+			0: offset = Vector2(0, -distance)
+			1: offset = Vector2(distance, 0)
+			2: offset = Vector2(0, distance)
+			3: offset = Vector2(-distance, 0)
 		#border_part.position = position + offset
+		#print(position)
+		#print(offset)
+		#print(border_part.position)
+		border_part.position = offset + MAGIC_VECTOR
 		sub_text_offsets.append(offset)
 
 

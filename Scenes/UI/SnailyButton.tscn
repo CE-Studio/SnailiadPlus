@@ -45,6 +45,7 @@ layout_mode = 2
 text = "Text!!"
 scroll_active = true
 autowrap_mode = 0
+horizontal_alignment = 1
 max_width = 300
 
 [node name="AudioGroup" type="Node" parent="."]
