@@ -9,6 +9,12 @@ extends RichTextLabel
 
 #region Variables
 @export var max_width:int = 0
+@export var text_scale:int = 2:
+	set(value):
+		text_scale = value
+		add_theme_font_size_override("normal_font_size", 8 * value)
+		for sub_label in sub_text:
+			sub_label.add_theme_font_size_override("normal_font_size", 8 * value)
 
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
@@ -42,16 +48,19 @@ func set_alignment(horiz:int, vert:int) -> void:
 func reset_label_size() -> void:
 	var longest_line = 0
 	var lines = text.split("\n")
+	var scale_mod = float(text_scale) * 0.5
 	for line in lines:
 		var line_length = font.get_string_size(line).x
 		if longest_line < line_length:
 			longest_line = line_length
 	if max_width == 0 or longest_line < max_width:
-		custom_minimum_size.x = longest_line
+		custom_minimum_size.x = longest_line * scale_mod
 	else:
 		custom_minimum_size.x = max_width
+	size.x = custom_minimum_size.x
 	for i in sub_text.size():
 		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
+		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
 		sub_text[i].position = sub_text_offsets[i]
 
 
@@ -96,6 +105,7 @@ func create_new_label() -> RichTextLabel:
 	new_label.horizontal_alignment = horizontal_alignment
 	new_label.vertical_alignment = vertical_alignment
 	new_label.add_theme_constant_override("line_separation", get_theme_constant("line_separation"))
+	new_label.add_theme_font_size_override("normal_font_size", 8 * text_scale)
 	new_label.clip_contents = false
 	new_label.size = size
 	new_label.theme = theme

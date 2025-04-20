@@ -169,6 +169,52 @@ static func save_all():
 #endregion
 
 
+#region Application functions
+static func get_window_size() -> Vector2:
+	return Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),
+	ProjectSettings.get_setting("display/window/size/viewport_height"))
+
+
+static func parse_version_to_text_string(version:String) -> String:
+	var prefix = version.substr(0, 1)
+	var number = version.substr(1)
+	var output:String
+	match prefix:
+		"b": output = get_text("menu_version_developer") + " "
+		"d": output = get_text("menu_version_demo") + " "
+		"r": output = get_text("menu_version_release") + " "
+	output += number
+	return output
+
+
+static func parse_version_to_array(version:String) -> Array:
+	var prefix = version.substr(0, 1)
+	if not is_number(prefix):
+		version = version.substr(1)
+	var version_parts = version.split(".")
+	var version_numbers:Array
+	for part in version_parts:
+		version_numbers.append(int(part))
+	return version_numbers
+
+
+static func compare_versions(compare:Array, against:Array) -> int:
+	if compare[0] < against[0]:
+		return -1
+	elif compare[0] > against[0]:
+		return 1
+	if compare[1] < against[1]:
+		return -1
+	elif compare[1] > against[1]:
+		return 1
+	if compare[2] < against[2]:
+		return -1
+	elif compare[2] > against[2]:
+		return 1
+	return 0
+#endregion
+
+
 static func get_text(key:String) -> String:
 	if text_lib.has(key):
 		return text_lib[key]

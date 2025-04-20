@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://btkfrtgsq6p4g"]
+[gd_scene load_steps=7 format=4 uid="uid://btkfrtgsq6p4g"]
 
 [ext_resource type="AudioStream" uid="uid://cft3bobdl6g6j" path="res://Assets/Sounds/Music/TitleSong.ogg" id="1_36iol"]
 [ext_resource type="Script" uid="uid://xexpkncfjycg" path="res://Scripts/MainMenu.gd" id="1_u7fmy"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_xx56i"]
 [ext_resource type="PackedScene" uid="uid://dcat51drlm5u4" path="res://Scenes/UI/Title.tscn" id="3_rae6p"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_w4qjd"]
+[ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="6_w4qjd"]
 
 [node name="MenuScene" type="Node2D"]
 script = ExtResource("1_u7fmy")
@@ -36,3 +37,20 @@ offset_bottom = 116.0
 text = "Click or press Z or A to play!!"
 horizontal_alignment = 1
 max_width = 360
+
+[node name="Version" parent="." instance=ExtResource("5_w4qjd")]
+custom_minimum_size = Vector2(76, 0)
+offset_left = 1.0
+offset_top = 222.0
+offset_right = 77.0
+offset_bottom = 238.0
+theme_override_font_sizes/normal_font_size = 8
+text = "Version
+0.0.0"
+text_scale = 1
+
+[node name="ContextPanel" parent="." instance=ExtResource("6_w4qjd")]
+offset_left = 62.0
+offset_top = 100.0
+offset_right = 236.0
+offset_bottom = 122.0

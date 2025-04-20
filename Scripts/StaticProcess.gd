@@ -3,6 +3,9 @@ extends Node
 
 # Initialize everything on load
 func _ready() -> void:
+	# Load all text from library
+	Statics.text_lib = _load_json_to_dict("res://Resources/Text.json")
+	
 	# Load data. If no data exists, create it
 	DirAccess.open("user://" + Statics.save_prefix)
 	if DirAccess.get_open_error() != 0:
@@ -29,8 +32,6 @@ func _ready() -> void:
 		Statics.data_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	Statics.save_general()
 	Statics.current_profile = Statics.data_profile1
-	
-	Statics.text_lib = _load_json_to_dict("res://Resources/Text.json")
 
 
 func _load_json_to_dict(path:String) -> Dictionary:
