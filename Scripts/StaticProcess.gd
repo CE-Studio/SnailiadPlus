@@ -30,8 +30,15 @@ func _ready() -> void:
 		Statics.data_records = _load_json_to_dict("user://" + Statics.save_prefix + "/Records.json")
 	else:
 		Statics.data_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
-	Statics.save_general()
-	Statics.current_profile = Statics.data_profile1
+	
+	var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
+	var current_ver = Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
+	var ver_compare = Statics.compare_versions(saved_ver, current_ver)
+	if ver_compare == -1:
+		pass
+	else:
+		Statics.save_general()
+		Statics.current_profile = Statics.data_profile1
 
 
 func _load_json_to_dict(path:String) -> Dictionary:

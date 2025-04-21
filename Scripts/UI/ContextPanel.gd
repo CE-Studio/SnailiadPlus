@@ -15,10 +15,10 @@ func _ready() -> void:
 	text.add_shadow(1)
 
 
-func set_text(_text:String, _size:int, _width:int) -> void:
+func set_text(_text:String, _size:int) -> void:
 	text.text_scale = _size
 	text.set_snaily_text(_text)
-	text.max_width = _width
+	text.max_width = custom_minimum_size.x - 16
 
 
 func add_header(_text:String, _size:int) -> void:

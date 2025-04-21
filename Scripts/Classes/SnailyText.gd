@@ -8,7 +8,10 @@ extends RichTextLabel
 
 
 #region Variables
-@export var max_width:int = 0
+@export var max_width:int = 0:
+	set(value):
+		max_width = value
+		custom_minimum_size.x = value
 @export var text_scale:int = 2:
 	set(value):
 		text_scale = value
@@ -111,3 +114,15 @@ func create_new_label() -> RichTextLabel:
 	new_label.theme = theme
 	new_label.text = text
 	return new_label
+
+
+func set_visible_chars_count(count:int) -> void:
+	visible_characters = count
+	for sub_label in sub_text:
+		sub_label.visible_characters = count
+
+
+func set_visible_chars_ratio(ratio:float) -> void:
+	visible_ratio = clamp(ratio, 0.0, 1.0)
+	for sub_label in sub_text:
+		sub_label.visible_ratio = clamp(ratio, 0.0, 1.0)
