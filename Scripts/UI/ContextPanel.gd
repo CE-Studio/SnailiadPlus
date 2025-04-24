@@ -6,6 +6,7 @@ extends PanelContainer
 @onready var vbox:VBoxContainer = $"MarginContainer/VBoxContainer"
 @onready var text:SnailyText = $"MarginContainer/VBoxContainer/Text"
 @onready var header:SnailyText = null
+@onready var button:SnailyButton = null
 @onready var text_scene = load("res://Scenes/internals/SnailyText.tscn")
 @onready var button_scene = load("res://Scenes/UI/SnailyButton.tscn")
 #endregion
@@ -27,11 +28,21 @@ func add_header(_text:String, _size:int) -> void:
 		var parent_box:VBoxContainer = VBoxContainer.new()
 		vbox.add_child(header_text)
 		vbox.move_child(header_text, 0)
-		#header_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 		header_text.add_shadow(1)
 		header = header_text
 	header.text_scale = _size
 	header.set_snaily_text(_text)
+
+
+func add_button(_text:String, target_function:Callable, focus:bool = true) -> void:
+	if button == null:
+		var new_button:SnailyButton = button_scene.instantiate()
+		vbox.add_child(new_button)
+		new_button.set_text(_text)
+		if focus:
+			new_button.grab_focus()
+		new_button.button_pressed.connect(target_function)
+		button = new_button
 
 
 func center_on_screen() -> void:

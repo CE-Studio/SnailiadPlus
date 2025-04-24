@@ -57,6 +57,6 @@ modulate = Color(1, 1, 1, 0)
 [node name="VersionWarnPanel" parent="." instance=ExtResource("6_w4qjd")]
 custom_minimum_size = Vector2(276, 0)
 offset_left = 62.0
-offset_top = 250.0
+offset_top = 80.0
 offset_right = 338.0
-offset_bottom = 272.0
+offset_bottom = 102.0

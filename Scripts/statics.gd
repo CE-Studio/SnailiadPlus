@@ -71,6 +71,7 @@ const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
 
 
+static var main_menu_booted_once:bool = false
 static var is_menu_open:bool = false
 static var is_in_boss_rush:bool = false
 static var increment_boss_rush_timer:bool = false
