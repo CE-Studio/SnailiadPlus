@@ -9,6 +9,7 @@ const MOVE_RATE:float = 12.0
 
 @export var text_id:String = ""
 @export var grab_focus_on_load:bool = false
+@export var disabled = false
 
 var focused:bool = false
 var mouse_over:bool = false
@@ -37,8 +38,10 @@ func _ready() -> void:
 			text.set_snaily_text("Text!!")
 		else:
 			text.set_snaily_text(Statics.get_text(text_id))
-		if can_focus and grab_focus_on_load:
+		if can_focus and grab_focus_on_load and not disabled:
 			grab_focus()
+		if disabled:
+			text.modulate = Color8(200, 192, 192)
 
 
 func _process(delta: float) -> void:
@@ -51,7 +54,7 @@ func _process(delta: float) -> void:
 	#		position = position.lerp(origin + focus_hover_pos + FOCUS_HOVER_OFFSET, MOVE_RATE * delta)
 	#	else:
 	#		position = position.lerp(origin, MOVE_RATE * delta)
-	if focused:
+	if focused and not disabled:
 		if (mouse_over and (Input.get_action_raw_strength("UIClick"))
 		or Input.get_action_raw_strength("Jump")):
 			button_pressed.emit()
@@ -64,7 +67,7 @@ func set_text(_text:String) -> void:
 
 func _on_mouse_over() -> void:
 	mouse_over = true
-	if can_focus:
+	if can_focus and not disabled:
 		grab_focus()
 
 
@@ -76,7 +79,11 @@ func _on_focus() -> void:
 	if not Engine.is_editor_hint():
 		if not focused:
 			focused = true
-			sfx_focus.play()
+			if grab_focus_on_load:
+				sfx_select.play()
+				grab_focus_on_load = false
+			else:
+				sfx_focus.play()
 
 
 func _on_exit_focus() -> void:

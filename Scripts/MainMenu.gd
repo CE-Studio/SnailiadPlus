@@ -2,18 +2,26 @@ class_name MainMenu
 extends Node2D
 
 #region Variables
+const TITLE_REST_Y = 40
+const TITLE_MOVE_RATE = 8
+const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
+
 @export var is_main_menu:bool = false
 
 var is_main_awaiting_input:bool = false
 var version_panel_active:bool = false
 var input_delay_timer:float = -2.25
+var title:Node2D
 var click_play_text:SnailyText
 var version_panel:ContextPanel
+
+@onready var layer_group:Node2D = $"LayerGroup"
 #endregion
 
 
 func _ready() -> void:
 	if is_main_menu:
+		title = $"Title"
 		if not Statics.main_menu_booted_once:
 			var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
 			var current_ver = Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
@@ -38,6 +46,8 @@ func _ready() -> void:
 			+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
 			version_text.set_snaily_text(version_string)
 			version_text.add_shadow(1)
+		else:
+			title.position.y = TITLE_REST_Y
 
 
 func _process(delta: float) -> void:
@@ -50,6 +60,8 @@ func _process(delta: float) -> void:
 			or Input.get_action_raw_strength("Jump")):
 				spawn_menu()
 				is_main_awaiting_input = false
+	if is_main_menu and not is_main_awaiting_input:
+		title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 
 
 func spawn_menu() -> void:
@@ -63,3 +75,11 @@ func spawn_menu() -> void:
 		Statics.data_general["game_version"] = ProjectSettings.get_setting("application/config/version")
 		Statics.save_general()
 		Statics.current_profile = Statics.data_profile1
+		create_layer("Main")
+
+
+func create_layer(name:String) -> MenuLayer:
+	var layer_scene = load(LAYER_PATH % name)
+	var layer = layer_scene.instantiate()
+	layer_group.add_child(layer)
+	return layer
