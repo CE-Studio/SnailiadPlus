@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7gnsi0pssupi"]
+
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_7kltg"]
+[ext_resource type="Script" uid="uid://c0nqdtcsxp5vd" path="res://Scripts/UI/ColorCover.gd" id="2_8asvy"]
+
+[node name="ColorCover" type="Sprite2D"]
+texture = ExtResource("1_7kltg")
+offset = Vector2(200, 120)
+script = ExtResource("2_8asvy")

@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="1_kra6s"]
 
 [node name="SnailyText" type="RichTextLabel"]
-z_index = 1
 clip_contents = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -19,6 +18,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_52xjo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
 fit_content = true
 scroll_active = false
 script = ExtResource("1_kra6s")

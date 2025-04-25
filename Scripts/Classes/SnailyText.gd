@@ -8,7 +8,16 @@ extends RichTextLabel
 
 
 #region Variables
-@export var max_width:int = 0
+@export var max_width:int = 0:
+	set(value):
+		max_width = value
+		custom_minimum_size.x = value
+@export var text_scale:int = 2:
+	set(value):
+		text_scale = value
+		add_theme_font_size_override("normal_font_size", 8 * value)
+		for sub_label in sub_text:
+			sub_label.add_theme_font_size_override("normal_font_size", 8 * value)
 
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
@@ -23,8 +32,7 @@ var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
 
 
 func set_snaily_text(_text:String) -> void:
-	print(_text)
-	self.text = _text
+	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
 	reset_label_size.call_deferred()
@@ -33,36 +41,30 @@ func set_snaily_text(_text:String) -> void:
 func set_alignment(horiz:int, vert:int) -> void:
 	align_horiz = horiz
 	align_vert = vert
-	self.horizontal_alignment = align_horiz
-	self.vertical_alignment = align_vert
+	horizontal_alignment = align_horiz
+	vertical_alignment = align_vert
 	for sub_label in sub_text:
 		sub_label.horizontal_alignment = align_horiz
 		sub_label.vertical_alignment = align_vert
 
 
 func reset_label_size() -> void:
-	#var string_size = font.get_string_size(self.text)
-	#print(string_size.x)
-	print("resize", text)
 	var longest_line = 0
-	var lines = self.text.split("\n")
+	var lines = text.split("\n")
+	var scale_mod = float(text_scale) * 0.5
 	for line in lines:
 		var line_length = font.get_string_size(line).x
 		if longest_line < line_length:
 			longest_line = line_length
 	if max_width == 0 or longest_line < max_width:
-		self.custom_minimum_size.x = longest_line
-		print(self.custom_minimum_size.x)
-		#self.size.y = 22 * len(lines)
+		custom_minimum_size.x = longest_line * scale_mod
 	else:
-		self.custom_minimum_size.x = max_width
-		#self.size.y = 22 * self.get_line_count()
-	#self.position.x = self.size.x * -0.5
+		custom_minimum_size.x = max_width
+	size.x = custom_minimum_size.x
 	for i in sub_text.size():
-		#var sub_label = sub_text[i]
-		sub_text[i].size = self.size
+		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
+		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
 		sub_text[i].position = sub_text_offsets[i]
-		#sub_label.position = self.position + sub_text_offsets[i]
 
 
 func clear_sub_text() -> void:
@@ -76,9 +78,8 @@ func add_shadow(distance:int) -> void:
 	shadow.modulate = shadow_color
 	sub_text.append(shadow)
 	var offset = Vector2(distance, distance)
-	shadow.position = self.position + offset
+	shadow.position = offset
 	sub_text_offsets.append(offset)
-	shadow.position = Vector2(distance, distance)
 
 
 func add_border(distance:int) -> void:
@@ -88,30 +89,40 @@ func add_border(distance:int) -> void:
 		sub_text.append(border_part)
 		var offset:Vector2
 		match i:
-			0: border_part.position = Vector2(0, -distance)
-			1: border_part.position = Vector2(distance, 0)
-			2: border_part.position = Vector2(0, distance)
-			3: border_part.position = Vector2(-distance, 0)
-		#border_part.position = self.position + offset
+			0: offset = Vector2(0, -distance)
+			1: offset = Vector2(distance, 0)
+			2: offset = Vector2(0, distance)
+			3: offset = Vector2(-distance, 0)
+		border_part.position = offset
 		sub_text_offsets.append(offset)
 
 
-#func _input(event: InputEvent) -> void:
-#	if not Engine.is_editor_hint():
-#		if event is InputEventKey:
-#			reset_label_size()
-
-
 func create_new_label() -> RichTextLabel:
-	print("create", text)
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
-	#move_child(new_label, 0)
-	new_label.z_index = -1
+	new_label.bbcode_enabled = true
+	new_label.show_behind_parent = true
 	new_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	new_label.fit_content = true
-	new_label.set_anchors_preset(Control.PRESET_CENTER)
-	new_label.size = self.size
+	new_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	new_label.horizontal_alignment = horizontal_alignment
+	new_label.vertical_alignment = vertical_alignment
+	new_label.add_theme_constant_override("line_separation", get_theme_constant("line_separation"))
+	new_label.add_theme_font_size_override("normal_font_size", 8 * text_scale)
+	new_label.clip_contents = false
+	new_label.size = size
 	new_label.theme = theme
-	new_label.text = self.text
+	new_label.text = text
 	return new_label
+
+
+func set_visible_chars_count(count:int) -> void:
+	visible_characters = count
+	for sub_label in sub_text:
+		sub_label.visible_characters = count
+
+
+func set_visible_chars_ratio(ratio:float) -> void:
+	visible_ratio = clamp(ratio, 0.0, 1.0)
+	for sub_label in sub_text:
+		sub_label.visible_ratio = clamp(ratio, 0.0, 1.0)

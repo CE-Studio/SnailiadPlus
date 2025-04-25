@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3 uid="uid://ewxxlol77jdq"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_kqxt8"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_rda1v"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kqxt8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+
+[node name="Profile" parent="VBoxContainer" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../HBoxContainer/BossRush")
+focus_next = NodePath("../HBoxContainer/BossRush")
+focus_previous = NodePath("../Quit")
+text_id = "menu_option_main_profile"
+grab_focus_on_load = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BossRush" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Multiplayer")
+focus_neighbor_top = NodePath("../../Profile")
+focus_neighbor_right = NodePath("../Multiplayer")
+focus_neighbor_bottom = NodePath("../../HBoxContainer2/Options")
+focus_next = NodePath("../Multiplayer")
+focus_previous = NodePath("../../Profile")
+text_id = "menu_option_main_bossRush"
+
+[node name="Multiplayer" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../BossRush")
+focus_neighbor_top = NodePath("../../Profile")
+focus_neighbor_right = NodePath("../BossRush")
+focus_neighbor_bottom = NodePath("../../HBoxContainer2/Records")
+focus_next = NodePath("../../HBoxContainer2/Options")
+focus_previous = NodePath("../BossRush")
+text_id = "menu_option_main_multiplayer"
+disabled = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Options" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Records")
+focus_neighbor_top = NodePath("../../HBoxContainer/BossRush")
+focus_neighbor_right = NodePath("../Records")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/Extras")
+focus_next = NodePath("../Records")
+focus_previous = NodePath("../../HBoxContainer/Multiplayer")
+text_id = "menu_option_main_options"
+
+[node name="Records" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Options")
+focus_neighbor_top = NodePath("../../HBoxContainer/Multiplayer")
+focus_neighbor_right = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/Credits")
+focus_next = NodePath("../../HBoxContainer3/Extras")
+focus_previous = NodePath("../Options")
+text_id = "menu_option_main_records"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Extras" parent="VBoxContainer/HBoxContainer3" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Credits")
+focus_neighbor_top = NodePath("../../HBoxContainer2/Options")
+focus_neighbor_right = NodePath("../Credits")
+focus_neighbor_bottom = NodePath("../../Quit")
+focus_next = NodePath("../Credits")
+focus_previous = NodePath("../../HBoxContainer2/Records")
+text_id = "menu_option_main_extras"
+
+[node name="Credits" parent="VBoxContainer/HBoxContainer3" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Extras")
+focus_neighbor_top = NodePath("../../HBoxContainer2/Records")
+focus_neighbor_right = NodePath("../Extras")
+focus_neighbor_bottom = NodePath("../../Quit")
+focus_next = NodePath("../../Quit")
+focus_previous = NodePath("../Extras")
+text_id = "menu_option_main_credits"
+
+[node name="Quit" parent="VBoxContainer" instance=ExtResource("2_rda1v")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../HBoxContainer3/Extras")
+focus_neighbor_bottom = NodePath("../Profile")
+focus_next = NodePath("../Profile")
+focus_previous = NodePath("../HBoxContainer3/Credits")
+text_id = "menu_option_main_quit"

@@ -9,12 +9,17 @@ const MOVE_RATE:float = 12.0
 
 @export var text_id:String = ""
 @export var grab_focus_on_load:bool = false
+@export var disabled = false
 
 var focused:bool = false
+var mouse_over:bool = false
 var origin:Vector2
-var focus_hover_rate:Vector2
-var focus_hover_range:Vector2
-var focus_hover_timers:Vector2
+var can_focus:bool = true
+#var focus_hover_rate:Vector2
+#var focus_hover_range:Vector2
+#var focus_hover_timers:Vector2
+
+signal button_pressed
 
 @onready var text:SnailyText = $MarginContainer/SnailyText
 @onready var sfx_focus:AudioStreamPlayer = $"AudioGroup/Focus"
@@ -23,40 +28,62 @@ var focus_hover_timers:Vector2
 
 
 func _ready() -> void:
+	text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
 		origin = position
-		focus_hover_rate = Vector2(randf_range(0.5, 4.5), randf_range(0.5, 4.5))
-		focus_hover_range = Vector2(randi_range(1, 3), randi_range(1, 2))
+		#focus_hover_rate = Vector2(randf_range(0.5, 4.5), randf_range(0.5, 4.5))
+		#focus_hover_range = Vector2(randi_range(1, 3), randi_range(1, 2))
 		if text_id.strip_edges() == "":
 			text.set_snaily_text("Text!!")
 		else:
 			text.set_snaily_text(Statics.get_text(text_id))
-		if grab_focus_on_load:
+		if can_focus and grab_focus_on_load and not disabled:
 			grab_focus()
+		if disabled:
+			text.modulate = Color8(200, 192, 192)
 
 
 func _process(delta: float) -> void:
-	if not Engine.is_editor_hint():
-		focus_hover_timers.x += delta * focus_hover_rate.x
-		focus_hover_timers.y += delta * focus_hover_rate.y
-		if focused:
-			var focus_hover_pos = Vector2(sin(focus_hover_timers.x) * focus_hover_range.x,
-			cos(focus_hover_timers.y) * focus_hover_range.y)
-			position = position.lerp(origin + focus_hover_pos + FOCUS_HOVER_OFFSET, MOVE_RATE * delta)
-		else:
-			position = position.lerp(origin, MOVE_RATE * delta)
+	#if not Engine.is_editor_hint():
+	#	focus_hover_timers.x += delta * focus_hover_rate.x
+	#	focus_hover_timers.y += delta * focus_hover_rate.y
+	#	if focused:
+	#		var focus_hover_pos = Vector2(sin(focus_hover_timers.x) * focus_hover_range.x,
+	#		cos(focus_hover_timers.y) * focus_hover_range.y)
+	#		position = position.lerp(origin + focus_hover_pos + FOCUS_HOVER_OFFSET, MOVE_RATE * delta)
+	#	else:
+	#		position = position.lerp(origin, MOVE_RATE * delta)
+	if focused and not disabled:
+		if (mouse_over and (Input.get_action_raw_strength("UIClick"))
+		or Input.get_action_raw_strength("Jump")):
+			button_pressed.emit()
+	pass
+
+
+func set_text(_text:String) -> void:
+	text.set_snaily_text(_text)
 
 
 func _on_mouse_over() -> void:
-	grab_focus()
+	mouse_over = true
+	if can_focus and not disabled:
+		grab_focus()
+
+
+func _on_mouse_exit() -> void:
+	mouse_over = false
 
 
 func _on_focus() -> void:
 	if not Engine.is_editor_hint():
 		if not focused:
 			focused = true
-			sfx_focus.play()
+			if grab_focus_on_load:
+				sfx_select.play()
+				grab_focus_on_load = false
+			else:
+				sfx_focus.play()
 
 
 func _on_exit_focus() -> void:
