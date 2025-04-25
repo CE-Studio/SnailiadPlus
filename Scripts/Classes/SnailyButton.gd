@@ -10,6 +10,10 @@ const MOVE_RATE:float = 12.0
 @export var text_id:String = ""
 @export var grab_focus_on_load:bool = false
 @export var disabled = false
+@export var hide_frame = false:
+	set(value):
+		hide_frame = value
+		self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
 
 var focused:bool = false
 var mouse_over:bool = false
@@ -42,6 +46,7 @@ func _ready() -> void:
 			grab_focus()
 		if disabled:
 			text.modulate = Color8(200, 192, 192)
+		hide_frame = hide_frame
 
 
 func _process(delta: float) -> void:

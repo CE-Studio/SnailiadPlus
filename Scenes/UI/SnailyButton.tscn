@@ -1,19 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cethpj66nvp1o"]
+[gd_scene load_steps=6 format=3 uid="uid://cethpj66nvp1o"]
 
 [ext_resource type="Script" uid="uid://dbvscle5lnyqd" path="res://Scripts/Classes/SnailyButton.gd" id="1_a4l7p"]
-[ext_resource type="Texture2D" uid="uid://dedrn6bpe28j4" path="res://Assets/Images/UI/Button.png" id="1_bd1a6"]
+[ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_ur6t0"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_a4l7p"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_ur6t0"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_beybx"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ur6t0"]
-texture = ExtResource("1_bd1a6")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 
 [node name="SnailyButton" type="PanelContainer"]
 anchors_preset = 8
@@ -30,7 +21,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_ur6t0")
+theme_override_styles/panel = ExtResource("1_ur6t0")
 script = ExtResource("1_a4l7p")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

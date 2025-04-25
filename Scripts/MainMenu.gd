@@ -82,4 +82,5 @@ func create_layer(name:String) -> MenuLayer:
 	var layer_scene = load(LAYER_PATH % name)
 	var layer = layer_scene.instantiate()
 	layer_group.add_child(layer)
+	layer.position = Vector2(0.0, 240.0)
 	return layer
