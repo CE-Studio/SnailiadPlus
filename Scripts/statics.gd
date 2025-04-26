@@ -311,3 +311,12 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
 					sprite_image.set_pixel(x, y, new_color)
 	return ImageTexture.create_from_image(sprite_image)
+
+
+static func get_all_children(_node:Node) -> Array:
+	var output = []
+	for child in _node.get_children():
+		output.append(child)
+		if child.get_child_count() > 0:
+			output.append_array(get_all_children(child))
+	return output

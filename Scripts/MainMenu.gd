@@ -79,8 +79,19 @@ func spawn_menu() -> void:
 
 
 func create_layer(name:String) -> MenuLayer:
+	for this_layer in layer_group.get_children():
+		#this_layer.can_focus = false
+		this_layer.set_button_focus(false)
+	var layer_count = layer_group.get_child_count()
 	var layer_scene = load(LAYER_PATH % name)
 	var layer = layer_scene.instantiate()
 	layer_group.add_child(layer)
 	layer.position = Vector2(0.0, 240.0)
+	layer.layer_id = layer_count
+	for this_layer in layer_group.get_children():
+		this_layer.total_layer_count = layer_count
+	for button in Statics.get_all_children(layer):
+		if button is SnailyButton:
+			if button.quick_load_layer.strip_edges() != "":
+				button.button_pressed.connect(create_layer)
 	return layer

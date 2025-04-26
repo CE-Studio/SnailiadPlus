@@ -21,6 +21,7 @@ focus_neighbor_bottom = NodePath("../Options")
 focus_next = NodePath("../Options")
 focus_previous = NodePath("../Quit")
 text_id = "menu_option_main_play"
+quick_load_layer = "Profiles"
 grab_focus_on_load = true
 hide_frame = true
 

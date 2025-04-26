@@ -8,6 +8,7 @@ const FOCUS_HOVER_OFFSET:Vector2 = Vector2(0, -3)
 const MOVE_RATE:float = 12.0
 
 @export var text_id:String = ""
+@export var quick_load_layer:String = ""
 @export var grab_focus_on_load:bool = false
 @export var disabled = false
 @export var hide_frame = false:
@@ -23,15 +24,19 @@ var can_focus:bool = true
 #var focus_hover_range:Vector2
 #var focus_hover_timers:Vector2
 
-signal button_pressed
+signal button_pressed(value)
 
-@onready var text:SnailyText = $MarginContainer/SnailyText
-@onready var sfx_focus:AudioStreamPlayer = $"AudioGroup/Focus"
-@onready var sfx_select:AudioStreamPlayer = $"AudioGroup/Select"
+@onready var text:SnailyText
+@onready var sfx_focus:AudioStreamPlayer
+@onready var sfx_select:AudioStreamPlayer
 #endregion
 
 
 func _ready() -> void:
+	text = $"MarginContainer/SnailyText"
+	sfx_focus = $"AudioGroup/Focus"
+	sfx_select = $"AudioGroup/Select"
+	
 	text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
@@ -60,9 +65,9 @@ func _process(delta: float) -> void:
 	#	else:
 	#		position = position.lerp(origin, MOVE_RATE * delta)
 	if focused and not disabled:
-		if (mouse_over and (Input.get_action_raw_strength("UIClick"))
-		or Input.get_action_raw_strength("Jump")):
-			button_pressed.emit()
+		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
+		or Input.is_action_just_pressed("Jump")):
+			button_pressed.emit(quick_load_layer)
 	pass
 
 
@@ -72,6 +77,7 @@ func set_text(_text:String) -> void:
 
 func _on_mouse_over() -> void:
 	mouse_over = true
+	print(can_focus)
 	if can_focus and not disabled:
 		grab_focus()
 
@@ -81,6 +87,7 @@ func _on_mouse_exit() -> void:
 
 
 func _on_focus() -> void:
+	print(text.text)
 	if not Engine.is_editor_hint():
 		if not focused:
 			focused = true

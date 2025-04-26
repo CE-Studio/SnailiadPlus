@@ -13,6 +13,7 @@ var can_focus:bool = true:
 		can_focus = value
 		for button in buttons:
 			button.can_focus = value
+#TODO: buttons wont can_focus = false
 var layer_id:int = 0
 var total_layer_count:int = 0
 var separation_float:float = MAX_SEPARATION
@@ -39,3 +40,8 @@ func _process(delta: float) -> void:
 	if separation_float > MIN_SEPARATION:
 		main_vbox.add_theme_constant_override("separation", int(separation_float))
 		separation_float = lerpf(separation_float, MIN_SEPARATION, MOVE_RATE * delta)
+
+
+func set_button_focus(state:bool) -> void:
+	for button in buttons:
+		button.can_focus = state
