@@ -39,3 +39,6 @@ alignment = 1
 custom_minimum_size = Vector2(118, 0)
 layout_mode = 2
 text = "Panel text"
+quick_load_text = null
+shadow_scale = null
+border_scale = null

@@ -53,4 +53,5 @@ focus_neighbor_bottom = NodePath("../Play")
 focus_next = NodePath("../Play")
 focus_previous = NodePath("../Museum")
 text_id = "menu_option_main_quit"
+quick_load_layer = "Quit"
 hide_frame = true

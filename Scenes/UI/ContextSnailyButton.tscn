@@ -23,6 +23,7 @@ size_flags_vertical = 4
 focus_mode = 2
 theme_override_styles/panel = ExtResource("1_dx4bq")
 script = ExtResource("2_dx4bq")
+back_one_layer = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

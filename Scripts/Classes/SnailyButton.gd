@@ -9,6 +9,7 @@ const MOVE_RATE:float = 12.0
 
 @export var text_id:String = ""
 @export var quick_load_layer:String = ""
+@export var back_one_layer:bool = false
 @export var grab_focus_on_load:bool = false
 @export var disabled = false
 @export var hide_frame = false:
@@ -19,7 +20,12 @@ const MOVE_RATE:float = 12.0
 var focused:bool = false
 var mouse_over:bool = false
 var origin:Vector2
-var can_focus:bool = true
+var can_focus:bool = true:
+	set(value):
+		can_focus = value
+		if value and grab_focus_on_load:
+			has_played_focus_sound = false
+var has_played_focus_sound:bool = false
 #var focus_hover_rate:Vector2
 #var focus_hover_range:Vector2
 #var focus_hover_timers:Vector2
@@ -67,7 +73,10 @@ func _process(delta: float) -> void:
 	if focused and not disabled:
 		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
 		or Input.is_action_just_pressed("Jump")):
-			button_pressed.emit(quick_load_layer)
+			if quick_load_layer.strip_edges() != "":
+				button_pressed.emit(quick_load_layer)
+			else:
+				button_pressed.emit()
 	pass
 
 
@@ -77,7 +86,6 @@ func set_text(_text:String) -> void:
 
 func _on_mouse_over() -> void:
 	mouse_over = true
-	print(can_focus)
 	if can_focus and not disabled:
 		grab_focus()
 
@@ -87,13 +95,12 @@ func _on_mouse_exit() -> void:
 
 
 func _on_focus() -> void:
-	print(text.text)
 	if not Engine.is_editor_hint():
 		if not focused:
 			focused = true
-			if grab_focus_on_load:
+			if grab_focus_on_load and not has_played_focus_sound:
 				sfx_select.play()
-				grab_focus_on_load = false
+				has_played_focus_sound = true
 			else:
 				sfx_focus.play()
 

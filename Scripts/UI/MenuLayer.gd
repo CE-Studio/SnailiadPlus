@@ -13,7 +13,6 @@ var can_focus:bool = true:
 		can_focus = value
 		for button in buttons:
 			button.can_focus = value
-#TODO: buttons wont can_focus = false
 var layer_id:int = 0
 var total_layer_count:int = 0
 var separation_float:float = MAX_SEPARATION
@@ -23,25 +22,20 @@ var separation_float:float = MAX_SEPARATION
 
 
 func _ready() -> void:
-	for child in get_children():
+	for child in Statics.get_all_children(self):
 		if child is SnailyButton:
 			buttons.append(child)
 
 
 func _process(delta: float) -> void:
-	if total_layer_count > layer_id:
-		position = position.lerp(Vector2(0.0, -240.0), MOVE_RATE * delta)
-	elif layer_id == -1:
+	if layer_id == -1:
 		position = position.lerp(Vector2(0.0, 480.0), MOVE_RATE * delta)
 		if position.y > 479.0:
 			queue_free()
+	elif total_layer_count > layer_id:
+		position = position.lerp(Vector2(0.0, -240.0), MOVE_RATE * delta)
 	else:
 		position = position.lerp(Vector2.ZERO, MOVE_RATE * delta)
 	if separation_float > MIN_SEPARATION:
 		main_vbox.add_theme_constant_override("separation", int(separation_float))
 		separation_float = lerpf(separation_float, MIN_SEPARATION, MOVE_RATE * delta)
-
-
-func set_button_focus(state:bool) -> void:
-	for button in buttons:
-		button.can_focus = state

@@ -18,17 +18,29 @@ extends RichTextLabel
 		add_theme_font_size_override("normal_font_size", 8 * value)
 		for sub_label in sub_text:
 			sub_label.add_theme_font_size_override("normal_font_size", 8 * value)
+@export var quick_load_text:String = ""
+@export var shadow_scale:int = 0
+@export var border_scale:int = 0
 
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
-var align_horiz:HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
-var align_vert:VerticalAlignment = VERTICAL_ALIGNMENT_TOP
+#var align_horiz:HorizontalAlignment = horizontal_alignment
+#var align_vert:VerticalAlignment = vertical_alignment
 
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
 #endregion
+
+
+func _ready() -> void:
+	if quick_load_text.strip_edges() != "" and not Engine.is_editor_hint():
+		set_snaily_text(Statics.get_text(quick_load_text))
+		if shadow_scale > 0:
+			add_shadow(shadow_scale)
+		if border_scale > 0:
+			add_border(border_scale)
 
 
 func set_snaily_text(_text:String) -> void:
@@ -39,13 +51,17 @@ func set_snaily_text(_text:String) -> void:
 
 
 func set_alignment(horiz:int, vert:int) -> void:
-	align_horiz = horiz
-	align_vert = vert
-	horizontal_alignment = align_horiz
-	vertical_alignment = align_vert
+	#align_horiz = horiz
+	#align_vert = vert
+	#horizontal_alignment = align_horiz
+	#vertical_alignment = align_vert
+	horizontal_alignment = horiz
+	vertical_alignment = vert
 	for sub_label in sub_text:
-		sub_label.horizontal_alignment = align_horiz
-		sub_label.vertical_alignment = align_vert
+		#sub_label.horizontal_alignment = align_horiz
+		#sub_label.vertical_alignment = align_vert
+		sub_label.horizontal_alignment = horiz
+		sub_label.vertical_alignment = vert
 
 
 func reset_label_size() -> void:

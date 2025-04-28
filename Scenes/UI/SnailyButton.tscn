@@ -37,6 +37,9 @@ text = "Text!!"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
+quick_load_text = null
+shadow_scale = null
+border_scale = null
 
 [node name="AudioGroup" type="Node" parent="."]
 

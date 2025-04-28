@@ -78,4 +78,5 @@ focus_neighbor_bottom = NodePath("../Profile1")
 focus_next = NodePath("../Profile1")
 focus_previous = NodePath("../HBoxContainer/Erase")
 text_id = "menu_option_main_returnTo"
+back_one_layer = true
 hide_frame = true

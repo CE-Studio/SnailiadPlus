@@ -14,6 +14,7 @@ var input_delay_timer:float = -2.25
 var title:Node2D
 var click_play_text:SnailyText
 var version_panel:ContextPanel
+var active_layers:int
 
 @onready var layer_group:Node2D = $"LayerGroup"
 #endregion
@@ -60,8 +61,12 @@ func _process(delta: float) -> void:
 			or Input.get_action_raw_strength("Jump")):
 				spawn_menu()
 				is_main_awaiting_input = false
-	if is_main_menu and not is_main_awaiting_input:
-		title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
+	if not is_main_awaiting_input:
+		if is_main_menu:
+			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
+		if Input.is_action_just_pressed("Pause"):
+			if layer_group.get_child_count() > 1:
+				clear_top_layer()
 
 
 func spawn_menu() -> void:
@@ -79,19 +84,50 @@ func spawn_menu() -> void:
 
 
 func create_layer(name:String) -> MenuLayer:
+	active_layers += 1
 	for this_layer in layer_group.get_children():
-		#this_layer.can_focus = false
-		this_layer.set_button_focus(false)
-	var layer_count = layer_group.get_child_count()
+		this_layer.can_focus = false
 	var layer_scene = load(LAYER_PATH % name)
 	var layer = layer_scene.instantiate()
 	layer_group.add_child(layer)
 	layer.position = Vector2(0.0, 240.0)
-	layer.layer_id = layer_count
+	layer.layer_id = active_layers
 	for this_layer in layer_group.get_children():
-		this_layer.total_layer_count = layer_count
+		this_layer.total_layer_count = active_layers
 	for button in Statics.get_all_children(layer):
 		if button is SnailyButton:
-			if button.quick_load_layer.strip_edges() != "":
+			if button.back_one_layer:
+				button.button_pressed.connect(clear_top_layer)
+			elif button.quick_load_layer.strip_edges() != "":
 				button.button_pressed.connect(create_layer)
 	return layer
+
+
+func clear_top_layer() -> MenuLayer:
+	if active_layers > 1:
+		active_layers -= 1
+		var top_layer:MenuLayer
+		var second_top_layer:MenuLayer
+		for this_layer in layer_group.get_children():
+			if this_layer.layer_id != -1:
+				this_layer.total_layer_count -= 1
+				second_top_layer = top_layer
+				top_layer = this_layer
+		top_layer.layer_id = -1
+		second_top_layer.can_focus = true
+		#region Find new focus
+		var buttons = Statics.get_all_children(second_top_layer)
+		var found_focus:bool = false
+		var focus_button:SnailyButton
+		for button in buttons:
+			if not found_focus:
+				if button is SnailyButton:
+					if focus_button == null:
+						focus_button = button
+					if button.grab_focus_on_load:
+						focus_button = button
+						found_focus = true
+		focus_button.grab_focus()
+		#endregion
+		return second_top_layer
+	return null
