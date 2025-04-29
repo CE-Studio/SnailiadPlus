@@ -1,8 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj1h0xrtfxbxg"]
+[gd_scene load_steps=5 format=3 uid="uid://cj1h0xrtfxbxg"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_gdv3v"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_7epk8"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="3_7epk8"]
+
+[sub_resource type="GDScript" id="GDScript_7epk8"]
+resource_name = "ProfileMenu"
+script/source = "extends VBoxContainer
+
+
+var pro1_empty = true
+var pro2_empty = true
+var pro3_empty = true
+
+
+func _ready() -> void:
+	for i in range(3):
+		var profile:Dictionary
+		var button:ContextSnailyButton
+		match i:
+			0:
+				profile = Statics.data_profile1
+				button = $\"Profile1\"
+			1:
+				profile = Statics.data_profile2
+				button = $\"Profile2\"
+			2:
+				profile = Statics.data_profile3
+				button = $\"Profile3\"
+		if not profile[\"is_empty\"]:
+			button.set_text(Statics.get_text(\"char_\" + str(i)) + \" \" + str(i + 1))
+			var stats = Statics.get_text(\"difficulty_\" + str(int(profile[\"difficulty\"])))
+			stats += \" / \" + Statics.format_game_time(profile[\"game_time\"])
+			stats += \" / %.1f%%\" % profile[\"item_rate\"]
+			if profile[\"r_shuffle_level\"] >= 0:
+				stats += \" / %08d\" % str(profile[\"r_seed\"])
+			button.set_subtext(stats)
+"
 
 [node name="Profiles" type="Node2D"]
 script = ExtResource("1_gdv3v")
@@ -11,8 +45,9 @@ script = ExtResource("1_gdv3v")
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
-offset_bottom = 220.0
+offset_bottom = 232.0
 alignment = 1
+script = SubResource("GDScript_7epk8")
 
 [node name="Profile1" parent="MainVBox" instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
@@ -23,6 +58,7 @@ focus_next = NodePath("../Profile2")
 focus_previous = NodePath("../Back")
 subtext_id = "menu_option_profile_empty_context"
 text_id = "menu_option_profile_empty"
+quick_load_layer = "ProfileSpawn"
 grab_focus_on_load = true
 
 [node name="Profile2" parent="MainVBox" instance=ExtResource("3_7epk8")]
@@ -49,6 +85,7 @@ text_id = "menu_option_profile_empty"
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+alignment = 1
 
 [node name="Copy" parent="MainVBox/HBoxContainer" instance=ExtResource("2_7epk8")]
 layout_mode = 2

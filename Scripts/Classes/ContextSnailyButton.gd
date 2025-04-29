@@ -10,8 +10,8 @@ extends SnailyButton
 #endregion
 
 func _ready() -> void:
-	text = $"MarginContainer/VBoxContainer/BigSnailyText"
-	subtext = $"MarginContainer/VBoxContainer/SmallSnailyText"
+	text = $"MarginContainer/VBoxContainer/BigContainer/BigSnailyText"
+	subtext = $"MarginContainer/VBoxContainer/SmallContainer/SmallSnailyText"
 	sfx_focus = $"AudioGroup/Focus"
 	sfx_select = $"AudioGroup/Select"
 	

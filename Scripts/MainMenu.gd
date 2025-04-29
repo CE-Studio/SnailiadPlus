@@ -65,8 +65,10 @@ func _process(delta: float) -> void:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 		if Input.is_action_just_pressed("Pause"):
-			if layer_group.get_child_count() > 1:
+			if active_layers > 1:
 				clear_top_layer()
+			else:
+				create_layer("Quit")
 
 
 func spawn_menu() -> void:

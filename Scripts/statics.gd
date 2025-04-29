@@ -216,6 +216,13 @@ static func compare_versions(compare:Array, against:Array) -> int:
 #endregion
 
 
+#region Profile functions
+static func format_game_time(time:Array) -> String:
+	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	return time_string
+#endregion
+
+
 static func get_text(key:String) -> String:
 	if text_lib.has(key):
 		return text_lib[key]
@@ -248,6 +255,10 @@ static func is_number(value:Variant, consider_strings := false) -> bool:
 			if value.is_valid_hex_number(true):
 				return true
 	return false
+
+
+static func round_to_places(number:float, decimal_places:int) -> float:
+	return round(number * pow(10, decimal_places)) / pow(10, decimal_places)
 
 
 static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:

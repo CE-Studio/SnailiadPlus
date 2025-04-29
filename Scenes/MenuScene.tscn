@@ -41,9 +41,6 @@ text = "Click or press Z or A to play!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 max_width = 360
-quick_load_text = null
-shadow_scale = null
-border_scale = null
 
 [node name="Version" parent="." instance=ExtResource("5_w4qjd")]
 custom_minimum_size = Vector2(76, 0)
@@ -55,9 +52,6 @@ theme_override_font_sizes/normal_font_size = 8
 text = "Version
 0.0.0"
 text_scale = 1
-quick_load_text = null
-shadow_scale = null
-border_scale = null
 
 [node name="ColorCover" parent="." instance=ExtResource("6_at33a")]
 modulate = Color(1, 1, 1, 0)

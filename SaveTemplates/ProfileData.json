@@ -1,5 +1,5 @@
 {
-	"is_empty": false,
+	"is_empty": true,
 	"difficulty": 0,
 	"game_time": [ 0.0, 0.0, 0.0 ],
 	"save_room": "__NONE__",
@@ -12,7 +12,7 @@
 	"world_flags": [ ],
 	"item_rate": 0.0,
 	"map_tiles": [ ],
-	"r_shuffle_level": 0,
+	"r_shuffle_level": -1,
 	"r_seed": 0,
 	"r_progressives": false,
 	"r_broom": false,
