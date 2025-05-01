@@ -25,6 +25,7 @@ var can_focus:bool = true:
 		can_focus = value
 		if value and grab_focus_on_load:
 			has_played_focus_sound = false
+		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
 var has_played_focus_sound:bool = false
 #var focus_hover_rate:Vector2
 #var focus_hover_range:Vector2
@@ -82,6 +83,26 @@ func _process(delta: float) -> void:
 
 func set_text(_text:String) -> void:
 	text.set_snaily_text(_text)
+
+
+func free_safely() -> void:
+	relinquish_focus_neighbors()
+	queue_free()
+
+
+func relinquish_focus_neighbors() -> void:
+	var bottom:Control = get_node(focus_neighbor_bottom)
+	var left:Control = get_node(focus_neighbor_left)
+	var right:Control = get_node(focus_neighbor_right)
+	var top:Control = get_node(focus_neighbor_top)
+	var next:Control = get_node(focus_next)
+	var previous:Control = get_node(focus_previous)
+	bottom.focus_neighbor_top = focus_neighbor_top
+	top.focus_neighbor_bottom = focus_neighbor_bottom
+	left.focus_neighbor_right = focus_neighbor_right
+	right.focus_neighbor_left = focus_neighbor_left
+	next.focus_previous = focus_previous
+	previous.focus_next = focus_next
 
 
 func _on_mouse_over() -> void:

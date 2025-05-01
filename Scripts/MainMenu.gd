@@ -5,6 +5,8 @@ extends Node2D
 const TITLE_REST_Y = 40
 const TITLE_MOVE_RATE = 8
 const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
+const SELECTOR_MOVE_RATE = 12
+const SELECTOR_OFFSET = Vector2i(16, -2)
 
 @export var is_main_menu:bool = false
 
@@ -15,13 +17,17 @@ var title:Node2D
 var click_play_text:SnailyText
 var version_panel:ContextPanel
 var active_layers:int
+var active_layer:MenuLayer
 
 @onready var layer_group:Node2D = $"LayerGroup"
+@onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
 #endregion
 
 
 func _ready() -> void:
 	if is_main_menu:
+		selectors[0].action = "left_0"
+		selectors[1].action = "right_0"
 		title = $"Title"
 		if not Statics.main_menu_booted_once:
 			var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
@@ -49,6 +55,9 @@ func _ready() -> void:
 			version_text.add_shadow(1)
 		else:
 			title.position.y = TITLE_REST_Y
+	else:
+		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
+		selectors[1].action = "right_%d" % int(Statics.current_profile["character"])
 
 
 func _process(delta: float) -> void:
@@ -69,6 +78,19 @@ func _process(delta: float) -> void:
 				clear_top_layer()
 			else:
 				create_layer("Quit")
+	
+	var focused_node = get_viewport().gui_get_focus_owner()
+	if focused_node != null:
+		for i in selectors.size():
+			var selector_pos:Vector2 = selectors[i].global_position
+			var destination = focused_node.global_position
+			destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
+			destination.y -= active_layer.position.y
+			match i:
+				0: destination.x -= SELECTOR_OFFSET.x
+				1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
+			var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
+			selectors[i].global_position = new_pos
 
 
 func spawn_menu() -> void:
@@ -94,6 +116,7 @@ func create_layer(name:String) -> MenuLayer:
 	layer_group.add_child(layer)
 	layer.position = Vector2(0.0, 240.0)
 	layer.layer_id = active_layers
+	layer.menu = self
 	for this_layer in layer_group.get_children():
 		this_layer.total_layer_count = active_layers
 	for button in Statics.get_all_children(layer):
@@ -102,6 +125,7 @@ func create_layer(name:String) -> MenuLayer:
 				button.button_pressed.connect(clear_top_layer)
 			elif button.quick_load_layer.strip_edges() != "":
 				button.button_pressed.connect(create_layer)
+	active_layer = layer
 	return layer
 
 
@@ -116,6 +140,7 @@ func clear_top_layer() -> MenuLayer:
 				second_top_layer = top_layer
 				top_layer = this_layer
 		top_layer.layer_id = -1
+		top_layer.can_focus = false
 		second_top_layer.can_focus = true
 		#region Find new focus
 		var buttons = Statics.get_all_children(second_top_layer)
@@ -131,5 +156,10 @@ func clear_top_layer() -> MenuLayer:
 						found_focus = true
 		focus_button.grab_focus()
 		#endregion
+		active_layer = second_top_layer
 		return second_top_layer
 	return null
+
+
+func connect_button_to_layer(button:SnailyButton) -> void:
+	button.button_pressed.connect(create_layer)

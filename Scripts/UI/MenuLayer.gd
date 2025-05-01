@@ -7,6 +7,8 @@ const MIN_SEPARATION = 4.0
 const MAX_SEPARATION = 64.0
 const MOVE_RATE = 8.0
 
+var menu:MainMenu
+
 var buttons:Array
 var can_focus:bool = true:
 	set(value):
@@ -39,3 +41,11 @@ func _process(delta: float) -> void:
 	if separation_float > MIN_SEPARATION:
 		main_vbox.add_theme_constant_override("separation", int(separation_float))
 		separation_float = lerpf(separation_float, MIN_SEPARATION, MOVE_RATE * delta)
+
+
+func get_vbox_pos() -> Vector2:
+	return main_vbox.position
+
+
+func remote_create_layer(_layer:String) -> MenuLayer:
+	return menu.create_layer(_layer)

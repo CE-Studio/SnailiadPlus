@@ -38,7 +38,9 @@ theme_override_constants/separation = 12
 [node name="Yes" parent="MainVBox" instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../No")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../No")
 focus_next = NodePath("../No")
 focus_previous = NodePath("../No")
@@ -48,7 +50,9 @@ hide_frame = true
 [node name="No" parent="MainVBox" instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Yes")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Yes")
 focus_next = NodePath("../Yes")
 focus_previous = NodePath("../Yes")

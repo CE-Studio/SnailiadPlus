@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ewxxlol77jdq"]
+[gd_scene load_steps=3 format=3 uid="uid://by53y5fokn1xi"]
 
-[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_kqxt8"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_rda1v"]
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4r5hr"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_ubp5x"]
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_kqxt8")
+[node name="Options" type="Node2D"]
+script = ExtResource("1_4r5hr")
 
 [node name="MainVBox" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(400, 0)
@@ -13,7 +13,7 @@ offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 
-[node name="Play" parent="MainVBox" instance=ExtResource("2_rda1v")]
+[node name="Play" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -27,7 +27,7 @@ quick_load_layer = "Profiles"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Options" parent="MainVBox" instance=ExtResource("2_rda1v")]
+[node name="Options" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -39,7 +39,7 @@ focus_previous = NodePath("../Play")
 text_id = "menu_option_main_options"
 hide_frame = true
 
-[node name="Museum" parent="MainVBox" instance=ExtResource("2_rda1v")]
+[node name="Museum" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -51,7 +51,7 @@ focus_previous = NodePath("../Options")
 text_id = "menu_option_main_museum"
 hide_frame = true
 
-[node name="Quit" parent="MainVBox" instance=ExtResource("2_rda1v")]
+[node name="Quit" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://btkfrtgsq6p4g"]
+[gd_scene load_steps=9 format=4 uid="uid://btkfrtgsq6p4g"]
 
 [ext_resource type="AudioStream" uid="uid://cft3bobdl6g6j" path="res://Assets/Sounds/Music/TitleSong.ogg" id="1_36iol"]
 [ext_resource type="Script" uid="uid://xexpkncfjycg" path="res://Scripts/MainMenu.gd" id="1_u7fmy"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_xx56i"]
 [ext_resource type="PackedScene" uid="uid://dcat51drlm5u4" path="res://Scenes/UI/Title.tscn" id="3_rae6p"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_6sxrv"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_w4qjd"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="6_at33a"]
 [ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="6_w4qjd"]
@@ -27,6 +28,18 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAPACAAAAABAAEAAAAPACAAAAACAAEAAAAPACA
 tile_set = ExtResource("2_xx56i")
 
 [node name="LayerGroup" type="Node2D" parent="."]
+
+[node name="LeftSelector" type="Sprite2D" parent="."]
+position = Vector2(200, 300)
+script = ExtResource("4_6sxrv")
+texture_path = "res://Assets/Images/UI/MenuPlayers.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="RightSelector" type="Sprite2D" parent="."]
+position = Vector2(200, 300)
+script = ExtResource("4_6sxrv")
+texture_path = "res://Assets/Images/UI/MenuPlayers.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Title" parent="." instance=ExtResource("3_rae6p")]
 position = Vector2(200, 100)

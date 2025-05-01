@@ -29,11 +29,13 @@ theme_override_constants/separation = 12
 [node name="SavePoint" parent="MainVBox" instance=ExtResource("2_l5ldk")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../WorldSpawn")
 focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
-subtext_id = "Amastrida Abyssus - Break Room"
+subtext_id = "Area - Room"
 text_id = "menu_option_loadGame_save"
 grab_focus_on_load = true
 hide_frame = true
@@ -41,7 +43,9 @@ hide_frame = true
 [node name="WorldSpawn" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../SavePoint")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../SavePoint")
@@ -51,7 +55,9 @@ hide_frame = true
 [node name="Back" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../WorldSpawn")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SavePoint")
 focus_next = NodePath("../SavePoint")
 focus_previous = NodePath("../WorldSpawn")
