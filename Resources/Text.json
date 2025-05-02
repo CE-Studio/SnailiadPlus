@@ -363,6 +363,8 @@
 	"menu_option_quit_header": "Really quit?",
 	"menu_option_quit_confirm": "Yeah, I'm done playing for now",
 	"menu_option_quit_return": "No way! I'm not done yet!",
+	"menu_option_quit_return": "No way! I'm not done yet!",
+	"menu_option_scroller_none": "[Empty array!]",
 	"difficulty_0": "Easy",
 	"difficulty_1": "Normal",
 	"difficulty_2": "Absurd",

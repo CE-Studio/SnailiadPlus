@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhed3tahgbbnt"]
+[gd_scene load_steps=4 format=3 uid="uid://bhed3tahgbbnt"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_75oj4"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_7m7tu"]
+[ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_pvyaf"]
 
 [node name="NewGame" type="Node2D"]
 script = ExtResource("1_75oj4")
@@ -13,53 +14,32 @@ offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 
-[node name="Play" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Header" parent="MainVBox" instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Quit")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Options")
-focus_next = NodePath("../Options")
-focus_previous = NodePath("../Quit")
-text_id = "menu_option_main_play"
-quick_load_layer = "Profiles"
+text_id = "menu_option_newGame_header"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Difficulty" parent="MainVBox" instance=ExtResource("2_pvyaf")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+header_id = "menu_option_newGame_difficulty"
+cycle_options = Array[String](["difficulty_0", "difficulty_1", "difficulty_2"])
+focus_option = 1
 grab_focus_on_load = true
-hide_frame = true
+minimum_x = 100
 
-[node name="Options" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Back" parent="MainVBox" instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Play")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Museum")
-focus_next = NodePath("../Museum")
-focus_previous = NodePath("../Play")
-text_id = "menu_option_main_options"
-hide_frame = true
-
-[node name="Museum" parent="MainVBox" instance=ExtResource("2_7m7tu")]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Options")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Quit")
-focus_next = NodePath("../Quit")
-focus_previous = NodePath("../Options")
-text_id = "menu_option_main_museum"
-hide_frame = true
-
-[node name="Quit" parent="MainVBox" instance=ExtResource("2_7m7tu")]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Museum")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Play")
-focus_next = NodePath("../Play")
-focus_previous = NodePath("../Museum")
-text_id = "menu_option_main_quit"
-quick_load_layer = "Quit"
+text_id = "menu_option_profile_returnTo"
+back_one_layer = true
 hide_frame = true
