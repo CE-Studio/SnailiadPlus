@@ -24,22 +24,76 @@ hide_frame = true
 [node name="HSeparator" type="HSeparator" parent="MainVBox"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 4
 
-[node name="Difficulty" parent="MainVBox" instance=ExtResource("2_pvyaf")]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Difficulty" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../Character")
+focus_neighbor_top = NodePath("../../Back")
+focus_neighbor_right = NodePath("../Character")
+focus_neighbor_bottom = NodePath("../../Mods")
+focus_next = NodePath("../Character")
+focus_previous = NodePath("../../Back")
 header_id = "menu_option_newGame_difficulty"
 cycle_options = Array[String](["difficulty_0", "difficulty_1", "difficulty_2"])
 focus_option = 1
 grab_focus_on_load = true
 minimum_x = 100
 
+[node name="Character" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Difficulty")
+focus_neighbor_top = NodePath("../../Back")
+focus_neighbor_right = NodePath("../Difficulty")
+focus_neighbor_bottom = NodePath("../../Mods")
+focus_next = NodePath("../../Mods")
+focus_previous = NodePath("../Difficulty")
+header_id = "menu_option_newGame_character"
+cycle_options = Array[String](["char_0", "char_1", "char_2", "char_3", "char_4", "char_5"])
+minimum_x = 100
+
+[node name="Mods" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../HBoxContainer/Difficulty")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Start")
+focus_next = NodePath("../Start")
+focus_previous = NodePath("../HBoxContainer/Character")
+text_id = "menu_option_newGame_gamemodes"
+hide_frame = true
+
+[node name="Start" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Mods")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Mods")
+text_id = "menu_option_newGame_confirm"
+hide_frame = true
+
 [node name="Back" parent="MainVBox" instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Start")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../HBoxContainer/Difficulty")
+focus_next = NodePath("../HBoxContainer/Difficulty")
+focus_previous = NodePath("../Start")
 text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true

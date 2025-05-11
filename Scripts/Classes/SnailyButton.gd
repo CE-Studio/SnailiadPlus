@@ -27,6 +27,7 @@ var can_focus:bool = true:
 			has_played_focus_sound = false
 		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
 var has_played_focus_sound:bool = false
+var parent_layer:MenuLayer
 
 signal button_pressed(value)
 
@@ -63,7 +64,6 @@ func _process(delta: float) -> void:
 				button_pressed.emit(quick_load_layer)
 			else:
 				button_pressed.emit()
-	pass
 
 
 func set_text(_text:String) -> void:

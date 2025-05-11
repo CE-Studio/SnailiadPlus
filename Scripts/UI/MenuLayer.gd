@@ -25,8 +25,9 @@ var separation_float:float = MAX_SEPARATION
 
 func _ready() -> void:
 	for child in Statics.get_all_children(self):
-		if child is SnailyButton:
+		if child is SnailyButton or child is ScrollingSnailyButton:
 			buttons.append(child)
+			child.parent_layer = self
 
 
 func _process(delta: float) -> void:

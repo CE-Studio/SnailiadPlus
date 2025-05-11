@@ -6,6 +6,8 @@ extends Control
 #region Variables
 const COLOR_ENABLED = Color8(252, 252, 252)
 const COLOR_DISABLED = Color8(200, 192, 192)
+const HOVER_ARROW_MAX_ALPHA = 0.5
+const HOVER_ARROW_CYCLE_SPEED = 8.0
 
 @export var header_id:String = ""
 @export var cycle_options:Array[String] = []
@@ -24,15 +26,15 @@ var origin:Vector2
 var can_focus:bool = true:
 	set(value):
 		can_focus = value
-		if value and grab_focus_on_load:
-			has_played_focus_sound = false
-		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
+		if not selected:
+			focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
 var has_played_focus_sound:bool = false
 var selected_option:int
+var arrow_flash_cycle:float
+var arrow_hover_state:Array[bool] = [ false, false ]
 
 var selected:bool = false
-var left_neighbor:NodePath
-var right_neighbor:NodePath
+var parent_layer:MenuLayer
 
 signal option_cycled(value)
 
@@ -79,8 +81,43 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
-
+	if not Engine.is_editor_hint():
+		if (focused and not disabled) or selected:
+			var suppress_deselect:bool = selected and (arrow_hover_state[0] or arrow_hover_state[1])
+			if (mouse_over and (Input.is_action_just_pressed("UIClick") and not suppress_deselect)
+			or Input.is_action_just_pressed("Jump")):
+				if selected:
+					deselect()
+				else:
+					set_selected()
+		if selected:
+			var cycled:bool = false
+			if (Input.is_action_just_pressed("Left")
+			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[0])):
+				selected_option -= 1
+				if selected_option < 0:
+					selected_option = cycle_options.size() - 1 if loop else 0
+				cycled = true
+			if (Input.is_action_just_pressed("Right")
+			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[1])):
+				selected_option += 1
+				if selected_option >= cycle_options.size():
+					selected_option = 0 if loop else cycle_options.size() - 1
+				cycled = true
+			if cycled:
+				sfx_focus.play()
+				option.call_deferred("set_snaily_text", Statics.get_text(cycle_options[selected_option]))
+				option_cycled.emit(selected_option)
+		
+		arrow_flash_cycle += delta * HOVER_ARROW_CYCLE_SPEED
+		var alpha = 0.0
+		if selected:
+			alpha = 1.0
+		elif focused:
+			var cycle = inverse_lerp(-1.0, 1.0, sin(arrow_flash_cycle)) * HOVER_ARROW_MAX_ALPHA
+			alpha = cycle
+		tex_left.modulate.a = alpha
+		tex_right.modulate.a = alpha
 
 
 func set_header(_text:String) -> void:
@@ -100,9 +137,9 @@ func relinquish_focus_neighbors() -> void:
 	var next:Control = get_node(focus_next)
 	var previous:Control = get_node(focus_previous)
 	bottom.focus_neighbor_top = focus_neighbor_top
-	top.focus_neighbor_bottom = focus_neighbor_bottom
 	left.focus_neighbor_right = focus_neighbor_right
 	right.focus_neighbor_left = focus_neighbor_left
+	top.focus_neighbor_bottom = focus_neighbor_bottom
 	next.focus_previous = focus_previous
 	previous.focus_next = focus_next
 
@@ -132,3 +169,31 @@ func _on_exit_focus() -> void:
 	if not Engine.is_editor_hint():
 		if focused:
 			focused = false
+
+
+func set_selected() -> void:
+	selected = true
+	sfx_select.play()
+	parent_layer.can_focus = false
+
+
+func deselect() -> void:
+	selected = false
+	sfx_select.play()
+	parent_layer.can_focus = true
+
+
+func _on_left_mouse_entered() -> void:
+	arrow_hover_state[0] = true
+
+
+func _on_left_mouse_exited() -> void:
+	arrow_hover_state[0] = false
+
+
+func _on_right_mouse_entered() -> void:
+	arrow_hover_state[1] = true
+
+
+func _on_right_mouse_exited() -> void:
+	arrow_hover_state[1] = false
