@@ -86,6 +86,8 @@ func _process(delta: float) -> void:
 			var destination = focused_node.global_position
 			destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
 			destination.y -= active_layer.position.y
+			if focused_node is ScrollingSnailyButton:
+				destination.y += focused_node.size.y * 0.25
 			match i:
 				0: destination.x -= SELECTOR_OFFSET.x
 				1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
@@ -113,10 +115,10 @@ func create_layer(name:String) -> MenuLayer:
 		this_layer.can_focus = false
 	var layer_scene = load(LAYER_PATH % name)
 	var layer = layer_scene.instantiate()
+	layer.menu = self
 	layer_group.add_child(layer)
 	layer.position = Vector2(0.0, 240.0)
 	layer.layer_id = active_layers
-	layer.menu = self
 	for this_layer in layer_group.get_children():
 		this_layer.total_layer_count = active_layers
 	for button in Statics.get_all_children(layer):
@@ -163,3 +165,10 @@ func clear_top_layer() -> MenuLayer:
 
 func connect_button_to_layer(button:SnailyButton) -> void:
 	button.button_pressed.connect(create_layer)
+
+
+func get_next_layer_up() -> MenuLayer:
+	var layer_count = layer_group.get_child_count()
+	if layer_count > 1:
+		return layer_group.get_child(layer_count - 2)
+	return null

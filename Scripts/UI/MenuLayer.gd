@@ -4,10 +4,11 @@ extends Node2D
 
 #region Variables
 const MIN_SEPARATION = 4.0
-const MAX_SEPARATION = 64.0
+const MAX_SEPARATION = 4.0
 const MOVE_RATE = 8.0
 
 var menu:MainMenu
+var meta_info:Array = []
 
 var buttons:Array
 var can_focus:bool = true:

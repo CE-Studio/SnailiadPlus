@@ -32,6 +32,7 @@ var layer_state:LayerState = LayerState.NORMAL
 
 func _ready() -> void:
 	layer = get_parent()
+	layer.meta_info.append(0)
 	
 	for i in range(3):
 		var profile:Dictionary
@@ -68,6 +69,7 @@ func _ready() -> void:
 func _on_profile1_selected() -> void:
 	match layer_state:
 		LayerState.NORMAL:
+			layer.meta_info[0] = 1
 			layer.remote_create_layer(pro1_layer)
 		LayerState.COPY1:
 			pass
@@ -80,6 +82,7 @@ func _on_profile1_selected() -> void:
 func _on_profile2_selected() -> void:
 	match layer_state:
 		LayerState.NORMAL:
+			layer.meta_info[0] = 2
 			layer.remote_create_layer(pro2_layer)
 		LayerState.COPY1:
 			pass
@@ -92,6 +95,7 @@ func _on_profile2_selected() -> void:
 func _on_profile3_selected() -> void:
 	match layer_state:
 		LayerState.NORMAL:
+			layer.meta_info[0] = 3
 			layer.remote_create_layer(pro3_layer)
 		LayerState.COPY1:
 			pass
