@@ -109,11 +109,11 @@ func spawn_menu() -> void:
 		create_layer("Main")
 
 
-func create_layer(name:String) -> MenuLayer:
+func create_layer(_name:String) -> MenuLayer:
 	active_layers += 1
 	for this_layer in layer_group.get_children():
 		this_layer.can_focus = false
-	var layer_scene = load(LAYER_PATH % name)
+	var layer_scene = load(LAYER_PATH % _name)
 	var layer = layer_scene.instantiate()
 	layer.menu = self
 	layer_group.add_child(layer)
@@ -134,7 +134,7 @@ func create_layer(name:String) -> MenuLayer:
 func clear_top_layer() -> MenuLayer:
 	if active_layers > 1:
 		active_layers -= 1
-		var top_layer:MenuLayer
+		var top_layer:MenuLayer = null
 		var second_top_layer:MenuLayer
 		for this_layer in layer_group.get_children():
 			if this_layer.layer_id != -1:
@@ -147,7 +147,7 @@ func clear_top_layer() -> MenuLayer:
 		#region Find new focus
 		var buttons = Statics.get_all_children(second_top_layer)
 		var found_focus:bool = false
-		var focus_button:SnailyButton
+		var focus_button:SnailyButton = null
 		for button in buttons:
 			if not found_focus:
 				if button is SnailyButton:

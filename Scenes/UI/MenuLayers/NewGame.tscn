@@ -17,6 +17,58 @@ var pro_id:int
 func _ready() -> void:
 	layer = get_parent()
 	pro_id = layer.menu.get_next_layer_up().meta_info[0]
+	match pro_id:
+		1: Statics.data_profile1 = StaticProcess._load_json_to_dict(
+			\"res://SaveTemplates/ProfileData.json\")
+		2: Statics.data_profile2 = StaticProcess._load_json_to_dict(
+			\"res://SaveTemplates/ProfileData.json\")
+		3: Statics.data_profile3 = StaticProcess._load_json_to_dict(
+			\"res://SaveTemplates/ProfileData.json\")
+	call_deferred(\"_clear_locked_buttons\")
+
+
+func _clear_locked_buttons() -> void:
+	var cleared_mods:bool = false
+	
+	if (not Statics.has_unlock(Statics.Unlocks.ITEM_RANDO)
+	and not Statics.has_unlock(Statics.Unlocks.OPEN_MAP)
+	and not Statics.has_unlock(Statics.Unlocks.SIX_HUNDO)
+	and not Statics.has_unlock(Statics.Unlocks.CHAOS_MODE)):
+		cleared_mods = true
+		$\"Mods\".free_roughly()
+		$\"HBoxContainer/Difficulty\".focus_neighbor_bottom = NodePath(\"../../Start\")
+		$\"HBoxContainer/Character\".focus_neighbor_bottom = NodePath(\"../../Start\")
+		$\"HBoxContainer/Character\".focus_next = NodePath(\"../../Start\")
+		$\"Start\".focus_neighbor_top = NodePath(\"../HBoxContainer/Difficulty\")
+		$\"Start\".focus_previous = NodePath(\"../HBoxContainer/Difficulty\")
+	
+	if not Statics.has_unlock(Statics.Unlocks.CHAR_SEL):
+		$\"HBoxContainer/Character\".free_roughly()
+		$\"HBoxContainer/Difficulty\".focus_neighbor_left = NodePath(\".\")
+		$\"HBoxContainer/Difficulty\".focus_neighbor_right = NodePath(\".\")
+		if cleared_mods:
+			$\"HBoxContainer/Difficulty\".focus_next = NodePath(\"../../Start\")
+			$\"Start\".focus_previous = NodePath(\"../HBoxContainer/Difficulty\")
+		else:
+			$\"HBoxContainer/Difficulty\".focus_next = NodePath(\"../../Mods\")
+			$\"Mods\".focus_previous = NodePath(\"../HBoxContainer/Difficulty\")
+	
+	if not Statics.has_unlock(Statics.Unlocks.ABSURD_DIFF):
+		$\"HBoxContainer/Difficulty\".cycle_options.pop_back()
+
+
+func _on_difficulty_changed(new_diff:int) -> void:
+	match pro_id:
+		1: Statics.data_profile1[\"difficulty\"] = new_diff
+		2: Statics.data_profile2[\"difficulty\"] = new_diff
+		3: Statics.data_profile3[\"difficulty\"] = new_diff
+
+
+func _on_character_changed(new_char:int) -> void:
+	match pro_id:
+		1: Statics.data_profile1[\"character\"] = new_char
+		2: Statics.data_profile2[\"character\"] = new_char
+		3: Statics.data_profile3[\"character\"] = new_char
 "
 
 [node name="NewGame" type="Node2D"]
@@ -62,6 +114,7 @@ header_id = "menu_option_newGame_difficulty"
 cycle_options = Array[String](["difficulty_0", "difficulty_1", "difficulty_2"])
 focus_option = 1
 grab_focus_on_load = true
+emit_signal_on_load = true
 minimum_x = 100
 
 [node name="Character" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
@@ -75,6 +128,7 @@ focus_next = NodePath("../../Mods")
 focus_previous = NodePath("../Difficulty")
 header_id = "menu_option_newGame_character"
 cycle_options = Array[String](["char_0", "char_1", "char_2", "char_3", "char_4", "char_5"])
+emit_signal_on_load = true
 minimum_x = 100
 
 [node name="Mods" parent="MainVBox" instance=ExtResource("2_7m7tu")]
@@ -113,3 +167,6 @@ focus_previous = NodePath("../Start")
 text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true
+
+[connection signal="option_cycled" from="MainVBox/HBoxContainer/Difficulty" to="MainVBox" method="_on_difficulty_changed"]
+[connection signal="option_cycled" from="MainVBox/HBoxContainer/Character" to="MainVBox" method="_on_character_changed"]

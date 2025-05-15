@@ -116,6 +116,16 @@ static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
+
+enum Unlocks {
+	BOSS_RUSH, # (Boss Rush; earned from beating the game)
+	CHAR_SEL, # (Character unlock; earned from Boss Rush completion)
+	ABSURD_DIFF, # (Absurd difficulty; earned from beating the game in 30 minutes or fewer)
+	ITEM_RANDO, # (Item randomizer gamemode; earned from collecting 100% of counted items)
+	OPEN_MAP, # (Fully revealed map on profile start; earned from filling 100% of the map)
+	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
+	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
+}
 #endregion
 
 
@@ -167,6 +177,10 @@ static func save_all():
 	save_profile(2)
 	save_profile(3)
 	save_records()
+
+
+static func has_unlock(unlock:Unlocks) -> bool:
+	return data_records["unlocks"].has(unlock)
 #endregion
 
 

@@ -72,6 +72,12 @@ func set_text(_text:String) -> void:
 
 func free_safely() -> void:
 	relinquish_focus_neighbors()
+	free_roughly()
+
+
+func free_roughly() -> void:
+	var index = parent_layer.buttons.find(self)
+	parent_layer.buttons.remove_at(index)
 	queue_free()
 
 
@@ -82,12 +88,32 @@ func relinquish_focus_neighbors() -> void:
 	var top:Control = get_node(focus_neighbor_top)
 	var next:Control = get_node(focus_next)
 	var previous:Control = get_node(focus_previous)
-	bottom.focus_neighbor_top = focus_neighbor_top
-	top.focus_neighbor_bottom = focus_neighbor_bottom
-	left.focus_neighbor_right = focus_neighbor_right
-	right.focus_neighbor_left = focus_neighbor_left
-	next.focus_previous = focus_previous
-	previous.focus_next = focus_next
+	if bottom: if get_node(bottom.focus_neighbor_top) == self:
+		bottom.focus_neighbor_top = focus_neighbor_top
+	if left: if get_node(left.focus_neighbor_right) == self:
+		left.focus_neighbor_right = focus_neighbor_right
+	if right: if get_node(right.focus_neighbor_left) == self:
+		right.focus_neighbor_left = focus_neighbor_left
+	if top: if get_node(top.focus_neighbor_bottom) == self:
+		top.focus_neighbor_bottom = focus_neighbor_bottom
+	if next: if get_node(next.focus_previous) == self:
+		next.focus_previous = focus_previous
+	if previous: if get_node(previous.focus_next) == self:
+		previous.focus_next = focus_next
+	#for button in parent_layer.buttons:
+	#	if button != self:
+	#		if get_node(button.focus_neighbor_top) == self:
+	#			button.focus_neighbor_top = focus_neighbor_top
+	#		if get_node(button.focus_neighbor_right) == self:
+	#			button.focus_neighbor_right = focus_neighbor_right
+	#		if get_node(button.focus_neighbor_left) == self:
+	#			button.focus_neighbor_left = focus_neighbor_left
+	#		if get_node(button.focus_neighbor_bottom) == self:
+	#			button.focus_neighbor_bottom = focus_neighbor_bottom
+	#		if get_node(button.focus_previous) == self:
+	#			button.focus_previous = focus_previous
+	#		if get_node(button.focus_next) == self:
+	#			button.focus_next = focus_next
 
 
 func _on_mouse_over() -> void:

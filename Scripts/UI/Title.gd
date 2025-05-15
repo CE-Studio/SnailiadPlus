@@ -27,8 +27,8 @@ func _ready() -> void:
 	var spawn_pos = Vector2.ZERO
 	var spawn_delay = 0.0
 	for i in title_string.length():
-		var char = title_string[i]
-		match char:
+		var this_char = title_string[i]
+		match this_char:
 			" ":
 				spawn_pos.x += 24
 			"+":
@@ -41,11 +41,11 @@ func _ready() -> void:
 					spawn_pos.x += 32 + LETTER_SPACING - 8
 				spawn_delay += LETTER_DELAY
 			_:
-				if valid_chars.has(char):
+				if valid_chars.has(this_char):
 					var new_letter = letter.instantiate()
 					add_child(new_letter)
 					new_letter.position = spawn_pos
-					var advance_amount = new_letter.spawn(char, spawn_delay)
+					var advance_amount = new_letter.spawn(this_char, spawn_delay)
 					if i != title_string.length() - 1:
 						spawn_pos.x += advance_amount + LETTER_SPACING
 					spawn_delay += LETTER_DELAY
