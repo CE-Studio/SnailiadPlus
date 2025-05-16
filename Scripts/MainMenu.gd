@@ -5,6 +5,8 @@ extends Node2D
 const TITLE_REST_Y = 40
 const TITLE_MOVE_RATE = 8
 const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
+const SELECTOR_MOVE_RATE = 12
+const SELECTOR_OFFSET = Vector2i(16, -2)
 
 @export var is_main_menu:bool = false
 
@@ -14,13 +16,18 @@ var input_delay_timer:float = -2.25
 var title:Node2D
 var click_play_text:SnailyText
 var version_panel:ContextPanel
+var active_layers:int
+var active_layer:MenuLayer
 
 @onready var layer_group:Node2D = $"LayerGroup"
+@onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
 #endregion
 
 
 func _ready() -> void:
 	if is_main_menu:
+		selectors[0].action = "left_0"
+		selectors[1].action = "right_0"
 		title = $"Title"
 		if not Statics.main_menu_booted_once:
 			var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
@@ -48,6 +55,9 @@ func _ready() -> void:
 			version_text.add_shadow(1)
 		else:
 			title.position.y = TITLE_REST_Y
+	else:
+		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
+		selectors[1].action = "right_%d" % int(Statics.current_profile["character"])
 
 
 func _process(delta: float) -> void:
@@ -60,8 +70,29 @@ func _process(delta: float) -> void:
 			or Input.get_action_raw_strength("Jump")):
 				spawn_menu()
 				is_main_awaiting_input = false
-	if is_main_menu and not is_main_awaiting_input:
-		title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
+	if not is_main_awaiting_input:
+		if is_main_menu:
+			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
+		if Input.is_action_just_pressed("Pause"):
+			if active_layers > 1:
+				clear_top_layer()
+			else:
+				create_layer("Quit")
+	
+	var focused_node = get_viewport().gui_get_focus_owner()
+	if focused_node != null:
+		for i in selectors.size():
+			var selector_pos:Vector2 = selectors[i].global_position
+			var destination = focused_node.global_position
+			destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
+			destination.y -= active_layer.position.y
+			if focused_node is ScrollingSnailyButton:
+				destination.y += focused_node.size.y * 0.25
+			match i:
+				0: destination.x -= SELECTOR_OFFSET.x
+				1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
+			var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
+			selectors[i].global_position = new_pos
 
 
 func spawn_menu() -> void:
@@ -78,8 +109,66 @@ func spawn_menu() -> void:
 		create_layer("Main")
 
 
-func create_layer(name:String) -> MenuLayer:
-	var layer_scene = load(LAYER_PATH % name)
+func create_layer(_name:String) -> MenuLayer:
+	active_layers += 1
+	for this_layer in layer_group.get_children():
+		this_layer.can_focus = false
+	var layer_scene = load(LAYER_PATH % _name)
 	var layer = layer_scene.instantiate()
+	layer.menu = self
 	layer_group.add_child(layer)
+	layer.position = Vector2(0.0, 240.0)
+	layer.layer_id = active_layers
+	for this_layer in layer_group.get_children():
+		this_layer.total_layer_count = active_layers
+	for button in Statics.get_all_children(layer):
+		if button is SnailyButton:
+			if button.back_one_layer:
+				button.button_pressed.connect(clear_top_layer)
+			elif button.quick_load_layer.strip_edges() != "":
+				button.button_pressed.connect(create_layer)
+	active_layer = layer
 	return layer
+
+
+func clear_top_layer() -> MenuLayer:
+	if active_layers > 1:
+		active_layers -= 1
+		var top_layer:MenuLayer = null
+		var second_top_layer:MenuLayer
+		for this_layer in layer_group.get_children():
+			if this_layer.layer_id != -1:
+				this_layer.total_layer_count -= 1
+				second_top_layer = top_layer
+				top_layer = this_layer
+		top_layer.layer_id = -1
+		top_layer.can_focus = false
+		second_top_layer.can_focus = true
+		#region Find new focus
+		var buttons = Statics.get_all_children(second_top_layer)
+		var found_focus:bool = false
+		var focus_button:SnailyButton = null
+		for button in buttons:
+			if not found_focus:
+				if button is SnailyButton:
+					if focus_button == null:
+						focus_button = button
+					if button.grab_focus_on_load:
+						focus_button = button
+						found_focus = true
+		focus_button.grab_focus()
+		#endregion
+		active_layer = second_top_layer
+		return second_top_layer
+	return null
+
+
+func connect_button_to_layer(button:SnailyButton) -> void:
+	button.button_pressed.connect(create_layer)
+
+
+func get_next_layer_up() -> MenuLayer:
+	var layer_count = layer_group.get_child_count()
+	if layer_count > 1:
+		return layer_group.get_child(layer_count - 2)
+	return null

@@ -116,6 +116,16 @@ static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
+
+enum Unlocks {
+	BOSS_RUSH, # (Boss Rush; earned from beating the game)
+	CHAR_SEL, # (Character unlock; earned from Boss Rush completion)
+	ABSURD_DIFF, # (Absurd difficulty; earned from beating the game in 30 minutes or fewer)
+	ITEM_RANDO, # (Item randomizer gamemode; earned from collecting 100% of counted items)
+	OPEN_MAP, # (Fully revealed map on profile start; earned from filling 100% of the map)
+	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
+	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
+}
 #endregion
 
 
@@ -167,6 +177,10 @@ static func save_all():
 	save_profile(2)
 	save_profile(3)
 	save_records()
+
+
+static func has_unlock(unlock:Unlocks) -> bool:
+	return data_records["unlocks"].has(unlock)
 #endregion
 
 
@@ -216,6 +230,13 @@ static func compare_versions(compare:Array, against:Array) -> int:
 #endregion
 
 
+#region Profile functions
+static func format_game_time(time:Array) -> String:
+	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	return time_string
+#endregion
+
+
 static func get_text(key:String) -> String:
 	if text_lib.has(key):
 		return text_lib[key]
@@ -248,6 +269,10 @@ static func is_number(value:Variant, consider_strings := false) -> bool:
 			if value.is_valid_hex_number(true):
 				return true
 	return false
+
+
+static func round_to_places(number:float, decimal_places:int) -> float:
+	return round(number * pow(10, decimal_places)) / pow(10, decimal_places)
 
 
 static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:
@@ -311,3 +336,12 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
 					sprite_image.set_pixel(x, y, new_color)
 	return ImageTexture.create_from_image(sprite_image)
+
+
+static func get_all_children(_node:Node) -> Array:
+	var output = []
+	for child in _node.get_children():
+		output.append(child)
+		if child.get_child_count() > 0:
+			output.append_array(get_all_children(child))
+	return output

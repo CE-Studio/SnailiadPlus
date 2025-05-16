@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvfrqrdlsbkao"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_argrp"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_feaba"]
+
+[sub_resource type="GDScript" id="GDScript_feaba"]
+resource_name = "QuitMenu"
+script/source = "extends VBoxContainer
+
+
+func on_quit_button_pressed() -> void:
+	get_tree().quit()
+"
+
+[node name="Quit" type="Node2D"]
+script = ExtResource("1_argrp")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = SubResource("GDScript_feaba")
+
+[node name="Header" parent="MainVBox" instance=ExtResource("2_feaba")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+text_id = "menu_option_quit_header"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Yes" parent="MainVBox" instance=ExtResource("2_feaba")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../No")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../No")
+focus_next = NodePath("../No")
+focus_previous = NodePath("../No")
+text_id = "menu_option_quit_confirm"
+hide_frame = true
+
+[node name="No" parent="MainVBox" instance=ExtResource("2_feaba")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Yes")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Yes")
+focus_next = NodePath("../Yes")
+focus_previous = NodePath("../Yes")
+text_id = "menu_option_quit_return"
+back_one_layer = true
+grab_focus_on_load = true
+hide_frame = true
+
+[connection signal="button_pressed" from="MainVBox/Yes" to="MainVBox" method="on_quit_button_pressed"]

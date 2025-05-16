@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2te0qs40rba4"]
+
+[ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_lckvt"]
+[ext_resource type="Script" uid="uid://bgy26ema1hnsb" path="res://Scripts/Classes/ScrollingSnailyButton.gd" id="1_rq7g3"]
+[ext_resource type="Texture2D" uid="uid://dba53vgxijg3n" path="res://Assets/Images/UI/ScrollerIcons.png" id="3_p6a10"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_xqide"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_75bjl"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_7p17y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rq7g3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq7g3"]
+atlas = ExtResource("3_p6a10")
+region = Rect2(0, 0, 10, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lckvt"]
+atlas = ExtResource("3_p6a10")
+region = Rect2(10, 0, 10, 16)
+
+[node name="ScrollingSnailyButton" type="PanelContainer"]
+offset_right = 126.0
+offset_bottom = 42.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rq7g3")
+script = ExtResource("1_rq7g3")
+
+[node name="Main" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopText" type="HBoxContainer" parent="Main"]
+layout_mode = 2
+alignment = 1
+
+[node name="SnailyText" parent="Main/TopText" instance=ExtResource("3_xqide")]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Option"
+horizontal_alignment = 1
+
+[node name="Scroller" type="HBoxContainer" parent="Main"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Left" type="TextureRect" parent="Main/Scroller"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_rq7g3")
+stretch_mode = 3
+
+[node name="Frame" type="PanelContainer" parent="Main/Scroller"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("1_lckvt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/Scroller/Frame"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="Main/Scroller/Frame/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="Main/Scroller/Frame/HBoxContainer/MarginContainer" instance=ExtResource("3_xqide")]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Option"
+
+[node name="Right" type="TextureRect" parent="Main/Scroller"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_lckvt")
+stretch_mode = 3
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("4_75bjl")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_7p17y")
+bus = &"Sfx"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus"]
+[connection signal="focus_exited" from="." to="." method="_on_exit_focus"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_over"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exit"]
+[connection signal="mouse_entered" from="Main/Scroller/Left" to="." method="_on_left_mouse_entered"]
+[connection signal="mouse_exited" from="Main/Scroller/Left" to="." method="_on_left_mouse_exited"]
+[connection signal="mouse_entered" from="Main/Scroller/Right" to="." method="_on_right_mouse_entered"]
+[connection signal="mouse_exited" from="Main/Scroller/Right" to="." method="_on_right_mouse_exited"]
