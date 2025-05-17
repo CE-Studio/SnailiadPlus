@@ -122,7 +122,7 @@ func create_layer(_name:String) -> MenuLayer:
 	for this_layer in layer_group.get_children():
 		this_layer.total_layer_count = active_layers
 	for button in Statics.get_all_children(layer):
-		if button is SnailyButton:
+		if button is ActionSnailyButton or button is ContextSnailyButton:
 			if button.back_one_layer:
 				button.button_pressed.connect(clear_top_layer)
 			elif button.quick_load_layer.strip_edges() != "":

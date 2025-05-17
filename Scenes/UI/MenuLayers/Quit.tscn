@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvfrqrdlsbkao"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_argrp"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_feaba"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_feaba"]
 
 [sub_resource type="GDScript" id="GDScript_feaba"]
 resource_name = "QuitMenu"

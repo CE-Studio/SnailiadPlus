@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5cqf1"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="2_l5ldk"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="3_nahkj"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_nahkj"]
 
 [node name="ProfileSpawn" type="Node2D"]
 script = ExtResource("1_5cqf1")
@@ -17,7 +17,7 @@ alignment = 1
 [node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text_id = "menu_option_loadGame_header"
+text_id = "menu_option_newGame_header"
 disabled = true
 hide_frame = true
 
@@ -35,8 +35,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../WorldSpawn")
 focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
-subtext_id = "Area - Room"
 text_id = "menu_option_loadGame_save"
+subtext_id = "Area - Room"
 grab_focus_on_load = true
 hide_frame = true
 
@@ -64,5 +64,3 @@ focus_previous = NodePath("../WorldSpawn")
 text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true
-
-[connection signal="button_pressed" from="MainVBox/WorldSpawn" to="MainVBox" method="on_quit_button_pressed"]

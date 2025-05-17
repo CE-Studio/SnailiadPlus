@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhed3tahgbbnt"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_7m7tu"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_7m7tu"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_7m7tu"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_pvyaf"]
 
 [sub_resource type="GDScript" id="GDScript_7m7tu"]
@@ -113,9 +113,10 @@ focus_previous = NodePath("../../Back")
 header_id = "menu_option_newGame_difficulty"
 cycle_options = Array[String](["difficulty_0", "difficulty_1", "difficulty_2"])
 focus_option = 1
-grab_focus_on_load = true
 emit_signal_on_load = true
 minimum_x = 100
+grab_focus_on_load = true
+hide_frame = null
 
 [node name="Character" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
 custom_minimum_size = Vector2(100, 0)
@@ -130,6 +131,7 @@ header_id = "menu_option_newGame_character"
 cycle_options = Array[String](["char_0", "char_1", "char_2", "char_3", "char_4", "char_5"])
 emit_signal_on_load = true
 minimum_x = 100
+hide_frame = null
 
 [node name="Mods" parent="MainVBox" instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)

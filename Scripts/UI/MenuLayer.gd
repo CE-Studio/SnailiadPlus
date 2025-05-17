@@ -15,7 +15,8 @@ var can_focus:bool = true:
 	set(value):
 		can_focus = value
 		for button in buttons:
-			button.can_focus = value
+			if button is ScrollingSnailyButton and not button.selected:
+				button.can_focus = value
 var layer_id:int = 0
 var total_layer_count:int = 0
 var separation_float:float = MAX_SEPARATION
@@ -26,7 +27,7 @@ var separation_float:float = MAX_SEPARATION
 
 func _ready() -> void:
 	for child in Statics.get_all_children(self):
-		if child is SnailyButton or child is ScrollingSnailyButton:
+		if child is SnailyButton:
 			buttons.append(child)
 			child.parent_layer = self
 
