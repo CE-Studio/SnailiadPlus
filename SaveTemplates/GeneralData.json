@@ -1,5 +1,6 @@
 {
 	"game_version": "b0.0.0",
+	"master_volume": 10,
 	"sound_volume": 10,
 	"music_volume": 10,
 	"window_scale": 2,
