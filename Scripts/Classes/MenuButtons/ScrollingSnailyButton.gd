@@ -26,6 +26,7 @@ var selected:bool = false
 signal option_cycled(value)
 
 @onready var header:SnailyText
+@onready var scroller:Control
 @onready var option:SnailyText
 @onready var tex_left:TextureRect
 @onready var tex_right:TextureRect
@@ -34,6 +35,7 @@ signal option_cycled(value)
 func _ready() -> void:
 	super._ready()
 	header = $"Main/TopText/SnailyText"
+	scroller = $"Main/Scroller"
 	option = $"Main/Scroller/Frame/HBoxContainer/MarginContainer/SnailyText"
 	tex_left = $"Main/Scroller/Left"
 	tex_right = $"Main/Scroller/Right"
@@ -107,6 +109,13 @@ func set_header(_text:String) -> void:
 	header.set_snaily_text(_text)
 
 
+func remote_set_option(value:int) -> void:
+	while value < 0:
+		value += cycle_options.size()
+	selected_option = value % cycle_options.size()
+	option.set_snaily_text(Statics.get_text(cycle_options[selected_option]))
+
+
 func set_selected() -> void:
 	selected = true
 	sfx_select.play()
@@ -117,6 +126,7 @@ func deselect() -> void:
 	selected = false
 	sfx_select.play()
 	parent_layer.can_focus = true
+	has_played_focus_sound = true
 
 
 func _on_left_mouse_entered() -> void:

@@ -20,6 +20,19 @@ func _ready() -> void:
 	Statics.data_profile2 = _load_data_dict("Profile2", template_profile)
 	Statics.data_profile3 = _load_data_dict("Profile3", template_profile)
 	Statics.data_records = _load_data_dict("Records", template_records)
+	
+	# Set important game systems according to newly loaded data
+	#region Sound volume
+	var master_index = AudioServer.get_bus_index("Master")
+	var master_vol = float(Statics.data_general["master_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(master_index, linear_to_db(master_vol))
+	var sound_index = AudioServer.get_bus_index("Sfx")
+	var sound_vol = float(Statics.data_general["sound_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(sound_index, linear_to_db(sound_vol))
+	var music_index = AudioServer.get_bus_index("Music")
+	var music_vol = float(Statics.data_general["music_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
+	#endregion
 
 
 func _load_data_dict(filename:String, template:Dictionary) -> Dictionary:

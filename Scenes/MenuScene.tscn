@@ -75,3 +75,9 @@ offset_left = 62.0
 offset_top = 80.0
 offset_right = 338.0
 offset_bottom = 102.0
+
+[node name="SaveIcon" type="Sprite2D" parent="."]
+position = Vector2(384, 224)
+script = ExtResource("4_6sxrv")
+texture_path = "res://Assets/Images/UI/SaveIcon.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"

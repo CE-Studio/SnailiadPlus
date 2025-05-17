@@ -143,6 +143,7 @@
 	"menu_option_options_eraseRecords": "Erase record data",
 	"menu_option_options_importExport": "Import/export all data",
 	"menu_option_options_returnTo": "Back to options",
+	"menu_option_sound_masterVol": "Master volume",
 	"menu_option_sound_soundVol": "Sound volume",
 	"menu_option_sound_musicVol": "Music volume",
 	"menu_option_display_resolution": "Window resolution",

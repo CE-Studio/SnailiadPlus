@@ -55,6 +55,7 @@ func _ready() -> void:
 			version_text.add_shadow(1)
 		else:
 			title.position.y = TITLE_REST_Y
+		$"SaveIcon".visible = false
 	else:
 		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
 		selectors[1].action = "right_%d" % int(Statics.current_profile["character"])
@@ -81,13 +82,13 @@ func _process(delta: float) -> void:
 	
 	var focused_node = get_viewport().gui_get_focus_owner()
 	if focused_node != null:
+		if focused_node is ScrollingSnailyButton:
+			focused_node = focused_node.scroller
 		for i in selectors.size():
 			var selector_pos:Vector2 = selectors[i].global_position
 			var destination = focused_node.global_position
 			destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
 			destination.y -= active_layer.position.y
-			if focused_node is ScrollingSnailyButton:
-				destination.y += focused_node.size.y * 0.25
 			match i:
 				0: destination.x -= SELECTOR_OFFSET.x
 				1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
@@ -143,6 +144,8 @@ func clear_top_layer() -> MenuLayer:
 				top_layer = this_layer
 		top_layer.layer_id = -1
 		top_layer.can_focus = false
+		if top_layer.save_general_on_close:
+			save_general()
 		second_top_layer.can_focus = true
 		#region Find new focus
 		var buttons = Statics.get_all_children(second_top_layer)
@@ -172,3 +175,9 @@ func get_next_layer_up() -> MenuLayer:
 	if layer_count > 1:
 		return layer_group.get_child(layer_count - 2)
 	return null
+
+
+func save_general() -> void:
+	Statics.save_general()
+	$"SaveIcon".visible = true
+	$"SaveIcon".action = "anim"

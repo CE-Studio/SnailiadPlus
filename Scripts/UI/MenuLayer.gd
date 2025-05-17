@@ -3,6 +3,8 @@ class_name MenuLayer
 extends Node2D
 
 #region Variables
+@export var save_general_on_close:bool = false
+
 const MIN_SEPARATION = 4.0
 const MAX_SEPARATION = 4.0
 const MOVE_RATE = 8.0
@@ -15,7 +17,7 @@ var can_focus:bool = true:
 	set(value):
 		can_focus = value
 		for button in buttons:
-			if button is ScrollingSnailyButton and not button.selected:
+			if (button is ScrollingSnailyButton and not button.selected) or button is not ScrollingSnailyButton:
 				button.can_focus = value
 var layer_id:int = 0
 var total_layer_count:int = 0
