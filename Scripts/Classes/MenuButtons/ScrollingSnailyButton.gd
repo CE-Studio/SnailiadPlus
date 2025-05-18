@@ -3,6 +3,7 @@
 class_name ScrollingSnailyButton
 extends SnailyButton
 
+
 #region Variables
 const HOVER_ARROW_MAX_ALPHA = 0.5
 const HOVER_ARROW_CYCLE_SPEED = 8.0
@@ -31,6 +32,7 @@ signal option_cycled(value)
 @onready var tex_left:TextureRect
 @onready var tex_right:TextureRect
 #endregion
+
 
 func _ready() -> void:
 	super._ready()

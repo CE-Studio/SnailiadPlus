@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://cm0i4dyk1srik"]
+
+[ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_3lbwi"]
+[ext_resource type="Script" uid="uid://bnpm7rfsi0i2d" path="res://Scripts/Classes/MenuButtons/ToggleSnailyButton.gd" id="1_38v4y"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="1_vul1p"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="2_38v4y"]
+[ext_resource type="Texture2D" uid="uid://duj0b7137bqic" path="res://Assets/Images/UI/ButtonToggle.png" id="3_3lbwi"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="3_o7cfg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3lbwi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrreg"]
+resource_local_to_scene = true
+atlas = ExtResource("3_3lbwi")
+region = Rect2(0, 0, 22, 22)
+
+[node name="ToggleSnailyButton" type="PanelContainer"]
+offset_right = 96.0
+offset_bottom = 22.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3lbwi")
+script = ExtResource("1_38v4y")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("1_3lbwi")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="HBoxContainer/PanelContainer/MarginContainer" instance=ExtResource("1_vul1p")]
+layout_mode = 2
+text = "Text!!"
+scroll_active = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_rrreg")
+stretch_mode = 2
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_38v4y")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("3_o7cfg")
+bus = &"Sfx"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus"]
+[connection signal="focus_exited" from="." to="." method="_on_exit_focus"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_over"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exit"]

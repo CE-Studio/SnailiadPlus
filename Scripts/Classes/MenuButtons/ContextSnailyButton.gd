@@ -3,6 +3,7 @@
 class_name ContextSnailyButton
 extends SnailyButton
 
+
 #region Variables
 @export var text_id:String = ""
 @export var subtext_id:String = ""
@@ -14,6 +15,7 @@ signal button_pressed(value)
 @onready var text:SnailyText
 @onready var subtext:SnailyText
 #endregion
+
 
 func _ready() -> void:
 	super._ready()
@@ -37,7 +39,7 @@ func _ready() -> void:
 		subtext.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if focused and not disabled:
 		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
 		or Input.is_action_just_pressed("Jump")):

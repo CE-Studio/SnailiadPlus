@@ -1,0 +1,16 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cu8hefgxulc2b"]
+
+[ext_resource type="Texture2D" uid="uid://c70eokgudumal" path="res://Assets/Images/UI/ScrollPanel.png" id="1_dpust"]
+
+[resource]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("1_dpust")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

@@ -12,7 +12,7 @@ const COLOR_DISABLED = Color8(200, 192, 192)
 @export var hide_frame = false:
 	set(value):
 		hide_frame = value
-		self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
+		frame.self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
 
 var focused:bool = false
 var mouse_over:bool = false
@@ -25,6 +25,7 @@ var can_focus:bool = true:
 		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
 var has_played_focus_sound:bool = false
 var parent_layer:MenuLayer
+var frame:PanelContainer = self
 
 @onready var sfx_focus:AudioStreamPlayer
 @onready var sfx_select:AudioStreamPlayer

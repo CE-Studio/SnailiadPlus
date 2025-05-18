@@ -37,6 +37,7 @@ focus_neighbor_bottom = NodePath("../Controls")
 focus_next = NodePath("../Controls")
 focus_previous = NodePath("../Sound")
 text_id = "menu_option_options_display"
+quick_load_layer = "DisplayOptions"
 hide_frame = true
 
 [node name="Controls" parent="MainVBox" instance=ExtResource("2_ubp5x")]

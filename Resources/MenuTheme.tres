@@ -1,10 +1,12 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://dbtbq5hs1dmxo"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://dbtbq5hs1dmxo"]
 
 [ext_resource type="Texture2D" uid="uid://bwghusmdaislc" path="res://Assets/Images/UI/ButtonDisabled.png" id="1_8dxvs"]
 [ext_resource type="FontFile" uid="uid://bo28bqj6d1u8m" path="res://Resources/SnailplanesExtended.ttf" id="1_ruq00"]
 [ext_resource type="Texture2D" uid="uid://csvko40a51fn6" path="res://Assets/Images/UI/ButtonHover.png" id="2_iopia"]
 [ext_resource type="Texture2D" uid="uid://cr3xr3rkcat6e" path="res://Assets/Images/UI/ButtonNormal.png" id="3_xphed"]
 [ext_resource type="Texture2D" uid="uid://fy15t6cubtmx" path="res://Assets/Images/UI/ButtonPressed.png" id="4_pog1h"]
+[ext_resource type="Texture2D" uid="uid://cs3smenqjjo8e" path="res://Assets/Images/UI/Scrollbar.png" id="5_xphed"]
+[ext_resource type="Texture2D" uid="uid://bq3xvrr6jgiku" path="res://Assets/Images/UI/ScrollBG.png" id="6_pog1h"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ltyml"]
 texture = ExtResource("1_8dxvs")
@@ -36,6 +38,49 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bs65x"]
+texture = ExtResource("5_xphed")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2kapd"]
+texture = ExtResource("5_xphed")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ptnii"]
+texture = ExtResource("5_xphed")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j1104"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+texture = ExtResource("6_pog1h")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bcw2p"]
+texture = ExtResource("6_pog1h")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+
 [resource]
 default_font = ExtResource("1_ruq00")
 default_font_size = 16
@@ -44,3 +89,8 @@ Button/styles/focus = SubResource("StyleBoxEmpty_bs65x")
 Button/styles/hover = SubResource("StyleBoxTexture_7ul4l")
 Button/styles/normal = SubResource("StyleBoxTexture_hplog")
 Button/styles/pressed = SubResource("StyleBoxTexture_o5dhv")
+VScrollBar/styles/grabber = SubResource("StyleBoxTexture_bs65x")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_2kapd")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_ptnii")
+VScrollBar/styles/scroll = SubResource("StyleBoxTexture_j1104")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxTexture_bcw2p")
