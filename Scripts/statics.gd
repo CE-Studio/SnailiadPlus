@@ -65,6 +65,14 @@ const FRAC_64:float = 0.015625
 const FRAC_128:float = 0.0078125
 const VECTOR_DIAG:Vector2 = Vector2(cos(deg_to_rad(40)), sin(deg_to_rad(40)))
 
+const ASPECT_RATIOS:Array = [
+	Vector2i(400, 240),
+	Vector2i(400, 320),
+	Vector2i(400, 300),
+	Vector2i(448, 252),
+	Vector2i(400, 250)
+]
+
 
 const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]

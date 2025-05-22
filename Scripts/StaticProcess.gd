@@ -22,6 +22,10 @@ func _ready() -> void:
 	Statics.data_records = _load_data_dict("Records", template_records)
 	
 	# Set important game systems according to newly loaded data
+	_set_game_settings()
+
+
+func _set_game_settings() -> void:
 	#region Sound volume
 	var master_index = AudioServer.get_bus_index("Master")
 	var master_vol = float(Statics.data_general["master_volume"]) / 20.0
@@ -32,6 +36,13 @@ func _ready() -> void:
 	var music_index = AudioServer.get_bus_index("Music")
 	var music_vol = float(Statics.data_general["music_volume"]) / 20.0
 	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
+	#endregion
+	
+	#region Display settings
+	var window_scale = Statics.data_general["window_scale"] + 1
+	var aspect_ratio = Statics.ASPECT_RATIOS[Statics.data_general["aspect_ratio"]]
+	get_window().size = aspect_ratio * window_scale
+	get_window().content_scale_factor = window_scale
 	#endregion
 
 

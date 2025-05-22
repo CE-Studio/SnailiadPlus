@@ -24,11 +24,9 @@ cutcontroll="res://Scenes/internals/CutsceneController.tscn"
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=480
+window/size/viewport_width=400
+window/size/viewport_height=240
 window/size/resizable=false
-window/stretch/mode="viewport"
-window/stretch/scale=2.0
 mouse_cursor/custom_image="uid://btlcuqewcs61t"
 
 [editor]

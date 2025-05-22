@@ -14,7 +14,7 @@ script/source = "extends VBoxContainer
 
 func _ready() -> void:
 	$\"ScrollContainer/VBoxContainer/Scale\".remote_set_option(int(Statics.data_general[\"window_scale\"]))
-	$\"ScrollContainer/VBoxContainer/Ratio\".remote_set_option(int(Statics.data_general[\"window_ratio\"]))
+	$\"ScrollContainer/VBoxContainer/Ratio\".remote_set_option(int(Statics.data_general[\"aspect_ratio\"]))
 	$\"ScrollContainer/VBoxContainer/Minimap\".remote_set_option(int(Statics.data_general[\"minimap_state\"]))
 	$\"ScrollContainer/VBoxContainer/BottomKeys\".remote_set_option(int(Statics.data_general[\"bottom_key_state\"]))
 	$\"ScrollContainer/VBoxContainer/InputMap\".toggled_on = bool(Statics.data_general[\"keymap_toggle\"])
@@ -27,12 +27,59 @@ func _ready() -> void:
 
 
 func on_scale_cycled(value) -> void:
-	ProjectSettings.set_setting(\"display/window/size/viewport_width\", 400 * (value + 1))
-	ProjectSettings.set_setting(\"display/window/size/viewport_height\", 240 * (value + 1))
-	ProjectSettings.set_setting(\"display/window/stretch/scale\", value + 1)
-	DisplayServer.window_set_size(Vector2i(400 * (value + 1), 240 * (value + 1)))
-	#get_window().content_scale_factor = value + 1
+	set_window_size(value, Statics.ASPECT_RATIOS[Statics.data_general[\"aspect_ratio\"]])
 	Statics.data_general[\"window_scale\"] = value
+
+
+func on_ratio_cycled(value) -> void:
+	var this_ratio = Statics.ASPECT_RATIOS[value]
+	set_window_size(Statics.data_general[\"window_scale\"], this_ratio)
+	Statics.data_general[\"aspect_ratio\"] = value
+
+
+func on_minimap_cycled(value) -> void:
+	Statics.data_general[\"minimap_state\"] = value
+
+
+func on_bottom_keys_cycled(value) -> void:
+	Statics.data_general[\"bottom_key_state\"] = value
+
+
+func on_input_map_toggled(value) -> void:
+	Statics.data_general[\"keymap_toggle\"] = value
+
+
+func on_igt_toggled(value) -> void:
+	Statics.data_general[\"time_toggle\"] = value
+
+
+func on_fps_toggled(value) -> void:
+	Statics.data_general[\"fps_toggle\"] = value
+
+
+func on_particles_cycled(value) -> void:
+	Statics.data_general[\"particle_state\"] = value
+
+
+func on_screen_shake_cycled(value) -> void:
+	Statics.data_general[\"screen_shake_state\"] = value
+
+
+func on_darkness_cycled(value) -> void:
+	Statics.data_general[\"darkness_level\"] = value
+
+
+func on_shader_toggled(value) -> void:
+	Statics.data_general[\"palette_shader_toggle\"] = value
+
+
+func set_window_size(_scale:int, _ratio:Vector2i) -> void:
+	var new_size:Vector2i = _ratio * (_scale + 1)
+	#ProjectSettings.set_setting(\"display/window/size/viewport_width\", new_size.x)
+	#ProjectSettings.set_setting(\"display/window/size/viewport_height\", new_size.y)
+	#DisplayServer.window_set_size(new_size)
+	get_window().size = new_size
+	get_window().content_scale_factor = _scale + 1
 "
 
 [node name="DisplayOptions" type="Node2D"]
@@ -205,3 +252,13 @@ back_one_layer = true
 hide_frame = true
 
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Scale" to="MainVBox" method="on_scale_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Ratio" to="MainVBox" method="on_ratio_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Minimap" to="MainVBox" method="on_minimap_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/BottomKeys" to="MainVBox" method="on_bottom_keys_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InputMap" to="MainVBox" method="on_input_map_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InGameTime" to="MainVBox" method="on_igt_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fps_toggled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Particles" to="MainVBox" method="on_particles_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="on_screen_shake_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Darkness" to="MainVBox" method="on_darkness_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_shader_toggled"]

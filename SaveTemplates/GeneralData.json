@@ -4,7 +4,7 @@
 	"sound_volume": 15,
 	"music_volume": 15,
 	"window_scale": 1,
-	"window_ratio": 0,
+	"aspect_ratio": 0,
 	"minimap_state": 2,
 	"bottom_key_state": 2,
 	"keymap_toggle": false,
