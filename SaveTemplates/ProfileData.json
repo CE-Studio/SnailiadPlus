@@ -3,7 +3,7 @@
 	"difficulty": 0,
 	"game_time": [ 0.0, 0.0, 0.0 ],
 	"save_room": "__NONE__",
-	"save_coords": { "x": 0.0, "y": 0.0 },
+	"save_coords": "(0, 0)",
 	"character": 0,
 	"items": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"locations": [ ],

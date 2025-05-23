@@ -39,10 +39,16 @@ func _set_game_settings() -> void:
 	#endregion
 	
 	#region Display settings
+	var window = get_window()
 	var window_scale = Statics.data_general["window_scale"] + 1
 	var aspect_ratio = Statics.ASPECT_RATIOS[Statics.data_general["aspect_ratio"]]
-	get_window().size = aspect_ratio * window_scale
-	get_window().content_scale_factor = window_scale
+	var old_size = window.size
+	var old_position = window.position
+	window.size = aspect_ratio * window_scale
+	window.content_scale_factor = window_scale
+	var new_size = window.size
+	var difference = new_size - old_size
+	window.position = old_position - Vector2i(difference * 0.5)
 	#endregion
 
 

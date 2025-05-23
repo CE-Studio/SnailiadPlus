@@ -75,11 +75,16 @@ func on_shader_toggled(value) -> void:
 
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	var new_size:Vector2i = _ratio * (_scale + 1)
+	var window = get_window()
 	#ProjectSettings.set_setting(\"display/window/size/viewport_width\", new_size.x)
 	#ProjectSettings.set_setting(\"display/window/size/viewport_height\", new_size.y)
 	#DisplayServer.window_set_size(new_size)
-	get_window().size = new_size
-	get_window().content_scale_factor = _scale + 1
+	var old_size = window.size
+	var old_position = window.position
+	window.size = new_size
+	window.content_scale_factor = _scale + 1
+	var difference = new_size - old_size
+	window.position = old_position - Vector2i(difference * 0.5)
 "
 
 [node name="DisplayOptions" type="Node2D"]

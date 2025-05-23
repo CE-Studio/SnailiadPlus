@@ -11,7 +11,8 @@ script/source = "extends VBoxContainer
 
 var layer:MenuLayer
 var pro_id:int
-
+var difficulty:int
+var character:int
 
 
 func _ready() -> void:
@@ -62,6 +63,7 @@ func _on_difficulty_changed(new_diff:int) -> void:
 		1: Statics.data_profile1[\"difficulty\"] = new_diff
 		2: Statics.data_profile2[\"difficulty\"] = new_diff
 		3: Statics.data_profile3[\"difficulty\"] = new_diff
+	difficulty = new_diff
 
 
 func _on_character_changed(new_char:int) -> void:
@@ -69,6 +71,24 @@ func _on_character_changed(new_char:int) -> void:
 		1: Statics.data_profile1[\"character\"] = new_char
 		2: Statics.data_profile2[\"character\"] = new_char
 		3: Statics.data_profile3[\"character\"] = new_char
+	character = new_char
+
+
+func _on_start_pressed(value) -> void:
+	var world_spawn = Statics.WORLD_SPAWN[character]
+	match pro_id:
+		1: Statics.current_profile = Statics.data_profile1
+		2: Statics.current_profile = Statics.data_profile2
+		3: Statics.current_profile = Statics.data_profile3
+	Statics.current_profile[\"is_empty\"] = false
+	Statics.current_profile[\"save_room\"] = world_spawn[0]
+	Statics.current_profile[\"save_coords\"] = Vector2i(world_spawn[1], world_spawn[2])
+	Statics.current_profile[\"difficulty\"] = difficulty
+	Statics.current_profile[\"character\"] = character
+	layer.menu.save_profile(pro_id)
+	Statics.load_room = world_spawn[0]
+	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
+	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
 "
 
 [node name="NewGame" type="Node2D"]
@@ -172,3 +192,4 @@ hide_frame = true
 
 [connection signal="option_cycled" from="MainVBox/HBoxContainer/Difficulty" to="MainVBox" method="_on_difficulty_changed"]
 [connection signal="option_cycled" from="MainVBox/HBoxContainer/Character" to="MainVBox" method="_on_character_changed"]
+[connection signal="button_pressed" from="MainVBox/Start" to="MainVBox" method="_on_start_pressed"]

@@ -1,8 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvrflv73h4dv5"]
+[gd_scene load_steps=5 format=3 uid="uid://bvrflv73h4dv5"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5cqf1"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="2_l5ldk"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_nahkj"]
+
+[sub_resource type="GDScript" id="GDScript_5cqf1"]
+resource_name = "ProfileSpawn"
+script/source = "extends VBoxContainer
+
+
+var layer:MenuLayer
+var pro_id:int
+
+
+func _ready() -> void:
+	layer = get_parent()
+	pro_id = layer.menu.get_next_layer_up().meta_info[0]
+
+
+func _on_save_spawn_pressed() -> void:
+	match pro_id:
+		1: Statics.current_profile = Statics.data_profile1
+		2: Statics.current_profile = Statics.data_profile2
+		3: Statics.current_profile = Statics.data_profile3
+	var load_pos = str_to_var(\"Vector2i\" + Statics.current_profile[\"save_coords\"])
+	Statics.load_room = str(Statics.current_profile[\"save_room\"])
+	Statics.load_coords = load_pos
+	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+
+
+func _on_world_spawn_pressed() -> void:
+	match pro_id:
+		1: Statics.current_profile = Statics.data_profile1
+		2: Statics.current_profile = Statics.data_profile2
+		3: Statics.current_profile = Statics.data_profile3
+	var world_spawn = Statics.WORLD_SPAWN[Statics.current_profile[\"character\"]]
+	Statics.load_room = world_spawn[0]
+	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
+	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+"
 
 [node name="ProfileSpawn" type="Node2D"]
 script = ExtResource("1_5cqf1")
@@ -13,6 +49,7 @@ offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
+script = SubResource("GDScript_5cqf1")
 
 [node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
@@ -64,3 +101,6 @@ focus_previous = NodePath("../WorldSpawn")
 text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true
+
+[connection signal="button_pressed" from="MainVBox/SavePoint" to="MainVBox" method="_on_save_spawn_pressed"]
+[connection signal="button_pressed" from="MainVBox/WorldSpawn" to="MainVBox" method="_on_world_spawn_pressed"]

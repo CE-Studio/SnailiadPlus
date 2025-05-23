@@ -65,6 +65,7 @@ const FRAC_64:float = 0.015625
 const FRAC_128:float = 0.0078125
 const VECTOR_DIAG:Vector2 = Vector2(cos(deg_to_rad(40)), sin(deg_to_rad(40)))
 
+
 const ASPECT_RATIOS:Array = [
 	Vector2i(400, 240),
 	Vector2i(400, 320),
@@ -77,6 +78,16 @@ const ASPECT_RATIOS:Array = [
 const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
+
+
+const WORLD_SPAWN:Array = [
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Snaily
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Sluggy
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 928, 152 ], # Upside
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Leggy
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Blobby
+	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Leechy
+]
 
 
 static var main_menu_booted_once:bool = false
@@ -112,6 +123,12 @@ static var cam:Camera2D
 static var active_room:Node2D
 
 static var text_lib:Dictionary
+
+
+#region Game scene load information
+static var load_room:String
+static var load_coords:Vector2i
+#endregion
 #endregion
 
 
@@ -134,6 +151,13 @@ enum Unlocks {
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
 	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
 }
+#endregion
+
+
+#region Profile functions
+static func format_game_time(time:Array) -> String:
+	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	return time_string
 #endregion
 
 
@@ -239,10 +263,6 @@ static func compare_versions(compare:Array, against:Array) -> int:
 
 
 #region Profile functions
-static func format_game_time(time:Array) -> String:
-	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
-	return time_string
-#endregion
 
 
 static func get_text(key:String) -> String:

@@ -181,3 +181,9 @@ func save_general() -> void:
 	Statics.save_general()
 	$"SaveIcon".visible = true
 	$"SaveIcon".action = "anim"
+
+
+func save_profile(id:int) -> void:
+	Statics.save_profile(id)
+	$"SaveIcon".visible = true
+	$"SaveIcon".action = "anim"

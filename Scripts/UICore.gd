@@ -104,10 +104,10 @@ func update_hearts() -> void:
 	for heart in heart_group.get_children():
 		var this_heart_value = clampi(health - running_total, 0, health_per_heart)
 		var anim_name:String
-		match Statics.current_profile["difficulty"]:
-			0.0: anim_name = "easy_"
-			1.0: anim_name = "normal_"
-			2.0: anim_name = "insane_"
+		match int(Statics.current_profile["difficulty"]):
+			0: anim_name = "easy_"
+			1: anim_name = "normal_"
+			2: anim_name = "insane_"
 		heart.action = anim_name + str(this_heart_value)
 		running_total += health_per_heart
 
