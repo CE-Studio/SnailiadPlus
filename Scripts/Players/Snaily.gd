@@ -20,7 +20,7 @@ func _ready():
 	stick_to_walls_when_hurt = [ Statics.Items.FLYSHELL ]
 	run_speed = [ 138.6667, 138.6667, 138.6667, 176 ]
 	jump_power = [ -428, -428, -428, -428, -498, -498, -498, -498 ]
-	gravity = [ 20, 20, 20, 20, 20, 20, 20, 20 ]
+	gravity = [ 1200, 20, 20, 20, 20, 20, 20, 20 ]
 	terminal_velocity = [ 500, 500, 500, 500, 500, 500, 500, 500 ]
 	jump_floatiness = [ 4, 4, 4, 4, 4, 4, 4, 4 ]
 	#weapon_cooldowns

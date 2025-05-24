@@ -18,7 +18,7 @@ func _ready() -> void:
 	pro_id = layer.menu.get_next_layer_up().meta_info[0]
 
 
-func _on_save_spawn_pressed() -> void:
+func _on_save_spawn_pressed(_value) -> void:
 	match pro_id:
 		1: Statics.current_profile = Statics.data_profile1
 		2: Statics.current_profile = Statics.data_profile2
@@ -29,7 +29,7 @@ func _on_save_spawn_pressed() -> void:
 	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
 
 
-func _on_world_spawn_pressed() -> void:
+func _on_world_spawn_pressed(_value) -> void:
 	match pro_id:
 		1: Statics.current_profile = Statics.data_profile1
 		2: Statics.current_profile = Statics.data_profile2

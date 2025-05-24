@@ -73,6 +73,12 @@ const ASPECT_RATIOS:Array = [
 	Vector2i(448, 252),
 	Vector2i(400, 250)
 ]
+const TARGET_FRAMERATES:Array = [
+	0,
+	30,
+	60,
+	120
+]
 
 
 const HEALTH_PER_HEART = [ 8, 4, 2 ]

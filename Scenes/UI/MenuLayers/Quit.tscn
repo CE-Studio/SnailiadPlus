@@ -8,7 +8,7 @@ resource_name = "QuitMenu"
 script/source = "extends VBoxContainer
 
 
-func on_quit_button_pressed() -> void:
+func on_quit_button_pressed(_value) -> void:
 	get_tree().quit()
 "
 

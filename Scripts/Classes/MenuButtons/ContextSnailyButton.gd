@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 			if quick_load_layer.strip_edges() != "":
 				button_pressed.emit(quick_load_layer)
 			else:
-				button_pressed.emit()
+				button_pressed.emit(0)
 
 
 func set_text(_text:String) -> void:

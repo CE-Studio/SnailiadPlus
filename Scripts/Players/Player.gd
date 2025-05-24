@@ -433,7 +433,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	last_rel_vel = rel_vel
 	#endregion
 	
-	rel_vel.x = rel_axis.x * run_speed[read_i_speed] * speed_mod
+	rel_vel.x = rel_axis.x * run_speed[read_i_speed] * speed_mod #* delta #mark
 	if rel_axis.x != 0.0 and grounded and current_state != AnimStates.WALK:
 		current_state = AnimStates.WALK
 		_play_anim("walk")
@@ -538,7 +538,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			jump_buffer_counter = jump_buffer
 			_play_anim("fall")
 		else:
-			rel_vel.y += gravity[read_i_jump] * gravity_mod
+			rel_vel.y += gravity[read_i_jump] * gravity_mod * delta #mark
 			if rel_vel.y < 0.0 and not Input.is_action_pressed("Jump"):
 				rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
 			rel_vel.y = clampf(rel_vel.y, -INF, terminal_velocity[read_i_jump])
@@ -596,6 +596,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
+	body.velocity = body.velocity #/ delta #mark
 	body.move_and_slide()
 	if not grounded and (body.is_on_floor() or body.is_on_ceiling()):
 		if surface == Statics.DirsSurface.FLOOR or surface == Statics.DirsSurface.CEILING:

@@ -21,7 +21,6 @@ func _ready() -> void:
 	$\"ScrollContainer/VBoxContainer/InGameTime\".toggled_on = bool(Statics.data_general[\"time_toggle\"])
 	$\"ScrollContainer/VBoxContainer/Framerate\".toggled_on = bool(Statics.data_general[\"fps_toggle\"])
 	$\"ScrollContainer/VBoxContainer/Particles\".remote_set_option(int(Statics.data_general[\"particle_state\"]))
-	$\"ScrollContainer/VBoxContainer/ScreenShake\".remote_set_option(int(Statics.data_general[\"screen_shake_state\"]))
 	$\"ScrollContainer/VBoxContainer/Darkness\".remote_set_option(int(Statics.data_general[\"darkness_level\"]))
 	$\"ScrollContainer/VBoxContainer/PaletteShader\".toggled_on = bool(Statics.data_general[\"palette_shader_toggle\"])
 
@@ -59,10 +58,6 @@ func on_fps_toggled(value) -> void:
 
 func on_particles_cycled(value) -> void:
 	Statics.data_general[\"particle_state\"] = value
-
-
-func on_screen_shake_cycled(value) -> void:
-	Statics.data_general[\"screen_shake_state\"] = value
 
 
 func on_darkness_cycled(value) -> void:
@@ -202,33 +197,21 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Framerate")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../ScreenShake")
-focus_next = NodePath("../ScreenShake")
+focus_neighbor_bottom = NodePath("../Darkness")
+focus_next = NodePath("../Darkness")
 focus_previous = NodePath("../Framerate")
 header_id = "menu_option_display_particles"
 cycle_options = Array[String](["menu_add_generic_none", "menu_add_particles1", "menu_add_particles2", "menu_add_particles3", "menu_add_particles4"])
 focus_option = 5
 
-[node name="ScreenShake" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Particles")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Darkness")
-focus_next = NodePath("../Darkness")
-focus_previous = NodePath("../Particles")
-header_id = "menu_option_display_screenShake"
-cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud"])
-focus_option = 2
-
-[node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../ScreenShake")
-focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../PaletteShader")
 focus_next = NodePath("../PaletteShader")
-focus_previous = NodePath("../ScreenShake")
+focus_previous = NodePath("../Particles")
 header_id = "menu_option_display_darkness"
 cycle_options = Array[String](["menu_add_generic_none", "menu_add_darkness_minor", "menu_add_darkness_half", "menu_add_darkness_full"])
 focus_option = 3
@@ -264,6 +247,5 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InGameTime" to="MainVBox" method="on_igt_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fps_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Particles" to="MainVBox" method="on_particles_cycled"]
-[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="on_screen_shake_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Darkness" to="MainVBox" method="on_darkness_cycled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_shader_toggled"]

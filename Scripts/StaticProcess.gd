@@ -50,6 +50,10 @@ func _set_game_settings() -> void:
 	var difference = new_size - old_size
 	window.position = old_position - Vector2i(difference * 0.5)
 	#endregion
+	
+	#region Gameplay settings
+	Engine.max_fps = Statics.TARGET_FRAMERATES[Statics.data_general["frame_limiter_state"]]
+	#endregion
 
 
 func _load_data_dict(filename:String, template:Dictionary) -> Dictionary:

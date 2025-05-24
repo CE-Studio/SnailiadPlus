@@ -67,7 +67,7 @@ func _ready() -> void:
 			button.set_subtext(stats)
 
 
-func _on_profile1_selected() -> void:
+func _on_profile1_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 1
@@ -80,7 +80,7 @@ func _on_profile1_selected() -> void:
 			pass
 
 
-func _on_profile2_selected() -> void:
+func _on_profile2_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 2
@@ -93,7 +93,7 @@ func _on_profile2_selected() -> void:
 			pass
 
 
-func _on_profile3_selected() -> void:
+func _on_profile3_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 3

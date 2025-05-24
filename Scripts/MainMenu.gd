@@ -5,7 +5,7 @@ extends Node2D
 const TITLE_REST_Y = 40
 const TITLE_MOVE_RATE = 8
 const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
-const SELECTOR_MOVE_RATE = 12
+const SELECTOR_MOVE_RATE = 16
 const SELECTOR_OFFSET = Vector2i(16, -2)
 
 @export var is_main_menu:bool = false
@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 		if Input.is_action_just_pressed("Pause"):
 			if active_layers > 1:
-				clear_top_layer()
+				clear_top_layer(0)
 			else:
 				create_layer("Quit")
 	
@@ -132,7 +132,7 @@ func create_layer(_name:String) -> MenuLayer:
 	return layer
 
 
-func clear_top_layer() -> MenuLayer:
+func clear_top_layer(_value) -> MenuLayer:
 	if active_layers > 1:
 		active_layers -= 1
 		var top_layer:MenuLayer = null

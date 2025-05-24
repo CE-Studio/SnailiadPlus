@@ -63,7 +63,7 @@ focus_neighbor_bottom = NodePath("../AssetPacks")
 focus_next = NodePath("../AssetPacks")
 focus_previous = NodePath("../Controls")
 text_id = "menu_option_options_gameplay"
-disabled = true
+quick_load_layer = "GameplayOptions"
 hide_frame = true
 
 [node name="AssetPacks" parent="MainVBox" instance=ExtResource("2_ubp5x")]
