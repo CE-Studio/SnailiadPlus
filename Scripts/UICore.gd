@@ -6,6 +6,7 @@ var cam:CamControl
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
 var heart_group:Node2D
+var color_cover:ColorCover
 
 
 static var instance:UICore
@@ -26,6 +27,8 @@ func instantiate() -> void:
 	
 	heart_group = $"Hearts"
 	draw_new_hearts()
+	
+	color_cover = $"ColorCover"
 
 
 func _process(delta: float) -> void:

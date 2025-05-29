@@ -67,6 +67,11 @@ text = "Version
 0.0.0"
 text_scale = 1
 
+[node name="EdgeFadeCover" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("9_nmi4p")
+
 [node name="ColorCover" parent="." instance=ExtResource("6_at33a")]
 modulate = Color(1, 1, 1, 0)
 
@@ -76,11 +81,6 @@ offset_left = 62.0
 offset_top = 80.0
 offset_right = 338.0
 offset_bottom = 102.0
-
-[node name="EdgeFadeCover" type="Sprite2D" parent="."]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(200, 120)
-texture = ExtResource("9_nmi4p")
 
 [node name="SaveIcon" type="Sprite2D" parent="."]
 position = Vector2(384, 224)
