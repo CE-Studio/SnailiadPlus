@@ -7,6 +7,7 @@ var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
 var heart_group:Node2D
 var color_cover:ColorCover
+var save_icon:JsonSprite2D
 
 
 static var instance:UICore
@@ -29,6 +30,9 @@ func instantiate() -> void:
 	draw_new_hearts()
 	
 	color_cover = $"ColorCover"
+	
+	save_icon = $"SaveIcon"
+	save_icon.visible = false
 
 
 func _process(delta: float) -> void:
@@ -117,3 +121,8 @@ func update_hearts() -> void:
 
 func get_cam_center_pos() -> Vector2:
 	return position + cam.offset
+
+
+func play_save_anim() -> void:
+	save_icon.visible = true
+	save_icon.action = "anim"

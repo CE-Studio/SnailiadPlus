@@ -90,3 +90,9 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="ColorCover" parent="." instance=ExtResource("7_ygllc")]
 modulate = Color(1, 1, 1, 0)
+
+[node name="SaveIcon" type="Sprite2D" parent="."]
+position = Vector2(384, 224)
+script = ExtResource("1_4o42s")
+texture_path = "res://Assets/Images/UI/SaveIcon.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"

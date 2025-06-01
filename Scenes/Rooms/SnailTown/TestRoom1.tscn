@@ -21,7 +21,7 @@ _data = {
 }
 point_count = 1
 
-[node name="Test" type="Node2D"]
+[node name="TestRoom1" type="Node2D"]
 script = ExtResource("1_ropfo")
 cutscenes = Array[ExtResource("2_w58g0")]([SubResource("Resource_ybq4q")])
 
