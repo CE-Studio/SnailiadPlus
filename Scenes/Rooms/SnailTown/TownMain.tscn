@@ -69,5 +69,4 @@ script = ExtResource("3_lgw5l")
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("3_qyovo")]
 position = Vector2(1236, 120)
-exit_room = "uid://vvs4fclk0j13"
-exit_transition = 1
+exit_room = "uid://c07hyvodc4n6d"

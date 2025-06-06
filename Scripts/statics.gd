@@ -86,13 +86,14 @@ const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
 
 
+const ROOM_PATH:String = "res://Scenes/Rooms/%s.tscn"
 const WORLD_SPAWN:Array = [
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Snaily
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Sluggy
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 928, 152 ], # Upside
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Leggy
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Blobby
-	[ "res://Scenes/Rooms/SnailTown/TownMain.tscn", 640, 600 ], # Leechy
+	[ "SnailTown/TownMain", 640, 600 ], # Snaily
+	[ "SnailTown/TownMain", 640, 600 ], # Sluggy
+	[ "SnailTown/TownMain", 928, 152 ], # Upside
+	[ "SnailTown/TownMain", 640, 600 ], # Leggy
+	[ "SnailTown/TownMain", 640, 600 ], # Blobby
+	[ "SnailTown/TownMain", 640, 600 ], # Leechy
 ]
 
 
@@ -147,6 +148,7 @@ static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
+static var current_profile_id:int
 
 enum Unlocks {
 	BOSS_RUSH, # (Boss Rush; earned from beating the game)

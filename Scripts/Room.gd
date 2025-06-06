@@ -44,6 +44,8 @@ enum Layers {
 	ENTITY
 }
 
+var room_path:String
+
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity:TileMapLayer = $"EntityLayer/Map"
 @onready var layer_fg2:Node2D = $"FG2Layer"
@@ -64,23 +66,34 @@ enum Layers {
 #endregion
 
 
-func spawn(spawn_all:bool):
+func spawn(_spawn_all:bool):
 	if Statics.show_entity_layer:
 		map_entity.modulate = Color(1, 1, 1, 0.5)
 	else:
 		map_entity.modulate = Color(1, 1, 1, 0)
+	get_room_name_from_filename()
 	
 	# Get all entity tiles and spawn associated objects
 	_spawn_entities_from_layer()
 	
 	# Properly spawn all objects in room
-	if spawn_all:
+	if _spawn_all:
 		var layer_array = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
 		for layer in layer_array:
 			for child in layer.get_children():
 				if (child is Door
 				or child is NPC):
 					child.spawn()
+				if child is SavePoint:
+					child.room_name = room_path
+
+
+func get_room_name_from_filename() -> void:
+	var trimmed_name = self.scene_file_path
+	var path_parts = Statics.ROOM_PATH.split("%s")
+	trimmed_name = trimmed_name.substr(path_parts[0].length())
+	trimmed_name = trimmed_name.substr(0, trimmed_name.length() - path_parts[1].length())
+	room_path = trimmed_name
 
 
 func _process(_delta):
@@ -123,24 +136,28 @@ func _spawn_entities_from_layer() -> void:
 			Vector2i(8, 4): # Boomerang breakable
 				var boom_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(boom_tile)
+				layer_ground.move_child(boom_tile, 1)
 				boom_tile.position = _tile_coords_to_vector_pos(tile)
 				boom_tile.spawn(tile, Breakable.TileTypes.BOOMERANG, false)
 			
 			Vector2i(9, 4): # Rainbow Wave breakable
 				var wave_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(wave_tile)
+				layer_ground.move_child(wave_tile, 1)
 				wave_tile.position = _tile_coords_to_vector_pos(tile)
 				wave_tile.spawn(tile, Breakable.TileTypes.RAINBOW_WAVE, false)
 			
 			Vector2i(10, 4): # Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(dev_tile)
+				layer_ground.move_child(dev_tile, 1)
 				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, false)
 			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				layer_ground.add_child(dev_tile)
+				layer_ground.move_child(dev_tile, 1)
 				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
 			
