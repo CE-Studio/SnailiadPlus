@@ -8,6 +8,7 @@ extends Node2D
 	set(value):
 		surface = value
 		_ready()
+@export_flags("Snaily", "Sluggy", "Upside", "Leggy", "Blobby", "Leechy") var characters_who_can_use_me:int = 63
 
 var activated:bool = false
 var room_name:String
@@ -16,7 +17,6 @@ var room_name:String
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var sfx:AudioStreamPlayer = $"Jingle"
 #endregion
-#TODO make save points remember what room they're in
 
 
 func _ready() -> void:
@@ -31,12 +31,26 @@ func _ready() -> void:
 			Statics.DirsSurface.LWALL: marker.frame = 4
 			Statics.DirsSurface.RWALL: marker.frame = 8
 			Statics.DirsSurface.CEILING: marker.frame = 12
+
+
+func check_character_spawnable() -> bool:
+	var char_flag:int = 1 << int(Statics.current_profile["character"])
+	if characters_who_can_use_me & char_flag > 0:
+		return true
+	queue_free()
+	return false
+
+
+func initialize_room_data(_room_name:String) -> void:
+	room_name = _room_name
+	var saved_position = Statics.current_profile["save_coords"]
+	if saved_position is String:
+		saved_position = str_to_var("Vector2" + saved_position)
+	if (Statics.current_profile["save_room"] == room_name
+	and saved_position == global_position):
+		sprite.action = "%d_last" % surface
 	else:
-		if (Statics.current_profile["save_room"] == room_name
-		and Statics.current_profile["save_coords"] == global_position):
-			sprite.action = "%d_last" % surface
-		else:
-			sprite.action = "%d_inactive" % surface
+		sprite.action = "%d_inactive" % surface
 
 
 func _on_player_entered(_body) -> void:
@@ -47,4 +61,36 @@ func _on_player_entered(_body) -> void:
 		Statics.save_profile(Statics.current_profile_id)
 		sfx.play()
 		sprite.action = "%d_touched" % surface
+		_spawn_save_particles()
 		UICore.instance.play_save_anim()
+
+
+func _spawn_save_particles() -> void:
+	var start_pos:Vector2
+	var advance_dir:Vector2
+	var float_dir:Vector2
+	match surface:
+		Statics.DirsSurface.FLOOR:
+			start_pos = position + Vector2(-16, 8)
+			advance_dir = Vector2.RIGHT
+			float_dir = Vector2.UP
+		Statics.DirsSurface.LWALL:
+			start_pos = position + Vector2(-8, 16)
+			advance_dir = Vector2.UP
+			float_dir = Vector2.RIGHT
+		Statics.DirsSurface.RWALL:
+			start_pos = position + Vector2(8, 16)
+			advance_dir = Vector2.UP
+			float_dir = Vector2.LEFT
+		Statics.DirsSurface.CEILING:
+			start_pos = position + Vector2(-16, -8)
+			advance_dir = Vector2.RIGHT
+			float_dir = Vector2.DOWN
+	for i in range(9):
+		var spawn_pos = start_pos + (advance_dir * 4 * i)
+		var new_particle = Statics.spawn_particle("DotGeneric", Room.Layers.GROUND, spawn_pos, [float_dir * randf_range(5.0, 30.0)])
+		match randi() % 4:
+			0: new_particle.sprite.modulate = Statics.get_color(Vector2i(3, 4))
+			1: new_particle.sprite.modulate = Statics.get_color(Vector2i(3, 9))
+			2: new_particle.sprite.modulate = Statics.get_color(Vector2i(2, 7))
+			3: new_particle.sprite.modulate = Statics.get_color(Vector2i(0, 1))

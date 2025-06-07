@@ -343,7 +343,7 @@ static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
-	var new_particle = load("res://Scenes/Particles/" + name + ".tscn").instantiate()
+	var new_particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)
@@ -372,6 +372,11 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
 					sprite_image.set_pixel(x, y, new_color)
 	return ImageTexture.create_from_image(sprite_image)
+
+
+static func get_color(coords:Vector2i) -> Color:
+	var palette_image = palette.get_image()
+	return palette_image.get_pixelv(coords)
 
 
 static func get_all_children(_node:Node) -> Array:

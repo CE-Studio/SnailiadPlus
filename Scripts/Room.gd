@@ -85,7 +85,8 @@ func spawn(_spawn_all:bool):
 				or child is NPC):
 					child.spawn()
 				if child is SavePoint:
-					child.room_name = room_path
+					if child.check_character_spawnable():
+						child.initialize_room_data(room_path)
 
 
 func get_room_name_from_filename() -> void:
