@@ -30,6 +30,9 @@ extends Node2D
 @export var bg1_offset:Vector2
 @export var bg2_offset:Vector2
 @export var sky_offset:Vector2
+
+@export_group("Misc")
+@export var song_change:MusicManager.Loops = MusicManager.Loops.None
 #endregion
 
 
@@ -87,6 +90,9 @@ func spawn(_spawn_all:bool):
 				if child is SavePoint:
 					if child.check_character_spawnable():
 						child.initialize_room_data(room_path)
+	
+	if song_change != MusicManager.Loops.None:
+		GameCore.instance.music_manager.play_song(song_change)
 
 
 func get_room_name_from_filename() -> void:

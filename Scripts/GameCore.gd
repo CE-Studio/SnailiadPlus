@@ -10,6 +10,7 @@ var cam_layer:UICore
 var current_room:Node2D
 var current_room_name:String
 var sfx_group:Node
+var music_manager:MusicManager
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _ready() -> void:
 			player = child
 	cam_layer = $"CameraLayer"
 	cam_layer.instantiate()
+	music_manager = $"MusicManager"
 	if current_room == null:
 		spawn_room(Statics.load_room)
 		player.reset_position(Statics.load_coords)
