@@ -45,11 +45,34 @@ const GROUPS:Array = [
 	[ Loops.Town1, Loops.Town2 ]
 ]
 
-var active_players:Array = [ ]
+const GROUP_FADE_TIME_SECONDS:float = 1.0
+
+var active_players:Array = [ ] # Stores AudioStreamPlayers
+var active_loops:Array = [ ] # Stores corresponding Loops values
 var current_song:Loops = Loops.None
 var group_focus:int = 0
 var is_group_song:bool = false
+var awaiting_load:bool = false
 #endregion
+
+
+func _process(delta: float) -> void:
+	if awaiting_load:
+		var all_loaded = true
+		for loop in active_loops:
+			if not ResourceLoader.has_cached(FILES[loop]):
+				all_loaded = false
+		if all_loaded:
+			for player in active_players:
+				player.play()
+			awaiting_load = false
+	elif is_group_song:
+		for i in range(active_players.size()):
+			var player:AudioStreamPlayer = active_players[i]
+			var vol_change:float = GROUP_FADE_TIME_SECONDS * delta
+			if i != group_focus:
+				vol_change *= -1
+			player.volume_linear = clampf(player.volume_linear + vol_change, 0.0, 1.0)
 
 
 func play_song(loop:Loops) -> void:
@@ -63,19 +86,39 @@ func play_song(loop:Loops) -> void:
 	var new_song_group = find_song_in_groups(loop)
 	if current_song != Loops.None:
 		if new_song_group != -1 and new_song_group == find_song_in_groups(current_song):
-			pass # Replace with fade code
+			group_focus = find_song_id_in_group(loop, new_song_group)
+			current_song = loop
+			return
 		else:
 			for player in active_players:
 				player.queue_free()
+			active_players.clear()
+			active_loops.clear()
 	# If new song is not None
 	#   Create sources for new song (and Group if part of one)
 	if loop != Loops.None:
 		if new_song_group != -1:
-			pass
+			var loop_count = GROUPS[new_song_group].size()
+			var active_id = find_song_id_in_group(loop, new_song_group)
+			var player_count:int = 0
+			for i in GROUPS[new_song_group]:
+				var new_player = create_new_player(i)
+				active_players.append(new_player)
+				active_loops.append(i)
+				if i == loop:
+					group_focus = player_count
+				else:
+					new_player.volume_linear = 0
+				player_count += 1
+			is_group_song = true
+			awaiting_load = true
 		else:
 			var new_player = create_new_player(loop)
 			active_players.append(new_player)
-			new_player.play()
+			active_loops.append(loop)
+			is_group_song = false
+			awaiting_load = true
+	current_song = loop
 
 
 func find_song_in_groups(loop:Loops) -> int:
@@ -97,7 +140,7 @@ func find_song_id_in_group(loop:Loops, group:int) -> int:
 
 
 func create_new_player(loop:Loops) -> AudioStreamPlayer:
-	var player = AudioStreamPlayer.new() #TODO get AudioStreamPlayers spawning
+	var player = AudioStreamPlayer.new()
 	player.stream = load(FILES[loop])
 	player.bus = &"Music"
 	player.name = str(loop)
