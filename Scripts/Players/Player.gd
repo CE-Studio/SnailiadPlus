@@ -893,6 +893,7 @@ func _toggle_weapon(id:int) -> void:
 			selected_weapon += shifted_id
 	else:
 		selected_weapon = shifted_id
+	Statics.current_profile["equipped_weapons"] = selected_weapon
 
 
 func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:

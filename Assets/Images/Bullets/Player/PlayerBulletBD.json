@@ -1,5 +1,7 @@
 {
 	"tiles": [6, 12],
+	"layerize": false,
+	"meta": {},
 	"animations": {
 		"normal_U": {
 			"fps": 14,

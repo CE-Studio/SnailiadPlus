@@ -188,6 +188,20 @@ static func check_item(id:int) -> int:
 	return output
 
 
+static func mark_item_location(id:int, state:bool = true) -> void:
+	while id > len(current_profile["locations"]):
+		current_profile["locations"].append(false)
+	#current_profile["locations"][id] = state
+	current_profile["locations"].set(id, state)
+
+
+static func check_location_collected(id:int) -> bool:
+	var output = false
+	if id < len(current_profile["locations"]):
+		output = current_profile["locations"][id]
+	return output
+
+
 static func save_general():
 	var file = FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_general, "\t", false))

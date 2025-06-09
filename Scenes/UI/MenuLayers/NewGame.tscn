@@ -87,7 +87,7 @@ func _on_start_pressed(value) -> void:
 	Statics.current_profile[\"difficulty\"] = difficulty
 	Statics.current_profile[\"character\"] = character
 	layer.menu.save_profile(pro_id)
-	Statics.load_room = world_spawn[0]
+	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
 	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
 "

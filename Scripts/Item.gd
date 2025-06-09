@@ -52,6 +52,12 @@ const HOVER_EASE:float = 12.5
 
 
 func _ready() -> void:
+	if (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
+	or character_reqs & (1 << int(Statics.current_profile["character"])) == 0
+	or Statics.check_location_collected(location_id)):
+		queue_free()
+		return
+	
 	var id_str
 	match type:
 		ItemTypes.PEASHOOTER:
@@ -129,6 +135,7 @@ func _on_player_entered(body: Node2D) -> void:
 		else:
 			Statics.play_sfx_disconnected(jingle_minor)
 		Statics.add_item(type, 1)
+		Statics.mark_item_location(location_id)
 		match type:
 			ItemTypes.PEASHOOTER:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 1):
@@ -167,6 +174,8 @@ func _on_player_entered(body: Node2D) -> void:
 			#ItemTypes.SPIDER_TRAP:
 			#ItemTypes.WARP_TRAP:
 			#_:
+		Statics.save_profile(Statics.current_profile_id)
+		UICore.instance.play_save_anim()
 
 
 func _on_collect_timer_timeout() -> void:

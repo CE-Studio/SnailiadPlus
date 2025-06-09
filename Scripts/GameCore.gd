@@ -25,30 +25,16 @@ func _ready() -> void:
 	if current_room == null:
 		spawn_room(Statics.load_room)
 		player.reset_position(Statics.load_coords)
+	player.selected_weapon = Statics.current_profile["equipped_weapons"]
 	cam_layer.cam.set_layer_position(player.position)
-
-
-#func spawn_room_from_file(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
-#	var trimmed_path = path
-#	var path_parts = Statics.ROOM_PATH.split("%s")
-#	print(trimmed_path)
-#	trimmed_path = trimmed_path.substr(path_parts[0].length())
-#	print(trimmed_path)
-#	trimmed_path = trimmed_path.substr(0, trimmed_path.length() - path_parts[1].length())
-#	print(trimmed_path)
-#	spawn_room(trimmed_path, path, entrance, offset)
-#
-#
-#func spawn_room_from_name(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
-#	var full_path = Statics.ROOM_PATH % path
-#	spawn_room(path, full_path, entrance, offset)
+	cam_layer.update_weapon_icons()
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
 	if current_room != null:
 		player.reparent(self)
 		current_room.queue_free()
-	var new_room:Room = load(path).instantiate() #TODO fix
+	var new_room:Room = load(path).instantiate()
 	add_child(new_room)
 	move_child(new_room, 0)
 	current_room = new_room

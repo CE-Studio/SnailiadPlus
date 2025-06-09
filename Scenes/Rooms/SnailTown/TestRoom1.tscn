@@ -23,7 +23,22 @@ point_count = 1
 
 [node name="TestRoom1" type="Node2D"]
 script = ExtResource("1_ropfo")
+area_id = 0
+subarea_id = 0
+is_bonus_room = false
+darkness_level = 0.0
 cutscenes = Array[ExtResource("2_w58g0")]([SubResource("Resource_ybq4q")])
+fg2_parallax = Vector2(0, 0)
+fg1_parallax = Vector2(0, 0)
+bg1_parallax = Vector2(0, 0)
+bg2_parallax = Vector2(0, 0)
+sky_parallax = Vector2(0, 0)
+fg2_offset = Vector2(0, 0)
+fg1_offset = Vector2(0, 0)
+bg1_offset = Vector2(0, 0)
+bg2_offset = Vector2(0, 0)
+sky_offset = Vector2(0, 0)
+song_change = -1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 
@@ -58,25 +73,39 @@ type = 12
 [node name="Door" parent="GroundLayer" instance=ExtResource("7_ybq4q")]
 position = Vector2(8, 104)
 direction = 3
+door_type = 0
+lock_type = -1
+required_boss = 0
+rando_sphere = 0
 
 [node name="Door2" parent="GroundLayer" instance=ExtResource("7_ybq4q")]
 position = Vector2(168, 8)
 direction = 1
+door_type = 0
 lock_type = 0
+required_boss = 0
+rando_sphere = 0
 
 [node name="NPC" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(240, 216)
+my_id = 0
+face_mode = -1
+surface = 0
+animation_set = 0
 identifier = &"One"
 
 [node name="NPC2" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(112, 216)
 my_id = 1
+face_mode = -1
+surface = 0
 animation_set = 6
 identifier = &"Two"
 
 [node name="NPC3" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(208, 152)
 my_id = 2
+face_mode = -1
 surface = 3
 animation_set = 1
 identifier = &"Three"
@@ -84,6 +113,7 @@ identifier = &"Three"
 [node name="NPC4" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(312, 120)
 my_id = 3
+face_mode = -1
 surface = 1
 animation_set = 2
 identifier = &"Four"
@@ -91,6 +121,7 @@ identifier = &"Four"
 [node name="NPC5" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(104, 64)
 my_id = 4
+face_mode = -1
 surface = 2
 animation_set = 3
 identifier = &"Five"
