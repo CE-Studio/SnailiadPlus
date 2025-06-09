@@ -8,7 +8,7 @@ extends PanelContainer
 @onready var header:SnailyText = null
 @onready var button:SnailyButton = null
 @onready var text_scene = load("res://Scenes/internals/SnailyText.tscn")
-@onready var button_scene = load("res://Scenes/UI/SnailyButton.tscn")
+@onready var button_scene = load("res://Scenes/UI/ActionSnailyButton.tscn")
 #endregion
 
 

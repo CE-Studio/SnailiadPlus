@@ -1,8 +1,58 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvrflv73h4dv5"]
+[gd_scene load_steps=5 format=3 uid="uid://bvrflv73h4dv5"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5cqf1"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="2_l5ldk"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="3_nahkj"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_nahkj"]
+
+[sub_resource type="GDScript" id="GDScript_5cqf1"]
+resource_name = "ProfileSpawn"
+script/source = "extends VBoxContainer
+
+
+var layer:MenuLayer
+var pro_id:int
+
+
+func _ready() -> void:
+	layer = get_parent()
+	pro_id = layer.menu.get_next_layer_up().meta_info[0]
+	var save_room_name
+	match pro_id:
+		1: save_room_name = Statics.data_profile1[\"save_room\"]
+		2: save_room_name = Statics.data_profile2[\"save_room\"]
+		3: save_room_name = Statics.data_profile3[\"save_room\"]
+	var save_room_parts = save_room_name.split(\"/\")
+	var save_area = Statics.get_text(\"area_%s\" % save_room_parts[0])
+	if save_room_parts.size() > 1:
+		var save_room = Statics.get_text(\"room_%s\" % save_room_name)
+		$\"SavePoint\".set_subtext(\"%s - %s\" % [save_area, save_room])
+	else:
+		$\"SavePoint\".set_subtext(save_area)
+
+
+func _on_save_spawn_pressed(_value) -> void:
+	match pro_id:
+		1: Statics.current_profile = Statics.data_profile1
+		2: Statics.current_profile = Statics.data_profile2
+		3: Statics.current_profile = Statics.data_profile3
+	Statics.current_profile_id = pro_id
+	var load_pos = str_to_var(\"Vector2i\" + Statics.current_profile[\"save_coords\"])
+	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile[\"save_room\"])
+	Statics.load_coords = load_pos
+	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+
+
+func _on_world_spawn_pressed(_value) -> void:
+	match pro_id:
+		1: Statics.current_profile = Statics.data_profile1
+		2: Statics.current_profile = Statics.data_profile2
+		3: Statics.current_profile = Statics.data_profile3
+	Statics.current_profile_id = pro_id
+	var world_spawn = Statics.WORLD_SPAWN[Statics.current_profile[\"character\"]]
+	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
+	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
+	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+"
 
 [node name="ProfileSpawn" type="Node2D"]
 script = ExtResource("1_5cqf1")
@@ -13,11 +63,12 @@ offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
+script = SubResource("GDScript_5cqf1")
 
 [node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text_id = "menu_option_loadGame_header"
+text_id = "menu_option_newGame_header"
 disabled = true
 hide_frame = true
 
@@ -35,9 +86,12 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../WorldSpawn")
 focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
-subtext_id = "Area - Room"
 text_id = "menu_option_loadGame_save"
+subtext_id = "Area - Room"
+quick_load_layer = ""
+back_one_layer = false
 grab_focus_on_load = true
+disabled = false
 hide_frame = true
 
 [node name="WorldSpawn" parent="MainVBox" instance=ExtResource("3_nahkj")]
@@ -65,4 +119,5 @@ text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true
 
-[connection signal="button_pressed" from="MainVBox/WorldSpawn" to="MainVBox" method="on_quit_button_pressed"]
+[connection signal="button_pressed" from="MainVBox/SavePoint" to="MainVBox" method="_on_save_spawn_pressed"]
+[connection signal="button_pressed" from="MainVBox/WorldSpawn" to="MainVBox" method="_on_world_spawn_pressed"]

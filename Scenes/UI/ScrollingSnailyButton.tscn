@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b2te0qs40rba4"]
 
 [ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_lckvt"]
-[ext_resource type="Script" uid="uid://bgy26ema1hnsb" path="res://Scripts/Classes/ScrollingSnailyButton.gd" id="1_rq7g3"]
+[ext_resource type="Script" uid="uid://bgy26ema1hnsb" path="res://Scripts/Classes/MenuButtons/ScrollingSnailyButton.gd" id="1_rq7g3"]
 [ext_resource type="Texture2D" uid="uid://dba53vgxijg3n" path="res://Assets/Images/UI/ScrollerIcons.png" id="3_p6a10"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_xqide"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_75bjl"]

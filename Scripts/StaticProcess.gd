@@ -10,26 +10,61 @@ func _ready() -> void:
 	DirAccess.open("user://" + Statics.save_prefix)
 	if DirAccess.get_open_error() != 0:
 		DirAccess.make_dir_recursive_absolute("user://" + Statics.save_prefix)
-	if FileAccess.file_exists("user://" + Statics.save_prefix + "/GeneralData.json"):
-		Statics.data_general = _load_json_to_dict("user://" + Statics.save_prefix + "/GeneralData.json")
+	
+	var template_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
+	var template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
+	var template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
+	
+	Statics.data_general = _load_data_dict("GeneralData", template_general)
+	Statics.data_profile1 = _load_data_dict("Profile1", template_profile)
+	Statics.data_profile2 = _load_data_dict("Profile2", template_profile)
+	Statics.data_profile3 = _load_data_dict("Profile3", template_profile)
+	Statics.data_records = _load_data_dict("Records", template_records)
+	
+	# Set important game systems according to newly loaded data
+	_set_game_settings()
+
+
+func _set_game_settings() -> void:
+	#region Sound volume
+	var master_index = AudioServer.get_bus_index("Master")
+	var master_vol = float(Statics.data_general["master_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(master_index, linear_to_db(master_vol))
+	var sound_index = AudioServer.get_bus_index("Sfx")
+	var sound_vol = float(Statics.data_general["sound_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(sound_index, linear_to_db(sound_vol))
+	var music_index = AudioServer.get_bus_index("Music")
+	var music_vol = float(Statics.data_general["music_volume"]) / 20.0
+	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
+	#endregion
+	
+	#region Display settings
+	var window = get_window()
+	var window_scale = Statics.data_general["window_scale"] + 1
+	var aspect_ratio = Statics.ASPECT_RATIOS[Statics.data_general["aspect_ratio"]]
+	var old_size = window.size
+	var old_position = window.position
+	window.size = aspect_ratio * window_scale
+	window.content_scale_factor = window_scale
+	var new_size = window.size
+	var difference = new_size - old_size
+	window.position = old_position - Vector2i(difference * 0.5)
+	#endregion
+	
+	#region Gameplay settings
+	Engine.max_fps = Statics.TARGET_FRAMERATES[Statics.data_general["frame_limiter_state"]]
+	#endregion
+
+
+func _load_data_dict(filename:String, template:Dictionary) -> Dictionary:
+	var file_path = "user://%s/%s.json" % [ Statics.save_prefix, filename ]
+	var loaded_dict:Dictionary = Dictionary()
+	if FileAccess.file_exists(file_path):
+		loaded_dict = _load_json_to_dict(file_path)
+		loaded_dict.merge(template)
 	else:
-		Statics.data_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
-	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile1.json"):
-		Statics.data_profile1 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile1.json")
-	else:
-		Statics.data_profile1 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile2.json"):
-		Statics.data_profile2 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile2.json")
-	else:
-		Statics.data_profile2 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Profile3.json"):
-		Statics.data_profile3 = _load_json_to_dict("user://" + Statics.save_prefix + "/Profile3.json")
-	else:
-		Statics.data_profile3 = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	if FileAccess.file_exists("user://" + Statics.save_prefix + "/Records.json"):
-		Statics.data_records = _load_json_to_dict("user://" + Statics.save_prefix + "/Records.json")
-	else:
-		Statics.data_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
+		loaded_dict = template.duplicate()
+	return loaded_dict
 
 
 func _load_json_to_dict(path:String) -> Dictionary:

@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://x16f2foun0w1"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4efbj"]
+[ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_p25fg"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_0h43h"]
+
+[sub_resource type="GDScript" id="GDScript_p25fg"]
+resource_name = "SoundOptions"
+script/source = "extends VBoxContainer
+
+
+func _ready() -> void:
+	$\"Master\".remote_set_option(int(Statics.data_general[\"master_volume\"]))
+	$\"Sound\".remote_set_option(int(Statics.data_general[\"sound_volume\"]))
+	$\"Music\".remote_set_option(int(Statics.data_general[\"music_volume\"]))
+
+
+func _on_master_cycled(value:int) -> void:
+	var index = AudioServer.get_bus_index(\"Master\")
+	var vol = float(value) / 20.0
+	AudioServer.set_bus_volume_db(index, linear_to_db(vol))
+	Statics.data_general[\"master_volume\"] = value
+
+
+func _on_sound_cycled(value:int) -> void:
+	var index = AudioServer.get_bus_index(\"Sfx\")
+	var vol = float(value) / 20.0
+	AudioServer.set_bus_volume_db(index, linear_to_db(vol))
+	Statics.data_general[\"sound_volume\"] = value
+
+
+func _on_music_cycled(value:int) -> void:
+	var index = AudioServer.get_bus_index(\"Music\")
+	var vol = float(value) / 20.0
+	AudioServer.set_bus_volume_db(index, linear_to_db(vol))
+	Statics.data_general[\"music_volume\"] = value
+"
+
+[node name="SoundOptions" type="Node2D"]
+script = ExtResource("1_4efbj")
+save_general_on_close = true
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = SubResource("GDScript_p25fg")
+
+[node name="Master" parent="MainVBox" instance=ExtResource("2_p25fg")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Sound")
+focus_next = NodePath("../Sound")
+focus_previous = NodePath("../Back")
+header_id = "menu_option_sound_masterVol"
+cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
+focus_option = 15
+loop = false
+grab_focus_on_load = true
+
+[node name="Sound" parent="MainVBox" instance=ExtResource("2_p25fg")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Master")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Music")
+focus_next = NodePath("../Music")
+focus_previous = NodePath("../Master")
+header_id = "menu_option_sound_soundVol"
+cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
+focus_option = 15
+loop = false
+
+[node name="Music" parent="MainVBox" instance=ExtResource("2_p25fg")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Sound")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Sound")
+header_id = "menu_option_sound_musicVol"
+cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
+focus_option = 15
+loop = false
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Back" parent="MainVBox" instance=ExtResource("3_0h43h")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Music")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Master")
+focus_next = NodePath("../Master")
+focus_previous = NodePath("../Music")
+text_id = "menu_option_options_returnTo"
+back_one_layer = true
+hide_frame = true
+
+[connection signal="option_cycled" from="MainVBox/Master" to="MainVBox" method="_on_master_cycled"]
+[connection signal="option_cycled" from="MainVBox/Sound" to="MainVBox" method="_on_sound_cycled"]
+[connection signal="option_cycled" from="MainVBox/Music" to="MainVBox" method="_on_music_cycled"]

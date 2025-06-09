@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://by53y5fokn1xi"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4r5hr"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_ubp5x"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_ubp5x"]
 
 [node name="Options" type="Node2D"]
 script = ExtResource("1_4r5hr")
@@ -13,53 +13,86 @@ offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 
-[node name="Play" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Sound" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_top = NodePath("../Back")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Options")
-focus_next = NodePath("../Options")
-focus_previous = NodePath("../Quit")
-text_id = "menu_option_main_play"
-quick_load_layer = "Profiles"
+focus_neighbor_bottom = NodePath("../Display")
+focus_next = NodePath("../Display")
+focus_previous = NodePath("../Back")
+text_id = "menu_option_options_sound"
+quick_load_layer = "SoundOptions"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Options" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Display" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Play")
+focus_neighbor_top = NodePath("../Sound")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Museum")
-focus_next = NodePath("../Museum")
-focus_previous = NodePath("../Play")
-text_id = "menu_option_main_options"
+focus_neighbor_bottom = NodePath("../Controls")
+focus_next = NodePath("../Controls")
+focus_previous = NodePath("../Sound")
+text_id = "menu_option_options_display"
+quick_load_layer = "DisplayOptions"
 hide_frame = true
 
-[node name="Museum" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Controls" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Options")
+focus_neighbor_top = NodePath("../Display")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Quit")
-focus_next = NodePath("../Quit")
-focus_previous = NodePath("../Options")
-text_id = "menu_option_main_museum"
+focus_neighbor_bottom = NodePath("../Gameplay")
+focus_next = NodePath("../Gameplay")
+focus_previous = NodePath("../Display")
+text_id = "menu_option_options_controls"
+disabled = true
 hide_frame = true
 
-[node name="Quit" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Gameplay" parent="MainVBox" instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Museum")
+focus_neighbor_top = NodePath("../Controls")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Play")
-focus_next = NodePath("../Play")
-focus_previous = NodePath("../Museum")
-text_id = "menu_option_main_quit"
-quick_load_layer = "Quit"
+focus_neighbor_bottom = NodePath("../AssetPacks")
+focus_next = NodePath("../AssetPacks")
+focus_previous = NodePath("../Controls")
+text_id = "menu_option_options_gameplay"
+quick_load_layer = "GameplayOptions"
+hide_frame = true
+
+[node name="AssetPacks" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Gameplay")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Gameplay")
+text_id = "menu_option_options_assets"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Back" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../AssetPacks")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Sound")
+focus_next = NodePath("../Sound")
+focus_previous = NodePath("../AssetPacks")
+text_id = "menu_option_main_returnTo"
+back_one_layer = true
 hide_frame = true

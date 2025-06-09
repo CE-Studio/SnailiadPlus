@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://ba4iceix628de"]
+
+[ext_resource type="Script" uid="uid://fjq0r2b3w12e" path="res://Scripts/SavePoint.gd" id="1_vcvb4"]
+[ext_resource type="Texture2D" uid="uid://bm6n8b18ixf8" path="res://Assets/Images/SavePoint.png" id="2_s5ai8"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_o0tqb"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_o0tqb"]
+[ext_resource type="AudioStream" uid="uid://6nuh50rtrmoj" path="res://Assets/Sounds/Sfx/Save.ogg" id="5_jesgl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jesgl"]
+size = Vector2(28, 44)
+
+[node name="SavePoint" type="Node2D"]
+script = ExtResource("1_vcvb4")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_s5ai8")
+hframes = 16
+vframes = 3
+script = ExtResource("3_o0tqb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_jesgl")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_o0tqb")
+texture_path = "res://Assets/Images/SavePoint.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Jingle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jesgl")
+bus = &"Sfx"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]

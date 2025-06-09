@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cj1h0xrtfxbxg"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_gdv3v"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/SnailyButton.tscn" id="2_7epk8"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_7epk8"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="3_7epk8"]
 
 [sub_resource type="GDScript" id="GDScript_7epk8"]
@@ -57,7 +57,8 @@ func _ready() -> void:
 					pro3_layer = LOAD_GAME_LAYER
 				button = $\"Profile3\"
 		if not profile[\"is_empty\"]:
-			button.set_text(Statics.get_text(\"char_\" + str(i)) + \" \" + str(i + 1))
+			var _char = str(int(profile[\"character\"]))
+			button.set_text(Statics.get_text(\"char_\" + _char) + \" \" + str(i + 1))
 			var stats = Statics.get_text(\"difficulty_\" + str(int(profile[\"difficulty\"])))
 			stats += \" / \" + Statics.format_game_time(profile[\"game_time\"])
 			stats += \" / %.1f%%\" % profile[\"item_rate\"]
@@ -66,7 +67,7 @@ func _ready() -> void:
 			button.set_subtext(stats)
 
 
-func _on_profile1_selected() -> void:
+func _on_profile1_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 1
@@ -79,7 +80,7 @@ func _on_profile1_selected() -> void:
 			pass
 
 
-func _on_profile2_selected() -> void:
+func _on_profile2_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 2
@@ -92,7 +93,7 @@ func _on_profile2_selected() -> void:
 			pass
 
 
-func _on_profile3_selected() -> void:
+func _on_profile3_selected(_value) -> void:
 	match layer_state:
 		LayerState.NORMAL:
 			layer.meta_info[0] = 3
@@ -125,8 +126,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Profile2")
 focus_next = NodePath("../Profile2")
 focus_previous = NodePath("../Back")
-subtext_id = "menu_option_profile_empty_context"
 text_id = "menu_option_profile_empty"
+subtext_id = "menu_option_profile_empty_context"
 grab_focus_on_load = true
 
 [node name="Profile2" parent="MainVBox" instance=ExtResource("3_7epk8")]
@@ -138,8 +139,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Profile3")
 focus_next = NodePath("../Profile3")
 focus_previous = NodePath("../Profile1")
-subtext_id = "menu_option_profile_empty_context"
 text_id = "menu_option_profile_empty"
+subtext_id = "menu_option_profile_empty_context"
 
 [node name="Profile3" parent="MainVBox" instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
@@ -150,8 +151,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../HBoxContainer/Copy")
 focus_next = NodePath("../HBoxContainer/Copy")
 focus_previous = NodePath("../Profile2")
-subtext_id = "menu_option_profile_empty_context"
 text_id = "menu_option_profile_empty"
+subtext_id = "menu_option_profile_empty_context"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
 custom_minimum_size = Vector2(280, 0)

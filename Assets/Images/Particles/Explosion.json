@@ -1,6 +1,7 @@
 {
 	"tiles": [5, 8],
 	"layerize": false,
+	"meta": {},
 	"animations": {
 		"tiny": {
 			"fps": 30,

@@ -66,9 +66,35 @@ const FRAC_128:float = 0.0078125
 const VECTOR_DIAG:Vector2 = Vector2(cos(deg_to_rad(40)), sin(deg_to_rad(40)))
 
 
+const ASPECT_RATIOS:Array = [
+	Vector2i(400, 240),
+	Vector2i(400, 320),
+	Vector2i(400, 300),
+	Vector2i(448, 252),
+	Vector2i(400, 250)
+]
+const TARGET_FRAMERATES:Array = [
+	0,
+	30,
+	60,
+	120
+]
+
+
 const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
+
+
+const ROOM_PATH:String = "res://Scenes/Rooms/%s.tscn"
+const WORLD_SPAWN:Array = [
+	[ "SnailTown/TownMain", 640, 600 ], # Snaily
+	[ "SnailTown/TownMain", 640, 600 ], # Sluggy
+	[ "SnailTown/TownMain", 928, 152 ], # Upside
+	[ "SnailTown/TownMain", 640, 600 ], # Leggy
+	[ "SnailTown/TownMain", 640, 600 ], # Blobby
+	[ "SnailTown/TownMain", 640, 600 ], # Leechy
+]
 
 
 static var main_menu_booted_once:bool = false
@@ -104,6 +130,12 @@ static var cam:Camera2D
 static var active_room:Node2D
 
 static var text_lib:Dictionary
+
+
+#region Game scene load information
+static var load_room:String
+static var load_coords:Vector2i
+#endregion
 #endregion
 
 
@@ -116,6 +148,7 @@ static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
+static var current_profile_id:int
 
 enum Unlocks {
 	BOSS_RUSH, # (Boss Rush; earned from beating the game)
@@ -126,6 +159,13 @@ enum Unlocks {
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
 	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
 }
+#endregion
+
+
+#region Profile functions
+static func format_game_time(time:Array) -> String:
+	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	return time_string
 #endregion
 
 
@@ -145,6 +185,20 @@ static func check_item(id:int) -> int:
 	var output = 0
 	if id < len(current_profile["items"]):
 		output = current_profile["items"][id]
+	return output
+
+
+static func mark_item_location(id:int, state:bool = true) -> void:
+	while id > len(current_profile["locations"]):
+		current_profile["locations"].append(false)
+	#current_profile["locations"][id] = state
+	current_profile["locations"].set(id, state)
+
+
+static func check_location_collected(id:int) -> bool:
+	var output = false
+	if id < len(current_profile["locations"]):
+		output = current_profile["locations"][id]
 	return output
 
 
@@ -231,10 +285,6 @@ static func compare_versions(compare:Array, against:Array) -> int:
 
 
 #region Profile functions
-static func format_game_time(time:Array) -> String:
-	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
-	return time_string
-#endregion
 
 
 static func get_text(key:String) -> String:
@@ -307,7 +357,7 @@ static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
-	var new_particle = load("res://Scenes/Particles/" + name + ".tscn").instantiate()
+	var new_particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)
@@ -336,6 +386,11 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
 					sprite_image.set_pixel(x, y, new_color)
 	return ImageTexture.create_from_image(sprite_image)
+
+
+static func get_color(coords:Vector2i) -> Color:
+	var palette_image = palette.get_image()
+	return palette_image.get_pixelv(coords)
 
 
 static func get_all_children(_node:Node) -> Array:

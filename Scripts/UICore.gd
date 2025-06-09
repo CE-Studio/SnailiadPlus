@@ -6,6 +6,8 @@ var cam:CamControl
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
 var heart_group:Node2D
+var color_cover:ColorCover
+var save_icon:JsonSprite2D
 
 
 static var instance:UICore
@@ -26,6 +28,11 @@ func instantiate() -> void:
 	
 	heart_group = $"Hearts"
 	draw_new_hearts()
+	
+	color_cover = $"ColorCover"
+	
+	save_icon = $"SaveIcon"
+	save_icon.visible = false
 
 
 func _process(delta: float) -> void:
@@ -104,13 +111,18 @@ func update_hearts() -> void:
 	for heart in heart_group.get_children():
 		var this_heart_value = clampi(health - running_total, 0, health_per_heart)
 		var anim_name:String
-		match Statics.current_profile["difficulty"]:
-			0.0: anim_name = "easy_"
-			1.0: anim_name = "normal_"
-			2.0: anim_name = "insane_"
+		match int(Statics.current_profile["difficulty"]):
+			0: anim_name = "easy_"
+			1: anim_name = "normal_"
+			2: anim_name = "insane_"
 		heart.action = anim_name + str(this_heart_value)
 		running_total += health_per_heart
 
 
 func get_cam_center_pos() -> Vector2:
 	return position + cam.offset
+
+
+func play_save_anim() -> void:
+	save_icon.visible = true
+	save_icon.action = "anim"
