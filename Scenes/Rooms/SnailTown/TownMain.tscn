@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://dpj78o8gohp2f"]
+[gd_scene load_steps=6 format=4 uid="uid://dpj78o8gohp2f"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_64pjd"]
-[ext_resource type="Script" uid="uid://dnfyb1da418id" path="res://Scripts/Classes/cutscene.gd" id="2_05b5u"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_et545"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_lgw5l"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_qyovo"]
@@ -14,21 +13,6 @@ point_count = 5
 
 [node name="TownMain" type="Node2D"]
 script = ExtResource("1_64pjd")
-area_id = 0
-subarea_id = 0
-is_bonus_room = false
-darkness_level = 0.0
-cutscenes = Array[ExtResource("2_05b5u")]([])
-fg2_parallax = Vector2(0, 0)
-fg1_parallax = Vector2(0, 0)
-bg1_parallax = Vector2(0, 0)
-bg2_parallax = Vector2(0, 0)
-sky_parallax = Vector2(0, 0)
-fg2_offset = Vector2(0, 0)
-fg1_offset = Vector2(0, 0)
-bg1_offset = Vector2(0, 0)
-bg2_offset = Vector2(0, 0)
-sky_offset = Vector2(0, 0)
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
@@ -87,3 +71,9 @@ script = ExtResource("3_lgw5l")
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("3_qyovo")]
 position = Vector2(1236, 120)
 exit_room = "uid://c07hyvodc4n6d"
+
+[node name="RoomTransitionTrigger2" parent="." instance=ExtResource("3_qyovo")]
+position = Vector2(928, -4)
+rotation = -1.57079
+my_id = 1
+exit_room = "uid://bh32pg4a5qd1r"
