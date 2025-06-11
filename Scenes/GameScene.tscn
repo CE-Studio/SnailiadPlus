@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dypiitm61n8rl"]
+[gd_scene load_steps=5 format=3 uid="uid://ltxtlsrku2k0"]
 
 [ext_resource type="Script" uid="uid://2jmosr6mcjwx" path="res://Scripts/GameCore.gd" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://ctodnm477yhmh" path="res://Scenes/internals/CameraLayer.tscn" id="2_3mbwn"]

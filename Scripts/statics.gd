@@ -32,25 +32,35 @@ enum DirsSurface {
 #endregion
 
 
-enum Items {
-	PEASHOOTER,
-	BOOMERANG,
-	RAINBOWWAVE,
-	DEVASTATOR,
-	HIGHJUMP,
-	SHELLSHIELD,
-	RAPIDFIRE,
-	ICESHELL,
-	FLYSHELL,
-	METALSHELL,
-	GRAVSHOCK,
-	SSBOOM,
-	DEBUGRW,
-	HEART,
-	FRAGMENT,
-	RADARSHELL,
-	NONE = -1,
+enum Players {
+	SNAILY,
+	SLUGGY,
+	UPSIDE,
+	LEGGY,
+	BLOBBY,
+	LEECHY,
 }
+
+
+#enum Items {
+#	PEASHOOTER,
+#	BOOMERANG,
+#	RAINBOWWAVE,
+#	DEVASTATOR,
+#	HIGHJUMP,
+#	SHELLSHIELD,
+#	RAPIDFIRE,
+#	ICESHELL,
+#	FLYSHELL,
+#	METALSHELL,
+#	GRAVSHOCK,
+#	SSBOOM,
+#	DEBUGRW,
+#	HEART,
+#	FRAGMENT,
+#	RADARSHELL,
+#	NONE = -1,
+#}
 
 
 const PI_OVER_EIGHT:float = PI * 0.125
@@ -95,6 +105,10 @@ const WORLD_SPAWN:Array = [
 	[ "SnailTown/TownMain", 640, 600 ], # Blobby
 	[ "SnailTown/TownMain", 640, 600 ], # Leechy
 ]
+
+
+# Maximum counts of each item in Item.ItemTypes for a save to be considered 100% complete
+const COUNTED_INVENTORY:Array = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 11, 30, 1, 0, 0, 0, 0, 0, 0 ]
 
 
 static var main_menu_booted_once:bool = false
@@ -171,7 +185,7 @@ static func format_game_time(time:Array) -> String:
 
 #region Save functions
 static func add_item(id:int, count:int) -> void:
-	while id > len(current_profile["items"]):
+	while id >= len(current_profile["items"]):
 		current_profile["items"].append(0)
 	current_profile["items"][id] += count
 
@@ -189,9 +203,8 @@ static func check_item(id:int) -> int:
 
 
 static func mark_item_location(id:int, state:bool = true) -> void:
-	while id > len(current_profile["locations"]):
+	while id >= len(current_profile["locations"]):
 		current_profile["locations"].append(false)
-	#current_profile["locations"][id] = state
 	current_profile["locations"].set(id, state)
 
 
@@ -200,6 +213,53 @@ static func check_location_collected(id:int) -> bool:
 	if id < len(current_profile["locations"]):
 		output = current_profile["locations"][id]
 	return output
+
+
+static func get_item_percentage(profile:int = 0) -> float:
+	var inventory:Array
+	var player:int
+	var difficulty:int
+	match profile:
+		1:
+			inventory = data_profile1["items"]
+			player = data_profile1["character"]
+			difficulty = data_profile1["difficulty"]
+		2:
+			inventory = data_profile2["items"]
+			player = data_profile2["character"]
+			difficulty = data_profile2["difficulty"]
+		3:
+			inventory = data_profile3["items"]
+			player = data_profile3["character"]
+			difficulty = data_profile3["difficulty"]
+		_:
+			inventory = current_profile["items"]
+			player = current_profile["character"]
+			difficulty = current_profile["difficulty"]
+	var collected_items:int # Counted items the player has collected and saved to ["items"]
+	var max_items:int # Maximum item count for 100% as dictated by COUNTED_INVENTORY
+	var total_items:int # Complete collection of items, counted or not, saved to ["items"]
+	for i in inventory.size():
+		total_items += inventory[i]
+		match i:
+			Item.ItemTypes.SHELL_SHIELD:
+				if player != Players.SLUGGY and player != Players.LEECHY:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			Item.ItemTypes.ICE_SHELL:
+				if difficulty != 2:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			_:
+				if COUNTED_INVENTORY[i] > 0:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
+	print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
+	if counted_percentage == 100.0:
+		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
+		return over_percentage
+	return counted_percentage
 
 
 static func save_general():
@@ -284,15 +344,7 @@ static func compare_versions(compare:Array, against:Array) -> int:
 #endregion
 
 
-#region Profile functions
-
-
-static func get_text(key:String) -> String:
-	if text_lib.has(key):
-		return text_lib[key]
-	return key
-
-
+#region Player state functions
 static func get_shell_level() -> int:
 	if check_item(Item.ItemTypes.METAL_SHELL):
 		return 3
@@ -301,6 +353,25 @@ static func get_shell_level() -> int:
 	if check_item(Item.ItemTypes.ICE_SHELL):
 		return 1
 	return 0
+
+
+static func get_character_name_string(character:Players, full:bool = false) -> String:
+	var char_int:int = int(character)
+	var full_check:String = "full_" if full else ""
+	return get_text("char_%s%d" % [ full_check, char_int ])
+
+
+static func get_character_species_string(character:Players, plural:bool = false) -> String:
+	var char_int:int = int(character)
+	var plural_check:String = "plural_" if plural else ""
+	return get_text("species_%s%d" % [ plural_check, char_int ])
+#endregion
+
+
+static func get_text(key:String) -> String:
+	if text_lib.has(key):
+		return text_lib[key]
+	return key
 
 
 static func is_number(value:Variant, consider_strings := false) -> bool:

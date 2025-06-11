@@ -2,6 +2,7 @@ extends Node2D
 class_name UICore
 
 
+#region Variables
 var cam:CamControl
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
@@ -9,8 +10,10 @@ var heart_group:Node2D
 var color_cover:ColorCover
 var save_icon:JsonSprite2D
 
+var flashy_popup_scene:PackedScene
 
 static var instance:UICore
+#endregion
 
 
 func instantiate() -> void:
@@ -33,6 +36,8 @@ func instantiate() -> void:
 	
 	save_icon = $"SaveIcon"
 	save_icon.visible = false
+	
+	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 
 
 func _process(delta: float) -> void:
@@ -126,3 +131,14 @@ func get_cam_center_pos() -> Vector2:
 func play_save_anim() -> void:
 	save_icon.visible = true
 	save_icon.action = "anim"
+
+
+func show_item_collection_text(item_label:String) -> void:
+	var header_label = flashy_popup_scene.instantiate()
+	add_child(header_label)
+	header_label.instance(item_label)
+	header_label.position = Vector2i(200, 180)
+	var percentage_label = flashy_popup_scene.instantiate()
+	add_child(percentage_label)
+	percentage_label.instance(Statics.get_text("hud_collectedItemPercentage") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
+	percentage_label.position = Vector2i(200, 200)

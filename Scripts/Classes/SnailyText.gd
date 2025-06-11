@@ -26,8 +26,6 @@ var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
-#var align_horiz:HorizontalAlignment = horizontal_alignment
-#var align_vert:VerticalAlignment = vertical_alignment
 
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
@@ -51,15 +49,9 @@ func set_snaily_text(_text:String) -> void:
 
 
 func set_alignment(horiz:int, vert:int) -> void:
-	#align_horiz = horiz
-	#align_vert = vert
-	#horizontal_alignment = align_horiz
-	#vertical_alignment = align_vert
 	horizontal_alignment = horiz
 	vertical_alignment = vert
 	for sub_label in sub_text:
-		#sub_label.horizontal_alignment = align_horiz
-		#sub_label.vertical_alignment = align_vert
 		sub_label.horizontal_alignment = horiz
 		sub_label.vertical_alignment = vert
 
@@ -81,6 +73,10 @@ func reset_label_size() -> void:
 		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
 		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
 		sub_text[i].position = sub_text_offsets[i]
+
+
+func center_position() -> void:
+	position.x = custom_minimum_size.x * -0.5
 
 
 func clear_sub_text() -> void:

@@ -963,7 +963,7 @@ func lock_inputs(locked:bool) -> bool:
 	return false
 
 
-func has_item(ID:Statics.Items) -> bool:
+func has_item(ID:Item.ItemTypes) -> bool:
 	return false
 
 

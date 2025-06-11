@@ -30,6 +30,8 @@ enum ItemTypes {
 	NONE = -1,
 }
 
+var name_str:String = ""
+
 @export var counted_in_percentage:bool = true
 @export var type:ItemTypes = ItemTypes.NONE
 @export_range(0, 9999) var location_id:int
@@ -59,34 +61,75 @@ func _ready() -> void:
 		return
 	
 	var id_str
+	var character = int(Statics.current_profile["character"])
+	var species = Statics.get_character_species_string(character)
 	match type:
 		ItemTypes.PEASHOOTER:
 			id_str = "Peashooter"
+			name_str = Statics.get_text("item_peashooter")
 		ItemTypes.BOOMERANG:
 			id_str = "Boomerang"
+			name_str = Statics.get_text("item_boomerang")
 		ItemTypes.RAINBOW_WAVE:
 			id_str = "RainbowWave"
+			name_str = Statics.get_text("item_rainbowWave")
 		ItemTypes.DEVASTATOR:
 			id_str = "Devastator"
+			name_str = Statics.get_text("item_devastator")
 			box.shape.size = Vector2(44, 28)
 		ItemTypes.HIGH_JUMP:
 			id_str = "HighJump"
+			name_str = Statics.get_text("item_highJump")
+			if character == Statics.Players.BLOBBY:
+				id_str = "WallGrab"
+				name_str = Statics.get_text("item_wallGrab")
 		ItemTypes.SHELL_SHIELD:
 			id_str = "ShellShield"
+			name_str = Statics.get_text("item_shellShield")
+			if character == Statics.Players.BLOBBY:
+				id_str = "Shelmet"
+				name_str = Statics.get_text("item_shelmet")
 		ItemTypes.RAPID_FIRE:
 			id_str = "RapidFire"
+			name_str = Statics.get_text("item_rapidFire")
+			if character == Statics.Players.LEECHY:
+				id_str = "Backfire"
+				name_str = Statics.get_text("item_backfire")
 		ItemTypes.ICE_SHELL:
 			id_str = "IceSnail"
+			name_str = Statics.get_text("item_iceSnail") % species
 		ItemTypes.GRAVITY_SHELL:
-			id_str = "GravitySnail"
+			match character:
+				Statics.Players.UPSIDE:
+					id_str = "MagneticFoot"
+					name_str = Statics.get_text("item_magneticFoot")
+				Statics.Players.LEGGY:
+					id_str = "CorkscrewJump"
+					name_str = Statics.get_text("item_corkscrewJump")
+				Statics.Players.BLOBBY:
+					id_str = "AngelJump"
+					name_str = Statics.get_text("item_angelJump")
+				_:
+					id_str = "GravitySnail"
+					name_str = Statics.get_text("item_gravSnail") % species
 		ItemTypes.METAL_SHELL:
 			id_str = "FullMetalSnail"
+			match character:
+				Statics.Players.SLUGGY or Statics.Players.LEECHY:
+					name_str = Statics.get_text("item_fullMetalSnail_noShell") % species
+				Statics.Players.BLOBBY:
+					name_str = Statics.get_text("item_fullMetalSnail_blob") % species
+				_:
+					name_str = Statics.get_text("item_fullMetalSnail_generic") % species
 		ItemTypes.GRAVITY_SHOCK:
 			id_str = "GravityShock"
+			name_str = Statics.get_text("item_gravityShock")
 		ItemTypes.SECRET_BOOMERANG:
 			id_str = "Boomerang"
+			name_str = Statics.get_text("item_boomerang_secret")
 		ItemTypes.DEBUG_WAVE:
 			id_str = "RainbowWave"
+			name_str = Statics.get_text("item_rainbowWave_secret")
 		ItemTypes.HEART_CONTAINER:
 			id_str = "HeartContainer"
 		ItemTypes.HELIX_FRAGMENT:
@@ -95,14 +138,19 @@ func _ready() -> void:
 		#ItemTypes.RADAR_SHELL:
 		ItemTypes.WEAPON_LOCK_TRAP:
 			id_str = "TrapItem"
+			name_str = Statics.get_text("item_trapWeapon")
 		ItemTypes.GRAVITY_LOCK_TRAP:
 			id_str = "TrapItem"
+			name_str = Statics.get_text("item_trapGravity")
 		ItemTypes.LULLABY_TRAP:
 			id_str = "TrapItem"
+			name_str = Statics.get_text("item_trapLullaby")
 		ItemTypes.SPIDER_TRAP:
 			id_str = "TrapItem"
+			name_str = Statics.get_text("item_trapSpider")
 		ItemTypes.WARP_TRAP:
 			id_str = "TrapItem"
+			name_str = Statics.get_text("item_trapWarp")
 		_:
 			id_str = "ItemBoundaryVisual"
 	sprite = JsonSprite2D.new()
@@ -136,6 +184,7 @@ func _on_player_entered(body: Node2D) -> void:
 			Statics.play_sfx_disconnected(jingle_minor)
 		Statics.add_item(type, 1)
 		Statics.mark_item_location(location_id)
+		Statics.current_profile["item_rate"] = Statics.get_item_percentage()
 		match type:
 			ItemTypes.PEASHOOTER:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 1):
@@ -165,8 +214,16 @@ func _on_player_entered(body: Node2D) -> void:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 3):
 					GameCore.instance.player._toggle_weapon(3)
 				UICore.instance.update_weapon_icons()
-			#ItemTypes.HEART_CONTAINER:
-			#ItemTypes.HELIX_FRAGMENT:
+			ItemTypes.HEART_CONTAINER:
+				if Statics.is_in_boss_rush:
+					name_str = Statics.get_text("item_heartContainer_noNum")
+				else:
+					name_str = Statics.get_text("item_heartContainer") % Statics.check_item(ItemTypes.HEART_CONTAINER)
+			ItemTypes.HELIX_FRAGMENT:
+				if Statics.is_in_boss_rush:
+					name_str = Statics.get_text("item_helixFragment_noNum")
+				else:
+					name_str = Statics.get_text("item_helixFragment") % Statics.check_item(ItemTypes.HELIX_FRAGMENT)
 			#ItemTypes.RADAR_SHELL:
 			#ItemTypes.WEAPON_LOCK_TRAP:
 			#ItemTypes.GRAVITY_LOCK_TRAP:
@@ -176,6 +233,7 @@ func _on_player_entered(body: Node2D) -> void:
 			#_:
 		Statics.save_profile(Statics.current_profile_id)
 		UICore.instance.play_save_anim()
+		UICore.instance.show_item_collection_text(name_str)
 
 
 func _on_collect_timer_timeout() -> void:
