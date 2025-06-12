@@ -13,6 +13,7 @@ point_count = 5
 
 [node name="TownMain" type="Node2D"]
 script = ExtResource("1_64pjd")
+center_parallax_maps = true
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
@@ -77,3 +78,11 @@ position = Vector2(928, -4)
 rotation = -1.57079
 my_id = 1
 exit_room = "uid://bh32pg4a5qd1r"
+
+[node name="RoomTransitionTrigger3" parent="." instance=ExtResource("3_qyovo")]
+position = Vector2(-4, 80)
+rotation = -3.14159
+scale = Vector2(1, 1.25)
+my_id = 2
+exit_room = "uid://xl8phkaah3ak"
+exit_transition = 1

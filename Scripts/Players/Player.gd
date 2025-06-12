@@ -164,6 +164,16 @@ var current_state:AnimStates = AnimStates.IDLE
 #endregion
 
 
+enum Players {
+	SNAILY,
+	SLUGGY,
+	UPSIDE,
+	LEGGY,
+	BLOBBY,
+	LEECHY,
+}
+
+
 var sprite:JsonSprite2D
 var body:CharacterBody2D
 var box_normal:CollisionShape2D

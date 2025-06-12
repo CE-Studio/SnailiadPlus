@@ -6,7 +6,7 @@ extends Node2D
 
 #region Variables
 #region Export
-@export_group("General")
+#@export_group("General")
 @export_enum(
 	"Snail Town", "Mare Carelia", "Spiralis Silere", "Amastrida Abyssus",
 	"Lux Lirata", "Shrine of Iris", "Boss Rush", "None:-1"
@@ -15,23 +15,24 @@ extends Node2D
 @export var is_bonus_room:bool = false
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
 @export var cutscenes:Array[Cutscene]
+@export var center_parallax_maps:bool = false
 
 
-@export_group("Layers")
-@export_subgroup("Parallax")
-@export var fg2_parallax:Vector2
-@export var fg1_parallax:Vector2
-@export var bg1_parallax:Vector2
-@export var bg2_parallax:Vector2
-@export var sky_parallax:Vector2
-@export_subgroup("Offsets")
-@export var fg2_offset:Vector2
-@export var fg1_offset:Vector2
-@export var bg1_offset:Vector2
-@export var bg2_offset:Vector2
-@export var sky_offset:Vector2
+#@export_group("Layers")
+#@export_subgroup("Parallax")
+#@export var fg2_parallax:Vector2
+#@export var fg1_parallax:Vector2
+#@export var bg1_parallax:Vector2
+#@export var bg2_parallax:Vector2
+#@export var sky_parallax:Vector2
+#@export_subgroup("Offsets")
+#@export var fg2_offset:Vector2
+#@export var fg1_offset:Vector2
+#@export var bg1_offset:Vector2
+#@export var bg2_offset:Vector2
+#@export var sky_offset:Vector2
 
-@export_group("Misc")
+#@export_group("Misc")
 @export var song_change:MusicManager.Loops = MusicManager.Loops.None
 #endregion
 
@@ -51,18 +52,20 @@ var room_path:String
 
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity:TileMapLayer = $"EntityLayer/Map"
-@onready var layer_fg2:Node2D = $"FG2Layer"
+@onready var layer_fg2:Parallax2D = $"FG2Layer"
 @onready var map_fg2:TileMapLayer = $"FG2Layer/Map"
-@onready var layer_fg1:Node2D = $"FG1Layer"
+@onready var layer_fg1:Parallax2D = $"FG1Layer"
 @onready var map_fg1:TileMapLayer = $"FG1Layer/Map"
 @onready var layer_ground:Node2D = $"GroundLayer"
 @onready var map_ground:TileMapLayer = $"GroundLayer/Map"
-@onready var layer_bg1:Node2D = $"BG1Layer"
+@onready var layer_bg1:Parallax2D = $"BG1Layer"
 @onready var map_bg1:TileMapLayer = $"BG1Layer/Map"
-@onready var layer_bg2:Node2D = $"BG2Layer"
+@onready var layer_bg2:Parallax2D = $"BG2Layer"
 @onready var map_bg2:TileMapLayer = $"BG2Layer/Map"
-@onready var layer_sky:Node2D = $"SkyLayer"
+@onready var layer_sky:Parallax2D = $"SkyLayer"
 @onready var map_sky:TileMapLayer = $"SkyLayer/Map"
+
+@onready var bounds:CameraBorder = $"CameraBorder"
 
 @onready var breakable_scene = load("res://Scenes/Entities/Breakable.tscn")
 #endregion
@@ -90,9 +93,15 @@ func spawn(_spawn_all:bool):
 				if child is SavePoint:
 					if child.check_character_spawnable():
 						child.initialize_room_data(room_path)
+		for fake_border in bounds.get_children():
+			if fake_border is FakeCamBoundary:
+				fake_border.call_deferred("instance")
 	
 	if song_change != MusicManager.Loops.None:
 		GameCore.instance.music_manager.play_song(song_change)
+	
+	if center_parallax_maps:
+		center_maps()
 
 
 func get_room_name_from_filename() -> void:
@@ -101,6 +110,36 @@ func get_room_name_from_filename() -> void:
 	trimmed_name = trimmed_name.substr(path_parts[0].length())
 	trimmed_name = trimmed_name.substr(0, trimmed_name.length() - path_parts[1].length())
 	room_path = trimmed_name
+
+
+func center_maps() -> void:
+	var room_size = bounds.get_bound_size()
+	for layer in [ Layers.SKY, Layers.BG2, Layers.BG1, Layers.FG1, Layers.FG2 ]:
+		var this_layer:Parallax2D
+		var tile_layer:TileMapLayer
+		match layer:
+			Layers.SKY:
+				this_layer = layer_sky
+				tile_layer = map_sky
+			Layers.BG2:
+				this_layer = layer_bg2
+				tile_layer = map_bg2
+			Layers.BG1:
+				this_layer = layer_bg1
+				tile_layer = map_bg1
+			Layers.FG1:
+				this_layer = layer_fg1
+				tile_layer = map_fg1
+			Layers.FG2:
+				this_layer = layer_fg2
+				tile_layer = map_fg2
+		var scroll = this_layer.scroll_scale
+		if scroll != Vector2(1.0, 1.0):
+			var new_offset = Vector2(
+				room_size.x - (room_size.x / scroll.x),
+				room_size.y - (room_size.y / scroll.y)
+			) * 0.5 * scroll
+			this_layer.scroll_offset = new_offset
 
 
 func _process(_delta):

@@ -80,19 +80,19 @@ func _ready() -> void:
 		ItemTypes.HIGH_JUMP:
 			id_str = "HighJump"
 			name_str = Statics.get_text("item_highJump")
-			if character == Statics.Players.BLOBBY:
+			if character == Player.Players.BLOBBY:
 				id_str = "WallGrab"
 				name_str = Statics.get_text("item_wallGrab")
 		ItemTypes.SHELL_SHIELD:
 			id_str = "ShellShield"
 			name_str = Statics.get_text("item_shellShield")
-			if character == Statics.Players.BLOBBY:
+			if character == Player.Players.BLOBBY:
 				id_str = "Shelmet"
 				name_str = Statics.get_text("item_shelmet")
 		ItemTypes.RAPID_FIRE:
 			id_str = "RapidFire"
 			name_str = Statics.get_text("item_rapidFire")
-			if character == Statics.Players.LEECHY:
+			if character == Player.Players.LEECHY:
 				id_str = "Backfire"
 				name_str = Statics.get_text("item_backfire")
 		ItemTypes.ICE_SHELL:
@@ -100,13 +100,13 @@ func _ready() -> void:
 			name_str = Statics.get_text("item_iceSnail") % species
 		ItemTypes.GRAVITY_SHELL:
 			match character:
-				Statics.Players.UPSIDE:
+				Player.Players.UPSIDE:
 					id_str = "MagneticFoot"
 					name_str = Statics.get_text("item_magneticFoot")
-				Statics.Players.LEGGY:
+				Player.Players.LEGGY:
 					id_str = "CorkscrewJump"
 					name_str = Statics.get_text("item_corkscrewJump")
-				Statics.Players.BLOBBY:
+				Player.Players.BLOBBY:
 					id_str = "AngelJump"
 					name_str = Statics.get_text("item_angelJump")
 				_:
@@ -115,9 +115,9 @@ func _ready() -> void:
 		ItemTypes.METAL_SHELL:
 			id_str = "FullMetalSnail"
 			match character:
-				Statics.Players.SLUGGY or Statics.Players.LEECHY:
+				Player.Players.SLUGGY or Player.Players.LEECHY:
 					name_str = Statics.get_text("item_fullMetalSnail_noShell") % species
-				Statics.Players.BLOBBY:
+				Player.Players.BLOBBY:
 					name_str = Statics.get_text("item_fullMetalSnail_blob") % species
 				_:
 					name_str = Statics.get_text("item_fullMetalSnail_generic") % species

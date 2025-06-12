@@ -32,16 +32,6 @@ enum DirsSurface {
 #endregion
 
 
-enum Players {
-	SNAILY,
-	SLUGGY,
-	UPSIDE,
-	LEGGY,
-	BLOBBY,
-	LEECHY,
-}
-
-
 #enum Items {
 #	PEASHOOTER,
 #	BOOMERANG,
@@ -243,7 +233,7 @@ static func get_item_percentage(profile:int = 0) -> float:
 		total_items += inventory[i]
 		match i:
 			Item.ItemTypes.SHELL_SHIELD:
-				if player != Players.SLUGGY and player != Players.LEECHY:
+				if player != Player.Players.SLUGGY and player != Player.Players.LEECHY:
 					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
 					max_items += COUNTED_INVENTORY[i]
 			Item.ItemTypes.ICE_SHELL:
@@ -255,7 +245,7 @@ static func get_item_percentage(profile:int = 0) -> float:
 					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
 					max_items += COUNTED_INVENTORY[i]
 	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
-	print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
+	#print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
 	if counted_percentage == 100.0:
 		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
 		return over_percentage
@@ -355,13 +345,13 @@ static func get_shell_level() -> int:
 	return 0
 
 
-static func get_character_name_string(character:Players, full:bool = false) -> String:
+static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
 	var char_int:int = int(character)
 	var full_check:String = "full_" if full else ""
 	return get_text("char_%s%d" % [ full_check, char_int ])
 
 
-static func get_character_species_string(character:Players, plural:bool = false) -> String:
+static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
 	var char_int:int = int(character)
 	var plural_check:String = "plural_" if plural else ""
 	return get_text("species_%s%d" % [ plural_check, char_int ])
