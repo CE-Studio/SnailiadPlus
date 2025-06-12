@@ -25,11 +25,18 @@ extends Node2D
 @export_enum("Horizontal", "Vertical") var axis:int = 0:
 	set(value):
 		axis = value
-		update_marker()
+		if Engine.is_editor_hint():
+			update_marker()
 @export_flags("Left/Top", "Right/Bottom") var stop_from:int = 3:
 	set(value):
 		stop_from = value
-		update_marker()
+		if Engine.is_editor_hint():
+			update_marker()
+@export var cover_full_tile:bool = false:
+	set(value):
+		cover_full_tile = value
+		if Engine.is_editor_hint():
+			update_marker()
 @export var up_left_room_name_override:String = ""
 @export var down_right_room_name_override:String = ""
 
@@ -102,7 +109,6 @@ func instance() -> void:
 			initial_relative_pos = Statics.DirsCardinal.UP
 			if stop_from & 1 == 0:
 				active = false
-	print(initial_relative_pos)
 
 
 func update_marker() -> void:
@@ -135,23 +141,18 @@ func update_marker() -> void:
 				marker.frame = 2
 			3:
 				marker.frame = 3
+	if cover_full_tile:
+		marker.frame += 4
 
 
 func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
-		match initial_relative_pos:
-			Statics.DirsCardinal.LEFT:
-				if GameCore.instance.player.position.x > position.x:
-					active = false
-			Statics.DirsCardinal.RIGHT:
-				if GameCore.instance.player.position.x < position.x:
-					active = false
-			Statics.DirsCardinal.UP:
-				if GameCore.instance.player.position.y > position.y:
-					active = false
-			Statics.DirsCardinal.DOWN:
-				if GameCore.instance.player.position.y < position.y:
-					active = false
+		if axis == 0:
+			if abs(GameCore.instance.player.position.x - position.x) <= 8.0:
+				active = false
+		else:
+			if abs(GameCore.instance.player.position.y - position.y) <= 8.0:
+				active = false
 #    public void Update()
 #    {
 #        if ((rawDownLeftRoomName.Contains("ALT") || rawUpRightRoomName.Contains("ALT")) && workingDirections != 3)
@@ -212,3 +213,19 @@ func _process(delta: float) -> void:
 #        }
 #    }
 #}
+
+
+func get_cam_buffer() -> float:
+	var buffer:float = 0.0
+	match initial_relative_pos:
+		Statics.DirsCardinal.LEFT:
+			buffer = -400
+			if cover_full_tile: buffer -= 8
+		Statics.DirsCardinal.RIGHT:
+			if cover_full_tile: buffer += 8
+		Statics.DirsCardinal.DOWN:
+			if cover_full_tile: buffer += 8
+		Statics.DirsCardinal.UP:
+			buffer = -240
+			if cover_full_tile: buffer -= 8
+	return buffer

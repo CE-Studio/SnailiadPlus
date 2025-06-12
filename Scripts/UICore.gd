@@ -88,6 +88,7 @@ func update_weapon_icons() -> void:
 
 func draw_new_hearts() -> void:
 	for heart in heart_group.get_children():
+		heart.reparent(instance)
 		heart.queue_free()
 	var max = GameCore.instance.player.max_health
 	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
@@ -105,7 +106,7 @@ func draw_new_hearts() -> void:
 		new_heart.position = pos
 		heart_count += 1
 		running_total += health_per_heart
-	update_hearts()
+	call_deferred("update_hearts")
 
 
 func update_hearts() -> void:

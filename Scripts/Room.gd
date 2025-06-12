@@ -116,23 +116,17 @@ func center_maps() -> void:
 	var room_size = bounds.get_bound_size()
 	for layer in [ Layers.SKY, Layers.BG2, Layers.BG1, Layers.FG1, Layers.FG2 ]:
 		var this_layer:Parallax2D
-		var tile_layer:TileMapLayer
 		match layer:
 			Layers.SKY:
 				this_layer = layer_sky
-				tile_layer = map_sky
 			Layers.BG2:
 				this_layer = layer_bg2
-				tile_layer = map_bg2
 			Layers.BG1:
 				this_layer = layer_bg1
-				tile_layer = map_bg1
 			Layers.FG1:
 				this_layer = layer_fg1
-				tile_layer = map_fg1
 			Layers.FG2:
 				this_layer = layer_fg2
-				tile_layer = map_fg2
 		var scroll = this_layer.scroll_scale
 		if scroll != Vector2(1.0, 1.0):
 			var new_offset = Vector2(

@@ -219,6 +219,12 @@ func _on_player_entered(body: Node2D) -> void:
 					name_str = Statics.get_text("item_heartContainer_noNum")
 				else:
 					name_str = Statics.get_text("item_heartContainer") % Statics.check_item(ItemTypes.HEART_CONTAINER)
+				#print(GameCore.instance.player.max_health)
+				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
+				#print(GameCore.instance.player.max_health)
+				GameCore.instance.player.health = GameCore.instance.player.max_health
+				#print(GameCore.instance.player.health)
+				UICore.instance.draw_new_hearts()
 			ItemTypes.HELIX_FRAGMENT:
 				if Statics.is_in_boss_rush:
 					name_str = Statics.get_text("item_helixFragment_noNum")
