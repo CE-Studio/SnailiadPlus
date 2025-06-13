@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://bn5hiirwyjxi6"]
+[gd_scene load_steps=9 format=4 uid="uid://bn5hiirwyjxi6"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_q73ju"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_stu6g"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_6d8xp"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_ugt0k"]
 [ext_resource type="PackedScene" uid="uid://dvouhch0vvcvs" path="res://Scenes/internals/FakeCamBoundary.tscn" id="4_fpo3h"]
+[ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="4_gwfll"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="6_8gk68"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
@@ -48,6 +49,13 @@ tile_set = ExtResource("2_stu6g")
 position = Vector2(48, 80)
 type = 13
 location_id = 4
+
+[node name="Door" parent="GroundLayer" instance=ExtResource("4_gwfll")]
+position = Vector2(392, 632)
+
+[node name="Door2" parent="GroundLayer" instance=ExtResource("4_gwfll")]
+position = Vector2(8, 632)
+direction = 3
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

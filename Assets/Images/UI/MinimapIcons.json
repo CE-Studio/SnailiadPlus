@@ -1,0 +1,94 @@
+{
+	"tiles": [6, 2],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"blank": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"player_normal": {
+			"fps": 4.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"player_highlight": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"item_normal": {
+			"fps": 2.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false],
+				[5, 0, false, false]
+			]
+		},
+		"item_collected": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"save": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false]
+			]
+		},
+		"boss": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false]
+			]
+		},
+		"unknown": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 1, false, false]
+			]
+		},
+		"marker": {
+			"fps": 1.0,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 1, false, false]
+			]
+		}
+	}
+}

@@ -16,6 +16,7 @@ extends Node2D
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
 @export var cutscenes:Array[Cutscene]
 @export var center_parallax_maps:bool = false
+@export var minimap_offset:Vector2i = Vector2i.ZERO
 
 
 #@export_group("Layers")
@@ -102,6 +103,8 @@ func spawn(_spawn_all:bool):
 	
 	if center_parallax_maps:
 		center_maps()
+	
+	UICore.instance.minimap.room_offset = minimap_offset
 
 
 func get_room_name_from_filename() -> void:

@@ -9,6 +9,7 @@ var weapon_icon_states:Array = [ ]
 var heart_group:Node2D
 var color_cover:ColorCover
 var save_icon:JsonSprite2D
+var minimap:Minimap
 
 var flashy_popup_scene:PackedScene
 
@@ -36,6 +37,8 @@ func instantiate() -> void:
 	
 	save_icon = $"SaveIcon"
 	save_icon.visible = false
+	
+	minimap = $"Minimap"
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 
