@@ -14,7 +14,7 @@ point_count = 1
 
 [node name="EntranceSave" type="Node2D"]
 script = ExtResource("1_wk23p")
-minimap_autofill = null
+minimap_offset = Vector2i(13, 8)
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

@@ -16,6 +16,7 @@ point_count = 3
 
 [node name="LoveCave" type="Node2D"]
 script = ExtResource("1_q73ju")
+minimap_offset = Vector2i(9, 9)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 

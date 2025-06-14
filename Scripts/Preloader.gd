@@ -11,7 +11,7 @@ func _ready() -> void:
 	$"JsonSprite2D".action = "idle"
 	if Minimap.marker_positions.size() == 0:
 		await _read_rooms_log_markers()
-	get_tree().change_scene_to_file("res://Scenes/MenuScene.tscn")
+	get_tree().call_deferred("change_scene_to_file", "res://Scenes/MenuScene.tscn")
 
 
 func _read_rooms_log_markers() -> void:
@@ -19,8 +19,8 @@ func _read_rooms_log_markers() -> void:
 	base_path = base_path.split("%s")[0]
 	var all_rooms:Array = _grab_files_recursive(base_path)
 	Minimap.marker_positions.resize(Minimap.DEFAULT_MAP.size())
+	Minimap.marker_positions.fill(Minimap.MarkerTypes.NONE)
 	for room in all_rooms:
-		print(room)
 		var room_scene = load(room).instantiate()
 		if room_scene is Room:
 			var room_children:Array = _grab_nodes_recursive(room_scene)
@@ -28,9 +28,11 @@ func _read_rooms_log_markers() -> void:
 				if child is SavePoint or child is Item:
 					var screen_pos = Minimap.world_position_to_screen_coordinate(child.position)
 					screen_pos += room_scene.minimap_offset
-					var array_i = screen_pos.x + (screen_pos.y * Minimap.MAP_SIZE.y)
+					var array_i = screen_pos.x + (screen_pos.y * Minimap.MAP_SIZE.x)
 					if child is SavePoint:
 						Minimap.marker_positions[array_i] = Minimap.MarkerTypes.SAVE
+					if child is Item:
+						Minimap.marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
 
 
 func _grab_files_recursive(path:String, files:Array = []) -> Array:

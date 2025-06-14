@@ -15,6 +15,7 @@ point_count = 3
 [node name="CaveUp1" type="Node2D"]
 script = ExtResource("1_rw63q")
 center_parallax_maps = true
+minimap_offset = Vector2i(12, 7)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 

@@ -14,8 +14,7 @@ point_count = 5
 
 [node name="TestRoom2" type="Node2D"]
 script = ExtResource("1_qskkn")
-sky_parallax = Vector2(0, 0.4)
-sky_offset = Vector2(0, -34)
+minimap_offset = Vector2i(14, 5)
 song_change = 2
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
