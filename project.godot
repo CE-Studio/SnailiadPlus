@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Snailiad Plus"
 config/version="b0.4.0"
-run/main_scene="uid://btkfrtgsq6p4g"
+run/main_scene="uid://dntc0s7wr1h1g"
 config/features=PackedStringArray("4.4", "Double Precision", "Forward Plus")
 run/max_fps=60
 config/icon="res://Assets/Images/Icon.png"

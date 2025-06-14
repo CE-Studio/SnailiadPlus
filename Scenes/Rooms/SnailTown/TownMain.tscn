@@ -15,6 +15,7 @@ point_count = 5
 script = ExtResource("1_64pjd")
 center_parallax_maps = true
 minimap_offset = Vector2i(10, 8)
+minimap_autofill = Array[Vector2i]([Vector2i(10, 8), Vector2i(11, 8), Vector2i(12, 8), Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(10, 10), Vector2i(11, 10), Vector2i(12, 10)])
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

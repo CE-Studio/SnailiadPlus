@@ -6,7 +6,6 @@ extends Node2D
 
 #region Variables
 #region Export
-#@export_group("General")
 @export_enum(
 	"Snail Town", "Mare Carelia", "Spiralis Silere", "Amastrida Abyssus",
 	"Lux Lirata", "Shrine of Iris", "Boss Rush", "None:-1"
@@ -17,23 +16,7 @@ extends Node2D
 @export var cutscenes:Array[Cutscene]
 @export var center_parallax_maps:bool = false
 @export var minimap_offset:Vector2i = Vector2i.ZERO
-
-
-#@export_group("Layers")
-#@export_subgroup("Parallax")
-#@export var fg2_parallax:Vector2
-#@export var fg1_parallax:Vector2
-#@export var bg1_parallax:Vector2
-#@export var bg2_parallax:Vector2
-#@export var sky_parallax:Vector2
-#@export_subgroup("Offsets")
-#@export var fg2_offset:Vector2
-#@export var fg1_offset:Vector2
-#@export var bg1_offset:Vector2
-#@export var bg2_offset:Vector2
-#@export var sky_offset:Vector2
-
-#@export_group("Misc")
+@export var minimap_autofill:Array[Vector2i] = []
 @export var song_change:MusicManager.Loops = MusicManager.Loops.None
 #endregion
 
@@ -105,6 +88,8 @@ func spawn(_spawn_all:bool):
 		center_maps()
 	
 	UICore.instance.minimap.room_offset = minimap_offset
+	for cell in minimap_autofill:
+		UICore.instance.minimap.fill_cell(cell)
 
 
 func get_room_name_from_filename() -> void:

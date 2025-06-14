@@ -12,7 +12,7 @@ _data = {
 }
 point_count = 3
 
-[node name="Template" type="Node2D"]
+[node name="CaveUp2" type="Node2D"]
 script = ExtResource("1_my6nq")
 center_parallax_maps = true
 

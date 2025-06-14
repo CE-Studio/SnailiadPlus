@@ -14,7 +14,7 @@ _data = {
 }
 point_count = 3
 
-[node name="Template" type="Node2D"]
+[node name="LoveCave" type="Node2D"]
 script = ExtResource("1_q73ju")
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

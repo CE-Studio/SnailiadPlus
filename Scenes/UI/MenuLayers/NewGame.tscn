@@ -86,6 +86,7 @@ func _on_start_pressed(value) -> void:
 	Statics.current_profile[\"save_coords\"] = Vector2i(world_spawn[1], world_spawn[2])
 	Statics.current_profile[\"difficulty\"] = difficulty
 	Statics.current_profile[\"character\"] = character
+	Statics.current_profile[\"map_tiles\"] = Minimap.DEFAULT_MAP.duplicate()
 	layer.menu.save_profile(pro_id)
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
