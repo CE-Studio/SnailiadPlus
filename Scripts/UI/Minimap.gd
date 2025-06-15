@@ -143,15 +143,15 @@ func log_markers() -> void:
 
 static func world_position_to_screen_coordinate(position:Vector2) -> Vector2i:
 	return Vector2i(
-		floori((position.x - 0.5) / SCREEN_SIZE.x * Statics.FRAC_16),
-		floori((position.y - 0.5) / SCREEN_SIZE.y * Statics.FRAC_16)
+		floori((position.x) / SCREEN_SIZE.x * Statics.FRAC_16),
+		floori((position.y) / SCREEN_SIZE.y * Statics.FRAC_16)
 	)
 
 
 func _process(delta: float) -> void:
 	var player = GameCore.instance.player
 	# Converts the player position into coordinates on the "screen grid"
-	var converted_player_pos = world_position_to_screen_coordinate(player.position)
+	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
 	map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
 	map_group.position = Vector2(
 		clampi(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x),
