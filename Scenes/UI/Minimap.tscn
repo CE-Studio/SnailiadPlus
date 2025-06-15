@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b20cdl7cicldv"]
+[gd_scene load_steps=9 format=3 uid="uid://b20cdl7cicldv"]
 
 [ext_resource type="Script" uid="uid://fdcmfss42swv" path="res://Scripts/UI/Minimap.gd" id="1_itplw"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lhiow"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://drmcos5pr1wle" path="res://Assets/Images/UI/minimap.png" id="4_a7d3d"]
 [ext_resource type="Texture2D" uid="uid://b2vr3rng13j38" path="res://Assets/Images/UI/MinimapMask.png" id="5_gbsa2"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="7_enhm3"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="8_q7g0h"]
 
 [node name="Minimap" type="Node2D"]
 script = ExtResource("1_itplw")
@@ -57,3 +58,24 @@ vframes = 2
 frame = 2
 script = ExtResource("3_a7d3d")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="SnailyText" parent="." instance=ExtResource("8_q7g0h")]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -73.0
+offset_top = 19.0
+offset_right = 27.0
+offset_bottom = 163.0
+grow_horizontal = 0
+grow_vertical = 1
+theme_override_font_sizes/normal_font_size = 8
+text = "Room name"
+horizontal_alignment = 2
+max_width = 100
+text_scale = 1
+quick_load_text = "Room name"
+border_scale = 1

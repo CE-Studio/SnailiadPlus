@@ -3,23 +3,6 @@
 class_name FakeCamBoundary
 extends Node2D
 
-#public class FakeRoomBorder:MonoBehaviour, IRoomObject {
-#    [SerializeField] private bool direction = false; // Specifies the relative orientation of the border. False for horizontal border, true for vertical border
-#    [SerializeField] private int workingDirections = 3; // Specifies what directions it will look for the player upon spawning. 1 for down/left only, 2 for up/right only, 3 for both
-#    public string downLeftRoomName = "";
-#    private string rawDownLeftRoomName = "";
-#    public string upRightRoomName = "";
-#    private string rawUpRightRoomName = "";
-#
-#    private bool isActive = true;
-#    public Vector2 initialPosRelative = Vector2.zero;
-#
-#    private const float BUFFER_HORIZ = 13;
-#    private const float BUFFER_VERT = 8;
-#
-#    public Dictionary<string, object> resave() {
-#        return null;
-#    }
 
 #region Variables
 @export_enum("Horizontal", "Vertical") var axis:int = 0:
@@ -45,51 +28,11 @@ const BUFFER_VERT:float = 7.5 * 16.0
 
 var active:bool = true
 var initial_relative_pos:Statics.DirsCardinal
+var original_room_name:String = ""
+var last_pos_neg_position:int = 0
 #endregion
 
 
-#    public void Spawn()
-#    {
-#        isActive = true;
-#        initialPosRelative = new Vector2(PlayState.player.transform.position.x > transform.position.x ? 1 : -1,
-#            PlayState.player.transform.position.y > transform.position.y ? 1 : -1);
-#        if (workingDirections != 3)
-#        {
-#            if (direction)
-#            {
-#                if ((initialPosRelative.x < 0 && workingDirections == 2) || (initialPosRelative.x > 0 && workingDirections == 1))
-#                    isActive = false;
-#            }
-#            else
-#            {
-#                if ((initialPosRelative.y < 0 && workingDirections == 2) || (initialPosRelative.y > 0 && workingDirections == 1))
-#                    isActive = false;
-#            }
-#        }
-#
-#        string roomName = transform.parent.name;
-#        if (roomName.Contains("/"))
-#        {
-#            string[] nameParts = roomName.Split('/');
-#            int areaID = transform.parent.GetComponent<RoomTrigger>().areaID;
-#            rawDownLeftRoomName = "room_" + (areaID < 10 ? "0" : "") + areaID + "_" + nameParts[0];
-#            foreach (char character in PlayState.GetText(rawDownLeftRoomName))
-#            {
-#                if (character == '|')
-#                    downLeftRoomName += "\n";
-#                else
-#                    downLeftRoomName += character;
-#            }
-#            rawUpRightRoomName = "room_" + (areaID < 10 ? "0" : "") + areaID + "_" + nameParts[1];
-#            foreach (char character in PlayState.GetText(rawUpRightRoomName))
-#            {
-#                if (character == '|')
-#                    upRightRoomName += "\n";
-#                else
-#                    upRightRoomName += character;
-#            }
-#        }
-#    }
 func instance() -> void:
 	if axis == 0:
 		if GameCore.instance.player.position.x > position.x:
@@ -147,72 +90,34 @@ func update_marker() -> void:
 
 func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
+		var player_pos = GameCore.instance.player.position
 		if axis == 0:
-			if abs(GameCore.instance.player.position.x - position.x) <= 8.0:
+			if abs(player_pos.x - position.x) <= 8.0:
 				active = false
 		else:
-			if abs(GameCore.instance.player.position.y - position.y) <= 8.0:
+			if abs(player_pos.y - position.y) <= 8.0:
 				active = false
-#    public void Update()
-#    {
-#        if ((rawDownLeftRoomName.Contains("ALT") || rawUpRightRoomName.Contains("ALT")) && workingDirections != 3)
-#        {
-#            string tempName = downLeftRoomName;
-#            string trueName = downLeftRoomName;
-#            if (rawDownLeftRoomName.Contains("ALT"))
-#                trueName = upRightRoomName;
-#            else
-#                tempName = upRightRoomName;
-#            PlayState.hudRoomName.SetText(isActive ? tempName : trueName);
-#        }
-#        else if (downLeftRoomName != "" || upRightRoomName != "")
-#        {
-#            if ((!direction && PlayState.player.transform.position.y > transform.position.y) ||
-#                (direction && PlayState.player.transform.position.x > transform.position.x))
-#                PlayState.hudRoomName.SetText(upRightRoomName);
-#            else
-#                PlayState.hudRoomName.SetText(downLeftRoomName);
-#        }
-#
-#        if (isActive)
-#        {
-#            if (direction)
-#            {
-#                if ((initialPosRelative.x == 1 && PlayState.player.transform.position.x < transform.position.x + 0.5f) ||
-#                    (initialPosRelative.x == -1 && PlayState.player.transform.position.x > transform.position.x - 0.5f))
-#                    isActive = false;
-#                else
-#                {
-#                    if (workingDirections >= 2 && initialPosRelative.x == 1)
-#                        PlayState.cam.transform.position = new Vector2(
-#                            Mathf.Clamp(PlayState.cam.transform.position.x, transform.position.x + BUFFER_HORIZ, Mathf.Infinity),
-#                            PlayState.cam.transform.position.y);
-#                    else if ((workingDirections == 1 || workingDirections == 3) && initialPosRelative.x == -1)
-#                        PlayState.cam.transform.position = new Vector2(
-#                            Mathf.Clamp(PlayState.cam.transform.position.x, -Mathf.Infinity, transform.position.x - BUFFER_HORIZ),
-#                            PlayState.cam.transform.position.y);
-#                }
-#            }
-#            else
-#            {
-#                if ((initialPosRelative.y == 1 && PlayState.player.transform.position.y < transform.position.y + 0.5) ||
-#                    (initialPosRelative.y == -1 && PlayState.player.transform.position.y > transform.position.y - 0.5f))
-#                    isActive = false;
-#                else
-#                {
-#                    if (workingDirections >= 2 && initialPosRelative.y == 1)
-#                        PlayState.cam.transform.position = new Vector2(
-#                            PlayState.cam.transform.position.x,
-#                            Mathf.Clamp(PlayState.cam.transform.position.y, transform.position.y + BUFFER_VERT, Mathf.Infinity));
-#                    else if ((workingDirections == 1 || workingDirections == 3) && initialPosRelative.y == -1)
-#                        PlayState.cam.transform.position = new Vector2(
-#                            PlayState.cam.transform.position.x,
-#                            Mathf.Clamp(PlayState.cam.transform.position.y, -Mathf.Infinity, transform.position.y - BUFFER_VERT));
-#                }
-#            }
-#        }
-#    }
-#}
+		#region Set room name on either side where applicable
+		if down_right_room_name_override != "" or up_left_room_name_override != "":
+			var this_pos_neg_position:int = 0
+			if ((axis == 0 and player_pos.x > position.x)
+			or (axis == 1 and player_pos.y > position.y)):
+				this_pos_neg_position = 1
+			else:
+				this_pos_neg_position = -1
+			if this_pos_neg_position != last_pos_neg_position:
+				if this_pos_neg_position == 1:
+					if down_right_room_name_override == "":
+						UICore.instance.minimap.set_room_name(original_room_name)
+					else:
+						UICore.instance.minimap.set_room_name(down_right_room_name_override)
+				else:
+					if up_left_room_name_override == "":
+						UICore.instance.minimap.set_room_name(original_room_name)
+					else:
+						UICore.instance.minimap.set_room_name(up_left_room_name_override)
+				last_pos_neg_position = this_pos_neg_position
+		#endregion
 
 
 func get_cam_buffer() -> float:

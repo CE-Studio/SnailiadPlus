@@ -28,6 +28,7 @@ const SCREEN_SIZE:Vector2 = Vector2(26.0, 16.0)
 const MAP_LAYER_MAX_BOUNDS:Vector2i = Vector2i(76, 68)
 const TL_OFFSET:Vector2i = Vector2i(100, 84)
 const MARKER_ZERO:Vector2i = Vector2i(-100, -84)
+const ROOM_NAME_STRING = "room_%s"
 
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
@@ -81,6 +82,7 @@ static var marker_positions:Array = []
 @onready var player_marker:JsonSprite2D = $"MapGroup/PlayerMarker"
 @onready var marker_group:Node2D = $"MapGroup/MarkerGroup"
 @onready var marker_scene:PackedScene = preload("res://Scenes/UI/MapMarker.tscn")
+@onready var name_text:SnailyText = $"SnailyText"
 #endregion
 
 
@@ -141,15 +143,15 @@ func log_markers() -> void:
 
 static func world_position_to_screen_coordinate(position:Vector2) -> Vector2i:
 	return Vector2i(
-		floori((position.x - 0.5) / SCREEN_SIZE.x * Statics.FRAC_16),
-		floori((position.y - 0.5) / SCREEN_SIZE.y * Statics.FRAC_16)
+		floori((position.x) / SCREEN_SIZE.x * Statics.FRAC_16),
+		floori((position.y) / SCREEN_SIZE.y * Statics.FRAC_16)
 	)
 
 
 func _process(delta: float) -> void:
 	var player = GameCore.instance.player
 	# Converts the player position into coordinates on the "screen grid"
-	var converted_player_pos = world_position_to_screen_coordinate(player.position)
+	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
 	map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
 	map_group.position = Vector2(
 		clampi(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x),
@@ -249,3 +251,7 @@ func update_markers(target_cells:Array = []) -> void:
 					marker.sprite.action = "item_collected"
 				elif marker.sprite.action == "item_collected" and not collected:
 					marker.sprite.action = "item_normal"
+
+
+func set_room_name(_name:String):
+	name_text.set_snaily_text(Statics.get_text(ROOM_NAME_STRING % _name))

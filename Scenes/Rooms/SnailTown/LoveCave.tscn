@@ -86,6 +86,8 @@ script = ExtResource("3_ugt0k")
 position = Vector2(200, 504)
 axis = 1
 cover_full_tile = true
+up_left_room_name_override = "SnailTown/LoveAlcove"
+down_right_room_name_override = "SnailTown/CaveLeft1"
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("6_8gk68")]
 position = Vector2(404, 320)
