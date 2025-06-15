@@ -80,6 +80,7 @@ func spawn(_spawn_all:bool):
 		for fake_border in bounds.get_children():
 			if fake_border is FakeCamBoundary:
 				fake_border.call_deferred("instance")
+				fake_border.original_room_name = room_path
 	
 	if song_change != MusicManager.Loops.None:
 		GameCore.instance.music_manager.play_song(song_change)
@@ -90,6 +91,7 @@ func spawn(_spawn_all:bool):
 	UICore.instance.minimap.room_offset = minimap_offset
 	for cell in minimap_autofill:
 		UICore.instance.minimap.fill_cell(cell)
+	UICore.instance.minimap.set_room_name(room_path)
 
 
 func get_room_name_from_filename() -> void:

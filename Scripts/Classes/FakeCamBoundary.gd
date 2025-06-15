@@ -45,6 +45,7 @@ const BUFFER_VERT:float = 7.5 * 16.0
 
 var active:bool = true
 var initial_relative_pos:Statics.DirsCardinal
+var original_room_name:String = ""
 #endregion
 
 
