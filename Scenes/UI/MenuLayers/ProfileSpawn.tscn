@@ -88,10 +88,7 @@ focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
 text_id = "menu_option_loadGame_save"
 subtext_id = "Area - Room"
-quick_load_layer = ""
-back_one_layer = false
 grab_focus_on_load = true
-disabled = false
 hide_frame = true
 
 [node name="WorldSpawn" parent="MainVBox" instance=ExtResource("3_nahkj")]

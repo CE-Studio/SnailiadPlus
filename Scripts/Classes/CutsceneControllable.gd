@@ -20,7 +20,7 @@ func _ready():
 		look_at_local(Vector2.ZERO)
 		look_at_node(self)
 		lock_inputs(false)
-		has_item(Statics.Items.NONE)
+		has_item(Item.ItemTypes.NONE)
 		can_perform_action("")
 		perform_action("", false)
 	var nr:Array[CutsceneControllable] = []
@@ -87,7 +87,7 @@ func lock_inputs(_locked:bool) -> bool:
 
 
 ## Returns true of the object has the specified item
-func has_item(_id:Statics.Items) -> bool:
+func has_item(_id:Item.ItemTypes) -> bool:
 	assert(false, str(get_path()) + ": Required func 'has_item(Statics.Items) -> bool' not defined!")
 	return false
 

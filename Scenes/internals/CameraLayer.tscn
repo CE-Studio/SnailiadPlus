@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=9 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/ScreenBorder.png" id="4_ygllc"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
+[ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="8_g8fv5"]
 
 [node name="CameraLayer" type="Node2D"]
 script = ExtResource("1_vjeh6")
@@ -96,3 +97,6 @@ position = Vector2(384, 224)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/SaveIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Minimap" parent="." instance=ExtResource("8_g8fv5")]
+position = Vector2(368, 24)

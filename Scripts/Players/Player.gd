@@ -164,6 +164,16 @@ var current_state:AnimStates = AnimStates.IDLE
 #endregion
 
 
+enum Players {
+	SNAILY,
+	SLUGGY,
+	UPSIDE,
+	LEGGY,
+	BLOBBY,
+	LEECHY,
+}
+
+
 var sprite:JsonSprite2D
 var body:CharacterBody2D
 var box_normal:CollisionShape2D
@@ -963,7 +973,7 @@ func lock_inputs(locked:bool) -> bool:
 	return false
 
 
-func has_item(ID:Statics.Items) -> bool:
+func has_item(ID:Item.ItemTypes) -> bool:
 	return false
 
 

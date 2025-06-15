@@ -40,6 +40,20 @@ func _process(delta):
 			pass
 	if border != null:
 		pos = border.get_closest_point_to(pos + offset) - offset
+		#region Fake cam boundaries
+		for child in border.get_children():
+			if child is FakeCamBoundary:
+				if child.active:
+					var buffer = child.get_cam_buffer()
+					if child.initial_relative_pos == Statics.DirsCardinal.LEFT and child.stop_from & 1 > 0:
+						pos.x = clampf(pos.x, -INF, child.position.x + buffer)
+					if child.initial_relative_pos == Statics.DirsCardinal.RIGHT and child.stop_from & 2 > 0:
+						pos.x = clampf(pos.x, child.position.x + buffer, INF)
+					if child.initial_relative_pos == Statics.DirsCardinal.DOWN and child.stop_from & 2 > 0:
+						pos.y = clampf(pos.y, child.position.y + buffer, INF)
+					if child.initial_relative_pos == Statics.DirsCardinal.UP and child.stop_from & 1 > 0:
+						pos.y = clampf(pos.y, -INF, child.position.y + buffer)
+		#endregion
 	UICore.instance.position = pos
 
 

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlaal46coilv7"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_bonff"]
+[ext_resource type="Script" uid="uid://cgjq2efrk1wfq" path="res://Scripts/UI/MapMarker.gd" id="1_s3jip"]
+[ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="2_s3jip"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xrdwr"]
+
+[node name="MapMarker" type="Node2D"]
+script = ExtResource("1_s3jip")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("1_bonff")
+texture_path = "res://Assets/Images/UI/MinimapIcons.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("2_s3jip")
+hframes = 6
+vframes = 2
+frame = 6
+script = ExtResource("3_xrdwr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

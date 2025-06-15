@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://c07hyvodc4n6d"]
+[gd_scene load_steps=7 format=4 uid="uid://c07hyvodc4n6d"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_wk23p"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_g8yq5"]
-[ext_resource type="Script" uid="uid://dnfyb1da418id" path="res://Scripts/Classes/cutscene.gd" id="2_yn82w"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_isxqa"]
 [ext_resource type="PackedScene" uid="uid://ba4iceix628de" path="res://Scenes/Entities/SavePoint.tscn" id="3_j5aks"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="5_oorrs"]
@@ -15,21 +14,7 @@ point_count = 1
 
 [node name="EntranceSave" type="Node2D"]
 script = ExtResource("1_wk23p")
-area_id = 0
-subarea_id = 0
-is_bonus_room = false
-darkness_level = 0.0
-cutscenes = Array[ExtResource("2_yn82w")]([])
-fg2_parallax = Vector2(0, 0)
-fg1_parallax = Vector2(0, 0)
-bg1_parallax = Vector2(0, 0)
-bg2_parallax = Vector2(0, 0)
-sky_parallax = Vector2(0, 0)
-fg2_offset = Vector2(0, 0)
-fg1_offset = Vector2(0, 0)
-bg1_offset = Vector2(0, 0)
-bg2_offset = Vector2(0, 0)
-sky_offset = Vector2(0, 0)
+minimap_offset = Vector2i(13, 8)
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
@@ -60,8 +45,6 @@ tile_set = ExtResource("2_g8yq5")
 
 [node name="SavePoint" parent="GroundLayer" instance=ExtResource("3_j5aks")]
 position = Vector2(208, 136)
-surface = 0
-characters_who_can_use_me = 63
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 
@@ -87,19 +70,21 @@ collision_enabled = false
 curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_isxqa")
 
+[node name="RoomTransitionTrigger2" parent="." instance=ExtResource("5_oorrs")]
+position = Vector2(-4, 120)
+rotation = -3.14159
+exit_room = "uid://dpj78o8gohp2f"
+
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("5_oorrs")]
 position = Vector2(404, 120)
 my_id = 1
 exit_room = "uid://vvs4fclk0j13"
 exit_transition = 1
 
-[node name="RoomTransitionTrigger2" parent="." instance=ExtResource("5_oorrs")]
-position = Vector2(-4, 120)
-rotation = -3.14159
-exit_room = "uid://dpj78o8gohp2f"
-
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("5_oorrs")]
 position = Vector2(208, -4)
 rotation = -1.57079
 scale = Vector2(1, 2.675)
 my_id = 2
+exit_room = "uid://bh32pg4a5qd1r"
+exit_transition = 1

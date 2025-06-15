@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvouhch0vvcvs"]
+
+[ext_resource type="Script" uid="uid://b0r5g26rhtir7" path="res://Scripts/Classes/FakeCamBoundary.gd" id="1_m24bv"]
+[ext_resource type="Texture2D" uid="uid://b717m4vcq3huk" path="res://Assets/Images/FakeCamBoundary.png" id="2_ldhgn"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_myy6g"]
+
+[node name="FakeCamBoundary" type="Node2D"]
+script = ExtResource("1_m24bv")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_ldhgn")
+hframes = 4
+vframes = 2
+frame = 1
+script = ExtResource("3_myy6g")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
