@@ -228,14 +228,14 @@ func update_markers(target_cells:Array = []) -> void:
 		for i in range(marker_positions.size()):
 			target_cells.append(i)
 	for i in range(marker_positions.size()):
-		var cell_pos = Vector2i.ZERO
-		var working_i = i
-		while working_i >= MAP_SIZE.x:
-			cell_pos.y += 1
-			working_i -= MAP_SIZE.x
-		cell_pos.x = working_i
 		var array_i = marker_positions[i]
-		if array_i != MarkerTypes.NONE:
+		if array_i != -1:
+			var cell_pos = Vector2i.ZERO
+			var working_i = i
+			while working_i >= MAP_SIZE.x:
+				cell_pos.y += 1
+				working_i -= MAP_SIZE.x
+			cell_pos.x = working_i
 			var marker = active_markers[array_i]
 			var tile = Statics.current_profile["map_tiles"][i]
 			

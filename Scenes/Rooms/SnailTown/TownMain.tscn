@@ -94,3 +94,16 @@ position = Vector2(-4, 576)
 rotation = 3.14159
 my_id = 3
 exit_room = "uid://bn5hiirwyjxi6"
+
+[node name="RoomTransitionTrigger5" parent="." instance=ExtResource("3_qyovo")]
+position = Vector2(328, 756)
+rotation = 1.57079
+my_id = 4
+exit_room = "uid://d06n2oq164gsw"
+
+[node name="RoomTransitionTrigger6" parent="." instance=ExtResource("3_qyovo")]
+position = Vector2(1064, 756)
+rotation = 1.57079
+my_id = 5
+exit_room = "uid://ipugr1u4imx3"
+exit_transition = 1
