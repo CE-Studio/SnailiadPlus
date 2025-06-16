@@ -42,6 +42,58 @@ func _ready():
 	health_gain_from_parry = 4
 	
 	sprite.action = "0.floor.right.idle"
+	
+	corner_cast = $"CastGroup/RoundCornerCast"
+	ground_casts = [
+		$"CastGroup/Normal/GroundCast0",
+		$"CastGroup/Normal/GroundCast1",
+		$"CastGroup/Normal/GroundCast2",
+		$"CastGroup/Normal/GroundCast3",
+		$"CastGroup/Shell/GroundCast0",
+		$"CastGroup/Shell/GroundCast1",
+		$"CastGroup/Shell/GroundCast2",
+		$"CastGroup/Shell/GroundCast3",
+	]
+	front_casts = [
+		$"CastGroup/Normal/FrontCast0",
+		$"CastGroup/Normal/FrontCast1",
+		$"CastGroup/Normal/FrontCast2",
+		$"CastGroup/Shell/FrontCast0",
+		$"CastGroup/Shell/FrontCast1",
+		$"CastGroup/Shell/FrontCast2",
+	]
+	ceil_casts = [
+		$"CastGroup/Normal/CeilingCast0",
+		$"CastGroup/Normal/CeilingCast1",
+		$"CastGroup/Normal/CeilingCast2",
+		$"CastGroup/Shell/CeilingCast0",
+		$"CastGroup/Shell/CeilingCast1",
+		$"CastGroup/Shell/CeilingCast2",
+	]
+	normal_casts = [
+		$"CastGroup/Normal/GroundCast0",
+		$"CastGroup/Normal/GroundCast1",
+		$"CastGroup/Normal/GroundCast2",
+		$"CastGroup/Normal/GroundCast3",
+		$"CastGroup/Normal/FrontCast0",
+		$"CastGroup/Normal/FrontCast1",
+		$"CastGroup/Normal/FrontCast2",
+		$"CastGroup/Normal/CeilingCast0",
+		$"CastGroup/Normal/CeilingCast1",
+		$"CastGroup/Normal/CeilingCast2",
+	]
+	shell_casts = [
+		$"CastGroup/Shell/GroundCast0",
+		$"CastGroup/Shell/GroundCast1",
+		$"CastGroup/Shell/GroundCast2",
+		$"CastGroup/Shell/GroundCast3",
+		$"CastGroup/Shell/FrontCast0",
+		$"CastGroup/Shell/FrontCast1",
+		$"CastGroup/Shell/FrontCast2",
+		$"CastGroup/Shell/CeilingCast0",
+		$"CastGroup/Shell/CeilingCast1",
+		$"CastGroup/Shell/CeilingCast2",
+	]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

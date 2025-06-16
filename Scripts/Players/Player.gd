@@ -185,6 +185,8 @@ var corner_cast:RayCast2D
 var ground_casts:Array
 var front_casts:Array
 var ceil_casts:Array
+var normal_casts:Array
+var shell_casts:Array
 
 
 var debug_print_adjustments:bool = false
@@ -204,23 +206,6 @@ func _ready():
 	sfx_jump = $"AudioGroup/Jump"
 	sfx_shell = $"AudioGroup/Shell"
 	cast_group = $"CastGroup"
-	corner_cast = $"CastGroup/RoundCornerCast"
-	ground_casts = [
-		$"CastGroup/GroundCast0",
-		$"CastGroup/GroundCast1",
-		$"CastGroup/GroundCast2",
-		$"CastGroup/GroundCast3",
-	]
-	front_casts = [
-		$"CastGroup/FrontCast0",
-		$"CastGroup/FrontCast1",
-		$"CastGroup/FrontCast2",
-	]
-	ceil_casts = [
-		$"CastGroup/CeilingCast0",
-		$"CastGroup/CeilingCast1",
-		$"CastGroup/CeilingCast2"
-	]
 	
 	var rect = box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
@@ -507,7 +492,11 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			_toggle_shell()
 			if current_state != AnimStates.JUMP:
 				current_state = AnimStates.IDLE
-		if not _check_ground_casts()[0]:
+		var ground_cast_state = _check_ground_casts()
+		if ground_cast_state[0]:
+			if ground_cast_state[1] > 1.0 and ground_cast_state[1] <= 12.0:
+				body.position += rel_vectors[Statics.DirsSurface.FLOOR] * ground_cast_state[1]
+		else:
 			grounded = false
 			if debug_print_adjustments:
 				print("We've left the ground")
@@ -695,6 +684,10 @@ func _set_shell(state:bool):
 	shelled = state
 	box_normal.disabled = state
 	box_shell.disabled = not state
+	for cast in normal_casts:
+		cast.enabled = not state
+	for cast in shell_casts:
+		cast.enabled = state
 	if state:
 		sfx_shell.play()
 		_play_anim("shell")
