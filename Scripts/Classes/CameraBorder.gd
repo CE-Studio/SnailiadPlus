@@ -3,9 +3,38 @@ class_name CameraBorder
 extends Path2D
 
 
+@export var point_ratio_adjustments:Array[Vector2i] = []
+
+var point_origins:Array[Vector2i] = []
+
+
 func _ready() -> void:
 	assert(global_position == Vector2.ZERO, "Camera border node MUST be centered")
 	UICore.instance.cam.border = self
+	for i in curve.point_count:
+		point_origins.append(Vector2i(curve.get_point_position(i)))
+	while point_ratio_adjustments.size() < curve.point_count:
+		point_ratio_adjustments.append(Vector2i.ZERO)
+	var current_ratio = int(Statics.data_general["aspect_ratio"])
+	if current_ratio != 0:
+		replot_points(Statics.ASPECT_RATIO_OFFSETS[current_ratio])
+
+
+func replot_points(offsets:Vector2i) -> void:
+	curve.clear_points()
+	for i in range(point_origins.size()):
+		var normalized_offset = point_ratio_adjustments[i]
+		#region Normalize
+		if normalized_offset.x > 1:
+			normalized_offset.x = 1
+		if normalized_offset.x < -1:
+			normalized_offset.x = -1
+		if normalized_offset.y > 1:
+			normalized_offset.y = 1
+		if normalized_offset.y < -1:
+			normalized_offset.y = -1
+		#endregion
+		curve.add_point(point_origins[i] + Vector2i(offsets * point_ratio_adjustments[i] * 0.5))
 
 
 func get_closest_point_to(pos:Vector2) -> Vector2:

@@ -73,6 +73,13 @@ const ASPECT_RATIOS:Array = [
 	Vector2i(448, 252),
 	Vector2i(400, 250)
 ]
+const ASPECT_RATIO_OFFSETS:Array = [
+	Vector2i(0, 0),
+	Vector2i(0, 80),
+	Vector2i(0, 60),
+	Vector2i(48, 12),
+	Vector2i(0, 10),
+]
 const TARGET_FRAMERATES:Array = [
 	0,
 	30,

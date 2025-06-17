@@ -10,6 +10,7 @@ var heart_group:Node2D
 var color_cover:ColorCover
 var save_icon:JsonSprite2D
 var minimap:Minimap
+var border:JsonSprite2D
 
 var flashy_popup_scene:PackedScene
 
@@ -23,22 +24,24 @@ func instantiate() -> void:
 	cam.instantiate()
 	
 	var icon_id = 0
-	for icon in $"WeaponIcons".get_children():
+	for icon in $"BR/WeaponIcons".get_children():
 		weapon_icons.append(icon)
 		weapon_icon_states.append(0)
 		icon.position += Vector2(0, 8)
 		icon.action = str(icon_id) + "_off"
 		icon_id += 1
 	
-	heart_group = $"Hearts"
+	heart_group = $"TL/Hearts"
 	draw_new_hearts()
 	
 	color_cover = $"ColorCover"
 	
-	save_icon = $"SaveIcon"
+	save_icon = $"BR/SaveIcon"
 	save_icon.visible = false
 	
-	minimap = $"Minimap"
+	minimap = $"TR/Minimap"
+	
+	border = $"Border"
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 
@@ -58,6 +61,15 @@ func _process(delta: float) -> void:
 		var pos = weapon_icons[i].position
 		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
 		weapon_icons[i].position = pos
+
+
+func configure_for_aspect_ratio(ratio_id:int) -> void:
+	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
+	$"TL".position = -offset
+	$"TR".position = Vector2(400 + offset.x, -offset.y)
+	$"BL".position = Vector2(-offset.x, 240 + offset.y)
+	$"BR".position = Vector2(400 + offset.x, 240 + offset.y)
+	set_border_anim(ratio_id)
 
 
 func update_weapon_icons() -> void:
@@ -135,6 +147,10 @@ func get_cam_center_pos() -> Vector2:
 func play_save_anim() -> void:
 	save_icon.visible = true
 	save_icon.action = "anim"
+
+
+func set_border_anim(anim_id:int) -> void:
+	border.action = str(anim_id)
 
 
 func show_item_collection_text(item_label:String) -> void:
