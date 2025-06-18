@@ -4,9 +4,10 @@ extends PanelContainer
 
 #region Variables
 @onready var vbox:VBoxContainer = $"MarginContainer/VBoxContainer"
+@onready var buttonbox:HBoxContainer = null
 @onready var text:SnailyText = $"MarginContainer/VBoxContainer/Text"
 @onready var header:SnailyText = null
-@onready var button:SnailyButton = null
+@onready var buttons:Array[SnailyButton] = []
 @onready var text_scene = load("res://Scenes/internals/SnailyText.tscn")
 @onready var button_scene = load("res://Scenes/UI/ActionSnailyButton.tscn")
 #endregion
@@ -35,14 +36,26 @@ func add_header(_text:String, _size:int) -> void:
 
 
 func add_button(_text:String, target_function:Callable, focus:bool = true) -> void:
-	if button == null:
-		var new_button:SnailyButton = button_scene.instantiate()
-		vbox.add_child(new_button)
-		new_button.set_text(_text)
-		if focus:
-			new_button.grab_focus()
-		new_button.button_pressed.connect(target_function)
-		button = new_button
+	if buttonbox == null:
+		var new_hbox = HBoxContainer.new()
+		new_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		new_hbox.add_theme_constant_override("separation", 32)
+		vbox.add_child(new_hbox)
+		buttonbox = new_hbox
+	var new_button:SnailyButton = button_scene.instantiate()
+	buttonbox.add_child(new_button)
+	new_button.set_text(_text)
+	if focus:
+		new_button.grab_focus()
+	new_button.button_pressed.connect(target_function)
+	buttons.append(new_button)
+
+
+func focus_button(i:int) -> void:
+	if i < 0:
+		i = 0
+	if buttons.size() > 0:
+		buttons[i % buttons.size()].grab_focus()
 
 
 func center_on_screen() -> void:

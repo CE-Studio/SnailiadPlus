@@ -201,7 +201,7 @@ focus_neighbor_bottom = NodePath("../Darkness")
 focus_next = NodePath("../Darkness")
 focus_previous = NodePath("../Framerate")
 header_id = "menu_option_display_particles"
-cycle_options = Array[String](["menu_add_generic_none", "menu_add_particles1", "menu_add_particles2", "menu_add_particles3", "menu_add_particles4"])
+cycle_options = Array[String](["menu_add_generic_none", "menu_add_particles1", "menu_add_particles2", "menu_add_particles3", "menu_add_particles4", "menu_add_particles5"])
 focus_option = 5
 
 [node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]

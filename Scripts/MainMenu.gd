@@ -179,11 +179,14 @@ func get_next_layer_up() -> MenuLayer:
 
 func save_general() -> void:
 	Statics.save_general()
-	$"SaveIcon".visible = true
-	$"SaveIcon".action = "anim"
+	play_save_anim()
 
 
 func save_profile(id:int) -> void:
 	Statics.save_profile(id)
+	play_save_anim()
+
+
+func play_save_anim() -> void:
 	$"SaveIcon".visible = true
 	$"SaveIcon".action = "anim"

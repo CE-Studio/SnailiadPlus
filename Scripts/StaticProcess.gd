@@ -1,6 +1,11 @@
 extends Node
 
 
+var template_general
+var template_profile
+var template_records
+
+
 # Initialize everything on load
 func _ready() -> void:
 	# Load all text from library
@@ -11,9 +16,9 @@ func _ready() -> void:
 	if DirAccess.get_open_error() != 0:
 		DirAccess.make_dir_recursive_absolute("user://" + Statics.save_prefix)
 	
-	var template_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
-	var template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	var template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
+	template_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
+	template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
+	template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	
 	Statics.data_general = _load_data_dict("GeneralData", template_general)
 	Statics.data_profile1 = _load_data_dict("Profile1", template_profile)

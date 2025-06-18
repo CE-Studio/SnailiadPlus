@@ -290,6 +290,13 @@ static func save_all():
 	save_records()
 
 
+static func delete_profile(iprofile:int) -> void:
+	if iprofile < 1 or iprofile > 3:
+		return
+	var file = "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
+	DirAccess.remove_absolute(file)
+
+
 static func has_unlock(unlock:Unlocks) -> bool:
 	return data_records["unlocks"].has(unlock)
 #endregion
