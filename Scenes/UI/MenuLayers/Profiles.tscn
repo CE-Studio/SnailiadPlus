@@ -90,9 +90,11 @@ func _process(delta: float) -> void:
 	if panel_up:
 		panel.modulate.a = lerpf(panel.modulate.a, 1.0, MenuLayer.MOVE_RATE * delta)
 		panel.position.y = lerp(panel.position.y, 80.0, MenuLayer.MOVE_RATE * delta)
+		layer.menu.selector_y_offset = 80.0 - panel.position.y
 	else:
 		panel.modulate.a = lerpf(panel.modulate.a, 0.0, MenuLayer.MOVE_RATE * delta)
 		panel.position.y = lerp(panel.position.y, 240.0, MenuLayer.MOVE_RATE * delta)
+		layer.menu.selector_y_offset = 0
 
 
 func _update_profile_buttons() -> void:
@@ -143,11 +145,14 @@ func focus_panel() -> void:
 		var erase_str = Statics.get_text(\"menu_option_eraseGame_popup\")
 		erase_str = erase_str % button_selection.x
 		panel.set_text(erase_str, 2)
+	panel.can_focus = true
 	panel.focus_button(0)
+	layer.menu.selector_y_offset = 80.0 - panel.position.y
 
 
 func defocus_panel() -> void:
 	panel_up = false
+	panel.can_focus = false
 	layer.can_focus = true
 	last_focus.grab_focus()
 
@@ -161,6 +166,7 @@ func _on_profile1_selected(_value) -> void:
 			if not pro1_empty:
 				button_selection.x = 1
 				layer_state = LayerState.COPY2
+				sfx_beep.play()
 		LayerState.COPY2:
 			if button_selection.x == 1:
 				button_selection.x = 0
@@ -185,6 +191,7 @@ func _on_profile2_selected(_value) -> void:
 			if not pro2_empty:
 				button_selection.x = 2
 				layer_state = LayerState.COPY2
+				sfx_beep.play()
 		LayerState.COPY2:
 			if button_selection.x == 2:
 				button_selection.x = 0
@@ -209,6 +216,7 @@ func _on_profile3_selected(_value) -> void:
 			if not pro3_empty:
 				button_selection.x = 3
 				layer_state = LayerState.COPY2
+				sfx_beep.play()
 		LayerState.COPY2:
 			if button_selection.x == 3:
 				button_selection.x = 0

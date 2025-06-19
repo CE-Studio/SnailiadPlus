@@ -3,6 +3,12 @@ extends PanelContainer
 
 
 #region Variables
+var can_focus:bool = false:
+	set(value):
+		can_focus = value
+		for button in buttons:
+			button.can_focus = value
+
 @onready var vbox:VBoxContainer = $"MarginContainer/VBoxContainer"
 @onready var buttonbox:HBoxContainer = null
 @onready var text:SnailyText = $"MarginContainer/VBoxContainer/Text"
@@ -45,6 +51,7 @@ func add_button(_text:String, target_function:Callable, focus:bool = true) -> vo
 	var new_button:SnailyButton = button_scene.instantiate()
 	buttonbox.add_child(new_button)
 	new_button.set_text(_text)
+	new_button.can_focus = can_focus
 	if focus:
 		new_button.grab_focus()
 	new_button.button_pressed.connect(target_function)

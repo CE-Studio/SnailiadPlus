@@ -18,6 +18,7 @@ var click_play_text:SnailyText
 var version_panel:ContextPanel
 var active_layers:int
 var active_layer:MenuLayer
+var selector_y_offset:float
 
 @onready var layer_group:Node2D = $"LayerGroup"
 @onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
@@ -38,6 +39,7 @@ func _ready() -> void:
 				version_panel.add_header(Statics.get_text("menu_olderVersion_header"), 2)
 				version_panel.set_text(Statics.get_text("menu_olderVersion_body"), 1)
 				version_panel.add_button(Statics.get_text("menu_olderVersion_confirm"), spawn_menu)
+				version_panel.can_focus = true
 				$"ColorCover".set_new_fade(Color(0.0, 0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0, 0.4), 0.5)
 			else:
 				$"VersionWarnPanel".queue_free()
@@ -75,6 +77,7 @@ func _process(delta: float) -> void:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 		if Input.is_action_just_pressed("Pause"):
+			selector_y_offset = 0
 			if active_layers > 1:
 				clear_top_layer(0)
 			else:
@@ -87,13 +90,15 @@ func _process(delta: float) -> void:
 		for i in selectors.size():
 			var selector_pos:Vector2 = selectors[i].global_position
 			var destination = focused_node.global_position
-			destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
-			destination.y -= active_layer.position.y
-			match i:
-				0: destination.x -= SELECTOR_OFFSET.x
-				1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
-			var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
-			selectors[i].global_position = new_pos
+			if destination.x > -230: # I hate that I have to do this to fix the weird left jump on first load
+				destination.y += (focused_node.size.y * 0.5) + SELECTOR_OFFSET.y
+				destination.y -= active_layer.position.y
+				destination.y += selector_y_offset
+				match i:
+					0: destination.x -= SELECTOR_OFFSET.x
+					1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
+				var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
+				selectors[i].global_position = new_pos
 
 
 func spawn_menu() -> void:
@@ -147,6 +152,7 @@ func clear_top_layer(_value) -> MenuLayer:
 		if top_layer.save_general_on_close:
 			save_general()
 		second_top_layer.can_focus = true
+		second_top_layer.first_beep = true
 		#region Find new focus
 		var buttons = Statics.get_all_children(second_top_layer)
 		var found_focus:bool = false

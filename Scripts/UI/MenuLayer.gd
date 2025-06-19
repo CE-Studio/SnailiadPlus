@@ -22,6 +22,7 @@ var can_focus:bool = true:
 var layer_id:int = 0
 var total_layer_count:int = 0
 var separation_float:float = MAX_SEPARATION
+var first_beep:bool = false
 
 @onready var main_vbox:VBoxContainer = $"MainVBox"
 #endregion
