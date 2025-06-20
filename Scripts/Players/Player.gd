@@ -621,6 +621,18 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		position = body.position.round() #Stops strange jitter from camera smoothing
 	else:
 		position = body.position
+	
+	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):
+		match surface:
+			Statics.DirsSurface.FLOOR:
+				body.position += Vector2.UP * 16
+			Statics.DirsSurface.LWALL:
+				body.position += Vector2.RIGHT * 16
+			Statics.DirsSurface.RWALL:
+				body.position += Vector2.LEFT * 16
+			Statics.DirsSurface.CEILING:
+				body.position += Vector2.DOWN * 16
+		position = body.position
 #endregion
 
 

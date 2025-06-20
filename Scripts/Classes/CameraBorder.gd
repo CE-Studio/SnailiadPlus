@@ -17,24 +17,19 @@ func _ready() -> void:
 		point_ratio_adjustments.append(Vector2i.ZERO)
 	var current_ratio = int(Statics.data_general["aspect_ratio"])
 	if current_ratio != 0:
-		replot_points(Statics.ASPECT_RATIO_OFFSETS[current_ratio])
+		replot_points(Statics.ASPECT_RATIO_OFFSETS[current_ratio]) #TODO: whatever the heck is going on here
 
 
 func replot_points(offsets:Vector2i) -> void:
+	print(curve.get_point_position(0))
 	curve.clear_points()
 	for i in range(point_origins.size()):
-		var normalized_offset = point_ratio_adjustments[i]
-		#region Normalize
-		if normalized_offset.x > 1:
-			normalized_offset.x = 1
-		if normalized_offset.x < -1:
-			normalized_offset.x = -1
-		if normalized_offset.y > 1:
-			normalized_offset.y = 1
-		if normalized_offset.y < -1:
-			normalized_offset.y = -1
-		#endregion
-		curve.add_point(point_origins[i] + Vector2i(offsets * point_ratio_adjustments[i] * 0.5))
+		var normalized_offset = Vector2i(
+			clampi(point_ratio_adjustments[i].x, -1, 1),
+			clampi(point_ratio_adjustments[i].y, -1, 1)
+		)
+		curve.add_point(point_origins[i] + Vector2i(offsets * normalized_offset * 0.5))
+	print(curve.get_point_position(0))
 
 
 func get_closest_point_to(pos:Vector2) -> Vector2:

@@ -7,7 +7,7 @@ static var instance:GameCore
 
 var player:Player
 var cam_layer:UICore
-var current_room:Node2D
+var current_room:Room
 var current_room_name:String
 var sfx_group:Node
 var music_manager:MusicManager
