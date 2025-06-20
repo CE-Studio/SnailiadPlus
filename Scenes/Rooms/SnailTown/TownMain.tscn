@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_qyovo"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
+resource_local_to_scene = true
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120, 0, 0, 0, 0, 1032, 120, 0, 0, 0, 0, 1032, 632, 0, 0, 0, 0, 200, 632, 0, 0, 0, 0, 200, 120)
 }
@@ -108,3 +109,8 @@ rotation = 1.57079
 my_id = 5
 exit_room = "uid://ipugr1u4imx3"
 exit_transition = 1
+
+[node name="RoomTransitionTrigger7" parent="." instance=ExtResource("3_qyovo")]
+position = Vector2(1236, 712)
+my_id = 6
+exit_room = "uid://dcinblnq5nkbm"

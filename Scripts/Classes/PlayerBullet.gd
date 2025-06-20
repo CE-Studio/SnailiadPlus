@@ -43,7 +43,7 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 
 func _process(delta: float) -> void:
 	life_timer += delta
-	if ((life_timer > 3 or despawn_offscreen) and
+	if ((life_timer > 3 or (despawn_offscreen and life_timer >= 0.25)) and
 	not Statics.is_box_on_screen(box_power if powered else box_normal, position)):
 		_despawn()
 

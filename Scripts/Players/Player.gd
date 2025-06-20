@@ -625,13 +625,25 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):
 		match surface:
 			Statics.DirsSurface.FLOOR:
-				body.position += Vector2.UP * 16
+				if corner_cast.is_colliding():
+					body.position += Vector2.UP * 16
+				else:
+					body.position += 16 * (Vector2.RIGHT if facing_left else Vector2.LEFT)
 			Statics.DirsSurface.LWALL:
-				body.position += Vector2.RIGHT * 16
+				if corner_cast.is_colliding():
+					body.position += Vector2.RIGHT * 16
+				else:
+					body.position += 16 * (Vector2.DOWN if facing_left else Vector2.UP)
 			Statics.DirsSurface.RWALL:
-				body.position += Vector2.LEFT * 16
+				if corner_cast.is_colliding():
+					body.position += Vector2.LEFT * 16
+				else:
+					body.position += 16 * (Vector2.UP if facing_left else Vector2.DOWN)
 			Statics.DirsSurface.CEILING:
-				body.position += Vector2.DOWN * 16
+				if corner_cast.is_colliding():
+					body.position += Vector2.DOWN * 16
+				else:
+					body.position += 16 * (Vector2.LEFT if facing_left else Vector2.RIGHT)
 		position = body.position
 #endregion
 

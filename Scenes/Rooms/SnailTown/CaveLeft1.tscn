@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_kgiwa"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
+resource_local_to_scene = true
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120)
 }

@@ -66,7 +66,7 @@ func instance() -> void:
 func offset_position_for_ratio() -> void:
 	var current_ratio = int(Statics.data_general["aspect_ratio"])
 	var offset = Statics.ASPECT_RATIO_OFFSETS[current_ratio]
-	position = origin + (offset * 0.5)
+	position = origin + (offset * aspect_offset * 0.5)
 
 
 func update_marker() -> void:
