@@ -46,6 +46,12 @@ tile_set = ExtResource("2_g8yq5")
 
 [node name="SavePoint" parent="GroundLayer" instance=ExtResource("3_j5aks")]
 position = Vector2(208, 136)
+characters_who_can_use_me = 59
+
+[node name="SavePoint2" parent="GroundLayer" instance=ExtResource("3_j5aks")]
+position = Vector2(304, 104)
+surface = 3
+characters_who_can_use_me = 4
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

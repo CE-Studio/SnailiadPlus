@@ -67,7 +67,7 @@ collision_enabled = false
 [node name="EntityLayer" type="Node2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAADAAwAAAALAAEAAAAUAAkAAAALAAEAAAAnAAgAAAALAAEAAAA3AAoAAAALAAEAAABEAA0AAAALAAEAAAA=")
+tile_map_data = PackedByteArray("AAADAAwAAAALAAEAAAAUAAkAAAALAAEAAAAnAAgAAAALAAEAAAA3AAoAAAALAAEAAABEAA0AAAALAAEAAABDAAIAAAAMAB4AAAAyAAMAAAAMAB4AAAAnAAQAAAAMAB4AAAAPAAMAAAAMAB4AAAA=")
 tile_set = ExtResource("2_2sihx")
 collision_enabled = false
 
@@ -85,6 +85,8 @@ exit_room = "uid://xl8phkaah3ak"
 position = Vector2(328, -4)
 rotation = -1.5708
 my_id = 1
+exit_room = "uid://cc3qkpvlkcl82"
+exit_transition = 1
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("5_s8nal")]
 position = Vector2(1236, 56)

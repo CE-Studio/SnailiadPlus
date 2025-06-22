@@ -53,9 +53,18 @@ door_type = 2
 position = Vector2(8, 120)
 direction = 3
 door_type = 2
+lock_type = 2
+required_boss = 1
+rando_sphere = 2
 
 [node name="SavePoint" parent="GroundLayer" instance=ExtResource("4_ags0q")]
 position = Vector2(208, 136)
+characters_who_can_use_me = 59
+
+[node name="SavePoint2" parent="GroundLayer" instance=ExtResource("4_ags0q")]
+position = Vector2(208, 104)
+surface = 3
+characters_who_can_use_me = 4
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

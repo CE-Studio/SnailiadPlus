@@ -17,6 +17,6 @@ position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_gkfyc")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-16, 0)
+position = Vector2(-8, 0)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_enter"]
