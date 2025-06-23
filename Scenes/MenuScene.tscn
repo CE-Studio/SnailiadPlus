@@ -74,6 +74,8 @@ texture = ExtResource("9_nmi4p")
 
 [node name="ColorCover" parent="." instance=ExtResource("6_at33a")]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(-200, -120)
+scale = Vector2(2, 2)
 
 [node name="VersionWarnPanel" parent="." instance=ExtResource("6_w4qjd")]
 custom_minimum_size = Vector2(276, 0)

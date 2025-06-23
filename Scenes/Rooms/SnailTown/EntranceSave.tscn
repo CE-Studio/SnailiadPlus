@@ -85,8 +85,7 @@ exit_room = "uid://dpj78o8gohp2f"
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("5_oorrs")]
 position = Vector2(404, 120)
 my_id = 1
-exit_room = "uid://vvs4fclk0j13"
-exit_transition = 1
+exit_room = "uid://c6228rcwcjv3g"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("5_oorrs")]
 position = Vector2(208, -4)

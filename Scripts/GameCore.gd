@@ -9,6 +9,7 @@ var player:Player
 var cam_layer:UICore
 var current_room:Room
 var current_room_name:String
+var current_area:int = -1
 var sfx_group:Node
 var music_manager:MusicManager
 
@@ -50,3 +51,6 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 					cam_layer.cam.set_layer_position(player.position)
 	new_room.spawn(true)
 	player.set_box_disable_override(false)
+	if new_room.area_id != current_area:
+		UICore.instance.show_area_text(new_room.area_id)
+		current_area = new_room.area_id

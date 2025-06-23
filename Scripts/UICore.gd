@@ -13,6 +13,9 @@ var minimap:Minimap
 var border:JsonSprite2D
 
 var flashy_popup_scene:PackedScene
+var color_popup_scene:PackedScene
+
+var active_area_label:Node
 
 static var instance:UICore
 #endregion
@@ -44,6 +47,7 @@ func instantiate() -> void:
 	border = $"Border"
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
+	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
 
 
 func _process(delta: float) -> void:
@@ -162,3 +166,31 @@ func show_item_collection_text(item_label:String) -> void:
 	add_child(percentage_label)
 	percentage_label.instance(Statics.get_text("hud_collectedItemPercentage") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
 	percentage_label.position = Vector2i(200, 200)
+
+
+func show_area_text(area_id:int) -> void:
+	if active_area_label != null:
+		active_area_label.queue_free()
+	
+	var area_label = color_popup_scene.instantiate()
+	add_child(area_label)
+	var area_color:Color = Color.WHITE
+	match area_id:
+		0: area_color = Statics.get_color(Vector2i(2, 5))
+		1: area_color = Statics.get_color(Vector2i(2, 8))
+		2: area_color = Statics.get_color(Vector2i(3, 10))
+		3: area_color = Statics.get_color(Vector2i(2, 3))
+		4: area_color = Statics.get_color(Vector2i(0, 1))
+		5: area_color = Statics.get_color(Vector2i(3, 11))
+	var color_list:Array[Color] = [ Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE ]
+	area_label.instance(Statics.get_text("area_%s" % Room.areas[area_id]), color_list, 4.5, 3)
+	area_label.position = Vector2i(200, 100)
+	active_area_label = area_label
+	
+	var text_width = area_label.text.size.x
+	for i in range(2):
+		var border:JsonSprite2D = JsonSprite2D.new()
+		border.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
+		area_label.add_child(border)
+		border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
+		border.position = Vector2i((text_width * (-1.5 if (i == 0) else 1.5)) + 1, -13)

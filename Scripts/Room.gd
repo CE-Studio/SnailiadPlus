@@ -22,6 +22,16 @@ extends Node2D
 
 
 #region Internals
+static var areas:Array = [
+	"SnailTown",
+	"MareCarelia",
+	"SpiralisSilere",
+	"AmastridaAbyssus",
+	"LuxLirata",
+	"ShrineOfIris",
+	"BossRush"
+]
+
 enum Layers {
 	SKY,
 	BG2,

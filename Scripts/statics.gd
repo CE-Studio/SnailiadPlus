@@ -32,27 +32,6 @@ enum DirsSurface {
 #endregion
 
 
-#enum Items {
-#	PEASHOOTER,
-#	BOOMERANG,
-#	RAINBOWWAVE,
-#	DEVASTATOR,
-#	HIGHJUMP,
-#	SHELLSHIELD,
-#	RAPIDFIRE,
-#	ICESHELL,
-#	FLYSHELL,
-#	METALSHELL,
-#	GRAVSHOCK,
-#	SSBOOM,
-#	DEBUGRW,
-#	HEART,
-#	FRAGMENT,
-#	RADARSHELL,
-#	NONE = -1,
-#}
-
-
 const PI_OVER_EIGHT:float = PI * 0.125
 const PI_OVER_FOUR:float = PI * 0.25
 const PI_OVER_THREE:float = PI * 0.3333
