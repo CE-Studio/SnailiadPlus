@@ -182,15 +182,16 @@ func show_area_text(area_id:int) -> void:
 		3: area_color = Statics.get_color(Vector2i(2, 3))
 		4: area_color = Statics.get_color(Vector2i(0, 1))
 		5: area_color = Statics.get_color(Vector2i(3, 11))
-	var color_list:Array[Color] = [ Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE ]
-	area_label.instance(Statics.get_text("area_%s" % Room.areas[area_id]), color_list, 4.5, 3)
+	var color_list:Array[Color] = [ Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE ]
+	area_label.instance(Statics.get_text("area_%s" % Room.areas[area_id]), color_list)
 	area_label.position = Vector2i(200, 100)
 	active_area_label = area_label
 	
-	var text_width = area_label.text.size.x
-	for i in range(2):
-		var border:JsonSprite2D = JsonSprite2D.new()
-		border.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
-		area_label.add_child(border)
-		border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
-		border.position = Vector2i((text_width * (-1.5 if (i == 0) else 1.5)) + 1, -13)
+	if area_id < 6:
+		var text_width = area_label.text.get_width()
+		for i in range(2):
+			var border:JsonSprite2D = JsonSprite2D.new()
+			border.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
+			area_label.add_child(border)
+			border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
+			border.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)

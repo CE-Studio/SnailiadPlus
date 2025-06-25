@@ -12,7 +12,7 @@ var life_timer:float = 0.0
 var offset_base:float = 0.0
 var max_lifetime:float = 4.5
 var color_list:Array[Color] = []
-#var color_pointer:int = 0
+var children:Array = []
 
 @onready var text:SnailyText = $"SnailyText"
 #endregion
@@ -23,7 +23,7 @@ func instance(new_text:String, new_list:Array[Color], lifetime:float = 4.5, text
 	color_list = new_list.duplicate()
 	max_lifetime = lifetime
 	offset_base = TOTAL_FADE_IN_TIME / raw_text.length()
-	text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP)
+	text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_CENTER)
 	text.text_scale = text_scale
 	text.add_border(1)
 	text.set_snaily_text(new_text)
@@ -46,5 +46,10 @@ func _process(delta: float) -> void:
 			this_color.a = inverse_lerp(max_lifetime, max_lifetime - FADE_OUT_TIME, life_timer) * this_color.a
 		bb_text += "[color=%08x]%s" % [this_color.to_rgba32(), raw_text[i]]
 	text.set_snaily_text(bb_text)
+	if life_timer >= max_lifetime - FADE_OUT_TIME:
+		if children.size() == 0 and get_child_count() > 0:
+			children.append_array(get_children())
+		for child in children:
+			child.modulate.a = inverse_lerp(max_lifetime, max_lifetime - FADE_OUT_TIME, life_timer)
 	if life_timer >= max_lifetime:
 		queue_free()
