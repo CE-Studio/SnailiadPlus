@@ -338,6 +338,14 @@ static func get_shell_level() -> int:
 	return 0
 
 
+static func has_shell(shell_id:int) -> bool:
+	var query = 1 << (shell_id - 1)
+	var level = 1 << (get_shell_level() - 1)
+	if stack_shells:
+		return query <= level
+	return query & level > 0
+
+
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
 	var char_int:int = int(character)
 	var full_check:String = "full_" if full else ""
