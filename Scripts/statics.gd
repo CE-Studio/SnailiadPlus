@@ -117,7 +117,7 @@ static var current_subarea:int = 0
 static var player:Player
 static var cam_layer:Node2D
 static var cam:Camera2D
-static var active_room:Node2D
+static var active_room:Room
 
 static var text_lib:Dictionary
 
@@ -356,6 +356,21 @@ static func get_character_species_string(character:Player.Players, plural:bool =
 	var char_int:int = int(character)
 	var plural_check:String = "plural_" if plural else ""
 	return get_text("species_%s%d" % [ plural_check, char_int ])
+#endregion
+
+
+#region World functions
+static func solid_at_world_pos(pos:Vector2i) -> bool:
+	var tile_pos = Vector2i(Vector2(pos) * FRAC_16)
+	return solid_at_grid_pos(tile_pos)
+
+
+static func solid_at_grid_pos(pos:Vector2i) -> bool:
+	if not active_room:
+		return false
+	if active_room.map_ground.get_cell_tile_data(pos):
+		return true
+	return false
 #endregion
 
 

@@ -27,13 +27,8 @@ enum ElementTypes {
 }
 var my_element:ElementTypes = ElementTypes.NONE
 
-#public Collider2D col;
-#public Rigidbody2D rb;
-#public SpriteRenderer sprite;
-#public AnimationModule anim;
-#public SpriteMask mask;
-
 var col:CollisionShape2D
+var body:CharacterBody2D
 var hitbox:Area2D
 var sprite:JsonSprite2D
 
@@ -45,13 +40,56 @@ var intersecting_player:bool = false
 var intersecting_bullets:Array[PlayerBullet] = []
 var intersecting_enemy_bullets:Array = [] #TODO: mark this as EnemyBullet array when class implemented
 var kill_particles:Array[String] = [ "ExplosionBig" ]
+var ai_active:bool = true
 
 @onready var sfx_ping:AudioStream = preload("res://Assets/Sounds/Sfx/Ping.ogg")
 @onready var sfx_kill:AudioStream = preload("res://Assets/Sounds/Sfx/EnemyKilled1.ogg")
+
+enum EnemyTypes {
+	SPIKEY_COMMON,     # Blue spikey
+	SPIKEY_TOUGH,      # Orange spikey
+	SPIKEY_ABSURD,     # Pink spikey
+	BABYFISH_1,        # Green babyfish
+	BABYFISH_2,        # Pink babyfish
+	FLOATSPIKE_COMMON, # Black floatspike
+	FLOATSPIKE_TOUGH,  # Blue floatspike
+	BLOB_COMMON,       # Blob
+	BLOB_TOUGH,        # Blub
+	BLOB_ANGEL,        # Angelblob
+	BLOB_DEVIL,        # Devilblov
+	CHIRPY_COMMON,     # Blue chirpy
+	CHIRPY_TOUGH,      # Light-blue chirpy
+	BATTYBAT,          # Batty bat
+	FIREBALL,          # Fireball
+	ICEBALL,           # Iceball
+	GHOSTBALL,         # Ghost dandelion
+	SNELK,             # Secret snelk
+	KITTY_COMMON,      # Gray kitty
+	KITTY_TOUGH,       # Orange kitty
+	CANON,             # Canon (red)
+	NONCANON,          # Non-canon (blue)
+	SNAKEY_COMMON,     # Green snakey
+	SNAKEY_TOUGH,      # Blue snakey
+	SKYVIPER,          # Sky viper
+	SPIDER_COMMON,     # Spider
+	SPIDER_TOUGH,      # Spider mama
+	TURTLE_COMMON,     # Gravity turtle
+	TURTLE_TOUGH,      # Cherry red gravity turtle
+	JELLYFISH,         # Jellyfish
+	SEAHORSE,          # Syngnathida
+	TALLFISH_COMMON,   # Tallfish
+	TALLFISH_TOUGH,    # Angry tallfish
+	WALLEYE,           # Walleye
+	PINCER,            # Pincer, sky pincer, and pouncer
+	GEAR_COMMON,       # Gray spinnygear
+	GEAR_TOUGH,        # Red spinnygear
+	DRONE,             # Federation drone
+	BALLOON,           # Balloon buster
+}
 #endregion
 
 
-func spawn(hp:int, atk:int, def:int, piercable:bool, orb_value:int, wea:Array[int] = [], res:Array[int] = [], imm:Array[int] = []) -> void:
+func spawn(hp:int, atk:int, def:int, piercable:bool, orb_value:int, active:bool = true, wea:Array[int] = [], res:Array[int] = [], imm:Array[int] = []) -> void:
 	origin = position
 	health = hp
 	max_health = hp
@@ -62,10 +100,17 @@ func spawn(hp:int, atk:int, def:int, piercable:bool, orb_value:int, wea:Array[in
 	immunities = imm.duplicate()
 	lets_permeating_shots_by = piercable
 	health_orb_value = orb_value
+	ai_active = active
+	
+	if hitbox:
+		hitbox.connect("area_entered", _on_bullet_entered)
+		hitbox.connect("area_exited", _on_bullet_exited)
+		hitbox.connect("body_entered", _on_player_entered)
+		hitbox.connect("body_exited", _on_player_entered)
 
 
 func _process(delta) -> void:
-	if intersecting_player and not GameCore.instance.player.stunned and can_damage:
+	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
 		var can_hit = true
 		match my_element:
 			ElementTypes.ICE:
