@@ -61,7 +61,8 @@ var room_path:String
 
 @onready var bounds:CameraBorder = $"CameraBorder"
 
-@onready var breakable_scene = load("res://Scenes/Entities/Breakable.tscn")
+@onready var breakable_scene = preload("res://Scenes/Entities/Breakable.tscn")
+@onready var special_collision_scene = preload("res://Scenes/Entities/SpecialCollision.tscn")
 #endregion
 #endregion
 
@@ -158,16 +159,27 @@ func _spawn_entities_from_layer() -> void:
 	for tile in map_entity.get_used_cells():
 		var tile_coords = map_entity.get_cell_atlas_coords(tile)
 		match tile_coords:
+			Vector2i(11, 0): # Blue spikey (CW)
+				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
+				spikey.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(spikey)
+			
+			Vector2i(12, 0): # Blue spikey (CCW)
+				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
+				spikey.position = _tile_coords_to_vector_pos(tile)
+				spikey.ccw = true
+				layer_ground.add_child(spikey)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
-				layer_ground.add_child(grass)
 				grass.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.FLOOR)
 			
 			Vector2i(14, 1): # Power grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
-				layer_ground.add_child(grass)
 				grass.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.FLOOR)
 			
 			Vector2i(15, 1): # Smoke particle
@@ -175,42 +187,50 @@ func _spawn_entities_from_layer() -> void:
 			
 			Vector2i(8, 4): # Boomerang breakable
 				var boom_tile:Breakable = breakable_scene.instantiate()
+				boom_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(boom_tile)
 				layer_ground.move_child(boom_tile, 1)
-				boom_tile.position = _tile_coords_to_vector_pos(tile)
 				boom_tile.spawn(tile, Breakable.TileTypes.BOOMERANG, false)
 			
 			Vector2i(9, 4): # Rainbow Wave breakable
 				var wave_tile:Breakable = breakable_scene.instantiate()
+				wave_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(wave_tile)
 				layer_ground.move_child(wave_tile, 1)
-				wave_tile.position = _tile_coords_to_vector_pos(tile)
 				wave_tile.spawn(tile, Breakable.TileTypes.RAINBOW_WAVE, false)
 			
 			Vector2i(10, 4): # Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
+				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(dev_tile)
 				layer_ground.move_child(dev_tile, 1)
-				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, false)
+			
+			Vector2i(2, 24): # Enemy solid tile
+				var enemy_tile:SpecialCollision = special_collision_scene.instantiate()
+				enemy_tile.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(enemy_tile)
+				layer_ground.move_child(enemy_tile, 1)
+				enemy_tile.set_full()
+				enemy_tile.set_collision_enemy()
 			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
+				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(dev_tile)
 				layer_ground.move_child(dev_tile, 1)
-				dev_tile.position = _tile_coords_to_vector_pos(tile)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
-				layer_ground.add_child(grass)
 				grass.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.CEILING)
 			
 			Vector2i(13, 30): # Hanging power grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
-				layer_ground.add_child(grass)
 				grass.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.CEILING)
 
 

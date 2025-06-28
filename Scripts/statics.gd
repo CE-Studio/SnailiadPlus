@@ -360,15 +360,18 @@ static func get_character_species_string(character:Player.Players, plural:bool =
 
 
 #region World functions
-static func solid_at_world_pos(pos:Vector2i) -> bool:
-	var tile_pos = Vector2i(Vector2(pos) * FRAC_16)
-	return solid_at_grid_pos(tile_pos)
+static func solid_at_world_pos(pos:Vector2, enemy_collidable:bool = false) -> bool:
+	var tile_pos = Vector2i(pos * FRAC_16)
+	#print("Received world pos %s\nTranslating to tile pos %s" % [ str(pos), str(tile_pos) ])
+	return solid_at_grid_pos(tile_pos, enemy_collidable)
 
 
-static func solid_at_grid_pos(pos:Vector2i) -> bool:
+static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bool:
 	if not active_room:
 		return false
 	if active_room.map_ground.get_cell_tile_data(pos):
+		return true
+	if enemy_collidable and (active_room.map_entity.get_cell_atlas_coords(pos) == Vector2i(2, 24)):
 		return true
 	return false
 #endregion
@@ -477,3 +480,42 @@ static func get_all_children(_node:Node) -> Array:
 		if child.get_child_count() > 0:
 			output.append_array(get_all_children(child))
 	return output
+
+
+static func spin_vector2(vector:Vector2, ccw:bool) -> Vector2:
+	match vector:
+		Vector2.DOWN:
+			return Vector2.RIGHT if ccw else Vector2.LEFT
+		Vector2.LEFT:
+			return Vector2.DOWN if ccw else Vector2.UP
+		Vector2.UP:
+			return Vector2.LEFT if ccw else Vector2.RIGHT
+		Vector2.RIGHT:
+			return Vector2.UP if ccw else Vector2.DOWN
+	return Vector2.ZERO
+
+
+static func spin_surface(surface:DirsSurface, ccw:bool) -> DirsSurface:
+	match surface:
+		DirsSurface.FLOOR:
+			return DirsSurface.RWALL if ccw else DirsSurface.LWALL
+		DirsSurface.LWALL:
+			return DirsSurface.FLOOR if ccw else DirsSurface.CEILING
+		DirsSurface.CEILING:
+			return DirsSurface.LWALL if ccw else DirsSurface.RWALL
+		DirsSurface.RWALL:
+			return DirsSurface.CEILING if ccw else DirsSurface.FLOOR
+	return DirsSurface.NONE
+
+
+static func spin_cardinal(cardinal:DirsCardinal, ccw:bool) -> DirsCardinal:
+	match cardinal:
+		DirsCardinal.DOWN:
+			return DirsCardinal.RIGHT if ccw else DirsCardinal.LEFT
+		DirsCardinal.LEFT:
+			return DirsCardinal.DOWN if ccw else DirsCardinal.UP
+		DirsCardinal.UP:
+			return DirsCardinal.LEFT if ccw else DirsCardinal.RIGHT
+		DirsCardinal.RIGHT:
+			return DirsCardinal.UP if ccw else DirsCardinal.DOWN
+	return DirsCardinal.NONE

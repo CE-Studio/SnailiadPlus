@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://biopitj8e1fre"]
+
+[ext_resource type="Script" uid="uid://efhp2t5pddu8" path="res://Scripts/Classes/SpecialCollision.gd" id="1_ofchq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7mom"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofchq"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cksbo"]
+size = Vector2(8, 8)
+
+[node name="SpecialCollision" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_ofchq")
+
+[node name="Full" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j7mom")
+
+[node name="HalfEdge" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ofchq")
+
+[node name="HalfCenter" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ofchq")
+
+[node name="Corner" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 4)
+shape = SubResource("RectangleShape2D_cksbo")

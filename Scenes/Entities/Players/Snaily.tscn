@@ -24,7 +24,6 @@ texture_path = "res://Assets/Images/Players/Snaily.json"
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 top_level = true
 collision_layer = 4
-collision_mask = 25
 
 [node name="NormalRect" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 1.5)

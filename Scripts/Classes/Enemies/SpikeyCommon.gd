@@ -3,14 +3,14 @@ extends Enemy
 
 
 #region Variables
-const SPEED = 1
+const SPEED = 1920
 const GRAVITY = 1200
 const FALL_DIR = Vector2.DOWN
+const CORNER_CHECK_EXTENT = 12
 
 var is_falling:bool = false
 var grace_period = 0
 var vel = 0
-var initialized_rot:bool = false
 
 @export var direction:Statics.DirsSurface = Statics.DirsSurface.NONE:
 	set(value):
@@ -36,20 +36,20 @@ var initialized_rot:bool = false
 
 
 func _ready() -> void:
-	col = $"CharacterBody2D/CollisionShape2D"
-	body = $"CharacterBody2D"
+	my_type = EnemyTypes.SPIKEY_COMMON
+	col = $"BodyBox"
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
-	super.spawn(70, 2, 0, true, 2)
+	super.spawn()
 	
 	if direction == Statics.DirsSurface.NONE:
-		if Statics.solid_at_world_pos(Vector2i(position) + (Vector2i.DOWN * 16)):
+		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
 			direction = Statics.DirsSurface.FLOOR
-		elif Statics.solid_at_world_pos(Vector2i(position) + (Vector2i.RIGHT * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.RIGHT * 16)):
 			direction = Statics.DirsSurface.RWALL
-		elif Statics.solid_at_world_pos(Vector2i(position) + (Vector2i.UP * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.UP * 16)):
 			direction = Statics.DirsSurface.CEILING
-		elif Statics.solid_at_world_pos(Vector2i(position) + (Vector2i.LEFT * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.LEFT * 16)):
 			direction = Statics.DirsSurface.LWALL
 		else:
 			direction = Statics.DirsSurface.FLOOR
@@ -70,4 +70,106 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
+	super._process(delta)
+	if not ai_active:
+		return
+	
+	if is_falling:
+		vel += GRAVITY * delta
+		velocity = FALL_DIR * vel
+		move_and_slide()
+		if is_on_floor():
+			is_falling = false
+			set_dir(Statics.DirsSurface.FLOOR)
+	else:
+		vel = 0.0
+		var front_cast = cast_ccw_check if ccw else cast_cw_check
+		var back_cast = cast_ccw_back if ccw else cast_cw_back
+		if front_cast.is_colliding() or back_cast.is_colliding():
+			match direction:
+				Statics.DirsSurface.FLOOR:
+					velocity = (Vector2.RIGHT if ccw else Vector2.LEFT) * SPEED * delta
+				Statics.DirsSurface.LWALL:
+					velocity = (Vector2.DOWN if ccw else Vector2.UP) * SPEED * delta
+				Statics.DirsSurface.RWALL:
+					velocity = (Vector2.UP if ccw else Vector2.DOWN) * SPEED * delta
+				Statics.DirsSurface.CEILING:
+					velocity = (Vector2.LEFT if ccw else Vector2.RIGHT) * SPEED * delta
+			move_and_slide()
+			if is_on_wall():
+				turn(ccw)
+				play_anim("_turnto_inner")
+		else:
+			var turns = 0
+			is_falling = true
+			while turns < 4 and is_falling:
+				turn(not ccw)
+				if is_corner_solid():
+					is_falling = false
+					play_anim("_turnto_outer")
+					match direction:
+						Statics.DirsSurface.FLOOR:
+							position.y = roundi(position.y * 0.25) * 4.0
+							position.y -= Statics.FRAC_16
+						Statics.DirsSurface.LWALL:
+							position.x = roundi(position.x * 0.25) * 4.0
+							position.x += Statics.FRAC_16
+						Statics.DirsSurface.RWALL:
+							position.x = roundi(position.x * 0.25) * 4.0
+							position.x -= Statics.FRAC_16
+						Statics.DirsSurface.CEILING:
+							position.y = roundi(position.y * 0.25) * 4.0
+							position.y += Statics.FRAC_16
+				turns += 1
+
+
+func turn(_ccw:bool) -> void:
+	set_dir(Statics.spin_surface(direction, _ccw))
+
+
+func is_corner_solid() -> bool:
+	var check_pos
+	match direction:
+		Statics.DirsSurface.FLOOR:
+			check_pos = Vector2(1 if ccw else -1, 1)
+		Statics.DirsSurface.LWALL:
+			check_pos = Vector2(-1, 1 if ccw else -1)
+		Statics.DirsSurface.RWALL:
+			check_pos = Vector2(1, -1 if ccw else 1)
+		Statics.DirsSurface.CEILING:
+			check_pos = Vector2(-1 if ccw else 1, -1)
+	check_pos *= CORNER_CHECK_EXTENT
+	return Statics.solid_at_world_pos(position + check_pos, true)
+
+
+func set_dir(new_dir:Statics.DirsSurface) -> void:
+	direction = new_dir
+	match new_dir:
+		Statics.DirsSurface.FLOOR:
+			cast_group.rotation_degrees = 0.0
+			up_direction = Vector2.UP
+		Statics.DirsSurface.LWALL:
+			cast_group.rotation_degrees = 90.0
+			up_direction = Vector2.RIGHT
+		Statics.DirsSurface.RWALL:
+			cast_group.rotation_degrees = -90.0
+			up_direction = Vector2.LEFT
+		Statics.DirsSurface.CEILING:
+			cast_group.rotation_degrees = 180.0
+			up_direction = Vector2.DOWN
+
+
+func play_anim(modifier:String = "") -> void:
+	var new_action = ""
+	match direction:
+		Statics.DirsSurface.FLOOR:
+			new_action = "floor_"
+		Statics.DirsSurface.LWALL:
+			new_action = "lwall_"
+		Statics.DirsSurface.RWALL:
+			new_action = "rwall_"
+		Statics.DirsSurface.CEILING:
+			new_action = "ceiling_"
+	new_action += "ccw" if ccw else "cw"
+	new_action += modifier
+	sprite.action = new_action

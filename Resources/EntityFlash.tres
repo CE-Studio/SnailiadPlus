@@ -1,0 +1,26 @@
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://bday5amji1ndg"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_g1srq"]
+parameter_name = "FloatParameter"
+
+[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_g1srq"]
+operator = 1
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_ri48l"]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+
+
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_g1srq")
+nodes/fragment/2/position = Vector2(-320, 140)
+nodes/fragment/3/node = SubResource("VisualShaderNodeColorOp_g1srq")
+nodes/fragment/3/position = Vector2(40, 200)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_ri48l")
+nodes/fragment/4/position = Vector2(-280, 360)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 3, 1)
