@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5vurgp6h0w04"
-path="res://.godot/imported/EnemyLightWave.png-adfc05341ef426eabe3a3e395bcf91d1.ctex"
+uid="uid://bhuh4gjumojh2"
+path="res://.godot/imported/EnemyGigaWave.png-15c5ebf8a95a2a7f6af4ceeb4624ce62.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/EnemyLightWave.png"
-dest_files=["res://.godot/imported/EnemyLightWave.png-adfc05341ef426eabe3a3e395bcf91d1.ctex"]
+source_file="res://Assets/Images/Bullets/Enemy/EnemyGigaWave.png"
+dest_files=["res://.godot/imported/EnemyGigaWave.png-15c5ebf8a95a2a7f6af4ceeb4624ce62.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0x2nlxn44jd"
-path="res://.godot/imported/EnemyLaser.png-fd2794a49cb154926d4b35bb35ef03fb.ctex"
+uid="uid://dyeqyhxtfxh6a"
+path="res://.godot/imported/EnemyBoomerangRed.png-5ac8c658c7b84f80cda5eff4316ba6f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/EnemyLaser.png"
-dest_files=["res://.godot/imported/EnemyLaser.png-fd2794a49cb154926d4b35bb35ef03fb.ctex"]
+source_file="res://Assets/Images/Bullets/Enemy/EnemyBoomerangRed.png"
+dest_files=["res://.godot/imported/EnemyBoomerangRed.png-5ac8c658c7b84f80cda5eff4316ba6f2.ctex"]
 
 [params]
 

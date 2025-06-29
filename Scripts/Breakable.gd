@@ -16,6 +16,7 @@ enum TileTypes {
 @onready var area:Area2D = $"Area2D"
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 
 var explode1:AudioStream = load("res://Assets/Sounds/Sfx/Explode1.ogg")
 var explode2:AudioStream = load("res://Assets/Sounds/Sfx/Explode2.ogg")
@@ -45,7 +46,7 @@ func spawn(tile_coords:Vector2i, tile_type:int, silent:bool):
 
 
 func _on_bullet_entered(_area:Area2D) -> void:
-	if Statics.is_box_on_screen(box, position):
+	if vis.is_on_screen():
 		var bullet = _area.get_parent()
 		var hit_hard_enough:bool = false
 		var icon_anim:String = ""

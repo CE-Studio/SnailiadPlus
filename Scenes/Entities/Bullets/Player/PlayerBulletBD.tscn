@@ -48,3 +48,6 @@ vframes = 12
 frame = 2
 script = ExtResource("2_2r7l5")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2.4, 2.4)

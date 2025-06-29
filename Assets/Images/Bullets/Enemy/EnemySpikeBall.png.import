@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyeqyhxtfxh6a"
-path="res://.godot/imported/EnemyBoomerangRed.png-4460a2caaa5d3a8a05f322220406d45a.ctex"
+uid="uid://cp118885tmaw0"
+path="res://.godot/imported/EnemySpikeBall.png-af54374a7b368b174e0f29596fbd9bd2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/EnemyBoomerangRed.png"
-dest_files=["res://.godot/imported/EnemyBoomerangRed.png-4460a2caaa5d3a8a05f322220406d45a.ctex"]
+source_file="res://Assets/Images/Bullets/Enemy/EnemySpikeBall.png"
+dest_files=["res://.godot/imported/EnemySpikeBall.png-af54374a7b368b174e0f29596fbd9bd2.ctex"]
 
 [params]
 

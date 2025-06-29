@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wg0ov37lblr6"
-path="res://.godot/imported/EnemyShadowWave.png-00faeaed122af66e86327121571d45d3.ctex"
+uid="uid://djsg5k0onys7"
+path="res://.godot/imported/EnemyBullet.svg-7be1ea29f7a4f91e13163475e0daa4f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/EnemyShadowWave.png"
-dest_files=["res://.godot/imported/EnemyShadowWave.png-00faeaed122af66e86327121571d45d3.ctex"]
+source_file="res://Editor/ico/EnemyBullet.svg"
+dest_files=["res://.godot/imported/EnemyBullet.svg-7be1ea29f7a4f91e13163475e0daa4f5.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

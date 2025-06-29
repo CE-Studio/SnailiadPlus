@@ -24,6 +24,7 @@ var current_nom_cooldown:float
 @onready var sfx_nom:AudioStreamPlayer = $"AudioGroup/Nom"
 @onready var sfx_grow:AudioStreamPlayer = $"AudioGroup/Grow"
 @onready var timer:Timer = $"RegrowTimer"
+@onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 #endregion
 
 
@@ -82,5 +83,5 @@ func _on_player_exited(body: Node2D) -> void:
 func _on_regrow_timer_timeout() -> void:
 	running_bite_count = bite_count
 	sprite.action = anim + "regrow"
-	if Statics.is_box_on_screen(box, position):
+	if vis.is_on_screen():
 		sfx_grow.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgd76ibvdfk3c"]
+[gd_scene load_steps=10 format=3 uid="uid://dgd76ibvdfk3c"]
 
 [ext_resource type="Script" uid="uid://d4nw14f3hljxw" path="res://Scripts/Players/Snaily.gd" id="1_k5eab"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_d17bl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_h84e5"]
 [ext_resource type="AudioStream" uid="uid://q5frvpwnb3mn" path="res://Assets/Sounds/Sfx/Jump.ogg" id="5_usmsa"]
 [ext_resource type="AudioStream" uid="uid://cyyfofel3rwoj" path="res://Assets/Sounds/Sfx/Shell.ogg" id="6_7e564"]
+[ext_resource type="AudioStream" uid="uid://dc13gmttbggq1" path="res://Assets/Sounds/Sfx/Hurt.ogg" id="7_wqsw1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
 size = Vector2(24, 13)
@@ -168,4 +169,8 @@ bus = &"Sfx"
 
 [node name="Shell" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("6_7e564")
+bus = &"Sfx"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("7_wqsw1")
 bus = &"Sfx"

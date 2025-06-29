@@ -8,6 +8,8 @@ extends CutsceneControllable
 
 
 #region Global control
+const MAX_STUN_TIMER = 1.0
+
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
 ## The size of the player's normal hitbox on the last frame.
@@ -25,6 +27,7 @@ var armed:bool
 var health:int
 var max_health:int
 var stunned:bool
+var stun_timer:float
 var in_death_cutscene:bool
 var underwater:bool
 var velocity:Vector2
@@ -180,6 +183,7 @@ var box_normal:CollisionShape2D
 var box_shell:CollisionShape2D
 var sfx_jump:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
+var sfx_hurt:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
@@ -205,6 +209,7 @@ func _ready():
 	box_shell.disabled = true
 	sfx_jump = $"AudioGroup/Jump"
 	sfx_shell = $"AudioGroup/Shell"
+	sfx_hurt = $"AudioGroup/Hurt"
 	cast_group = $"CastGroup"
 	
 	var rect = box_normal.shape.get_rect()
@@ -316,6 +321,13 @@ func _process(delta):
 	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
 	last_gravity = gravity_dir
 	grounded_last_frame = grounded
+	
+	if stun_timer > 0:
+		sprite.visible = not sprite.visible
+		stun_timer -= delta
+		if stun_timer <= 0:
+			stunned = false
+			sprite.visible = true
 
 
 func reset_position(pos:Vector2) -> void:
@@ -903,6 +915,15 @@ func adjust_health(amount:int) -> void:
 	UICore.instance.update_hearts()
 	if health == 0:
 		die()
+	elif amount < 0:
+		if shelled:
+			_set_shell(false)
+		# Disabled gravity shock
+		if not _check_ability(stick_to_walls_when_hurt):
+			_set_direction(home_gravity, facing_left)
+		stunned = true
+		stun_timer = MAX_STUN_TIMER
+		sfx_hurt.play()
 
 
 func die() -> void:

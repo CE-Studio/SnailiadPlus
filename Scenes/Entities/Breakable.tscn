@@ -21,4 +21,7 @@ script = ExtResource("2_5yyy2")
 texture_path = "res://Assets/Images/Entities/BreakableIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_bullet_entered"]

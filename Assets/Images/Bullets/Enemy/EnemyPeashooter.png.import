@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp118885tmaw0"
-path="res://.godot/imported/EnemySpikeBall.png-9f9b5e5f13b3297ddc35b6b035092925.ctex"
+uid="uid://dl1avw03v3tt1"
+path="res://.godot/imported/EnemyPeashooter.png-9c50aa6f451415c59676b52146d4f5b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Bullets/EnemySpikeBall.png"
-dest_files=["res://.godot/imported/EnemySpikeBall.png-9f9b5e5f13b3297ddc35b6b035092925.ctex"]
+source_file="res://Assets/Images/Bullets/Enemy/EnemyPeashooter.png"
+dest_files=["res://.godot/imported/EnemyPeashooter.png-9c50aa6f451415c59676b52146d4f5b5.ctex"]
 
 [params]
 

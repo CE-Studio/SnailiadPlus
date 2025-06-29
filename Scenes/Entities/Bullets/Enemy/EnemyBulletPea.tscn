@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://ypf8dhvoybdu"]
+
+[ext_resource type="Script" uid="uid://c0678qont3vu2" path="res://Scripts/Bullets/Enemy/EnemyBulletPea.gd" id="1_uf0x4"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_qgkbw"]
+[ext_resource type="AudioStream" uid="uid://dda5g4tjex8i2" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyPea.ogg" id="3_qgkbw"]
+[ext_resource type="Texture2D" uid="uid://dl1avw03v3tt1" path="res://Assets/Images/Bullets/Enemy/EnemyPeashooter.png" id="4_lbyhf"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_vkhkq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(4, 4)
+
+[node name="EnemyBulletPea" type="Node2D"]
+script = ExtResource("1_uf0x4")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_qgkbw")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyPeashooter.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3p1tk")
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("3_qgkbw")
+bus = &"Sfx"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("4_lbyhf")
+script = ExtResource("5_vkhkq")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.2, 0.2)

@@ -170,6 +170,17 @@ func _spawn_entities_from_layer() -> void:
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 			
+			Vector2i(13, 0): # Orange spikey (CW)
+				var spikey:SpikeyTough = load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
+				spikey.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(spikey)
+			
+			Vector2i(14, 0): # Orange spikey (CCW)
+				var spikey:SpikeyTough = load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
+				spikey.position = _tile_coords_to_vector_pos(tile)
+				spikey.ccw = true
+				layer_ground.add_child(spikey)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)

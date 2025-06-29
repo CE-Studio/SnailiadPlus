@@ -12,7 +12,7 @@ const DAMAGE_TIMEOUT:float = 0.025
 @export var weaknesses:Array[int] = []  # Enemies take double damage from bullet types in this list
 @export var resistances:Array[int] = [] # Enemies take half damage from bullet types in this list
 @export var immunities:Array[int] = []  # Enemies resist all damage from bullet types in this list
-@export var can_be_pierced:bool
+@export var can_be_pierced:bool = true
 @export var make_sound_on_ping:bool = true
 @export var invulnerable:bool = false
 @export var can_damage:bool = true
@@ -27,6 +27,7 @@ var health:int
 var parry_damage:int = 0
 var damage_timeout:float = 0.0
 var stun_invul:bool = false
+var ping_played:bool = false
 
 enum ElementTypes {
 	ICE,
@@ -37,15 +38,15 @@ enum ElementTypes {
 var col:CollisionShape2D
 var hitbox:Area2D
 var sprite:JsonSprite2D
-
-var ping_player:int = 0
+var vis:VisibleOnScreenNotifier2D
 
 var spawn_conditions:Array[float] = []
 var origin:Vector2
 var intersecting_player:bool = false
-var intersecting_bullets:Array[PlayerBullet] = []
-var intersecting_enemy_bullets:Array = [] #TODO: mark this as EnemyBullet array when class implemented
+var intersecting_pbullets:Array[PlayerBullet] = []
+var intersecting_ebullets:Array[EnemyBullet] = []
 var ai_active:bool = true
+var hard_mode:bool = false
 
 @onready var sfx_ping:AudioStream = preload("res://Assets/Sounds/Sfx/Ping.ogg")
 @onready var sfx_kill:AudioStream = preload("res://Assets/Sounds/Sfx/EnemyKilled1.ogg")
@@ -104,12 +105,13 @@ func spawn(active:bool = true) -> void:
 	origin = position
 	health = max_health
 	ai_active = active
+	hard_mode = Statics.current_profile["difficulty"] == 2
 	
 	if hitbox:
 		hitbox.connect("area_entered", _on_bullet_entered)
 		hitbox.connect("area_exited", _on_bullet_exited)
 		hitbox.connect("body_entered", _on_player_entered)
-		hitbox.connect("body_exited", _on_player_entered)
+		hitbox.connect("body_exited", _on_player_exited)
 
 
 func _process(delta) -> void:
@@ -123,12 +125,12 @@ func _process(delta) -> void:
 		if can_hit:
 			GameCore.instance.player.adjust_health(-attack)
 		
-	if not stun_invul and Statics.is_box_on_screen(col, position) and not invulnerable:
+	if not stun_invul and vis.is_on_screen() and not invulnerable:
 		var pbullets_to_despawn:Array = []
 		var ebullets_to_despawn:Array = []
 		var kill_flag:bool = false
 		var max_damage:int = parry_damage
-		for bullet in intersecting_bullets:
+		for bullet in intersecting_pbullets:
 			var this_damage = bullet.damage
 			#gravity shock critical damage mult (1.35)
 			if not immunities.has(bullet.type) and bullet.damage - defense > 0:
@@ -140,34 +142,23 @@ func _process(delta) -> void:
 				if this_damage > max_damage:
 					max_damage = this_damage
 			else:
-				if make_sound_on_ping:
+				if make_sound_on_ping and not ping_played:
 					Statics.play_sfx_disconnected(sfx_ping)
-				ping_player -= 1
+				ping_played  = true
 			if not can_be_pierced or bullet.single_hit:
 				pbullets_to_despawn.append(bullet)
-#		foreach (EnemyBullet bullet in intersectingEnemyBullets)
-#		{
-#			if (bullet.hasBeenParried)
-#			{
-#				if (bullet.damage - defense > 0)
-#				{
-#					int thisDamage = Mathf.FloorToInt(bullet.damage - defense);
-#					if (thisDamage > maxDamage)
-#						maxDamage = thisDamage;
-#				}
-#				else
-#				{
-#					if (!PlayState.armorPingPlayedThisFrame && makeSoundOnPing)
-#					{
-#						PlayState.armorPingPlayedThisFrame = true;
-#						PlayState.PlaySound("Ping");
-#					}
-#					pingPlayer -= 1;
-#				}
-#				if (!letsPermeatingShotsBy || bullet.bulletType == EnemyBullet.BulletType.pea || !bullet.isActive)
-#					enemyBulletsToDespawn.Add(bullet);
-#			}
-#		}
+		for bullet in intersecting_ebullets:
+			if bullet.has_been_parried:
+				if bullet.damage - defense > 0:
+					var this_damage = floori(bullet.damage - defense)
+					if this_damage > max_damage:
+						max_damage = this_damage
+				else:
+					if make_sound_on_ping and not ping_played:
+						Statics.play_sfx_disconnected(sfx_ping)
+					ping_played  = true
+				if not can_be_pierced:
+					ebullets_to_despawn.append(bullet)
 		if max_damage > 0 and not shield_entity:
 			if health <= 0:
 				kill_flag = true
@@ -184,6 +175,7 @@ func _process(delta) -> void:
 			kill()
 	if damage_timeout > 0.0:
 		damage_timeout -= delta
+	ping_played = false
 
 
 func _on_player_entered(_body) -> void:
@@ -192,8 +184,9 @@ func _on_player_entered(_body) -> void:
 func _on_bullet_entered(_area) -> void:
 	var bullet = _area.get_parent()
 	if bullet is PlayerBullet:
-		intersecting_bullets.append(bullet)
-	#elif _area is EnemyBullet:
+		intersecting_pbullets.append(bullet)
+	elif bullet is EnemyBullet:
+		intersecting_ebullets.append(bullet)
 
 
 func _on_player_exited(_body) -> void:
@@ -202,7 +195,17 @@ func _on_player_exited(_body) -> void:
 func _on_bullet_exited(_area) -> void:
 	var bullet = _area.get_parent()
 	if bullet is PlayerBullet:
-		intersecting_bullets.remove_at(intersecting_bullets.find(bullet))
+		intersecting_pbullets.remove_at(intersecting_pbullets.find(bullet))
+	elif bullet is EnemyBullet:
+		intersecting_ebullets.remove_at(intersecting_ebullets.find(bullet))
+
+
+func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float) -> EnemyBullet:
+	var bullet:EnemyBullet = _scene.instantiate()
+	bullet.position = position
+	Statics.active_room.layer_ground.add_child(bullet)
+	bullet._spawn(_direction, _speed)
+	return bullet
 
 
 func _damage(health_lost:int, sound:bool = true) -> void:
