@@ -48,16 +48,19 @@ func _ready() -> void:
 	if direction == Statics.DirsSurface.NONE:
 		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
 			set_dir(Statics.DirsSurface.FLOOR)
+			position.y -= Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.RIGHT * 16)):
 			set_dir(Statics.DirsSurface.RWALL)
+			position.x -= Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.UP * 16)):
 			set_dir(Statics.DirsSurface.CEILING)
+			position.y += Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.LEFT * 16)):
 			set_dir(Statics.DirsSurface.LWALL)
+			position.x += Statics.FRAC_8
 		else:
 			set_dir(Statics.DirsSurface.FLOOR)
 			is_falling = true
-	print(direction)
 	var dir = "ccw" if ccw else "cw"
 	match direction:
 		Statics.DirsSurface.FLOOR:
@@ -74,8 +77,8 @@ func _ready() -> void:
 	sprite._process(0.0)
 
 
-func _process(delta: float) -> void:
-	super._process(delta)
+func _physics_process(delta: float) -> void:
+	super(delta)
 	if not ai_active:
 		return
 	
@@ -86,6 +89,7 @@ func _process(delta: float) -> void:
 		if is_on_floor():
 			is_falling = false
 			set_dir(Statics.DirsSurface.FLOOR)
+			play_anim()
 	else:
 		elapsed += delta
 		while elapsed > SEC_PER_TICK:
@@ -119,16 +123,16 @@ func _process(delta: float) -> void:
 						match direction:
 							Statics.DirsSurface.FLOOR:
 								position.y = roundi(position.y * 0.25) * 4.0
-								position.y -= Statics.FRAC_16
+								position.y -= Statics.FRAC_8
 							Statics.DirsSurface.LWALL:
 								position.x = roundi(position.x * 0.25) * 4.0
-								position.x += Statics.FRAC_16
+								position.x += Statics.FRAC_8
 							Statics.DirsSurface.RWALL:
 								position.x = roundi(position.x * 0.25) * 4.0
-								position.x -= Statics.FRAC_16
+								position.x -= Statics.FRAC_8
 							Statics.DirsSurface.CEILING:
 								position.y = roundi(position.y * 0.25) * 4.0
-								position.y += Statics.FRAC_16
+								position.y += Statics.FRAC_8
 					turns += 1
 				if is_falling:
 					up_direction = Vector2.UP

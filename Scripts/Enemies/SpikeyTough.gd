@@ -61,12 +61,16 @@ func _ready() -> void:
 	if direction == Statics.DirsSurface.NONE:
 		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
 			set_dir(Statics.DirsSurface.FLOOR)
+			position.y -= Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.RIGHT * 16)):
 			set_dir(Statics.DirsSurface.RWALL)
+			position.x -= Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.UP * 16)):
 			set_dir(Statics.DirsSurface.CEILING)
+			position.y += Statics.FRAC_8
 		elif Statics.solid_at_world_pos(position + (Vector2.LEFT * 16)):
 			set_dir(Statics.DirsSurface.LWALL)
+			position.x += Statics.FRAC_8
 		else:
 			set_dir(Statics.DirsSurface.FLOOR)
 			is_falling = true
@@ -89,8 +93,8 @@ func _ready() -> void:
 	start_timeout = stop_timeout 
 
 
-func _process(delta: float) -> void:
-	super._process(delta)
+func _physics_process(delta: float) -> void:
+	super(delta)
 	if not ai_active:
 		return
 	
@@ -120,6 +124,7 @@ func _process(delta: float) -> void:
 		if is_on_floor():
 			is_falling = false
 			set_dir(Statics.DirsSurface.FLOOR)
+			play_anim()
 	elif not stopped:
 		elapsed += delta
 		var this_tick_speed = SEC_PER_TICK_FAST if hard_mode else SEC_PER_TICK_SLOW

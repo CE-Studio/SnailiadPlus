@@ -225,7 +225,9 @@ func _ready():
 # It's used here to control player movement
 func _process(delta):
 	super(delta)
-	
+
+
+func _physics_process(delta) -> void:
 	if Statics.noclip_mode:
 		box_normal.disabled = true
 		box_shell.disabled = true

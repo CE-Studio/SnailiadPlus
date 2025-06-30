@@ -39,6 +39,7 @@ var col:CollisionShape2D
 var hitbox:Area2D
 var sprite:JsonSprite2D
 var vis:VisibleOnScreenNotifier2D
+var environment:EnvironmentArea
 
 var spawn_conditions:Array[float] = []
 var origin:Vector2
@@ -114,7 +115,7 @@ func spawn(active:bool = true) -> void:
 		hitbox.connect("body_exited", _on_player_exited)
 
 
-func _process(delta) -> void:
+func _physics_process(delta) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
 		var can_hit = true
 		match my_element:
