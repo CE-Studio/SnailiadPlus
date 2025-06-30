@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cdf57eyuaxew"]
 
-[ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Classes/Enemies/SpikeyTough.gd" id="1_eebw4"]
+[ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Enemies/SpikeyTough.gd" id="1_eebw4"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_xwnv8"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_c741o"]
 [ext_resource type="Texture2D" uid="uid://dcem1ncnq4ist" path="res://Assets/Images/Entities/Spikey2.png" id="4_eebw4"]

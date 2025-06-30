@@ -225,6 +225,11 @@ func _spawn_entities_from_layer() -> void:
 				enemy_tile.set_full()
 				enemy_tile.set_collision_enemy()
 			
+			Vector2i(15, 24): # Black floatspike
+				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()
+				floatspike.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(floatspike)
+			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				dev_tile.position = _tile_coords_to_vector_pos(tile)

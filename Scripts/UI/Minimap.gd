@@ -177,7 +177,9 @@ func _process(delta: float) -> void:
 			Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
 		if cell == CellTypes.SECRET_UNEXPLORED:
 			Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
-		update_map = true
+		update_cell_mask(map_local_center)
+		update_markers(last_drawn_cells)
+		update_map = false
 		last_player_pos = player_cell
 		
 		if marker_positions[array_pos] >= 0 and player_marker.action == "player_normal":

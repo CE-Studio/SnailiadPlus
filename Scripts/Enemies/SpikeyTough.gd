@@ -49,7 +49,7 @@ var stopped:bool = false
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.SPIKEY_COMMON
+	my_type = EnemyTypes.SPIKEY_TOUGH
 	col = $"BodyBox"
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
