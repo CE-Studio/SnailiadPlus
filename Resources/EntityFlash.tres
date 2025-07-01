@@ -15,6 +15,7 @@ render_mode blend_mix;
 
 
 "
+graph_offset = Vector2(-328.343, -58.5416)
 mode = 1
 flags/light_only = false
 nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_g1srq")

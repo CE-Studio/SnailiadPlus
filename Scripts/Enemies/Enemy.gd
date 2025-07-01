@@ -226,6 +226,7 @@ func kill() -> void:
 		Statics.spawn_particle(part, Room.Layers.GROUND, position + pos)
 	if Statics.current_profile["character"] == Player.Players.LEECHY:
 		pass #SpawnHealthOrbs
+	environment = null
 	queue_free()
 
 

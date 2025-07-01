@@ -149,6 +149,15 @@ enum Unlocks {
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
 	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
 }
+
+enum ParticleOptions {
+	NONE,
+	ENVIRONMENTS,
+	ENTITIES_FLASH,
+	ENTITIES_ALL,
+	FLASH,
+	ALL
+}
 #endregion
 
 
@@ -422,18 +431,6 @@ static func play_sfx_disconnected(sound:AudioStream) -> void:
 		var new_discon_sound = disconnected_sound.instantiate()
 		GameCore.instance.sfx_group.add_child(new_discon_sound)
 		new_discon_sound.load_and_play(sound)
-
-
-#static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
-#	var box_size:Vector2 = box.shape.size
-#	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
-#	var cam_offset:Vector2 = UICore.instance.cam.offset
-#	var pos_diff:Vector2 = pos - cam_pos
-#	var within_x = absf(pos_diff.x) < cam_offset.x + (box_size.x * 0.5)
-#	var within_y = absf(pos_diff.y) < cam_offset.y + (box_size.y * 0.5)
-#	if within_x and within_y:
-#		return true
-#	return false
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:

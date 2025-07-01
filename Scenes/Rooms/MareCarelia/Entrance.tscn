@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://c6228rcwcjv3g"]
+[gd_scene load_steps=9 format=4 uid="uid://c6228rcwcjv3g"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_e03i5"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v0hpu"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_e1y5m"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_inq4f"]
+[ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="5_rmpg5"]
+[ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="6_k3ase"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -11,6 +13,9 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120, 0, 0, 0, 0, 1032, 120, 0, 0, 0, 0, 1032, 376, 0, 0, 0, 0, 200, 376, 0, 0, 0, 0, 200, 120)
 }
 point_count = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3ase"]
+size = Vector2(1360, 368)
 
 [node name="Entrance" type="Node2D"]
 script = ExtResource("1_e03i5")
@@ -32,9 +37,10 @@ tile_set = ExtResource("2_v0hpu")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 1)
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
-tile_map_data = PackedByteArray("AAA8AB4AAAAHAFoAAAA9AB4AAAAHAFoAAAA+AB4AAAAHAFoAAAA/AB4AAAAHAFoAAAAKABsAAAAHAFoAAAALABsAAAAHAFoAAAAMABwAAAAHAFoAAAANABwAAAAHAFoAAAA=")
+tile_map_data = PackedByteArray("AAA8AB4AAAAHAFoAAAA9AB4AAAAHAFoAAAA+AB4AAAAHAFoAAAA/AB4AAAAHAFoAAAAKABsAAAAHAFoAAAALABsAAAAHAFoAAAAMABwAAAAHAFoAAAANABwAAAAHAFoAAAAAAAwAAAAGACAAAAABAAwAAAAFACAAAAACAAwAAAAGACAAAAADAAwAAAAFACAAAAAEAAwAAAAGACAAAAAFAAwAAAAFACAAAAAGAAwAAAAGACAAAAAHAAwAAAAFACAAAAAIAAwAAAAGACAAAAAJAAwAAAAFACAAAAAKAAwAAAAGACAAAAALAAwAAAAFACAAAAAMAAwAAAAGACAAAAANAAwAAAAFACAAAAAOAAwAAAAGACAAAAAPAAwAAAAFACAAAAAQAAwAAAAGACAAAAARAAwAAAAFACAAAAASAAwAAAAGACAAAAATAAwAAAAFACAAAAAUAAwAAAAGACAAAAAVAAwAAAAFACAAAAAWAAwAAAAGACAAAAAXAAwAAAAFACAAAAAYAAwAAAAGACAAAAAZAAwAAAAFACAAAAAaAAwAAAAGACAAAAAbAAwAAAAFACAAAAAcAAwAAAAGACAAAAAdAAwAAAAFACAAAAAeAAwAAAAGACAAAAAfAAwAAAAFACAAAAAgAAwAAAAGACAAAAAhAAwAAAAGACAAAAAiAAwAAAAFACAAAAAjAAwAAAAGACAAAAAkAAwAAAAFACAAAAAlAAwAAAAGACAAAAAmAAwAAAAFACAAAAAnAAwAAAAGACAAAAAoAAwAAAAFACAAAAApAAwAAAAGACAAAAAqAAwAAAAFACAAAAArAAwAAAAGACAAAAAsAAwAAAAFACAAAAAtAAwAAAAGACAAAAAuAAwAAAAFACAAAAAvAAwAAAAGACAAAAAwAAwAAAAGACAAAAAxAAwAAAAFACAAAAAyAAwAAAAGACAAAAAzAAwAAAAFACAAAAA0AAwAAAAGACAAAAA1AAwAAAAFACAAAAA2AAwAAAAGACAAAAA3AAwAAAAGACAAAAA4AAwAAAAFACAAAAA5AAwAAAAGACAAAAA6AAwAAAAFACAAAAA7AAwAAAAGACAAAAA8AAwAAAAFACAAAAA9AAwAAAAGACAAAAA+AAwAAAAFACAAAAA/AAwAAAAGACAAAABAAAwAAAAFACAAAABBAAwAAAAGACAAAABCAAwAAAAGACAAAABDAAwAAAAFACAAAABEAAwAAAAGACAAAABFAAwAAAAFACAAAABGAAwAAAAGACAAAABHAAwAAAAFACAAAABIAAwAAAAGACAAAABJAAwAAAAFACAAAABLAAwAAAAGACAAAABMAAwAAAAFACAAAABKAAwAAAAFACAAAAA=")
 tile_set = ExtResource("2_v0hpu")
 collision_enabled = false
 
@@ -83,3 +89,15 @@ my_id = 1
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_inq4f")]
 position = Vector2(1236, 376)
 my_id = 2
+
+[node name="WaterArea" parent="." instance=ExtResource("5_rmpg5")]
+position = Vector2(0, 192)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea"]
+position = Vector2(616, 184)
+shape = SubResource("RectangleShape2D_k3ase")
+
+[node name="Polygon2D" type="Polygon2D" parent="WaterArea"]
+material = ExtResource("6_k3ase")
+polygon = PackedVector2Array(-64, 0, 1296, 0, 1296, 368, -64, 368)
+uv = PackedVector2Array(-299.5, -50.5, 184.5, -66.5, 198.5, 55.5, -292.5, 44.5)
