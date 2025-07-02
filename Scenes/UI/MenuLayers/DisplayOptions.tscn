@@ -23,6 +23,7 @@ func _ready() -> void:
 	$\"ScrollContainer/VBoxContainer/Particles\".remote_set_option(int(Statics.data_general[\"particle_state\"]))
 	$\"ScrollContainer/VBoxContainer/Darkness\".remote_set_option(int(Statics.data_general[\"darkness_level\"]))
 	$\"ScrollContainer/VBoxContainer/PaletteShader\".toggled_on = bool(Statics.data_general[\"palette_shader_toggle\"])
+	$\"ScrollContainer/VBoxContainer/DistortShader\".toggled_on = bool(Statics.data_general[\"distort_shader_toggle\"])
 
 
 func on_scale_cycled(value) -> void:
@@ -64,8 +65,12 @@ func on_darkness_cycled(value) -> void:
 	Statics.data_general[\"darkness_level\"] = value
 
 
-func on_shader_toggled(value) -> void:
+func on_pshader_toggled(value) -> void:
 	Statics.data_general[\"palette_shader_toggle\"] = value
+
+
+func on_dshader_toggled(value) -> void:
+	Statics.data_general[\"distort_shader_toggle\"] = value
 
 
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:
@@ -221,20 +226,30 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Darkness")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../../../Back")
-focus_next = NodePath("../../../Back")
+focus_neighbor_bottom = NodePath("../DistortShader")
+focus_next = NodePath("../DistortShader")
 focus_previous = NodePath("../Darkness")
 text_id = "menu_option_display_paletteShader"
+
+[node name="DistortShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../PaletteShader")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../../Back")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../PaletteShader")
+text_id = "menu_option_display_distortShader"
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_45c1g")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/PaletteShader")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/DistortShader")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Scale")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Scale")
-focus_previous = NodePath("../ScrollContainer/VBoxContainer/PaletteShader")
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/DistortShader")
 text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true
@@ -248,4 +263,5 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fps_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Particles" to="MainVBox" method="on_particles_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Darkness" to="MainVBox" method="on_darkness_cycled"]
-[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_shader_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_pshader_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DistortShader" to="MainVBox" method="on_dshader_toggled"]

@@ -383,6 +383,14 @@ static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bo
 	if enemy_collidable and (active_room.map_entity.get_cell_atlas_coords(pos) == Vector2i(2, 24)):
 		return true
 	return false
+
+
+static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bool:
+	var aspect_buffer:Vector2 = ASPECT_RATIOS[data_general["aspect_ratio"]] * 0.5
+	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
+	var within_x:bool = abs(pos.x - cam_pos.x) <= aspect_buffer.x + buffer.x
+	var within_y:bool = abs(pos.y - cam_pos.y) <= aspect_buffer.y + buffer.y
+	return within_x and within_y
 #endregion
 
 

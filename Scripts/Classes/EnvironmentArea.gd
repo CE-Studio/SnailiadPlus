@@ -6,6 +6,8 @@ extends Area2D
 var spawn_grace_frames = 4
 var contained_bodies:Array = []
 var boxes:Array[CollisionShape2D] = []
+var polys:Array[Polygon2D] = []
+var read_interactions:bool = true
 #endregion
 
 
@@ -14,11 +16,20 @@ func _ready() -> void:
 		if child is CollisionShape2D:
 			if child.shape is RectangleShape2D:
 				boxes.append(child)
+		elif child is Polygon2D:
+			polys.append(child)
+	update_shader_visibility()
 
 
 func _physics_process(delta: float) -> void:
 	if spawn_grace_frames > 0:
 		spawn_grace_frames -= 1
+
+
+func update_shader_visibility() -> void:
+	var is_visible = Statics.data_general["distort_shader_toggle"]
+	for poly in polys:
+		poly.visible = is_visible
 
 
 func _on_body_enter(body) -> void:
@@ -33,10 +44,11 @@ func _on_body_exit(body) -> void:
 		body.environment = null
 
 
-func get_closest_point(in_point:Vector2) -> Array[Vector2]:
+func get_closest_point(in_point:Vector2) -> Array:
 	var shortest_distance = -1
 	var out_point = Vector2.ZERO
 	var normal_dir = Vector2.ZERO
+	var closest_box = null
 	for box in boxes:
 		var rect:RectangleShape2D = box.shape
 		var r_top = box.global_position.y - (rect.size.y * 0.5)
@@ -75,5 +87,6 @@ func get_closest_point(in_point:Vector2) -> Array[Vector2]:
 					normal_dir = Vector2.RIGHT
 				d_corner:
 					normal_dir = Vector2.UP if corner_y == r_top else Vector2.DOWN
+			closest_box = box
 			out_point = in_point + (shortest_distance * normal_dir * (1 if match_edge else -1))
-	return [ out_point, normal_dir ]
+	return [ out_point, normal_dir, closest_box ]

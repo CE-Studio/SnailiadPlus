@@ -35,7 +35,7 @@ func _ready() -> void:
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
 	if current_room != null:
 		player.reparent(self)
-		current_room.queue_free()
+		despawn_room(current_room)
 	var new_room:Room = load(path).instantiate()
 	add_child(new_room)
 	move_child(new_room, 0)
@@ -54,3 +54,10 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	if new_room.area_id != current_area:
 		UICore.instance.show_area_text(new_room.area_id)
 		current_area = new_room.area_id
+
+
+func despawn_room(room:Room) -> void:
+	for child in Statics.get_all_children(room):
+		if child is EnvironmentArea:
+			child.read_interactions = false
+	room.queue_free()
