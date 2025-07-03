@@ -18,7 +18,7 @@ shader = ExtResource("2_xwnv8")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
 shader = ExtResource("2_xwnv8")
 
-[node name="SpikeyCommon" type="CharacterBody2D"]
+[node name="SpikeyTough" type="CharacterBody2D"]
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_eebw4")
@@ -27,6 +27,7 @@ attack = 4
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_43bce")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 64
@@ -34,6 +35,7 @@ collision_mask = 44
 
 [node name="HitBox" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_6ijum")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4sk1w")
@@ -71,6 +73,12 @@ hit_from_inside = true
 
 [node name="CCWBack" type="RayCast2D" parent="CastGroup"]
 position = Vector2(-8, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="Center" type="RayCast2D" parent="CastGroup"]
+position = Vector2(0, 8)
 target_position = Vector2(0, 12)
 collision_mask = 3
 hit_from_inside = true

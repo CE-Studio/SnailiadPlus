@@ -18,6 +18,12 @@ extends Node2D
 @export var minimap_offset:Vector2i = Vector2i.ZERO
 @export var minimap_autofill:Array[Vector2i] = []
 @export var song_change:MusicManager.Loops = MusicManager.Loops.None
+
+@export_group("Tiled importing")
+@export var tiled_path:String = "res://Resources/map.tmx"
+@export var tiled_corner:Vector2i = Vector2.ZERO
+@export var tiled_range:Vector2i = Vector2.ZERO
+@export var tiled_layers:Array[String] = [ "", "", "", "", "", "", "" ]
 #endregion
 
 
@@ -159,6 +165,11 @@ func _spawn_entities_from_layer() -> void:
 	for tile in map_entity.get_used_cells():
 		var tile_coords = map_entity.get_cell_atlas_coords(tile)
 		match tile_coords:
+			Vector2i(4, 0): # Blob
+				var blob:BlobCommon = load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
+				blob.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(blob)
+			
 			Vector2i(11, 0): # Blue spikey (CW)
 				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)

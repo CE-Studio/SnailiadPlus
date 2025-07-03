@@ -44,6 +44,7 @@ var stopped:bool = false
 @onready var cast_ccw_check:RayCast2D = $"CastGroup/CCWCheck"
 @onready var cast_cw_back:RayCast2D = $"CastGroup/CWBack"
 @onready var cast_ccw_back:RayCast2D = $"CastGroup/CCWBack"
+@onready var cast_center:RayCast2D = $"CastGroup/Center"
 @onready var pea:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletPea.tscn")
 #endregion
 
@@ -133,7 +134,8 @@ func _physics_process(delta: float) -> void:
 			vel = 0.0
 			var front_cast = cast_ccw_check if ccw else cast_cw_check
 			var back_cast = cast_ccw_back if ccw else cast_cw_back
-			if front_cast.is_colliding() or back_cast.is_colliding() or grace_period > 0:
+			if (front_cast.is_colliding() or back_cast.is_colliding() or cast_center.is_colliding()
+			or grace_period > 0.0):
 				match direction:
 					Statics.DirsSurface.FLOOR:
 						velocity = (Vector2.RIGHT if ccw else Vector2.LEFT) * SPEED

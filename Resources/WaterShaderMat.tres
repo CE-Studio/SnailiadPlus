@@ -4,3 +4,4 @@
 
 [resource]
 shader = ExtResource("1_82xq2")
+shader_parameter/aspect_ratio = Vector2(400, 240)

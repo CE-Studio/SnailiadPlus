@@ -30,6 +30,9 @@ func update_shader_visibility() -> void:
 	var is_visible = Statics.data_general["distort_shader_toggle"]
 	for poly in polys:
 		poly.visible = is_visible
+		if is_visible:
+			var ratio_id = Statics.data_general["aspect_ratio"]
+			poly.material.set("shader_parameter/aspect_ratio", Statics.ASPECT_RATIOS[ratio_id])
 
 
 func _on_body_enter(body) -> void:

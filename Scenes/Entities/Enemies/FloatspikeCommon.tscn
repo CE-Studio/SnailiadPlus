@@ -29,6 +29,7 @@ collision_mask = 44
 
 [node name="HitBox" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_qrvrh")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qqo6b")
