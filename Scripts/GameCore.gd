@@ -34,6 +34,7 @@ func _ready() -> void:
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
 	if current_room != null:
+		player.environment_exit_override = 2
 		player.reparent(self)
 		despawn_room(current_room)
 	var new_room:Room = load(path).instantiate()

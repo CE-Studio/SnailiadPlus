@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://dodf5h2iwgbwx"]
+
+[ext_resource type="Script" uid="uid://bbux3c3vr0y0j" path="res://Scripts/Bullets/Player/PlayerBulletBD.gd" id="1_xnsam"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_vet8q"]
+[ext_resource type="AudioStream" uid="uid://ci2wulxf6x53r" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBD.ogg" id="3_g17go"]
+[ext_resource type="AudioStream" uid="uid://caydxn5jc7fqo" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBDPower.ogg" id="4_ra7jl"]
+[ext_resource type="Texture2D" uid="uid://ddtm7h56jq1k4" path="res://Assets/Images/Bullets/Player/PlayerBulletBD.png" id="5_x1bwc"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_6xfrw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xooq3"]
+size = Vector2(48, 48)
+
+[node name="PlayerBulletBD" type="Node2D"]
+script = ExtResource("1_xnsam")
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_vet8q")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBD.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 65
+
+[node name="Normal" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="Power" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_xooq3")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Normal" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("3_g17go")
+bus = &"Sfx"
+
+[node name="Power" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("4_ra7jl")
+bus = &"Sfx"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("5_x1bwc")
+hframes = 6
+vframes = 12
+frame = 2
+script = ExtResource("6_6xfrw")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2.4, 2.4)

@@ -36,6 +36,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_enter(body) -> void:
+	if contained_bodies.has(body):
+		return
 	if spawn_grace_frames <= 0 and read_interactions:
 		var edge_data:Array = get_closest_point(body.position)
 		var speed:float
@@ -49,6 +51,11 @@ func _on_body_enter(body) -> void:
 
 
 func _on_body_exit(body) -> void:
+	if not contained_bodies.has(body):
+		return
+	if body.get_parent() is Player:
+		if body.get_parent().environment_exit_override > 0:
+			return
 	if spawn_grace_frames <= 0 and read_interactions:
 		var edge_data = get_closest_point(body.position)
 		if body is not Enemy or body.environment == self:
@@ -57,6 +64,7 @@ func _on_body_exit(body) -> void:
 
 
 func call_splash(pos:Vector2, normal:Vector2, make_bubbles:float = 0, home_box:CollisionShape2D = null) -> void:
+	print(read_interactions)
 	var particle_setting = Statics.data_general["particle_state"]
 	if (particle_setting != Statics.ParticleOptions.ENVIRONMENTS
 	and particle_setting != Statics.ParticleOptions.ALL):

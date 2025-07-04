@@ -7,7 +7,7 @@ extends Node2D
 
 const MIN_SEPARATION = 4.0
 const MAX_SEPARATION = 4.0
-const MOVE_RATE = 12.0
+const MOVE_RATE = 20.0
 
 var menu:MainMenu
 var meta_info:Array = []

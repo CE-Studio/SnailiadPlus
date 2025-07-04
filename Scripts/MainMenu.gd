@@ -5,7 +5,7 @@ extends Node2D
 const TITLE_REST_Y = 40
 const TITLE_MOVE_RATE = 8
 const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
-const SELECTOR_MOVE_RATE = 16
+const SELECTOR_MOVE_RATE = 20
 const SELECTOR_OFFSET = Vector2i(16, -2)
 
 @export var is_main_menu:bool = false

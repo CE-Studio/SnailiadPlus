@@ -24,6 +24,7 @@ script = ExtResource("1_sc7m0")
 area_id = 1
 minimap_offset = Vector2i(17, 4)
 song_change = 3
+tiled_layers = Array[String](["", "", "", "", "", "", ""])
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 
@@ -101,6 +102,7 @@ point_ratio_adjustments = Array[Vector2i]([Vector2i(0, 1), Vector2i(0, -1), Vect
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_qpcak")]
 position = Vector2(-4, 1656)
 rotation = 3.14159
+exit_room = "uid://ieoeoo6r43em"
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("4_qpcak")]
 position = Vector2(-4, 1400)

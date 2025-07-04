@@ -5,7 +5,7 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	if dir == Vector2.ZERO:
 		dir = Vector2.RIGHT
 	super._spawn(dir, rapid_shot)
-	velocity = 60
+	velocity = 370
 	velocity_init = velocity
 	cooldown /= rapid_shot
 	#region Direction animation
@@ -26,5 +26,4 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 
 func _physics_process(delta: float) -> void:
 	position += velocity * normalized_dir * delta
-	velocity += velocity_init * 18.0 * delta
 	super(delta)

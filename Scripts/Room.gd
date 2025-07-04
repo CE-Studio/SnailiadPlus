@@ -23,7 +23,7 @@ extends Node2D
 @export_file("*.tmx") var tiled_path:String = "res://Resources/map.tmx"
 @export var tiled_corner:Vector2i = Vector2.ZERO
 @export var tiled_range:Vector2i = Vector2.ZERO
-@export var tiled_layers:Array[String] = [ "", "", "", "", "", "", "" ]
+@export var tiled_layers:Array[String] = [ "sky", "", "", "bg", "fg", "", "sp" ]
 @export_tool_button("Import tile data") var import_button:Callable = _import_from_tiled
 #endregion
 
@@ -171,6 +171,11 @@ func _spawn_entities_from_layer() -> void:
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 			
+			Vector2i(5, 0): # Blub
+				var blob:BlobTough = load("res://Scenes/Entities/Enemies/BlobTough.tscn").instantiate()
+				blob.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(blob)
+			
 			Vector2i(11, 0): # Blue spikey (CW)
 				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
@@ -248,6 +253,16 @@ func _spawn_entities_from_layer() -> void:
 				layer_ground.add_child(dev_tile)
 				layer_ground.move_child(dev_tile, 1)
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
+			
+			Vector2i(7, 28): # Green babyfish
+				var fish:Babyfish1 = load("res://Scenes/Entities/Enemies/Babyfish1.tscn").instantiate()
+				fish.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fish)
+			
+			Vector2i(8, 28): # Pink babyfish
+				var fish:Babyfish2 = load("res://Scenes/Entities/Enemies/Babyfish2.tscn").instantiate()
+				fish.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fish)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()

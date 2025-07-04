@@ -167,7 +167,7 @@ func _physics_process(delta) -> void:
 				_damage(max_damage)
 		parry_damage = 0
 		for bullet in pbullets_to_despawn:
-			bullet.queue_free()
+			bullet.despawn(true)
 		for bullet in ebullets_to_despawn:
 			bullet.queue_free()
 		pbullets_to_despawn.clear()
@@ -223,7 +223,7 @@ func kill() -> void:
 		var range = kill_particle_range
 		var pos = Vector2(randi_range(-range.x, range.x), randi_range(-range.y, range.y))
 		var part = kill_particle_types[randi() % kill_particle_types.size()]
-		Statics.spawn_particle(part, Room.Layers.GROUND, position + pos)
+		Statics.spawn_particle(part, Room.Layers.FG1, position + pos)
 	if Statics.current_profile["character"] == Player.Players.LEECHY:
 		pass #SpawnHealthOrbs
 	environment = null

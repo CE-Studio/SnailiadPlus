@@ -22,6 +22,7 @@ script = ExtResource("1_e03i5")
 area_id = 1
 minimap_offset = Vector2i(14, 8)
 song_change = 3
+tiled_layers = Array[String](["", "", "", "", "", "", ""])
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.6, 0.9)

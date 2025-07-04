@@ -36,12 +36,19 @@ func update_shader_visibility() -> void:
 
 
 func _on_body_enter(body) -> void:
+	if contained_bodies.has(body):
+		return
 	contained_bodies.append(body)
 	if body is Enemy:
 		body.environment = self
 
 
 func _on_body_exit(body) -> void:
+	if not contained_bodies.has(body):
+		return
+	if body.get_parent() is Player:
+		if body.get_parent().environment_exit_override > 0:
+			return
 	contained_bodies.remove_at(contained_bodies.find(body))
 	if body is Enemy and body.environment == self:
 		body.environment = null

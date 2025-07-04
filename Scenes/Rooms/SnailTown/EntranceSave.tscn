@@ -17,6 +17,7 @@ point_count = 1
 script = ExtResource("1_wk23p")
 minimap_offset = Vector2i(13, 8)
 song_change = 1
+tiled_layers = Array[String](["", "", "", "", "", "", ""])
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
 
