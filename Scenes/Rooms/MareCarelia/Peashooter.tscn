@@ -19,7 +19,7 @@ point_count = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7irb"]
 size = Vector2(912, 272)
 
-[node name="Template" type="Node2D"]
+[node name="Peashooter" type="Node2D"]
 script = ExtResource("1_8n4r2")
 area_id = 1
 minimap_offset = Vector2i(17, 11)
@@ -101,6 +101,7 @@ exit_transition = 1
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("4_3p1xf")]
 position = Vector2(820, 64)
 my_id = 1
+exit_room = "uid://b1c4je37tqo0j"
 
 [node name="WaterArea" parent="." instance=ExtResource("7_5lobi")]
 

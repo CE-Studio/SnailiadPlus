@@ -22,7 +22,7 @@ size = Vector2(248, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqtpj"]
 size = Vector2(1080, 592)
 
-[node name="Template" type="Node2D"]
+[node name="Hub1" type="Node2D"]
 script = ExtResource("1_f285a")
 area_id = 1
 minimap_offset = Vector2i(14, 10)

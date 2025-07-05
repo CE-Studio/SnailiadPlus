@@ -3,14 +3,8 @@ class_name UICore
 
 
 #region Variables
-var cam:CamControl
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
-var heart_group:Node2D
-var color_cover:ColorCover
-var save_icon:JsonSprite2D
-var minimap:Minimap
-var border:JsonSprite2D
 
 var flashy_popup_scene:PackedScene
 var color_popup_scene:PackedScene
@@ -18,12 +12,20 @@ var color_popup_scene:PackedScene
 var active_area_label:Node
 
 static var instance:UICore
+
+@onready var cam:CamControl = $"Camera2D"
+@onready var heart_group:Node2D = $"TL/Hearts"
+@onready var color_cover:ColorCover = $"ColorCover"
+@onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
+@onready var minimap:Minimap = $"TR/Minimap"
+@onready var border:JsonSprite2D = $"Border"
+@onready var popup_layer:Node2D = $"PopupLayer"
+@onready var pause_layer:Node2D = $"PauseLayer"
 #endregion
 
 
 func instantiate() -> void:
 	instance = self
-	cam = $"Camera2D"
 	cam.instantiate()
 	
 	var icon_id = 0
@@ -34,17 +36,9 @@ func instantiate() -> void:
 		icon.action = str(icon_id) + "_off"
 		icon_id += 1
 	
-	heart_group = $"TL/Hearts"
 	draw_new_hearts()
 	
-	color_cover = $"ColorCover"
-	
-	save_icon = $"BR/SaveIcon"
 	save_icon.visible = false
-	
-	minimap = $"TR/Minimap"
-	
-	border = $"Border"
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
@@ -159,11 +153,11 @@ func set_border_anim(anim_id:int) -> void:
 
 func show_item_collection_text(item_label:String) -> void:
 	var header_label = flashy_popup_scene.instantiate()
-	add_child(header_label)
+	popup_layer.add_child(header_label)
 	header_label.instance(item_label)
 	header_label.position = Vector2i(200, 180)
 	var percentage_label = flashy_popup_scene.instantiate()
-	add_child(percentage_label)
+	popup_layer.add_child(percentage_label)
 	percentage_label.instance(Statics.get_text("hud_collectedItemPercentage") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
 	percentage_label.position = Vector2i(200, 200)
 
@@ -173,7 +167,7 @@ func show_area_text(area_id:int) -> void:
 		active_area_label.queue_free()
 	
 	var area_label = color_popup_scene.instantiate()
-	add_child(area_label)
+	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE
 	match area_id:
 		0: area_color = Statics.get_color(Vector2i(2, 5))

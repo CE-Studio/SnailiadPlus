@@ -273,26 +273,16 @@ func _physics_process(delta) -> void:
 		home_gravity = default_gravity
 	
 	# Here, we control weapon swapping
-	#region Weapon equipping
-	var weapon_req:int = 0
 	if Input.is_action_just_pressed("Weapon0") and Statics.check_item(Item.ItemTypes.BROOM):
-		weapon_req = (weapon_req + 1) if Statics.stack_weapons else 1
+		_toggle_weapon(0)
 	if Input.is_action_just_pressed("Weapon1") and Statics.check_item(Item.ItemTypes.PEASHOOTER):
-		weapon_req = (weapon_req + 2) if Statics.stack_weapons else 2
+		_toggle_weapon(1)
 	if (Input.is_action_just_pressed("Weapon2")
 	and (Statics.check_item(Item.ItemTypes.BOOMERANG) or Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG))):
-		weapon_req = (weapon_req + 4) if Statics.stack_weapons else 4
+		_toggle_weapon(2)
 	if (Input.is_action_just_pressed("Weapon3")
 	and (Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) or Statics.check_item(Item.ItemTypes.DEBUG_WAVE))):
-		weapon_req = (weapon_req + 8) if Statics.stack_weapons else 8
-	if weapon_req > 0:
-		if Statics.stack_weapons:
-			selected_weapon = selected_weapon ^ weapon_req
-			UICore.instance.update_weapon_icons()
-		else:
-			selected_weapon = weapon_req
-			UICore.instance.update_weapon_icons()
-	#endregion
+		_toggle_weapon(3)
 	
 	# Next, we target a different block of movement code dependent on our current gravity
 	# Under typical circumstances, each gravity case would be the same with just a few directionally-dependent values adjusted,
@@ -970,6 +960,7 @@ func _toggle_weapon(id:int) -> void:
 	else:
 		selected_weapon = shifted_id
 	Statics.current_profile["equipped_weapons"] = selected_weapon
+	UICore.instance.update_weapon_icons()
 
 
 func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:

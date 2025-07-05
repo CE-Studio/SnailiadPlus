@@ -13,23 +13,32 @@ const SELECTOR_OFFSET = Vector2i(16, -2)
 var is_main_awaiting_input:bool = false
 var version_panel_active:bool = false
 var input_delay_timer:float = -2.25
-var title:Node2D
 var click_play_text:SnailyText
 var version_panel:ContextPanel
 var active_layers:int
 var active_layer:MenuLayer
 var selector_y_offset:float
+var spawn_buffer_frames:int = 2
 
+@onready var title:Node2D = $"Title"
 @onready var layer_group:Node2D = $"LayerGroup"
 @onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
+@onready var save_icon:JsonSprite2D = $"SaveIcon"
 #endregion
 
 
 func _ready() -> void:
+	save_icon.visible = false
+			
+	var version_text = $"Version"
+	var version_string = (Statics.get_text("menu_version_header") + "\n"
+	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
+	version_text.set_snaily_text(version_string)
+	version_text.add_shadow(1)
+	
 	if is_main_menu:
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
-		title = $"Title"
 		if not Statics.main_menu_booted_once:
 			var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
 			var current_ver = Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
@@ -49,18 +58,13 @@ func _ready() -> void:
 			click_play_text.set_snaily_text(Statics.get_text("test"))
 			click_play_text.add_border(1)
 			click_play_text.add_shadow(2)
-			
-			var version_text = $"Version"
-			var version_string = (Statics.get_text("menu_version_header") + "\n"
-			+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
-			version_text.set_snaily_text(version_string)
-			version_text.add_shadow(1)
 		else:
 			title.position.y = TITLE_REST_Y
-		$"SaveIcon".visible = false
 	else:
+		title.position.y = TITLE_REST_Y
 		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
 		selectors[1].action = "right_%d" % int(Statics.current_profile["character"])
+		create_layer("MainAlt")
 
 
 func _process(delta: float) -> void:
@@ -70,15 +74,15 @@ func _process(delta: float) -> void:
 		click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
 		if input_delay_timer >= -1.5:
 			if (Input.get_action_raw_strength("UIClick")
-			or Input.get_action_raw_strength("Jump")):
+			or Input.get_action_raw_strength("Jump")) and spawn_buffer_frames <= 0:
 				spawn_menu()
 				is_main_awaiting_input = false
 	if not is_main_awaiting_input:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
-		if Input.is_action_just_pressed("Pause"):
+		if Input.is_action_just_pressed("Pause") and spawn_buffer_frames <= 0:
 			selector_y_offset = 0
-			if active_layers > 1:
+			if active_layers > 1 or not is_main_menu:
 				clear_top_layer(0)
 			else:
 				create_layer("Quit")
@@ -99,6 +103,9 @@ func _process(delta: float) -> void:
 					1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
 				var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
 				selectors[i].global_position = new_pos
+	
+	if spawn_buffer_frames > 0:
+		spawn_buffer_frames -= 1
 
 
 func spawn_menu() -> void:
@@ -169,6 +176,9 @@ func clear_top_layer(_value) -> MenuLayer:
 		#endregion
 		active_layer = second_top_layer
 		return second_top_layer
+	elif active_layers == 1 and not is_main_menu:
+		UICore.instance.pause_layer.unpause_fade_out()
+		queue_free()
 	return null
 
 
@@ -194,5 +204,5 @@ func save_profile(id:int) -> void:
 
 
 func play_save_anim() -> void:
-	$"SaveIcon".visible = true
-	$"SaveIcon".action = "anim"
+	save_icon.visible = true
+	save_icon.action = "anim"

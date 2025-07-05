@@ -115,14 +115,17 @@ exit_transition = 2
 position = Vector2(-4, 632)
 rotation = -3.14159
 my_id = 2
+exit_room = "uid://pbysg35ta2cv"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("4_qpcak")]
 position = Vector2(404, 632)
 my_id = 3
+exit_room = "uid://cg67b3785dqlj"
 
 [node name="RoomTransitionTrigger5" parent="." instance=ExtResource("4_qpcak")]
 position = Vector2(404, 136)
 my_id = 4
+exit_room = "uid://7uewgrinca8f"
 
 [node name="RoomTransitionTrigger6" parent="." instance=ExtResource("4_qpcak")]
 position = Vector2(320, -4)

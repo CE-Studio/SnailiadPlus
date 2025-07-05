@@ -275,6 +275,13 @@ func _spawn_entities_from_layer() -> void:
 				grass.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.CEILING)
+			
+			Vector2i(2, 31): # Peashooter breakable
+				var pea_tile:Breakable = breakable_scene.instantiate()
+				pea_tile.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(pea_tile)
+				layer_ground.move_child(pea_tile, 1)
+				pea_tile.spawn(tile, Breakable.TileTypes.PEASHOOTER, false)
 
 
 func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:
