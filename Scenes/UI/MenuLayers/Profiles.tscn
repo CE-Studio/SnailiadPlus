@@ -56,8 +56,6 @@ func _ready() -> void:
 	layer.meta_info.append(0)
 	_update_profile_buttons()
 	panel.modulate.a = 0
-	#panel.add_button(\"menu_add_generic_no\", _on_panel_no)
-	#panel.add_button(\"menu_add_generic_yes\", _on_panel_yes)
 	panel.call_deferred(\"add_button\",
 		Statics.get_text(\"menu_add_generic_no\"), _on_panel_no, false)
 	panel.call_deferred(\"add_button\",

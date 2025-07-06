@@ -64,7 +64,6 @@ func _on_body_exit(body) -> void:
 
 
 func call_splash(pos:Vector2, normal:Vector2, make_bubbles:float = 0, home_box:CollisionShape2D = null) -> void:
-	print(read_interactions)
 	var particle_setting = Statics.data_general["particle_state"]
 	if (particle_setting != Statics.ParticleOptions.ENVIRONMENTS
 	and particle_setting != Statics.ParticleOptions.ALL):

@@ -19,17 +19,19 @@ var active_layers:int
 var active_layer:MenuLayer
 var selector_y_offset:float
 var spawn_buffer_frames:int = 2
+var read_inputs:bool = true
 
 @onready var title:Node2D = $"Title"
 @onready var layer_group:Node2D = $"LayerGroup"
 @onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
 @onready var save_icon:JsonSprite2D = $"SaveIcon"
+@onready var color_cover:ColorCover = $"ColorCover"
 #endregion
 
 
 func _ready() -> void:
 	save_icon.visible = false
-			
+	
 	var version_text = $"Version"
 	var version_string = (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
@@ -37,6 +39,7 @@ func _ready() -> void:
 	version_text.add_shadow(1)
 	
 	if is_main_menu:
+		get_tree().paused = false
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
 		if not Statics.main_menu_booted_once:
@@ -49,7 +52,7 @@ func _ready() -> void:
 				version_panel.set_text(Statics.get_text("menu_olderVersion_body"), 1)
 				version_panel.add_button(Statics.get_text("menu_olderVersion_confirm"), spawn_menu)
 				version_panel.can_focus = true
-				$"ColorCover".set_new_fade(Color(0.0, 0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0, 0.4), 0.5)
+				color_cover.set_new_fade(Color(0.0, 0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0, 0.4), 0.5)
 			else:
 				$"VersionWarnPanel".queue_free()
 				is_main_awaiting_input = true
@@ -60,6 +63,11 @@ func _ready() -> void:
 			click_play_text.add_shadow(2)
 		else:
 			title.position.y = TITLE_REST_Y
+			$"ClickPlay".queue_free()
+			$"VersionWarnPanel".queue_free()
+			is_main_awaiting_input = false
+			spawn_menu()
+			
 	else:
 		title.position.y = TITLE_REST_Y
 		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
@@ -73,14 +81,15 @@ func _process(delta: float) -> void:
 			input_delay_timer += delta
 		click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
 		if input_delay_timer >= -1.5:
-			if (Input.get_action_raw_strength("UIClick")
-			or Input.get_action_raw_strength("Jump")) and spawn_buffer_frames <= 0:
+			if ((Input.get_action_raw_strength("UIClick")
+			or Input.get_action_raw_strength("Jump"))
+			and spawn_buffer_frames <= 0 and read_inputs):
 				spawn_menu()
 				is_main_awaiting_input = false
 	if not is_main_awaiting_input:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
-		if Input.is_action_just_pressed("Pause") and spawn_buffer_frames <= 0:
+		if Input.is_action_just_pressed("Pause") and spawn_buffer_frames <= 0 and read_inputs:
 			selector_y_offset = 0
 			if active_layers > 1 or not is_main_menu:
 				clear_top_layer(0)
@@ -115,10 +124,11 @@ func spawn_menu() -> void:
 		if version_panel:
 			version_panel.queue_free()
 			$"ColorCover".set_new_fade($"ColorCover".end_color, Color(0.0, 0.0, 0.0, 0.0), 0.25)
+		if not Statics.main_menu_booted_once:
+			Statics.data_general["game_version"] = ProjectSettings.get_setting("application/config/version")
+			Statics.save_general()
+			Statics.current_profile = Statics.data_profile1
 		Statics.main_menu_booted_once = true
-		Statics.data_general["game_version"] = ProjectSettings.get_setting("application/config/version")
-		Statics.save_general()
-		Statics.current_profile = Statics.data_profile1
 		create_layer("Main")
 
 

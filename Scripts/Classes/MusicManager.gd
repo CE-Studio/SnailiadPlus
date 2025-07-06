@@ -53,10 +53,18 @@ var current_song:Loops = Loops.None
 var group_focus:int = 0
 var is_group_song:bool = false
 var awaiting_load:bool = false
+var global_vol_mult:float = 1.0
+var global_vol_fade:float = 1.0
 #endregion
 
 
 func _process(delta: float) -> void:
+	if global_vol_mult != global_vol_fade:
+		if abs(global_vol_fade - global_vol_mult) < delta:
+			global_vol_mult = global_vol_fade
+		else:
+			global_vol_mult += delta if (global_vol_fade > global_vol_mult) else -delta
+	
 	if awaiting_load:
 		var all_loaded = true
 		for loop in active_loops:
@@ -72,7 +80,11 @@ func _process(delta: float) -> void:
 			var vol_change:float = GROUP_FADE_TIME_SECONDS * delta
 			if i != group_focus:
 				vol_change *= -1
-			player.volume_linear = clampf(player.volume_linear + vol_change, 0.0, 1.0)
+			player.volume_linear = clampf(player.volume_linear + vol_change, 0.0, global_vol_mult)
+	else:
+		for i in range(active_players.size()):
+			var player:AudioStreamPlayer = active_players[i]
+			player.volume_linear = global_vol_mult
 
 
 func play_song(loop:Loops) -> void:

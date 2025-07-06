@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=3 uid="uid://dda3jgnbeg4jd"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_ghgvq"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_h0fbv"]
+
+[sub_resource type="GDScript" id="GDScript_ghgvq"]
+resource_name = "QuitToMenu"
+script/source = "extends VBoxContainer
+
+
+@onready var layer:MenuLayer = get_parent()
+
+
+func _on_quit_save(_value) -> void:
+	layer.menu.save_profile(Statics.current_profile_id)
+	_on_quit_no_save(_value)
+
+
+func _on_quit_no_save(_value) -> void:
+	layer.can_focus = false
+	layer.menu.read_inputs = false
+	layer.menu.color_cover.set_new_fade(Color(0.0, 0.0, 0.0, 0.0), Color.BLACK, 1.0)
+	GameCore.instance.music_manager.global_vol_fade = 0
+	$\"Timer\".start()
+
+func _on_timer_timeout() -> void:
+	get_tree().change_scene_to_file(\"res://Scenes/MenuScene.tscn\")
+"
+
+[node name="QuitToMenu" type="Node2D"]
+script = ExtResource("1_ghgvq")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = SubResource("GDScript_ghgvq")
+
+[node name="Header" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+text_id = "menu_option_return_header"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="QuitSave" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../QuitNoSave")
+focus_next = NodePath("../QuitNoSave")
+focus_previous = NodePath("../Back")
+text_id = "menu_option_return_confirmSave"
+hide_frame = true
+
+[node name="QuitNoSave" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../QuitSave")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../QuitSave")
+text_id = "menu_option_return_confirmNoSave"
+hide_frame = true
+
+[node name="Back" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../QuitNoSave")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../QuitSave")
+focus_next = NodePath("../QuitSave")
+focus_previous = NodePath("../QuitNoSave")
+text_id = "menu_option_return_cancel"
+back_one_layer = true
+grab_focus_on_load = true
+hide_frame = true
+
+[node name="Timer" type="Timer" parent="MainVBox"]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="button_pressed" from="MainVBox/QuitSave" to="MainVBox" method="_on_quit_save"]
+[connection signal="button_pressed" from="MainVBox/QuitNoSave" to="MainVBox" method="_on_quit_no_save"]
+[connection signal="timeout" from="MainVBox/Timer" to="MainVBox" method="_on_timer_timeout"]
