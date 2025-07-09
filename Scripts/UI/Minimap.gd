@@ -72,7 +72,8 @@ var organized_markers:Dictionary = {
 	"unknowns": [],
 	"p_markers": []
 }
-static var marker_positions:Array = []
+static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
+var marker_positions:Array = []
 
 @onready var panel:JsonSprite2D = $"Panel"
 @onready var panel_mask:Sprite2D = $"PanelMask"
@@ -104,6 +105,7 @@ func create_cell_mask() -> void:
 
 
 func log_markers() -> void:
+	marker_positions = unprocessed_marker_positions.duplicate()
 	var screen_pos:Vector2i = Vector2i.ZERO
 	for i in range(marker_positions.size()):
 		if ((marker_positions[i] is Array and marker_positions[i][0] > MarkerTypes.NONE)
