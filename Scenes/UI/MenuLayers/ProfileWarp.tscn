@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvrflv73h4dv5"]
+[gd_scene load_steps=5 format=3 uid="uid://mkxuxq84ey5a"]
 
-[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5cqf1"]
-[ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="2_l5ldk"]
-[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_nahkj"]
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_52spg"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_gx5ja"]
+[ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="3_3e4a6"]
 
 [sub_resource type="GDScript" id="GDScript_5cqf1"]
 resource_name = "ProfileSpawn"
@@ -11,11 +11,13 @@ script/source = "extends VBoxContainer
 
 var layer:MenuLayer
 var pro_id:int
+var fade_color:Color
+var fade_color_a:Color
 
 
 func _ready() -> void:
 	layer = get_parent()
-	pro_id = layer.menu.get_next_layer_up().meta_info[0]
+	pro_id = Statics.current_profile_id
 	var save_room_name
 	match pro_id:
 		1: save_room_name = Statics.data_profile1[\"save_room\"]
@@ -28,6 +30,9 @@ func _ready() -> void:
 		$\"SavePoint\".set_subtext(\"%s - %s\" % [save_area, save_room])
 	else:
 		$\"SavePoint\".set_subtext(save_area)
+	fade_color = Statics.get_color(Vector2i(1, 10))
+	fade_color_a = fade_color
+	fade_color_a.a = 0
 
 
 func _on_save_spawn_pressed(_value) -> void:
@@ -41,7 +46,11 @@ func _on_save_spawn_pressed(_value) -> void:
 		load_pos = str_to_var(\"Vector2i\" + load_pos)
 	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile[\"save_room\"])
 	Statics.load_coords = load_pos
-	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+	layer.can_focus = false
+	layer.menu.read_inputs = false
+	layer.menu.color_cover.set_new_fade(fade_color_a, fade_color, 0.5)
+	GameCore.instance.music_manager.set_fade(0.0, 1.25)
+	$\"Timer\".start()
 
 
 func _on_world_spawn_pressed(_value) -> void:
@@ -53,11 +62,25 @@ func _on_world_spawn_pressed(_value) -> void:
 	var world_spawn = Statics.WORLD_SPAWN[Statics.current_profile[\"character\"]]
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
-	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
+	layer.can_focus = false
+	layer.menu.read_inputs = false
+	layer.menu.color_cover.set_new_fade(fade_color_a, fade_color, 0.5)
+	GameCore.instance.music_manager.set_fade(0.0, 1.25)
+	$\"Timer\".start()
+
+func _on_timer_timeout() -> void:
+	GameCore.instance.music_manager.stop_all()
+	GameCore.instance.music_manager.set_global_volume(1.0)
+	UICore.instance.color_cover.set_new_fade(fade_color, fade_color_a, 0.25)
+	GameCore.instance.spawn_room(Statics.load_room)
+	GameCore.instance.player.reset_position(Statics.load_coords)
+	UICore.instance.cam.set_layer_position(Statics.load_coords)
+	get_tree().paused = false
+	layer.menu.queue_free()
 "
 
 [node name="ProfileSpawn" type="Node2D"]
-script = ExtResource("1_5cqf1")
+script = ExtResource("1_52spg")
 
 [node name="MainVBox" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(400, 0)
@@ -67,10 +90,10 @@ offset_bottom = 220.0
 alignment = 1
 script = SubResource("GDScript_5cqf1")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="Header" parent="MainVBox" instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text_id = "menu_option_loadGame_header"
+text_id = "menu_option_loadGame_headerWarp"
 disabled = true
 hide_frame = true
 
@@ -79,7 +102,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="SavePoint" parent="MainVBox" instance=ExtResource("2_l5ldk")]
+[node name="SavePoint" parent="MainVBox" instance=ExtResource("3_3e4a6")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -88,12 +111,12 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../WorldSpawn")
 focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
-text_id = "menu_option_loadGame_save"
+text_id = "menu_option_loadGame_saveWarp"
 subtext_id = "Area - Room"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="WorldSpawn" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="WorldSpawn" parent="MainVBox" instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -102,10 +125,10 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../SavePoint")
-text_id = "menu_option_loadGame_spawn"
+text_id = "menu_option_loadGame_spawnWarp"
 hide_frame = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="Back" parent="MainVBox" instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -118,5 +141,10 @@ text_id = "menu_option_profile_returnTo"
 back_one_layer = true
 hide_frame = true
 
+[node name="Timer" type="Timer" parent="MainVBox"]
+wait_time = 0.75
+one_shot = true
+
 [connection signal="button_pressed" from="MainVBox/SavePoint" to="MainVBox" method="_on_save_spawn_pressed"]
 [connection signal="button_pressed" from="MainVBox/WorldSpawn" to="MainVBox" method="_on_world_spawn_pressed"]
+[connection signal="timeout" from="MainVBox/Timer" to="MainVBox" method="_on_timer_timeout"]
