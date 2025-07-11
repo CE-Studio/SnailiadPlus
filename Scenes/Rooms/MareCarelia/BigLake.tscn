@@ -95,6 +95,8 @@ exit_transition = 4
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("5_o08cc")]
 position = Vector2(1236, 136)
 my_id = 1
+exit_room = "uid://5k7fuiuvx02m"
+exit_transition = 1
 
 [node name="WaterArea" parent="." instance=ExtResource("6_fdhc5")]
 

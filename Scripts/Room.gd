@@ -242,6 +242,30 @@ func _spawn_entities_from_layer() -> void:
 				enemy_tile.set_full()
 				enemy_tile.set_collision_enemy()
 			
+			Vector2i(3, 24): # Ice spike (floor)
+				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				spike.position = _tile_coords_to_vector_pos(tile)
+				spike.direction = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(spike)
+			
+			Vector2i(4, 24): # Ice spike (ceiling)
+				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				spike.position = _tile_coords_to_vector_pos(tile)
+				spike.direction = Statics.DirsSurface.CEILING
+				layer_ground.add_child(spike)
+			
+			Vector2i(5, 24): # Ice spike (left wall)
+				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				spike.position = _tile_coords_to_vector_pos(tile)
+				spike.direction = Statics.DirsSurface.LWALL
+				layer_ground.add_child(spike)
+			
+			Vector2i(6, 24): # Ice spike (right wall)
+				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				spike.position = _tile_coords_to_vector_pos(tile)
+				spike.direction = Statics.DirsSurface.RWALL
+				layer_ground.add_child(spike)
+			
 			Vector2i(15, 24): # Black floatspike
 				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()
 				floatspike.position = _tile_coords_to_vector_pos(tile)

@@ -927,7 +927,7 @@ func set_box_disable_override(state:bool) -> void:
 		box_shell.disabled = not shelled
 
 
-func adjust_health(amount:int) -> void:
+func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 	health += amount
 	health = clampi(health, 0, max_health)
 	UICore.instance.update_hearts()
