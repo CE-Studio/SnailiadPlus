@@ -39,6 +39,7 @@ func _ready():
 	grav_shock_speed = 40.0
 	grav_shock_steering = 2.5
 	damage_multiplier = 1
+	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
 	
 	sprite.action = "0.floor.right.idle"

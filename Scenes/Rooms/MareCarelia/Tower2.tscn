@@ -116,6 +116,7 @@ aspect_offset = Vector2i(0, 1)
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("7_2uv63")]
 position = Vector2(-4, 1400)
 rotation = -3.14159
+exit_room = "uid://d0v665igakgdb"
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("7_2uv63")]
 position = Vector2(-4, 904)
@@ -128,7 +129,8 @@ exit_transition = 1
 position = Vector2(-4, 600)
 rotation = -3.14159
 scale = Vector2(1, 2.5)
-exit_transition = 2
+my_id = 2
+exit_room = "uid://b5clr6tl36ik5"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("7_2uv63")]
 position = Vector2(404, 136)

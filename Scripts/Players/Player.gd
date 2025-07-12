@@ -151,6 +151,8 @@ var grav_shock_steering:float
 # How fast Gravity Shock can be steered perpendicular to its fire direction
 var damage_multiplier:float
 # A fractional multiplier applied to any damage taken to increase/decrease characters' defense
+var shield_particle_offset:Vector2i
+# An offset from the center of the player used to align any shield particle effect. Should be set as if the player is on the ground facing right
 var health_gain_from_parry:int
 # How much health you recover from a Perfect Parry
 #endregion
@@ -185,6 +187,8 @@ var box_shell:CollisionShape2D
 var sfx_jump:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
 var sfx_hurt:AudioStreamPlayer
+var sfx_ping:AudioStreamPlayer
+var sfx_parry:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
@@ -192,6 +196,7 @@ var front_casts:Array
 var ceil_casts:Array
 var normal_casts:Array
 var shell_casts:Array
+var shield_particle:Particle
 
 
 var debug_print_adjustments:bool = false
@@ -211,6 +216,8 @@ func _ready():
 	sfx_jump = $"AudioGroup/Jump"
 	sfx_shell = $"AudioGroup/Shell"
 	sfx_hurt = $"AudioGroup/Hurt"
+	sfx_ping = $"AudioGroup/Ping"
+	sfx_parry = $"AudioGroup/Parry"
 	cast_group = $"CastGroup"
 	
 	var rect = box_normal.shape.get_rect()
@@ -345,6 +352,29 @@ func _physics_process(delta) -> void:
 		if stun_timer <= 0:
 			stunned = false
 			sprite.visible = true
+	
+	if shield_particle:
+		match gravity_dir:
+			Statics.DirsSurface.FLOOR:
+				shield_particle.position = Vector2(
+					position.x + (shield_particle_offset.x * (-1 if facing_left else 1)),
+					position.y + shield_particle_offset.y
+				)
+			Statics.DirsSurface.LWALL:
+				shield_particle.position = Vector2(
+					position.x - shield_particle_offset.x,
+					position.y + (shield_particle_offset.y * (-1 if facing_left else 1))
+				)
+			Statics.DirsSurface.RWALL:
+				shield_particle.position = Vector2(
+					position.x + shield_particle_offset.x,
+					position.y - (shield_particle_offset.y * (-1 if facing_left else 1))
+				)
+			Statics.DirsSurface.CEILING:
+				shield_particle.position = Vector2(
+					position.x - (shield_particle_offset.x * (-1 if facing_left else 1)),
+					position.y - shield_particle_offset.y
+				)
 
 
 func reset_position(pos:Vector2) -> void:
@@ -746,8 +776,12 @@ func _set_shell(state:bool):
 		sfx_shell.play()
 		_play_anim("shell")
 		current_state = AnimStates.SHELL
+		if Statics.check_item(Item.ItemTypes.SHELL_SHIELD):
+			shield_particle = Statics.spawn_particle("Shield", Room.Layers.GROUND, position)
 	else:
 		_play_anim("unshell")
+		if shield_particle:
+			shield_particle.queue_free()
 
 
 # Takes in specific surface data to figure out a vector to adjust the player's position by,
@@ -928,12 +962,16 @@ func set_box_disable_override(state:bool) -> void:
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
+	var shielded:bool = false
+	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD):
+		amount = 0
+		shielded = true
 	health += amount
 	health = clampi(health, 0, max_health)
 	UICore.instance.update_hearts()
 	if health == 0:
 		die()
-	elif amount < 0:
+	elif amount < 0 or shielded:
 		if shelled:
 			_set_shell(false)
 		# Disabled gravity shock
@@ -941,7 +979,10 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 			_set_direction(home_gravity, facing_left)
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
-		sfx_hurt.play()
+		if shielded:
+			sfx_ping.play()
+		else:
+			sfx_hurt.play()
 
 
 func die() -> void:

@@ -1,0 +1,25 @@
+{
+	"tiles": [2, 2],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"item": {
+			"fps": 10,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[0, 1, false, false],
+				[0, 1, false, false],
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[1, 1, false, false],
+			]
+		}
+	}
+}
