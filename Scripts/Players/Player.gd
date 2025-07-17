@@ -548,7 +548,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				_play_anim("fall")
 	
 	if (shelled and (Input.is_action_pressed("Shoot") or Input.is_action_pressed("Strafe")
-	or rel_axis.x != 0.0) or aim_vector != Vector2.ZERO):
+	or (rel_axis.x != 0.0 and grounded)) or aim_vector != Vector2.ZERO):
 		_toggle_shell()
 	elif rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable):
 		_toggle_shell()
