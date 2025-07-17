@@ -494,13 +494,6 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	# - - Elif is on ground, zero vertical velocity and mark grounded
 	# Move and slide
 	
-	# TODO
-	# Ceiling grab
-	# Anim states
-	# Integrating of upward velocity on jump
-	# Velocity reset on state change
-	# Proper ability checks
-	
 	rel_vel.x = rel_axis.x * run_speed[read_i_speed] * speed_mod
 	if rel_axis.x != 0.0 and grounded and current_state != AnimStates.WALK:
 		current_state = AnimStates.WALK
@@ -527,9 +520,9 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		if ((Input.is_action_just_pressed("Jump") or
 		(Input.is_action_pressed("Jump") and (jump_buffer_counter < jump_buffer))) and 
 		not _check_ceil_casts()[0]):
-			sfx_jump.play()
-			grounded = false
-			rel_vel.y = jump_power[read_i_jump] * jump_mod
+			if shelled:
+				_toggle_shell()
+			rel_vel.y = _jump_decide_state()
 		elif not body.is_on_floor():
 			if _check_ground_casts()[0]:
 				# Snap to ground with another move call
@@ -539,7 +532,18 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			else:
 				grounded = false
 	else:
-		rel_vel.y += gravity[read_i_jump] * gravity_mod * delta
+		if (Input.is_action_just_pressed("Jump") and (coyote_time_counter < coyote_time) and 
+		not _check_ceil_casts()[0]):
+			rel_vel.y = _jump()
+		else:
+			rel_vel.y += gravity[read_i_jump] * gravity_mod * delta
+			if rel_vel.y < 0.0 and not Input.is_action_pressed("Jump"):
+				rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
+			rel_vel.y = clampf(rel_vel.y, -INF, terminal_velocity[read_i_jump])
+			if (rel_vel.y > 0.0
+			and current_state != AnimStates.FALL and current_state != AnimStates.SHELL):
+				current_state = AnimStates.FALL
+				_play_anim("fall")
 	
 	if (shelled and (Input.is_action_pressed("Shoot") or Input.is_action_pressed("Strafe")
 	or rel_axis.x != 0.0) or aim_vector != Vector2.ZERO):
@@ -547,14 +551,14 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	elif rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable):
 		_toggle_shell()
 	
-	if (body.is_on_wall() and rel_axis.y != 0
-	and _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)):
+	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
+	and (_can_grab_wall() or (_can_round_corner_inner() and grounded))):
 		var adjustment:Vector2 = Vector2.ZERO
 		var new_dir = _get_dir_adjacent_ccw(gravity_dir)
 		var perform_flip:bool = true
 		if facing_left:
 			new_dir = _get_dir_adjacent_cw(gravity_dir)
-		if grounded and rel_axis.y < 0.0 and not _check_ceil_casts()[0]:
+		if grounded and rel_axis.y < 0.0 and not _check_ceil_casts()[0] and _can_round_corner_inner():
 			adjustment = Vector2(-1 if facing_left else 1, -1) * _get_box_difference()
 		elif not grounded:
 			grounded = true
@@ -569,25 +573,38 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		if perform_flip:
 			body.move_and_collide(_spin_vector_to_surface(adjustment, gravity_dir))
 			_set_direction(new_dir, facing_left)
-	
+			_play_anim("walk")
+			current_state = AnimStates.WALK
 	elif not grounded:
-		if (rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame and
-		corner_cast.is_colliding() and not _check_ground_casts()[0]):
+		if (_can_round_corner_outer()
+		and rel_axis.x != 0.0 and rel_axis.y > 0.0 and grounded_last_frame
+		and corner_cast.is_colliding() and not _check_ground_casts()[0]):
 			var new_dir = _get_dir_adjacent_cw(gravity_dir)
 			if facing_left:
 				new_dir = _get_dir_adjacent_ccw(gravity_dir)
 			var adjustment:Vector2 = Vector2(1 if facing_left else -1, 1) * _get_box_difference()
 			body.move_and_collide(_spin_vector_to_surface(adjustment, gravity_dir))
 			_set_direction(new_dir, facing_left)
+			_play_anim("walk")
+			current_state = AnimStates.WALK
 			grounded = true
-		elif body.is_on_ceiling() and rel_vel.y < 0:
-			rel_vel.y = 0.0
-			if rel_axis.y < 0:
+			#rel_vel.y = 720 #TODO fix strange corner behavior and 720 velocity funkiness
+		elif body.is_on_ceiling():
+			if rel_axis.y < 0 and _can_grab_ceiling():
 				grounded = true
 				_set_direction(_get_dir_opposite(gravity_dir), not facing_left)
+				_play_anim("idle" if rel_axis.x == 0.0 else "walk")
+				current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 		elif body.is_on_floor() and rel_vel.y >= 0:
 			grounded = true
-			rel_vel.y = 0.0
+		elif not _check_ability(retain_gravity_on_airborne):
+			var this_left = facing_left
+			if gravity_dir == _get_dir_opposite(home_gravity):
+				this_left = not this_left
+			_set_direction(home_gravity, this_left)
+			if not shelled:
+				_play_anim("fall")
+				current_state = AnimStates.FALL
 	
 	#region Old move code
 	#rel_vel.x = rel_axis.x * run_speed[read_i_speed] * speed_mod #* delta #mark
@@ -809,6 +826,89 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				else:
 					body.position += 16 * (Vector2.LEFT if facing_left else Vector2.RIGHT)
 		position = body.position
+#endregion
+
+
+#region Movement subfunctions
+func _jump() -> float:
+	grounded = false
+	sfx_jump.play()
+	current_state = AnimStates.JUMP
+	_play_anim("jump")
+	jump_buffer_counter = jump_buffer
+	coyote_time_counter = coyote_time
+	return jump_power[read_i_jump] * jump_mod
+
+
+func _jump_and_reorient() -> float:
+	grounded = false
+	sfx_jump.play()
+	jump_buffer_counter = jump_buffer
+	coyote_time_counter = coyote_time
+	_push_from_wall()
+	if gravity_dir == _get_dir_opposite(home_gravity):
+		_set_direction(home_gravity, not facing_left)
+	else:
+		_set_direction(home_gravity, facing_left)
+	current_state = AnimStates.FALL
+	_play_anim("fall")
+	return 0.0
+
+
+func _jump_decide_state() -> float:
+	if gravity_dir != home_gravity and not _check_ability(retain_gravity_on_airborne):
+		return _jump_and_reorient()
+	else:
+		return _jump()
+
+
+func _push_from_wall() -> void:
+	var push_vector:Vector2
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR:
+			push_vector = Vector2.UP * _get_box_difference()
+		Statics.DirsSurface.LWALL:
+			push_vector = Vector2.RIGHT * _get_box_difference()
+		Statics.DirsSurface.RWALL:
+			push_vector = Vector2.LEFT * _get_box_difference()
+		Statics.DirsSurface.CEILING:
+			push_vector = Vector2.DOWN * _get_box_difference()
+	body.move_and_collide(push_vector)
+	position = body.position
+
+
+func _can_grab_wall() -> bool:
+	if stunned and not _check_ability(stick_to_walls_when_hurt):
+		return false
+	return _check_ability(can_swap_gravity)
+
+
+func _can_grab_ceiling() -> bool:
+	if stunned and not _check_ability(stick_to_walls_when_hurt):
+		return false
+	return _check_ability(can_swap_gravity)
+
+
+func _can_round_corner_inner() -> bool:
+	if stunned and not _check_ability(stick_to_walls_when_hurt):
+		return false
+	return _check_ability(can_swap_gravity) and _check_ability(can_round_inner_corners)
+
+
+func _can_round_corner_outer() -> bool:
+	if stunned and not _check_ability(stick_to_walls_when_hurt):
+		return false
+	if not _check_ability(can_swap_gravity) and not _check_ability(can_round_outer_corners):
+		return false
+	var can_outer:bool = _check_ability(can_round_opposite_outer_corners)
+	if gravity_dir == _get_dir_adjacent_cw(home_gravity):
+		return true if facing_left else can_outer
+	elif gravity_dir == _get_dir_adjacent_ccw(home_gravity):
+		return can_outer if facing_left else true
+	elif gravity_dir == _get_dir_opposite(home_gravity):
+		return can_outer
+	else:
+		return true
 #endregion
 
 
@@ -1105,8 +1205,12 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 		if shelled:
 			_set_shell(false)
 		# Disabled gravity shock
-		if not _check_ability(stick_to_walls_when_hurt):
+		if not _check_ability(stick_to_walls_when_hurt) and gravity_dir != home_gravity:
+			if gravity_dir != _get_dir_opposite(home_gravity):
+				_push_from_wall()
 			_set_direction(home_gravity, facing_left)
+			_play_anim("fall")
+			body.velocity = Vector2.ZERO
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
 		if shielded:
