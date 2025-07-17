@@ -97,6 +97,7 @@ static var is_random_game:bool = false
 static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
+static var show_invis_entites:bool = false
 static var stack_shells:bool = true
 static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true

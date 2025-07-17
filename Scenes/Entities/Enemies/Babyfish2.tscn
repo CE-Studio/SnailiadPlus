@@ -27,6 +27,9 @@ can_damage = false
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.7, 0.5)
+
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_rcg65")
 script = ExtResource("3_t5ilg")
@@ -40,6 +43,3 @@ hframes = 4
 frame = 2
 script = ExtResource("5_ryo2g")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.7, 0.5)

@@ -21,11 +21,6 @@ ping_on_breakables = false
 despawn_particle = "ExplosionTiny"
 despawn_offset = Vector2(4, 4)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
-script = ExtResource("2_4p8ps")
-texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletB.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 65
@@ -40,10 +35,15 @@ debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 stream = ExtResource("3_x2y1m")
 bus = &"Sfx"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.3, 0.3)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_4p8ps")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletB.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
 texture = ExtResource("5_0cs6w")
 script = ExtResource("6_1le4m")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.3, 0.3)

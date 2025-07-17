@@ -10,7 +10,6 @@ var max_life_time:float = 1.6
 var velocity:float = 0.0
 var velocity_init:float = 0.0
 var damage:int = 0
-var cooldown:float = 0.0
 var rapid_mult:float = 0.0
 var despawn_offscreen:bool = false
 var collide_with_world:bool = false
@@ -41,13 +40,12 @@ var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
 #endregion
 
 
-func _spawn(dir:Vector2, speed:float) -> float:
+func _spawn(dir:Vector2, speed:float) -> void:
 	normalized_dir = dir
 	velocity_init = speed
 	sfx.play()
 	area.connect("area_entered", _on_pbullet_collision)
 	area.connect("body_entered", _on_body_entered)
-	return cooldown
 
 
 func _process(delta: float) -> void:
@@ -55,8 +53,8 @@ func _process(delta: float) -> void:
 		GameCore.instance.player.adjust_health(-damage)
 	
 	life_timer += delta
-	if ((life_timer > max_life_time or (despawn_offscreen and life_timer >= 0.25)) and
-	not vis.is_on_screen()):
+	if (life_timer > max_life_time
+	or (despawn_offscreen and life_timer >= 0.25 and not vis.is_on_screen())):
 		_despawn()
 
 

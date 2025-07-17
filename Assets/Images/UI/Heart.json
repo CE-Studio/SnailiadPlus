@@ -1,5 +1,5 @@
 {
-	"tiles": [5, 1],
+	"tiles": [5, 2],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -135,7 +135,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 0, false, false]
+				[0, 1, false, false]
 			]
 		},
 		"insane_1": {
@@ -144,7 +144,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[2, 0, false, false]
+				[1, 1, false, false]
 			]
 		},
 		"insane_2": {
@@ -153,7 +153,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[4, 0, false, false]
+				[2, 1, false, false]
 			]
 		},
 	}

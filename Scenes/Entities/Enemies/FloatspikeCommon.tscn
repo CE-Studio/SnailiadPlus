@@ -31,6 +31,9 @@ collision_mask = 44
 shape = SubResource("RectangleShape2D_qrvrh")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qqo6b")
 script = ExtResource("3_vixes")
@@ -42,6 +45,3 @@ material = SubResource("ShaderMaterial_ojica")
 texture = ExtResource("4_v2c1n")
 script = ExtResource("5_01swg")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.8, 0.8)

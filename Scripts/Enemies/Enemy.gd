@@ -126,7 +126,7 @@ func _physics_process(delta) -> void:
 		if can_hit:
 			GameCore.instance.player.adjust_health(-attack)
 		
-	if not stun_invul and vis.is_on_screen() and not invulnerable:
+	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
 		var pbullets_to_despawn:Array = []
 		var ebullets_to_despawn:Array = []
 		var kill_flag:bool = false
@@ -161,7 +161,7 @@ func _physics_process(delta) -> void:
 				if not can_be_pierced:
 					ebullets_to_despawn.append(bullet)
 		if max_damage > 0 and not shield_entity:
-			if health <= 0:
+			if health - max_damage <= 0:
 				kill_flag = true
 			else:
 				_damage(max_damage)

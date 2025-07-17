@@ -176,6 +176,16 @@ func _spawn_entities_from_layer() -> void:
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 			
+			Vector2i(7, 0): # Blue chirpy
+				var chirpy:ChirpyCommon = load("res://Scenes/Entities/Enemies/ChirpyCommon.tscn").instantiate()
+				chirpy.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(chirpy)
+			
+			Vector2i(10, 0): # Blue chirpy generator
+				var gen:GeneratorChirpyCommon = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyCommon.tscn").instantiate()
+				gen.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(gen)
+			
 			Vector2i(11, 0): # Blue spikey (CW)
 				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
@@ -271,6 +281,11 @@ func _spawn_entities_from_layer() -> void:
 				floatspike.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(floatspike)
 			
+			Vector2i(7, 25): # Aqua chirpy
+				var chirpy:ChirpyTough = load("res://Scenes/Entities/Enemies/ChirpyTough.tscn").instantiate()
+				chirpy.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(chirpy)
+			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				dev_tile.position = _tile_coords_to_vector_pos(tile)
@@ -287,6 +302,11 @@ func _spawn_entities_from_layer() -> void:
 				var fish:Babyfish2 = load("res://Scenes/Entities/Enemies/Babyfish2.tscn").instantiate()
 				fish.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fish)
+			
+			Vector2i(13, 28): # Aqua chirpy generator
+				var gen:GeneratorChirpyTough = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyTough.tscn").instantiate()
+				gen.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(gen)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()

@@ -37,6 +37,9 @@ collision_mask = 44
 shape = SubResource("RectangleShape2D_6ijum")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4sk1w")
 script = ExtResource("2_6ijum")
@@ -82,6 +85,3 @@ position = Vector2(0, 8)
 target_position = Vector2(0, 12)
 collision_mask = 3
 hit_from_inside = true
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.8, 0.8)

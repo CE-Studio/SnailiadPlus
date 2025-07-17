@@ -164,8 +164,8 @@ func _process(delta: float) -> void:
 	var update_map:bool = false
 	
 	var map_local_center = Vector2i(
-		clampi(converted_player_pos.x + room_offset.x, EDGE_BUFFER.x, MAP_SIZE.x - EDGE_BUFFER.x),
-		clampi(converted_player_pos.y + room_offset.y, EDGE_BUFFER.y, MAP_SIZE.y - EDGE_BUFFER.y)
+		clampi(converted_player_pos.x + room_offset.x, EDGE_BUFFER.x, MAP_SIZE.x - EDGE_BUFFER.x - 1),
+		clampi(converted_player_pos.y + room_offset.y, EDGE_BUFFER.y, MAP_SIZE.y - EDGE_BUFFER.y - 1)
 	)
 	if last_map_center != map_local_center:
 		update_map = true

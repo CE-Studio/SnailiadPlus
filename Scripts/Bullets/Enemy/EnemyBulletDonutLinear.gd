@@ -8,9 +8,9 @@ func _spawn(dir:Vector2, speed:float) -> void:
 	velocity = speed
 	velocity_init = speed
 	damage = 2
-	max_life_time = 3.6
+	max_life_time = 3.8
 	despawn_offscreen = true
-	collide_with_world = true
+	collide_with_world = false
 	#region Direction animation
 	var anim_name = ""
 	if dir.y < -0.3827:
@@ -21,6 +21,7 @@ func _spawn(dir:Vector2, speed:float) -> void:
 		anim_name += "L"
 	elif dir.x > 0.3827:
 		anim_name += "R"
+	anim_name += "_linear"
 	sprite.action = anim_name
 	sprite._process(0.0)
 	#endregion
