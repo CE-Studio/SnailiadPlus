@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck2f53pdjx88q"]
+[gd_scene load_steps=5 format=3 uid="uid://ck2f53pdjx88q"]
 
 [ext_resource type="Script" uid="uid://bftvkbcmljrxc" path="res://Scripts/Classes/RoomTransitionTrigger.gd" id="1_gkfyc"]
+[ext_resource type="Texture2D" uid="uid://d0cauv4lqxieg" path="res://Editor/EditorMarkers/RoomTransitionTrigger.png" id="2_wovne"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_5cwcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkfyc"]
-size = Vector2(16, 48)
+size = Vector2(16, 16)
 
 [node name="RoomTransitionTrigger" type="Node2D"]
 script = ExtResource("1_gkfyc")
@@ -13,10 +15,15 @@ collision_layer = 16
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(16, 0)
+position = Vector2(20, 0)
 shape = SubResource("RectangleShape2D_gkfyc")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-8, 0)
+position = Vector2(-4, 0)
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_wovne")
+script = ExtResource("3_5cwcu")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_enter"]

@@ -85,7 +85,8 @@ script = ExtResource("3_kvyk3")
 point_ratio_adjustments = Array[Vector2i]([Vector2i(1, 1), Vector2i(-1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1)])
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_pyt0x")]
-position = Vector2(-4, 120)
+position = Vector2(0, 120)
 rotation = 3.14159
+scale = Vector2(1, 3)
 exit_room = "uid://ddhe5fn4huo5m"
 exit_transition = 2

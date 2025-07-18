@@ -87,7 +87,8 @@ curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_lgt5p")
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_rcxvy")]
-position = Vector2(404, 120)
+position = Vector2(400, 120)
+scale = Vector2(1, 3)
 exit_room = "uid://5k7fuiuvx02m"
 
 [node name="WaterArea" parent="." instance=ExtResource("7_nc805")]

@@ -76,25 +76,28 @@ curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_or87c")
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_kgiwa")]
-position = Vector2(-4, 120)
+position = Vector2(0, 120)
 rotation = 3.14159
+scale = Vector2(1, 3)
 exit_room = "uid://eqhtgjbwo5in"
 exit_transition = 1
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("4_kgiwa")]
-position = Vector2(360, -4)
+position = Vector2(360, 1.77636e-15)
 rotation = -1.5708
+scale = Vector2(1, 3)
 my_id = 1
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_kgiwa")]
-position = Vector2(360, 244)
+position = Vector2(360, 240)
 rotation = 1.5708
+scale = Vector2(1, 3)
 my_id = 2
 exit_room = "uid://c4jw6ccq414be"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("4_kgiwa")]
-position = Vector2(404, 120)
-scale = Vector2(1, 4.25)
+position = Vector2(400, 120)
+scale = Vector2(1, 13)
 my_id = 3
 exit_room = "uid://bn5hiirwyjxi6"
 exit_transition = 3

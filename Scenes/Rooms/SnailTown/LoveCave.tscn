@@ -92,26 +92,29 @@ up_left_room_name_override = "SnailTown/LoveAlcove"
 down_right_room_name_override = "SnailTown/Paths"
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("6_8gk68")]
-position = Vector2(404, 320)
+position = Vector2(400, 320)
+scale = Vector2(1, 2)
 exit_room = "uid://dpj78o8gohp2f"
 exit_transition = 3
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("6_8gk68")]
-position = Vector2(404, 632)
+position = Vector2(400, 632)
+scale = Vector2(1, 3)
 my_id = 1
 exit_room = "uid://d06n2oq164gsw"
 exit_transition = 1
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("6_8gk68")]
-position = Vector2(352, 756)
+position = Vector2(352, 752)
 rotation = 1.57079
+scale = Vector2(1, 2)
 my_id = 2
 exit_room = "uid://b0ht64lx178py"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("6_8gk68")]
-position = Vector2(-4, 632)
+position = Vector2(0, 632)
 rotation = 3.14159
-scale = Vector2(1, 4.25)
+scale = Vector2(1, 13)
 my_id = 3
 exit_room = "uid://d2hhbdey0140d"
 exit_transition = 3

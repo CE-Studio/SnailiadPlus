@@ -100,37 +100,45 @@ script = ExtResource("3_o33p5")
 point_ratio_adjustments = Array[Vector2i]([Vector2i(0, 1), Vector2i(0, -1), Vector2i(0, 1)])
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(-4, 1656)
+position = Vector2(-8.88178e-16, 1656)
 rotation = 3.14159
+scale = Vector2(1, 3)
 exit_room = "uid://ieoeoo6r43em"
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(-4, 1400)
+position = Vector2(0, 1400)
 rotation = 3.14159
+scale = Vector2(1, 3)
 my_id = 1
 exit_room = "uid://c6228rcwcjv3g"
 exit_transition = 2
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(-4, 632)
+position = Vector2(0, 632)
 rotation = -3.14159
+scale = Vector2(1, 3)
 my_id = 2
 exit_room = "uid://pbysg35ta2cv"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(404, 632)
+position = Vector2(400, 632)
+scale = Vector2(1, 3)
 my_id = 3
 exit_room = "uid://cg67b3785dqlj"
 
 [node name="RoomTransitionTrigger5" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(404, 136)
+position = Vector2(400, 136)
+scale = Vector2(1, 3)
 my_id = 4
 exit_room = "uid://7uewgrinca8f"
 
 [node name="RoomTransitionTrigger6" parent="." instance=ExtResource("4_qpcak")]
-position = Vector2(320, -4)
+position = Vector2(320, 8.88178e-16)
 rotation = -1.5708
+scale = Vector2(1, 2)
 my_id = 5
+exit_room = "uid://dcg5h2uxdyiil"
+exit_transition = 3
 
 [node name="WaterArea" parent="." instance=ExtResource("7_rroe3")]
 position = Vector2(0, 1216)

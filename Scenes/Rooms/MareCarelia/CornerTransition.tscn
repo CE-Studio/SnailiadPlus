@@ -77,12 +77,14 @@ curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_es32b")
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_tl5mj")]
-position = Vector2(-4, 64)
+position = Vector2(0, 64)
 rotation = -3.14159
+scale = Vector2(1, 2)
 exit_room = "uid://cawrupj66kxr8"
 exit_transition = 1
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("4_tl5mj")]
-position = Vector2(200, 244)
+position = Vector2(200, 240)
 rotation = 1.5708
+scale = Vector2(1, 3)
 my_id = 1

@@ -74,43 +74,48 @@ script = ExtResource("3_lgw5l")
 point_ratio_adjustments = Array[Vector2i]([Vector2i(1, 1), Vector2i(-1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1)])
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(1236, 120)
+position = Vector2(1232, 120)
+scale = Vector2(1, 3)
 exit_room = "uid://c07hyvodc4n6d"
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(928, -4)
+position = Vector2(928, 8.88178e-16)
 rotation = -1.57079
+scale = Vector2(1, 2)
 my_id = 1
 exit_room = "uid://bh32pg4a5qd1r"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(-4, 80)
+position = Vector2(-8.88178e-16, 80)
 rotation = -3.14159
-scale = Vector2(1, 1.25)
+scale = Vector2(1, 4)
 my_id = 2
 exit_room = "uid://xl8phkaah3ak"
 exit_transition = 1
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(-4, 576)
+position = Vector2(0, 576)
 rotation = 3.14159
+scale = Vector2(1, 2)
 my_id = 3
 exit_room = "uid://bn5hiirwyjxi6"
 
 [node name="RoomTransitionTrigger5" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(328, 756)
+position = Vector2(328, 752)
 rotation = 1.57079
 my_id = 4
 exit_room = "uid://d06n2oq164gsw"
 
 [node name="RoomTransitionTrigger6" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(1064, 756)
+position = Vector2(1064, 752)
 rotation = 1.57079
+scale = Vector2(1, 3)
 my_id = 5
 exit_room = "uid://ipugr1u4imx3"
 exit_transition = 1
 
 [node name="RoomTransitionTrigger7" parent="." instance=ExtResource("3_qyovo")]
-position = Vector2(1236, 712)
+position = Vector2(1232, 712)
+scale = Vector2(1, 3)
 my_id = 6
 exit_room = "uid://dcinblnq5nkbm"
