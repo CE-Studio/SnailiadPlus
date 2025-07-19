@@ -215,6 +215,7 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 	if sound:
 		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
 	health -= health_lost
+	damage_timeout = DAMAGE_TIMEOUT
 
 
 func kill() -> void:

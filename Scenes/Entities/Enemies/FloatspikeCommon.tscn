@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdtmtu8jybih5"]
+[gd_scene load_steps=10 format=3 uid="uid://cdtmtu8jybih5"]
 
 [ext_resource type="Script" uid="uid://cu2rfjkk4wjm8" path="res://Scripts/Enemies/FloatspikeCommon.gd" id="1_v2c1n"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_pd0tq"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_01swg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqo6b"]
@@ -16,6 +19,8 @@ shader = ExtResource("2_pd0tq")
 shader = ExtResource("2_pd0tq")
 
 [node name="FloatspikeCommon" type="CharacterBody2D"]
+collision_layer = 64
+collision_mask = 0
 script = ExtResource("1_v2c1n")
 max_health = 5
 attack = 2
@@ -23,12 +28,16 @@ defense = 59
 can_be_pierced = false
 health_orb_value = 2
 
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qrvrh")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 44
 
 [node name="HitBox" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_qrvrh")
+shape = SubResource("RectangleShape2D_v2c1n")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

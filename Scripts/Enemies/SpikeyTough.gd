@@ -134,8 +134,10 @@ func _physics_process(delta: float) -> void:
 			vel = 0.0
 			var front_cast = cast_ccw_check if ccw else cast_cw_check
 			var back_cast = cast_ccw_back if ccw else cast_cw_back
+			var turn_outer:bool = true
 			if (front_cast.is_colliding() or back_cast.is_colliding() or cast_center.is_colliding()
 			or grace_period > 0.0):
+				turn_outer = false
 				match direction:
 					Statics.DirsSurface.FLOOR:
 						velocity = (Vector2.RIGHT if ccw else Vector2.LEFT) * SPEED
@@ -147,9 +149,12 @@ func _physics_process(delta: float) -> void:
 						velocity = (Vector2.LEFT if ccw else Vector2.RIGHT) * SPEED
 				move_and_slide()
 				if is_on_wall():
-					turn(ccw)
-					play_anim("_turnto_inner")
-			else:
+					if cast_center.is_colliding():
+						turn(ccw)
+						play_anim("_turnto_inner")
+					else:
+						turn_outer = true
+			if turn_outer:
 				var turns = 0
 				is_falling = true
 				while turns < 4 and is_falling:

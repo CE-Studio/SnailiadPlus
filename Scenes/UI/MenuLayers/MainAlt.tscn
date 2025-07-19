@@ -68,6 +68,7 @@ focus_neighbor_bottom = NodePath("../Quit")
 focus_next = NodePath("../Quit")
 focus_previous = NodePath("../Options")
 text_id = "menu_option_main_museum"
+quick_load_layer = "Museum"
 hide_frame = true
 
 [node name="Quit" parent="MainVBox" instance=ExtResource("2_0j8kw")]

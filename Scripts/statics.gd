@@ -148,7 +148,7 @@ enum Unlocks {
 	ITEM_RANDO, # (Item randomizer gamemode; earned from collecting 100% of counted items)
 	OPEN_MAP, # (Fully revealed map on profile start; earned from filling 100% of the map)
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
-	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
+	CHAOS_MODE, # (Chaos gamemode; earned from beating the game on absurd difficulty)
 }
 
 enum ParticleOptions {

@@ -286,6 +286,11 @@ func _spawn_entities_from_layer() -> void:
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
 			
+			Vector2i(8, 26): # Batty bat
+				var bat:BattyBat = load("res://Scenes/Entities/Enemies/BattyBat.tscn").instantiate()
+				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				layer_ground.add_child(bat)
+			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				dev_tile.position = _tile_coords_to_vector_pos(tile)
