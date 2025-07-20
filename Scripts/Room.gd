@@ -13,7 +13,8 @@ extends Node2D
 @export var subarea_id:int = 0
 @export var is_bonus_room:bool = false
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
-@export var cutscenes:Array[Cutscene]
+@export_file("*.txt") var cutscene_script:String = "res://CutsceneScripts/test.txt"
+@export var cutscene_animator:AnimationPlayer
 @export var center_parallax_maps:bool = false
 @export var minimap_offset:Vector2i = Vector2i.ZERO
 @export var minimap_autofill:Array[Vector2i] = []
@@ -74,7 +75,7 @@ var room_path:String
 #endregion
 
 
-func spawn(_spawn_all:bool):
+func spawn(_spawn_all:bool) -> void:
 	if Statics.show_entity_layer:
 		map_entity.modulate = Color(1, 1, 1, 0.5)
 	else:
@@ -86,7 +87,7 @@ func spawn(_spawn_all:bool):
 	
 	# Properly spawn all objects in room
 	if _spawn_all:
-		var layer_array = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
+		var layer_array:Array[Node2D] = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
 		for layer in layer_array:
 			for child in layer.get_children():
 				if (child is Door
@@ -113,16 +114,16 @@ func spawn(_spawn_all:bool):
 
 
 func get_room_name_from_filename() -> void:
-	var trimmed_name = self.scene_file_path
-	var path_parts = Statics.ROOM_PATH.split("%s")
+	var trimmed_name := self.scene_file_path
+	var path_parts: = Statics.ROOM_PATH.split("%s")
 	trimmed_name = trimmed_name.substr(path_parts[0].length())
 	trimmed_name = trimmed_name.substr(0, trimmed_name.length() - path_parts[1].length())
 	room_path = trimmed_name
 
 
 func center_maps() -> void:
-	var room_size = bounds.get_bound_size()
-	for layer in [ Layers.SKY, Layers.BG2, Layers.BG1, Layers.FG1, Layers.FG2 ]:
+	var room_size := bounds.get_bound_size()
+	for layer:int in [ Layers.SKY, Layers.BG2, Layers.BG1, Layers.FG1, Layers.FG2 ]:
 		var this_layer:Parallax2D
 		match layer:
 			Layers.SKY:
@@ -135,17 +136,13 @@ func center_maps() -> void:
 				this_layer = layer_fg1
 			Layers.FG2:
 				this_layer = layer_fg2
-		var scroll = this_layer.scroll_scale
+		var scroll := this_layer.scroll_scale
 		if scroll != Vector2(1.0, 1.0):
-			var new_offset = Vector2(
+			var new_offset := Vector2(
 				room_size.x - (room_size.x / scroll.x),
 				room_size.y - (room_size.y / scroll.y)
 			) * 0.5 * scroll
 			this_layer.scroll_offset = new_offset
-
-
-func _process(_delta):
-	pass
 
 
 func get_actors() -> Array[CutsceneControllable]:
@@ -155,7 +152,7 @@ func get_actors() -> Array[CutsceneControllable]:
 	return arr
 
 
-func _recur_extr(arr:Array[CutsceneControllable], n:Node):
+func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 	for i in n.get_children():
 		_recur_extr(arr, i)
 	if n is CutsceneControllable:
@@ -164,7 +161,7 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node):
 
 func _spawn_entities_from_layer() -> void:
 	for tile in map_entity.get_used_cells():
-		var tile_coords = map_entity.get_cell_atlas_coords(tile)
+		var tile_coords := map_entity.get_cell_atlas_coords(tile)
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
@@ -345,15 +342,15 @@ func _import_from_tiled():
 	var target_layer:int = -1
 	var layer_size:Vector2i = Vector2i.ZERO
 	var tilesheet_size:Vector2i = Vector2i.ZERO
-	var parser = XMLParser.new()
+	var parser := XMLParser.new()
 	
 	parser.open(tiled_path)
 	while parser.read() != ERR_FILE_EOF:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-			var node_name = parser.get_node_name()
+			var node_name := parser.get_node_name()
 			match node_name:
 				"layer":
-					var layer_name = parser.get_attribute_value(1)
+					var layer_name := parser.get_attribute_value(1)
 					target_layer = -1
 					if tiled_layers.has(layer_name):
 						target_layer = tiled_layers.find(layer_name)
@@ -370,30 +367,30 @@ func _import_from_tiled():
 						) / 16
 		elif parser.get_node_type() == XMLParser.NODE_TEXT:
 			if target_layer != -1:
-				var data = parser.get_node_data()
+				var data := parser.get_node_data()
 				data.replace(" ", "")
 				data.replace("\n", "")
-				var this_line:Array = parser.get_node_data().split(",")
+				var this_line := parser.get_node_data().split(",")
 				if this_line.size() > 1:
 					for y in range(tiled_corner.y, tiled_corner.y + tiled_range.y):
 						for x in range(tiled_corner.x, tiled_corner.x + tiled_range.x):
-							var array_i = (y * layer_size.x) + x
-							var tile = this_line[array_i]
+							var array_i := (y * layer_size.x) + x
+							var tile := this_line[array_i]
 							tile = tile.strip_edges()
 							var tile_id:int = 0
 							if tile.is_valid_int():
 								tile_id = int(tile)
 							tile_id -= 1
 							if tile_id >= -1:
-								var tile_coords = Vector2i(tile_id, 0)
-								var source = 0
+								var tile_coords := Vector2i(tile_id, 0)
+								var source:int = 0
 								if tile_id == -1:
 									tile_coords = Vector2i.ZERO
 									source = -1
 								while tile_coords.x >= tilesheet_size.x:
 									tile_coords.x -= tilesheet_size.x
 									tile_coords.y += 1
-								var map_index = Vector2i(x, y)
+								var map_index := Vector2i(x, y)
 								print("Placing %s at %s" % [ tile_coords, map_index - tiled_corner ])
 								match target_layer:
 									Layers.SKY:
