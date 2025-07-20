@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lhiow"]
 [ext_resource type="Texture2D" uid="uid://g0pd5mkj75ci" path="res://Assets/Images/UI/MinimapPanel.png" id="2_6qi0o"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_a7d3d"]
-[ext_resource type="Texture2D" uid="uid://drmcos5pr1wle" path="res://Assets/Images/UI/minimap.png" id="4_a7d3d"]
+[ext_resource type="Texture2D" uid="uid://drmcos5pr1wle" path="res://Assets/Images/UI/Minimap.png" id="4_a7d3d"]
 [ext_resource type="Texture2D" uid="uid://b2vr3rng13j38" path="res://Assets/Images/UI/MinimapMask.png" id="5_gbsa2"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="7_enhm3"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="8_q7g0h"]

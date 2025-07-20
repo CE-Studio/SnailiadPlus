@@ -140,6 +140,7 @@ static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
 static var current_profile_id:int
+static var cutscene_persistent_vars:Dictionary[StringName, Dictionary] = {&"": {}}
 
 enum Unlocks {
 	BOSS_RUSH, # (Boss Rush; earned from beating the game)

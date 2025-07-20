@@ -32,8 +32,8 @@ var read_inputs:bool = true
 func _ready() -> void:
 	save_icon.visible = false
 	
-	var version_text = $"Version"
-	var version_string = (Statics.get_text("menu_version_header") + "\n"
+	var version_text:SnailyText = $"Version"
+	var version_string := (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
 	version_text.set_snaily_text(version_string)
 	version_text.add_shadow(1)
@@ -43,9 +43,9 @@ func _ready() -> void:
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
 		if not Statics.main_menu_booted_once:
-			var saved_ver = Statics.parse_version_to_array(Statics.data_general["game_version"])
-			var current_ver = Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
-			var ver_compare = Statics.compare_versions(saved_ver, current_ver)
+			var saved_ver := Statics.parse_version_to_array(Statics.data_general["game_version"])
+			var current_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
+			var ver_compare := Statics.compare_versions(saved_ver, current_ver)
 			if ver_compare == 1:
 				version_panel = $"VersionWarnPanel"
 				version_panel.add_header(Statics.get_text("menu_olderVersion_header"), 2)

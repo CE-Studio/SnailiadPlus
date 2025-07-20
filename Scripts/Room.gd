@@ -13,6 +13,7 @@ extends Node2D
 @export var subarea_id:int = 0
 @export var is_bonus_room:bool = false
 @export_range(0.0, 1.0) var darkness_level:float = 0.0
+@export var cutscene_variable_context:StringName
 @export_file("*.txt") var cutscene_script:String = "res://CutsceneScripts/test.txt"
 @export var cutscene_animator:AnimationPlayer
 @export var center_parallax_maps:bool = false
