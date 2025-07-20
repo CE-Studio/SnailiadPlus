@@ -164,7 +164,7 @@ enum ParticleOptions {
 
 #region Profile functions
 static func format_game_time(time:Array) -> String:
-	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
 	return time_string
 #endregion
 
@@ -182,7 +182,7 @@ static func remove_item(id:int, count:int) -> void:
 
 
 static func check_item(id:int) -> int:
-	var output = 0
+	var output:int = 0
 	if id < len(current_profile["items"]):
 		output = current_profile["items"][id]
 	return output
@@ -195,7 +195,7 @@ static func mark_item_location(id:int, state:bool = true) -> void:
 
 
 static func check_location_collected(id:int) -> bool:
-	var output = false
+	var output := false
 	if id < len(current_profile["locations"]):
 		output = current_profile["locations"][id]
 	return output
@@ -248,15 +248,16 @@ static func get_item_percentage(profile:int = 0) -> float:
 	return counted_percentage
 
 
-static func save_general():
-	var file = FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
+static func save_general() -> void:
+	var file := FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_general, "\t", false))
+	file.close()
 
 
-static func save_profile(iprofile:int):
+static func save_profile(iprofile:int) -> void:
 	if iprofile < 1 or iprofile > 3:
 		return
-	var file = FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
+	var file := FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
 	match iprofile:
 		1:
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
@@ -264,14 +265,16 @@ static func save_profile(iprofile:int):
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
 		3:
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
+	file.close()
 
 
-static func save_records():
-	var file = FileAccess.open("user://" + save_prefix + "/Records.json", FileAccess.WRITE_READ)
+static func save_records() -> void:
+	var file := FileAccess.open("user://" + save_prefix + "/Records.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_records, "\t", false))
+	file.close()
 
 
-static func save_all():
+static func save_all() -> void:
 	save_general()
 	save_profile(1)
 	save_profile(2)
@@ -282,7 +285,7 @@ static func save_all():
 static func delete_profile(iprofile:int) -> void:
 	if iprofile < 1 or iprofile > 3:
 		return
-	var file = "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
+	var file := "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
 	DirAccess.remove_absolute(file)
 
 
@@ -298,8 +301,8 @@ static func get_window_size() -> Vector2:
 
 
 static func parse_version_to_text_string(version:String) -> String:
-	var prefix = version.substr(0, 1)
-	var number = version.substr(1)
+	var prefix := version.substr(0, 1)
+	var number := version.substr(1)
 	var output:String
 	match prefix:
 		"b": output = get_text("menu_version_developer") + " "
@@ -310,10 +313,10 @@ static func parse_version_to_text_string(version:String) -> String:
 
 
 static func parse_version_to_array(version:String) -> Array:
-	var prefix = version.substr(0, 1)
+	var prefix := version.substr(0, 1)
 	if not is_number(prefix):
 		version = version.substr(1)
-	var version_parts = version.split(".")
+	var version_parts := version.split(".")
 	var version_numbers:Array
 	for part in version_parts:
 		version_numbers.append(int(part))
@@ -349,21 +352,21 @@ static func get_shell_level() -> int:
 
 
 static func has_shell(shell_id:int) -> bool:
-	var query = 1 << (shell_id - 1)
-	var level = 1 << (get_shell_level() - 1)
+	var query := 1 << (shell_id - 1)
+	var level := 1 << (get_shell_level() - 1)
 	if stack_shells:
 		return query <= level
 	return query & level > 0
 
 
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
-	var char_int:int = int(character)
+	var char_int := int(character)
 	var full_check:String = "full_" if full else ""
 	return get_text("char_%s%d" % [ full_check, char_int ])
 
 
 static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
-	var char_int:int = int(character)
+	var char_int := int(character)
 	var plural_check:String = "plural_" if plural else ""
 	return get_text("species_%s%d" % [ plural_check, char_int ])
 #endregion
@@ -371,7 +374,7 @@ static func get_character_species_string(character:Player.Players, plural:bool =
 
 #region World functions
 static func solid_at_world_pos(pos:Vector2, enemy_collidable:bool = false) -> bool:
-	var tile_pos = Vector2i(pos * FRAC_16)
+	var tile_pos := Vector2i(pos * FRAC_16)
 	#print("Received world pos %s\nTranslating to tile pos %s" % [ str(pos), str(tile_pos) ])
 	return solid_at_grid_pos(tile_pos, enemy_collidable)
 
@@ -424,7 +427,7 @@ static func round_to_places(number:float, decimal_places:int) -> float:
 
 
 static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:
-	var scale = pow(0.1, speed)
+	var scale := pow(0.1, speed)
 	num = num * pow(scale, elapsed) + target * (1.0 - pow(scale, elapsed))
 	if absf(num - target) < threshold:
 		num = target
@@ -432,18 +435,18 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 
 
 static func play_sfx_disconnected(sound:AudioStream) -> void:
-	var active_sounds_of_type = 0
+	var active_sounds_of_type:int = 0
 	for sfx in GameCore.instance.sfx_group.get_children():
 		if sfx.stream == sound:
 			active_sounds_of_type += 1
 	if active_sounds_of_type < 2:
-		var new_discon_sound = disconnected_sound.instantiate()
+		var new_discon_sound:AudioStreamPlayer = disconnected_sound.instantiate()
 		GameCore.instance.sfx_group.add_child(new_discon_sound)
 		new_discon_sound.load_and_play(sound)
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
-	var new_particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
+	var new_particle:Particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)
@@ -457,9 +460,9 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 
 
 static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int) -> Texture2D:
-	var color_count = palette.get_width()
-	var palette_image = palette.get_image()
-	var sprite_image = spritesheet.get_image()
+	var color_count := palette.get_width()
+	var palette_image := palette.get_image()
+	var sprite_image := spritesheet.get_image()
 	var check_colors:Array = [ ]
 	for i in color_count:
 		check_colors.append(palette_image.get_pixel(i, 0))
@@ -475,12 +478,12 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 
 
 static func get_color(coords:Vector2i) -> Color:
-	var palette_image = palette.get_image()
+	var palette_image := palette.get_image()
 	return palette_image.get_pixelv(coords)
 
 
-static func get_all_children(_node:Node) -> Array:
-	var output = []
+static func get_all_children(_node:Node) -> Array[Node]:
+	var output:Array[Node] = []
 	for child in _node.get_children():
 		output.append(child)
 		if child.get_child_count() > 0:
