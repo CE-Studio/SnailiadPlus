@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://drmcos5pr1wle"
-path="res://.godot/imported/minimap.png-c85b3ee1665c7084ae95c2ac8123dc68.ctex"
+path="res://.godot/imported/Minimap.png-d42c0e0425ad12a4362ded6577982806.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/minimap.png"
-dest_files=["res://.godot/imported/minimap.png-c85b3ee1665c7084ae95c2ac8123dc68.ctex"]
+source_file="res://Assets/Images/UI/Minimap.png"
+dest_files=["res://.godot/imported/Minimap.png-d42c0e0425ad12a4362ded6577982806.ctex"]
 
 [params]
 
