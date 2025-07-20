@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_5japa"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
+resource_local_to_scene = true
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120)
 }

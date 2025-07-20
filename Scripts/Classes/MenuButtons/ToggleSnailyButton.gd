@@ -35,12 +35,13 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if focused and not disabled:
+	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES:
 		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
 		or Input.is_action_just_pressed("Jump")):
 			toggled_on = !toggled_on
 			button_toggled.emit(toggled_on)
 			sfx_select.play()
+	super._process(_delta)
 
 
 func set_text(_text:String) -> void:

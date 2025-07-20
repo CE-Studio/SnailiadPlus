@@ -1,0 +1,16 @@
+{
+	"tiles": [1, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"idle": {
+			"fps": 1,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false]
+			]
+		}
+	}
+}

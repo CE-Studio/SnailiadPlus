@@ -22,6 +22,12 @@ extends Node2D
 			update_marker()
 @export var up_left_room_name_override:String = ""
 @export var down_right_room_name_override:String = ""
+@export var aspect_offset:Vector2i = Vector2i.ZERO:
+	set(value):
+		aspect_offset = Vector2i(
+			clampi(value.x, -1, 1),
+			clampi(value.y, -1, 1)
+		)
 
 const BUFFER_HORIZ:float = 12.5 * 16.0
 const BUFFER_VERT:float = 7.5 * 16.0
@@ -30,6 +36,8 @@ var active:bool = true
 var initial_relative_pos:Statics.DirsCardinal
 var original_room_name:String = ""
 var last_pos_neg_position:int = 0
+
+@onready var origin:Vector2 = position
 #endregion
 
 
@@ -52,6 +60,13 @@ func instance() -> void:
 			initial_relative_pos = Statics.DirsCardinal.UP
 			if stop_from & 1 == 0:
 				active = false
+	offset_position_for_ratio()
+
+
+func offset_position_for_ratio() -> void:
+	var current_ratio = int(Statics.data_general["aspect_ratio"])
+	var offset = Statics.ASPECT_RATIO_OFFSETS[current_ratio]
+	position = origin + (offset * aspect_offset * 0.5)
 
 
 func update_marker() -> void:

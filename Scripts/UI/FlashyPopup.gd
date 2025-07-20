@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 		this_color.a = clampf((life_timer * CHAR_FADE_IN_MULT) - (offset_base * i), 0.0, 1.0)
 		if life_timer >= max_lifetime - FADE_OUT_TIME:
 			this_color.a = inverse_lerp(max_lifetime, max_lifetime - FADE_OUT_TIME, life_timer) * this_color.a
-		bb_text += "[color=%x]%s" % [this_color.to_rgba32(), raw_text[i]]
+		bb_text += "[color=%08x]%s" % [this_color.to_rgba32(), raw_text[i]]
 	text.set_snaily_text(bb_text)
 	if life_timer >= max_lifetime:
 		queue_free()

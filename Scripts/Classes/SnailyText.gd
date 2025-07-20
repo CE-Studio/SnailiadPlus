@@ -57,13 +57,8 @@ func set_alignment(horiz:int, vert:int) -> void:
 
 
 func reset_label_size() -> void:
-	var longest_line = 0
-	var lines = text.split("\n")
+	var longest_line = get_width()
 	var scale_mod = float(text_scale) * 0.5
-	for line in lines:
-		var line_length = font.get_string_size(line).x
-		if longest_line < line_length:
-			longest_line = line_length
 	if max_width == 0 or longest_line < max_width:
 		custom_minimum_size.x = longest_line * scale_mod
 	else:
@@ -138,3 +133,13 @@ func set_visible_chars_ratio(ratio:float) -> void:
 	visible_ratio = clamp(ratio, 0.0, 1.0)
 	for sub_label in sub_text:
 		sub_label.visible_ratio = clamp(ratio, 0.0, 1.0)
+
+
+func get_width(_text:String = text) -> int:
+	var longest_line = 0
+	var lines = text.split("\n")
+	for line in lines:
+		var line_length = font.get_string_size(line).x
+		if longest_line < line_length:
+			longest_line = line_length
+	return longest_line

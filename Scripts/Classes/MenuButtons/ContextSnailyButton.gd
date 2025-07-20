@@ -40,13 +40,14 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if focused and not disabled:
+	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES:
 		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
 		or Input.is_action_just_pressed("Jump")):
 			if quick_load_layer.strip_edges() != "":
 				button_pressed.emit(quick_load_layer)
 			else:
 				button_pressed.emit(0)
+	super._process(_delta)
 
 
 func set_text(_text:String) -> void:

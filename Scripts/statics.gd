@@ -32,27 +32,6 @@ enum DirsSurface {
 #endregion
 
 
-#enum Items {
-#	PEASHOOTER,
-#	BOOMERANG,
-#	RAINBOWWAVE,
-#	DEVASTATOR,
-#	HIGHJUMP,
-#	SHELLSHIELD,
-#	RAPIDFIRE,
-#	ICESHELL,
-#	FLYSHELL,
-#	METALSHELL,
-#	GRAVSHOCK,
-#	SSBOOM,
-#	DEBUGRW,
-#	HEART,
-#	FRAGMENT,
-#	RADARSHELL,
-#	NONE = -1,
-#}
-
-
 const PI_OVER_EIGHT:float = PI * 0.125
 const PI_OVER_FOUR:float = PI * 0.25
 const PI_OVER_THREE:float = PI * 0.3333
@@ -72,6 +51,13 @@ const ASPECT_RATIOS:Array = [
 	Vector2i(400, 300),
 	Vector2i(448, 252),
 	Vector2i(400, 250)
+]
+const ASPECT_RATIO_OFFSETS:Array = [
+	Vector2i(0, 0),
+	Vector2i(0, 80),
+	Vector2i(0, 60),
+	Vector2i(48, 12),
+	Vector2i(0, 10),
 ]
 const TARGET_FRAMERATES:Array = [
 	0,
@@ -111,6 +97,7 @@ static var is_random_game:bool = false
 static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
+static var show_invis_entites:bool = false
 static var stack_shells:bool = true
 static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true
@@ -131,7 +118,7 @@ static var current_subarea:int = 0
 static var player:Player
 static var cam_layer:Node2D
 static var cam:Camera2D
-static var active_room:Node2D
+static var active_room:Room
 
 static var text_lib:Dictionary
 
@@ -161,7 +148,16 @@ enum Unlocks {
 	ITEM_RANDO, # (Item randomizer gamemode; earned from collecting 100% of counted items)
 	OPEN_MAP, # (Fully revealed map on profile start; earned from filling 100% of the map)
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
-	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
+	CHAOS_MODE, # (Chaos gamemode; earned from beating the game on absurd difficulty)
+}
+
+enum ParticleOptions {
+	NONE,
+	ENVIRONMENTS,
+	ENTITIES_FLASH,
+	ENTITIES_ALL,
+	FLASH,
+	ALL
 }
 #endregion
 
@@ -283,6 +279,13 @@ static func save_all():
 	save_records()
 
 
+static func delete_profile(iprofile:int) -> void:
+	if iprofile < 1 or iprofile > 3:
+		return
+	var file = "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
+	DirAccess.remove_absolute(file)
+
+
 static func has_unlock(unlock:Unlocks) -> bool:
 	return data_records["unlocks"].has(unlock)
 #endregion
@@ -345,6 +348,14 @@ static func get_shell_level() -> int:
 	return 0
 
 
+static func has_shell(shell_id:int) -> bool:
+	var query = 1 << (shell_id - 1)
+	var level = 1 << (get_shell_level() - 1)
+	if stack_shells:
+		return query <= level
+	return query & level > 0
+
+
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
 	var char_int:int = int(character)
 	var full_check:String = "full_" if full else ""
@@ -355,6 +366,32 @@ static func get_character_species_string(character:Player.Players, plural:bool =
 	var char_int:int = int(character)
 	var plural_check:String = "plural_" if plural else ""
 	return get_text("species_%s%d" % [ plural_check, char_int ])
+#endregion
+
+
+#region World functions
+static func solid_at_world_pos(pos:Vector2, enemy_collidable:bool = false) -> bool:
+	var tile_pos = Vector2i(pos * FRAC_16)
+	#print("Received world pos %s\nTranslating to tile pos %s" % [ str(pos), str(tile_pos) ])
+	return solid_at_grid_pos(tile_pos, enemy_collidable)
+
+
+static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bool:
+	if not active_room:
+		return false
+	if active_room.map_ground.get_cell_tile_data(pos):
+		return true
+	if enemy_collidable and (active_room.map_entity.get_cell_atlas_coords(pos) == Vector2i(2, 24)):
+		return true
+	return false
+
+
+static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bool:
+	var aspect_buffer:Vector2 = ASPECT_RATIOS[data_general["aspect_ratio"]] * 0.5
+	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
+	var within_x:bool = abs(pos.x - cam_pos.x) <= aspect_buffer.x + buffer.x
+	var within_y:bool = abs(pos.y - cam_pos.y) <= aspect_buffer.y + buffer.y
+	return within_x and within_y
 #endregion
 
 
@@ -405,18 +442,6 @@ static func play_sfx_disconnected(sound:AudioStream) -> void:
 		new_discon_sound.load_and_play(sound)
 
 
-static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
-	var box_size:Vector2 = box.shape.size
-	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
-	var cam_offset:Vector2 = UICore.instance.cam.offset
-	var pos_diff:Vector2 = pos - cam_pos
-	var within_x = absf(pos_diff.x) < cam_offset.x + (box_size.x * 0.5)
-	var within_y = absf(pos_diff.y) < cam_offset.y + (box_size.y * 0.5)
-	if within_x and within_y:
-		return true
-	return false
-
-
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
 	var new_particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
@@ -461,3 +486,42 @@ static func get_all_children(_node:Node) -> Array:
 		if child.get_child_count() > 0:
 			output.append_array(get_all_children(child))
 	return output
+
+
+static func spin_vector2(vector:Vector2, ccw:bool) -> Vector2:
+	match vector:
+		Vector2.DOWN:
+			return Vector2.RIGHT if ccw else Vector2.LEFT
+		Vector2.LEFT:
+			return Vector2.DOWN if ccw else Vector2.UP
+		Vector2.UP:
+			return Vector2.LEFT if ccw else Vector2.RIGHT
+		Vector2.RIGHT:
+			return Vector2.UP if ccw else Vector2.DOWN
+	return Vector2.ZERO
+
+
+static func spin_surface(surface:DirsSurface, ccw:bool) -> DirsSurface:
+	match surface:
+		DirsSurface.FLOOR:
+			return DirsSurface.RWALL if ccw else DirsSurface.LWALL
+		DirsSurface.LWALL:
+			return DirsSurface.FLOOR if ccw else DirsSurface.CEILING
+		DirsSurface.CEILING:
+			return DirsSurface.LWALL if ccw else DirsSurface.RWALL
+		DirsSurface.RWALL:
+			return DirsSurface.CEILING if ccw else DirsSurface.FLOOR
+	return DirsSurface.NONE
+
+
+static func spin_cardinal(cardinal:DirsCardinal, ccw:bool) -> DirsCardinal:
+	match cardinal:
+		DirsCardinal.DOWN:
+			return DirsCardinal.RIGHT if ccw else DirsCardinal.LEFT
+		DirsCardinal.LEFT:
+			return DirsCardinal.DOWN if ccw else DirsCardinal.UP
+		DirsCardinal.UP:
+			return DirsCardinal.LEFT if ccw else DirsCardinal.RIGHT
+		DirsCardinal.RIGHT:
+			return DirsCardinal.UP if ccw else DirsCardinal.DOWN
+	return DirsCardinal.NONE

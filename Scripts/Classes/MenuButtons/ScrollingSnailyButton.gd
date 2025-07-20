@@ -69,7 +69,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
-		if (focused and not disabled) or selected:
+		if (focused and not disabled and life_frames >= REQ_LIFE_FRAMES) or selected:
 			var suppress_deselect:bool = selected and (arrow_hover_state[0] or arrow_hover_state[1])
 			if (mouse_over and (Input.is_action_just_pressed("UIClick") and not suppress_deselect)
 			or Input.is_action_just_pressed("Jump")):
@@ -105,6 +105,7 @@ func _process(delta: float) -> void:
 			alpha = cycle
 		tex_left.modulate.a = alpha
 		tex_right.modulate.a = alpha
+	super._process(delta)
 
 
 func set_header(_text:String) -> void:
@@ -128,7 +129,6 @@ func deselect() -> void:
 	selected = false
 	sfx_select.play()
 	parent_layer.can_focus = true
-	has_played_focus_sound = true
 
 
 func _on_left_mouse_entered() -> void:

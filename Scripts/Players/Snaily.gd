@@ -20,7 +20,7 @@ func _ready():
 	stick_to_walls_when_hurt = [ Item.ItemTypes.GRAVITY_SHELL ]
 	run_speed = [ 138.6667, 138.6667, 138.6667, 176 ]
 	jump_power = [ -428, -428, -428, -428, -498, -498, -498, -498 ]
-	gravity = [ 1200, 20, 20, 20, 20, 20, 20, 20 ]
+	gravity = [ 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200 ]
 	terminal_velocity = [ 500, 500, 500, 500, 500, 500, 500, 500 ]
 	jump_floatiness = [ 4, 4, 4, 4, 4, 4, 4, 4 ]
 	#weapon_cooldowns
@@ -39,11 +39,64 @@ func _ready():
 	grav_shock_speed = 40.0
 	grav_shock_steering = 2.5
 	damage_multiplier = 1
+	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
 	
 	sprite.action = "0.floor.right.idle"
+	
+	corner_cast = $"CastGroup/RoundCornerCast"
+	ground_casts = [
+		$"CastGroup/Normal/GroundCast0",
+		$"CastGroup/Normal/GroundCast1",
+		$"CastGroup/Normal/GroundCast2",
+		$"CastGroup/Normal/GroundCast3",
+		$"CastGroup/Shell/GroundCast0",
+		$"CastGroup/Shell/GroundCast1",
+		$"CastGroup/Shell/GroundCast2",
+		$"CastGroup/Shell/GroundCast3",
+	]
+	front_casts = [
+		$"CastGroup/Normal/FrontCast0",
+		$"CastGroup/Normal/FrontCast1",
+		$"CastGroup/Normal/FrontCast2",
+		$"CastGroup/Shell/FrontCast0",
+		$"CastGroup/Shell/FrontCast1",
+		$"CastGroup/Shell/FrontCast2",
+	]
+	ceil_casts = [
+		$"CastGroup/Normal/CeilingCast0",
+		$"CastGroup/Normal/CeilingCast1",
+		$"CastGroup/Normal/CeilingCast2",
+		$"CastGroup/Shell/CeilingCast0",
+		$"CastGroup/Shell/CeilingCast1",
+		$"CastGroup/Shell/CeilingCast2",
+	]
+	normal_casts = [
+		$"CastGroup/Normal/GroundCast0",
+		$"CastGroup/Normal/GroundCast1",
+		$"CastGroup/Normal/GroundCast2",
+		$"CastGroup/Normal/GroundCast3",
+		$"CastGroup/Normal/FrontCast0",
+		$"CastGroup/Normal/FrontCast1",
+		$"CastGroup/Normal/FrontCast2",
+		$"CastGroup/Normal/CeilingCast0",
+		$"CastGroup/Normal/CeilingCast1",
+		$"CastGroup/Normal/CeilingCast2",
+	]
+	shell_casts = [
+		$"CastGroup/Shell/GroundCast0",
+		$"CastGroup/Shell/GroundCast1",
+		$"CastGroup/Shell/GroundCast2",
+		$"CastGroup/Shell/GroundCast3",
+		$"CastGroup/Shell/FrontCast0",
+		$"CastGroup/Shell/FrontCast1",
+		$"CastGroup/Shell/FrontCast2",
+		$"CastGroup/Shell/CeilingCast0",
+		$"CastGroup/Shell/CeilingCast1",
+		$"CastGroup/Shell/CeilingCast2",
+	]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	super(delta)

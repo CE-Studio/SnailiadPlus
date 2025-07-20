@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdf57eyuaxew"]
+
+[ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Enemies/SpikeyTough.gd" id="1_eebw4"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_xwnv8"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_c741o"]
+[ext_resource type="Texture2D" uid="uid://dcem1ncnq4ist" path="res://Assets/Images/Entities/Spikey2.png" id="4_eebw4"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_h6lg0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
+size = Vector2(14, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4sk1w"]
+shader = ExtResource("2_xwnv8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
+shader = ExtResource("2_xwnv8")
+
+[node name="SpikeyTough" type="CharacterBody2D"]
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_eebw4")
+max_health = 340
+attack = 4
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_43bce")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6ijum")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4sk1w")
+script = ExtResource("3_c741o")
+texture_path = "res://Assets/Images/Entities/Spikey2.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_43bce")
+texture = ExtResource("4_eebw4")
+hframes = 4
+vframes = 4
+script = ExtResource("5_h6lg0")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="CastGroup" type="Node2D" parent="."]
+
+[node name="CWCheck" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-9, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CWBack" type="RayCast2D" parent="CastGroup"]
+position = Vector2(8, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CCWCheck" type="RayCast2D" parent="CastGroup"]
+position = Vector2(9, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CCWBack" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-8, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="Center" type="RayCast2D" parent="CastGroup"]
+position = Vector2(0, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true

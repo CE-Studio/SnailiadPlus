@@ -72,7 +72,8 @@ var organized_markers:Dictionary = {
 	"unknowns": [],
 	"p_markers": []
 }
-static var marker_positions:Array = []
+static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
+var marker_positions:Array = []
 
 @onready var panel:JsonSprite2D = $"Panel"
 @onready var panel_mask:Sprite2D = $"PanelMask"
@@ -104,6 +105,7 @@ func create_cell_mask() -> void:
 
 
 func log_markers() -> void:
+	marker_positions = unprocessed_marker_positions.duplicate()
 	var screen_pos:Vector2i = Vector2i.ZERO
 	for i in range(marker_positions.size()):
 		if ((marker_positions[i] is Array and marker_positions[i][0] > MarkerTypes.NONE)
@@ -162,8 +164,8 @@ func _process(delta: float) -> void:
 	var update_map:bool = false
 	
 	var map_local_center = Vector2i(
-		clampi(converted_player_pos.x + room_offset.x, EDGE_BUFFER.x, MAP_SIZE.x - EDGE_BUFFER.x),
-		clampi(converted_player_pos.y + room_offset.y, EDGE_BUFFER.y, MAP_SIZE.y - EDGE_BUFFER.y)
+		clampi(converted_player_pos.x + room_offset.x, EDGE_BUFFER.x, MAP_SIZE.x - EDGE_BUFFER.x - 1),
+		clampi(converted_player_pos.y + room_offset.y, EDGE_BUFFER.y, MAP_SIZE.y - EDGE_BUFFER.y - 1)
 	)
 	if last_map_center != map_local_center:
 		update_map = true
@@ -177,7 +179,9 @@ func _process(delta: float) -> void:
 			Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
 		if cell == CellTypes.SECRET_UNEXPLORED:
 			Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
-		update_map = true
+		update_cell_mask(map_local_center)
+		update_markers(last_drawn_cells)
+		update_map = false
 		last_player_pos = player_cell
 		
 		if marker_positions[array_pos] >= 0 and player_marker.action == "player_normal":
@@ -228,14 +232,14 @@ func update_markers(target_cells:Array = []) -> void:
 		for i in range(marker_positions.size()):
 			target_cells.append(i)
 	for i in range(marker_positions.size()):
-		var cell_pos = Vector2i.ZERO
-		var working_i = i
-		while working_i >= MAP_SIZE.x:
-			cell_pos.y += 1
-			working_i -= MAP_SIZE.x
-		cell_pos.x = working_i
 		var array_i = marker_positions[i]
-		if array_i != MarkerTypes.NONE:
+		if array_i != -1:
+			var cell_pos = Vector2i.ZERO
+			var working_i = i
+			while working_i >= MAP_SIZE.x:
+				cell_pos.y += 1
+				working_i -= MAP_SIZE.x
+			cell_pos.x = working_i
 			var marker = active_markers[array_i]
 			var tile = Statics.current_profile["map_tiles"][i]
 			

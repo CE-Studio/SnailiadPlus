@@ -1,0 +1,183 @@
+{
+	"tiles": [4, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"1_idle_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"1_idle_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"1_swim_left": {
+			"fps": 10,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "1_idle_left",
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false]
+			]
+		},
+		"1_swim_right": {
+			"fps": 10,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "1_idle_right",
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false]
+			]
+		},
+		"1_turn_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "1_swim_left",
+			"frames": []
+		},
+		"1_turn_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "1_swim_right",
+			"frames": []
+		},
+		"2_idle_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, true, false]
+			]
+		},
+		"2_idle_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"2_swim_left": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "2_idle_left",
+			"frames": [
+				[2, 0, true, false],
+				[3, 0, true, false],
+				[2, 0, true, false],
+				[3, 0, true, false],
+				[2, 0, true, false],
+				[3, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[3, 0, true, false],
+				[3, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[3, 0, true, false],
+				[3, 0, true, false],
+				[3, 0, true, false],
+				[3, 0, true, false],
+				[3, 0, true, false]
+			]
+		},
+		"2_swim_right": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "2_idle_right",
+			"frames": [
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[3, 0, false, false],
+				[3, 0, false, false],
+				[3, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"2_turn_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "2_swim_left",
+			"frames": []
+		},
+		"2_turn_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "2_swim_right",
+			"frames": []
+		},
+	}
+}

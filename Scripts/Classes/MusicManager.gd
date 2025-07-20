@@ -53,10 +53,20 @@ var current_song:Loops = Loops.None
 var group_focus:int = 0
 var is_group_song:bool = false
 var awaiting_load:bool = false
+var global_vol_mult:float = 1.0
+var global_vol_fade:float = 1.0
+var global_vol_fade_spd:float = 1.0
 #endregion
 
 
 func _process(delta: float) -> void:
+	if global_vol_mult != global_vol_fade:
+		var this_delta = delta * global_vol_fade_spd
+		if abs(global_vol_fade - global_vol_mult) < this_delta:
+			global_vol_mult = global_vol_fade
+		else:
+			global_vol_mult += this_delta if (global_vol_fade > global_vol_mult) else -this_delta
+	
 	if awaiting_load:
 		var all_loaded = true
 		for loop in active_loops:
@@ -72,7 +82,11 @@ func _process(delta: float) -> void:
 			var vol_change:float = GROUP_FADE_TIME_SECONDS * delta
 			if i != group_focus:
 				vol_change *= -1
-			player.volume_linear = clampf(player.volume_linear + vol_change, 0.0, 1.0)
+			player.volume_linear = clampf(player.volume_linear + vol_change, 0.0, global_vol_mult)
+	else:
+		for i in range(active_players.size()):
+			var player:AudioStreamPlayer = active_players[i]
+			player.volume_linear = global_vol_mult
 
 
 func play_song(loop:Loops) -> void:
@@ -90,10 +104,7 @@ func play_song(loop:Loops) -> void:
 			current_song = loop
 			return
 		else:
-			for player in active_players:
-				player.queue_free()
-			active_players.clear()
-			active_loops.clear()
+			stop_all(false)
 	# If new song is not None
 	#   Create sources for new song (and Group if part of one)
 	if loop != Loops.None:
@@ -121,6 +132,15 @@ func play_song(loop:Loops) -> void:
 	current_song = loop
 
 
+func stop_all(reset_current:bool = true) -> void:
+	for player in active_players:
+		player.queue_free()
+	active_players.clear()
+	active_loops.clear()
+	if reset_current:
+		current_song = Loops.None
+
+
 func find_song_in_groups(loop:Loops) -> int:
 	var found_group:int = -1
 	for i in range(GROUPS.size()):
@@ -146,3 +166,13 @@ func create_new_player(loop:Loops) -> AudioStreamPlayer:
 	player.name = str(loop)
 	add_child(player)
 	return player
+
+
+func set_global_volume(vol:float) -> void:
+	global_vol_mult = vol
+	global_vol_fade = vol
+
+
+func set_fade(fade:float, speed:float = 1.0) -> void:
+	global_vol_fade = fade
+	global_vol_fade_spd = speed

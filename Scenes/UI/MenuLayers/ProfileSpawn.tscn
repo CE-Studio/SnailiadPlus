@@ -36,7 +36,9 @@ func _on_save_spawn_pressed(_value) -> void:
 		2: Statics.current_profile = Statics.data_profile2
 		3: Statics.current_profile = Statics.data_profile3
 	Statics.current_profile_id = pro_id
-	var load_pos = str_to_var(\"Vector2i\" + Statics.current_profile[\"save_coords\"])
+	var load_pos = Statics.current_profile[\"save_coords\"]
+	if load_pos is String:
+		load_pos = str_to_var(\"Vector2i\" + load_pos)
 	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile[\"save_room\"])
 	Statics.load_coords = load_pos
 	get_tree().change_scene_to_file(\"res://Scenes/GameScene.tscn\")
@@ -68,7 +70,7 @@ script = SubResource("GDScript_5cqf1")
 [node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text_id = "menu_option_newGame_header"
+text_id = "menu_option_loadGame_header"
 disabled = true
 hide_frame = true
 

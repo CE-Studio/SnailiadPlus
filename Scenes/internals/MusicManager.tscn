@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://c83kbyi7w7mxt" path="res://Scripts/Classes/MusicManager.gd" id="1_alebt"]
 
 [node name="MusicManager" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_alebt")

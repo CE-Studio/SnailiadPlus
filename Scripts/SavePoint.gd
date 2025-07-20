@@ -66,6 +66,11 @@ func _on_player_entered(_body) -> void:
 
 
 func _spawn_save_particles() -> void:
+	var particle_setting = Statics.data_general["particle_state"]
+	if (particle_setting != Statics.ParticleOptions.ENTITIES_ALL
+	and particle_setting != Statics.ParticleOptions.ALL):
+		return
+	
 	var start_pos:Vector2
 	var advance_dir:Vector2
 	var float_dir:Vector2
