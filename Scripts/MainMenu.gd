@@ -139,9 +139,9 @@ func create_layer(_name:String) -> MenuLayer:
 	var layer_scene = load(LAYER_PATH % _name)
 	var layer = layer_scene.instantiate()
 	layer.menu = self
-	layer_group.add_child(layer)
 	layer.position = Vector2(0.0, 240.0)
 	layer.layer_id = active_layers
+	layer_group.add_child(layer)
 	for this_layer in layer_group.get_children():
 		this_layer.total_layer_count = active_layers
 	for button in Statics.get_all_children(layer):

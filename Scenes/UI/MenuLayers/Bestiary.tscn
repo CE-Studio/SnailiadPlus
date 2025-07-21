@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://capqop150dmrx"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_blq8n"]
+[ext_resource type="Texture2D" uid="uid://c21s6w3gptrlt" path="res://Assets/Images/UI/BestiaryBackground.png" id="2_jdu1y"]
+[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="3_wfk3g"]
+[ext_resource type="Texture2D" uid="uid://cqv3m8uc5txwd" path="res://Assets/Images/UI/ScrollPanelBare.png" id="4_gx5uf"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_obml4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8bw4w"]
+texture = ExtResource("4_gx5uf")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[node name="Bestiary" type="Node2D"]
+script = ExtResource("1_blq8n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(200, 120)
+texture = ExtResource("2_jdu1y")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Sprite2D"]
+offset_left = -96.0
+offset_top = -104.0
+offset_right = -24.0
+offset_bottom = 104.0
+theme = ExtResource("3_wfk3g")
+theme_override_styles/panel = SubResource("StyleBoxTexture_8bw4w")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sprite2D/ScrollContainer"]
+layout_mode = 2
+
+[node name="Name" parent="Sprite2D" instance=ExtResource("5_obml4")]
+custom_minimum_size = Vector2(156, 0)
+offset_left = -176.0
+offset_top = -224.0
+offset_right = -20.0
+offset_bottom = -64.0
+text = "Name here"
+max_width = 156
+
+[node name="Description" parent="Sprite2D" instance=ExtResource("5_obml4")]
+custom_minimum_size = Vector2(156, 0)
+offset_left = -176.0
+offset_top = -128.0
+offset_right = -20.0
+offset_bottom = 32.0
+theme_override_font_sizes/normal_font_size = 8
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+max_width = 156
+text_scale = 1

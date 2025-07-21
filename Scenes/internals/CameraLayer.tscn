@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bukaxq2vrte5l" path="res://Scripts/UICore.gd" id="1_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_gi4g0"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
-[ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/ScreenBorder.png" id="4_ygllc"]
+[ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/UI/ScreenBorder.png" id="4_ygllc"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
 [ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="8_g8fv5"]
 [ext_resource type="Script" uid="uid://de1nn2ecms07n" path="res://Scripts/UI/PauseLayer.gd" id="9_qjw3k"]
@@ -108,7 +108,7 @@ scale = Vector2(2, 2)
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 script = ExtResource("1_4o42s")
-texture_path = "res://Assets/Images/ScreenBorder.json"
+texture_path = "res://Assets/Images/UI/ScreenBorder.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Border"]

@@ -292,6 +292,19 @@ static func delete_profile(iprofile:int) -> void:
 
 static func has_unlock(unlock:Unlocks) -> bool:
 	return data_records["unlocks"].has(unlock)
+
+
+static func add_achievement(id:int) -> void:
+	while id >= len(data_records["achievements"]):
+		data_records["achievements"].append(false)
+	data_records["achievements"] = true
+
+
+static func check_achievement(id:int) -> bool:
+	var output := false
+	if id < len(data_records["achievements"]):
+		output = data_records["achievements"][id]
+	return output
 #endregion
 
 

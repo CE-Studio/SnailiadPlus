@@ -17,7 +17,8 @@ var can_focus:bool = true:
 	set(value):
 		can_focus = value
 		for button in buttons:
-			if (button is ScrollingSnailyButton and not button.selected) or button is not ScrollingSnailyButton:
+			var can_scroll := button is ScrollingSnailyButton or button is HeaderlessScrollingSnailyButton
+			if (can_scroll and not button.selected) or not can_scroll:
 				button.can_focus = value
 var layer_id:int = 0
 var total_layer_count:int = 0

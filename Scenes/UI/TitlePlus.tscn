@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://u1e2wjuormfp"]
 
 [ext_resource type="Script" uid="uid://clnmcqhf54j1y" path="res://Scripts/UI/TitlePlus.gd" id="1_5iwpm"]
-[ext_resource type="Texture2D" uid="uid://driptgr8ouckf" path="res://Assets/Images/TitlePlus.png" id="1_rpn4k"]
+[ext_resource type="Texture2D" uid="uid://driptgr8ouckf" path="res://Assets/Images/UI/TitlePlus.png" id="1_rpn4k"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_5iwpm"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_f5hte"]
 
@@ -18,5 +18,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("3_f5hte")
-texture_path = "res://Assets/Images/TitlePlus.json"
+texture_path = "res://Assets/Images/UI/TitlePlus.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

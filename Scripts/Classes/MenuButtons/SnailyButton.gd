@@ -13,7 +13,8 @@ const REQ_LIFE_FRAMES = 2
 @export var hide_frame = false:
 	set(value):
 		hide_frame = value
-		frame.self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
+		if frame:
+			frame.self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
 
 var focused:bool = false
 var mouse_over:bool = false

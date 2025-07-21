@@ -39,6 +39,7 @@ focus_neighbor_bottom = NodePath("../Gallery")
 focus_next = NodePath("../Gallery")
 focus_previous = NodePath("../Back")
 text_id = "menu_option_records_times"
+quick_load_layer = "Times"
 grab_focus_on_load = true
 hide_frame = true
 
@@ -64,6 +65,7 @@ focus_neighbor_bottom = NodePath("../Bestiary")
 focus_next = NodePath("../Bestiary")
 focus_previous = NodePath("../Gallery")
 text_id = "menu_option_records_achievements"
+quick_load_layer = "Achievements"
 hide_frame = true
 
 [node name="Bestiary" parent="MainVBox" instance=ExtResource("2_v7ejv")]
@@ -76,6 +78,7 @@ focus_neighbor_bottom = NodePath("../SoundTest")
 focus_next = NodePath("../SoundTest")
 focus_previous = NodePath("../Achievements")
 text_id = "menu_option_records_bestiary"
+quick_load_layer = "Bestiary"
 hide_frame = true
 
 [node name="SoundTest" parent="MainVBox" instance=ExtResource("2_v7ejv")]
