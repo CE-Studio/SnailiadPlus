@@ -305,6 +305,19 @@ static func check_achievement(id:int) -> bool:
 	if id < len(data_records["achievements"]):
 		output = data_records["achievements"][id]
 	return output
+
+
+static func add_bestiary_entry(id:int) -> void:
+	while id >= len(data_records["bestiary"]):
+		data_records["bestiary"].append(false)
+	data_records["bestiary"] = true
+
+
+static func check_bestiary_entry(id:int) -> bool:
+	var output := false
+	if id < len(data_records["bestiary"]):
+		output = data_records["bestiary"][id]
+	return output
 #endregion
 
 

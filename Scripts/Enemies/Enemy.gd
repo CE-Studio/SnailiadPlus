@@ -62,14 +62,13 @@ enum EnemyTypes {
 	SPIKEY_COMMON,     # Blue spikey
 	SPIKEY_TOUGH,      # Orange spikey
 	SPIKEY_ABSURD,     # Pink spikey
-	BABYFISH_1,        # Green babyfish
-	BABYFISH_2,        # Pink babyfish
+	BABYFISH,          # Green and pink babyfish
 	FLOATSPIKE_COMMON, # Black floatspike
 	FLOATSPIKE_TOUGH,  # Blue floatspike
 	BLOB_COMMON,       # Blob
 	BLOB_TOUGH,        # Blub
 	BLOB_ANGEL,        # Angelblob
-	BLOB_DEVIL,        # Devilblov
+	BLOB_DEVIL,        # Devilblob
 	CHIRPY_COMMON,     # Blue chirpy
 	CHIRPY_TOUGH,      # Light-blue chirpy
 	BATTYBAT,          # Batty bat
@@ -93,7 +92,9 @@ enum EnemyTypes {
 	TALLFISH_COMMON,   # Tallfish
 	TALLFISH_TOUGH,    # Angry tallfish
 	WALLEYE,           # Walleye
-	PINCER,            # Pincer, sky pincer, and pouncer
+	PINCER_FLOOR,      # Pincer
+	PINCER_WALL,       # Pouncer
+	PINCER_CEILING,    # Sky pincer
 	GEAR_COMMON,       # Gray spinnygear
 	GEAR_TOUGH,        # Red spinnygear
 	DRONE,             # Federation drone

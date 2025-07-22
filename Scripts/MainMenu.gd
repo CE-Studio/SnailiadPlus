@@ -7,6 +7,7 @@ const TITLE_MOVE_RATE = 8
 const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
 const SELECTOR_MOVE_RATE = 20
 const SELECTOR_OFFSET = Vector2i(16, -2)
+const HIDE_FADE_RATE = 16
 
 @export var is_main_menu:bool = false
 
@@ -22,6 +23,7 @@ var spawn_buffer_frames:int = 2
 var read_inputs:bool = true
 
 @onready var title:Node2D = $"Title"
+@onready var version_text:SnailyText = $"Version"
 @onready var layer_group:Node2D = $"LayerGroup"
 @onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
 @onready var save_icon:JsonSprite2D = $"SaveIcon"
@@ -32,7 +34,6 @@ var read_inputs:bool = true
 func _ready() -> void:
 	save_icon.visible = false
 	
-	var version_text:SnailyText = $"Version"
 	var version_string := (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
 	version_text.set_snaily_text(version_string)
@@ -115,6 +116,20 @@ func _process(delta: float) -> void:
 	
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1
+	
+	if not is_main_awaiting_input:
+		var rate_delta := HIDE_FADE_RATE * delta
+		var asset_a = title.modulate.a
+		var selector_a = selectors[0].modulate.a
+		var selector_target_a = active_layer.selector_opacity
+		if active_layer.hide_global_menu_assets:
+			title.modulate.a = lerp(asset_a, 0.0, rate_delta)
+			version_text.modulate.a = lerp(asset_a, 0.0, rate_delta)
+		else:
+			title.modulate.a = lerp(asset_a, 1.0, rate_delta)
+			version_text.modulate.a = lerp(asset_a, 1.0, rate_delta)
+		selectors[0].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
+		selectors[1].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
 
 
 func spawn_menu() -> void:

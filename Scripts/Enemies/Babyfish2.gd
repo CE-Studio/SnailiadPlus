@@ -13,7 +13,7 @@ var facing_left:bool = false
 #endregion
 
 func _ready() -> void:
-	my_type = EnemyTypes.BABYFISH_1
+	my_type = EnemyTypes.BABYFISH
 	col = $"BodyBox"
 	sprite = $"JsonSprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
