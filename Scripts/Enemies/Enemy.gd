@@ -22,12 +22,14 @@ const DAMAGE_TIMEOUT:float = 0.025
 @export var kill_particle_range:Vector2i = Vector2i(8, 8)
 @export var kill_particle_types:Array[String] = [ "ExplosionSmall" ]
 @export var kill_particle_count:int = 4
+@export var grant_bestiary_without_defeat:bool = false
 
 var health:int
 var parry_damage:int = 0
 var damage_timeout:float = 0.0
 var stun_invul:bool = false
 var ping_played:bool = false
+var sent_entry_once:bool = false
 
 enum ElementTypes {
 	ICE,
@@ -117,6 +119,10 @@ func spawn(active:bool = true) -> void:
 
 
 func _physics_process(delta) -> void:
+	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
+		sent_entry_once = true
+		Statics.add_bestiary_entry(my_type)
+	
 	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
 		var can_hit = true
 		match my_element:
@@ -221,6 +227,7 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 
 func kill() -> void:
 	Statics.play_sfx_disconnected(sfx_kill)
+	Statics.add_bestiary_entry(my_type)
 	for i in range(kill_particle_count):
 		var range = kill_particle_range
 		var pos = Vector2(randi_range(-range.x, range.x), randi_range(-range.y, range.y))

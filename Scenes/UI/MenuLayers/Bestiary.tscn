@@ -24,6 +24,7 @@ const SELECTOR_Y_MARGIN:int = 20
 var text_color:Color = Statics.get_color(Vector2i(0, 4))
 var list_items:Array[SnailyText] = []
 var entity_list:Array[String] = []
+var entry_states:Array[bool] = []
 var elapsed:float = 0.0
 var focused_text:SnailyText = null
 var selector_origin_x:float = 0.0
@@ -33,6 +34,9 @@ var selection:int = 0
 @onready var scroll_list:VBoxContainer = $\"ScrollPanel/EntityList\"
 @onready var sfx_beep:AudioStreamPlayer = $\"Beep\"
 @onready var selector:Node2D = $\"Selector\"
+@onready var name_text:SnailyText = $\"Name\"
+@onready var desc_text:SnailyText = $\"Description\"
+@onready var display_enemy:Enemy = null
 #endregion
 
 
@@ -44,6 +48,11 @@ func _ready() -> void:
 	
 	for i in range(entity_list.size()):
 		var entity := entity_list[i]
+		if not Statics.check_bestiary_entry(i):
+			entity = \"none\"
+			entry_states.append(false)
+		else:
+			entry_states.append(true)
 		entity = Statics.get_text(NAME_STR % entity)
 		var new_text:SnailyText = text_scene.instantiate()
 		new_text.text_scale = 1
@@ -76,6 +85,10 @@ func _ready() -> void:
 		list_items[0].grab_focus()
 	
 	selector_origin_x = selector.position.x
+	
+	name_text.modulate = text_color
+	desc_text.modulate = text_color
+	_update_entry_display()
 
 
 func _process(delta: float) -> void:
@@ -103,6 +116,19 @@ func _on_text_focused() -> void:
 	focused_text = get_viewport().gui_get_focus_owner()
 	sfx_beep.play()
 	selection = int(focused_text.name)
+	_update_entry_display()
+
+
+func _update_entry_display() -> void:
+	if display_enemy:
+		display_enemy.queue_free()
+		display_enemy = null
+	var has_entry := entry_states[selection]
+	var this_entity := entity_list[selection] if has_entry else \"none\"
+	name_text.set_snaily_text(Statics.get_text(NAME_STR % this_entity))
+	desc_text.set_snaily_text(Statics.get_text(DESC_STR % this_entity))
+	if has_entry:
+		pass #spawn display enemy
 "
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8bw4w"]
@@ -143,12 +169,14 @@ theme_override_constants/separation = 2
 
 [node name="Name" parent="Sprite2D" instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
-offset_left = -176.0
-offset_top = -224.0
-offset_right = -20.0
-offset_bottom = -64.0
+offset_left = -157.0
+offset_top = -216.0
+offset_right = -1.0
+offset_bottom = -56.0
+theme_override_font_sizes/normal_font_size = 8
 text = "Name here"
 max_width = 156
+text_scale = 1
 
 [node name="Description" parent="Sprite2D" instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)

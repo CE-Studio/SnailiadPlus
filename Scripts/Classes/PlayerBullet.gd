@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 
 
 func despawn(loudly:bool = false) -> void:
-	if loudly:
+	if loudly and vis.is_on_screen():
 		Statics.spawn_particle(despawn_particle, Room.Layers.FG1, Vector2(
 			randf_range(-despawn_offset.x, despawn_offset.x),
 			randf_range(-despawn_offset.y, despawn_offset.y)

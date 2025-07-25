@@ -22,6 +22,7 @@ script = ExtResource("1_b0nbo")
 max_health = 30
 invulnerable = true
 can_damage = false
+grant_bestiary_without_defeat = true
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_yl0hf")

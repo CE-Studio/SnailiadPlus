@@ -308,9 +308,12 @@ static func check_achievement(id:int) -> bool:
 
 
 static func add_bestiary_entry(id:int) -> void:
+	if check_bestiary_entry(id):
+		return
 	while id >= len(data_records["bestiary"]):
 		data_records["bestiary"].append(false)
-	data_records["bestiary"] = true
+	data_records["bestiary"][id] = true
+	UICore.instance.play_bestiary_anim()
 
 
 static func check_bestiary_entry(id:int) -> bool:

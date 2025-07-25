@@ -86,6 +86,12 @@ script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/SaveIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
+[node name="BestiaryIcon" type="Sprite2D" parent="BR"]
+position = Vector2(-16, -16)
+script = ExtResource("1_4o42s")
+texture_path = "res://Assets/Images/UI/SaveIcon.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
 [node name="TL" type="Node2D" parent="."]
 
 [node name="Hearts" type="Node2D" parent="TL"]

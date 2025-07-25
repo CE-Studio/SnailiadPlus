@@ -17,6 +17,7 @@ static var instance:UICore
 @onready var heart_group:Node2D = $"TL/Hearts"
 @onready var color_cover:ColorCover = $"ColorCover"
 @onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
+@onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
 @onready var border:JsonSprite2D = $"Border"
 @onready var popup_layer:Node2D = $"PopupLayer"
@@ -39,6 +40,7 @@ func instantiate() -> void:
 	draw_new_hearts()
 	
 	save_icon.visible = false
+	bestiary_icon.visible = false
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
@@ -145,6 +147,11 @@ func get_cam_center_pos() -> Vector2:
 func play_save_anim() -> void:
 	save_icon.visible = true
 	save_icon.action = "anim"
+
+
+func play_bestiary_anim() -> void:
+	bestiary_icon.visible = true
+	bestiary_icon.action = "anim"
 
 
 func set_border_anim(anim_id:int) -> void:
