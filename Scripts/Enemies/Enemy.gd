@@ -23,6 +23,7 @@ const DAMAGE_TIMEOUT:float = 0.025
 @export var kill_particle_types:Array[String] = [ "ExplosionSmall" ]
 @export var kill_particle_count:int = 4
 @export var grant_bestiary_without_defeat:bool = false
+@export var display_mode:bool = false
 
 var health:int
 var parry_damage:int = 0
@@ -116,6 +117,18 @@ func spawn(active:bool = true) -> void:
 		hitbox.connect("area_exited", _on_bullet_exited)
 		hitbox.connect("body_entered", _on_player_entered)
 		hitbox.connect("body_exited", _on_player_exited)
+	
+	if display_mode:
+		ai_active = false
+		can_damage = false
+		invulnerable = true
+		can_be_pierced = true
+		make_sound_on_ping = false
+		configure_display_mode()
+
+
+func configure_display_mode() -> void:
+	pass
 
 
 func _physics_process(delta) -> void:
