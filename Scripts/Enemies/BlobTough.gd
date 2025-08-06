@@ -18,7 +18,7 @@ var hop_timeout:float = 0.0
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.BLOB_COMMON
+	my_type = EnemyTypes.BLOB_TOUGH
 	col = $"BodyBox"
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"

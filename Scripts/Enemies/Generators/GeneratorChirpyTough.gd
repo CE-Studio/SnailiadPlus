@@ -22,7 +22,7 @@ var pointer:int = 0
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.CHIRPY_TOUGH
+	my_type = EnemyTypes.CHIRPY
 	super.spawn()
 	
 	spr.modulate.a = 0.0

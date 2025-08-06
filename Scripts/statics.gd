@@ -314,6 +314,7 @@ static func add_bestiary_entry(id:int) -> void:
 		data_records["bestiary"].append(false)
 	data_records["bestiary"][id] = true
 	UICore.instance.play_bestiary_anim()
+	save_records()
 
 
 static func check_bestiary_entry(id:int) -> bool:

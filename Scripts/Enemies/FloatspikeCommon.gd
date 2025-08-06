@@ -6,7 +6,7 @@ var theta = 0.0
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.FLOATSPIKE_COMMON
+	my_type = EnemyTypes.FLOATSPIKE
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not ai_active:
+	if not ai_active and not display_mode:
 		return
 	
 	theta += delta

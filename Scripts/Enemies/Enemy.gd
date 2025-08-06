@@ -66,14 +66,12 @@ enum EnemyTypes {
 	SPIKEY_TOUGH,      # Orange spikey
 	SPIKEY_ABSURD,     # Pink spikey
 	BABYFISH,          # Green and pink babyfish
-	FLOATSPIKE_COMMON, # Black floatspike
-	FLOATSPIKE_TOUGH,  # Blue floatspike
+	FLOATSPIKE,        # Floatspike
 	BLOB_COMMON,       # Blob
 	BLOB_TOUGH,        # Blub
 	BLOB_ANGEL,        # Angelblob
 	BLOB_DEVIL,        # Devilblob
-	CHIRPY_COMMON,     # Blue chirpy
-	CHIRPY_TOUGH,      # Light-blue chirpy
+	CHIRPY,            # Chirpy
 	BATTYBAT,          # Batty bat
 	FIREBALL,          # Fireball
 	ICEBALL,           # Iceball
@@ -102,6 +100,12 @@ enum EnemyTypes {
 	GEAR_TOUGH,        # Red spinnygear
 	DRONE,             # Federation drone
 	BALLOON,           # Balloon buster
+	SHELLBREAKER,      # Shellbreaker
+	STOMPY,            # Stompy
+	SPACEBOX,          # Space Box
+	MOONSNAIL,         # Moon Snail
+	GIGASNAIL,         # Giga Moon Snail
+	COSMICSNAIL,       # Cosmic Moon Snail
 }
 #endregion
 

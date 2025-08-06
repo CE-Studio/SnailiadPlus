@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=11 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_gi4g0"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/UI/ScreenBorder.png" id="4_ygllc"]
+[ext_resource type="PackedScene" uid="uid://coram7y7g81vt" path="res://Scenes/UI/AchivementPanel.tscn" id="6_f5gkc"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
 [ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="8_g8fv5"]
 [ext_resource type="Script" uid="uid://de1nn2ecms07n" path="res://Scripts/UI/PauseLayer.gd" id="9_qjw3k"]
@@ -95,6 +96,9 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="TL" type="Node2D" parent="."]
 
 [node name="Hearts" type="Node2D" parent="TL"]
+
+[node name="AchivementPanel" parent="TL" instance=ExtResource("6_f5gkc")]
+position = Vector2(39, 36)
 
 [node name="TR" type="Node2D" parent="."]
 position = Vector2(400, 0)

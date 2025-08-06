@@ -22,8 +22,12 @@ func _ready() -> void:
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	facing_left = _get_left()
-	sprite.action = "idle_" + ("left" if facing_left else "right")
+	if display_mode:
+		facing_left = randf() < 0.5
+		sprite.action = "fly_" + ("left" if facing_left else "right")
+	else:
+		facing_left = _get_left()
+		sprite.action = "idle_" + ("left" if facing_left else "right")
 
 
 func _physics_process(delta: float) -> void:
