@@ -22,10 +22,15 @@ extends RichTextLabel
 @export var shadow_scale:int = 0
 @export var border_scale:int = 0
 
+const CONTROL_PATH:String = "res://Assets/Images/UI/ControlIcons/"
+const DEFAULT_TIMEOUT:float = 0.02
+
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
+
+var char_timeouts:Array[float] = []
 
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
@@ -42,6 +47,7 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
+	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
@@ -143,3 +149,27 @@ func get_width(_text:String = text) -> int:
 		if longest_line < line_length:
 			longest_line = line_length
 	return longest_line
+
+
+func format_extra_tags(_text:String) -> String:
+	if _text.contains("[ctrl]") and _text.contains("[/ctrl]"):
+		_text.replace("[ctrl]", "[img]" + CONTROL_PATH)
+		_text.replace("[/ctrl]", ".png[/img]")
+	return _text
+	#var parsed_text:String = ""
+	#var parsed_tag:String = ""
+	#var current_timeout:float = DEFAULT_TIMEOUT
+	#var open_tag:bool = false
+	#for char in _text:
+	#	match char:
+	#		"[":
+	#			pass
+	#		"]":
+	#			pass
+	#		_:
+	#			if open_tag:
+	#				parsed_tag += char
+	#			else:
+	#				parsed_text += char
+	#				char_timeouts.append(current_timeout)
+	#return parsed_text

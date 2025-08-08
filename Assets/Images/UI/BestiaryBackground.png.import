@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gqsn3i0abkdk"
-path="res://.godot/imported/ScreenBorder.png-97dfc940c4d2923944b92aca76b745bb.ctex"
+uid="uid://c21s6w3gptrlt"
+path="res://.godot/imported/BestiaryBackground.png-34e6920abecd6e80c064f3612948d7f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/ScreenBorder.png"
-dest_files=["res://.godot/imported/ScreenBorder.png-97dfc940c4d2923944b92aca76b745bb.ctex"]
+source_file="res://Assets/Images/UI/BestiaryBackground.png"
+dest_files=["res://.godot/imported/BestiaryBackground.png-34e6920abecd6e80c064f3612948d7f0.ctex"]
 
 [params]
 

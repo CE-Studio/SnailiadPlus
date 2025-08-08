@@ -1,6 +1,6 @@
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
-class_name ScrollingSnailyButton
+class_name HeaderlessScrollingSnailyButton
 extends SnailyButton
 
 
@@ -8,9 +8,8 @@ extends SnailyButton
 const HOVER_ARROW_MAX_ALPHA = 0.5
 const HOVER_ARROW_CYCLE_SPEED = 8.0
 
-@export var header_id:String = ""
-@export var auto_select_mode:bool = false # Automatically enable cycling when button is focused, and enable emitting of button_pressed
 @export var cycle_options:Array[String] = []
+@export var auto_select_mode:bool = false # Automatically enable cycling when button is focused, and enable emitting of button_pressed
 @export var focus_option:int = 0
 @export var loop:bool = true
 @export var emit_signal_on_load:bool = false
@@ -30,7 +29,6 @@ signal cycled_left(value)
 signal cycled_right(value)
 signal button_pressed(value)
 
-@onready var header:SnailyText
 @onready var scroller:Control
 @onready var option:SnailyText
 @onready var tex_left:TextureRect
@@ -39,22 +37,15 @@ signal button_pressed(value)
 
 
 func _ready() -> void:
-	frame = $"Main/Scroller/Frame"
+	frame = $"Scroller/Frame"
 	super._ready()
-	header = $"Main/TopText/SnailyText"
-	scroller = $"Main/Scroller"
-	option = $"Main/Scroller/Frame/HBoxContainer/MarginContainer/SnailyText"
-	tex_left = $"Main/Scroller/Left"
-	tex_right = $"Main/Scroller/Right"
+	scroller = $"Scroller"
+	option = $"Scroller/Frame/HBoxContainer/MarginContainer/SnailyText"
+	tex_left = $"Scroller/Left"
+	tex_right = $"Scroller/Right"
 	
-	header.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
-	header.add_shadow(1)
 	option.add_shadow(1)
 	if not Engine.is_editor_hint():
-		if header_id.strip_edges() == "":
-			header.set_snaily_text("Text!!")
-		else:
-			header.set_snaily_text(Statics.get_text(header_id))
 		if cycle_options.size() == 0:
 			option.set_snaily_text(Statics.get_text("menu_option_scroller_none"))
 			selected_option = -1
@@ -66,7 +57,6 @@ func _ready() -> void:
 			option.set_snaily_text(Statics.get_text(cycle_options[selected_option]))
 			if emit_signal_on_load:
 				option_cycled.emit(selected_option)
-		header.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 		option.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 		tex_left.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 		tex_right.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
@@ -115,10 +105,6 @@ func _process(delta: float) -> void:
 		tex_left.modulate.a = alpha
 		tex_right.modulate.a = alpha
 	super._process(delta)
-
-
-func set_header(_text:String) -> void:
-	header.set_snaily_text(_text)
 
 
 func remote_set_option(value:int) -> void:

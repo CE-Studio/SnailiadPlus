@@ -116,7 +116,7 @@ func spawn(_spawn_all:bool) -> void:
 
 func get_room_name_from_filename() -> void:
 	var trimmed_name := self.scene_file_path
-	var path_parts: = Statics.ROOM_PATH.split("%s")
+	var path_parts := Statics.ROOM_PATH.split("%s")
 	trimmed_name = trimmed_name.substr(path_parts[0].length())
 	trimmed_name = trimmed_name.substr(0, trimmed_name.length() - path_parts[1].length())
 	room_path = trimmed_name

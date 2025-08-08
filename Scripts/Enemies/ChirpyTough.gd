@@ -24,7 +24,7 @@ var shot_timeout:float = SHOT_TIMEOUT
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.CHIRPY_TOUGH
+	my_type = EnemyTypes.CHIRPY
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
@@ -36,11 +36,16 @@ func _ready() -> void:
 	fly_speed += sin(position.x * 2.332 - position.y * 1.9) * 10.0
 	fly_amplitude += sin(position.x * 7.3 + position.y) * 5.0
 	shot_timeout -= sin(position.x * 2.725 - position.y * 2.6) * 0.8
+	
+	if display_mode:
+		taken_off = true
+		facing_left = randf() < 0.5
+		fly_amplitude = 16.0
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not ai_active:
+	if not ai_active and not display_mode:
 		return
 	
 	if vis.is_on_screen() and not taken_off:
@@ -58,7 +63,7 @@ func _physics_process(delta: float) -> void:
 			_play_anim(false)
 		if vis.is_on_screen():
 			off_screen_time = 0
-			if hard_mode:
+			if hard_mode and not display_mode:
 				shot_timeout -= delta
 				if shot_timeout <= 0.0:
 					shot_timeout = SHOT_TIMEOUT

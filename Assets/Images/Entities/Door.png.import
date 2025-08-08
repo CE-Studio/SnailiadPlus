@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d174bbfmyslpm"
-path="res://.godot/imported/TitleFont.png-f94668e445dcf8c4ca3e19977c813969.ctex"
+uid="uid://bnoc5snsu6wge"
+path="res://.godot/imported/Door.png-ea31125bcf44b3f2307881585c2a5260.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/TitleFont.png"
-dest_files=["res://.godot/imported/TitleFont.png-f94668e445dcf8c4ca3e19977c813969.ctex"]
+source_file="res://Assets/Images/Entities/Door.png"
+dest_files=["res://.godot/imported/Door.png-ea31125bcf44b3f2307881585c2a5260.ctex"]
 
 [params]
 

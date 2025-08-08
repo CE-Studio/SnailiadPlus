@@ -10,28 +10,35 @@ const DECEL:float = SPEED * 0.6
 var elapsed:float = 0.0
 var move_timeout:float = 0.0
 var facing_left:bool = false
+var last_velocity:float = 0.0
 #endregion
 
 func _ready() -> void:
-	my_type = EnemyTypes.BABYFISH_1
+	my_type = EnemyTypes.BABYFISH
 	col = $"BodyBox"
 	sprite = $"JsonSprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	move_timeout = MOVE_TIMEOUT * 0.125
-	facing_left = randf() < 0.5
-	play_anim("idle")
+	if not display_mode:
+		move_timeout = MOVE_TIMEOUT * 0.125
+		facing_left = randf() < 0.5
+		play_anim("idle")
+
+
+func configure_display_mode() -> void:
+	elapsed = randf_range(0, TAU)
+	sprite.action = "1_display"
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not ai_active:
+	if not ai_active and not display_mode:
 		return
 	
 	elapsed += delta
 	position.y = origin.y + 4 * sin(elapsed * 2)
-	if vis.is_on_screen():
+	if vis.is_on_screen() and not display_mode:
 		move_timeout -= delta
 		if move_timeout <= 0:
 			facing_left = GameCore.instance.player.position.x < position.x
@@ -42,9 +49,11 @@ func _physics_process(delta: float) -> void:
 			play_anim("swim")
 		move_and_slide()
 		if is_on_wall():
-			velocity *= -1
-		#velocity.x = lerpf(velocity.x, 0, DECEL * delta)
+			velocity.x = -last_velocity
+			facing_left = not facing_left
+			play_anim("swim")
 		velocity.x -= DECEL * delta * (-1 if velocity.x < 0 else 1)
+		last_velocity = velocity.x
 
 
 func play_anim(modifier:String) -> void:

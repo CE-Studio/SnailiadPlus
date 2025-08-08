@@ -22,12 +22,15 @@ const DAMAGE_TIMEOUT:float = 0.025
 @export var kill_particle_range:Vector2i = Vector2i(8, 8)
 @export var kill_particle_types:Array[String] = [ "ExplosionSmall" ]
 @export var kill_particle_count:int = 4
+@export var grant_bestiary_without_defeat:bool = false
+@export var display_mode:bool = false
 
 var health:int
 var parry_damage:int = 0
 var damage_timeout:float = 0.0
 var stun_invul:bool = false
 var ping_played:bool = false
+var sent_entry_once:bool = false
 
 enum ElementTypes {
 	ICE,
@@ -62,16 +65,13 @@ enum EnemyTypes {
 	SPIKEY_COMMON,     # Blue spikey
 	SPIKEY_TOUGH,      # Orange spikey
 	SPIKEY_ABSURD,     # Pink spikey
-	BABYFISH_1,        # Green babyfish
-	BABYFISH_2,        # Pink babyfish
-	FLOATSPIKE_COMMON, # Black floatspike
-	FLOATSPIKE_TOUGH,  # Blue floatspike
+	BABYFISH,          # Green and pink babyfish
+	FLOATSPIKE,        # Floatspike
 	BLOB_COMMON,       # Blob
 	BLOB_TOUGH,        # Blub
 	BLOB_ANGEL,        # Angelblob
-	BLOB_DEVIL,        # Devilblov
-	CHIRPY_COMMON,     # Blue chirpy
-	CHIRPY_TOUGH,      # Light-blue chirpy
+	BLOB_DEVIL,        # Devilblob
+	CHIRPY,            # Chirpy
 	BATTYBAT,          # Batty bat
 	FIREBALL,          # Fireball
 	ICEBALL,           # Iceball
@@ -93,11 +93,19 @@ enum EnemyTypes {
 	TALLFISH_COMMON,   # Tallfish
 	TALLFISH_TOUGH,    # Angry tallfish
 	WALLEYE,           # Walleye
-	PINCER,            # Pincer, sky pincer, and pouncer
+	PINCER_FLOOR,      # Pincer
+	PINCER_WALL,       # Pouncer
+	PINCER_CEILING,    # Sky pincer
 	GEAR_COMMON,       # Gray spinnygear
 	GEAR_TOUGH,        # Red spinnygear
 	DRONE,             # Federation drone
 	BALLOON,           # Balloon buster
+	SHELLBREAKER,      # Shellbreaker
+	STOMPY,            # Stompy
+	SPACEBOX,          # Space Box
+	MOONSNAIL,         # Moon Snail
+	GIGASNAIL,         # Giga Moon Snail
+	COSMICSNAIL,       # Cosmic Moon Snail
 }
 #endregion
 
@@ -113,9 +121,25 @@ func spawn(active:bool = true) -> void:
 		hitbox.connect("area_exited", _on_bullet_exited)
 		hitbox.connect("body_entered", _on_player_entered)
 		hitbox.connect("body_exited", _on_player_exited)
+	
+	if display_mode:
+		ai_active = false
+		can_damage = false
+		invulnerable = true
+		can_be_pierced = true
+		make_sound_on_ping = false
+		configure_display_mode()
+
+
+func configure_display_mode() -> void:
+	pass
 
 
 func _physics_process(delta) -> void:
+	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
+		sent_entry_once = true
+		Statics.add_bestiary_entry(my_type)
+	
 	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
 		var can_hit = true
 		match my_element:
@@ -220,6 +244,7 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 
 func kill() -> void:
 	Statics.play_sfx_disconnected(sfx_kill)
+	Statics.add_bestiary_entry(my_type)
 	for i in range(kill_particle_count):
 		var range = kill_particle_range
 		var pos = Vector2(randi_range(-range.x, range.x), randi_range(-range.y, range.y))

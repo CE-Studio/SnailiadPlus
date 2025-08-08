@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://driptgr8ouckf"
-path="res://.godot/imported/TitlePlus.png-21428348529631e196d4551311385c01.ctex"
+uid="uid://cqv3m8uc5txwd"
+path="res://.godot/imported/ScrollPanelBare.png-6fa65199af06fc4294ead271a37936cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/TitlePlus.png"
-dest_files=["res://.godot/imported/TitlePlus.png-21428348529631e196d4551311385c01.ctex"]
+source_file="res://Assets/Images/UI/ScrollPanelBare.png"
+dest_files=["res://.godot/imported/ScrollPanelBare.png-6fa65199af06fc4294ead271a37936cc.ctex"]
 
 [params]
 

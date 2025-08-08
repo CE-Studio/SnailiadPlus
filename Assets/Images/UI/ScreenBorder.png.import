@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm6n8b18ixf8"
-path="res://.godot/imported/SavePoint.png-23322803340b0442afe06141112edcff.ctex"
+uid="uid://gqsn3i0abkdk"
+path="res://.godot/imported/ScreenBorder.png-a217b9a4d0cb5c4f18b3dee93bad2b29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/SavePoint.png"
-dest_files=["res://.godot/imported/SavePoint.png-23322803340b0442afe06141112edcff.ctex"]
+source_file="res://Assets/Images/UI/ScreenBorder.png"
+dest_files=["res://.godot/imported/ScreenBorder.png-a217b9a4d0cb5c4f18b3dee93bad2b29.ctex"]
 
 [params]
 

@@ -608,6 +608,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			if not shelled:
 				_play_anim("fall")
 				current_state = AnimStates.FALL
+			coyote_time_counter = coyote_time
+			jump_buffer_counter = jump_buffer
 	
 	#region Restore relative
 	match surface:
