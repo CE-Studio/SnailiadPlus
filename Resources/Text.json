@@ -1,5 +1,5 @@
 {
-	"test": "Click or press [img]res://Assets/Images/UI/ControlIcons/Z.png[/img] or [img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img] to play!!",
+	"test": "Click or press [ctrl]Z[/ctrl] or [ctrl]FaceA[/ctrl] to play!!",
 	"menu_title": "Snailiad+",
 	"menu_title_rare1": "Snaliad+",
 	"menu_title_rare2": "Snailaid+",

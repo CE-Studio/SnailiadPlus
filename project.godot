@@ -21,6 +21,7 @@ config/icon="res://Assets/Images/Icon.png"
 
 StaticProcess="*res://Scripts/StaticProcess.gd"
 cutcontroll="res://Scenes/internals/CutsceneController.tscn"
+SInput="*res://Scripts/SInput.gd"
 
 [display]
 
