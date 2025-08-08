@@ -1,6 +1,0 @@
-[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cv82jmuw4vldb"]
-
-[ext_resource type="Texture2D" uid="uid://bq1i8boi474rs" path="res://addons/cutprog/tex/tex1.png" id="1_fbkap"]
-
-[resource]
-texture = ExtResource("1_fbkap")

@@ -1,6 +1,0 @@
-[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cuyx6v7gxokcl"]
-
-[ext_resource type="Texture2D" uid="uid://wigpj5p5ff4h" path="res://addons/cutprog/tex/vec1.png" id="1_of7tg"]
-
-[resource]
-texture = ExtResource("1_of7tg")
