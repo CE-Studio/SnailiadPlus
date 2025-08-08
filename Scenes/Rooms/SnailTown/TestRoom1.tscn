@@ -17,7 +17,6 @@ point_count = 1
 
 [node name="TestRoom1" type="Node2D"]
 script = ExtResource("1_ropfo")
-cutscene_variable_context = null
 minimap_offset = Vector2i(16, 5)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

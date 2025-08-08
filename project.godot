@@ -22,6 +22,7 @@ config/icon="res://Assets/Images/Icon.png"
 StaticProcess="*res://Scripts/StaticProcess.gd"
 cutcontroll="res://Scenes/internals/CutsceneController.tscn"
 SInput="*res://Scripts/SInput.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]
 
@@ -36,7 +37,7 @@ run/main_run_args="debug"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdLinter/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/gdLinter/plugin.cfg")
 
 [gui]
 
