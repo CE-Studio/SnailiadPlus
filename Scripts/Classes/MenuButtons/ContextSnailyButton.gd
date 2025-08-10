@@ -42,7 +42,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES:
 		if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK))
-		or SInput.input_just_pressed(SInput.Inputs.JUMP)):
+		or SInput.input_just_pressed(SInput.Inputs.UI_ACCEPT)):
 			if quick_load_layer.strip_edges() != "":
 				button_pressed.emit(quick_load_layer)
 			else:

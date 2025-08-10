@@ -128,6 +128,7 @@ focus_neighbor_bottom = NodePath("../Ratio")
 focus_next = NodePath("../Ratio")
 focus_previous = NodePath("../../../Back")
 header_id = "menu_option_display_scale"
+auto_select_mode = true
 cycle_options = Array[String](["1x", "2x", "3x", "4x", "5x", "6x"])
 focus_option = 1
 grab_focus_on_load = true
@@ -141,6 +142,7 @@ focus_neighbor_bottom = NodePath("../Minimap")
 focus_next = NodePath("../Minimap")
 focus_previous = NodePath("../Scale")
 header_id = "menu_option_display_ratio"
+auto_select_mode = true
 cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10"])
 
 [node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
@@ -152,6 +154,7 @@ focus_neighbor_bottom = NodePath("../BottomKeys")
 focus_next = NodePath("../BottomKeys")
 focus_previous = NodePath("../Ratio")
 header_id = "menu_option_display_minimap"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_hide", "menu_add_mapOnly", "menu_add_generic_show"])
 focus_option = 2
 
@@ -164,6 +167,7 @@ focus_neighbor_bottom = NodePath("../InputMap")
 focus_next = NodePath("../InputMap")
 focus_previous = NodePath("../Minimap")
 header_id = "menu_option_display_bottomKeys"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_hide", "menu_add_bottomKeyWeaponOnly", "menu_add_generic_show"])
 focus_option = 2
 
@@ -206,6 +210,7 @@ focus_neighbor_bottom = NodePath("../Darkness")
 focus_next = NodePath("../Darkness")
 focus_previous = NodePath("../Framerate")
 header_id = "menu_option_display_particles"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_none", "menu_add_particles1", "menu_add_particles2", "menu_add_particles3", "menu_add_particles4", "menu_add_particles5"])
 focus_option = 5
 
@@ -218,6 +223,7 @@ focus_neighbor_bottom = NodePath("../PaletteShader")
 focus_next = NodePath("../PaletteShader")
 focus_previous = NodePath("../Particles")
 header_id = "menu_option_display_darkness"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_none", "menu_add_darkness_minor", "menu_add_darkness_half", "menu_add_darkness_full"])
 focus_option = 3
 

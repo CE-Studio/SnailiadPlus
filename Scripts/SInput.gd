@@ -24,6 +24,8 @@ enum Inputs {
 	AIM_D,
 	DEBUG,
 	UI_CLICK,
+	UI_ACCEPT,
+	UI_BACK,
 }
 
 const STICK_DEADZONE_MOVE:float = 0.1
@@ -77,7 +79,7 @@ func check_input(action:Inputs, just:bool) -> bool:
 	#		return batch_pressed(this_action, true, true, true, true)
 	
 	if [ Inputs.WEAPON0, Inputs.WEAPON1, Inputs.WEAPON2, Inputs.WEAPON3,
-	Inputs.PAUSE, Inputs.MAP ].has(action):
+	Inputs.PAUSE, Inputs.MAP, Inputs.UI_ACCEPT, Inputs.UI_BACK ].has(action):
 		if just: return batch_just_pressed(this_action, true, false, true, false)
 		return batch_pressed(this_action, true, false, true, false)
 		

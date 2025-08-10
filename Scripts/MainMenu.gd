@@ -83,14 +83,15 @@ func _process(delta: float) -> void:
 		click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
 		if input_delay_timer >= -1.5:
 			if ((SInput.input_pressed(SInput.Inputs.UI_CLICK)
-			or SInput.input_pressed(SInput.Inputs.JUMP))
+			or SInput.input_pressed(SInput.Inputs.UI_ACCEPT))
 			and spawn_buffer_frames <= 0 and read_inputs):
 				spawn_menu()
 				is_main_awaiting_input = false
 	if not is_main_awaiting_input:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
-		if SInput.input_just_pressed(SInput.Inputs.PAUSE) and spawn_buffer_frames <= 0 and read_inputs:
+		if ((SInput.input_just_pressed(SInput.Inputs.PAUSE) or SInput.input_just_pressed(SInput.Inputs.UI_BACK))
+		and spawn_buffer_frames <= 0 and read_inputs):
 			selector_y_offset = 0
 			if active_layers > 1 or not is_main_menu:
 				clear_top_layer(0)

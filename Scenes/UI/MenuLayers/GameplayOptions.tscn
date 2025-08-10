@@ -101,6 +101,7 @@ focus_neighbor_bottom = NodePath("../Breakables")
 focus_next = NodePath("../Breakables")
 focus_previous = NodePath("../../../Back")
 header_id = "menu_option_gameplay_shooting"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_shooting_normal", "menu_add_shooting_toggle"])
 grab_focus_on_load = true
 
@@ -113,6 +114,7 @@ focus_neighbor_bottom = NodePath("../SecretMap")
 focus_next = NodePath("../SecretMap")
 focus_previous = NodePath("../ShootMode")
 header_id = "menu_option_gameplay_breakables"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_off", "menu_add_breakables_some", "menu_add_breakables_all", "menu_add_breakables_some_permeating", "menu_add_breakables_all_permeating"])
 
 [node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
@@ -134,6 +136,7 @@ focus_neighbor_bottom = NodePath("../ScreenShake")
 focus_next = NodePath("../ScreenShake")
 focus_previous = NodePath("../SecretMap")
 header_id = "menu_option_gameplay_frameLimit"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_frameLimit_none", "menu_add_frameLimit_30", "menu_add_frameLimit_60", "menu_add_frameLimit_120"])
 focus_option = 2
 
@@ -146,6 +149,7 @@ focus_neighbor_bottom = NodePath("../StickAimMode")
 focus_next = NodePath("../StickAimMode")
 focus_previous = NodePath("../TargetFPS")
 header_id = "menu_option_gameplay_screenShake"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud"])
 focus_option = 2
 
@@ -158,6 +162,7 @@ focus_neighbor_bottom = NodePath("../GravSwap")
 focus_next = NodePath("../GravSwap")
 focus_previous = NodePath("../ScreenShake")
 header_id = "menu_option_gameplay_stickAimMode"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_stickAimMode_octo", "menu_add_stickAimMode_omni"])
 
 [node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
@@ -169,6 +174,7 @@ focus_neighbor_bottom = NodePath("../GravKeep")
 focus_next = NodePath("../GravKeep")
 focus_previous = NodePath("../StickAimMode")
 header_id = "menu_option_gameplay_gravSwap"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_gravSwap_onJump", "menu_add_gravSwap_onDir", "menu_add_gravSwap_onDoubleTap", "menu_add_gravSwap_buttonOnly"])
 
 [node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
@@ -180,6 +186,7 @@ focus_neighbor_bottom = NodePath("../../../Back")
 focus_next = NodePath("../../../Back")
 focus_previous = NodePath("../GravSwap")
 header_id = "menu_option_gameplay_gravKeep"
+auto_select_mode = true
 cycle_options = Array[String](["menu_add_gravKeep_onState", "menu_add_gravKeep_onJump"])
 
 [node name="Back" parent="MainVBox" instance=ExtResource("5_1l54c")]
