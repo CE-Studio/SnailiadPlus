@@ -25,6 +25,8 @@ enum Inputs {
 	DEBUG,
 	UI_CLICK,
 }
+
+const STICK_DEADZONE:float = 0.1
 #endregion
 
 
@@ -54,12 +56,63 @@ func batch_just_pressed(action:String, pri_key:bool, sec_key:bool, pri_con:bool,
 	)
 
 
-func input_pressed(action:Inputs) -> bool:
+func check_input(action:Inputs, just:bool) -> bool:
+	#print(Inputs.keys()[action])
 	var this_action:String = Inputs.keys()[action]
 	this_action = this_action.to_camel_case()
-	var current_checks:Array[bool] = [true, true, true, true]
-	match action:
-		_:
-			pass
-	return false
-	#temp
+	#match action:
+	#	(Inputs.WEAPON0 or Inputs.WEAPON1 or Inputs.WEAPON2 or Inputs.WEAPON3
+	#	or Inputs.PAUSE or Inputs.MAP):
+	#		if just:
+	#			return batch_just_pressed(this_action, true, false, true, false)
+	#		return batch_pressed(this_action, true, false, true, false)
+	#	Inputs.DEBUG or Inputs.UI_CLICK:
+	#		if just:
+	#			return just_pressed(this_action)
+	#		return pressed(this_action)
+	#	_:
+	#		if just:
+	#			return batch_just_pressed(this_action, true, true, true, true)
+	#		return batch_pressed(this_action, true, true, true, true)
+	
+	if [ Inputs.WEAPON0, Inputs.WEAPON1, Inputs.WEAPON2, Inputs.WEAPON3,
+	Inputs.PAUSE, Inputs.MAP ].has(action):
+		if just: return batch_just_pressed(this_action, true, false, true, false)
+		return batch_pressed(this_action, true, false, true, false)
+		
+	elif [ Inputs.DEBUG, Inputs.UI_CLICK ].has(action):
+		if just: return just_pressed(this_action)
+		return pressed(this_action)
+		
+	else:
+		if just: return batch_just_pressed(this_action, true, true, true, true)
+		return batch_pressed(this_action, true, true, true, true)
+
+
+func input_pressed(action:Inputs) -> bool:
+	return check_input(action, false)
+
+
+func input_just_pressed(action:Inputs) -> bool:
+	return check_input(action, true)
+
+
+func vector_move(raw:bool = false) -> Vector2:
+	var vector:Vector2 = (Input.get_vector("leftK1", "rightK1", "upK1", "downK1")
+	+ Input.get_vector("leftK2", "rightK2", "upK2", "downK2")
+	+ Input.get_vector("leftC1", "rightC1", "upC1", "downC1")
+	+ Input.get_vector("leftC2", "rightC2", "upC2", "downC2"))
+	vector *= 0.25
+	if raw:
+		return vector
+	if vector.x < -STICK_DEADZONE: vector.x = -1
+	elif vector.x > STICK_DEADZONE: vector.x = 1
+	else: vector.x = 0
+	if vector.y < -STICK_DEADZONE: vector.y = -1
+	elif vector.y > STICK_DEADZONE: vector.y = 1
+	else: vector.y = 0
+	return vector
+
+
+func vector_aim() -> Vector2:
+	return Input.get_vector("aimL", "aimR", "aimU", "aimD").normalized()

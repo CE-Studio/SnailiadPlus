@@ -76,8 +76,8 @@ func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		if (focused and not disabled and life_frames >= REQ_LIFE_FRAMES) or selected:
 			var suppress_deselect:bool = selected and (arrow_hover_state[0] or arrow_hover_state[1])
-			if (mouse_over and (Input.is_action_just_pressed("UIClick") and not suppress_deselect)
-			or Input.is_action_just_pressed("Jump")):
+			if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and not suppress_deselect)
+			or SInput.input_just_pressed(SInput.Inputs.JUMP)):
 				if auto_select_mode:
 					button_pressed.emit(selected_option)
 				elif selected:
@@ -86,15 +86,15 @@ func _process(delta: float) -> void:
 					set_selected()
 		if selected or auto_select_mode:
 			var cycled:bool = false
-			if (Input.is_action_just_pressed("Left")
-			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[0])):
+			if (SInput.input_just_pressed(SInput.Inputs.LEFT)
+			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0])):
 				selected_option -= 1
 				if selected_option < 0:
 					selected_option = cycle_options.size() - 1 if loop else 0
 				cycled = true
 				cycled_left.emit(selected_option)
-			if (Input.is_action_just_pressed("Right")
-			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[1])):
+			if (SInput.input_just_pressed(SInput.Inputs.RIGHT)
+			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1])):
 				selected_option += 1
 				if selected_option >= cycle_options.size():
 					selected_option = 0 if loop else cycle_options.size() - 1
