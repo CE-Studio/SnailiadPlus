@@ -531,6 +531,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				rel_vel.y = 720
 				#   12 (standard expected length of player casts)
 				# * 60 (compensating move_and_slide dividing by physics tick rate)
+				grounded = true
 			else:
 				grounded = false
 	else:
@@ -550,7 +551,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if (shelled and (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
 		_toggle_shell()
-	elif rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable):
+	elif (rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable)
+	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE))):
 		_toggle_shell()
 	
 	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
@@ -591,7 +593,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			_play_anim("walk")
 			current_state = AnimStates.WALK
 			grounded = true
-			rel_vel.y = 720 #TODO fix strange corner behavior and 720 velocity funkiness
+			rel_vel.y = 720
 		elif body.is_on_ceiling():
 			if rel_axis.y < 0 and _can_grab_ceiling():
 				grounded = true

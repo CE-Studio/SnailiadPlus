@@ -26,7 +26,8 @@ enum Inputs {
 	UI_CLICK,
 }
 
-const STICK_DEADZONE:float = 0.1
+const STICK_DEADZONE_MOVE:float = 0.1
+const STICK_DEADZONE_AIM:float = 0.2
 #endregion
 
 
@@ -105,14 +106,22 @@ func vector_move(raw:bool = false) -> Vector2:
 	vector *= 0.25
 	if raw:
 		return vector
-	if vector.x < -STICK_DEADZONE: vector.x = -1
-	elif vector.x > STICK_DEADZONE: vector.x = 1
+	if vector.x < -STICK_DEADZONE_MOVE: vector.x = -1
+	elif vector.x > STICK_DEADZONE_MOVE: vector.x = 1
 	else: vector.x = 0
-	if vector.y < -STICK_DEADZONE: vector.y = -1
-	elif vector.y > STICK_DEADZONE: vector.y = 1
+	if vector.y < -STICK_DEADZONE_MOVE: vector.y = -1
+	elif vector.y > STICK_DEADZONE_MOVE: vector.y = 1
 	else: vector.y = 0
 	return vector
 
 
 func vector_aim() -> Vector2:
-	return Input.get_vector("aimL", "aimR", "aimU", "aimD").normalized()
+	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD").normalized()
+	if Statics.data_general["stick_aim_mode"] == 0:
+		if vector.x < -STICK_DEADZONE_AIM: vector.x = -1
+		elif vector.x > STICK_DEADZONE_AIM: vector.x = 1
+		else: vector.x = 0
+		if vector.y < -STICK_DEADZONE_AIM: vector.y = -1
+		elif vector.y > STICK_DEADZONE_AIM: vector.y = 1
+		else: vector.y = 0
+	return vector

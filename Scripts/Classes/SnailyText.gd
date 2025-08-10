@@ -153,8 +153,8 @@ func get_width(_text:String = text) -> int:
 
 func format_extra_tags(_text:String) -> String:
 	if _text.contains("[ctrl]") and _text.contains("[/ctrl]"):
-		_text.replace("[ctrl]", "[img]" + CONTROL_PATH)
-		_text.replace("[/ctrl]", ".png[/img]")
+		_text = _text.replace("[ctrl]", "[img]" + CONTROL_PATH)
+		_text = _text.replace("[/ctrl]", ".png[/img]")
 	return _text
 	#var parsed_text:String = ""
 	#var parsed_tag:String = ""

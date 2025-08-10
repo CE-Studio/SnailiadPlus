@@ -22,6 +22,7 @@ func _ready() -> void:
 	$\"ScrollContainer/VBoxContainer/SecretMap\".toggled_on = bool(Statics.data_general[\"secret_tile_toggle\"])
 	$\"ScrollContainer/VBoxContainer/TargetFPS\".remote_set_option(int(Statics.data_general[\"frame_limiter_state\"]))
 	$\"ScrollContainer/VBoxContainer/ScreenShake\".remote_set_option(int(Statics.data_general[\"screen_shake_state\"]))
+	$\"ScrollContainer/VBoxContainer/StickAimMode\".remote_set_option(int(Statics.data_general[\"stick_aim_mode\"]))
 	$\"ScrollContainer/VBoxContainer/GravSwap\".remote_set_option(int(Statics.data_general[\"grav_swap_type\"]))
 	$\"ScrollContainer/VBoxContainer/GravKeep\".remote_set_option(int(Statics.data_general[\"grav_keep_type\"]))
 
@@ -45,6 +46,10 @@ func _on_target_fps_cycled(value) -> void:
 
 func _on_screen_shake_cycled(value) -> void:
 	Statics.data_general[\"screen_shake_state\"] = value
+
+
+func _on_stick_aim_mode_cycled(value) -> void:
+	Statics.data_general[\"stick_aim_mode\"] = value
 
 
 func _on_grav_swap_cycled(value) -> void:
@@ -137,21 +142,32 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../TargetFPS")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../GravSwap")
-focus_next = NodePath("../GravSwap")
+focus_neighbor_bottom = NodePath("../StickAimMode")
+focus_next = NodePath("../StickAimMode")
 focus_previous = NodePath("../TargetFPS")
 header_id = "menu_option_gameplay_screenShake"
 cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud"])
 focus_option = 2
 
-[node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ScreenShake")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../GravSwap")
+focus_next = NodePath("../GravSwap")
+focus_previous = NodePath("../ScreenShake")
+header_id = "menu_option_gameplay_stickAimMode"
+cycle_options = Array[String](["menu_add_stickAimMode_octo", "menu_add_stickAimMode_omni"])
+
+[node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../StickAimMode")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../GravKeep")
 focus_next = NodePath("../GravKeep")
-focus_previous = NodePath("../ScreenShake")
+focus_previous = NodePath("../StickAimMode")
 header_id = "menu_option_gameplay_gravSwap"
 cycle_options = Array[String](["menu_add_gravSwap_onJump", "menu_add_gravSwap_onDir", "menu_add_gravSwap_onDoubleTap", "menu_add_gravSwap_buttonOnly"])
 
@@ -182,5 +198,6 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/SecretMap" to="MainVBox" method="_on_secret_map_tiles_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/TargetFPS" to="MainVBox" method="_on_target_fps_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="_on_screen_shake_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/StickAimMode" to="MainVBox" method="_on_stick_aim_mode_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravSwap" to="MainVBox" method="_on_grav_swap_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravKeep" to="MainVBox" method="_on_grav_keep_cycled"]
