@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	var version_string := (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
-	version_text.set_snaily_text(version_string)
+	version_text.set_snaily_text_raw(version_string)
 	version_text.add_shadow(1)
 	
 	if is_main_menu:
@@ -59,7 +59,7 @@ func _ready() -> void:
 				is_main_awaiting_input = true
 			
 			click_play_text = $"ClickPlay"
-			click_play_text.set_snaily_text(Statics.get_text("test"))
+			click_play_text.set_snaily_text("menu_play")
 			click_play_text.add_border(1)
 			click_play_text.add_shadow(2)
 		else:

@@ -1,5 +1,5 @@
 {
-	"test": "Click or press [ctrl]Z[/ctrl] or [ctrl]FaceA[/ctrl] to play!!",
+	"menu_play": "Click or press [ctrl]Z[/ctrl] or [ctrl]FaceA[/ctrl] to play!!",
 	"menu_title": "Snailiad+",
 	"menu_title_rare1": "Snaliad+",
 	"menu_title_rare2": "Snailaid+",
@@ -9,8 +9,6 @@
 	"menu_version_developer": "DEV",
 	"menu_version_demo": "DEMO",
 	"menu_version_release": "RELEASE",
-	"menu_intro_keyboard": "Click or press %s to play!",
-	"menu_intro_controller": "Press %s to play!",
 	"menu_olderVersion_header": "Woah there!!",
 	"menu_olderVersion_body": "Looks like your current save is from a newer version of the game! Are you sure you wanna continue playing this version? Some data might get erased!! I'd recommend backing it up before continuing!",
 	"menu_olderVersion_confirm": "Yeah, let me in!",

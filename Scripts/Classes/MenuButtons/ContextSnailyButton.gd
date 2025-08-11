@@ -28,13 +28,13 @@ func _ready() -> void:
 	subtext.add_shadow(1)
 	if not Engine.is_editor_hint():
 		if text_id.strip_edges() == "":
-			text.set_snaily_text("Text!!")
+			text.set_snaily_text_raw("Text!!")
 		else:
-			text.set_snaily_text(Statics.get_text(text_id))
+			text.set_snaily_text(text_id)
 		if subtext_id.strip_edges() == "":
-			subtext.set_snaily_text("Text!!")
+			subtext.set_snaily_text_raw("Text!!")
 		else:
-			subtext.set_snaily_text(Statics.get_text(subtext_id))
+			subtext.set_snaily_text(subtext_id)
 		text.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 		subtext.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 
@@ -51,8 +51,8 @@ func _process(_delta: float) -> void:
 
 
 func set_text(_text:String) -> void:
-	text.set_snaily_text(_text)
+	text.set_snaily_text_raw(_text)
 
 
 func set_subtext(_text:String) -> void:
-	subtext.set_snaily_text(_text)
+	subtext.set_snaily_text_raw(_text)

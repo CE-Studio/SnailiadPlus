@@ -74,7 +74,7 @@ func _add_to_queue(id:Achievements) -> void:
 		jingle.play()
 		panel.visible = true
 		panel.action = "open"
-		header.set_snaily_text(Statics.get_text("hud_achievement"))
+		header.set_snaily_text("hud_achievement")
 
 
 func _on_timer_timeout() -> void:

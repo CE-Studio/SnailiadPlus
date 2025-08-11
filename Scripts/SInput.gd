@@ -28,9 +28,23 @@ enum Inputs {
 	UI_BACK,
 }
 
+const DEFAULTS:Dictionary = {
+	"leftK1": KEY_LEFT,
+	"leftK2": KEY_A,
+}
+
 const STICK_DEADZONE_MOVE:float = 0.1
 const STICK_DEADZONE_AIM:float = 0.2
 #endregion
+
+
+func _ready() -> void:
+	print(InputMap.get_actions())
+
+
+func _input(event: InputEvent) -> void:
+	#print(event.as_text())
+	pass
 
 
 func pressed(action:String) -> bool:

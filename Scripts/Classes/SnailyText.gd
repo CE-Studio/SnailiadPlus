@@ -47,6 +47,10 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
+	set_snaily_text_raw(Statics.get_text(_text))
+
+
+func set_snaily_text_raw(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:

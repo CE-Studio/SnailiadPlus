@@ -23,9 +23,9 @@ func _ready() -> void:
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
 		if text_id.strip_edges() == "":
-			text.set_snaily_text("Text!!")
+			text.set_snaily_text_raw("Text!!")
 		else:
-			text.set_snaily_text(Statics.get_text(text_id))
+			text.set_snaily_text(text_id)
 		text.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 
 
@@ -41,4 +41,4 @@ func _process(_delta: float) -> void:
 
 
 func set_text(_text:String) -> void:
-	text.set_snaily_text(_text)
+	text.set_snaily_text_raw(_text)

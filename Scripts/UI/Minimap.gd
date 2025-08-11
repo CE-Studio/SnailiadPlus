@@ -258,4 +258,4 @@ func update_markers(target_cells:Array = []) -> void:
 
 
 func set_room_name(_name:String):
-	name_text.set_snaily_text(Statics.get_text(ROOM_NAME_STRING % _name))
+	name_text.set_snaily_text(ROOM_NAME_STRING % _name)
