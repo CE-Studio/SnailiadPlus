@@ -2,30 +2,49 @@ extends Node2D
 class_name UICore
 
 
-var cam:CamControl
+#region Variables
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
-var heart_group:Node2D
 
+var flashy_popup_scene:PackedScene
+var color_popup_scene:PackedScene
+
+var active_area_label:Node
 
 static var instance:UICore
+
+@onready var cam:CamControl = $"Camera2D"
+@onready var heart_group:Node2D = $"TL/Hearts"
+@onready var color_cover:ColorCover = $"ColorCover"
+@onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
+@onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
+@onready var minimap:Minimap = $"TR/Minimap"
+@onready var border:JsonSprite2D = $"Border"
+@onready var popup_layer:Node2D = $"PopupLayer"
+@onready var pause_layer:Node2D = $"PauseLayer"
+@onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
+#endregion
 
 
 func instantiate() -> void:
 	instance = self
-	cam = $"Camera2D"
 	cam.instantiate()
 	
 	var icon_id = 0
-	for icon in $"WeaponIcons".get_children():
+	for icon in $"BR/WeaponIcons".get_children():
 		weapon_icons.append(icon)
 		weapon_icon_states.append(0)
 		icon.position += Vector2(0, 8)
 		icon.action = str(icon_id) + "_off"
 		icon_id += 1
 	
-	heart_group = $"Hearts"
 	draw_new_hearts()
+	
+	save_icon.visible = false
+	bestiary_icon.visible = false
+	
+	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
+	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
 
 
 func _process(delta: float) -> void:
@@ -43,6 +62,15 @@ func _process(delta: float) -> void:
 		var pos = weapon_icons[i].position
 		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
 		weapon_icons[i].position = pos
+
+
+func configure_for_aspect_ratio(ratio_id:int) -> void:
+	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
+	$"TL".position = -offset
+	$"TR".position = Vector2(400 + offset.x, -offset.y)
+	$"BL".position = Vector2(-offset.x, 240 + offset.y)
+	$"BR".position = Vector2(400 + offset.x, 240 + offset.y)
+	set_border_anim(ratio_id)
 
 
 func update_weapon_icons() -> void:
@@ -76,6 +104,7 @@ func update_weapon_icons() -> void:
 
 func draw_new_hearts() -> void:
 	for heart in heart_group.get_children():
+		heart.reparent(instance)
 		heart.queue_free()
 	var max = GameCore.instance.player.max_health
 	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
@@ -93,7 +122,7 @@ func draw_new_hearts() -> void:
 		new_heart.position = pos
 		heart_count += 1
 		running_total += health_per_heart
-	update_hearts()
+	call_deferred("update_hearts")
 
 
 func update_hearts() -> void:
@@ -104,13 +133,67 @@ func update_hearts() -> void:
 	for heart in heart_group.get_children():
 		var this_heart_value = clampi(health - running_total, 0, health_per_heart)
 		var anim_name:String
-		match Statics.current_profile["difficulty"]:
-			0.0: anim_name = "easy_"
-			1.0: anim_name = "normal_"
-			2.0: anim_name = "insane_"
+		match int(Statics.current_profile["difficulty"]):
+			0: anim_name = "easy_"
+			1: anim_name = "normal_"
+			2: anim_name = "insane_"
 		heart.action = anim_name + str(this_heart_value)
 		running_total += health_per_heart
 
 
 func get_cam_center_pos() -> Vector2:
 	return position + cam.offset
+
+
+func play_save_anim() -> void:
+	save_icon.visible = true
+	save_icon.action = "anim"
+
+
+func play_bestiary_anim() -> void:
+	bestiary_icon.visible = true
+	bestiary_icon.action = "anim"
+
+
+func set_border_anim(anim_id:int) -> void:
+	border.action = str(anim_id)
+
+
+func show_item_collection_text(item_label:String) -> void:
+	var header_label = flashy_popup_scene.instantiate()
+	popup_layer.add_child(header_label)
+	header_label.instance(item_label)
+	header_label.position = Vector2i(200, 180)
+	var percentage_label = flashy_popup_scene.instantiate()
+	popup_layer.add_child(percentage_label)
+	percentage_label.instance(Statics.get_text("hud_collectedItemPercentage") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
+	percentage_label.position = Vector2i(200, 200)
+
+
+func show_area_text(area_id:int) -> void:
+	if active_area_label != null:
+		active_area_label.queue_free()
+	
+	var area_label = color_popup_scene.instantiate()
+	popup_layer.add_child(area_label)
+	var area_color:Color = Color.WHITE
+	match area_id:
+		0: area_color = Statics.get_color(Vector2i(2, 5))
+		1: area_color = Statics.get_color(Vector2i(2, 8))
+		2: area_color = Statics.get_color(Vector2i(3, 10))
+		3: area_color = Statics.get_color(Vector2i(2, 3))
+		4: area_color = Statics.get_color(Vector2i(0, 1))
+		5: area_color = Statics.get_color(Vector2i(3, 11))
+	var color_list:Array[Color] = [ Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE ]
+	area_label.instance(Statics.get_text("area_%s" % Room.areas[area_id]), color_list)
+	area_label.position = Vector2i(200, 100)
+	active_area_label = area_label
+	
+	if area_id < 6:
+		var text_width = area_label.text.get_width()
+		for i in range(2):
+			var border:JsonSprite2D = JsonSprite2D.new()
+			border.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
+			area_label.add_child(border)
+			border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
+			border.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)

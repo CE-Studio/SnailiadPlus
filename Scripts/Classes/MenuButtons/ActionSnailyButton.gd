@@ -23,21 +23,22 @@ func _ready() -> void:
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
 		if text_id.strip_edges() == "":
-			text.set_snaily_text("Text!!")
+			text.set_snaily_text_raw("Text!!")
 		else:
-			text.set_snaily_text(Statics.get_text(text_id))
+			text.set_snaily_text(text_id)
 		text.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 
 
 func _process(_delta: float) -> void:
-	if focused and not disabled:
-		if (mouse_over and (Input.is_action_just_pressed("UIClick"))
-		or Input.is_action_just_pressed("Jump")):
+	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES:
+		if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK))
+		or SInput.input_just_pressed(SInput.Inputs.UI_ACCEPT)):
 			if quick_load_layer.strip_edges() != "":
 				button_pressed.emit(quick_load_layer)
 			else:
-				button_pressed.emit()
+				button_pressed.emit(0)
+	super._process(_delta)
 
 
 func set_text(_text:String) -> void:
-	text.set_snaily_text(_text)
+	text.set_snaily_text_raw(_text)

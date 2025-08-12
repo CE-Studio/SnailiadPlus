@@ -4,49 +4,58 @@ extends Node2D
 
 
 #region Variables
-var type:int = 0
+@export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
+@export var damage:int = 0
+@export var cooldown:float = 0.0
+@export var rapid_mult:float = 1.0
+@export var powered:bool = false
+@export var despawn_offscreen:bool = false
+@export var collide_with_wall:bool
+@export var single_hit:bool
+@export var ping_on_breakables:bool = true
+@export var despawn_particle:String = "ExplosionSmall"
+@export var despawn_offset:Vector2 = Vector2.ZERO
+
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
 var velocity:float = 0.0
 var velocity_init:float = 0.0
-var damage:int = 0
-var cooldown:float = 0.0
-var rapid_mult:float = 0.0
-var powered:bool = false
-var despawn_offscreen:bool = false
 var single_frame_hit_flag:bool = false
-
-var collide_with_wall:bool
-var single_hit:bool
 
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var area:Area2D = $"Area2D"
-@onready var box_normal:CollisionShape2D = $"Area2D/Normal"
-@onready var box_power:CollisionShape2D = $"Area2D/Power"
-@onready var sfx_normal:AudioStreamPlayer = $"AudioGroup/Normal"
-@onready var sfx_power:AudioStreamPlayer = $"AudioGroup/Power"
+@onready var box:CollisionShape2D = $"Area2D/Box"
+@onready var sfx_shoot:AudioStreamPlayer = $"AudioGroup/Shoot"
+@onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
+@onready var sfx_despawn:AudioStream = preload("res://Assets/Sounds/Sfx/ShotHit.ogg")
 #endregion
 
 
-func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
+func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	normalized_dir = dir
 	rapid_mult = rapid_shot
-	powered = power_shot
-	if power_shot:
-		box_normal.disabled = true
-		sfx_power.play()
-	else:
-		box_power.disabled = true
-		sfx_normal.play()
+	sfx_shoot.play()
+	area.connect("body_entered", _on_body_entered)
 	return cooldown
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	life_timer += delta
-	if ((life_timer > 3 or despawn_offscreen) and
-	not Statics.is_box_on_screen(box_power if powered else box_normal, position)):
-		_despawn()
+	if ((life_timer > 3 or (despawn_offscreen and life_timer >= 0.25)) and
+	not vis.is_on_screen()):
+		despawn()
 
 
-func _despawn(loudly:bool = false) -> void:
+func despawn(loudly:bool = false) -> void:
+	if loudly and vis.is_on_screen():
+		Statics.spawn_particle(despawn_particle, Room.Layers.FG1, Vector2(
+			randf_range(-despawn_offset.x, despawn_offset.x),
+			randf_range(-despawn_offset.y, despawn_offset.y)
+		) + position)
+		Statics.play_sfx_disconnected(sfx_despawn)
 	queue_free()
+
+
+func _on_body_entered(body) -> void:
+	if body is not Enemy and collide_with_wall:
+		despawn(true)

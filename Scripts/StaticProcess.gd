@@ -1,6 +1,11 @@
 extends Node
 
 
+var template_general
+var template_profile
+var template_records
+
+
 # Initialize everything on load
 func _ready() -> void:
 	# Load all text from library
@@ -11,9 +16,9 @@ func _ready() -> void:
 	if DirAccess.get_open_error() != 0:
 		DirAccess.make_dir_recursive_absolute("user://" + Statics.save_prefix)
 	
-	var template_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
-	var template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
-	var template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
+	template_general = _load_json_to_dict("res://SaveTemplates/GeneralData.json")
+	template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
+	template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	
 	Statics.data_general = _load_data_dict("GeneralData", template_general)
 	Statics.data_profile1 = _load_data_dict("Profile1", template_profile)
@@ -22,6 +27,10 @@ func _ready() -> void:
 	Statics.data_records = _load_data_dict("Records", template_records)
 	
 	# Set important game systems according to newly loaded data
+	_set_game_settings()
+
+
+func _set_game_settings() -> void:
 	#region Sound volume
 	var master_index = AudioServer.get_bus_index("Master")
 	var master_vol = float(Statics.data_general["master_volume"]) / 20.0
@@ -32,6 +41,23 @@ func _ready() -> void:
 	var music_index = AudioServer.get_bus_index("Music")
 	var music_vol = float(Statics.data_general["music_volume"]) / 20.0
 	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
+	#endregion
+	
+	#region Display settings
+	var window = get_window()
+	var window_scale = Statics.data_general["window_scale"] + 1
+	var aspect_ratio = Statics.ASPECT_RATIOS[Statics.data_general["aspect_ratio"]]
+	var old_size = window.size
+	var old_position = window.position
+	window.size = aspect_ratio * window_scale
+	window.content_scale_factor = window_scale
+	var new_size = window.size
+	var difference = new_size - old_size
+	window.position = old_position - Vector2i(difference * 0.5)
+	#endregion
+	
+	#region Gameplay settings
+	Engine.max_fps = Statics.TARGET_FRAMERATES[Statics.data_general["frame_limiter_state"]]
 	#endregion
 
 
@@ -65,5 +91,5 @@ func _load_json_to_dict(path:String) -> Dictionary:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("Debug") and not Statics.is_menu_open:
+	if event.is_action_pressed("debug") and not Statics.is_menu_open:
 		Statics.noclip_mode = not Statics.noclip_mode

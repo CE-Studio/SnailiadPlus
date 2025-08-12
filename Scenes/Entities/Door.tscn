@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://brx6hvienl8qy"]
 
 [ext_resource type="Script" uid="uid://d0tkoc84o7fdc" path="res://Scripts/Door.gd" id="1_yyb1i"]
-[ext_resource type="Texture2D" uid="uid://bnoc5snsu6wge" path="res://Assets/Images/Door.png" id="2_8i1hx"]
+[ext_resource type="Texture2D" uid="uid://bnoc5snsu6wge" path="res://Assets/Images/Entities/Door.png" id="2_8i1hx"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_gt038"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_gt038"]
 [ext_resource type="AudioStream" uid="uid://4kkt8p8sasxi" path="res://Assets/Sounds/Sfx/DoorOpen.ogg" id="5_s521q"]
@@ -32,7 +32,7 @@ disabled = true
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("2_gt038")
-texture_path = "res://Assets/Images/Door.json"
+texture_path = "res://Assets/Images/Entities/Door.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]

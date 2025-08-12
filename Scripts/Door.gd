@@ -13,7 +13,7 @@ enum LockTypes {
 	UNLOCKED = -1,
 }
 
-const SPAWN_OPEN_RADIUS = 32
+const SPAWN_OPEN_RADIUS = 40
 const SPAWN_CLOSE_RADIUS = 70
 
 @export var direction:Statics.DirsCardinal = Statics.DirsCardinal.LEFT:

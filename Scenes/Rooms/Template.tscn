@@ -5,12 +5,13 @@
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_5japa"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
+resource_local_to_scene = true
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120)
 }
 point_count = 1
 
-[node name="Test" type="Node2D"]
+[node name="Template" type="Node2D"]
 script = ExtResource("1_qa3a0")
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

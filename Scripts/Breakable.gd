@@ -16,11 +16,13 @@ enum TileTypes {
 @onready var area:Area2D = $"Area2D"
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 
 var explode1:AudioStream = load("res://Assets/Sounds/Sfx/Explode1.ogg")
 var explode2:AudioStream = load("res://Assets/Sounds/Sfx/Explode2.ogg")
 var explode3:AudioStream = load("res://Assets/Sounds/Sfx/Explode3.ogg")
 var explode4:AudioStream = load("res://Assets/Sounds/Sfx/Explode4.ogg")
+var ping:AudioStream = load("res://Assets/Sounds/Sfx/Ping.ogg")
 
 var coords:Vector2i
 var tile_data:Array
@@ -45,8 +47,8 @@ func spawn(tile_coords:Vector2i, tile_type:int, silent:bool):
 
 
 func _on_bullet_entered(_area:Area2D) -> void:
-	if Statics.is_box_on_screen(box, position):
-		var bullet = _area.get_parent()
+	if vis.is_on_screen():
+		var bullet:PlayerBullet = _area.get_parent()
 		var hit_hard_enough:bool = false
 		var icon_anim:String = ""
 		match type:
@@ -80,6 +82,23 @@ func _on_bullet_entered(_area:Area2D) -> void:
 				3: Statics.play_sfx_disconnected(explode3)
 				4: Statics.play_sfx_disconnected(explode4)
 			queue_free()
-		elif icon_anim != "" and not is_silent:
-			sprite.visible = true
-			sprite.action = icon_anim
+		else:
+			if not is_silent and bullet.ping_on_breakables:
+				Statics.play_sfx_disconnected(ping)
+			if icon_anim != "":
+				var show_option = int(Statics.data_general["breakable_state"])
+				var can_show:bool = false
+				match show_option:
+					0: # Don't show
+						can_show = false
+					1: # Obvious, any shot
+						can_show = not is_silent
+					2: # All, any shot
+						can_show = true
+					3: # Obvious, percing shot
+						can_show = not is_silent and not bullet.collide_with_wall
+					4: # All, piercing shot
+						can_show = not bullet.collide_with_wall
+				if can_show and not sprite.visible:
+					sprite.visible = true
+					sprite.action = icon_anim

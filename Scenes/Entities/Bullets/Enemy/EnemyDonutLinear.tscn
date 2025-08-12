@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr8jpfivtdpnw"]
+
+[ext_resource type="Script" uid="uid://cufrtsjx618i3" path="res://Scripts/Bullets/Enemy/EnemyBulletDonutLinear.gd" id="1_gwjhu"]
+[ext_resource type="AudioStream" uid="uid://b8hwo683tykgl" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyDonut.ogg" id="2_gwjhu"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_k3nue"]
+[ext_resource type="Texture2D" uid="uid://d2d63f4o5acdh" path="res://Assets/Images/Bullets/Enemy/EnemyDonut.png" id="4_gwjhu"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_7mha5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(24, 24)
+
+[node name="EnemyBulletDonutLinear" type="Node2D"]
+script = ExtResource("1_gwjhu")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.482353, 0.435294, 1, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(1.2, 1.2)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_k3nue")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyDonut.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("4_gwjhu")
+hframes = 4
+script = ExtResource("5_7mha5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_gwjhu")
+bus = &"Sfx"

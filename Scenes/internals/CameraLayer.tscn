@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=11 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
 [ext_resource type="Script" uid="uid://bukaxq2vrte5l" path="res://Scripts/UICore.gd" id="1_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_gi4g0"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
-[ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/ScreenBorder.png" id="4_ygllc"]
+[ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/UI/ScreenBorder.png" id="4_ygllc"]
+[ext_resource type="PackedScene" uid="uid://coram7y7g81vt" path="res://Scenes/UI/AchivementPanel.tscn" id="6_f5gkc"]
+[ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
+[ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="8_g8fv5"]
+[ext_resource type="Script" uid="uid://de1nn2ecms07n" path="res://Scripts/UI/PauseLayer.gd" id="9_qjw3k"]
 
 [node name="CameraLayer" type="Node2D"]
 script = ExtResource("1_vjeh6")
@@ -14,29 +18,34 @@ script = ExtResource("1_vjeh6")
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
-[node name="WeaponIcons" type="Node2D" parent="."]
+[node name="BL" type="Node2D" parent="."]
+position = Vector2(0, 240)
+
+[node name="BR" type="Node2D" parent="."]
 position = Vector2(400, 240)
 
-[node name="Broom" type="Sprite2D" parent="WeaponIcons"]
+[node name="WeaponIcons" type="Node2D" parent="BR"]
+
+[node name="Broom" type="Sprite2D" parent="BR/WeaponIcons"]
 position = Vector2(-64, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="WeaponIcons/Broom"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Broom"]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Peashooter" type="Sprite2D" parent="WeaponIcons"]
+[node name="Peashooter" type="Sprite2D" parent="BR/WeaponIcons"]
 position = Vector2(-50, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="WeaponIcons/Peashooter"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Peashooter"]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -44,13 +53,13 @@ frame = 1
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Boomerang" type="Sprite2D" parent="WeaponIcons"]
+[node name="Boomerang" type="Sprite2D" parent="BR/WeaponIcons"]
 position = Vector2(-36, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="WeaponIcons/Boomerang"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Boomerang"]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -58,13 +67,13 @@ frame = 2
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="RainbowWave" type="Sprite2D" parent="WeaponIcons"]
+[node name="RainbowWave" type="Sprite2D" parent="BR/WeaponIcons"]
 position = Vector2(-22, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="WeaponIcons/RainbowWave"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/RainbowWave"]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -72,17 +81,53 @@ frame = 3
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Hearts" type="Node2D" parent="."]
+[node name="SaveIcon" type="Sprite2D" parent="BR"]
+position = Vector2(-16, -16)
+script = ExtResource("1_4o42s")
+texture_path = "res://Assets/Images/UI/SaveIcon.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BestiaryIcon" type="Sprite2D" parent="BR"]
+position = Vector2(-16, -16)
+script = ExtResource("1_4o42s")
+texture_path = "res://Assets/Images/UI/SaveIcon.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="TL" type="Node2D" parent="."]
+
+[node name="Hearts" type="Node2D" parent="TL"]
+
+[node name="AchivementPanel" parent="TL" instance=ExtResource("6_f5gkc")]
+position = Vector2(39, 36)
+
+[node name="TR" type="Node2D" parent="."]
+position = Vector2(400, 0)
+
+[node name="Minimap" parent="TR" instance=ExtResource("8_g8fv5")]
+position = Vector2(-32, 24)
+
+[node name="PopupLayer" type="Node2D" parent="."]
+
+[node name="ColorCover" parent="." instance=ExtResource("7_ygllc")]
+process_mode = 3
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-200, -120)
+scale = Vector2(2, 2)
 
 [node name="Border" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 script = ExtResource("1_4o42s")
-texture_path = "res://Assets/Images/ScreenBorder.json"
+texture_path = "res://Assets/Images/UI/ScreenBorder.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Border"]
 modulate = Color(1, 0.823529, 0.709804, 0.172549)
 texture = ExtResource("4_ygllc")
+vframes = 5
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="PauseLayer" type="Node2D" parent="."]
+process_mode = 3
+script = ExtResource("9_qjw3k")

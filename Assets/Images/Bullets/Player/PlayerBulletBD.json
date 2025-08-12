@@ -1,7 +1,9 @@
 {
 	"tiles": [6, 12],
+	"layerize": false,
+	"meta": {},
 	"animations": {
-		"normal_U": {
+		"U": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -15,7 +17,7 @@
 				[0, 5, false, false]
 			]
 		},
-		"normal_UR": {
+		"UR": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -29,7 +31,7 @@
 				[1, 5, false, false]
 			]
 		},
-		"normal_R": {
+		"R": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -43,7 +45,7 @@
 				[2, 5, false, false]
 			]
 		},
-		"normal_DR": {
+		"DR": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -57,7 +59,7 @@
 				[1, 5, false, true]
 			]
 		},
-		"normal_D": {
+		"D": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -71,7 +73,7 @@
 				[0, 5, false, true]
 			]
 		},
-		"normal_DL": {
+		"DL": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -85,7 +87,7 @@
 				[1, 5, true, true]
 			]
 		},
-		"normal_L": {
+		"L": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,
@@ -99,7 +101,7 @@
 				[2, 5, true, false]
 			]
 		},
-		"normal_UL": {
+		"UL": {
 			"fps": 14,
 			"loop": true,
 			"loop_point": 0,

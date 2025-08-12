@@ -22,12 +22,15 @@ extends RichTextLabel
 @export var shadow_scale:int = 0
 @export var border_scale:int = 0
 
+const CONTROL_PATH:String = "res://Assets/Images/UI/ControlIcons/"
+const DEFAULT_TIMEOUT:float = 0.02
+
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
-#var align_horiz:HorizontalAlignment = horizontal_alignment
-#var align_vert:VerticalAlignment = vertical_alignment
+
+var char_timeouts:Array[float] = []
 
 @onready var sub_text:Array = []
 @onready var sub_text_offsets:Array = []
@@ -44,6 +47,11 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
+	set_snaily_text_raw(Statics.get_text(_text))
+
+
+func set_snaily_text_raw(_text:String) -> void:
+	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
@@ -51,27 +59,16 @@ func set_snaily_text(_text:String) -> void:
 
 
 func set_alignment(horiz:int, vert:int) -> void:
-	#align_horiz = horiz
-	#align_vert = vert
-	#horizontal_alignment = align_horiz
-	#vertical_alignment = align_vert
 	horizontal_alignment = horiz
 	vertical_alignment = vert
 	for sub_label in sub_text:
-		#sub_label.horizontal_alignment = align_horiz
-		#sub_label.vertical_alignment = align_vert
 		sub_label.horizontal_alignment = horiz
 		sub_label.vertical_alignment = vert
 
 
 func reset_label_size() -> void:
-	var longest_line = 0
-	var lines = text.split("\n")
+	var longest_line = get_width()
 	var scale_mod = float(text_scale) * 0.5
-	for line in lines:
-		var line_length = font.get_string_size(line).x
-		if longest_line < line_length:
-			longest_line = line_length
 	if max_width == 0 or longest_line < max_width:
 		custom_minimum_size.x = longest_line * scale_mod
 	else:
@@ -81,6 +78,10 @@ func reset_label_size() -> void:
 		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
 		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
 		sub_text[i].position = sub_text_offsets[i]
+
+
+func center_position() -> void:
+	position.x = custom_minimum_size.x * -0.5
 
 
 func clear_sub_text() -> void:
@@ -142,3 +143,37 @@ func set_visible_chars_ratio(ratio:float) -> void:
 	visible_ratio = clamp(ratio, 0.0, 1.0)
 	for sub_label in sub_text:
 		sub_label.visible_ratio = clamp(ratio, 0.0, 1.0)
+
+
+func get_width(_text:String = text) -> int:
+	var longest_line = 0
+	var lines = text.split("\n")
+	for line in lines:
+		var line_length = font.get_string_size(line).x
+		if longest_line < line_length:
+			longest_line = line_length
+	return longest_line
+
+
+func format_extra_tags(_text:String) -> String:
+	if _text.contains("[ctrl]") and _text.contains("[/ctrl]"):
+		_text = _text.replace("[ctrl]", "[img]" + CONTROL_PATH)
+		_text = _text.replace("[/ctrl]", ".png[/img]")
+	return _text
+	#var parsed_text:String = ""
+	#var parsed_tag:String = ""
+	#var current_timeout:float = DEFAULT_TIMEOUT
+	#var open_tag:bool = false
+	#for char in _text:
+	#	match char:
+	#		"[":
+	#			pass
+	#		"]":
+	#			pass
+	#		_:
+	#			if open_tag:
+	#				parsed_tag += char
+	#			else:
+	#				parsed_text += char
+	#				char_timeouts.append(current_timeout)
+	#return parsed_text

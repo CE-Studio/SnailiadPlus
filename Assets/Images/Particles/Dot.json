@@ -1,0 +1,106 @@
+{
+	"tiles": [4, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"small_slow": {
+			"fps": 1.5,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"small_med": {
+			"fps": 1.85,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"small_fast": {
+			"fps": 2.25,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"med_slow": {
+			"fps": 1.5,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"med_med": {
+			"fps": 1.85,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"med_fast": {
+			"fps": 2.25,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"big_slow": {
+			"fps": 1.5,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"big_med": {
+			"fps": 1.85,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"big_fast": {
+			"fps": 2.25,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[2, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		}
+	}
+}

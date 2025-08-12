@@ -4,7 +4,7 @@
 	"sound_volume": 15,
 	"music_volume": 15,
 	"window_scale": 1,
-	"window_ratio": 0,
+	"aspect_ratio": 0,
 	"minimap_state": 2,
 	"bottom_key_state": 2,
 	"keymap_toggle": false,
@@ -21,7 +21,9 @@
 	"frame_limiter_state": 2,
 	"screen_shake_state": 2,
 	"palette_shader_toggle": false,
+	"distort_shader_toggle": true,
 	"controller_face_type": 0,
+	"stick_aim_mode": 0,
 	"grav_swap_type": 0,
 	"grav_keep_type": 0,
 	"darkness_level": 3

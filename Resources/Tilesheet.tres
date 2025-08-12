@@ -6654,6 +6654,10 @@ texture = ExtResource("1_cgld8")
 2:213/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:213/0 = 0
 3:213/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:208/0 = 0
+9:208/0 = 0
+8:209/0 = 0
+9:209/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 3

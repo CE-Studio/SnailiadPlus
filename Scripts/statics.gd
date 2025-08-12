@@ -32,27 +32,6 @@ enum DirsSurface {
 #endregion
 
 
-enum Items {
-	PEASHOOTER,
-	BOOMERANG,
-	RAINBOWWAVE,
-	DEVASTATOR,
-	HIGHJUMP,
-	SHELLSHIELD,
-	RAPIDFIRE,
-	ICESHELL,
-	FLYSHELL,
-	METALSHELL,
-	GRAVSHOCK,
-	SSBOOM,
-	DEBUGRW,
-	HEART,
-	FRAGMENT,
-	RADARSHELL,
-	NONE = -1,
-}
-
-
 const PI_OVER_EIGHT:float = PI * 0.125
 const PI_OVER_FOUR:float = PI * 0.25
 const PI_OVER_THREE:float = PI * 0.3333
@@ -66,9 +45,46 @@ const FRAC_128:float = 0.0078125
 const VECTOR_DIAG:Vector2 = Vector2(cos(deg_to_rad(40)), sin(deg_to_rad(40)))
 
 
+const ASPECT_RATIOS:Array = [
+	Vector2i(400, 240),
+	Vector2i(400, 320),
+	Vector2i(400, 300),
+	Vector2i(448, 252),
+	Vector2i(400, 250)
+]
+const ASPECT_RATIO_OFFSETS:Array = [
+	Vector2i(0, 0),
+	Vector2i(0, 80),
+	Vector2i(0, 60),
+	Vector2i(48, 12),
+	Vector2i(0, 10),
+]
+const TARGET_FRAMERATES:Array = [
+	0,
+	30,
+	60,
+	120
+]
+
+
 const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
+
+
+const ROOM_PATH:String = "res://Scenes/Rooms/%s.tscn"
+const WORLD_SPAWN:Array = [
+	[ "SnailTown/TownMain", 640, 600 ], # Snaily
+	[ "SnailTown/TownMain", 640, 600 ], # Sluggy
+	[ "SnailTown/TownMain", 928, 152 ], # Upside
+	[ "SnailTown/TownMain", 640, 600 ], # Leggy
+	[ "SnailTown/TownMain", 640, 600 ], # Blobby
+	[ "SnailTown/TownMain", 640, 600 ], # Leechy
+]
+
+
+# Maximum counts of each item in Item.ItemTypes for a save to be considered 100% complete
+const COUNTED_INVENTORY:Array = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 11, 30, 1, 0, 0, 0, 0, 0, 0 ]
 
 
 static var main_menu_booted_once:bool = false
@@ -81,6 +97,7 @@ static var is_random_game:bool = false
 static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
+static var show_invis_entites:bool = false
 static var stack_shells:bool = true
 static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true
@@ -101,9 +118,15 @@ static var current_subarea:int = 0
 static var player:Player
 static var cam_layer:Node2D
 static var cam:Camera2D
-static var active_room:Node2D
+static var active_room:Room
 
 static var text_lib:Dictionary
+
+
+#region Game scene load information
+static var load_room:String
+static var load_coords:Vector2i
+#endregion
 #endregion
 
 
@@ -116,6 +139,8 @@ static var data_profile3:Dictionary
 static var data_records:Dictionary
 static var save_prefix:String = "snailyplus_saves"
 static var current_profile:Dictionary
+static var current_profile_id:int
+static var cutscene_persistent_vars:Dictionary[StringName, Dictionary] = {&"": {}}
 
 enum Unlocks {
 	BOSS_RUSH, # (Boss Rush; earned from beating the game)
@@ -124,14 +149,30 @@ enum Unlocks {
 	ITEM_RANDO, # (Item randomizer gamemode; earned from collecting 100% of counted items)
 	OPEN_MAP, # (Fully revealed map on profile start; earned from filling 100% of the map)
 	SIX_HUNDO, # (600% gamemode; earned from beating the game with any character aside from Snaily)
-	CHAOS_MODE, # (Chaos gamemode; earned from [Undecided yet])
+	CHAOS_MODE, # (Chaos gamemode; earned from beating the game on absurd difficulty)
 }
+
+enum ParticleOptions {
+	NONE,
+	ENVIRONMENTS,
+	ENTITIES_FLASH,
+	ENTITIES_ALL,
+	FLASH,
+	ALL
+}
+#endregion
+
+
+#region Profile functions
+static func format_game_time(time:Array) -> String:
+	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	return time_string
 #endregion
 
 
 #region Save functions
 static func add_item(id:int, count:int) -> void:
-	while id > len(current_profile["items"]):
+	while id >= len(current_profile["items"]):
 		current_profile["items"].append(0)
 	current_profile["items"][id] += count
 
@@ -142,21 +183,82 @@ static func remove_item(id:int, count:int) -> void:
 
 
 static func check_item(id:int) -> int:
-	var output = 0
+	var output:int = 0
 	if id < len(current_profile["items"]):
 		output = current_profile["items"][id]
 	return output
 
 
-static func save_general():
-	var file = FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
+static func mark_item_location(id:int, state:bool = true) -> void:
+	while id >= len(current_profile["locations"]):
+		current_profile["locations"].append(false)
+	current_profile["locations"].set(id, state)
+
+
+static func check_location_collected(id:int) -> bool:
+	var output := false
+	if id < len(current_profile["locations"]):
+		output = current_profile["locations"][id]
+	return output
+
+
+static func get_item_percentage(profile:int = 0) -> float:
+	var inventory:Array
+	var player:int
+	var difficulty:int
+	match profile:
+		1:
+			inventory = data_profile1["items"]
+			player = data_profile1["character"]
+			difficulty = data_profile1["difficulty"]
+		2:
+			inventory = data_profile2["items"]
+			player = data_profile2["character"]
+			difficulty = data_profile2["difficulty"]
+		3:
+			inventory = data_profile3["items"]
+			player = data_profile3["character"]
+			difficulty = data_profile3["difficulty"]
+		_:
+			inventory = current_profile["items"]
+			player = current_profile["character"]
+			difficulty = current_profile["difficulty"]
+	var collected_items:int # Counted items the player has collected and saved to ["items"]
+	var max_items:int # Maximum item count for 100% as dictated by COUNTED_INVENTORY
+	var total_items:int # Complete collection of items, counted or not, saved to ["items"]
+	for i in inventory.size():
+		total_items += inventory[i]
+		match i:
+			Item.ItemTypes.SHELL_SHIELD:
+				if player != Player.Players.SLUGGY and player != Player.Players.LEECHY:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			Item.ItemTypes.ICE_SHELL:
+				if difficulty != 2:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			_:
+				if COUNTED_INVENTORY[i] > 0:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
+	#print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
+	if counted_percentage == 100.0:
+		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
+		return over_percentage
+	return counted_percentage
+
+
+static func save_general() -> void:
+	var file := FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_general, "\t", false))
+	file.close()
 
 
-static func save_profile(iprofile:int):
+static func save_profile(iprofile:int) -> void:
 	if iprofile < 1 or iprofile > 3:
 		return
-	var file = FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
+	var file := FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
 	match iprofile:
 		1:
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
@@ -164,14 +266,16 @@ static func save_profile(iprofile:int):
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
 		3:
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
+	file.close()
 
 
-static func save_records():
-	var file = FileAccess.open("user://" + save_prefix + "/Records.json", FileAccess.WRITE_READ)
+static func save_records() -> void:
+	var file := FileAccess.open("user://" + save_prefix + "/Records.json", FileAccess.WRITE_READ)
 	file.store_string(JSON.stringify(data_records, "\t", false))
+	file.close()
 
 
-static func save_all():
+static func save_all() -> void:
 	save_general()
 	save_profile(1)
 	save_profile(2)
@@ -179,8 +283,45 @@ static func save_all():
 	save_records()
 
 
+static func delete_profile(iprofile:int) -> void:
+	if iprofile < 1 or iprofile > 3:
+		return
+	var file := "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
+	DirAccess.remove_absolute(file)
+
+
 static func has_unlock(unlock:Unlocks) -> bool:
 	return data_records["unlocks"].has(unlock)
+
+
+static func add_achievement(id:int) -> void:
+	while id >= len(data_records["achievements"]):
+		data_records["achievements"].append(false)
+	data_records["achievements"] = true
+
+
+static func check_achievement(id:int) -> bool:
+	var output := false
+	if id < len(data_records["achievements"]):
+		output = data_records["achievements"][id]
+	return output
+
+
+static func add_bestiary_entry(id:int) -> void:
+	if check_bestiary_entry(id):
+		return
+	while id >= len(data_records["bestiary"]):
+		data_records["bestiary"].append(false)
+	data_records["bestiary"][id] = true
+	UICore.instance.play_bestiary_anim()
+	save_records()
+
+
+static func check_bestiary_entry(id:int) -> bool:
+	var output := false
+	if id < len(data_records["bestiary"]):
+		output = data_records["bestiary"][id]
+	return output
 #endregion
 
 
@@ -191,8 +332,8 @@ static func get_window_size() -> Vector2:
 
 
 static func parse_version_to_text_string(version:String) -> String:
-	var prefix = version.substr(0, 1)
-	var number = version.substr(1)
+	var prefix := version.substr(0, 1)
+	var number := version.substr(1)
 	var output:String
 	match prefix:
 		"b": output = get_text("menu_version_developer") + " "
@@ -203,10 +344,10 @@ static func parse_version_to_text_string(version:String) -> String:
 
 
 static func parse_version_to_array(version:String) -> Array:
-	var prefix = version.substr(0, 1)
+	var prefix := version.substr(0, 1)
 	if not is_number(prefix):
 		version = version.substr(1)
-	var version_parts = version.split(".")
+	var version_parts := version.split(".")
 	var version_numbers:Array
 	for part in version_parts:
 		version_numbers.append(int(part))
@@ -230,19 +371,7 @@ static func compare_versions(compare:Array, against:Array) -> int:
 #endregion
 
 
-#region Profile functions
-static func format_game_time(time:Array) -> String:
-	var time_string = "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
-	return time_string
-#endregion
-
-
-static func get_text(key:String) -> String:
-	if text_lib.has(key):
-		return text_lib[key]
-	return key
-
-
+#region Player state functions
 static func get_shell_level() -> int:
 	if check_item(Item.ItemTypes.METAL_SHELL):
 		return 3
@@ -251,6 +380,59 @@ static func get_shell_level() -> int:
 	if check_item(Item.ItemTypes.ICE_SHELL):
 		return 1
 	return 0
+
+
+static func has_shell(shell_id:int) -> bool:
+	var query := 1 << (shell_id - 1)
+	var level := 1 << (get_shell_level() - 1)
+	if stack_shells:
+		return query <= level
+	return query & level > 0
+
+
+static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
+	var char_int := int(character)
+	var full_check:String = "full_" if full else ""
+	return get_text("char_%s%d" % [ full_check, char_int ])
+
+
+static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
+	var char_int := int(character)
+	var plural_check:String = "plural_" if plural else ""
+	return get_text("species_%s%d" % [ plural_check, char_int ])
+#endregion
+
+
+#region World functions
+static func solid_at_world_pos(pos:Vector2, enemy_collidable:bool = false) -> bool:
+	var tile_pos := Vector2i(pos * FRAC_16)
+	#print("Received world pos %s\nTranslating to tile pos %s" % [ str(pos), str(tile_pos) ])
+	return solid_at_grid_pos(tile_pos, enemy_collidable)
+
+
+static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bool:
+	if not active_room:
+		return false
+	if active_room.map_ground.get_cell_tile_data(pos):
+		return true
+	if enemy_collidable and (active_room.map_entity.get_cell_atlas_coords(pos) == Vector2i(2, 24)):
+		return true
+	return false
+
+
+static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bool:
+	var aspect_buffer:Vector2 = ASPECT_RATIOS[data_general["aspect_ratio"]] * 0.5
+	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
+	var within_x:bool = abs(pos.x - cam_pos.x) <= aspect_buffer.x + buffer.x
+	var within_y:bool = abs(pos.y - cam_pos.y) <= aspect_buffer.y + buffer.y
+	return within_x and within_y
+#endregion
+
+
+static func get_text(key:String) -> String:
+	if text_lib.has(key):
+		return text_lib[key]
+	return key
 
 
 static func is_number(value:Variant, consider_strings := false) -> bool:
@@ -276,7 +458,7 @@ static func round_to_places(number:float, decimal_places:int) -> float:
 
 
 static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:
-	var scale = pow(0.1, speed)
+	var scale := pow(0.1, speed)
 	num = num * pow(scale, elapsed) + target * (1.0 - pow(scale, elapsed))
 	if absf(num - target) < threshold:
 		num = target
@@ -284,30 +466,18 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 
 
 static func play_sfx_disconnected(sound:AudioStream) -> void:
-	var active_sounds_of_type = 0
+	var active_sounds_of_type:int = 0
 	for sfx in GameCore.instance.sfx_group.get_children():
 		if sfx.stream == sound:
 			active_sounds_of_type += 1
 	if active_sounds_of_type < 2:
-		var new_discon_sound = disconnected_sound.instantiate()
+		var new_discon_sound:AudioStreamPlayer = disconnected_sound.instantiate()
 		GameCore.instance.sfx_group.add_child(new_discon_sound)
 		new_discon_sound.load_and_play(sound)
 
 
-static func is_box_on_screen(box:CollisionShape2D, pos:Vector2) -> bool:
-	var box_size:Vector2 = box.shape.size
-	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
-	var cam_offset:Vector2 = UICore.instance.cam.offset
-	var pos_diff:Vector2 = pos - cam_pos
-	var within_x = absf(pos_diff.x) < cam_offset.x + (box_size.x * 0.5)
-	var within_y = absf(pos_diff.y) < cam_offset.y + (box_size.y * 0.5)
-	if within_x and within_y:
-		return true
-	return false
-
-
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
-	var new_particle = load("res://Scenes/Particles/" + name + ".tscn").instantiate()
+	var new_particle:Particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)
@@ -321,9 +491,9 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 
 
 static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int) -> Texture2D:
-	var color_count = palette.get_width()
-	var palette_image = palette.get_image()
-	var sprite_image = spritesheet.get_image()
+	var color_count := palette.get_width()
+	var palette_image := palette.get_image()
+	var sprite_image := spritesheet.get_image()
 	var check_colors:Array = [ ]
 	for i in color_count:
 		check_colors.append(palette_image.get_pixel(i, 0))
@@ -338,10 +508,54 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 	return ImageTexture.create_from_image(sprite_image)
 
 
-static func get_all_children(_node:Node) -> Array:
-	var output = []
+static func get_color(coords:Vector2i) -> Color:
+	var palette_image := palette.get_image()
+	return palette_image.get_pixelv(coords)
+
+
+static func get_all_children(_node:Node) -> Array[Node]:
+	var output:Array[Node] = []
 	for child in _node.get_children():
 		output.append(child)
 		if child.get_child_count() > 0:
 			output.append_array(get_all_children(child))
 	return output
+
+
+static func spin_vector2(vector:Vector2, ccw:bool) -> Vector2:
+	match vector:
+		Vector2.DOWN:
+			return Vector2.RIGHT if ccw else Vector2.LEFT
+		Vector2.LEFT:
+			return Vector2.DOWN if ccw else Vector2.UP
+		Vector2.UP:
+			return Vector2.LEFT if ccw else Vector2.RIGHT
+		Vector2.RIGHT:
+			return Vector2.UP if ccw else Vector2.DOWN
+	return Vector2.ZERO
+
+
+static func spin_surface(surface:DirsSurface, ccw:bool) -> DirsSurface:
+	match surface:
+		DirsSurface.FLOOR:
+			return DirsSurface.RWALL if ccw else DirsSurface.LWALL
+		DirsSurface.LWALL:
+			return DirsSurface.FLOOR if ccw else DirsSurface.CEILING
+		DirsSurface.CEILING:
+			return DirsSurface.LWALL if ccw else DirsSurface.RWALL
+		DirsSurface.RWALL:
+			return DirsSurface.CEILING if ccw else DirsSurface.FLOOR
+	return DirsSurface.NONE
+
+
+static func spin_cardinal(cardinal:DirsCardinal, ccw:bool) -> DirsCardinal:
+	match cardinal:
+		DirsCardinal.DOWN:
+			return DirsCardinal.RIGHT if ccw else DirsCardinal.LEFT
+		DirsCardinal.LEFT:
+			return DirsCardinal.DOWN if ccw else DirsCardinal.UP
+		DirsCardinal.UP:
+			return DirsCardinal.LEFT if ccw else DirsCardinal.RIGHT
+		DirsCardinal.RIGHT:
+			return DirsCardinal.UP if ccw else DirsCardinal.DOWN
+	return DirsCardinal.NONE

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsfco0jvttf7a"]
+
+[ext_resource type="Script" uid="uid://tcl5b1h6am1x" path="res://Scripts/Particles/Bubble.gd" id="1_hnf7c"]
+[ext_resource type="Texture2D" uid="uid://debdo8vfuuncs" path="res://Assets/Images/Particles/Bubble.png" id="2_jswqg"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xhvnq"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_tqava"]
+
+[node name="Bubble" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_hnf7c")
+sprite = NodePath("JsonSprite2D")
+metadata/_custom_type_script = "uid://bjoxx2waxewlf"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_jswqg")
+hframes = 4
+vframes = 2
+frame = 6
+script = ExtResource("3_xhvnq")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_tqava")
+texture_path = "res://Assets/Images/Particles/Bubble.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"

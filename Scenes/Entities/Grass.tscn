@@ -12,13 +12,6 @@ size = Vector2(16, 16)
 [node name="Grass" type="Node2D"]
 script = ExtResource("1_56jc0")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_qrpkj")
-hframes = 2
-vframes = 2
-script = ExtResource("3_u0pfo")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 4
@@ -42,6 +35,16 @@ bus = &"Sfx"
 
 [node name="RegrowTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_qrpkj")
+hframes = 2
+vframes = 2
+script = ExtResource("3_u0pfo")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_player_exited"]

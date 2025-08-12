@@ -6,13 +6,15 @@ extends PanelContainer
 #region Variables
 const COLOR_ENABLED = Color8(252, 252, 252)
 const COLOR_DISABLED = Color8(200, 192, 192)
+const REQ_LIFE_FRAMES = 2
 
 @export var grab_focus_on_load:bool = false
 @export var disabled = false
 @export var hide_frame = false:
 	set(value):
 		hide_frame = value
-		frame.self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
+		if frame:
+			frame.self_modulate = Color(1.0, 1.0, 1.0, 0.0 if hide_frame else 1.0)
 
 var focused:bool = false
 var mouse_over:bool = false
@@ -20,12 +22,12 @@ var origin:Vector2
 var can_focus:bool = true:
 	set(value):
 		can_focus = value
-		if value and grab_focus_on_load:
-			has_played_focus_sound = false
 		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
-var has_played_focus_sound:bool = false
+		if value:
+			life_frames = 0
 var parent_layer:MenuLayer
 var frame:PanelContainer = self
+var life_frames:int = 0
 
 @onready var sfx_focus:AudioStreamPlayer
 @onready var sfx_select:AudioStreamPlayer
@@ -41,6 +43,11 @@ func _ready() -> void:
 		if can_focus and grab_focus_on_load and not disabled:
 			grab_focus()
 		hide_frame = hide_frame
+
+
+func _process(delta: float) -> void:
+	if not Engine.is_editor_hint():
+		life_frames += 1
 
 
 func free_safely() -> void:
@@ -89,9 +96,10 @@ func _on_focus() -> void:
 	if not Engine.is_editor_hint():
 		if not focused:
 			focused = true
-			if grab_focus_on_load and not has_played_focus_sound:
+			if grab_focus_on_load and (not parent_layer or parent_layer.first_beep):
 				sfx_select.play()
-				has_played_focus_sound = true
+				if parent_layer:
+					parent_layer.first_beep = false
 			else:
 				sfx_focus.play()
 

@@ -1,13 +1,5 @@
-extends Node
 class_name CutsceneController
-
-
-static var instance:CutsceneController
-
-
-static var events := {}
-static var persistent_data := {}
-static var _stat:Status
+extends Node
 
 
 enum Status {
@@ -18,105 +10,18 @@ enum Status {
 }
 
 
-#region Context
-static var active := false
-
-
-static var program := []
-static var stack:Array[int] = []
+static var instance:CutsceneController
 
 
 func _process(delta: float) -> void:
 	pass
-#endregion
 
 
 func _ready() -> void:
 	instance = self
 	print(name)
 	print("!!!!!! READY")
-	load_event("res://CusceneScripts/test.txt", &"test:test")
 
 
-static func get_error() -> Status:
-	return _stat
-
-
-static func run_event(ID:StringName) -> Status:
-	return Status.BUSY
-
-
-static func _extract_strings(inp:String) -> Array:
-	var instring := false
-	var outp = [""]
-	var i := 0
-	while i < len(inp):
-		var letter = inp[i]
-		if instring:
-			if letter == "\\":
-				outp[-1] += (letter + inp[i + 1])
-				i += 1
-			elif letter == "\"":
-				instring = false
-				outp.append("")
-			else:
-				outp[-1] += letter
-		else:
-			if letter == "\"":
-				instring = true
-				outp.append("")
-			else:
-				outp[-1] += letter
-		i += 1
-	if outp[-1] == "":
-		outp.resize(outp.size() - 1)
-	return outp
-
-
-static func load_event(path:String, ID:StringName) -> bool:
-	if FileAccess.file_exists(path):
-		var f = FileAccess.open(path, FileAccess.READ)
-		var raw := f.get_as_text().replace("\r", "").split("\n", false) as Array
-		f.close()
-		for i in raw.size():
-			var iter = raw[i]
-			var piter = " " + iter
-			var ppiter = " " + piter
-			var indenting := true
-			var indent = 0
-			var instring := false
-			var depth := 0
-			for l in len(iter):
-				var letter = iter[l]
-				var pletter = piter[l]
-				var ppletter = ppiter[l]
-				if indenting and (letter in [" ", "\t"]):
-					indent += 1
-				else:
-					indenting = false
-					match letter:
-						"(" when !instring:
-							depth += 1
-						")" when !instring:
-							depth -= 1
-						"\"" when instring:
-							if not (pletter == "\\" and (not ppletter == "\\")):
-								instring = false
-						"\"" when !instring:
-							instring = true
-			if instring:
-				print("Uneven string ", i)
-				return false
-			if depth != 0:
-				print("Uneven parens ", i)
-				return false
-			raw[i] = [indent, iter.strip_edges()]
-		for i in raw:
-			var line = i[1]
-			i[1] = _extract_strings(line)
-			print(i)
-	else:
-		_stat = Status.FILE_ERROR
-		return false
-	_stat = Status.UNKOWN_ERROR
-	return false
+func _sim_step() -> void:
+	pass

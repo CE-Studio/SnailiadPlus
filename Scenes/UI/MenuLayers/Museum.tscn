@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://8bnhgx7rwmtx"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_obrtw"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_v7ejv"]
+
+[sub_resource type="GDScript" id="GDScript_obrtw"]
+resource_name = "Museum"
+script/source = "extends VBoxContainer
+
+
+func _ready() -> void:
+	if not Statics.has_unlock(Statics.Unlocks.BOSS_RUSH):
+		$\"Times\".quick_load_layer = \"\"
+		$\"Times\".set_text(\"-- ??? --\")
+		$\"Gallery\".quick_load_layer = \"\"
+		$\"Gallery\".set_text(\"-- ??? --\")
+		$\"SoundTest\".quick_load_layer = \"\"
+		$\"SoundTest\".set_text(\"-- ??? --\")
+"
+
+[node name="Museum" type="Node2D"]
+script = ExtResource("1_obrtw")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = SubResource("GDScript_obrtw")
+
+[node name="Times" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Gallery")
+focus_next = NodePath("../Gallery")
+focus_previous = NodePath("../Back")
+text_id = "menu_option_records_times"
+quick_load_layer = "Times"
+grab_focus_on_load = true
+hide_frame = true
+
+[node name="Gallery" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Times")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Achievements")
+focus_next = NodePath("../Achievements")
+focus_previous = NodePath("../Times")
+text_id = "menu_option_records_gallery"
+hide_frame = true
+
+[node name="Achievements" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Gallery")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Bestiary")
+focus_next = NodePath("../Bestiary")
+focus_previous = NodePath("../Gallery")
+text_id = "menu_option_records_achievements"
+quick_load_layer = "Achievements"
+hide_frame = true
+
+[node name="Bestiary" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Achievements")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SoundTest")
+focus_next = NodePath("../SoundTest")
+focus_previous = NodePath("../Achievements")
+text_id = "menu_option_records_bestiary"
+quick_load_layer = "Bestiary"
+hide_frame = true
+
+[node name="SoundTest" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Bestiary")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Bestiary")
+text_id = "menu_option_records_soundTest"
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Back" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SoundTest")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Times")
+focus_next = NodePath("../Times")
+focus_previous = NodePath("../SoundTest")
+text_id = "menu_option_main_returnTo"
+back_one_layer = true
+hide_frame = true
