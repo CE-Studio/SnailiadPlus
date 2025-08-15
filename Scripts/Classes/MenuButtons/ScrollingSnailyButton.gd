@@ -52,18 +52,18 @@ func _ready() -> void:
 	option.add_shadow(1)
 	if not Engine.is_editor_hint():
 		if header_id.strip_edges() == "":
-			header.set_snaily_text("Text!!")
+			header.set_snaily_text_raw("Text!!")
 		else:
-			header.set_snaily_text(Statics.get_text(header_id))
+			header.set_snaily_text(header_id)
 		if cycle_options.size() == 0:
-			option.set_snaily_text(Statics.get_text("menu_option_scroller_none"))
+			option.set_snaily_text("menu_option_scroller_none")
 			selected_option = -1
 			disabled = true
 		else:
 			while focus_option < 0:
 				focus_option += cycle_options.size()
 			selected_option = focus_option % cycle_options.size()
-			option.set_snaily_text(Statics.get_text(cycle_options[selected_option]))
+			option.set_snaily_text(cycle_options[selected_option])
 			if emit_signal_on_load:
 				option_cycled.emit(selected_option)
 		header.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
@@ -76,25 +76,26 @@ func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		if (focused and not disabled and life_frames >= REQ_LIFE_FRAMES) or selected:
 			var suppress_deselect:bool = selected and (arrow_hover_state[0] or arrow_hover_state[1])
-			if (mouse_over and (Input.is_action_just_pressed("UIClick") and not suppress_deselect)
-			or Input.is_action_just_pressed("Jump")):
+			if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and not suppress_deselect)
+			or SInput.input_just_pressed(SInput.Inputs.UI_ACCEPT)
+			or (selected and SInput.input_just_pressed(SInput.Inputs.UI_BACK))):
 				if auto_select_mode:
 					button_pressed.emit(selected_option)
 				elif selected:
 					deselect()
 				else:
 					set_selected()
-		if selected or auto_select_mode:
+		if selected or (focused and auto_select_mode):
 			var cycled:bool = false
-			if (Input.is_action_just_pressed("Left")
-			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[0])):
+			if (SInput.input_just_pressed(SInput.Inputs.LEFT)
+			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0])):
 				selected_option -= 1
 				if selected_option < 0:
 					selected_option = cycle_options.size() - 1 if loop else 0
 				cycled = true
 				cycled_left.emit(selected_option)
-			if (Input.is_action_just_pressed("Right")
-			or (Input.is_action_just_pressed("UIClick") and arrow_hover_state[1])):
+			if (SInput.input_just_pressed(SInput.Inputs.RIGHT)
+			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1])):
 				selected_option += 1
 				if selected_option >= cycle_options.size():
 					selected_option = 0 if loop else cycle_options.size() - 1
@@ -102,7 +103,7 @@ func _process(delta: float) -> void:
 				cycled_right.emit(selected_option)
 			if cycled:
 				sfx_focus.play()
-				option.call_deferred("set_snaily_text", Statics.get_text(cycle_options[selected_option]))
+				option.call_deferred("set_snaily_text", cycle_options[selected_option])
 				option_cycled.emit(selected_option)
 		
 		arrow_flash_cycle += delta * HOVER_ARROW_CYCLE_SPEED
@@ -118,20 +119,20 @@ func _process(delta: float) -> void:
 
 
 func set_header(_text:String) -> void:
-	header.set_snaily_text(_text)
+	header.set_snaily_text_raw(_text)
 
 
 func remote_set_option(value:int) -> void:
 	while value < 0:
 		value += cycle_options.size()
 	selected_option = value % cycle_options.size()
-	option.set_snaily_text(Statics.get_text(cycle_options[selected_option]))
+	option.set_snaily_text(cycle_options[selected_option])
 
 
 func remote_import_new_options(new_array:Array[String]) -> void:
 	cycle_options = new_array.duplicate()
 	selected_option %= cycle_options.size()
-	option.set_snaily_text(Statics.get_text(cycle_options[selected_option]))
+	option.set_snaily_text(cycle_options[selected_option])
 
 
 func set_selected() -> void:

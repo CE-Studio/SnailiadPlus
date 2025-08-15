@@ -23,7 +23,7 @@ func instance(new_text:String, lifetime:float = 3.5, text_scale:int = 2, delay:f
 	text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP)
 	text.text_scale = text_scale
 	text.add_border(1)
-	text.set_snaily_text(new_text)
+	text.set_snaily_text_raw(new_text)
 	text.call_deferred("center_position")
 	life_timer = -abs(delay)
 
@@ -43,6 +43,6 @@ func _process(delta: float) -> void:
 		if life_timer >= max_lifetime - FADE_OUT_TIME:
 			this_color.a = inverse_lerp(max_lifetime, max_lifetime - FADE_OUT_TIME, life_timer) * this_color.a
 		bb_text += "[color=%08x]%s" % [this_color.to_rgba32(), raw_text[i]]
-	text.set_snaily_text(bb_text)
+	text.set_snaily_text_raw(bb_text)
 	if life_timer >= max_lifetime:
 		queue_free()

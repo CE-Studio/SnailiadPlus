@@ -103,20 +103,17 @@ func _update_profile_buttons() -> void:
 			0:
 				profile = Statics.data_profile1
 				pro1_empty = profile[\"is_empty\"]
-				if not pro1_empty:
-					pro1_layer = LOAD_GAME_LAYER
+				pro1_layer = NEW_GAME_LAYER if pro1_empty else LOAD_GAME_LAYER
 				button = $\"Profile1\"
 			1:
 				profile = Statics.data_profile2
 				pro2_empty = profile[\"is_empty\"]
-				if not pro2_empty:
-					pro2_layer = LOAD_GAME_LAYER
+				pro2_layer = NEW_GAME_LAYER if pro2_empty else LOAD_GAME_LAYER
 				button = $\"Profile2\"
 			2:
 				profile = Statics.data_profile3
 				pro3_empty = profile[\"is_empty\"]
-				if not pro3_empty:
-					pro3_layer = LOAD_GAME_LAYER
+				pro3_layer = NEW_GAME_LAYER if pro3_empty else LOAD_GAME_LAYER
 				button = $\"Profile3\"
 		if not profile[\"is_empty\"]:
 			var _char = str(int(profile[\"character\"]))

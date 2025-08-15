@@ -38,8 +38,9 @@ var char_timeouts:Array[float] = []
 
 
 func _ready() -> void:
-	if quick_load_text.strip_edges() != "" and not Engine.is_editor_hint():
-		set_snaily_text(Statics.get_text(quick_load_text))
+	if not Engine.is_editor_hint():
+		if quick_load_text.strip_edges() != "":
+			set_snaily_text(Statics.get_text(quick_load_text))
 		if shadow_scale > 0:
 			add_shadow(shadow_scale)
 		if border_scale > 0:
@@ -47,6 +48,10 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
+	set_snaily_text_raw(Statics.get_text(_text))
+
+
+func set_snaily_text_raw(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
@@ -153,8 +158,8 @@ func get_width(_text:String = text) -> int:
 
 func format_extra_tags(_text:String) -> String:
 	if _text.contains("[ctrl]") and _text.contains("[/ctrl]"):
-		_text.replace("[ctrl]", "[img]" + CONTROL_PATH)
-		_text.replace("[/ctrl]", ".png[/img]")
+		_text = _text.replace("[ctrl]", "[img]" + CONTROL_PATH)
+		_text = _text.replace("[/ctrl]", ".png[/img]")
 	return _text
 	#var parsed_text:String = ""
 	#var parsed_tag:String = ""

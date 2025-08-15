@@ -106,6 +106,11 @@ enum EnemyTypes {
 	MOONSNAIL,         # Moon Snail
 	GIGASNAIL,         # Giga Moon Snail
 	COSMICSNAIL,       # Cosmic Moon Snail
+	SHELLBREAKER_RUSH, # Super Shellbreaker
+	STOMPY_RUSH,       # Vis Vires
+	SPACEBOX_RUSH,     # Time Cube
+	MOONSNAIL_RUSH,    # Sun Snail
+	GIGASNAIL_RUSH,    # Giga Sun Snail
 }
 #endregion
 

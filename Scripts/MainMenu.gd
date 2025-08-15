@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	var version_string := (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
-	version_text.set_snaily_text(version_string)
+	version_text.set_snaily_text_raw(version_string)
 	version_text.add_shadow(1)
 	
 	if is_main_menu:
@@ -59,7 +59,7 @@ func _ready() -> void:
 				is_main_awaiting_input = true
 			
 			click_play_text = $"ClickPlay"
-			click_play_text.set_snaily_text(Statics.get_text("test"))
+			click_play_text.set_snaily_text("menu_play")
 			click_play_text.add_border(1)
 			click_play_text.add_shadow(2)
 		else:
@@ -82,15 +82,16 @@ func _process(delta: float) -> void:
 			input_delay_timer += delta
 		click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
 		if input_delay_timer >= -1.5:
-			if ((Input.get_action_raw_strength("UIClick")
-			or Input.get_action_raw_strength("Jump"))
+			if ((SInput.input_pressed(SInput.Inputs.UI_CLICK)
+			or SInput.input_pressed(SInput.Inputs.UI_ACCEPT))
 			and spawn_buffer_frames <= 0 and read_inputs):
 				spawn_menu()
 				is_main_awaiting_input = false
 	if not is_main_awaiting_input:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
-		if Input.is_action_just_pressed("Pause") and spawn_buffer_frames <= 0 and read_inputs:
+		if ((SInput.input_just_pressed(SInput.Inputs.PAUSE) or SInput.input_just_pressed(SInput.Inputs.UI_BACK))
+		and spawn_buffer_frames <= 0 and read_inputs):
 			selector_y_offset = 0
 			if active_layers > 1 or not is_main_menu:
 				clear_top_layer(0)

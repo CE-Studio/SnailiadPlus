@@ -1,0 +1,169 @@
+[gd_scene load_steps=8 format=3 uid="uid://3mo5lvbvrnk3"]
+
+[ext_resource type="Script" uid="uid://jtdmrr03mk6n" path="res://Scripts/Classes/MenuButtons/BindSnailyButton.gd" id="1_8mtia"]
+[ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="2_8mtia"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_atxd7"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="5_s1r4d"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="6_vi03d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3lbwi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atxd7"]
+
+[node name="BindSnailyButton" type="PanelContainer"]
+offset_right = 96.0
+offset_bottom = 22.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3lbwi")
+script = ExtResource("1_8mtia")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_atxd7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Label" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_8mtia")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/Label"]
+layout_mode = 2
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/Label/MarginContainer" instance=ExtResource("3_atxd7")]
+layout_mode = 2
+scroll_active = true
+autowrap_mode = 0
+shadow_scale = 1
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="PriKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_8mtia")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriKey"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" instance=ExtResource("3_atxd7")]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+text = "[img]res://Assets/Images/UI/ControlIcons/Z.png[/img]"
+scroll_active = true
+autowrap_mode = 0
+horizontal_alignment = 1
+max_width = 14
+shadow_scale = 1
+
+[node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_8mtia")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecKey"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" instance=ExtResource("3_atxd7")]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+text = "[img]res://Assets/Images/UI/ControlIcons/K.png[/img]"
+scroll_active = true
+autowrap_mode = 0
+horizontal_alignment = 1
+max_width = 14
+shadow_scale = 1
+
+[node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_8mtia")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriCon"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" instance=ExtResource("3_atxd7")]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+text = "[img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img]"
+scroll_active = true
+autowrap_mode = 0
+horizontal_alignment = 1
+max_width = 14
+shadow_scale = 1
+
+[node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_8mtia")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecCon"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = -2
+
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" instance=ExtResource("3_atxd7")]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+text = "[img]res://Assets/Images/UI/ControlIcons/R1.png[/img]"
+scroll_active = true
+autowrap_mode = 0
+horizontal_alignment = 1
+max_width = 14
+shadow_scale = 1
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_s1r4d")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("6_vi03d")
+bus = &"Sfx"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus"]
+[connection signal="focus_exited" from="." to="." method="_on_exit_focus"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_over"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exit"]

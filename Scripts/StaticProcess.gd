@@ -91,5 +91,5 @@ func _load_json_to_dict(path:String) -> Dictionary:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("Debug") and not Statics.is_menu_open:
+	if event.is_action_pressed("debug") and not Statics.is_menu_open:
 		Statics.noclip_mode = not Statics.noclip_mode

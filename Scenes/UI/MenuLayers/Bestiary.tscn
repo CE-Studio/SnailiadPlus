@@ -58,12 +58,11 @@ func _ready() -> void:
 			entry_states.append(false)
 		else:
 			entry_states.append(true)
-		entity = Statics.get_text(NAME_STR % entity)
+		entity = NAME_STR % entity
 		var new_text:SnailyText = text_scene.instantiate()
 		new_text.text_scale = 1
 		new_text.max_width = 112
 		new_text.name = str(i)
-		#var bb_text := \"[color=%08x]%s\" % [text_color.to_rgba32(), entity]
 		new_text.modulate = text_color
 		new_text.set_snaily_text(entity)
 		scroll_list.add_child(new_text)
@@ -131,8 +130,8 @@ func _update_entry_display() -> void:
 		display_enemies.clear()
 	var has_entry := entry_states[selection]
 	var this_entity := entity_list[selection] if has_entry else \"none\"
-	name_text.set_snaily_text(Statics.get_text(NAME_STR % this_entity))
-	desc_text.set_snaily_text(Statics.get_text(DESC_STR % this_entity))
+	name_text.set_snaily_text(NAME_STR % this_entity)
+	desc_text.set_snaily_text(DESC_STR % this_entity)
 	if has_entry:
 		spawn_display_entity(this_entity)
 

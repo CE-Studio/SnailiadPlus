@@ -10,7 +10,7 @@ extends Node2D
 func _physics_process(delta: float) -> void:
 	if not cam:
 		cam = UICore.instance
-	if Input.is_action_just_pressed("Pause") and not get_tree().paused:
+	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
 		add_child(menu_scene.instantiate())
 
