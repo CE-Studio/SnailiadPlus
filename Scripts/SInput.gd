@@ -33,17 +33,108 @@ const DEFAULTS:Dictionary = {
 	"leftK2": KEY_A,
 }
 
+const ICONS_KEY:Dictionary = {
+	KEY_0: "0",
+	KEY_1: "1",
+	KEY_2: "2",
+	KEY_3: "3",
+	KEY_4: "4",
+	KEY_5: "5",
+	KEY_6: "6",
+	KEY_7: "7",
+	KEY_8: "8",
+	KEY_9: "9",
+	KEY_A: "A",
+	KEY_ALT: "Alt",
+	KEY_B: "B",
+	KEY_QUOTELEFT: "Backquote",
+	KEY_BACKSLASH: "Backslash",
+	KEY_BACKSPACE: "Backspace",
+	KEY_C: "C",
+	KEY_BRACKETRIGHT: "CloseBracket",
+	KEY_COLON: "Colon",
+	KEY_COMMA: "Comma",
+	KEY_CTRL: "Ctrl",
+	KEY_D: "D",
+	KEY_DELETE: "Del",
+	KEY_QUOTEDBL: "DoubleQuote",
+	KEY_DOWN: "Down",
+	KEY_E: "E",
+	KEY_ENTER: "Enter",
+	KEY_EQUAL: "Equal",
+	KEY_ESCAPE: "Esc",
+	KEY_F: "F",
+	KEY_F1: "F1",
+	KEY_F2: "F2",
+	KEY_F3: "F3",
+	KEY_F4: "F4",
+	KEY_F5: "F5",
+	KEY_F6: "F6",
+	KEY_F7: "F7",
+	KEY_F8: "F8",
+	KEY_F9: "F9",
+	KEY_F10: "F10",
+	KEY_F11: "F11",
+	KEY_F12: "F12",
+	KEY_G: "G",
+	KEY_H: "H",
+	KEY_I: "I",
+	KEY_J: "J",
+	KEY_K: "K",
+	KEY_L: "L",
+	KEY_LEFT: "Left",
+	KEY_META: "Logo",
+	KEY_M: "M",
+	KEY_MINUS: "Minus",
+	KEY_N: "N",
+	KEY_KP_0: "Num0",
+	KEY_KP_1: "Num1",
+	KEY_KP_2: "Num2",
+	KEY_KP_3: "Num3",
+	KEY_KP_4: "Num4",
+	KEY_KP_5: "Num5",
+	KEY_KP_6: "Num6",
+	KEY_KP_7: "Num7",
+	KEY_KP_8: "Num8",
+	KEY_KP_9: "Num9",
+	KEY_KP_DIVIDE: "NumDivide",
+	KEY_KP_ENTER: "NumEnter",
+	KEY_KP_SUBTRACT: "NumMinus",
+	KEY_KP_MULTIPLY: "NumMultiply",
+	KEY_KP_ADD: "NumPlus",
+	KEY_O: "O",
+	KEY_BRACKETLEFT: "OpenBracket",
+	KEY_P: "P",
+	KEY_PERIOD: "Period",
+	KEY_Q: "Q",
+	KEY_R: "R",
+	KEY_RIGHT: "Right",
+	KEY_S: "S",
+	KEY_SEMICOLON: "Semicolon",
+	KEY_SHIFT: "Shift",
+	KEY_SLASH: "Slash",
+	KEY_SPACE: "Space",
+	KEY_T: "T",
+	KEY_TAB: "Tab",
+	KEY_U: "U",
+	KEY_UP: "Up",
+	KEY_V: "V",
+	KEY_W: "W",
+	KEY_X: "X",
+	KEY_Y: "Y",
+	KEY_Z: "Z",
+}
+
 const STICK_DEADZONE_MOVE:float = 0.1
 const STICK_DEADZONE_AIM:float = 0.2
 #endregion
 
 
 func _ready() -> void:
-	print(InputMap.get_actions())
+	pass
 
 
 func _input(event: InputEvent) -> void:
-	#print(event.as_text())
 	pass
 
 
@@ -141,3 +232,17 @@ func vector_aim() -> Vector2:
 		elif vector.y > STICK_DEADZONE_AIM: vector.y = 1
 		else: vector.y = 0
 	return vector
+
+
+func get_input_icon(event:InputEvent) -> String:
+	if event is InputEventKey:
+		#print(event)
+		var key = event.get_keycode_with_modifiers()
+		#print(key)
+		for i in event.get_property_list():
+			print(i)
+		if ICONS_KEY.has(key):
+			return ICONS_KEY[key]
+		else:
+			return "Unknown"
+	return "Unknown"

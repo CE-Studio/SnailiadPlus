@@ -38,8 +38,9 @@ var char_timeouts:Array[float] = []
 
 
 func _ready() -> void:
-	if quick_load_text.strip_edges() != "" and not Engine.is_editor_hint():
-		set_snaily_text(Statics.get_text(quick_load_text))
+	if not Engine.is_editor_hint():
+		if quick_load_text.strip_edges() != "":
+			set_snaily_text(Statics.get_text(quick_load_text))
 		if shadow_scale > 0:
 			add_shadow(shadow_scale)
 		if border_scale > 0:

@@ -32,101 +32,101 @@ scroll_vertical_custom_step = 1.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 6
 alignment = 1
 
-[node name="PriKey1" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Left" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"leftK1"
+bind = &"left"
 grab_focus_on_load = true
 
-[node name="PriKey2" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Right" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"rightK1"
+bind = &"right"
 
-[node name="PriKey3" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Up" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"upK1"
+bind = &"up"
 
-[node name="PriKey4" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Down" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"downK1"
+bind = &"down"
 
-[node name="PriKey5" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Jump" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"jumpK1"
+bind = &"jump"
 
-[node name="PriKey6" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Shoot" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"shootK1"
+bind = &"shoot"
 
-[node name="PriKey7" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Strafe" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"strafeK1"
+bind = &"strafe"
 
-[node name="PriKey8" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Speak" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"speakK1"
+bind = &"speak"
 
-[node name="PriKey9" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Gravity" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"gravityK1"
+bind = &"gravity"
 
-[node name="PriKey10" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Pause" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"pauseK1"
+bind = &"pause"
 
-[node name="PriKey11" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Map" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"mapK1"
+bind = &"map"
 
-[node name="PriKey12" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Weapon0" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"weapon0K1"
+bind = &"weapon0"
 
-[node name="PriKey13" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Weapon1" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"weapon1K1"
+bind = &"weapon1"
 
-[node name="PriKey14" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Weapon2" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"weapon2K1"
+bind = &"weapon2"
 
-[node name="PriKey15" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+[node name="Weapon3" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = &"weapon3K1"
+bind = &"weapon3"
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_oamqp")]
 self_modulate = Color(1, 1, 1, 0)
