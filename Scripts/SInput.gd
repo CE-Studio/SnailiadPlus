@@ -236,11 +236,8 @@ func vector_aim() -> Vector2:
 
 func get_input_icon(event:InputEvent) -> String:
 	if event is InputEventKey:
-		#print(event)
-		var key = event.get_keycode_with_modifiers()
-		#print(key)
-		for i in event.get_property_list():
-			print(i)
+		var key = OS.get_keycode_string(event.physical_keycode)
+		print(key)
 		if ICONS_KEY.has(key):
 			return ICONS_KEY[key]
 		else:
