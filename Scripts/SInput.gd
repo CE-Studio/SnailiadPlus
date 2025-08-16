@@ -29,29 +29,29 @@ enum Inputs {
 }
 
 const INPUT_SLOTS:Array = [
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001111,
-	0b00001010,
-	0b00001010,
-	0b00001010,
-	0b00001010,
-	0b00001010,
-	0b00001010,
-	0b00000010,
-	0b00000010,
-	0b00000010,
-	0b00000010,
-	0b00001000,
-	0b00001000,
-	0b00001111,
-	0b00001111,
+	0b00001111, # Left
+	0b00001111, # Right
+	0b00001111, # Up
+	0b00001111, # Down
+	0b00001111, # Jump
+	0b00001111, # Shoot
+	0b00001111, # Strafe
+	0b00001111, # Speak
+	0b00001111, # Gravity
+	0b00001010, # Pause
+	0b00001010, # Map
+	0b00001010, # Weapon 0
+	0b00001010, # Weapon 1
+	0b00001010, # Weapon 2
+	0b00001010, # Weapon 3
+	0b00000010, # Aim left
+	0b00000010, # Aim right
+	0b00000010, # Aim up
+	0b00000010, # Aim down
+	0b00001000, # Debug
+	0b00001000, # UI click
+	0b00001111, # UI accept
+	0b00001111, # UI back
 ]
 
 const CON_MAPPINGS:Array[Array] = [
@@ -80,12 +80,12 @@ const DEFAULTS:Array[Array] = [
 	[ KEY_1, KEY_1, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_DOWN ],
 	[ KEY_2, KEY_2, JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_UP ],
 	[ KEY_3, KEY_3, JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_RIGHT ],
-	[ KEY_3, KEY_3, JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_RIGHT ],
 	[ KEY_NONE, KEY_NONE, Vector2i(2, -1), Vector2i(2, -1) ],
 	[ KEY_NONE, KEY_NONE, Vector2i(2, 1), Vector2i(2, 1) ],
 	[ KEY_NONE, KEY_NONE, Vector2i(3, -1), Vector2i(3, -1) ],
 	[ KEY_NONE, KEY_NONE, Vector2i(3, 1), Vector2i(3, 1) ],
 	[ KEY_QUOTELEFT, KEY_QUOTELEFT, JOY_BUTTON_INVALID, JOY_BUTTON_INVALID ],
+	[ KEY_NONE, KEY_NONE, JOY_BUTTON_INVALID, JOY_BUTTON_INVALID ],
 	[ KEY_Z, KEY_ENTER, JOY_BUTTON_A, JOY_BUTTON_A ],
 	[ KEY_X, KEY_ESCAPE, JOY_BUTTON_B, JOY_BUTTON_B ],
 ]
@@ -102,7 +102,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if false:
+	if true:
 		return
 	if event is InputEventKey:
 		print(OS.get_keycode_string(event.physical_keycode))

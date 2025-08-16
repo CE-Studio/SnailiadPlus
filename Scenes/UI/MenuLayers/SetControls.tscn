@@ -55,7 +55,6 @@ alignment = 1
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
-bind = 0
 grab_focus_on_load = true
 
 [node name="Right" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
