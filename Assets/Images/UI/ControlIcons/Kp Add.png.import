@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4fy4gfircgx6"
-path="res://.godot/imported/NumMultiply.png-b3ccb89820285e62f577d9fa3690072a.ctex"
+uid="uid://dmvai67i4gryf"
+path="res://.godot/imported/Kp Add.png-b44fb480bd5b5e315974611a1024e33b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/NumMultiply.png"
-dest_files=["res://.godot/imported/NumMultiply.png-b3ccb89820285e62f577d9fa3690072a.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp Add.png"
+dest_files=["res://.godot/imported/Kp Add.png-b44fb480bd5b5e315974611a1024e33b.ctex"]
 
 [params]
 

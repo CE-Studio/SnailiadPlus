@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqypqlra5aq78"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_cowbv"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_mn8gm"]
+[ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="3_mn8gm"]
+
+[sub_resource type="GDScript" id="GDScript_mn8gm"]
+resource_name = "ControlOptions"
+script/source = "extends VBoxContainer
+
+
+func _ready() -> void:
+	$\"ButtonStyle\".remote_set_option(Statics.data_general[\"controller_face_type\"])
+
+
+func on_face_type_cycled(value) -> void:
+	Statics.data_general[\"controller_face_type\"] = value
+"
+
+[node name="ControlOptions" type="Node2D"]
+script = ExtResource("1_cowbv")
+save_general_on_close = true
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = SubResource("GDScript_mn8gm")
+
+[node name="Remap" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ButtonStyle")
+focus_next = NodePath("../ButtonStyle")
+focus_previous = NodePath("../Back")
+text_id = "menu_option_controls_remap"
+quick_load_layer = "SetControls"
+grab_focus_on_load = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ButtonStyle" parent="MainVBox" instance=ExtResource("3_mn8gm")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Remap")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Default")
+focus_next = NodePath("../Default")
+focus_previous = NodePath("../Remap")
+header_id = "menu_option_controls_buttonType"
+cycle_options = Array[String](["menu_option_controls_buttonType_xbox", "menu_option_controls_buttonType_nintendo", "menu_option_controls_buttonType_playstation", "menu_option_controls_buttonType_ouya"])
+
+[node name="Default" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ButtonStyle")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../ButtonStyle")
+text_id = "menu_option_controls_default"
+hide_frame = true
+
+[node name="HSeparator2" type="HSeparator" parent="MainVBox"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Back" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Default")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Remap")
+focus_next = NodePath("../Remap")
+focus_previous = NodePath("../Default")
+text_id = "menu_option_main_returnTo"
+back_one_layer = true
+hide_frame = true
+
+[connection signal="option_cycled" from="MainVBox/ButtonStyle" to="MainVBox" method="on_face_type_cycled"]

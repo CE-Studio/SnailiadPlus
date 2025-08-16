@@ -26,6 +26,10 @@ func _ready() -> void:
 	Statics.data_profile3 = _load_data_dict("Profile3", template_profile)
 	Statics.data_records = _load_data_dict("Records", template_records)
 	
+	# If control array is empty, set default controls
+	if Statics.data_general["controls"].size() == 0:
+		Statics.data_general["controls"] = SInput.DEFAULTS.duplicate()
+	
 	# Set important game systems according to newly loaded data
 	_set_game_settings()
 

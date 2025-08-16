@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj2fi5jcm667"
-path="res://.godot/imported/Num9.png-a02c0b4bbd2dabeda27ff93391a6c0bb.ctex"
+uid="uid://pfy3i28so7bl"
+path="res://.godot/imported/Kp Divide.png-40441b4624b54faa02b827383e9e090d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Num9.png"
-dest_files=["res://.godot/imported/Num9.png-a02c0b4bbd2dabeda27ff93391a6c0bb.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp Divide.png"
+dest_files=["res://.godot/imported/Kp Divide.png-40441b4624b54faa02b827383e9e090d.ctex"]
 
 [params]
 

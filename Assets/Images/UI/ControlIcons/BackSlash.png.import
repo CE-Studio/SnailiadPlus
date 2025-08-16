@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpca7wu3sh6fg"
-path="res://.godot/imported/Num7.png-ea78233c529e9df1cca7411d4747efa1.ctex"
+uid="uid://rn4wr7hk5mi1"
+path="res://.godot/imported/BackSlash.png-cd9a4e2ff6c0df7250cc2203b5189c84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Num7.png"
-dest_files=["res://.godot/imported/Num7.png-ea78233c529e9df1cca7411d4747efa1.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/BackSlash.png"
+dest_files=["res://.godot/imported/BackSlash.png-cd9a4e2ff6c0df7250cc2203b5189c84.ctex"]
 
 [params]
 

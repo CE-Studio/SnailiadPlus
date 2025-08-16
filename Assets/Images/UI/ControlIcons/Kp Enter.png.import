@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmvai67i4gryf"
-path="res://.godot/imported/NumPlus.png-aeaa66d7cb6eebac5ab8312410b6ecc4.ctex"
+uid="uid://dvpljvppjvjd"
+path="res://.godot/imported/Kp Enter.png-5bbe69c7770cdeae409dc47fe56cfb03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/NumPlus.png"
-dest_files=["res://.godot/imported/NumPlus.png-aeaa66d7cb6eebac5ab8312410b6ecc4.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp Enter.png"
+dest_files=["res://.godot/imported/Kp Enter.png-5bbe69c7770cdeae409dc47fe56cfb03.ctex"]
 
 [params]
 

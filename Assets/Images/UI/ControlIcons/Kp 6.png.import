@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1viw8ul32hax"
-path="res://.godot/imported/Esc.png-96713d3d4dcb2c5db0f3684404c9d97c.ctex"
+uid="uid://d07lgt74chpht"
+path="res://.godot/imported/Kp 6.png-c2845f3de6999bec5e7f493a8dec21f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Esc.png"
-dest_files=["res://.godot/imported/Esc.png-96713d3d4dcb2c5db0f3684404c9d97c.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 6.png"
+dest_files=["res://.godot/imported/Kp 6.png-c2845f3de6999bec5e7f493a8dec21f2.ctex"]
 
 [params]
 

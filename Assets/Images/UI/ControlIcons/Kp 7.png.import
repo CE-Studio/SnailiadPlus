@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jdhmpr8kfpus"
-path="res://.godot/imported/Quote.png-4062e5935be00b239afc9a87d4ec4b48.ctex"
+uid="uid://cpca7wu3sh6fg"
+path="res://.godot/imported/Kp 7.png-8dfb2618ec6cfcdde75f1e529729dcee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Quote.png"
-dest_files=["res://.godot/imported/Quote.png-4062e5935be00b239afc9a87d4ec4b48.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 7.png"
+dest_files=["res://.godot/imported/Kp 7.png-8dfb2618ec6cfcdde75f1e529729dcee.ctex"]
 
 [params]
 

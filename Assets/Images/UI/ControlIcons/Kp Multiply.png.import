@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drlnwfe3052mq"
-path="res://.godot/imported/OpenBracket.png-c085706afec0cf3984d2dbe85280339c.ctex"
+uid="uid://c4fy4gfircgx6"
+path="res://.godot/imported/Kp Multiply.png-9337acd4fd7d2d466d2c4b7361982879.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/OpenBracket.png"
-dest_files=["res://.godot/imported/OpenBracket.png-c085706afec0cf3984d2dbe85280339c.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp Multiply.png"
+dest_files=["res://.godot/imported/Kp Multiply.png-9337acd4fd7d2d466d2c4b7361982879.ctex"]
 
 [params]
 

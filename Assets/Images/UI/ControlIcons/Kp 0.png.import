@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xivn4f2ouhow"
-path="res://.godot/imported/CloseBracket.png-d1ad66cbf93806f93be3a8ed3ded7411.ctex"
+uid="uid://cfr1syjmash8a"
+path="res://.godot/imported/Kp 0.png-b313d21cc18b1bd3adedc030672b0993.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/CloseBracket.png"
-dest_files=["res://.godot/imported/CloseBracket.png-d1ad66cbf93806f93be3a8ed3ded7411.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 0.png"
+dest_files=["res://.godot/imported/Kp 0.png-b313d21cc18b1bd3adedc030672b0993.ctex"]
 
 [params]
 

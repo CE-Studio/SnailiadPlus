@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d07lgt74chpht"
-path="res://.godot/imported/Num6.png-1e7210fea2b4f9b9b18d900a39bcc9bf.ctex"
+uid="uid://dvm87fcopkxa1"
+path="res://.godot/imported/Kp 1.png-8c58f9612ca1cb29f92224d270fa1be6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Num6.png"
-dest_files=["res://.godot/imported/Num6.png-1e7210fea2b4f9b9b18d900a39bcc9bf.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 1.png"
+dest_files=["res://.godot/imported/Kp 1.png-8c58f9612ca1cb29f92224d270fa1be6.ctex"]
 
 [params]
 

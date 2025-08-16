@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rn4wr7hk5mi1"
-path="res://.godot/imported/Backslash.png-5460a13d20d055bca4003aade62aa5d6.ctex"
+uid="uid://cljr245v2wmuh"
+path="res://.godot/imported/Kp 8.png-f15f48d8498325dbd6c36a6b2f79549c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Backslash.png"
-dest_files=["res://.godot/imported/Backslash.png-5460a13d20d055bca4003aade62aa5d6.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 8.png"
+dest_files=["res://.godot/imported/Kp 8.png-f15f48d8498325dbd6c36a6b2f79549c.ctex"]
 
 [params]
 

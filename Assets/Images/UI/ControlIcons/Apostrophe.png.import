@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pfy3i28so7bl"
-path="res://.godot/imported/NumDivide.png-79be79ec6706f9ad6d9c14ee54f551eb.ctex"
+uid="uid://jdhmpr8kfpus"
+path="res://.godot/imported/Apostrophe.png-56d7ed040530038d50ef13ecbd0fee61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/NumDivide.png"
-dest_files=["res://.godot/imported/NumDivide.png-79be79ec6706f9ad6d9c14ee54f551eb.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Apostrophe.png"
+dest_files=["res://.godot/imported/Apostrophe.png-56d7ed040530038d50ef13ecbd0fee61.ctex"]
 
 [params]
 

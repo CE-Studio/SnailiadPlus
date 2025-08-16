@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cljr245v2wmuh"
-path="res://.godot/imported/Num8.png-f4df3c302e1daf1eaff01109f192d993.ctex"
+uid="uid://d1viw8ul32hax"
+path="res://.godot/imported/Escape.png-d8b316d3bb9483183414c4567fc00bed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Num8.png"
-dest_files=["res://.godot/imported/Num8.png-f4df3c302e1daf1eaff01109f192d993.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Escape.png"
+dest_files=["res://.godot/imported/Escape.png-d8b316d3bb9483183414c4567fc00bed.ctex"]
 
 [params]
 

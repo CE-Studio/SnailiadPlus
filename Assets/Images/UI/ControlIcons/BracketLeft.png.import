@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bewkr33efdgk0"
-path="res://.godot/imported/Backquote.png-4ae6f798721800d93fbb99aadb960f84.ctex"
+uid="uid://drlnwfe3052mq"
+path="res://.godot/imported/BracketLeft.png-a47ce8af4c3c7d7c1cb8a4272eefff41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/Backquote.png"
-dest_files=["res://.godot/imported/Backquote.png-4ae6f798721800d93fbb99aadb960f84.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/BracketLeft.png"
+dest_files=["res://.godot/imported/BracketLeft.png-a47ce8af4c3c7d7c1cb8a4272eefff41.ctex"]
 
 [params]
 

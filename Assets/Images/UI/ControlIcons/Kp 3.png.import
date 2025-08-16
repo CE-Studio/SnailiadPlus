@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvpljvppjvjd"
-path="res://.godot/imported/NumEnter.png-a4b139aea06606d873016c66895ca3c1.ctex"
+uid="uid://cpbi1jfmqxvg5"
+path="res://.godot/imported/Kp 3.png-8050ed64b24b894f79c094fab8358a12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/ControlIcons/NumEnter.png"
-dest_files=["res://.godot/imported/NumEnter.png-a4b139aea06606d873016c66895ca3c1.ctex"]
+source_file="res://Assets/Images/UI/ControlIcons/Kp 3.png"
+dest_files=["res://.godot/imported/Kp 3.png-8050ed64b24b894f79c094fab8358a12.ctex"]
 
 [params]
 
