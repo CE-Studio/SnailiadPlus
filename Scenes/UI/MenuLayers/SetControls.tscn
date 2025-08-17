@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bffjuo7l54767"]
+[gd_scene load_steps=8 format=3 uid="uid://bffjuo7l54767"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_26pkv"]
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_thf4g"]
 [ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="3_nb4ro"]
 [ext_resource type="PackedScene" uid="uid://3mo5lvbvrnk3" path="res://Scenes/UI/BindSnailyButton.tscn" id="4_mugii"]
+[ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="6_26pkv"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="6_oamqp"]
 
 [sub_resource type="GDScript" id="GDScript_mugii"]
@@ -11,13 +12,57 @@ resource_name = "SetControls"
 script/source = "extends VBoxContainer
 
 
+var panel_up:bool = false
+
 @onready var layer:MenuLayer = get_parent()
+@onready var panel:ContextPanel = $\"../ContextPanel\"
 
 
 func _ready() -> void:
 	if layer.meta_info.size() == 0:
 		layer.meta_info.append(0)
-	layer.meta_info[0] = 0
+	
+	panel.call_deferred(\"add_header\",
+		\"menu_option_controls_remap_header\", 2)
+
+
+func _process(delta: float) -> void:
+	if panel_up:
+		panel.modulate.a = lerpf(panel.modulate.a, 1.0, MenuLayer.MOVE_RATE * delta)
+		panel.position.y = lerp(panel.position.y, 80.0, MenuLayer.MOVE_RATE * delta)
+		layer.menu.selector_y_offset = 80.0 - panel.position.y
+	else:
+		panel.modulate.a = lerpf(panel.modulate.a, 0.0, MenuLayer.MOVE_RATE * delta)
+		panel.position.y = lerp(panel.position.y, 240.0, MenuLayer.MOVE_RATE * delta)
+		layer.menu.selector_y_offset = 0
+
+
+# TODO receive bind button pressed signal and send it to _focus_panel
+# TODO read input events when panel up
+
+
+func _focus_panel(bind:int) -> void:
+	layer.can_focus = false
+	panel_up = true
+	var bind_str:String = \"\"
+	match layer.meta_info[0]:
+		0: bind_str = Statics.get_text(\"menu_option_controls_remap_priKey\")
+		1: bind_str = Statics.get_text(\"menu_option_controls_remap_secKey\")
+		2: bind_str = Statics.get_text(\"menu_option_controls_remap_priCon\")
+		3: bind_str = Statics.get_text(\"menu_option_controls_remap_secCon\")
+	panel.set_text(bind_str % \"A\", 1)
+	panel.can_focus = true
+	panel.focus_button(0)
+	layer.menu.selector_y_offset = 80.0 - panel.position.y
+
+
+func _defocus_panel() -> void:
+	panel_up = false
+	panel.can_focus = false
+	layer.can_focus = true
+	if layer.meta_info.size() >= 2:
+		layer.meta_info[1].grab_focus()
+		layer.meta_info.remove_at(1)
 "
 
 [node name="SetControls" type="Node2D"]
@@ -185,3 +230,10 @@ focus_neighbor_right = NodePath(".")
 text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true
+
+[node name="ContextPanel" parent="." instance=ExtResource("6_26pkv")]
+custom_minimum_size = Vector2(200, 0)
+offset_left = 100.0
+offset_top = 240.0
+offset_right = 300.0
+offset_bottom = 262.0

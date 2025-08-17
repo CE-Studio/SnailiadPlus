@@ -14,6 +14,7 @@ const BIND_BBCODE:String = "[ctrl]%s[/ctrl]"
 const FOCUS_FLASH_SPEED:float = 6.5
 
 signal bind_changed
+signal pressed(value:int)
 
 var active_buttons:int = 0
 var bind_str:String = ""
@@ -61,6 +62,9 @@ func _process(delta: float) -> void:
 			if SInput.check_input(SInput.Inputs.RIGHT, true):
 				sfx_focus.play()
 				focus_right()
+			if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+				parent_layer.meta_info.append(self)
+				pressed.emit(bind)
 		
 		elapsed += delta * FOCUS_FLASH_SPEED
 		for i in range(bind_icons.size()):
