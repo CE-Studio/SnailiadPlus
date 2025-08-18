@@ -13,6 +13,8 @@ script/source = "extends VBoxContainer
 
 
 var panel_up:bool = false
+var action_being_remapped:int = 0
+var bind_buttons:Array[BindSnailyButton] = []
 
 @onready var layer:MenuLayer = get_parent()
 @onready var panel:ContextPanel = $\"../ContextPanel\"
@@ -24,6 +26,11 @@ func _ready() -> void:
 	
 	panel.call_deferred(\"add_header\",
 		\"menu_option_controls_remap_header\", 2)
+	
+	for child in Statics.get_all_children(self):
+		if child is BindSnailyButton:
+			child.connect(\"pressed\", _on_button_pressed)
+			bind_buttons.append(child)
 
 
 func _process(delta: float) -> void:
@@ -37,22 +44,35 @@ func _process(delta: float) -> void:
 		layer.menu.selector_y_offset = 0
 
 
-# TODO receive bind button pressed signal and send it to _focus_panel
-# TODO read input events when panel up
+func _input(event: InputEvent) -> void:
+	if not panel_up or event is InputEventMouse:
+		return
+	
+	var bind_slot:int = layer.meta_info[0]
+	if ((bind_slot < 2 and event is InputEventKey)
+	or (bind_slot >= 2 and (event is InputEventJoypadButton or event is InputEventJoypadMotion))):
+		pass
+
+
+func _on_button_pressed(bind:int) -> void:
+	action_being_remapped = bind
+	_focus_panel(bind)
 
 
 func _focus_panel(bind:int) -> void:
 	layer.can_focus = false
+	layer.menu.read_inputs = false
 	panel_up = true
-	var bind_str:String = \"\"
+	var base_str:String = \"\"
 	match layer.meta_info[0]:
-		0: bind_str = Statics.get_text(\"menu_option_controls_remap_priKey\")
-		1: bind_str = Statics.get_text(\"menu_option_controls_remap_secKey\")
-		2: bind_str = Statics.get_text(\"menu_option_controls_remap_priCon\")
-		3: bind_str = Statics.get_text(\"menu_option_controls_remap_secCon\")
-	panel.set_text(bind_str % \"A\", 1)
+		0: base_str = Statics.get_text(\"menu_option_controls_remap_priKey\")
+		1: base_str = Statics.get_text(\"menu_option_controls_remap_secKey\")
+		2: base_str = Statics.get_text(\"menu_option_controls_remap_priCon\")
+		3: base_str = Statics.get_text(\"menu_option_controls_remap_secCon\")
+	var bind_str = Statics.get_text(\"menu_option_controls_\" + SInput.get_input_str(bind))
+	print(base_str % bind_str)
+	panel.set_text(base_str % bind_str, 1)
 	panel.can_focus = true
-	panel.focus_button(0)
 	layer.menu.selector_y_offset = 80.0 - panel.position.y
 
 
@@ -60,6 +80,7 @@ func _defocus_panel() -> void:
 	panel_up = false
 	panel.can_focus = false
 	layer.can_focus = true
+	layer.menu.set_deferred(\"read_inputs\", true)
 	if layer.meta_info.size() >= 2:
 		layer.meta_info[1].grab_focus()
 		layer.meta_info.remove_at(1)

@@ -139,12 +139,14 @@ func set_selected() -> void:
 	selected = true
 	sfx_select.play()
 	parent_layer.can_focus = false
+	parent_layer.menu.read_inputs = false
 
 
 func deselect() -> void:
 	selected = false
 	sfx_select.play()
 	parent_layer.can_focus = true
+	parent_layer.menu.set_deferred("read_inputs", true)
 
 
 func _on_left_mouse_entered() -> void:

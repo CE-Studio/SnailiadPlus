@@ -65,6 +65,7 @@ func _process(delta: float) -> void:
 			if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
 				parent_layer.meta_info.append(self)
 				pressed.emit(bind)
+				print("oop")
 		
 		elapsed += delta * FOCUS_FLASH_SPEED
 		for i in range(bind_icons.size()):

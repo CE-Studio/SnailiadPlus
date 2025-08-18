@@ -131,6 +131,7 @@ func _update_profile_buttons() -> void:
 
 func focus_panel() -> void:
 	layer.can_focus = false
+	layer.menu.read_inputs = false
 	panel_up = true
 	if layer_state == LayerState.COPY2:
 		var copy_str = Statics.get_text(\"menu_option_copyGame_popup\")
@@ -149,6 +150,7 @@ func defocus_panel() -> void:
 	panel_up = false
 	panel.can_focus = false
 	layer.can_focus = true
+	layer.menu.set_deferred(\"read_inputs\", true)
 	last_focus.grab_focus()
 
 

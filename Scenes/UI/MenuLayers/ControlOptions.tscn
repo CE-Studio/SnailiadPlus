@@ -62,6 +62,7 @@ func _on_panel_yes(_value) -> void:
 
 func _focus_panel() -> void:
 	layer.can_focus = false
+	layer.menu.read_inputs = false
 	panel_up = true
 	panel.can_focus = true
 	panel.focus_button(0)
@@ -72,6 +73,7 @@ func _defocus_panel() -> void:
 	panel_up = false
 	panel.can_focus = false
 	layer.can_focus = true
+	layer.menu.set_deferred(\"read_inputs\", true)
 	default_button.grab_focus()
 "
 

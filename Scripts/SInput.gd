@@ -121,8 +121,7 @@ func just_pressed(action:String) -> bool:
 
 
 func check_input(action:Inputs, just:bool) -> bool:
-	var this_action:String = Inputs.keys()[action]
-	this_action = this_action.to_camel_case()
+	var this_action:String = get_input_str(action)
 	if just:
 		return just_pressed(this_action)
 	return pressed(this_action)
@@ -175,6 +174,11 @@ func get_input_icon(event:InputEvent) -> String:
 			-1 if event.axis_value < 0 else 1
 		))
 	return "Unknown"
+
+
+func get_input_str(input:Inputs) -> String:
+	var str:String = Inputs.keys()[input]
+	return str.to_camel_case()
 
 
 func _check_icon_exists(key:String) -> String:
