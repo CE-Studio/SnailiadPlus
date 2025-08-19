@@ -250,10 +250,6 @@ static func get_item_percentage(profile:int = 0) -> float:
 
 
 static func save_general() -> void:
-	#var file := FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
-	#file.store_string(JSON.stringify(data_general, "\t", false))
-	#file.close()
-	#ProjectSettings.save_custom("override.cfg")
 	ProjectSettings.save_custom("user://general_settings.godot")
 
 

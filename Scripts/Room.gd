@@ -391,7 +391,7 @@ func _import_from_tiled():
 									tile_coords.x -= tilesheet_size.x
 									tile_coords.y += 1
 								var map_index := Vector2i(x, y)
-								print("Placing %s at %s" % [ tile_coords, map_index - tiled_corner ])
+								#print("Placing %s at %s" % [ tile_coords, map_index - tiled_corner ])
 								match target_layer:
 									Layers.SKY:
 										map_sky.set_cell(map_index - tiled_corner, source, tile_coords)

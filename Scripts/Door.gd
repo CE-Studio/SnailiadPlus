@@ -56,7 +56,7 @@ func _ready() -> void:
 
 func spawn() -> void:
 	#Temp
-	if lock_type != LockTypes.UNLOCKED:
+	if lock_type == LockTypes.LOCKED_BY_BOSS:
 		anim_prefix = "locked_"
 		is_locked = true
 	else:
