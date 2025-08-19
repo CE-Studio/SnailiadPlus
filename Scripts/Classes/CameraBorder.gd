@@ -15,7 +15,7 @@ func _ready() -> void:
 		point_origins.append(Vector2i(curve.get_point_position(i)))
 	while point_ratio_adjustments.size() < curve.point_count:
 		point_ratio_adjustments.append(Vector2i.ZERO)
-	var current_ratio = int(Statics.data_general["aspect_ratio"])
+	var current_ratio = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 	if current_ratio != 0:
 		replot_points(Statics.ASPECT_RATIO_OFFSETS[current_ratio])
 

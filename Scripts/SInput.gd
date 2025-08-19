@@ -151,7 +151,7 @@ func vector_move(raw:bool = false) -> Vector2:
 
 func vector_aim() -> Vector2:
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD").normalized()
-	if Statics.data_general["stick_aim_mode"] == 0:
+	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
 		if vector.x < -STICK_DEADZONE_AIM: vector.x = -1
 		elif vector.x > STICK_DEADZONE_AIM: vector.x = 1
 		else: vector.x = 0
@@ -166,17 +166,17 @@ func get_input_icon(event:InputEvent) -> String:
 	
 	if event is InputEventKey:
 		return get_key_icon(event.physical_keycode)
-	elif event is InputEventJoypadButton:
-		return get_button_icon(event.button_index)
 	elif event is InputEventJoypadMotion:
 		return get_axis_icon(Vector2i(
 			event.axis,
 			-1 if event.axis_value < 0 else 1
 		))
+	elif event is InputEventJoypadButton:
+		return get_button_icon(event.button_index)
 	return "Unknown"
 
 
-func get_input_str(input:Inputs) -> String:
+func get_input_str(input:Inputs) -> StringName:
 	var str:String = Inputs.keys()[input]
 	return str.to_camel_case()
 
@@ -194,7 +194,7 @@ func get_key_icon(key:int) -> String:
 func get_button_icon(button:int) -> String:
 	var key:String = ""
 	if button < CON_TYPE_GENERAL:
-		var con_type = Statics.data_general["controller_face_type"]
+		var con_type = ProjectSettings.get_setting("game/control/controller_type")
 		key = CON_MAPPINGS[con_type][button]
 	else:
 		key = CON_MAPPINGS[CON_TYPE_GENERAL_ARRAY][button - CON_TYPE_GENERAL]
@@ -215,7 +215,7 @@ func get_axis_icon(axis:Vector2i) -> String:
 
 
 func pull_action(input:Inputs) -> Array:
-	var action:Array = Statics.data_general["controls"][input].duplicate()
+	var action:Array = ProjectSettings.get_setting("game/control/controls")[input].duplicate()
 	for i in range(action.size()):
 		var event = action[i]
 		if event is String and event.contains("("):
@@ -224,7 +224,9 @@ func pull_action(input:Inputs) -> Array:
 
 
 func rebind(action:Inputs, new_event:Variant, slot:int) -> void:
-	var old_action:Array = Statics.data_general["controls"][action].duplicate()
+	var controls:Array = ProjectSettings.get_setting("game/control/controls")
+	var old_action:Array = controls[action].duplicate()
 	if slot < old_action.size() and slot >= 0:
 		old_action[slot] = new_event
-	Statics.data_general["controls"][action] = old_action.duplicate()
+	controls[action] = old_action.duplicate()
+	ProjectSettings.set_setting("game/control/controls", controls.duplicate())

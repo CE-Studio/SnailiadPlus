@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		timeout = TIMEOUTS[pointer] * BASE_TIMEOUT * (0.5 if hard_mode else 1.0)
 		var cam_center = UICore.instance.get_cam_center_pos()
 		var x_offset = 200 + 8
-		x_offset += ceili(Statics.ASPECT_RATIO_OFFSETS[Statics.data_general["aspect_ratio"]].x * 0.5)
+		x_offset += ceili(Statics.ASPECT_RATIO_OFFSETS[ProjectSettings.get_setting("display/window/size/aspect_ratio")].x * 0.5)
 		x_offset *= -1 if randf() < 0.5 else 1
 		if abs(GameCore.instance.player.position.x - (cam_center.x + x_offset)) < 75.0:
 			if hard_mode:

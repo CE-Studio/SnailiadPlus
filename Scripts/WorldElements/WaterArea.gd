@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func spawn_initial_bubbles() -> void:
-	var particle_setting = Statics.data_general["particle_state"]
+	var particle_setting = ProjectSettings.get_setting("game/world/particles")
 	if (particle_setting != Statics.ParticleOptions.ENVIRONMENTS
 	and particle_setting != Statics.ParticleOptions.FLASH
 	and particle_setting != Statics.ParticleOptions.ALL):
@@ -64,7 +64,7 @@ func _on_body_exit(body) -> void:
 
 
 func call_splash(pos:Vector2, normal:Vector2, make_bubbles:float = 0, home_box:CollisionShape2D = null) -> void:
-	var particle_setting = Statics.data_general["particle_state"]
+	var particle_setting = ProjectSettings.get_setting("game/world/particles")
 	if (particle_setting != Statics.ParticleOptions.ENVIRONMENTS
 	and particle_setting != Statics.ParticleOptions.ALL):
 		return

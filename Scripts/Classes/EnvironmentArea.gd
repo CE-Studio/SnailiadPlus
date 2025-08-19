@@ -27,11 +27,11 @@ func _physics_process(delta: float) -> void:
 
 
 func update_shader_visibility() -> void:
-	var is_visible = Statics.data_general["distort_shader_toggle"]
+	var is_visible = ProjectSettings.get_setting("game/visuals/distortion_shader")
 	for poly in polys:
 		poly.visible = is_visible
 		if is_visible:
-			var ratio_id = Statics.data_general["aspect_ratio"]
+			var ratio_id = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 			poly.material.set("shader_parameter/aspect_ratio", Statics.ASPECT_RATIOS[ratio_id])
 
 

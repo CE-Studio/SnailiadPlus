@@ -13,9 +13,17 @@ config_version=5
 config/name="Snailiad Plus"
 config/version="b0.4.0"
 run/main_scene="uid://dntc0s7wr1h1g"
+config/project_settings_override="user://general_settings.godot"
 config/features=PackedStringArray("4.4", "Double Precision", "Forward Plus")
 run/max_fps=60
 config/icon="res://Assets/Images/Icon.png"
+config/old_version="b0.0.0"
+
+[audio]
+
+volume/master=15
+volume/music=15
+volume/sound=15
 
 [autoload]
 
@@ -30,6 +38,7 @@ window/size/viewport_width=400
 window/size/viewport_height=240
 window/size/resizable=false
 mouse_cursor/custom_image="uid://btlcuqewcs61t"
+window/size/aspect_ratio=0
 
 [editor]
 
@@ -38,6 +47,32 @@ run/main_run_args="debug"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/gdLinter/plugin.cfg")
+
+[game]
+
+ui/minimap=2
+ui/keymap=false
+ui/in_game_time=false
+ui/fps_counter=false
+visuals/frame_limit=2
+visuals/screen_shake=2
+ui/secret_map_tiles=false
+visuals/palette_shader=false
+visuals/distortion_shader=true
+visuals/darkness=3
+ui/bottom_keys=2
+visuals/texture_pack="__DEFAULT__"
+visuals/sound_pack="__DEFAULT__"
+visuals/music_pack="__DEFAULT__"
+visuals/text_pack="__DEFAULT__"
+world/breakables=0
+world/particles=5
+control/toggle_shoot=false
+control/omni_stick_aim=false
+control/gravity_swap=0
+control/gravity_keep=0
+control/controls=[]
+control/controller_type=0
 
 [gui]
 

@@ -29,7 +29,7 @@ func _ready() -> void:
 	player.selected_weapon = Statics.current_profile["equipped_weapons"]
 	cam_layer.cam.set_layer_position(player.position)
 	cam_layer.update_weapon_icons()
-	cam_layer.configure_for_aspect_ratio(int(Statics.data_general["aspect_ratio"]))
+	cam_layer.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:

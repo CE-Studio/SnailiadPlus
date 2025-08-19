@@ -207,7 +207,7 @@ func update_cell_mask(center:Vector2i, extents:Vector2i = EDGE_BUFFER) -> void:
 			if x >= 0 and x < MAP_SIZE.x and y >= 0 and y < MAP_SIZE.y:
 				var cell = Statics.current_profile["map_tiles"][x + (y * MAP_SIZE.x)]
 				if (cell == CellTypes.EXPLORED or
-				(cell == CellTypes.SECRET_EXPLORED and Statics.data_general["secret_tile_toggle"])):
+				(cell == CellTypes.SECRET_EXPLORED and ProjectSettings.get_setting("game/ui/secret_map_tiles"))):
 					mask.set_pixel(x, y, Color.WHITE)
 				new_marker_cells.append(x + (y * MAP_SIZE.x))
 	mask_texture.update(mask)
@@ -246,7 +246,7 @@ func update_markers(target_cells:Array = []) -> void:
 			marker.visible = false
 			if target_cells.has(i):
 				if (tile == CellTypes.EXPLORED
-				or (Statics.data_general["secret_tile_toggle"] and tile == CellTypes.SECRET_EXPLORED)):
+				or (ProjectSettings.get_setting("game/ui/secret_map_tiles") and tile == CellTypes.SECRET_EXPLORED)):
 					marker.visible = true
 				
 			if marker.type == MarkerTypes.ITEM:

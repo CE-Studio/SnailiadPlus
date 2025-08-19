@@ -86,7 +86,7 @@ func _on_bullet_entered(_area:Area2D) -> void:
 			if not is_silent and bullet.ping_on_breakables:
 				Statics.play_sfx_disconnected(ping)
 			if icon_anim != "":
-				var show_option = int(Statics.data_general["breakable_state"])
+				var show_option = ProjectSettings.get_setting("game/world/breakables")
 				var can_show:bool = false
 				match show_option:
 					0: # Don't show

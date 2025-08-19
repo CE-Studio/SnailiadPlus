@@ -20,7 +20,7 @@ var panel_up:bool = false
 
 
 func _ready() -> void:
-	$\"ButtonStyle\".remote_set_option(Statics.data_general[\"controller_face_type\"])
+	$\"ButtonStyle\".remote_set_option(ProjectSettings.get_setting(\"game/control/controller_type\"))
 	panel.modulate.a = 0
 	panel.call_deferred(\"set_text\",
 		\"menu_option_controls_default_confirm\", 1)
@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 
 
 func on_face_type_cycled(value) -> void:
-	Statics.data_general[\"controller_face_type\"] = value
+	ProjectSettings.set_setting(\"game/control/controller_type\", value)
 
 
 func on_reset_defaults(value) -> void:
@@ -54,7 +54,7 @@ func _on_panel_no(_value) -> void:
 
 
 func _on_panel_yes(_value) -> void:
-	Statics.data_general[\"controls\"] = SInput.DEFAULTS.duplicate()
+	ProjectSettings.set_setting(\"game/control/controls\", SInput.DEFAULTS.duplicate())
 	layer.menu.save_general()
 	sfx_default.play()
 	_defocus_panel()

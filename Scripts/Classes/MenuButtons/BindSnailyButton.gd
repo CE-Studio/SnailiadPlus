@@ -13,13 +13,16 @@ const BIND_STR:String = "menu_option_controls_%s"
 const BIND_BBCODE:String = "[ctrl]%s[/ctrl]"
 const FOCUS_FLASH_SPEED:float = 6.5
 
-signal bind_changed
 signal pressed(value:int)
 
 var active_buttons:int = 0
 var bind_str:String = ""
 var focus_flash_color:Color = Color.WHITE
 var elapsed:float = 0.0
+var slots_moused_over:int = 0:
+	set(value):
+		slots_moused_over = value
+		mouse_over = slots_moused_over > 0
 
 @onready var text:SnailyText = $"PanelContainer/HBoxContainer/Label/MarginContainer/SnailyText"
 @onready var bind_frames:Array[PanelContainer] = [
@@ -46,7 +49,7 @@ func _ready() -> void:
 		text.set_snaily_text(bind_str)
 	else:
 		text.set_snaily_text(BIND_STR % bind_str)
-		_setup_bind_icons()
+		setup_bind_icons()
 		focus_flash_color = Statics.get_color(Vector2i(1, 8))
 
 
@@ -54,18 +57,19 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	if parent_layer.meta_info.size() > 0:
+	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus:
 		if focused:
-			if SInput.check_input(SInput.Inputs.LEFT, true):
-				sfx_focus.play()
-				focus_left()
-			if SInput.check_input(SInput.Inputs.RIGHT, true):
-				sfx_focus.play()
-				focus_right()
-			if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+			if (SInput.check_input(SInput.Inputs.UI_ACCEPT, true)
+			or (mouse_over and SInput.check_input(SInput.Inputs.UI_CLICK, true))):
 				parent_layer.meta_info.append(self)
 				pressed.emit(bind)
-				print("oop")
+			else:
+				if SInput.check_input(SInput.Inputs.LEFT, true):
+					sfx_focus.play()
+					focus_left()
+				if SInput.check_input(SInput.Inputs.RIGHT, true):
+					sfx_focus.play()
+					focus_right()
 		
 		elapsed += delta * FOCUS_FLASH_SPEED
 		for i in range(bind_icons.size()):
@@ -74,11 +78,12 @@ func _process(delta: float) -> void:
 				bind_icons[i].modulate = Color.WHITE.lerp(focus_flash_color, abs(sin(elapsed)))
 
 
-func _setup_bind_icons() -> void:
+func setup_bind_icons() -> void:
 	var events:Array = SInput.pull_action(bind)
 	var event_ptr:int = 0
 	var event_slots:int = SInput.INPUT_SLOTS[bind]
 	
+	active_buttons = 0
 	for i in [ 8, 4, 2, 1 ]:
 		if event_slots & i > 0:
 			active_buttons += i
@@ -87,7 +92,7 @@ func _setup_bind_icons() -> void:
 			if i > 2:
 				event_str = SInput.get_key_icon(event)
 			else:
-				if event is Vector2i:
+				if event is Vector2 or event is Vector2i:
 					event_str = SInput.get_axis_icon(event)
 				else:
 					event_str = SInput.get_button_icon(event)
@@ -137,3 +142,47 @@ func _on_exit_focus() -> void:
 	
 	for icon in bind_icons:
 		icon.modulate = Color.WHITE
+
+
+func _on_mouse_entered_0() -> void:
+	if check_slot_active(0):
+		parent_layer.meta_info[0] = 0
+		if focused:
+			sfx_focus.play()
+		else:
+			grab_focus()
+	slots_moused_over += 1
+
+
+func _on_mouse_entered_1() -> void:
+	if check_slot_active(1):
+		parent_layer.meta_info[0] = 1
+		if focused:
+			sfx_focus.play()
+		else:
+			grab_focus()
+	slots_moused_over += 1
+
+
+func _on_mouse_entered_2() -> void:
+	if check_slot_active(2):
+		parent_layer.meta_info[0] = 2
+		if focused:
+			sfx_focus.play()
+		else:
+			grab_focus()
+	slots_moused_over += 1
+
+
+func _on_mouse_entered_3() -> void:
+	if check_slot_active(3):
+		parent_layer.meta_info[0] = 3
+		if focused:
+			sfx_focus.play()
+		else:
+			grab_focus()
+	slots_moused_over += 1
+
+
+func _on_mouse_exit_slot() -> void:
+	slots_moused_over -= 1
