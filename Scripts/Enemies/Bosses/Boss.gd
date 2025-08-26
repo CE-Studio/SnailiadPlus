@@ -6,6 +6,7 @@ extends Enemy
 @export var battle_music:MusicManager.Loops = MusicManager.Loops.Boss1
 @export var phase_changes:Array[float] = [ 0 ]
 
+var intro_delay:bool = true
 var phase:int = 0
 var current_anim:String = ""
 #endregion
