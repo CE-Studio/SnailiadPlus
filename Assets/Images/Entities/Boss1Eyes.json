@@ -1,0 +1,127 @@
+{
+	"tiles": [2, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"p0_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p0_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_shoot",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p0_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p0_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p1_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p1_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_shoot",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p1_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p1_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p2_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p2_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_shoot",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p2_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"p2_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		}
+	}
+}

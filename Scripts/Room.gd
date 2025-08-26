@@ -205,6 +205,11 @@ func _spawn_entities_from_layer() -> void:
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 			
+			Vector2i(7, 1): # Shellbreaker
+				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
+				shellbreaker.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(shellbreaker)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
@@ -284,7 +289,7 @@ func _spawn_entities_from_layer() -> void:
 				layer_ground.add_child(chirpy)
 			
 			Vector2i(8, 26): # Batty bat
-				var bat:BattyBat = load("res://Scenes/Entities/Enemies/BattyBat.tscn").instantiate()
+				var bat:BattyBat = load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
 			

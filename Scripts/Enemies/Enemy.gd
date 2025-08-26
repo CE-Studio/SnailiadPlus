@@ -7,6 +7,7 @@ extends CharacterBody2D
 const DAMAGE_TIMEOUT:float = 0.025
 
 @export var max_health:int
+@export var max_health_hard:int
 @export var attack:int
 @export var defense:int
 @export var weaknesses:Array[int] = []  # Enemies take double damage from bullet types in this list
@@ -117,9 +118,11 @@ enum EnemyTypes {
 
 func spawn(active:bool = true) -> void:
 	origin = position
-	health = max_health
 	ai_active = active
 	hard_mode = Statics.current_profile["difficulty"] == 2
+	if hard_mode and max_health_hard != 0:
+		max_health = max_health_hard
+	health = max_health
 	
 	if hitbox:
 		hitbox.connect("area_entered", _on_bullet_entered)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://capqop150dmrx"]
+[gd_scene load_steps=11 format=3 uid="uid://capqop150dmrx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_blq8n"]
 [ext_resource type="Texture2D" uid="uid://c21s6w3gptrlt" path="res://Assets/Images/UI/BestiaryBackground.png" id="2_jdu1y"]
 [ext_resource type="Texture2D" uid="uid://dcnlyrwm2srdm" path="res://Assets/Images/UI/BestiarySelector.png" id="3_gx5uf"]
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="3_wfk3g"]
 [ext_resource type="Texture2D" uid="uid://cqv3m8uc5txwd" path="res://Assets/Images/UI/ScrollPanelBare.png" id="4_gx5uf"]
+[ext_resource type="Texture2D" uid="uid://bvquc2c5jmqyb" path="res://Assets/Images/UI/BestiaryEntityMask.png" id="4_obml4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_obml4"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="6_wfk3g"]
 
@@ -17,6 +18,7 @@ script/source = "extends Sprite2D
 const NAME_STR:String = \"entity_%s_name\"
 const DESC_STR:String = \"entity_%s_desc\"
 const ENEMY_PATH:String = \"res://Scenes/Entities/Enemies/%s.tscn\"
+const BOSS_PATH:String = \"res://Scenes/Entities/Enemies/Bosses/%s.tscn\"
 const FOCUS_COLOR_SPEED:float = 4.5
 const SELECTOR_WIGGLE_SPEED:float = 3.8
 const SELECTOR_EASE_RATE:float = 20.0
@@ -162,7 +164,12 @@ func spawn_display_entity(entity:String) -> void:
 
 
 func spawn_entity(entity:String) -> Enemy:
-	var new_enemy:Enemy = load(ENEMY_PATH % entity.to_pascal_case()).instantiate()
+	entity = entity.to_pascal_case()
+	var new_enemy:Enemy = null
+	if FileAccess.file_exists(BOSS_PATH % entity):
+		new_enemy = load(BOSS_PATH % entity).instantiate()
+	else:
+		new_enemy = load(ENEMY_PATH % entity).instantiate()
 	new_enemy.display_mode = true
 	display_enemies.append(new_enemy)
 	return new_enemy
@@ -189,8 +196,10 @@ script = SubResource("GDScript_jdu1y")
 position = Vector2(-168, -96)
 texture = ExtResource("3_gx5uf")
 
-[node name="EntityOrigin" type="Marker2D" parent="Sprite2D"]
+[node name="EntityOrigin" type="Sprite2D" parent="Sprite2D"]
+clip_children = 1
 position = Vector2(102, -47)
+texture = ExtResource("4_obml4")
 
 [node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D"]
 offset_left = -160.0
