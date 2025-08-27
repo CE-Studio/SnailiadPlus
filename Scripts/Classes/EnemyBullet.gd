@@ -46,6 +46,7 @@ func _spawn(dir:Vector2, speed:float) -> void:
 	sfx.play()
 	area.connect("area_entered", _on_pbullet_collision)
 	area.connect("body_entered", _on_body_entered)
+	area.connect("body_exited", _on_body_exited)
 
 
 func _process(delta: float) -> void:
@@ -73,7 +74,7 @@ func _on_body_entered(_body) -> void:
 
 
 func _on_body_exited(_body) -> void:
-	if _body.get_parent is Player:
+	if _body.get_parent() is Player:
 		intersecting_player = false
 
 

@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0moh826bija1"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4eer3"]
+[ext_resource type="Texture2D" uid="uid://kb0jat8ql671" path="res://Assets/Images/UI/BossHealthBar.png" id="2_luj16"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_krcuj"]
+
+[node name="BossHealthBar" type="Node2D"]
+
+[node name="Frame" type="Sprite2D" parent="."]
+script = ExtResource("1_4eer3")
+texture_path = "res://Assets/Images/UI/BossHealthBar.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Frame"]
+texture = ExtResource("2_luj16")
+vframes = 4
+script = ExtResource("3_krcuj")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="BarDamagedMask" type="Sprite2D" parent="."]
+clip_children = 1
+script = ExtResource("1_4eer3")
+texture_path = "res://Assets/Images/UI/BossHealthBar.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BarDamaged" type="Sprite2D" parent="BarDamagedMask"]
+script = ExtResource("1_4eer3")
+texture_path = "res://Assets/Images/UI/BossHealthBar.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BarMainMask" type="Sprite2D" parent="."]
+clip_children = 1
+script = ExtResource("1_4eer3")
+texture_path = "res://Assets/Images/UI/BossHealthBar.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BarMain" type="Sprite2D" parent="BarMainMask"]
+script = ExtResource("1_4eer3")
+texture_path = "res://Assets/Images/UI/BossHealthBar.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="BarMainMask/BarMain"]
+texture = ExtResource("2_luj16")
+vframes = 4
+frame = 1
+script = ExtResource("3_krcuj")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -19,6 +19,8 @@ area_id = 1
 center_parallax_maps = true
 minimap_offset = Vector2i(15, 0)
 minimap_autofill = Array[Vector2i]([Vector2i(15, 0), Vector2i(15, 1), Vector2i(16, 0), Vector2i(16, 1)])
+song_change = 3
+play_song_on_enter = false
 tiled_corner = Vector2i(391, 1)
 tiled_range = Vector2i(51, 31)
 

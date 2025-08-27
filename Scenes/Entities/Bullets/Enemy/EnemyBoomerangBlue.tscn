@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_6t3vn"]
 [ext_resource type="Texture2D" uid="uid://dky2jnbuufqo2" path="res://Assets/Images/Bullets/Enemy/EnemyBoomerangBlue.png" id="3_6t3vn"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_y5cpl"]
-[ext_resource type="AudioStream" uid="uid://b8hwo683tykgl" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyDonut.ogg" id="5_vmjbs"]
+[ext_resource type="AudioStream" uid="uid://ocux4qvqar8m" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyBoomerang.ogg" id="5_1cqul"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(24, 24)
@@ -38,5 +38,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="AudioGroup" type="Node" parent="."]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
-stream = ExtResource("5_vmjbs")
+stream = ExtResource("5_1cqul")
 bus = &"Sfx"
