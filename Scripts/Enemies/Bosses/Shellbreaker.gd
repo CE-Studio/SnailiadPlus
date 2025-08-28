@@ -59,8 +59,10 @@ func _ready() -> void:
 		hand_thetas.append(0.0)
 		hand_theta_speeds.append(2.5 + i * 0.75)
 		hand_group.add_child(new_hand)
+	
 	if not display_mode and not Statics.is_in_boss_rush:
 		GameCore.instance.music_manager.play_song(battle_music)
+	health_bar = UICore.instance.show_boss_bar(self)
 
 
 func _physics_process(delta: float) -> void:

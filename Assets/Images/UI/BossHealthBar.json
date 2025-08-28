@@ -30,7 +30,7 @@
 			"autoplay_next": "frame_idle",
 			"frames": []
 		},
-		"bar_normal_idle": {
+		"bar_main_idle": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
@@ -39,23 +39,29 @@
 				[0, 1, false, false]
 			]
 		},
-		"bar_normal_damage": {
+		"bar_main_damage": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
-			"autoplay_next": "bar_normal_idle",
+			"autoplay_next": "bar_main_idle",
 			"frames": []
 		},
-		"bar_normal_filled": {
-			"fps": 1,
+		"bar_main_filled": {
+			"fps": 20,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
-			"autoplay_next": "bar_normal_idle",
-			"frames": []
+			"autoplay_next": "bar_main_idle",
+			"frames": [
+				[0, 2, false, false],
+				[0, 1, false, false],
+				[0, 2, false, false],
+				[0, 1, false, false],
+				[0, 2, false, false]
+			]
 		},
-		"bar_normal_mask": {
+		"bar_main_mask": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,

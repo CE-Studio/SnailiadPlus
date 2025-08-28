@@ -8,8 +8,10 @@ var weapon_icon_states:Array = [ ]
 
 var flashy_popup_scene:PackedScene
 var color_popup_scene:PackedScene
+var boss_bar:PackedScene
 
 var active_area_label:Node
+var active_boss_bar:BossHealthBar
 
 static var instance:UICore
 
@@ -23,6 +25,11 @@ static var instance:UICore
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:Node2D = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
+
+@onready var tl:Node2D = $"TL"
+@onready var tr:Node2D = $"TR"
+@onready var bl:Node2D = $"BL"
+@onready var br:Node2D = $"BR"
 #endregion
 
 
@@ -45,6 +52,7 @@ func instantiate() -> void:
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
+	boss_bar = preload("res://Scenes/UI/BossHealthBar.tscn")
 
 
 func _process(delta: float) -> void:
@@ -66,10 +74,10 @@ func _process(delta: float) -> void:
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
 	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
-	$"TL".position = -offset
-	$"TR".position = Vector2(400 + offset.x, -offset.y)
-	$"BL".position = Vector2(-offset.x, 240 + offset.y)
-	$"BR".position = Vector2(400 + offset.x, 240 + offset.y)
+	tl.position = -offset
+	tr.position = Vector2(400 + offset.x, -offset.y)
+	bl.position = Vector2(-offset.x, 240 + offset.y)
+	br.position = Vector2(400 + offset.x, 240 + offset.y)
 	set_border_anim(ratio_id)
 
 
@@ -171,9 +179,7 @@ func show_item_collection_text(item_label:String) -> void:
 
 
 func show_area_text(area_id:int) -> void:
-	if active_area_label != null:
-		active_area_label.queue_free()
-	
+	clear_area_text()
 	var area_label = color_popup_scene.instantiate()
 	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE
@@ -197,3 +203,23 @@ func show_area_text(area_id:int) -> void:
 			area_label.add_child(border)
 			border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
 			border.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
+
+
+func clear_area_text() -> void:
+	if active_area_label != null:
+		active_area_label.queue_free()
+
+
+func show_boss_bar(boss:Boss) -> BossHealthBar:
+	clear_area_text()
+	clear_boss_bar()
+	active_boss_bar = boss_bar.instantiate()
+	popup_layer.add_child(active_boss_bar)
+	active_boss_bar.position = Vector2(200, tl.position.y)
+	active_boss_bar.boss = boss
+	return active_boss_bar
+
+
+func clear_boss_bar() -> void:
+	if active_boss_bar != null:
+		active_boss_bar.queue_free()
