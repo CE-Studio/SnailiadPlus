@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0moh826bija1"]
+[gd_scene load_steps=11 format=3 uid="uid://d0moh826bija1"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4eer3"]
 [ext_resource type="Script" uid="uid://bcbsgnuirgluw" path="res://Scripts/UI/BossHealthBar.gd" id="1_krcuj"]
@@ -6,212 +6,6 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_krcuj"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_g7p6m"]
 [ext_resource type="AudioStream" uid="uid://dgxsaawqmxanw" path="res://Assets/Sounds/Sfx/BossHpBleep.ogg" id="6_lknyw"]
-
-[sub_resource type="Animation" id="Animation_lknyw"]
-resource_name = "Spawn"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Frame:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat64Array(0, 0.8),
-"transitions": PackedFloat64Array(0.4, 1),
-"update": 0,
-"values": [Vector2(0, -8), Vector2(0, 8)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BossName/HBox:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat64Array(0, 2, 2.1, 2.5),
-"transitions": PackedFloat64Array(1, 1, 4, 1),
-"update": 0,
-"values": [Vector2(-200, 40), Vector2(-200, 40), Vector2(-200, 44), Vector2(-200, 8)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("BossName/HBox:modulate")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat64Array(0, 0.25),
-"transitions": PackedFloat64Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat64Array(1, 1.03333, 1.06667, 1.1, 1.13333, 1.16667, 1.2, 1.23333, 1.26667, 1.3, 1.33333, 1.36667, 1.4, 1.43333, 1.46667, 1.5, 1.53333, 1.56667, 1.6, 1.63333, 1.66667, 1.7, 1.73333, 1.76667, 1.8, 1.83333, 1.86667, 1.9, 1.93333, 1.96667, 2, 2.03333, 2.06667, 2.1, 2.13333, 2.16667, 2.2, 2.23333, 2.26667, 2.3, 2.33333, 2.36667, 2.4, 2.43333, 2.46667, 2.5),
-"transitions": PackedFloat64Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"values": [{
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}, {
-"args": [],
-"method": &"play_beep"
-}]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat64Array(1, 2.5),
-"transitions": PackedFloat64Array(1, 1),
-"values": [{
-"args": [],
-"method": &"_begin_intro_fill"
-}, {
-"args": [],
-"method": &"_end_intro_fill"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_gahxl"]
 length = 0.001
@@ -251,9 +45,324 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Defeated:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat64Array(0),
+"transitions": PackedFloat64Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Defeated:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat64Array(0),
+"transitions": PackedFloat64Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat64Array(0),
+"transitions": PackedFloat64Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lknyw"]
+resource_name = "Spawn"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat64Array(0, 0.8),
+"transitions": PackedFloat64Array(0.4, 1),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, 8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BossName/HBox:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat64Array(0, 1.6, 1.9, 2.5),
+"transitions": PackedFloat64Array(1, 1, 4, 1),
+"update": 0,
+"values": [Vector2(-200, 100), Vector2(-200, 100), Vector2(-200, 108), Vector2(-200, 8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BossName/HBox:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat64Array(0, 0.25),
+"transitions": PackedFloat64Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat64Array(1, 1.03333, 1.06667, 1.1, 1.13333, 1.16667, 1.2, 1.23333, 1.26667, 1.3, 1.33333, 1.36667, 1.4, 1.43333, 1.46667, 1.5, 1.53333, 1.56667, 1.6, 1.63333, 1.66667, 1.7, 1.73333, 1.76667, 1.8, 1.83333, 1.86667, 1.9, 1.93333, 1.96667, 2, 2.03333, 2.06667, 2.1, 2.13333, 2.16667, 2.2, 2.23333, 2.26667, 2.3, 2.33333, 2.36667, 2.4, 2.43333, 2.46667, 2.5, 2.9),
+"transitions": PackedFloat64Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"_enable_boss"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat64Array(1, 2.5),
+"transitions": PackedFloat64Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_begin_intro_fill"
+}, {
+"args": [],
+"method": &"_end_intro_fill"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0ogdg"]
+resource_name = "Defeated"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BossName/HBox:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat64Array(0, 1.8),
+"transitions": PackedFloat64Array(1, 1),
+"update": 0,
+"values": [Vector2(-200, 8), Vector2(-200, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Defeated:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat64Array(0, 1.7),
+"transitions": PackedFloat64Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Defeated:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat64Array(1.7, 1.73333, 1.76667, 1.8),
+"transitions": PackedFloat64Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(5, 5), Vector2(4, 4), Vector2(3, 3), Vector2(2, 2)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat64Array(1.8, 4),
+"transitions": PackedFloat64Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_toggle_outro_shake"
+}, {
+"args": [],
+"method": &"_despawn"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat64Array(3.5, 4),
+"transitions": PackedFloat64Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ogdg"]
 _data = {
+&"Defeated": SubResource("Animation_0ogdg"),
 &"RESET": SubResource("Animation_gahxl"),
 &"Spawn": SubResource("Animation_lknyw")
 }
@@ -322,20 +431,24 @@ layout_mode = 2
 text = "Shellbreaker"
 border_scale = 1
 
-[node name="Defeated" type="HBoxContainer" parent="."]
+[node name="Defeated" type="Node2D" parent="."]
 visible = false
+position = Vector2(0, 118)
+
+[node name="HBox" type="HBoxContainer" parent="Defeated"]
 custom_minimum_size = Vector2(400, 0)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -200.0
-offset_top = 24.0
+offset_top = -11.0
 offset_right = 200.0
-offset_bottom = 64.0
+offset_bottom = 29.0
 grow_horizontal = 2
+pivot_offset = Vector2(200, 0)
 alignment = 1
 
-[node name="SnailyText" parent="Defeated" instance=ExtResource("5_g7p6m")]
+[node name="SnailyText" parent="Defeated/HBox" instance=ExtResource("5_g7p6m")]
 custom_minimum_size = Vector2(104, 0)
 layout_mode = 2
 text = "Defeated!!"

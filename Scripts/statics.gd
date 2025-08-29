@@ -293,9 +293,11 @@ static func has_unlock(unlock:Unlocks) -> bool:
 
 
 static func add_achievement(id:int) -> void:
+	if check_achievement(id):
+		return
 	while id >= len(data_records["achievements"]):
 		data_records["achievements"].append(false)
-	data_records["achievements"] = true
+	data_records["achievements"][id] = true
 
 
 static func check_achievement(id:int) -> bool:

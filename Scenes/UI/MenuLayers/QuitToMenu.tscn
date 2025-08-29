@@ -1,31 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dda3jgnbeg4jd"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_ghgvq"]
+[ext_resource type="Script" uid="uid://d2am8osmsm34i" path="res://Scripts/UI/MenuLayers/QuitToMenu.gd" id="2_5q3mp"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_h0fbv"]
-
-[sub_resource type="GDScript" id="GDScript_ghgvq"]
-resource_name = "QuitToMenu"
-script/source = "extends VBoxContainer
-
-
-@onready var layer:MenuLayer = get_parent()
-
-
-func _on_quit_save(_value) -> void:
-	layer.menu.save_profile(Statics.current_profile_id)
-	_on_quit_no_save(_value)
-
-
-func _on_quit_no_save(_value) -> void:
-	layer.can_focus = false
-	layer.menu.read_inputs = false
-	layer.menu.color_cover.set_new_fade(Color(0.0, 0.0, 0.0, 0.0), Color.BLACK, 1.0)
-	GameCore.instance.music_manager.set_fade(0.0)
-	$\"Timer\".start()
-
-func _on_timer_timeout() -> void:
-	get_tree().change_scene_to_file(\"res://Scenes/MenuScene.tscn\")
-"
 
 [node name="QuitToMenu" type="Node2D"]
 script = ExtResource("1_ghgvq")
@@ -36,7 +13,7 @@ offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
-script = SubResource("GDScript_ghgvq")
+script = ExtResource("2_5q3mp")
 
 [node name="Header" parent="MainVBox" instance=ExtResource("2_h0fbv")]
 self_modulate = Color(1, 1, 1, 0)

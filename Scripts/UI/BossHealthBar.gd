@@ -11,11 +11,13 @@ const SHAKE_VARIANCE:float = 6.0
 const INTRO_FILL_TIME:float = 1.5
 const NAME_SHAKE_RADIUS:float = 4.0
 const NAME_SHAKE_TIME:float = 0.25
+const OUTRO_SHAKE:float = 2.0
 
 var boss:Boss = null
 var damage_update_timeout:float = 0.0
 var intro_fill:float = 0.0
 var name_shake_time:float = 0.0
+var outro_shake:bool = false
 
 @onready var frame:JsonSprite2D = $"Frame"
 @onready var main:JsonSprite2D = $"Frame/BarMainMask/BarMain"
@@ -24,7 +26,10 @@ var name_shake_time:float = 0.0
 @onready var damaged_mask:JsonSprite2D = $"Frame/BarDamagedMask"
 @onready var boss_name:SnailyText = $"BossName/HBox/SnailyText"
 @onready var boss_name_container:Node2D = $"BossName"
+@onready var defeated:SnailyText = $"Defeated/HBox/SnailyText"
+@onready var defeated_container:Node2D = $"Defeated"
 @onready var sfx_beep:AudioStreamPlayer = $"AudioGroup/Beep"
+@onready var anim:AnimationPlayer = $"AnimationPlayer"
 #endregion
 
 
@@ -36,6 +41,14 @@ func _ready() -> void:
 	damaged_mask.action = "bar_damaged_mask"
 	_update_main(_get_bar_pos_from_ratio(0))
 	_update_damaged(_get_bar_pos_from_ratio(0))
+
+
+func instance(_boss:Boss) -> void:
+	boss = _boss
+	var _name:String = Enemy.EnemyTypes.keys()[_boss.my_type]
+	_name = _name.to_pascal_case()
+	boss_name.set_snaily_text("boss_%s" % _name)
+	defeated.set_snaily_text("boss_defeated")
 
 
 func _process(delta: float) -> void:
@@ -59,8 +72,16 @@ func _process(delta: float) -> void:
 		name_shake_time -= delta
 		if name_shake_time <= 0.0:
 			boss_name_container.position = Vector2.ZERO
+	if outro_shake:
+		boss_name_container.position = Vector2(
+			randf_range(-OUTRO_SHAKE, OUTRO_SHAKE),
+			randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
+		)
+		if frame.meta["programmatic_shake"] == true:
+			frame.position.x += randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
 
 
+#region AnimationPlayer functions
 func _begin_intro_fill() -> void:
 	intro_fill = INTRO_FILL_TIME
 
@@ -71,6 +92,26 @@ func _end_intro_fill() -> void:
 	_update_main(0)
 	_update_damaged(0)
 	main.action = "bar_main_filled"
+
+
+func _enable_boss() -> void:
+	if boss:
+		boss.intro_delay = false
+
+
+func _toggle_outro_shake() -> void:
+	outro_shake = not outro_shake
+	if outro_shake:
+		_update_main(_get_bar_pos_from_ratio(0))
+		anim.play("Defeated")
+	else:
+		boss_name_container.position = Vector2.ZERO
+
+
+func _despawn() -> void:
+	UICore.instance.boss_bar = null
+	queue_free()
+#endregion
 
 
 func update() -> void:

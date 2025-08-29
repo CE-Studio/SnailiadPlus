@@ -60,9 +60,10 @@ func _ready() -> void:
 		hand_theta_speeds.append(2.5 + i * 0.75)
 		hand_group.add_child(new_hand)
 	
-	if not display_mode and not Statics.is_in_boss_rush:
-		GameCore.instance.music_manager.play_song(battle_music)
-	health_bar = UICore.instance.show_boss_bar(self)
+	if not display_mode:
+		if not Statics.is_in_boss_rush:
+			GameCore.instance.music_manager.play_song(battle_music)
+		health_bar = UICore.instance.show_boss_bar(self)
 
 
 func _physics_process(delta: float) -> void:
@@ -73,8 +74,6 @@ func _physics_process(delta: float) -> void:
 	elapsed += delta
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
-	if elapsed > 2.9:
-		intro_delay = false
 	
 	if display_mode:
 		for i in hands.size():
@@ -160,3 +159,10 @@ func get_aim_dir() -> float:
 		position.y - GameCore.instance.player.position.y,
 		position.x - GameCore.instance.player.position.x
 	)
+
+
+func kill() -> void:
+	super()
+	UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SHELLBREAKER)
+	if health_bar:
+		health_bar._toggle_outro_shake()

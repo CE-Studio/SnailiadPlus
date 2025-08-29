@@ -1,22 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://8bnhgx7rwmtx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_obrtw"]
+[ext_resource type="Script" uid="uid://gd3xw6sllvs8" path="res://Scripts/UI/MenuLayers/Museum.gd" id="2_e0tbj"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_v7ejv"]
-
-[sub_resource type="GDScript" id="GDScript_obrtw"]
-resource_name = "Museum"
-script/source = "extends VBoxContainer
-
-
-func _ready() -> void:
-	if not Statics.has_unlock(Statics.Unlocks.BOSS_RUSH):
-		$\"Times\".quick_load_layer = \"\"
-		$\"Times\".set_text(\"-- ??? --\")
-		$\"Gallery\".quick_load_layer = \"\"
-		$\"Gallery\".set_text(\"-- ??? --\")
-		$\"SoundTest\".quick_load_layer = \"\"
-		$\"SoundTest\".set_text(\"-- ??? --\")
-"
 
 [node name="Museum" type="Node2D"]
 script = ExtResource("1_obrtw")
@@ -27,7 +13,7 @@ offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
-script = SubResource("GDScript_obrtw")
+script = ExtResource("2_e0tbj")
 
 [node name="Times" parent="MainVBox" instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
