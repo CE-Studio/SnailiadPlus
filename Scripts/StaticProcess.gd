@@ -27,8 +27,6 @@ func _ready() -> void:
 	Statics.data_records = _load_data_dict("Records", template_records)
 	
 	# If control array is empty, set default controls
-	#if Statics.data_general["controls"].size() == 0:
-	#	Statics.data_general["controls"] = SInput.DEFAULTS.duplicate()
 	if ProjectSettings.get_setting("game/control/controls").size() == 0:
 		ProjectSettings.set_setting("game/control/controls", SInput.DEFAULTS.duplicate())
 	

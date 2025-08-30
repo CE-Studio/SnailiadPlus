@@ -18,6 +18,7 @@ var damage_update_timeout:float = 0.0
 var intro_fill:float = 0.0
 var name_shake_time:float = 0.0
 var outro_shake:bool = false
+var defeated_origin:Vector2 = Vector2.ZERO
 
 @onready var frame:JsonSprite2D = $"Frame"
 @onready var main:JsonSprite2D = $"Frame/BarMainMask/BarMain"
@@ -29,6 +30,7 @@ var outro_shake:bool = false
 @onready var defeated:SnailyText = $"Defeated/HBox/SnailyText"
 @onready var defeated_container:Node2D = $"Defeated"
 @onready var sfx_beep:AudioStreamPlayer = $"AudioGroup/Beep"
+@onready var sfx_full:AudioStreamPlayer = $"AudioGroup/Full"
 @onready var anim:AnimationPlayer = $"AnimationPlayer"
 #endregion
 
@@ -41,6 +43,7 @@ func _ready() -> void:
 	damaged_mask.action = "bar_damaged_mask"
 	_update_main(_get_bar_pos_from_ratio(0))
 	_update_damaged(_get_bar_pos_from_ratio(0))
+	defeated_origin = defeated_container.position
 
 
 func instance(_boss:Boss) -> void:
@@ -73,10 +76,12 @@ func _process(delta: float) -> void:
 		if name_shake_time <= 0.0:
 			boss_name_container.position = Vector2.ZERO
 	if outro_shake:
-		boss_name_container.position = Vector2(
+		var container_shake = Vector2(
 			randf_range(-OUTRO_SHAKE, OUTRO_SHAKE),
 			randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
 		)
+		boss_name_container.position = container_shake
+		defeated_container.position = container_shake + defeated_origin
 		if frame.meta["programmatic_shake"] == true:
 			frame.position.x += randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
 
@@ -92,6 +97,7 @@ func _end_intro_fill() -> void:
 	_update_main(0)
 	_update_damaged(0)
 	main.action = "bar_main_filled"
+	sfx_full.play()
 
 
 func _enable_boss() -> void:
@@ -106,10 +112,11 @@ func _toggle_outro_shake() -> void:
 		anim.play("Defeated")
 	else:
 		boss_name_container.position = Vector2.ZERO
+		defeated_container.position = defeated_origin
 
 
 func _despawn() -> void:
-	UICore.instance.boss_bar = null
+	UICore.instance.active_boss_bar = null
 	queue_free()
 #endregion
 

@@ -15,6 +15,7 @@ const PATTERN_COUNT:int = 4
 const HAND_RADIUS_MIN:float = 50.0
 const HAND_RADIUS_BASE:float = 40.0
 const HAND_RADIUS_MOD:float = 90.0
+const BLINK_TIMEOUT_MAX:float = 3.0
 
 var hands:Array[Enemy] = []
 var hand_thetas:Array[float] = []
@@ -29,6 +30,7 @@ var shot_timeout:float = 0.0
 var shot_pattern_timeout:float = 0.0
 var shot_count:int = 0
 var is_firing:bool = false
+var blink_timeout:float = 0.0
 
 @onready var eyes:JsonSprite2D = $"Eyes"
 @onready var hand:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/ShellbreakerHand.tscn")
@@ -59,11 +61,15 @@ func _ready() -> void:
 		hand_thetas.append(0.0)
 		hand_theta_speeds.append(2.5 + i * 0.75)
 		hand_group.add_child(new_hand)
+	blink_timeout = randf() * BLINK_TIMEOUT_MAX
 	
 	if not display_mode:
 		if not Statics.is_in_boss_rush:
 			GameCore.instance.music_manager.play_song(battle_music)
 		health_bar = UICore.instance.show_boss_bar(self)
+	
+	nodes_to_wiggle.append(sprite)
+	nodes_to_wiggle.append(eyes)
 
 
 func _physics_process(delta: float) -> void:
@@ -74,6 +80,8 @@ func _physics_process(delta: float) -> void:
 	elapsed += delta
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
+	if not is_firing:
+		blink_timeout -= delta
 	
 	if display_mode:
 		for i in hands.size():
@@ -106,6 +114,10 @@ func _physics_process(delta: float) -> void:
 			cos(hand_thetas[i])
 		) * hand_radius
 		hands[i].invulnerable = hand_radius_target == 0.0
+	
+	if blink_timeout <= 0.0:
+		blink_timeout = randf() * BLINK_TIMEOUT_MAX
+		play_phase_anim("blink")
 
 
 func try_shoot() -> void:
@@ -144,8 +156,9 @@ func shoot(angle:float) -> void:
 
 
 func play_phase_anim(anim_name:String = "") -> String:
+	var eyes_anim_name:String = "eyes_" + anim_name
 	anim_name = super.play_phase_anim(anim_name)
-	eyes.action = anim_name
+	eyes.action = get_phase_anim(eyes_anim_name)
 	return anim_name
 
 
@@ -162,7 +175,14 @@ func get_aim_dir() -> float:
 
 
 func kill() -> void:
+	if not in_death_anim:
+		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SHELLBREAKER)
+		if health_bar:
+			health_bar._toggle_outro_shake()
+		sprite.action = "defeat"
+		eyes.action = "eyes_defeat"
+		for _hand in hands:
+			_hand.kill()
+		hands.clear()
+		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position)
 	super()
-	UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SHELLBREAKER)
-	if health_bar:
-		health_bar._toggle_outro_shake()

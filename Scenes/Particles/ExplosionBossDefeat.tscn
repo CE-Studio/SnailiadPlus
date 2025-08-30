@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://q64glrswau4a"]
+
+[ext_resource type="Script" uid="uid://bxhlu0uaj5fhk" path="res://Scripts/Particles/ExplosionBossDefeat.gd" id="1_pjae3"]
+[ext_resource type="AudioStream" uid="uid://bt37e4rs2jw1g" path="res://Assets/Sounds/Sfx/EnemyKilled1.ogg" id="2_7pb1o"]
+[ext_resource type="AudioStream" uid="uid://63kcoyeh2ysa" path="res://Assets/Sounds/Sfx/EnemyKilled2.ogg" id="3_tpjhu"]
+[ext_resource type="AudioStream" uid="uid://c756tbrjfg353" path="res://Assets/Sounds/Sfx/EnemyKilled3.ogg" id="4_m3iyu"]
+[ext_resource type="AudioStream" uid="uid://br8snm0iqts4g" path="res://Assets/Sounds/Sfx/Explode1.ogg" id="5_ciui8"]
+[ext_resource type="AudioStream" uid="uid://fxp56us7em3w" path="res://Assets/Sounds/Sfx/Explode2.ogg" id="6_pu7gh"]
+[ext_resource type="AudioStream" uid="uid://cbkqdrvlo8gbo" path="res://Assets/Sounds/Sfx/Explode3.ogg" id="7_5vnic"]
+[ext_resource type="AudioStream" uid="uid://brxaghtx4yim" path="res://Assets/Sounds/Sfx/Explode4.ogg" id="8_a3kuf"]
+
+[node name="ExplosionBossDefeat" type="Node2D"]
+script = ExtResource("1_pjae3")
+
+[node name="Boom1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7pb1o")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="Boom2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tpjhu")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="Boom3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_m3iyu")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="SmallBoom1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ciui8")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="SmallBoom2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_pu7gh")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="SmallBoom3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_5vnic")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="SmallBoom4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_a3kuf")
+volume_db = -6.0
+max_polyphony = 2
+bus = &"Sfx"

@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://da62go5bytmwc"]
+[gd_scene load_steps=6 format=3 uid="uid://da62go5bytmwc"]
 
 [ext_resource type="Script" uid="uid://r14a47rjik4o" path="res://Scripts/Enemies/Bosses/Shellbreaker.gd" id="1_mrmot"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_8mwk1"]
 [ext_resource type="Texture2D" uid="uid://btusvvrw8c21i" path="res://Assets/Images/Entities/Boss1.png" id="3_dkg6q"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_edngx"]
-[ext_resource type="Texture2D" uid="uid://cyua4fbwjfixa" path="res://Assets/Images/Entities/Boss1Eyes.png" id="5_wkqwb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(48, 48)
@@ -19,7 +18,8 @@ max_health_hard = 450
 attack = 2
 defense = 3
 kill_particle_range = Vector2i(0, 0)
-kill_particle_count = 1
+kill_particle_types = Array[String]([])
+kill_particle_count = 0
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vj7im")
@@ -45,19 +45,21 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Body"]
 texture = ExtResource("3_dkg6q")
-hframes = 6
-vframes = 3
+hframes = 7
+vframes = 4
 script = ExtResource("4_edngx")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Eyes" type="Sprite2D" parent="."]
 script = ExtResource("2_8mwk1")
-texture_path = "res://Assets/Images/Entities/Boss1Eyes.json"
+texture_path = "res://Assets/Images/Entities/Boss1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Eyes"]
 position = Vector2(-1, 0)
-texture = ExtResource("5_wkqwb")
-hframes = 2
+texture = ExtResource("3_dkg6q")
+hframes = 7
+vframes = 4
+frame = 21
 script = ExtResource("4_edngx")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

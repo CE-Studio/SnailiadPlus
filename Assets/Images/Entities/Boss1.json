@@ -1,5 +1,5 @@
 {
-	"tiles": [6, 3],
+	"tiles": [7, 4],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -13,6 +13,16 @@
 				[0, 0, false, false]
 			]
 		},
+		"p0_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_idle",
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
 		"p0_shoot_start": {
 			"fps": 1,
 			"loop": false,
@@ -20,7 +30,7 @@
 			"randomize_start": false,
 			"autoplay_next": "p0_shoot",
 			"frames": [
-				[1, 0, false, false]
+				[2, 0, false, false]
 			]
 		},
 		"p0_shoot": {
@@ -30,7 +40,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[1, 0, false, false]
+				[2, 0, false, false]
 			]
 		},
 		"p0_shoot_end": {
@@ -50,7 +60,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[2, 0, false, false]
+				[3, 0, false, false]
 			]
 		},
 		"p0_shock_right": {
@@ -60,7 +70,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[3, 0, false, false]
+				[4, 0, false, false]
 			]
 		},
 		"p0_shock_down": {
@@ -70,7 +80,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[4, 0, false, false]
+				[5, 0, false, false]
 			]
 		},
 		"p0_shock_left": {
@@ -80,7 +90,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[5, 0, false, false]
+				[6, 0, false, false]
 			]
 		},
 		"p1_idle": {
@@ -93,6 +103,16 @@
 				[0, 1, false, false]
 			]
 		},
+		"p1_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_idle",
+			"frames": [
+				[1, 1, false, false]
+			]
+		},
 		"p1_shoot_start": {
 			"fps": 1,
 			"loop": false,
@@ -100,7 +120,7 @@
 			"randomize_start": false,
 			"autoplay_next": "p1_shoot",
 			"frames": [
-				[1, 1, false, false]
+				[2, 1, false, false]
 			]
 		},
 		"p1_shoot": {
@@ -110,7 +130,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[1, 1, false, false]
+				[2, 1, false, false]
 			]
 		},
 		"p1_shoot_end": {
@@ -130,7 +150,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[2, 1, false, false]
+				[3, 1, false, false]
 			]
 		},
 		"p1_shock_right": {
@@ -140,7 +160,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[3, 1, false, false]
+				[4, 1, false, false]
 			]
 		},
 		"p1_shock_down": {
@@ -150,7 +170,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[4, 1, false, false]
+				[5, 1, false, false]
 			]
 		},
 		"p1_shock_left": {
@@ -160,7 +180,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[5, 1, false, false]
+				[6, 1, false, false]
 			]
 		},
 		"p2_idle": {
@@ -173,6 +193,16 @@
 				[0, 2, false, false]
 			]
 		},
+		"p2_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_idle",
+			"frames": [
+				[1, 2, false, false]
+			]
+		},
 		"p2_shoot_start": {
 			"fps": 1,
 			"loop": false,
@@ -180,7 +210,7 @@
 			"randomize_start": false,
 			"autoplay_next": "p2_shoot",
 			"frames": [
-				[1, 2, false, false]
+				[2, 2, false, false]
 			]
 		},
 		"p2_shoot": {
@@ -190,7 +220,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[1, 2, false, false]
+				[2, 2, false, false]
 			]
 		},
 		"p2_shoot_end": {
@@ -210,7 +240,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[2, 2, false, false]
+				[3, 2, false, false]
 			]
 		},
 		"p2_shock_right": {
@@ -220,7 +250,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[3, 2, false, false]
+				[4, 2, false, false]
 			]
 		},
 		"p2_shock_down": {
@@ -230,7 +260,7 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[4, 2, false, false]
+				[5, 2, false, false]
 			]
 		},
 		"p2_shock_left": {
@@ -240,7 +270,177 @@
 			"randomize_start": false,
 			"autoplay_next": "",
 			"frames": [
-				[5, 2, false, false]
+				[6, 2, false, false]
+			]
+		},
+		"defeat": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[1, 3, false, false]
+			]
+		},
+		"p0_eyes_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p0_eyes_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_eyes_idle",
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"p0_eyes_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_eyes_shoot",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p0_eyes_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p0_eyes_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p0_eyes_idle",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p1_eyes_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p1_eyes_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_eyes_idle",
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"p1_eyes_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_eyes_shoot",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p1_eyes_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p1_eyes_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p1_eyes_idle",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p2_eyes_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p2_eyes_blink": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_eyes_idle",
+			"frames": [
+				[-1, -1, false, false]
+			]
+		},
+		"p2_eyes_shoot_start": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_eyes_shoot",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p2_eyes_shoot": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"p2_eyes_shoot_end": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "p2_eyes_idle",
+			"frames": [
+				[0, 3, false, false]
+			]
+		},
+		"eyes_defeat": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[-1, -1, false, false]
 			]
 		}
 	}

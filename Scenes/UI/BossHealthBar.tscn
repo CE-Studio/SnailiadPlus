@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d0moh826bija1"]
+[gd_scene load_steps=13 format=3 uid="uid://d0moh826bija1"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4eer3"]
 [ext_resource type="Script" uid="uid://bcbsgnuirgluw" path="res://Scripts/UI/BossHealthBar.gd" id="1_krcuj"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_krcuj"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_g7p6m"]
 [ext_resource type="AudioStream" uid="uid://dgxsaawqmxanw" path="res://Assets/Sounds/Sfx/BossHpBleep.ogg" id="6_lknyw"]
+[ext_resource type="AudioStream" uid="uid://cnch0eia1ssyo" path="res://Assets/Sounds/Sfx/BossHpFull.ogg" id="7_gahxl"]
+[ext_resource type="AudioStream" uid="uid://1kr007smqo56" path="res://Assets/Sounds/Sfx/BossDefeatPopup.ogg" id="8_0ogdg"]
 
 [sub_resource type="Animation" id="Animation_gahxl"]
 length = 0.001
@@ -76,6 +78,30 @@ tracks/5/path = NodePath(".:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
+"times": PackedFloat64Array(0),
+"transitions": PackedFloat64Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AudioGroup/Defeat:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat64Array(0),
+"transitions": PackedFloat64Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Defeated:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat64Array(0),
 "transitions": PackedFloat64Array(1),
 "update": 0,
@@ -337,7 +363,7 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat64Array(1.8, 4),
+"times": PackedFloat64Array(2, 4),
 "transitions": PackedFloat64Array(1, 1),
 "values": [{
 "args": [],
@@ -358,6 +384,30 @@ tracks/4/keys = {
 "transitions": PackedFloat64Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AudioGroup/Defeat:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat64Array(0, 1.8),
+"transitions": PackedFloat64Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Defeated:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat64Array(0, 1.7, 1.8, 1.86667, 1.93333, 2, 2.06667, 2.13333, 2.2, 2.26667, 2.33333, 2.4, 2.46667, 2.53333, 2.6, 2.66667, 2.73333, 2.8, 2.86667, 2.93333, 3, 3.06667, 3.13333, 3.2, 3.26667, 3.33333, 3.4, 3.46667, 3.53333, 3.6, 3.66667, 3.73333, 3.8, 3.86667, 3.93333, 4),
+"transitions": PackedFloat64Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1), Color(0.964706, 0.741176, 0.866667, 1), Color(0.666667, 0.945098, 0.847059, 1), Color(0.780392, 0.745098, 0.74902, 1), Color(0.996078, 0.866667, 0.717647, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ogdg"]
@@ -459,6 +509,14 @@ border_scale = 1
 [node name="Beep" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("6_lknyw")
 max_polyphony = 4
+bus = &"Sfx"
+
+[node name="Full" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("7_gahxl")
+bus = &"Sfx"
+
+[node name="Defeat" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("8_0ogdg")
 bus = &"Sfx"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

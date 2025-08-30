@@ -112,6 +112,7 @@ enum EnemyTypes {
 	SPACEBOX_RUSH,     # Time Cube
 	MOONSNAIL_RUSH,    # Sun Snail
 	GIGASNAIL_RUSH,    # Giga Sun Snail
+	NONE = -1,
 }
 #endregion
 
@@ -252,7 +253,8 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 
 func kill() -> void:
 	Statics.play_sfx_disconnected(sfx_kill)
-	Statics.add_bestiary_entry(my_type)
+	if my_type != EnemyTypes.NONE:
+		Statics.add_bestiary_entry(my_type)
 	for i in range(kill_particle_count):
 		var range = kill_particle_range
 		var pos = Vector2(randi_range(-range.x, range.x), randi_range(-range.y, range.y))

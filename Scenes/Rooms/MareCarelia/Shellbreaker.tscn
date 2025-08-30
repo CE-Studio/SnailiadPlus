@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://bkg2uj053xip4"]
+[gd_scene load_steps=8 format=4 uid="uid://bkg2uj053xip4"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_pp8yf"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_xiyhc"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_1g3eu"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_wc8xk"]
+[ext_resource type="PackedScene" uid="uid://da62go5bytmwc" path="res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn" id="4_254gw"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_wsp43"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
@@ -55,6 +56,9 @@ position = Vector2(8, 376)
 direction = 3
 lock_type = 1
 
+[node name="Shellbreaker" parent="GroundLayer" instance=ExtResource("4_254gw")]
+position = Vector2(280, 312)
+
 [node name="FG1Layer" type="Parallax2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
@@ -70,7 +74,7 @@ collision_enabled = false
 [node name="EntityLayer" type="Node2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAARABMAAAAHAAEAAAAHABsAAAALAAEAAAAMABsAAAALAAEAAAAWABsAAAALAAEAAAAbABsAAAALAAEAAAAFAAsAAAAMAB4AAAARAAsAAAAMAB4AAAANAAsAAAAMAB4AAAAaAAsAAAAMAB4AAAA=")
+tile_map_data = PackedByteArray("AAAHABsAAAALAAEAAAAMABsAAAALAAEAAAAWABsAAAALAAEAAAAbABsAAAALAAEAAAAFAAsAAAAMAB4AAAARAAsAAAAMAB4AAAANAAsAAAAMAB4AAAAaAAsAAAAMAB4AAAA=")
 tile_set = ExtResource("2_xiyhc")
 collision_enabled = false
 
