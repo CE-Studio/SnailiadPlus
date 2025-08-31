@@ -117,7 +117,7 @@ func _physics_process(delta: float) -> void:
 	
 	if blink_timeout <= 0.0:
 		blink_timeout = randf() * BLINK_TIMEOUT_MAX
-		play_phase_anim("blink")
+		play_phase_anim("blink", false)
 
 
 func try_shoot() -> void:
@@ -155,9 +155,9 @@ func shoot(angle:float) -> void:
 	_shoot(boomerang, direction, WEAPON_SPEED)
 
 
-func play_phase_anim(anim_name:String = "") -> String:
+func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
 	var eyes_anim_name:String = "eyes_" + anim_name
-	anim_name = super.play_phase_anim(anim_name)
+	anim_name = super.play_phase_anim(anim_name, set_as_current)
 	eyes.action = get_phase_anim(eyes_anim_name)
 	return anim_name
 

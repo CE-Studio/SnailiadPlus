@@ -48,9 +48,10 @@ func advance_phase(count:int = 1) -> void:
 	play_phase_anim()
 
 
-func play_phase_anim(anim_name:String = "") -> String:
+func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
 	sprite.action = get_phase_anim(anim_name)
-	current_anim = anim_name
+	if set_as_current:
+		current_anim = anim_name
 	return anim_name
 
 

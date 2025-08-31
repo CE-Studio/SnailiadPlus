@@ -28,7 +28,8 @@ const SCREEN_SIZE:Vector2 = Vector2(26.0, 16.0)
 const MAP_LAYER_MAX_BOUNDS:Vector2i = Vector2i(76, 68)
 const TL_OFFSET:Vector2i = Vector2i(100, 84)
 const MARKER_ZERO:Vector2i = Vector2i(-100, -84)
-const ROOM_NAME_STRING = "room_%s"
+const ROOM_NAME_STRING:String = "room_%s"
+const FADE_SPEED:float = 3.5
 
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
@@ -61,6 +62,7 @@ var mask_texture:ImageTexture
 var last_map_center:Vector2i = Vector2i(-1, -1)
 var last_player_pos:Vector2i = Vector2i(-1, -1)
 var last_drawn_cells:Array = []
+var fade_override:float = 1.0
 
 var room_offset:Vector2i = Vector2i.ZERO
 
@@ -96,6 +98,21 @@ func _ready() -> void:
 	marker_group.position
 	create_cell_mask()
 	log_markers()
+
+
+func update_visible(target_fade:float = 1.0, quick_fade:bool = false) -> void:
+	match ProjectSettings.get_setting("game/ui/minimap"):
+		0:
+			visible = false
+		1:
+			visible = true
+			name_text.visible = false
+		2:
+			visible = true
+			name_text.visible = true
+	fade_override = target_fade
+	if quick_fade:
+		modulate.a = target_fade
 
 
 func create_cell_mask() -> void:
@@ -197,6 +214,9 @@ func _process(delta: float) -> void:
 	if update_map:
 		update_cell_mask(map_local_center)
 		update_markers(last_drawn_cells)
+	
+	if modulate.a != fade_override:
+		modulate.a = move_toward(modulate.a, fade_override, delta * FADE_SPEED)
 
 
 func update_cell_mask(center:Vector2i, extents:Vector2i = EDGE_BUFFER) -> void:

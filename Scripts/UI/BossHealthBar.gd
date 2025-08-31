@@ -7,10 +7,8 @@ const WIDTH:int = 250
 const DAMAGE_UPDATE_TIMEOUT:float = 0.5
 const DAMAGE_LERP_SPEED:float = 6.0
 const SHAKE_LERP_SPEED:float = 10.0
-const SHAKE_VARIANCE:float = 6.0
+const SHAKE_VARIANCE:float = 2.0
 const INTRO_FILL_TIME:float = 1.5
-const NAME_SHAKE_RADIUS:float = 4.0
-const NAME_SHAKE_TIME:float = 0.25
 const OUTRO_SHAKE:float = 2.0
 
 var boss:Boss = null
@@ -67,14 +65,6 @@ func _process(delta: float) -> void:
 		_update_main(current_pos)
 		_update_damaged(current_pos)
 		intro_fill -= delta
-	if name_shake_time > 0.0:
-		boss_name_container.position = Vector2(
-			randf_range(-NAME_SHAKE_RADIUS, NAME_SHAKE_RADIUS),
-			randf_range(-NAME_SHAKE_RADIUS, NAME_SHAKE_RADIUS)
-		) * inverse_lerp(0.0, NAME_SHAKE_TIME, name_shake_time)
-		name_shake_time -= delta
-		if name_shake_time <= 0.0:
-			boss_name_container.position = Vector2.ZERO
 	if outro_shake:
 		var container_shake = Vector2(
 			randf_range(-OUTRO_SHAKE, OUTRO_SHAKE),
@@ -93,7 +83,6 @@ func _begin_intro_fill() -> void:
 
 func _end_intro_fill() -> void:
 	intro_fill = 0.0
-	name_shake_time = NAME_SHAKE_TIME
 	_update_main(0)
 	_update_damaged(0)
 	main.action = "bar_main_filled"
@@ -116,8 +105,7 @@ func _toggle_outro_shake() -> void:
 
 
 func _despawn() -> void:
-	UICore.instance.active_boss_bar = null
-	queue_free()
+	UICore.instance.clear_boss_bar()
 #endregion
 
 

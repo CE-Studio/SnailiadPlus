@@ -210,16 +210,18 @@ func clear_area_text() -> void:
 		active_area_label.queue_free()
 
 
-func show_boss_bar(boss:Boss) -> BossHealthBar:
+func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 	clear_area_text()
 	clear_boss_bar()
 	active_boss_bar = boss_bar.instantiate()
 	popup_layer.add_child(active_boss_bar)
 	active_boss_bar.position = Vector2(200, tl.position.y)
 	active_boss_bar.boss = boss
+	minimap.update_visible(0.0, true)
 	return active_boss_bar
 
 
 func clear_boss_bar() -> void:
 	if active_boss_bar != null:
 		active_boss_bar.queue_free()
+	minimap.update_visible(1.0)
