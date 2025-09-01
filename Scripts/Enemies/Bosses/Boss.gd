@@ -50,15 +50,15 @@ func advance_phase(count:int = 1) -> void:
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
 	sprite.action = get_phase_anim(anim_name)
-	if set_as_current:
+	if set_as_current and anim_name.strip_edges() != "":
 		current_anim = anim_name
 	return anim_name
 
 
-func get_phase_anim(anim_name:String = "") -> String:
+func get_phase_anim(anim_name:String = "", prefix:String = "") -> String:
 	if anim_name.strip_edges() == "":
 		anim_name = current_anim
-	return "p%d_%s" % [ phase, anim_name ]
+	return "p%d_%s" % [ phase, prefix + anim_name ]
 
 
 func kill() -> void:

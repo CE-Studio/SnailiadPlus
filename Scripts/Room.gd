@@ -364,8 +364,6 @@ func _import_from_tiled():
 							int(parser.get_attribute_value(2)),
 							int(parser.get_attribute_value(3))
 						)
-					#print(layer_name)
-					#print(layer_size)
 				"image":
 					tilesheet_size = Vector2(
 							int(parser.get_attribute_value(1)),
@@ -397,7 +395,6 @@ func _import_from_tiled():
 									tile_coords.x -= tilesheet_size.x
 									tile_coords.y += 1
 								var map_index := Vector2i(x, y)
-								#print("Placing %s at %s" % [ tile_coords, map_index - tiled_corner ])
 								match target_layer:
 									Layers.SKY:
 										map_sky.set_cell(map_index - tiled_corner, source, tile_coords)
@@ -413,3 +410,14 @@ func _import_from_tiled():
 										map_fg2.set_cell(map_index - tiled_corner, source, tile_coords)
 									Layers.ENTITY:
 										map_entity.set_cell(map_index - tiled_corner, source, tile_coords)
+
+
+#region Runtime functions
+func open_all_boss_doors() -> void:
+	var children:Array = Statics.get_all_children(self)
+	#for child in children:
+	#	if child is Door:
+	#		var boss_locked:bool = (
+	#			#TODO this. Also add boss alive states to global flags
+	#		)
+#endregion

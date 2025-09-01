@@ -156,15 +156,13 @@ func shoot(angle:float) -> void:
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
-	var eyes_anim_name:String = "eyes_" + anim_name
-	anim_name = super.play_phase_anim(anim_name, set_as_current)
-	eyes.action = get_phase_anim(eyes_anim_name)
+	super.play_phase_anim(anim_name, set_as_current)
+	eyes.action = get_phase_anim(anim_name, "eyes_")
 	return anim_name
 
 
 func advance_phase(count:int = 1) -> void:
 	super(count)
-	
 
 
 func get_aim_dir() -> float:
@@ -185,4 +183,7 @@ func kill() -> void:
 			_hand.kill()
 		hands.clear()
 		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position)
+		GameCore.instance.music_manager.stop_all(true)
+	else:
+		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
 	super()
