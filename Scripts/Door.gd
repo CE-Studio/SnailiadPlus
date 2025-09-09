@@ -56,7 +56,7 @@ func _ready() -> void:
 
 func spawn() -> void:
 	#Temp
-	if lock_type == LockTypes.LOCKED_BY_BOSS:
+	if _check_boss_locked():
 		anim_prefix = "locked_"
 		is_locked = true
 	else:
@@ -81,6 +81,24 @@ func spawn() -> void:
 	
 	if direction == Statics.DirsCardinal.DOWN or direction == Statics.DirsCardinal.UP:
 		box_group.rotation_degrees = 90.0
+
+
+func _check_boss_locked() -> bool:
+	if lock_type == LockTypes.LOCKED_BY_BOSS or lock_type == LockTypes.LOCKED_BY_BOSS_IN_RANDOMIZER:
+		match required_boss:
+			0:
+				if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) != true:
+					return true
+			1:
+				if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2) != true:
+					return true
+			2:
+				if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3) != true:
+					return true
+			3:
+				if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) != true:
+					return true
+	return false
 
 
 func _process(_delta: float) -> void:

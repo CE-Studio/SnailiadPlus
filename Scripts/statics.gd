@@ -132,7 +132,6 @@ static var load_coords:Vector2i
 
 #region Save info
 static var profile:String
-#static var data_general:Dictionary
 static var data_profile1:Dictionary
 static var data_profile2:Dictionary
 static var data_profile3:Dictionary
@@ -158,7 +157,16 @@ enum ParticleOptions {
 	ENTITIES_FLASH,
 	ENTITIES_ALL,
 	FLASH,
-	ALL
+	ALL,
+}
+
+enum WorldFlags {
+	HAS_SEEN_CAVE_SNAIL,
+	TALKED_TO_IRIS,
+	DEFEATED_BOSS1,
+	DEFEATED_BOSS2,
+	DEFEATED_BOSS3,
+	DEFEATED_BOSS4,
 }
 #endregion
 
@@ -322,6 +330,18 @@ static func check_bestiary_entry(id:int) -> bool:
 	if id < len(data_records["bestiary"]):
 		output = data_records["bestiary"][id]
 	return output
+
+
+static func set_world_flag(id:WorldFlags, value:Variant) -> void:
+	while id >= len(current_profile["world_flags"]):
+		current_profile["world_flags"].append(null)
+	current_profile["world_flags"][id] = value
+
+
+static func get_world_flag(id:WorldFlags) -> Variant:
+	if id < len(current_profile["world_flags"]):
+		return current_profile["world_flags"][id]
+	return null
 #endregion
 
 

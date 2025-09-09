@@ -3,11 +3,11 @@ extends Enemy
 
 
 #region Variables
-@export var battle_music:MusicManager.Loops = MusicManager.Loops.Boss1
-@export var phase_changes:Array[float] = [ 0 ]
-
 const DEATH_WIGGLE_RANGE:float = 2.0
 const DEATH_WIGGLE_TIME:float = 1.8
+
+@export var battle_music:MusicManager.Loops = MusicManager.Loops.Boss1
+@export var phase_changes:Array[float] = [ 0 ]
 
 var intro_delay:bool = true
 var phase:int = 0
@@ -15,6 +15,7 @@ var current_anim:String = ""
 var in_death_anim:bool = false
 var nodes_to_wiggle:Array = []
 var death_timer:float = 0.0
+var bullets:Array = []
 
 var health_bar:BossHealthBar = null
 #endregion
@@ -70,3 +71,9 @@ func kill() -> void:
 		can_damage = false
 		invulnerable = true
 		death_timer = DEATH_WIGGLE_TIME
+		for bullet in bullets:
+			if bullet != null:
+				if bullet is EnemyBullet:
+					bullet._despawn()
+				else:
+					bullet.queue_free()

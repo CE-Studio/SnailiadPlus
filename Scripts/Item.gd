@@ -187,15 +187,15 @@ func _on_player_entered(body: Node2D) -> void:
 		Statics.current_profile["item_rate"] = Statics.get_item_percentage()
 		match type:
 			ItemTypes.PEASHOOTER:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 1):
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
 					GameCore.instance.player._toggle_weapon(1)
 				UICore.instance.update_weapon_icons()
 			ItemTypes.BOOMERANG:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
 				UICore.instance.update_weapon_icons()
 			ItemTypes.RAINBOW_WAVE:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 3):
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)
 				UICore.instance.update_weapon_icons()
 			#ItemTypes.DEVASTATOR:
@@ -207,11 +207,11 @@ func _on_player_entered(body: Node2D) -> void:
 			#ItemTypes.METAL_SHELL:
 			#ItemTypes.GRAVITY_SHOCK:
 			ItemTypes.SECRET_BOOMERANG:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
 				UICore.instance.update_weapon_icons()
 			ItemTypes.DEBUG_WAVE:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 3):
+				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)
 				UICore.instance.update_weapon_icons()
 			ItemTypes.HEART_CONTAINER:
@@ -238,6 +238,7 @@ func _on_player_entered(body: Node2D) -> void:
 		UICore.instance.play_save_anim()
 		UICore.instance.show_item_collection_text(name_str)
 		UICore.instance.minimap.update_markers(UICore.instance.minimap.last_drawn_cells)
+		UICore.instance.minimap.update_player()
 
 
 func _on_collect_timer_timeout() -> void:

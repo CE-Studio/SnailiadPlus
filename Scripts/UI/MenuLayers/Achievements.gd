@@ -56,6 +56,8 @@ func _ready() -> void:
 			new_icon.icon.action = achievement_str_names[i]
 		else:
 			new_icon.icon.action = "locked"
+	
+	_update_desc(2 if Statics.check_achievement(0) else 0)
 
 
 func _process(delta: float) -> void:

@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 		if position.y > 479.0:
 			queue_free()
 	elif total_layer_count > layer_id:
-		position = position.lerp(Vector2(0.0, -240.0), MOVE_RATE * delta)
+		position = position.lerp(Vector2(0.0, -300.0), MOVE_RATE * delta)
 	else:
 		position = position.lerp(Vector2.ZERO, MOVE_RATE * delta)
 	if separation_float > MIN_SEPARATION and main_vbox:

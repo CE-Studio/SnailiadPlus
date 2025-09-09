@@ -23,6 +23,10 @@ func on_ratio_cycled(value) -> void:
 	var this_ratio = Statics.ASPECT_RATIOS[value]
 	set_window_size(ProjectSettings.get_setting("display/window/stretch/scale") - 1, this_ratio)
 	ProjectSettings.set_setting("display/window/size/aspect_ratio", value)
+	if UICore.instance != null:
+		UICore.instance.configure_for_aspect_ratio(value)
+		GameCore.instance.current_room.bounds.replot_points(Statics.ASPECT_RATIO_OFFSETS[value])
+		UICore.instance.cam._process(0.0)
 
 
 func on_minimap_cycled(value) -> void:

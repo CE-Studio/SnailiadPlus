@@ -63,6 +63,7 @@ var last_map_center:Vector2i = Vector2i(-1, -1)
 var last_player_pos:Vector2i = Vector2i(-1, -1)
 var last_drawn_cells:Array = []
 var fade_override:float = 1.0
+var update_player_flag:bool = false
 
 var room_offset:Vector2i = Vector2i.ZERO
 
@@ -95,7 +96,6 @@ func _ready() -> void:
 	panel.action = "idle"
 	map.action = "idle"
 	player_marker.action = "player_normal"
-	marker_group.position
 	create_cell_mask()
 	log_markers()
 
@@ -189,7 +189,8 @@ func _process(delta: float) -> void:
 		last_map_center = map_local_center
 		
 	var player_cell = Vector2i(converted_player_pos + room_offset)
-	if player_cell != last_player_pos:
+	if player_cell != last_player_pos or update_player_flag:
+		update_player_flag = false
 		var array_pos = vector_to_array_index(player_cell)
 		var cell = Statics.current_profile["map_tiles"][array_pos]
 		if cell == CellTypes.UNEXPLORED:
@@ -201,11 +202,12 @@ func _process(delta: float) -> void:
 		update_map = false
 		last_player_pos = player_cell
 		
-		if marker_positions[array_pos] >= 0 and player_marker.action == "player_normal":
+		if marker_positions[array_pos] >= 0:
 			var marker = active_markers[marker_positions[array_pos]]
 			if (marker.type != MarkerTypes.ITEM
 			or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]))):
-				player_marker.action = "player_highlight"
+				if player_marker.action == "player_normal":
+					player_marker.action = "player_highlight"
 			elif player_marker.action == "player_highlight":
 				player_marker.action = "player_normal"
 		elif marker_positions[array_pos] < 0 and player_marker.action == "player_highlight":
@@ -253,7 +255,7 @@ func update_markers(target_cells:Array = []) -> void:
 			target_cells.append(i)
 	for i in range(marker_positions.size()):
 		var array_i = marker_positions[i]
-		if array_i != -1:
+		if array_i >= 0:
 			var cell_pos = Vector2i.ZERO
 			var working_i = i
 			while working_i >= MAP_SIZE.x:
@@ -279,3 +281,7 @@ func update_markers(target_cells:Array = []) -> void:
 
 func set_room_name(_name:String):
 	name_text.set_snaily_text(ROOM_NAME_STRING % _name)
+
+
+func update_player() -> void:
+	update_player_flag = true

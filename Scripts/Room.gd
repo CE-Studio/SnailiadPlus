@@ -415,9 +415,24 @@ func _import_from_tiled():
 #region Runtime functions
 func open_all_boss_doors() -> void:
 	var children:Array = Statics.get_all_children(self)
-	#for child in children:
-	#	if child is Door:
-	#		var boss_locked:bool = (
-	#			#TODO this. Also add boss alive states to global flags
-	#		)
+	for child in children:
+		if child is Door:
+			var boss_locked:bool = (
+				(child.lock_type == Door.LockTypes.LOCKED_BY_BOSS
+				or child.lock_type == Door.LockTypes.LOCKED_BY_BOSS_IN_RANDOMIZER)
+			)
+			if boss_locked:
+				match child.required_boss:
+					0:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) == true:
+							child.open()
+					1:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2) == true:
+							child.open()
+					2:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3) == true:
+							child.open()
+					3:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) == true:
+							child.open()
 #endregion

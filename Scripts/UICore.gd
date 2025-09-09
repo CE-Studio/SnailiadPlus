@@ -81,6 +81,10 @@ func configure_for_aspect_ratio(ratio_id:int) -> void:
 	set_border_anim(ratio_id)
 
 
+func set_all_visibility_from_settings() -> void:
+	pass # TODO figure out the bottom keys thing
+
+
 func update_weapon_icons() -> void:
 	for i in range(len(weapon_icons)):
 		var has:bool = false
@@ -165,6 +169,7 @@ func play_bestiary_anim() -> void:
 
 func set_border_anim(anim_id:int) -> void:
 	border.action = str(anim_id)
+	border._process(0.0)
 
 
 func show_item_collection_text(item_label:String) -> void:

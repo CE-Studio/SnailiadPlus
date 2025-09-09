@@ -154,7 +154,7 @@
 	"menu_option_display_scale": "Window scale",
 	"menu_option_display_ratio": "Aspect ratio",
 	"menu_option_display_minimap": "Minimap display",
-	"menu_option_display_bottomKeys": "Bottom keys",
+	"menu_option_display_bottomKeys": "Show weapon icons",
 	"menu_option_display_keymap": "Show input display",
 	"menu_option_display_gameTime": "Show in-game time",
 	"menu_option_display_fps": "Show FPS",

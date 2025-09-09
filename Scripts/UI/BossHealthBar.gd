@@ -106,6 +106,7 @@ func _toggle_outro_shake() -> void:
 
 func _despawn() -> void:
 	UICore.instance.clear_boss_bar()
+	GameCore.instance.current_room.open_all_boss_doors()
 #endregion
 
 

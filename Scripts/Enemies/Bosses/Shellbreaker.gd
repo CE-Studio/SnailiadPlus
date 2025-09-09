@@ -40,6 +40,10 @@ var blink_timeout:float = 0.0
 
 
 func _ready() -> void:
+	if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) == true and not display_mode:
+		queue_free()
+		return
+	
 	my_type = EnemyTypes.SHELLBREAKER
 	col = $"BodyBox"
 	sprite = $"Body"
@@ -74,14 +78,19 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	
+	if not is_firing:
+		blink_timeout -= delta
+	if blink_timeout <= 0.0:
+		blink_timeout = randf() * BLINK_TIMEOUT_MAX
+		play_phase_anim("blink", false)
+		
 	if not ai_active and not display_mode:
 		return
 	
 	elapsed += delta
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
-	if not is_firing:
-		blink_timeout -= delta
 	
 	if display_mode:
 		for i in hands.size():
@@ -114,10 +123,6 @@ func _physics_process(delta: float) -> void:
 			cos(hand_thetas[i])
 		) * hand_radius
 		hands[i].invulnerable = hand_radius_target == 0.0
-	
-	if blink_timeout <= 0.0:
-		blink_timeout = randf() * BLINK_TIMEOUT_MAX
-		play_phase_anim("blink", false)
 
 
 func try_shoot() -> void:
@@ -152,7 +157,7 @@ func try_shoot() -> void:
 
 func shoot(angle:float) -> void:
 	var direction:Vector2 = Vector2(cos(angle), sin(angle))
-	_shoot(boomerang, direction, WEAPON_SPEED)
+	bullets.append(_shoot(boomerang, direction, WEAPON_SPEED))
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
@@ -184,6 +189,7 @@ func kill() -> void:
 		hands.clear()
 		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position)
 		GameCore.instance.music_manager.stop_all(true)
+		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, true)
 	else:
 		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
 	super()
