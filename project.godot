@@ -60,7 +60,6 @@ ui/secret_map_tiles=false
 visuals/palette_shader=false
 visuals/distortion_shader=true
 visuals/darkness=3
-ui/bottom_keys=2
 visuals/texture_pack="__DEFAULT__"
 visuals/sound_pack="__DEFAULT__"
 visuals/music_pack="__DEFAULT__"
@@ -73,6 +72,7 @@ control/gravity_swap=0
 control/gravity_keep=0
 control/controls=[]
 control/controller_type=0
+ui/bottom_keys=true
 
 [gui]
 

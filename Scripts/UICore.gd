@@ -3,6 +3,9 @@ class_name UICore
 
 
 #region Variables
+const BL_TEXT_ORIGIN:Vector2 = Vector2(3, -12)
+const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
+
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
 
@@ -25,6 +28,9 @@ static var instance:UICore
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:Node2D = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
+@onready var weapon_icon_group:Node2D = $"BR/WeaponIcons"
+@onready var igt:SnailyText = $"BL/InGameTime"
+@onready var fps:SnailyText = $"BL/Framerate"
 
 @onready var tl:Node2D = $"TL"
 @onready var tr:Node2D = $"TR"
@@ -38,7 +44,7 @@ func instantiate() -> void:
 	cam.instantiate()
 	
 	var icon_id = 0
-	for icon in $"BR/WeaponIcons".get_children():
+	for icon in weapon_icon_group.get_children():
 		weapon_icons.append(icon)
 		weapon_icon_states.append(0)
 		icon.position += Vector2(0, 8)
@@ -53,6 +59,8 @@ func instantiate() -> void:
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
 	boss_bar = preload("res://Scenes/UI/BossHealthBar.tscn")
+	
+	set_all_visibility_from_settings.call_deferred()
 
 
 func _process(delta: float) -> void:
@@ -70,6 +78,19 @@ func _process(delta: float) -> void:
 		var pos = weapon_icons[i].position
 		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
 		weapon_icons[i].position = pos
+	
+	# Framerate
+	var fps_int = int(Engine.get_frames_per_second())
+	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")
+	if fps_setting == 0:
+		fps.set_snaily_text_raw(Statics.get_text("hud_fps") % fps_int)
+	else:
+		var target_fps:int = 60
+		match fps_setting:
+			1: target_fps = 30
+			2: target_fps = 60
+			3: target_fps = 120
+		fps.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
@@ -82,7 +103,21 @@ func configure_for_aspect_ratio(ratio_id:int) -> void:
 
 
 func set_all_visibility_from_settings() -> void:
-	pass # TODO figure out the bottom keys thing
+	igt.position = BL_TEXT_ORIGIN
+	fps.position = BL_TEXT_ORIGIN
+	
+	minimap.update_visible(minimap.fade_override)
+	
+	#keymap
+	
+	igt.visible = false
+	if ProjectSettings.get_setting("game/ui/in_game_time"):
+		igt.visible = true
+		fps.position.y += BL_TEXT_OFFSETS.y
+	
+	fps.visible = ProjectSettings.get_setting("game/ui/fps_counter")
+	
+	weapon_icon_group.visible = ProjectSettings.get_setting("game/ui/bottom_keys")
 
 
 func update_weapon_icons() -> void:

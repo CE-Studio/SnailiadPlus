@@ -5,7 +5,7 @@ func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/Scale".remote_set_option(int(ProjectSettings.get_setting("display/window/stretch/scale") - 1))
 	$"ScrollContainer/VBoxContainer/Ratio".remote_set_option(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
 	$"ScrollContainer/VBoxContainer/Minimap".remote_set_option(ProjectSettings.get_setting("game/ui/minimap"))
-	$"ScrollContainer/VBoxContainer/BottomKeys".remote_set_option(ProjectSettings.get_setting("game/ui/bottom_keys"))
+	$"ScrollContainer/VBoxContainer/BottomKeys".toggled_on = ProjectSettings.get_setting("game/ui/bottom_keys")
 	$"ScrollContainer/VBoxContainer/InputMap".toggled_on = ProjectSettings.get_setting("game/ui/keymap")
 	$"ScrollContainer/VBoxContainer/InGameTime".toggled_on = ProjectSettings.get_setting("game/ui/in_game_time")
 	$"ScrollContainer/VBoxContainer/Framerate".toggled_on = ProjectSettings.get_setting("game/ui/fps_counter")
@@ -33,7 +33,7 @@ func on_minimap_cycled(value) -> void:
 	ProjectSettings.set_setting("game/ui/minimap", value)
 
 
-func on_bottom_keys_cycled(value) -> void:
+func on_bottom_keys_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/bottom_keys", value)
 
 

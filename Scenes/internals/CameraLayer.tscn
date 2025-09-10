@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=12 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
 [ext_resource type="Script" uid="uid://bukaxq2vrte5l" path="res://Scripts/UICore.gd" id="1_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_gi4g0"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_bgnuu"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/UI/ScreenBorder.png" id="4_ygllc"]
 [ext_resource type="PackedScene" uid="uid://coram7y7g81vt" path="res://Scenes/UI/AchivementPanel.tscn" id="6_f5gkc"]
@@ -20,6 +21,27 @@ script = ExtResource("1_gi4g0")
 
 [node name="BL" type="Node2D" parent="."]
 position = Vector2(0, 240)
+
+[node name="InGameTime" parent="BL" instance=ExtResource("3_bgnuu")]
+custom_minimum_size = Vector2(46, 0)
+offset_left = 3.0
+offset_top = -12.0
+offset_right = 83.0
+offset_bottom = -4.0
+theme_override_font_sizes/normal_font_size = 8
+text = "00:00:00.00"
+text_scale = 1
+border_scale = 1
+
+[node name="Framerate" parent="BL" instance=ExtResource("3_bgnuu")]
+offset_left = 3.0
+offset_top = -20.0
+offset_right = 83.0
+offset_bottom = -12.0
+theme_override_font_sizes/normal_font_size = 8
+text = "00 FPS"
+text_scale = 1
+border_scale = 1
 
 [node name="BR" type="Node2D" parent="."]
 position = Vector2(400, 240)

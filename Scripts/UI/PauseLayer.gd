@@ -25,3 +25,4 @@ func unpause_fade_out() -> void:
 	get_tree().paused = false
 	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 	cam.popup_layer.visible = true
+	cam.set_all_visibility_from_settings()
