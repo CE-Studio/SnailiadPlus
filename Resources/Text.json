@@ -472,7 +472,7 @@
 	"hud_ap_sender": "Received from %s",
 	"subscreen_header_name": "Name",
 	"subscreen_header_weapon": "Weapon",
-	"subscreen_header_shell": "Shell",
+	"subscreen_header_shell": "Body",
 	"subscreen_header_ability": "Ability",
 	"subscreen_shellNormal": "Normal %s",
 	"subscreen_shell": "shell",

@@ -1,0 +1,108 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpfe8sxp7e2kp"]
+
+[ext_resource type="Script" uid="uid://dljhb3wxvqdup" path="res://Scripts/UI/Subscreen.gd" id="1_gcfo6"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_i7mg0"]
+[ext_resource type="Texture2D" uid="uid://bclnc6t0rfexc" path="res://Assets/Images/UI/Subscreen.png" id="2_d38hq"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_shvbi"]
+[ext_resource type="Texture2D" uid="uid://ypov61wmfy4r" path="res://Assets/Images/UI/SubscreenSeparator.png" id="4_shvbi"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_ndsvi"]
+[ext_resource type="Texture2D" uid="uid://bb8hyp40krwaw" path="res://Assets/Images/UI/SubscreenPlayers.png" id="6_teiof"]
+
+[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators")]
+script = ExtResource("1_gcfo6")
+separators = [NodePath("Separator1"), NodePath("Separator2"), NodePath("Separator3"), NodePath("Separator4")]
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(200, 144)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/Subscreen.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Body"]
+texture = ExtResource("2_d38hq")
+hframes = 2
+vframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MinimapTarget" type="Marker2D" parent="."]
+position = Vector2(288, 112)
+
+[node name="Separator1" type="Sprite2D" parent="."]
+position = Vector2(37, 40)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Separator1"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Separator2" type="Sprite2D" parent="."]
+position = Vector2(37, 80)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Separator2"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Separator3" type="Sprite2D" parent="."]
+position = Vector2(37, 130)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Separator3"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Separator4" type="Sprite2D" parent="."]
+position = Vector2(37, 184)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Separator4"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HeaderName" parent="." instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(24, 0)
+offset_left = 17.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 63.0
+theme_override_font_sizes/normal_font_size = 8
+text = "Name"
+text_scale = 1
+quick_load_text = "subscreen_header_name"
+shadow_scale = 1
+
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+position = Vector2(142, 47)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenPlayers.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="PlayerIcon"]
+texture = ExtResource("6_teiof")
+hframes = 2
+vframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Name" parent="." instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(124, 0)
+offset_left = 17.0
+offset_top = 38.0
+offset_right = 141.0
+offset_bottom = 70.0
+text = "Snaily Snail"
+quick_load_text = "subscreen_header_name"
+shadow_scale = 1

@@ -4,6 +4,7 @@ extends Node2D
 #region Variables
 @onready var cam:UICore = UICore.instance
 @onready var menu_scene:PackedScene = preload("res://Scenes/IngameMenuScene.tscn")
+@onready var subscreen:PackedScene = preload("res://Scenes/UI/Subscreen.tscn")
 #endregion
 
 
@@ -13,6 +14,9 @@ func _physics_process(delta: float) -> void:
 	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
 		add_child(menu_scene.instantiate())
+	if SInput.input_just_pressed(SInput.Inputs.MAP) and not get_tree().paused:
+		pause_fade_in()
+		add_child(subscreen.instantiate())
 
 
 func pause_fade_in() -> void:
