@@ -71,7 +71,7 @@ func reset_label_size() -> void:
 	var longest_line = get_width()
 	var scale_mod = float(text_scale) * 0.5
 	if max_width == 0 or longest_line < max_width:
-		custom_minimum_size.x = longest_line * scale_mod
+		custom_minimum_size.x = ceil(longest_line * scale_mod)
 	else:
 		custom_minimum_size.x = max_width
 	size.x = custom_minimum_size.x

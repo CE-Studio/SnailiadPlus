@@ -1,0 +1,175 @@
+{
+	"tiles": [8, 3],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"left_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"left_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 1, false, false],
+				[0, 2, false, false],
+			]
+		},
+		"down_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"down_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[1, 1, false, false],
+				[1, 2, false, false],
+			]
+		},
+		"up_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"up_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[2, 1, false, false],
+				[2, 2, false, false],
+			]
+		},
+		"right_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"right_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[3, 1, false, false],
+				[3, 2, false, false],
+			]
+		},
+		"jump_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[4, 0, false, false]
+			]
+		},
+		"jump_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[4, 1, false, false],
+				[4, 2, false, false],
+			]
+		},
+		"shoot_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[5, 0, false, false]
+			]
+		},
+		"shoot_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[5, 1, false, false],
+				[5, 2, false, false],
+			]
+		},
+		"strafe_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[6, 0, false, false]
+			]
+		},
+		"strafe_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[6, 1, false, false],
+				[6, 2, false, false],
+			]
+		},
+		"gravity_idle": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[7, 0, false, false]
+			]
+		},
+		"gravity_press": {
+			"fps": 15,
+			"loop": true,
+			"loop_point": 1,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[7, 1, false, false],
+				[7, 2, false, false],
+			]
+		},
+	}
+}

@@ -5,6 +5,7 @@ class_name UICore
 #region Variables
 const BL_TEXT_ORIGIN:Vector2 = Vector2(3, -12)
 const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
+const BL_TEXT_OFFSETS_LARGE:Vector2 = Vector2(0, -20)
 
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
@@ -29,8 +30,11 @@ static var instance:UICore
 @onready var pause_layer:Node2D = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
 @onready var weapon_icon_group:Node2D = $"BR/WeaponIcons"
-@onready var igt:SnailyText = $"BL/InGameTime"
-@onready var fps:SnailyText = $"BL/Framerate"
+@onready var igt:HBoxContainer = $"BL/InGameTime"
+@onready var igt_text:SnailyText = $"BL/InGameTime/Text"
+@onready var fps:HBoxContainer = $"BL/Framerate"
+@onready var fps_text:SnailyText = $"BL/Framerate/Text"
+@onready var input_display:InputDisplay = $"BL/InputDisplay"
 
 @onready var tl:Node2D = $"TL"
 @onready var tr:Node2D = $"TR"
@@ -83,14 +87,16 @@ func _process(delta: float) -> void:
 	var fps_int = int(Engine.get_frames_per_second())
 	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")
 	if fps_setting == 0:
-		fps.set_snaily_text_raw(Statics.get_text("hud_fps") % fps_int)
+		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps") % fps_int)
 	else:
 		var target_fps:int = 60
 		match fps_setting:
 			1: target_fps = 30
 			2: target_fps = 60
 			3: target_fps = 120
-		fps.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
+		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
+	
+	#IGT is counted up in GameCore.gd, being an aspect of the game/profile itself and not purely a HUD element
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
@@ -108,7 +114,11 @@ func set_all_visibility_from_settings() -> void:
 	
 	minimap.update_visible(minimap.fade_override)
 	
-	#keymap
+	input_display.visible = false
+	if ProjectSettings.get_setting("game/ui/keymap"):
+		input_display.visible = true
+		igt.position.y += BL_TEXT_OFFSETS_LARGE.y
+		fps.position.y += BL_TEXT_OFFSETS_LARGE.y
 	
 	igt.visible = false
 	if ProjectSettings.get_setting("game/ui/in_game_time"):
