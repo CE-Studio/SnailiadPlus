@@ -63,73 +63,49 @@ func _ready() -> void:
 	var id_str
 	var character = int(Statics.current_profile["character"])
 	var species = Statics.get_character_species_string(character)
+	name_str = get_name_str_from_id(type)
 	match type:
 		ItemTypes.PEASHOOTER:
 			id_str = "Peashooter"
-			name_str = Statics.get_text("item_peashooter")
 		ItemTypes.BOOMERANG:
 			id_str = "Boomerang"
-			name_str = Statics.get_text("item_boomerang")
 		ItemTypes.RAINBOW_WAVE:
 			id_str = "RainbowWave"
-			name_str = Statics.get_text("item_rainbowWave")
 		ItemTypes.DEVASTATOR:
 			id_str = "Devastator"
-			name_str = Statics.get_text("item_devastator")
 			box.shape.size = Vector2(44, 28)
 		ItemTypes.HIGH_JUMP:
 			id_str = "HighJump"
-			name_str = Statics.get_text("item_highJump")
 			if character == Player.Players.BLOBBY:
 				id_str = "WallGrab"
-				name_str = Statics.get_text("item_wallGrab")
 		ItemTypes.SHELL_SHIELD:
 			id_str = "ShellShield"
-			name_str = Statics.get_text("item_shellShield")
 			if character == Player.Players.BLOBBY:
 				id_str = "Shelmet"
-				name_str = Statics.get_text("item_shelmet")
 		ItemTypes.RAPID_FIRE:
 			id_str = "RapidFire"
-			name_str = Statics.get_text("item_rapidFire")
 			if character == Player.Players.LEECHY:
 				id_str = "Backfire"
-				name_str = Statics.get_text("item_backfire")
 		ItemTypes.ICE_SHELL:
 			id_str = "IceSnail"
-			name_str = Statics.get_text("item_iceSnail") % species
 		ItemTypes.GRAVITY_SHELL:
 			match character:
 				Player.Players.UPSIDE:
 					id_str = "MagneticFoot"
-					name_str = Statics.get_text("item_magneticFoot")
 				Player.Players.LEGGY:
 					id_str = "CorkscrewJump"
-					name_str = Statics.get_text("item_corkscrewJump")
 				Player.Players.BLOBBY:
 					id_str = "AngelJump"
-					name_str = Statics.get_text("item_angelJump")
 				_:
 					id_str = "GravitySnail"
-					name_str = Statics.get_text("item_gravSnail") % species
 		ItemTypes.METAL_SHELL:
 			id_str = "FullMetalSnail"
-			match character:
-				Player.Players.SLUGGY or Player.Players.LEECHY:
-					name_str = Statics.get_text("item_fullMetalSnail_noShell") % species
-				Player.Players.BLOBBY:
-					name_str = Statics.get_text("item_fullMetalSnail_blob") % species
-				_:
-					name_str = Statics.get_text("item_fullMetalSnail_generic") % species
 		ItemTypes.GRAVITY_SHOCK:
 			id_str = "GravityShock"
-			name_str = Statics.get_text("item_gravityShock")
 		ItemTypes.SECRET_BOOMERANG:
 			id_str = "Boomerang"
-			name_str = Statics.get_text("item_boomerang_secret")
 		ItemTypes.DEBUG_WAVE:
 			id_str = "RainbowWave"
-			name_str = Statics.get_text("item_rainbowWave_secret")
 		ItemTypes.HEART_CONTAINER:
 			id_str = "HeartContainer"
 		ItemTypes.HELIX_FRAGMENT:
@@ -138,25 +114,88 @@ func _ready() -> void:
 		#ItemTypes.RADAR_SHELL:
 		ItemTypes.WEAPON_LOCK_TRAP:
 			id_str = "TrapItem"
-			name_str = Statics.get_text("item_trapWeapon")
 		ItemTypes.GRAVITY_LOCK_TRAP:
 			id_str = "TrapItem"
-			name_str = Statics.get_text("item_trapGravity")
 		ItemTypes.LULLABY_TRAP:
 			id_str = "TrapItem"
-			name_str = Statics.get_text("item_trapLullaby")
 		ItemTypes.SPIDER_TRAP:
 			id_str = "TrapItem"
-			name_str = Statics.get_text("item_trapSpider")
 		ItemTypes.WARP_TRAP:
 			id_str = "TrapItem"
-			name_str = Statics.get_text("item_trapWarp")
 		_:
 			id_str = "ItemBoundaryVisual"
 	sprite = JsonSprite2D.new()
 	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
 	add_child.call_deferred(sprite)
 	sprite.action = "item"
+
+
+func get_name_str_from_id(id:ItemTypes) -> String:
+	var character = int(Statics.current_profile["character"])
+	var species = Statics.get_character_species_string(character)
+	match id:
+		ItemTypes.PEASHOOTER:
+			return Statics.get_text("item_peashooter")
+		ItemTypes.BOOMERANG:
+			return Statics.get_text("item_boomerang")
+		ItemTypes.RAINBOW_WAVE:
+			return Statics.get_text("item_rainbowWave")
+		ItemTypes.DEVASTATOR:
+			return Statics.get_text("item_devastator")
+		ItemTypes.HIGH_JUMP:
+			if character == Player.Players.BLOBBY:
+				return Statics.get_text("item_wallGrab")
+			return Statics.get_text("item_highJump")
+		ItemTypes.SHELL_SHIELD:
+			if character == Player.Players.BLOBBY:
+				return Statics.get_text("item_shelmet")
+			return Statics.get_text("item_shellShield")
+		ItemTypes.RAPID_FIRE:
+			if character == Player.Players.LEECHY:
+				return Statics.get_text("item_backfire")
+			return Statics.get_text("item_rapidFire")
+		ItemTypes.ICE_SHELL:
+			return Statics.get_text("item_iceSnail") % species
+		ItemTypes.GRAVITY_SHELL:
+			match character:
+				Player.Players.UPSIDE:
+					return Statics.get_text("item_magneticFoot")
+				Player.Players.LEGGY:
+					return Statics.get_text("item_corkscrewJump")
+				Player.Players.BLOBBY:
+					return Statics.get_text("item_angelJump")
+				_:
+					return Statics.get_text("item_gravSnail") % species
+		ItemTypes.METAL_SHELL:
+			match character:
+				Player.Players.SLUGGY or Player.Players.LEECHY:
+					return Statics.get_text("item_fullMetalSnail_noShell") % species
+				Player.Players.BLOBBY:
+					return Statics.get_text("item_fullMetalSnail_blob") % species
+				_:
+					return Statics.get_text("item_fullMetalSnail_generic") % species
+		ItemTypes.GRAVITY_SHOCK:
+			return Statics.get_text("item_gravityShock")
+		ItemTypes.SECRET_BOOMERANG:
+			return Statics.get_text("item_boomerang_secret")
+		ItemTypes.DEBUG_WAVE:
+			return Statics.get_text("item_rainbowWave_secret")
+		ItemTypes.HEART_CONTAINER:
+			return Statics.get_text("item_heartContainer_noNum")
+		ItemTypes.HELIX_FRAGMENT:
+			return Statics.get_text("item_helixFragment_noNum")
+		#ItemTypes.RADAR_SHELL:
+		ItemTypes.WEAPON_LOCK_TRAP:
+			return Statics.get_text("item_trapWeapon")
+		ItemTypes.GRAVITY_LOCK_TRAP:
+			return Statics.get_text("item_trapGravity")
+		ItemTypes.LULLABY_TRAP:
+			return Statics.get_text("item_trapLullaby")
+		ItemTypes.SPIDER_TRAP:
+			return Statics.get_text("item_trapSpider")
+		ItemTypes.WARP_TRAP:
+			return Statics.get_text("item_trapWarp")
+	return "item_nothing"
 
 
 func _process(delta: float) -> void:

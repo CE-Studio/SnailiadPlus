@@ -474,6 +474,7 @@
 	"subscreen_header_weapon": "Weapon",
 	"subscreen_header_shell": "Body",
 	"subscreen_header_ability": "Ability",
+	"subscreen_header_unknown": "?????",
 	"subscreen_shellNormal": "Normal %s",
 	"subscreen_shell": "shell",
 	"subscreen_markers": "Press \"%s\" to set markers",

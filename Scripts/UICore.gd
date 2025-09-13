@@ -112,7 +112,7 @@ func set_all_visibility_from_settings() -> void:
 	igt.position = BL_TEXT_ORIGIN
 	fps.position = BL_TEXT_ORIGIN
 	
-	minimap.update_visible(minimap.fade_override)
+	minimap.update_visible_from_settings(minimap.fade_override)
 	
 	input_display.visible = false
 	if ProjectSettings.get_setting("game/ui/keymap"):
@@ -267,11 +267,11 @@ func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 	popup_layer.add_child(active_boss_bar)
 	active_boss_bar.position = Vector2(200, tl.position.y)
 	active_boss_bar.boss = boss
-	minimap.update_visible(0.0, true)
+	minimap.update_visible_from_settings(0.0, true)
 	return active_boss_bar
 
 
 func clear_boss_bar() -> void:
 	if active_boss_bar != null:
 		active_boss_bar.queue_free()
-	minimap.update_visible(1.0)
+	minimap.update_visible_from_settings(1.0)

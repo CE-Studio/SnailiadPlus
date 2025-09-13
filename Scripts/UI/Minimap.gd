@@ -100,8 +100,13 @@ func _ready() -> void:
 	log_markers()
 
 
-func update_visible(target_fade:float = 1.0, quick_fade:bool = false) -> void:
-	match ProjectSettings.get_setting("game/ui/minimap"):
+func update_visible_from_settings(target_fade:float = 1.0, quick_fade:bool = false) -> void:
+	var mode = ProjectSettings.get_setting("game/ui/minimap")
+	update_visible(mode, target_fade, quick_fade)
+
+
+func update_visible(mode:int, target_fade:float = 1.0, quick_fade:bool = false) -> void:
+	match mode:
 		0:
 			visible = false
 		1:

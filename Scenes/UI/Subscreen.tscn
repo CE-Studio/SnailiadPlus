@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpfe8sxp7e2kp"]
+[gd_scene load_steps=9 format=3 uid="uid://dpfe8sxp7e2kp"]
 
 [ext_resource type="Script" uid="uid://dljhb3wxvqdup" path="res://Scripts/UI/Subscreen.gd" id="1_gcfo6"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_i7mg0"]
@@ -7,10 +7,22 @@
 [ext_resource type="Texture2D" uid="uid://ypov61wmfy4r" path="res://Assets/Images/UI/SubscreenSeparator.png" id="4_shvbi"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_ndsvi"]
 [ext_resource type="Texture2D" uid="uid://bb8hyp40krwaw" path="res://Assets/Images/UI/SubscreenPlayers.png" id="6_teiof"]
+[ext_resource type="Texture2D" uid="uid://bx5a6muw3qefk" path="res://Assets/Images/UI/SubscreenSelector.png" id="8_f6p1s"]
 
-[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators")]
+[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "header_weapon", "header_shell", "header_ability", "name_box", "name_text", "selector", "selector_spr")]
+process_mode = 3
 script = ExtResource("1_gcfo6")
-separators = [NodePath("Separator1"), NodePath("Separator2"), NodePath("Separator3"), NodePath("Separator4")]
+separators = [NodePath("GroupName"), NodePath("GroupWeapon"), NodePath("GroupShell"), NodePath("GroupAbility")]
+body = NodePath("Body")
+player_icon = NodePath("GroupName/PlayerIcon")
+header_name = NodePath("GroupName/HBox/HeaderName")
+header_weapon = NodePath("GroupWeapon/HBox/HeaderWeapon")
+header_shell = NodePath("GroupShell/HBox/HeaderShell")
+header_ability = NodePath("GroupAbility/HBox/HeaderAbility")
+name_box = NodePath("GroupName/Box")
+name_text = NodePath("GroupName/Box/Name")
+selector = NodePath("Selector")
+selector_spr = NodePath("Selector/Sprite")
 
 [node name="Body" type="Sprite2D" parent="."]
 position = Vector2(200, 144)
@@ -28,81 +40,146 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="MinimapTarget" type="Marker2D" parent="."]
 position = Vector2(288, 112)
 
-[node name="Separator1" type="Sprite2D" parent="."]
+[node name="GroupName" type="Sprite2D" parent="."]
 position = Vector2(37, 40)
 script = ExtResource("1_i7mg0")
 texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Separator1"]
+[node name="MarkerSprite" type="Sprite2D" parent="GroupName"]
 texture = ExtResource("4_shvbi")
 script = ExtResource("3_shvbi")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Separator2" type="Sprite2D" parent="."]
-position = Vector2(37, 80)
-script = ExtResource("1_i7mg0")
-texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="HBox" type="HBoxContainer" parent="GroupName"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
 
-[node name="MarkerSprite" type="Sprite2D" parent="Separator2"]
-texture = ExtResource("4_shvbi")
-script = ExtResource("3_shvbi")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Separator3" type="Sprite2D" parent="."]
-position = Vector2(37, 130)
-script = ExtResource("1_i7mg0")
-texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Separator3"]
-texture = ExtResource("4_shvbi")
-script = ExtResource("3_shvbi")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Separator4" type="Sprite2D" parent="."]
-position = Vector2(37, 184)
-script = ExtResource("1_i7mg0")
-texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Separator4"]
-texture = ExtResource("4_shvbi")
-script = ExtResource("3_shvbi")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="HeaderName" parent="." instance=ExtResource("5_ndsvi")]
+[node name="HeaderName" parent="GroupName/HBox" instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(24, 0)
-offset_left = 17.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 63.0
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Name"
 text_scale = 1
 quick_load_text = "subscreen_header_name"
 shadow_scale = 1
 
-[node name="PlayerIcon" type="Sprite2D" parent="."]
-position = Vector2(142, 47)
+[node name="PlayerIcon" type="Sprite2D" parent="GroupName"]
+position = Vector2(105, 7)
 script = ExtResource("1_i7mg0")
 texture_path = "res://Assets/Images/UI/SubscreenPlayers.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="PlayerIcon"]
+[node name="MarkerSprite" type="Sprite2D" parent="GroupName/PlayerIcon"]
 texture = ExtResource("6_teiof")
 hframes = 2
 vframes = 3
 script = ExtResource("3_shvbi")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Name" parent="." instance=ExtResource("5_ndsvi")]
+[node name="Box" type="HBoxContainer" parent="GroupName"]
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 104.0
+offset_bottom = 38.0
+
+[node name="Name" parent="GroupName/Box" instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(124, 0)
-offset_left = 17.0
-offset_top = 38.0
-offset_right = 141.0
-offset_bottom = 70.0
+layout_mode = 2
 text = "Snaily Snail"
 quick_load_text = "subscreen_header_name"
 shadow_scale = 1
+
+[node name="GroupWeapon" type="Sprite2D" parent="."]
+position = Vector2(37, 80)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupWeapon"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupWeapon"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
+
+[node name="HeaderWeapon" parent="GroupWeapon/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Weapon"
+text_scale = 1
+quick_load_text = "subscreen_header_weapon"
+shadow_scale = 1
+
+[node name="GroupShell" type="Sprite2D" parent="."]
+position = Vector2(37, 130)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupShell"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupShell"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
+
+[node name="HeaderShell" parent="GroupShell/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Body"
+text_scale = 1
+quick_load_text = "subscreen_header_shell"
+shadow_scale = 1
+
+[node name="GroupAbility" type="Sprite2D" parent="."]
+position = Vector2(37, 184)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupAbility"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupAbility"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 47.0
+
+[node name="HeaderAbility" parent="GroupAbility/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Ability"
+text_scale = 1
+quick_load_text = "subscreen_header_ability"
+shadow_scale = 1
+
+[node name="Selector" type="Node2D" parent="."]
+position = Vector2(10, 50)
+
+[node name="Sprite" type="Sprite2D" parent="Selector"]
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSelector.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Selector/Sprite"]
+texture = ExtResource("8_f6p1s")
+hframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
