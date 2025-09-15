@@ -130,9 +130,10 @@ func _ready() -> void:
 	sprite.action = "item"
 
 
-func get_name_str_from_id(id:ItemTypes) -> String:
+static func get_name_str_from_id(id:ItemTypes, specify_shell:bool = false) -> String:
 	var character = int(Statics.current_profile["character"])
 	var species = Statics.get_character_species_string(character)
+	var shell = Statics.get_text("subscreen_shell")
 	match id:
 		ItemTypes.PEASHOOTER:
 			return Statics.get_text("item_peashooter")
@@ -173,6 +174,8 @@ func get_name_str_from_id(id:ItemTypes) -> String:
 				Player.Players.BLOBBY:
 					return Statics.get_text("item_fullMetalSnail_blob") % species
 				_:
+					if specify_shell:
+						return Statics.get_text("item_fullMetalSnail_generic") % shell
 					return Statics.get_text("item_fullMetalSnail_generic") % species
 		ItemTypes.GRAVITY_SHOCK:
 			return Statics.get_text("item_gravityShock")
@@ -195,6 +198,13 @@ func get_name_str_from_id(id:ItemTypes) -> String:
 			return Statics.get_text("item_trapSpider")
 		ItemTypes.WARP_TRAP:
 			return Statics.get_text("item_trapWarp")
+	if specify_shell:
+		var normal = Statics.get_text("subscreen_shellNormal")
+		match character:
+			Player.Players.SLUGGY or Player.Players.BLOBBY or Player.Players.LEECHY:
+				return normal % species
+			_:
+				return normal % shell
 	return "item_nothing"
 
 
