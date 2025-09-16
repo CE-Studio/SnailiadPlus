@@ -27,6 +27,16 @@ const SUB_ITEMS:Dictionary = {
 }
 const GROUP_SELECTION_X_OFFSET:float = 4.0
 const LIST_SPRITE_OFFSET:float = 10.0
+const SELECTOR_LIST_OFFSET:Vector2 = Vector2(-20.0, -1.0)
+const SELECTOR_SPEED:float = 20.0
+#const SELECTOR_NAME_TARGET:Vector2 = Vector2(10.0, 50.0)
+
+enum MoveMode {
+	NONE = -1,
+	LIST,
+	NAME,
+	MAP
+}
 
 var group_start_x:float = 0.0
 var elapsed:float = 0.0
@@ -34,6 +44,7 @@ var selection_depth:int = -1
 var selectable_items:Array = [] # Formatting: [ JsonSprite2D, Int ]
 var selection:int = -1
 var list_focused:bool = false
+var selector_target:Vector2 = Vector2.ZERO
 
 @export var separators:Array[JsonSprite2D] = []
 @export var body:JsonSprite2D
@@ -55,6 +66,11 @@ var list_focused:bool = false
 @export_file("*.json") var list_spr_json:String
 @export var sfx_move:AudioStreamPlayer
 @export var sfx_select:AudioStreamPlayer
+@export var sel_target_name:Marker2D
+@export var sel_target_map:Marker2D
+@export var map_target:Marker2D
+@export var desc_name:SnailyText
+@export var desc_body:SnailyText
 
 @onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 #endregion
@@ -70,7 +86,10 @@ func _ready() -> void:
 	for sep in separators:
 		sep.action = "anim"
 	selector_spr.action = "anim"
+	selector_target = sel_target_map.position
 	_init_item_slots()
+	desc_name.set_snaily_text_raw("")
+	desc_body.set_snaily_text_raw("")
 
 
 func _process(delta: float) -> void:
@@ -84,6 +103,9 @@ func _process(delta: float) -> void:
 	
 	if selection_depth < 0:
 		selection_depth = 0
+	
+	_test_for_move_selection()
+	selector.position = selector.position.lerp(selector_target, SELECTOR_SPEED * delta)
 
 
 func _init_item_slots() -> void:
@@ -162,4 +184,81 @@ func _get_item_count(id:Item.ItemTypes) -> int:
 
 
 func _test_for_move_selection() -> void:
-	pass
+	var move_mode:MoveMode = MoveMode.NONE
+	if list_focused:
+		if SInput.check_input(SInput.Inputs.RIGHT, true):
+			pass #map
+		elif SInput.check_input(SInput.Inputs.DOWN, true):
+			selection += 1
+			move_mode = MoveMode.LIST
+			if selection >= selectable_items.size():
+				selection = -1
+				move_mode = MoveMode.NAME
+		elif SInput.check_input(SInput.Inputs.UP, true):
+			selection -= 1
+			if selection == -1:
+				move_mode = MoveMode.NAME
+			else:
+				if selection < -1:
+					selection = selectable_items.size() - 1
+				move_mode = MoveMode.LIST
+	else:
+		if SInput.check_input(SInput.Inputs.LEFT, true):
+			list_focused = true
+			move_mode == MoveMode.NAME if selection == -1 else MoveMode.LIST
+	
+	if move_mode != MoveMode.NONE:
+		sfx_move.play()
+	match move_mode:
+		MoveMode.LIST:
+			selector_target = selectable_items[selection][0].global_position
+			selector_target -= UICore.instance.global_position
+			selector_target += SELECTOR_LIST_OFFSET
+			_set_desc(selectable_items[selection][1])
+		MoveMode.NAME:
+			selector_target = sel_target_name.position
+			_set_desc(-2)
+
+
+func _set_desc(id:int) -> void:
+	desc_name.visible = true
+	desc_name.set_snaily_text(Item.get_name_str_from_id(id, true))
+	var player = int(Statics.current_profile["character"])
+	match id:
+		Item.ItemTypes.PEASHOOTER:
+			desc_body.set_snaily_text("subscreen_desc_peashooter")
+		Item.ItemTypes.BOOMERANG:
+			desc_body.set_snaily_text("subscreen_desc_boomerang")
+		Item.ItemTypes.RAINBOW_WAVE:
+			desc_body.set_snaily_text("subscreen_desc_rainbowWave")
+		Item.ItemTypes.DEVASTATOR:
+			desc_body.set_snaily_text("subscreen_desc_devastator")
+		Item.ItemTypes.HIGH_JUMP:
+			if player == Player.Players.BLOBBY:
+				desc_body.set_snaily_text("subscreen_desc_wallGrab")
+			else:
+				desc_body.set_snaily_text("subscreen_desc_highJump")
+		Item.ItemTypes.SHELL_SHIELD:
+			if player == Player.Players.BLOBBY:
+				desc_body.set_snaily_text("subscreen_desc_shelmet")
+			else:
+				desc_body.set_snaily_text("subscreen_desc_shellShield")
+		Item.ItemTypes.RAPID_FIRE:
+			if player == Player.Players.LEECHY:
+				desc_body.set_snaily_text("subscreen_desc_backfire")
+			else:
+				desc_body.set_snaily_text("subscreen_desc_rapidFire")
+		Item.ItemTypes.NONE:
+			desc_body.set_snaily_text("subscreen_desc_normalShell")
+			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
+				desc_body.set_snaily_text("subscreen_desc_normalShell_afterWin")
+		Item.ItemTypes.ICE_SHELL:
+			desc_body.set_snaily_text("subscreen_desc_iceShell")
+		-2:
+			var pkeys = Player.Players.keys()
+			#desc_name.set_snaily_text("char_full_" + str(player))
+			desc_name.visible = false
+			desc_body.set_snaily_text("subscreen_desc_" + pkeys[player].to_lower())
+		_:
+			desc_name.set_snaily_text_raw("")
+			desc_body.set_snaily_text_raw("")
