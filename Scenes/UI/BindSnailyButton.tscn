@@ -20,7 +20,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_3lbwi")
 script = ExtResource("1_8mtia")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_atxd7")
 
@@ -44,7 +44,9 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/Label/MarginContainer" instance=ExtResource("3_atxd7")]
+custom_minimum_size = Vector2(46, 0)
 layout_mode = 2
+text = "left"
 scroll_active = true
 autowrap_mode = 0
 shadow_scale = 1
@@ -69,13 +71,13 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(14, 0)
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/Z.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 14
+max_width = 16
 shadow_scale = 1
 
 [node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
@@ -94,13 +96,13 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(14, 0)
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/K.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 14
+max_width = 16
 shadow_scale = 1
 
 [node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
@@ -119,13 +121,13 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(14, 0)
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 14
+max_width = 16
 shadow_scale = 1
 
 [node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
@@ -144,13 +146,13 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(14, 0)
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/R1.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 14
+max_width = 16
 shadow_scale = 1
 
 [node name="AudioGroup" type="Node" parent="."]
@@ -167,3 +169,11 @@ bus = &"Sfx"
 [connection signal="focus_exited" from="." to="." method="_on_exit_focus"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_over"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exit"]
+[connection signal="mouse_entered" from="PanelContainer/HBoxContainer/PriKey" to="." method="_on_mouse_entered_0"]
+[connection signal="mouse_exited" from="PanelContainer/HBoxContainer/PriKey" to="." method="_on_mouse_exit_slot"]
+[connection signal="mouse_entered" from="PanelContainer/HBoxContainer/SecKey" to="." method="_on_mouse_entered_1"]
+[connection signal="mouse_exited" from="PanelContainer/HBoxContainer/SecKey" to="." method="_on_mouse_exit_slot"]
+[connection signal="mouse_entered" from="PanelContainer/HBoxContainer/PriCon" to="." method="_on_mouse_entered_2"]
+[connection signal="mouse_exited" from="PanelContainer/HBoxContainer/PriCon" to="." method="_on_mouse_exit_slot"]
+[connection signal="mouse_entered" from="PanelContainer/HBoxContainer/SecCon" to="." method="_on_mouse_entered_3"]
+[connection signal="mouse_exited" from="PanelContainer/HBoxContainer/SecCon" to="." method="_on_mouse_exit_slot"]

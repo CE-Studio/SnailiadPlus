@@ -49,7 +49,7 @@ func _ready() -> void:
 	header.visible = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if panel.action == "idle" and currently_open and not currently_displaying:
 		currently_displaying = true
 		icon.visible = true

@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=3 uid="uid://wmn05t8atr6"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_k7lrv"]
+[ext_resource type="Script" uid="uid://c5dps66xy2ucs" path="res://Scripts/UI/InputDisplay.gd" id="1_p4hb2"]
+[ext_resource type="Texture2D" uid="uid://b2kd06qn8b4jk" path="res://Assets/Images/UI/DebugKey.png" id="3_ct6f5"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_cv0em"]
+
+[node name="InputDisplay" type="Node2D"]
+script = ExtResource("1_p4hb2")
+
+[node name="Left" type="Sprite2D" parent="."]
+position = Vector2(4, -4)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Left"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Down" type="Sprite2D" parent="."]
+position = Vector2(13, -4)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Down"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 1
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Up" type="Sprite2D" parent="."]
+position = Vector2(13, -13)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Up"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 2
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Right" type="Sprite2D" parent="."]
+position = Vector2(22, -4)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Right"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 3
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Jump" type="Sprite2D" parent="."]
+position = Vector2(31, -4)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Jump"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 4
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Shoot" type="Sprite2D" parent="."]
+position = Vector2(31, -13)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Shoot"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 5
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Strafe" type="Sprite2D" parent="."]
+position = Vector2(40, -13)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Strafe"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 6
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Gravity" type="Sprite2D" parent="."]
+position = Vector2(40, -4)
+script = ExtResource("1_k7lrv")
+texture_path = "res://Assets/Images/UI/DebugKey.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Gravity"]
+texture = ExtResource("3_ct6f5")
+hframes = 8
+vframes = 3
+frame = 7
+script = ExtResource("4_cv0em")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

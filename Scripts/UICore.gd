@@ -3,19 +3,26 @@ class_name UICore
 
 
 #region Variables
+const BL_TEXT_ORIGIN:Vector2 = Vector2(3, -12)
+const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
+const BL_TEXT_OFFSETS_LARGE:Vector2 = Vector2(0, -20)
+
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
 
 var flashy_popup_scene:PackedScene
 var color_popup_scene:PackedScene
+var boss_bar:PackedScene
 
 var active_area_label:Node
+var active_boss_bar:BossHealthBar
 
 static var instance:UICore
 
 @onready var cam:CamControl = $"Camera2D"
 @onready var heart_group:Node2D = $"TL/Hearts"
-@onready var color_cover:ColorCover = $"ColorCover"
+@onready var color_cover_top:ColorCover = $"ColorCoverTop"
+@onready var color_cover_bottom:ColorCover = $"ColorCoverBottom"
 @onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
@@ -23,6 +30,17 @@ static var instance:UICore
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:Node2D = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
+@onready var weapon_icon_group:Node2D = $"BR/WeaponIcons"
+@onready var igt:HBoxContainer = $"BL/InGameTime"
+@onready var igt_text:SnailyText = $"BL/InGameTime/Text"
+@onready var fps:HBoxContainer = $"BL/Framerate"
+@onready var fps_text:SnailyText = $"BL/Framerate/Text"
+@onready var input_display:InputDisplay = $"BL/InputDisplay"
+
+@onready var tl:Node2D = $"TL"
+@onready var tr:Node2D = $"TR"
+@onready var bl:Node2D = $"BL"
+@onready var br:Node2D = $"BR"
 #endregion
 
 
@@ -31,7 +49,7 @@ func instantiate() -> void:
 	cam.instantiate()
 	
 	var icon_id = 0
-	for icon in $"BR/WeaponIcons".get_children():
+	for icon in weapon_icon_group.get_children():
 		weapon_icons.append(icon)
 		weapon_icon_states.append(0)
 		icon.position += Vector2(0, 8)
@@ -45,6 +63,9 @@ func instantiate() -> void:
 	
 	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
 	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
+	boss_bar = preload("res://Scenes/UI/BossHealthBar.tscn")
+	
+	set_all_visibility_from_settings.call_deferred()
 
 
 func _process(delta: float) -> void:
@@ -62,15 +83,52 @@ func _process(delta: float) -> void:
 		var pos = weapon_icons[i].position
 		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
 		weapon_icons[i].position = pos
+	
+	# Framerate
+	var fps_int = int(Engine.get_frames_per_second())
+	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")
+	if fps_setting == 0:
+		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps") % fps_int)
+	else:
+		var target_fps:int = 60
+		match fps_setting:
+			1: target_fps = 30
+			2: target_fps = 60
+			3: target_fps = 120
+		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
+	
+	#IGT is counted up in GameCore.gd, being an aspect of the game/profile itself and not purely a HUD element
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
 	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
-	$"TL".position = -offset
-	$"TR".position = Vector2(400 + offset.x, -offset.y)
-	$"BL".position = Vector2(-offset.x, 240 + offset.y)
-	$"BR".position = Vector2(400 + offset.x, 240 + offset.y)
+	tl.position = -offset
+	tr.position = Vector2(400 + offset.x, -offset.y)
+	bl.position = Vector2(-offset.x, 240 + offset.y)
+	br.position = Vector2(400 + offset.x, 240 + offset.y)
 	set_border_anim(ratio_id)
+
+
+func set_all_visibility_from_settings() -> void:
+	igt.position = BL_TEXT_ORIGIN
+	fps.position = BL_TEXT_ORIGIN
+	
+	minimap.update_visible_from_settings(minimap.fade_override)
+	
+	input_display.visible = false
+	if ProjectSettings.get_setting("game/ui/keymap"):
+		input_display.visible = true
+		igt.position.y += BL_TEXT_OFFSETS_LARGE.y
+		fps.position.y += BL_TEXT_OFFSETS_LARGE.y
+	
+	igt.visible = false
+	if ProjectSettings.get_setting("game/ui/in_game_time"):
+		igt.visible = true
+		fps.position.y += BL_TEXT_OFFSETS.y
+	
+	fps.visible = ProjectSettings.get_setting("game/ui/fps_counter")
+	
+	weapon_icon_group.visible = ProjectSettings.get_setting("game/ui/bottom_keys")
 
 
 func update_weapon_icons() -> void:
@@ -157,6 +215,7 @@ func play_bestiary_anim() -> void:
 
 func set_border_anim(anim_id:int) -> void:
 	border.action = str(anim_id)
+	border._process(0.0)
 
 
 func show_item_collection_text(item_label:String) -> void:
@@ -171,9 +230,7 @@ func show_item_collection_text(item_label:String) -> void:
 
 
 func show_area_text(area_id:int) -> void:
-	if active_area_label != null:
-		active_area_label.queue_free()
-	
+	clear_area_text()
 	var area_label = color_popup_scene.instantiate()
 	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE
@@ -197,3 +254,25 @@ func show_area_text(area_id:int) -> void:
 			area_label.add_child(border)
 			border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
 			border.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
+
+
+func clear_area_text() -> void:
+	if active_area_label != null:
+		active_area_label.queue_free()
+
+
+func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
+	clear_area_text()
+	clear_boss_bar()
+	active_boss_bar = boss_bar.instantiate()
+	popup_layer.add_child(active_boss_bar)
+	active_boss_bar.position = Vector2(200, tl.position.y)
+	active_boss_bar.boss = boss
+	minimap.update_visible_from_settings(0.0, true)
+	return active_boss_bar
+
+
+func clear_boss_bar() -> void:
+	if active_boss_bar != null:
+		active_boss_bar.queue_free()
+	minimap.update_visible_from_settings(1.0)

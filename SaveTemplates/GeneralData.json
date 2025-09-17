@@ -26,5 +26,6 @@
 	"stick_aim_mode": 0,
 	"grav_swap_type": 0,
 	"grav_keep_type": 0,
-	"darkness_level": 3
+	"darkness_level": 3,
+	"controls": []
 }

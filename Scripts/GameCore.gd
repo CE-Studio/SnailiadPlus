@@ -29,7 +29,35 @@ func _ready() -> void:
 	player.selected_weapon = Statics.current_profile["equipped_weapons"]
 	cam_layer.cam.set_layer_position(player.position)
 	cam_layer.update_weapon_icons()
-	cam_layer.configure_for_aspect_ratio(int(Statics.data_general["aspect_ratio"]))
+	cam_layer.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
+
+
+func _process(delta: float) -> void:
+	inc_game_time(delta)
+
+
+func inc_game_time(delta:float) -> void:
+	if get_tree().paused:
+		return
+	
+	var cur_time = Statics.current_profile["game_time"].duplicate()
+	cur_time[2] += delta
+	if cur_time[2] >= 60.0:
+		cur_time[2] -= 60.0
+		cur_time[1] += 1
+	if cur_time[1] >= 60:
+		cur_time[1] -= 60
+		cur_time[0] += 1
+	Statics.current_profile["game_time"] = cur_time.duplicate()
+	
+	if UICore.instance:
+		var time_str:String = ""
+		if cur_time[0] > 0:
+			time_str = Statics.get_text("hud_igt_hms") % [ cur_time[0], cur_time[1], cur_time[2] ]
+		else:
+			time_str = Statics.get_text("hud_igt_ms") % [ cur_time[1], cur_time[2] ]
+		time_str = time_str.strip_edges()
+		UICore.instance.igt_text.set_snaily_text_raw(time_str)
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:

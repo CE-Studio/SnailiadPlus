@@ -25,7 +25,7 @@ func _read_rooms_log_markers() -> void:
 		if room_scene is Room:
 			var room_children:Array = _grab_nodes_recursive(room_scene)
 			for child in room_children:
-				if child is SavePoint or child is Item:
+				if child is SavePoint or child is Item or child is Boss:
 					var screen_pos = Minimap.world_position_to_screen_coordinate(child.position)
 					screen_pos += room_scene.minimap_offset
 					var array_i = screen_pos.x + (screen_pos.y * Minimap.MAP_SIZE.x)
@@ -33,6 +33,8 @@ func _read_rooms_log_markers() -> void:
 						Minimap.unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.SAVE
 					if child is Item:
 						Minimap.unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
+					if child is Boss:
+						Minimap.unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
 
 
 func _grab_files_recursive(path:String, files:Array = []) -> Array:

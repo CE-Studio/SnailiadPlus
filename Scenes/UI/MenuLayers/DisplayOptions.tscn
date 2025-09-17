@@ -1,91 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://bms4bml0e80ji"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_6as5y"]
+[ext_resource type="Script" uid="uid://d0obh6jkecpl" path="res://Scripts/UI/MenuLayers/DisplayOptions.gd" id="2_0fbpc"]
 [ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="2_fqkyc"]
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_jxl7l"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_msw3w"]
 [ext_resource type="PackedScene" uid="uid://cm0i4dyk1srik" path="res://Scenes/UI/ToggleSnailyButton.tscn" id="4_jxl7l"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="6_45c1g"]
-
-[sub_resource type="GDScript" id="GDScript_45c1g"]
-resource_name = "DisplayOptions"
-script/source = "extends VBoxContainer
-
-
-func _ready() -> void:
-	$\"ScrollContainer/VBoxContainer/Scale\".remote_set_option(int(Statics.data_general[\"window_scale\"]))
-	$\"ScrollContainer/VBoxContainer/Ratio\".remote_set_option(int(Statics.data_general[\"aspect_ratio\"]))
-	$\"ScrollContainer/VBoxContainer/Minimap\".remote_set_option(int(Statics.data_general[\"minimap_state\"]))
-	$\"ScrollContainer/VBoxContainer/BottomKeys\".remote_set_option(int(Statics.data_general[\"bottom_key_state\"]))
-	$\"ScrollContainer/VBoxContainer/InputMap\".toggled_on = bool(Statics.data_general[\"keymap_toggle\"])
-	$\"ScrollContainer/VBoxContainer/InGameTime\".toggled_on = bool(Statics.data_general[\"time_toggle\"])
-	$\"ScrollContainer/VBoxContainer/Framerate\".toggled_on = bool(Statics.data_general[\"fps_toggle\"])
-	$\"ScrollContainer/VBoxContainer/Particles\".remote_set_option(int(Statics.data_general[\"particle_state\"]))
-	$\"ScrollContainer/VBoxContainer/Darkness\".remote_set_option(int(Statics.data_general[\"darkness_level\"]))
-	$\"ScrollContainer/VBoxContainer/PaletteShader\".toggled_on = bool(Statics.data_general[\"palette_shader_toggle\"])
-	$\"ScrollContainer/VBoxContainer/DistortShader\".toggled_on = bool(Statics.data_general[\"distort_shader_toggle\"])
-
-
-func on_scale_cycled(value) -> void:
-	set_window_size(value, Statics.ASPECT_RATIOS[Statics.data_general[\"aspect_ratio\"]])
-	Statics.data_general[\"window_scale\"] = value
-
-
-func on_ratio_cycled(value) -> void:
-	var this_ratio = Statics.ASPECT_RATIOS[value]
-	set_window_size(Statics.data_general[\"window_scale\"], this_ratio)
-	Statics.data_general[\"aspect_ratio\"] = value
-
-
-func on_minimap_cycled(value) -> void:
-	Statics.data_general[\"minimap_state\"] = value
-
-
-func on_bottom_keys_cycled(value) -> void:
-	Statics.data_general[\"bottom_key_state\"] = value
-
-
-func on_input_map_toggled(value) -> void:
-	Statics.data_general[\"keymap_toggle\"] = value
-
-
-func on_igt_toggled(value) -> void:
-	Statics.data_general[\"time_toggle\"] = value
-
-
-func on_fps_toggled(value) -> void:
-	Statics.data_general[\"fps_toggle\"] = value
-
-
-func on_particles_cycled(value) -> void:
-	Statics.data_general[\"particle_state\"] = value
-
-
-func on_darkness_cycled(value) -> void:
-	Statics.data_general[\"darkness_level\"] = value
-
-
-func on_pshader_toggled(value) -> void:
-	Statics.data_general[\"palette_shader_toggle\"] = value
-
-
-func on_dshader_toggled(value) -> void:
-	Statics.data_general[\"distort_shader_toggle\"] = value
-
-
-func set_window_size(_scale:int, _ratio:Vector2i) -> void:
-	var new_size:Vector2i = _ratio * (_scale + 1)
-	var window = get_window()
-	#ProjectSettings.set_setting(\"display/window/size/viewport_width\", new_size.x)
-	#ProjectSettings.set_setting(\"display/window/size/viewport_height\", new_size.y)
-	#DisplayServer.window_set_size(new_size)
-	var old_size = window.size
-	var old_position = window.position
-	window.size = new_size
-	window.content_scale_factor = _scale + 1
-	var difference = new_size - old_size
-	window.position = old_position - Vector2i(difference * 0.5)
-"
 
 [node name="DisplayOptions" type="Node2D"]
 script = ExtResource("1_6as5y")
@@ -99,7 +20,7 @@ offset_bottom = 220.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
-script = SubResource("GDScript_45c1g")
+script = ExtResource("2_0fbpc")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainVBox"]
 custom_minimum_size = Vector2(0, 140)
@@ -158,7 +79,7 @@ auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_hide", "menu_add_mapOnly", "menu_add_generic_show"])
 focus_option = 2
 
-[node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Minimap")
@@ -166,10 +87,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../InputMap")
 focus_next = NodePath("../InputMap")
 focus_previous = NodePath("../Minimap")
-header_id = "menu_option_display_bottomKeys"
-auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_hide", "menu_add_bottomKeyWeaponOnly", "menu_add_generic_show"])
-focus_option = 2
+text_id = "menu_option_display_bottomKeys"
 
 [node name="InputMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -263,7 +181,7 @@ hide_frame = true
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Scale" to="MainVBox" method="on_scale_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Ratio" to="MainVBox" method="on_ratio_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Minimap" to="MainVBox" method="on_minimap_cycled"]
-[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/BottomKeys" to="MainVBox" method="on_bottom_keys_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/BottomKeys" to="MainVBox" method="on_bottom_keys_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InputMap" to="MainVBox" method="on_input_map_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InGameTime" to="MainVBox" method="on_igt_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fps_toggled"]

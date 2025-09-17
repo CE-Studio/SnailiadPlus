@@ -20,7 +20,12 @@ var active_layers:int
 var active_layer:MenuLayer
 var selector_y_offset:float
 var spawn_buffer_frames:int = 2
-var read_inputs:bool = true
+var read_inputs:bool = true:
+	set(value):
+		read_inputs = value
+		if not value:
+			read_esc = value
+var read_esc:bool = false
 
 @onready var title:Node2D = $"Title"
 @onready var version_text:SnailyText = $"Version"
@@ -44,7 +49,7 @@ func _ready() -> void:
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
 		if not Statics.main_menu_booted_once:
-			var saved_ver := Statics.parse_version_to_array(Statics.data_general["game_version"])
+			var saved_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/old_version"))
 			var current_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
 			var ver_compare := Statics.compare_versions(saved_ver, current_ver)
 			if ver_compare == 1:
@@ -91,7 +96,7 @@ func _process(delta: float) -> void:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 		if ((SInput.input_just_pressed(SInput.Inputs.PAUSE) or SInput.input_just_pressed(SInput.Inputs.UI_BACK))
-		and spawn_buffer_frames <= 0 and read_inputs):
+		and spawn_buffer_frames <= 0 and read_esc):
 			selector_y_offset = 0
 			if active_layers > 1 or not is_main_menu:
 				clear_top_layer(0)
@@ -131,6 +136,9 @@ func _process(delta: float) -> void:
 			version_text.modulate.a = lerp(asset_a, 1.0, rate_delta)
 		selectors[0].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
 		selectors[1].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
+	
+	if read_inputs and not read_esc:
+		read_esc = true
 
 
 func spawn_menu() -> void:
@@ -141,7 +149,6 @@ func spawn_menu() -> void:
 			version_panel.queue_free()
 			$"ColorCover".set_new_fade($"ColorCover".end_color, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 		if not Statics.main_menu_booted_once:
-			Statics.data_general["game_version"] = ProjectSettings.get_setting("application/config/version")
 			Statics.save_general()
 			Statics.current_profile = Statics.data_profile1
 		Statics.main_menu_booted_once = true

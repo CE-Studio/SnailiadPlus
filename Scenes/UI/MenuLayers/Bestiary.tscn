@@ -1,172 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://capqop150dmrx"]
+[gd_scene load_steps=11 format=3 uid="uid://capqop150dmrx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_blq8n"]
 [ext_resource type="Texture2D" uid="uid://c21s6w3gptrlt" path="res://Assets/Images/UI/BestiaryBackground.png" id="2_jdu1y"]
+[ext_resource type="Script" uid="uid://bllk3lh1381tj" path="res://Scripts/UI/MenuLayers/Bestiary.gd" id="3_8bw4w"]
 [ext_resource type="Texture2D" uid="uid://dcnlyrwm2srdm" path="res://Assets/Images/UI/BestiarySelector.png" id="3_gx5uf"]
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="3_wfk3g"]
 [ext_resource type="Texture2D" uid="uid://cqv3m8uc5txwd" path="res://Assets/Images/UI/ScrollPanelBare.png" id="4_gx5uf"]
+[ext_resource type="Texture2D" uid="uid://bvquc2c5jmqyb" path="res://Assets/Images/UI/BestiaryEntityMask.png" id="4_obml4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_obml4"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="6_wfk3g"]
-
-[sub_resource type="GDScript" id="GDScript_jdu1y"]
-resource_name = "Bestiary"
-script/source = "extends Sprite2D
-
-
-#region Variables
-const NAME_STR:String = \"entity_%s_name\"
-const DESC_STR:String = \"entity_%s_desc\"
-const ENEMY_PATH:String = \"res://Scenes/Entities/Enemies/%s.tscn\"
-const FOCUS_COLOR_SPEED:float = 4.5
-const SELECTOR_WIGGLE_SPEED:float = 3.8
-const SELECTOR_EASE_RATE:float = 20.0
-const SELECTOR_Y_MARGIN:int = 20
-
-var parent_layer:MenuLayer
-var text_color:Color = Statics.get_color(Vector2i(0, 4))
-var list_items:Array[SnailyText] = []
-var entity_list:Array[String] = []
-var entry_states:Array[bool] = []
-var elapsed:float = 0.0
-var focused_text:SnailyText = null
-var selector_origin_x:float = 0.0
-var selection:int = 0
-
-@onready var text_scene:PackedScene = preload(\"res://Scenes/internals/SnailyText.tscn\")
-@onready var scroll_list:VBoxContainer = $\"ScrollPanel/EntityList\"
-@onready var sfx_beep:AudioStreamPlayer = $\"Beep\"
-@onready var selector:Node2D = $\"Selector\"
-@onready var name_text:SnailyText = $\"Name\"
-@onready var desc_text:SnailyText = $\"Description\"
-@onready var display_enemies:Array[Enemy] = []
-@onready var enemy_spawn:Node2D = $\"EntityOrigin\"
-#endregion
-
-
-func _ready() -> void:
-	parent_layer = get_parent()
-	
-	var enemy_enums := Enemy.EnemyTypes.keys()
-	for enemy in enemy_enums:
-		if enemy is String:
-			entity_list.append(enemy.to_camel_case())
-	
-	for i in range(entity_list.size()):
-		var entity := entity_list[i]
-		if not Statics.check_bestiary_entry(i):
-			entity = \"none\"
-			entry_states.append(false)
-		else:
-			entry_states.append(true)
-		entity = NAME_STR % entity
-		var new_text:SnailyText = text_scene.instantiate()
-		new_text.text_scale = 1
-		new_text.max_width = 112
-		new_text.name = str(i)
-		new_text.modulate = text_color
-		new_text.set_snaily_text(entity)
-		scroll_list.add_child(new_text)
-		list_items.append(new_text)
-		#region Set focus
-		new_text.focus_mode = Control.FOCUS_ALL
-		var this_focus = \"../\" + str(i)
-		var last_focus = \"../\" + str(i - 1)
-		var next_focus = \"../\" + str(i + 1)
-		if i == 0:
-			last_focus = \"../\" + str(entity_list.size() - 1)
-		if i == entity_list.size() - 1:
-			next_focus = \"../\" + str(0)
-		new_text.focus_neighbor_left = this_focus
-		new_text.focus_neighbor_right = this_focus
-		new_text.focus_neighbor_bottom = next_focus
-		new_text.focus_next = next_focus
-		new_text.focus_neighbor_top = last_focus
-		new_text.focus_previous = last_focus
-		#endregion
-		new_text.focus_entered.connect(_on_text_focused)
-	
-	if list_items.size() > 0:
-		list_items[0].grab_focus()
-	
-	selector_origin_x = selector.position.x
-	
-	name_text.modulate = text_color
-	desc_text.modulate = text_color
-	_update_entry_display()
-
-
-func _process(delta: float) -> void:
-	elapsed += delta
-	for text in list_items:
-		if text == focused_text:
-			var elapsed_mod:float = abs(sin(elapsed * FOCUS_COLOR_SPEED))
-			text.modulate = text_color.lerp(Color.WHITE, elapsed_mod)
-		else:
-			text.modulate = text_color
-	
-	selector.position.x = selector_origin_x + sin(elapsed * SELECTOR_WIGGLE_SPEED)
-	selector.global_position.y = clampf(
-		lerpf(
-			selector.global_position.y,
-			focused_text.global_position.y + 5,
-			SELECTOR_EASE_RATE * delta
-		),
-		parent_layer.global_position.y + SELECTOR_Y_MARGIN,
-		parent_layer.global_position.y + 240 - SELECTOR_Y_MARGIN
-	)
-
-
-func _on_text_focused() -> void:
-	focused_text = get_viewport().gui_get_focus_owner()
-	sfx_beep.play()
-	selection = int(focused_text.name)
-	_update_entry_display()
-
-
-func _update_entry_display() -> void:
-	if display_enemies.size() > 0:
-		for enemy in display_enemies:
-			enemy.queue_free()
-		display_enemies.clear()
-	var has_entry := entry_states[selection]
-	var this_entity := entity_list[selection] if has_entry else \"none\"
-	name_text.set_snaily_text(NAME_STR % this_entity)
-	desc_text.set_snaily_text(DESC_STR % this_entity)
-	if has_entry:
-		spawn_display_entity(this_entity)
-
-
-func spawn_display_entity(entity:String) -> void:
-	match entity:
-		\"babyfish\":
-			var fish1 = spawn_entity(\"babyfish1\")
-			enemy_spawn.add_child(fish1)
-			fish1.position = Vector2.LEFT * 12
-			var fish2 = spawn_entity(\"babyfish2\")
-			enemy_spawn.add_child(fish2)
-			fish2.position = Vector2.RIGHT * 12
-		# floatspike
-		\"chirpy\":
-			var chirpy1 = spawn_entity(\"chirpy_common\")
-			enemy_spawn.add_child(chirpy1)
-			chirpy1.position = Vector2.LEFT * 16
-			var chirpy2 = spawn_entity(\"chirpy_tough\")
-			enemy_spawn.add_child(chirpy2)
-			chirpy2.position = Vector2.RIGHT * 16
-		# snakey
-		# kitty
-		_:
-			var general_enemy = spawn_entity(entity)
-			enemy_spawn.add_child(general_enemy)
-			general_enemy.position = Vector2.ZERO
-
-
-func spawn_entity(entity:String) -> Enemy:
-	var new_enemy:Enemy = load(ENEMY_PATH % entity.to_pascal_case()).instantiate()
-	new_enemy.display_mode = true
-	display_enemies.append(new_enemy)
-	return new_enemy
-"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8bw4w"]
 texture = ExtResource("4_gx5uf")
@@ -183,14 +25,16 @@ selector_opacity = 0.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(200, 120)
 texture = ExtResource("2_jdu1y")
-script = SubResource("GDScript_jdu1y")
+script = ExtResource("3_8bw4w")
 
 [node name="Selector" type="Sprite2D" parent="Sprite2D"]
 position = Vector2(-168, -96)
 texture = ExtResource("3_gx5uf")
 
-[node name="EntityOrigin" type="Marker2D" parent="Sprite2D"]
-position = Vector2(102, -47)
+[node name="EntityOrigin" type="Sprite2D" parent="Sprite2D"]
+clip_children = 1
+position = Vector2(103, -47)
+texture = ExtResource("4_obml4")
 
 [node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D"]
 offset_left = -160.0

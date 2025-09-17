@@ -1,16 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvfrqrdlsbkao"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_argrp"]
+[ext_resource type="Script" uid="uid://dkwc06lwmcssc" path="res://Scripts/UI/MenuLayers/Quit.gd" id="2_6lq4w"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_feaba"]
-
-[sub_resource type="GDScript" id="GDScript_feaba"]
-resource_name = "QuitMenu"
-script/source = "extends VBoxContainer
-
-
-func on_quit_button_pressed(_value) -> void:
-	get_tree().quit()
-"
 
 [node name="Quit" type="Node2D"]
 script = ExtResource("1_argrp")
@@ -21,7 +13,7 @@ offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
-script = SubResource("GDScript_feaba")
+script = ExtResource("2_6lq4w")
 
 [node name="Header" parent="MainVBox" instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)

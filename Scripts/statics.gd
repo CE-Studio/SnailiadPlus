@@ -132,7 +132,6 @@ static var load_coords:Vector2i
 
 #region Save info
 static var profile:String
-static var data_general:Dictionary
 static var data_profile1:Dictionary
 static var data_profile2:Dictionary
 static var data_profile3:Dictionary
@@ -158,7 +157,16 @@ enum ParticleOptions {
 	ENTITIES_FLASH,
 	ENTITIES_ALL,
 	FLASH,
-	ALL
+	ALL,
+}
+
+enum WorldFlags {
+	HAS_SEEN_CAVE_SNAIL,
+	TALKED_TO_IRIS,
+	DEFEATED_BOSS1,
+	DEFEATED_BOSS2,
+	DEFEATED_BOSS3,
+	DEFEATED_BOSS4,
 }
 #endregion
 
@@ -250,9 +258,7 @@ static func get_item_percentage(profile:int = 0) -> float:
 
 
 static func save_general() -> void:
-	var file := FileAccess.open("user://" + save_prefix + "/GeneralData.json", FileAccess.WRITE_READ)
-	file.store_string(JSON.stringify(data_general, "\t", false))
-	file.close()
+	ProjectSettings.save_custom("user://general_settings.godot")
 
 
 static func save_profile(iprofile:int) -> void:
@@ -295,9 +301,11 @@ static func has_unlock(unlock:Unlocks) -> bool:
 
 
 static func add_achievement(id:int) -> void:
+	if check_achievement(id):
+		return
 	while id >= len(data_records["achievements"]):
 		data_records["achievements"].append(false)
-	data_records["achievements"] = true
+	data_records["achievements"][id] = true
 
 
 static func check_achievement(id:int) -> bool:
@@ -322,6 +330,18 @@ static func check_bestiary_entry(id:int) -> bool:
 	if id < len(data_records["bestiary"]):
 		output = data_records["bestiary"][id]
 	return output
+
+
+static func set_world_flag(id:WorldFlags, value:Variant) -> void:
+	while id >= len(current_profile["world_flags"]):
+		current_profile["world_flags"].append(null)
+	current_profile["world_flags"][id] = value
+
+
+static func get_world_flag(id:WorldFlags) -> Variant:
+	if id < len(current_profile["world_flags"]):
+		return current_profile["world_flags"][id]
+	return null
 #endregion
 
 
@@ -421,7 +441,7 @@ static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bo
 
 
 static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bool:
-	var aspect_buffer:Vector2 = ASPECT_RATIOS[data_general["aspect_ratio"]] * 0.5
+	var aspect_buffer:Vector2 = ASPECT_RATIOS[ProjectSettings.get_setting("display/window/size/aspect_ratio")] * 0.5
 	var cam_pos:Vector2 = UICore.instance.get_cam_center_pos()
 	var within_x:bool = abs(pos.x - cam_pos.x) <= aspect_buffer.x + buffer.x
 	var within_y:bool = abs(pos.y - cam_pos.y) <= aspect_buffer.y + buffer.y

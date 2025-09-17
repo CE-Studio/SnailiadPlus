@@ -20,11 +20,15 @@ func _ready() -> void:
 	template_profile = _load_json_to_dict("res://SaveTemplates/ProfileData.json")
 	template_records = _load_json_to_dict("res://SaveTemplates/RecordData.json")
 	
-	Statics.data_general = _load_data_dict("GeneralData", template_general)
+	#Statics.data_general = _load_data_dict("GeneralData", template_general)
 	Statics.data_profile1 = _load_data_dict("Profile1", template_profile)
 	Statics.data_profile2 = _load_data_dict("Profile2", template_profile)
 	Statics.data_profile3 = _load_data_dict("Profile3", template_profile)
 	Statics.data_records = _load_data_dict("Records", template_records)
+	
+	# If control array is empty, set default controls
+	if ProjectSettings.get_setting("game/control/controls").size() == 0:
+		ProjectSettings.set_setting("game/control/controls", SInput.DEFAULTS.duplicate())
 	
 	# Set important game systems according to newly loaded data
 	_set_game_settings()
@@ -33,31 +37,18 @@ func _ready() -> void:
 func _set_game_settings() -> void:
 	#region Sound volume
 	var master_index = AudioServer.get_bus_index("Master")
-	var master_vol = float(Statics.data_general["master_volume"]) / 20.0
+	var master_vol = ProjectSettings.get_setting("audio/volume/master") / 20.0
 	AudioServer.set_bus_volume_db(master_index, linear_to_db(master_vol))
 	var sound_index = AudioServer.get_bus_index("Sfx")
-	var sound_vol = float(Statics.data_general["sound_volume"]) / 20.0
+	var sound_vol = ProjectSettings.get_setting("audio/volume/sound") / 20.0
 	AudioServer.set_bus_volume_db(sound_index, linear_to_db(sound_vol))
 	var music_index = AudioServer.get_bus_index("Music")
-	var music_vol = float(Statics.data_general["music_volume"]) / 20.0
+	var music_vol = ProjectSettings.get_setting("audio/volume/music") / 20.0
 	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
 	#endregion
 	
-	#region Display settings
-	var window = get_window()
-	var window_scale = Statics.data_general["window_scale"] + 1
-	var aspect_ratio = Statics.ASPECT_RATIOS[Statics.data_general["aspect_ratio"]]
-	var old_size = window.size
-	var old_position = window.position
-	window.size = aspect_ratio * window_scale
-	window.content_scale_factor = window_scale
-	var new_size = window.size
-	var difference = new_size - old_size
-	window.position = old_position - Vector2i(difference * 0.5)
-	#endregion
-	
 	#region Gameplay settings
-	Engine.max_fps = Statics.TARGET_FRAMERATES[Statics.data_general["frame_limiter_state"]]
+	Engine.max_fps = Statics.TARGET_FRAMERATES[ProjectSettings.get_setting("game/visuals/frame_limit")]
 	#endregion
 
 

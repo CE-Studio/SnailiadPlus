@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=13 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
 [ext_resource type="Script" uid="uid://bukaxq2vrte5l" path="res://Scripts/UICore.gd" id="1_vjeh6"]
 [ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_gi4g0"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="3_bgnuu"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vjeh6"]
+[ext_resource type="PackedScene" uid="uid://wmn05t8atr6" path="res://Scenes/UI/InputDisplay.tscn" id="4_22ldm"]
 [ext_resource type="Texture2D" uid="uid://gqsn3i0abkdk" path="res://Assets/Images/UI/ScreenBorder.png" id="4_ygllc"]
 [ext_resource type="PackedScene" uid="uid://coram7y7g81vt" path="res://Scenes/UI/AchivementPanel.tscn" id="6_f5gkc"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
@@ -18,8 +20,46 @@ script = ExtResource("1_vjeh6")
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
+[node name="ColorCoverBottom" parent="." instance=ExtResource("7_ygllc")]
+process_mode = 3
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-200, -120)
+scale = Vector2(2, 2)
+start_color = Color(0, 0, 0, 0)
+
 [node name="BL" type="Node2D" parent="."]
 position = Vector2(0, 240)
+
+[node name="InGameTime" type="HBoxContainer" parent="BL"]
+offset_left = 3.0
+offset_top = -12.0
+offset_right = 49.0
+offset_bottom = 28.0
+
+[node name="Text" parent="BL/InGameTime" instance=ExtResource("3_bgnuu")]
+custom_minimum_size = Vector2(46, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "00:00:00.00"
+text_scale = 1
+border_scale = 1
+
+[node name="Framerate" type="HBoxContainer" parent="BL"]
+offset_left = 3.0
+offset_top = -20.0
+offset_right = 49.0
+offset_bottom = 20.0
+
+[node name="Text" parent="BL/Framerate" instance=ExtResource("3_bgnuu")]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "00 FPS"
+text_scale = 1
+border_scale = 1
+
+[node name="InputDisplay" parent="BL" instance=ExtResource("4_22ldm")]
+position = Vector2(4, -4)
 
 [node name="BR" type="Node2D" parent="."]
 position = Vector2(400, 240)
@@ -108,7 +148,7 @@ position = Vector2(-32, 24)
 
 [node name="PopupLayer" type="Node2D" parent="."]
 
-[node name="ColorCover" parent="." instance=ExtResource("7_ygllc")]
+[node name="ColorCoverTop" parent="." instance=ExtResource("7_ygllc")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)

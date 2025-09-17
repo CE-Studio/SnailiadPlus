@@ -97,3 +97,5 @@ exit_transition = 5
 position = Vector2(400, 88)
 scale = Vector2(1, 7)
 my_id = 2
+exit_room = "uid://1s6gmpiu2oac"
+exit_transition = 1

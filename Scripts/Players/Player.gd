@@ -276,7 +276,7 @@ func _physics_process(delta) -> void:
 		grav_shock_timer = 0
 	# We update our home direction assuming gravity keep
 	# behavior is set to any state change
-	if Statics.data_general["grav_keep_type"] != 1:
+	if ProjectSettings.get_setting("game/control/gravity_keep") != 1:
 		home_gravity = default_gravity
 	
 	# Here, we control weapon swapping
@@ -313,7 +313,7 @@ func _physics_process(delta) -> void:
 		if body.velocity.y == INF or body.velocity.y == -INF:
 			body.velocity.y = 0
 	
-	if Statics.data_general["shoot_mode"]:
+	if ProjectSettings.get_setting("game/control/toggle_shoot"):
 		if SInput.input_just_pressed(SInput.Inputs.SHOOT):
 			fire_mode = not fire_mode
 	else:

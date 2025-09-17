@@ -64,7 +64,7 @@ func instance() -> void:
 
 
 func offset_position_for_ratio() -> void:
-	var current_ratio = int(Statics.data_general["aspect_ratio"])
+	var current_ratio = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 	var offset = Statics.ASPECT_RATIO_OFFSETS[current_ratio]
 	position = origin + (offset * aspect_offset * 0.5)
 

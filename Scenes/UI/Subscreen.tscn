@@ -1,0 +1,272 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpfe8sxp7e2kp"]
+
+[ext_resource type="Script" uid="uid://dljhb3wxvqdup" path="res://Scripts/UI/Subscreen.gd" id="1_gcfo6"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_i7mg0"]
+[ext_resource type="Texture2D" uid="uid://bclnc6t0rfexc" path="res://Assets/Images/UI/Subscreen.png" id="2_d38hq"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_shvbi"]
+[ext_resource type="Texture2D" uid="uid://ypov61wmfy4r" path="res://Assets/Images/UI/SubscreenSeparator.png" id="4_shvbi"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_ndsvi"]
+[ext_resource type="Texture2D" uid="uid://bb8hyp40krwaw" path="res://Assets/Images/UI/SubscreenPlayers.png" id="6_teiof"]
+[ext_resource type="Texture2D" uid="uid://bx5a6muw3qefk" path="res://Assets/Images/UI/SubscreenSelector.png" id="8_f6p1s"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="9_wlxts"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="10_pai4i"]
+
+[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sel_target_name", "sel_target_map", "map_target", "desc_name", "desc_body")]
+process_mode = 3
+script = ExtResource("1_gcfo6")
+separators = [NodePath("GroupName"), NodePath("GroupWeapon"), NodePath("GroupShell"), NodePath("GroupAbility")]
+body = NodePath("Body")
+player_icon = NodePath("GroupName/PlayerIcon")
+header_name = NodePath("GroupName/HBox/HeaderName")
+name_box = NodePath("GroupName/Box")
+name_text = NodePath("GroupName/Box/Name")
+header_weapon = NodePath("GroupWeapon/HBox/HeaderWeapon")
+slist_weapon = NodePath("GroupWeapon/SpriteGroup")
+tlist_weapon = NodePath("GroupWeapon/TextGroup")
+header_shell = NodePath("GroupShell/HBox/HeaderShell")
+slist_shell = NodePath("GroupShell/SpriteGroup")
+tlist_shell = NodePath("GroupShell/TextGroup")
+header_ability = NodePath("GroupAbility/HBox/HeaderAbility")
+slist_ability = NodePath("GroupAbility/SpriteGroup")
+tlist_ability = NodePath("GroupAbility/TextGroup")
+selector = NodePath("Selector")
+selector_spr = NodePath("Selector/Sprite")
+list_spr_json = "res://Assets/Images/UI/SubscreenItemFrame.json"
+sfx_move = NodePath("AudioGroup/Move")
+sfx_select = NodePath("AudioGroup/Select")
+sel_target_name = NodePath("TargetName")
+sel_target_map = NodePath("TargetMap")
+map_target = NodePath("MinimapTarget")
+desc_name = NodePath("ItemDesc/Name")
+desc_body = NodePath("ItemDesc/Body")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(200, 144)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/Subscreen.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Body"]
+texture = ExtResource("2_d38hq")
+hframes = 2
+vframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MinimapTarget" type="Marker2D" parent="."]
+position = Vector2(288, 112)
+
+[node name="GroupName" type="Sprite2D" parent="."]
+position = Vector2(37, 40)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupName"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupName"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
+
+[node name="HeaderName" parent="GroupName/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Name"
+text_scale = 1
+quick_load_text = "subscreen_header_name"
+shadow_scale = 1
+
+[node name="PlayerIcon" type="Sprite2D" parent="GroupName"]
+position = Vector2(105, 7)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenPlayers.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupName/PlayerIcon"]
+texture = ExtResource("6_teiof")
+hframes = 2
+vframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Box" type="HBoxContainer" parent="GroupName"]
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 104.0
+offset_bottom = 38.0
+
+[node name="Name" parent="GroupName/Box" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(124, 0)
+layout_mode = 2
+text = "Snaily Snail"
+quick_load_text = "subscreen_header_name"
+shadow_scale = 1
+
+[node name="GroupWeapon" type="Sprite2D" parent="."]
+position = Vector2(37, 80)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupWeapon"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupWeapon"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
+
+[node name="HeaderWeapon" parent="GroupWeapon/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Weapon"
+text_scale = 1
+quick_load_text = "subscreen_header_weapon"
+shadow_scale = 1
+
+[node name="SpriteGroup" type="Node2D" parent="GroupWeapon"]
+position = Vector2(-7, 8)
+
+[node name="TextGroup" type="VBoxContainer" parent="GroupWeapon"]
+offset_left = -13.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 41.0
+theme_override_constants/separation = 2
+
+[node name="GroupShell" type="Sprite2D" parent="."]
+position = Vector2(37, 130)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupShell"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupShell"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 31.0
+
+[node name="HeaderShell" parent="GroupShell/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Body"
+text_scale = 1
+quick_load_text = "subscreen_header_shell"
+shadow_scale = 1
+
+[node name="SpriteGroup" type="Node2D" parent="GroupShell"]
+position = Vector2(-7, 8)
+
+[node name="TextGroup" type="VBoxContainer" parent="GroupShell"]
+offset_left = -13.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 41.0
+theme_override_constants/separation = 2
+
+[node name="GroupAbility" type="Sprite2D" parent="."]
+position = Vector2(37, 184)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="GroupAbility"]
+texture = ExtResource("4_shvbi")
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HBox" type="HBoxContainer" parent="GroupAbility"]
+offset_left = -20.0
+offset_top = -9.0
+offset_right = 20.0
+offset_bottom = 47.0
+
+[node name="HeaderAbility" parent="GroupAbility/HBox" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Ability"
+text_scale = 1
+quick_load_text = "subscreen_header_ability"
+shadow_scale = 1
+
+[node name="SpriteGroup" type="Node2D" parent="GroupAbility"]
+position = Vector2(-7, 8)
+
+[node name="TextGroup" type="VBoxContainer" parent="GroupAbility"]
+offset_left = -13.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 41.0
+theme_override_constants/separation = 2
+
+[node name="Selector" type="Node2D" parent="."]
+position = Vector2(10, 50)
+
+[node name="Sprite" type="Sprite2D" parent="Selector"]
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/UI/SubscreenSelector.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Selector/Sprite"]
+texture = ExtResource("8_f6p1s")
+hframes = 3
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="TargetName" type="Marker2D" parent="."]
+position = Vector2(10, 50)
+
+[node name="TargetMap" type="Marker2D" parent="."]
+position = Vector2(180, 50)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="ItemDesc" type="VBoxContainer" parent="."]
+offset_left = 196.0
+offset_top = 36.0
+offset_right = 236.0
+offset_bottom = 76.0
+theme_override_constants/separation = 24
+
+[node name="Name" parent="ItemDesc" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+text = "Item descriptions"
+max_width = 192
+shadow_scale = 1
+
+[node name="Body" parent="ItemDesc" instance=ExtResource("5_ndsvi")]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "This is where descriptions of whatever item is selected will go!"
+max_width = 192
+text_scale = 1
+shadow_scale = 1
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Move" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("9_wlxts")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("10_pai4i")
+bus = &"Sfx"

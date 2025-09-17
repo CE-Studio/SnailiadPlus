@@ -66,7 +66,7 @@ func _on_player_entered(_body) -> void:
 
 
 func _spawn_save_particles() -> void:
-	var particle_setting = Statics.data_general["particle_state"]
+	var particle_setting = ProjectSettings.get_setting("game/world/particles")
 	if (particle_setting != Statics.ParticleOptions.ENTITIES_ALL
 	and particle_setting != Statics.ParticleOptions.ALL):
 		return

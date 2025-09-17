@@ -19,6 +19,7 @@ extends Node2D
 @export var minimap_offset:Vector2i = Vector2i.ZERO
 @export var minimap_autofill:Array[Vector2i] = []
 @export var song_change:MusicManager.Loops = MusicManager.Loops.None
+@export var play_song_on_enter:bool = true
 
 @export_group("Tiled importing")
 @export_file("*.tmx") var tiled_path:String = "res://Resources/map.tmx"
@@ -101,7 +102,7 @@ func spawn(_spawn_all:bool) -> void:
 				fake_border.call_deferred("instance")
 				fake_border.original_room_name = room_path
 	
-	if song_change != MusicManager.Loops.None:
+	if song_change != MusicManager.Loops.None and play_song_on_enter:
 		GameCore.instance.music_manager.play_song(song_change)
 	
 	if center_parallax_maps:
@@ -205,6 +206,11 @@ func _spawn_entities_from_layer() -> void:
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 			
+			Vector2i(7, 1): # Shellbreaker
+				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
+				shellbreaker.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(shellbreaker)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
@@ -284,7 +290,7 @@ func _spawn_entities_from_layer() -> void:
 				layer_ground.add_child(chirpy)
 			
 			Vector2i(8, 26): # Batty bat
-				var bat:BattyBat = load("res://Scenes/Entities/Enemies/BattyBat.tscn").instantiate()
+				var bat:BattyBat = load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
 			
@@ -358,8 +364,6 @@ func _import_from_tiled():
 							int(parser.get_attribute_value(2)),
 							int(parser.get_attribute_value(3))
 						)
-					#print(layer_name)
-					#print(layer_size)
 				"image":
 					tilesheet_size = Vector2(
 							int(parser.get_attribute_value(1)),
@@ -391,7 +395,6 @@ func _import_from_tiled():
 									tile_coords.x -= tilesheet_size.x
 									tile_coords.y += 1
 								var map_index := Vector2i(x, y)
-								print("Placing %s at %s" % [ tile_coords, map_index - tiled_corner ])
 								match target_layer:
 									Layers.SKY:
 										map_sky.set_cell(map_index - tiled_corner, source, tile_coords)
@@ -407,3 +410,29 @@ func _import_from_tiled():
 										map_fg2.set_cell(map_index - tiled_corner, source, tile_coords)
 									Layers.ENTITY:
 										map_entity.set_cell(map_index - tiled_corner, source, tile_coords)
+
+
+#region Runtime functions
+func open_all_boss_doors() -> void:
+	var children:Array = Statics.get_all_children(self)
+	for child in children:
+		if child is Door:
+			var boss_locked:bool = (
+				(child.lock_type == Door.LockTypes.LOCKED_BY_BOSS
+				or child.lock_type == Door.LockTypes.LOCKED_BY_BOSS_IN_RANDOMIZER)
+			)
+			if boss_locked:
+				match child.required_boss:
+					0:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) == true:
+							child.open()
+					1:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2) == true:
+							child.open()
+					2:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3) == true:
+							child.open()
+					3:
+						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) == true:
+							child.open()
+#endregion
