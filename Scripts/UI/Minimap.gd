@@ -77,6 +77,7 @@ var organized_markers:Dictionary = {
 }
 static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
 var marker_positions:Array = []
+var subscreen_mode:bool = false
 
 @onready var panel:JsonSprite2D = $"Panel"
 @onready var panel_mask:Sprite2D = $"PanelMask"

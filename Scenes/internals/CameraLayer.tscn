@@ -20,6 +20,13 @@ script = ExtResource("1_vjeh6")
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
+[node name="ColorCoverBottom" parent="." instance=ExtResource("7_ygllc")]
+process_mode = 3
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-200, -120)
+scale = Vector2(2, 2)
+start_color = Color(0, 0, 0, 0)
+
 [node name="BL" type="Node2D" parent="."]
 position = Vector2(0, 240)
 
@@ -141,7 +148,7 @@ position = Vector2(-32, 24)
 
 [node name="PopupLayer" type="Node2D" parent="."]
 
-[node name="ColorCover" parent="." instance=ExtResource("7_ygllc")]
+[node name="ColorCoverTop" parent="." instance=ExtResource("7_ygllc")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)

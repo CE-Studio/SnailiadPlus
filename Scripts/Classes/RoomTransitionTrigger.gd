@@ -31,4 +31,4 @@ func _on_player_enter(_area):
 		GameCore.instance.player.set_box_disable_override(true)
 		var offset = GameCore.instance.player.body.global_position - area.global_position
 		GameCore.instance.call_deferred("spawn_room", exit_room, exit_transition, offset)
-		UICore.instance.color_cover.set_new_fade(Color8(0, 0, 0, 255), Color8(0, 0, 0, 0), 0.25)
+		UICore.instance.color_cover_top.set_new_fade(Color8(0, 0, 0, 255), Color8(0, 0, 0, 0), 0.25)

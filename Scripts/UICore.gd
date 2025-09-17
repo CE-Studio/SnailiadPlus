@@ -21,7 +21,8 @@ static var instance:UICore
 
 @onready var cam:CamControl = $"Camera2D"
 @onready var heart_group:Node2D = $"TL/Hearts"
-@onready var color_cover:ColorCover = $"ColorCover"
+@onready var color_cover_top:ColorCover = $"ColorCoverTop"
+@onready var color_cover_bottom:ColorCover = $"ColorCoverBottom"
 @onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"

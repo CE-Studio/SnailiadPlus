@@ -29,7 +29,8 @@ const GROUP_SELECTION_X_OFFSET:float = 4.0
 const LIST_SPRITE_OFFSET:float = 10.0
 const SELECTOR_LIST_OFFSET:Vector2 = Vector2(-20.0, -1.0)
 const SELECTOR_SPEED:float = 20.0
-#const SELECTOR_NAME_TARGET:Vector2 = Vector2(10.0, 50.0)
+const SUBSCREEN_ENTER_SPEED:float = 16.0
+const SUBSCREEN_INACTIVE_ACCEL:float = 16.0
 
 enum MoveMode {
 	NONE = -1,
@@ -45,6 +46,8 @@ var selectable_items:Array = [] # Formatting: [ JsonSprite2D, Int ]
 var selection:int = -1
 var list_focused:bool = false
 var selector_target:Vector2 = Vector2.ZERO
+var active:bool = true
+var exit_speed:float = 1.0
 
 @export var separators:Array[JsonSprite2D] = []
 @export var body:JsonSprite2D
@@ -87,6 +90,7 @@ func _ready() -> void:
 		sep.action = "anim"
 	selector_spr.action = "anim"
 	selector_target = sel_target_map.position
+	selector.position = selector_target
 	_init_item_slots()
 	desc_name.set_snaily_text_raw("")
 	desc_body.set_snaily_text_raw("")
@@ -96,16 +100,24 @@ func _process(delta: float) -> void:
 	elapsed += delta
 	selector_spr.position.x = abs(sin(elapsed * 8)) * -2
 	
-	if selection_depth == 0:
-		if SInput.check_input(SInput.Inputs.MAP, true) or SInput.check_input(SInput.Inputs.PAUSE, true):
+	if active:
+		if selection_depth == 0:
+			if SInput.check_input(SInput.Inputs.MAP, true) or SInput.check_input(SInput.Inputs.PAUSE, true):
+				UICore.instance.pause_layer.unpause_fade_out()
+				active = false
+		
+		if selection_depth < 0:
+			selection_depth = 0
+		
+		_test_for_move_selection()
+		selector.position = selector.position.lerp(selector_target, SELECTOR_SPEED * delta)
+		
+		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
+	else:
+		position.y += exit_speed
+		exit_speed *= 1.0 + (SUBSCREEN_INACTIVE_ACCEL * delta)
+		if position.y >= 240.0:
 			queue_free()
-			UICore.instance.pause_layer.unpause_fade_out()
-	
-	if selection_depth < 0:
-		selection_depth = 0
-	
-	_test_for_move_selection()
-	selector.position = selector.position.lerp(selector_target, SELECTOR_SPEED * delta)
 
 
 func _init_item_slots() -> void:
@@ -187,7 +199,8 @@ func _test_for_move_selection() -> void:
 	var move_mode:MoveMode = MoveMode.NONE
 	if list_focused:
 		if SInput.check_input(SInput.Inputs.RIGHT, true):
-			pass #map
+			list_focused = false
+			move_mode = MoveMode.MAP
 		elif SInput.check_input(SInput.Inputs.DOWN, true):
 			selection += 1
 			move_mode = MoveMode.LIST
@@ -205,7 +218,7 @@ func _test_for_move_selection() -> void:
 	else:
 		if SInput.check_input(SInput.Inputs.LEFT, true):
 			list_focused = true
-			move_mode == MoveMode.NAME if selection == -1 else MoveMode.LIST
+			move_mode = MoveMode.NAME if selection == -1 else MoveMode.LIST
 	
 	if move_mode != MoveMode.NONE:
 		sfx_move.play()
@@ -218,6 +231,10 @@ func _test_for_move_selection() -> void:
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
+		MoveMode.MAP:
+			selector_target = sel_target_map.position
+			desc_name.set_snaily_text_raw("")
+			desc_body.set_snaily_text_raw("")
 
 
 func _set_desc(id:int) -> void:
@@ -256,7 +273,6 @@ func _set_desc(id:int) -> void:
 			desc_body.set_snaily_text("subscreen_desc_iceShell")
 		-2:
 			var pkeys = Player.Players.keys()
-			#desc_name.set_snaily_text("char_full_" + str(player))
 			desc_name.visible = false
 			desc_body.set_snaily_text("subscreen_desc_" + pkeys[player].to_lower())
 		_:
