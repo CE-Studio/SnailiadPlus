@@ -232,7 +232,7 @@ func _ready():
 # This function is called once every frame
 # It's used here to control player movement
 func _process(delta):
-	super(delta)
+	pass
 
 
 func _physics_process(delta) -> void:
