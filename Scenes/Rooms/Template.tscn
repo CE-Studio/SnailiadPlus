@@ -59,3 +59,6 @@ collision_enabled = false
 [node name="CameraBorder" type="Path2D" parent="."]
 curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_5japa")
+
+[node name="DefaultSpawn" type="Marker2D" parent="."]
+position = Vector2(200, 120)

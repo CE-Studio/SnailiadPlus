@@ -20,7 +20,7 @@ func _ready():
 	pass
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1
 

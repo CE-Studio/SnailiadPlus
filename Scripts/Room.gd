@@ -69,11 +69,24 @@ var room_path:String
 @onready var map_sky:TileMapLayer = $"SkyLayer/Map"
 
 @onready var bounds:CameraBorder = $"CameraBorder"
+@onready var default_spawn:Marker2D = $"DefaultSpawn"
 
 @onready var breakable_scene = preload("res://Scenes/Entities/Breakable.tscn")
 @onready var special_collision_scene = preload("res://Scenes/Entities/SpecialCollision.tscn")
 #endregion
 #endregion
+
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	if GameCore.instance == null:
+		Statics.current_profile = Statics.data_profile1
+		Statics.current_profile_id = 1
+		Statics.load_room = Statics.ROOM_PATH % (areas[area_id] + "/" + name if area_id != -1 else name)
+		Statics.load_coords = default_spawn.position
+		Statics.shortcut_load_game_scene = true
+		get_tree().change_scene_to_file("res://Scenes/PreloadScene.tscn")
 
 
 func spawn(_spawn_all:bool) -> void:

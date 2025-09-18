@@ -88,6 +88,9 @@ collision_enabled = false
 curve = SubResource("Curve2D_67xdc")
 script = ExtResource("5_frp3d")
 
+[node name="DefaultSpawn" type="Marker2D" parent="."]
+position = Vector2(320, 136)
+
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("6_icuur")]
 position = Vector2(-8.88178e-16, 120)
 rotation = -3.14159

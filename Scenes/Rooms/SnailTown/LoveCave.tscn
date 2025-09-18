@@ -91,6 +91,9 @@ cover_full_tile = true
 up_left_room_name_override = "SnailTown/LoveAlcove"
 down_right_room_name_override = "SnailTown/Paths"
 
+[node name="DefaultSpawn" type="Marker2D" parent="."]
+position = Vector2(296, 408)
+
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("6_8gk68")]
 position = Vector2(400, 320)
 scale = Vector2(1, 2)
