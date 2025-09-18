@@ -42,7 +42,9 @@ func spawn() -> void:
 	sprite._process(0.0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	if GameCore.instance == null:
+		return
 	if not Engine.is_editor_hint():
 		if face_mode == -1:
 			var player_pos = GameCore.instance.player.position
