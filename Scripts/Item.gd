@@ -54,6 +54,8 @@ const HOVER_EASE:float = 12.5
 
 
 func _ready() -> void:
+	if GameCore.instance == null:
+		return
 	if (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
 	or character_reqs & (1 << int(Statics.current_profile["character"])) == 0
 	or Statics.check_location_collected(location_id)):
@@ -62,7 +64,6 @@ func _ready() -> void:
 	
 	var id_str
 	var character = int(Statics.current_profile["character"])
-	var species = Statics.get_character_species_string(character)
 	name_str = get_name_str_from_id(type)
 	match type:
 		ItemTypes.PEASHOOTER:
@@ -223,7 +224,7 @@ func _process(delta: float) -> void:
 		position = position.lerp(target_pos, HOVER_EASE * delta)
 
 
-func _on_player_entered(body: Node2D) -> void:
+func _on_player_entered(_body: Node2D) -> void:
 	if not collected:
 		collected = true
 		timer.start()
