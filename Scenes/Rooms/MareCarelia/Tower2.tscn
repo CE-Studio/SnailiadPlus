@@ -113,6 +113,9 @@ axis = 1
 stop_from = 1
 aspect_offset = Vector2i(0, 1)
 
+[node name="DefaultSpawn" type="Marker2D" parent="."]
+position = Vector2(64, 984)
+
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("7_2uv63")]
 position = Vector2(0, 1400)
 rotation = -3.14159

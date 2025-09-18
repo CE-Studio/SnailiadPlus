@@ -10,6 +10,8 @@ var point_origins:Array[Vector2i] = []
 
 func _ready() -> void:
 	assert(global_position == Vector2.ZERO, "Camera border node MUST be centered")
+	if UICore.instance == null:
+		return
 	UICore.instance.cam.border = self
 	for i in curve.point_count:
 		point_origins.append(Vector2i(curve.get_point_position(i)))

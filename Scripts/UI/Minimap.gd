@@ -166,10 +166,10 @@ func log_markers() -> void:
 			screen_pos = Vector2i(0, screen_pos.y + 1)
 
 
-static func world_position_to_screen_coordinate(position:Vector2) -> Vector2i:
+static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
 	return Vector2i(
-		floori((position.x) / SCREEN_SIZE.x * Statics.FRAC_16),
-		floori((position.y) / SCREEN_SIZE.y * Statics.FRAC_16)
+		floori((_position.x) / SCREEN_SIZE.x * Statics.FRAC_16),
+		floori((_position.y) / SCREEN_SIZE.y * Statics.FRAC_16)
 	)
 
 
@@ -179,8 +179,8 @@ func _process(delta: float) -> void:
 	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
 	map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
 	map_group.position = Vector2(
-		clampi(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x),
-		clampi(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y)
+		int(clampf(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x)),
+		int(clampf(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y))
 	)
 	player_marker.position = MARKER_ZERO + (converted_player_pos * 8) + (room_offset * 8)
 	
@@ -243,7 +243,7 @@ func update_cell_mask(center:Vector2i, extents:Vector2i = EDGE_BUFFER) -> void:
 
 
 func vector_to_array_index(coords:Vector2) -> int:
-	return coords.x + (coords.y * MAP_SIZE.x)
+	return int(coords.x + (coords.y * MAP_SIZE.x))
 
 
 func fill_cell(coords:Vector2i) -> void:

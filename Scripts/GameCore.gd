@@ -72,12 +72,13 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	Statics.active_room = current_room
 	player.reparent(new_room.layer_ground)
 	new_room.layer_ground.move_child(player, 1)
+	player.reset_position(new_room.default_spawn.position + offset)
 	if entrance != -1:
 		for child in new_room.get_children():
 			if child is RoomTransitionTrigger:
 				if child.my_id == entrance:
 					player.reset_position(child.exit_marker.global_position + offset)
-					cam_layer.cam.set_layer_position(player.position)
+	cam_layer.cam.set_layer_position(player.position)
 	new_room.spawn(true)
 	player.set_box_disable_override(false)
 	if new_room.area_id != current_area:

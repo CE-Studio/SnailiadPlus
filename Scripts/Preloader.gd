@@ -10,8 +10,12 @@ extends Node2D
 func _ready() -> void:
 	$"JsonSprite2D".action = "idle"
 	if Minimap.unprocessed_marker_positions.size() == 0:
-		await _read_rooms_log_markers()
-	get_tree().call_deferred("change_scene_to_file", "res://Scenes/MenuScene.tscn")
+		_read_rooms_log_markers()
+	if Statics.shortcut_load_game_scene:
+		Statics.shortcut_load_game_scene = false
+		get_tree().call_deferred("change_scene_to_file", "res://Scenes/GameScene.tscn")
+	else:
+		get_tree().call_deferred("change_scene_to_file", "res://Scenes/MenuScene.tscn")
 
 
 func _read_rooms_log_markers() -> void:

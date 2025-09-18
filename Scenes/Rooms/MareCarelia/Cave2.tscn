@@ -85,6 +85,9 @@ curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_vuc7b")
 point_ratio_adjustments = Array[Vector2i]([Vector2i(1, 0), Vector2i(-1, 0), Vector2i(1, 0)])
 
+[node name="DefaultSpawn" type="Marker2D" parent="."]
+position = Vector2(1160, 184)
+
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("4_mfalp")]
 position = Vector2(1232, 88)
 scale = Vector2(1, 7)

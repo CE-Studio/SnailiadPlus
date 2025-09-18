@@ -89,6 +89,8 @@ const COUNTED_INVENTORY:Array = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 11, 30,
 
 static var main_menu_booted_once:bool = false
 static var is_menu_open:bool = false
+static var shortcut_load_game_scene:bool = false
+
 static var is_in_boss_rush:bool = false
 static var increment_boss_rush_timer:bool = false
 static var is_random_game:bool = false
