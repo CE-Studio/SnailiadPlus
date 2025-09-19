@@ -162,8 +162,6 @@ func vector_aim() -> Vector2:
 
 
 func get_input_icon(event:InputEvent) -> String:
-	var key:String = ""
-	
 	if event is InputEventKey:
 		return get_key_icon(event.physical_keycode)
 	elif event is InputEventJoypadMotion:
@@ -177,8 +175,8 @@ func get_input_icon(event:InputEvent) -> String:
 
 
 func get_input_str(input:Inputs) -> StringName:
-	var str:String = Inputs.keys()[input]
-	return str.to_camel_case()
+	var string:String = Inputs.keys()[input]
+	return string.to_camel_case()
 
 
 func _check_icon_exists(key:String) -> String:

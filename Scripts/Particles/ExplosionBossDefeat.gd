@@ -24,12 +24,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _call_batched(front:bool = false) -> void:
-	_create_radial("ExplosionSmall", randf() * 160)
-	_create_radial("ExplosionSmall", randf() * 80)
-	_create_radial("ExplosionBig", randf() * 120)
-	_create_radial("ExplosionBig", randf() * 60)
+	_create_radial("ExplosionSmall", randf() * 160, front)
+	_create_radial("ExplosionSmall", randf() * 80, front)
+	_create_radial("ExplosionBig", randf() * 120, front)
+	_create_radial("ExplosionBig", randf() * 60, front)
 	if randf() * 20.0 > 17.0:
-		_create_radial("ExplosionHuge", randf() * 130)
+		_create_radial("ExplosionHuge", randf() * 130, front)
 	if randf() * 10.0 > 1.0:
 		_random_boom()
 	if randf() * 10.0 > 7.0:

@@ -103,7 +103,7 @@ func update_marker() -> void:
 		marker.frame += 4
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
 		var player_pos = GameCore.instance.player.position
 		if axis == 0:

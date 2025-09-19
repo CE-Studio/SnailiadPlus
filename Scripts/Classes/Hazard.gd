@@ -23,7 +23,7 @@ func _ready() -> void:
 	connect("body_exited", _on_player_exited)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned:
 		var can_hit = true
 		match element:
@@ -35,9 +35,9 @@ func _physics_process(delta: float) -> void:
 			GameCore.instance.player.adjust_health(-damage, ignore_defense)
 
 
-func _on_player_entered(body) -> void:
+func _on_player_entered(_body) -> void:
 	intersecting_player = true
 
 
-func _on_player_exited(body) -> void:
+func _on_player_exited(_body) -> void:
 	intersecting_player = false

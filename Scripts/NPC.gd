@@ -92,11 +92,11 @@ func play_anim(state:String) -> void:
 
 
 #region Cutscene functions
-func impulse(direction:Vector2) -> bool:
+func impulse(_direction:Vector2) -> bool:
 	return false
 
 
-func glide_to(position:Vector2, duration:float) -> bool:
+func glide_to(_position:Vector2, _duration:float) -> bool:
 	return false
 
 
@@ -104,34 +104,34 @@ func get_dialogue_icon() -> Texture:
 	return null
 
 
-func fake_input(event:InputEventAction, hold_for:float) -> bool:
+func fake_input(_event:InputEventAction, _hold_for:float) -> bool:
 	return false
 
 
-func look_at_position(pos:Vector2) -> bool:
+func look_at_position(_pos:Vector2) -> bool:
 	return false
 
 
-func look_at_local(pos:Vector2) -> bool:
+func look_at_local(_pos:Vector2) -> bool:
 	return false
 
 
-func look_at_node(node:Node2D) -> bool:
+func look_at_node(_node:Node2D) -> bool:
 	return false
 
 
-func lock_inputs(locked:bool) -> bool:
+func lock_inputs(_locked:bool) -> bool:
 	return false
 
 
-func has_item(ID:Item.ItemTypes) -> bool:
+func has_item(_ID:Item.ItemTypes) -> bool:
 	return false
 
 
-func can_perform_action(action:String) -> bool:
+func can_perform_action(_action:String) -> bool:
 	return false
 
 
-func perform_action(action:String, force:bool) -> bool:
+func perform_action(_action:String, _force:bool) -> bool:
 	return false
 #endregion

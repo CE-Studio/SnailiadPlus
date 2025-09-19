@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		play_anim()
 		if vis.is_on_screen():
 			var target = Vector2(GameCore.instance.player.position - position).normalized()
-			var speed = PEA_SPEED * (PEA_MOD if hard_mode else 1)
+			var speed = PEA_SPEED * (PEA_MOD if hard_mode else 1.0)
 			_shoot(pea, target, speed)
 	
 	if is_falling:

@@ -4,6 +4,7 @@ class_name SnailyText
 extends RichTextLabel
 
 
+@warning_ignore("unused_private_class_variable")
 @export_tool_button("Force Update") var _blech:Callable = reset_label_size
 
 
@@ -60,8 +61,8 @@ func set_snaily_text_raw(_text:String) -> void:
 
 
 func set_alignment(horiz:int, vert:int) -> void:
-	horizontal_alignment = horiz
-	vertical_alignment = vert
+	horizontal_alignment = horiz as HorizontalAlignment
+	vertical_alignment = vert as VerticalAlignment
 	for sub_label in sub_text:
 		sub_label.horizontal_alignment = horiz
 		sub_label.vertical_alignment = vert

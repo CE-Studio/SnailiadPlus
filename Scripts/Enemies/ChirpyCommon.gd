@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 				if shot_timeout <= 0.0:
 					shot_timeout = SHOT_TIMEOUT
 					var player_pos = GameCore.instance.player.position
-					var target = Vector2(GameCore.instance.player.position - position).normalized()
+					var target = Vector2(player_pos - position).normalized()
 					_shoot(donut, target, WEAPON_SPEED)
 		else:
 			off_screen_time += delta

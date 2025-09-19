@@ -109,8 +109,8 @@ func play_song(loop:Loops) -> void:
 	#   Create sources for new song (and Group if part of one)
 	if loop != Loops.None:
 		if new_song_group != -1:
-			var loop_count = GROUPS[new_song_group].size()
-			var active_id = find_song_id_in_group(loop, new_song_group)
+			#var loop_count = GROUPS[new_song_group].size()
+			#var active_id = find_song_id_in_group(loop, new_song_group)
 			var player_count:int = 0
 			for i in GROUPS[new_song_group]:
 				var new_player = create_new_player(i)

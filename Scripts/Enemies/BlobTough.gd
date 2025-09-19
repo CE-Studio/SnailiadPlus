@@ -26,7 +26,7 @@ func _ready() -> void:
 	super.spawn()
 	
 	hop_ptr = int(position.x) % HOP_HEIGHTS.size()
-	hop_timeout = HOP_TIMEOUTS[hop_ptr] * (0.5 if hard_mode else 1)
+	hop_timeout = HOP_TIMEOUTS[hop_ptr] * (0.5 if hard_mode else 1.0)
 	facing_right = randf() >= 0.5
 	play_anim("idle")
 

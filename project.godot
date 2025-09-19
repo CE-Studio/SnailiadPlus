@@ -32,6 +32,10 @@ cutcontroll="res://Scenes/internals/CutsceneController.tscn"
 SInput="*res://Scripts/SInput.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
+[debug]
+
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=400

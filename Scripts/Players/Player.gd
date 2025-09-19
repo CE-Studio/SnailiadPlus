@@ -231,7 +231,7 @@ func _ready():
 #region Movement
 # This function is called once every frame
 # It's used here to control player movement
-func _process(delta):
+func _process(_delta):
 	pass
 
 
@@ -399,9 +399,9 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	var rel_axis:Vector2 # Input vector, rotated to match the current gravity state
 	var rel_vel:Vector2 # Velocity, rotated to match the current gravity state
 	var rel_down_pressed:bool # Shortcut boolean check for the relative down input
-	var rel_vectors:Array # Array remapping raw cardinal vectors to match gravity. Index with DirsSurface
+	var _rel_vectors:Array # Array remapping raw cardinal vectors to match gravity. Index with DirsSurface
 	var remapped_dirs:Array # Array remapping DirsSurface references to match gravity. Index with DirsSurface
-	var suppress_wall_grab:bool = false # Boolean that forces wall checks to be ignored
+	var _suppress_wall_grab:bool = false # Boolean that forces wall checks to be ignored
 	var aim_vector = SInput.vector_aim()
 	#region Set relative
 	match surface:
@@ -409,7 +409,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			rel_axis = input_axis
 			rel_vel = Vector2(body.velocity.x, body.velocity.y)
 			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.DOWN)
-			rel_vectors = [
+			_rel_vectors = [
 				Vector2.DOWN,
 				Vector2.LEFT,
 				Vector2.RIGHT,
@@ -425,7 +425,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			rel_axis = Vector2(input_axis.y, -input_axis.x)
 			rel_vel = Vector2(body.velocity.y, -body.velocity.x)
 			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.LEFT)
-			rel_vectors = [
+			_rel_vectors = [
 				Vector2.LEFT,
 				Vector2.UP,
 				Vector2.DOWN,
@@ -441,7 +441,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			rel_axis = Vector2(-input_axis.y, input_axis.x)
 			rel_vel = Vector2(-body.velocity.y, body.velocity.x)
 			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.RIGHT)
-			rel_vectors = [
+			_rel_vectors = [
 				Vector2.RIGHT,
 				Vector2.DOWN,
 				Vector2.UP,
@@ -457,7 +457,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			rel_axis = -input_axis
 			rel_vel = Vector2(-body.velocity.x, -body.velocity.y)
 			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.UP)
-			rel_vectors = [
+			_rel_vectors = [
 				Vector2.UP,
 				Vector2.RIGHT,
 				Vector2.LEFT,
@@ -1005,20 +1005,20 @@ func _check_ceil_casts() -> Array:
 	return [ hit, distance ]
 
 
-func set_box_disable_override(state:bool) -> void:
+func set_box_disable_override(_state:bool) -> void:
 	return
-	override_box_disable = state
-	if state == true:
-		box_normal.disabled = true
-		box_shell.disabled = true
-	else:
-		box_normal.disabled = shelled
-		box_shell.disabled = not shelled
+	#override_box_disable = state
+	#if state == true:
+	#	box_normal.disabled = true
+	#	box_shell.disabled = true
+	#else:
+	#	box_normal.disabled = shelled
+	#	box_shell.disabled = not shelled
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 	var shielded:bool = false
-	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD):
+	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
 		amount = 0
 		shielded = true
 	health += amount
@@ -1063,7 +1063,7 @@ func _toggle_weapon(id:int) -> void:
 	UICore.instance.update_weapon_icons()
 
 
-func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
+func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
 	var bullet_type:String = ""
 	#region Determine bullet type
 	if Statics.stack_weapons:
@@ -1100,11 +1100,11 @@ func _shoot(bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posit
 
 
 #region Cutscene functions
-func impulse(direction:Vector2) -> bool:
+func impulse(_direction:Vector2) -> bool:
 	return false
 
 
-func glide_to(position:Vector2, duration:float) -> bool:
+func glide_to(_position:Vector2, _duration:float) -> bool:
 	return false
 
 
@@ -1112,34 +1112,34 @@ func get_dialogue_icon() -> Texture:
 	return null
 
 
-func fake_input(event:InputEventAction, hold_for:float) -> bool:
+func fake_input(_event:InputEventAction, _hold_for:float) -> bool:
 	return false
 
 
-func look_at_position(pos:Vector2) -> bool:
+func look_at_position(_pos:Vector2) -> bool:
 	return false
 
 
-func look_at_local(pos:Vector2) -> bool:
+func look_at_local(_pos:Vector2) -> bool:
 	return false
 
 
-func look_at_node(node:Node2D) -> bool:
+func look_at_node(_node:Node2D) -> bool:
 	return false
 
 
-func lock_inputs(locked:bool) -> bool:
+func lock_inputs(_locked:bool) -> bool:
 	return false
 
 
-func has_item(ID:Item.ItemTypes) -> bool:
+func has_item(_ID:Item.ItemTypes) -> bool:
 	return false
 
 
-func can_perform_action(action:String) -> bool:
+func can_perform_action(_action:String) -> bool:
 	return false
 
 
-func perform_action(action:String, force:bool) -> bool:
+func perform_action(_action:String, _force:bool) -> bool:
 	return false
 #endregion

@@ -32,7 +32,7 @@ func set_text(_text:String, _size:int) -> void:
 func add_header(_text:String, _size:int) -> void:
 	if header == null:
 		var header_text:SnailyText = text_scene.instantiate()
-		var parent_box:VBoxContainer = VBoxContainer.new()
+		#var parent_box:VBoxContainer = VBoxContainer.new()
 		vbox.add_child(header_text)
 		vbox.move_child(header_text, 0)
 		header_text.add_shadow(1)

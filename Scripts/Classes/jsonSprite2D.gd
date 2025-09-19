@@ -248,14 +248,14 @@ func _process(delta: float) -> void:
 				else:
 					action = "__NONE__"
 					return
-			var frame = _frames[_index]
-			if min(frame[0], frame[1]) < 0:
+			var _frame = _frames[_index]
+			if min(_frame[0], _frame[1]) < 0:
 				hide()
 			else:
 				show()
-				frame_coords = Vector2i(frame[0], frame[1])
-			flip_h = frame[2]
-			flip_v = frame[3]
+				frame_coords = Vector2i(_frame[0], _frame[1])
+			flip_h = _frame[2]
+			flip_v = _frame[3]
 			_index += 1
 	for i in _children:
 		i.frame = frame

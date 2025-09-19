@@ -21,16 +21,16 @@ func _ready() -> void:
 	update_shader_visibility()
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if spawn_grace_frames > 0:
 		spawn_grace_frames -= 1
 
 
 func update_shader_visibility() -> void:
-	var is_visible = ProjectSettings.get_setting("game/visuals/distortion_shader")
+	var distort = ProjectSettings.get_setting("game/visuals/distortion_shader")
 	for poly in polys:
-		poly.visible = is_visible
-		if is_visible:
+		poly.visible = distort
+		if distort:
 			var ratio_id = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 			poly.material.set("shader_parameter/aspect_ratio", Statics.ASPECT_RATIOS[ratio_id])
 

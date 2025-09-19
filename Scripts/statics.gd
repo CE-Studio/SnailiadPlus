@@ -219,19 +219,19 @@ static func get_item_percentage(_profile:int = 0) -> float:
 	match _profile:
 		1:
 			inventory = data_profile1["items"]
-			player = data_profile1["character"]
+			_player = data_profile1["character"]
 			difficulty = data_profile1["difficulty"]
 		2:
 			inventory = data_profile2["items"]
-			player = data_profile2["character"]
+			_player = data_profile2["character"]
 			difficulty = data_profile2["difficulty"]
 		3:
 			inventory = data_profile3["items"]
-			player = data_profile3["character"]
+			_player = data_profile3["character"]
 			difficulty = data_profile3["difficulty"]
 		_:
 			inventory = current_profile["items"]
-			player = current_profile["character"]
+			_player = current_profile["character"]
 			difficulty = current_profile["difficulty"]
 	var collected_items:int = 0 # Counted items the player has collected and saved to ["items"]
 	var max_items:int = 0 # Maximum item count for 100% as dictated by COUNTED_INVENTORY
