@@ -212,11 +212,11 @@ static func check_location_collected(id:int) -> bool:
 	return output
 
 
-static func get_item_percentage(profile:int = 0) -> float:
+static func get_item_percentage(_profile:int = 0) -> float:
 	var inventory:Array
-	var player:int
+	var _player:int
 	var difficulty:int
-	match profile:
+	match _profile:
 		1:
 			inventory = data_profile1["items"]
 			player = data_profile1["character"]
@@ -233,14 +233,14 @@ static func get_item_percentage(profile:int = 0) -> float:
 			inventory = current_profile["items"]
 			player = current_profile["character"]
 			difficulty = current_profile["difficulty"]
-	var collected_items:int # Counted items the player has collected and saved to ["items"]
-	var max_items:int # Maximum item count for 100% as dictated by COUNTED_INVENTORY
-	var total_items:int # Complete collection of items, counted or not, saved to ["items"]
+	var collected_items:int = 0 # Counted items the player has collected and saved to ["items"]
+	var max_items:int = 0 # Maximum item count for 100% as dictated by COUNTED_INVENTORY
+	var total_items:int = 0 # Complete collection of items, counted or not, saved to ["items"]
 	for i in inventory.size():
 		total_items += inventory[i]
 		match i:
 			Item.ItemTypes.SHELL_SHIELD:
-				if player != Player.Players.SLUGGY and player != Player.Players.LEECHY:
+				if _player != Player.Players.SLUGGY and _player != Player.Players.LEECHY:
 					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
 					max_items += COUNTED_INVENTORY[i]
 			Item.ItemTypes.ICE_SHELL:
@@ -512,9 +512,9 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 	return new_particle
 
 
-static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int) -> Texture2D:
-	var color_count := palette.get_width()
-	var palette_image := palette.get_image()
+static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:int) -> Texture2D:
+	var color_count := _palette.get_width()
+	var palette_image := _palette.get_image()
 	var sprite_image := spritesheet.get_image()
 	var check_colors:Array = [ ]
 	for i in color_count:
@@ -524,7 +524,7 @@ static func colorize_sprite(spritesheet:Texture2D, palette:Texture2D, row_id:int
 			if spritesheet.is_pixel_opaque(x, y):
 				var this_check_color = sprite_image.get_pixel(x, y)
 				if check_colors.has(this_check_color):
-					var color_id = check_colors.find(this_check_color)
+					var _color_id = check_colors.find(this_check_color)
 					var new_color = palette_image.get_pixel(this_check_color, row_id + 1)
 					sprite_image.set_pixel(x, y, new_color)
 	return ImageTexture.create_from_image(sprite_image)

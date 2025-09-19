@@ -25,8 +25,8 @@ const SUB_ITEMS:Dictionary = {
 	Item.ItemTypes.SECRET_BOOMERANG: Item.ItemTypes.BOOMERANG,
 	Item.ItemTypes.DEBUG_WAVE: Item.ItemTypes.RAINBOW_WAVE
 }
-const GROUP_SELECTION_X_OFFSET:float = 4.0
-const LIST_SPRITE_OFFSET:float = 10.0
+const GROUP_SELECTION_X_OFFSET:int = 4
+const LIST_SPRITE_OFFSET:int = 10
 const SELECTOR_LIST_OFFSET:Vector2 = Vector2(-20.0, -1.0)
 const SELECTOR_SPEED:float = 20.0
 const SUBSCREEN_ENTER_SPEED:float = 16.0
@@ -69,6 +69,8 @@ var exit_speed:float = 1.0
 @export_file("*.json") var list_spr_json:String
 @export var sfx_move:AudioStreamPlayer
 @export var sfx_select:AudioStreamPlayer
+@export var sfx_open:AudioStreamPlayer
+@export var sfx_close:AudioStreamPlayer
 @export var sel_target_name:Marker2D
 @export var sel_target_map:Marker2D
 @export var map_target:Marker2D
@@ -94,6 +96,7 @@ func _ready() -> void:
 	_init_item_slots()
 	desc_name.set_snaily_text_raw("")
 	desc_body.set_snaily_text_raw("")
+	sfx_open.play()
 
 
 func _process(delta: float) -> void:
@@ -105,6 +108,7 @@ func _process(delta: float) -> void:
 			if SInput.check_input(SInput.Inputs.MAP, true) or SInput.check_input(SInput.Inputs.PAUSE, true):
 				UICore.instance.pause_layer.unpause_fade_out()
 				active = false
+				sfx_close.play()
 		
 		if selection_depth < 0:
 			selection_depth = 0
@@ -116,7 +120,7 @@ func _process(delta: float) -> void:
 	else:
 		position.y += exit_speed
 		exit_speed *= 1.0 + (SUBSCREEN_INACTIVE_ACCEL * delta)
-		if position.y >= 240.0:
+		if position.y >= 240.0 and not sfx_close.playing:
 			queue_free()
 
 
@@ -228,13 +232,16 @@ func _test_for_move_selection() -> void:
 			selector_target -= UICore.instance.global_position
 			selector_target += SELECTOR_LIST_OFFSET
 			_set_desc(selectable_items[selection][1])
+			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
+			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
 		MoveMode.MAP:
 			selector_target = sel_target_map.position
 			desc_name.set_snaily_text_raw("")
 			desc_body.set_snaily_text_raw("")
+			UICore.instance.minimap.modulate = Color.WHITE
 
 
 func _set_desc(id:int) -> void:
