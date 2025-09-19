@@ -30,6 +30,8 @@ const TL_OFFSET:Vector2i = Vector2i(100, 84)
 const MARKER_ZERO:Vector2i = Vector2i(-100, -84)
 const ROOM_NAME_STRING:String = "room_%s"
 const FADE_SPEED:float = 3.5
+const SUBSCREEN_MOVE_SPEED:float = 16.0
+const SUBSCREEN_MOD_TOLERANCE:float = Statics.FRAC_64
 
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
@@ -78,6 +80,9 @@ var organized_markers:Dictionary = {
 static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
 var marker_positions:Array = []
 var subscreen_mode:bool = false
+var subscreen_target:Vector2 = Vector2.ZERO
+var subscreen_target_mod:float = 0.0
+var edge_extension:int = 0
 
 @onready var panel:JsonSprite2D = $"Panel"
 @onready var panel_mask:Sprite2D = $"PanelMask"
@@ -174,15 +179,48 @@ static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
 
 
 func _process(delta: float) -> void:
+	_tick_minimap(true)
+	
+	if subscreen_mode and subscreen_target_mod < 1.0:
+		subscreen_target_mod = lerpf(subscreen_target_mod, 1.0, SUBSCREEN_MOVE_SPEED * delta)
+		if 1.0 - subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
+			subscreen_target_mod = 1.0
+	elif not subscreen_mode and subscreen_target_mod > 0.0:
+		subscreen_target_mod = lerpf(subscreen_target_mod, 0.0, SUBSCREEN_MOVE_SPEED * delta)
+		if subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
+			subscreen_target_mod = 0.0
+	
+	if subscreen_target_mod > 0.0:
+		subscreen_target = UICore.instance.pause_layer.subscreen.map_target.global_position
+		subscreen_target -= UICore.instance.pause_layer.subscreen.position
+		map_group.global_position = map_group.global_position.lerp(subscreen_target, subscreen_target_mod)
+		if subscreen_mode and subscreen_target_mod == 1.0:
+			if edge_extension < min(MAP_SIZE.x, MAP_SIZE.y):
+				edge_extension += 1
+				_tick_minimap(false, false, true)
+	if not subscreen_mode and edge_extension > 0:
+		edge_extension = clampi(edge_extension - 2, 0, 999)
+		_tick_minimap(false, false, true)
+	
+	var fade_d:float = delta * FADE_SPEED
+	if modulate.a != fade_override:
+		modulate.a = move_toward(modulate.a, fade_override, fade_d)
+	var subscreen_target_a = 0.0 if subscreen_mode else 1.0
+	panel.modulate.a = move_toward(panel.modulate.a, subscreen_target_a, fade_d)
+	name_text.modulate.a = move_toward(name_text.modulate.a, subscreen_target_a, fade_d)
+
+
+func _tick_minimap(move_group:bool, tick_player:bool = true, force_update:bool = false) -> void:
 	var player = GameCore.instance.player
 	# Converts the player position into coordinates on the "screen grid"
 	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
-	map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
-	map_group.position = Vector2(
-		int(clampf(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x)),
-		int(clampf(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y))
-	)
-	player_marker.position = MARKER_ZERO + (converted_player_pos * 8) + (room_offset * 8)
+	if move_group:
+		map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
+		map_group.position = Vector2(
+			int(clampf(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x)),
+			int(clampf(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y))
+		)
+		player_marker.position = MARKER_ZERO + (converted_player_pos * 8) + (room_offset * 8)
 	
 	var update_map:bool = false
 	
@@ -193,38 +231,40 @@ func _process(delta: float) -> void:
 	if last_map_center != map_local_center:
 		update_map = true
 		last_map_center = map_local_center
-		
-	var player_cell = Vector2i(converted_player_pos + room_offset)
-	if player_cell != last_player_pos or update_player_flag:
-		update_player_flag = false
-		var array_pos = vector_to_array_index(player_cell)
-		var cell = Statics.current_profile["map_tiles"][array_pos]
-		if cell == CellTypes.UNEXPLORED:
-			Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
-		if cell == CellTypes.SECRET_UNEXPLORED:
-			Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
-		update_cell_mask(map_local_center)
-		update_markers(last_drawn_cells)
-		update_map = false
-		last_player_pos = player_cell
-		
-		if marker_positions[array_pos] >= 0:
-			var marker = active_markers[marker_positions[array_pos]]
-			if (marker.type != MarkerTypes.ITEM
-			or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]))):
-				if player_marker.action == "player_normal":
-					player_marker.action = "player_highlight"
-			elif player_marker.action == "player_highlight":
-				player_marker.action = "player_normal"
-		elif marker_positions[array_pos] < 0 and player_marker.action == "player_highlight":
-			player_marker.action = "player_normal"
-		
-	if update_map:
-		update_cell_mask(map_local_center)
-		update_markers(last_drawn_cells)
 	
-	if modulate.a != fade_override:
-		modulate.a = move_toward(modulate.a, fade_override, delta * FADE_SPEED)
+	if tick_player:
+		var player_cell = Vector2i(converted_player_pos + room_offset)
+		if player_cell != last_player_pos or update_player_flag:
+			update_player_flag = false
+			var array_pos = vector_to_array_index(player_cell)
+			var cell = Statics.current_profile["map_tiles"][array_pos]
+			if cell == CellTypes.UNEXPLORED:
+				Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
+			if cell == CellTypes.SECRET_UNEXPLORED:
+				Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
+			update_cell_mask(map_local_center)
+			update_markers(last_drawn_cells)
+			update_map = false
+			last_player_pos = player_cell
+			
+			if marker_positions.size() > 0:
+				if marker_positions[array_pos] >= 0:
+					var marker = active_markers[marker_positions[array_pos]]
+					if (marker.type != MarkerTypes.ITEM
+					or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]))):
+						if player_marker.action == "player_normal":
+							player_marker.action = "player_highlight"
+					elif player_marker.action == "player_highlight":
+						player_marker.action = "player_normal"
+				elif marker_positions[array_pos] < 0 and player_marker.action == "player_highlight":
+					player_marker.action = "player_normal"
+	
+	if update_map or force_update:
+		var extents = EDGE_BUFFER
+		extents.x += edge_extension
+		extents.y += edge_extension
+		update_cell_mask(map_local_center, extents)
+		update_markers(last_drawn_cells)
 
 
 func update_cell_mask(center:Vector2i, extents:Vector2i = EDGE_BUFFER) -> void:

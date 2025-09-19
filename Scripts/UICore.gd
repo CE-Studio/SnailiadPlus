@@ -28,7 +28,7 @@ static var instance:UICore
 @onready var minimap:Minimap = $"TR/Minimap"
 @onready var border:JsonSprite2D = $"Border"
 @onready var popup_layer:Node2D = $"PopupLayer"
-@onready var pause_layer:Node2D = $"PauseLayer"
+@onready var pause_layer:PauseLayer = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
 @onready var weapon_icon_group:Node2D = $"BR/WeaponIcons"
 @onready var igt:HBoxContainer = $"BL/InGameTime"
