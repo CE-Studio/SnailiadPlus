@@ -3,6 +3,9 @@
 	"layerize": true,
 	"meta": {},
 	"animations": {
+		"testanim": {
+			"inherit": "0.floor.right.idle"
+		},
 		"0.floor.right.idle": {
 			"fps": 3,
 			"loop": true,

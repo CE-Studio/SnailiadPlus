@@ -12,6 +12,7 @@ const _DATA_MATCH = {
 			"colors": [0],
 			"fps": 30,
 			"loop": true,
+			"inherit": "name", #optional
 			"loop_point": 0, #optional
 			"autoplay_next": "an_action", #optional
 			"randomize_start": false, #optional
@@ -124,6 +125,20 @@ func _ready() -> void:
 			if not (t is Dictionary):
 				assert(false, "Animation is incorrect type: " + i)
 				return
+			t = t as Dictionary
+			if t.has("inherit"):
+				if not (t["inherit"] is String):
+					assert(false, "Incorrect inheritance key type")
+					return
+				if not (tempdata["animations"].has(t["inherit"])):
+					assert(false, "Inherited animation does not exist")
+					return
+				var ind = tempdata["animations"][t["inherit"]]
+				if not (ind is Dictionary):
+					assert(false, "Inherited animation is corrupt")
+					return
+				ind = ind as Dictionary
+				t.merge(ind)
 			if not t.has_all(["fps", "frames"]):
 				assert(false, "Animation is missing important keys")
 				return
