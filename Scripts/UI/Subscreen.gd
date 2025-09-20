@@ -73,7 +73,8 @@ var exit_speed:float = 1.0
 @export var sfx_close:AudioStreamPlayer
 @export var sel_target_name:Marker2D
 @export var sel_target_map:Marker2D
-@export var map_target:Marker2D
+#@export var map_target:Marker2D
+@export var map:Minimap
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
 
@@ -232,16 +233,16 @@ func _test_for_move_selection() -> void:
 			selector_target -= UICore.instance.global_position
 			selector_target += SELECTOR_LIST_OFFSET
 			_set_desc(selectable_items[selection][1])
-			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = Color(0.3, 0.3, 0.3)
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
-			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = Color(0.3, 0.3, 0.3)
 		MoveMode.MAP:
 			selector_target = sel_target_map.position
 			desc_name.set_snaily_text_raw("")
 			desc_body.set_snaily_text_raw("")
-			UICore.instance.minimap.modulate = Color.WHITE
+			map.modulate = Color.WHITE
 
 
 func _set_desc(id:int) -> void:

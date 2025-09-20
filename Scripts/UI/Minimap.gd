@@ -79,10 +79,10 @@ var organized_markers:Dictionary = {
 }
 static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
 var marker_positions:Array = []
-var subscreen_mode:bool = false
-var subscreen_target:Vector2 = Vector2.ZERO
-var subscreen_target_mod:float = 0.0
-var edge_extension:int = 0
+@export var subscreen_mode:bool = false
+#var subscreen_target:Vector2 = Vector2.ZERO
+#var subscreen_target_mod:float = 0.0
+#var edge_extension:int = 0
 
 @onready var panel:JsonSprite2D = $"Panel"
 @onready var panel_mask:Sprite2D = $"PanelMask"
@@ -104,6 +104,11 @@ func _ready() -> void:
 	player_marker.action = "player_normal"
 	create_cell_mask()
 	log_markers()
+	if subscreen_mode:
+		panel.queue_free()
+		name_text.queue_free()
+		room_offset = UICore.instance.minimap.room_offset
+		_tick_minimap(1, false, true)
 
 
 func update_visible_from_settings(target_fade:float = 1.0, quick_fade:bool = false) -> void:
@@ -179,47 +184,49 @@ static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
 
 
 func _process(delta: float) -> void:
-	_tick_minimap(true)
+	if not subscreen_mode:
+		_tick_minimap(2)
 	
-	if subscreen_mode and subscreen_target_mod < 1.0:
-		subscreen_target_mod = lerpf(subscreen_target_mod, 1.0, SUBSCREEN_MOVE_SPEED * delta)
-		if 1.0 - subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
-			subscreen_target_mod = 1.0
-	elif not subscreen_mode and subscreen_target_mod > 0.0:
-		subscreen_target_mod = lerpf(subscreen_target_mod, 0.0, SUBSCREEN_MOVE_SPEED * delta)
-		if subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
-			subscreen_target_mod = 0.0
-	
-	if subscreen_target_mod > 0.0:
-		subscreen_target = UICore.instance.pause_layer.subscreen.map_target.global_position
-		subscreen_target -= UICore.instance.pause_layer.subscreen.position
-		map_group.global_position = map_group.global_position.lerp(subscreen_target, subscreen_target_mod)
-		if subscreen_mode and subscreen_target_mod == 1.0:
-			if edge_extension < min(MAP_SIZE.x, MAP_SIZE.y):
-				edge_extension += 1
-				_tick_minimap(false, false, true)
-	if not subscreen_mode and edge_extension > 0:
-		edge_extension = clampi(edge_extension - 2, 0, 999)
-		_tick_minimap(false, false, true)
+	#if subscreen_mode and subscreen_target_mod < 1.0:
+	#	subscreen_target_mod = lerpf(subscreen_target_mod, 1.0, SUBSCREEN_MOVE_SPEED * delta)
+	#	if 1.0 - subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
+	#		subscreen_target_mod = 1.0
+	#elif not subscreen_mode and subscreen_target_mod > 0.0:
+	#	subscreen_target_mod = lerpf(subscreen_target_mod, 0.0, SUBSCREEN_MOVE_SPEED * delta)
+	#	if subscreen_target_mod < SUBSCREEN_MOD_TOLERANCE:
+	#		subscreen_target_mod = 0.0
+	#
+	#if subscreen_target_mod > 0.0:
+	#	subscreen_target = UICore.instance.pause_layer.subscreen.map_target.global_position
+	#	subscreen_target -= UICore.instance.pause_layer.subscreen.position
+	#	map_group.global_position = map_group.global_position.lerp(subscreen_target, subscreen_target_mod)
+	#	if subscreen_mode and subscreen_target_mod == 1.0:
+	#		if edge_extension < min(MAP_SIZE.x, MAP_SIZE.y):
+	#			edge_extension += 1
+	#			_tick_minimap(false, false, true)
+	#if not subscreen_mode and edge_extension > 0:
+	#	edge_extension = clampi(edge_extension - 2, 0, 999)
+	#	_tick_minimap(false, false, true)
 	
 	var fade_d:float = delta * FADE_SPEED
 	if modulate.a != fade_override:
 		modulate.a = move_toward(modulate.a, fade_override, fade_d)
-	var subscreen_target_a = 0.0 if subscreen_mode else 1.0
-	panel.modulate.a = move_toward(panel.modulate.a, subscreen_target_a, fade_d)
-	name_text.modulate.a = move_toward(name_text.modulate.a, subscreen_target_a, fade_d)
+	#var subscreen_target_a = 0.0 if subscreen_mode else 1.0
+	#panel.modulate.a = move_toward(panel.modulate.a, subscreen_target_a, fade_d)
+	#name_text.modulate.a = move_toward(name_text.modulate.a, subscreen_target_a, fade_d)
 
 
-func _tick_minimap(move_group:bool, tick_player:bool = true, force_update:bool = false) -> void:
+func _tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bool = false) -> void:
 	var player = GameCore.instance.player
 	# Converts the player position into coordinates on the "screen grid"
 	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
-	if move_group:
-		map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
-		map_group.position = Vector2(
-			int(clampf(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x)),
-			int(clampf(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y))
-		)
+	if move_group_mode > 0:
+		if move_group_mode > 1:
+			map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
+			map_group.position = Vector2(
+				int(clampf(map_group.position.x, -MAP_LAYER_MAX_BOUNDS.x, MAP_LAYER_MAX_BOUNDS.x)),
+				int(clampf(map_group.position.y, -MAP_LAYER_MAX_BOUNDS.y, MAP_LAYER_MAX_BOUNDS.y))
+			)
 		player_marker.position = MARKER_ZERO + (converted_player_pos * 8) + (room_offset * 8)
 	
 	var update_map:bool = false
@@ -260,10 +267,10 @@ func _tick_minimap(move_group:bool, tick_player:bool = true, force_update:bool =
 					player_marker.action = "player_normal"
 	
 	if update_map or force_update:
-		var extents = EDGE_BUFFER
-		extents.x += edge_extension
-		extents.y += edge_extension
-		update_cell_mask(map_local_center, extents)
+		if subscreen_mode:
+			update_cell_mask(Vector2i.ZERO, MAP_SIZE)
+		else:
+			update_cell_mask(map_local_center, EDGE_BUFFER)
 		update_markers(last_drawn_cells)
 
 
@@ -326,7 +333,8 @@ func update_markers(target_cells:Array = []) -> void:
 
 
 func set_room_name(_name:String):
-	name_text.set_snaily_text(ROOM_NAME_STRING % _name)
+	if not subscreen_mode:
+		name_text.set_snaily_text(ROOM_NAME_STRING % _name)
 
 
 func update_player() -> void:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpfe8sxp7e2kp"]
+[gd_scene load_steps=14 format=3 uid="uid://dpfe8sxp7e2kp"]
 
 [ext_resource type="Script" uid="uid://dljhb3wxvqdup" path="res://Scripts/UI/Subscreen.gd" id="1_gcfo6"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_i7mg0"]
 [ext_resource type="Texture2D" uid="uid://bclnc6t0rfexc" path="res://Assets/Images/UI/Subscreen.png" id="2_d38hq"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_shvbi"]
 [ext_resource type="Texture2D" uid="uid://ypov61wmfy4r" path="res://Assets/Images/UI/SubscreenSeparator.png" id="4_shvbi"]
+[ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="5_cf02a"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_ndsvi"]
 [ext_resource type="Texture2D" uid="uid://bb8hyp40krwaw" path="res://Assets/Images/UI/SubscreenPlayers.png" id="6_teiof"]
 [ext_resource type="Texture2D" uid="uid://bx5a6muw3qefk" path="res://Assets/Images/UI/SubscreenSelector.png" id="8_f6p1s"]
@@ -13,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://c1f8m5y7axavq" path="res://Assets/Sounds/Sfx/SubscreenUp.ogg" id="11_upi3e"]
 [ext_resource type="AudioStream" uid="uid://dgmxh721jnbu1" path="res://Assets/Sounds/Sfx/SubscreenDown.ogg" id="12_cf02a"]
 
-[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sel_target_name", "sel_target_map", "map_target", "desc_name", "desc_body")]
+[node name="Subscreen" type="Node2D" node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sel_target_name", "sel_target_map", "map", "desc_name", "desc_body")]
 process_mode = 3
 script = ExtResource("1_gcfo6")
 separators = [NodePath("GroupName"), NodePath("GroupWeapon"), NodePath("GroupShell"), NodePath("GroupAbility")]
@@ -40,7 +41,7 @@ sfx_open = NodePath("AudioGroup/Open")
 sfx_close = NodePath("AudioGroup/Close")
 sel_target_name = NodePath("TargetName")
 sel_target_map = NodePath("TargetMap")
-map_target = NodePath("MinimapTarget")
+map = NodePath("Minimap")
 desc_name = NodePath("ItemDesc/Name")
 desc_body = NodePath("ItemDesc/Body")
 
@@ -57,8 +58,9 @@ vframes = 3
 script = ExtResource("3_shvbi")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="MinimapTarget" type="Marker2D" parent="."]
+[node name="Minimap" parent="." instance=ExtResource("5_cf02a")]
 position = Vector2(292, 116)
+subscreen_mode = true
 
 [node name="GroupName" type="Sprite2D" parent="."]
 position = Vector2(37, 40)
