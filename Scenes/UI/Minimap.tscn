@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b20cdl7cicldv"]
+[gd_scene load_steps=10 format=3 uid="uid://b20cdl7cicldv"]
 
 [ext_resource type="Script" uid="uid://fdcmfss42swv" path="res://Scripts/UI/Minimap.gd" id="1_itplw"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lhiow"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://drmcos5pr1wle" path="res://Assets/Images/UI/Minimap.png" id="4_a7d3d"]
 [ext_resource type="Texture2D" uid="uid://b2vr3rng13j38" path="res://Assets/Images/UI/MinimapMask.png" id="5_gbsa2"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="7_enhm3"]
+[ext_resource type="Script" uid="uid://oki7wxtma4x4" path="res://Scripts/UI/PlayerMarkerLayer.gd" id="7_n2mc3"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="8_q7g0h"]
 
 [node name="Minimap" type="Node2D"]
@@ -45,6 +46,10 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="MarkerGroup" type="Node2D" parent="MapGroup"]
 position = Vector2(-100, -84)
+
+[node name="PlayerMarkerGroup" type="Node2D" parent="MapGroup"]
+position = Vector2(-100, -84)
+script = ExtResource("7_n2mc3")
 
 [node name="PlayerMarker" type="Sprite2D" parent="MapGroup"]
 script = ExtResource("1_lhiow")

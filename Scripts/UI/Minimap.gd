@@ -30,8 +30,9 @@ const TL_OFFSET:Vector2i = Vector2i(100, 84)
 const MARKER_ZERO:Vector2i = Vector2i(-100, -84)
 const ROOM_NAME_STRING:String = "room_%s"
 const FADE_SPEED:float = 3.5
-const SUBSCREEN_MOVE_SPEED:float = 16.0
-const SUBSCREEN_MOD_TOLERANCE:float = Statics.FRAC_64
+#const SUBSCREEN_MOVE_SPEED:float = 16.0
+#const SUBSCREEN_MOD_TOLERANCE:float = Statics.FRAC_64
+const P_MARKER_ID_OFFSET:int = 100
 
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
@@ -79,6 +80,7 @@ var organized_markers:Dictionary = {
 }
 static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
 var marker_positions:Array = []
+var player_marker_sprites:Array = []
 @export var subscreen_mode:bool = false
 #var subscreen_target:Vector2 = Vector2.ZERO
 #var subscreen_target_mod:float = 0.0
@@ -91,6 +93,7 @@ var marker_positions:Array = []
 @onready var map:JsonSprite2D = $"MapGroup/CellMask/Map"
 @onready var player_marker:JsonSprite2D = $"MapGroup/PlayerMarker"
 @onready var marker_group:Node2D = $"MapGroup/MarkerGroup"
+@onready var p_marker_group:Node2D = $"MapGroup/PlayerMarkerGroup"
 @onready var marker_scene:PackedScene = preload("res://Scenes/UI/MapMarker.tscn")
 @onready var name_text:SnailyText = $"SnailyText"
 #endregion
@@ -100,15 +103,17 @@ func _ready() -> void:
 	if Statics.current_profile["map_tiles"].size() == 0:
 		Statics.current_profile["map_tiles"] = DEFAULT_MAP.duplicate()
 	panel.action = "idle"
-	map.action = "idle"
+	map.action = "minimap"
 	player_marker.action = "player_normal"
 	create_cell_mask()
 	log_markers()
+	update_p_marker_layer()
 	if subscreen_mode:
+		map.action = "subscreen"
 		panel.queue_free()
 		name_text.queue_free()
 		room_offset = UICore.instance.minimap.room_offset
-		_tick_minimap(1, false, true)
+		tick_minimap(1, true, true)
 
 
 func update_visible_from_settings(target_fade:float = 1.0, quick_fade:bool = false) -> void:
@@ -176,6 +181,43 @@ func log_markers() -> void:
 			screen_pos = Vector2i(0, screen_pos.y + 1)
 
 
+func update_p_marker_at_cell(cell:Vector2i) -> void:
+	var index = (cell.y * MAP_SIZE.x) + cell.x
+	if Statics.current_profile["map_tiles"][index] < P_MARKER_ID_OFFSET - 1:
+		Statics.current_profile["map_tiles"][index] += P_MARKER_ID_OFFSET
+	else:
+		Statics.current_profile["map_tiles"][index] -= P_MARKER_ID_OFFSET
+	update_p_marker_layer()
+	if cell == last_player_pos:
+		update_player()
+		tick_minimap(0)
+
+
+func update_p_marker_layer() -> void:
+	while player_marker_sprites.size() < DEFAULT_MAP.size():
+		player_marker_sprites.append(null)
+	var cur_map:Array = Statics.current_profile["map_tiles"]
+	var cell_coords:Vector2i = Vector2i.ZERO
+	for i in cur_map.size():
+		if cur_map[i] >= P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] == null:
+			var new_marker:MapMarker = marker_scene.instantiate()
+			p_marker_group.add_child(new_marker)
+			new_marker.position = cell_coords * 8
+			new_marker.type = MarkerTypes.P_MARKER
+			new_marker.sprite.action = "marker"
+			organized_markers["p_markers"].append(new_marker)
+			player_marker_sprites[i] = new_marker
+		elif cur_map[i] < P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] != null:
+			var spr = player_marker_sprites[i]
+			organized_markers["p_markers"].remove_at(organized_markers["p_markers"].find(spr))
+			spr.queue_free()
+		
+		cell_coords.x += 1
+		if cell_coords.x >= MAP_SIZE.x:
+			cell_coords.x = 0
+			cell_coords.y += 1
+
+
 static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
 	return Vector2i(
 		floori((_position.x) / SCREEN_SIZE.x * Statics.FRAC_16),
@@ -185,7 +227,7 @@ static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
 
 func _process(delta: float) -> void:
 	if not subscreen_mode:
-		_tick_minimap(2)
+		tick_minimap(2)
 	
 	#if subscreen_mode and subscreen_target_mod < 1.0:
 	#	subscreen_target_mod = lerpf(subscreen_target_mod, 1.0, SUBSCREEN_MOVE_SPEED * delta)
@@ -203,10 +245,10 @@ func _process(delta: float) -> void:
 	#	if subscreen_mode and subscreen_target_mod == 1.0:
 	#		if edge_extension < min(MAP_SIZE.x, MAP_SIZE.y):
 	#			edge_extension += 1
-	#			_tick_minimap(false, false, true)
+	#			tick_minimap(false, false, true)
 	#if not subscreen_mode and edge_extension > 0:
 	#	edge_extension = clampi(edge_extension - 2, 0, 999)
-	#	_tick_minimap(false, false, true)
+	#	tick_minimap(false, false, true)
 	
 	var fade_d:float = delta * FADE_SPEED
 	if modulate.a != fade_override:
@@ -216,7 +258,7 @@ func _process(delta: float) -> void:
 	#name_text.modulate.a = move_toward(name_text.modulate.a, subscreen_target_a, fade_d)
 
 
-func _tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bool = false) -> void:
+func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bool = false) -> void:
 	var player = GameCore.instance.player
 	# Converts the player position into coordinates on the "screen grid"
 	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
@@ -235,7 +277,7 @@ func _tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bo
 		clampi(converted_player_pos.x + room_offset.x, EDGE_BUFFER.x, MAP_SIZE.x - EDGE_BUFFER.x - 1),
 		clampi(converted_player_pos.y + room_offset.y, EDGE_BUFFER.y, MAP_SIZE.y - EDGE_BUFFER.y - 1)
 	)
-	if last_map_center != map_local_center:
+	if last_map_center != map_local_center and not subscreen_mode:
 		update_map = true
 		last_map_center = map_local_center
 	
@@ -244,26 +286,37 @@ func _tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bo
 		if player_cell != last_player_pos or update_player_flag:
 			update_player_flag = false
 			var array_pos = vector_to_array_index(player_cell)
-			var cell = Statics.current_profile["map_tiles"][array_pos]
-			if cell == CellTypes.UNEXPLORED:
-				Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
-			if cell == CellTypes.SECRET_UNEXPLORED:
-				Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
-			update_cell_mask(map_local_center)
-			update_markers(last_drawn_cells)
+			#var cell = Statics.current_profile["map_tiles"][array_pos]
+			#var p_marked_cell:bool = false
+			#if cell >= P_MARKER_ID_OFFSET - 1:
+			#	cell -= P_MARKER_ID_OFFSET
+			#	p_marked_cell = true
+			#if cell == CellTypes.UNEXPLORED:
+			#	Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
+			#if cell == CellTypes.SECRET_UNEXPLORED:
+			#	Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
+			var cell = fill_cell(player_cell)
+			var p_marked_cell = cell > P_MARKER_ID_OFFSET - 1
+			if not subscreen_mode:
+				update_cell_mask(map_local_center)
+				update_markers(last_drawn_cells)
 			update_map = false
 			last_player_pos = player_cell
 			
 			if marker_positions.size() > 0:
-				if marker_positions[array_pos] >= 0:
+				var highlight:bool = false
+				
+				if p_marked_cell:
+					highlight = true
+				elif marker_positions[array_pos] >= 0:
 					var marker = active_markers[marker_positions[array_pos]]
 					if (marker.type != MarkerTypes.ITEM
 					or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]))):
-						if player_marker.action == "player_normal":
-							player_marker.action = "player_highlight"
-					elif player_marker.action == "player_highlight":
-						player_marker.action = "player_normal"
-				elif marker_positions[array_pos] < 0 and player_marker.action == "player_highlight":
+						highlight = true
+				
+				if highlight and player_marker.action == "player_normal":
+					player_marker.action = "player_highlight"
+				elif not highlight and player_marker.action == "player_highlight":
 					player_marker.action = "player_normal"
 	
 	if update_map or force_update:
@@ -281,6 +334,8 @@ func update_cell_mask(center:Vector2i, extents:Vector2i = EDGE_BUFFER) -> void:
 		for x in range(center.x - extents.x, center.x + extents.x + 1):
 			if x >= 0 and x < MAP_SIZE.x and y >= 0 and y < MAP_SIZE.y:
 				var cell = Statics.current_profile["map_tiles"][x + (y * MAP_SIZE.x)]
+				if cell >= P_MARKER_ID_OFFSET - 1:
+					cell -= P_MARKER_ID_OFFSET
 				if (cell == CellTypes.EXPLORED or
 				(cell == CellTypes.SECRET_EXPLORED and ProjectSettings.get_setting("game/ui/secret_map_tiles"))):
 					mask.set_pixel(x, y, Color.WHITE)
@@ -293,21 +348,43 @@ func vector_to_array_index(coords:Vector2) -> int:
 	return int(coords.x + (coords.y * MAP_SIZE.x))
 
 
-func fill_cell(coords:Vector2i) -> void:
-	var cell_index = vector_to_array_index(coords)
-	var cell = Statics.current_profile["map_tiles"][cell_index]
+func fill_cell(coords:Vector2i) -> int:
+	var cell_index:int = vector_to_array_index(coords)
+	var true_cell:int = Statics.current_profile["map_tiles"][cell_index]
+	var cell:int = true_cell
+	var player_marked:bool = false
+	if cell >= P_MARKER_ID_OFFSET - 1:
+		cell -= P_MARKER_ID_OFFSET
+		player_marked = true
+	
 	if cell == CellTypes.UNEXPLORED:
 		Statics.current_profile["map_tiles"][cell_index] = CellTypes.EXPLORED
+		if player_marked:
+			Statics.current_profile["map_tiles"][cell_index] += P_MARKER_ID_OFFSET
 	if cell == CellTypes.SECRET_UNEXPLORED:
 		Statics.current_profile["map_tiles"][cell_index] = CellTypes.SECRET_EXPLORED
+		if player_marked:
+			Statics.current_profile["map_tiles"][cell_index] += P_MARKER_ID_OFFSET
+	
+	return true_cell
 
 
 func update_markers(target_cells:Array = []) -> void:
 	if target_cells.is_empty():
 		for i in range(marker_positions.size()):
 			target_cells.append(i)
+	
 	for i in range(marker_positions.size()):
 		var array_i = marker_positions[i]
+		var tile = Statics.current_profile["map_tiles"][i]
+		var player_tile:bool = false
+		if tile >= P_MARKER_ID_OFFSET - 1:
+			tile -= P_MARKER_ID_OFFSET
+			player_tile = true
+		var tile_visible:bool = (tile == CellTypes.EXPLORED
+			or (ProjectSettings.get_setting("game/ui/secret_map_tiles")
+			and tile == CellTypes.SECRET_EXPLORED))
+		
 		if array_i >= 0:
 			var cell_pos = Vector2i.ZERO
 			var working_i = i
@@ -316,20 +393,22 @@ func update_markers(target_cells:Array = []) -> void:
 				working_i -= MAP_SIZE.x
 			cell_pos.x = working_i
 			var marker = active_markers[array_i]
-			var tile = Statics.current_profile["map_tiles"][i]
 			
-			marker.visible = false
-			if target_cells.has(i):
-				if (tile == CellTypes.EXPLORED
-				or (ProjectSettings.get_setting("game/ui/secret_map_tiles") and tile == CellTypes.SECRET_EXPLORED)):
-					marker.visible = true
-				
+			marker.modulate.a = 0.0
+			if target_cells.has(i) and tile_visible:
+				marker.modulate.a = 1.0
+			
 			if marker.type == MarkerTypes.ITEM:
 				var collected:bool = Statics.check_location_collected(marker.data[0])
 				if marker.sprite.action == "item_normal" and collected:
 					marker.sprite.action = "item_collected"
 				elif marker.sprite.action == "item_collected" and not collected:
 					marker.sprite.action = "item_normal"
+		
+		if player_marker_sprites[i]:
+			player_marker_sprites[i].modulate.a = 0.0
+			if target_cells.has(i) and player_tile:
+				player_marker_sprites[i].modulate.a = 1.0
 
 
 func set_room_name(_name:String):

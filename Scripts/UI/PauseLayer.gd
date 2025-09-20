@@ -44,3 +44,4 @@ func unpause_fade_out() -> void:
 	cam.set_all_visibility_from_settings()
 	cam.minimap.subscreen_mode = false
 	cam.minimap.modulate = Color.WHITE
+	cam.minimap.tick_minimap(0, false, true)
