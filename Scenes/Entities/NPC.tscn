@@ -10,12 +10,14 @@ size = Vector2(24, 13)
 
 [node name="NPC" type="Node2D"]
 script = ExtResource("1_4a2w1")
+animation_set = -1
 metadata/_custom_type_script = "uid://dh1qf0lsli2pl"
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_4a2w1")
 hframes = 8
-vframes = 7
+vframes = 8
+frame = 8
 script = ExtResource("3_yb3dg")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 

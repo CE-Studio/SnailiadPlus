@@ -9,7 +9,8 @@ extends CutsceneControllable
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var surface:int = 0
 @export_enum(
 	"Snail", "Slug", "Cone-shell snail", "Spikey shell snail",
-	"Spikey cone-shell snail", "Large-shelled snail", "Turtle"
+	"Spikey cone-shell snail", "Large-shelled snail", "Turtle",
+	"Detect from ID:-1"
 ) var animation_set:int = 0
 
 var facing_left:bool = false
@@ -80,7 +81,9 @@ func _process(_delta: float) -> void:
 
 
 func play_anim(state:String) -> void:
-	var anim = str(animation_set) + "."
+	var anim:String = "npc%d." % my_id
+	if animation_set != -1:
+		anim = str(animation_set) + "."
 	match surface:
 		Statics.DirsSurface.FLOOR: anim += "floor."
 		Statics.DirsSurface.LWALL: anim += "lwall."

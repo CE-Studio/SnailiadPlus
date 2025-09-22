@@ -60,6 +60,7 @@ lock_type = 0
 
 [node name="NPC" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(240, 216)
+animation_set = 0
 identifier = &"One"
 
 [node name="NPC2" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
