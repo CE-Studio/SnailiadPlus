@@ -82,6 +82,11 @@ var exit_speed:float = 1.0
 @export var map_selector:JsonSprite2D
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
+@export var marker_text:SnailyText
+@export var select_text:SnailyText
+@export var map_text:SnailyText
+@export var time_text:SnailyText
+@export var item_text:SnailyText
 
 @onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 #endregion
@@ -106,6 +111,9 @@ func _ready() -> void:
 	desc_name.set_snaily_text_raw("")
 	desc_body.set_snaily_text_raw("")
 	sfx_open.play()
+	map_text.set_snaily_text_raw(map_text.text % Minimap.get_map_rate())
+	item_text.set_snaily_text_raw(item_text.text % Statics.get_item_percentage())
+	time_text.set_snaily_text_raw(time_text.text % Statics.get_igt_str())
 
 
 func _process(delta: float) -> void:
@@ -261,15 +269,21 @@ func _test_for_move_selection() -> void:
 			selector_target += SELECTOR_LIST_OFFSET
 			_set_desc(selectable_items[selection][1])
 			map.modulate = Color(0.3, 0.3, 0.3)
+			marker_text.visible = false
+			select_text.set_snaily_text("subscreen_selection_list")
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
 			map.modulate = Color(0.3, 0.3, 0.3)
+			marker_text.visible = false
+			select_text.set_snaily_text("subscreen_selection_list")
 		MoveMode.MAP:
 			selector_target = sel_target_map.position
 			desc_name.set_snaily_text_raw("")
 			desc_body.set_snaily_text_raw("")
 			map.modulate = Color.WHITE
+			marker_text.visible = true
+			select_text.set_snaily_text("subscreen_selection")
 		MoveMode.GRID:
 			map_selection += grid_move
 			if map_selection.x < 0:
@@ -292,6 +306,8 @@ func _test_for_selection_events() -> void:
 				map_selector.visible = true
 				map_selector.action = "8"
 				map_selector.position = map_sel_origin + (map_selection * 8)
+				marker_text.set_snaily_text("subscreen_markers_place")
+				select_text.set_snaily_text("subscreen_markers_stop")
 		1:
 			if map_focused:
 				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
@@ -301,6 +317,8 @@ func _test_for_selection_events() -> void:
 					sfx_select.play()
 					map_selector.action = "8_disable"
 					selection_depth -= 1
+					marker_text.set_snaily_text("subscreen_markers")
+					select_text.set_snaily_text("subscreen_selection")
 
 
 func _set_desc(id:int) -> void:

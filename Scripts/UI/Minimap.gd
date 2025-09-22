@@ -418,3 +418,14 @@ func set_room_name(_name:String):
 
 func update_player() -> void:
 	update_player_flag = true
+
+
+static func get_map_rate() -> float:
+	var max_cell_count:int = DEFAULT_MAP.count(CellTypes.UNEXPLORED)
+	var cur_map:Array = Statics.current_profile["map_tiles"].duplicate()
+	for i in cur_map.size():
+		cur_map[i] = cur_map[i] as int
+	var cur_cell_count:int = cur_map.count(CellTypes.EXPLORED)
+	cur_cell_count += cur_map.count(CellTypes.EXPLORED + P_MARKER_ID_OFFSET)
+	var output:float = (float(cur_cell_count) / float(max_cell_count)) * 100.0
+	return output

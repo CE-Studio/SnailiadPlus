@@ -51,12 +51,7 @@ func inc_game_time(delta:float) -> void:
 	Statics.current_profile["game_time"] = cur_time.duplicate()
 	
 	if UICore.instance:
-		var time_str:String = ""
-		if cur_time[0] > 0:
-			time_str = Statics.get_text("hud_igt_hms") % [ cur_time[0], cur_time[1], cur_time[2] ]
-		else:
-			time_str = Statics.get_text("hud_igt_ms") % [ cur_time[1], cur_time[2] ]
-		time_str = time_str.strip_edges()
+		var time_str:String = Statics.get_igt_str()
 		UICore.instance.igt_text.set_snaily_text_raw(time_str)
 
 

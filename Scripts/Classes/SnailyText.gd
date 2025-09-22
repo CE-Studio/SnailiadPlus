@@ -23,7 +23,7 @@ extends RichTextLabel
 @export var shadow_scale:int = 0
 @export var border_scale:int = 0
 
-const CONTROL_PATH:String = "res://Assets/Images/UI/ControlIcons/"
+const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
 
 var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
@@ -32,8 +32,9 @@ var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
 
 var char_timeouts:Array[float] = []
+var internal_text:String = ""
 
-@onready var sub_text:Array = []
+@onready var sub_text:Array[RichTextLabel] = []
 @onready var sub_text_offsets:Array = []
 #endregion
 
@@ -41,7 +42,7 @@ var char_timeouts:Array[float] = []
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if quick_load_text.strip_edges() != "":
-			set_snaily_text(Statics.get_text(quick_load_text))
+			set_snaily_text(quick_load_text)
 		if shadow_scale > 0:
 			add_shadow(shadow_scale)
 		if border_scale > 0:
@@ -64,8 +65,8 @@ func set_alignment(horiz:int, vert:int) -> void:
 	horizontal_alignment = horiz as HorizontalAlignment
 	vertical_alignment = vert as VerticalAlignment
 	for sub_label in sub_text:
-		sub_label.horizontal_alignment = horiz
-		sub_label.vertical_alignment = vert
+		sub_label.horizontal_alignment = horiz as HorizontalAlignment
+		sub_label.vertical_alignment = vert as VerticalAlignment
 
 
 func reset_label_size() -> void:
@@ -149,7 +150,7 @@ func set_visible_chars_ratio(ratio:float) -> void:
 
 func get_width(_text:String = text) -> int:
 	var longest_line = 0
-	var lines = text.split("\n")
+	var lines = internal_text.split("\n")
 	for line in lines:
 		var line_length = font.get_string_size(line).x
 		if longest_line < line_length:
@@ -158,10 +159,29 @@ func get_width(_text:String = text) -> int:
 
 
 func format_extra_tags(_text:String) -> String:
-	if _text.contains("[ctrl]") and _text.contains("[/ctrl]"):
-		_text = _text.replace("[ctrl]", "[img]" + CONTROL_PATH)
-		_text = _text.replace("[/ctrl]", ".png[/img]")
-	return _text
+	var split_words:PackedStringArray = _text.split(" ")
+	var reassembled_str:PackedStringArray = []
+	var internal_reassembled_str:PackedStringArray = []
+	for word in split_words:
+		if word.contains("__"):
+			var parts = word.split("__")
+			match parts[0]:
+				"ctrl":
+					reassembled_str.append(CONTROL_PATH % parts[1])
+					internal_reassembled_str.append("LL")
+				"bind":
+					var icon:String = SInput.get_icon_from_enum_str(parts[1])
+					reassembled_str.append(CONTROL_PATH % icon)
+					internal_reassembled_str.append("LL")
+				_:
+					reassembled_str.append(word)
+					internal_reassembled_str.append(word)
+		else:
+			reassembled_str.append(word)
+			internal_reassembled_str.append(word)
+	
+	internal_text = " ".join(internal_reassembled_str)
+	return " ".join(reassembled_str)
 	#var parsed_text:String = ""
 	#var parsed_tag:String = ""
 	#var current_timeout:float = DEFAULT_TIMEOUT

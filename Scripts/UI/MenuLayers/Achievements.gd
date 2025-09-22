@@ -42,7 +42,7 @@ func _ready() -> void:
 		new_option_array.append(new_text)
 	main_scroller.remote_import_new_options(new_option_array)
 	
-	hint_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
+	hint_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER)
 	
 	desc_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	
@@ -91,7 +91,8 @@ func _on_cycle_right(value: Variant) -> void:
 
 
 func _on_scroller_pressed(_value: Variant) -> void:
-	_update_desc(desc_mode + 1)
+	if desc_mode == 0:
+		_update_desc(desc_mode + 1)
 	main_scroller.sfx_select.play()
 
 

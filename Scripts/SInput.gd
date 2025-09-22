@@ -94,6 +94,8 @@ const STICK_DEADZONE_MOVE:float = 0.1
 const STICK_DEADZONE_AIM:float = 0.2
 
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
+
+var last_input_was_con:bool = false
 #endregion
 
 
@@ -102,14 +104,15 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if true:
-		return
 	if event is InputEventKey:
-		print(OS.get_keycode_string(event.physical_keycode))
+		last_input_was_con = false
+		#print(OS.get_keycode_string(event.physical_keycode))
 	elif event is InputEventJoypadButton:
-		print(event.button_index)
+		last_input_was_con = true
+		#print(event.button_index)
 	elif event is InputEventJoypadMotion:
-		print(event)
+		last_input_was_con = true
+		#print(event)
 
 
 func pressed(action:String) -> bool:
@@ -161,15 +164,32 @@ func vector_aim() -> Vector2:
 	return vector
 
 
+func get_icon_from_enum_str(string:String) -> String:
+	string = string.to_upper()
+	var keys:Array = Inputs.keys()
+	assert(keys.has(string), "'%s' is not a valid Inputs value!" % string)
+	var index:int = keys.find(string)
+	return get_icon_from_enum(index as Inputs)
+
+
+func get_icon_from_enum(input:Inputs) -> String:
+	var action = pull_action(input)
+	if last_input_was_con:
+		if action[2] is Vector2i:
+			return get_axis_icon(action[2])
+		return get_button_icon(action[2])
+	return get_key_icon(action[0])
+
+
 func get_input_icon(event:InputEvent) -> String:
 	if event is InputEventKey:
 		return get_key_icon(event.physical_keycode)
-	elif event is InputEventJoypadMotion:
+	if event is InputEventJoypadMotion:
 		return get_axis_icon(Vector2i(
 			event.axis,
 			-1 if event.axis_value < 0 else 1
 		))
-	elif event is InputEventJoypadButton:
+	if event is InputEventJoypadButton:
 		return get_button_icon(event.button_index)
 	return "Unknown"
 

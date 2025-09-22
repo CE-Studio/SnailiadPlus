@@ -177,39 +177,6 @@ enum WorldFlags {
 static func format_game_time(time:Array) -> String:
 	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
 	return time_string
-#endregion
-
-
-#region Save functions
-static func add_item(id:int, count:int) -> void:
-	while id >= len(current_profile["items"]):
-		current_profile["items"].append(0)
-	current_profile["items"][id] += count
-
-
-static func remove_item(id:int, count:int) -> void:
-	if id < len(current_profile["items"]):
-		current_profile["items"][id] -= count
-
-
-static func check_item(id:int) -> int:
-	var output:int = 0
-	if id < len(current_profile["items"]):
-		output = current_profile["items"][id]
-	return output
-
-
-static func mark_item_location(id:int, state:bool = true) -> void:
-	while id >= len(current_profile["locations"]):
-		current_profile["locations"].append(false)
-	current_profile["locations"].set(id, state)
-
-
-static func check_location_collected(id:int) -> bool:
-	var output := false
-	if id < len(current_profile["locations"]):
-		output = current_profile["locations"][id]
-	return output
 
 
 static func get_item_percentage(_profile:int = 0) -> float:
@@ -252,11 +219,63 @@ static func get_item_percentage(_profile:int = 0) -> float:
 					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
 					max_items += COUNTED_INVENTORY[i]
 	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
-	#print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
 	if counted_percentage == 100.0:
 		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
 		return over_percentage
 	return counted_percentage
+
+
+static func get_igt_str(_profile:int = 0) -> String:
+	var time:Array = []
+	match _profile:
+		1:
+			time = data_profile1["game_time"]
+		2:
+			time = data_profile2["game_time"]
+		3:
+			time = data_profile3["game_time"]
+		_:
+			time = current_profile["game_time"]
+	var time_str:String = ""
+	if time[0] > 0:
+		time_str = Statics.get_text("hud_igt_hms") % [ time[0], time[1], time[2] ]
+	else:
+		time_str = Statics.get_text("hud_igt_ms") % [ time[1], time[2] ]
+	time_str = time_str.strip_edges()
+	return time_str
+#endregion
+
+
+#region Save functions
+static func add_item(id:int, count:int) -> void:
+	while id >= len(current_profile["items"]):
+		current_profile["items"].append(0)
+	current_profile["items"][id] += count
+
+
+static func remove_item(id:int, count:int) -> void:
+	if id < len(current_profile["items"]):
+		current_profile["items"][id] -= count
+
+
+static func check_item(id:int) -> int:
+	var output:int = 0
+	if id < len(current_profile["items"]):
+		output = current_profile["items"][id]
+	return output
+
+
+static func mark_item_location(id:int, state:bool = true) -> void:
+	while id >= len(current_profile["locations"]):
+		current_profile["locations"].append(false)
+	current_profile["locations"].set(id, state)
+
+
+static func check_location_collected(id:int) -> bool:
+	var output := false
+	if id < len(current_profile["locations"]):
+		output = current_profile["locations"][id]
+	return output
 
 
 static func save_general() -> void:
