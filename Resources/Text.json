@@ -202,6 +202,7 @@
 	"menu_option_controls_remap_secKey": "Secondary keyboard bind for:\n%s",
 	"menu_option_controls_remap_priCon": "Primary controller bind for:\n%s",
 	"menu_option_controls_remap_secCon": "Secondary controller bind for:\n%s",
+	"menu_option_gameplay_dynamicCam": "Dynamic camera",
 	"menu_option_gameplay_shooting": "Shoot mode",
 	"menu_option_gameplay_breakables": "Show breakables",
 	"menu_option_gameplay_secretTiles": "Show secret map tiles",

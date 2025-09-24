@@ -48,4 +48,5 @@ func unpause_fade_out() -> void:
 	cam.minimap.subscreen_mode = false
 	cam.minimap.modulate = Color.WHITE
 	cam.minimap.tick_minimap(0, false, true)
+	cam.cam.set_cam_mode()
 	game.current_room.set_environment_visibility()

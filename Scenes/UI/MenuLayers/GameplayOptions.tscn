@@ -40,18 +40,28 @@ layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="ShootMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="DynamicCamera" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../../Back")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ShootMode")
+focus_next = NodePath("../ShootMode")
+focus_previous = NodePath("../../../Back")
+text_id = "menu_option_gameplay_dynamicCam"
+grab_focus_on_load = true
+
+[node name="ShootMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../DynamicCamera")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Breakables")
 focus_next = NodePath("../Breakables")
-focus_previous = NodePath("../../../Back")
+focus_previous = NodePath("../DynamicCamera")
 header_id = "menu_option_gameplay_shooting"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_shooting_normal", "menu_add_shooting_toggle"])
-grab_focus_on_load = true
 
 [node name="Breakables" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -141,13 +151,16 @@ cycle_options = Array[String](["menu_add_gravKeep_onState", "menu_add_gravKeep_o
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/GravKeep")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/ShootMode")
-focus_next = NodePath("../ScrollContainer/VBoxContainer/ShootMode")
+focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/DynamicCamera")
+focus_next = NodePath("../ScrollContainer/VBoxContainer/DynamicCamera")
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/GravKeep")
 text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true
 
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DynamicCamera" to="MainVBox" method="_on_dynamic_camera_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ShootMode" to="MainVBox" method="_on_shoot_mode_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Breakables" to="MainVBox" method="_on_breakables_cycled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/SecretMap" to="MainVBox" method="_on_secret_map_tiles_toggled"]
