@@ -6,35 +6,35 @@ extends Node2D
 var subscreen:Subscreen = null
 
 @onready var cam:UICore = UICore.instance
+@onready var game:GameCore = GameCore.instance
 @onready var menu_scene:PackedScene = preload("res://Scenes/IngameMenuScene.tscn")
 @onready var subscreen_scene:PackedScene = preload("res://Scenes/UI/Subscreen.tscn")
 #endregion
 
 
 func _physics_process(_delta: float) -> void:
-	if not cam:
+	if not cam and UICore.instance:
 		cam = UICore.instance
+	if not game and GameCore.instance:
+		game = GameCore.instance
 	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
 		add_child(menu_scene.instantiate())
 		cam.minimap.process_mode = Node.PROCESS_MODE_INHERIT
 	if SInput.input_just_pressed(SInput.Inputs.MAP) and not get_tree().paused:
-		pause_fade_in(true)
+		pause_fade_in()
 		subscreen = subscreen_scene.instantiate()
 		add_child(subscreen)
 		subscreen.position = Vector2(0, 240)
-		cam.minimap.subscreen_mode = true
-		cam.minimap.process_mode = Node.PROCESS_MODE_ALWAYS
-		if not cam.minimap.visible:
-			cam.minimap.update_visible(1)
+		#cam.minimap.subscreen_mode = true
+		#cam.minimap.process_mode = Node.PROCESS_MODE_ALWAYS
+		#if not cam.minimap.visible:
+		#	cam.minimap.update_visible(1)
 
 
-func pause_fade_in(bottom_cover:bool = false) -> void:
+func pause_fade_in() -> void:
 	get_tree().paused = true
-	if bottom_cover:
-		cam.color_cover_bottom.set_new_fade(cam.color_cover_bottom.modulate, Color(0.0, 0.0, 0.0, 0.6), 0.25)
-	else:
-		cam.color_cover_top.set_new_fade(cam.color_cover_top.modulate, Color(0.0, 0.0, 0.0, 0.6), 0.25)
+	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.6), 0.25)
 	cam.popup_layer.visible = false
 	if subscreen:
 		subscreen = null
@@ -42,9 +42,10 @@ func pause_fade_in(bottom_cover:bool = false) -> void:
 
 func unpause_fade_out() -> void:
 	get_tree().paused = false
-	cam.color_cover_top.set_new_fade(cam.color_cover_top.modulate, Color(0.0, 0.0, 0.0, 0.0), 0.25)
-	cam.color_cover_bottom.set_new_fade(cam.color_cover_bottom.modulate, Color(0.0, 0.0, 0.0, 0.0), 0.25)
+	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 	cam.popup_layer.visible = true
 	cam.set_all_visibility_from_settings()
 	cam.minimap.subscreen_mode = false
 	cam.minimap.modulate = Color.WHITE
+	cam.minimap.tick_minimap(0, false, true)
+	game.current_room.set_environment_visibility()

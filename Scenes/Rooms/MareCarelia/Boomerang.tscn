@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b0hjamj58gp3l"]
+[gd_scene load_steps=9 format=4 uid="uid://b0hjamj58gp3l"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_risgg"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v80hh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_huquc"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_1414l"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_tjs8r"]
+[ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="5_1414l"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -62,6 +63,11 @@ location_id = 21
 position = Vector2(48, 48)
 type = 13
 location_id = 22
+
+[node name="NPC11" parent="GroundLayer" instance=ExtResource("5_1414l")]
+position = Vector2(688, 200)
+my_id = 11
+identifier = &"11"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

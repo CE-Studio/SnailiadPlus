@@ -27,7 +27,7 @@ const SUB_ITEMS:Dictionary = {
 }
 const GROUP_SELECTION_X_OFFSET:int = 4
 const LIST_SPRITE_OFFSET:int = 10
-const SELECTOR_LIST_OFFSET:Vector2 = Vector2(-20.0, -1.0)
+const SELECTOR_LIST_OFFSET:Vector2i = Vector2(-20, -1)
 const SELECTOR_SPEED:float = 20.0
 const SUBSCREEN_ENTER_SPEED:float = 16.0
 const SUBSCREEN_INACTIVE_ACCEL:float = 16.0
@@ -36,7 +36,8 @@ enum MoveMode {
 	NONE = -1,
 	LIST,
 	NAME,
-	MAP
+	MAP,
+	GRID
 }
 
 var group_start_x:float = 0.0
@@ -45,7 +46,10 @@ var selection_depth:int = -1
 var selectable_items:Array = [] # Formatting: [ JsonSprite2D, Int ]
 var selection:int = -1
 var list_focused:bool = false
-var selector_target:Vector2 = Vector2.ZERO
+var map_focused:bool = true
+var selector_target:Vector2i = Vector2.ZERO
+var map_sel_origin:Vector2i
+var map_selection:Vector2i = Vector2.ZERO
 var active:bool = true
 var exit_speed:float = 1.0
 
@@ -73,9 +77,16 @@ var exit_speed:float = 1.0
 @export var sfx_close:AudioStreamPlayer
 @export var sel_target_name:Marker2D
 @export var sel_target_map:Marker2D
-@export var map_target:Marker2D
+#@export var map_target:Marker2D
+@export var map:Minimap
+@export var map_selector:JsonSprite2D
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
+@export var marker_text:SnailyText
+@export var select_text:SnailyText
+@export var map_text:SnailyText
+@export var time_text:SnailyText
+@export var item_text:SnailyText
 
 @onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 #endregion
@@ -93,10 +104,16 @@ func _ready() -> void:
 	selector_spr.action = "anim"
 	selector_target = sel_target_map.position
 	selector.position = selector_target
+	map_selector.visible = false
+	map_sel_origin = Vector2i(map.position) + map.MARKER_ZERO
+	map_selection = UICore.instance.minimap.last_player_pos
 	_init_item_slots()
 	desc_name.set_snaily_text_raw("")
 	desc_body.set_snaily_text_raw("")
 	sfx_open.play()
+	map_text.set_snaily_text_raw(map_text.text % Minimap.get_map_rate())
+	item_text.set_snaily_text_raw(item_text.text % Statics.get_item_percentage())
+	time_text.set_snaily_text_raw(time_text.text % Statics.get_igt_str())
 
 
 func _process(delta: float) -> void:
@@ -108,6 +125,8 @@ func _process(delta: float) -> void:
 			if SInput.check_input(SInput.Inputs.MAP, true) or SInput.check_input(SInput.Inputs.PAUSE, true):
 				UICore.instance.pause_layer.unpause_fade_out()
 				active = false
+				UICore.instance.minimap.update_player()
+				UICore.instance.minimap.update_p_marker_layer()
 				sfx_close.play()
 		
 		if selection_depth < 0:
@@ -115,6 +134,7 @@ func _process(delta: float) -> void:
 		
 		_test_for_move_selection()
 		selector.position = selector.position.lerp(selector_target, SELECTOR_SPEED * delta)
+		_test_for_selection_events()
 		
 		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
 	else:
@@ -201,9 +221,12 @@ func _get_item_count(id:Item.ItemTypes) -> int:
 
 func _test_for_move_selection() -> void:
 	var move_mode:MoveMode = MoveMode.NONE
+	var grid_move:Vector2i = Vector2i.ZERO
+	
 	if list_focused:
 		if SInput.check_input(SInput.Inputs.RIGHT, true):
 			list_focused = false
+			map_focused = true
 			move_mode = MoveMode.MAP
 		elif SInput.check_input(SInput.Inputs.DOWN, true):
 			selection += 1
@@ -219,29 +242,83 @@ func _test_for_move_selection() -> void:
 				if selection < -1:
 					selection = selectable_items.size() - 1
 				move_mode = MoveMode.LIST
-	else:
-		if SInput.check_input(SInput.Inputs.LEFT, true):
-			list_focused = true
-			move_mode = MoveMode.NAME if selection == -1 else MoveMode.LIST
+	elif map_focused:
+		if selection_depth == 0:
+			if SInput.check_input(SInput.Inputs.LEFT, true):
+				list_focused = true
+				map_focused = false
+				move_mode = MoveMode.NAME if selection == -1 else MoveMode.LIST
+		elif selection_depth == 1:
+			if SInput.check_input(SInput.Inputs.LEFT, true):
+				grid_move.x -= 1
+			if SInput.check_input(SInput.Inputs.RIGHT, true):
+				grid_move.x += 1
+			if SInput.check_input(SInput.Inputs.UP, true):
+				grid_move.y -= 1
+			if SInput.check_input(SInput.Inputs.DOWN, true):
+				grid_move.y += 1
+			if grid_move != Vector2i.ZERO:
+				move_mode = MoveMode.GRID
 	
 	if move_mode != MoveMode.NONE:
 		sfx_move.play()
 	match move_mode:
 		MoveMode.LIST:
 			selector_target = selectable_items[selection][0].global_position
-			selector_target -= UICore.instance.global_position
+			selector_target -= Vector2i(UICore.instance.global_position)
 			selector_target += SELECTOR_LIST_OFFSET
 			_set_desc(selectable_items[selection][1])
-			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = Color(0.3, 0.3, 0.3)
+			marker_text.visible = false
+			select_text.set_snaily_text("subscreen_selection_list")
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
-			UICore.instance.minimap.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = Color(0.3, 0.3, 0.3)
+			marker_text.visible = false
+			select_text.set_snaily_text("subscreen_selection_list")
 		MoveMode.MAP:
 			selector_target = sel_target_map.position
 			desc_name.set_snaily_text_raw("")
 			desc_body.set_snaily_text_raw("")
-			UICore.instance.minimap.modulate = Color.WHITE
+			map.modulate = Color.WHITE
+			marker_text.visible = true
+			select_text.set_snaily_text("subscreen_selection")
+		MoveMode.GRID:
+			map_selection += grid_move
+			if map_selection.x < 0:
+				map_selection.x += Minimap.MAP_SIZE.x
+			elif map_selection.x >= Minimap.MAP_SIZE.x:
+				map_selection.x -= Minimap.MAP_SIZE.x
+			if map_selection.y < 0:
+				map_selection.y += Minimap.MAP_SIZE.y
+			elif map_selection.y >= Minimap.MAP_SIZE.y:
+				map_selection.y -= Minimap.MAP_SIZE.y
+			map_selector.position = map_sel_origin + (map_selection * 8)
+
+
+func _test_for_selection_events() -> void:
+	match selection_depth:
+		0:
+			if map_focused and SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+				selection_depth += 1
+				sfx_select.play()
+				map_selector.visible = true
+				map_selector.action = "8"
+				map_selector.position = map_sel_origin + (map_selection * 8)
+				marker_text.set_snaily_text("subscreen_markers_place")
+				select_text.set_snaily_text("subscreen_markers_stop")
+		1:
+			if map_focused:
+				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+					sfx_select.play()
+					map.update_p_marker_at_cell(map_selection)
+				elif SInput.check_input(SInput.Inputs.UI_BACK, true):
+					sfx_select.play()
+					map_selector.action = "8_disable"
+					selection_depth -= 1
+					marker_text.set_snaily_text("subscreen_markers")
+					select_text.set_snaily_text("subscreen_selection")
 
 
 func _set_desc(id:int) -> void:

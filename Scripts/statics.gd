@@ -177,6 +177,72 @@ enum WorldFlags {
 static func format_game_time(time:Array) -> String:
 	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
 	return time_string
+
+
+static func get_item_percentage(_profile:int = 0) -> float:
+	var inventory:Array
+	var _player:int
+	var difficulty:int
+	match _profile:
+		1:
+			inventory = data_profile1["items"]
+			_player = data_profile1["character"]
+			difficulty = data_profile1["difficulty"]
+		2:
+			inventory = data_profile2["items"]
+			_player = data_profile2["character"]
+			difficulty = data_profile2["difficulty"]
+		3:
+			inventory = data_profile3["items"]
+			_player = data_profile3["character"]
+			difficulty = data_profile3["difficulty"]
+		_:
+			inventory = current_profile["items"]
+			_player = current_profile["character"]
+			difficulty = current_profile["difficulty"]
+	var collected_items:int = 0 # Counted items the player has collected and saved to ["items"]
+	var max_items:int = 0 # Maximum item count for 100% as dictated by COUNTED_INVENTORY
+	var total_items:int = 0 # Complete collection of items, counted or not, saved to ["items"]
+	for i in inventory.size():
+		total_items += inventory[i]
+		match i:
+			Item.ItemTypes.SHELL_SHIELD:
+				if _player != Player.Players.SLUGGY and _player != Player.Players.LEECHY:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			Item.ItemTypes.ICE_SHELL:
+				if difficulty != 2:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+			_:
+				if COUNTED_INVENTORY[i] > 0:
+					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
+					max_items += COUNTED_INVENTORY[i]
+	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
+	if counted_percentage == 100.0:
+		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
+		return over_percentage
+	return counted_percentage
+
+
+static func get_igt_str(_profile:int = 0) -> String:
+	var time:Array = []
+	match _profile:
+		1:
+			time = data_profile1["game_time"]
+		2:
+			time = data_profile2["game_time"]
+		3:
+			time = data_profile3["game_time"]
+		_:
+			time = current_profile["game_time"]
+	var time_str:String = ""
+	if time[0] > 0:
+		time_str = Statics.get_text("hud_igt_hms") % [ time[0], time[1], time[2] ]
+	else:
+		time_str = Statics.get_text("hud_igt_ms") % [ time[1], time[2] ]
+	time_str = time_str.strip_edges()
+	return time_str
 #endregion
 
 
@@ -210,53 +276,6 @@ static func check_location_collected(id:int) -> bool:
 	if id < len(current_profile["locations"]):
 		output = current_profile["locations"][id]
 	return output
-
-
-static func get_item_percentage(_profile:int = 0) -> float:
-	var inventory:Array
-	var _player:int
-	var difficulty:int
-	match _profile:
-		1:
-			inventory = data_profile1["items"]
-			player = data_profile1["character"]
-			difficulty = data_profile1["difficulty"]
-		2:
-			inventory = data_profile2["items"]
-			player = data_profile2["character"]
-			difficulty = data_profile2["difficulty"]
-		3:
-			inventory = data_profile3["items"]
-			player = data_profile3["character"]
-			difficulty = data_profile3["difficulty"]
-		_:
-			inventory = current_profile["items"]
-			player = current_profile["character"]
-			difficulty = current_profile["difficulty"]
-	var collected_items:int = 0 # Counted items the player has collected and saved to ["items"]
-	var max_items:int = 0 # Maximum item count for 100% as dictated by COUNTED_INVENTORY
-	var total_items:int = 0 # Complete collection of items, counted or not, saved to ["items"]
-	for i in inventory.size():
-		total_items += inventory[i]
-		match i:
-			Item.ItemTypes.SHELL_SHIELD:
-				if _player != Player.Players.SLUGGY and _player != Player.Players.LEECHY:
-					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
-					max_items += COUNTED_INVENTORY[i]
-			Item.ItemTypes.ICE_SHELL:
-				if difficulty != 2:
-					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
-					max_items += COUNTED_INVENTORY[i]
-			_:
-				if COUNTED_INVENTORY[i] > 0:
-					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
-					max_items += COUNTED_INVENTORY[i]
-	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
-	#print("%s / %s = %s" % [ collected_items, max_items, counted_percentage ])
-	if counted_percentage == 100.0:
-		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
-		return over_percentage
-	return counted_percentage
 
 
 static func save_general() -> void:

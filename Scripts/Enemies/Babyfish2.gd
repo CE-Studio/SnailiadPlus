@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	elapsed += delta
-	position.y = origin.y + 4 * sin(elapsed * (1.86 if display_mode else 2))
+	position.y = origin.y + 4 * sin(elapsed * (1.86 if display_mode else 2.0))
 	if vis.is_on_screen() and not display_mode:
 		move_timeout -= delta
 		if move_timeout <= 0:

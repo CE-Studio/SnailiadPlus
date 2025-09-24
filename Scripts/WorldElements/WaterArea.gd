@@ -8,7 +8,8 @@ var active_bubbles:Array = []
 
 func _ready() -> void:
 	super()
-	call_deferred("spawn_initial_bubbles")
+	if GameCore.instance:
+		call_deferred("spawn_initial_bubbles")
 
 
 func spawn_initial_bubbles() -> void:
@@ -73,8 +74,8 @@ func call_splash(pos:Vector2, normal:Vector2, make_bubbles:float = 0, home_box:C
 	
 	Statics.spawn_particle("SplashTop", Room.Layers.GROUND, pos + (normal * 8))
 	if make_bubbles > 0:
-		var bubble_count = floori(lerp(2, 10, make_bubbles))
-		for i in range(bubble_count):
+		var this_bubble_count = floori(lerp(2, 10, make_bubbles))
+		for i in range(this_bubble_count):
 			match normal:
 				Vector2.UP:
 					var x_variance = randf_range(-4, 4)

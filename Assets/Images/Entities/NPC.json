@@ -1,19 +1,16 @@
 {
-	"tiles": [8, 7],
+	"tiles": [8, 8],
 	"layerize": true,
 	"meta": {},
 	"animations": {
-		"testanim": {
-			"inherit": "0.floor.right.idle"
-		},
 		"0.floor.right.idle": {
 			"fps": 3,
 			"loop": true,
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 0, false, false],
-				[1, 0, false, false]
+				[0, 1, false, false],
+				[1, 1, false, false]
 			]
 		},
 		"0.floor.right.turnground": {
@@ -30,18 +27,17 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[3, 1, false, false]
 			 ]
 		},
 		"0.floor.left.idle": {
 			"fps": 3,
 			"loop": true,
-			"colors": [255, 255, 4278190335, 255, 255],
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 0, true, false],
-				[1, 0, true, false]
+				[0, 1, true, false],
+				[1, 1, true, false]
 			]
 		},
 		"0.floor.left.turnground": {
@@ -58,7 +54,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, true, false]
+				[3, 1, true, false]
 			 ]
 		},
 		"0.lwall.right.idle": {
@@ -67,8 +63,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 0, true, false],
-				[5, 0, true, false]
+				[4, 1, true, false],
+				[5, 1, true, false]
 			]
 		},
 		"0.lwall.right.turnground": {
@@ -85,7 +81,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 0, false, true]
+				[7, 1, false, true]
 			 ]
 		},
 		"0.lwall.left.idle": {
@@ -94,8 +90,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 0, true, true],
-				[5, 0, true, true]
+				[4, 1, true, true],
+				[5, 1, true, true]
 			]
 		},
 		"0.lwall.left.turnground": {
@@ -112,7 +108,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 0, false, false]
+				[7, 1, false, false]
 			 ]
 		},
 		"0.rwall.right.idle": {
@@ -121,8 +117,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 0, false, true],
-				[5, 0, false, true]
+				[4, 1, false, true],
+				[5, 1, false, true]
 			]
 		},
 		"0.rwall.right.turnground": {
@@ -139,7 +135,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 0, false, false]
+				[7, 1, false, false]
 			 ]
 		},
 		"0.rwall.left.idle": {
@@ -148,8 +144,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 0, false, false],
-				[5, 0, false, false]
+				[4, 1, false, false],
+				[5, 1, false, false]
 			]
 		},
 		"0.rwall.left.turnground": {
@@ -166,7 +162,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 0, false, true]
+				[7, 1, false, true]
 			 ]
 		},
 		"0.ceiling.right.idle": {
@@ -175,8 +171,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 0, true, true],
-				[1, 0, true, true]
+				[0, 1, true, true],
+				[1, 1, true, true]
 			]
 		},
 		"0.ceiling.right.turnground": {
@@ -193,7 +189,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, true, true]
+				[3, 1, true, true]
 			 ]
 		},
 		"0.ceiling.left.idle": {
@@ -202,8 +198,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 0, false, true],
-				[1, 0, false, true]
+				[0, 1, false, true],
+				[1, 1, false, true]
 			]
 		},
 		"0.ceiling.left.turnground": {
@@ -220,7 +216,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, true]
+				[3, 1, false, true]
 			 ]
 		},
 		"1.floor.right.idle": {
@@ -229,8 +225,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 1, false, false],
-				[1, 1, false, false]
+				[0, 2, false, false],
+				[1, 2, false, false]
 			]
 		},
 		"1.floor.right.turnground": {
@@ -247,7 +243,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, false]
+				[3, 2, false, false]
 			 ]
 		},
 		"1.floor.left.idle": {
@@ -256,8 +252,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 1, true, false],
-				[1, 1, true, false]
+				[0, 2, true, false],
+				[1, 2, true, false]
 			]
 		},
 		"1.floor.left.turnground": {
@@ -274,7 +270,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, true, false]
+				[3, 2, true, false]
 			 ]
 		},
 		"1.lwall.right.idle": {
@@ -283,8 +279,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 1, true, false],
-				[5, 1, true, false]
+				[4, 2, true, false],
+				[5, 2, true, false]
 			]
 		},
 		"1.lwall.right.turnground": {
@@ -301,7 +297,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 1, false, true]
+				[7, 2, false, true]
 			 ]
 		},
 		"1.lwall.left.idle": {
@@ -310,8 +306,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 1, true, true],
-				[5, 1, true, true]
+				[4, 2, true, true],
+				[5, 2, true, true]
 			]
 		},
 		"1.lwall.left.turnground": {
@@ -328,7 +324,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 1, false, false]
+				[7, 2, false, false]
 			 ]
 		},
 		"1.rwall.right.idle": {
@@ -337,8 +333,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 1, false, true],
-				[5, 1, false, true]
+				[4, 2, false, true],
+				[5, 2, false, true]
 			]
 		},
 		"1.rwall.right.turnground": {
@@ -355,7 +351,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 1, false, false]
+				[7, 2, false, false]
 			 ]
 		},
 		"1.rwall.left.idle": {
@@ -364,8 +360,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 1, false, false],
-				[5, 1, false, false]
+				[4, 2, false, false],
+				[5, 2, false, false]
 			]
 		},
 		"1.rwall.left.turnground": {
@@ -382,7 +378,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 1, false, true]
+				[7, 2, false, true]
 			 ]
 		},
 		"1.ceiling.right.idle": {
@@ -391,8 +387,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 1, true, true],
-				[1, 1, true, true]
+				[0, 2, true, true],
+				[1, 2, true, true]
 			]
 		},
 		"1.ceiling.right.turnground": {
@@ -409,7 +405,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, true, true]
+				[3, 2, true, true]
 			 ]
 		},
 		"1.ceiling.left.idle": {
@@ -418,8 +414,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 1, false, true],
-				[1, 1, false, true]
+				[0, 2, false, true],
+				[1, 2, false, true]
 			]
 		},
 		"1.ceiling.left.turnground": {
@@ -436,7 +432,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, true]
+				[3, 2, false, true]
 			 ]
 		},
 		"2.floor.right.idle": {
@@ -445,8 +441,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 2, false, false],
-				[1, 2, false, false]
+				[0, 3, false, false],
+				[1, 3, false, false]
 			]
 		},
 		"2.floor.right.turnground": {
@@ -463,7 +459,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 2, false, false]
+				[3, 3, false, false]
 			 ]
 		},
 		"2.floor.left.idle": {
@@ -472,8 +468,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 2, true, false],
-				[1, 2, true, false]
+				[0, 3, true, false],
+				[1, 3, true, false]
 			]
 		},
 		"2.floor.left.turnground": {
@@ -490,7 +486,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 2, true, false]
+				[3, 3, true, false]
 			 ]
 		},
 		"2.lwall.right.idle": {
@@ -499,8 +495,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 2, true, false],
-				[5, 2, true, false]
+				[4, 3, true, false],
+				[5, 3, true, false]
 			]
 		},
 		"2.lwall.right.turnground": {
@@ -517,7 +513,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 2, false, true]
+				[7, 3, false, true]
 			 ]
 		},
 		"2.lwall.left.idle": {
@@ -526,8 +522,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 2, true, true],
-				[5, 2, true, true]
+				[4, 3, true, true],
+				[5, 3, true, true]
 			]
 		},
 		"2.lwall.left.turnground": {
@@ -544,7 +540,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 2, false, false]
+				[7, 3, false, false]
 			 ]
 		},
 		"2.rwall.right.idle": {
@@ -553,8 +549,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 2, false, true],
-				[5, 2, false, true]
+				[4, 3, false, true],
+				[5, 3, false, true]
 			]
 		},
 		"2.rwall.right.turnground": {
@@ -571,7 +567,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 2, false, false]
+				[7, 3, false, false]
 			 ]
 		},
 		"2.rwall.left.idle": {
@@ -580,8 +576,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 2, false, false],
-				[5, 2, false, false]
+				[4, 3, false, false],
+				[5, 3, false, false]
 			]
 		},
 		"2.rwall.left.turnground": {
@@ -598,7 +594,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 2, false, true]
+				[7, 3, false, true]
 			 ]
 		},
 		"2.ceiling.right.idle": {
@@ -607,8 +603,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 2, true, true],
-				[1, 2, true, true]
+				[0, 3, true, true],
+				[1, 3, true, true]
 			]
 		},
 		"2.ceiling.right.turnground": {
@@ -625,7 +621,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 2, true, true]
+				[3, 3, true, true]
 			 ]
 		},
 		"2.ceiling.left.idle": {
@@ -634,8 +630,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 2, false, true],
-				[1, 2, false, true]
+				[0, 3, false, true],
+				[1, 3, false, true]
 			]
 		},
 		"2.ceiling.left.turnground": {
@@ -652,7 +648,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 2, false, true]
+				[3, 3, false, true]
 			 ]
 		},
 		"3.floor.right.idle": {
@@ -661,8 +657,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 3, false, false],
-				[1, 3, false, false]
+				[0, 4, false, false],
+				[1, 4, false, false]
 			]
 		},
 		"3.floor.right.turnground": {
@@ -679,7 +675,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 3, false, false]
+				[3, 4, false, false]
 			 ]
 		},
 		"3.floor.left.idle": {
@@ -688,8 +684,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 3, true, false],
-				[1, 3, true, false]
+				[0, 4, true, false],
+				[1, 4, true, false]
 			]
 		},
 		"3.floor.left.turnground": {
@@ -706,7 +702,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 3, true, false]
+				[3, 4, true, false]
 			 ]
 		},
 		"3.lwall.right.idle": {
@@ -715,8 +711,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 3, true, false],
-				[5, 3, true, false]
+				[4, 4, true, false],
+				[5, 4, true, false]
 			]
 		},
 		"3.lwall.right.turnground": {
@@ -733,7 +729,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 3, false, true]
+				[7, 4, false, true]
 			 ]
 		},
 		"3.lwall.left.idle": {
@@ -742,8 +738,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 3, true, true],
-				[5, 3, true, true]
+				[4, 4, true, true],
+				[5, 4, true, true]
 			]
 		},
 		"3.lwall.left.turnground": {
@@ -760,7 +756,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 3, false, false]
+				[7, 4, false, false]
 			 ]
 		},
 		"3.rwall.right.idle": {
@@ -769,8 +765,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 3, false, true],
-				[5, 3, false, true]
+				[4, 4, false, true],
+				[5, 4, false, true]
 			]
 		},
 		"3.rwall.right.turnground": {
@@ -787,7 +783,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 3, false, false]
+				[7, 4, false, false]
 			 ]
 		},
 		"3.rwall.left.idle": {
@@ -796,8 +792,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 3, false, false],
-				[5, 3, false, false]
+				[4, 4, false, false],
+				[5, 4, false, false]
 			]
 		},
 		"3.rwall.left.turnground": {
@@ -814,7 +810,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 3, false, true]
+				[7, 4, false, true]
 			 ]
 		},
 		"3.ceiling.right.idle": {
@@ -823,8 +819,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 3, true, true],
-				[1, 3, true, true]
+				[0, 4, true, true],
+				[1, 4, true, true]
 			]
 		},
 		"3.ceiling.right.turnground": {
@@ -841,7 +837,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 3, true, true]
+				[3, 4, true, true]
 			 ]
 		},
 		"3.ceiling.left.idle": {
@@ -850,8 +846,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 3, false, true],
-				[1, 3, false, true]
+				[0, 4, false, true],
+				[1, 4, false, true]
 			]
 		},
 		"3.ceiling.left.turnground": {
@@ -868,7 +864,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 3, false, true]
+				[3, 4, false, true]
 			 ]
 		},
 		"4.floor.right.idle": {
@@ -877,8 +873,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 4, false, false],
-				[1, 4, false, false]
+				[0, 5, false, false],
+				[1, 5, false, false]
 			]
 		},
 		"4.floor.right.turnground": {
@@ -895,7 +891,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 4, false, false]
+				[3, 5, false, false]
 			 ]
 		},
 		"4.floor.left.idle": {
@@ -904,8 +900,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 4, true, false],
-				[1, 4, true, false]
+				[0, 5, true, false],
+				[1, 5, true, false]
 			]
 		},
 		"4.floor.left.turnground": {
@@ -922,7 +918,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 4, true, false]
+				[3, 5, true, false]
 			 ]
 		},
 		"4.lwall.right.idle": {
@@ -931,8 +927,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 4, true, false],
-				[5, 4, true, false]
+				[4, 5, true, false],
+				[5, 5, true, false]
 			]
 		},
 		"4.lwall.right.turnground": {
@@ -949,7 +945,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 4, false, true]
+				[7, 5, false, true]
 			 ]
 		},
 		"4.lwall.left.idle": {
@@ -958,8 +954,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 4, true, true],
-				[5, 4, true, true]
+				[4, 5, true, true],
+				[5, 5, true, true]
 			]
 		},
 		"4.lwall.left.turnground": {
@@ -976,7 +972,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 4, false, false]
+				[7, 5, false, false]
 			 ]
 		},
 		"4.rwall.right.idle": {
@@ -985,8 +981,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 4, false, true],
-				[5, 4, false, true]
+				[4, 5, false, true],
+				[5, 5, false, true]
 			]
 		},
 		"4.rwall.right.turnground": {
@@ -1003,7 +999,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 4, false, false]
+				[7, 5, false, false]
 			 ]
 		},
 		"4.rwall.left.idle": {
@@ -1012,8 +1008,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 4, false, false],
-				[5, 4, false, false]
+				[4, 5, false, false],
+				[5, 5, false, false]
 			]
 		},
 		"4.rwall.left.turnground": {
@@ -1030,7 +1026,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 4, false, true]
+				[7, 5, false, true]
 			 ]
 		},
 		"4.ceiling.right.idle": {
@@ -1039,8 +1035,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 4, true, true],
-				[1, 4, true, true]
+				[0, 5, true, true],
+				[1, 5, true, true]
 			]
 		},
 		"4.ceiling.right.turnground": {
@@ -1057,7 +1053,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 4, true, true]
+				[3, 5, true, true]
 			 ]
 		},
 		"4.ceiling.left.idle": {
@@ -1066,8 +1062,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 4, false, true],
-				[1, 4, false, true]
+				[0, 5, false, true],
+				[1, 5, false, true]
 			]
 		},
 		"4.ceiling.left.turnground": {
@@ -1084,7 +1080,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 4, false, true]
+				[3, 5, false, true]
 			 ]
 		},
 		"5.floor.right.idle": {
@@ -1093,8 +1089,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 5, false, false],
-				[1, 5, false, false]
+				[0, 6, false, false],
+				[1, 6, false, false]
 			]
 		},
 		"5.floor.right.turnground": {
@@ -1111,7 +1107,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 5, false, false]
+				[3, 6, false, false]
 			 ]
 		},
 		"5.floor.left.idle": {
@@ -1120,8 +1116,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 5, true, false],
-				[1, 5, true, false]
+				[0, 6, true, false],
+				[1, 6, true, false]
 			]
 		},
 		"5.floor.left.turnground": {
@@ -1138,7 +1134,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 5, true, false]
+				[3, 6, true, false]
 			 ]
 		},
 		"5.lwall.right.idle": {
@@ -1147,8 +1143,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 5, true, false],
-				[5, 5, true, false]
+				[4, 6, true, false],
+				[5, 6, true, false]
 			]
 		},
 		"5.lwall.right.turnground": {
@@ -1165,7 +1161,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 5, false, true]
+				[7, 6, false, true]
 			 ]
 		},
 		"5.lwall.left.idle": {
@@ -1174,8 +1170,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 5, true, true],
-				[5, 5, true, true]
+				[4, 6, true, true],
+				[5, 6, true, true]
 			]
 		},
 		"5.lwall.left.turnground": {
@@ -1192,7 +1188,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 5, false, false]
+				[7, 6, false, false]
 			 ]
 		},
 		"5.rwall.right.idle": {
@@ -1201,8 +1197,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 5, false, true],
-				[5, 5, false, true]
+				[4, 6, false, true],
+				[5, 6, false, true]
 			]
 		},
 		"5.rwall.right.turnground": {
@@ -1219,7 +1215,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 5, false, false]
+				[7, 6, false, false]
 			 ]
 		},
 		"5.rwall.left.idle": {
@@ -1228,8 +1224,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 5, false, false],
-				[5, 5, false, false]
+				[4, 6, false, false],
+				[5, 6, false, false]
 			]
 		},
 		"5.rwall.left.turnground": {
@@ -1246,7 +1242,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 5, false, true]
+				[7, 6, false, true]
 			 ]
 		},
 		"5.ceiling.right.idle": {
@@ -1255,8 +1251,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 5, true, true],
-				[1, 5, true, true]
+				[0, 6, true, true],
+				[1, 6, true, true]
 			]
 		},
 		"5.ceiling.right.turnground": {
@@ -1273,7 +1269,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 5, true, true]
+				[3, 6, true, true]
 			 ]
 		},
 		"5.ceiling.left.idle": {
@@ -1282,8 +1278,8 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 5, false, true],
-				[1, 5, false, true]
+				[0, 6, false, true],
+				[1, 6, false, true]
 			]
 		},
 		"5.ceiling.left.turnground": {
@@ -1300,7 +1296,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 5, false, true]
+				[3, 6, false, true]
 			 ]
 		},
 		"6.floor.right.idle": {
@@ -1309,10 +1305,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 6, false, false],
-				[1, 6, false, false],
-				[0, 6, false, false],
-				[2, 6, false, false],
+				[0, 7, false, false],
+				[1, 7, false, false],
+				[0, 7, false, false],
+				[2, 7, false, false],
 			]
 		},
 		"6.floor.right.turnground": {
@@ -1329,7 +1325,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 6, false, false]
+				[3, 7, false, false]
 			 ]
 		},
 		"6.floor.left.idle": {
@@ -1338,10 +1334,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 6, true, false],
-				[1, 6, true, false],
-				[0, 6, true, false],
-				[2, 6, true, false]
+				[0, 7, true, false],
+				[1, 7, true, false],
+				[0, 7, true, false],
+				[2, 7, true, false]
 			]
 		},
 		"6.floor.left.turnground": {
@@ -1358,7 +1354,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 6, true, false]
+				[3, 7, true, false]
 			 ]
 		},
 		"6.lwall.right.idle": {
@@ -1367,10 +1363,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 6, true, false],
-				[5, 6, true, false],
-				[4, 6, true, false],
-				[6, 6, true, false]
+				[4, 7, true, false],
+				[5, 7, true, false],
+				[4, 7, true, false],
+				[6, 7, true, false]
 			]
 		},
 		"6.lwall.right.turnground": {
@@ -1387,7 +1383,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 6, false, true]
+				[7, 7, false, true]
 			 ]
 		},
 		"6.lwall.left.idle": {
@@ -1396,10 +1392,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 6, true, true],
-				[5, 6, true, true],
-				[4, 6, true, true],
-				[6, 6, true, true]
+				[4, 7, true, true],
+				[5, 7, true, true],
+				[4, 7, true, true],
+				[6, 7, true, true]
 			]
 		},
 		"6.lwall.left.turnground": {
@@ -1416,7 +1412,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 6, false, false]
+				[7, 7, false, false]
 			 ]
 		},
 		"6.rwall.right.idle": {
@@ -1425,10 +1421,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 6, false, true],
-				[5, 6, false, true],
-				[4, 6, false, true],
-				[6, 6, false, true]
+				[4, 7, false, true],
+				[5, 7, false, true],
+				[4, 7, false, true],
+				[6, 7, false, true]
 			]
 		},
 		"6.rwall.right.turnground": {
@@ -1445,7 +1441,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 6, false, false]
+				[7, 7, false, false]
 			 ]
 		},
 		"6.rwall.left.idle": {
@@ -1454,10 +1450,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[4, 6, false, false],
-				[5, 6, false, false],
-				[4, 6, false, false],
-				[6, 6, false, false]
+				[4, 7, false, false],
+				[5, 7, false, false],
+				[4, 7, false, false],
+				[6, 7, false, false]
 			]
 		},
 		"6.rwall.left.turnground": {
@@ -1474,7 +1470,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[7, 6, false, true]
+				[7, 7, false, true]
 			 ]
 		},
 		"6.ceiling.right.idle": {
@@ -1483,10 +1479,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 6, true, true],
-				[1, 6, true, true],
-				[0, 6, true, true],
-				[2, 6, true, true]
+				[0, 7, true, true],
+				[1, 7, true, true],
+				[0, 7, true, true],
+				[2, 7, true, true]
 			]
 		},
 		"6.ceiling.right.turnground": {
@@ -1503,7 +1499,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 6, true, true]
+				[3, 7, true, true]
 			 ]
 		},
 		"6.ceiling.left.idle": {
@@ -1512,10 +1508,10 @@
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
-				[0, 6, false, true],
-				[1, 6, false, true],
-				[0, 6, false, true],
-				[2, 6, false, true]
+				[0, 7, false, true],
+				[1, 7, false, true],
+				[0, 7, false, true],
+				[2, 7, false, true]
 			]
 		},
 		"6.ceiling.left.turnground": {
@@ -1532,8 +1528,566 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 6, false, true]
+				[3, 7, false, true]
 			 ]
-		}
+		},
+		"npc0.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4238362879, 8951039, 0, 4176935167],
+		},
+		"npc0.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4238362879, 8951039, 0, 4176935167],
+			"autoplay_next": "npc0.floor.right.idle",
+		},
+		"npc0.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4238362879, 8951039, 0, 4176935167],
+		},
+		"npc0.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4238362879, 8951039, 0, 4176935167],
+			"autoplay_next": "npc0.floor.left.idle",
+		},
+		"npc1.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3703110911, 3691042047, 0, 4176935167],
+		},
+		"npc1.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3703110911, 3691042047, 0, 4176935167],
+			"autoplay_next": "npc1.floor.right.idle",
+		},
+		"npc1.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3703110911, 3691042047, 0, 4176935167],
+		},
+		"npc1.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3703110911, 3691042047, 0, 4176935167],
+			"autoplay_next": "npc1.floor.left.idle",
+		},
+		"npc2.floor.right.idle": {
+			"inherit": "2.floor.right.idle",
+			"colors": [255, 952171775, 12058879, 0, 4176935167],
+		},
+		"npc2.floor.right.turnground": {
+			"inherit": "2.floor.right.turnground",
+			"colors": [255, 952171775, 12058879, 0, 4176935167],
+			"autoplay_next": "npc2.floor.right.idle",
+		},
+		"npc2.floor.left.idle": {
+			"inherit": "2.floor.left.idle",
+			"colors": [255, 952171775, 12058879, 0, 4176935167],
+		},
+		"npc2.floor.left.turnground": {
+			"inherit": "2.floor.left.turnground",
+			"colors": [255, 952171775, 12058879, 0, 4176935167],
+			"autoplay_next": "npc2.floor.left.idle",
+		},
+		"npc3.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3166749951, 3831503103, 0, 4176935167],
+		},
+		"npc3.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3166749951, 3831503103, 0, 4176935167],
+			"autoplay_next": "npc3.floor.right.idle",
+		},
+		"npc3.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3166749951, 3831503103, 0, 4176935167],
+		},
+		"npc3.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3166749951, 3831503103, 0, 4176935167],
+			"autoplay_next": "npc3.floor.left.idle",
+		},
+		"npc4.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3166239999, 4217087, 0, 4176935167],
+		},
+		"npc4.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3166239999, 4217087, 0, 4176935167],
+			"autoplay_next": "npc4.floor.right.idle",
+		},
+		"npc4.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3166239999, 4217087, 0, 4176935167],
+		},
+		"npc4.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3166239999, 4217087, 0, 4176935167],
+			"autoplay_next": "npc4.floor.left.idle",
+		},
+		"npc5.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4106281215, 4242048255, 0, 4176935167],
+		},
+		"npc5.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4106281215, 4242048255, 0, 4176935167],
+			"autoplay_next": "npc5.floor.right.idle",
+		},
+		"npc5.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4106281215, 4242048255, 0, 4176935167],
+		},
+		"npc5.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4106281215, 4242048255, 0, 4176935167],
+			"autoplay_next": "npc5.floor.left.idle",
+		},
+		"npc6.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4238362879, 3703110911, 0, 4176935167],
+		},
+		"npc6.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4238362879, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc6.floor.right.idle",
+		},
+		"npc6.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4238362879, 3703110911, 0, 4176935167],
+		},
+		"npc6.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4238362879, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc6.floor.left.idle",
+		},
+		"npc7.floor.right.idle": {
+			"inherit": "1.floor.right.idle",
+			"colors": [255, 3831503103, 3825230079, 0, 4176935167],
+		},
+		"npc7.floor.right.turnground": {
+			"inherit": "1.floor.right.turnground",
+			"colors": [255, 3831503103, 3825230079, 0, 4176935167],
+			"autoplay_next": "npc7.floor.right.idle",
+		},
+		"npc7.floor.left.idle": {
+			"inherit": "1.floor.left.idle",
+			"colors": [255, 3831503103, 3825230079, 0, 4176935167],
+		},
+		"npc7.floor.left.turnground": {
+			"inherit": "1.floor.left.turnground",
+			"colors": [255, 3831503103, 3825230079, 0, 4176935167],
+			"autoplay_next": "npc7.floor.left.idle",
+		},
+		"npc8.floor.right.idle": {
+			"inherit": "1.floor.right.idle",
+			"colors": [255, 3103291647, 12058879, 0, 4176935167],
+		},
+		"npc8.floor.right.turnground": {
+			"inherit": "1.floor.right.turnground",
+			"colors": [255, 3103291647, 12058879, 0, 4176935167],
+			"autoplay_next": "npc8.floor.right.idle",
+		},
+		"npc8.floor.left.idle": {
+			"inherit": "1.floor.left.idle",
+			"colors": [255, 3103291647, 12058879, 0, 4176935167],
+		},
+		"npc8.floor.left.turnground": {
+			"inherit": "1.floor.left.turnground",
+			"colors": [255, 3103291647, 12058879, 0, 4176935167],
+			"autoplay_next": "npc8.floor.left.idle",
+		},
+		"npc9.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4107318527, 12058879, 0, 4176935167],
+		},
+		"npc9.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4107318527, 12058879, 0, 4176935167],
+			"autoplay_next": "npc9.floor.right.idle",
+		},
+		"npc9.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4107318527, 12058879, 0, 4176935167],
+		},
+		"npc9.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4107318527, 12058879, 0, 4176935167],
+			"autoplay_next": "npc9.floor.left.idle",
+		},
+		"npc10.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3103291647, 4107318527, 0, 4176935167],
+		},
+		"npc10.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3103291647, 4107318527, 0, 4176935167],
+			"autoplay_next": "npc10.floor.right.idle",
+		},
+		"npc10.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3103291647, 4107318527, 0, 4176935167],
+		},
+		"npc10.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3103291647, 4107318527, 0, 4176935167],
+			"autoplay_next": "npc10.floor.left.idle",
+		},
+		"npc11.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 1490573567, 3166239999, 0, 4176935167],
+		},
+		"npc11.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 1490573567, 3166239999, 0, 4176935167],
+			"autoplay_next": "npc11.floor.right.idle",
+		},
+		"npc11.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 1490573567, 3166239999, 0, 4176935167],
+		},
+		"npc11.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 1490573567, 3166239999, 0, 4176935167],
+			"autoplay_next": "npc11.floor.left.idle",
+		},
+		"npc12.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4238362879, 1345323263, 0, 4176935167],
+		},
+		"npc12.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4238362879, 1345323263, 0, 4176935167],
+			"autoplay_next": "npc12.floor.right.idle",
+		},
+		"npc12.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4238362879, 1345323263, 0, 4176935167],
+		},
+		"npc12.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4238362879, 1345323263, 0, 4176935167],
+			"autoplay_next": "npc12.floor.left.idle",
+		},
+		"npc13.floor.right.idle": {
+			"inherit": "2.floor.right.idle",
+			"colors": [255, 4238362879, 2625174783, 0, 4176935167],
+		},
+		"npc13.floor.right.turnground": {
+			"inherit": "2.floor.right.turnground",
+			"colors": [255, 4238362879, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc13.floor.right.idle",
+		},
+		"npc13.floor.left.idle": {
+			"inherit": "2.floor.left.idle",
+			"colors": [255, 4238362879, 2625174783, 0, 4176935167],
+		},
+		"npc13.floor.left.turnground": {
+			"inherit": "2.floor.left.turnground",
+			"colors": [255, 4238362879, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc13.floor.left.idle",
+		},
+		"npc14.floor.right.idle": {
+			"inherit": "3.floor.right.idle",
+			"colors": [255, 12058879, 1345323263, 0, 4176935167],
+		},
+		"npc14.floor.right.turnground": {
+			"inherit": "3.floor.right.turnground",
+			"colors": [255, 12058879, 1345323263, 0, 4176935167],
+			"autoplay_next": "npc14.floor.right.idle",
+		},
+		"npc14.floor.left.idle": {
+			"inherit": "3.floor.left.idle",
+			"colors": [255, 12058879, 1345323263, 0, 4176935167],
+		},
+		"npc14.floor.left.turnground": {
+			"inherit": "3.floor.left.turnground",
+			"colors": [255, 12058879, 1345323263, 0, 4176935167],
+			"autoplay_next": "npc14.floor.left.idle",
+		},
+		"npc15.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3103291647, 2894070015, 0, 4176935167],
+		},
+		"npc15.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3103291647, 2894070015, 0, 4176935167],
+			"autoplay_next": "npc15.floor.right.idle",
+		},
+		"npc15.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3103291647, 2894070015, 0, 4176935167],
+		},
+		"npc15.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3103291647, 2894070015, 0, 4176935167],
+			"autoplay_next": "npc15.floor.left.idle",
+		},
+		"npc16.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3825230079, 2625174783, 0, 4176935167],
+		},
+		"npc16.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3825230079, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc16.floor.right.idle",
+		},
+		"npc16.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3825230079, 2625174783, 0, 4176935167],
+		},
+		"npc16.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3825230079, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc16.floor.left.idle",
+		},
+		"npc17.ceiling.right.idle": {
+			"inherit": "0.ceiling.right.idle",
+			"colors": [255, 2350383359, 4239917311, 0, 4176935167],
+		},
+		"npc17.ceiling.right.turnground": {
+			"inherit": "0.ceiling.right.turnground",
+			"colors": [255, 2350383359, 4239917311, 0, 4176935167],
+			"autoplay_next": "npc17.ceiling.right.idle",
+		},
+		"npc17.ceiling.left.idle": {
+			"inherit": "0.ceiling.left.idle",
+			"colors": [255, 2350383359, 4239917311, 0, 4176935167],
+		},
+		"npc17.ceiling.left.turnground": {
+			"inherit": "0.ceiling.left.turnground",
+			"colors": [255, 2350383359, 4239917311, 0, 4176935167],
+			"autoplay_next": "npc17.ceiling.left.idle",
+		},
+		"npc18.floor.right.idle": {
+			"inherit": "3.floor.right.idle",
+			"colors": [255, 4239917311, 3368075519, 0, 4176935167],
+		},
+		"npc18.floor.right.turnground": {
+			"inherit": "3.floor.right.turnground",
+			"colors": [255, 4239917311, 3368075519, 0, 4176935167],
+			"autoplay_next": "npc18.floor.right.idle",
+		},
+		"npc18.floor.left.idle": {
+			"inherit": "3.floor.left.idle",
+			"colors": [255, 4239917311, 3368075519, 0, 4176935167],
+		},
+		"npc18.floor.left.turnground": {
+			"inherit": "3.floor.left.turnground",
+			"colors": [255, 4239917311, 3368075519, 0, 4176935167],
+			"autoplay_next": "npc18.floor.left.idle",
+		},
+		"npc19.floor.right.idle": {
+			"inherit": "2.floor.right.idle",
+			"colors": [255, 4242584831, 2625174783, 0, 4176935167],
+		},
+		"npc19.floor.right.turnground": {
+			"inherit": "2.floor.right.turnground",
+			"colors": [255, 4242584831, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc19.floor.right.idle",
+		},
+		"npc19.floor.left.idle": {
+			"inherit": "2.floor.left.idle",
+			"colors": [255, 4242584831, 2625174783, 0, 4176935167],
+		},
+		"npc19.floor.left.turnground": {
+			"inherit": "2.floor.left.turnground",
+			"colors": [255, 4242584831, 2625174783, 0, 4176935167],
+			"autoplay_next": "npc19.floor.left.idle",
+		},
+		"npc21.floor.right.idle": {
+			"inherit": "3.floor.right.idle",
+			"colors": [255, 4233665791, 2894070015, 0, 4176935167],
+		},
+		"npc21.floor.right.turnground": {
+			"inherit": "3.floor.right.turnground",
+			"colors": [255, 4233665791, 2894070015, 0, 4176935167],
+			"autoplay_next": "npc21.floor.right.idle",
+		},
+		"npc21.floor.left.idle": {
+			"inherit": "3.floor.left.idle",
+			"colors": [255, 4233665791, 2894070015, 0, 4176935167],
+		},
+		"npc21.floor.left.turnground": {
+			"inherit": "3.floor.left.turnground",
+			"colors": [255, 4233665791, 2894070015, 0, 4176935167],
+			"autoplay_next": "npc21.floor.left.idle",
+		},
+		"npc22.floor.right.idle": {
+			"inherit": "3.floor.right.idle",
+			"colors": [255, 4233665791, 1753808127, 0, 4176935167],
+		},
+		"npc22.floor.right.turnground": {
+			"inherit": "3.floor.right.turnground",
+			"colors": [255, 4233665791, 1753808127, 0, 4176935167],
+			"autoplay_next": "npc22.floor.right.idle",
+		},
+		"npc22.floor.left.idle": {
+			"inherit": "3.floor.left.idle",
+			"colors": [255, 4233665791, 1753808127, 0, 4176935167],
+		},
+		"npc22.floor.left.turnground": {
+			"inherit": "3.floor.left.turnground",
+			"colors": [255, 4233665791, 1753808127, 0, 4176935167],
+			"autoplay_next": "npc22.floor.left.idle",
+		},
+		"npc23.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 1749613823, 15262975, 0, 4176935167],
+		},
+		"npc23.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 1749613823, 15262975, 0, 4176935167],
+			"autoplay_next": "npc23.floor.right.idle",
+		},
+		"npc23.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 1749613823, 15262975, 0, 4176935167],
+		},
+		"npc23.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 1749613823, 15262975, 0, 4176935167],
+			"autoplay_next": "npc23.floor.left.idle",
+		},
+		"npc24.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3368075519, 1490573567, 0, 4176935167],
+		},
+		"npc24.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3368075519, 1490573567, 0, 4176935167],
+			"autoplay_next": "npc24.floor.right.idle",
+		},
+		"npc24.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3368075519, 1490573567, 0, 4176935167],
+		},
+		"npc24.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3368075519, 1490573567, 0, 4176935167],
+			"autoplay_next": "npc24.floor.left.idle",
+		},
+		"npc25.floor.right.idle": {
+			"inherit": "2.floor.right.idle",
+			"colors": [255, 1753808127, 3703110911, 0, 4176935167],
+		},
+		"npc25.floor.right.turnground": {
+			"inherit": "2.floor.right.turnground",
+			"colors": [255, 1753808127, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc25.floor.right.idle",
+		},
+		"npc25.floor.left.idle": {
+			"inherit": "2.floor.left.idle",
+			"colors": [255, 1753808127, 3703110911, 0, 4176935167],
+		},
+		"npc25.floor.left.turnground": {
+			"inherit": "2.floor.left.turnground",
+			"colors": [255, 1753808127, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc25.floor.left.idle",
+		},
+		"npc26.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+		},
+		"npc26.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+			"autoplay_next": "npc26.floor.right.idle",
+		},
+		"npc26.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+		},
+		"npc26.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+			"autoplay_next": "npc26.floor.left.idle",
+		},
+		"npc41.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 4238362879, 11028735, 0, 4176935167],
+		},
+		"npc41.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 4238362879, 11028735, 0, 4176935167],
+			"autoplay_next": "npc41.floor.right.idle",
+		},
+		"npc41.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 4238362879, 11028735, 0, 4176935167],
+		},
+		"npc41.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 4238362879, 11028735, 0, 4176935167],
+			"autoplay_next": "npc41.floor.left.idle",
+		},
+		"npc43.ceiling.right.idle": {
+			"inherit": "0.ceiling.right.idle",
+			"colors": [255, 2625174783, 4239981823, 0, 4176935167],
+		},
+		"npc43.ceiling.right.turnground": {
+			"inherit": "0.ceiling.right.turnground",
+			"colors": [255, 2625174783, 4239981823, 0, 4176935167],
+			"autoplay_next": "npc43.ceiling.right.idle",
+		},
+		"npc43.ceiling.left.idle": {
+			"inherit": "0.ceiling.left.idle",
+			"colors": [255, 2625174783, 4239981823, 0, 4176935167],
+		},
+		"npc43.ceiling.left.turnground": {
+			"inherit": "0.ceiling.left.turnground",
+			"colors": [255, 2625174783, 4239981823, 0, 4176935167],
+			"autoplay_next": "npc43.ceiling.left.idle",
+		},
+		"npc48.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3707271423, 4106281215, 0, 4176935167],
+		},
+		"npc48.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3707271423, 4106281215, 0, 4176935167],
+			"autoplay_next": "npc48.floor.right.idle",
+		},
+		"npc48.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3707271423, 4106281215, 0, 4176935167],
+		},
+		"npc48.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3707271423, 4106281215, 0, 4176935167],
+			"autoplay_next": "npc48.floor.left.idle",
+		},
+		"npc52.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3691042047, 1616929023, 0, 4176935167],
+		},
+		"npc52.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3691042047, 1616929023, 0, 4176935167],
+			"autoplay_next": "npc52.floor.right.idle",
+		},
+		"npc52.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3691042047, 1616929023, 0, 4176935167],
+		},
+		"npc52.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3691042047, 1616929023, 0, 4176935167],
+			"autoplay_next": "npc52.floor.left.idle",
+		},
+		"npc56.floor.right.idle": {
+			"inherit": "6.floor.right.idle",
+			"colors": [255, 5767423, 11028735, 1490573567, 3103291647],
+		},
+		"npc56.floor.right.turnground": {
+			"inherit": "6.floor.right.turnground",
+			"colors": [255, 5767423, 11028735, 1490573567, 3103291647],
+			"autoplay_next": "npc56.floor.right.idle",
+		},
+		"npc56.floor.left.idle": {
+			"inherit": "6.floor.left.idle",
+			"colors": [255, 5767423, 11028735, 1490573567, 3103291647],
+		},
+		"npc56.floor.left.turnground": {
+			"inherit": "6.floor.left.turnground",
+			"colors": [255, 5767423, 11028735, 1490573567, 3103291647],
+			"autoplay_next": "npc56.floor.left.idle",
+		},
 	}
 }

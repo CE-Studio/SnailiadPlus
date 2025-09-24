@@ -72,11 +72,11 @@ func _process(delta: float) -> void:
 		current_nom_cooldown = 0.0
 
 
-func _on_player_entered(body: Node2D) -> void:
+func _on_player_entered(_body: Node2D) -> void:
 	player_intersecting = true
 
 
-func _on_player_exited(body: Node2D) -> void:
+func _on_player_exited(_body: Node2D) -> void:
 	player_intersecting = false
 
 

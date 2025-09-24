@@ -104,5 +104,5 @@ func _on_pbullet_collision(_area:Area2D) -> void:
 				_despawn(true)
 
 
-func _despawn(loudly:bool = false) -> void:
+func _despawn(_loudly:bool = false) -> void:
 	queue_free()

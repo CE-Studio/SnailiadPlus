@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://vvs4fclk0j13"]
+[gd_scene load_steps=8 format=4 uid="uid://vvs4fclk0j13"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_qskkn"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_lmwas"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_hi3re"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_jjgcd"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_hi3re"]
+[ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_s1sah"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjgcd"]
 resource_local_to_scene = true
@@ -78,6 +79,11 @@ door_type = 2
 position = Vector2(712, 472)
 direction = 0
 door_type = 3
+
+[node name="NPC52" parent="GroundLayer" instance=ExtResource("4_s1sah")]
+position = Vector2(432, 312)
+my_id = 52
+identifier = &"52"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

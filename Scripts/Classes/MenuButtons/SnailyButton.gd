@@ -45,7 +45,7 @@ func _ready() -> void:
 		hide_frame = hide_frame
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
 		life_frames += 1
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://l35j5qi1lir0"]
+[gd_scene load_steps=12 format=4 uid="uid://l35j5qi1lir0"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_sc7m0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_15q6y"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ba4iceix628de" path="res://Scenes/Entities/SavePoint.tscn" id="3_qpxsq"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_qpcak"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="4_s71w6"]
+[ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="5_6ltyp"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="7_rroe3"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="8_6ltyp"]
 
@@ -73,6 +74,12 @@ position = Vector2(392, 632)
 
 [node name="Door3" parent="GroundLayer" instance=ExtResource("4_s71w6")]
 position = Vector2(392, 136)
+
+[node name="NPC43" parent="GroundLayer" instance=ExtResource("5_6ltyp")]
+position = Vector2(224, 1352)
+my_id = 43
+surface = 3
+identifier = &"43"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 

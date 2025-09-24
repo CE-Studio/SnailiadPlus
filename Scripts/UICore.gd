@@ -21,8 +21,7 @@ static var instance:UICore
 
 @onready var cam:CamControl = $"Camera2D"
 @onready var heart_group:Node2D = $"TL/Hearts"
-@onready var color_cover_top:ColorCover = $"ColorCoverTop"
-@onready var color_cover_bottom:ColorCover = $"ColorCoverBottom"
+@onready var color_cover:ColorCover = $"ColorCover"
 @onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
@@ -37,10 +36,10 @@ static var instance:UICore
 @onready var fps_text:SnailyText = $"BL/Framerate/Text"
 @onready var input_display:InputDisplay = $"BL/InputDisplay"
 
-@onready var tl:Node2D = $"TL"
-@onready var tr:Node2D = $"TR"
-@onready var bl:Node2D = $"BL"
-@onready var br:Node2D = $"BR"
+@onready var _tl:Node2D = $"TL"
+@onready var _tr:Node2D = $"TR"
+@onready var _bl:Node2D = $"BL"
+@onready var _br:Node2D = $"BR"
 #endregion
 
 
@@ -70,7 +69,7 @@ func instantiate() -> void:
 
 func _process(delta: float) -> void:
 	# Weapon icons
-	var equipped = GameCore.instance.player.selected_weapon
+	#var equipped = GameCore.instance.player.selected_weapon
 	for i in range(len(weapon_icons)):
 		var target_y
 		match weapon_icon_states[i]:
@@ -102,10 +101,10 @@ func _process(delta: float) -> void:
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
 	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
-	tl.position = -offset
-	tr.position = Vector2(400 + offset.x, -offset.y)
-	bl.position = Vector2(-offset.x, 240 + offset.y)
-	br.position = Vector2(400 + offset.x, 240 + offset.y)
+	_tl.position = -offset
+	_tr.position = Vector2(400 + offset.x, -offset.y)
+	_bl.position = Vector2(-offset.x, 240 + offset.y)
+	_br.position = Vector2(400 + offset.x, 240 + offset.y)
 	set_border_anim(ratio_id)
 
 
@@ -164,14 +163,14 @@ func draw_new_hearts() -> void:
 	for heart in heart_group.get_children():
 		heart.reparent(instance)
 		heart.queue_free()
-	var max = GameCore.instance.player.max_health
+	var max_hp = GameCore.instance.player.max_health
 	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	var running_total = 0
 	var heart_count = 0
 	var origin = Vector2(8, 8)
 	var spacing = Vector2(8, 8)
 	var hearts_per_row = 7
-	while running_total < max:
+	while running_total < max_hp:
 		var new_heart = JsonSprite2D.new()
 		new_heart.texture_path = "res://Assets/Images/UI/Heart.json"
 		heart_group.add_child(new_heart)
@@ -185,7 +184,7 @@ func draw_new_hearts() -> void:
 
 func update_hearts() -> void:
 	var health = GameCore.instance.player.health
-	var max = GameCore.instance.player.max_health
+	#var max_hp = GameCore.instance.player.max_health
 	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	var running_total = 0
 	for heart in heart_group.get_children():
@@ -249,11 +248,11 @@ func show_area_text(area_id:int) -> void:
 	if area_id < 6:
 		var text_width = area_label.text.get_width()
 		for i in range(2):
-			var border:JsonSprite2D = JsonSprite2D.new()
-			border.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
-			area_label.add_child(border)
-			border.action = ("%d_left" if (i == 0) else "%d_right") % area_id
-			border.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
+			var bookend:JsonSprite2D = JsonSprite2D.new()
+			bookend.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
+			area_label.add_child(bookend)
+			bookend.action = ("%d_left" if (i == 0) else "%d_right") % area_id
+			bookend.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
 
 
 func clear_area_text() -> void:
@@ -266,9 +265,10 @@ func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 	clear_boss_bar()
 	active_boss_bar = boss_bar.instantiate()
 	popup_layer.add_child(active_boss_bar)
-	active_boss_bar.position = Vector2(200, tl.position.y)
+	active_boss_bar.position = Vector2(200, _tl.position.y)
 	active_boss_bar.boss = boss
-	minimap.update_visible_from_settings(0.0, true)
+	if hide_minimap:
+		minimap.update_visible_from_settings(0.0, true)
 	return active_boss_bar
 
 

@@ -17,7 +17,7 @@ point_count = 1
 script = ExtResource("1_e6vmr")
 area_id = 1
 minimap_offset = Vector2i(14, 3)
-song_change = 4
+song_change = 3
 tiled_corner = Vector2i(365, 49)
 tiled_range = Vector2i(25, 15)
 
