@@ -448,4 +448,10 @@ func open_all_boss_doors() -> void:
 					3:
 						if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) == true:
 							child.open()
+
+
+func set_environment_visibility() -> void:
+	for child in get_children():
+		if child is EnvironmentArea:
+			child.update_shader_visibility()
 #endregion

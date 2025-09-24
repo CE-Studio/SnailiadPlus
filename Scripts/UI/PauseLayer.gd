@@ -6,14 +6,17 @@ extends Node2D
 var subscreen:Subscreen = null
 
 @onready var cam:UICore = UICore.instance
+@onready var game:GameCore = GameCore.instance
 @onready var menu_scene:PackedScene = preload("res://Scenes/IngameMenuScene.tscn")
 @onready var subscreen_scene:PackedScene = preload("res://Scenes/UI/Subscreen.tscn")
 #endregion
 
 
 func _physics_process(_delta: float) -> void:
-	if not cam:
+	if not cam and UICore.instance:
 		cam = UICore.instance
+	if not game and GameCore.instance:
+		game = GameCore.instance
 	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
 		add_child(menu_scene.instantiate())
@@ -45,3 +48,4 @@ func unpause_fade_out() -> void:
 	cam.minimap.subscreen_mode = false
 	cam.minimap.modulate = Color.WHITE
 	cam.minimap.tick_minimap(0, false, true)
+	game.current_room.set_environment_visibility()

@@ -8,7 +8,8 @@ var active_bubbles:Array = []
 
 func _ready() -> void:
 	super()
-	call_deferred("spawn_initial_bubbles")
+	if GameCore.instance:
+		call_deferred("spawn_initial_bubbles")
 
 
 func spawn_initial_bubbles() -> void:

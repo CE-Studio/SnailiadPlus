@@ -82,6 +82,32 @@ position = Vector2(880, 120)
 my_id = 6
 identifier = &"6"
 
+[node name="NPC14" parent="GroundLayer" instance=ExtResource("3_05b5u")]
+position = Vector2(160, 536)
+my_id = 14
+identifier = &"14"
+
+[node name="NPC15" parent="GroundLayer" instance=ExtResource("3_05b5u")]
+position = Vector2(592, 456)
+my_id = 15
+identifier = &"15"
+
+[node name="NPC16" parent="GroundLayer" instance=ExtResource("3_05b5u")]
+position = Vector2(368, 344)
+my_id = 16
+identifier = &"16"
+
+[node name="NPC17" parent="GroundLayer" instance=ExtResource("3_05b5u")]
+position = Vector2(928, 152)
+my_id = 17
+surface = 3
+identifier = &"17"
+
+[node name="NPC25" parent="GroundLayer" instance=ExtResource("3_05b5u")]
+position = Vector2(1056, 488)
+my_id = 25
+identifier = &"25"
+
 [node name="FG1Layer" type="Parallax2D" parent="."]
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]

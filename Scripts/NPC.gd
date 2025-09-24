@@ -4,6 +4,9 @@ extends CutsceneControllable
 
 
 #region Variables
+const GRAVITY:float = 1200.0
+const TERMINAL_VELOCITY:float = 500.0
+
 @export var my_id:int
 @export_enum("Left", "Right", "Face player:-1") var face_mode:int = -1
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var surface:int = 0
@@ -25,16 +28,21 @@ func spawn() -> void:
 	match surface:
 		Statics.DirsSurface.FLOOR:
 			body.set_deferred("rotation_degrees", 0.0)
+			body.up_direction = Vector2.UP
 			facing_left = GameCore.instance.player.position.x < position.x
 		Statics.DirsSurface.LWALL:
 			body.set_deferred("rotation_degrees", 90.0)
+			body.up_direction = Vector2.RIGHT
 			facing_left = GameCore.instance.player.position.y < position.y
 		Statics.DirsSurface.RWALL:
 			body.set_deferred("rotation_degrees", 270.0)
+			body.up_direction = Vector2.LEFT
 			facing_left = GameCore.instance.player.position.y > position.y
 		Statics.DirsSurface.CEILING:
 			body.set_deferred("rotation_degrees", 180.0)
+			body.up_direction = Vector2.DOWN
 			facing_left = GameCore.instance.player.position.x > position.x
+	body.position = position
 	if face_mode == 0:
 		facing_left = true
 	elif face_mode == 1:
@@ -44,40 +52,61 @@ func spawn() -> void:
 
 
 func _process(_delta: float) -> void:
-	if GameCore.instance == null:
+	if GameCore.instance == null or Engine.is_editor_hint():
 		return
-	if not Engine.is_editor_hint():
-		if face_mode == -1:
-			var player_pos = GameCore.instance.player.position
-			match surface:
-				Statics.DirsSurface.FLOOR:
-					if facing_left and player_pos.x > position.x:
-						facing_left = false
-						play_anim("turnground")
-					elif not facing_left and player_pos.x < position.x:
-						facing_left = true;
-						play_anim("turnground")
-				Statics.DirsSurface.LWALL:
-					if facing_left and player_pos.y > position.y:
-						facing_left = false
-						play_anim("turnground")
-					elif not facing_left and player_pos.y < position.y:
-						facing_left = true;
-						play_anim("turnground")
-				Statics.DirsSurface.RWALL:
-					if facing_left and player_pos.y < position.y:
-						facing_left = false
-						play_anim("turnground")
-					elif not facing_left and player_pos.y > position.y:
-						facing_left = true;
-						play_anim("turnground")
-				Statics.DirsSurface.CEILING:
-					if facing_left and player_pos.x < position.x:
-						facing_left = false
-						play_anim("turnground")
-					elif not facing_left and player_pos.x > position.x:
-						facing_left = true;
-						play_anim("turnground")
+	
+	if face_mode == -1:
+		var player_pos = GameCore.instance.player.position
+		match surface:
+			Statics.DirsSurface.FLOOR:
+				if facing_left and player_pos.x > position.x:
+					facing_left = false
+					play_anim("turnground")
+				elif not facing_left and player_pos.x < position.x:
+					facing_left = true;
+					play_anim("turnground")
+			Statics.DirsSurface.LWALL:
+				if facing_left and player_pos.y > position.y:
+					facing_left = false
+					play_anim("turnground")
+				elif not facing_left and player_pos.y < position.y:
+					facing_left = true;
+					play_anim("turnground")
+			Statics.DirsSurface.RWALL:
+				if facing_left and player_pos.y < position.y:
+					facing_left = false
+					play_anim("turnground")
+				elif not facing_left and player_pos.y > position.y:
+					facing_left = true;
+					play_anim("turnground")
+			Statics.DirsSurface.CEILING:
+				if facing_left and player_pos.x < position.x:
+					facing_left = false
+					play_anim("turnground")
+				elif not facing_left and player_pos.x > position.x:
+					facing_left = true;
+					play_anim("turnground")
+
+
+func _physics_process(delta: float) -> void:
+	if GameCore.instance == null or Engine.is_editor_hint():
+		return
+	
+	match surface:
+		0:
+			body.velocity.y += GRAVITY * delta
+			body.velocity.y = clampf(body.velocity.y, -INF, TERMINAL_VELOCITY)
+		1:
+			body.velocity.x -= GRAVITY * delta
+			body.velocity.x = clampf(body.velocity.x, -TERMINAL_VELOCITY, INF)
+		2:
+			body.velocity.x += GRAVITY * delta
+			body.velocity.x = clampf(body.velocity.x, -INF, TERMINAL_VELOCITY)
+		3:
+			body.velocity.y -= GRAVITY * delta
+			body.velocity.y = clampf(body.velocity.y, -TERMINAL_VELOCITY, INF)
+	body.move_and_slide()
+	position = body.position
 
 
 func play_anim(state:String) -> void:
