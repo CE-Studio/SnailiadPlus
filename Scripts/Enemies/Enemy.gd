@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 #region Vaariables
 const DAMAGE_TIMEOUT:float = 0.025
+const DAMAGE_FLASH_COLOR:Color = Color(0.9, 0.9, 0.9)
+const DAMAGE_FADE_DECAY:float = 0.5
 
 @export var max_health:int
 @export var max_health_hard:int
@@ -52,6 +54,8 @@ var intersecting_pbullets:Array[PlayerBullet] = []
 var intersecting_ebullets:Array[EnemyBullet] = []
 var ai_active:bool = true
 var hard_mode:bool = false
+
+var flash_color:Color = Color.BLACK
 
 @onready var sfx_ping:AudioStream = preload("res://Assets/Sounds/Sfx/Ping.ogg")
 @onready var sfx_kill:AudioStream = preload("res://Assets/Sounds/Sfx/EnemyKilled1.ogg")
@@ -124,6 +128,8 @@ func spawn(active:bool = true) -> void:
 	if hard_mode and max_health_hard != 0:
 		max_health = max_health_hard
 	health = max_health
+	if material == null:
+		material = load("res://Resources/EnemyFlashMat.tres")
 	
 	if hitbox:
 		hitbox.connect("area_entered", _on_bullet_entered)
@@ -210,6 +216,10 @@ func _physics_process(delta) -> void:
 	if damage_timeout > 0.0:
 		damage_timeout -= delta
 	ping_played = false
+	
+	sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
+	print(sprite.material.get("shader_parameter/flash_color"))
+	flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
 
 
 func _on_player_entered(_body) -> void:
@@ -249,6 +259,7 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
 	health -= health_lost
 	damage_timeout = DAMAGE_TIMEOUT
+	flash_color = DAMAGE_FLASH_COLOR
 
 
 func kill() -> void:
