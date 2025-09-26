@@ -27,6 +27,14 @@ const _DATA_MATCH = {
 
 @export var normal_npc := false 
 @export_file("*.json") var texture_path:String
+@export var fade_color:Color = Color.WHITE:
+	set(value):
+		fade_color = value
+		_fade_color()
+@export_range(0, 1, 0) var fade_lerp:float = 0:
+	set(value):
+		fade_lerp = value
+		_fade_color()
 var data:Dictionary
 var is_ready := false
 var action:String:
@@ -210,21 +218,29 @@ func _ready() -> void:
 	is_ready = true
 
 
+func _fade_color() -> void:
+	if _has_action:
+		var _action:Dictionary = data["animations"][action]
+		if _action.has("colors"):
+			for i in _action["colors"].size():
+				var col:Color = Color.hex(_action["colors"][i])
+				col = col.lerp(fade_color, fade_lerp)
+				if i >= _children.size():
+					self_modulate = col
+				else:
+					_children[i].self_modulate = col
+
+
 func _process(delta: float) -> void:
 	if _recheck:
 		_check_action()
 	_timer += delta
+	_fade_color()
 	if _has_action:
 		var _action:Dictionary = data["animations"][action]
 		var _fps:float = _action["fps"]
 		var _frames:Array = _action["frames"]
 		var _frametime = 1 / _fps
-		if _action.has("colors"):
-			for i in _action["colors"].size():
-				if i >= _children.size():
-					self_modulate = Color.hex(_action["colors"][i])
-				else:
-					_children[i].self_modulate = Color.hex(_action["colors"][i])
 		if (_frames.size() == 0):
 			if _action.has("autoplay_next"):
 				action = _action["autoplay_next"]
