@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://i20oatr6nmr1" path="res://Scripts/Enemies/Babyfish1.gd" id="1_b0nbo"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_belrl"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_ep1w5"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_nj3ik"]
 [ext_resource type="Texture2D" uid="uid://cxvgn2uti1cd4" path="res://Assets/Images/Entities/Babyfish.png" id="4_ep1w5"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_61fcf"]
@@ -9,11 +10,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
 size = Vector2(14, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcg65"]
-shader = ExtResource("2_belrl")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
 shader = ExtResource("2_belrl")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="Babyfish1" type="CharacterBody2D"]
 collision_layer = 64
@@ -32,7 +31,7 @@ debug_color = Color(0.976029, 0, 0.414963, 0.42)
 scale = Vector2(0.7, 0.5)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_rcg65")
+material = ExtResource("2_ep1w5")
 script = ExtResource("3_nj3ik")
 texture_path = "res://Assets/Images/Entities/Babyfish.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

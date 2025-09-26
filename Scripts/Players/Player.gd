@@ -189,6 +189,7 @@ var sfx_shell:AudioStreamPlayer
 var sfx_hurt:AudioStreamPlayer
 var sfx_ping:AudioStreamPlayer
 var sfx_parry:AudioStreamPlayer
+var sfx_death:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
@@ -197,6 +198,8 @@ var ceil_casts:Array
 var normal_casts:Array
 var shell_casts:Array
 var shield_particle:Particle
+var timer_die_fade:Timer
+var timer_die_respawn:Timer
 
 
 var debug_print_adjustments:bool = false
@@ -218,7 +221,10 @@ func _ready():
 	sfx_hurt = $"AudioGroup/Hurt"
 	sfx_ping = $"AudioGroup/Ping"
 	sfx_parry = $"AudioGroup/Parry"
+	sfx_death = $"AudioGroup/Die"
 	cast_group = $"CastGroup"
+	timer_die_fade = $"TimerGroup/DieFadeDelay"
+	timer_die_respawn = $"TimerGroup/RespawnDelay"
 	
 	var rect = box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
@@ -294,7 +300,9 @@ func _physics_process(delta) -> void:
 	# Next, we target a different block of movement code dependent on our current gravity
 	# Under typical circumstances, each gravity case would be the same with just a few directionally-dependent values adjusted,
 	# but they're referenced separately like this in case a certain character needs a unique case for a particular direction
-	if not in_death_cutscene:
+	if in_death_cutscene:
+		tick_death(delta)
+	else:
 		read_i_speed = Statics.get_shell_level()
 		read_i_jump = read_i_speed + (4 if Statics.check_item(Item.ItemTypes.HIGH_JUMP) else 0)
 		match gravity_dir:
@@ -365,6 +373,8 @@ func _physics_process(delta) -> void:
 func reset_position(pos:Vector2) -> void:
 	global_position = pos.round()
 	body.global_position = pos
+	sprite.position = Vector2.ZERO
+	in_death_cutscene = false
 
 
 # The floor case for player movement
@@ -880,15 +890,16 @@ func _play_anim(action:String):
 	
 	full_action += "0."
 	
-	match gravity_dir:
-		Statics.DirsSurface.FLOOR:
-			full_action += "floor."
-		Statics.DirsSurface.LWALL:
-			full_action += "lwall."
-		Statics.DirsSurface.RWALL:
-			full_action += "rwall."
-		Statics.DirsSurface.CEILING:
-			full_action += "ceiling."
+	if action != "death":
+		match gravity_dir:
+			Statics.DirsSurface.FLOOR:
+				full_action += "floor."
+			Statics.DirsSurface.LWALL:
+				full_action += "lwall."
+			Statics.DirsSurface.RWALL:
+				full_action += "rwall."
+			Statics.DirsSurface.CEILING:
+				full_action += "ceiling."
 	full_action += "left." if facing_left else "right."
 	
 	full_action += action
@@ -1025,7 +1036,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 	health = clampi(health, 0, max_health)
 	UICore.instance.update_hearts()
 	if health == 0:
-		die()
+		tick_death(0.0)
 	elif amount < 0 or shielded:
 		if shelled:
 			_set_shell(false)
@@ -1044,7 +1055,20 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 			sfx_hurt.play()
 
 
-func die() -> void:
+func tick_death(_delta:float) -> void:
+	if not in_death_cutscene:
+		in_death_cutscene = true
+		sfx_death.play()
+		timer_die_fade.start()
+		timer_die_respawn.start()
+		GameCore.instance.music_manager.set_fade(0.0, 1.25)
+
+
+func _on_death_fade_timeout() -> void:
+	pass
+
+
+func _on_respawn_timeout() -> void:
 	pass
 #endregion
 

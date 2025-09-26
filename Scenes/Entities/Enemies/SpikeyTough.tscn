@@ -1,6 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cdf57eyuaxew"]
 
 [ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Enemies/SpikeyTough.gd" id="1_eebw4"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_c741o"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_xwnv8"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_c741o"]
 [ext_resource type="Texture2D" uid="uid://dcem1ncnq4ist" path="res://Assets/Images/Entities/Spikey2.png" id="4_eebw4"]
@@ -11,10 +12,6 @@ size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4sk1w"]
-shader = ExtResource("2_xwnv8")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
 shader = ExtResource("2_xwnv8")
@@ -44,7 +41,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_4sk1w")
+material = ExtResource("2_c741o")
 script = ExtResource("3_c741o")
 texture_path = "res://Assets/Images/Entities/Spikey2.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

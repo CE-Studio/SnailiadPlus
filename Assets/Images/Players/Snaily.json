@@ -850,6 +850,30 @@
 			"autoplay_next": "0.ceiling.left.idle",
 			"randomize_start": false,
 			"frames": [ ]
+		},
+		"0.right.death": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[8, 0, false, false],
+				[9, 0, false, false],
+				[10, 0, false, false],
+				[11, 0, false, false],
+			]
+		},
+		"0.left.death": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[8, 0, true, false],
+				[9, 0, true, false],
+				[10, 0, true, false],
+				[11, 0, true, false],
+			]
 		}
 	}
 }
