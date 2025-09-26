@@ -5,7 +5,8 @@ extends CharacterBody2D
 
 #region Vaariables
 const DAMAGE_TIMEOUT:float = 0.025
-const DAMAGE_FLASH_COLOR:Color = Color(0.9, 0.9, 0.9)
+const DAMAGE_FLASH_COLOR:Color = Color.WHITE
+const DAMAGE_FLASH_STRENGTH:float = 0.9
 const DAMAGE_FADE_DECAY:float = 0.5
 
 @export var max_health:int
@@ -55,7 +56,7 @@ var intersecting_ebullets:Array[EnemyBullet] = []
 var ai_active:bool = true
 var hard_mode:bool = false
 
-var flash_color:Color = Color.BLACK
+var flash_strength:float = 0.0
 
 @onready var sfx_ping:AudioStream = preload("res://Assets/Sounds/Sfx/Ping.ogg")
 @onready var sfx_kill:AudioStream = preload("res://Assets/Sounds/Sfx/EnemyKilled1.ogg")
@@ -128,8 +129,6 @@ func spawn(active:bool = true) -> void:
 	if hard_mode and max_health_hard != 0:
 		max_health = max_health_hard
 	health = max_health
-	if material == null:
-		material = load("res://Resources/EnemyFlashMat.tres")
 	
 	if hitbox:
 		hitbox.connect("area_entered", _on_bullet_entered)
@@ -217,9 +216,12 @@ func _physics_process(delta) -> void:
 		damage_timeout -= delta
 	ping_played = false
 	
-	sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
-	print(sprite.material.get("shader_parameter/flash_color"))
-	flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
+	#sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
+	#print(sprite.material.get("shader_parameter/flash_color"))
+	#flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
+	if flash_strength > 0.0:
+		flash_strength -= DAMAGE_FADE_DECAY * delta
+	sprite.fade_lerp = clampf(flash_strength, 0.0, 1.0)
 
 
 func _on_player_entered(_body) -> void:
@@ -259,7 +261,10 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
 	health -= health_lost
 	damage_timeout = DAMAGE_TIMEOUT
-	flash_color = DAMAGE_FLASH_COLOR
+	#flash_color = DAMAGE_FLASH_COLOR
+	sprite.fade_color = DAMAGE_FLASH_COLOR
+	sprite.fade_lerp = DAMAGE_FLASH_STRENGTH
+	flash_strength = DAMAGE_FLASH_STRENGTH
 
 
 func kill() -> void:
