@@ -15,9 +15,11 @@ size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rcg65"]
 shader = ExtResource("2_306ds")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
 shader = ExtResource("2_306ds")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="BlobCommon" type="CharacterBody2D"]
 collision_layer = 64

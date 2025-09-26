@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://da62go5bytmwc"]
+[gd_scene load_steps=7 format=3 uid="uid://da62go5bytmwc"]
 
 [ext_resource type="Script" uid="uid://r14a47rjik4o" path="res://Scripts/Enemies/Bosses/Shellbreaker.gd" id="1_mrmot"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_8mwk1"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_dkg6q"]
 [ext_resource type="Texture2D" uid="uid://btusvvrw8c21i" path="res://Assets/Images/Entities/Boss1.png" id="3_dkg6q"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_edngx"]
 
@@ -39,6 +40,7 @@ scale = Vector2(2.4, 2.4)
 [node name="HandGroup" type="Node2D" parent="."]
 
 [node name="Body" type="Sprite2D" parent="."]
+material = ExtResource("2_dkg6q")
 script = ExtResource("2_8mwk1")
 texture_path = "res://Assets/Images/Entities/Boss1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
@@ -51,6 +53,7 @@ script = ExtResource("4_edngx")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Eyes" type="Sprite2D" parent="."]
+material = ExtResource("2_dkg6q")
 script = ExtResource("2_8mwk1")
 texture_path = "res://Assets/Images/Entities/Boss1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

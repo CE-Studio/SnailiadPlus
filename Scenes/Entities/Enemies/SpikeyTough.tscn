@@ -7,16 +7,18 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_h6lg0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
-size = Vector2(16, 14)
+size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4sk1w"]
 shader = ExtResource("2_xwnv8")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
 shader = ExtResource("2_xwnv8")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="SpikeyTough" type="CharacterBody2D"]
 collision_layer = 64

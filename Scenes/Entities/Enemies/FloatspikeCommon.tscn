@@ -14,9 +14,11 @@ size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqo6b"]
 shader = ExtResource("2_pd0tq")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
 shader = ExtResource("2_pd0tq")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="FloatspikeCommon" type="CharacterBody2D"]
 collision_layer = 64

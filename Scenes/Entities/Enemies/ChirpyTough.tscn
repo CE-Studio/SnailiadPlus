@@ -15,9 +15,11 @@ size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4sk1w"]
 shader = ExtResource("2_a730g")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
 shader = ExtResource("2_a730g")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="ChirpyTough" type="CharacterBody2D"]
 collision_layer = 64
