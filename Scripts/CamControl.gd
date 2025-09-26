@@ -10,19 +10,22 @@ enum CamStates {
 	TARGET_ENTITY,
 	NONE = -1,
 }
-var state:CamStates = CamStates.FOLLOW_FLASH
+var state:CamStates = CamStates.FOLLOW_NEW
 var target_point:Vector2 = Vector2.ZERO
 var target_entity:Node2D
 var player:Player
-var ease_rate:float = 4.0
+var ease_rate:float = 4.25
 var offset:Vector2 = Vector2(200, 120)
 var border:CameraBorder = null
 
 #region New follow vars
-const NF_OFFSET_MAX:Vector2 = Vector2(48.0, 32.0)
-const NF_OFFSET_ADJUST_DELAY:float = 0.75
-const NF_OFFSET_EASE_RATE:float = 32.0
-const NF_OFFSET_MAX_FALL_MULT:Vector2 = Vector2(0.5, 2.0)
+const NF_OFFSET_MAX:Vector2 = Vector2(64.0, 48.0)
+const NF_OFFSET_MAX_FALL:Vector2 = Vector2(128.0, 80.0)
+const NF_OFFSET_ADJUST_DELAY:float = 0.5
+const NF_OFFSET_EASE_RATE:float = 128.0
+const NF_OFFSET_FALL_EASE_RATE:float = 192.0
+const NF_OFFSET_LAND_EASE_RATE:float = 512.0
+const NF_OFFSET_MAX_FALL_MULT:float = 2.5
 var nf_offset:Vector2 = Vector2.ZERO
 var nf_delay_timer:float = 0.0
 #endregion
@@ -31,6 +34,16 @@ var nf_delay_timer:float = 0.0
 
 func instantiate() -> void:
 	player = GameCore.instance.player
+
+
+func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:
+	if _state == CamStates.NONE:
+		if ProjectSettings.get_setting("game/visuals/dynamic_camera"):
+			state = CamStates.FOLLOW_NEW
+		else:
+			state = CamStates.FOLLOW_FLASH
+	else:
+		state = _state
 
 
 func _process(delta):
@@ -68,53 +81,75 @@ func _process(delta):
 
 func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
 	var move_vector:Vector2 = SInput.vector_move()
-	if move_vector != Vector2.ZERO:
-		nf_delay_timer += delta
-	else:
-		nf_delay_timer = 0.0
-	
 	var walled:bool = (
 		player.gravity_dir == Statics.DirsSurface.LWALL or
 		player.gravity_dir == Statics.DirsSurface.RWALL
 	)
-	if player.grounded:
-		if nf_delay_timer >= NF_OFFSET_ADJUST_DELAY:
-			if walled:
-				nf_offset.y = clampf(
-					nf_offset.y + (NF_OFFSET_EASE_RATE * delta * move_vector.y),
-					-NF_OFFSET_MAX.y, NF_OFFSET_MAX.y
-				)
-			else:
-				nf_offset.x = clampf(
-					nf_offset.x + (NF_OFFSET_EASE_RATE * delta * move_vector.x),
-					-NF_OFFSET_MAX.x, NF_OFFSET_MAX.x
-				)
+	
+	if ((walled and move_vector.y != 0.0) or
+	(not walled and move_vector.x != 0.0)):
+		nf_delay_timer += delta
 	else:
+		nf_delay_timer = 0.0
+	
+	if nf_delay_timer >= NF_OFFSET_ADJUST_DELAY:
+		if walled:
+			nf_offset.y = move_toward(nf_offset.y,
+				NF_OFFSET_MAX.y * move_vector.y,
+				NF_OFFSET_EASE_RATE * delta
+			)
+		else:
+			nf_offset.x = move_toward(nf_offset.x,
+				NF_OFFSET_MAX.x * move_vector.x,
+				NF_OFFSET_EASE_RATE * delta
+			)
+	
+	var tick_land:bool = true
+	if not player.grounded:
 		match player.gravity_dir:
 			Statics.DirsSurface.FLOOR:
-				nf_offset.y = clampf(
-					nf_offset.y + (NF_OFFSET_EASE_RATE * delta),
-					-INF, NF_OFFSET_MAX.y * NF_OFFSET_MAX_FALL_MULT.y
-				)
-				nf_offset.x = NF_OFFSET_MAX.x * NF_OFFSET_MAX_FALL_MULT.x * move_vector.x
+				if player.grounded_last_frame:
+					nf_offset.y = 0.0
+				if player.body.velocity.y > 0.0:
+					nf_offset.y = move_toward(nf_offset.y,
+						NF_OFFSET_MAX_FALL.y,
+						NF_OFFSET_FALL_EASE_RATE * delta
+					)
+					tick_land = false
 			Statics.DirsSurface.LWALL:
-				nf_offset.x = clampf(
-					nf_offset.x - (NF_OFFSET_EASE_RATE * delta),
-					-INF, NF_OFFSET_MAX.x * NF_OFFSET_MAX_FALL_MULT.x
-				)
-				nf_offset.y = NF_OFFSET_MAX.y * NF_OFFSET_MAX_FALL_MULT.y * move_vector.y
+				if player.grounded_last_frame:
+					nf_offset.x = 0.0
+				if player.body.velocity.x < 0.0:
+					nf_offset.x = move_toward(nf_offset.x,
+						-NF_OFFSET_MAX_FALL.x,
+						NF_OFFSET_FALL_EASE_RATE * delta
+					)
+					tick_land = false
 			Statics.DirsSurface.RWALL:
-				nf_offset.x = clampf(
-					nf_offset.x + (NF_OFFSET_EASE_RATE * delta),
-					-INF, NF_OFFSET_MAX.x * NF_OFFSET_MAX_FALL_MULT.x
-				)
-				nf_offset.y = NF_OFFSET_MAX.y * NF_OFFSET_MAX_FALL_MULT.y * move_vector.y
+				if player.grounded_last_frame:
+					nf_offset.x = 0.0
+				if player.body.velocity.x > 0.0:
+					nf_offset.x = move_toward(nf_offset.x,
+						NF_OFFSET_MAX_FALL.x,
+						NF_OFFSET_FALL_EASE_RATE * delta
+					)
+					tick_land = false
 			Statics.DirsSurface.CEILING:
-				nf_offset.y = clampf(
-					nf_offset.y - (NF_OFFSET_EASE_RATE * delta),
-					-INF, NF_OFFSET_MAX.y * NF_OFFSET_MAX_FALL_MULT.y
-				)
-				nf_offset.x = NF_OFFSET_MAX.x * NF_OFFSET_MAX_FALL_MULT.x * move_vector.x
+				if player.grounded_last_frame:
+					nf_offset.y = 0.0
+				if player.body.velocity.y < 0.0:
+					nf_offset.y = move_toward(nf_offset.y,
+						-NF_OFFSET_MAX_FALL.y,
+						NF_OFFSET_FALL_EASE_RATE * delta
+					)
+					tick_land = false
+	if tick_land:
+		if walled:
+			nf_offset.x = move_toward(nf_offset.x, 0.0, NF_OFFSET_LAND_EASE_RATE * delta)
+			#nf_offset.x = 0.0
+		else:
+			nf_offset.y = move_toward(nf_offset.y, 0.0, NF_OFFSET_LAND_EASE_RATE * delta)
+			#nf_offset.y = 0.0
 	
 	pos = pos.lerp(player.position - offset + nf_offset, ease_rate * delta)
 	return pos

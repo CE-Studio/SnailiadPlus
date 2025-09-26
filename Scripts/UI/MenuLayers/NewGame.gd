@@ -39,6 +39,7 @@ func _clear_locked_buttons() -> void:
 		$"HBoxContainer/Character".free_roughly()
 		$"HBoxContainer/Difficulty".focus_neighbor_left = NodePath(".")
 		$"HBoxContainer/Difficulty".focus_neighbor_right = NodePath(".")
+		$"HBoxContainer/Difficulty".auto_select_mode = true
 		if cleared_mods:
 			$"HBoxContainer/Difficulty".focus_next = NodePath("../../Start")
 			$"Start".focus_previous = NodePath("../HBoxContainer/Difficulty")

@@ -6,6 +6,7 @@ var layer:MenuLayer
 
 func _ready() -> void:
 	layer = get_parent()
+	$"ScrollContainer/VBoxContainer/DynamicCamera".toggled_on = ProjectSettings.get_setting("game/visuals/dynamic_camera")
 	$"ScrollContainer/VBoxContainer/ShootMode".remote_set_option(ProjectSettings.get_setting("game/control/toggle_shoot"))
 	$"ScrollContainer/VBoxContainer/Breakables".remote_set_option(ProjectSettings.get_setting("game/world/breakables"))
 	$"ScrollContainer/VBoxContainer/SecretMap".toggled_on = ProjectSettings.get_setting("game/ui/secret_map_tiles")
@@ -14,6 +15,10 @@ func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/StickAimMode".remote_set_option(ProjectSettings.get_setting("game/control/omni_stick_aim"))
 	$"ScrollContainer/VBoxContainer/GravSwap".remote_set_option(ProjectSettings.get_setting("game/control/gravity_swap"))
 	$"ScrollContainer/VBoxContainer/GravKeep".remote_set_option(ProjectSettings.get_setting("game/control/gravity_keep"))
+
+
+func _on_dynamic_camera_toggled(value) -> void:
+	ProjectSettings.set_setting("game/visuals/dynamic_camera", value)
 
 
 func _on_shoot_mode_cycled(value) -> void:
