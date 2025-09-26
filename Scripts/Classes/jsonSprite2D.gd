@@ -212,6 +212,7 @@ func _ready() -> void:
 			sp.texture = _layers[i]
 			sp.hframes = hframes
 			sp.vframes = vframes
+			sp.use_parent_material = true
 			add_child(sp)
 			_children.append(sp)
 		texture = _layers[-1]
