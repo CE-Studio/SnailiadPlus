@@ -2,22 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dckcsqki31n2a"
-path="res://.godot/imported/SnailyError.png-5c13e79dfdb9a0bf58945b6b2b475e46.ctex"
+uid="uid://d0enkfkdxa50u"
+path="res://.godot/imported/ErrorBG.png-1a1b57ba58e4fb82ec639825ff14cdcd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Resources/error/SnailyError.png"
-dest_files=["res://.godot/imported/SnailyError.png-5c13e79dfdb9a0bf58945b6b2b475e46.ctex"]
+source_file="res://Assets/Images/UI/ErrorBG.png"
+dest_files=["res://.godot/imported/ErrorBG.png-1a1b57ba58e4fb82ec639825ff14cdcd.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
