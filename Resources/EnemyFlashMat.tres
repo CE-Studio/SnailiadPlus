@@ -3,5 +3,6 @@
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="1_7qnnv"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_7qnnv")
 shader_parameter/flash_color = Color(0, 0, 0, 1)

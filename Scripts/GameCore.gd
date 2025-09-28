@@ -34,6 +34,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	inc_game_time(delta)
+	handle_cheats()
 
 
 func inc_game_time(delta:float) -> void:
@@ -86,3 +87,25 @@ func despawn_room(room:Room) -> void:
 		if child is EnvironmentArea:
 			child.read_interactions = false
 	room.queue_free()
+
+
+func handle_cheats() -> void:
+	var running_check:Array = SInput.last_ten_keys.duplicate()
+	var cheat_executed:bool = false
+	while running_check.size() > 0:
+		match running_check.size():
+			7:
+				if running_check == [ KEY_S, KEY_K, KEY_Y, KEY_F, KEY_I, KEY_S, KEY_H ]:
+					Statics.play_sfx_disconnected(load("res://Assets/Sounds/Sfx/CheatSkyfish.ogg"))
+					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, false)
+					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, false)
+					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, false)
+					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, false)
+					UICore.instance.show_flashy_popup(Statics.get_text("cheat_skyfish"))
+					cheat_executed = true
+			_:
+				pass
+		running_check.pop_front()
+		if cheat_executed:
+			running_check.clear()
+			SInput.last_ten_keys.clear()

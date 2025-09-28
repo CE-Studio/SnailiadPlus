@@ -217,6 +217,13 @@ func set_border_anim(anim_id:int) -> void:
 	border._process(0.0)
 
 
+func show_flashy_popup(text:String) -> void:
+	var popup_label = flashy_popup_scene.instantiate()
+	popup_layer.add_child(popup_label)
+	popup_label.instance(text)
+	popup_label.position = Vector2i(200, 180)
+
+
 func show_item_collection_text(item_label:String) -> void:
 	var header_label = flashy_popup_scene.instantiate()
 	popup_layer.add_child(header_label)

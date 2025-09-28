@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgd76ibvdfk3c"]
+[gd_scene load_steps=13 format=3 uid="uid://dgd76ibvdfk3c"]
 
 [ext_resource type="Script" uid="uid://d4nw14f3hljxw" path="res://Scripts/Players/Snaily.gd" id="1_k5eab"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_d17bl"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dc13gmttbggq1" path="res://Assets/Sounds/Sfx/Hurt.ogg" id="7_wqsw1"]
 [ext_resource type="AudioStream" uid="uid://da0tclibjxftr" path="res://Assets/Sounds/Sfx/Ping.ogg" id="8_v1l34"]
 [ext_resource type="AudioStream" uid="uid://dcvnbaslac0qs" path="res://Assets/Sounds/Sfx/Parry.ogg" id="9_evjxd"]
+[ext_resource type="AudioStream" uid="uid://dux0aqxuer1ju" path="res://Assets/Sounds/Sfx/Death.ogg" id="10_evjxd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
 size = Vector2(24, 13)
@@ -184,3 +185,19 @@ bus = &"Sfx"
 [node name="Parry" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("9_evjxd")
 bus = &"Sfx"
+
+[node name="Die" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("10_evjxd")
+bus = &"Sfx"
+
+[node name="TimerGroup" type="Node" parent="."]
+
+[node name="DieFadeDelay" type="Timer" parent="TimerGroup"]
+one_shot = true
+
+[node name="RespawnDelay" type="Timer" parent="TimerGroup"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="TimerGroup/DieFadeDelay" to="." method="_on_death_fade_timeout"]
+[connection signal="timeout" from="TimerGroup/RespawnDelay" to="." method="_on_respawn_timeout"]

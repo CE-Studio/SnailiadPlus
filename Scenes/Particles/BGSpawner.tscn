@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk6hmfxa0ad1c"]
+
+[ext_resource type="Script" uid="uid://b6kon3xh5pvkq" path="res://Scripts/Particles/BGSpawner.gd" id="1_uvhul"]
+
+[node name="BGSpawner" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_uvhul")

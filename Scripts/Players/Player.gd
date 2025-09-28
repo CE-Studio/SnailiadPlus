@@ -8,7 +8,8 @@ extends CutsceneControllable
 
 
 #region Global control
-const MAX_STUN_TIMER = 1.0
+const MAX_STUN_TIMER:float = 1.0
+const RESPAWN_INVIN_TIMER:float = 0.25
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -68,6 +69,7 @@ var box_adjust:Array = [
 ]
 var override_box_disable:bool
 var environment_exit_override:int = 0
+var respawn_i_frames:float = 0.0
 #endregion
 
 
@@ -189,6 +191,7 @@ var sfx_shell:AudioStreamPlayer
 var sfx_hurt:AudioStreamPlayer
 var sfx_ping:AudioStreamPlayer
 var sfx_parry:AudioStreamPlayer
+var sfx_death:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array
@@ -197,6 +200,8 @@ var ceil_casts:Array
 var normal_casts:Array
 var shell_casts:Array
 var shield_particle:Particle
+var timer_die_fade:Timer
+var timer_die_respawn:Timer
 
 
 var debug_print_adjustments:bool = false
@@ -218,7 +223,10 @@ func _ready():
 	sfx_hurt = $"AudioGroup/Hurt"
 	sfx_ping = $"AudioGroup/Ping"
 	sfx_parry = $"AudioGroup/Parry"
+	sfx_death = $"AudioGroup/Die"
 	cast_group = $"CastGroup"
+	timer_die_fade = $"TimerGroup/DieFadeDelay"
+	timer_die_respawn = $"TimerGroup/RespawnDelay"
 	
 	var rect = box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
@@ -294,7 +302,9 @@ func _physics_process(delta) -> void:
 	# Next, we target a different block of movement code dependent on our current gravity
 	# Under typical circumstances, each gravity case would be the same with just a few directionally-dependent values adjusted,
 	# but they're referenced separately like this in case a certain character needs a unique case for a particular direction
-	if not in_death_cutscene:
+	if in_death_cutscene:
+		tick_death(delta)
+	else:
 		read_i_speed = Statics.get_shell_level()
 		read_i_jump = read_i_speed + (4 if Statics.check_item(Item.ItemTypes.HIGH_JUMP) else 0)
 		match gravity_dir:
@@ -365,6 +375,8 @@ func _physics_process(delta) -> void:
 func reset_position(pos:Vector2) -> void:
 	global_position = pos.round()
 	body.global_position = pos
+	sprite.position = Vector2.ZERO
+	in_death_cutscene = false
 
 
 # The floor case for player movement
@@ -880,15 +892,16 @@ func _play_anim(action:String):
 	
 	full_action += "0."
 	
-	match gravity_dir:
-		Statics.DirsSurface.FLOOR:
-			full_action += "floor."
-		Statics.DirsSurface.LWALL:
-			full_action += "lwall."
-		Statics.DirsSurface.RWALL:
-			full_action += "rwall."
-		Statics.DirsSurface.CEILING:
-			full_action += "ceiling."
+	if action != "death":
+		match gravity_dir:
+			Statics.DirsSurface.FLOOR:
+				full_action += "floor."
+			Statics.DirsSurface.LWALL:
+				full_action += "lwall."
+			Statics.DirsSurface.RWALL:
+				full_action += "rwall."
+			Statics.DirsSurface.CEILING:
+				full_action += "ceiling."
 	full_action += "left." if facing_left else "right."
 	
 	full_action += action
@@ -1017,6 +1030,9 @@ func set_box_disable_override(_state:bool) -> void:
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
+	if amount < 0 and in_death_cutscene:
+		return
+	
 	var shielded:bool = false
 	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
 		amount = 0
@@ -1025,7 +1041,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 	health = clampi(health, 0, max_health)
 	UICore.instance.update_hearts()
 	if health == 0:
-		die()
+		tick_death(0.0)
 	elif amount < 0 or shielded:
 		if shelled:
 			_set_shell(false)
@@ -1044,8 +1060,46 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 			sfx_hurt.play()
 
 
-func die() -> void:
-	pass
+func tick_death(_delta:float) -> void:
+	if not in_death_cutscene:
+		in_death_cutscene = true
+		sfx_death.play()
+		timer_die_fade.start()
+		timer_die_respawn.start()
+		GameCore.instance.music_manager.set_fade(0.0, 1.25)
+		respawn_i_frames = RESPAWN_INVIN_TIMER
+		override_box_disable = true
+
+
+func _on_death_fade_timeout() -> void:
+	var fade_color:Color = Statics.get_color(Vector2i(0, 0))
+	var fade_color_a:Color = fade_color
+	fade_color_a.a = 0.0
+	UICore.instance.color_cover.set_new_fade(fade_color_a, fade_color, 0.75)
+
+
+func _on_respawn_timeout() -> void:
+	GameCore.instance.music_manager.stop_all()
+	GameCore.instance.music_manager.set_global_volume(1.0)
+	
+	var fade_color:Color = Statics.get_color(Vector2i(0, 0))
+	var fade_color_a:Color = fade_color
+	fade_color_a.a = 0.0
+	UICore.instance.color_cover.set_new_fade(fade_color, fade_color_a, 0.25)
+	
+	var load_pos = Statics.current_profile["save_coords"]
+	if load_pos is String:
+		load_pos = str_to_var("Vector2i" + load_pos)
+	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile["save_room"])
+	Statics.load_coords = load_pos
+	
+	GameCore.instance.spawn_room(Statics.load_room)
+	UICore.instance.cam.set_layer_position(Statics.load_coords)
+	UICore.instance.clear_area_text()
+	UICore.instance.clear_boss_bar()
+	adjust_health(999999)
+	reset_position(Statics.load_coords)
+	set_deferred("override_box_disable", false)
 #endregion
 
 

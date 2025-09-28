@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cu2rfjkk4wjm8" path="res://Scripts/Enemies/FloatspikeCommon.gd" id="1_v2c1n"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_pd0tq"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_vixes"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_vixes"]
 [ext_resource type="Texture2D" uid="uid://dwkf50yu77n0k" path="res://Assets/Images/Entities/Floatspike1.png" id="4_v2c1n"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_01swg"]
@@ -12,11 +13,9 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqo6b"]
-shader = ExtResource("2_pd0tq")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
 shader = ExtResource("2_pd0tq")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="FloatspikeCommon" type="CharacterBody2D"]
 collision_layer = 64
@@ -44,7 +43,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_qqo6b")
+material = ExtResource("2_vixes")
 script = ExtResource("3_vixes")
 texture_path = "res://Assets/Images/Entities/Floatspike1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

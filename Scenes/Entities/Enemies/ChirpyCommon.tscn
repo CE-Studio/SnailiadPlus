@@ -1,6 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://ctamvgmd3t6yn"]
 
 [ext_resource type="Script" uid="uid://xiyy0nsou5g3" path="res://Scripts/Enemies/ChirpyCommon.gd" id="1_tg0tv"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_58c8j"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_d4uhh"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_58c8j"]
 [ext_resource type="Texture2D" uid="uid://ct6qpgc4lolab" path="res://Assets/Images/Entities/Chirpy1.png" id="4_tg0tv"]
@@ -13,11 +14,9 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4sk1w"]
-shader = ExtResource("2_d4uhh")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
 shader = ExtResource("2_d4uhh")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="ChirpyCommon" type="CharacterBody2D"]
 collision_layer = 64
@@ -43,7 +42,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_4sk1w")
+material = ExtResource("2_58c8j")
 script = ExtResource("3_58c8j")
 texture_path = "res://Assets/Images/Entities/Chirpy1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

@@ -260,6 +260,7 @@ func _on_player_entered(_body: Node2D) -> void:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
 				UICore.instance.update_weapon_icons()
+				UICore.instance.achievement_core.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
 			ItemTypes.DEBUG_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)

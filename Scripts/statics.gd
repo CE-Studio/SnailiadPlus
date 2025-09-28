@@ -518,6 +518,8 @@ static func play_sfx_disconnected(sound:AudioStream) -> void:
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
+	if active_room == null:
+		return null
 	var new_particle:Particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)

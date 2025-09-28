@@ -100,3 +100,21 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	super(delta)
+
+
+func tick_death(delta:float) -> void:
+	if not in_death_cutscene:
+		match gravity_dir:
+			Statics.DirsSurface.FLOOR:
+				facing_left = facing_left
+			Statics.DirsSurface.CEILING:
+				facing_left = not facing_left
+			Statics.DirsSurface.LWALL:
+				facing_left = true
+			Statics.DirsSurface.RWALL:
+				facing_left = true
+		_play_anim("death")
+		velocity = Vector2(110 if facing_left else -110, -300)
+	super(delta)
+	sprite.position += velocity * delta
+	velocity.y += gravity[read_i_jump] * delta

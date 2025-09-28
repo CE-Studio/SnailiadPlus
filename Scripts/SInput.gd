@@ -96,6 +96,7 @@ const STICK_DEADZONE_AIM:float = 0.2
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
 
 var last_input_was_con:bool = false
+var last_ten_keys:Array = []
 #endregion
 
 
@@ -106,6 +107,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		last_input_was_con = false
+		if event.pressed:
+			last_ten_keys.append(event.keycode)
+			if last_ten_keys.size() > 10:
+				last_ten_keys.pop_front()
 		#print(OS.get_keycode_string(event.physical_keycode))
 	elif event is InputEventJoypadButton:
 		last_input_was_con = true

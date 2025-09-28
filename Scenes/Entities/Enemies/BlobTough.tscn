@@ -1,6 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://55mm0f4dr2j6"]
 
 [ext_resource type="Script" uid="uid://qf6ly8gqgx03" path="res://Scripts/Enemies/BlobTough.gd" id="1_m0vag"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_1u7oy"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_306ds"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_1u7oy"]
 [ext_resource type="Texture2D" uid="uid://t51kmln17iof" path="res://Assets/Images/Entities/Blob.png" id="4_4k86t"]
@@ -13,11 +14,9 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcg65"]
-shader = ExtResource("2_306ds")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
 shader = ExtResource("2_306ds")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="BlobCommon" type="CharacterBody2D"]
 collision_layer = 64
@@ -44,7 +43,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_rcg65")
+material = ExtResource("2_1u7oy")
 script = ExtResource("3_1u7oy")
 texture_path = "res://Assets/Images/Entities/Blob.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

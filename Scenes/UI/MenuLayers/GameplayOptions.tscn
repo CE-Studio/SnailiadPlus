@@ -134,6 +134,7 @@ focus_previous = NodePath("../StickAimMode")
 header_id = "menu_option_gameplay_gravSwap"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_gravSwap_onJump", "menu_add_gravSwap_onDir", "menu_add_gravSwap_onDoubleTap", "menu_add_gravSwap_buttonOnly"])
+disabled = true
 
 [node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -146,6 +147,7 @@ focus_previous = NodePath("../GravSwap")
 header_id = "menu_option_gameplay_gravKeep"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_gravKeep_onState", "menu_add_gravKeep_onJump"])
+disabled = true
 
 [node name="Back" parent="MainVBox" instance=ExtResource("5_1l54c")]
 self_modulate = Color(1, 1, 1, 0)

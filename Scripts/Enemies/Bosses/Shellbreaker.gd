@@ -74,12 +74,16 @@ func _ready() -> void:
 	
 	nodes_to_wiggle.append(sprite)
 	nodes_to_wiggle.append(eyes)
+	
+	eyes.material = sprite.material
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if not Engine.is_editor_hint():
+		eyes.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 	
-	if not is_firing:
+	if not is_firing and not in_death_anim:
 		blink_timeout -= delta
 	if blink_timeout <= 0.0:
 		blink_timeout = randf() * BLINK_TIMEOUT_MAX

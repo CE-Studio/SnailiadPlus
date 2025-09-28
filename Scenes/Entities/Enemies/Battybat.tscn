@@ -1,6 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bdgewgqflvxlg"]
 
 [ext_resource type="Script" uid="uid://dk0gc6mahojnf" path="res://Scripts/Enemies/BattyBat.gd" id="1_gjyyg"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_8dran"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_u6hm7"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_odqp2"]
 [ext_resource type="Texture2D" uid="uid://jp515er6y5lx" path="res://Assets/Images/Entities/Bat.png" id="4_gjyyg"]
@@ -13,11 +14,9 @@ size = Vector2(32, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(30, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcg65"]
-shader = ExtResource("2_u6hm7")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
 shader = ExtResource("2_u6hm7")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="BattyBat" type="CharacterBody2D"]
 collision_layer = 64
@@ -45,7 +44,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(1.6, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_rcg65")
+material = ExtResource("2_8dran")
 script = ExtResource("3_odqp2")
 texture_path = "res://Assets/Images/Entities/Bat.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
