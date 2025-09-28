@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_4sk1w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
-size = Vector2(14, 14)
+size = Vector2(16, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)

@@ -8,7 +8,8 @@ extends CutsceneControllable
 
 
 #region Global control
-const MAX_STUN_TIMER = 1.0
+const MAX_STUN_TIMER:float = 1.0
+const RESPAWN_INVIN_TIMER:float = 0.25
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -68,6 +69,7 @@ var box_adjust:Array = [
 ]
 var override_box_disable:bool
 var environment_exit_override:int = 0
+var respawn_i_frames:float = 0.0
 #endregion
 
 
@@ -1028,6 +1030,9 @@ func set_box_disable_override(_state:bool) -> void:
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
+	if amount < 0 and in_death_cutscene:
+		return
+	
 	var shielded:bool = false
 	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
 		amount = 0
@@ -1062,14 +1067,39 @@ func tick_death(_delta:float) -> void:
 		timer_die_fade.start()
 		timer_die_respawn.start()
 		GameCore.instance.music_manager.set_fade(0.0, 1.25)
+		respawn_i_frames = RESPAWN_INVIN_TIMER
+		override_box_disable = true
 
 
 func _on_death_fade_timeout() -> void:
-	pass
+	var fade_color:Color = Statics.get_color(Vector2i(0, 0))
+	var fade_color_a:Color = fade_color
+	fade_color_a.a = 0.0
+	UICore.instance.color_cover.set_new_fade(fade_color_a, fade_color, 0.75)
 
 
 func _on_respawn_timeout() -> void:
-	pass
+	GameCore.instance.music_manager.stop_all()
+	GameCore.instance.music_manager.set_global_volume(1.0)
+	
+	var fade_color:Color = Statics.get_color(Vector2i(0, 0))
+	var fade_color_a:Color = fade_color
+	fade_color_a.a = 0.0
+	UICore.instance.color_cover.set_new_fade(fade_color, fade_color_a, 0.25)
+	
+	var load_pos = Statics.current_profile["save_coords"]
+	if load_pos is String:
+		load_pos = str_to_var("Vector2i" + load_pos)
+	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile["save_room"])
+	Statics.load_coords = load_pos
+	
+	GameCore.instance.spawn_room(Statics.load_room)
+	UICore.instance.cam.set_layer_position(Statics.load_coords)
+	UICore.instance.clear_area_text()
+	UICore.instance.clear_boss_bar()
+	adjust_health(999999)
+	reset_position(Statics.load_coords)
+	set_deferred("override_box_disable", false)
 #endregion
 
 

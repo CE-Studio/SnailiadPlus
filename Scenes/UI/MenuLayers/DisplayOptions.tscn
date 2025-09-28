@@ -144,6 +144,7 @@ header_id = "menu_option_display_darkness"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_none", "menu_add_darkness_minor", "menu_add_darkness_half", "menu_add_darkness_full"])
 focus_option = 3
+disabled = true
 
 [node name="PaletteShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -154,6 +155,7 @@ focus_neighbor_bottom = NodePath("../DistortShader")
 focus_next = NodePath("../DistortShader")
 focus_previous = NodePath("../Darkness")
 text_id = "menu_option_display_paletteShader"
+disabled = true
 
 [node name="DistortShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2

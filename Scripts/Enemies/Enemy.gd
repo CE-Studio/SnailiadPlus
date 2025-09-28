@@ -260,7 +260,7 @@ func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float) -> EnemyBullet
 
 
 func _damage(health_lost:int, sound:bool = true) -> void:
-	if damage_timeout > 0:
+	if damage_timeout > 0 or GameCore.instance.player.in_death_cutscene:
 		return
 	if sound:
 		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])

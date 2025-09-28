@@ -1891,6 +1891,24 @@
 			"colors": [255, 4242584831, 2625174783, 0, 4176935167],
 			"autoplay_next": "npc19.floor.left.idle",
 		},
+		"npc20.floor.right.idle": {
+			"inherit": "3.floor.right.idle",
+			"colors": [255, 4176935167, 741092607, 0, 4176935167],
+		},
+		"npc20.floor.right.turnground": {
+			"inherit": "3.floor.right.turnground",
+			"colors": [255, 4176935167, 741092607, 0, 4176935167],
+			"autoplay_next": "npc20.floor.right.idle",
+		},
+		"npc20.floor.left.idle": {
+			"inherit": "3.floor.left.idle",
+			"colors": [255, 4176935167, 741092607, 0, 4176935167],
+		},
+		"npc20.floor.left.turnground": {
+			"inherit": "3.floor.left.turnground",
+			"colors": [255, 4176935167, 741092607, 0, 4176935167],
+			"autoplay_next": "npc20.floor.left.idle",
+		},
 		"npc21.floor.right.idle": {
 			"inherit": "3.floor.right.idle",
 			"colors": [255, 4233665791, 2894070015, 0, 4176935167],

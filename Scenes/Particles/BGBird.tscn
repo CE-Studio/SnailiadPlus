@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7hk1dssrcct4"]
+
+[ext_resource type="Script" uid="uid://dngoea22fbdkr" path="res://Scripts/Particles/BGBird.gd" id="1_ypp7s"]
+[ext_resource type="Texture2D" uid="uid://ck7eivtpt6146" path="res://Assets/Images/Particles/BGBird.png" id="2_ypp7s"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_0mmox"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_pel1u"]
+
+[node name="BGBird" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_ypp7s")
+sprite = NodePath("JsonSprite2D")
+metadata/_custom_type_script = "uid://bjoxx2waxewlf"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_ypp7s")
+hframes = 7
+script = ExtResource("3_0mmox")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_pel1u")
+texture_path = "res://Assets/Images/Particles/BGBird.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
