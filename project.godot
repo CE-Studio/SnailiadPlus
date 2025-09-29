@@ -82,7 +82,7 @@ visuals/dynamic_camera=true
 [gui]
 
 theme/custom="res://UI/uitheme.tres"
-theme/custom_font="res://UI/Snailplanes Extended.ttf"
+theme/custom_font="uid://bo28bqj6d1u8m"
 
 [input]
 

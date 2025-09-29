@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ftlqv2v5mipy"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://ftlqv2v5mipy"]
 
 [ext_resource type="Texture2D" uid="uid://bpo6uchb1gs50" path="res://Assets/Images/UI/Panel.png" id="1_g42j3"]
+[ext_resource type="FontFile" uid="uid://bo28bqj6d1u8m" path="res://Resources/SnailplanesExtended.ttf" id="2_gcu3v"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nnoeq"]
 texture = ExtResource("1_g42j3")
@@ -10,7 +11,8 @@ texture_margin_right = 6.0
 texture_margin_bottom = 6.0
 
 [resource]
-Button/font_sizes/font_size = 10
+default_font = ExtResource("2_gcu3v")
+Button/font_sizes/font_size = 16
 Label/font_sizes/font_size = 10
 LineEdit/font_sizes/font_size = 10
 Panel/styles/panel = SubResource("StyleBoxTexture_nnoeq")

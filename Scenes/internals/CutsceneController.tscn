@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://etemc37gjn6w" path="res://Scripts/Classes/CutsceneController.gd" id="1_ssxem"]
 [ext_resource type="Shader" uid="uid://c2jiouympoi7d" path="res://Scenes/internals/CutsceneControllerErrorShader.tres" id="2_6ydxn"]
 [ext_resource type="Texture2D" uid="uid://byaenqj6o648n" path="res://UI/errorbacking.png" id="2_r73cr"]
-[ext_resource type="AudioStream" uid="uid://hy655rr7l73k" path="res://Assets/Resources/error/SnailyError.ogg" id="4_8b4nq"]
-[ext_resource type="Texture2D" uid="uid://dckcsqki31n2a" path="res://Assets/Resources/error/SnailyError.png" id="4_gc0g0"]
+[ext_resource type="AudioStream" uid="uid://hdwgx5v76x3e" path="res://Assets/Sounds/Sfx/SnailyError.ogg" id="4_8b4nq"]
+[ext_resource type="Texture2D" uid="uid://bxlv8jnxvlvfc" path="res://Assets/Images/UI/SnailyError.png" id="4_gc0g0"]
 [ext_resource type="Texture2D" uid="uid://d1bbnms8harwj" path="res://UI/cutplayingicon.png" id="5_xegkh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h4kkg"]
