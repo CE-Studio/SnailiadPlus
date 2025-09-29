@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=18 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
@@ -11,7 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://coram7y7g81vt" path="res://Scenes/UI/AchivementPanel.tscn" id="6_f5gkc"]
 [ext_resource type="PackedScene" uid="uid://c7gnsi0pssupi" path="res://Scenes/UI/ColorCover.tscn" id="7_ygllc"]
 [ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="8_g8fv5"]
+[ext_resource type="AudioStream" uid="uid://dqy26ppv8a1wn" path="res://Assets/Sounds/Sfx/WeaponSelected0.ogg" id="8_wbo4q"]
+[ext_resource type="AudioStream" uid="uid://bw58uw8lj3s7n" path="res://Assets/Sounds/Sfx/WeaponSelected1.ogg" id="9_adkld"]
 [ext_resource type="Script" uid="uid://de1nn2ecms07n" path="res://Scripts/UI/PauseLayer.gd" id="9_qjw3k"]
+[ext_resource type="AudioStream" uid="uid://gmll1o5mkd6q" path="res://Assets/Sounds/Sfx/WeaponSelected2.ogg" id="10_yb2dk"]
+[ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="11_kf05q"]
+[ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
 
 [node name="CameraLayer" type="Node2D"]
 script = ExtResource("1_vjeh6")
@@ -114,6 +119,26 @@ frame = 3
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
+[node name="Sel0" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+stream = ExtResource("8_wbo4q")
+bus = &"Sfx"
+
+[node name="Sel1" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+stream = ExtResource("9_adkld")
+bus = &"Sfx"
+
+[node name="Sel2" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+stream = ExtResource("10_yb2dk")
+bus = &"Sfx"
+
+[node name="Sel3" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+stream = ExtResource("11_kf05q")
+bus = &"Sfx"
+
+[node name="Sel4" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+stream = ExtResource("12_cac8p")
+bus = &"Sfx"
+
 [node name="SaveIcon" type="Sprite2D" parent="BR"]
 position = Vector2(-16, -16)
 script = ExtResource("1_4o42s")
@@ -123,7 +148,7 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="BestiaryIcon" type="Sprite2D" parent="BR"]
 position = Vector2(-16, -16)
 script = ExtResource("1_4o42s")
-texture_path = "res://Assets/Images/UI/SaveIcon.json"
+texture_path = "res://Assets/Images/UI/BestiaryIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="TL" type="Node2D" parent="."]

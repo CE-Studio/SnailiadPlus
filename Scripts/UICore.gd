@@ -40,6 +40,12 @@ static var instance:UICore
 @onready var _tr:Node2D = $"TR"
 @onready var _bl:Node2D = $"BL"
 @onready var _br:Node2D = $"BR"
+
+@onready var sfx_weapon_0:AudioStreamPlayer = $"BR/WeaponIcons/Sel0"
+@onready var sfx_weapon_1:AudioStreamPlayer = $"BR/WeaponIcons/Sel1"
+@onready var sfx_weapon_2:AudioStreamPlayer = $"BR/WeaponIcons/Sel2"
+@onready var sfx_weapon_3:AudioStreamPlayer = $"BR/WeaponIcons/Sel3"
+@onready var sfx_weapon_4:AudioStreamPlayer = $"BR/WeaponIcons/Sel4"
 #endregion
 
 
@@ -49,11 +55,12 @@ func instantiate() -> void:
 	
 	var icon_id = 0
 	for icon in weapon_icon_group.get_children():
-		weapon_icons.append(icon)
-		weapon_icon_states.append(0)
-		icon.position += Vector2(0, 8)
-		icon.action = str(icon_id) + "_off"
-		icon_id += 1
+		if icon is JsonSprite2D:
+			weapon_icons.append(icon)
+			weapon_icon_states.append(0)
+			icon.position += Vector2(0, 8)
+			icon.action = str(icon_id) + "_off"
+			icon_id += 1
 	
 	draw_new_hearts()
 	
@@ -130,7 +137,8 @@ func set_all_visibility_from_settings() -> void:
 	weapon_icon_group.visible = ProjectSettings.get_setting("game/ui/bottom_keys")
 
 
-func update_weapon_icons() -> void:
+func update_weapon_icons(play_sound:bool = true) -> void:
+	var active_weapons:int = 0
 	for i in range(len(weapon_icons)):
 		var has:bool = false
 		var equipped:bool = false
@@ -153,10 +161,18 @@ func update_weapon_icons() -> void:
 			if weapon_icon_states[i] != 2:
 				weapon_icons[i].action = str(i) + "_on"
 			weapon_icon_states[i] = 2
+			active_weapons += 1
 		else:
 			if weapon_icon_states[i] == 2:
 				weapon_icons[i].action = str(i) + "_off"
 			weapon_icon_states[i] = 1 if has else 0
+	if play_sound:
+		match active_weapons:
+			0: sfx_weapon_0.play()
+			1: sfx_weapon_1.play()
+			2: sfx_weapon_2.play()
+			3: sfx_weapon_3.play()
+			4: sfx_weapon_4.play()
 
 
 func draw_new_hearts() -> void:

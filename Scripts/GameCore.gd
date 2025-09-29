@@ -28,7 +28,7 @@ func _ready() -> void:
 		player.reset_position(Statics.load_coords)
 	player.selected_weapon = Statics.current_profile["equipped_weapons"]
 	cam_layer.cam.set_layer_position(player.position)
-	cam_layer.update_weapon_icons()
+	cam_layer.update_weapon_icons(false)
 	cam_layer.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
 
 
