@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ukn31olknvf6"]
+
+[ext_resource type="Shader" uid="uid://ci6bo7rsuohae" path="res://Resources/DarknessLayer.tres" id="1_saxpf"]
+
+[resource]
+shader = ExtResource("1_saxpf")
