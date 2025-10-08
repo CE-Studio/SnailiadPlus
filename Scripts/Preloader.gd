@@ -3,14 +3,27 @@ extends Node2D
 
 
 #region Variables
-
+var thread:Thread = Thread.new()
+var unprocessed_marker_positions:Array = []
+@export var gui_debug := false
+@onready var file_label:Label = %FileLabel
+@onready var progress_bar:ProgressBar = %ProgressBar
 #endregion
 
 
 func _ready() -> void:
-	$"JsonSprite2D".action = "idle"
+	%"JsonSprite2D".action = "idle"
+	if gui_debug:
+		return
 	if Minimap.unprocessed_marker_positions.size() == 0:
-		_read_rooms_log_markers()
+		if OS.has_feature("nothreads"):
+			_read_rooms_log_markers()
+		else:
+			thread.start(_read_rooms_log_markers)
+			while thread.is_alive():
+				await  get_tree().process_frame
+			thread.wait_to_finish()
+		Minimap.unprocessed_marker_positions = unprocessed_marker_positions
 	if Statics.shortcut_load_game_scene:
 		Statics.shortcut_load_game_scene = false
 		get_tree().call_deferred("change_scene_to_file", "res://Scenes/GameScene.tscn")
@@ -22,9 +35,15 @@ func _read_rooms_log_markers() -> void:
 	var base_path:String = Statics.ROOM_PATH
 	base_path = base_path.split("%s")[0]
 	var all_rooms:Array = _grab_files_recursive(base_path)
-	Minimap.unprocessed_marker_positions.resize(Minimap.DEFAULT_MAP.size())
-	Minimap.unprocessed_marker_positions.fill(Minimap.MarkerTypes.NONE)
+	unprocessed_marker_positions.resize(Minimap.DEFAULT_MAP.size())
+	unprocessed_marker_positions.fill(Minimap.MarkerTypes.NONE)
+	var count_max := all_rooms.size()
+	var count:int = 0
+	progress_bar.set_thread_safe(&"max_value", count_max)
 	for room in all_rooms:
+		count += 1
+		progress_bar.set_thread_safe(&"value", count)
+		file_label.set_thread_safe(&"text", room)
 		var room_scene = load(room).instantiate()
 		if room_scene is Room:
 			var room_children:Array = _grab_nodes_recursive(room_scene)
@@ -34,12 +53,12 @@ func _read_rooms_log_markers() -> void:
 					screen_pos += room_scene.minimap_offset
 					var array_i = screen_pos.x + (screen_pos.y * Minimap.MAP_SIZE.x)
 					if child is SavePoint:
-						Minimap.unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.SAVE
+						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.SAVE
 					if child is Item:
-						Minimap.unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
+						unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
 					if child is Boss:
-						Minimap.unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
-		room_scene.free()
+						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
+		room_scene.queue_free()
 
 
 func _grab_files_recursive(path:String, files:Array = []) -> Array:
