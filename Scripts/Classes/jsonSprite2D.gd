@@ -85,7 +85,7 @@ func _ready() -> void:
 		var found := false
 		for i:String in [".png", ".svg", ".tga", ".hdr", ".exr", ".ktx", ".dds", ".bmp", ".jpg", ".jpeg", ".webp"]:
 			var path := pathtrimmed + i
-			if FileAccess.file_exists(path):
+			if ResourceLoader.exists(path):
 				var tex = load(path)
 				if tex is Texture:
 					_imgcache[pathtrimmed] = tex

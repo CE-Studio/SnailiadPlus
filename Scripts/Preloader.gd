@@ -39,10 +39,13 @@ func _read_rooms_log_markers() -> void:
 						Minimap.unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
 					if child is Boss:
 						Minimap.unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
+		room_scene.free()
 
 
 func _grab_files_recursive(path:String, files:Array = []) -> Array:
 	for file in DirAccess.get_files_at(path):
+		if file.get_extension() == "remap":
+			file = file.get_basename()
 		files.append(path + file)
 	for dir in DirAccess.get_directories_at(path):
 		files.append_array(_grab_files_recursive(path + dir + "/"))
