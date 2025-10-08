@@ -10,7 +10,7 @@ extends SnailyButton
 
 const SLOT_COUNT:int = 4
 const BIND_STR:String = "menu_option_controls_%s"
-const BIND_BBCODE:String = "[ctrl]%s[/ctrl]"
+const BIND_BBCODE:String = "ctrl__%s"
 const FOCUS_FLASH_SPEED:float = 6.5
 
 signal pressed(value:int)
