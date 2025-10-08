@@ -153,7 +153,7 @@ func spawn_display_entity(entity:String) -> void:
 func spawn_entity(entity:String) -> Enemy:
 	entity = entity.to_pascal_case()
 	var new_enemy:Enemy = null
-	if FileAccess.file_exists(BOSS_PATH % entity):
+	if ResourceLoader.exists(BOSS_PATH % entity):
 		new_enemy = load(BOSS_PATH % entity).instantiate()
 	else:
 		new_enemy = load(ENEMY_PATH % entity).instantiate()

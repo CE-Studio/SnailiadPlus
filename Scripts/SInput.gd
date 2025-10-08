@@ -205,7 +205,7 @@ func get_input_str(input:Inputs) -> StringName:
 
 
 func _check_icon_exists(key:String) -> String:
-	if FileAccess.file_exists(ICON_PATH % key):
+	if ResourceLoader.exists(ICON_PATH % key):
 		return key
 	return "Unknown"
 
