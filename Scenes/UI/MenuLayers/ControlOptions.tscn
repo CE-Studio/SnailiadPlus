@@ -47,6 +47,7 @@ focus_neighbor_bottom = NodePath("../Default")
 focus_next = NodePath("../Default")
 focus_previous = NodePath("../Remap")
 header_id = "menu_option_controls_buttonType"
+auto_select_mode = true
 cycle_options = Array[String](["menu_option_controls_buttonType_xbox", "menu_option_controls_buttonType_nintendo", "menu_option_controls_buttonType_playstation", "menu_option_controls_buttonType_ouya"])
 
 [node name="Default" parent="MainVBox" instance=ExtResource("2_mn8gm")]
