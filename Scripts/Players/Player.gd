@@ -823,6 +823,7 @@ func _set_shell(state:bool):
 	else:
 		_play_anim("unshell")
 		if shield_particle:
+			Statics.spawn_particle("ShieldPop", Room.Layers.GROUND, shield_particle.position)
 			shield_particle.queue_free()
 
 

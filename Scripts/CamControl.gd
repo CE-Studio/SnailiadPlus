@@ -22,12 +22,14 @@ var border:CameraBorder = null
 const NF_OFFSET_MAX:Vector2 = Vector2(64.0, 48.0)
 const NF_OFFSET_MAX_FALL:Vector2 = Vector2(128.0, 80.0)
 const NF_OFFSET_ADJUST_DELAY:float = 0.5
+const NF_OFFSET_RETURN_DELAY:float = 1.25
 const NF_OFFSET_EASE_RATE:float = 128.0
 const NF_OFFSET_FALL_EASE_RATE:float = 192.0
 const NF_OFFSET_LAND_EASE_RATE:float = 512.0
 const NF_OFFSET_MAX_FALL_MULT:float = 2.5
 var nf_offset:Vector2 = Vector2.ZERO
 var nf_delay_timer:float = 0.0
+var nf_return_timer:float = 0.0
 #endregion
 #endregion
 
@@ -89,8 +91,10 @@ func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
 	if ((walled and move_vector.y != 0.0) or
 	(not walled and move_vector.x != 0.0)):
 		nf_delay_timer += delta
+		nf_return_timer = 0.0
 	else:
 		nf_delay_timer = 0.0
+		nf_return_timer += delta
 	
 	if nf_delay_timer >= NF_OFFSET_ADJUST_DELAY:
 		if walled:
@@ -103,6 +107,8 @@ func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
 				NF_OFFSET_MAX.x * move_vector.x,
 				NF_OFFSET_EASE_RATE * delta
 			)
+	if nf_return_timer >= NF_OFFSET_RETURN_DELAY:
+		nf_offset = nf_offset.move_toward(Vector2.ZERO, NF_OFFSET_EASE_RATE * delta)
 	
 	var tick_land:bool = true
 	if not player.grounded:

@@ -133,6 +133,7 @@ func create_new_label() -> RichTextLabel:
 	new_label.size = size
 	new_label.theme = theme
 	new_label.text = text
+	new_label.autowrap_mode = self.autowrap_mode
 	return new_label
 
 

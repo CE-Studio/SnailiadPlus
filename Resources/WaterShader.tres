@@ -17,7 +17,7 @@ operator = 2
 operator = 3
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_ux8u5"]
-constant = 3.0
+constant = 2.0
 
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_c2q70"]
 function = 14
@@ -145,7 +145,7 @@ void fragment() {
 
 
 // FloatConstant:20
-	float n_out20p0 = 3.000000;
+	float n_out20p0 = 2.000000;
 
 
 // FloatOp:26
