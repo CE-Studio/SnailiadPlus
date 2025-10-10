@@ -90,7 +90,7 @@ const DEFAULTS:Array[Array] = [
 	[ KEY_X, KEY_ESCAPE, JOY_BUTTON_B, JOY_BUTTON_B ],
 ]
 
-const STICK_DEADZONE_MOVE:float = 0.1
+const STICK_DEADZONE_MOVE:float = 0.2
 const STICK_DEADZONE_AIM:float = 0.2
 
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
@@ -144,28 +144,40 @@ func input_just_pressed(action:Inputs) -> bool:
 
 
 func vector_move(raw:bool = false) -> Vector2:
-	var vector:Vector2 = Input.get_vector("left", "right", "up", "down")
-	vector *= 0.25
+	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", STICK_DEADZONE_MOVE)
+	#if not last_input_was_con:
+	#	vector *= 0.25
+	#	if raw:
+	#		return vector
+	#	if vector.x < -STICK_DEADZONE_MOVE: vector.x = -1
+	#	elif vector.x > STICK_DEADZONE_MOVE: vector.x = 1
+	#	else: vector.x = 0
+	#	if vector.y < -STICK_DEADZONE_MOVE: vector.y = -1
+	#	elif vector.y > STICK_DEADZONE_MOVE: vector.y = 1
+	#	else: vector.y = 0
+	#print(vector)
 	if raw:
 		return vector
-	if vector.x < -STICK_DEADZONE_MOVE: vector.x = -1
-	elif vector.x > STICK_DEADZONE_MOVE: vector.x = 1
-	else: vector.x = 0
-	if vector.y < -STICK_DEADZONE_MOVE: vector.y = -1
-	elif vector.y > STICK_DEADZONE_MOVE: vector.y = 1
-	else: vector.y = 0
+	if vector.x < 0: vector.x = -1
+	elif vector.x > 0: vector.x = 1
+	if vector.y < 0: vector.y = -1
+	elif vector.y > 0: vector.y = 1
 	return vector
 
 
 func vector_aim() -> Vector2:
-	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD").normalized()
+	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", STICK_DEADZONE_AIM).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
-		if vector.x < -STICK_DEADZONE_AIM: vector.x = -1
-		elif vector.x > STICK_DEADZONE_AIM: vector.x = 1
-		else: vector.x = 0
-		if vector.y < -STICK_DEADZONE_AIM: vector.y = -1
-		elif vector.y > STICK_DEADZONE_AIM: vector.y = 1
-		else: vector.y = 0
+		#if vector.x < -STICK_DEADZONE_AIM: vector.x = -1
+		#elif vector.x > STICK_DEADZONE_AIM: vector.x = 1
+		#else: vector.x = 0
+		#if vector.y < -STICK_DEADZONE_AIM: vector.y = -1
+		#elif vector.y > STICK_DEADZONE_AIM: vector.y = 1
+		#else: vector.y = 0
+		if vector.x < 0: vector.x = -1
+		elif vector.x > 0: vector.x = 1
+		if vector.y < 0: vector.y = -1
+		elif vector.y > 0: vector.y = 1
 	return vector
 
 
@@ -246,10 +258,50 @@ func pull_action(input:Inputs) -> Array:
 	return action
 
 
-func rebind(action:Inputs, new_event:Variant, slot:int) -> void:
+func rebind_ctrl(action:Inputs, new_event:Variant, slot:int) -> void:
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var old_action:Array = controls[action].duplicate()
 	if slot < old_action.size() and slot >= 0:
 		old_action[slot] = new_event
 	controls[action] = old_action.duplicate()
 	ProjectSettings.set_setting("game/control/controls", controls.duplicate())
+
+
+func rebind_action(action:String) -> void:
+	var controls:Array = ProjectSettings.get_setting("game/control/controls")
+	var actions_raw:Array = SInput.Inputs.keys()
+	var actions:Array = []
+	for act in actions_raw:
+		actions.append(act.to_camel_case())
+	var action_id:int = actions.find(action)
+	
+	InputMap.action_erase_events(action)
+	for i in range(4):
+		var new_event:InputEvent = null
+		if i < 2:
+			new_event = InputEventKey.new()
+			new_event.keycode = controls[action_id][i]
+			
+		elif controls[action_id][i] is Vector2 or controls[action_id][i] is Vector2i:
+			new_event = InputEventJoypadMotion.new()
+			new_event.axis = controls[action_id][i].x
+			new_event.axis_value = controls[action_id][i].y
+		else:
+			new_event = InputEventJoypadButton.new()
+			new_event.button_index = controls[action_id][i]
+		InputMap.action_add_event(action, new_event)
+
+
+func rebind_all() -> void:
+	var keys:Array = Inputs.keys()
+	for i in range(keys.size() - 1):
+		keys[i] = keys[i].to_camel_case()
+	
+	var actions:Array = InputMap.get_actions()
+	for action in actions:
+		if keys.has(action) and action != "uiClick":
+			rebind_action(action)
+
+
+func load_from_project_settings() -> void:
+	pass

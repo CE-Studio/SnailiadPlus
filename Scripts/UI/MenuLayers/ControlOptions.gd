@@ -35,7 +35,7 @@ func on_face_type_cycled(value) -> void:
 	ProjectSettings.set_setting("game/control/controller_type", value)
 
 
-func on_reset_defaults(value) -> void:
+func on_reset_defaults(_value) -> void:
 	_focus_panel()
 
 

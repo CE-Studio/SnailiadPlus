@@ -62,42 +62,12 @@ func _input(event: InputEvent) -> void:
 			)
 		elif event is InputEventJoypadButton:
 			controls[action_being_remapped][bind_slot] = event.button_index
-		rebind_action(SInput.get_input_str(action_being_remapped))
+		SInput.rebind_action(SInput.get_input_str(action_being_remapped))
 		for button in bind_buttons:
 			if button.bind == action_being_remapped:
 				button.setup_bind_icons()
 		suppress_input = SUPPRESS_FRAMES
 		queue_defocus = true
-
-
-func rebind_action(action:String) -> void:
-	var controls:Array = ProjectSettings.get_setting("game/control/controls")
-	var actions_raw:Array = SInput.Inputs.keys()
-	var actions:Array = []
-	for act in actions_raw:
-		actions.append(act.to_camel_case())
-	var action_id:int = actions.find(action)
-	
-	InputMap.action_erase_events(action)
-	for i in range(4):
-		var new_event:InputEvent = null
-		if i < 2:
-			new_event = InputEventKey.new()
-			new_event.keycode = controls[action_id][i]
-		elif controls[action_id][i] is Vector2 or controls[action_id][i] is Vector2i:
-			new_event = InputEventJoypadMotion.new()
-			new_event.axis = controls[action_id][i].x
-			new_event.axis_value = controls[action_id][i].y
-		else:
-			new_event = InputEventJoypadButton.new()
-			new_event.button_index = controls[action_id][i]
-		InputMap.action_add_event(action, new_event)
-
-
-func rebind_all() -> void:
-	var actions:Array = InputMap.get_actions()
-	for action in actions:
-		rebind_action(action)
 
 
 func _on_button_pressed(bind:int) -> void:

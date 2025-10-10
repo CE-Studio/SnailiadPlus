@@ -992,7 +992,7 @@
 	"entity_floatspike_name": "Floatspike",
 	"entity_floatspike_desc": "Habitat: diverse\nHead: empty\nLife: easy\n\nThese simple urchins tend to gravitate toward areas either full of water or otherwise verdant and damp.  They like to find a spot and sit idly for a long time.  The way they tend to gather has led to theories of unknown floatspike societies, but with little evidence.",
 	"entity_blobCommon_name": "Blob",
-	"entity_blobCommon_desc": "Habitat: diverse\nTexture: slimy, pliable\nTaste: would not recommend\n\nThe blob is a humble creature.  Being made purely of slime, its malleable surface can be bent and reshaped to its whim.  Their apperance around where snails tend to reside makes one think if they rose from residual snail trails.",
+	"entity_blobCommon_desc": "Habitat: diverse\nTexture: slimy, pliable\nTaste: would not recommend\n\nThe blob is a humble creature.  Being made purely of slime, its malleable surface can be bent and reshaped to its whim.  Their appearance around where snails tend to reside makes one wonder if they rose from residual snail trails.",
 	"entity_blobTough_name": "Blub",
 	"entity_blobTough_desc": "Habitat: diverse\nSenses: heightened\nDiet: unknown\n\nBlobs have an impressive ability to adapt to their environments as they age.  Generally, this tends to involve a strengthening of surface tension and a change in pigmentation.  Blub also loves listening to music.",
 	"entity_blobAngel_name": "Angelblob",

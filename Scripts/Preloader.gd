@@ -15,6 +15,7 @@ func _ready() -> void:
 	%"JsonSprite2D".action = "idle"
 	if gui_debug:
 		return
+	SInput.rebind_all()
 	if Minimap.unprocessed_marker_positions.size() == 0:
 		if OS.has_feature("nothreads"):
 			_read_rooms_log_markers()

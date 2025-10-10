@@ -67,7 +67,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" instance=ExtResource("3_atxd7")]
@@ -92,7 +91,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" instance=ExtResource("3_atxd7")]
@@ -117,7 +115,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" instance=ExtResource("3_atxd7")]
@@ -142,7 +139,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" instance=ExtResource("3_atxd7")]

@@ -36,6 +36,7 @@ var nf_return_timer:float = 0.0
 
 func instantiate() -> void:
 	player = GameCore.instance.player
+	set_cam_mode()
 
 
 func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:

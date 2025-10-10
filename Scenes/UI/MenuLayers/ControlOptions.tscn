@@ -76,7 +76,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Remap")
 focus_next = NodePath("../Remap")
 focus_previous = NodePath("../Default")
-text_id = "menu_option_main_returnTo"
+text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true
 
