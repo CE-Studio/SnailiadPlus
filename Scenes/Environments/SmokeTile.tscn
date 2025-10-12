@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cumw0kogpvr1s"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_63qo2"]
+[ext_resource type="Texture2D" uid="uid://c811rv1q1vj5l" path="res://Assets/Images/Environments/Smoke.png" id="2_63qo2"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_ibj8a"]
+
+[node name="SmokeTile" type="Sprite2D"]
+script = ExtResource("1_63qo2")
+texture_path = "res://Assets/Images/Environments/Smoke.json"
+load_autoplay = Array[String](["smoke"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_63qo2")
+hframes = 3
+script = ExtResource("3_ibj8a")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
