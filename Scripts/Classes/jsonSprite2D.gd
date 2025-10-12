@@ -27,11 +27,12 @@ const _DATA_MATCH = {
 
 @export var normal_npc := false 
 @export_file("*.json") var texture_path:String
+@export var load_autoplay:Array[String]
 @export var fade_color:Color = Color.WHITE:
 	set(value):
 		fade_color = value
 		_fade_color()
-@export_range(0, 1, 0) var fade_lerp:float = 0:
+@export_range(0, 1, 0.01) var fade_lerp:float = 0:
 	set(value):
 		fade_lerp = value
 		_fade_color()
@@ -217,6 +218,9 @@ func _ready() -> void:
 			_children.append(sp)
 		texture = _layers[-1]
 	is_ready = true
+	
+	if load_autoplay.size() > 0:
+		action = load_autoplay.pick_random()
 
 
 func _fade_color() -> void:

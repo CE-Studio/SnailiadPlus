@@ -85,7 +85,7 @@ func _process(delta: float) -> void:
 					deselect()
 				else:
 					set_selected()
-		if selected or (focused and auto_select_mode):
+		if (selected or (focused and auto_select_mode)) and not disabled:
 			var cycled:bool = false
 			if (SInput.input_just_pressed(SInput.Inputs.LEFT)
 			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0])):

@@ -506,7 +506,7 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 	return num
 
 
-static func play_sfx_disconnected(sound:AudioStream) -> void:
+static func play_sfx_disconnected(sound:AudioStream, vol:float = 1.0) -> void:
 	var active_sounds_of_type:int = 0
 	for sfx in GameCore.instance.sfx_group.get_children():
 		if sfx.stream == sound:
@@ -514,7 +514,7 @@ static func play_sfx_disconnected(sound:AudioStream) -> void:
 	if active_sounds_of_type < 2:
 		var new_discon_sound:AudioStreamPlayer = disconnected_sound.instantiate()
 		GameCore.instance.sfx_group.add_child(new_discon_sound)
-		new_discon_sound.load_and_play(sound)
+		new_discon_sound.load_and_play(sound, vol)
 
 
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:

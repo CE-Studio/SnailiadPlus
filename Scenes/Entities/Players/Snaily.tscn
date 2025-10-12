@@ -18,10 +18,12 @@ size = Vector2(24, 13)
 size = Vector2(12, 13)
 
 [node name="Snaily" type="Node2D"]
+visibility_layer = 3
 script = ExtResource("1_k5eab")
 identifier = &"Player"
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
+visibility_layer = 3
 script = ExtResource("2_d17bl")
 texture_path = "res://Assets/Images/Players/Snaily.json"
 

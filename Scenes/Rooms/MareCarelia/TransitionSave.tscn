@@ -50,7 +50,6 @@ tile_set = ExtResource("2_vbhpk")
 [node name="Door" parent="GroundLayer" instance=ExtResource("3_yaot4")]
 position = Vector2(392, 120)
 door_type = 1
-lock_type = 0
 
 [node name="Door2" parent="GroundLayer" instance=ExtResource("3_yaot4")]
 position = Vector2(8, 120)
@@ -103,3 +102,4 @@ exit_transition = 3
 position = Vector2(400, 120)
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://cna4moa3uiam0"

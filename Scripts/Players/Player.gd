@@ -329,7 +329,7 @@ func _physics_process(delta) -> void:
 	else:
 		fire_mode = SInput.input_pressed(SInput.Inputs.SHOOT)
 	if ((fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or SInput.vector_aim() != Vector2.ZERO)
-	and selected_weapon > 0 and fire_cooldown == 0.0):
+	and selected_weapon > 0 and fire_cooldown == 0.0 and not in_death_cutscene):
 		#region Get direction
 		var vector_aim = SInput.vector_aim()
 		var vector_raw = SInput.vector_move()
@@ -377,6 +377,7 @@ func reset_position(pos:Vector2) -> void:
 	body.global_position = pos
 	sprite.position = Vector2.ZERO
 	in_death_cutscene = false
+	_play_anim("idle")
 
 
 # The floor case for player movement
@@ -823,6 +824,7 @@ func _set_shell(state:bool):
 	else:
 		_play_anim("unshell")
 		if shield_particle:
+			Statics.spawn_particle("ShieldPop", Room.Layers.GROUND, shield_particle.position)
 			shield_particle.queue_free()
 
 

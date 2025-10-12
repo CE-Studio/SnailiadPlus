@@ -3,7 +3,7 @@ extends Particle
 
 #region Variables
 const SPEED:Vector2 = Vector2(14.0, 8.0)
-const TURNAROUND_SPEED:float = 8.0
+const TURNAROUND_SPEED:float = 12.0
 const MAX_FLAPS:int = 12
 const MAX_GLIDE_TIME:float = 4.0
 const MIN_TURNAROUND_TIME:float = 6.0

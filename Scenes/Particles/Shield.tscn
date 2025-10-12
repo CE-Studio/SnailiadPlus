@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 [node name="MarkerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_fboqi")
 hframes = 4
-vframes = 3
+vframes = 4
 frame = 3
 script = ExtResource("3_3new5")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

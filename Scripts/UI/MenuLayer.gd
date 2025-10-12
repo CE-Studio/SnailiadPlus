@@ -3,13 +3,13 @@ class_name MenuLayer
 extends Node2D
 
 #region Variables
-@export var save_general_on_close:bool = false
-@export var hide_global_menu_assets:bool = false
-@export_range(0.0, 1.0, 0.01) var selector_opacity:float = 1.0
-
 const MIN_SEPARATION = 4.0
 const MAX_SEPARATION = 4.0
 const MOVE_RATE = 20.0
+
+@export var save_general_on_close:bool = false
+@export var hide_global_menu_assets:bool = false
+@export_range(0.0, 1.0, 0.01) var selector_opacity:float = 1.0
 
 var menu:MainMenu
 var meta_info:Array = []

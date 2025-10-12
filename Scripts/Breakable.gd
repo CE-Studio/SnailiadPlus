@@ -75,12 +75,12 @@ func _on_bullet_entered(_area:Area2D) -> void:
 				map.set_cell(coords)
 			for i in range(2):
 				var pos = Vector2(randi_range(-16, 16), randi_range(-16, 16))
-				Statics.spawn_particle("ExplosionBig", Room.Layers.FG1, position + pos)
+				Statics.spawn_particle("ExplosionSmall", Room.Layers.FG1, position + pos)
 			match randi_range(1, 4):
-				1: Statics.play_sfx_disconnected(explode1)
-				2: Statics.play_sfx_disconnected(explode2)
-				3: Statics.play_sfx_disconnected(explode3)
-				4: Statics.play_sfx_disconnected(explode4)
+				1: Statics.play_sfx_disconnected(explode1, 0.75)
+				2: Statics.play_sfx_disconnected(explode2, 0.75)
+				3: Statics.play_sfx_disconnected(explode3, 0.75)
+				4: Statics.play_sfx_disconnected(explode4, 0.75)
 			queue_free()
 		else:
 			if not is_silent and bullet.ping_on_breakables:

@@ -78,6 +78,8 @@ control/controls=[]
 control/controller_type=0
 ui/bottom_keys=true
 visuals/dynamic_camera=true
+control/deadzone_move=0.2
+control/deadzone_aim=0.2
 
 [gui]
 
@@ -243,6 +245,8 @@ uiBack={
 
 [layer_names]
 
+2d_render/layer_1="Main"
+2d_render/layer_2="Silhouette"
 2d_physics/layer_1="WorldCollide"
 2d_physics/layer_2="EnemyCollide"
 2d_physics/layer_3="Player"

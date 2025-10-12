@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c811rv1q1vj5l"
-path="res://.godot/imported/Smoke.png-3f260547b797114d0815afba720ae936.ctex"
+uid="uid://oufyw1ml7qmd"
+path="res://.godot/imported/WaterSurface.png-77afdf83f914858448d5d68b70a9937a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Particles/Smoke.png"
-dest_files=["res://.godot/imported/Smoke.png-3f260547b797114d0815afba720ae936.ctex"]
+source_file="res://Assets/Images/Environments/WaterSurface.png"
+dest_files=["res://.godot/imported/WaterSurface.png-77afdf83f914858448d5d68b70a9937a.ctex"]
 
 [params]
 
