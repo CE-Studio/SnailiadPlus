@@ -10,7 +10,6 @@ var panel_up:bool = false
 
 
 func _ready() -> void:
-	$"ButtonStyle".remote_set_option(ProjectSettings.get_setting("game/control/controller_type"))
 	panel.modulate.a = 0
 	panel.call_deferred("set_text",
 		"menu_option_controls_default_confirm", 1)
@@ -29,10 +28,6 @@ func _process(delta: float) -> void:
 		panel.modulate.a = lerpf(panel.modulate.a, 0.0, MenuLayer.MOVE_RATE * delta)
 		panel.position.y = lerp(panel.position.y, 240.0, MenuLayer.MOVE_RATE * delta)
 		layer.menu.selector_y_offset = 0
-
-
-func on_face_type_cycled(value) -> void:
-	ProjectSettings.set_setting("game/control/controller_type", value)
 
 
 func on_reset_defaults(_value) -> void:

@@ -90,9 +90,6 @@ const DEFAULTS:Array[Array] = [
 	[ KEY_X, KEY_ESCAPE, JOY_BUTTON_B, JOY_BUTTON_B ],
 ]
 
-const STICK_DEADZONE_MOVE:float = 0.2
-const STICK_DEADZONE_AIM:float = 0.2
-
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
 
 var last_input_was_con:bool = false
@@ -144,18 +141,8 @@ func input_just_pressed(action:Inputs) -> bool:
 
 
 func vector_move(raw:bool = false) -> Vector2:
-	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", STICK_DEADZONE_MOVE)
-	#if not last_input_was_con:
-	#	vector *= 0.25
-	#	if raw:
-	#		return vector
-	#	if vector.x < -STICK_DEADZONE_MOVE: vector.x = -1
-	#	elif vector.x > STICK_DEADZONE_MOVE: vector.x = 1
-	#	else: vector.x = 0
-	#	if vector.y < -STICK_DEADZONE_MOVE: vector.y = -1
-	#	elif vector.y > STICK_DEADZONE_MOVE: vector.y = 1
-	#	else: vector.y = 0
-	#print(vector)
+	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_move")
+	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
 	if raw:
 		return vector
 	if vector.x < 0: vector.x = -1
@@ -166,14 +153,9 @@ func vector_move(raw:bool = false) -> Vector2:
 
 
 func vector_aim() -> Vector2:
-	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", STICK_DEADZONE_AIM).normalized()
+	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
+	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
-		#if vector.x < -STICK_DEADZONE_AIM: vector.x = -1
-		#elif vector.x > STICK_DEADZONE_AIM: vector.x = 1
-		#else: vector.x = 0
-		#if vector.y < -STICK_DEADZONE_AIM: vector.y = -1
-		#elif vector.y > STICK_DEADZONE_AIM: vector.y = 1
-		#else: vector.y = 0
 		if vector.x < 0: vector.x = -1
 		elif vector.x > 0: vector.x = 1
 		if vector.y < 0: vector.y = -1

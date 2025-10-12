@@ -3,7 +3,7 @@ class_name EnvironmentArea
 extends Area2D
 
 #region Variables
-var spawn_grace_frames = 4
+var spawn_grace_frames = 2
 var contained_bodies:Array = []
 var boxes:Array[CollisionShape2D] = []
 var polys:Array[Polygon2D] = []

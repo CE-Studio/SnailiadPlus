@@ -19,7 +19,7 @@ var offset:Vector2 = Vector2(200, 120)
 var border:CameraBorder = null
 
 #region New follow vars
-const NF_OFFSET_MAX:Vector2 = Vector2(64.0, 48.0)
+const NF_OFFSET_MAX:Vector2 = Vector2(40.0, 32.0)
 const NF_OFFSET_MAX_FALL:Vector2 = Vector2(128.0, 80.0)
 const NF_OFFSET_ADJUST_DELAY:float = 0.5
 const NF_OFFSET_RETURN_DELAY:float = 1.25

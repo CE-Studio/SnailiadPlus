@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://be7ub8315wtem"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_oh6ol"]
+[ext_resource type="Texture2D" uid="uid://oufyw1ml7qmd" path="res://Assets/Images/Environments/WaterSurface.png" id="2_0slrk"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wwl8c"]
+
+[node name="WaterSurfaceTile" type="Sprite2D"]
+script = ExtResource("1_oh6ol")
+texture_path = "res://Assets/Images/Environments/WaterSurface.json"
+load_autoplay = Array[String](["anim0", "anim1", "anim2"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_0slrk")
+hframes = 4
+script = ExtResource("3_wwl8c")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

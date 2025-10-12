@@ -347,6 +347,11 @@ func _spawn_entities_from_layer() -> void:
 				layer_ground.add_child(pea_tile)
 				layer_ground.move_child(pea_tile, 1)
 				pea_tile.spawn(tile, Breakable.TileTypes.PEASHOOTER, false)
+			
+			Vector2i(3, 31): # Water surface effect tile
+				var surface_tile:JsonSprite2D = load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
+				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
+				layer_fg2.add_child(surface_tile)
 
 
 func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:

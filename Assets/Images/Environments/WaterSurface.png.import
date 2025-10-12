@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bus4mys0ccidy"
-path="res://.godot/imported/EpicBanner.png-c2b04239a0fe2c3fbdb9c6dedc7b31ed.ctex"
+uid="uid://oufyw1ml7qmd"
+path="res://.godot/imported/WaterSurface.png-77afdf83f914858448d5d68b70a9937a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/EpicBanner.png"
-dest_files=["res://.godot/imported/EpicBanner.png-c2b04239a0fe2c3fbdb9c6dedc7b31ed.ctex"]
+source_file="res://Assets/Images/Environments/WaterSurface.png"
+dest_files=["res://.godot/imported/WaterSurface.png-77afdf83f914858448d5d68b70a9937a.ctex"]
 
 [params]
 

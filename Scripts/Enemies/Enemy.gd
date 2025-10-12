@@ -112,6 +112,7 @@ enum EnemyTypes {
 	SHELLBREAKER,      # Shellbreaker
 	STOMPY,            # Stompy
 	SPACEBOX,          # Space Box
+	BABYBOX,           # Baby Box
 	MOONSNAIL,         # Moon Snail
 	GIGASNAIL,         # Giga Moon Snail
 	COSMICSNAIL,       # Cosmic Moon Snail
@@ -224,9 +225,6 @@ func _physics_process(delta) -> void:
 	if sprite:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
-	#if flash_strength > 0.0:
-	#	flash_strength -= DAMAGE_FADE_DECAY * delta
-	#sprite.fade_lerp = clampf(flash_strength, 0.0, 1.0)
 
 
 func _on_player_entered(_body) -> void:

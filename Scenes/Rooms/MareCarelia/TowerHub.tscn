@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_coiht"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_nylvx"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="5_huffg"]
-[ext_resource type="Texture2D" uid="uid://bus4mys0ccidy" path="res://Assets/Images/Entities/EpicBanner.png" id="6_g5lqu"]
+[ext_resource type="Texture2D" uid="uid://bus4mys0ccidy" path="res://Assets/Images/Environments/EpicBanner.png" id="6_g5lqu"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="7_qcc3e"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
@@ -74,7 +74,7 @@ collision_enabled = false
 [node name="EpicBanner" type="Sprite2D" parent="FG1Layer"]
 position = Vector2(164, 360)
 script = ExtResource("5_huffg")
-texture_path = "res://Assets/Images/Entities/EpicBanner.json"
+texture_path = "res://Assets/Images/Environments/EpicBanner.json"
 load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
