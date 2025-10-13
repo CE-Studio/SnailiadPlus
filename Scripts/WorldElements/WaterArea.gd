@@ -37,9 +37,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	var y:float = UICore.instance.get_cam_center_pos().y - 120.0
+	y *= 0.0625
 	for poly in polys:
 		if poly.visible:
-			poly.material.set("shader_parameter/y_offset", UICore.instance.get_cam_center_pos().y * 0.0625)
+			poly.material.set("shader_parameter/y_offset", y)
 
 
 func _on_body_enter(body) -> void:
