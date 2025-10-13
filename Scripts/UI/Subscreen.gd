@@ -121,13 +121,22 @@ func _process(delta: float) -> void:
 	selector_spr.position.x = abs(sin(elapsed * 8)) * -2
 	
 	if active:
+		var close_flag:bool = false
 		if selection_depth == 0:
-			if SInput.check_input(SInput.Inputs.MAP, true) or SInput.check_input(SInput.Inputs.PAUSE, true):
-				UICore.instance.pause_layer.unpause_fade_out()
-				active = false
-				UICore.instance.minimap.update_player()
-				UICore.instance.minimap.update_p_marker_layer()
-				sfx_close.play()
+			if (SInput.check_input(SInput.Inputs.MAP, true)
+			or SInput.check_input(SInput.Inputs.PAUSE, true)
+			or SInput.check_input(SInput.Inputs.UI_BACK, true)):
+				close_flag = true
+		elif selection_depth == 1:
+			if SInput.check_input(SInput.Inputs.PAUSE, true):
+				close_flag = true
+		if close_flag:
+			UICore.instance.pause_layer.unpause_fade_out()
+			active = false
+			UICore.instance.minimap.update_player()
+			UICore.instance.minimap.update_p_marker_layer()
+			sfx_close.play()
+			return
 		
 		if selection_depth < 0:
 			selection_depth = 0

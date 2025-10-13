@@ -145,10 +145,12 @@ func vector_move(raw:bool = false) -> Vector2:
 	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
 	if raw:
 		return vector
-	if vector.x < 0: vector.x = -1
-	elif vector.x > 0: vector.x = 1
-	if vector.y < 0: vector.y = -1
-	elif vector.y > 0: vector.y = 1
+	if vector.x < -deadzone: vector.x = -1
+	elif vector.x > deadzone: vector.x = 1
+	else: vector.x = 0
+	if vector.y < -deadzone: vector.y = -1
+	elif vector.y > deadzone: vector.y = 1
+	else: vector.y = 0
 	return vector
 
 
@@ -156,10 +158,12 @@ func vector_aim() -> Vector2:
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
-		if vector.x < 0: vector.x = -1
-		elif vector.x > 0: vector.x = 1
-		if vector.y < 0: vector.y = -1
-		elif vector.y > 0: vector.y = 1
+		if vector.x < deadzone: vector.x = -1
+		elif vector.x > deadzone: vector.x = 1
+		else: vector.x = 0
+		if vector.y < deadzone: vector.y = -1
+		elif vector.y > deadzone: vector.y = 1
+		else: vector.y = 0
 	return vector
 
 
