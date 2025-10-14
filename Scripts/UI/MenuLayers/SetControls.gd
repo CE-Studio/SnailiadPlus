@@ -2,12 +2,14 @@ extends VBoxContainer
 
 
 const SUPPRESS_FRAMES:int = 3
+const BIND_TIME:float = 2.0
 
 var panel_up:bool = false
 var action_being_remapped:int = 0
 var bind_buttons:Array[BindSnailyButton] = []
 var suppress_input:int = 0
 var queue_defocus:bool = true
+var bind_time:float = 0.0
 
 @onready var layer:MenuLayer = get_parent()
 @onready var panel:ContextPanel = $"../ContextPanel"
@@ -31,6 +33,9 @@ func _process(delta: float) -> void:
 		panel.modulate.a = lerpf(panel.modulate.a, 1.0, MenuLayer.MOVE_RATE * delta)
 		panel.position.y = lerp(panel.position.y, 80.0, MenuLayer.MOVE_RATE * delta)
 		layer.menu.selector_y_offset = 80.0 - panel.position.y
+		bind_time -= delta
+		if bind_time <= 0.0:
+			_defocus_panel()
 	else:
 		panel.modulate.a = lerpf(panel.modulate.a, 0.0, MenuLayer.MOVE_RATE * delta)
 		panel.position.y = lerp(panel.position.y, 240.0, MenuLayer.MOVE_RATE * delta)
@@ -47,9 +52,9 @@ func _input(event: InputEvent) -> void:
 	if not panel_up or event is InputEventMouse or (suppress_input > 0):
 		return
 	
-	if event is InputEventKey and event.keycode == KEY_ESCAPE:
-		_defocus_panel()
-		return
+	#if event is InputEventKey and event.keycode == KEY_ESCAPE:
+	#	_defocus_panel()
+	#	return
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var bind_slot:int = layer.meta_info[0]
 	if ((bind_slot < 2 and event is InputEventKey)
@@ -73,6 +78,7 @@ func _input(event: InputEvent) -> void:
 func _on_button_pressed(bind:int) -> void:
 	action_being_remapped = bind
 	_focus_panel(bind)
+	bind_time = BIND_TIME
 
 
 func _focus_panel(bind:int) -> void:
