@@ -10,6 +10,7 @@ extends CutsceneControllable
 #region Global control
 const MAX_STUN_TIMER:float = 1.0
 const RESPAWN_INVIN_TIMER:float = 0.25
+const MOVE_STEPS:int = 4
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -647,7 +648,12 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
-	body.move_and_slide()
+	var cur_vel:Vector2 = body.velocity
+	var step_vel:Vector2 = cur_vel / MOVE_STEPS
+	for i in range(MOVE_STEPS):
+		body.velocity = step_vel
+		body.move_and_slide()
+	body.velocity *= MOVE_STEPS
 	position = body.position
 	
 	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):

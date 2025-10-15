@@ -103,7 +103,7 @@ func _process(delta: float) -> void:
 			else:
 				create_layer("Quit")
 	
-	var focused_node = get_viewport().gui_get_focus_owner()
+	var focused_node:Control = get_viewport().gui_get_focus_owner()
 	if focused_node != null:
 		if focused_node is ScrollingSnailyButton:
 			focused_node = focused_node.scroller
@@ -119,6 +119,19 @@ func _process(delta: float) -> void:
 					1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
 				var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
 				selectors[i].global_position = new_pos
+		
+		if SInput.just_pressed_as_echo("left") or SInput.just_pressed_as_echo("ui_left"):
+			var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
+			left.grab_focus()
+		if SInput.just_pressed_as_echo("right") or SInput.just_pressed_as_echo("ui_right"):
+			var right:Control = focused_node.get_node(focused_node.focus_neighbor_right)
+			right.grab_focus()
+		if SInput.just_pressed_as_echo("up") or SInput.just_pressed_as_echo("ui_up"):
+			var up:Control = focused_node.get_node(focused_node.focus_neighbor_top)
+			up.grab_focus()
+		if SInput.just_pressed_as_echo("down") or SInput.just_pressed_as_echo("ui_down"):
+			var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
+			down.grab_focus()
 	
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1

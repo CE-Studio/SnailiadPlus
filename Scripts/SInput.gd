@@ -92,13 +92,30 @@ const DEFAULTS:Array[Array] = [
 
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
 
+const ECHO_DELAY_INITIAL:float = 0.6
+const ECHO_DELAY_REPEAT:float = 0.04
+
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
+var ui_echo_delay:float = ECHO_DELAY_INITIAL
+var send_con_as_echo:bool = false
 #endregion
 
 
 func _ready() -> void:
 	pass
+
+
+func _process(delta: float) -> void:
+	var any_down:bool = Input.is_anything_pressed()
+	send_con_as_echo = false
+	if last_input_was_con and any_down:
+		ui_echo_delay -= delta
+		if ui_echo_delay <= 0.0:
+			ui_echo_delay += ECHO_DELAY_REPEAT
+			send_con_as_echo = true
+	else:
+		ui_echo_delay = ECHO_DELAY_INITIAL
 
 
 func _input(event: InputEvent) -> void:
@@ -121,15 +138,31 @@ func pressed(action:String) -> bool:
 	return Input.is_action_pressed(action)
 
 
-func just_pressed(action:String) -> bool:
+func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
+	if accept_con_echo:
+		return (Input.is_action_just_pressed(action) or 
+		Input.is_action_pressed(action) and send_con_as_echo)
 	return Input.is_action_just_pressed(action)
 
 
-func check_input(action:Inputs, just:bool) -> bool:
+func just_pressed_as_echo(action:String) -> bool:
+	if just_pressed(action):
+		return false
+	return just_pressed(action, true)
+
+
+func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
 	var this_action:String = get_input_str(action)
 	if just:
-		return just_pressed(this_action)
+		return just_pressed(this_action, accept_con_echo)
 	return pressed(this_action)
+
+
+func check_input_as_echo(action:Inputs) -> bool:
+	var this_action:String = get_input_str(action)
+	if just_pressed(this_action):
+		return false
+	return just_pressed(this_action, true)
 
 
 func input_pressed(action:Inputs) -> bool:
