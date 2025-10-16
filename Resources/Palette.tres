@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://fnkulw04l6s1"]
+
+[ext_resource type="Shader" uid="uid://b7q8pmjkj1hwb" path="res://Resources/Palette.gdshader" id="1_vlhkj"]
+[ext_resource type="Texture2D" uid="uid://c58iesr2t811g" path="res://Assets/Images/PaletteLinear.png" id="2_vlhkj"]
+
+[resource]
+shader = ExtResource("1_vlhkj")
+shader_parameter/num_colors = 56
+shader_parameter/PALETTE_TEXTURE = ExtResource("2_vlhkj")
