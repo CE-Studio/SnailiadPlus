@@ -103,7 +103,7 @@ var send_con_as_echo:bool = false
 
 
 func _ready() -> void:
-	pass
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 func _process(delta: float) -> void:

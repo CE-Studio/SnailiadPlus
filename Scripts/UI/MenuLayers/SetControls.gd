@@ -18,6 +18,7 @@ var bind_time:float = 0.0
 func _ready() -> void:
 	if layer.meta_info.size() == 0:
 		layer.meta_info.append(0)
+		layer.meta_info.append(0)
 	
 	panel.call_deferred("add_header",
 		"menu_option_controls_remap_header", 2)
@@ -43,8 +44,9 @@ func _process(delta: float) -> void:
 	
 	if suppress_input > 0 and not Input.is_anything_pressed() and SInput.vector_move(true) == Vector2.ZERO:
 		suppress_input -= 1
-		if queue_defocus and suppress_input == 0:
-			_defocus_panel()
+	layer.meta_info[1] = suppress_input
+	if queue_defocus:
+		_defocus_panel()
 	
 
 
@@ -52,9 +54,6 @@ func _input(event: InputEvent) -> void:
 	if not panel_up or event is InputEventMouse or (suppress_input > 0):
 		return
 	
-	#if event is InputEventKey and event.keycode == KEY_ESCAPE:
-	#	_defocus_panel()
-	#	return
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var bind_slot:int = layer.meta_info[0]
 	if ((bind_slot < 2 and event is InputEventKey)
@@ -104,6 +103,6 @@ func _defocus_panel() -> void:
 	panel.can_focus = false
 	layer.can_focus = true
 	layer.menu.set_deferred("read_inputs", true)
-	if layer.meta_info.size() >= 2:
-		layer.meta_info[1].grab_focus()
-		layer.meta_info.remove_at(1)
+	if layer.meta_info.size() >= 3:
+		layer.meta_info[2].grab_focus()
+		layer.meta_info.remove_at(2)

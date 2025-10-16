@@ -336,6 +336,14 @@ static func check_achievement(id:int) -> bool:
 	return output
 
 
+static func get_achievement_count() -> int:
+	var earned:int = 0
+	for i in AchievementCore.Achievements.keys().size():
+		if check_achievement(i):
+			earned += 1
+	return earned
+
+
 static func add_bestiary_entry(id:int) -> void:
 	if check_bestiary_entry(id):
 		return

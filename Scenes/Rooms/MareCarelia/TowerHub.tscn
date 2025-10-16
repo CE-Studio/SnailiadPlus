@@ -81,7 +81,6 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="MarkerSprite" type="Sprite2D" parent="FG1Layer/EpicBanner"]
 texture = ExtResource("6_g5lqu")
 hframes = 6
-vframes = 3
 script = ExtResource("7_qcc3e")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 

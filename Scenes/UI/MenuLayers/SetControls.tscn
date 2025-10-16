@@ -42,134 +42,222 @@ alignment = 1
 [node name="Left" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../../Back")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Right")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../Right")
 grab_focus_on_load = true
 
 [node name="Right" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Left")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Up")
+focus_next = NodePath("../Up")
+focus_previous = NodePath("../Left")
 bind = 1
 
 [node name="Up" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Right")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Down")
+focus_next = NodePath("../Down")
+focus_previous = NodePath("../Right")
 bind = 2
 
 [node name="Down" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Up")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Jump")
+focus_next = NodePath("../Jump")
+focus_previous = NodePath("../Up")
 bind = 3
 
 [node name="Jump" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Down")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Shoot")
+focus_next = NodePath("../Shoot")
+focus_previous = NodePath("../Down")
 bind = 4
 
 [node name="Shoot" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Jump")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Strafe")
+focus_next = NodePath("../Strafe")
+focus_previous = NodePath("../Jump")
 bind = 5
 
 [node name="Strafe" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Shoot")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Speak")
+focus_next = NodePath("../Speak")
+focus_previous = NodePath("../Shoot")
 bind = 6
 
 [node name="Speak" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Strafe")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Gravity")
+focus_next = NodePath("../Gravity")
+focus_previous = NodePath("../Strafe")
 bind = 7
 
 [node name="Gravity" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Speak")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Pause")
+focus_next = NodePath("../Pause")
+focus_previous = NodePath("../Speak")
 bind = 8
 
 [node name="Pause" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Gravity")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Map")
+focus_next = NodePath("../Map")
+focus_previous = NodePath("../Gravity")
 bind = 9
 
 [node name="Map" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Pause")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Weapon0")
+focus_next = NodePath("../Weapon0")
+focus_previous = NodePath("../Pause")
 bind = 10
 
 [node name="Weapon0" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Map")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Weapon1")
+focus_next = NodePath("../Weapon1")
+focus_previous = NodePath("../Map")
 bind = 11
 
 [node name="Weapon1" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Weapon0")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Weapon2")
+focus_next = NodePath("../Weapon2")
+focus_previous = NodePath("../Weapon0")
 bind = 12
 
 [node name="Weapon2" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Weapon1")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Weapon3")
+focus_next = NodePath("../Weapon3")
+focus_previous = NodePath("../Weapon1")
 bind = 13
 
 [node name="Weapon3" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Weapon2")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../AimL")
+focus_next = NodePath("../AimL")
+focus_previous = NodePath("../Weapon2")
 bind = 14
 
 [node name="AimL" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Weapon3")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../AimR")
+focus_next = NodePath("../AimR")
+focus_previous = NodePath("../Weapon3")
 bind = 15
 
 [node name="AimR" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../AimL")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../AimU")
+focus_next = NodePath("../AimU")
+focus_previous = NodePath("../AimL")
 bind = 16
 
 [node name="AimU" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../AimR")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../AimD")
+focus_next = NodePath("../AimD")
+focus_previous = NodePath("../AimR")
 bind = 17
 
 [node name="AimD" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../AimU")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../UIAccept")
+focus_next = NodePath("../UIAccept")
+focus_previous = NodePath("../AimU")
 bind = 18
 
 [node name="UIAccept" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../AimD")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../UIBack")
+focus_next = NodePath("../UIBack")
+focus_previous = NodePath("../AimD")
 bind = 21
 
 [node name="UIBack" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../UIAccept")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../../Back")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../UIAccept")
 bind = 22
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_oamqp")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/UIBack")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Left")
+focus_next = NodePath("../ScrollContainer/VBoxContainer/Left")
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/UIBack")
 text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true

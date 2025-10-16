@@ -27,7 +27,8 @@ var desc_mode:int = 0
 func _ready() -> void:
 	counter_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	var counter_raw := counter_text.text
-	counter_text.set_snaily_text(counter_raw % [ 0, achievement_count ])
+	var earned_count:int = Statics.get_achievement_count()
+	counter_text.set_snaily_text(counter_raw % [ earned_count, achievement_count ])
 	var camel_array:Array = []
 	for _name in achievement_str_names:
 		if _name is String:

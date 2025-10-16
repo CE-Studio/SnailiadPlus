@@ -88,16 +88,14 @@ func _process(delta: float) -> void:
 					set_selected()
 		if (selected or (focused and auto_select_mode)) and not disabled:
 			var cycled:bool = false
-			if (SInput.input_just_pressed(SInput.Inputs.LEFT) or Input.is_action_just_pressed("ui_left")
-			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0])) and scroll_state != -1:
+			if _check_left() and (scroll_state != -1 or SInput.send_con_as_echo):
 				selected_option -= 1
 				if selected_option < 0:
 					selected_option = cycle_options.size() - 1 if loop else 0
 				cycled = true
 				scroll_state = -1
 				cycled_left.emit(selected_option)
-			if (SInput.input_just_pressed(SInput.Inputs.RIGHT) or Input.is_action_just_pressed("ui_right")
-			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1])) and scroll_state != 1:
+			if _check_right() and (scroll_state != 1 or SInput.send_con_as_echo):
 				selected_option += 1
 				if selected_option >= cycle_options.size():
 					selected_option = 0 if loop else cycle_options.size() - 1
@@ -122,6 +120,20 @@ func _process(delta: float) -> void:
 		tex_left.modulate.a = alpha
 		tex_right.modulate.a = alpha
 	super._process(delta)
+
+
+func _check_left() -> bool:
+	var norm:bool = SInput.just_pressed("left", true)
+	var ui:bool = SInput.just_pressed("ui_left", true)
+	var mouse:bool = SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0]
+	return norm or ui or mouse
+
+
+func _check_right() -> bool:
+	var norm:bool = SInput.just_pressed("right", true)
+	var ui:bool = SInput.just_pressed("ui_right", true)
+	var mouse:bool = SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1]
+	return norm or ui or mouse
 
 
 func set_header(_text:String) -> void:

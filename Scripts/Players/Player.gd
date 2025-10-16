@@ -698,10 +698,11 @@ func _jump_and_reorient() -> float:
 	sfx_jump.play()
 	jump_buffer_counter = jump_buffer
 	coyote_time_counter = coyote_time
-	_push_from_wall()
 	if gravity_dir == _get_dir_opposite(home_gravity):
 		_set_direction(home_gravity, not facing_left)
+		_test_for_ceiling_reorient_wall_nudge()
 	else:
+		_push_from_wall()
 		_set_direction(home_gravity, facing_left)
 	outer_allowed = false
 	current_state = AnimStates.FALL
@@ -729,6 +730,29 @@ func _push_from_wall() -> void:
 			push_vector = Vector2.DOWN * _get_box_difference()
 	body.move_and_collide(push_vector)
 	position = body.position
+
+
+func _test_for_ceiling_reorient_wall_nudge() -> void:
+	if not body.is_on_wall():
+		return
+	var nudge:int = 1
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR:
+			var axis:float = Input.get_axis("left", "right")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.x += nudge if facing_left else -nudge
+		Statics.DirsSurface.LWALL:
+			var axis:float = Input.get_axis("up", "down")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.y += nudge if facing_left else -nudge
+		Statics.DirsSurface.RWALL:
+			var axis:float = Input.get_axis("down", "up")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.y += -nudge if facing_left else nudge
+		Statics.DirsSurface.CEILING:
+			var axis:float = Input.get_axis("right", "left")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.x += -nudge if facing_left else nudge
 
 
 func _can_grab_wall() -> bool:

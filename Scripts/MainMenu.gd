@@ -121,17 +121,21 @@ func _process(delta: float) -> void:
 				selectors[i].global_position = new_pos
 		
 		if SInput.just_pressed_as_echo("left") or SInput.just_pressed_as_echo("ui_left"):
-			var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
-			left.grab_focus()
+			if focused_node.focus_neighbor_left != ^"":
+				var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
+				left.grab_focus()
 		if SInput.just_pressed_as_echo("right") or SInput.just_pressed_as_echo("ui_right"):
-			var right:Control = focused_node.get_node(focused_node.focus_neighbor_right)
-			right.grab_focus()
+			if focused_node.focus_neighbor_right != ^"":
+				var right:Control = focused_node.get_node(focused_node.focus_neighbor_right)
+				right.grab_focus()
 		if SInput.just_pressed_as_echo("up") or SInput.just_pressed_as_echo("ui_up"):
-			var up:Control = focused_node.get_node(focused_node.focus_neighbor_top)
-			up.grab_focus()
+			if focused_node.focus_neighbor_top != ^"":
+				var up:Control = focused_node.get_node(focused_node.focus_neighbor_top)
+				up.grab_focus()
 		if SInput.just_pressed_as_echo("down") or SInput.just_pressed_as_echo("ui_down"):
-			var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
-			down.grab_focus()
+			if focused_node.focus_neighbor_bottom != ^"":
+				var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
+				down.grab_focus()
 	
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1
