@@ -3,6 +3,8 @@ class_name EnvironmentArea
 extends Area2D
 
 #region Variables
+const PLAYER_CHECK_TOLERANCE:float = 18.0
+
 var spawn_grace_frames = 2
 var contained_bodies:Array = []
 var boxes:Array[CollisionShape2D] = []
@@ -24,6 +26,18 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if spawn_grace_frames > 0:
 		spawn_grace_frames -= 1
+		if spawn_grace_frames == 0:
+			_double_check_player_collision()
+
+
+func _double_check_player_collision() -> void:
+	var player:Player = GameCore.instance.player
+	if contained_bodies.has(player.body):
+		var closest:Vector2 = get_closest_point(player.position)[0]
+		var distance:float = closest.distance_to(player.position)
+		if distance > PLAYER_CHECK_TOLERANCE:
+			var p_index:int = contained_bodies.find(player.body)
+			contained_bodies.remove_at(p_index)
 
 
 func update_shader_visibility() -> void:

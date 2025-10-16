@@ -57,10 +57,13 @@ func inc_game_time(delta:float) -> void:
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
+	player.set_box_disable_override(true)
 	if current_room != null:
 		player.environment_exit_override = 2
 		player.reparent(self)
 		despawn_room(current_room)
+	player.reset_position(Vector2(-999999, -999999))
+	
 	var new_room:Room = load(path).instantiate()
 	add_child(new_room)
 	move_child(new_room, 0)
@@ -68,6 +71,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	Statics.active_room = current_room
 	player.reparent(new_room.layer_ground)
 	new_room.layer_ground.move_child(player, 1)
+	
 	player.reset_position(new_room.default_spawn.position + offset)
 	if entrance != -1:
 		for child in new_room.get_children():
@@ -75,8 +79,9 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 				if child.my_id == entrance:
 					player.reset_position(child.exit_marker.global_position + offset)
 	cam_layer.cam.set_layer_position(player.position)
+	
 	new_room.spawn(true)
-	player.set_box_disable_override(false)
+	player.set_box_disable_override.call_deferred(false)
 	if new_room.area_id != current_area:
 		UICore.instance.show_area_text(new_room.area_id)
 		current_area = new_room.area_id

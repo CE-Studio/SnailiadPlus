@@ -1038,15 +1038,15 @@ func _check_ceil_casts() -> Array:
 	return [ hit, distance ]
 
 
-func set_box_disable_override(_state:bool) -> void:
-	return
-	#override_box_disable = state
-	#if state == true:
-	#	box_normal.disabled = true
-	#	box_shell.disabled = true
-	#else:
-	#	box_normal.disabled = shelled
-	#	box_shell.disabled = not shelled
+func set_box_disable_override(state:bool) -> void:
+	#return
+	override_box_disable = state
+	if state == true:
+		box_normal.set_deferred("disabled", true)
+		box_shell.set_deferred("disabled", true)
+	else:
+		box_normal.set_deferred("disabled", shelled)
+		box_shell.set_deferred("disabled", not shelled)
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
