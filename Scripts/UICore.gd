@@ -76,7 +76,6 @@ func instantiate() -> void:
 
 func _process(delta: float) -> void:
 	# Weapon icons
-	#var equipped = GameCore.instance.player.selected_weapon
 	for i in range(len(weapon_icons)):
 		var target_y
 		match weapon_icon_states[i]:

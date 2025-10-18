@@ -1,4 +1,4 @@
-class_name Iceball
+class_name Fireball
 extends Enemy
 
 
@@ -8,7 +8,7 @@ const GRAVITY = 1200
 const FALL_DIR = Vector2.DOWN
 const CORNER_CHECK_EXTENT = 12
 
-var sec_per_tick = 0.015
+var sec_per_tick = 0.02
 var elapsed:float = 0.0
 var is_falling:bool = false
 var grace_period = 0.4
@@ -27,7 +27,7 @@ var vel = 0
 					$"JsonSprite2D/MarkerSprite".frame = 4
 				Statics.DirsSurface.CEILING:
 					$"JsonSprite2D/MarkerSprite".frame = 8
-@export var ccw:bool # Assuming the iceball is tracking the inner edge of a ring, false for CW and true for CCW
+@export var ccw:bool # Assuming the fireball is tracking the inner edge of a ring, false for CW and true for CCW
 
 @onready var box:CollisionShape2D = $"BodyBox"
 @onready var cast_group:Node2D = $"CastGroup"
@@ -40,7 +40,7 @@ var vel = 0
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.ICEBALL
+	my_type = EnemyTypes.FIREBALL
 	col = $"BodyBox"
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
@@ -48,7 +48,7 @@ func _ready() -> void:
 	super.spawn()
 	
 	if hard_mode:
-		sec_per_tick = 0.009
+		sec_per_tick = 0.01
 	if direction == Statics.DirsSurface.NONE:
 		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
 			set_dir(Statics.DirsSurface.FLOOR)

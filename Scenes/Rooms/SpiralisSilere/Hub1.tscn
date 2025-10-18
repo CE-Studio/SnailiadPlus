@@ -123,6 +123,7 @@ exit_transition = 1
 position = Vector2(816, 120)
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://dk86r6x6rf3ne"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_n4fb7")]
 position = Vector2(0, 632)

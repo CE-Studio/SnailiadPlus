@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://bq075ljhbklt2"]
+
+[ext_resource type="Script" uid="uid://bshc0vyy3xff3" path="res://Scripts/Enemies/Fireball.gd" id="1_n6l8y"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_wyqt5"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_dob6v"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_xue4o"]
+[ext_resource type="Texture2D" uid="uid://mjxpgogwt7sa" path="res://Assets/Images/Entities/Fireball1.png" id="5_n6l8y"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_u8ksc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
+size = Vector2(14, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
+shader = ExtResource("4_xue4o")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="Fireball" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_n6l8y")
+max_health = 400
+attack = 3
+my_element = 1
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_43bce")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6ijum")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_wyqt5")
+script = ExtResource("3_dob6v")
+texture_path = "res://Assets/Images/Entities/Fireball1.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_43bce")
+texture = ExtResource("5_n6l8y")
+hframes = 4
+script = ExtResource("6_u8ksc")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="CastGroup" type="Node2D" parent="."]
+
+[node name="CWCheck" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-9, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CWBack" type="RayCast2D" parent="CastGroup"]
+position = Vector2(8, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CCWCheck" type="RayCast2D" parent="CastGroup"]
+position = Vector2(9, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CCWBack" type="RayCast2D" parent="CastGroup"]
+position = Vector2(-8, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="Center" type="RayCast2D" parent="CastGroup"]
+position = Vector2(0, 8)
+target_position = Vector2(0, 12)
+collision_mask = 3
+hit_from_inside = true

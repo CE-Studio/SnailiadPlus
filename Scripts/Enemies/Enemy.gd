@@ -175,21 +175,30 @@ func _physics_process(delta) -> void:
 		var ebullets_to_despawn:Array = []
 		var kill_flag:bool = false
 		var max_damage:int = parry_damage
+		var max_color:Color = Statics.get_color(Vector2i(3, 1))
+		var was_hit:bool = false
 		for bullet in intersecting_pbullets:
-			var this_damage = bullet.damage
+			was_hit = true
+			var this_damage:int = bullet.damage
+			var this_color:Color = Statics.get_color(Vector2i(3, 1))
 			#gravity shock critical damage mult (1.35)
 			if not immunities.has(bullet.type) and bullet.damage - defense > 0:
 				this_damage = floori(bullet.damage - defense)
 				if weaknesses.has(bullet.type):
 					this_damage *= 2
+					this_color = Statics.get_color(Vector2i(2, 3))
 				if resistances.has(bullet.type):
 					this_damage = floori(this_damage * 0.5)
+					this_color = Statics.get_color(Vector2i(2, 10))
 				if this_damage > max_damage:
 					max_damage = this_damage
+					max_color = this_color
 			else:
 				if make_sound_on_ping and not ping_played:
 					Statics.play_sfx_disconnected(sfx_ping)
 				ping_played  = true
+				if max_damage == 0:
+					max_color = Statics.get_color(Vector2i(3, 0))
 			if not can_be_pierced or bullet.single_hit:
 				pbullets_to_despawn.append(bullet)
 		for bullet in intersecting_ebullets:
@@ -204,6 +213,8 @@ func _physics_process(delta) -> void:
 					ping_played  = true
 				if not can_be_pierced:
 					ebullets_to_despawn.append(bullet)
+		if was_hit:
+			_spawn_damage_num(max_damage, max_color)
 		if max_damage > 0 and not shield_entity:
 			if health - max_damage <= 0:
 				kill_flag = true
@@ -265,9 +276,15 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 	health -= health_lost
 	damage_timeout = DAMAGE_TIMEOUT
 	flash_color = DAMAGE_FLASH_COLOR
-	#sprite.fade_color = DAMAGE_FLASH_COLOR
-	#sprite.fade_lerp = DAMAGE_FLASH_STRENGTH
-	#flash_strength = DAMAGE_FLASH_STRENGTH
+
+
+func _spawn_damage_num(num:int, color:Color) -> void:
+	if not Statics.draw_damage_numbers:
+		return
+	var new_num:DamageNumber = Statics.damage_number.instantiate()
+	GameCore.instance.current_room.layer_ground.add_child(new_num)
+	new_num.position = position + Vector2(0, -8)
+	new_num.instance(num, color)
 
 
 func kill() -> void:

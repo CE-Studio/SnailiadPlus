@@ -54,7 +54,8 @@ enum Layers {
 var room_path:String
 
 @onready var layer_entity:Node2D = $"EntityLayer"
-@onready var map_entity:TileMapLayer = $"EntityLayer/Map"
+@onready var map_entity1:TileMapLayer = $"EntityLayer/Map"
+@onready var map_entity2:TileMapLayer = $"EntityLayer/Map2"
 @onready var layer_fg2:Parallax2D = $"FG2Layer"
 @onready var map_fg2:TileMapLayer = $"FG2Layer/Map"
 @onready var layer_fg1:Parallax2D = $"FG1Layer"
@@ -91,13 +92,16 @@ func _ready() -> void:
 
 func spawn(_spawn_all:bool) -> void:
 	if Statics.show_entity_layer:
-		map_entity.modulate = Color(1, 1, 1, 0.5)
+		map_entity1.modulate = Color(1, 1, 1, 0.5)
+		map_entity2.modulate = Color(1, 1, 1, 0.5)
 	else:
-		map_entity.modulate = Color(1, 1, 1, 0)
+		map_entity1.modulate = Color(1, 1, 1, 0)
+		map_entity2.modulate = Color(1, 1, 1, 0)
 	get_room_name_from_filename()
 	
 	# Get all entity tiles and spawn associated objects
-	_spawn_entities_from_layer()
+	_spawn_entities_from_layer(0)
+	_spawn_entities_from_layer(1)
 	
 	# Properly spawn all objects in room
 	if _spawn_all:
@@ -173,9 +177,10 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 		arr.append(n)
 
 
-func _spawn_entities_from_layer() -> void:
-	for tile in map_entity.get_used_cells():
-		var tile_coords := map_entity.get_cell_atlas_coords(tile)
+func _spawn_entities_from_layer(layer:int) -> void:
+	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
+	for tile in map.get_used_cells():
+		var tile_coords := map.get_cell_atlas_coords(tile)
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
@@ -218,6 +223,17 @@ func _spawn_entities_from_layer() -> void:
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
+			
+			Vector2i(15, 0): # Fireball (CW)
+				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				fireball.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fireball)
+			
+			Vector2i(0, 1): # Fireball (CCW)
+				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				fireball.position = _tile_coords_to_vector_pos(tile)
+				fireball.ccw = true
+				layer_ground.add_child(fireball)
 			
 			Vector2i(1, 1): # Iceball (CW)
 				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
@@ -445,7 +461,7 @@ func _import_from_tiled():
 									Layers.FG2:
 										map_fg2.set_cell(map_index - tiled_corner, source, tile_coords)
 									Layers.ENTITY:
-										map_entity.set_cell(map_index - tiled_corner, source, tile_coords)
+										map_entity1.set_cell(map_index - tiled_corner, source, tile_coords)
 
 
 #region Runtime functions

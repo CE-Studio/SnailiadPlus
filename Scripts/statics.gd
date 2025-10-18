@@ -100,6 +100,7 @@ static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
 static var show_invis_entites:bool = false
+static var draw_damage_numbers:bool = true
 static var stack_shells:bool = true
 static var stack_weapons:bool = false
 static var stack_weapon_mods:bool = true
@@ -111,6 +112,7 @@ static var missing := preload("res://Assets/Images/Missing.png")
 
 
 static var disconnected_sound := preload("res://Scenes/internals/DisconnectedSound.tscn")
+static var damage_number := preload("res://Scenes/internals/DamageNumber.tscn")
 
 
 static var current_area:int = 0
@@ -464,7 +466,9 @@ static func solid_at_grid_pos(pos:Vector2i, enemy_collidable:bool = false) -> bo
 		return false
 	if active_room.map_ground.get_cell_tile_data(pos):
 		return true
-	if enemy_collidable and (active_room.map_entity.get_cell_atlas_coords(pos) == Vector2i(2, 24)):
+	if (enemy_collidable and
+	(active_room.map_entity1.get_cell_atlas_coords(pos) == Vector2i(2, 24)) or
+	(active_room.map_entity2.get_cell_atlas_coords(pos) == Vector2i(2, 24))):
 		return true
 	return false
 
