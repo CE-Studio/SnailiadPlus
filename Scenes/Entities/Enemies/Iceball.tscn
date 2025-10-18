@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dj02iqflklu42"]
+[gd_scene load_steps=10 format=3 uid="uid://ccfhxln12xn5"]
 
-[ext_resource type="Script" uid="uid://vav0p2ugjvuj" path="res://Scripts/Enemies/SpikeyCommon.gd" id="1_f8vex"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4sk1w"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_6ijum"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_exfki"]
-[ext_resource type="Texture2D" uid="uid://1r5fbtgr2gtb" path="res://Assets/Images/Entities/Spikey1.png" id="3_exfki"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_4sk1w"]
+[ext_resource type="Script" uid="uid://227t0ox5assx" path="res://Scripts/Enemies/Iceball.gd" id="1_70sqt"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_6kgun"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_ydo0v"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_xpm8o"]
+[ext_resource type="Texture2D" uid="uid://0ylhodornnao" path="res://Assets/Images/Entities/Fireball2.png" id="5_70sqt"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_xc2qc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
 size = Vector2(16, 14)
@@ -14,15 +14,17 @@ size = Vector2(16, 14)
 size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
-shader = ExtResource("2_exfki")
+shader = ExtResource("4_xpm8o")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="SpikeyCommon" type="CharacterBody2D"]
+[node name="Iceball" type="CharacterBody2D"]
 collision_layer = 64
 collision_mask = 3
-script = ExtResource("1_f8vex")
-max_health = 70
-attack = 2
+script = ExtResource("1_70sqt")
+max_health = 50
+attack = 3
+defense = 25
+my_element = 0
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -41,17 +43,16 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-material = ExtResource("2_4sk1w")
-script = ExtResource("2_6ijum")
-texture_path = "res://Assets/Images/Entities/Spikey1.json"
+material = ExtResource("2_6kgun")
+script = ExtResource("3_ydo0v")
+texture_path = "res://Assets/Images/Entities/Fireball2.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
 material = SubResource("ShaderMaterial_43bce")
-texture = ExtResource("3_exfki")
+texture = ExtResource("5_70sqt")
 hframes = 4
-vframes = 4
-script = ExtResource("4_4sk1w")
+script = ExtResource("6_xc2qc")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="CastGroup" type="Node2D" parent="."]

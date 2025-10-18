@@ -69,15 +69,6 @@ func _input(event: InputEvent) -> void:
 
 func _rebind_from_buffered() -> void:
 	var bind_slot:int = layer.meta_info[0]
-	#var controls:Array = ProjectSettings.get_setting("game/control/controls")
-	#if rebind_buffer is InputEventKey:
-	#	controls[action_being_remapped][bind_slot] = rebind_buffer.keycode
-	#elif rebind_buffer is InputEventJoypadMotion:
-	#	controls[action_being_remapped][bind_slot] = Vector2(
-	#		rebind_buffer.axis, -1 if rebind_buffer.axis_value < 0 else 1
-	#	)
-	#elif rebind_buffer is InputEventJoypadButton:
-	#	controls[action_being_remapped][bind_slot] = rebind_buffer.button_index
 	SInput.rebind_ctrl(action_being_remapped, rebind_buffer, bind_slot)
 	SInput.rebind_action.call_deferred(SInput.get_input_str(action_being_remapped))
 	for button in bind_buttons:

@@ -29,6 +29,7 @@ var vel = 0
 					$"JsonSprite2D/MarkerSprite".frame = 8
 @export var ccw:bool # Assuming the spikey is tracking the inner edge of a ring, false for CW and true for CCW
 
+@onready var box:CollisionShape2D = $"BodyBox"
 @onready var cast_group:Node2D = $"CastGroup"
 @onready var cast_cw_check:RayCast2D = $"CastGroup/CWCheck"
 @onready var cast_ccw_check:RayCast2D = $"CastGroup/CCWCheck"
@@ -171,15 +172,20 @@ func set_dir(new_dir:Statics.DirsSurface) -> void:
 		Statics.DirsSurface.FLOOR:
 			cast_group.rotation_degrees = 0.0
 			up_direction = Vector2.UP
+			box.rotation_degrees = 0.0
 		Statics.DirsSurface.LWALL:
 			cast_group.rotation_degrees = 90.0
 			up_direction = Vector2.RIGHT
+			box.rotation_degrees = 90.0
 		Statics.DirsSurface.RWALL:
 			cast_group.rotation_degrees = -90.0
 			up_direction = Vector2.LEFT
+			box.rotation_degrees = 90.0
 		Statics.DirsSurface.CEILING:
 			cast_group.rotation_degrees = 180.0
 			up_direction = Vector2.DOWN
+			box.rotation_degrees = 0.0
+	box.position = -up_direction
 
 
 func play_anim(modifier:String = "") -> void:

@@ -22,6 +22,7 @@ extends Node2D
 			update_marker()
 @export var up_left_room_name_override:String = ""
 @export var down_right_room_name_override:String = ""
+@export var restore_name_if_crossed:bool = false
 @export var aspect_offset:Vector2i = Vector2i.ZERO:
 	set(value):
 		aspect_offset = Vector2i(
@@ -36,6 +37,7 @@ var active:bool = true
 var initial_relative_pos:Statics.DirsCardinal
 var original_room_name:String = ""
 var last_pos_neg_position:int = 0
+var restored_name:bool = false
 
 @onready var origin:Vector2 = position
 #endregion
@@ -113,7 +115,8 @@ func _process(_delta: float) -> void:
 			if abs(player_pos.y - position.y) <= 8.0:
 				active = false
 		#region Set room name on either side where applicable
-		if down_right_room_name_override != "" or up_left_room_name_override != "":
+		if ((down_right_room_name_override != "" or up_left_room_name_override != "")
+		and ((restore_name_if_crossed and active) or not restore_name_if_crossed)):
 			var this_pos_neg_position:int = 0
 			if ((axis == 0 and player_pos.x > position.x)
 			or (axis == 1 and player_pos.y > position.y)):
@@ -132,6 +135,9 @@ func _process(_delta: float) -> void:
 					else:
 						UICore.instance.minimap.set_room_name(up_left_room_name_override)
 				last_pos_neg_position = this_pos_neg_position
+		elif restore_name_if_crossed and not active and not restored_name:
+			UICore.instance.minimap.set_room_name(original_room_name)
+			restored_name = true
 		#endregion
 
 

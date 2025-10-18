@@ -1,0 +1,59 @@
+{
+	"tiles": [4, 4],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"0": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+			]
+		},
+		"1": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"autoplay_next": "",
+			"frames": [
+				[0, 1, false, false],
+				[3, 1, false, false],
+				[2, 1, false, false],
+				[1, 1, false, false],
+			]
+		},
+		"2": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"autoplay_next": "",
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[3, 2, false, false],
+				[2, 2, false, false],
+			]
+		},
+		"3": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"autoplay_next": "",
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[0, 3, false, false],
+				[3, 3, false, false],
+			]
+		},
+	}
+}

@@ -1,4 +1,4 @@
-class_name SpikeyTough
+class_name Iceball
 extends Enemy
 
 
@@ -7,22 +7,12 @@ const SPEED = 60
 const GRAVITY = 1200
 const FALL_DIR = Vector2.DOWN
 const CORNER_CHECK_EXTENT = 12
-const SEC_PER_TICK_SLOW = 0.022
-const SEC_PER_TICK_FAST = 0.019
-const STOP_TIMEOUT_SLOW = 5.0
-const START_TIMEOUT_SLOW = 1.0
-const STOP_TIMEOUT_FAST = 3.0
-const START_TIMEOUT_FAST = 0.2
-const PEA_SPEED = 80.0
-const PEA_MOD = 2.3
+const SEC_PER_TICK = 0.015
 
 var elapsed:float = 0.0
 var is_falling:bool = false
-var grace_period = 4
+var grace_period = 0.4
 var vel = 0
-var stop_timeout:float
-var start_timeout:float
-var stopped:bool = false
 
 @export var direction:Statics.DirsSurface = Statics.DirsSurface.NONE:
 	set(value):
@@ -46,19 +36,16 @@ var stopped:bool = false
 @onready var cast_cw_back:RayCast2D = $"CastGroup/CWBack"
 @onready var cast_ccw_back:RayCast2D = $"CastGroup/CCWBack"
 @onready var cast_center:RayCast2D = $"CastGroup/Center"
-@onready var pea:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletPea.tscn")
 #endregion
 
 
 func _ready() -> void:
-	my_type = EnemyTypes.SPIKEY_TOUGH
+	my_type = EnemyTypes.SPIKEY_COMMON
 	col = $"BodyBox"
 	hitbox = $"Area2D"
 	sprite = $"JsonSprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
-	if hard_mode:
-		max_health = 720
 	
 	if direction == Statics.DirsSurface.NONE:
 		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
@@ -90,34 +77,12 @@ func _ready() -> void:
 			sprite.action = "ceiling_" + dir
 			cast_group.rotation_degrees = 180.0
 	sprite._process(0.0)
-	
-	stop_timeout = fmod(2.0 + (position.x * 0.13 + position.y * 0.7), 2.94)
-	start_timeout = stop_timeout 
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if not ai_active:
 		return
-	
-	stop_timeout -= delta
-	start_timeout -= delta
-	var this_stop = STOP_TIMEOUT_FAST if hard_mode else STOP_TIMEOUT_SLOW
-	var this_start = START_TIMEOUT_FAST if hard_mode else START_TIMEOUT_SLOW
-	if stop_timeout < 0 and not stopped:
-		stop_timeout = this_stop
-		start_timeout = this_start
-		stopped = true
-		play_anim("_stop")
-	elif start_timeout < 0 and stopped:
-		stop_timeout = this_stop
-		start_timeout = this_start + this_stop
-		stopped = false
-		play_anim()
-		if vis.is_on_screen():
-			var target = Vector2(GameCore.instance.player.position - position).normalized()
-			var speed = PEA_SPEED * (PEA_MOD if hard_mode else 1.0)
-			_shoot(pea, target, speed)
 	
 	if is_falling:
 		vel += GRAVITY * delta
@@ -127,11 +92,10 @@ func _physics_process(delta: float) -> void:
 			is_falling = false
 			set_dir(Statics.DirsSurface.FLOOR)
 			play_anim()
-	elif not stopped:
+	else:
 		elapsed += delta
-		var this_tick_speed = SEC_PER_TICK_FAST if hard_mode else SEC_PER_TICK_SLOW
-		while elapsed > this_tick_speed:
-			elapsed -= this_tick_speed
+		while elapsed > SEC_PER_TICK:
+			elapsed -= SEC_PER_TICK
 			vel = 0.0
 			var front_cast = cast_ccw_check if ccw else cast_cw_check
 			var back_cast = cast_ccw_back if ccw else cast_cw_back
@@ -162,25 +126,25 @@ func _physics_process(delta: float) -> void:
 					turn(not ccw)
 					if is_corner_solid():
 						is_falling = false
-						grace_period = 4
+						grace_period = 0.4
 						play_anim("_turnto_outer")
 						match direction:
 							Statics.DirsSurface.FLOOR:
 								position.y = roundi(position.y * 0.25) * 4.0
-								position.y -= Statics.FRAC_16
+								position.y -= Statics.FRAC_8
 							Statics.DirsSurface.LWALL:
 								position.x = roundi(position.x * 0.25) * 4.0
-								position.x += Statics.FRAC_16
+								position.x += Statics.FRAC_8
 							Statics.DirsSurface.RWALL:
 								position.x = roundi(position.x * 0.25) * 4.0
-								position.x -= Statics.FRAC_16
+								position.x -= Statics.FRAC_8
 							Statics.DirsSurface.CEILING:
 								position.y = roundi(position.y * 0.25) * 4.0
-								position.y += Statics.FRAC_16
+								position.y += Statics.FRAC_8
 					turns += 1
 				if is_falling:
 					up_direction = Vector2.UP
-	grace_period -= 1
+	grace_period -= delta
 
 
 func turn(_ccw:bool) -> void:

@@ -287,8 +287,7 @@ func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var old_action:Array = controls[action].duplicate()
 	var slot_state:int = INPUT_SLOTS[action as int]
-	#if slot < old_action.size() and slot >= 0:
-	#	old_action[slot] = new_event
+	
 	var event_data
 	if new_event is InputEventKey:
 		event_data = new_event.keycode
@@ -298,17 +297,10 @@ func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 		event_data = Vector2(new_event.axis, -1 if new_event.axis_value < 0 else 1)
 	
 	old_action[slot] = event_data
-	if ((slot == 0 or slot == 2) and (1 << (slot + 1)) & slot_state == 0):
+	# Bitwise op: check slot to the right of current slot by indexing slot_state where slot = 0b----0123
+	var state_index:int = 2 - slot # slot (range 0-3) is flipped (3 - slot), then subtract 1 to bump index right
+	if ((slot == 0 or slot == 2) and ((1 << state_index) & slot_state) == 0):
 		old_action[slot + 1] = event_data
-	#var controls:Array = ProjectSettings.get_setting("game/control/controls")
-	#if rebind_buffer is InputEventKey:
-	#	controls[action_being_remapped][bind_slot] = rebind_buffer.keycode
-	#elif rebind_buffer is InputEventJoypadMotion:
-	#	controls[action_being_remapped][bind_slot] = Vector2(
-	#		rebind_buffer.axis, -1 if rebind_buffer.axis_value < 0 else 1
-	#	)
-	#elif rebind_buffer is InputEventJoypadButton:
-	#	controls[action_being_remapped][bind_slot] = rebind_buffer.button_index
 	
 	controls[action] = old_action.duplicate()
 	ProjectSettings.set_setting("game/control/controls", controls.duplicate())
@@ -322,7 +314,6 @@ func rebind_action(action:String) -> void:
 		actions.append(act.to_camel_case())
 	var action_id:int = actions.find(action)
 	
-	print(action)
 	InputMap.action_erase_events(action)
 	for i in range(4):
 		var new_event:InputEvent = null
@@ -338,7 +329,6 @@ func rebind_action(action:String) -> void:
 			new_event = InputEventJoypadButton.new()
 			new_event.button_index = controls[action_id][i]
 		InputMap.action_add_event(action, new_event)
-		print(new_event)
 
 
 func rebind_all() -> void:

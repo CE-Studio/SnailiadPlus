@@ -219,6 +219,17 @@ func _spawn_entities_from_layer() -> void:
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 			
+			Vector2i(1, 1): # Iceball (CW)
+				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				iceball.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(iceball)
+			
+			Vector2i(2, 1): # Iceball (CCW)
+				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				iceball.position = _tile_coords_to_vector_pos(tile)
+				iceball.ccw = true
+				layer_ground.add_child(iceball)
+			
 			Vector2i(7, 1): # Shellbreaker
 				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
 				shellbreaker.position = _tile_coords_to_vector_pos(tile)
@@ -293,6 +304,11 @@ func _spawn_entities_from_layer() -> void:
 				spike.position = _tile_coords_to_vector_pos(tile)
 				spike.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(spike)
+			
+			Vector2i(12, 24): # Muck
+				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
+				muck.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(muck)
 			
 			Vector2i(15, 24): # Black floatspike
 				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()

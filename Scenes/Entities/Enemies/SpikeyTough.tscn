@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_h6lg0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
-size = Vector2(16, 16)
+size = Vector2(16, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
@@ -25,6 +25,7 @@ max_health = 340
 attack = 4
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_43bce")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
