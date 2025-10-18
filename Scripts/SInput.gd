@@ -94,11 +94,13 @@ const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
 
 const ECHO_DELAY_INITIAL:float = 0.6
 const ECHO_DELAY_REPEAT:float = 0.04
+const DEBUG_PRINT_INPUTS:bool = false
 
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
 var ui_echo_delay:float = ECHO_DELAY_INITIAL
 var send_con_as_echo:bool = false
+var inputs_down:int = 0
 #endregion
 
 
@@ -120,18 +122,22 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
+		if DEBUG_PRINT_INPUTS:
+			(OS.get_keycode_string(event.physical_keycode))
+		
 		last_input_was_con = false
 		if event.pressed:
 			last_ten_keys.append(event.keycode)
 			if last_ten_keys.size() > 10:
 				last_ten_keys.pop_front()
-		#print(OS.get_keycode_string(event.physical_keycode))
 	elif event is InputEventJoypadButton:
+		if DEBUG_PRINT_INPUTS:
+			print(event.button_index)
 		last_input_was_con = true
-		#print(event.button_index)
 	elif event is InputEventJoypadMotion:
+		if DEBUG_PRINT_INPUTS:
+			print(event)
 		last_input_was_con = true
-		#print(event)
 
 
 func pressed(action:String) -> bool:
@@ -191,10 +197,10 @@ func vector_aim() -> Vector2:
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
-		if vector.x < deadzone: vector.x = -1
+		if vector.x < -deadzone: vector.x = -1
 		elif vector.x > deadzone: vector.x = 1
 		else: vector.x = 0
-		if vector.y < deadzone: vector.y = -1
+		if vector.y < -deadzone: vector.y = -1
 		elif vector.y > deadzone: vector.y = 1
 		else: vector.y = 0
 	return vector
@@ -277,11 +283,33 @@ func pull_action(input:Inputs) -> Array:
 	return action
 
 
-func rebind_ctrl(action:Inputs, new_event:Variant, slot:int) -> void:
+func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var old_action:Array = controls[action].duplicate()
-	if slot < old_action.size() and slot >= 0:
-		old_action[slot] = new_event
+	var slot_state:int = INPUT_SLOTS[action as int]
+	#if slot < old_action.size() and slot >= 0:
+	#	old_action[slot] = new_event
+	var event_data
+	if new_event is InputEventKey:
+		event_data = new_event.keycode
+	elif new_event is InputEventJoypadButton:
+		event_data = new_event.button_index
+	elif new_event is InputEventJoypadMotion:
+		event_data = Vector2(new_event.axis, -1 if new_event.axis_value < 0 else 1)
+	
+	old_action[slot] = event_data
+	if ((slot == 0 or slot == 2) and (1 << (slot + 1)) & slot_state == 0):
+		old_action[slot + 1] = event_data
+	#var controls:Array = ProjectSettings.get_setting("game/control/controls")
+	#if rebind_buffer is InputEventKey:
+	#	controls[action_being_remapped][bind_slot] = rebind_buffer.keycode
+	#elif rebind_buffer is InputEventJoypadMotion:
+	#	controls[action_being_remapped][bind_slot] = Vector2(
+	#		rebind_buffer.axis, -1 if rebind_buffer.axis_value < 0 else 1
+	#	)
+	#elif rebind_buffer is InputEventJoypadButton:
+	#	controls[action_being_remapped][bind_slot] = rebind_buffer.button_index
+	
 	controls[action] = old_action.duplicate()
 	ProjectSettings.set_setting("game/control/controls", controls.duplicate())
 
@@ -294,6 +322,7 @@ func rebind_action(action:String) -> void:
 		actions.append(act.to_camel_case())
 	var action_id:int = actions.find(action)
 	
+	print(action)
 	InputMap.action_erase_events(action)
 	for i in range(4):
 		var new_event:InputEvent = null
@@ -309,6 +338,7 @@ func rebind_action(action:String) -> void:
 			new_event = InputEventJoypadButton.new()
 			new_event.button_index = controls[action_id][i]
 		InputMap.action_add_event(action, new_event)
+		print(new_event)
 
 
 func rebind_all() -> void:

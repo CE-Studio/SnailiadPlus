@@ -10,6 +10,7 @@ var bind_buttons:Array[BindSnailyButton] = []
 var suppress_input:int = 0
 var queue_defocus:bool = true
 var bind_time:float = 0.0
+var rebind_buffer:InputEvent = null
 
 @onready var layer:MenuLayer = get_parent()
 @onready var panel:ContextPanel = $"../ContextPanel"
@@ -42,6 +43,10 @@ func _process(delta: float) -> void:
 		panel.position.y = lerp(panel.position.y, 240.0, MenuLayer.MOVE_RATE * delta)
 		layer.menu.selector_y_offset = 0
 	
+	if rebind_buffer != null and not Input.is_anything_pressed():
+		_rebind_from_buffered()
+		rebind_buffer = null
+	
 	if suppress_input > 0 and not Input.is_anything_pressed() and SInput.vector_move(true) == Vector2.ZERO:
 		suppress_input -= 1
 	layer.meta_info[1] = suppress_input
@@ -54,24 +59,30 @@ func _input(event: InputEvent) -> void:
 	if not panel_up or event is InputEventMouse or (suppress_input > 0):
 		return
 	
-	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var bind_slot:int = layer.meta_info[0]
 	if ((bind_slot < 2 and event is InputEventKey)
 	or (bind_slot >= 2 and (event is InputEventJoypadButton or event is InputEventJoypadMotion))):
-		if event is InputEventKey:
-			controls[action_being_remapped][bind_slot] = event.keycode
-		elif event is InputEventJoypadMotion:
-			controls[action_being_remapped][bind_slot] = Vector2(
-				event.axis, -1 if event.axis_value < 0 else 1
-			)
-		elif event is InputEventJoypadButton:
-			controls[action_being_remapped][bind_slot] = event.button_index
-		SInput.rebind_action(SInput.get_input_str(action_being_remapped))
-		for button in bind_buttons:
-			if button.bind == action_being_remapped:
-				button.setup_bind_icons()
+		rebind_buffer = event
 		suppress_input = SUPPRESS_FRAMES
 		queue_defocus = true
+
+
+func _rebind_from_buffered() -> void:
+	var bind_slot:int = layer.meta_info[0]
+	#var controls:Array = ProjectSettings.get_setting("game/control/controls")
+	#if rebind_buffer is InputEventKey:
+	#	controls[action_being_remapped][bind_slot] = rebind_buffer.keycode
+	#elif rebind_buffer is InputEventJoypadMotion:
+	#	controls[action_being_remapped][bind_slot] = Vector2(
+	#		rebind_buffer.axis, -1 if rebind_buffer.axis_value < 0 else 1
+	#	)
+	#elif rebind_buffer is InputEventJoypadButton:
+	#	controls[action_being_remapped][bind_slot] = rebind_buffer.button_index
+	SInput.rebind_ctrl(action_being_remapped, rebind_buffer, bind_slot)
+	SInput.rebind_action.call_deferred(SInput.get_input_str(action_being_remapped))
+	for button in bind_buttons:
+		if button.bind == action_being_remapped:
+			button.setup_bind_icons.call_deferred()
 
 
 func _on_button_pressed(bind:int) -> void:

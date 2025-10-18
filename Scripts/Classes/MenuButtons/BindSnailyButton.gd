@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 		return
 	
 	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus:
-		if focused and parent_layer.meta_info[1] == 0:
+		if focused and parent_layer.meta_info[1] <= 0:
 			if (SInput.check_input(SInput.Inputs.UI_ACCEPT, true)
 			or (mouse_over and SInput.check_input(SInput.Inputs.UI_CLICK, true))):
 				parent_layer.meta_info.append(self)
