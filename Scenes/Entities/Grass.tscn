@@ -10,6 +10,7 @@
 size = Vector2(16, 16)
 
 [node name="Grass" type="Node2D"]
+z_index = 10
 script = ExtResource("1_56jc0")
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -19,6 +19,8 @@
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
 
 [node name="CameraLayer" type="Node2D"]
+z_index = 1000
+z_as_relative = false
 script = ExtResource("1_vjeh6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -174,6 +176,7 @@ scale = Vector2(2, 2)
 
 [node name="Border" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
+z_index = 10
 position = Vector2(200, 120)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/ScreenBorder.json"
@@ -188,4 +191,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="PauseLayer" type="Node2D" parent="."]
 process_mode = 3
+z_index = 15
 script = ExtResource("9_qjw3k")

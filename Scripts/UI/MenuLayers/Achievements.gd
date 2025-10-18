@@ -2,7 +2,7 @@ extends VBoxContainer
 
 
 #region Variables
-const ICON_RADII:Vector2i = Vector2i(300, 80)
+const ICON_RADII:Vector2i = Vector2i(240, 80)
 const THETA_EASE_RATE:float = 10.0
 
 var achievement_str_names:Array = AchievementCore.Achievements.keys()

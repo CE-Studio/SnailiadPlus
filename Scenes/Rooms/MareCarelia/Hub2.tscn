@@ -14,6 +14,7 @@ _data = {
 point_count = 5
 
 [node name="Hub2" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_ujocb")
 area_id = 1
 center_parallax_maps = true
@@ -22,6 +23,7 @@ tiled_corner = Vector2i(573, 1)
 tiled_range = Vector2i(51, 31)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(0.5, 0.5)
 
 [node name="Map" type="TileMapLayer" parent="SkyLayer"]
@@ -30,12 +32,14 @@ tile_set = ExtResource("2_nsw8v")
 collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer"]
 tile_set = ExtResource("2_nsw8v")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_set = ExtResource("2_nsw8v")
@@ -60,21 +64,28 @@ position = Vector2(808, 120)
 door_type = 3
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_set = ExtResource("2_nsw8v")
 collision_enabled = false
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
 tile_set = ExtResource("2_nsw8v")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAAUAAgAAAAMAAAAAAACAAsAAAAFABgAAAACAAwAAAAFABgAAAAHAAwAAAAMAAAAAAAhAAwAAAAMAAAAAAACAA0AAAAFABgAAAACAA4AAAAFABgAAAAvAA8AAAAEAAAAAAACABAAAAAFABgAAAACABEAAAAFABgAAAAbABEAAAALAAAAAAACABIAAAAFABgAAAACABMAAAAFABgAAAACABQAAAAFABgAAAAOABYAAAALAAAAAAASABYAAAAKAAAAAAAlABkAAAALAAAAAAAeABoAAAALAAEAAAANABwAAAALAAEAAAALAA8AAAAMAB4AAAAZABUAAAAMAB4AAAA=")
+tile_set = ExtResource("2_nsw8v")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_nsw8v")
 collision_enabled = false
 

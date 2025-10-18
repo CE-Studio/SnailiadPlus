@@ -10,6 +10,7 @@
 size = Vector2(48, 48)
 
 [node name="Shellbreaker" type="CharacterBody2D"]
+z_index = 3
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_mrmot")

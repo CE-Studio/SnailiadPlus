@@ -18,6 +18,7 @@ _data = {
 point_count = 3
 
 [node name="IceHall" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_qa741")
 area_id = 1
 center_parallax_maps = true
@@ -26,6 +27,7 @@ tiled_corner = Vector2i(469, 1)
 tiled_range = Vector2i(77, 15)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(0.5, 1)
 
 [node name="Map" type="TileMapLayer" parent="SkyLayer"]
@@ -42,6 +44,7 @@ shape = SubResource("RectangleShape2D_knnab")
 debug_color = Color(0, 0.8039216, 0.9372549, 0.1882353)
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 scroll_scale = Vector2(0.7, 1)
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer"]
@@ -50,6 +53,7 @@ tile_set = ExtResource("2_e501o")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_set = ExtResource("2_e501o")
@@ -69,21 +73,28 @@ direction = 3
 position = Vector2(1224, 120)
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_set = ExtResource("2_e501o")
 collision_enabled = false
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
 tile_set = ExtResource("2_e501o")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAA+AAUAAAANABwAAAAMAAgAAAALAAAAAAAqAAgAAAALAAAAAABEAAkAAAAKAAAAAAADAAsAAAAMAAAAAAAQAAsAAAAMAAAAAAAjAAsAAAAMAAAAAAA0AAsAAAAMAAAAAAA/AAsAAAAMAAAAAAACAAwAAAADABgAAAADAAwAAAADABgAAAAEAAwAAAADABgAAAAFAAwAAAADABgAAAAGAAwAAAADABgAAAAHAAwAAAADABgAAAAIAAwAAAADABgAAAAJAAwAAAADABgAAAAKAAwAAAADABgAAAALAAwAAAADABgAAAAMAAwAAAADABgAAAANAAwAAAADABgAAAAOAAwAAAADABgAAAAPAAwAAAADABgAAAAQAAwAAAADABgAAAARAAwAAAADABgAAAASAAwAAAADABgAAAATAAwAAAADABgAAAAUAAwAAAADABgAAAAVAAwAAAADABgAAAAWAAwAAAADABgAAAAXAAwAAAADABgAAAAYAAwAAAADABgAAAAZAAwAAAADABgAAAAaAAwAAAADABgAAAAbAAwAAAADABgAAAAcAAwAAAADABgAAAAdAAwAAAADABgAAAAeAAwAAAADABgAAAAfAAwAAAADABgAAAAgAAwAAAADABgAAAAhAAwAAAADABgAAAAiAAwAAAADABgAAAAjAAwAAAADABgAAAAkAAwAAAADABgAAAAlAAwAAAADABgAAAAmAAwAAAADABgAAAAnAAwAAAADABgAAAAoAAwAAAADABgAAAApAAwAAAADABgAAAAqAAwAAAADABgAAAArAAwAAAADABgAAAAsAAwAAAADABgAAAAtAAwAAAADABgAAAAuAAwAAAADABgAAAAvAAwAAAADABgAAAAwAAwAAAADABgAAAAxAAwAAAADABgAAAAyAAwAAAADABgAAAAzAAwAAAADABgAAAA0AAwAAAADABgAAAA1AAwAAAADABgAAAA2AAwAAAADABgAAAA3AAwAAAADABgAAAA4AAwAAAADABgAAAA5AAwAAAADABgAAAA6AAwAAAADABgAAAA7AAwAAAADABgAAAA8AAwAAAADABgAAAA9AAwAAAADABgAAAA+AAwAAAADABgAAAA/AAwAAAADABgAAABAAAwAAAADABgAAABBAAwAAAADABgAAABCAAwAAAADABgAAABDAAwAAAADABgAAABEAAwAAAADABgAAABFAAwAAAADABgAAABGAAwAAAADABgAAABHAAwAAAADABgAAABIAAwAAAADABgAAABJAAwAAAADABgAAABKAAwAAAADABgAAAA=")
+tile_set = ExtResource("2_e501o")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_e501o")
 collision_enabled = false
 

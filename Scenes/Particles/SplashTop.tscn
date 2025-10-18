@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://ckugq6vqmvkpm" path="res://Assets/Sounds/Sfx/Splash.ogg" id="5_10x3t"]
 
 [node name="SplashTop" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+z_index = 10
 script = ExtResource("1_2xtg1")
 sprite = NodePath("JsonSprite2D")
 anim_name = "top"

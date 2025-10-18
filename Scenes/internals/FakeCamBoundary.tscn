@@ -8,6 +8,7 @@
 script = ExtResource("1_m24bv")
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]
+z_index = 999
 texture = ExtResource("2_ldhgn")
 hframes = 4
 vframes = 2

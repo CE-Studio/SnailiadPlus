@@ -10,6 +10,8 @@
 script = ExtResource("1_6hqtr")
 
 [node name="IconGroup" type="Node2D" parent="."]
+z_index = -1
+y_sort_enabled = true
 position = Vector2(200, 48)
 
 [node name="MainVBox" type="VBoxContainer" parent="."]

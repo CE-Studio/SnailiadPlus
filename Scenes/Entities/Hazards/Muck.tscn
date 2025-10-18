@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_5qi6r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1k1m"]
-size = Vector2(16, 16)
+size = Vector2(16, 14)
 
 [node name="Muck" type="Area2D"]
 collision_layer = 8
@@ -16,9 +16,11 @@ damage = 3
 element = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_j1k1m")
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
+z_index = 25
 script = ExtResource("2_xj71n")
 texture_path = "res://Assets/Images/Entities/Muck.json"
 load_autoplay = Array[String](["0", "1", "2", "3"])

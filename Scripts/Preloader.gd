@@ -12,6 +12,8 @@ var unprocessed_marker_positions:Array = []
 
 
 func _ready() -> void:
+	print(RenderingServer.CANVAS_ITEM_Z_MIN)
+	print(RenderingServer.CANVAS_ITEM_Z_MAX)
 	%"JsonSprite2D".action = "idle"
 	if gui_debug:
 		return

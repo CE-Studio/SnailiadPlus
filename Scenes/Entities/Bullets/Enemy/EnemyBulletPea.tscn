@@ -10,6 +10,7 @@
 size = Vector2(4, 4)
 
 [node name="EnemyBulletPea" type="Node2D"]
+z_index = 50
 script = ExtResource("1_uf0x4")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

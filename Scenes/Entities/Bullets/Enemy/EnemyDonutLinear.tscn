@@ -10,6 +10,7 @@
 size = Vector2(24, 24)
 
 [node name="EnemyBulletDonutLinear" type="Node2D"]
+z_index = 50
 script = ExtResource("1_gwjhu")
 
 [node name="Area2D" type="Area2D" parent="."]

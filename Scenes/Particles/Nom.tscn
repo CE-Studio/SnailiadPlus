@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_kg7p8"]
 
 [node name="Nom" type="Node2D" node_paths=PackedStringArray("sprite", "timer")]
+z_index = 5
 script = ExtResource("1_pahfa")
 sprite = NodePath("JsonSprite2D")
 anim_name = "nom"
