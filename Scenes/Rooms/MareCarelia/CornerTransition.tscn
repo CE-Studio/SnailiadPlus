@@ -102,3 +102,4 @@ position = Vector2(200, 240)
 rotation = 1.5708
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://bkr15svy4hnsw"

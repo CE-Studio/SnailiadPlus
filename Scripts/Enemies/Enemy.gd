@@ -86,8 +86,7 @@ enum EnemyTypes {
 	ICEBALL,           # Iceball
 	GHOSTBALL,         # Ghost dandelion
 	SNELK,             # Secret snelk
-	KITTY_COMMON,      # Gray kitty
-	KITTY_TOUGH,       # Orange kitty
+	KITTY,             # Kitty
 	CANON,             # Canon (red)
 	NONCANON,          # Non-canon (blue)
 	SNAKEY_COMMON,     # Green snakey
