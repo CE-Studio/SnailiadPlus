@@ -1,8 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dd51oitsi3hyq"]
 
-[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_dkpfe"]
 [ext_resource type="Material" uid="uid://ukn31olknvf6" path="res://Resources/DarknessLayerMat.tres" id="1_sqnwa"]
+[ext_resource type="Texture2D" uid="uid://cvtrvyj6w6k12" path="res://Assets/Images/Environments/DarknessMain.png" id="2_sqnwa"]
 
 [node name="DarknessLayer" type="Sprite2D"]
 material = ExtResource("1_sqnwa")
-texture = ExtResource("1_dkpfe")
+scale = Vector2(248, 168)
+texture = ExtResource("2_sqnwa")

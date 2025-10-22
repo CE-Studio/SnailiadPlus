@@ -24,6 +24,7 @@ enum States {
 var hop_num:int = 0
 var hop_timeout:float = 0.0
 var facing_left:bool = false
+var first_jump:bool = false
 
 @onready var sfx:AudioStreamPlayer = $"Sfx"
 #endregion
@@ -40,11 +41,12 @@ func _ready() -> void:
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	if state == States.SLEEP:
+	if state == States.SLEEP or display_mode:
 		facing_left = randf() < 0.5
 	else:
 		facing_left = position.x > GameCore.instance.player.position.x
 	hop_num = abs(roundi(position.x)) % HOP_HEIGHTS.size()
+	_play_anim()
 
 
 func _physics_process(delta: float) -> void:
@@ -77,6 +79,7 @@ func _physics_process(delta: float) -> void:
 				facing_left = position.x < GameCore.instance.player.position.x
 			velocity.y = JUMP_POWER * HOP_HEIGHTS[hop_num]
 			hop_num = (hop_num + 1) % HOP_HEIGHTS.size()
+			first_jump = true
 			_play_anim()
 			set_vel = true
 		
@@ -91,10 +94,22 @@ func _physics_process(delta: float) -> void:
 
 func _play_anim() -> void:
 	var dir:String = "_left" if facing_left else "_right"
-	match state:
-		States.NORMAL:
-			sprite.action = "jump" + dir
-		States.RUN:
-			sprite.action = "jump_panic" + dir
-		States.SLEEP:
-			sprite.action = "sleep" + dir
+	var action = ""
+	if display_mode:
+		if randf() < 0.02:
+			action = "sleep"
+		else:
+			action = "idle"
+	else:
+		match state:
+			States.NORMAL:
+				action = "jump"
+				if not first_jump:
+					action = "idle"
+			States.RUN:
+				action = "jump_panic"
+				if not first_jump:
+					action = "idle"
+			States.SLEEP:
+				action = "sleep"
+	sprite.action = action + dir

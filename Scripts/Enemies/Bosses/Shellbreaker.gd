@@ -67,7 +67,11 @@ func _ready() -> void:
 		hand_group.add_child(new_hand)
 	blink_timeout = randf() * BLINK_TIMEOUT_MAX
 	
-	if not display_mode:
+	if display_mode:
+		z_index = 0
+		for _hand in hands:
+			_hand.z_index = 0
+	else:
 		if not Statics.is_in_boss_rush:
 			GameCore.instance.music_manager.play_song(battle_music)
 		health_bar = UICore.instance.show_boss_bar(self)

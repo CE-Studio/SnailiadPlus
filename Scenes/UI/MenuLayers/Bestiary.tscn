@@ -33,6 +33,7 @@ texture = ExtResource("3_gx5uf")
 
 [node name="EntityOrigin" type="Sprite2D" parent="Sprite2D"]
 clip_children = 1
+z_index = 10
 position = Vector2(103, -47)
 texture = ExtResource("4_obml4")
 

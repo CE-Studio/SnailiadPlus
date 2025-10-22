@@ -89,6 +89,7 @@ enum EnemyTypes {
 	KITTY,             # Kitty
 	CANON,             # Canon (red)
 	NONCANON,          # Non-canon (blue)
+	FANON,             # Fanon (green)
 	SNAKEY_COMMON,     # Green snakey
 	SNAKEY_TOUGH,      # Blue snakey
 	SKYVIPER,          # Sky viper
