@@ -341,6 +341,17 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
 			
+			Vector2i(2, 27): # Snelk
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				layer_ground.add_child(snelk)
+			
+			Vector2i(2, 27): # Snelk (panicked)
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				snelk.state = Snelk.States.RUN
+				layer_ground.add_child(snelk)
+			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
 				dev_tile.position = _tile_coords_to_vector_pos(tile)
@@ -362,6 +373,12 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var gen:GeneratorChirpyTough = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyTough.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(gen)
+			
+			Vector2i(14, 28): # Snelk (sleeping)
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				snelk.state = Snelk.States.SLEEP
+				layer_ground.add_child(snelk)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()

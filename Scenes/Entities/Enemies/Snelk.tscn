@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://bxxcqyt05cebe"]
+
+[ext_resource type="Script" uid="uid://cgffkaop7cyhp" path="res://Scripts/Enemies/Snelk.gd" id="1_mlwfl"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_mlwfl"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_vtb3o"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_ourwp"]
+[ext_resource type="Texture2D" uid="uid://8ajluyxd0650" path="res://Assets/Images/Entities/Snelk.png" id="5_tt5hy"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_sjk62"]
+[ext_resource type="AudioStream" uid="uid://bnmmi3c2auem" path="res://Assets/Sounds/Sfx/Enemy/Snelk.ogg" id="7_mlwfl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
+size = Vector2(24, 24)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
+shader = ExtResource("4_ourwp")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="Snelk" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_mlwfl")
+max_health = 50
+attack = 2
+defense = 1
+invulnerable = true
+can_damage = false
+grant_bestiary_without_defeat = true
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yl0hf")
+debug_color = Color(0.976029, 0, 0.414963, 0.42)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.7, 0.5)
+rect = Rect2(-17.142857, -24, 34.285713, 48)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_mlwfl")
+script = ExtResource("3_vtb3o")
+texture_path = "res://Assets/Images/Entities/Snelk.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_5ic2g")
+texture = ExtResource("5_tt5hy")
+vframes = 3
+script = ExtResource("6_sjk62")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_mlwfl")
+max_polyphony = 2
+bus = &"Sfx"

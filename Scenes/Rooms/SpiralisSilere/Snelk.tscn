@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b0pahbkyyhrbp"]
+[gd_scene load_steps=10 format=4 uid="uid://b0pahbkyyhrbp"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_iop1f"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_04gch"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_pucvx"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_ahe7n"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_hbv0h"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="7_go4si"]
+[ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="8_yqjip"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -99,3 +101,9 @@ position = Vector2(400, 24)
 scale = Vector2(1, 3)
 exit_room = "uid://d2wjebgbby1sr"
 exit_transition = 2
+
+[node name="Trigger" parent="." instance=ExtResource("7_go4si")]
+position = Vector2(376, 32)
+scale = Vector2(8, 8)
+script = ExtResource("8_yqjip")
+achievement = 16
