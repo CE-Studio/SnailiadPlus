@@ -25,6 +25,7 @@ script = ExtResource("1_70sqt")
 max_health = 50
 attack = 3
 defense = 25
+light_radius = 40
 my_element = 0
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]

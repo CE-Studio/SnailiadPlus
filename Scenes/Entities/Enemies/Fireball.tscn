@@ -24,6 +24,7 @@ collision_mask = 3
 script = ExtResource("1_n6l8y")
 max_health = 400
 attack = 3
+light_radius = 48
 my_element = 1
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]

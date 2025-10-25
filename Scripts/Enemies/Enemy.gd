@@ -22,6 +22,7 @@ const DAMAGE_FADE_DECAY:float = 10.0
 @export var can_damage:bool = true
 @export var shield_entity:bool = false
 @export var health_orb_value:int = 0
+@export_range(0, 256, 1) var light_radius:int = 0
 @export var my_element:ElementTypes = ElementTypes.NONE
 @export var kill_particle_range:Vector2i = Vector2i(8, 8)
 @export var kill_particle_types:Array[String] = [ "ExplosionSmall" ]
@@ -149,6 +150,9 @@ func spawn(active:bool = true) -> void:
 		can_be_pierced = true
 		make_sound_on_ping = false
 		configure_display_mode()
+	else:
+		if light_radius > 0:
+			UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
 func configure_display_mode() -> void:

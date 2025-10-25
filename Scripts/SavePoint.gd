@@ -31,6 +31,9 @@ func _ready() -> void:
 			Statics.DirsSurface.LWALL: marker.frame = 4
 			Statics.DirsSurface.RWALL: marker.frame = 8
 			Statics.DirsSurface.CEILING: marker.frame = 12
+	
+	if UICore.instance:
+		UICore.instance.darkness_layer.add_source(self, 48)
 
 
 func check_character_spawnable() -> bool:

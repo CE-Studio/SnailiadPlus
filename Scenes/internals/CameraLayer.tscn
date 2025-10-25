@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene load_steps=19 format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
@@ -17,11 +17,15 @@
 [ext_resource type="AudioStream" uid="uid://gmll1o5mkd6q" path="res://Assets/Sounds/Sfx/WeaponSelected2.ogg" id="10_yb2dk"]
 [ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="11_kf05q"]
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
+[ext_resource type="PackedScene" uid="uid://dd51oitsi3hyq" path="res://Scenes/internals/DarknessLayer.tscn" id="18_adkld"]
 
 [node name="CameraLayer" type="Node2D"]
 z_index = 1000
 z_as_relative = false
 script = ExtResource("1_vjeh6")
+
+[node name="DarknessLayer" parent="." instance=ExtResource("18_adkld")]
+position = Vector2(200, 120)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(200, 120)

@@ -88,6 +88,8 @@ func _ready() -> void:
 		Statics.load_coords = default_spawn.position
 		Statics.shortcut_load_game_scene = true
 		get_tree().call_deferred("change_scene_to_file", "res://Scenes/PreloadScene.tscn")
+	if UICore.instance:
+		UICore.instance.darkness_layer.call_deferred("update_col", darkness_level)
 
 
 func spawn(_spawn_all:bool) -> void:

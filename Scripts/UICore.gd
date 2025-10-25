@@ -26,6 +26,7 @@ static var instance:UICore
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
 @onready var border:JsonSprite2D = $"Border"
+@onready var darkness_layer:DarknessLayer = $"DarknessLayer"
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:PauseLayer = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"

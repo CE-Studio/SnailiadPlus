@@ -159,6 +159,8 @@ var shield_particle_offset:Vector2i
 # An offset from the center of the player used to align any shield particle effect. Should be set as if the player is on the ground facing right
 var health_gain_from_parry:int
 # How much health you recover from a Perfect Parry
+var light_radius:int
+# How large the light emitted by the player should be
 #endregion
 
 
@@ -243,6 +245,9 @@ func _ready():
 func _process(_delta):
 	if stun_timer > 0:
 		sprite.visible = not sprite.visible
+	
+	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
+		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
 # This function is called on a fixed interval of
