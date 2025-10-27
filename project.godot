@@ -42,6 +42,8 @@ window/size/viewport_width=400
 window/size/viewport_height=240
 window/size/resizable=false
 window/size/sharp_corners=true
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 mouse_cursor/custom_image="uid://btlcuqewcs61t"
 window/size/aspect_ratio=0
 

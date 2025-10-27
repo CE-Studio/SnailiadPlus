@@ -68,14 +68,12 @@ func on_dshader_toggled(value) -> void:
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	var new_size:Vector2i = _ratio * (_scale + 1)
 	var window = get_window()
-	#var old_size = window.size
 	ProjectSettings.set_setting("display/window/size/viewport_width", new_size.x)
 	ProjectSettings.set_setting("display/window/size/viewport_height", new_size.y)
 	ProjectSettings.set_setting("display/window/stretch/scale", _scale + 1)
-	#var old_position = window.position
 	window.size = new_size
 	window.content_scale_factor = _scale + 1
-	#var difference = new_size - old_size
-	#window.position = old_position - Vector2i(difference * 0.5)
+	window.content_scale_size = new_size
+	
 	if GameCore.instance:
 		UICore.instance.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))

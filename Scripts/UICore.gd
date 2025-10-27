@@ -107,6 +107,9 @@ func _process(delta: float) -> void:
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
+	#ProjectSettings.set_setting("display/window/size/viewport_height", Statics.ASPECT_RATIOS[ratio_id].x)
+	#ProjectSettings.set_setting("display/window/size/viewport_width", Statics.ASPECT_RATIOS[ratio_id].y)
+	#DisplayServer.window_set_size(Statics.ASPECT_RATIOS[ratio_id])
 	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
 	_tl.position = -offset
 	_tr.position = Vector2(400 + offset.x, -offset.y)
