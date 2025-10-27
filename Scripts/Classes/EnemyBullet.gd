@@ -4,21 +4,21 @@ extends Node2D
 
 
 #region Variables
+@export var damage:int = 0
+@export var max_life_time:float = 1.6
+@export var rapid_mult:float = 1.0
+@export var despawn_offscreen:bool = false
+@export var collide_with_wall:bool = false
+@export var single_hit:bool = false
+@export var light_radius:int = 0
+
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
-var max_life_time:float = 1.6
 var velocity:float = 0.0
 var velocity_init:float = 0.0
-var damage:int = 0
-var rapid_mult:float = 0.0
-var despawn_offscreen:bool = false
-var collide_with_world:bool = false
 var source_enemy:Enemy
 var has_been_parried:bool = false
 var intersecting_player:bool = false
-
-var collide_with_wall:bool
-var single_hit:bool
 
 enum PBulletInteractions {
 	ALWAYS_DESTROY,
@@ -47,11 +47,15 @@ func _spawn(dir:Vector2, speed:float) -> void:
 	area.connect("area_entered", _on_pbullet_collision)
 	area.connect("body_entered", _on_body_entered)
 	area.connect("body_exited", _on_body_exited)
+	if light_radius > 0:
+		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
 func _process(delta: float) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried:
 		GameCore.instance.player.adjust_health(-damage)
+		if single_hit:
+			_despawn()
 	
 	life_timer += delta
 	if (life_timer > max_life_time
@@ -69,7 +73,7 @@ func parry_reshoot() -> void:
 func _on_body_entered(_body) -> void:
 	if _body.get_parent() is Player:
 		intersecting_player = true
-	elif collide_with_world:
+	elif collide_with_wall:
 		_despawn(true)
 
 

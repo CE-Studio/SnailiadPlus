@@ -17,6 +17,7 @@ damage = 30
 cooldown = 0.17
 despawn_offscreen = true
 despawn_particle = "ExplosionRainbowBig"
+light_radius = 40
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32

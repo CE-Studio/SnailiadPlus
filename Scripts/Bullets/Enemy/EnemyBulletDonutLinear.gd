@@ -7,10 +7,6 @@ func _spawn(dir:Vector2, speed:float) -> void:
 	super._spawn(dir, speed)
 	velocity = speed
 	velocity_init = speed
-	damage = 2
-	max_life_time = 3.8
-	despawn_offscreen = true
-	collide_with_world = false
 	#region Direction animation
 	var anim_name = ""
 	if dir.y < -0.3827:

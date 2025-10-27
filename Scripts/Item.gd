@@ -129,6 +129,8 @@ func _ready() -> void:
 	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
 	add_child.call_deferred(sprite)
 	sprite.action = "item"
+	
+	UICore.instance.darkness_layer.add_source(self, 48)
 
 
 static func get_name_str_from_id(id:ItemTypes, specify_shell:bool = false) -> String:

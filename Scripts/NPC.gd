@@ -49,6 +49,7 @@ func spawn() -> void:
 		facing_left = false
 	play_anim("idle")
 	sprite._process(0.0)
+	UICore.instance.darkness_layer.add_source(self, 32)
 
 
 func _process(_delta: float) -> void:
