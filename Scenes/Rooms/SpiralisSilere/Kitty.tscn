@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://dplqsoeoa35da"]
+[gd_scene load_steps=8 format=4 uid="uid://dplqsoeoa35da"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_78y74"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_63mp3"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_baxkx"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_ksxgg"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_jxmvc"]
+[ext_resource type="PackedScene" uid="uid://ch8sehpi312pf" path="res://Scenes/Environments/ParticleLayers/SnowLayer.tscn" id="6_w0ho7"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -117,3 +118,6 @@ scale = Vector2(1, 2)
 my_id = 3
 exit_room = "uid://b61qwev14ftl"
 exit_transition = 1
+
+[node name="SnowLayer" parent="." instance=ExtResource("6_w0ho7")]
+density = 0.25

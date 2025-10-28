@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch8sehpi312pf"]
+
+[ext_resource type="Script" uid="uid://cni307gbuku6d" path="res://Scripts/Particles/ParticleLayers/SnowLayer.gd" id="1_w418i"]
+[ext_resource type="Texture2D" uid="uid://rld2oq2qngkr" path="res://Editor/EditorMarkers/SnowParticles.png" id="2_w418i"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_56pmr"]
+
+[node name="SnowLayer" type="Node2D"]
+z_index = 500
+z_as_relative = false
+script = ExtResource("1_w418i")
+particles = Array[String](["Snow"])
+particle_count = 60
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_w418i")
+script = ExtResource("3_56pmr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -107,7 +107,7 @@ func spawn(_spawn_all:bool) -> void:
 	
 	# Properly spawn all objects in room
 	if _spawn_all:
-		var layer_array:Array[Node2D] = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
+		var layer_array:Array[Node2D] = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2, self ]
 		for layer in layer_array:
 			for child in layer.get_children():
 				if (child is Door
@@ -116,6 +116,8 @@ func spawn(_spawn_all:bool) -> void:
 				if child is SavePoint:
 					if child.check_character_spawnable():
 						child.initialize_room_data(room_path)
+				if child is ParticleLayer:
+					child.spawn()
 		for fake_border in bounds.get_children():
 			if fake_border is FakeCamBoundary:
 				fake_border.call_deferred("instance")

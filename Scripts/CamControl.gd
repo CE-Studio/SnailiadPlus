@@ -24,6 +24,7 @@ const NF_OFFSET_MAX_FALL:Vector2 = Vector2(128.0, 80.0)
 const NF_OFFSET_ADJUST_DELAY:float = 0.5
 const NF_OFFSET_RETURN_DELAY:float = 1.25
 const NF_OFFSET_EASE_RATE:float = 128.0
+const NF_OFFSET_RETURN_EASE_RATE:float = 64.0
 const NF_OFFSET_FALL_EASE_RATE:float = 192.0
 const NF_OFFSET_LAND_EASE_RATE:float = 512.0
 const NF_OFFSET_MAX_FALL_MULT:float = 2.5
@@ -109,7 +110,7 @@ func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
 				NF_OFFSET_EASE_RATE * delta
 			)
 	if nf_return_timer >= NF_OFFSET_RETURN_DELAY:
-		nf_offset = nf_offset.move_toward(Vector2.ZERO, NF_OFFSET_EASE_RATE * delta)
+		nf_offset = nf_offset.move_toward(Vector2.ZERO, NF_OFFSET_RETURN_EASE_RATE * delta)
 	
 	var tick_land:bool = true
 	if not player.grounded:
