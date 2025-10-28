@@ -19,6 +19,7 @@ max_health = 400
 max_health_hard = 450
 attack = 2
 defense = 3
+light_radius = 64
 kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String]([])
 kill_particle_count = 0

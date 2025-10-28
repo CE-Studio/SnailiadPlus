@@ -24,6 +24,7 @@ size = Vector2(912, 272)
 z_as_relative = false
 script = ExtResource("1_8n4r2")
 area_id = 1
+darkness_level = 0.15
 minimap_offset = Vector2i(17, 11)
 tiled_corner = Vector2i(443, 177)
 tiled_range = Vector2i(51, 15)

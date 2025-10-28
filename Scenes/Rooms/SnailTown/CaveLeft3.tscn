@@ -18,6 +18,7 @@ point_count = 3
 [node name="CaveLeft3" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_4sjdi")
+darkness_level = 0.2
 minimap_offset = Vector2i(8, 12)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

@@ -199,6 +199,16 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
 			
+			Vector2i(8, 0): # Gray kitty
+				var kitty:KittyCommon = load("res://Scenes/Entities/Enemies/KittyCommon.tscn").instantiate()
+				kitty.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(kitty)
+			
+			Vector2i(9, 0): # Orange kitty
+				var kitty:KittyTough = load("res://Scenes/Entities/Enemies/KittyTough.tscn").instantiate()
+				kitty.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(kitty)
+			
 			Vector2i(10, 0): # Blue chirpy generator
 				var gen:GeneratorChirpyCommon = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyCommon.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
@@ -348,7 +358,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(snelk)
 			
-			Vector2i(2, 27): # Snelk (panicked)
+			Vector2i(3, 27): # Snelk (panicked)
 				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				snelk.state = Snelk.States.RUN

@@ -17,6 +17,7 @@ point_count = 1
 z_as_relative = false
 script = ExtResource("1_e6vmr")
 area_id = 1
+darkness_level = 0.2
 minimap_offset = Vector2i(14, 3)
 song_change = 3
 tiled_corner = Vector2i(365, 49)
@@ -75,7 +76,7 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAAQAAcAAAALAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAAcAAAALAAAAAAALAA8AAAACABgAAAAMAA8AAAACABgAAAANAA8AAAACABgAAAAZAAkAAAACABgAAAAZAAgAAAACABgAAAAZAAcAAAACABgAAAA=")
 tile_set = ExtResource("2_gups5")
 collision_enabled = false
 

@@ -15,6 +15,7 @@ point_count = 3
 [node name="CaveDown2" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_gupf0")
+darkness_level = 0.35
 minimap_offset = Vector2i(12, 13)
 song_change = 1
 

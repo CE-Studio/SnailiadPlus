@@ -18,6 +18,7 @@ point_count = 1
 [node name="CaveRight2" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_0cf4r")
+darkness_level = 0.2
 minimap_offset = Vector2i(12, 11)
 song_change = 1
 

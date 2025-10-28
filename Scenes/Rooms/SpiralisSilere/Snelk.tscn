@@ -21,6 +21,7 @@ z_as_relative = false
 script = ExtResource("1_iop1f")
 area_id = 2
 is_bonus_room = true
+darkness_level = 0.2
 minimap_offset = Vector2i(18, 15)
 song_change = 16
 tiled_corner = Vector2i(469, 241)

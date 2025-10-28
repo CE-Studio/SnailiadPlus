@@ -16,6 +16,7 @@ point_count = 1
 [node name="Angle" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_e6vmr")
+darkness_level = 0.2
 minimap_offset = Vector2i(14, 4)
 song_change = 1
 
@@ -72,7 +73,7 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAAJAAgAAAALAAAAAAA=")
+tile_map_data = PackedByteArray("AAAJAAgAAAALAAAAAAALAP//AAACABgAAAAMAP//AAACABgAAAANAP//AAACABgAAAD//wYAAAACABgAAAD//wcAAAACABgAAAD//wgAAAACABgAAAA=")
 tile_set = ExtResource("2_gups5")
 collision_enabled = false
 

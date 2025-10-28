@@ -23,6 +23,7 @@ size = Vector2(496, 224)
 z_as_relative = false
 script = ExtResource("1_oyken")
 area_id = 1
+darkness_level = 0.1
 minimap_offset = Vector2i(20, 6)
 tiled_corner = Vector2i(521, 97)
 tiled_range = Vector2i(25, 15)

@@ -15,6 +15,7 @@ point_count = 1
 [node name="RunnerCave" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_2dy4v")
+darkness_level = 0.15
 minimap_offset = Vector2i(10, 11)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

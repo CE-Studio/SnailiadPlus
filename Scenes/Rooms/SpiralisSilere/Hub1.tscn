@@ -135,3 +135,4 @@ my_id = 2
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("4_n4fb7")]
 position = Vector2(816, 568)
 my_id = 3
+exit_room = "uid://b61qwev14ftl"

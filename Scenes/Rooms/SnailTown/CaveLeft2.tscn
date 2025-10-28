@@ -17,6 +17,7 @@ point_count = 1
 [node name="CaveLeft2" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_mpmcp")
+darkness_level = 0.2
 minimap_offset = Vector2i(7, 11)
 song_change = 1
 

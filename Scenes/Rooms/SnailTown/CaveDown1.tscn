@@ -19,6 +19,7 @@ point_count = 3
 [node name="CaveDown1" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_a73a0")
+darkness_level = 0.35
 center_parallax_maps = true
 minimap_offset = Vector2i(9, 12)
 song_change = 1

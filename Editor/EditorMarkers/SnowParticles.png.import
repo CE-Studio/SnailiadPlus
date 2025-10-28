@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0lou3b8hnx8y"
-path="res://.godot/imported/Kitty.png-ec23db2553cf4d1b48b335bcf7fc92b8.ctex"
+uid="uid://rld2oq2qngkr"
+path="res://.godot/imported/SnowParticles.png-129075481f6f3a3804cfb299ec7d5f68.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/Kitty.png"
-dest_files=["res://.godot/imported/Kitty.png-ec23db2553cf4d1b48b335bcf7fc92b8.ctex"]
+source_file="res://Editor/EditorMarkers/SnowParticles.png"
+dest_files=["res://.godot/imported/SnowParticles.png-129075481f6f3a3804cfb299ec7d5f68.ctex"]
 
 [params]
 

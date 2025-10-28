@@ -17,6 +17,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_8sp8v")
 area_id = 2
+darkness_level = 0.3
 center_parallax_maps = true
 minimap_offset = Vector2i(18, 14)
 tiled_corner = Vector2i(469, 225)

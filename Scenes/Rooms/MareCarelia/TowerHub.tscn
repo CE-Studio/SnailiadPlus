@@ -21,6 +21,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_8sp8v")
 area_id = 1
+darkness_level = 0.15
 minimap_offset = Vector2i(13, 11)
 song_change = 3
 tiled_corner = Vector2i(339, 177)
