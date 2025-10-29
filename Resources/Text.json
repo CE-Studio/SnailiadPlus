@@ -153,6 +153,7 @@
 	"menu_option_sound_musicVol": "Music volume",
 	"menu_option_display_scale": "Window scale",
 	"menu_option_display_ratio": "Aspect ratio",
+	"menu_option_is_fullscreen": "Fullscreen",
 	"menu_option_display_minimap": "Minimap display",
 	"menu_option_display_bottomKeys": "Show weapon icons",
 	"menu_option_display_keymap": "Show input display",

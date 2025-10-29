@@ -44,6 +44,21 @@ func on_input_map_toggled(value) -> void:
 func on_igt_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/in_game_time", value)
 
+func on_fullscreen_toggled(value) -> void:
+	var window = get_window()
+	
+	if value:
+		window.mode = Window.MODE_FULLSCREEN
+	else:
+		window.mode = Window.MODE_WINDOWED
+		
+		# Restore window size
+		var ratio_idx = ProjectSettings.get("display/window/size/aspect_ratio")
+		var ratio = Statics.ASPECT_RATIOS[ratio_idx]
+		
+		var window_scale = ProjectSettings.get("display/window/stretch/scale") - 1
+		
+		set_window_size(window_scale, ratio)
 
 func on_fps_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/fps_counter", value)
