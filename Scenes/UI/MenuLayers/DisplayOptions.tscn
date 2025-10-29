@@ -59,17 +59,27 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Scale")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Minimap")
+focus_neighbor_bottom = NodePath("../Fullscreen")
 focus_next = NodePath("../Minimap")
 focus_previous = NodePath("../Scale")
 header_id = "menu_option_display_ratio"
 auto_select_mode = true
 cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10"])
 
-[node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Fullscreen" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Ratio")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Minimap")
+focus_next = NodePath("../Framerate")
+focus_previous = NodePath("../InputMap")
+text_id = "menu_option_is_fullscreen"
+
+[node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Fullscreen")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../BottomKeys")
 focus_next = NodePath("../BottomKeys")
@@ -181,6 +191,7 @@ hide_frame = true
 
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Scale" to="MainVBox" method="on_scale_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Ratio" to="MainVBox" method="on_ratio_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Fullscreen" to="MainVBox" method="on_fullscreen_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Minimap" to="MainVBox" method="on_minimap_cycled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/BottomKeys" to="MainVBox" method="on_bottom_keys_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InputMap" to="MainVBox" method="on_input_map_toggled"]
