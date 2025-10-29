@@ -19,6 +19,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_4tr63")
 area_id = 2
+darkness_level = 0.25
 center_parallax_maps = true
 minimap_offset = Vector2i(20, 19)
 tiled_corner = Vector2i(521, 305)
@@ -110,7 +111,7 @@ position = Vector2(0, 632)
 rotation = 3.1415927
 scale = Vector2(1, 3)
 my_id = 1
-exit_room = "uid://bkmifbyeo6e4m"
+exit_room = "uid://c11xal3gfuofx"
 
 [node name="SnowLayer" parent="." instance=ExtResource("7_xsy30")]
 density = 1.8

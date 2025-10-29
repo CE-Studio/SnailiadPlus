@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://doudahj75yf0j"]
+
+[ext_resource type="Script" uid="uid://cxbbi7t72ijpr" path="res://Scripts/Particles/Transformation.gd" id="1_la6fb"]
+[ext_resource type="Texture2D" uid="uid://cl17247un10gy" path="res://Assets/Images/Particles/Transformation.png" id="2_la6fb"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wim5b"]
+[ext_resource type="AudioStream" uid="uid://c0okte5cvilxm" path="res://Assets/Sounds/Sfx/Transformation.ogg" id="4_elesh"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_wim5b"]
+
+[node name="Transformation" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+z_index = 1
+script = ExtResource("1_la6fb")
+sprite = NodePath("JsonSprite2D")
+sound = NodePath("Transform")
+timer = NodePath("Timer")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_la6fb")
+hframes = 15
+vframes = 6
+frame = 9
+script = ExtResource("3_wim5b")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_wim5b")
+texture_path = "res://Assets/Images/Particles/Transformation.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Transform" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_elesh")
+bus = &"Sfx"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true

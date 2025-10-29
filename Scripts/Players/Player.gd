@@ -72,6 +72,7 @@ var override_box_disable:bool
 var environment_exit_override:int = 0
 var respawn_i_frames:float = 0.0
 var outer_allowed:bool = false
+var shell_level_displayed:int = 0
 #endregion
 
 
@@ -238,6 +239,8 @@ func _ready():
 	max_health = 3 + Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
 	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	health = max_health
+	
+	shell_level_displayed = Statics.get_shell_level()
 
 
 #region Movement
@@ -248,6 +251,9 @@ func _process(_delta):
 	
 	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
 		UICore.instance.darkness_layer.add_source(self, light_radius)
+	
+	if Input.is_action_just_pressed("gravity"):
+		Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
 
 
 # This function is called on a fixed interval of
@@ -937,9 +943,7 @@ func _spin_vector_to_surface(input:Vector2, surface:Statics.DirsSurface) -> Vect
 # JsonSprite2D animation appropriately
 # Input  - the action to perform
 func _play_anim(action:String):
-	var full_action = ""
-	
-	full_action += "0."
+	var full_action = str(shell_level_displayed) + "."
 	
 	if action != "death":
 		match gravity_dir:
@@ -957,6 +961,13 @@ func _play_anim(action:String):
 	if sprite.action != full_action:
 		sprite.action = full_action
 	#print(full_action)
+
+
+# Externally called; updates which animation set the player uses based on shell level
+# Input  - the level of shell to display
+func update_shell_displayed(new_shell:int) -> void:
+	shell_level_displayed = new_shell
+	_play_anim("idle")
 
 
 # Takes a surface direction and outputs the direction 90 degrees clockwise from it
