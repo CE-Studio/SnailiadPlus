@@ -196,7 +196,7 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/BottomKeys" to="MainVBox" method="on_bottom_keys_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InputMap" to="MainVBox" method="on_input_map_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/InGameTime" to="MainVBox" method="on_igt_toggled"]
-[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fullscreen_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/Framerate" to="MainVBox" method="on_fps_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Particles" to="MainVBox" method="on_particles_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Darkness" to="MainVBox" method="on_darkness_cycled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_pshader_toggled"]
