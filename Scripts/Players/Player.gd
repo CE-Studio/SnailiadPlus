@@ -187,6 +187,34 @@ enum Players {
 }
 
 
+static var player_name:String:
+	set(_v):
+		pass
+	get:
+		return Statics.get_character_name_string(Statics.current_profile["character"], false)
+
+
+static var player_full_name:String:
+	set(_v):
+		pass
+	get:
+		return Statics.get_character_name_string(Statics.current_profile["character"], true)
+
+
+static var player_species:String:
+	set(_v):
+		pass
+	get:
+		return Statics.get_character_species_string(Statics.current_profile["character"], false)
+
+
+static var player_species_plural:String:
+	set(_v):
+		pass
+	get:
+		return Statics.get_character_species_string(Statics.current_profile["character"], true)
+
+
 var sprite:JsonSprite2D
 var body:CharacterBody2D
 var box_normal:CollisionShape2D
