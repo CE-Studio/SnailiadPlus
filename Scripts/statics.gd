@@ -172,6 +172,13 @@ enum WorldFlags {
 	DEFEATED_BOSS3,
 	DEFEATED_BOSS4,
 }
+
+enum CutsceneFlags {
+	PLACEHOLDER0,
+	PLACEHOLDER1,
+	PLACEHOLDER2,
+	PLACEHOLDER3,
+}
 #endregion
 
 
@@ -290,10 +297,16 @@ static func save_profile(iprofile:int) -> void:
 	var file := FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
 	match iprofile:
 		1:
+			if iprofile == current_profile_id:
+				data_profile1["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
 		2:
+			if iprofile == current_profile_id:
+				data_profile2["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
 		3:
+			if iprofile == current_profile_id:
+				data_profile3["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
 	file.close()
 

@@ -57,6 +57,8 @@ func _read_rooms_log_markers() -> void:
 						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.SAVE
 					if child is Item:
 						unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
+						if child.type == Item.ItemTypes.NONE:
+							Minimap.empty_locations.append(child.location_id)
 					if child is Boss:
 						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
 		room_scene.queue_free()
