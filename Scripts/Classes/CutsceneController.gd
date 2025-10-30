@@ -19,8 +19,6 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	instance = self
-	print(name)
-	print("!!!!!! READY")
 
 
 func _sim_step() -> void:
