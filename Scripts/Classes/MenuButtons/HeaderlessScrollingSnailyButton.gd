@@ -21,6 +21,7 @@ const HOVER_ARROW_CYCLE_SPEED = 8.0
 var selected_option:int
 var arrow_flash_cycle:float
 var arrow_hover_state:Array[bool] = [ false, false ]
+var scroll_state:int = 0
 
 var selected:bool = false
 
@@ -77,24 +78,27 @@ func _process(delta: float) -> void:
 					set_selected()
 		if selected or (focused and auto_select_mode):
 			var cycled:bool = false
-			if (SInput.input_just_pressed(SInput.Inputs.LEFT)
-			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0])):
+			if _check_left() and (scroll_state != -1 or SInput.send_con_as_echo):
 				selected_option -= 1
 				if selected_option < 0:
 					selected_option = cycle_options.size() - 1 if loop else 0
 				cycled = true
+				scroll_state = -1
 				cycled_left.emit(selected_option)
-			if (SInput.input_just_pressed(SInput.Inputs.RIGHT)
-			or (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1])):
+			if _check_right() and (scroll_state != 1 or SInput.send_con_as_echo):
 				selected_option += 1
 				if selected_option >= cycle_options.size():
 					selected_option = 0 if loop else cycle_options.size() - 1
 				cycled = true
+				scroll_state = 1
 				cycled_right.emit(selected_option)
 			if cycled:
 				sfx_focus.play()
 				option.call_deferred("set_snaily_text", cycle_options[selected_option])
 				option_cycled.emit(selected_option)
+			if ((scroll_state == -1 and not Input.is_action_pressed("ui_left") and not SInput.input_pressed(SInput.Inputs.LEFT))
+			or (scroll_state == 1 and not Input.is_action_pressed("ui_right") and not SInput.input_pressed(SInput.Inputs.RIGHT))):
+				scroll_state = 0
 		
 		arrow_flash_cycle += delta * HOVER_ARROW_CYCLE_SPEED
 		var alpha = 0.0
@@ -106,6 +110,20 @@ func _process(delta: float) -> void:
 		tex_left.modulate.a = alpha
 		tex_right.modulate.a = alpha
 	super._process(delta)
+
+
+func _check_left() -> bool:
+	var norm:bool = SInput.just_pressed("left", true)
+	var ui:bool = SInput.just_pressed("ui_left", true)
+	var mouse:bool = SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[0]
+	return norm or ui or mouse
+
+
+func _check_right() -> bool:
+	var norm:bool = SInput.just_pressed("right", true)
+	var ui:bool = SInput.just_pressed("ui_right", true)
+	var mouse:bool = SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and arrow_hover_state[1]
+	return norm or ui or mouse
 
 
 func remote_set_option(value:int) -> void:

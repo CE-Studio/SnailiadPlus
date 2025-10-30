@@ -92,74 +92,132 @@ const DEFAULTS:Array[Array] = [
 
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
 
+const ECHO_DELAY_INITIAL:float = 0.6
+const ECHO_DELAY_REPEAT:float = 0.04
+const DEBUG_PRINT_INPUTS:bool = false
+
+var read_inputs:bool = true
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
+var ui_echo_delay:float = ECHO_DELAY_INITIAL
+var send_con_as_echo:bool = false
+var inputs_down:int = 0
 #endregion
 
 
 func _ready() -> void:
-	pass
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func _process(delta: float) -> void:
+	var any_down:bool = Input.is_anything_pressed()
+	send_con_as_echo = false
+	if last_input_was_con and any_down:
+		ui_echo_delay -= delta
+		if ui_echo_delay <= 0.0:
+			ui_echo_delay += ECHO_DELAY_REPEAT
+			send_con_as_echo = true
+	else:
+		ui_echo_delay = ECHO_DELAY_INITIAL
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
+		if DEBUG_PRINT_INPUTS:
+			(OS.get_keycode_string(event.physical_keycode))
+		
 		last_input_was_con = false
 		if event.pressed:
 			last_ten_keys.append(event.keycode)
 			if last_ten_keys.size() > 10:
 				last_ten_keys.pop_front()
-		#print(OS.get_keycode_string(event.physical_keycode))
 	elif event is InputEventJoypadButton:
+		if DEBUG_PRINT_INPUTS:
+			print(event.button_index)
 		last_input_was_con = true
-		#print(event.button_index)
 	elif event is InputEventJoypadMotion:
+		if DEBUG_PRINT_INPUTS:
+			print(event)
 		last_input_was_con = true
-		#print(event)
 
 
 func pressed(action:String) -> bool:
+	if not read_inputs:
+		return false
 	return Input.is_action_pressed(action)
 
 
-func just_pressed(action:String) -> bool:
+func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
+	if not read_inputs:
+		return false
+	if accept_con_echo:
+		return (Input.is_action_just_pressed(action) or 
+		Input.is_action_pressed(action) and send_con_as_echo)
 	return Input.is_action_just_pressed(action)
 
 
-func check_input(action:Inputs, just:bool) -> bool:
+func just_pressed_as_echo(action:String) -> bool:
+	if just_pressed(action) or not read_inputs:
+		return false
+	return just_pressed(action, true)
+
+
+func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
+	if not read_inputs:
+		return false
 	var this_action:String = get_input_str(action)
 	if just:
-		return just_pressed(this_action)
+		return just_pressed(this_action, accept_con_echo)
 	return pressed(this_action)
 
 
+func check_input_as_echo(action:Inputs) -> bool:
+	var this_action:String = get_input_str(action)
+	if just_pressed(this_action) or not read_inputs:
+		return false
+	return just_pressed(this_action, true)
+
+
 func input_pressed(action:Inputs) -> bool:
+	if not read_inputs:
+		return false
 	return check_input(action, false)
 
 
 func input_just_pressed(action:Inputs) -> bool:
+	if not read_inputs:
+		return false
 	return check_input(action, true)
 
 
 func vector_move(raw:bool = false) -> Vector2:
+	if not read_inputs:
+		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_move")
 	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
 	if raw:
 		return vector
-	if vector.x < 0: vector.x = -1
-	elif vector.x > 0: vector.x = 1
-	if vector.y < 0: vector.y = -1
-	elif vector.y > 0: vector.y = 1
+	if vector.x < -deadzone: vector.x = -1
+	elif vector.x > deadzone: vector.x = 1
+	else: vector.x = 0
+	if vector.y < -deadzone: vector.y = -1
+	elif vector.y > deadzone: vector.y = 1
+	else: vector.y = 0
 	return vector
 
 
 func vector_aim() -> Vector2:
+	if not read_inputs:
+		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
-		if vector.x < 0: vector.x = -1
-		elif vector.x > 0: vector.x = 1
-		if vector.y < 0: vector.y = -1
-		elif vector.y > 0: vector.y = 1
+		if vector.x < -deadzone: vector.x = -1
+		elif vector.x > deadzone: vector.x = 1
+		else: vector.x = 0
+		if vector.y < -deadzone: vector.y = -1
+		elif vector.y > deadzone: vector.y = 1
+		else: vector.y = 0
 	return vector
 
 
@@ -240,11 +298,25 @@ func pull_action(input:Inputs) -> Array:
 	return action
 
 
-func rebind_ctrl(action:Inputs, new_event:Variant, slot:int) -> void:
+func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var old_action:Array = controls[action].duplicate()
-	if slot < old_action.size() and slot >= 0:
-		old_action[slot] = new_event
+	var slot_state:int = INPUT_SLOTS[action as int]
+	
+	var event_data
+	if new_event is InputEventKey:
+		event_data = new_event.keycode
+	elif new_event is InputEventJoypadButton:
+		event_data = new_event.button_index
+	elif new_event is InputEventJoypadMotion:
+		event_data = Vector2(new_event.axis, -1 if new_event.axis_value < 0 else 1)
+	
+	old_action[slot] = event_data
+	# Bitwise op: check slot to the right of current slot by indexing slot_state where slot = 0b----0123
+	var state_index:int = 2 - slot # slot (range 0-3) is flipped (3 - slot), then subtract 1 to bump index right
+	if ((slot == 0 or slot == 2) and ((1 << state_index) & slot_state) == 0):
+		old_action[slot + 1] = event_data
+	
 	controls[action] = old_action.duplicate()
 	ProjectSettings.set_setting("game/control/controls", controls.duplicate())
 

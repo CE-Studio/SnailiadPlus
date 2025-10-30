@@ -129,6 +129,8 @@ func _ready() -> void:
 	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
 	add_child.call_deferred(sprite)
 	sprite.action = "item"
+	
+	UICore.instance.darkness_layer.add_source(self, 48)
 
 
 static func get_name_str_from_id(id:ItemTypes, specify_shell:bool = false) -> String:
@@ -227,11 +229,14 @@ func _process(delta: float) -> void:
 func _on_player_entered(_body: Node2D) -> void:
 	if not collected:
 		collected = true
+		var played_unique_dust:bool = false
 		timer.start()
 		if is_super_unique:
 			Statics.play_sfx_disconnected(jingle_major)
+			SInput.read_inputs = false
 		else:
 			Statics.play_sfx_disconnected(jingle_minor)
+		
 		Statics.add_item(type, 1)
 		Statics.mark_item_location(location_id)
 		Statics.current_profile["item_rate"] = Statics.get_item_percentage()
@@ -252,9 +257,28 @@ func _on_player_entered(_body: Node2D) -> void:
 			#ItemTypes.HIGH_JUMP:
 			#ItemTypes.SHELL_SHIELD:
 			#ItemTypes.RAPID_FIRE:
-			#ItemTypes.ICE_SHELL:
-			#ItemTypes.GRAVITY_SHELL:
-			#ItemTypes.METAL_SHELL:
+			ItemTypes.ICE_SHELL:
+				if is_super_unique:
+					played_unique_dust = true
+					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [1, true, true, 1])
+			ItemTypes.GRAVITY_SHELL:
+				if is_super_unique:
+					played_unique_dust = true
+					var anim_id:int = 0
+					match int(Statics.current_profile["character"]):
+						Player.Players.UPSIDE:
+							anim_id = 4
+						Player.Players.LEGGY:
+							anim_id = 5
+						Player.Players.BLOBBY:
+							anim_id = 6
+						_:
+							anim_id = 2
+					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [anim_id, true, true, 2])
+			ItemTypes.METAL_SHELL:
+				if is_super_unique:
+					played_unique_dust = true
+					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [3, true, true, 3])
 			#ItemTypes.GRAVITY_SHOCK:
 			ItemTypes.SECRET_BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
@@ -285,6 +309,8 @@ func _on_player_entered(_body: Node2D) -> void:
 			#ItemTypes.SPIDER_TRAP:
 			#ItemTypes.WARP_TRAP:
 			#_:
+		if is_super_unique and not played_unique_dust:
+			Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [0, true, true])
 		Statics.save_profile(Statics.current_profile_id)
 		UICore.instance.play_save_anim()
 		UICore.instance.show_item_collection_text(name_str)

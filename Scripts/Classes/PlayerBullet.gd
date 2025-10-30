@@ -15,6 +15,7 @@ extends Node2D
 @export var ping_on_breakables:bool = true
 @export var despawn_particle:String = "ExplosionSmall"
 @export var despawn_offset:Vector2 = Vector2.ZERO
+@export var light_radius:int = 0
 
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
@@ -36,6 +37,8 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	rapid_mult = rapid_shot
 	sfx_shoot.play()
 	area.connect("body_entered", _on_body_entered)
+	if light_radius > 0:
+		UICore.instance.darkness_layer.add_source(self, light_radius)
 	return cooldown
 
 

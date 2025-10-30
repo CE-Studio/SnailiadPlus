@@ -1,6 +1,16 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ukn31olknvf6"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ukn31olknvf6"]
 
-[ext_resource type="Shader" uid="uid://ci6bo7rsuohae" path="res://Resources/DarknessLayer.tres" id="1_saxpf"]
+[ext_resource type="Shader" uid="uid://c3ewgda5n7quq" path="res://Resources/Darkness.gdshader" id="1_06du1"]
+[ext_resource type="Texture2D" uid="uid://d1ixqbq4rwcm0" path="res://Assets/Images/Environments/DarknessDither.png" id="2_p2sbv"]
 
 [resource]
-shader = ExtResource("1_saxpf")
+shader = ExtResource("1_06du1")
+shader_parameter/aspect = Vector2(496, 336)
+shader_parameter/lights = 64
+shader_parameter/light_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/main_color = Color(0, 0, 0, 0)
+shader_parameter/ring_color = Color(0, 0, 0, 1)
+shader_parameter/bacgroun_color = Color(0, 0, 0, 1)
+shader_parameter/dither = ExtResource("2_p2sbv")
+shader_parameter/dither_size = 299.55
+shader_parameter/halo_thickness = 20.0

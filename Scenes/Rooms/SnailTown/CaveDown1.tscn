@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://b0ht64lx178py"]
+[gd_scene load_steps=10 format=4 uid="uid://b0ht64lx178py"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_a73a0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_1rcoy"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_tdcuk"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_08uyj"]
 [ext_resource type="PackedScene" uid="uid://dvouhch0vvcvs" path="res://Scenes/internals/FakeCamBoundary.tscn" id="4_cqxgb"]
+[ext_resource type="PackedScene" uid="uid://hk36as37xl0f" path="res://Scenes/Entities/PlayerSilhouette.tscn" id="5_5a3xf"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="5_y32jm"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
@@ -16,12 +17,15 @@ _data = {
 point_count = 3
 
 [node name="CaveDown1" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_a73a0")
+darkness_level = 0.35
 center_parallax_maps = true
 minimap_offset = Vector2i(9, 12)
 song_change = 1
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(0.9, 1)
 
 [node name="Map" type="TileMapLayer" parent="SkyLayer"]
@@ -30,6 +34,7 @@ tile_set = ExtResource("2_1rcoy")
 collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 scroll_scale = Vector2(0.95, 1)
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer"]
@@ -38,6 +43,7 @@ tile_set = ExtResource("2_1rcoy")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_map_data = PackedByteArray("AAA5AA0AAAAGAHoAAAA4AAAAAAALAHkAAAA9AAAAAAALAHkAAABEAA4AAAALAHkAAABLAAIAAAALAHkAAABTAAMAAAALAHkAAABYAA4AAAAHAHoAAAA=")
@@ -66,13 +72,27 @@ my_id = 22
 identifier = &"22"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_map_data = PackedByteArray("AAAsAAAAAAAIAHgAAAArAAAAAAAIAHoAAAArAAEAAAACAHkAAAApAAEAAAAGAHoAAAAqAAEAAAAGAHoAAAAqAAAAAAAGAHoAAAApAAAAAAAHAHoAAAAhAAwAAAABAHkAAAAiAAwAAAAPAHkAAAAjAAwAAAALAHkAAAAkAAwAAAAGAHoAAAAlAAwAAAAEAHoAAAAkAA0AAAAEAHoAAAAjAA4AAAAGAHoAAAAkAA4AAAAHAHoAAAAjAA0AAAAHAHoAAAAlAA0AAAAPAHkAAAAlAA4AAAAAAHoAAABeAAUAAAALAHgAAABeAAYAAAAPAHgAAABeAAcAAAABAHkAAABfAAkAAAALAHgAAABfAAoAAAAPAHgAAABfAAsAAAABAHkAAABfAAwAAAADAHkAAABeAA0AAAAOAHcAAABeAAgAAAAFAHgAAABfAAgAAAAMAHoAAABfAA0AAAAOAHoAAABjAAcAAAANAHoAAABjAAYAAAAEAHkAAABkAAcAAAAAAHgAAABkAAgAAAAGAHoAAABkAAkAAAAGAHoAAABkAAoAAAAGAHoAAABkAAsAAAAGAHoAAABkAAwAAAAGAHoAAABkAA0AAAAGAHoAAABiAAwAAAAGAHoAAABiAAoAAAAGAHoAAABiAAgAAAAGAHoAAABiAAYAAAAGAHoAAABhAAYAAAAHAHoAAABgAAcAAAAHAHoAAABfAAcAAAAHAHoAAABiAAcAAAAHAHoAAABhAAgAAAAHAHoAAABgAAkAAAAHAHoAAABiAAkAAAAHAHoAAABhAAoAAAAHAHoAAABgAAsAAAAHAHoAAABiAAsAAAAHAHoAAABhAAwAAAAHAHoAAABgAA0AAAAHAHoAAABiAA0AAAAHAHoAAABjAA0AAAAHAHoAAABjAAwAAAAHAHoAAABjAAsAAAAHAHoAAABjAAoAAAAHAHoAAABjAAkAAAAHAHoAAABjAAgAAAAHAHoAAABhAA0AAAALAHkAAABhAAsAAAALAHkAAABhAAkAAAALAHkAAABhAAcAAAALAHkAAABgAAwAAAAFAHoAAABgAAoAAAAFAHoAAABgAAgAAAAFAHoAAABgAAYAAAAFAHoAAABfAAYAAAAEAHoAAABYAA0AAAALAHoAAABEAA0AAAALAHoAAAA5AAwAAAALAHoAAAA4AAEAAAAKAHoAAAA9AAEAAAAJAHoAAABLAAMAAAAKAHoAAABTAAQAAAAKAHoAAABSAAEAAAAJAHoAAABaAAIAAAAJAHoAAAApAP3/AAAHAHoAAAApAP7/AAAGAHoAAAApAP//AAAAAHoAAAAqAP3/AAAFAHoAAAAqAP7/AAAEAHoAAAAqAP//AAAEAHoAAAArAP3/AAAHAHoAAAArAP7/AAAAAHoAAAArAP//AAAAAHoAAAAsAP3/AAAAAHoAAAAsAP7/AAADAHoAAAAsAP//AAAEAHoAAAAjAA8AAAALAHkAAAAjABAAAAALAHkAAAAjABEAAAADAHoAAAAkAA8AAAAEAHoAAAAkABAAAAAFAHoAAAAkABEAAAAFAHoAAAAlAA8AAAAHAHoAAAAlABAAAAAGAHoAAAAlABEAAAADAHoAAAAeAAIAAAAPAH0AAAAeAAMAAAAHAHwAAAAeAAQAAAAJAHwAAAAfAAQAAAADAHwAAAAgAAIAAAAAAH4AAAAgAAMAAAAIAHwAAAAgAAQAAAALAHwAAAAhAAIAAAABAH4AAAAVAAkAAAADAHwAAAAWAAMAAAAPAHwAAAAWAAQAAAADAH0AAAAWAAUAAAAIAH0AAAAWAAYAAAAMAH0AAAAWAAcAAAAAAH4AAAAWAAgAAAAIAHwAAAAWAAkAAAALAHwAAAAXAAIAAAAOAH0AAAAXAAMAAAAAAH0AAAAXAAQAAAAFAH0AAAAXAAUAAAAJAH0AAAAXAAYAAAANAH0AAAAXAAcAAAABAH4AAAApAAMAAAABAH0AAAApAAQAAAAGAH0AAAApAAUAAAAKAH0AAAAqAAMAAAACAH0AAAAqAAQAAAAHAH0AAAAqAAUAAAALAH0AAAAqAAYAAAAPAH0AAAAqAAcAAAAHAHwAAAAqAAgAAAAJAHwAAAArAAgAAAADAHwAAAAsAAIAAAAPAHwAAAAsAAMAAAADAH0AAAAsAAQAAAAIAH0AAAAsAAUAAAAMAH0AAAAsAAYAAAAAAH4AAAAsAAcAAAAIAHwAAAAsAAgAAAALAHwAAAAtAAIAAAAAAH0AAAAtAAMAAAAFAH0AAAAtAAQAAAAJAH0AAAAtAAUAAAANAH0AAAAtAAYAAAABAH4AAAAtAAEAAAAOAH0AAAA=")
 tile_set = ExtResource("2_1rcoy")
 collision_enabled = false
 
+[node name="Polygon2D" type="Polygon2D" parent="FG1Layer"]
+clip_children = 1
+polygon = PackedVector2Array(1507, 64, 1507, 140, 1508, 141, 1523, 141, 1523, 211, 1508, 211, 1507, 212, 1507, 241, 1648, 240, 1648, 64)
+
+[node name="PlayerSilhouette" parent="FG1Layer/Polygon2D" instance=ExtResource("5_5a3xf")]
+
+[node name="Polygon2D2" type="Polygon2D" parent="FG1Layer"]
+clip_children = 1
+polygon = PackedVector2Array(531, 163, 640, 163, 640, 288, 531, 288)
+
+[node name="PlayerSilhouette" parent="FG1Layer/Polygon2D2" instance=ExtResource("5_5a3xf")]
+
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 scroll_scale = Vector2(1.05, 1)
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
@@ -81,9 +101,14 @@ tile_set = ExtResource("2_1rcoy")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAA6AAEAAAAMAB4AAAAfAAIAAAAMAB4AAAAbAAwAAAALAAEAAAApAAkAAAALAAEAAAA/AA0AAAALAAEAAABaAA0AAAALAAEAAAA=")
+tile_set = ExtResource("2_1rcoy")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_1rcoy")
 collision_enabled = false
 

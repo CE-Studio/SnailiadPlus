@@ -16,6 +16,7 @@ _data = {
 point_count = 3
 
 [node name="BossHub" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_ud8rh")
 area_id = 1
 minimap_offset = Vector2i(14, 1)
@@ -24,6 +25,7 @@ tiled_corner = Vector2i(365, 17)
 tiled_range = Vector2i(25, 31)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(1, 0.6)
 
 [node name="Map" type="TileMapLayer" parent="SkyLayer"]
@@ -32,6 +34,7 @@ tile_set = ExtResource("2_exv6x")
 collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 scroll_scale = Vector2(1, 0.8)
 scroll_offset = Vector2(0, -80)
 
@@ -41,6 +44,7 @@ tile_set = ExtResource("2_exv6x")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_map_data = PackedByteArray("AAAXAAYAAAAHACQAAAAXAAcAAAAHACQAAAAXAAgAAAAHACQAAAAYAAYAAAAIACAAAAAYAAcAAAAJACAAAAAYAAgAAAAIACAAAAAXAAUAAAAFACQAAAAYAAUAAAAJACAAAAAXAAkAAAAFACQAAAAYAAkAAAAIACAAAAAZAAUAAAAJAFsAAAAZAAkAAAALAFsAAAAZABoAAAAJAFsAAAAZABYAAAALAFsAAAD//xoAAAAMAFsAAAD//xYAAAAKAFsAAAAaAAkAAAAOAEYAAAAbAAkAAAANAD4AAAAaAAUAAAAOAEYAAAAbAAUAAAAOAEYAAAAaABoAAAAOAEYAAAAbABoAAAANAD4AAAAaABYAAAANAD4AAAAbABYAAAANAD4AAAD9/xoAAAANAD4AAAD+/xoAAAAOAEYAAAD9/xYAAAANAD4AAAD+/xYAAAAOAEYAAAAZAAYAAAAJACAAAAAZAAcAAAAIACAAAAAZAAgAAAAJACAAAAAaAAYAAAAIACAAAAAaAAcAAAAJACAAAAAaAAgAAAAJACAAAAAbAAYAAAAJACAAAAAbAAcAAAAIACAAAAAbAAgAAAAJACAAAAA=")
@@ -80,6 +84,7 @@ my_id = 41
 identifier = &"41"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_map_data = PackedByteArray("AAAZABcAAAAJAFsAAAAZABgAAAALAFsAAAAZABkAAAALAFsAAAAZAAYAAAALAFsAAAAZAAcAAAALAFsAAAAZAAgAAAALAFsAAAD//xcAAAAKAFsAAAD//xgAAAAMAFsAAAD//xkAAAAKAFsAAAD9/xcAAAANAD4AAAD9/xgAAAAOAEYAAAD9/xkAAAAOAEYAAAD+/xcAAAAOAEYAAAD+/xgAAAAOAEYAAAD+/xkAAAAOAEYAAAAaABcAAAAOAEYAAAAaABgAAAAOAEYAAAAaABkAAAAOAEYAAAAbABcAAAAOAEYAAAAbABgAAAANAD4AAAAbABkAAAAOAEYAAAAaAAYAAAAOAEYAAAAaAAcAAAAOAEYAAAAaAAgAAAANAD4AAAAbAAYAAAANAD4AAAAbAAcAAAANAD4AAAAbAAgAAAANAD4AAAA=")
@@ -87,15 +92,21 @@ tile_set = ExtResource("2_exv6x")
 collision_enabled = false
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
 tile_set = ExtResource("2_exv6x")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAASAAoAAAAOAAEAAAAMAAsAAAANAAEAAAAGABIAAAALAAEAAAALABkAAAALAAEAAAAEAAYAAAAMAB4AAAAJAAYAAAANAB4AAAA=")
+tile_set = ExtResource("2_exv6x")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_exv6x")
 collision_enabled = false
 

@@ -26,10 +26,6 @@ func _physics_process(_delta: float) -> void:
 		subscreen = subscreen_scene.instantiate()
 		add_child(subscreen)
 		subscreen.position = Vector2(0, 240)
-		#cam.minimap.subscreen_mode = true
-		#cam.minimap.process_mode = Node.PROCESS_MODE_ALWAYS
-		#if not cam.minimap.visible:
-		#	cam.minimap.update_visible(1)
 
 
 func pause_fade_in() -> void:
@@ -49,4 +45,5 @@ func unpause_fade_out() -> void:
 	cam.minimap.modulate = Color.WHITE
 	cam.minimap.tick_minimap(0, false, true)
 	cam.cam.set_cam_mode()
+	cam.darkness_layer.update_col()
 	game.current_room.set_environment_visibility()

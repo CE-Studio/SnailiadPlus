@@ -8,6 +8,7 @@
 size = Vector2(16, 16)
 
 [node name="RoomTransitionTrigger" type="Node2D"]
+z_index = 999
 script = ExtResource("1_gkfyc")
 
 [node name="Area2D" type="Area2D" parent="."]

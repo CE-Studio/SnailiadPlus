@@ -10,6 +10,58 @@ const FOCUS_COLOR_SPEED:float = 4.5
 const SELECTOR_WIGGLE_SPEED:float = 3.8
 const SELECTOR_EASE_RATE:float = 20.0
 const SELECTOR_Y_MARGIN:int = 20
+const ENTRIES:Array = [
+	Enemy.EnemyTypes.SPIKEY_COMMON,
+	Enemy.EnemyTypes.SPIKEY_TOUGH,
+	#Enemy.EnemyTypes.SPIKEY_ABSURD,
+	Enemy.EnemyTypes.BABYFISH,
+	Enemy.EnemyTypes.FLOATSPIKE,
+	Enemy.EnemyTypes.BLOB_COMMON,
+	Enemy.EnemyTypes.BLOB_TOUGH,
+	#Enemy.EnemyTypes.BLOB_ANGEL,
+	Enemy.EnemyTypes.BLOB_DEVIL,
+	Enemy.EnemyTypes.CHIRPY,
+	Enemy.EnemyTypes.BATTYBAT,
+	Enemy.EnemyTypes.FIREBALL,
+	Enemy.EnemyTypes.ICEBALL,
+	Enemy.EnemyTypes.GHOSTBALL,
+	Enemy.EnemyTypes.SNELK,
+	Enemy.EnemyTypes.KITTY,
+	Enemy.EnemyTypes.CANON,
+	#Enemy.EnemyTypes.NONCANON,
+	#Enemy.EnemyTypes.FANON,
+	#Enemy.EnemyTypes.SNAKEY_COMMON,
+	#Enemy.EnemyTypes.SNAKEY_TOUGH,
+	#Enemy.EnemyTypes.SKYVIPER,
+	#Enemy.EnemyTypes.SPIDER_COMMON,
+	#Enemy.EnemyTypes.SPIDER_TOUGH,
+	#Enemy.EnemyTypes.TURTLE_COMMON,
+	#Enemy.EnemyTypes.TURTLE_TOUGH,
+	#Enemy.EnemyTypes.JELLYFISH,
+	#Enemy.EnemyTypes.SEAHORSE,
+	#Enemy.EnemyTypes.TALLFISH_COMMON,
+	#Enemy.EnemyTypes.TALLFISH_TOUGH,
+	#Enemy.EnemyTypes.WALLEYE,
+	#Enemy.EnemyTypes.PINCER_FLOOR,
+	#Enemy.EnemyTypes.PINCER_WALL,
+	#Enemy.EnemyTypes.PINCER_CEILING,
+	#Enemy.EnemyTypes.GEAR_COMMON,
+	#Enemy.EnemyTypes.GEAR_TOUGH,
+	#Enemy.EnemyTypes.DRONE,
+	#Enemy.EnemyTypes.BALLOON,
+	Enemy.EnemyTypes.SHELLBREAKER,
+	Enemy.EnemyTypes.STOMPY,
+	#Enemy.EnemyTypes.SPACEBOX,
+	#Enemy.EnemyTypes.BABYBOX,
+	#Enemy.EnemyTypes.MOONSNAIL,
+	#Enemy.EnemyTypes.GIGASNAIL,
+	#Enemy.EnemyTypes.COSMICSNAIL,
+	#Enemy.EnemyTypes.SHELLBREAKER_RUSH,
+	#Enemy.EnemyTypes.STOMPY_RUSH,
+	#Enemy.EnemyTypes.SPACEBOX_RUSH,
+	#Enemy.EnemyTypes.MOONSNAIL_RUSH,
+	#Enemy.EnemyTypes.GIGASNAIL_RUSH,
+]
 
 var parent_layer:MenuLayer
 var text_color:Color = Statics.get_color(Vector2i(0, 4))
@@ -20,6 +72,7 @@ var elapsed:float = 0.0
 var focused_text:SnailyText = null
 var selector_origin_x:float = 0.0
 var selection:int = 0
+
 
 @onready var text_scene:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 @onready var scroll_list:VBoxContainer = $"ScrollPanel/EntityList"
@@ -36,13 +89,15 @@ func _ready() -> void:
 	parent_layer = get_parent()
 	
 	var enemy_enums := Enemy.EnemyTypes.keys()
-	for enemy in enemy_enums:
-		if enemy is String:
-			entity_list.append(enemy.to_camel_case())
+	#for enemy in enemy_enums:
+	#	if enemy is String:
+	#		entity_list.append(enemy.to_camel_case())
+	for enemy in ENTRIES:
+		entity_list.append(enemy_enums[enemy].to_camel_case())
 	
 	for i in range(entity_list.size()):
 		var entity := entity_list[i]
-		if not Statics.check_bestiary_entry(i):
+		if not Statics.check_bestiary_entry(ENTRIES[i]):
 			entity = "none"
 			entry_states.append(false)
 		else:
@@ -143,7 +198,9 @@ func spawn_display_entity(entity:String) -> void:
 			enemy_spawn.add_child(chirpy2)
 			chirpy2.position = Vector2.RIGHT * 16
 		# snakey
-		# kitty
+		"kitty":
+			var kitty2 = spawn_entity("kitty_tough")
+			enemy_spawn.add_child(kitty2)
 		_:
 			var general_enemy = spawn_entity(entity)
 			enemy_spawn.add_child(general_enemy)
@@ -159,4 +216,5 @@ func spawn_entity(entity:String) -> Enemy:
 		new_enemy = load(ENEMY_PATH % entity).instantiate()
 	new_enemy.display_mode = true
 	display_enemies.append(new_enemy)
+	new_enemy.z_index = -5
 	return new_enemy

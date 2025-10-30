@@ -1,0 +1,231 @@
+{
+	"tiles": [4, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"floor_cw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"floor_cw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_ccw",
+			"frames": [ ]
+		},
+		"floor_cw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_ccw",
+			"frames": [ ]
+		},
+		"floor_ccw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"floor_ccw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_ccw",
+			"frames": [ ]
+		},
+		"floor_ccw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_ccw",
+			"frames": [ ]
+		},
+		"lwall_cw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"lwall_cw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_cw",
+			"frames": [ ]
+		},
+		"lwall_cw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_cw",
+			"frames": [ ]
+		},
+		"lwall_ccw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"lwall_ccw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_ccw",
+			"frames": [ ]
+		},
+		"lwall_ccw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_ccw",
+			"frames": [ ]
+		},
+		"rwall_cw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"rwall_cw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_cw",
+			"frames": [ ]
+		},
+		"rwall_cw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_cw",
+			"frames": [ ]
+		},
+		"rwall_ccw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"rwall_ccw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_ccw",
+			"frames": [ ]
+		},
+		"rwall_ccw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_ccw",
+			"frames": [ ]
+		},
+		"ceiling_cw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"ceiling_cw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_cw",
+			"frames": [ ]
+		},
+		"ceiling_cw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_cw",
+			"frames": [ ]
+		},
+		"ceiling_ccw": {
+			"fps": 6,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false]
+			]
+		},
+		"ceiling_ccw_turnto_inner": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_ccw",
+			"frames": [ ]
+		},
+		"ceiling_ccw_turnto_outer": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_ccw",
+			"frames": [ ]
+		}
+	}
+}

@@ -2017,6 +2017,42 @@
 			"colors": [255, 952171775, 4231528703, 0, 4176935167],
 			"autoplay_next": "npc26.floor.left.idle",
 		},
+		"npc29.floor.right.idle": {
+			"inherit": "2.floor.right.idle",
+			"colors": [255, 2766732543, 2021688575, 0, 4176935167],
+		},
+		"npc29.floor.right.turnground": {
+			"inherit": "2.floor.right.turnground",
+			"colors": [255, 2766732543, 2021688575, 0, 4176935167],
+			"autoplay_next": "npc29.floor.right.idle",
+		},
+		"npc29.floor.left.idle": {
+			"inherit": "2.floor.left.idle",
+			"colors": [255, 2766732543, 2021688575, 0, 4176935167],
+		},
+		"npc29.floor.left.turnground": {
+			"inherit": "2.floor.left.turnground",
+			"colors": [255, 2766732543, 2021688575, 0, 4176935167],
+			"autoplay_next": "npc29.floor.left.idle",
+		},
+		"npc35.ceiling.right.idle": {
+			"inherit": "2.ceiling.right.idle",
+			"colors": [255, 1749613823, 4233665791, 0, 4176935167],
+		},
+		"npc35.ceiling.right.turnground": {
+			"inherit": "2.ceiling.right.turnground",
+			"colors": [255, 1749613823, 4233665791, 0, 4176935167],
+			"autoplay_next": "npc35.ceiling.right.idle",
+		},
+		"npc35.ceiling.left.idle": {
+			"inherit": "2.ceiling.left.idle",
+			"colors": [255, 1749613823, 4233665791, 0, 4176935167],
+		},
+		"npc35.ceiling.left.turnground": {
+			"inherit": "2.ceiling.left.turnground",
+			"colors": [255, 1749613823, 4233665791, 0, 4176935167],
+			"autoplay_next": "npc35.ceiling.left.idle",
+		},
 		"npc41.floor.right.idle": {
 			"inherit": "0.floor.right.idle",
 			"colors": [255, 4238362879, 11028735, 0, 4176935167],
@@ -2070,6 +2106,24 @@
 			"inherit": "0.floor.left.turnground",
 			"colors": [255, 3707271423, 4106281215, 0, 4176935167],
 			"autoplay_next": "npc48.floor.left.idle",
+		},
+		"npc50.floor.right.idle": {
+			"inherit": "1.floor.right.idle",
+			"colors": [255, 3707271423, 4239981823, 0, 4176935167],
+		},
+		"npc50.floor.right.turnground": {
+			"inherit": "1.floor.right.turnground",
+			"colors": [255, 3707271423, 4239981823, 0, 4176935167],
+			"autoplay_next": "npc50.floor.right.idle",
+		},
+		"npc50.floor.left.idle": {
+			"inherit": "1.floor.left.idle",
+			"colors": [255, 3707271423, 4239981823, 0, 4176935167],
+		},
+		"npc50.floor.left.turnground": {
+			"inherit": "1.floor.left.turnground",
+			"colors": [255, 3707271423, 4239981823, 0, 4176935167],
+			"autoplay_next": "npc50.floor.left.idle",
 		},
 		"npc52.floor.right.idle": {
 			"inherit": "0.floor.right.idle",

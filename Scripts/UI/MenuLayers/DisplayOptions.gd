@@ -44,6 +44,21 @@ func on_input_map_toggled(value) -> void:
 func on_igt_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/in_game_time", value)
 
+func on_fullscreen_toggled(value) -> void:
+	var window = get_window()
+	
+	if value:
+		window.mode = Window.MODE_FULLSCREEN
+	else:
+		window.mode = Window.MODE_WINDOWED
+		
+		# Restore window size
+		var ratio_idx = ProjectSettings.get("display/window/size/aspect_ratio")
+		var ratio = Statics.ASPECT_RATIOS[ratio_idx]
+		
+		var window_scale = ProjectSettings.get("display/window/stretch/scale") - 1
+		
+		set_window_size(window_scale, ratio)
 
 func on_fps_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/fps_counter", value)
@@ -68,12 +83,14 @@ func on_dshader_toggled(value) -> void:
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	var new_size:Vector2i = _ratio * (_scale + 1)
 	var window = get_window()
-	var old_size = window.size
 	ProjectSettings.set_setting("display/window/size/viewport_width", new_size.x)
 	ProjectSettings.set_setting("display/window/size/viewport_height", new_size.y)
+	ProjectSettings.set_setting("display/window/size/window_width_override", new_size.x)
+	ProjectSettings.set_setting("display/window/size/window_height_override", new_size.y)
 	ProjectSettings.set_setting("display/window/stretch/scale", _scale + 1)
-	var old_position = window.position
 	window.size = new_size
 	window.content_scale_factor = _scale + 1
-	var difference = new_size - old_size
-	window.position = old_position - Vector2i(difference * 0.5)
+	window.content_scale_size = new_size
+	
+	if GameCore.instance:
+		UICore.instance.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))

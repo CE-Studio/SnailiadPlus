@@ -10,6 +10,7 @@ extends CutsceneControllable
 #region Global control
 const MAX_STUN_TIMER:float = 1.0
 const RESPAWN_INVIN_TIMER:float = 0.25
+const MOVE_STEPS:int = 4
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -70,6 +71,8 @@ var box_adjust:Array = [
 var override_box_disable:bool
 var environment_exit_override:int = 0
 var respawn_i_frames:float = 0.0
+var outer_allowed:bool = false
+var shell_level_displayed:int = 0
 #endregion
 
 
@@ -157,6 +160,8 @@ var shield_particle_offset:Vector2i
 # An offset from the center of the player used to align any shield particle effect. Should be set as if the player is on the ground facing right
 var health_gain_from_parry:int
 # How much health you recover from a Perfect Parry
+var light_radius:int
+# How large the light emitted by the player should be
 #endregion
 
 
@@ -234,15 +239,25 @@ func _ready():
 	max_health = 3 + Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
 	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	health = max_health
+	
+	shell_level_displayed = Statics.get_shell_level()
 
 
 #region Movement
 # This function is called once every frame
-# It's used here to control player movement
 func _process(_delta):
-	pass
+	if stun_timer > 0:
+		sprite.visible = not sprite.visible
+	
+	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
+		UICore.instance.darkness_layer.add_source(self, light_radius)
+	
+	if Input.is_action_just_pressed("gravity"):
+		Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
 
 
+# This function is called on a fixed interval of
+# 60 times per second, regardless of framerate
 func _physics_process(delta) -> void:
 	if Statics.noclip_mode:
 		box_normal.disabled = true
@@ -358,7 +373,6 @@ func _physics_process(delta) -> void:
 	grounded_last_frame = grounded
 	
 	if stun_timer > 0:
-		sprite.visible = not sprite.visible
 		stun_timer -= delta
 		if stun_timer <= 0:
 			stunned = false
@@ -545,6 +559,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				#   12 (standard expected length of player casts)
 				# * 60 (compensating move_and_slide dividing by physics tick rate)
 				grounded = true
+				outer_allowed = true
 			else:
 				grounded = false
 	else:
@@ -579,6 +594,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			adjustment = Vector2(-1 if facing_left else 1, -1) * _get_box_difference()
 		elif not grounded:
 			grounded = true
+			outer_allowed = true
 			adjustment = Vector2(-1 if facing_left else 1, 0)
 			if _check_ceil_casts()[0]:
 				adjustment.y += 1
@@ -606,19 +622,24 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			_play_anim("walk")
 			current_state = AnimStates.WALK
 			grounded = true
+			outer_allowed = true
 			rel_vel.y = 720
 		elif body.is_on_ceiling():
 			if rel_axis.y < 0 and _can_grab_ceiling():
 				grounded = true
+				outer_allowed = true
 				_set_direction(_get_dir_opposite(surface), not facing_left)
 				_play_anim("idle" if rel_axis.x == 0.0 else "walk")
 				current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 		elif body.is_on_floor() and rel_vel.y >= 0:
 			grounded = true
-		elif not _check_ability(retain_gravity_on_airborne):
+			outer_allowed = true
+		elif not _check_ability(retain_gravity_on_airborne) and surface != home_gravity:
 			var this_left = facing_left
 			if surface == _get_dir_opposite(home_gravity):
 				this_left = not this_left
+			if _get_dir_opposite(gravity_dir) != home_gravity and gravity_dir != home_gravity:
+				rel_vel.x = 0.0
 			_set_direction(home_gravity, this_left)
 			if not shelled:
 				_play_anim("fall")
@@ -638,7 +659,12 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			body.velocity = -rel_vel
 	#endregion
 	
-	body.move_and_slide()
+	var cur_vel:Vector2 = body.velocity
+	var step_vel:Vector2 = cur_vel / MOVE_STEPS
+	for i in range(MOVE_STEPS):
+		body.velocity = step_vel
+		body.move_and_slide()
+	body.velocity *= MOVE_STEPS
 	position = body.position
 	
 	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):
@@ -683,11 +709,13 @@ func _jump_and_reorient() -> float:
 	sfx_jump.play()
 	jump_buffer_counter = jump_buffer
 	coyote_time_counter = coyote_time
-	_push_from_wall()
 	if gravity_dir == _get_dir_opposite(home_gravity):
 		_set_direction(home_gravity, not facing_left)
+		_test_for_ceiling_reorient_wall_nudge()
 	else:
+		_push_from_wall()
 		_set_direction(home_gravity, facing_left)
+	outer_allowed = false
 	current_state = AnimStates.FALL
 	_play_anim("fall")
 	return 0.0
@@ -715,6 +743,29 @@ func _push_from_wall() -> void:
 	position = body.position
 
 
+func _test_for_ceiling_reorient_wall_nudge() -> void:
+	if not body.is_on_wall():
+		return
+	var nudge:int = 1
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR:
+			var axis:float = Input.get_axis("left", "right")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.x += nudge if facing_left else -nudge
+		Statics.DirsSurface.LWALL:
+			var axis:float = Input.get_axis("up", "down")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.y += nudge if facing_left else -nudge
+		Statics.DirsSurface.RWALL:
+			var axis:float = Input.get_axis("down", "up")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.y += -nudge if facing_left else nudge
+		Statics.DirsSurface.CEILING:
+			var axis:float = Input.get_axis("right", "left")
+			if ((axis < 0 and facing_left) or (axis > 0 and not facing_left)):
+				body.position.x += -nudge if facing_left else nudge
+
+
 func _can_grab_wall() -> bool:
 	if stunned and not _check_ability(stick_to_walls_when_hurt):
 		return false
@@ -737,6 +788,8 @@ func _can_round_corner_outer() -> bool:
 	if stunned and not _check_ability(stick_to_walls_when_hurt):
 		return false
 	if not _check_ability(can_swap_gravity) and not _check_ability(can_round_outer_corners):
+		return false
+	if not outer_allowed:
 		return false
 	var can_outer:bool = _check_ability(can_round_opposite_outer_corners)
 	if gravity_dir == _get_dir_adjacent_cw(home_gravity):
@@ -890,9 +943,7 @@ func _spin_vector_to_surface(input:Vector2, surface:Statics.DirsSurface) -> Vect
 # JsonSprite2D animation appropriately
 # Input  - the action to perform
 func _play_anim(action:String):
-	var full_action = ""
-	
-	full_action += "0."
+	var full_action = str(shell_level_displayed) + "."
 	
 	if action != "death":
 		match gravity_dir:
@@ -910,6 +961,13 @@ func _play_anim(action:String):
 	if sprite.action != full_action:
 		sprite.action = full_action
 	#print(full_action)
+
+
+# Externally called; updates which animation set the player uses based on shell level
+# Input  - the level of shell to display
+func update_shell_displayed(new_shell:int) -> void:
+	shell_level_displayed = new_shell
+	_play_anim("idle")
 
 
 # Takes a surface direction and outputs the direction 90 degrees clockwise from it
@@ -1020,15 +1078,15 @@ func _check_ceil_casts() -> Array:
 	return [ hit, distance ]
 
 
-func set_box_disable_override(_state:bool) -> void:
-	return
-	#override_box_disable = state
-	#if state == true:
-	#	box_normal.disabled = true
-	#	box_shell.disabled = true
-	#else:
-	#	box_normal.disabled = shelled
-	#	box_shell.disabled = not shelled
+func set_box_disable_override(state:bool) -> void:
+	#return
+	override_box_disable = state
+	if state == true:
+		box_normal.set_deferred("disabled", true)
+		box_shell.set_deferred("disabled", true)
+	else:
+		box_normal.set_deferred("disabled", shelled)
+		box_shell.set_deferred("disabled", not shelled)
 
 
 func adjust_health(amount:int, ignore_defense:bool = false) -> void:
@@ -1052,6 +1110,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 			if gravity_dir != _get_dir_opposite(home_gravity):
 				_push_from_wall()
 			_set_direction(home_gravity, facing_left)
+			outer_allowed = false
 			_play_anim("fall")
 			body.velocity = Vector2.ZERO
 		stunned = true
@@ -1100,6 +1159,7 @@ func _on_respawn_timeout() -> void:
 	UICore.instance.clear_area_text()
 	UICore.instance.clear_boss_bar()
 	adjust_health(999999)
+	stun_timer = MAX_STUN_TIMER
 	reset_position(Statics.load_coords)
 	set_deferred("override_box_disable", false)
 #endregion

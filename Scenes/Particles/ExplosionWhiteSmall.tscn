@@ -6,7 +6,8 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_h587t"]
 [ext_resource type="AudioStream" uid="uid://jy74nugtx5w1" path="res://Assets/Sounds/Sfx/ShotHit.ogg" id="5_6t55a"]
 
-[node name="ExplosionTiny" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+[node name="ExplosionWhiteSmall" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+z_index = 15
 script = ExtResource("1_ql4ox")
 sprite = NodePath("JsonSprite2D")
 anim_name = "white_small"

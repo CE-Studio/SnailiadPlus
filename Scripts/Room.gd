@@ -54,7 +54,8 @@ enum Layers {
 var room_path:String
 
 @onready var layer_entity:Node2D = $"EntityLayer"
-@onready var map_entity:TileMapLayer = $"EntityLayer/Map"
+@onready var map_entity1:TileMapLayer = $"EntityLayer/Map"
+@onready var map_entity2:TileMapLayer = $"EntityLayer/Map2"
 @onready var layer_fg2:Parallax2D = $"FG2Layer"
 @onready var map_fg2:TileMapLayer = $"FG2Layer/Map"
 @onready var layer_fg1:Parallax2D = $"FG1Layer"
@@ -87,21 +88,26 @@ func _ready() -> void:
 		Statics.load_coords = default_spawn.position
 		Statics.shortcut_load_game_scene = true
 		get_tree().call_deferred("change_scene_to_file", "res://Scenes/PreloadScene.tscn")
+	if UICore.instance:
+		UICore.instance.darkness_layer.call_deferred("update_col", darkness_level)
 
 
 func spawn(_spawn_all:bool) -> void:
 	if Statics.show_entity_layer:
-		map_entity.modulate = Color(1, 1, 1, 0.5)
+		map_entity1.modulate = Color(1, 1, 1, 0.5)
+		map_entity2.modulate = Color(1, 1, 1, 0.5)
 	else:
-		map_entity.modulate = Color(1, 1, 1, 0)
+		map_entity1.modulate = Color(1, 1, 1, 0)
+		map_entity2.modulate = Color(1, 1, 1, 0)
 	get_room_name_from_filename()
 	
 	# Get all entity tiles and spawn associated objects
-	_spawn_entities_from_layer()
+	_spawn_entities_from_layer(0)
+	_spawn_entities_from_layer(1)
 	
 	# Properly spawn all objects in room
 	if _spawn_all:
-		var layer_array:Array[Node2D] = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2 ]
+		var layer_array:Array[Node2D] = [ layer_sky, layer_bg2, layer_bg1, layer_ground, layer_fg1, layer_fg2, self ]
 		for layer in layer_array:
 			for child in layer.get_children():
 				if (child is Door
@@ -110,6 +116,8 @@ func spawn(_spawn_all:bool) -> void:
 				if child is SavePoint:
 					if child.check_character_spawnable():
 						child.initialize_room_data(room_path)
+				if child is ParticleLayer:
+					child.spawn()
 		for fake_border in bounds.get_children():
 			if fake_border is FakeCamBoundary:
 				fake_border.call_deferred("instance")
@@ -173,9 +181,10 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 		arr.append(n)
 
 
-func _spawn_entities_from_layer() -> void:
-	for tile in map_entity.get_used_cells():
-		var tile_coords := map_entity.get_cell_atlas_coords(tile)
+func _spawn_entities_from_layer(layer:int) -> void:
+	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
+	for tile in map.get_used_cells():
+		var tile_coords := map.get_cell_atlas_coords(tile)
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
@@ -191,6 +200,16 @@ func _spawn_entities_from_layer() -> void:
 				var chirpy:ChirpyCommon = load("res://Scenes/Entities/Enemies/ChirpyCommon.tscn").instantiate()
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
+			
+			Vector2i(8, 0): # Gray kitty
+				var kitty:KittyCommon = load("res://Scenes/Entities/Enemies/KittyCommon.tscn").instantiate()
+				kitty.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(kitty)
+			
+			Vector2i(9, 0): # Orange kitty
+				var kitty:KittyTough = load("res://Scenes/Entities/Enemies/KittyTough.tscn").instantiate()
+				kitty.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(kitty)
 			
 			Vector2i(10, 0): # Blue chirpy generator
 				var gen:GeneratorChirpyCommon = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyCommon.tscn").instantiate()
@@ -218,6 +237,28 @@ func _spawn_entities_from_layer() -> void:
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
+			
+			Vector2i(15, 0): # Fireball (CW)
+				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				fireball.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fireball)
+			
+			Vector2i(0, 1): # Fireball (CCW)
+				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				fireball.position = _tile_coords_to_vector_pos(tile)
+				fireball.ccw = true
+				layer_ground.add_child(fireball)
+			
+			Vector2i(1, 1): # Iceball (CW)
+				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				iceball.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(iceball)
+			
+			Vector2i(2, 1): # Iceball (CCW)
+				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				iceball.position = _tile_coords_to_vector_pos(tile)
+				iceball.ccw = true
+				layer_ground.add_child(iceball)
 			
 			Vector2i(7, 1): # Shellbreaker
 				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
@@ -294,6 +335,11 @@ func _spawn_entities_from_layer() -> void:
 				spike.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(spike)
 			
+			Vector2i(12, 24): # Muck
+				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
+				muck.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(muck)
+			
 			Vector2i(15, 24): # Black floatspike
 				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()
 				floatspike.position = _tile_coords_to_vector_pos(tile)
@@ -308,6 +354,17 @@ func _spawn_entities_from_layer() -> void:
 				var bat:BattyBat = load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
+			
+			Vector2i(2, 27): # Snelk
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				layer_ground.add_child(snelk)
+			
+			Vector2i(3, 27): # Snelk (panicked)
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				snelk.state = Snelk.States.RUN
+				layer_ground.add_child(snelk)
 			
 			Vector2i(1, 28): # Silent Devastator breakable
 				var dev_tile:Breakable = breakable_scene.instantiate()
@@ -330,6 +387,12 @@ func _spawn_entities_from_layer() -> void:
 				var gen:GeneratorChirpyTough = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyTough.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(gen)
+			
+			Vector2i(14, 28): # Snelk (sleeping)
+				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				snelk.state = Snelk.States.SLEEP
+				layer_ground.add_child(snelk)
 			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
@@ -429,7 +492,7 @@ func _import_from_tiled():
 									Layers.FG2:
 										map_fg2.set_cell(map_index - tiled_corner, source, tile_coords)
 									Layers.ENTITY:
-										map_entity.set_cell(map_index - tiled_corner, source, tile_coords)
+										map_entity1.set_cell(map_index - tiled_corner, source, tile_coords)
 
 
 #region Runtime functions

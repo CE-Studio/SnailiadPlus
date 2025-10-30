@@ -8,6 +8,7 @@
 size = Vector2(28, 28)
 
 [node name="Item" type="Node2D"]
+z_index = 10
 script = ExtResource("1_foglj")
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]

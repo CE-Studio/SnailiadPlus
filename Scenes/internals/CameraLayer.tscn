@@ -17,28 +17,15 @@
 [ext_resource type="AudioStream" uid="uid://gmll1o5mkd6q" path="res://Assets/Sounds/Sfx/WeaponSelected2.ogg" id="10_yb2dk"]
 [ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="11_kf05q"]
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_wbo4q"]
-viewport_path = NodePath("SilhouetteViewport")
+[ext_resource type="PackedScene" uid="uid://dd51oitsi3hyq" path="res://Scenes/internals/DarknessLayer.tscn" id="18_adkld"]
 
 [node name="CameraLayer" type="Node2D"]
+z_index = 1000
+z_as_relative = false
 script = ExtResource("1_vjeh6")
 
-[node name="SilhouetteViewport" type="SubViewport" parent="."]
-transparent_bg = true
-handle_input_locally = false
-canvas_cull_mask = 4294966274
-size = Vector2i(400, 240)
-render_target_update_mode = 4
-
-[node name="Camera2D" type="Camera2D" parent="SilhouetteViewport"]
-visible = false
-visibility_layer = 2
+[node name="DarknessLayer" parent="." instance=ExtResource("18_adkld")]
 position = Vector2(200, 120)
-
-[node name="Sprite2D" type="Sprite2D" parent="SilhouetteViewport"]
-visible = false
-texture = SubResource("ViewportTexture_wbo4q")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(200, 120)
@@ -193,6 +180,7 @@ scale = Vector2(2, 2)
 
 [node name="Border" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
+z_index = 10
 position = Vector2(200, 120)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/ScreenBorder.json"
@@ -207,4 +195,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="PauseLayer" type="Node2D" parent="."]
 process_mode = 3
+z_index = 15
 script = ExtResource("9_qjw3k")

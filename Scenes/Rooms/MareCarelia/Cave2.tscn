@@ -21,13 +21,16 @@ point_count = 3
 size = Vector2(1232, 336)
 
 [node name="Cave2" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_u0ncl")
 area_id = 1
+darkness_level = 0.15
 minimap_offset = Vector2i(18, 3)
 tiled_corner = Vector2i(469, 49)
 tiled_range = Vector2i(77, 15)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(0.6, 1)
 
 [node name="Map" type="TileMapLayer" parent="SkyLayer"]
@@ -36,12 +39,14 @@ tile_set = ExtResource("2_cw4nt")
 collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer"]
 tile_set = ExtResource("2_cw4nt")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_set = ExtResource("2_cw4nt")
@@ -67,6 +72,7 @@ my_id = 26
 identifier = &"26"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_map_data = PackedByteArray("AABLAAIAAAAJAGsAAABMAAIAAAANAD4AAABLAAMAAAAJAGsAAABMAAMAAAANAD4AAAA=")
@@ -74,15 +80,21 @@ tile_set = ExtResource("2_cw4nt")
 collision_enabled = false
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
 tile_set = ExtResource("2_cw4nt")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAAKAAIAAAAMAAAAAAARAAIAAAAEABgAAAAWAAIAAAAMAAAAAAAvAAIAAAAMAAAAAAA6AAIAAAAEABgAAAA+AAIAAAAMAAAAAABGAAIAAAAMAAAAAABLAAIAAAACABgAAAAdAAMAAAAMAAAAAABLAAMAAAACABgAAAAlAAQAAAAMAAAAAAAOAAcAAAALAAEAAABDAAsAAAAMAAAAAAAHAAwAAAAMAAAAAAARAAwAAAAMAAAAAAAYAAwAAAAMAAAAAAAxAAwAAAAMAAAAAAA0AAwAAAADABgAAAA2AAwAAAAMAAAAAAA9AAwAAAAMAAAAAAAgAA0AAAADABgAAAAmAA0AAAAMAAAAAAA=")
+tile_set = ExtResource("2_cw4nt")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_cw4nt")
 collision_enabled = false
 

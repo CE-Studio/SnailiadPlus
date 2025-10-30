@@ -41,6 +41,7 @@ func _on_panel_no(_value) -> void:
 func _on_panel_yes(_value) -> void:
 	ProjectSettings.set_setting("game/control/controls", SInput.DEFAULTS.duplicate())
 	layer.menu.save_general()
+	SInput.rebind_all()
 	sfx_default.play()
 	_defocus_panel()
 

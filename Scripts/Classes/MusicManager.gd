@@ -56,16 +56,20 @@ var awaiting_load:bool = false
 var global_vol_mult:float = 1.0
 var global_vol_fade:float = 1.0
 var global_vol_fade_spd:float = 1.0
+var global_vol_fade_delay:float = 0.0
 #endregion
 
 
 func _process(delta: float) -> void:
 	if global_vol_mult != global_vol_fade:
-		var this_delta = delta * global_vol_fade_spd
-		if abs(global_vol_fade - global_vol_mult) < this_delta:
-			global_vol_mult = global_vol_fade
+		if global_vol_fade_delay > 0:
+			global_vol_fade_delay -= delta
 		else:
-			global_vol_mult += this_delta if (global_vol_fade > global_vol_mult) else -this_delta
+			var this_delta = delta * global_vol_fade_spd
+			if abs(global_vol_fade - global_vol_mult) < this_delta:
+				global_vol_mult = global_vol_fade
+			else:
+				global_vol_mult += this_delta if (global_vol_fade > global_vol_mult) else -this_delta
 	
 	if awaiting_load:
 		var all_loaded = true
@@ -173,6 +177,7 @@ func set_global_volume(vol:float) -> void:
 	global_vol_fade = vol
 
 
-func set_fade(fade:float, speed:float = 1.0) -> void:
+func set_fade(fade:float, speed:float = 1.0, delay:float = 0.0) -> void:
 	global_vol_fade = fade
 	global_vol_fade_spd = speed
+	global_vol_fade_delay = delay

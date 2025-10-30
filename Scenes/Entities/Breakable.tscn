@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckorsdyiwbgow"]
+[gd_scene load_steps=6 format=3 uid="uid://ckorsdyiwbgow"]
 
 [ext_resource type="Script" uid="uid://d24ostoyx12ou" path="res://Scripts/Breakable.gd" id="1_btjpg"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_5yyy2"]
+[ext_resource type="Texture2D" uid="uid://rdi8ck7qb61x" path="res://Assets/Images/Missing.png" id="3_xk0s4"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_2b18p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_btjpg"]
 size = Vector2(16, 16)
 
 [node name="Breakable" type="Node2D"]
+z_index = 1
 script = ExtResource("1_btjpg")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -23,5 +26,10 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_xk0s4")
+script = ExtResource("4_2b18p")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_bullet_entered"]

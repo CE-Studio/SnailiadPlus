@@ -26,6 +26,7 @@ static var instance:UICore
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
 @onready var border:JsonSprite2D = $"Border"
+@onready var darkness_layer:DarknessLayer = $"DarknessLayer"
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:PauseLayer = $"PauseLayer"
 @onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
@@ -76,7 +77,6 @@ func instantiate() -> void:
 
 func _process(delta: float) -> void:
 	# Weapon icons
-	#var equipped = GameCore.instance.player.selected_weapon
 	for i in range(len(weapon_icons)):
 		var target_y
 		match weapon_icon_states[i]:
@@ -107,6 +107,9 @@ func _process(delta: float) -> void:
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
+	#ProjectSettings.set_setting("display/window/size/viewport_height", Statics.ASPECT_RATIOS[ratio_id].x)
+	#ProjectSettings.set_setting("display/window/size/viewport_width", Statics.ASPECT_RATIOS[ratio_id].y)
+	#DisplayServer.window_set_size(Statics.ASPECT_RATIOS[ratio_id])
 	var offset = Statics.ASPECT_RATIO_OFFSETS[ratio_id] * 0.5
 	_tl.position = -offset
 	_tr.position = Vector2(400 + offset.x, -offset.y)

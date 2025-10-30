@@ -41,6 +41,7 @@ func _ready():
 	damage_multiplier = 1
 	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
+	light_radius = 32
 	
 	sprite.action = "0.floor.right.idle"
 	

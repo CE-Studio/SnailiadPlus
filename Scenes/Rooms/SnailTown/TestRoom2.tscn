@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://vvs4fclk0j13"]
+[gd_scene load_steps=10 format=4 uid="uid://vvs4fclk0j13"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_qskkn"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_lmwas"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_jjgcd"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_hi3re"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_s1sah"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="7_xjc6k"]
+[ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="8_o6ueh"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjgcd"]
 resource_local_to_scene = true
@@ -15,11 +17,13 @@ _data = {
 point_count = 5
 
 [node name="TestRoom2" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_qskkn")
 minimap_offset = Vector2i(14, 5)
 song_change = 2
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
+z_index = -300
 scroll_scale = Vector2(0, 0.6)
 scroll_offset = Vector2(0, -34)
 
@@ -29,12 +33,14 @@ tile_set = ExtResource("2_lmwas")
 collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="."]
+z_index = -200
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer"]
 tile_set = ExtResource("2_lmwas")
 collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="."]
+z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
 tile_set = ExtResource("2_lmwas")
@@ -86,6 +92,7 @@ my_id = 52
 identifier = &"52"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
+z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
 tile_map_data = PackedByteArray("AAAeABQAAAAOAHEAAAAjABoAAAAOAHEAAAAXABQAAAALAHEAAAASABoAAAALAHEAAAA=")
@@ -93,15 +100,21 @@ tile_set = ExtResource("2_lmwas")
 collision_enabled = false
 
 [node name="FG2Layer" type="Parallax2D" parent="."]
+z_index = 200
 
 [node name="Map" type="TileMapLayer" parent="FG2Layer"]
 tile_set = ExtResource("2_lmwas")
 collision_enabled = false
 
 [node name="EntityLayer" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
 tile_map_data = PackedByteArray("AAAUAAoAAAAJAAQAAAAVAAoAAAAJAAQAAAAWAAoAAAAJAAQAAAAXAAoAAAAJAAQAAAAYAAoAAAAJAAQAAAAZAAoAAAAJAAQAAAAaAAoAAAAJAAQAAAAbAAoAAAAJAAQAAAAcAAoAAAAJAAQAAAAdAAoAAAAJAAQAAAAdAAsAAAAJAAQAAAAcAAsAAAAJAAQAAAAbAAsAAAAJAAQAAAAaAAsAAAAJAAQAAAAZAAsAAAAJAAQAAAAYAAsAAAAJAAQAAAAXAAsAAAAJAAQAAAAWAAsAAAAJAAQAAAAVAAsAAAAJAAQAAAAUAAsAAAAJAAQAAAAVAAwAAAAJAAQAAAAVAA0AAAAJAAQAAAAWAA0AAAAJAAQAAAAXAA0AAAAJAAQAAAAYAA0AAAAJAAQAAAAZAA0AAAAJAAQAAAAaAA0AAAAJAAQAAAAbAA0AAAAJAAQAAAAcAA0AAAAJAAQAAAAcAAwAAAAJAAQAAAAbAAwAAAAJAAQAAAAaAAwAAAAJAAQAAAAZAAwAAAAJAAQAAAAYAAwAAAAJAAQAAAAXAAwAAAAJAAQAAAAWAAwAAAAJAAQAAAAtAAkAAAALAAEAAAAYAAkAAAALAAAAAAAZAA4AAAALAAAAAAAUAA0AAAALAAAAAAAdAAwAAAALAAAAAAAeAAsAAAALAAAAAAAgAAcAAAAPABgAAAAhAAcAAAAPABgAAAAgAAYAAAAPABgAAAAfAAUAAAAPABgAAAAlAB0AAAAPABgAAAA=")
+tile_set = ExtResource("2_lmwas")
+collision_enabled = false
+
+[node name="Map2" type="TileMapLayer" parent="EntityLayer"]
 tile_set = ExtResource("2_lmwas")
 collision_enabled = false
 
@@ -125,3 +138,9 @@ scale = Vector2(1, 3)
 my_id = 1
 exit_room = "uid://jiur51gd4kef"
 exit_transition = 2
+
+[node name="Trigger" parent="." instance=ExtResource("7_xjc6k")]
+position = Vector2(32, 120)
+scale = Vector2(8, 8)
+script = ExtResource("8_o6ueh")
+achievement = 19

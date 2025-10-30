@@ -9,6 +9,7 @@
 size = Vector2(24, 13)
 
 [node name="NPC" type="Node2D"]
+z_index = 6
 script = ExtResource("1_4a2w1")
 animation_set = -1
 metadata/_custom_type_script = "uid://dh1qf0lsli2pl"

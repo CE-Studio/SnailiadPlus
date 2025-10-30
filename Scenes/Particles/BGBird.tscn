@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_pel1u"]
 
 [node name="BGBird" type="Node2D" node_paths=PackedStringArray("sprite")]
+z_index = 5
 script = ExtResource("1_ypp7s")
 sprite = NodePath("JsonSprite2D")
 metadata/_custom_type_script = "uid://bjoxx2waxewlf"

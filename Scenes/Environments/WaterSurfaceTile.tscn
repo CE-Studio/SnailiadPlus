@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wwl8c"]
 
 [node name="WaterSurfaceTile" type="Sprite2D"]
+z_index = 10
 script = ExtResource("1_oh6ol")
 texture_path = "res://Assets/Images/Environments/WaterSurface.json"
 load_autoplay = Array[String](["anim0", "anim1", "anim2"])

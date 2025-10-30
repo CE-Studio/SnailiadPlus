@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_0n57l"]
 
 [node name="WaterArea" type="Area2D"]
+z_index = 250
 collision_layer = 0
 collision_mask = 68
 script = ExtResource("1_11elw")

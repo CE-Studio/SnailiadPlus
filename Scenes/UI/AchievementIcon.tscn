@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://p7n0mc1vnka6" path="res://Assets/Images/UI/AchievementIcons.png" id="4_gk2pu"]
 
 [node name="AchivevementIcon" type="Sprite2D"]
+y_sort_enabled = true
 script = ExtResource("1_bca4f")
 texture_path = "res://Assets/Images/UI/AchievementFrame.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

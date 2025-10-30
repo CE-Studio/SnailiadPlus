@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Snelk.ogg-b138486598575e02913d30e1ccdee710.og
 [params]
 
 loop=true
-loop_offset=0.0
+loop_offset=4.0
 bpm=0.0
 beat_count=0
 bar_beats=4

@@ -81,6 +81,8 @@ func spawn() -> void:
 	
 	if direction == Statics.DirsCardinal.DOWN or direction == Statics.DirsCardinal.UP:
 		box_group.rotation_degrees = 90.0
+	
+	UICore.instance.darkness_layer.add_source(self, 40)
 
 
 func _check_boss_locked() -> bool:

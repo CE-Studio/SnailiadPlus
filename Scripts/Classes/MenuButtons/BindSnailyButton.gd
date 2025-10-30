@@ -23,6 +23,7 @@ var slots_moused_over:int = 0:
 	set(value):
 		slots_moused_over = value
 		mouse_over = slots_moused_over > 0
+var scroll_state:int = 0
 
 @onready var text:SnailyText = $"PanelContainer/HBoxContainer/Label/MarginContainer/SnailyText"
 @onready var bind_frames:Array[PanelContainer] = [
@@ -58,24 +59,41 @@ func _process(delta: float) -> void:
 		return
 	
 	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus:
-		if focused:
+		if focused and parent_layer.meta_info[1] <= 0:
 			if (SInput.check_input(SInput.Inputs.UI_ACCEPT, true)
 			or (mouse_over and SInput.check_input(SInput.Inputs.UI_CLICK, true))):
 				parent_layer.meta_info.append(self)
 				pressed.emit(bind)
 			else:
-				if SInput.check_input(SInput.Inputs.LEFT, true):
+				if _check_left() and scroll_state != -1:
 					sfx_focus.play()
 					focus_left()
-				if SInput.check_input(SInput.Inputs.RIGHT, true):
+					scroll_state = -1
+				if _check_right() and scroll_state != 1:
 					sfx_focus.play()
 					focus_right()
+					scroll_state = 1
+		if ((scroll_state == -1 and not Input.is_action_pressed("ui_left") and not SInput.input_pressed(SInput.Inputs.LEFT))
+		or (scroll_state == 1 and not Input.is_action_pressed("ui_right") and not SInput.input_pressed(SInput.Inputs.RIGHT))):
+			scroll_state = 0
 		
 		elapsed += delta * FOCUS_FLASH_SPEED
 		for i in range(bind_icons.size()):
 			bind_icons[i].modulate = Color.WHITE
 			if i == parent_layer.meta_info[0] and focused:
 				bind_icons[i].modulate = Color.WHITE.lerp(focus_flash_color, abs(sin(elapsed)))
+
+
+func _check_left() -> bool:
+	var norm:bool = SInput.just_pressed("left", true)
+	var ui:bool = SInput.just_pressed("ui_left", true)
+	return norm or ui
+
+
+func _check_right() -> bool:
+	var norm:bool = SInput.just_pressed("right", true)
+	var ui:bool = SInput.just_pressed("ui_right", true)
+	return norm or ui
 
 
 func setup_bind_icons() -> void:

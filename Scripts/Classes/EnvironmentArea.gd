@@ -3,6 +3,8 @@ class_name EnvironmentArea
 extends Area2D
 
 #region Variables
+const PLAYER_CHECK_TOLERANCE:float = 18.0
+
 var spawn_grace_frames = 2
 var contained_bodies:Array = []
 var boxes:Array[CollisionShape2D] = []
@@ -24,6 +26,22 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if spawn_grace_frames > 0:
 		spawn_grace_frames -= 1
+		if spawn_grace_frames == 0:
+			_double_check_player_collision.call_deferred()
+
+
+func _double_check_player_collision() -> void:
+	var player:Player = GameCore.instance.player
+	#if contained_bodies.has(player.body):
+	#	var closest:Vector2 = get_closest_point(player.position)[0]
+	#	var distance:float = closest.distance_to(player.position)
+	#	if distance > PLAYER_CHECK_TOLERANCE:
+	#		var p_index:int = contained_bodies.find(player.body)
+	#		contained_bodies.remove_at(p_index)
+	if contained_bodies.has(player.body):
+		if not point_in_bounds(player.position):
+			var p_index:int = contained_bodies.find(player.body)
+			contained_bodies.remove_at(p_index)
 
 
 func update_shader_visibility() -> void:
@@ -100,3 +118,16 @@ func get_closest_point(in_point:Vector2) -> Array:
 			closest_box = box
 			out_point = in_point + (shortest_distance * normal_dir * (1 if match_edge else -1))
 	return [ out_point, normal_dir, closest_box ]
+
+
+func point_in_bounds(in_point:Vector2) -> bool:
+	var within:bool = false
+	for box in boxes:
+		var rect:RectangleShape2D = box.shape
+		var pos:Vector2 = box.global_position
+		var size:Vector2 = rect.size * 0.5
+		var in_x:bool = in_point.x > pos.x - size.x and in_point.x < pos.x + size.x
+		var in_y:bool = in_point.y > pos.y - size.y and in_point.y < pos.y + size.y
+		if in_x and in_y:
+			within = true
+	return within

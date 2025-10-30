@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dykn8gwnf0w8s"]
+
+[ext_resource type="Texture2D" uid="uid://cl17247un10gy" path="res://Assets/Images/Particles/Transformation.png" id="1_cx3et"]
+[ext_resource type="Script" uid="uid://c70574uyipvg0" path="res://Scripts/Particles/ShellUpEffect.gd" id="1_rp4ed"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_w5vqj"]
+
+[node name="ShellUpEffect" type="Node2D"]
+script = ExtResource("1_rp4ed")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_cx3et")
+hframes = 15
+vframes = 6
+frame = 39
+script = ExtResource("2_w5vqj")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
