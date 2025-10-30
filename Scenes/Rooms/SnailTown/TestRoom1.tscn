@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://uef0mmwa2tuq"]
+[gd_scene load_steps=10 format=4 uid="uid://uef0mmwa2tuq"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
+[ext_resource type="Resource" uid="uid://c63fxwt6s4tf1" path="res://CusceneScripts/testcut.dialogue" id="2_ntfxy"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_u3nms"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
@@ -18,6 +19,7 @@ point_count = 1
 [node name="TestRoom1" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_ropfo")
+cutscene_script = ExtResource("2_ntfxy")
 minimap_offset = Vector2i(16, 5)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]
@@ -139,3 +141,5 @@ position = Vector2(168, 8.88178e-16)
 rotation = -1.57079
 scale = Vector2(1, 3)
 my_id = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

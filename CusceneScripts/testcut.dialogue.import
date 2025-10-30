@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c63fxwt6s4tf1"
+path="res://.godot/imported/testcut.dialogue-9c52cfbaac52ded23e6dcc6157558f30.tres"
+
+[deps]
+
+source_file="res://CusceneScripts/testcut.dialogue"
+dest_files=["res://.godot/imported/testcut.dialogue-9c52cfbaac52ded23e6dcc6157558f30.tres"]
+
+[params]
+
+defaults=true

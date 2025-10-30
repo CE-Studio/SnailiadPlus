@@ -1,9 +1,0 @@
-
-
-func run():
-	if player.can_perform_action("jump"):
-		player.perform_action("jump")
-		player.speak("cut.player.jump")
-		sleep(3)
-	else:
-		sleep(10)
