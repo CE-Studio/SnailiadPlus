@@ -33,7 +33,9 @@ func _on_save_spawn_pressed(_value) -> void:
 		load_pos = str_to_var("Vector2i" + load_pos)
 	Statics.load_room = Statics.ROOM_PATH % str(Statics.current_profile["save_room"])
 	Statics.load_coords = load_pos
-	CutsceneController.load_flags(Statics.current_profile["cutscene_flags"])
+	var flags:Array[StringName] = []
+	flags.assign(Statics.current_profile["cutscene_flags"])
+	CutsceneController.load_flags(flags)
 	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
 
 
