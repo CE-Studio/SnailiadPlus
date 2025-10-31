@@ -47,7 +47,10 @@ func _spawn(_data:Array) -> void:
 		dusts.append(Statics.spawn_particle("Dust", Room.Layers.GROUND, position))
 		dusts[i].sprite.action = TYPES[type]
 		radii.append(LEGACY_START_RADIUS if legacy_anim else DYNAMIC_MAX_RADIUS)
-	_tick_legacy(0.0)
+	if legacy_anim:
+		_tick_legacy(0.0)
+	else:
+		_tick_dynamic(0.0)
 	if fade_music:
 		GameCore.instance.music_manager.set_global_volume(0.0)
 
@@ -87,6 +90,7 @@ func _tick_dynamic(_delta:float) -> void:
 			radii[i] = lerpf(DYNAMIC_MAX_RADIUS, DYNAMIC_MIN_RADIUS, 1 - pow(1 - this_radius_mult, 5))
 			dusts[i].position = position + (Vector2(cos(angle), sin(angle)) * radii[i] * dynamic_main_mult)
 			rand_i = (rand_i + 1) % DUST_COUNT
+			dusts[i].visible = radii[i] != DYNAMIC_MAX_RADIUS
 
 
 func _despawn() -> void:

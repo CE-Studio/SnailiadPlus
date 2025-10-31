@@ -48,7 +48,7 @@ collision_enabled = false
 z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer"]
-tile_map_data = PackedByteArray("AAAIAAUAAAAAABIAAAAIAAEAAAAAABIAAAAZAAUAAAAJAFsAAAAZAAkAAAALAFsAAAAaAAkAAAANAD4AAAAbAAkAAAANAD4AAAAaAAUAAAANAD4AAAAbAAUAAAANAD4AAAA=")
+tile_map_data = PackedByteArray("AAAIAAUAAAAAABIAAAAIAAEAAAAAABIAAAA=")
 tile_set = ExtResource("2_ipenf")
 collision_enabled = false
 
@@ -71,7 +71,7 @@ location_id = 20
 z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer"]
-tile_map_data = PackedByteArray("AAAZAAYAAAAJAFsAAAAZAAcAAAALAFsAAAAZAAgAAAALAFsAAAAaAAcAAAANAD4AAAAaAAYAAAANAD4AAAAbAAYAAAANAD4AAAAbAAcAAAANAD4AAAAaAAgAAAANAD4AAAAbAAgAAAANAD4AAAA=")
+tile_map_data = PackedByteArray("AAAZAAYAAAAKANMAAAAZAAcAAAAKANQAAAAZAAgAAAAKANUAAAAaAAcAAAALANQAAAAaAAYAAAALANMAAAAbAAYAAAAMANMAAAAbAAcAAAAMANQAAAAaAAgAAAALANUAAAAbAAgAAAAMANUAAAA=")
 tile_set = ExtResource("2_ipenf")
 collision_enabled = false
 

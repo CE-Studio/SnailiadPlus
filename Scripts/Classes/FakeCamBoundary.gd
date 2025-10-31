@@ -29,6 +29,7 @@ extends Node2D
 			clampi(value.x, -1, 1),
 			clampi(value.y, -1, 1)
 		)
+@export var offset_dir_from_entry_dir:bool = false
 
 const BUFFER_HORIZ:float = 12.5 * 16.0
 const BUFFER_VERT:float = 7.5 * 16.0
@@ -68,7 +69,13 @@ func instance() -> void:
 func offset_position_for_ratio() -> void:
 	var current_ratio = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 	var offset = Statics.ASPECT_RATIO_OFFSETS[current_ratio]
-	position = origin + (offset * aspect_offset * 0.5)
+	var a_offset:Vector2i = aspect_offset
+	if offset_dir_from_entry_dir:
+		if axis:
+			a_offset = Vector2i.DOWN if GameCore.instance.player.position.y > position.y else Vector2i.UP
+		else:
+			a_offset = Vector2i.LEFT if GameCore.instance.player.position.x > position.x else Vector2i.RIGHT
+	position = origin + (offset * a_offset * 0.5)
 
 
 func update_marker() -> void:
