@@ -260,6 +260,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				iceball.ccw = true
 				layer_ground.add_child(iceball)
 			
+			Vector2i(3, 1): # Ghost dandelion generator
+				var gen:GeneratorGhostball = load("res://Scenes/Entities/Enemies/Generators/GeneratorGhostball.tscn").instantiate()
+				gen.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(gen)
+			
 			Vector2i(7, 1): # Shellbreaker
 				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
 				shellbreaker.position = _tile_coords_to_vector_pos(tile)
@@ -339,6 +344,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
 				muck.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(muck)
+			
+			Vector2i(13, 24): # Ghost dandelion
+				var ghostball:Ghostball = load("res://Scenes/Entities/Enemies/Ghostball.tscn").instantiate()
+				ghostball.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(ghostball)
 			
 			Vector2i(15, 24): # Black floatspike
 				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()

@@ -436,7 +436,15 @@ static func compare_versions(compare:Array, against:Array) -> int:
 
 
 #region Player state functions
-static func get_shell_level() -> int:
+# Modes -  0 - level (0-3)
+#          1 - collective (0-7, accounts for all active shells)
+static func get_shell_level(mode:int = 0) -> int:
+	if mode == 1:
+		var total:int = 0
+		total += 1 if check_item(Item.ItemTypes.ICE_SHELL) else 0
+		total += 2 if check_item(Item.ItemTypes.GRAVITY_SHELL) else 0
+		total += 4 if check_item(Item.ItemTypes.METAL_SHELL) else 0
+		return total
 	if check_item(Item.ItemTypes.METAL_SHELL):
 		return 3
 	if check_item(Item.ItemTypes.GRAVITY_SHELL):

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_xvehh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
-size = Vector2(16, 16)
+size = Vector2(18, 18)
 
 [node name="PlayerBulletBC" type="Node2D"]
 z_index = 50
@@ -33,6 +33,7 @@ bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
+rect = Rect2(-11.249999, -11.249999, 22.499998, 22.499998)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("3_kd8x0")

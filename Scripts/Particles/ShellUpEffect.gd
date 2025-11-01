@@ -102,5 +102,5 @@ func _despawn() -> void:
 		Statics.spawn_particle("Transformation", Room.Layers.GROUND, position, [TYPES[type]])
 	if restore_input:
 		SInput.read_inputs = true
-	GameCore.instance.player.update_shell_displayed(update_player_shell)
+	GameCore.instance.player.update_shell_displayed(update_player_shell, 0 if Statics.stack_shells else 2)
 	queue_free()

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvyxfdkuw76ek"]
+
+[ext_resource type="Script" uid="uid://cecjqxqc8l6we" path="res://Scripts/Enemies/Generators/GeneratorGhostball.gd" id="1_qmtwr"]
+[ext_resource type="Texture2D" uid="uid://2lg8dqmi62ui" path="res://Assets/Images/Entities/Generators.png" id="2_wisw2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3f02"]
+size = Vector2(16, 16)
+
+[node name="GeneratorGhostball" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_qmtwr")
+make_sound_on_ping = false
+invulnerable = true
+can_damage = false
+metadata/_custom_type_script = "uid://cai477htwvosf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g3f02")
+debug_color = Color(0.564706, 0.564706, 0.564706, 0.262745)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_wisw2")
+hframes = 4
+frame = 2
