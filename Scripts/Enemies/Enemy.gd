@@ -264,12 +264,35 @@ func _on_bullet_exited(_area) -> void:
 		intersecting_ebullets.remove_at(intersecting_ebullets.find(bullet))
 
 
-func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float) -> EnemyBullet:
+func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float, _play_sound:bool = true) -> EnemyBullet:
 	var bullet:EnemyBullet = _scene.instantiate()
 	bullet.position = position
 	Statics.active_room.layer_ground.add_child(bullet)
-	bullet._spawn(_direction, _speed)
+	bullet._spawn(_direction, _speed, _play_sound)
 	return bullet
+
+
+func _shoot_360_cluster(_scene:PackedScene, _init_angle:float, _speed:float, _count:int) -> EnemyBullet:
+	var return_bullet:EnemyBullet = null
+	var inc_amount:float = TAU / _count
+	for i in range(_count):
+		var direction:Vector2 = Vector2(cos(_init_angle), sin(_init_angle))
+		var bullet = _shoot(_scene, direction, _speed, i == 0)
+		_init_angle += inc_amount
+		if i == 0:
+			return_bullet = bullet
+	return return_bullet
+
+
+func _shoot_360_cluster_rotary(_scene:PackedScene, _direction:Vector2, _speed:float, _count:int) -> EnemyBullet:
+	var return_bullet:EnemyBullet = null
+	var inc_amount:float = TAU / _count
+	for i in range(_count):
+		var bullet = _shoot(_scene, _direction, _speed, i == 0)
+		_direction.y += inc_amount
+		if i == 0:
+			return_bullet = bullet
+	return return_bullet
 
 
 func _damage(health_lost:int, sound:bool = true) -> void:

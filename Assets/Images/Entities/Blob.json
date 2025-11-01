@@ -346,6 +346,178 @@
 				[3, 1, true, false],
 				[3, 1, true, false]
 			]
+		},
+		"devil_idle_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, false, false]
+			]
+		},
+		"devil_idle_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, true, false]
+			]
+		},
+		"devil_jump_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, false, false]
+			]
+		},
+		"devil_jump_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, true, false]
+			]
+		},
+		"devil_reflect_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false]
+			]
+		},
+		"devil_reflect_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false]
+			]
+		},
+		"devil_quiver_left": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "devil_idle_left",
+			"frames": [
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false],
+				[3, 2, false, false]
+			]
+		},
+		"devil_quiver_right": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "devil_idle_right",
+			"frames": [
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false],
+				[0, 2, true, false],
+				[0, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[1, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[2, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false],
+				[3, 2, true, false]
+			]
 		}
 	}
 }

@@ -196,6 +196,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 			
+			Vector2i(6, 0): # Devilblob
+				var blob:BlobDevil = load("res://Scenes/Entities/Enemies/BlobDevil.tscn").instantiate()
+				blob.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(blob)
+			
 			Vector2i(7, 0): # Blue chirpy
 				var chirpy:ChirpyCommon = load("res://Scenes/Entities/Enemies/ChirpyCommon.tscn").instantiate()
 				chirpy.position = _tile_coords_to_vector_pos(tile)

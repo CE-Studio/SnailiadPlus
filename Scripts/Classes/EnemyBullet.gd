@@ -40,10 +40,11 @@ var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
 #endregion
 
 
-func _spawn(dir:Vector2, speed:float) -> void:
+func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	normalized_dir = dir
 	velocity_init = speed
-	sfx.play()
+	if play_sound:
+		sfx.play()
 	area.connect("area_entered", _on_pbullet_collision)
 	area.connect("body_entered", _on_body_entered)
 	area.connect("body_exited", _on_body_exited)
