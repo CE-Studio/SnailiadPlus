@@ -27,7 +27,10 @@ func _ready() -> void:
 	
 	hop_ptr = int(position.x) % HOP_HEIGHTS.size()
 	hop_timeout = HOP_TIMEOUTS[hop_ptr] * 0.3333
-	facing_right = randf() >= 0.5
+	if not display_mode:
+		facing_right = GameCore.instance.player.position.x > position.x
+	else:
+		facing_right = randf() >= 0.5
 	play_anim("idle")
 
 

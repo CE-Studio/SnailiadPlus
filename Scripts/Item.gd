@@ -58,7 +58,8 @@ func _ready() -> void:
 		return
 	if (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
 	or character_reqs & (1 << int(Statics.current_profile["character"])) == 0
-	or Statics.check_location_collected(location_id)):
+	or Statics.check_location_collected(location_id)
+	or type == ItemTypes.NONE):
 		queue_free()
 		return
 	

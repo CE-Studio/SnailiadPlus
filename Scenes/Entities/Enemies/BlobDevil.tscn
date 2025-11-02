@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://btr64w8ghrsic"]
+
+[ext_resource type="Script" uid="uid://duefot2lmjmi8" path="res://Scripts/Enemies/BlobDevil.gd" id="1_kx22m"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_acbkx"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_j4ypy"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_f1sv1"]
+[ext_resource type="Texture2D" uid="uid://t51kmln17iof" path="res://Assets/Images/Entities/Blob.png" id="5_18wyy"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_x7jea"]
+[ext_resource type="AudioStream" uid="uid://dg0ue34dycuir" path="res://Assets/Sounds/Sfx/Enemy/BlobJump.ogg" id="7_t241x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
+size = Vector2(14, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
+shader = ExtResource("4_f1sv1")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="BlobDevil" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_kx22m")
+max_health = 10000
+attack = 12
+defense = 30
+health_orb_value = 2
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yl0hf")
+debug_color = Color(0.976029, 0, 0.414963, 0.42)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_pfaec")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_acbkx")
+script = ExtResource("3_j4ypy")
+texture_path = "res://Assets/Images/Entities/Blob.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_5ic2g")
+texture = ExtResource("5_18wyy")
+hframes = 4
+vframes = 4
+frame = 8
+script = ExtResource("6_x7jea")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_t241x")
+bus = &"Sfx"

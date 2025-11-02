@@ -48,16 +48,16 @@ func _ready() -> void:
 	super.spawn()
 	
 	if direction == Statics.DirsSurface.NONE:
-		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16)):
+		if Statics.solid_at_world_pos(position + (Vector2.DOWN * 16), true):
 			set_dir(Statics.DirsSurface.FLOOR)
 			position.y -= Statics.FRAC_8
-		elif Statics.solid_at_world_pos(position + (Vector2.RIGHT * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.RIGHT * 16), true):
 			set_dir(Statics.DirsSurface.RWALL)
 			position.x -= Statics.FRAC_8
-		elif Statics.solid_at_world_pos(position + (Vector2.UP * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.UP * 16), true):
 			set_dir(Statics.DirsSurface.CEILING)
 			position.y += Statics.FRAC_8
-		elif Statics.solid_at_world_pos(position + (Vector2.LEFT * 16)):
+		elif Statics.solid_at_world_pos(position + (Vector2.LEFT * 16), true):
 			set_dir(Statics.DirsSurface.LWALL)
 			position.x += Statics.FRAC_8
 		else:

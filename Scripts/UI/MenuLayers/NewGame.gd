@@ -67,7 +67,7 @@ func _on_character_changed(new_char:int) -> void:
 	character = new_char
 
 
-func _on_start_pressed(value) -> void:
+func _on_start_pressed(_value) -> void:
 	var world_spawn = Statics.WORLD_SPAWN[character]
 	Statics.current_profile_id = pro_id
 	match pro_id:
@@ -83,4 +83,7 @@ func _on_start_pressed(value) -> void:
 	layer.menu.save_profile(pro_id)
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
+	var flags:Array[StringName] = []
+	flags.assign(Statics.current_profile["cutscene_flags"])
+	CutsceneController.load_flags(flags)
 	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")

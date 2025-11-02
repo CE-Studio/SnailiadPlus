@@ -79,6 +79,8 @@ var organized_markers:Dictionary = {
 	"p_markers": []
 }
 static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
+static var empty_locations:Array[int] = [] # Set up in Preloader.gd
+static var hide_empty_locations:bool = true
 var marker_positions:Array = []
 var player_marker_sprites:Array = []
 @export var subscreen_mode:bool = false
@@ -311,7 +313,8 @@ func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:boo
 				elif marker_positions[array_pos] >= 0:
 					var marker = active_markers[marker_positions[array_pos]]
 					if (marker.type != MarkerTypes.ITEM
-					or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]))):
+					or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]) and
+					(not empty_locations.has(marker.data[0]) or not hide_empty_locations))):
 						highlight = true
 				
 				if highlight and player_marker.action == "player_normal":
@@ -399,6 +402,7 @@ func update_markers(target_cells:Array = []) -> void:
 				marker.modulate.a = 1.0
 			
 			if marker.type == MarkerTypes.ITEM:
+				marker.visible = not empty_locations.has(marker.data[0]) or not hide_empty_locations
 				var collected:bool = Statics.check_location_collected(marker.data[0])
 				if marker.sprite.action == "item_normal" and collected:
 					marker.sprite.action = "item_collected"

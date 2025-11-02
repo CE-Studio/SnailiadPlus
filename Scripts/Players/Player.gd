@@ -268,7 +268,12 @@ func _ready():
 	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	health = max_health
 	
-	shell_level_displayed = Statics.get_shell_level()
+	#var shell_mode = 0 if Statics.stack_shells else 1
+	#shell_level_displayed = Statics.get_shell_level()
+	if Statics.stack_shells:
+		shell_level_displayed = 1 << (Statics.get_shell_level() - 1)
+	else:
+		shell_level_displayed = Statics.get_shell_level(1)
 
 
 #region Movement
@@ -993,8 +998,18 @@ func _play_anim(action:String):
 
 # Externally called; updates which animation set the player uses based on shell level
 # Input  - the level of shell to display
-func update_shell_displayed(new_shell:int) -> void:
-	shell_level_displayed = new_shell
+#        - the way in which to use the new shell level where
+#               0 - Set bit (sets the displayed shell to the new value via bit index)
+#               1 - Set explicit (sets the displayed shell to the new value, as is)
+#               2 - Toggle (Flips the specified bit)
+func update_shell_displayed(new_shell:int, mode:int) -> void:
+	match mode:
+		0:
+			shell_level_displayed = 1 << (new_shell - 1)
+		1:
+			shell_level_displayed = new_shell
+		2:
+			shell_level_displayed = shell_level_displayed ^ new_shell
 	_play_anim("idle")
 
 

@@ -172,6 +172,13 @@ enum WorldFlags {
 	DEFEATED_BOSS3,
 	DEFEATED_BOSS4,
 }
+
+enum CutsceneFlags {
+	PLACEHOLDER0,
+	PLACEHOLDER1,
+	PLACEHOLDER2,
+	PLACEHOLDER3,
+}
 #endregion
 
 
@@ -290,10 +297,16 @@ static func save_profile(iprofile:int) -> void:
 	var file := FileAccess.open("user://" + save_prefix + "/Profile" + str(iprofile) + ".json", FileAccess.WRITE_READ)
 	match iprofile:
 		1:
+			if iprofile == current_profile_id:
+				data_profile1["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
 		2:
+			if iprofile == current_profile_id:
+				data_profile2["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
 		3:
+			if iprofile == current_profile_id:
+				data_profile3["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
 	file.close()
 
@@ -423,7 +436,15 @@ static func compare_versions(compare:Array, against:Array) -> int:
 
 
 #region Player state functions
-static func get_shell_level() -> int:
+# Modes -  0 - level (0-3)
+#          1 - collective (0-7, accounts for all active shells)
+static func get_shell_level(mode:int = 0) -> int:
+	if mode == 1:
+		var total:int = 0
+		total += 1 if check_item(Item.ItemTypes.ICE_SHELL) else 0
+		total += 2 if check_item(Item.ItemTypes.GRAVITY_SHELL) else 0
+		total += 4 if check_item(Item.ItemTypes.METAL_SHELL) else 0
+		return total
 	if check_item(Item.ItemTypes.METAL_SHELL):
 		return 3
 	if check_item(Item.ItemTypes.GRAVITY_SHELL):

@@ -1,10 +1,10 @@
 extends EnemyBullet
 
 
-func _spawn(dir:Vector2, speed:float) -> void:
+func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	if dir == Vector2.ZERO:
 		dir = Vector2.RIGHT
-	super._spawn(dir, speed)
+	super._spawn(dir, speed, play_sound)
 	velocity = speed
 	velocity_init = speed
 	#region Direction animation

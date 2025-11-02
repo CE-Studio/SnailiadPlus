@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b0pahbkyyhrbp"]
+[gd_scene load_steps=11 format=4 uid="uid://b0pahbkyyhrbp"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_iop1f"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_04gch"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_hbv0h"]
 [ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="7_go4si"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="8_yqjip"]
+[ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="9_yqjip"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -62,6 +63,11 @@ position = Vector2(392, 24)
 position = Vector2(160, 72)
 my_id = 35
 surface = 3
+
+[node name="Item" parent="GroundLayer" instance=ExtResource("9_yqjip")]
+position = Vector2(160, 128)
+counted_in_percentage = false
+location_id = 23
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

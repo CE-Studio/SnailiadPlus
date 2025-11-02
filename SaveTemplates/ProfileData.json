@@ -10,6 +10,7 @@
 	"equipped_weapons": 0,
 	"bosses": [ true, true, true, true ],
 	"world_flags": [ ],
+	"cutscene_flags": [ ],
 	"item_rate": 0.0,
 	"map_tiles": [ ],
 	"r_shuffle_level": -1,
