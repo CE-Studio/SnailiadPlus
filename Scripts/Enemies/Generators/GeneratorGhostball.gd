@@ -28,7 +28,7 @@ func _ready() -> void:
 	spr.modulate.a = 0.0
 	pointer = abs(floori(position.x * 4 + position.y * 20)) % TIMEOUTS.size()
 	timeout = TIMEOUTS[pointer] * BASE_TIMEOUT * (0.5 if hard_mode else 1.0)
-	timeout = roundi(timeout) % (abs(roundi(position.x)) % 20)
+	timeout = roundi(timeout) % ((abs(ceili(position.x)) % 20) + 1)
 
 
 func _physics_process(delta: float) -> void:
