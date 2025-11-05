@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu7tr6nhyjh1i"
-path="res://.godot/imported/AngryBlock.png-bb2712ff27c145efc5a2e123f187106e.ctex"
+uid="uid://dkf8p163fny4q"
+path="res://.godot/imported/AngryblockFace.png-4529ebf0e621ae6c4d9bb1d5aa7ad707.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/AngryBlock.png"
-dest_files=["res://.godot/imported/AngryBlock.png-bb2712ff27c145efc5a2e123f187106e.ctex"]
+source_file="res://Assets/Images/Entities/AngryblockFace.png"
+dest_files=["res://.godot/imported/AngryblockFace.png-4529ebf0e621ae6c4d9bb1d5aa7ad707.ctex"]
 
 [params]
 

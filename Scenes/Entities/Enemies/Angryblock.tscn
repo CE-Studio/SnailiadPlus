@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://8qd3nw7f18jy"]
 
-[ext_resource type="Script" uid="uid://bc020ygx3nmwf" path="res://Scripts/Enemies/AngryBlock.gd" id="1_bi7n5"]
+[ext_resource type="Script" uid="uid://bc020ygx3nmwf" path="res://Scripts/Enemies/Angryblock.gd" id="1_bi7n5"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_bi7n5"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_qnqel"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_5npqa"]
-[ext_resource type="Texture2D" uid="uid://bu7tr6nhyjh1i" path="res://Assets/Images/Entities/AngryBlock.png" id="5_bi7n5"]
+[ext_resource type="Texture2D" uid="uid://bu7tr6nhyjh1i" path="res://Assets/Images/Entities/Angryblock.png" id="5_bi7n5"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_y32f1"]
-[ext_resource type="Texture2D" uid="uid://dkf8p163fny4q" path="res://Assets/Images/Entities/AngryBlockFace.png" id="7_qnqel"]
+[ext_resource type="Texture2D" uid="uid://dkf8p163fny4q" path="res://Assets/Images/Entities/AngryblockFace.png" id="7_qnqel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
 size = Vector2(96, 64)
@@ -51,8 +51,8 @@ rect = Rect2(-19.999998, -19.999998, 39.999996, 39.999996)
 [node name="Body" type="Sprite2D" parent="."]
 material = ExtResource("2_bi7n5")
 script = ExtResource("3_qnqel")
-texture_path = "res://Assets/Images/Entities/AngryBlock.json"
-load_autoplay = Array[String](["100"])
+texture_path = "res://Assets/Images/Entities/Angryblock.json"
+load_autoplay = Array[String](["0"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Body"]
@@ -65,7 +65,7 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="Face" type="Sprite2D" parent="."]
 material = ExtResource("2_bi7n5")
 script = ExtResource("3_qnqel")
-texture_path = "res://Assets/Images/Entities/AngryBlockFace.json"
+texture_path = "res://Assets/Images/Entities/AngryblockFace.json"
 load_autoplay = Array[String](["idle"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 

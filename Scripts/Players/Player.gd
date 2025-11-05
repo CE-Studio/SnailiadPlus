@@ -72,6 +72,7 @@ var override_box_disable:bool
 var environment_exit_override:int = 0
 var respawn_i_frames:float = 0.0
 var outer_allowed:bool = false
+var just_jumped:int = 0
 var shell_level_displayed:int = 0
 #endregion
 
@@ -578,6 +579,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			AnimStates.SHELL:
 				_play_anim("turnshell")
 	
+	just_jumped = clampi(just_jumped - 1, 0, 10)
 	if grounded:
 		if ((SInput.input_just_pressed(SInput.Inputs.JUMP) or
 		(SInput.input_pressed(SInput.Inputs.JUMP) and (jump_buffer_counter < jump_buffer))) and 
@@ -585,6 +587,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			if shelled:
 				_toggle_shell()
 			rel_vel.y = _jump_decide_state()
+			outer_allowed = false
+			just_jumped = 3
 		elif not body.is_on_floor():
 			if _check_ground_casts()[0]:
 				# Snap to ground with another move call
@@ -822,7 +826,7 @@ func _can_round_corner_outer() -> bool:
 		return false
 	if not _check_ability(can_swap_gravity) and not _check_ability(can_round_outer_corners):
 		return false
-	if not outer_allowed:
+	if not outer_allowed or just_jumped:
 		return false
 	var can_outer:bool = _check_ability(can_round_opposite_outer_corners)
 	if gravity_dir == _get_dir_adjacent_cw(home_gravity):
@@ -1149,7 +1153,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 		if shelled:
 			_set_shell(false)
 		# Disabled gravity shock
-		if not _check_ability(stick_to_walls_when_hurt) and gravity_dir != home_gravity:
+		if not _check_ability(stick_to_walls_when_hurt) and gravity_dir != home_gravity and not _check_ceil_casts()[0]:
 			if gravity_dir != _get_dir_opposite(home_gravity):
 				_push_from_wall()
 			_set_direction(home_gravity, facing_left)

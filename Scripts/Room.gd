@@ -410,7 +410,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				layer_ground.add_child(snelk)
 			
 			Vector2i(11, 30): # Angry block
-				var block:AngryBlock = load("res://Scenes/Entities/Enemies/AngryBlock.tscn").instantiate()
+				var block:Angryblock = load("res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()
 				block.position = _tile_coords_to_vector_pos(tile) + Vector2(40, 24)
 				layer_ground.add_child(block)
 			

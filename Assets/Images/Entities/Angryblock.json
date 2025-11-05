@@ -1,9 +1,9 @@
 {
 	"tiles": [1, 3],
 	"layerize": false,
-	"meta": {},
+	"meta": { "0": 60, "1": 30 },
 	"animations": {
-		"100": {
+		"0": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
@@ -12,16 +12,7 @@
 				[0, 0, false, false]
 			]
 		},
-		"75": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[0, 0, false, false]
-			]
-		},
-		"50": {
+		"1": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
@@ -30,7 +21,7 @@
 				[0, 1, false, false]
 			]
 		},
-		"25": {
+		"2": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,

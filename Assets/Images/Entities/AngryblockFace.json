@@ -24,11 +24,12 @@
 			]
 		},
 		"U_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 0, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -53,11 +54,12 @@
 			]
 		},
 		"UR_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[0, 1, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -82,11 +84,12 @@
 			]
 		},
 		"R_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[1, 1, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -111,11 +114,12 @@
 			]
 		},
 		"DR_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 1, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -140,11 +144,12 @@
 			]
 		},
 		"D_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[0, 2, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -169,11 +174,12 @@
 			]
 		},
 		"DL_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[1, 2, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -198,11 +204,12 @@
 			]
 		},
 		"L_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[2, 2, false, false],
 				[1, 0, false, false],
 			]
 		},
@@ -227,11 +234,12 @@
 			]
 		},
 		"UL_prep": {
-			"fps": 12,
+			"fps": 2,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
+				[0, 3, false, false],
 				[1, 0, false, false],
 			]
 		},
