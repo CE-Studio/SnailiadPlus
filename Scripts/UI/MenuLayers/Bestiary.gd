@@ -30,6 +30,7 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.CANON,
 	#Enemy.EnemyTypes.NONCANON,
 	#Enemy.EnemyTypes.FANON,
+	Enemy.EnemyTypes.ANGRYBLOCK,
 	#Enemy.EnemyTypes.SNAKEY_COMMON,
 	#Enemy.EnemyTypes.SNAKEY_TOUGH,
 	#Enemy.EnemyTypes.SKYVIPER,

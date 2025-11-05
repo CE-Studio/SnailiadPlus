@@ -409,6 +409,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snelk.state = Snelk.States.SLEEP
 				layer_ground.add_child(snelk)
 			
+			Vector2i(11, 30): # Angry block
+				var block:AngryBlock = load("res://Scenes/Entities/Enemies/AngryBlock.tscn").instantiate()
+				block.position = _tile_coords_to_vector_pos(tile) + Vector2(40, 24)
+				layer_ground.add_child(block)
+			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)

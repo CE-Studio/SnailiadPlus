@@ -1,0 +1,249 @@
+{
+	"tiles": [3, 4],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 0, false, false],
+			]
+		},
+		"U_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+			]
+		},
+		"U_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"U_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"UR_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 1, false, false],
+			]
+		},
+		"UR_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"UR_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"R_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[1, 1, false, false],
+			]
+		},
+		"R_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"R_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"DR_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[2, 1, false, false],
+			]
+		},
+		"DR_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"DR_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"D_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 2, false, false],
+			]
+		},
+		"D_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"D_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"DL_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[1, 2, false, false],
+			]
+		},
+		"DL_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"DL_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"L_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[2, 2, false, false],
+			]
+		},
+		"L_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"L_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		},
+		"UL_idle": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[0, 3, false, false],
+			]
+		},
+		"UL_prep": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+			]
+		},
+		"UL_fire": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+			]
+		}
+	}
+}

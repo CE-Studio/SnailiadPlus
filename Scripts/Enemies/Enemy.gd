@@ -122,6 +122,7 @@ enum EnemyTypes {
 	SPACEBOX_RUSH,     # Time Cube
 	MOONSNAIL_RUSH,    # Sun Snail
 	GIGASNAIL_RUSH,    # Giga Sun Snail
+	ANGRYBLOCK,        # Angry Block
 	NONE = -1,
 }
 #endregion

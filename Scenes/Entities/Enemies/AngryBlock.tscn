@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://8qd3nw7f18jy"]
+
+[ext_resource type="Script" uid="uid://bc020ygx3nmwf" path="res://Scripts/Enemies/AngryBlock.gd" id="1_bi7n5"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_bi7n5"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_qnqel"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_5npqa"]
+[ext_resource type="Texture2D" uid="uid://bu7tr6nhyjh1i" path="res://Assets/Images/Entities/AngryBlock.png" id="5_bi7n5"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_y32f1"]
+[ext_resource type="Texture2D" uid="uid://dkf8p163fny4q" path="res://Assets/Images/Entities/AngryBlockFace.png" id="7_qnqel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
+size = Vector2(96, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
+size = Vector2(96, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
+shader = ExtResource("4_5npqa")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="AngryBlock" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 67
+collision_mask = 0
+script = ExtResource("1_bi7n5")
+max_health = 1500
+max_health_hard = 4000
+defense = 32
+can_damage = false
+health_orb_value = 20
+kill_particle_range = Vector2i(16, 40)
+kill_particle_types = Array[String](["ExplosionBig"])
+kill_particle_count = 8
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qrvrh")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v2c1n")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+rect = Rect2(-19.999998, -19.999998, 39.999996, 39.999996)
+
+[node name="Body" type="Sprite2D" parent="."]
+material = ExtResource("2_bi7n5")
+script = ExtResource("3_qnqel")
+texture_path = "res://Assets/Images/Entities/AngryBlock.json"
+load_autoplay = Array[String](["100"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Body"]
+material = SubResource("ShaderMaterial_ojica")
+texture = ExtResource("5_bi7n5")
+vframes = 3
+script = ExtResource("6_y32f1")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Face" type="Sprite2D" parent="."]
+material = ExtResource("2_bi7n5")
+script = ExtResource("3_qnqel")
+texture_path = "res://Assets/Images/Entities/AngryBlockFace.json"
+load_autoplay = Array[String](["idle"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Face"]
+material = SubResource("ShaderMaterial_ojica")
+texture = ExtResource("7_qnqel")
+hframes = 3
+vframes = 4
+script = ExtResource("6_y32f1")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

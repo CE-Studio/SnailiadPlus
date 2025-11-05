@@ -1,14 +1,24 @@
 @icon("uid://el86xs2vjg0b")
+@tool
 class_name CameraBorder
 extends Path2D
 
 
 @export var point_ratio_adjustments:Array[Vector2i] = []
+@export var editor_show_borders:bool = false:
+	set(value):
+		editor_show_borders = value
+		queue_redraw()
+
+const EDITOR_BORDER_WIDTH:int = 3
 
 var point_origins:Array[Vector2i] = []
+var last_state:Curve2D = curve
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	assert(global_position == Vector2.ZERO, "Camera border node MUST be centered")
 	if UICore.instance == null:
 		return
@@ -20,6 +30,14 @@ func _ready() -> void:
 	var current_ratio = ProjectSettings.get_setting("display/window/size/aspect_ratio")
 	if current_ratio != 0:
 		replot_points(Statics.ASPECT_RATIO_OFFSETS[current_ratio])
+
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		if curve != last_state:
+			curve = last_state
+			if editor_show_borders:
+				queue_redraw()
 
 
 func replot_points(offsets:Vector2i) -> void:
@@ -68,3 +86,30 @@ func get_center() -> Vector2:
 		(bounds.x + bounds.z) * 0.5,
 		(bounds.y + bounds.w) * 0.5
 	)
+
+
+func _draw() -> void:
+	if Engine.is_editor_hint() and editor_show_borders:
+		for i in range(curve.point_count):
+			var pos:Vector2 = curve.get_point_position(i)
+			var bounds:Vector2 = Vector2(200, 120)
+			draw_line(
+				Vector2(pos.x - bounds.x, pos.y - bounds.y),
+				Vector2(pos.x - bounds.x, pos.y + bounds.y),
+				Color.WHITE, EDITOR_BORDER_WIDTH
+			)
+			draw_line(
+				Vector2(pos.x - bounds.x, pos.y - bounds.y),
+				Vector2(pos.x + bounds.x, pos.y - bounds.y),
+				Color.WHITE, EDITOR_BORDER_WIDTH
+			)
+			draw_line(
+				Vector2(pos.x + bounds.x, pos.y + bounds.y),
+				Vector2(pos.x - bounds.x, pos.y + bounds.y),
+				Color.WHITE, EDITOR_BORDER_WIDTH
+			)
+			draw_line(
+				Vector2(pos.x + bounds.x, pos.y + bounds.y),
+				Vector2(pos.x + bounds.x, pos.y - bounds.y),
+				Color.WHITE, EDITOR_BORDER_WIDTH
+			)
