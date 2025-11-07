@@ -275,6 +275,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				shellbreaker.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(shellbreaker)
 			
+			Vector2i(8, 1): # Stompy
+				var stompy:Stompy = load("res://Scenes/Entities/Enemies/Bosses/Stompy.tscn").instantiate()
+				stompy.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(stompy)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
