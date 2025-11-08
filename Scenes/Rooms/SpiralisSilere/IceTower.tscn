@@ -115,6 +115,7 @@ position = Vector2(0, 120)
 rotation = -3.1415927
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://gyieg6o5qvon"
 
 [node name="SnowLayer" parent="." instance=ExtResource("7_dyicf")]
 density = 2.4

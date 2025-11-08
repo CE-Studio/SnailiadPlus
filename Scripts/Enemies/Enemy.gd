@@ -36,6 +36,7 @@ var damage_timeout:float = 0.0
 var stun_invul:bool = false
 var ping_played:bool = false
 var sent_entry_once:bool = false
+var damaged_this_tick:bool = false
 
 var flash_mat:Material = preload("res://Resources/EnemyFlashMat.tres")
 
@@ -174,7 +175,8 @@ func _physics_process(delta) -> void:
 				can_hit = not Statics.has_shell(3)
 		if can_hit:
 			GameCore.instance.player.adjust_health(-attack)
-		
+	
+	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
 		var pbullets_to_despawn:Array = []
 		var ebullets_to_despawn:Array = []
@@ -267,7 +269,7 @@ func _on_bullet_exited(_area) -> void:
 
 func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float, _play_sound:bool = true) -> EnemyBullet:
 	var bullet:EnemyBullet = _scene.instantiate()
-	bullet.position = position
+	bullet.global_position = global_position
 	Statics.active_room.layer_ground.add_child(bullet)
 	bullet._spawn(_direction, _speed, _play_sound)
 	return bullet
@@ -304,6 +306,7 @@ func _damage(health_lost:int, sound:bool = true) -> void:
 	health -= health_lost
 	damage_timeout = DAMAGE_TIMEOUT
 	flash_color = DAMAGE_FLASH_COLOR
+	damaged_this_tick = true
 
 
 func _spawn_damage_num(num:int, color:Color) -> void:
