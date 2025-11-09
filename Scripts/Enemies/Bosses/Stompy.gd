@@ -267,8 +267,8 @@ func _tick_parts() -> void:
 			mode_r = FootMode.MOVE
 			eye_r.can_attack = true
 			raise_timeout_r = 1000000
-			stomp_timeout_index_r = (stomp_timeout_index_r + 1) % TIMEOUTS.size()
-			stomp_timeout_r = int(TIMEOUTS[stomp_timeout_index_r] * 360) + 60
+			stomp_timeout_index_l = (stomp_timeout_index_l + 1) % TIMEOUTS.size()
+			stomp_timeout_r = int(TIMEOUTS[stomp_timeout_index_l] * 360) + 60
 			if boss_mode == BossMode.SYNC:
 				stomp_timeout_r = SYNC_STOMP_TIMEOUT
 	#endregion
@@ -276,11 +276,11 @@ func _tick_parts() -> void:
 	#region Move left
 	if boss_mode != BossMode.INTRO and mode_l == FootMode.MOVE:
 		theta_l += 0.2
-		target_l.x = player_pos.x - position.x if boss_mode == BossMode.HUNT else sin(theta_l / 15.0) * 160.0
+		target_l.x = player_pos.x - position.x if boss_mode == BossMode.HUNT else sin(theta_l / 15) * 160
 		if foot_r.position.x - target_l.x < MIN_DIST:
 			target_l.x = foot_r.position.x - MIN_DIST
 		if player_pos.x - position.x < -320.0:
-			target_l.x = player_pos.x - position.x + 100.0
+			target_l.x = player_pos.x - position.x# + 100.0
 		stomp_timeout_l -= 1
 		vel_l.x = target_l.x - foot_l.position.x
 		foot_l.position.x += vel_l.x * 0.1
@@ -293,11 +293,11 @@ func _tick_parts() -> void:
 	#region Move right
 	if boss_mode != BossMode.INTRO and mode_r == FootMode.MOVE:
 		theta_r += 0.2
-		target_r.x = player_pos.x - position.x if boss_mode == BossMode.HUNT else sin(theta_r / 15.5 + PI / 3.0) * 160.0
+		target_r.x = player_pos.x - position.x if boss_mode == BossMode.HUNT else sin(theta_r / 15 + PI / 3) * 160
 		if target_r.x - foot_l.position.x < MIN_DIST:
 			target_r.x = foot_l.position.x + MIN_DIST
 		if player_pos.x - position.x > 302.0:
-			target_r.x = player_pos.x - position.x - 40
+			target_r.x = player_pos.x - position.x# - 40
 		stomp_timeout_r -= 1
 		vel_r.x = target_r.x - foot_r.position.x
 		foot_r.position.x += vel_r.x * 0.1
@@ -325,7 +325,7 @@ func _tick_parts() -> void:
 	
 	#region Step now left
 	if mode_l == FootMode.STEP_NOW:
-		if step_dir_is_left and theta_l == 0.0 and foot_l.position.x < -170.0:
+		if step_dir_is_left and theta_l == 0.0 and foot_l.position.x < -295.0:
 			step_dir_is_left = false
 			mode_l = FootMode.STEP_WAIT
 			mode_r = FootMode.STEP_NOW
@@ -358,7 +358,7 @@ func _tick_parts() -> void:
 	
 	#region Step now right
 	elif mode_r == FootMode.STEP_NOW:
-		if not step_dir_is_left and theta_r == 0.0 and foot_l.position.x > 170.0:
+		if not step_dir_is_left and theta_r == 0.0 and foot_r.position.x > 295.0:
 			step_dir_is_left = true
 			mode_r = FootMode.STEP_WAIT
 			mode_l = FootMode.STEP_NOW
