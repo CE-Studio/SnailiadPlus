@@ -292,7 +292,7 @@ func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 	active_boss_bar = boss_bar.instantiate()
 	popup_layer.add_child(active_boss_bar)
 	active_boss_bar.position = Vector2(200, _tl.position.y)
-	active_boss_bar.boss = boss
+	active_boss_bar.instance(boss)
 	if hide_minimap:
 		minimap.update_visible_from_settings(0.0, true)
 	return active_boss_bar

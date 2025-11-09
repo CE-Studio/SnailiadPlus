@@ -21,7 +21,7 @@ var cluster_timeout:float = 0.0
 var shot_timeout:float = 0.0
 var shot_count:int = 0
 var is_shooting:bool = false
-var can_attack:bool = true
+var can_attack:bool = false
 
 var boss:Stompy
 var my_foot:StompyFoot
@@ -55,14 +55,15 @@ func _physics_process(delta) -> void:
 		pupil.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		eyelid.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		my_foot.sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
-	if damaged_this_tick and not will_close:
-		will_close = true
-		close_timeout = CLOSE_DELAY
+	if damaged_this_tick:
 		var this_damage:int = max_health - health
 		boss._damage(this_damage, false)
 		health = max_health
+		if not will_close:
+			close_timeout = CLOSE_DELAY
+			will_close = true
 	
-	if not Engine.is_editor_hint():
+	if not display_mode:
 		var player_dir:float = atan2(
 			GameCore.instance.player.position.y - global_position.y,
 			GameCore.instance.player.position.x - global_position.x
@@ -109,3 +110,10 @@ func _physics_process(delta) -> void:
 			open = true
 			invulnerable = false
 			eyelid.action = boss.get_phase_anim("left_open" if left else "right_open")
+
+
+func update_phase() -> void:
+	var dir:String = "left" if left else "right"
+	sprite.action = "p%d_%s" % [boss.phase, dir]
+	pupil.action = "p%d_%s" % [boss.phase, dir]
+	eyelid.action = "p%d_%s_%s" % [boss.phase, dir, "open" if open else "blink"]
