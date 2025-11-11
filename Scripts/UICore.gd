@@ -328,10 +328,11 @@ func clear_boss_bar() -> void:
 
 func call_screen_shake_radial(timeline:Array[float], mode:ShakeCallMode) -> void:
 	assert(timeline.size() >= 2, "Screen shake timeline must be at minimum two values in length!")
-	if mode == ShakeCallMode.APPEND:
+	if mode != ShakeCallMode.OVERWRITE_ALL:
 		active_shake_timeline.append_array(timeline)
 	else:
-		active_shake_timeline = timeline
+		active_shake_timeline = timeline.duplicate()
+		shake_elapsed = 0.0
 
 
 func call_screen_shake_linear(timeline:Array[float], axis:Vector2, mode:ShakeCallMode) -> void:
@@ -339,10 +340,11 @@ func call_screen_shake_linear(timeline:Array[float], axis:Vector2, mode:ShakeCal
 	if shake_dir == Vector2.ZERO or mode != ShakeCallMode.APPEND:
 		shake_dir = axis
 		current_shake_offset = axis
-	if mode != ShakeCallMode.OVERWRITE_AXIS:
+	if mode != ShakeCallMode.OVERWRITE_ALL:
 		active_shake_timeline.append_array(timeline)
 	else:
-		active_shake_timeline = timeline
+		active_shake_timeline = timeline.duplicate()
+		shake_elapsed = 0.0
 
 
 func tick_screen_shake(delta:float) -> void:

@@ -350,6 +350,30 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				spike.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(spike)
 			
+			Vector2i(7, 24): # Canon (floor)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(canon)
+			
+			Vector2i(8, 24): # Canon (left wall)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.LWALL
+				layer_ground.add_child(canon)
+			
+			Vector2i(9, 24): # Canon (right wall)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.RWALL
+				layer_ground.add_child(canon)
+			
+			Vector2i(10, 24): # Canon (ceiling)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.CEILING
+				layer_ground.add_child(canon)
+			
 			Vector2i(12, 24): # Muck
 				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
 				muck.position = _tile_coords_to_vector_pos(tile)

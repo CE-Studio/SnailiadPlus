@@ -63,7 +63,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 0, false, false]
+				[0, 1, false, false]
 			]
 		},
 		"ceiling_destroyed": {
@@ -72,7 +72,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 0, false, false]
+				[0, 1, false, false]
 			]
 		}
 	}

@@ -28,7 +28,7 @@ const OFFSET_FOOT_L:Vector2 = Vector2(-125, 0)
 const OFFSET_FOOT_R:Vector2 = Vector2(125, 0)
 const OFFSET_EYE_L:Vector2 = Vector2(52, -83)
 const OFFSET_EYE_R:Vector2 = Vector2(-52, -83)
-const SHAKE_TIMELINE:Array[float] = [6.0, 0.7, 0.0]
+const SHAKE_TIMELINE:Array[float] = [5.0, 0.7]
 
 enum BossMode {
 	INTRO,
@@ -59,6 +59,7 @@ var boss_mode:BossMode = BossMode.INTRO
 var next_step_is_left:bool = false
 var step_dir_is_left:bool = false
 var step_mode_timeout:float = 0.0
+var cannons:Array[Enemy] = []
 
 var pos_l:Vector2 = Vector2.ZERO
 var mode_l:FootMode = FootMode.NONE
@@ -93,6 +94,10 @@ var played_fall_on_step_r:bool = false
 
 
 func _ready() -> void:
+	if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2) == true and not display_mode:
+		queue_free()
+		return
+	
 	my_type = EnemyTypes.STOMPY
 	super.spawn()
 	
@@ -107,24 +112,27 @@ func _ready() -> void:
 	eye_r.my_foot = foot_r
 	eye_r.display_mode = display_mode
 	
-	nodes_to_wiggle.append(foot_l)
-	nodes_to_wiggle.append(foot_r)
-	nodes_to_wiggle.append(eye_l)
-	nodes_to_wiggle.append(eye_r)
+	nodes_to_wiggle.append(foot_l.sprite)
+	nodes_to_wiggle.append(foot_r.sprite)
+	nodes_to_wiggle.append(eye_l.spr_group)
+	nodes_to_wiggle.append(eye_r.spr_group)
 	
 	if hard_mode:
 		boss_speed = 1.0
 	
 	if display_mode:
 		z_index = 0
-		pos_l = Vector2i(-101, 76)
-		pos_r = Vector2i(101, 76)
+		foot_l.position = Vector2i(-101, 76)
+		foot_r.position = Vector2i(101, 76)
 		eye_l.position = Vector2i(-48, 0)
 		eye_r.position = Vector2i(48, 0)
 	else:
 		pos_l.y = RAISED_Y
 		pos_r.y = RAISED_Y
 		_tick_parts()
+		_spawn_cannons.call_deferred()
+		foot_l.can_damage = false
+		foot_r.can_damage = false
 
 
 func _physics_process(delta: float) -> void:
@@ -145,21 +153,21 @@ func _physics_process(delta: float) -> void:
 		var player_pos:Vector2 = GameCore.instance.player.position
 		match intro_step:
 			0:
-				if intro_from_left and player_pos.x > position.x + 89.0:
+				if intro_from_left and player_pos.x > position.x + 73.0:
 					mode_r = FootMode.STOMP
-					if player_pos.x > position.x + 109.0:
+					if player_pos.x > position.x + 93.0:
 						intro_step += 1
-				elif not intro_from_left and player_pos.x < position.x - 89.0:
+				elif not intro_from_left and player_pos.x < position.x - 73.0:
 					mode_l = FootMode.STOMP
-					if player_pos.x < position.x - 109.0:
+					if player_pos.x < position.x - 93.0:
 						intro_step += 1
 			1:
 				var mark_complete:bool = false
-				if intro_from_left and player_pos.x < position.x + 46.0:
+				if intro_from_left and player_pos.x < position.x + 30.0:
 					mode_l = FootMode.STOMP
 					if player_pos.x < position.x + 38.0:
 						mark_complete = true
-				elif not intro_from_left and player_pos.x > position.x - 46.0:
+				elif not intro_from_left and player_pos.x > position.x - 30.0:
 					mode_r = FootMode.STOMP
 					if player_pos.x > position.x - 38.0:
 						mark_complete = true
@@ -176,6 +184,8 @@ func _physics_process(delta: float) -> void:
 		match boss_mode:
 			BossMode.INTRO:
 				if not intro_delay:
+					foot_l.can_damage = true
+					foot_r.can_damage = true
 					boss_mode = BossMode.MOVE_STOMP
 					step_mode_timeout = STEP_MODE_TIMEOUT
 			
@@ -232,7 +242,7 @@ func _tick_parts() -> void:
 			vel_l.y = 0.0
 			raise_timeout_l = WAIT_RAISE_TIMEOUT
 			stomp_timeout_l = 1000000
-			shake()
+			_shake()
 			foot_l.play_phase_anim(phase, "down")
 	
 	elif boss_mode != BossMode.INTRO and mode_l == FootMode.WAIT_RAISE:
@@ -268,7 +278,7 @@ func _tick_parts() -> void:
 			vel_r.y = 0.0
 			raise_timeout_r = WAIT_RAISE_TIMEOUT
 			stomp_timeout_r = 1000000
-			shake()
+			_shake()
 			foot_r.play_phase_anim(phase, "down")
 	
 	elif boss_mode != BossMode.INTRO and mode_r == FootMode.WAIT_RAISE: 
@@ -364,7 +374,7 @@ func _tick_parts() -> void:
 				foot_l.play_phase_anim(phase, "fall")
 			if theta_l >= PI:
 				theta_l = PI
-				shake()
+				_shake()
 				foot_l.play_phase_anim(phase, "down")
 				mode_l = FootMode.STEP_WAIT
 				mode_r = FootMode.STEP_NOW
@@ -403,7 +413,7 @@ func _tick_parts() -> void:
 				foot_r.play_phase_anim(phase, "fall")
 			if theta_r >= PI:
 				theta_r = PI
-				shake()
+				_shake()
 				foot_r.play_phase_anim(phase, "down")
 				mode_r = FootMode.STEP_WAIT
 				mode_l = FootMode.STEP_NOW
@@ -444,12 +454,12 @@ func _tick_parts() -> void:
 		eye_l.position.y = MIN_EYE_Y
 		eye_l.invulnerable = true
 	else:
-		eye_l.invulnerable = not eye_l.open
+		eye_l.invulnerable = not eye_l.open or boss_mode == BossMode.INTRO
 	if eye_r.position.y <= MIN_EYE_Y:
 		eye_r.position.y = MIN_EYE_Y
 		eye_r.invulnerable = true
 	else:
-		eye_r.invulnerable = not eye_r.open
+		eye_r.invulnerable = not eye_r.open or boss_mode == BossMode.INTRO
 	#endregion
 
 
@@ -470,6 +480,41 @@ func advance_phase(count:int = 1) -> void:
 		boss_speed += 0.3
 
 
-func shake() -> void:
+func _shake() -> void:
 	sfx_stomp.play()
 	UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2.DOWN, UICore.ShakeCallMode.OVERWRITE_ALL)
+
+
+func _spawn_cannons() -> void:
+	var y:float = 16.0
+	var target_dir:Statics.DirsSurface = Statics.DirsSurface.CEILING
+	var cannon:PackedScene = load("res://Scenes/Entities/Enemies/Canon.tscn")
+	if Statics.current_profile["character"] == Player.Players.UPSIDE:
+		y = 160.0
+		target_dir = Statics.DirsSurface.FLOOR
+	for x in [ -224.0, -128.0, 128.0, 224.0 ]:
+		var new_cannon:Canon = cannon.instantiate()
+		new_cannon.base_dir = target_dir
+		new_cannon.position = position + Vector2(x, y)
+		GameCore.instance.current_room.layer_ground.add_child(new_cannon)
+		cannons.append(new_cannon)
+
+
+func kill() -> void:
+	if not in_death_anim:
+		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_STOMPY)
+		if health_bar:
+			health_bar._toggle_outro_shake()
+		foot_l.sprite.action = "defeat_left"
+		foot_r.sprite.action = "defeat_right"
+		eye_l.set_death_pose.call_deferred()
+		eye_r.set_death_pose.call_deferred()
+		for _cannon in cannons:
+			_cannon.kill()
+		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position + foot_l.position)
+		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position + foot_r.position, [false])
+		GameCore.instance.music_manager.stop_all(true)
+		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, true)
+	else:
+		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
+	super()

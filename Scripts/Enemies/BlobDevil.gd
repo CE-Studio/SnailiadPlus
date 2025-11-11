@@ -18,7 +18,7 @@ var hop_timeout:float = 0.0
 var shot_timeout:float = 0.0
 
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyDonutRotary.tscn")
+@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotary.tscn")
 #endregion
 
 

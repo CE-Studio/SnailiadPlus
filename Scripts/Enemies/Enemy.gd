@@ -298,15 +298,17 @@ func _shoot_360_cluster_rotary(_scene:PackedScene, _direction:Vector2, _speed:fl
 	return return_bullet
 
 
-func _damage(health_lost:int, sound:bool = true) -> void:
+func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> void:
 	if damage_timeout > 0 or GameCore.instance.player.in_death_cutscene:
 		return
-	if sound:
-		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
 	health -= health_lost
 	damage_timeout = DAMAGE_TIMEOUT
 	flash_color = DAMAGE_FLASH_COLOR
 	damaged_this_tick = true
+	if sound and health > 0:
+		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
+	if allow_kill and health <= 0:
+		kill()
 
 
 func _spawn_damage_num(num:int, color:Color) -> void:
@@ -328,11 +330,13 @@ func kill() -> void:
 		var part = kill_particle_types[randi() % kill_particle_types.size()]
 		Statics.spawn_particle(part, Room.Layers.FG1, position + pos)
 	if Statics.current_profile["character"] == Player.Players.LEECHY:
-		pass #SpawnHealthOrbs
+		spawn_health_orbs()
 	environment = null
 	queue_free()
 
 
+func spawn_health_orbs() -> void:
+	pass
 #	protected void SpawnHealthOrbs()
 #	{
 #		healthOrbValue = Mathf.CeilToInt(healthOrbValue * PlayState.HEALTH_ORB_MULTS[PlayState.currentProfile.difficulty]);

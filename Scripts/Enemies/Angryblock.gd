@@ -31,7 +31,7 @@ var body_anim_ptr:int = 0
 var last_face_anim:String = ""
 
 @onready var face_spr:JsonSprite2D = $"Face"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyDonutLinear.tscn")
+@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
 #endregion
 
 

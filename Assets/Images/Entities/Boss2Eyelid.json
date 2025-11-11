@@ -194,6 +194,24 @@
 				[2, 1, false, false],
 				[2, 0, false, false],
 			]
+		},
+		"defeat_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false]
+			]
+		},
+		"defeat_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
 		}
 	}
 }

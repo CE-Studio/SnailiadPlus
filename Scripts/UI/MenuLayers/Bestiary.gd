@@ -202,6 +202,16 @@ func spawn_display_entity(entity:String) -> void:
 		"kitty":
 			var kitty2 = spawn_entity("kitty_tough")
 			enemy_spawn.add_child(kitty2)
+		"canon":
+			var canon = spawn_entity("canon")
+			enemy_spawn.add_child(canon)
+			canon.position = Vector2(8, 8)
+		"stompy":
+			var stompy = spawn_entity("stompy")
+			enemy_spawn.add_child(stompy)
+			stompy.position = Vector2(48, 0)
+			stompy.foot_r.visible = false
+			stompy.eye_r.visible = false
 		_:
 			var general_enemy = spawn_entity(entity)
 			enemy_spawn.add_child(general_enemy)

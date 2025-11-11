@@ -22,17 +22,19 @@ var shot_timeout:float = SHOT_TIMEOUT
 var shot_count:int = 0
 var is_shooting:bool = false
 var can_attack:bool = false
+var is_dying:bool = false
 
 var boss:Stompy
 var my_foot:StompyFoot
-@onready var pupil:JsonSprite2D = $"Pupil"
-@onready var eyelid:JsonSprite2D = $"Eyelid"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyDonutLinear.tscn")
+@onready var spr_group:Node2D = $"SpriteGroup"
+@onready var pupil:JsonSprite2D = $"SpriteGroup/Pupil"
+@onready var eyelid:JsonSprite2D = $"SpriteGroup/Eyelid"
+@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
 #endregion
 
 func _ready() -> void:
 	my_type = EnemyTypes.NONE
-	sprite = $"Eye"
+	sprite = $"SpriteGroup/Eye"
 	hitbox = $"Area2D"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
@@ -41,7 +43,7 @@ func _ready() -> void:
 	pupil.action = "p0_left" if left else "p0_right"
 	eyelid.action = "p0_left_open" if left else "p0_right_open"
 	
-	if pupil.meta["clip"]:
+	if pupil.meta["clip"] and not display_mode:
 		pupil.reparent(sprite)
 	
 	if hard_mode:
@@ -55,9 +57,13 @@ func _physics_process(delta) -> void:
 		pupil.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		eyelid.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		my_foot.sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
+	if is_dying or boss.in_death_anim:
+		return
+	
 	if damaged_this_tick:
 		var this_damage:int = max_health - health
-		boss._damage(this_damage, false)
+		if not boss.in_death_anim:
+			boss._damage(this_damage, false, true)
 		health = max_health
 		if not will_close:
 			close_timeout = CLOSE_DELAY
@@ -117,3 +123,17 @@ func update_phase() -> void:
 	sprite.action = "p%d_%s" % [boss.phase, dir]
 	pupil.action = "p%d_%s" % [boss.phase, dir]
 	eyelid.action = "p%d_%s_%s" % [boss.phase, dir, "open" if open else "blink"]
+
+
+func set_death_pose() -> void:
+	if left:
+		sprite.action = "defeat_left"
+		pupil.action = "defeat_left"
+		pupil.position = Vector2(cos(3.2), sin(3.2)) * PUPIL_RADII
+		eyelid.action = "defeat_left"
+	else:
+		sprite.action = "defeat_right"
+		pupil.action = "defeat_right"
+		pupil.position = Vector2(cos(0.85), sin(0.85)) * PUPIL_RADII
+		eyelid.action = "defeat_right"
+	is_dying = true

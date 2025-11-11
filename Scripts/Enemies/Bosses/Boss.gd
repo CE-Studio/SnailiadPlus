@@ -38,8 +38,8 @@ func _physics_process(delta: float) -> void:
 		death_timer -= delta
 
 
-func _damage(health_lost:int, sound:bool = true) -> void:
-	super(health_lost, sound)
+func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> void:
+	super(health_lost, sound, allow_kill)
 	if health_bar:
 		health_bar.update()
 

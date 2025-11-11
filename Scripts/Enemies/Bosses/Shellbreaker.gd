@@ -35,7 +35,7 @@ var blink_timeout:float = 0.0
 @onready var eyes:JsonSprite2D = $"Eyes"
 @onready var hand:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/ShellbreakerHand.tscn")
 @onready var hand_group:Node2D = $"HandGroup"
-@onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBoomerangBlue.tscn")
+@onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangBlue.tscn")
 #endregion
 
 
