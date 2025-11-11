@@ -46,4 +46,5 @@ func unpause_fade_out() -> void:
 	cam.minimap.tick_minimap(0, false, true)
 	cam.cam.set_cam_mode()
 	cam.darkness_layer.update_col()
+	cam.shake_setting = ProjectSettings.get_setting("game/visuals/screen_shake")
 	game.current_room.set_environment_visibility()

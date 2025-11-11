@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://m1j84q4kx1aj"]
+[gd_scene load_steps=7 format=3 uid="uid://m1j84q4kx1aj"]
 
 [ext_resource type="Script" uid="uid://crcke8exum3uo" path="res://Scripts/Enemies/Bosses/Stompy.gd" id="1_asfk8"]
 [ext_resource type="PackedScene" uid="uid://b5irbfjr44kke" path="res://Scenes/Entities/Enemies/Bosses/StompyEye.tscn" id="3_uiwpq"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_wafhq"]
 [ext_resource type="Texture2D" uid="uid://dby1olsbvjdjh" path="res://Editor/EditorMarkers/StompyPlacementGuide.png" id="6_asfk8"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_bc1og"]
 [ext_resource type="PackedScene" uid="uid://b0k5iw8d1ap4w" path="res://Scenes/Entities/Enemies/Bosses/StompyFoot.tscn" id="6_wsny0"]
 
 [node name="Stompy" type="CharacterBody2D"]
@@ -41,3 +42,7 @@ position = Vector2(0, 80)
 texture = ExtResource("6_asfk8")
 script = ExtResource("5_wafhq")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bc1og")
+bus = &"Sfx"

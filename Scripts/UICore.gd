@@ -6,6 +6,7 @@ class_name UICore
 const BL_TEXT_ORIGIN:Vector2 = Vector2(3, -12)
 const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
 const BL_TEXT_OFFSETS_LARGE:Vector2 = Vector2(0, -20)
+const MINIMAL_SHAKE_MOD:float = 0.4
 
 var weapon_icons:Array = [ ]
 var weapon_icon_states:Array = [ ]
@@ -16,6 +17,25 @@ var boss_bar:PackedScene
 
 var active_area_label:Node
 var active_boss_bar:BossHealthBar
+
+var active_shake_timeline:Array[float] = []
+var shake_dir:Vector2 = Vector2.ZERO
+var flip_shake_dir:bool = false
+var shake_elapsed:float = 0.0
+var current_shake_offset:Vector2 = Vector2.ZERO
+enum ShakeCallMode {
+	APPEND,
+	OVERWRITE_ALL,
+	OVERWRITE_AXIS
+}
+enum ShakeSetting {
+	OFF,
+	MINIMAL,
+	ON,
+	MIN_NOHUD,
+	ON_NOHUD
+}
+var shake_setting:ShakeSetting = ShakeSetting.ON
 
 static var instance:UICore
 
@@ -104,6 +124,8 @@ func _process(delta: float) -> void:
 		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
 	
 	#IGT is counted up in GameCore.gd, being an aspect of the game/profile itself and not purely a HUD element
+	
+	tick_screen_shake(delta)
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
@@ -302,3 +324,68 @@ func clear_boss_bar() -> void:
 	if active_boss_bar != null:
 		active_boss_bar.queue_free()
 	minimap.update_visible_from_settings(1.0)
+
+
+func call_screen_shake_radial(timeline:Array[float], mode:ShakeCallMode) -> void:
+	assert(timeline.size() >= 2, "Screen shake timeline must be at minimum two values in length!")
+	if mode == ShakeCallMode.APPEND:
+		active_shake_timeline.append_array(timeline)
+	else:
+		active_shake_timeline = timeline
+
+
+func call_screen_shake_linear(timeline:Array[float], axis:Vector2, mode:ShakeCallMode) -> void:
+	assert(timeline.size() >= 2, "Screen shake timeline must be at minimum two values in length!")
+	if shake_dir == Vector2.ZERO or mode != ShakeCallMode.APPEND:
+		shake_dir = axis
+		current_shake_offset = axis
+	if mode != ShakeCallMode.OVERWRITE_AXIS:
+		active_shake_timeline.append_array(timeline)
+	else:
+		active_shake_timeline = timeline
+
+
+func tick_screen_shake(delta:float) -> void:
+	if active_shake_timeline.size() > 0:
+		var parse:bool = true
+		var start_strength:float = 0.0
+		var end_strength:float = 0.0
+		var max_time:float = 0.0
+		match active_shake_timeline.size():
+			1:
+				active_shake_timeline.clear()
+				parse = false
+			2:
+				start_strength = active_shake_timeline[0]
+				max_time = active_shake_timeline[1]
+			_:
+				start_strength = active_shake_timeline[0]
+				max_time = active_shake_timeline[1]
+				end_strength = active_shake_timeline[2]
+		if parse:
+			var this_strength:float = lerpf(start_strength, end_strength, shake_elapsed / max_time)
+			if shake_dir == Vector2.ZERO:
+				current_shake_offset = Vector2(
+					randf_range(-this_strength, this_strength),
+					randf_range(-this_strength, this_strength)
+				).normalized()
+			else:
+				current_shake_offset = shake_dir * this_strength
+				if flip_shake_dir:
+					shake_dir *= -1
+				flip_shake_dir = not flip_shake_dir
+			shake_elapsed += delta
+			if shake_elapsed >= max_time:
+				shake_elapsed -= max_time
+				active_shake_timeline.remove_at(0)
+				active_shake_timeline.remove_at(0)
+		
+		if shake_setting == ShakeSetting.MINIMAL or shake_setting == ShakeSetting.MIN_NOHUD:
+			current_shake_offset *= MINIMAL_SHAKE_MOD
+		cam.shake_offset = current_shake_offset
+		cam.do_screen_shake = shake_setting != ShakeSetting.OFF
+		cam.shake_cam_only = shake_setting == ShakeSetting.MINIMAL or shake_setting == ShakeSetting.ON
+	else:
+		shake_elapsed = 0.0
+		shake_dir = Vector2.ZERO
+		flip_shake_dir = false

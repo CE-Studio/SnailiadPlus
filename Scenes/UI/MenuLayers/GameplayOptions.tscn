@@ -108,7 +108,7 @@ focus_next = NodePath("../StickAimMode")
 focus_previous = NodePath("../TargetFPS")
 header_id = "menu_option_gameplay_screenShake"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud"])
+cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud", "menu_add_shake_noHud"])
 focus_option = 2
 
 [node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
