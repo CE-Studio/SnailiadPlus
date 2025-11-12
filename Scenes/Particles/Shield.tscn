@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_xtx2w"]
 
 [node name="Shield" type="Node2D" node_paths=PackedStringArray("sprite")]
-z_index = 1
+z_index = 10
 script = ExtResource("1_fboqi")
 sprite = NodePath("JsonSprite2D")
 anim_name = "shield"

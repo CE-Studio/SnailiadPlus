@@ -86,7 +86,7 @@ focus_next = NodePath("../BottomKeys")
 focus_previous = NodePath("../Fullscreen")
 header_id = "menu_option_display_minimap"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_hide", "menu_add_mapOnly", "menu_add_generic_show"])
+cycle_options = Array[String](["menu_add_generic_hide", "menu_add_mapOnly", "menu_add_mapAndNames"])
 focus_option = 2
 
 [node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
