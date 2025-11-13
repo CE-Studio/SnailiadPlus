@@ -272,9 +272,11 @@ func _ready():
 	#var shell_mode = 0 if Statics.stack_shells else 1
 	#shell_level_displayed = Statics.get_shell_level()
 	if Statics.stack_shells:
-		shell_level_displayed = 1 << (Statics.get_shell_level() - 1)
+		var shell_level = Statics.get_shell_level()
+		shell_level_displayed = 1 << (shell_level - 1) if shell_level > 0 else 0
 	else:
 		shell_level_displayed = Statics.get_shell_level(1)
+	print("Shell level - " + str(shell_level_displayed))
 
 
 #region Movement

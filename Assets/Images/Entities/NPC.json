@@ -2072,7 +2072,7 @@
 			"autoplay_next": "npc35.ceiling.left.idle",
 		},
 		"npc40.floor.right.idle": {
-			"inherit": "0.floor.right.idle",
+			"inherit": "1.floor.right.idle",
 			"colors": [255, 4239981823, 4239917311, 0, 4176935167],
 		},
 		"npc40.floor.right.turnground": {
@@ -2090,7 +2090,7 @@
 			"autoplay_next": "npc40.floor.left.idle",
 		},
 		"npc41.floor.right.idle": {
-			"inherit": "1.floor.right.idle",
+			"inherit": "0.floor.right.idle",
 			"colors": [255, 4238362879, 11028735, 0, 4176935167],
 		},
 		"npc41.floor.right.turnground": {
