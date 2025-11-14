@@ -1,20 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctqn1t6ytg45x"]
+[gd_scene load_steps=7 format=3 uid="uid://nccie5dnn634"]
 
-[ext_resource type="Script" uid="uid://c5i2l35mxtp7w" path="res://Scripts/Bullets/Player/PlayerBulletBCD.gd" id="1_66x8w"]
-[ext_resource type="AudioStream" uid="uid://cm7ypoocwhxdk" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBCD.ogg" id="2_66x8w"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_nhf1n"]
-[ext_resource type="Texture2D" uid="uid://bvv8ysslch0pa" path="res://Assets/Images/Bullets/Player/PlayerBulletBCD.png" id="4_66x8w"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_5k2qf"]
+[ext_resource type="Script" uid="uid://bv32am1twjia5" path="res://Scripts/Bullets/Player/PlayerBulletCD.gd" id="1_whkbw"]
+[ext_resource type="AudioStream" uid="uid://b3xvaab0i1i1v" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotCD.ogg" id="2_whkbw"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_igwuf"]
+[ext_resource type="Texture2D" uid="uid://d237sprei1pqi" path="res://Assets/Images/Bullets/Player/PlayerBulletCD.png" id="4_asaw7"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_rq484"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
 size = Vector2(26, 26)
 
-[node name="PlayerBulletBCD" type="Node2D"]
+[node name="PlayerBulletCD" type="Node2D"]
 z_index = 150
-script = ExtResource("1_66x8w")
-type = 14
+script = ExtResource("1_whkbw")
+type = 12
 damage = 25
-cooldown = 0.22
+cooldown = 0.03
 afterimages = 3
 despawn_particle = "ExplosionRainbowBig"
 light_radius = 40
@@ -30,7 +30,7 @@ debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 [node name="AudioGroup" type="Node" parent="."]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
-stream = ExtResource("2_66x8w")
+stream = ExtResource("2_whkbw")
 bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
@@ -38,14 +38,13 @@ scale = Vector2(0.8, 0.8)
 rect = Rect2(-16.249998, -16.249998, 32.499996, 32.499996)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
-script = ExtResource("3_nhf1n")
-texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBCD.json"
+script = ExtResource("3_igwuf")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletCD.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
-texture = ExtResource("4_66x8w")
+texture = ExtResource("4_asaw7")
 hframes = 8
 vframes = 4
-frame = 1
-script = ExtResource("5_5k2qf")
+script = ExtResource("5_rq484")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

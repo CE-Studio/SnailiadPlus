@@ -10,7 +10,7 @@
 size = Vector2(18, 18)
 
 [node name="PlayerBulletBC" type="Node2D"]
-z_index = 50
+z_index = 150
 script = ExtResource("1_ggt1q")
 type = 6
 damage = 20

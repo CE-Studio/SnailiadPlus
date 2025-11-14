@@ -10,7 +10,7 @@
 size = Vector2(32, 32)
 
 [node name="PlayerBulletAfterimage" type="Node2D"]
-z_index = 49
+z_index = 149
 script = ExtResource("1_jo1nt")
 damage = 30
 despawn_offscreen = true

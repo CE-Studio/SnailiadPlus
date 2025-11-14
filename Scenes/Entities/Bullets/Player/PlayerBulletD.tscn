@@ -1,11 +1,48 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvrifp0nton52"]
+[gd_scene load_steps=7 format=3 uid="uid://dvrifp0nton52"]
 
 [ext_resource type="Script" uid="uid://dbe1exqxfon5i" path="res://Scripts/Bullets/Player/PlayerBulletD.gd" id="1_0q70w"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_3xsxv"]
+[ext_resource type="AudioStream" uid="uid://hxhaba86k4b8" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotD.ogg" id="2_nnj2w"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_bborg"]
+[ext_resource type="Texture2D" uid="uid://cs60vw0lra7mc" path="res://Assets/Images/Bullets/Player/PlayerBulletD.png" id="4_38kni"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sfm3"]
+size = Vector2(26, 26)
 
 [node name="PlayerBulletD" type="Node2D"]
+z_index = 150
 script = ExtResource("1_0q70w")
+type = 8
+damage = 20
+cooldown = 0.24
+despawn_particle = "ExplosionRainbowBig"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 65
+
+[node name="Box" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_5sfm3")
+debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_nnj2w")
+bus = &"Sfx"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+rect = Rect2(-16.249998, -16.249998, 32.499996, 32.499996)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("3_bborg")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletD.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("4_38kni")
+hframes = 6
+vframes = 2
 script = ExtResource("2_3xsxv")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
