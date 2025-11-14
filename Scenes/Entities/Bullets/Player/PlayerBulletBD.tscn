@@ -15,6 +15,7 @@ script = ExtResource("1_yk50o")
 type = 10
 damage = 30
 cooldown = 0.17
+afterimages = 1
 despawn_offscreen = true
 despawn_particle = "ExplosionRainbowBig"
 light_radius = 40

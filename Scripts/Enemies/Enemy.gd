@@ -201,7 +201,7 @@ func _physics_process(delta) -> void:
 					max_damage = this_damage
 					max_color = this_color
 			else:
-				if make_sound_on_ping and not ping_played:
+				if make_sound_on_ping and not ping_played and not bullet is PlayerBulletAfterimage:
 					Statics.play_sfx_disconnected(sfx_ping)
 				ping_played  = true
 				if max_damage == 0:

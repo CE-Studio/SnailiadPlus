@@ -4,11 +4,16 @@ extends Node2D
 
 
 #region Variables
+const TICKS_BETWEEN_AFTERIMAGES:int = 2
+
 @export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
 @export var damage:int = 0
 @export var cooldown:float = 0.0
 @export var rapid_mult:float = 1.0
 @export var powered:bool = false
+@export_enum(
+	"Don't create", "Create if stacked",
+	"Create if unstacked", "Always create") var afterimages:int = 0
 @export var despawn_offscreen:bool = false
 @export var collide_with_wall:bool
 @export var single_hit:bool
@@ -22,6 +27,7 @@ var life_timer:float = 0.0
 var velocity:float = 0.0
 var velocity_init:float = 0.0
 var single_frame_hit_flag:bool = false
+var afterimage_tick:int = 0
 
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var area:Area2D = $"Area2D"
@@ -29,6 +35,7 @@ var single_frame_hit_flag:bool = false
 @onready var sfx_shoot:AudioStreamPlayer = $"AudioGroup/Shoot"
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 @onready var sfx_despawn:AudioStream = preload("res://Assets/Sounds/Sfx/ShotHit.ogg")
+@onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Player/PlayerBulletAfterimage.tscn")
 #endregion
 
 
@@ -47,6 +54,14 @@ func _physics_process(delta: float) -> void:
 	if ((life_timer > 3 or (despawn_offscreen and life_timer >= 0.25)) and
 	not vis.is_on_screen()):
 		despawn()
+	elif _can_create_afterimages():
+		afterimage_tick += 1
+		if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
+			var new_afterimage:PlayerBulletAfterimage = afterimage.instantiate()
+			GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
+			new_afterimage.position = position
+			new_afterimage._spawn_afterimage(self)
+			afterimage_tick -= TICKS_BETWEEN_AFTERIMAGES
 
 
 func despawn(loudly:bool = false) -> void:
@@ -62,3 +77,10 @@ func despawn(loudly:bool = false) -> void:
 func _on_body_entered(body) -> void:
 	if body is not Enemy and collide_with_wall:
 		despawn(true)
+
+
+func _can_create_afterimages() -> bool:
+	if Statics.stack_weapons:
+		return afterimages == 1 or afterimages == 3
+	else:
+		return afterimages >= 2

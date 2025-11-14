@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpwnugjso664"]
+
+[ext_resource type="Script" uid="uid://r66i16n7lmrf" path="res://Scripts/Bullets/Player/PlayerBulletAfterimage.gd" id="1_jo1nt"]
+[ext_resource type="AudioStream" uid="uid://ci2wulxf6x53r" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBD.ogg" id="2_0p3iw"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_uxr8c"]
+[ext_resource type="Texture2D" uid="uid://ddtm7h56jq1k4" path="res://Assets/Images/Bullets/Player/PlayerBulletBD.png" id="4_tolka"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_wprjy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(32, 32)
+
+[node name="PlayerBulletAfterimage" type="Node2D"]
+z_index = 49
+script = ExtResource("1_jo1nt")
+damage = 30
+despawn_offscreen = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 64
+
+[node name="Box" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_0p3iw")
+bus = &"Sfx"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(1.6, 1.6)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+visible = false
+script = ExtResource("3_uxr8c")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBD.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="MarkerSprite" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("4_tolka")
+hframes = 6
+vframes = 12
+frame = 38
+script = ExtResource("5_wprjy")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

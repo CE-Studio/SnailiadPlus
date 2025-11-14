@@ -269,14 +269,11 @@ func _ready():
 	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	health = max_health
 	
-	#var shell_mode = 0 if Statics.stack_shells else 1
-	#shell_level_displayed = Statics.get_shell_level()
 	if Statics.stack_shells:
 		var shell_level = Statics.get_shell_level()
 		shell_level_displayed = 1 << (shell_level - 1) if shell_level > 0 else 0
 	else:
 		shell_level_displayed = Statics.get_shell_level(1)
-	print("Shell level - " + str(shell_level_displayed))
 
 
 #region Movement
@@ -1254,7 +1251,7 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 		bullet_type += "Power"
 	var bullet_scene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
-	GameCore.instance.current_room.layer_fg1.add_child(new_bullet)
+	GameCore.instance.current_room.layer_ground.add_child(new_bullet)
 	new_bullet.position = pos
 	if pos == body.position:
 		new_bullet.position += normalized_velocity * Statics.FRAC_8

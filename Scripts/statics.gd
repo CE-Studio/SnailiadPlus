@@ -102,7 +102,7 @@ static var show_entity_layer:bool = false
 static var show_invis_entites:bool = false
 static var draw_damage_numbers:bool = true
 static var stack_shells:bool = true
-static var stack_weapons:bool = false
+static var stack_weapons:bool = true
 static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer

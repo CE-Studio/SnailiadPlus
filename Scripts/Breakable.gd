@@ -47,6 +47,8 @@ func spawn(tile_coords:Vector2i, tile_type:int, silent:bool):
 
 
 func _on_bullet_entered(_area:Area2D) -> void:
+	if _area.get_parent() is PlayerBulletAfterimage:
+		return
 	if vis.is_on_screen():
 		var bullet:PlayerBullet = _area.get_parent()
 		var hit_hard_enough:bool = false
