@@ -6,6 +6,7 @@ const DAMAGE_MULT:float = 0.25
 const MAX_LIFE_TIME:float = 0.3
 
 var fade_time:float = MAX_LIFE_TIME
+var opaque:bool = ProjectSettings.get_setting("game/visuals/opaque_afterimages")
 
 @onready var _sprite:Sprite2D = $"Sprite2D"
 
@@ -28,6 +29,8 @@ func _spawn_afterimage(parent:PlayerBullet) -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	_sprite.modulate.a = inverse_lerp(0.0, MAX_LIFE_TIME, fade_time)
+	if not opaque:
+		_sprite.modulate.a *= 0.5
 	fade_time -= delta
 	if fade_time <= 0.0:
 		despawn()

@@ -466,6 +466,16 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var surface_tile:JsonSprite2D = load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
 				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
 				layer_fg2.add_child(surface_tile)
+			
+			Vector2i(12, 70): # Fire
+				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				fire.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fire)
+			
+			Vector2i(13, 70): # Fire
+				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				fire.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fire)
 
 
 func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:

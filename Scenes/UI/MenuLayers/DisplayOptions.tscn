@@ -171,17 +171,27 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../PaletteShader")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../../../Back")
-focus_next = NodePath("../../../Back")
+focus_neighbor_bottom = NodePath("../OpaqueAfterimages")
+focus_next = NodePath("../OpaqueAfterimages")
 focus_previous = NodePath("../PaletteShader")
 text_id = "menu_option_display_distortShader"
+
+[node name="OpaqueAfterimages" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../DistortShader")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../../Back")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../DistortShader")
+text_id = "menu_option_display_opaqueAfterimages"
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_45c1g")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-focus_neighbor_left = NodePath(".")
+focus_neighbor_left = NodePath("../ScrollContainer/VBoxContainer/OpaqueAfterimages")
 focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/DistortShader")
-focus_neighbor_right = NodePath(".")
+focus_neighbor_right = NodePath("../ScrollContainer/VBoxContainer/OpaqueAfterimages")
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Scale")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Scale")
 focus_previous = NodePath("../ScrollContainer/VBoxContainer/DistortShader")
@@ -201,3 +211,4 @@ hide_frame = true
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Darkness" to="MainVBox" method="on_darkness_cycled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/PaletteShader" to="MainVBox" method="on_pshader_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DistortShader" to="MainVBox" method="on_dshader_toggled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/OpaqueAfterimages" to="MainVBox" method="on_opaque_afterimages_toggled"]

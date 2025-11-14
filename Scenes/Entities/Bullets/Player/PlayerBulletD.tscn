@@ -16,6 +16,7 @@ type = 8
 damage = 20
 cooldown = 0.24
 despawn_particle = "ExplosionRainbowBig"
+light_radius = 32
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32

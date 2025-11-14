@@ -7,6 +7,7 @@ extends Area2D
 @export var damage:int = 0
 @export var element:ElementTypes = ElementTypes.NONE
 @export var ignore_defense:bool = false
+@export_range(0, 256, 1) var light_radius:int = 0
 
 enum ElementTypes {
 	ICE,
@@ -21,6 +22,8 @@ var intersecting_player:bool = false
 func _ready() -> void:
 	connect("body_entered", _on_player_entered)
 	connect("body_exited", _on_player_exited)
+	if light_radius > 0:
+		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
 func _physics_process(_delta: float) -> void:

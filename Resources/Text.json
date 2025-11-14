@@ -163,6 +163,7 @@
 	"menu_option_display_darkness": "Darkness level",
 	"menu_option_display_paletteShader": "Small palette shader",
 	"menu_option_display_distortShader": "Distortion shaders",
+	"menu_option_display_opaqueAfterimages": "Afterimages start\nopaque",
 	"menu_option_display_nextPage": "Next page",
 	"menu_option_display_prevPage": "Previous page",
 	"menu_option_controls_main_keyboard": "Keyboard inputs",

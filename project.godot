@@ -86,6 +86,7 @@ ui/bottom_keys=true
 visuals/dynamic_camera=true
 control/deadzone_move=0.2
 control/deadzone_aim=0.2
+visuals/opaque_afterimages=true
 
 [gui]
 
