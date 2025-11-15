@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_kgmdq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1k1m"]
-size = Vector2(16, 14)
+size = Vector2(16, 16)
 
 [node name="Fire" type="Area2D"]
 collision_layer = 8
@@ -17,7 +17,6 @@ element = 1
 light_radius = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_j1k1m")
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]

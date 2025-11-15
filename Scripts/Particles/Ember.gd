@@ -9,8 +9,13 @@ var amplitude:float = randf_range(0.5, 1.25)#(8, 20)
 
 
 func _spawn(_data:Array) -> void:
-	origin_x = position.x
-	super._spawn(_data)
+	var option:int = ProjectSettings.get_setting("game/world/particles")
+	if not (option == Statics.ParticleOptions.ENVIRONMENTS
+	or option == Statics.ParticleOptions.ALL):
+		queue_free()
+	else:
+		origin_x = position.x
+		super._spawn(_data)
 
 
 func _process(delta: float) -> void:

@@ -96,7 +96,7 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAAHAAIAAAAAAAEAAAADAAgAAAAOAAEAAAACAAwAAAAMAEYAAAADAAwAAAAMAEYAAAAEAAwAAAAMAEYAAAAFAAwAAAAMAEYAAAAGAAwAAAAMAEYAAAAHAAwAAAAMAEYAAAAIAAwAAAAMAEYAAAAJAAwAAAAMAEYAAAAKAAwAAAAMAEYAAAALAAwAAAAMAEYAAAAMAAwAAAAMAEYAAAA=")
+tile_map_data = PackedByteArray("AAAHAAIAAAAAAAEAAAADAAgAAAAOAAEAAAACAAwAAAAMAEYAAAADAAwAAAAMAEYAAAAEAAwAAAAMAEYAAAAFAAwAAAAMAEYAAAAGAAwAAAAMAEYAAAAHAAwAAAAMAEYAAAAIAAwAAAAMAEYAAAAJAAwAAAAMAEYAAAAKAAwAAAAMAEYAAAALAAwAAAAMAEYAAAAMAAwAAAAMAEYAAAD//wYAAAACABgAAAD//wcAAAACABgAAAD//wgAAAACABgAAAAQAA8AAAACABgAAAARAA8AAAACABgAAAASAA8AAAACABgAAAAZAAYAAAACABgAAAAZAAcAAAACABgAAAAZAAgAAAACABgAAAA=")
 tile_set = ExtResource("2_v0hpu")
 collision_enabled = false
 
@@ -123,10 +123,12 @@ position = Vector2(0, 120)
 rotation = 3.1415927
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://bikjegdq3s3vy"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_3l7pb")]
 position = Vector2(400, 120)
 scale = Vector2(1, 3)
 my_id = 2
+exit_room = "uid://mmxkwedjd4ju"
 
 [node name="EmberLayer" parent="." instance=ExtResource("7_7luot")]

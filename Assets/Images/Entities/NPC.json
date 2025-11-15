@@ -2125,6 +2125,24 @@
 			"colors": [255, 2625174783, 4239981823, 0, 4176935167],
 			"autoplay_next": "npc43.ceiling.left.idle",
 		},
+		"npc47.ceiling.right.idle": {
+			"inherit": "2.ceiling.right.idle",
+			"colors": [255, 4233665791, 4176935167, 0, 4176935167],
+		},
+		"npc47.ceiling.right.turnground": {
+			"inherit": "2.ceiling.right.turnground",
+			"colors": [255, 4233665791, 4176935167, 0, 4176935167],
+			"autoplay_next": "npc47.ceiling.right.idle",
+		},
+		"npc47.ceiling.left.idle": {
+			"inherit": "2.ceiling.left.idle",
+			"colors": [255, 4233665791, 4176935167, 0, 4176935167],
+		},
+		"npc47.ceiling.left.turnground": {
+			"inherit": "2.ceiling.left.turnground",
+			"colors": [255, 4233665791, 4176935167, 0, 4176935167],
+			"autoplay_next": "npc47.ceiling.left.idle",
+		},
 		"npc48.floor.right.idle": {
 			"inherit": "0.floor.right.idle",
 			"colors": [255, 3707271423, 4106281215, 0, 4176935167],

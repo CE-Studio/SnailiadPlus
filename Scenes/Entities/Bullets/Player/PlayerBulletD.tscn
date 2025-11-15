@@ -14,7 +14,7 @@ z_index = 150
 script = ExtResource("1_0q70w")
 type = 8
 damage = 20
-cooldown = 0.24
+cooldown = 0.29
 despawn_particle = "ExplosionRainbowBig"
 light_radius = 32
 

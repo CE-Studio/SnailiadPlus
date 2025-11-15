@@ -243,6 +243,10 @@ func get_cam_center_pos() -> Vector2:
 	return position + cam.offset
 
 
+func get_cam_movement_this_tick() -> Vector2:
+	return cam.pos - cam.last_pos
+
+
 func play_save_anim() -> void:
 	save_icon.visible = true
 	save_icon.action = "anim"

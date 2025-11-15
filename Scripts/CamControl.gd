@@ -21,6 +21,7 @@ var border:CameraBorder = null
 var shake_offset:Vector2 = Vector2.ZERO
 var do_screen_shake:bool = true
 var shake_cam_only:bool = false
+var last_pos:Vector2 = Vector2.ZERO
 
 #region New follow vars
 const NF_OFFSET_MAX:Vector2 = Vector2(40.0, 32.0)
@@ -56,6 +57,7 @@ func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:
 
 
 func _process(delta):
+	last_pos = pos
 	match state:
 		CamStates.FOLLOW_FLASH:
 			if player != null:
