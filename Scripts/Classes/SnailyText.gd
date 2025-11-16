@@ -180,7 +180,7 @@ func format_extra_tags(_text:String) -> String:
 		else:
 			reassembled_str.append(word)
 			internal_reassembled_str.append(word)
-	
+
 	internal_text = " ".join(internal_reassembled_str)
 	return " ".join(reassembled_str)
 	#var parsed_text:String = ""

@@ -5,19 +5,19 @@ extends Player
 func _ready():
 	super()
 	default_gravity = Statics.DirsSurface.FLOOR
-	can_jump = [ -1 ]
-	can_swap_gravity = [ [ -1, -3 ] ]
-	retain_gravity_on_airborne = [ Item.ItemTypes.GRAVITY_SHELL ]
-	can_gravity_jump_opposite = [ Item.ItemTypes.GRAVITY_SHELL ]
-	can_gravity_jump_adjacent = [ Item.ItemTypes.GRAVITY_SHELL ]
-	can_gravity_shock = [ -1 ]
-	shellable = [ -1 ]
-	hop_while_moving = [ -2 ]
+	can_jump = [ [-1] ]
+	can_swap_gravity = [ [-1, -3] ]
+	retain_gravity_on_airborne = [ [Item.ItemTypes.GRAVITY_SHELL] ]
+	can_gravity_jump_opposite = [ [Item.ItemTypes.GRAVITY_SHELL] ]
+	can_gravity_jump_adjacent = [ [Item.ItemTypes.GRAVITY_SHELL] ]
+	can_gravity_shock = [ [-1] ]
+	shellable = [ [-1] ]
+	hop_while_moving = [ [-2] ]
 	hop_power = 0.0
-	can_round_inner_corners = [ -1 ]
-	can_round_outer_corners = [ -1 ]
-	can_round_opposite_outer_corners = [ Item.ItemTypes.GRAVITY_SHELL ]
-	stick_to_walls_when_hurt = [ Item.ItemTypes.GRAVITY_SHELL ]
+	can_round_inner_corners = [ [-1] ]
+	can_round_outer_corners = [ [-1] ]
+	can_round_opposite_outer_corners = [ [Item.ItemTypes.GRAVITY_SHELL] ]
+	stick_to_walls_when_hurt = [ [Item.ItemTypes.GRAVITY_SHELL] ]
 	run_speed = [ 138.6667, 138.6667, 138.6667, 176 ]
 	jump_power = [ -428, -428, -428, -428, -498, -498, -498, -498 ]
 	gravity = [ 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200 ]
@@ -42,9 +42,9 @@ func _ready():
 	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
 	light_radius = 32
-	
+
 	sprite.action = "0.floor.right.idle"
-	
+
 	corner_cast = $"CastGroup/RoundCornerCast"
 	ground_casts = [
 		$"CastGroup/Normal/GroundCast0",
@@ -98,11 +98,6 @@ func _ready():
 	]
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	super(delta)
-
-
 func tick_death(delta:float) -> void:
 	if not in_death_cutscene:
 		match gravity_dir:
@@ -117,5 +112,5 @@ func tick_death(delta:float) -> void:
 		_play_anim("death")
 		velocity = Vector2(110 if facing_left else -110, -300)
 	super(delta)
-	sprite.position += velocity * delta
+	sprite.position = body.position
 	velocity.y += gravity[read_i_jump] * delta

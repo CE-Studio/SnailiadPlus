@@ -55,7 +55,7 @@ func spawn() -> void:
 func _process(_delta: float) -> void:
 	if GameCore.instance == null or Engine.is_editor_hint():
 		return
-	
+
 	if face_mode == -1:
 		var player_pos = GameCore.instance.player.position
 		match surface:
@@ -92,7 +92,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if GameCore.instance == null or Engine.is_editor_hint():
 		return
-	
+
 	match surface:
 		0:
 			body.velocity.y += GRAVITY * delta

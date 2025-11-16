@@ -138,13 +138,13 @@ func spawn(active:bool = true) -> void:
 	health = max_health
 	if sprite and sprite.material == null:
 		sprite.material = flash_mat
-	
+
 	if hitbox:
 		hitbox.connect("area_entered", _on_bullet_entered)
 		hitbox.connect("area_exited", _on_bullet_exited)
 		hitbox.connect("body_entered", _on_player_entered)
 		hitbox.connect("body_exited", _on_player_exited)
-	
+
 	if display_mode:
 		ai_active = false
 		can_damage = false
@@ -165,7 +165,7 @@ func _physics_process(delta) -> void:
 	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
 		sent_entry_once = true
 		Statics.add_bestiary_entry(my_type)
-	
+
 	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
 		var can_hit = true
 		match my_element:
@@ -175,7 +175,7 @@ func _physics_process(delta) -> void:
 				can_hit = not Statics.has_shell(3)
 		if can_hit:
 			GameCore.instance.player.adjust_health(-attack)
-	
+
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
 		var pbullets_to_despawn:Array = []
@@ -239,7 +239,7 @@ func _physics_process(delta) -> void:
 	if damage_timeout > 0.0:
 		damage_timeout -= delta
 	ping_played = false
-	
+
 	if sprite:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)

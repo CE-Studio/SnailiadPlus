@@ -23,10 +23,10 @@ var health_bar:BossHealthBar = null
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	
+
 	while phase < phase_changes.size() and health < max_health * phase_changes[phase]:
 		advance_phase()
-	
+
 	if in_death_anim:
 		for node in nodes_to_wiggle:
 			node.position = Vector2(

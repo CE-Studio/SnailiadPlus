@@ -62,7 +62,7 @@ func _ready() -> void:
 	or type == ItemTypes.NONE):
 		queue_free()
 		return
-	
+
 	var id_str
 	var character = int(Statics.current_profile["character"])
 	name_str = get_name_str_from_id(type)
@@ -130,7 +130,7 @@ func _ready() -> void:
 	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
 	add_child.call_deferred(sprite)
 	sprite.action = "item"
-	
+
 	UICore.instance.darkness_layer.add_source(self, 48)
 
 
@@ -237,7 +237,7 @@ func _on_player_entered(_body: Node2D) -> void:
 			SInput.read_inputs = false
 		else:
 			Statics.play_sfx_disconnected(jingle_minor)
-		
+
 		Statics.add_item(type, 1)
 		Statics.mark_item_location(location_id)
 		Statics.current_profile["item_rate"] = Statics.get_item_percentage()

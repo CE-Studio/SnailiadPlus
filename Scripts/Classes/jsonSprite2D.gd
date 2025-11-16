@@ -25,7 +25,7 @@ const _DATA_MATCH = {
 }
 
 
-@export var normal_npc := false 
+@export var normal_npc := false
 @export_file("*.json") var texture_path:String
 @export var load_autoplay:Array[String]
 @export var fade_color:Color = Color.WHITE:
@@ -77,7 +77,7 @@ func _ready() -> void:
 		assert(false, "Path is not a json file!")
 		return
 
-	
+
 	if normal_npc:
 		texture = preload("uid://cp668vus8s3n0")
 	elif _imgcache.has(pathtrimmed):
@@ -154,8 +154,8 @@ func _ready() -> void:
 			for h in t["frames"]:
 				if h is Array:
 					if h.size() == 4:
-						if (Statics.is_number(h[0]) and 
-							Statics.is_number(h[1]) and 
+						if (Statics.is_number(h[0]) and
+							Statics.is_number(h[1]) and
 							h[2] is bool and
 							h[3] is bool):
 								continue
@@ -166,7 +166,7 @@ func _ready() -> void:
 					if typeof(t[h]) == typeof(_DATA_MATCH["animations"]["an_action"][h]):
 						continue
 					else:
-						if (Statics.is_number(t[h]) and 
+						if (Statics.is_number(t[h]) and
 							Statics.is_number(_DATA_MATCH["animations"]["an_action"][h])):
 							continue
 					assert(false, "Animation data type mismatch: " + h)
@@ -182,11 +182,11 @@ func _ready() -> void:
 			return
 		_datcache[pathtrimmed] = tempdata
 		data = tempdata
-	
+
 	hframes = data["tiles"][0]
 	vframes = data["tiles"][1]
 	meta = data["meta"]
-	
+
 	if data["layerize"]:
 		var layers:Dictionary[int, Image]
 		var img := texture.get_image()
@@ -218,7 +218,7 @@ func _ready() -> void:
 			_children.append(sp)
 		texture = _layers[-1]
 	is_ready = true
-	
+
 	if load_autoplay.size() > 0:
 		action = load_autoplay.pick_random()
 
