@@ -2,6 +2,7 @@ extends Particle
 
 
 var life_time:float = 1.8
+var play_sound:bool = true
 
 @onready var boom1:AudioStreamPlayer = $"Boom1"
 @onready var boom2:AudioStreamPlayer = $"Boom2"
@@ -10,6 +11,13 @@ var life_time:float = 1.8
 @onready var small_boom2:AudioStreamPlayer = $"SmallBoom2"
 @onready var small_boom3:AudioStreamPlayer = $"SmallBoom3"
 @onready var small_boom4:AudioStreamPlayer = $"SmallBoom4"
+
+
+func _spawn(_data:Array) -> void:
+	super(_data)
+	
+	if _data.size() > 0 and _data[0] is bool:
+		play_sound = _data[0]
 
 
 func _physics_process(delta: float) -> void:
@@ -37,6 +45,8 @@ func _call_batched(front:bool = false) -> void:
 
 
 func _random_boom() -> void:
+	if not play_sound:
+		return
 	match floori(randf() * 3):
 		0: boom1.play()
 		1: boom2.play()
@@ -44,6 +54,8 @@ func _random_boom() -> void:
 
 
 func _random_small_boom() -> void:
+	if not play_sound:
+		return
 	match floori(randf() * 4):
 		0: small_boom1.play()
 		1: small_boom2.play()

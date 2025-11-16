@@ -30,6 +30,7 @@ func _ready() -> void:
 	cam_layer.cam.set_layer_position(player.position)
 	cam_layer.update_weapon_icons(false)
 	cam_layer.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
+	cam_layer.shake_setting = ProjectSettings.get_setting("game/visuals/screen_shake")
 
 
 func _process(delta: float) -> void:

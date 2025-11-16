@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5irbfjr44kke"]
+
+[ext_resource type="Script" uid="uid://c7g66sbiyd82b" path="res://Scripts/Enemies/Bosses/StompyEye.gd" id="1_8dq5x"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_an5j5"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_tbccu"]
+[ext_resource type="Texture2D" uid="uid://blx8hjkkqf5k0" path="res://Assets/Images/Entities/Boss2Eye.png" id="3_an5j5"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_an5j5"]
+[ext_resource type="Texture2D" uid="uid://ddbtiqj8n7d2y" path="res://Assets/Images/Entities/Boss2Pupil.png" id="5_0oolt"]
+[ext_resource type="Texture2D" uid="uid://b0mc81l83seev" path="res://Assets/Images/Entities/Boss2Eyelid.png" id="6_07le3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxpcm"]
+size = Vector2(100, 52)
+
+[node name="StompyEye" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_8dq5x")
+max_health = 2000
+max_health_hard = 4000
+defense = 5
+can_damage = false
+kill_particle_range = Vector2i(0, 0)
+kill_particle_types = Array[String]([])
+kill_particle_count = 0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_mxpcm")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2.4, 2.4)
+rect = Rect2(-20, -10, 40, 20)
+
+[node name="SpriteGroup" type="Node2D" parent="."]
+
+[node name="Eye" type="Sprite2D" parent="SpriteGroup"]
+clip_children = 2
+material = ExtResource("2_an5j5")
+script = ExtResource("2_tbccu")
+texture_path = "res://Assets/Images/Entities/Boss2Eye.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eye"]
+texture = ExtResource("3_an5j5")
+script = ExtResource("4_an5j5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Pupil" type="Sprite2D" parent="SpriteGroup"]
+material = ExtResource("2_an5j5")
+script = ExtResource("2_tbccu")
+texture_path = "res://Assets/Images/Entities/Boss2Pupil.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Pupil"]
+texture = ExtResource("5_0oolt")
+script = ExtResource("4_an5j5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Eyelid" type="Sprite2D" parent="SpriteGroup"]
+material = ExtResource("2_an5j5")
+script = ExtResource("2_tbccu")
+texture_path = "res://Assets/Images/Entities/Boss2Eyelid.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eyelid"]
+texture = ExtResource("6_07le3")
+hframes = 3
+vframes = 3
+script = ExtResource("4_an5j5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

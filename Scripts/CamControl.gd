@@ -11,12 +11,17 @@ enum CamStates {
 	NONE = -1,
 }
 var state:CamStates = CamStates.FOLLOW_NEW
+var pos:Vector2 = Vector2.ZERO
 var target_point:Vector2 = Vector2.ZERO
 var target_entity:Node2D
 var player:Player
 var ease_rate:float = 4.25
 var offset:Vector2 = Vector2(200, 120)
 var border:CameraBorder = null
+var shake_offset:Vector2 = Vector2.ZERO
+var do_screen_shake:bool = true
+var shake_cam_only:bool = false
+var last_pos:Vector2 = Vector2.ZERO
 
 #region New follow vars
 const NF_OFFSET_MAX:Vector2 = Vector2(40.0, 32.0)
@@ -37,6 +42,7 @@ var nf_return_timer:float = 0.0
 
 func instantiate() -> void:
 	player = GameCore.instance.player
+	pos = UICore.instance.position
 	set_cam_mode()
 
 
@@ -51,7 +57,7 @@ func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:
 
 
 func _process(delta):
-	var pos = UICore.instance.position
+	last_pos = pos
 	match state:
 		CamStates.FOLLOW_FLASH:
 			if player != null:
@@ -81,9 +87,15 @@ func _process(delta):
 						pos.y = clampf(pos.y, -INF, child.position.y + buffer)
 		#endregion
 	UICore.instance.position = pos
+	position = offset
+	if do_screen_shake:
+		if shake_cam_only:
+			position += shake_offset
+		else:
+			UICore.instance.position += shake_offset
 
 
-func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
+func _tick_new_follow(_pos:Vector2, delta:float) -> Vector2:
 	var move_vector:Vector2 = SInput.vector_move()
 	var walled:bool = (
 		player.gravity_dir == Statics.DirsSurface.LWALL or
@@ -159,9 +171,10 @@ func _tick_new_follow(pos:Vector2, delta:float) -> Vector2:
 			nf_offset.y = move_toward(nf_offset.y, 0.0, NF_OFFSET_LAND_EASE_RATE * delta)
 			#nf_offset.y = 0.0
 	
-	pos = pos.lerp(player.position - offset + nf_offset, ease_rate * delta)
-	return pos
+	_pos = _pos.lerp(player.position - offset + nf_offset, ease_rate * delta)
+	return _pos
 
 
 func set_layer_position(new_pos:Vector2):
 	UICore.instance.position = new_pos - offset
+	pos = UICore.instance.position

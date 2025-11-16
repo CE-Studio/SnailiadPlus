@@ -47,7 +47,7 @@ func _ready() -> void:
 func instance(_boss:Boss) -> void:
 	boss = _boss
 	var _name:String = Enemy.EnemyTypes.keys()[_boss.my_type]
-	_name = _name.to_pascal_case()
+	_name = _name.to_camel_case()
 	boss_name.set_snaily_text("boss_%s" % _name)
 	defeated.set_snaily_text("boss_defeated")
 

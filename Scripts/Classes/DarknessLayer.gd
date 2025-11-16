@@ -3,7 +3,7 @@ extends Node2D
 
 
 #region Variables
-const MAX_SOURCES:int = 64
+const MAX_SOURCES:int = 128
 const NULL_POS:Vector3 = Vector3(-32, -32, 0)
 const MAX_DARKNESS_COL:Color = Color(0.0, 0.0, 0.0, 1.0)
 const HALO_SCALE:float = 16.0
@@ -57,7 +57,7 @@ func add_source(source:Node2D, radius:int) -> void:
 		if sources[i] == null:
 			sources[i] = source
 			source_radii[i] = radius
-			return
+			break
 
 
 func _check_clear_null_sources() -> void:
@@ -92,4 +92,5 @@ func update_radius(source:Node2D, new_radius:int) -> void:
 
 
 func _update_light_positions() -> void:
+	mat.set_shader_parameter("lights", MAX_SOURCES)
 	mat.set_shader_parameter("light_pos", array_state)

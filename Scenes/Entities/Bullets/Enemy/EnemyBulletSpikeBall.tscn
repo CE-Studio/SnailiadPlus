@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://nu02ausampyq"]
+
+[ext_resource type="Script" uid="uid://bew784mhp5pjr" path="res://Scripts/Bullets/Enemy/EnemyBulletSpikeBall.gd" id="1_gip5i"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_pb2i8"]
+[ext_resource type="Texture2D" uid="uid://cp118885tmaw0" path="res://Assets/Images/Bullets/Enemy/EnemySpikeBall.png" id="3_gip5i"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_l8gkq"]
+[ext_resource type="AudioStream" uid="uid://cexggq3vwofgk" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemySpikeBall.ogg" id="5_pb2i8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(28, 28)
+
+[node name="EnemyBulletSpikeBall" type="Node2D"]
+z_index = 50
+script = ExtResource("1_gip5i")
+damage = 2
+despawn_offscreen = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.2, 0.2)
+rect = Rect2(-79.99999, -79.99999, 159.99998, 159.99998)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.483053, 0.436212, 1, 0.42)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_pb2i8")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemySpikeBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("3_gip5i")
+hframes = 2
+script = ExtResource("4_l8gkq")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("5_pb2i8")
+bus = &"Sfx"

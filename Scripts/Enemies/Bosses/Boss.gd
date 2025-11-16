@@ -38,8 +38,8 @@ func _physics_process(delta: float) -> void:
 		death_timer -= delta
 
 
-func _damage(health_lost:int, sound:bool = true) -> void:
-	super(health_lost, sound)
+func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> void:
+	super(health_lost, sound, allow_kill)
 	if health_bar:
 		health_bar.update()
 
@@ -50,6 +50,8 @@ func advance_phase(count:int = 1) -> void:
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
+	if not sprite:
+		return ""
 	sprite.action = get_phase_anim(anim_name)
 	if set_as_current and anim_name.strip_edges() != "":
 		current_anim = anim_name

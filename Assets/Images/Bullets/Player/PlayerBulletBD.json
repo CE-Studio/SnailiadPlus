@@ -1,7 +1,7 @@
 {
 	"tiles": [6, 12],
 	"layerize": false,
-	"meta": {},
+	"meta": { "afterimage_offset_x": 0, "afterimage_offset_y": 6 },
 	"animations": {
 		"U": {
 			"fps": 14,

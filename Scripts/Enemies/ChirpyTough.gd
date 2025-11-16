@@ -19,7 +19,7 @@ var off_screen_time:float = 0.0
 var shot_timeout:float = SHOT_TIMEOUT
 
 @onready var sfx_chirp:AudioStreamPlayer = $"Chirp"
-@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyDonutLinear.tscn")
+@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
 #endregion
 
 

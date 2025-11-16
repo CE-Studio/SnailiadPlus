@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxome248ds403"]
+
+[ext_resource type="Script" uid="uid://dtu5fbhadud3q" path="res://Scripts/Particles/ParticleLayers/EmberLayer.gd" id="1_4smfb"]
+[ext_resource type="Texture2D" uid="uid://40vtf6x1iom6" path="res://Editor/EditorMarkers/HeatEffect.png" id="2_djypw"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_istr6"]
+
+[node name="EmberLayer" type="Node2D"]
+z_index = 500
+z_as_relative = false
+script = ExtResource("1_4smfb")
+particles = Array[String](["Ember"])
+spawn_delay = 0.03
+spawn_all_at_once = false
+particle_count = 16
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_djypw")
+script = ExtResource("3_istr6")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -47,6 +47,8 @@ func spawn(tile_coords:Vector2i, tile_type:int, silent:bool):
 
 
 func _on_bullet_entered(_area:Area2D) -> void:
+	if _area.get_parent() is PlayerBulletAfterimage:
+		return
 	if vis.is_on_screen():
 		var bullet:PlayerBullet = _area.get_parent()
 		var hit_hard_enough:bool = false
@@ -77,10 +79,10 @@ func _on_bullet_entered(_area:Area2D) -> void:
 				var pos = Vector2(randi_range(-16, 16), randi_range(-16, 16))
 				Statics.spawn_particle("ExplosionSmall", Room.Layers.FG1, position + pos)
 			match randi_range(1, 4):
-				1: Statics.play_sfx_disconnected(explode1, 0.75)
-				2: Statics.play_sfx_disconnected(explode2, 0.75)
-				3: Statics.play_sfx_disconnected(explode3, 0.75)
-				4: Statics.play_sfx_disconnected(explode4, 0.75)
+				1: Statics.play_sfx_disconnected(explode1, 0.65)
+				2: Statics.play_sfx_disconnected(explode2, 0.65)
+				3: Statics.play_sfx_disconnected(explode3, 0.65)
+				4: Statics.play_sfx_disconnected(explode4, 0.65)
 			queue_free()
 		else:
 			if not is_silent and bullet.ping_on_breakables:

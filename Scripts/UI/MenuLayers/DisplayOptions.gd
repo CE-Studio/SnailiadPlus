@@ -13,6 +13,7 @@ func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/Darkness".remote_set_option(ProjectSettings.get_setting("game/visuals/darkness"))
 	$"ScrollContainer/VBoxContainer/PaletteShader".toggled_on = ProjectSettings.get_setting("game/visuals/palette_shader")
 	$"ScrollContainer/VBoxContainer/DistortShader".toggled_on = ProjectSettings.get_setting("game/visuals/distortion_shader")
+	$"ScrollContainer/VBoxContainer/OpaqueAfterimages".toggled_on = ProjectSettings.get_setting("game/visuals/opaque_afterimages")
 
 
 func on_scale_cycled(value) -> void:
@@ -78,6 +79,10 @@ func on_pshader_toggled(value) -> void:
 
 func on_dshader_toggled(value) -> void:
 	ProjectSettings.set_setting("game/visuals/distortion_shader", value)
+
+
+func on_opaque_afterimages_toggled(value) -> void:
+	ProjectSettings.set_setting("game/visuals/opaque_afterimages", value)
 
 
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:

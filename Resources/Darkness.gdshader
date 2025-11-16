@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 uniform vec2 aspect;
 uniform int lights = 8;
-uniform vec3 light_pos[64];
+uniform vec3 light_pos[128];
 
 
 

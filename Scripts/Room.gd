@@ -275,6 +275,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				shellbreaker.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(shellbreaker)
 			
+			Vector2i(8, 1): # Stompy
+				var stompy:Stompy = load("res://Scenes/Entities/Enemies/Bosses/Stompy.tscn").instantiate()
+				stompy.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(stompy)
+			
 			Vector2i(11, 1): # Grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
@@ -345,6 +350,30 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				spike.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(spike)
 			
+			Vector2i(7, 24): # Canon (floor)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(canon)
+			
+			Vector2i(8, 24): # Canon (left wall)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.LWALL
+				layer_ground.add_child(canon)
+			
+			Vector2i(9, 24): # Canon (right wall)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.RWALL
+				layer_ground.add_child(canon)
+			
+			Vector2i(10, 24): # Canon (ceiling)
+				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				canon.position = _tile_coords_to_vector_pos(tile)
+				canon.base_dir = Statics.DirsSurface.CEILING
+				layer_ground.add_child(canon)
+			
 			Vector2i(12, 24): # Muck
 				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
 				muck.position = _tile_coords_to_vector_pos(tile)
@@ -409,6 +438,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snelk.state = Snelk.States.SLEEP
 				layer_ground.add_child(snelk)
 			
+			Vector2i(11, 30): # Angry block
+				var block:Angryblock = load("res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()
+				block.position = _tile_coords_to_vector_pos(tile) + Vector2(40, 24)
+				layer_ground.add_child(block)
+			
 			Vector2i(12, 30): # Hanging grass
 				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
@@ -432,6 +466,16 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var surface_tile:JsonSprite2D = load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
 				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
 				layer_fg2.add_child(surface_tile)
+			
+			Vector2i(12, 70): # Fire
+				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				fire.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fire)
+			
+			Vector2i(13, 70): # Fire
+				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				fire.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(fire)
 
 
 func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:

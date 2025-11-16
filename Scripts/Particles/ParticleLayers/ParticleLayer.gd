@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	spawn_cooldown -= delta
 	while spawn_cooldown <= 0.0 and active_particles.size() < particle_count:
 		_spawn_one()
-		spawn_cooldown += spawn_delay
+		spawn_cooldown = spawn_delay
 	
 	var cam_center = UICore.instance.get_cam_center_pos()
 	for particle in active_particles:

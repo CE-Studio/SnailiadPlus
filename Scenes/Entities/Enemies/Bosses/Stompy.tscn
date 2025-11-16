@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://m1j84q4kx1aj"]
+
+[ext_resource type="Script" uid="uid://crcke8exum3uo" path="res://Scripts/Enemies/Bosses/Stompy.gd" id="1_asfk8"]
+[ext_resource type="PackedScene" uid="uid://b5irbfjr44kke" path="res://Scenes/Entities/Enemies/Bosses/StompyEye.tscn" id="3_uiwpq"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_wafhq"]
+[ext_resource type="Texture2D" uid="uid://dby1olsbvjdjh" path="res://Editor/EditorMarkers/StompyPlacementGuide.png" id="6_asfk8"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_bc1og"]
+[ext_resource type="PackedScene" uid="uid://b0k5iw8d1ap4w" path="res://Scenes/Entities/Enemies/Bosses/StompyFoot.tscn" id="6_wsny0"]
+
+[node name="Stompy" type="CharacterBody2D"]
+z_index = 14
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_asfk8")
+battle_music = 9
+phase_changes = Array[float]([0.66, 0.28])
+max_health = 2000
+max_health_hard = 4000
+defense = 5
+invulnerable = true
+can_damage = false
+kill_particle_range = Vector2i(0, 0)
+kill_particle_types = Array[String]([])
+kill_particle_count = 0
+
+[node name="FootL" parent="." instance=ExtResource("6_wsny0")]
+position = Vector2(-128, 104)
+left = true
+
+[node name="FootR" parent="." instance=ExtResource("6_wsny0")]
+position = Vector2(128, 104)
+
+[node name="EyeL" parent="." instance=ExtResource("3_uiwpq")]
+position = Vector2(-72, 16)
+left = true
+
+[node name="EyeR" parent="." instance=ExtResource("3_uiwpq")]
+position = Vector2(72, 16)
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 80)
+texture = ExtResource("6_asfk8")
+script = ExtResource("5_wafhq")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bc1og")
+bus = &"Sfx"
