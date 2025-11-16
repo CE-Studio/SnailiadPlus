@@ -285,8 +285,8 @@ func _process(_delta):
 	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
-	if Input.is_action_just_pressed("gravity"):
-		Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
+	#if Input.is_action_just_pressed("gravity"):
+	#	Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
 
 
 # This function is called on a fixed interval of
@@ -298,8 +298,8 @@ func _physics_process(delta:float) -> void:
 		var move_speed:float = 160.0
 		if SInput.input_pressed(SInput.Inputs.JUMP):
 			move_speed = 400.0
-		var move_dir = SInput.vector_move()
-		#body.velocity = move_dir * move_speed
+		var move_dir:Vector2 = SInput.vector_move()
+		body.velocity = move_dir * move_speed
 		body.move_and_slide()
 		position = body.position
 		return
@@ -616,7 +616,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
 		_toggle_shell()
 	elif (rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable)
-	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE))):
+	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or stunned)):
 		_toggle_shell()
 
 	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)

@@ -46,9 +46,9 @@ func _process(delta: float) -> void:
 				new_pos *= Vector2(216, 136)
 				position = center + new_pos
 		2:
-			if abs(position.x - center.x) > 216 or abs(position.y - center.y) > 136:
+			if absf(position.x - center.x) > 216 or absf(position.y - center.y) > 136:
 				position = center
-				var theta = randf() * TAU
+				var theta:float = randf() * TAU
 				direction = Vector2(cos(theta), sin(theta))
 			else:
 				direction = position.direction_to(UICore.instance.get_cam_center_pos()) * -1
