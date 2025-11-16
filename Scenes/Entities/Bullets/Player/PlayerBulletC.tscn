@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_x2k2k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
-size = Vector2(18, 18)
 
 [node name="PlayerBulletC" type="Node2D"]
 z_index = 150

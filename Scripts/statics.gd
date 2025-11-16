@@ -550,6 +550,10 @@ static func play_sfx_disconnected(sound:AudioStream, vol:float = 1.0) -> void:
 		new_discon_sound.load_and_play(sound, vol)
 
 
+static func play_sfx_limited(sound:AudioStream, sound_name:String, vol:float = 1.0) -> void:
+	GameCore.instance.lim_sfx_handler.play_sound(sound, sound_name, vol)
+
+
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
 	if active_room == null:
 		return null

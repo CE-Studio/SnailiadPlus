@@ -424,6 +424,7 @@ func reset_position(pos:Vector2) -> void:
 	body.global_position = pos
 	sprite.position = Vector2.ZERO
 	in_death_cutscene = false
+	fire_cooldown = 0.0
 	_play_anim("idle")
 
 

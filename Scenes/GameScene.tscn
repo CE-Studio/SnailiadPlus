@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ltxtlsrku2k0"]
+[gd_scene load_steps=6 format=3 uid="uid://ltxtlsrku2k0"]
 
 [ext_resource type="Script" uid="uid://2jmosr6mcjwx" path="res://Scripts/GameCore.gd" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://ctodnm477yhmh" path="res://Scenes/internals/CameraLayer.tscn" id="2_3mbwn"]
 [ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
 [ext_resource type="PackedScene" uid="uid://b051o8jm6et2f" path="res://Scenes/internals/MusicManager.tscn" id="4_jwv4s"]
+[ext_resource type="PackedScene" uid="uid://d2376pjd403n3" path="res://Scenes/internals/LimitedSoundHandler.tscn" id="5_lohlh"]
 
 [node name="GameScene" type="Node2D"]
 process_mode = 1
@@ -17,3 +18,5 @@ script = ExtResource("1_x87qo")
 position = Vector2(64, 96)
 
 [node name="MusicManager" parent="." instance=ExtResource("4_jwv4s")]
+
+[node name="LimitedSoundHandler" parent="." instance=ExtResource("5_lohlh")]

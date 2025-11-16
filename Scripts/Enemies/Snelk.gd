@@ -27,6 +27,7 @@ var facing_left:bool = false
 var first_jump:bool = false
 
 @onready var sfx:AudioStreamPlayer = $"Sfx"
+@onready var sound:AudioStream = load("res://Assets/Sounds/Sfx/Enemy/Snelk.ogg")
 #endregion
 
 
@@ -56,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	
 	if state == States.SLEEP:
 		if position.distance_to(GameCore.instance.player.position) < WAKE_RANGE:
-			sfx.play()
+			_play_sound()
 			state = States.RUN
 	else:
 		var jump:bool = false
@@ -64,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		if is_on_floor():
 			jump = true
 			if vis and vis.is_on_screen() and randf() <= SFX_CHANCE:
-				sfx.play()
+				_play_sound()
 		if is_on_wall():
 			facing_left = not facing_left
 			_play_anim()
@@ -113,3 +114,8 @@ func _play_anim() -> void:
 			States.SLEEP:
 				action = "sleep"
 	sprite.action = action + dir
+
+
+func _play_sound() -> void:
+	#sfx.play()
+	Statics.play_sfx_limited(sound, "Snelk")
