@@ -45,7 +45,7 @@ func _ready() -> void:
 	super()
 	bind_str = SInput.Inputs.keys()[bind]
 	bind_str = bind_str.to_camel_case()
-	
+
 	if Engine.is_editor_hint():
 		text.set_snaily_text(bind_str)
 	else:
@@ -57,7 +57,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus:
 		if focused and parent_layer.meta_info[1] <= 0:
 			if (SInput.check_input(SInput.Inputs.UI_ACCEPT, true)
@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 		if ((scroll_state == -1 and not Input.is_action_pressed("ui_left") and not SInput.input_pressed(SInput.Inputs.LEFT))
 		or (scroll_state == 1 and not Input.is_action_pressed("ui_right") and not SInput.input_pressed(SInput.Inputs.RIGHT))):
 			scroll_state = 0
-		
+
 		elapsed += delta * FOCUS_FLASH_SPEED
 		for i in range(bind_icons.size()):
 			bind_icons[i].modulate = Color.WHITE
@@ -100,7 +100,7 @@ func setup_bind_icons() -> void:
 	var events:Array = SInput.pull_action(bind)
 	var event_ptr:int = 0
 	var event_slots:int = SInput.INPUT_SLOTS[bind]
-	
+
 	active_buttons = 0
 	for i in [ 8, 4, 2, 1 ]:
 		if event_slots & i > 0:
@@ -145,7 +145,7 @@ func _on_focus() -> void:
 	super()
 	if Engine.is_editor_hint() or not parent_layer:
 		return
-	
+
 	if not check_slot_active(parent_layer.meta_info[0]):
 		if parent_layer.meta_info[0] == 0:
 			focus_right()
@@ -157,7 +157,7 @@ func _on_exit_focus() -> void:
 	super()
 	if Engine.is_editor_hint():
 		return
-	
+
 	for icon in bind_icons:
 		icon.modulate = Color.WHITE
 

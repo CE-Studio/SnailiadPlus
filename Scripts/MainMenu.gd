@@ -38,12 +38,12 @@ var read_esc:bool = false
 
 func _ready() -> void:
 	save_icon.visible = false
-	
+
 	var version_string := (Statics.get_text("menu_version_header") + "\n"
 	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
 	version_text.set_snaily_text_raw(version_string)
 	version_text.add_shadow(1)
-	
+
 	if is_main_menu:
 		get_tree().paused = false
 		selectors[0].action = "left_0"
@@ -62,7 +62,7 @@ func _ready() -> void:
 			else:
 				$"VersionWarnPanel".queue_free()
 				is_main_awaiting_input = true
-			
+
 			click_play_text = $"ClickPlay"
 			click_play_text.set_snaily_text("menu_play")
 			click_play_text.add_border(1)
@@ -73,7 +73,7 @@ func _ready() -> void:
 			$"VersionWarnPanel".queue_free()
 			is_main_awaiting_input = false
 			spawn_menu()
-			
+
 	else:
 		title.position.y = TITLE_REST_Y
 		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 				clear_top_layer(0)
 			else:
 				create_layer("Quit")
-	
+
 	var focused_node:Control = get_viewport().gui_get_focus_owner()
 	if focused_node != null:
 		if focused_node is ScrollingSnailyButton:
@@ -119,7 +119,7 @@ func _process(delta: float) -> void:
 					1: destination.x += focused_node.size.x + SELECTOR_OFFSET.x
 				var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
 				selectors[i].global_position = new_pos
-		
+
 		if SInput.just_pressed_as_echo("left") or SInput.just_pressed_as_echo("ui_left"):
 			if focused_node.focus_neighbor_left != ^"":
 				var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
@@ -136,10 +136,10 @@ func _process(delta: float) -> void:
 			if focused_node.focus_neighbor_bottom != ^"":
 				var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
 				down.grab_focus()
-	
+
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1
-	
+
 	if not is_main_awaiting_input:
 		var rate_delta := HIDE_FADE_RATE * delta
 		var asset_a = title.modulate.a
@@ -153,7 +153,7 @@ func _process(delta: float) -> void:
 			version_text.modulate.a = lerp(asset_a, 1.0, rate_delta)
 		selectors[0].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
 		selectors[1].modulate.a = lerp(selector_a, selector_target_a, rate_delta)
-	
+
 	if read_inputs and not read_esc:
 		read_esc = true
 

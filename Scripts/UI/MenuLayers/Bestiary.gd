@@ -88,14 +88,14 @@ var selection:int = 0
 
 func _ready() -> void:
 	parent_layer = get_parent()
-	
+
 	var enemy_enums := Enemy.EnemyTypes.keys()
 	#for enemy in enemy_enums:
 	#	if enemy is String:
 	#		entity_list.append(enemy.to_camel_case())
 	for enemy in ENTRIES:
 		entity_list.append(enemy_enums[enemy].to_camel_case())
-	
+
 	for i in range(entity_list.size()):
 		var entity := entity_list[i]
 		if not Statics.check_bestiary_entry(ENTRIES[i]):
@@ -129,12 +129,12 @@ func _ready() -> void:
 		new_text.focus_previous = last_focus
 		#endregion
 		new_text.focus_entered.connect(_on_text_focused)
-	
+
 	if list_items.size() > 0:
 		list_items[0].grab_focus()
-	
+
 	selector_origin_x = selector.position.x
-	
+
 	name_text.modulate = text_color
 	desc_text.modulate = text_color
 	_update_entry_display()
@@ -148,7 +148,7 @@ func _process(delta: float) -> void:
 			text.modulate = text_color.lerp(Color.WHITE, elapsed_mod)
 		else:
 			text.modulate = text_color
-	
+
 	selector.position.x = selector_origin_x + sin(elapsed * SELECTOR_WIGGLE_SPEED)
 	selector.global_position.y = clampf(
 		lerpf(

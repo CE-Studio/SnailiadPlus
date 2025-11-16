@@ -54,6 +54,10 @@ window/size/aspect_ratio=0
 
 run/main_run_args="debug"
 
+[editor_overrides]
+
+text_editor/theme/highlighting/line_number_color=Color(1, 0, 0, 1)
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/gdLinter/plugin.cfg")

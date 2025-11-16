@@ -136,12 +136,12 @@ static var load_coords:Vector2i
 
 #region Save info
 static var profile:String
-static var data_profile1:Dictionary
-static var data_profile2:Dictionary
-static var data_profile3:Dictionary
-static var data_records:Dictionary
+static var data_profile1:Dictionary[String, Variant]
+static var data_profile2:Dictionary[String, Variant]
+static var data_profile3:Dictionary[String, Variant]
+static var data_records:Dictionary[String, Variant]
 static var save_prefix:String = "snailyplus_saves"
-static var current_profile:Dictionary
+static var current_profile:Dictionary[String, Variant]
 static var current_profile_id:int
 static var cutscene_persistent_vars:Dictionary[StringName, Dictionary] = {&"": {}}
 

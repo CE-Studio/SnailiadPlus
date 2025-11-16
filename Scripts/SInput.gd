@@ -125,7 +125,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if DEBUG_PRINT_INPUTS:
 			(OS.get_keycode_string(event.physical_keycode))
-		
+
 		last_input_was_con = false
 		if event.pressed:
 			last_ten_keys.append(event.keycode)
@@ -151,7 +151,7 @@ func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
 	if not read_inputs:
 		return false
 	if accept_con_echo:
-		return (Input.is_action_just_pressed(action) or 
+		return (Input.is_action_just_pressed(action) or
 		Input.is_action_pressed(action) and send_con_as_echo)
 	return Input.is_action_just_pressed(action)
 
@@ -302,7 +302,7 @@ func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 	var controls:Array = ProjectSettings.get_setting("game/control/controls")
 	var old_action:Array = controls[action].duplicate()
 	var slot_state:int = INPUT_SLOTS[action as int]
-	
+
 	var event_data
 	if new_event is InputEventKey:
 		event_data = new_event.keycode
@@ -310,13 +310,13 @@ func rebind_ctrl(action:Inputs, new_event:InputEvent, slot:int) -> void:
 		event_data = new_event.button_index
 	elif new_event is InputEventJoypadMotion:
 		event_data = Vector2(new_event.axis, -1 if new_event.axis_value < 0 else 1)
-	
+
 	old_action[slot] = event_data
 	# Bitwise op: check slot to the right of current slot by indexing slot_state where slot = 0b----0123
 	var state_index:int = 2 - slot # slot (range 0-3) is flipped (3 - slot), then subtract 1 to bump index right
 	if ((slot == 0 or slot == 2) and ((1 << state_index) & slot_state) == 0):
 		old_action[slot + 1] = event_data
-	
+
 	controls[action] = old_action.duplicate()
 	ProjectSettings.set_setting("game/control/controls", controls.duplicate())
 
@@ -328,14 +328,14 @@ func rebind_action(action:String) -> void:
 	for act in actions_raw:
 		actions.append(act.to_camel_case())
 	var action_id:int = actions.find(action)
-	
+
 	InputMap.action_erase_events(action)
 	for i in range(4):
 		var new_event:InputEvent = null
 		if i < 2:
 			new_event = InputEventKey.new()
 			new_event.keycode = controls[action_id][i]
-			
+
 		elif controls[action_id][i] is Vector2 or controls[action_id][i] is Vector2i:
 			new_event = InputEventJoypadMotion.new()
 			new_event.axis = controls[action_id][i].x
@@ -350,7 +350,7 @@ func rebind_all() -> void:
 	var keys:Array = Inputs.keys()
 	for i in range(keys.size() - 1):
 		keys[i] = keys[i].to_camel_case()
-	
+
 	var actions:Array = InputMap.get_actions()
 	for action in actions:
 		if keys.has(action) and action != "uiClick":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://uef0mmwa2tuq"]
+[gd_scene load_steps=12 format=4 uid="uid://uef0mmwa2tuq"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="6_ntfxy"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="7_ybq4q"]
+[ext_resource type="PackedScene" uid="uid://bod3nsu7mn3sh" path="res://Scenes/Entities/MovingPlatform.tscn" id="9_a1iiw"]
 
 [sub_resource type="Curve2D" id="Curve2D_sg3tw"]
 resource_local_to_scene = true
@@ -15,6 +16,9 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 200, 120)
 }
 point_count = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1iiw"]
+size = Vector2(6, 6)
 
 [node name="TestRoom1" type="Node2D"]
 z_as_relative = false
@@ -128,7 +132,7 @@ curve = SubResource("Curve2D_sg3tw")
 script = ExtResource("4_u3nms")
 
 [node name="DefaultSpawn" type="Marker2D" parent="."]
-position = Vector2(96, 152)
+position = Vector2(32, 125)
 
 [node name="RoomTransitionTrigger" parent="." instance=ExtResource("3_u3nms")]
 position = Vector2(0, 104)
@@ -143,3 +147,22 @@ scale = Vector2(1, 3)
 my_id = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MovingPlatform" parent="." instance=ExtResource("9_a1iiw")]
+position = Vector2(24, 160)
+rotation = 1.5707941
+type = 1
+path_anim = &"AAup10"
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(24, 139)
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_a1iiw")
+
+[node name="ColorRect" type="ColorRect" parent="RigidBody2D/CollisionShape2D"]
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
