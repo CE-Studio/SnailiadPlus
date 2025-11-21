@@ -48,6 +48,7 @@ var holding_shell:bool = false
 var axis_flag:bool
 var against_wall:bool
 var fire_cooldown:float
+var return_bullet:PlayerBullet
 var fire_mode:bool = false
 var idle_timer:Timer
 var is_idling:bool
@@ -312,7 +313,8 @@ func _physics_process(delta:float) -> void:
 		box_shell.disabled = not shelled
 	# To start things off, we decrease the fire cooldown,
 	# and increase the coyote time and jump buffer as necessary
-	fire_cooldown = clampf(fire_cooldown - delta, 0.0, INF)
+	if return_bullet == null:
+		fire_cooldown = clampf(fire_cooldown - delta, 0.0, INF)
 	if SInput.input_pressed(SInput.Inputs.JUMP):
 		jump_buffer_counter += delta
 	else:

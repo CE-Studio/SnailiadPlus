@@ -3,6 +3,7 @@ extends EnvironmentArea
 
 
 @export_range(0.0, 256.0, 1.0) var bubble_count = 16
+@export var fast_bubbles:bool = false
 var active_bubbles:Array = []
 
 
@@ -27,7 +28,7 @@ func spawn_initial_bubbles() -> void:
 			randf_range(-box_size.y, box_size.y)
 		) + box.global_position
 		var layer = randi_range(3, 5)
-		var bubble = Statics.spawn_particle("Bubble", layer, spawn_pos)
+		var bubble = Statics.spawn_particle("Bubble", layer, spawn_pos, [Vector2.ZERO, false, fast_bubbles])
 		active_bubbles.append(bubble)
 		bubble.home = box
 

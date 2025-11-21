@@ -165,11 +165,13 @@ exit_transition = 1
 position = Vector2(400, 1080)
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://7py6rmykxu68"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("6_fsnil")]
 position = Vector2(400, 376)
 scale = Vector2(1, 3)
 my_id = 2
+exit_room = "uid://bt10cwalr3u41"
 
 [node name="RoomTransitionTrigger4" parent="." instance=ExtResource("6_fsnil")]
 position = Vector2(400, 104)

@@ -394,10 +394,32 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
 
+			Vector2i(8, 25): # Snakey (common)
+				var snakey:SnakeyCommon = load("res://Scenes/Entities/Enemies/SnakeyCommon.tscn").instantiate()
+				snakey.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(snakey)
+
+			Vector2i(12, 25): # Syngnathida
+				var seahorse:Seahorse = load("res://Scenes/Entities/Enemies/Seahorse.tscn").instantiate()
+				seahorse.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(seahorse)
+
+			Vector2i(15, 25): # Walleye (right)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 2
+				layer_ground.add_child(walleye)
+
 			Vector2i(8, 26): # Batty bat
 				var bat:BattyBat = load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
+
+			Vector2i(11, 26): # Walleye (left)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 6
+				layer_ground.add_child(walleye)
 
 			Vector2i(2, 27): # Snelk
 				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
@@ -466,6 +488,42 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var surface_tile:JsonSprite2D = load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
 				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
 				layer_fg2.add_child(surface_tile)
+
+			Vector2i(4, 31): # Walleye (up right)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 1
+				layer_ground.add_child(walleye)
+
+			Vector2i(5, 31): # Walleye (up)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 0
+				layer_ground.add_child(walleye)
+
+			Vector2i(6, 31): # Walleye (up left)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 7
+				layer_ground.add_child(walleye)
+
+			Vector2i(7, 31): # Walleye (down right)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 3
+				layer_ground.add_child(walleye)
+
+			Vector2i(8, 31): # Walleye (down)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 4
+				layer_ground.add_child(walleye)
+
+			Vector2i(9, 31): # Walleye (down left)
+				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				walleye.position = _tile_coords_to_vector_pos(tile)
+				walleye.direction = 5
+				layer_ground.add_child(walleye)
 
 			Vector2i(12, 70): # Fire
 				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()

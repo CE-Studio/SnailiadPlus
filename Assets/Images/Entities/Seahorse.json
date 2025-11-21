@@ -1,0 +1,99 @@
+{
+	"tiles": [1, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"left_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"right_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"left_swim_down": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "left_idle",
+			"frames": []
+		},
+		"right_swim_down": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "right_idle",
+			"frames": []
+		},
+		"left_swim_up": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "left_idle",
+			"frames": []
+		},
+		"right_swim_up": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "right_idle",
+			"frames": []
+		},
+		"left_turn_down": {
+			"fps": 0.9,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "right_idle",
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"right_turn_down": {
+			"fps": 0.9,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "left_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"left_turn_up": {
+			"fps": 0.9,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "right_idle",
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"right_turn_up": {
+			"fps": 0.9,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "left_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		}
+	}
+}

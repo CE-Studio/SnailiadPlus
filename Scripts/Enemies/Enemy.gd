@@ -92,8 +92,8 @@ enum EnemyTypes {
 	CANON,             # Canon (red)
 	NONCANON,          # Non-canon (blue)
 	FANON,             # Fanon (green)
-	SNAKEY_COMMON,     # Green snakey
-	SNAKEY_TOUGH,      # Blue snakey
+	SNAKEY,            # Snakey
+	MISSING0,          # Unused slot
 	SKYVIPER,          # Sky viper
 	SPIDER_COMMON,     # Spider
 	SPIDER_TOUGH,      # Spider mama

@@ -31,18 +31,17 @@ const ENTRIES:Array = [
 	#Enemy.EnemyTypes.NONCANON,
 	#Enemy.EnemyTypes.FANON,
 	Enemy.EnemyTypes.ANGRYBLOCK,
-	#Enemy.EnemyTypes.SNAKEY_COMMON,
-	#Enemy.EnemyTypes.SNAKEY_TOUGH,
+	Enemy.EnemyTypes.SNAKEY,
 	#Enemy.EnemyTypes.SKYVIPER,
-	#Enemy.EnemyTypes.SPIDER_COMMON,
-	#Enemy.EnemyTypes.SPIDER_TOUGH,
-	#Enemy.EnemyTypes.TURTLE_COMMON,
-	#Enemy.EnemyTypes.TURTLE_TOUGH,
-	#Enemy.EnemyTypes.JELLYFISH,
-	#Enemy.EnemyTypes.SEAHORSE,
-	#Enemy.EnemyTypes.TALLFISH_COMMON,
-	#Enemy.EnemyTypes.TALLFISH_TOUGH,
-	#Enemy.EnemyTypes.WALLEYE,
+	Enemy.EnemyTypes.SPIDER_COMMON,
+	Enemy.EnemyTypes.SPIDER_TOUGH,
+	Enemy.EnemyTypes.TURTLE_COMMON,
+	Enemy.EnemyTypes.TURTLE_TOUGH,
+	Enemy.EnemyTypes.JELLYFISH,
+	Enemy.EnemyTypes.SEAHORSE,
+	Enemy.EnemyTypes.TALLFISH_COMMON,
+	Enemy.EnemyTypes.TALLFISH_TOUGH,
+	Enemy.EnemyTypes.WALLEYE,
 	#Enemy.EnemyTypes.PINCER_FLOOR,
 	#Enemy.EnemyTypes.PINCER_WALL,
 	#Enemy.EnemyTypes.PINCER_CEILING,
@@ -52,8 +51,8 @@ const ENTRIES:Array = [
 	#Enemy.EnemyTypes.BALLOON,
 	Enemy.EnemyTypes.SHELLBREAKER,
 	Enemy.EnemyTypes.STOMPY,
-	#Enemy.EnemyTypes.SPACEBOX,
-	#Enemy.EnemyTypes.BABYBOX,
+	Enemy.EnemyTypes.SPACEBOX,
+	Enemy.EnemyTypes.BABYBOX,
 	#Enemy.EnemyTypes.MOONSNAIL,
 	#Enemy.EnemyTypes.GIGASNAIL,
 	#Enemy.EnemyTypes.COSMICSNAIL,
@@ -198,7 +197,13 @@ func spawn_display_entity(entity:String) -> void:
 			var chirpy2 = spawn_entity("chirpy_tough")
 			enemy_spawn.add_child(chirpy2)
 			chirpy2.position = Vector2.RIGHT * 16
-		# snakey
+		"snakey":
+			var snakey1 = spawn_entity("snakey_common")
+			enemy_spawn.add_child(snakey1)
+			snakey1.position = Vector2.LEFT * 16
+			#var chirpy2 = spawn_entity("chirpy_tough")
+			#enemy_spawn.add_child(chirpy2)
+			#chirpy2.position = Vector2.RIGHT * 16
 		"kitty":
 			var kitty2 = spawn_entity("kitty_tough")
 			enemy_spawn.add_child(kitty2)
