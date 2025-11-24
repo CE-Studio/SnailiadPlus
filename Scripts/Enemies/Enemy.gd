@@ -312,7 +312,7 @@ func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> voi
 
 
 func _spawn_damage_num(num:int, color:Color) -> void:
-	if not Statics.draw_damage_numbers:
+	if not ProjectSettings.get_setting("game/world/damage_numbers"):
 		return
 	var new_num:DamageNumber = Statics.damage_number.instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(new_num)

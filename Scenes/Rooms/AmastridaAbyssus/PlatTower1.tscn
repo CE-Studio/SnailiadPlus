@@ -177,6 +177,8 @@ exit_room = "uid://bt10cwalr3u41"
 position = Vector2(400, 104)
 scale = Vector2(1, 3)
 my_id = 3
+exit_room = "uid://iqf5n1jndfwg"
+exit_transition = 1
 
 [node name="RoomTransitionTrigger5" parent="." instance=ExtResource("6_fsnil")]
 position = Vector2(40, 1520)

@@ -45,6 +45,8 @@ func _ready() -> void:
 	version_text.add_shadow(1)
 
 	if is_main_menu:
+		Statics.active_room = $"TitleRoom"
+		Statics.active_room.spawn(true)
 		get_tree().paused = false
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"

@@ -100,7 +100,6 @@ static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
 static var show_invis_entites:bool = false
-static var draw_damage_numbers:bool = true
 static var stack_shells:bool = true
 static var stack_weapons:bool = true
 static var stack_weapon_mods:bool = true
@@ -125,6 +124,9 @@ static var cam:Camera2D
 static var active_room:Room
 
 static var text_lib:Dictionary
+
+static var particle_cache:Array[PackedScene] = []
+static var particle_table:Array[String] = []
 
 
 #region Game scene load information
@@ -557,7 +559,10 @@ static func play_sfx_limited(sound:AudioStream, sound_name:String, vol:float = 1
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
 	if active_room == null:
 		return null
-	var new_particle:Particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
+	if not particle_table.has(name):
+		particle_table.append(name)
+		particle_cache.append(load("res://Scenes/Particles/%s.tscn" % name))
+	var new_particle:Particle = particle_cache[particle_table.find(name)].instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)

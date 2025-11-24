@@ -103,22 +103,32 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../TargetFPS")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../StickAimMode")
-focus_next = NodePath("../StickAimMode")
+focus_neighbor_bottom = NodePath("../DamageNumbers")
+focus_next = NodePath("../DamageNumbers")
 focus_previous = NodePath("../TargetFPS")
 header_id = "menu_option_gameplay_screenShake"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud", "menu_add_shake_noHud"])
 focus_option = 2
 
-[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="DamageNumbers" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ScreenShake")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../StickAimMode")
+focus_next = NodePath("../StickAimMode")
+focus_previous = NodePath("../ScreenShake")
+text_id = "menu_option_gameplay_damageNumbers"
+
+[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../DamageNumbers")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../GravSwap")
 focus_next = NodePath("../GravSwap")
-focus_previous = NodePath("../ScreenShake")
+focus_previous = NodePath("../DamageNumbers")
 header_id = "menu_option_gameplay_stickAimMode"
 auto_select_mode = true
 cycle_options = Array[String](["menu_add_stickAimMode_octo", "menu_add_stickAimMode_omni"])
@@ -168,6 +178,7 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/SecretMap" to="MainVBox" method="_on_secret_map_tiles_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/TargetFPS" to="MainVBox" method="_on_target_fps_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="_on_screen_shake_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DamageNumbers" to="MainVBox" method="_on_damage_numbers_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/StickAimMode" to="MainVBox" method="_on_stick_aim_mode_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravSwap" to="MainVBox" method="_on_grav_swap_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravKeep" to="MainVBox" method="_on_grav_keep_cycled"]

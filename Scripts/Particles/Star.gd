@@ -4,6 +4,7 @@ extends Particle
 const CENTER_MIN:float = 8.0
 
 var speed:float = randf() * 100.0 + 10.0
+var mod:float = 1.0
 var direction:Vector2 = Vector2.LEFT
 var border_mode:int = 0 # 0 - no special mode, 1 - inward from border, 2 - outward to border
 
@@ -28,14 +29,18 @@ func _spawn(_data:Array) -> void:
 				8: border_mode = 1
 				9:
 					border_mode = 2
+		if _data.size() > 1 and _data[1] is float:
+			mod = _data[1]
 		super(_data)
 
 
 func _process(delta: float) -> void:
-	var center:Vector2 = UICore.instance.get_cam_center_pos()
+	var center:Vector2 = Vector2(200, 120)
+	if UICore.instance:
+		center = UICore.instance.get_cam_center_pos()
 	match border_mode:
 		1:
-			position = position.move_toward(center, speed * delta)
+			position = position.move_toward(center, speed * mod * delta)
 			if position.distance_to(center) <= CENTER_MIN:
 				var new_pos:Vector2 = Vector2(
 					randf_range(-1.0, 1.0),
@@ -52,7 +57,8 @@ func _process(delta: float) -> void:
 				direction = Vector2(cos(theta), sin(theta))
 			else:
 				direction = position.direction_to(UICore.instance.get_cam_center_pos()) * -1
-			position += direction * speed * delta
+			position += direction * speed * mod * delta
 		_:
-			position += direction * speed * delta
-	position += UICore.instance.get_cam_movement_this_tick()
+			position += direction * speed * mod * delta
+	if UICore.instance:
+		position += UICore.instance.get_cam_movement_this_tick()

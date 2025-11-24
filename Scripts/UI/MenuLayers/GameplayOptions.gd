@@ -12,6 +12,7 @@ func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/SecretMap".toggled_on = ProjectSettings.get_setting("game/ui/secret_map_tiles")
 	$"ScrollContainer/VBoxContainer/TargetFPS".remote_set_option(ProjectSettings.get_setting("game/visuals/frame_limit"))
 	$"ScrollContainer/VBoxContainer/ScreenShake".remote_set_option(ProjectSettings.get_setting("game/visuals/screen_shake"))
+	$"ScrollContainer/VBoxContainer/DamageNumbers".toggled_on = ProjectSettings.get_setting("game/world/damage_numbers")
 	$"ScrollContainer/VBoxContainer/StickAimMode".remote_set_option(ProjectSettings.get_setting("game/control/omni_stick_aim"))
 	$"ScrollContainer/VBoxContainer/GravSwap".remote_set_option(ProjectSettings.get_setting("game/control/gravity_swap"))
 	$"ScrollContainer/VBoxContainer/GravKeep".remote_set_option(ProjectSettings.get_setting("game/control/gravity_keep"))
@@ -40,6 +41,10 @@ func _on_target_fps_cycled(value) -> void:
 
 func _on_screen_shake_cycled(value) -> void:
 	ProjectSettings.set_setting("game/visuals/screen_shake", value)
+
+
+func _on_damage_numbers_toggled(value) -> void:
+	ProjectSettings.set_setting("game/world/damage_numbers", value)
 
 
 func _on_stick_aim_mode_cycled(value) -> void:

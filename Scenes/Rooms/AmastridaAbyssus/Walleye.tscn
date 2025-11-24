@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://bhmsl4lmit5gy"]
+[gd_scene load_steps=11 format=4 uid="uid://bhmsl4lmit5gy"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_mtjo3"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_86nyw"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_1y65c"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_ja67e"]
+[ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_722vc"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_anwj1"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="6_722vc"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="7_pbam3"]
@@ -58,6 +59,10 @@ tile_set = ExtResource("2_86nyw")
 [node name="NPC46" parent="GroundLayer" instance=ExtResource("3_ja67e")]
 position = Vector2(224, 184)
 my_id = 46
+
+[node name="Item" parent="GroundLayer" instance=ExtResource("4_722vc")]
+position = Vector2(256, 112)
+location_id = 36
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

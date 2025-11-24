@@ -20,6 +20,7 @@ extends Node2D
 @export var minimap_autofill:Array[Vector2i] = []
 @export var song_change:MusicManager.Loops = MusicManager.Loops.None
 @export var play_song_on_enter:bool = true
+@export var display_room:bool = false
 
 @export_group("Tiled importing")
 @export_file("*.tmx") var tiled_path:String = "res://Resources/map.tmx"
@@ -81,7 +82,7 @@ var room_path:String
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	if GameCore.instance == null:
+	if GameCore.instance == null and not display_room:
 		Statics.current_profile = Statics.data_profile1
 		Statics.current_profile_id = 1
 		Statics.load_room = Statics.ROOM_PATH % (areas[area_id] + "/" + name if area_id != -1 else name)
@@ -122,17 +123,18 @@ func spawn(_spawn_all:bool) -> void:
 			if fake_border is FakeCamBoundary:
 				fake_border.call_deferred("instance")
 				fake_border.original_room_name = room_path
-
+	
 	if song_change != MusicManager.Loops.None and play_song_on_enter:
 		GameCore.instance.music_manager.play_song(song_change)
-
+	
 	if center_parallax_maps:
 		center_maps()
-
-	UICore.instance.minimap.room_offset = minimap_offset
-	for cell in minimap_autofill:
-		UICore.instance.minimap.fill_cell(cell)
-	UICore.instance.minimap.set_room_name(room_path)
+	
+	if UICore.instance and not display_room:
+		UICore.instance.minimap.room_offset = minimap_offset
+		for cell in minimap_autofill:
+			UICore.instance.minimap.fill_cell(cell)
+		UICore.instance.minimap.set_room_name(room_path)
 
 
 func get_room_name_from_filename() -> void:

@@ -6,11 +6,13 @@ extends Node2D
 #region Variables
 const WRAP_BOUNDS:Vector2 = Vector2(232, 152)
 const WRAP_DIST:Vector2 = Vector2(464, 304)
+const STATIC_POSITION:Vector2 = Vector2(200, 120)
 
 @export var particles:Array[String] = []
 @export var spawn_delay:float = 0.0
 @export var spawn_all_at_once:bool = true
 @export var particle_count:int = 0
+@export var static_position:bool = false
 
 var active_particles:Array[Particle] = []
 var spawn_cooldown:float = 0.0
@@ -19,7 +21,7 @@ var initialized:bool = false
 
 
 func spawn() -> void:
-	if not UICore.instance:
+	if not UICore.instance and not static_position:
 		return
 	
 	if spawn_all_at_once:
@@ -29,7 +31,7 @@ func spawn() -> void:
 
 
 func _process(delta: float) -> void:
-	if not UICore.instance or not initialized:
+	if (not UICore.instance and not static_position) or not initialized:
 		return
 	
 	for i in range(active_particles.size() - 1, -1, -1):
@@ -41,7 +43,7 @@ func _process(delta: float) -> void:
 		_spawn_one()
 		spawn_cooldown = spawn_delay
 	
-	var cam_center = UICore.instance.get_cam_center_pos()
+	var cam_center = STATIC_POSITION if static_position else UICore.instance.get_cam_center_pos()
 	for particle in active_particles:
 		while particle.position.x < cam_center.x - WRAP_BOUNDS.x:
 			particle.position.x += WRAP_DIST.x
@@ -55,7 +57,8 @@ func _process(delta: float) -> void:
 
 func _spawn_one() -> void:
 	var this_particle:String = particles[randi_range(0, particles.size() - 1)]
-	var spawn_pos = UICore.instance.get_cam_center_pos() + Vector2(
+	var center = STATIC_POSITION if static_position else UICore.instance.get_cam_center_pos()
+	var spawn_pos = center + Vector2(
 		randf_range(-WRAP_BOUNDS.x, WRAP_BOUNDS.x),
 		randf_range(-WRAP_BOUNDS.y, WRAP_BOUNDS.y)
 	)
