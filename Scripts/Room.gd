@@ -54,6 +54,9 @@ enum Layers {
 
 var room_path:String
 
+var sp_cache:Array[PackedScene] = []
+var sp_table:Array[String] = []
+
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity1:TileMapLayer = $"EntityLayer/Map"
 @onready var map_entity2:TileMapLayer = $"EntityLayer/Map2"
@@ -189,113 +192,113 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		var tile_coords := map.get_cell_atlas_coords(tile)
 		match tile_coords:
 			Vector2i(4, 0): # Blob
-				var blob:BlobCommon = load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
+				var blob:BlobCommon = _load("res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 
 			Vector2i(5, 0): # Blub
-				var blob:BlobTough = load("res://Scenes/Entities/Enemies/BlobTough.tscn").instantiate()
+				var blob:BlobTough = _load("res://Scenes/Entities/Enemies/BlobTough.tscn").instantiate()
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 
 			Vector2i(6, 0): # Devilblob
-				var blob:BlobDevil = load("res://Scenes/Entities/Enemies/BlobDevil.tscn").instantiate()
+				var blob:BlobDevil = _load("res://Scenes/Entities/Enemies/BlobDevil.tscn").instantiate()
 				blob.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(blob)
 
 			Vector2i(7, 0): # Blue chirpy
-				var chirpy:ChirpyCommon = load("res://Scenes/Entities/Enemies/ChirpyCommon.tscn").instantiate()
+				var chirpy:ChirpyCommon = _load("res://Scenes/Entities/Enemies/ChirpyCommon.tscn").instantiate()
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
 
 			Vector2i(8, 0): # Gray kitty
-				var kitty:KittyCommon = load("res://Scenes/Entities/Enemies/KittyCommon.tscn").instantiate()
+				var kitty:KittyCommon = _load("res://Scenes/Entities/Enemies/KittyCommon.tscn").instantiate()
 				kitty.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(kitty)
 
 			Vector2i(9, 0): # Orange kitty
-				var kitty:KittyTough = load("res://Scenes/Entities/Enemies/KittyTough.tscn").instantiate()
+				var kitty:KittyTough = _load("res://Scenes/Entities/Enemies/KittyTough.tscn").instantiate()
 				kitty.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(kitty)
 
 			Vector2i(10, 0): # Blue chirpy generator
-				var gen:GeneratorChirpyCommon = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyCommon.tscn").instantiate()
+				var gen:GeneratorChirpyCommon = _load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyCommon.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(gen)
 
 			Vector2i(11, 0): # Blue spikey (CW)
-				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
+				var spikey:SpikeyCommon = _load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(spikey)
 
 			Vector2i(12, 0): # Blue spikey (CCW)
-				var spikey:SpikeyCommon = load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
+				var spikey:SpikeyCommon = _load("res://Scenes/Entities/Enemies/SpikeyCommon.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 
 			Vector2i(13, 0): # Orange spikey (CW)
-				var spikey:SpikeyTough = load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
+				var spikey:SpikeyTough = _load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(spikey)
 
 			Vector2i(14, 0): # Orange spikey (CCW)
-				var spikey:SpikeyTough = load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
+				var spikey:SpikeyTough = _load("res://Scenes/Entities/Enemies/SpikeyTough.tscn").instantiate()
 				spikey.position = _tile_coords_to_vector_pos(tile)
 				spikey.ccw = true
 				layer_ground.add_child(spikey)
 
 			Vector2i(15, 0): # Fireball (CW)
-				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				var fireball:Fireball = _load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
 				fireball.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fireball)
 
 			Vector2i(0, 1): # Fireball (CCW)
-				var fireball:Fireball = load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
+				var fireball:Fireball = _load("res://Scenes/Entities/Enemies/Fireball.tscn").instantiate()
 				fireball.position = _tile_coords_to_vector_pos(tile)
 				fireball.ccw = true
 				layer_ground.add_child(fireball)
 
 			Vector2i(1, 1): # Iceball (CW)
-				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				var iceball:Iceball = _load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
 				iceball.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(iceball)
 
 			Vector2i(2, 1): # Iceball (CCW)
-				var iceball:Iceball = load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
+				var iceball:Iceball = _load("res://Scenes/Entities/Enemies/Iceball.tscn").instantiate()
 				iceball.position = _tile_coords_to_vector_pos(tile)
 				iceball.ccw = true
 				layer_ground.add_child(iceball)
 
 			Vector2i(3, 1): # Ghost dandelion generator
-				var gen:GeneratorGhostball = load("res://Scenes/Entities/Enemies/Generators/GeneratorGhostball.tscn").instantiate()
+				var gen:GeneratorGhostball = _load("res://Scenes/Entities/Enemies/Generators/GeneratorGhostball.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(gen)
 
 			Vector2i(7, 1): # Shellbreaker
-				var shellbreaker:Shellbreaker = load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
+				var shellbreaker:Shellbreaker = _load("res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn").instantiate()
 				shellbreaker.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(shellbreaker)
 
 			Vector2i(8, 1): # Stompy
-				var stompy:Stompy = load("res://Scenes/Entities/Enemies/Bosses/Stompy.tscn").instantiate()
+				var stompy:Stompy = _load("res://Scenes/Entities/Enemies/Bosses/Stompy.tscn").instantiate()
 				stompy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(stompy)
 
 			Vector2i(11, 1): # Grass
-				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
+				var grass:Grass = _load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.FLOOR)
 
 			Vector2i(14, 1): # Power grass
-				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
+				var grass:Grass = _load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.FLOOR)
 
 			Vector2i(15, 1): # Smoke effect tile
-				var smoke_tile:JsonSprite2D = load("res://Scenes/Environments/SmokeTile.tscn").instantiate()
+				var smoke_tile:JsonSprite2D = _load("res://Scenes/Environments/SmokeTile.tscn").instantiate()
 				smoke_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_bg1.add_child(smoke_tile)
 
@@ -329,107 +332,107 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				enemy_tile.set_collision_enemy()
 
 			Vector2i(3, 24): # Ice spike (floor)
-				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				var spike:IceSpike = _load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
 				spike.position = _tile_coords_to_vector_pos(tile)
 				spike.direction = Statics.DirsSurface.FLOOR
 				layer_ground.add_child(spike)
 
 			Vector2i(4, 24): # Ice spike (ceiling)
-				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				var spike:IceSpike = _load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
 				spike.position = _tile_coords_to_vector_pos(tile)
 				spike.direction = Statics.DirsSurface.CEILING
 				layer_ground.add_child(spike)
 
 			Vector2i(5, 24): # Ice spike (left wall)
-				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				var spike:IceSpike = _load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
 				spike.position = _tile_coords_to_vector_pos(tile)
 				spike.direction = Statics.DirsSurface.LWALL
 				layer_ground.add_child(spike)
 
 			Vector2i(6, 24): # Ice spike (right wall)
-				var spike:IceSpike = load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
+				var spike:IceSpike = _load("res://Scenes/Entities/Hazards/IceSpike.tscn").instantiate()
 				spike.position = _tile_coords_to_vector_pos(tile)
 				spike.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(spike)
 
 			Vector2i(7, 24): # Canon (floor)
-				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				var canon:Canon = _load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
 				canon.position = _tile_coords_to_vector_pos(tile)
 				canon.base_dir = Statics.DirsSurface.FLOOR
 				layer_ground.add_child(canon)
 
 			Vector2i(8, 24): # Canon (left wall)
-				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				var canon:Canon = _load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
 				canon.position = _tile_coords_to_vector_pos(tile)
 				canon.base_dir = Statics.DirsSurface.LWALL
 				layer_ground.add_child(canon)
 
 			Vector2i(9, 24): # Canon (right wall)
-				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				var canon:Canon = _load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
 				canon.position = _tile_coords_to_vector_pos(tile)
 				canon.base_dir = Statics.DirsSurface.RWALL
 				layer_ground.add_child(canon)
 
 			Vector2i(10, 24): # Canon (ceiling)
-				var canon:Canon = load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
+				var canon:Canon = _load("res://Scenes/Entities/Enemies/Canon.tscn").instantiate()
 				canon.position = _tile_coords_to_vector_pos(tile)
 				canon.base_dir = Statics.DirsSurface.CEILING
 				layer_ground.add_child(canon)
 
 			Vector2i(12, 24): # Muck
-				var muck:Muck = load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
+				var muck:Muck = _load("res://Scenes/Entities/Hazards/Muck.tscn").instantiate()
 				muck.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(muck)
 
 			Vector2i(13, 24): # Ghost dandelion
-				var ghostball:Ghostball = load("res://Scenes/Entities/Enemies/Ghostball.tscn").instantiate()
+				var ghostball:Ghostball = _load("res://Scenes/Entities/Enemies/Ghostball.tscn").instantiate()
 				ghostball.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(ghostball)
 
 			Vector2i(15, 24): # Black floatspike
-				var floatspike:FloatspikeCommon = load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()
+				var floatspike:FloatspikeCommon = _load("res://Scenes/Entities/Enemies/FloatspikeCommon.tscn").instantiate()
 				floatspike.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(floatspike)
 
 			Vector2i(7, 25): # Aqua chirpy
-				var chirpy:ChirpyTough = load("res://Scenes/Entities/Enemies/ChirpyTough.tscn").instantiate()
+				var chirpy:ChirpyTough = _load("res://Scenes/Entities/Enemies/ChirpyTough.tscn").instantiate()
 				chirpy.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(chirpy)
 
 			Vector2i(8, 25): # Snakey (common)
-				var snakey:SnakeyCommon = load("res://Scenes/Entities/Enemies/SnakeyCommon.tscn").instantiate()
+				var snakey:SnakeyCommon = _load("res://Scenes/Entities/Enemies/SnakeyCommon.tscn").instantiate()
 				snakey.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(snakey)
 
 			Vector2i(12, 25): # Syngnathida
-				var seahorse:Seahorse = load("res://Scenes/Entities/Enemies/Seahorse.tscn").instantiate()
+				var seahorse:Seahorse = _load("res://Scenes/Entities/Enemies/Seahorse.tscn").instantiate()
 				seahorse.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(seahorse)
 
 			Vector2i(15, 25): # Walleye (right)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 2
 				layer_ground.add_child(walleye)
 
 			Vector2i(8, 26): # Batty bat
-				var bat:BattyBat = load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
+				var bat:BattyBat = _load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
 
 			Vector2i(11, 26): # Walleye (left)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 6
 				layer_ground.add_child(walleye)
 
 			Vector2i(2, 27): # Snelk
-				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				var snelk:Snelk = _load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(snelk)
 
 			Vector2i(3, 27): # Snelk (panicked)
-				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				var snelk:Snelk = _load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				snelk.state = Snelk.States.RUN
 				layer_ground.add_child(snelk)
@@ -442,39 +445,39 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				dev_tile.spawn(tile, Breakable.TileTypes.DEVASTATOR, true)
 
 			Vector2i(7, 28): # Green babyfish
-				var fish:Babyfish1 = load("res://Scenes/Entities/Enemies/Babyfish1.tscn").instantiate()
+				var fish:Babyfish1 = _load("res://Scenes/Entities/Enemies/Babyfish1.tscn").instantiate()
 				fish.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fish)
 
 			Vector2i(8, 28): # Pink babyfish
-				var fish:Babyfish2 = load("res://Scenes/Entities/Enemies/Babyfish2.tscn").instantiate()
+				var fish:Babyfish2 = _load("res://Scenes/Entities/Enemies/Babyfish2.tscn").instantiate()
 				fish.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fish)
 
 			Vector2i(13, 28): # Aqua chirpy generator
-				var gen:GeneratorChirpyTough = load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyTough.tscn").instantiate()
+				var gen:GeneratorChirpyTough = _load("res://Scenes/Entities/Enemies/Generators/GeneratorChirpyTough.tscn").instantiate()
 				gen.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(gen)
 
 			Vector2i(14, 28): # Snelk (sleeping)
-				var snelk:Snelk = load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
+				var snelk:Snelk = _load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				snelk.state = Snelk.States.SLEEP
 				layer_ground.add_child(snelk)
 
 			Vector2i(11, 30): # Angry block
-				var block:Angryblock = load("res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()
+				var block:Angryblock = _load("res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()
 				block.position = _tile_coords_to_vector_pos(tile) + Vector2(40, 24)
 				layer_ground.add_child(block)
 
 			Vector2i(12, 30): # Hanging grass
-				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
+				var grass:Grass = _load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.NORMAL, Statics.DirsSurface.CEILING)
 
 			Vector2i(13, 30): # Hanging power grass
-				var grass:Grass = load("res://Scenes/Entities/Grass.tscn").instantiate()
+				var grass:Grass = _load("res://Scenes/Entities/Grass.tscn").instantiate()
 				grass.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(grass)
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.CEILING)
@@ -487,55 +490,62 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				pea_tile.spawn(tile, Breakable.TileTypes.PEASHOOTER, false)
 
 			Vector2i(3, 31): # Water surface effect tile
-				var surface_tile:JsonSprite2D = load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
+				var surface_tile:JsonSprite2D = _load("res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
 				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
 				layer_fg2.add_child(surface_tile)
 
 			Vector2i(4, 31): # Walleye (up right)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 1
 				layer_ground.add_child(walleye)
 
 			Vector2i(5, 31): # Walleye (up)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 0
 				layer_ground.add_child(walleye)
 
 			Vector2i(6, 31): # Walleye (up left)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 7
 				layer_ground.add_child(walleye)
 
 			Vector2i(7, 31): # Walleye (down right)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 3
 				layer_ground.add_child(walleye)
 
 			Vector2i(8, 31): # Walleye (down)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 4
 				layer_ground.add_child(walleye)
 
 			Vector2i(9, 31): # Walleye (down left)
-				var walleye:Walleye = load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
+				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 5
 				layer_ground.add_child(walleye)
 
 			Vector2i(12, 70): # Fire
-				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				var fire:Fire = _load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
 				fire.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fire)
 
 			Vector2i(13, 70): # Fire
-				var fire:Fire = load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
+				var fire:Fire = _load("res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
 				fire.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fire)
+
+
+func _load(path:String) -> PackedScene:
+	if not sp_table.has(path):
+		sp_table.append(path)
+		sp_cache.append(load(path))
+	return sp_cache[sp_table.find(path)]
 
 
 func _tile_coords_to_vector_pos(coords:Vector2i) -> Vector2:

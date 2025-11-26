@@ -107,6 +107,7 @@ position = Vector2(0, 80)
 rotation = 3.1415927
 scale = Vector2(1, 6)
 my_id = 1
+exit_room = "uid://du8xm2ilg5aip"
 
 [node name="RoomTransitionTrigger3" parent="." instance=ExtResource("4_bm1fy")]
 position = Vector2(472, 496)
