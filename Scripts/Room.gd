@@ -415,6 +415,18 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				walleye.direction = 2
 				layer_ground.add_child(walleye)
 
+			Vector2i(5, 26): # Cherry turtle (right)
+				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.RWALL
+				layer_ground.add_child(turtle)
+
+			Vector2i(6, 26): # Cherry turtle (left)
+				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.LWALL
+				layer_ground.add_child(turtle)
+
 			Vector2i(8, 26): # Batty bat
 				var bat:BattyBat = _load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
@@ -464,6 +476,18 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				snelk.state = Snelk.States.SLEEP
 				layer_ground.add_child(snelk)
+
+			Vector2i(1, 29): # Cherry turtle (floor)
+				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(turtle)
+
+			Vector2i(2, 29): # Cherry turtle (ceiling)
+				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.CEILING
+				layer_ground.add_child(turtle)
 
 			Vector2i(11, 30): # Angry block
 				var block:Angryblock = _load("res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()

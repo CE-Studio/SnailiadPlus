@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dnucmiwwaqcv7"]
+[gd_scene load_steps=12 format=3 uid="uid://dnucmiwwaqcv7"]
 
 [ext_resource type="Script" uid="uid://ds643854yp56o" path="res://Scripts/Enemies/TurtleTough.gd" id="1_lc45k"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_xdglf"]
@@ -6,7 +6,8 @@
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_0gxbd"]
 [ext_resource type="Texture2D" uid="uid://bo4gvpx5e0fm3" path="res://Assets/Images/Entities/GravTurtle2.png" id="5_lc45k"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_my0gr"]
-[ext_resource type="AudioStream" uid="uid://bu2ihtnuw3kpg" path="res://Assets/Sounds/Sfx/Enemy/KittyJump.ogg" id="7_qn1oc"]
+[ext_resource type="AudioStream" uid="uid://dg8sgs2yvauli" path="res://Assets/Sounds/Sfx/Enemy/TurtleJump.ogg" id="7_xdglf"]
+[ext_resource type="AudioStream" uid="uid://o66jg6j8o21p" path="res://Assets/Sounds/Sfx/Enemy/TurtleFlip.ogg" id="8_u2uie"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
 size = Vector2(32, 16)
@@ -61,9 +62,9 @@ script = ExtResource("6_my0gr")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Jump" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_qn1oc")
+stream = ExtResource("7_xdglf")
 bus = &"Sfx"
 
 [node name="Flip" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_qn1oc")
+stream = ExtResource("8_u2uie")
 bus = &"Sfx"
