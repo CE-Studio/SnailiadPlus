@@ -1,0 +1,391 @@
+{
+	"tiles": [3, 2],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"floor_left_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[2, 0, true, false],
+			]
+		},
+		"floor_left_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_left_walk",
+			"frames": []
+		},
+		"floor_left_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_left_fall",
+			"frames": []
+		},
+		"floor_left_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_left_fall",
+			"frames": []
+		},
+		"floor_left_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[2, 0, true, false],
+			]
+		},
+		"floor_right_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[2, 0, false, false],
+			]
+		},
+		"floor_right_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_right_walk",
+			"frames": []
+		},
+		"floor_right_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_right_fall",
+			"frames": []
+		},
+		"floor_right_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "floor_right_fall",
+			"frames": []
+		},
+		"floor_right_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[2, 0, false, false],
+			]
+		},
+		"lwall_left_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, true, true],
+				[1, 1, true, true],
+				[0, 1, true, true],
+				[2, 1, true, true],
+			]
+		},
+		"lwall_left_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_left_walk",
+			"frames": []
+		},
+		"lwall_left_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_left_fall",
+			"frames": []
+		},
+		"lwall_left_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_left_fall",
+			"frames": []
+		},
+		"lwall_left_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, true, true],
+				[1, 1, true, true],
+				[0, 1, true, true],
+				[2, 1, true, true],
+			]
+		},
+		"lwall_right_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, true, false],
+				[1, 1, true, false],
+				[0, 1, true, false],
+				[2, 1, true, false],
+			]
+		},
+		"lwall_right_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_right_walk",
+			"frames": []
+		},
+		"lwall_right_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_right_fall",
+			"frames": []
+		},
+		"lwall_right_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "lwall_right_fall",
+			"frames": []
+		},
+		"lwall_right_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, true, false],
+				[1, 1, true, false],
+				[0, 1, true, false],
+				[2, 1, true, false],
+			]
+		},
+		"rwall_left_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[0, 1, false, false],
+				[2, 1, false, false],
+			]
+		},
+		"rwall_left_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_left_walk",
+			"frames": []
+		},
+		"rwall_left_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_left_fall",
+			"frames": []
+		},
+		"rwall_left_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_left_fall",
+			"frames": []
+		},
+		"rwall_left_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[0, 1, false, false],
+				[2, 1, false, false],
+			]
+		},
+		"rwall_right_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, true],
+				[1, 1, false, true],
+				[0, 1, false, true],
+				[2, 1, false, true],
+			]
+		},
+		"rwall_right_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_right_walk",
+			"frames": []
+		},
+		"rwall_right_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_right_fall",
+			"frames": []
+		},
+		"rwall_right_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "rwall_right_fall",
+			"frames": []
+		},
+		"rwall_right_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, true],
+				[1, 1, false, true],
+				[0, 1, false, true],
+				[2, 1, false, true],
+			]
+		},
+		"ceiling_left_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, true],
+				[1, 0, false, true],
+				[0, 0, false, true],
+				[2, 0, false, true],
+			]
+		},
+		"ceiling_left_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_left_walk",
+			"frames": []
+		},
+		"ceiling_left_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_left_fall",
+			"frames": []
+		},
+		"ceiling_left_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_left_fall",
+			"frames": []
+		},
+		"ceiling_left_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, true],
+				[1, 0, false, true],
+				[0, 0, false, true],
+				[2, 0, false, true],
+			]
+		},
+		"ceiling_right_walk": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0,  true, true],
+				[1, 0,  true, true],
+				[0, 0,  true, true],
+				[2, 0,  true, true],
+			]
+		},
+		"ceiling_right_turn": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_right_walk",
+			"frames": []
+		},
+		"ceiling_right_jump": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_right_fall",
+			"frames": []
+		},
+		"ceiling_right_flip": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "ceiling_right_fall",
+			"frames": []
+		},
+		"ceiling_right_fall": {
+			"fps": 3,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0,  true, true],
+				[1, 0,  true, true],
+				[0, 0,  true, true],
+				[2, 0,  true, true],
+			]
+		}
+	}
+}

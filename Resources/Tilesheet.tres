@@ -6676,6 +6676,7 @@ texture = ExtResource("1_cgld8")
 12:212/0 = 0
 13:212/0 = 0
 14:212/0 = 0
+6:170/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 3

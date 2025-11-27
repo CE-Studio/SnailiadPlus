@@ -1,0 +1,47 @@
+{
+	"tiles": [2, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"left_idle": {
+			"fps": 10,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+			]
+		},
+		"left_move": {
+			"fps": 10,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+			]
+		},
+		"right_idle": {
+			"fps": 10,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+			]
+		},
+		"right_move": {
+			"fps": 10,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+			]
+		}
+	}
+}

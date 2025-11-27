@@ -201,9 +201,9 @@ func spawn_display_entity(entity:String) -> void:
 			var snakey1 = spawn_entity("snakey_common")
 			enemy_spawn.add_child(snakey1)
 			snakey1.position = Vector2.LEFT * 16
-			#var chirpy2 = spawn_entity("chirpy_tough")
-			#enemy_spawn.add_child(chirpy2)
-			#chirpy2.position = Vector2.RIGHT * 16
+			var snakey2 = spawn_entity("snakey_tough")
+			enemy_spawn.add_child(snakey2)
+			snakey2.position = Vector2.RIGHT * 16
 		"kitty":
 			var kitty2 = spawn_entity("kitty_tough")
 			enemy_spawn.add_child(kitty2)

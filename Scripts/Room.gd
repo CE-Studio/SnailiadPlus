@@ -415,6 +415,23 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				walleye.direction = 2
 				layer_ground.add_child(walleye)
 
+			Vector2i(2, 26): # Turtle (right)
+				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.RWALL
+				layer_ground.add_child(turtle)
+
+			Vector2i(3, 26): # Turtle (left)
+				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.LWALL
+				layer_ground.add_child(turtle)
+
+			Vector2i(4, 26): # Snakey (tough)
+				var snakey:SnakeyTough = _load("res://Scenes/Entities/Enemies/SnakeyTough.tscn").instantiate()
+				snakey.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(snakey)
+
 			Vector2i(5, 26): # Cherry turtle (right)
 				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
 				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
@@ -476,6 +493,18 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				snelk.state = Snelk.States.SLEEP
 				layer_ground.add_child(snelk)
+
+			Vector2i(15, 28): # Turtle (floor)
+				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(turtle)
+
+			Vector2i(0, 29): # Turtle (ceiling)
+				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.direction = Statics.DirsSurface.CEILING
+				layer_ground.add_child(turtle)
 
 			Vector2i(1, 29): # Cherry turtle (floor)
 				var turtle:TurtleTough = _load("res://Scenes/Entities/Enemies/TurtleTough.tscn").instantiate()
