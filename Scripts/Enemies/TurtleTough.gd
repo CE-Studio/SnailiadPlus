@@ -181,9 +181,11 @@ func _set_gravity(new_dir:Statics.DirsSurface) -> void:
 	if new_dir == Statics.DirsSurface.LWALL or new_dir == Statics.DirsSurface.RWALL:
 		col.rotation_degrees = 90
 		hitbox.rotation_degrees = 90
+		vis.rotation_degrees = 90
 	else:
 		col.rotation_degrees = 0
 		hitbox.rotation_degrees = 0
+		vis.rotation_degrees = 0
 
 
 func _play_anim(action:String = "") -> void:

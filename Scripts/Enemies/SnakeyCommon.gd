@@ -47,7 +47,15 @@ func _physics_process(delta: float) -> void:
 			_play_anim(true)
 			move_timeout = MOVE_TIMEOUT
 			sfx_move.play()
+	
+	var last_vel:Vector2 = velocity
+	var last_grounded:bool = is_on_floor()
 	move_and_slide()
+	if is_on_wall() and last_vel.x != 0.0:
+		velocity.x = -last_vel.x
+	if is_on_floor() and last_grounded:
+		velocity.y = last_vel.y * -0.1
+	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 	velocity.x = move_toward(velocity.x, 0.0, DECEL * delta)

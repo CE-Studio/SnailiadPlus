@@ -29,3 +29,7 @@ func set_new_fade(start:Color, end:Color, _fade_time:float) -> void:
 	fade_time = _fade_time
 	current_time = 0.0
 	modulate = start
+
+
+func set_color(color:Color) -> void:
+	modulate = color

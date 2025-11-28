@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://c8v6ec2os4sgf"]
+
+[ext_resource type="Script" uid="uid://cx5iqiw5vi50f" path="res://Scripts/Enemies/FloatspikeTough.gd" id="1_f88cf"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_xqeni"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_1gkrn"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_7e0vk"]
+[ext_resource type="Texture2D" uid="uid://bhedmx2gxb83y" path="res://Assets/Images/Entities/Floatspike2.png" id="5_f88cf"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_tkgoj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
+size = Vector2(14, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
+shader = ExtResource("4_7e0vk")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="FloatspikeTough" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_f88cf")
+max_health = 5
+attack = 6
+defense = 250
+can_be_pierced = false
+health_orb_value = 2
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qrvrh")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v2c1n")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_xqeni")
+script = ExtResource("3_1gkrn")
+texture_path = "res://Assets/Images/Entities/Floatspike2.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_ojica")
+texture = ExtResource("5_f88cf")
+script = ExtResource("6_tkgoj")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

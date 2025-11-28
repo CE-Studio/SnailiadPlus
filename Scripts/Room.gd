@@ -404,6 +404,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snakey.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(snakey)
 
+			Vector2i(11, 25): # Jellyfish
+				var jellyfish:Jellyfish = _load("res://Scenes/Entities/Enemies/Jellyfish.tscn").instantiate()
+				jellyfish.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(jellyfish)
+
 			Vector2i(12, 25): # Syngnathida
 				var seahorse:Seahorse = _load("res://Scenes/Entities/Enemies/Seahorse.tscn").instantiate()
 				seahorse.position = _tile_coords_to_vector_pos(tile)
@@ -454,6 +459,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				walleye.position = _tile_coords_to_vector_pos(tile)
 				walleye.direction = 6
 				layer_ground.add_child(walleye)
+
+			Vector2i(12, 26): # Blue floatspike
+				var floatspike:FloatspikeTough = _load("res://Scenes/Entities/Enemies/FloatspikeTough.tscn").instantiate()
+				floatspike.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(floatspike)
 
 			Vector2i(2, 27): # Snelk
 				var snelk:Snelk = _load("res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()

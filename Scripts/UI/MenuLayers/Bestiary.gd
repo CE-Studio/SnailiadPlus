@@ -189,7 +189,13 @@ func spawn_display_entity(entity:String) -> void:
 			var fish2 = spawn_entity("babyfish2")
 			enemy_spawn.add_child(fish2)
 			fish2.position = Vector2.RIGHT * 12
-		# floatspike
+		"floatspike":
+			var floatspike1 = spawn_entity("floatspike_common")
+			enemy_spawn.add_child(floatspike1)
+			floatspike1.position = Vector2.LEFT * 16
+			var floatspike2 = spawn_entity("floatspike_tough")
+			enemy_spawn.add_child(floatspike2)
+			floatspike2.position = Vector2.RIGHT * 16
 		"chirpy":
 			var chirpy1 = spawn_entity("chirpy_common")
 			enemy_spawn.add_child(chirpy1)
