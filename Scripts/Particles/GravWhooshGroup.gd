@@ -2,8 +2,8 @@ extends Particle
 
 
 const EXTENTS:float = 20.0
-const COUNT:int = 4
-const COUNT_FLAT:int = 6
+const COUNT:int = 8
+const COUNT_FLAT:int = 4
 const BUMP_DIST:float = 8.0
 
 var direction:Statics.DirsSurface = Statics.DirsSurface.FLOOR
