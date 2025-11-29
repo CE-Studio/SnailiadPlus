@@ -26,7 +26,8 @@ func _spawn(_data:Array) -> void:
 			despawn_at_home_top = _data[1]
 		if _data.size() >= 3:
 			fast = _data[2]
-			up_speed *= FAST_MULT
+			if fast:
+				up_speed *= FAST_MULT
 
 
 func _process(delta: float) -> void:

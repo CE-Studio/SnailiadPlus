@@ -25,7 +25,6 @@ script = ExtResource("1_j1yy8")
 max_health = 350
 attack = 3
 defense = 50
-can_be_pierced = false
 health_orb_value = 2
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]

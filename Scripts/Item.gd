@@ -170,7 +170,7 @@ static func get_name_str_from_id(id:ItemTypes, specify_shell:bool = false) -> St
 				Player.Players.BLOBBY:
 					return Statics.get_text("item_angelJump")
 				_:
-					return Statics.get_text("item_gravSnail") % species
+					return Statics.get_text("item_gravitySnail") % species
 		ItemTypes.METAL_SHELL:
 			match character:
 				Player.Players.SLUGGY or Player.Players.LEECHY:

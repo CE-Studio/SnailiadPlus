@@ -97,6 +97,7 @@ const ECHO_DELAY_REPEAT:float = 0.04
 const DEBUG_PRINT_INPUTS:bool = false
 
 var read_inputs:bool = true
+var cutscene_has_control:bool = false
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
 var ui_echo_delay:float = ECHO_DELAY_INITIAL
@@ -142,13 +143,13 @@ func _input(event: InputEvent) -> void:
 
 
 func pressed(action:String) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return Input.is_action_pressed(action)
 
 
 func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	if accept_con_echo:
 		return (Input.is_action_just_pressed(action) or
@@ -157,13 +158,13 @@ func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
 
 
 func just_pressed_as_echo(action:String) -> bool:
-	if just_pressed(action) or not read_inputs:
+	if just_pressed(action) or not accepting_input():
 		return false
 	return just_pressed(action, true)
 
 
 func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	var this_action:String = get_input_str(action)
 	if just:
@@ -173,25 +174,25 @@ func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool
 
 func check_input_as_echo(action:Inputs) -> bool:
 	var this_action:String = get_input_str(action)
-	if just_pressed(this_action) or not read_inputs:
+	if just_pressed(this_action) or not accepting_input():
 		return false
 	return just_pressed(this_action, true)
 
 
 func input_pressed(action:Inputs) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return check_input(action, false)
 
 
 func input_just_pressed(action:Inputs) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return check_input(action, true)
 
 
 func vector_move(raw:bool = false) -> Vector2:
-	if not read_inputs:
+	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_move")
 	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
@@ -207,7 +208,7 @@ func vector_move(raw:bool = false) -> Vector2:
 
 
 func vector_aim() -> Vector2:
-	if not read_inputs:
+	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
@@ -359,3 +360,7 @@ func rebind_all() -> void:
 
 func load_from_project_settings() -> void:
 	pass
+
+
+func accepting_input() -> bool:
+	return read_inputs and not cutscene_has_control

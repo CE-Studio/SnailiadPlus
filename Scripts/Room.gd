@@ -414,6 +414,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				seahorse.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(seahorse)
 
+			Vector2i(13, 25): # Tallfish
+				var tallfish:TallfishCommon = _load("res://Scenes/Entities/Enemies/TallfishCommon.tscn").instantiate()
+				tallfish.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 16)
+				layer_ground.add_child(tallfish)
+
 			Vector2i(15, 25): # Walleye (right)
 				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)
@@ -463,6 +468,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var bat:BattyBat = _load("res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
+
+			Vector2i(10, 26): # Angry tallfish
+				var tallfish:TallfishTough = _load("res://Scenes/Entities/Enemies/TallfishTough.tscn").instantiate()
+				tallfish.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 16)
+				layer_ground.add_child(tallfish)
 
 			Vector2i(11, 26): # Walleye (left)
 				var walleye:Walleye = _load("res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()

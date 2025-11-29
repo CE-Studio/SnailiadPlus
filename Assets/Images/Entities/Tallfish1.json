@@ -1,0 +1,103 @@
+{
+	"tiles": [3, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"idle_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"swim_right": {
+			"fps": 10,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "idle_right",
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[0, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+				[2, 0, false, false],
+			]
+		},
+		"idle_swim_right": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[0, 0, false, false],
+				[2, 0, false, false],
+			]
+		},
+		"idle_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"swim_left": {
+			"fps": 10,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "idle_left",
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[0, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+				[2, 0, true, false],
+			]
+		},
+		"idle_swim_left": {
+			"fps": 4,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[0, 0, true, false],
+				[2, 0, true, false],
+			]
+		}
+	}
+}
