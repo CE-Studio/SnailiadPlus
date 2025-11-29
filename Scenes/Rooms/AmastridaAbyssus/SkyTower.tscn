@@ -125,6 +125,7 @@ my_id = 1
 position = Vector2(400, 696)
 scale = Vector2(1, 3)
 my_id = 2
+exit_room = "uid://cmo23luxfdex5"
 
 [node name="WaterArea" parent="." instance=ExtResource("7_h33q7")]
 

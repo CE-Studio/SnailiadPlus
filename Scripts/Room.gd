@@ -420,15 +420,25 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				walleye.direction = 2
 				layer_ground.add_child(walleye)
 
+			Vector2i(0, 26): # Spider
+				var spider:SpiderCommon = _load("res://Scenes/Entities/Enemies/SpiderCommon.tscn").instantiate()
+				spider.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(spider)
+
+			Vector2i(1, 26): # Spider mama
+				var spider:SpiderTough = _load("res://Scenes/Entities/Enemies/SpiderTough.tscn").instantiate()
+				spider.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(spider)
+
 			Vector2i(2, 26): # Turtle (right)
 				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
-				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(0, 8)
 				turtle.direction = Statics.DirsSurface.RWALL
 				layer_ground.add_child(turtle)
 
 			Vector2i(3, 26): # Turtle (left)
 				var turtle:TurtleCommon = _load("res://Scenes/Entities/Enemies/TurtleCommon.tscn").instantiate()
-				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(0, 8)
 				turtle.direction = Statics.DirsSurface.LWALL
 				layer_ground.add_child(turtle)
 
