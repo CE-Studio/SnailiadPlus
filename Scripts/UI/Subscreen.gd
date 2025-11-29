@@ -361,15 +361,13 @@ func _set_desc(id:int) -> void:
 		Item.ItemTypes.ICE_SHELL:
 			desc_body.set_snaily_text("subscreen_desc_iceShell")
 		Item.ItemTypes.GRAVITY_SHELL:
-			#if player == Player.Players.UPSIDE:
-			#	desc_body.set_snaily_text("subscreen_desc_wallGrab")
-			#else:
-			#	desc_body.set_snaily_text("subscreen_desc_highJump")
 			match player:
 				Player.Players.UPSIDE: desc_body.set_snaily_text("subscreen_desc_magneticFoot")
 				Player.Players.LEGGY: desc_body.set_snaily_text("subscreen_desc_corkscrewJump")
 				Player.Players.BLOBBY: desc_body.set_snaily_text("subscreen_desc_angelJump")
 				_: desc_body.set_snaily_text("subscreen_desc_gravityShell")
+			if Statics.stack_shells:
+				desc_body.set_snaily_text_raw(desc_body.text + Statics.get_text("subscreen_desc_suffix_stackedShells"))
 		Item.ItemTypes.NONE:
 			desc_body.set_snaily_text("subscreen_desc_normalShell")
 			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):

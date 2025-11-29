@@ -278,6 +278,7 @@ layout_mode = 2
 text = "Item descriptions"
 max_width = 192
 shadow_scale = 1
+border_scale = 1
 
 [node name="Body" parent="ItemDesc" instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
@@ -287,6 +288,7 @@ text = "This is where descriptions of whatever item is selected will go!"
 max_width = 192
 text_scale = 1
 shadow_scale = 1
+border_scale = 1
 
 [node name="MarkerPrompt" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
