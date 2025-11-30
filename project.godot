@@ -94,7 +94,7 @@ world/damage_numbers=false
 
 [gui]
 
-theme/custom="res://UI/uitheme.tres"
+theme/custom="uid://dbtbq5hs1dmxo"
 theme/custom_font="uid://bo28bqj6d1u8m"
 
 [input]

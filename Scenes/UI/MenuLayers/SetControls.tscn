@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bffjuo7l54767"]
+[gd_scene load_steps=7 format=3 uid="uid://bffjuo7l54767"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_26pkv"]
 [ext_resource type="Script" uid="uid://bn5sbi8f4q16t" path="res://Scripts/UI/MenuLayers/SetControls.gd" id="2_nb4ro"]
-[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_thf4g"]
 [ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="3_nb4ro"]
 [ext_resource type="PackedScene" uid="uid://3mo5lvbvrnk3" path="res://Scenes/UI/BindSnailyButton.tscn" id="4_mugii"]
 [ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="6_26pkv"]
@@ -26,7 +25,6 @@ custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("2_thf4g")
 theme_override_styles/panel = ExtResource("3_nb4ro")
 follow_focus = true
 scroll_horizontal_custom_step = 1.0
