@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://capqop150dmrx"]
+[gd_scene load_steps=10 format=3 uid="uid://capqop150dmrx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_blq8n"]
 [ext_resource type="Texture2D" uid="uid://c21s6w3gptrlt" path="res://Assets/Images/UI/BestiaryBackground.png" id="2_jdu1y"]
 [ext_resource type="Script" uid="uid://bllk3lh1381tj" path="res://Scripts/UI/MenuLayers/Bestiary.gd" id="3_8bw4w"]
 [ext_resource type="Texture2D" uid="uid://dcnlyrwm2srdm" path="res://Assets/Images/UI/BestiarySelector.png" id="3_gx5uf"]
-[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="3_wfk3g"]
 [ext_resource type="Texture2D" uid="uid://cqv3m8uc5txwd" path="res://Assets/Images/UI/ScrollPanelBare.png" id="4_gx5uf"]
 [ext_resource type="Texture2D" uid="uid://bvquc2c5jmqyb" path="res://Assets/Images/UI/BestiaryEntityMask.png" id="4_obml4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_obml4"]
@@ -43,7 +42,6 @@ offset_top = -104.0
 offset_right = -24.0
 offset_bottom = 104.0
 size_flags_horizontal = 4
-theme = ExtResource("3_wfk3g")
 theme_override_styles/panel = SubResource("StyleBoxTexture_8bw4w")
 follow_focus = true
 horizontal_scroll_mode = 0

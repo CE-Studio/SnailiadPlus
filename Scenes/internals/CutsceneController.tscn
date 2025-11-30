@@ -1,41 +1,43 @@
-[gd_scene load_steps=12 format=3 uid="uid://cn0i5sa8m78t3"]
+[gd_scene load_steps=17 format=3 uid="uid://cn0i5sa8m78t3"]
 
 [ext_resource type="Script" uid="uid://etemc37gjn6w" path="res://Scripts/Classes/CutsceneController.gd" id="1_ssxem"]
-[ext_resource type="Shader" uid="uid://c2jiouympoi7d" path="res://Scenes/internals/CutsceneControllerErrorShader.tres" id="2_6ydxn"]
-[ext_resource type="Texture2D" uid="uid://byaenqj6o648n" path="res://UI/errorbacking.png" id="2_r73cr"]
+[ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_mg7n4"]
+[ext_resource type="Texture2D" uid="uid://bg12eipvp0s3v" path="res://UI/DialogueAdvance.png" id="3_n4pca"]
 [ext_resource type="AudioStream" uid="uid://hdwgx5v76x3e" path="res://Assets/Sounds/Sfx/SnailyError.ogg" id="4_8b4nq"]
 [ext_resource type="Texture2D" uid="uid://bxlv8jnxvlvfc" path="res://Assets/Images/UI/SnailyError.png" id="4_gc0g0"]
 [ext_resource type="Texture2D" uid="uid://d1bbnms8harwj" path="res://UI/cutplayingicon.png" id="5_xegkh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4kkg"]
-shader = ExtResource("2_6ydxn")
-shader_parameter/fade = 0.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_opako"]
+atlas = ExtResource("3_n4pca")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tnswa"]
-texture = ExtResource("2_r73cr")
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjrlc"]
+atlas = ExtResource("3_n4pca")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fsgch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opako")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjrlc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
 
 [sub_resource type="Animation" id="Animation_wj2ip"]
 length = 0.001
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/Panel:material:shader_parameter/fade")
+tracks/0/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -46,36 +48,25 @@ tracks/1/keys = {
 resource_name = "appear"
 length = 2.45
 step = 0.05
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/Panel:material:shader_parameter/fade")
+tracks/0/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1.5)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/MarginContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
 }
-tracks/2/type = "audio"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -83,12 +74,176 @@ tracks/2/keys = {
 }],
 "times": PackedFloat32Array(2)
 }
-tracks/2/use_blend = true
+tracks/1/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fv03o"]
 _data = {
 &"RESET": SubResource("Animation_wj2ip"),
 &"appear": SubResource("Animation_6khaw")
+}
+
+[sub_resource type="Animation" id="Animation_opako"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(364, 78)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_n4pca"]
+resource_name = "appear"
+length = 0.30001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(184, 31), Vector2(10, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16, 16), Vector2(364, 78)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.30001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_mg7n4"]
+resource_name = "default"
+length = 0.10001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(184, 31)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wjrlc"]
+_data = {
+&"RESET": SubResource("Animation_opako"),
+&"appear": SubResource("Animation_n4pca"),
+&"default": SubResource("Animation_mg7n4")
 }
 
 [node name="CutsceneController" type="Node"]
@@ -107,16 +262,89 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
-material = SubResource("ShaderMaterial_h4kkg")
+[node name="toptargpos" type="Control" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_top = 16.0
+offset_right = -192.0
+offset_bottom = 16.0
+grow_horizontal = 2
+
+[node name="bottargpos" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = 61.0
+offset_right = -192.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="text" type="Control" parent="CanvasLayer/Control"]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 8.0
+offset_bottom = 16.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/text"]
+self_modulate = Color(0, 0.2509804, 0.34509805, 1)
+layout_mode = 0
+offset_left = 10.0
+offset_right = 374.0
+offset_bottom = 78.0
+theme_type_variation = &"textbg_1"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/text/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "AAAA"
+scroll_active = false
+script = ExtResource("2_mg7n4")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
+metadata/_custom_type_script = "uid://g32um0mltv5d"
+
+[node name="advancearrow" type="Control" parent="CanvasLayer/Control/text/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/text/PanelContainer/advancearrow"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_tnswa")
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control/text/PanelContainer/advancearrow/Control"]
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_fsgch")
+autoplay = "default"
+frame_progress = 0.78229266
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
 visible = false
@@ -185,16 +413,23 @@ size_flags_horizontal = 3
 text = "continue"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 14.0
-offset_bottom = 14.0
+visible = false
+offset_left = 5.0
+offset_top = 14.0
+offset_right = 15.0
+offset_bottom = 24.0
 mouse_filter = 2
 texture = ExtResource("5_xegkh")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="warning" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_fv03o")
 }
+
+[node name="effects" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wjrlc")
+}
+autoplay = "default"

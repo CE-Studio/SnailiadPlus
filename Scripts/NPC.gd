@@ -168,3 +168,12 @@ func can_perform_action(_action:String) -> bool:
 func perform_action(_action:String, _force:bool) -> bool:
 	return false
 #endregion
+
+
+func _on_character_body_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if Engine.is_editor_hint():
+		return
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				Room.instance.start_cutscene(self)

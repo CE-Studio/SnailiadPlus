@@ -190,6 +190,9 @@ enum Players {
 var who_i_is:Players = Players.SNAILY
 
 
+static var instance:Player
+
+
 static var player_name:String:
 	set(_v):
 		pass
@@ -247,6 +250,7 @@ var debug_print_adjustments:bool = false
 # It's used here to initialize certain variables and node references
 func _ready():
 	super()
+	instance = self
 	sprite = $"JsonSprite2D"
 	body = $"CharacterBody2D"
 	box_normal = $"CharacterBody2D/NormalRect"

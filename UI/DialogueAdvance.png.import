@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb43pems338ae"
-path="res://.godot/imported/SnailyButton.svg-f448bc7f768854f3c13d41c00fb2a92d.ctex"
+uid="uid://bg12eipvp0s3v"
+path="res://.godot/imported/DialogueAdvance.png-f78038da4bde6cf20605b4ea88dfe2b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Editor/ico/SnailyButton.svg"
-dest_files=["res://.godot/imported/SnailyButton.svg-f448bc7f768854f3c13d41c00fb2a92d.ctex"]
+source_file="res://UI/DialogueAdvance.png"
+dest_files=["res://.godot/imported/DialogueAdvance.png-f78038da4bde6cf20605b4ea88dfe2b4.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

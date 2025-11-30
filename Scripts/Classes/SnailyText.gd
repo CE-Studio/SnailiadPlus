@@ -26,7 +26,7 @@ extends RichTextLabel
 const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
 
-var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
+
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
