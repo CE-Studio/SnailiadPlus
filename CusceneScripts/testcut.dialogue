@@ -14,7 +14,7 @@ match CutsceneController.object_id
 		=> END
 	when "Four"
 		NPC Four: Watch {{Player.player_name}}! I'm going to jump off of this wall!
-		do CutsceneController.actor_select("Four")
+		do CutsceneController.set_actor("Four")
 		do CutsceneController.perform_action("jump", true)
 		NPC Four: I'm on the ground now!
 	when "Five"

@@ -186,9 +186,9 @@ text = "continue"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_left = 4.0
-offset_top = 4.0
+offset_top = 20.0
 offset_right = 14.0
-offset_bottom = 14.0
+offset_bottom = 30.0
 mouse_filter = 2
 texture = ExtResource("5_xegkh")
 

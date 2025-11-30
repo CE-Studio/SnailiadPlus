@@ -30,8 +30,11 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 top_level = true
-collision_layer = 0
+collision_layer = 2147483648
+input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_yb3dg")
+
+[connection signal="input_event" from="CharacterBody2D" to="." method="_on_character_body_2d_input_event"]

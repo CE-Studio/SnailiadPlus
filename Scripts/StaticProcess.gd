@@ -6,6 +6,9 @@ var template_profile
 var template_records
 
 
+signal cut_advance
+
+
 # Initialize everything on load
 func _ready() -> void:
 	# Load all text from library

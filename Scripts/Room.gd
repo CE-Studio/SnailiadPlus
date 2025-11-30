@@ -42,6 +42,8 @@ static var areas:Array = [
 	"BossRush"
 ]
 
+static var instance:Room
+
 enum Layers {
 	SKY,
 	BG2,
@@ -85,6 +87,7 @@ var sp_table:Array[String] = []
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	instance = self
 	if GameCore.instance == null and not display_room:
 		Statics.current_profile = Statics.data_profile1
 		Statics.current_profile_id = 1
@@ -737,3 +740,7 @@ func set_environment_visibility() -> void:
 		if child is EnvironmentArea:
 			child.update_shader_visibility()
 #endregion
+
+
+func start_cutscene(initiator:CutsceneControllable) -> void:
+	CutsceneController.start(cutscene_script, cutscene_animator, initiator.identifier)
