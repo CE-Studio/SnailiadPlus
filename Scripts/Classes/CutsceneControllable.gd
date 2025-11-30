@@ -21,6 +21,10 @@ func _ready():
 	actors.append(self)
 
 
+func is_in_top_half_of_screen() -> bool:
+	return Input.is_action_pressed(&"debug")
+
+
 ## Apply a force to the object. Returns true if force was applied.
 @abstract func impulse(_direction:Vector2) -> bool
 

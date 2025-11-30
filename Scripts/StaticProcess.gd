@@ -87,3 +87,5 @@ func _load_json_to_dict(path:String) -> Dictionary[String, Variant]:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug") and not Statics.is_menu_open:
 		Statics.noclip_mode = not Statics.noclip_mode
+	if event.is_action_pressed(&"speak"):
+		cut_advance.emit()
