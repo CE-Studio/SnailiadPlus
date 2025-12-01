@@ -267,6 +267,8 @@ static func add_item(id:int, count:int) -> void:
 static func remove_item(id:int, count:int) -> void:
 	if id < len(current_profile["items"]):
 		current_profile["items"][id] -= count
+		if current_profile["items"][id] < 0:
+			current_profile["items"][id] = 0
 
 
 static func check_item(id:int) -> int:
