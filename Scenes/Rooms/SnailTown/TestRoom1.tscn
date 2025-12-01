@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ropfo"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_jcf1i"]
-[ext_resource type="Resource" uid="uid://c63fxwt6s4tf1" path="res://CusceneScripts/testcut.dialogue" id="2_ntfxy"]
+[ext_resource type="Resource" uid="uid://c63fxwt6s4tf1" path="res://CutsceneScripts/testcut.dialogue" id="2_ntfxy"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_u3nms"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_u3nms"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="5_sg3tw"]
