@@ -239,6 +239,10 @@ func get_icon_from_enum(input:Inputs) -> String:
 	return get_key_icon(action[0])
 
 
+func get_icon_as_bbcode(input:Inputs) -> String:
+	return "[img]" + (ICON_PATH % get_icon_from_enum(input)) + "[/img]"
+
+
 func get_input_icon(event:InputEvent) -> String:
 	if event is InputEventKey:
 		return get_key_icon(event.physical_keycode)

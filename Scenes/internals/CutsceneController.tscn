@@ -320,6 +320,7 @@ layout_mode = 2
 [node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+bbcode_enabled = true
 text = "AAAA"
 scroll_active = false
 script = ExtResource("2_mg7n4")
