@@ -320,6 +320,8 @@ layout_mode = 2
 [node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
 bbcode_enabled = true
 text = "AAAA"
 scroll_active = false

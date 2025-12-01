@@ -28,6 +28,100 @@ enum Inputs {
 	UI_BACK,
 }
 
+#region Static icon variables
+var icon_left:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.LEFT)
+
+var icon_right:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.RIGHT)
+
+var icon_up:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UP)
+
+var icon_down:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.DOWN)
+
+var icon_jump:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.JUMP)
+
+var icon_shoot:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.SHOOT)
+
+var icon_strafe:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.STRAFE)
+
+var icon_speak:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.SPEAK)
+
+var icon_gravity:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.GRAVITY)
+
+var icon_pause:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.PAUSE)
+
+var icon_map:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.MAP)
+
+var icon_weapon0:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON0)
+
+var icon_weapon1:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON1)
+
+var icon_weapon2:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON2)
+
+var icon_weapon3:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON3)
+
+var icon_aiml:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_L)
+
+var icon_aimr:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_R)
+
+var icon_aimu:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_U)
+
+var icon_aimd:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_D)
+
+var icon_debug:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.DEBUG)
+
+var icon_uiclick:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_CLICK)
+
+var icon_uiaccept:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_ACCEPT)
+
+var icon_uiback:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_BACK)
+#endregion
+
 const INPUT_SLOTS:Array = [
 	0b00001111, # Left
 	0b00001111, # Right
@@ -240,7 +334,7 @@ func get_icon_from_enum(input:Inputs) -> String:
 
 
 func get_icon_as_bbcode(input:Inputs) -> String:
-	return "[img]" + (ICON_PATH % get_icon_from_enum(input)) + "[/img]"
+	return "[img=top,top]" + (ICON_PATH % get_icon_from_enum(input)) + "[/img]"
 
 
 func get_input_icon(event:InputEvent) -> String:
