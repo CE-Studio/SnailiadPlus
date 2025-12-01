@@ -136,8 +136,6 @@ static func perform_action(action:String, force:bool) -> void:
 	var actor := get_actor(active_object_id)
 	if not is_instance_valid(actor):
 			return
-	if not actor.can_perform_action(action):
-		return
 	actor.perform_action(action, force)
 
 
