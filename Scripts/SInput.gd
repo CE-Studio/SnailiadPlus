@@ -324,17 +324,17 @@ func get_icon_from_enum_str(string:String) -> String:
 	return get_icon_from_enum(index as Inputs)
 
 
-func get_icon_from_enum(input:Inputs) -> String:
+func get_icon_from_enum(input:Inputs, con_mode:int = -1) -> String:
 	var action = pull_action(input)
-	if last_input_was_con:
+	if con_mode == 1 or (last_input_was_con and not con_mode == 0):
 		if action[2] is Vector2i:
 			return get_axis_icon(action[2])
 		return get_button_icon(action[2])
 	return get_key_icon(action[0])
 
 
-func get_icon_as_bbcode(input:Inputs) -> String:
-	return "[img=top,top]" + (ICON_PATH % get_icon_from_enum(input)) + "[/img]"
+func get_icon_as_bbcode(input:Inputs, con_mode:int = -1) -> String:
+	return "[img=top,top]" + (ICON_PATH % get_icon_from_enum(input, con_mode)) + "[/img]"
 
 
 func get_input_icon(event:InputEvent) -> String:

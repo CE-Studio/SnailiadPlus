@@ -20,6 +20,6 @@ match CutsceneController.object_id
 		do CutsceneController.show_textbox()
 		NPC Four: I'm on the ground now!
 	when "Five"
-		NPC Five: I'm testing buttons! Try pressing {{SInput.icon_gravity}}
+		NPC Five: I'm testing buttons! Try pressing {{SInput.icon_g_rawravity}}
 do CutsceneController.hide_textbox()
 => END

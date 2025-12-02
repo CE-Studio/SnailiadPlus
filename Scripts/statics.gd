@@ -186,7 +186,7 @@ enum CutsceneFlags {
 
 #region Profile functions
 static func format_game_time(time:Array) -> String:
-	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	var time_string := "%d:%02d:%05.2f" % [ time[0], time[1], time[2] ]
 	return time_string
 
 

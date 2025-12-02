@@ -19,6 +19,7 @@ script = ExtResource("2_5q3mp")
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 text_id = "menu_option_return_header"
+button_text = "Really return to menu?"
 disabled = true
 hide_frame = true
 
@@ -37,6 +38,7 @@ focus_neighbor_bottom = NodePath("../QuitNoSave")
 focus_next = NodePath("../QuitNoSave")
 focus_previous = NodePath("../Back")
 text_id = "menu_option_return_confirmSave"
+button_text = "Save and quit"
 hide_frame = true
 
 [node name="QuitNoSave" parent="MainVBox" instance=ExtResource("2_h0fbv")]
@@ -49,6 +51,7 @@ focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../QuitSave")
 text_id = "menu_option_return_confirmNoSave"
+button_text = "Quit without saving"
 hide_frame = true
 
 [node name="Back" parent="MainVBox" instance=ExtResource("2_h0fbv")]
@@ -61,6 +64,7 @@ focus_neighbor_bottom = NodePath("../QuitSave")
 focus_next = NodePath("../QuitSave")
 focus_previous = NodePath("../QuitNoSave")
 text_id = "menu_option_return_cancel"
+button_text = "Back to pause menu"
 back_one_layer = true
 grab_focus_on_load = true
 hide_frame = true

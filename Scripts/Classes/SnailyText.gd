@@ -50,7 +50,8 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
-	set_snaily_text_raw(Statics.get_text(_text))
+	#set_snaily_text_raw(Statics.get_text(_text))
+	set_snaily_text_raw(_text)
 
 
 func set_snaily_text_raw(_text:String) -> void:

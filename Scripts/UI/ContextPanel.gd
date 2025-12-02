@@ -25,7 +25,7 @@ func _ready() -> void:
 
 func set_text(_text:String, _size:int) -> void:
 	text.text_scale = _size
-	text.set_snaily_text(_text)
+	text.set_snaily_text_raw(_text)
 	text.max_width = int(custom_minimum_size.x) - 16
 
 
@@ -38,7 +38,7 @@ func add_header(_text:String, _size:int) -> void:
 		header_text.add_shadow(1)
 		header = header_text
 	header.text_scale = _size
-	header.set_snaily_text(_text)
+	header.set_snaily_text_raw(_text)
 
 
 func add_button(_text:String, target_function:Callable, focus:bool = true) -> void:

@@ -173,9 +173,9 @@ static func trigger_animation_backwards(anim:String, wait:bool) -> void:
 				await instance.current_animator.animation_finished
 
 
-static func set_textbox_color(col:String) -> void:
+static func set_textbox_color(_col:String) -> void:
 	pass
 
 
-static func set_textbox_frame(frame:int) -> void:
+static func set_textbox_frame(_frame:int) -> void:
 	pass

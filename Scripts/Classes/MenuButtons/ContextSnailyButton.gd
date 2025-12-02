@@ -7,6 +7,8 @@ extends SnailyButton
 #region Variables
 @export var text_id:String = ""
 @export var subtext_id:String = ""
+@export var main_text:String = ""
+@export var sub_text:String = ""
 @export var quick_load_layer:String = ""
 @export var back_one_layer:bool = false
 
@@ -27,14 +29,14 @@ func _ready() -> void:
 	subtext.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP)
 	subtext.add_shadow(1)
 	if not Engine.is_editor_hint():
-		if text_id.strip_edges() == "":
-			text.set_snaily_text_raw("Text!!")
+		if main_text.strip_edges() == "":
+			text.set_snaily_text_raw(tr(&"Text!!"))
 		else:
-			text.set_snaily_text(text_id)
-		if subtext_id.strip_edges() == "":
-			subtext.set_snaily_text_raw("Text!!")
+			text.set_snaily_text_raw(main_text.replace("\\n", "\n"))
+		if sub_text.strip_edges() == "":
+			subtext.set_snaily_text_raw(tr(&"Text!!"))
 		else:
-			subtext.set_snaily_text(subtext_id)
+			subtext.set_snaily_text_raw(sub_text.replace("\\n", "\n"))
 		text.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 		subtext.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 

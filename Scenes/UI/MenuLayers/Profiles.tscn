@@ -31,6 +31,8 @@ focus_next = NodePath("../Profile2")
 focus_previous = NodePath("../Back")
 text_id = "menu_option_profile_empty"
 subtext_id = "menu_option_profile_empty_context"
+main_text = "Empty profile"
+sub_text = "Select to start a new one!"
 grab_focus_on_load = true
 
 [node name="Profile2" parent="MainVBox" instance=ExtResource("3_7epk8")]
@@ -44,6 +46,8 @@ focus_next = NodePath("../Profile3")
 focus_previous = NodePath("../Profile1")
 text_id = "menu_option_profile_empty"
 subtext_id = "menu_option_profile_empty_context"
+main_text = "Empty profile"
+sub_text = "Select to start a new one!"
 
 [node name="Profile3" parent="MainVBox" instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
@@ -56,6 +60,8 @@ focus_next = NodePath("../HBoxContainer/Copy")
 focus_previous = NodePath("../Profile2")
 text_id = "menu_option_profile_empty"
 subtext_id = "menu_option_profile_empty_context"
+main_text = "Empty profile"
+sub_text = "Select to start a new one!"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
 custom_minimum_size = Vector2(280, 0)
@@ -73,6 +79,7 @@ focus_neighbor_bottom = NodePath("../../Back")
 focus_next = NodePath("../Erase")
 focus_previous = NodePath("../../Profile3")
 text_id = "menu_option_profile_copy"
+button_text = "Copy"
 
 [node name="Erase" parent="MainVBox/HBoxContainer" instance=ExtResource("2_7epk8")]
 layout_mode = 2
@@ -83,6 +90,7 @@ focus_neighbor_bottom = NodePath("../../Back")
 focus_next = NodePath("../../Back")
 focus_previous = NodePath("../Copy")
 text_id = "menu_option_profile_erase"
+button_text = "Erase"
 
 [node name="Back" parent="MainVBox" instance=ExtResource("2_7epk8")]
 self_modulate = Color(1, 1, 1, 0)
@@ -94,6 +102,7 @@ focus_neighbor_bottom = NodePath("../Profile1")
 focus_next = NodePath("../Profile1")
 focus_previous = NodePath("../HBoxContainer/Erase")
 text_id = "menu_option_main_returnTo"
+button_text = "Back to main menu"
 back_one_layer = true
 hide_frame = true
 

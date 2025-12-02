@@ -20,6 +20,7 @@ script = ExtResource("2_nahkj")
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 text_id = "menu_option_loadGame_header"
+button_text = "Okay, where would you\\nlike to start from?"
 disabled = true
 hide_frame = true
 
@@ -39,6 +40,8 @@ focus_next = NodePath("../WorldSpawn")
 focus_previous = NodePath("../Back")
 text_id = "menu_option_loadGame_save"
 subtext_id = "Area - Room"
+main_text = "Start from save point"
+sub_text = "Area - Room"
 grab_focus_on_load = true
 hide_frame = true
 
@@ -52,6 +55,7 @@ focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../SavePoint")
 text_id = "menu_option_loadGame_spawn"
+button_text = "Start from Snail Town"
 hide_frame = true
 
 [node name="Back" parent="MainVBox" instance=ExtResource("3_nahkj")]
@@ -64,6 +68,7 @@ focus_neighbor_bottom = NodePath("../SavePoint")
 focus_next = NodePath("../SavePoint")
 focus_previous = NodePath("../WorldSpawn")
 text_id = "menu_option_profile_returnTo"
+button_text = "Back to profile selection"
 back_one_layer = true
 hide_frame = true
 

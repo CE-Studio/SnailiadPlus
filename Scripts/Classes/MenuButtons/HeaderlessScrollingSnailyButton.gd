@@ -9,6 +9,7 @@ const HOVER_ARROW_MAX_ALPHA = 0.5
 const HOVER_ARROW_CYCLE_SPEED = 8.0
 
 @export var cycle_options:Array[String] = []
+@export var cycle_option_text:String = ""
 @export var auto_select_mode:bool = false # Automatically enable cycling when button is focused, and enable emitting of button_pressed
 @export var focus_option:int = 0
 @export var loop:bool = true
@@ -47,15 +48,20 @@ func _ready() -> void:
 	
 	option.add_shadow(1)
 	if not Engine.is_editor_hint():
+		if cycle_option_text.strip_edges() != "":
+			var options:PackedStringArray = cycle_option_text.split("|")
+			cycle_options.append_array(options)
+			for i in cycle_options.size():
+				cycle_options[i] = cycle_options[i].replace("\\n", "\n")
 		if cycle_options.size() == 0:
-			option.set_snaily_text("menu_option_scroller_none")
+			option.set_snaily_text_raw(tr(&"[Empty array!]"))
 			selected_option = -1
 			disabled = true
 		else:
 			while focus_option < 0:
 				focus_option += cycle_options.size()
 			selected_option = focus_option % cycle_options.size()
-			option.set_snaily_text(cycle_options[selected_option])
+			option.set_snaily_text_raw(cycle_options[selected_option])
 			if emit_signal_on_load:
 				option_cycled.emit(selected_option)
 		option.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
@@ -94,7 +100,7 @@ func _process(delta: float) -> void:
 				cycled_right.emit(selected_option)
 			if cycled:
 				sfx_focus.play()
-				option.call_deferred("set_snaily_text", cycle_options[selected_option])
+				option.call_deferred("set_snaily_text_raw", cycle_options[selected_option])
 				option_cycled.emit(selected_option)
 			if ((scroll_state == -1 and not Input.is_action_pressed("ui_left") and not SInput.input_pressed(SInput.Inputs.LEFT))
 			or (scroll_state == 1 and not Input.is_action_pressed("ui_right") and not SInput.input_pressed(SInput.Inputs.RIGHT))):
@@ -130,13 +136,13 @@ func remote_set_option(value:int) -> void:
 	while value < 0:
 		value += cycle_options.size()
 	selected_option = value % cycle_options.size()
-	option.set_snaily_text(cycle_options[selected_option])
+	option.set_snaily_text_raw(cycle_options[selected_option])
 
 
 func remote_import_new_options(new_array:Array[String]) -> void:
 	cycle_options = new_array.duplicate()
 	selected_option %= cycle_options.size()
-	option.set_snaily_text(cycle_options[selected_option])
+	option.set_snaily_text_raw(cycle_options[selected_option])
 
 
 func set_selected() -> void:
