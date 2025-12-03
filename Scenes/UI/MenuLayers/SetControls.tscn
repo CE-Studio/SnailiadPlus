@@ -257,6 +257,7 @@ focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Left")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Left")
 focus_previous = NodePath("../ScrollContainer/VBoxContainer/UIBack")
 text_id = "menu_option_options_returnTo"
+button_text = "Back to options"
 back_one_layer = true
 hide_frame = true
 

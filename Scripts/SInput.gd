@@ -28,6 +28,14 @@ enum Inputs {
 	UI_BACK,
 }
 
+var input_tr_strings:PackedStringArray = [
+	tr(&"Move left"), tr(&"Move right"), tr(&"Move up"), tr(&"Move down"), tr(&"Jump"),
+	tr(&"Shoot"), tr(&"Strafe"), tr(&"Speak"), tr(&"Gravity jump"), tr(&"Open menu"),
+	tr(&"Open map"), tr(&"Weapon 0"), tr(&"Weapon 1"), tr(&"Weapon 2"), tr(&"Weapon 3"),
+	tr(&"Aim left"), tr(&"Aim right"), tr(&"Aim up"), tr(&"Aim down"), tr(&"Open debug menu"),
+	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"), 
+]
+
 #region Static icon variables
 var icon_left:String:
 	set(_v): pass
@@ -334,7 +342,11 @@ func get_icon_from_enum(input:Inputs, con_mode:int = -1) -> String:
 
 
 func get_icon_as_bbcode(input:Inputs, con_mode:int = -1) -> String:
-	return "[img=top,top]" + (ICON_PATH % get_icon_from_enum(input, con_mode)) + "[/img]"
+	return get_icon_as_bbcode_from_string(get_icon_from_enum(input, con_mode))
+
+
+func get_icon_as_bbcode_from_string(input:String) -> String:
+	return "[img=top,top]" + (ICON_PATH % input) + "[/img]"
 
 
 func get_input_icon(event:InputEvent) -> String:
@@ -353,6 +365,10 @@ func get_input_icon(event:InputEvent) -> String:
 func get_input_str(input:Inputs) -> StringName:
 	var string:String = Inputs.keys()[input]
 	return string.to_camel_case()
+
+
+func get_input_tr_str(input:Inputs) -> StringName:
+	return input_tr_strings[input as int]
 
 
 func _check_icon_exists(key:String) -> String:

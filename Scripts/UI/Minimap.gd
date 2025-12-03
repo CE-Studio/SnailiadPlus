@@ -417,7 +417,8 @@ func update_markers(target_cells:Array = []) -> void:
 
 func set_room_name(_name:String):
 	if not subscreen_mode:
-		name_text.set_snaily_text(ROOM_NAME_STRING % _name)
+		#name_text.set_snaily_text(ROOM_NAME_STRING % _name)
+		name_text.set_snaily_text_raw(GlobalText.room_names[_name])
 
 
 func update_player() -> void:

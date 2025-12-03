@@ -31,6 +31,7 @@ StaticProcess="*res://Scripts/StaticProcess.gd"
 cutcontroll="res://Scenes/internals/CutsceneController.tscn"
 SInput="*res://Scripts/SInput.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+GlobalText="*res://Scripts/GlobalText.gd"
 
 [debug]
 

@@ -10,15 +10,15 @@ var fade_color_a:Color
 func _ready() -> void:
 	layer = get_parent()
 	pro_id = Statics.current_profile_id
-	var save_room_name
+	var save_room_name:String
 	match pro_id:
 		1: save_room_name = Statics.data_profile1["save_room"]
 		2: save_room_name = Statics.data_profile2["save_room"]
 		3: save_room_name = Statics.data_profile3["save_room"]
-	var save_room_parts = save_room_name.split("/")
-	var save_area = Statics.get_text("area_%s" % save_room_parts[0])
+	var save_room_parts:PackedStringArray = save_room_name.split("/")
+	var save_area:String = GlobalText.areas[save_room_parts[0]].strip_edges()
 	if save_room_parts.size() > 1:
-		var save_room = Statics.get_text("room_%s" % save_room_name)
+		var save_room:String = GlobalText.room_names[save_room_name].strip_edges()
 		$"SavePoint".set_subtext("%s - %s" % [save_area, save_room])
 	else:
 		$"SavePoint".set_subtext(save_area)

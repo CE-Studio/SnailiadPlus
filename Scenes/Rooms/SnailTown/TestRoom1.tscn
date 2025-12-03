@@ -71,14 +71,12 @@ lock_type = 0
 [node name="NPC" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(240, 216)
 animation_set = 0
-inventory = null
 identifier = &"One"
 
 [node name="NPC2" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
 position = Vector2(112, 216)
 my_id = 1
 animation_set = 6
-inventory = null
 identifier = &"Two"
 
 [node name="NPC3" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
@@ -86,7 +84,6 @@ position = Vector2(208, 152)
 my_id = 2
 surface = 3
 animation_set = 1
-inventory = null
 identifier = &"Three"
 
 [node name="NPC4" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
@@ -94,7 +91,6 @@ position = Vector2(312, 120)
 my_id = 3
 surface = 1
 animation_set = 2
-inventory = null
 identifier = &"Four"
 
 [node name="NPC5" parent="GroundLayer" instance=ExtResource("6_ntfxy")]
@@ -102,7 +98,6 @@ position = Vector2(104, 64)
 my_id = 4
 surface = 2
 animation_set = 3
-inventory = null
 identifier = &"Five"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]

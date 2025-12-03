@@ -21,8 +21,7 @@ func _ready() -> void:
 		layer.meta_info.append(0)
 		layer.meta_info.append(0)
 	
-	panel.call_deferred("add_header",
-		"menu_option_controls_remap_header", 2)
+	panel.call_deferred("add_header", tr(&"Now remapping..."), 2)
 	
 	for child in Statics.get_all_children(self):
 		if child is BindSnailyButton:
@@ -90,11 +89,11 @@ func _focus_panel(bind:int) -> void:
 	queue_defocus = false
 	var base_str:String = ""
 	match layer.meta_info[0]:
-		0: base_str = Statics.get_text("menu_option_controls_remap_priKey")
-		1: base_str = Statics.get_text("menu_option_controls_remap_secKey")
-		2: base_str = Statics.get_text("menu_option_controls_remap_priCon")
-		3: base_str = Statics.get_text("menu_option_controls_remap_secCon")
-	var bind_str = Statics.get_text("menu_option_controls_" + SInput.get_input_str(bind))
+		0: base_str = tr(&"Primary keyboard bind for:\n%s")
+		1: base_str = tr(&"Secondary keyboard bind for:\n%s")
+		2: base_str = tr(&"Primary controller bind for:\n%s")
+		3: base_str = tr(&"Secondary controller bind for:\n%s")
+	var bind_str = SInput.get_input_tr_str(bind)
 	panel.set_text(base_str % bind_str, 1)
 	panel.can_focus = true
 	layer.menu.selector_y_offset = 80.0 - panel.position.y
