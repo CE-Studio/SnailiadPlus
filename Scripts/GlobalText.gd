@@ -145,3 +145,95 @@ var room_names:Dictionary = {
 	"Iris/Helix": tr(&"Glitched Goodies"),
 	"Iris/Shrine": tr(&"Shrine of Iris"),
 }
+
+
+func get_player_name(id:Player.Players, full:bool = false) -> StringName:
+	match id:
+		Player.Players.SNAILY:
+			return tr(&"Snaily Snail") if full else tr(&"Snaily")
+		Player.Players.SLUGGY:
+			return tr(&"Sluggy Slug") if full else tr(&"Sluggy")
+		Player.Players.UPSIDE:
+			return tr(&"Upside Snail") if full else tr(&"Upside")
+		Player.Players.LEGGY:
+			return tr(&"Leggy Snail") if full else tr(&"Leggy")
+		Player.Players.BLOBBY:
+			return tr(&"Blobby Blob") if full else tr(&"Blobby")
+		Player.Players.LEECHY:
+			return tr(&"Leechy Leech") if full else tr(&"Leechy")
+	return "?"
+
+
+func get_item_name(id:Item.ItemTypes, specify_shell:bool = false) -> StringName:
+	var character:int = 0
+	if GameCore.instance:
+		int(Statics.current_profile["character"])
+	match id:
+		Item.ItemTypes.PEASHOOTER:
+			return tr(&"Peashooter")
+		Item.ItemTypes.BOOMERANG:
+			return tr(&"Boomerang")
+		Item.ItemTypes.RAINBOW_WAVE:
+			return tr(&"Rainbow Wave")
+		Item.ItemTypes.DEVASTATOR:
+			return tr(&"Devastator")
+		Item.ItemTypes.HIGH_JUMP:
+			if character == Player.Players.BLOBBY:
+				return tr(&"Wall Grab")
+			return tr(&"High Jump")
+		Item.ItemTypes.SHELL_SHIELD:
+			if character == Player.Players.BLOBBY:
+				return tr(&"Shelmet")
+			return tr(&"Shell Shield")
+		Item.ItemTypes.RAPID_FIRE:
+			if character == Player.Players.LEECHY:
+				return tr(&"Backfire")
+			return tr(&"Rapid Fire")
+		Item.ItemTypes.ICE_SHELL:
+			match character:
+				Player.Players.SLUGGY: return tr(&"Ice Slug")
+				Player.Players.BLOBBY: return tr(&"Ice Blob")
+				Player.Players.LEECHY: return tr(&"Ice Leech")
+				_: return tr(&"Ice Shell") if specify_shell else tr(&"Ice Snail")
+		Item.ItemTypes.GRAVITY_SHELL:
+			match character:
+				Player.Players.SNAILY: return tr(&"Gravity Shell") if specify_shell else tr(&"Gravity Snail")
+				Player.Players.SNAILY: return tr(&"Gravity Slug")
+				Player.Players.UPSIDE: return tr(&"Magnetic Foot")
+				Player.Players.LEGGY: return tr(&"Corkscrew Jump")
+				Player.Players.BLOBBY: return tr(&"Angel Jump")
+				Player.Players.SNAILY: return tr(&"Gravity Leech")
+		Item.ItemTypes.METAL_SHELL:
+			match character:
+				Player.Players.SNAILY: return tr(&"Full Power Slug")
+				Player.Players.BLOBBY: return tr(&"Non-Newtonian Blob")
+				Player.Players.SNAILY: return tr(&"Full Power Leech")
+				_: return tr(&"Full Metal Shell") if specify_shell else tr(&"Full Metal Snail")
+		Item.ItemTypes.GRAVITY_SHOCK:
+			return tr(&"Gravity Shock")
+		Item.ItemTypes.SECRET_BOOMERANG:
+			return tr(&"Super Secret Boomerang")
+		Item.ItemTypes.DEBUG_WAVE:
+			return tr(&"Debug Rainbow Wave")
+		Item.ItemTypes.HEART_CONTAINER:
+			return tr(&"Heart Container")
+		Item.ItemTypes.HELIX_FRAGMENT:
+			return tr(&"Helix Fragment")
+		#Item.ItemTypes.RADAR_SHELL:
+		Item.ItemTypes.WEAPON_LOCK_TRAP:
+			return tr(&"Weapon Lock")
+		Item.ItemTypes.GRAVITY_LOCK_TRAP:
+			return tr(&"Gravity Lock")
+		Item.ItemTypes.LULLABY_TRAP:
+			return tr(&"Lullaby Trap")
+		Item.ItemTypes.SPIDER_TRAP:
+			return tr(&"Spider Ambush")
+		Item.ItemTypes.WARP_TRAP:
+			return tr(&"Warp Trap")
+	if specify_shell:
+		match character:
+			Player.Players.SNAILY: return tr(&"Normal Slug")
+			Player.Players.BLOBBY: return tr(&"Normal Blob")
+			Player.Players.SNAILY: return tr(&"Normal Leech")
+			_: return tr(&"Normal Shell")
+	return tr(&"Nothing")
