@@ -109,7 +109,7 @@ func handle_cheats() -> void:
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, false)
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, false)
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, false)
-					UICore.instance.show_flashy_popup(Statics.get_text("cheat_skyfish"))
+					UICore.instance.show_flashy_popup(tr(&"- Skyfish Flies Again -"))
 					cheat_executed = true
 			_:
 				pass

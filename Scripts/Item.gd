@@ -65,7 +65,8 @@ func _ready() -> void:
 
 	var id_str
 	var character = int(Statics.current_profile["character"])
-	name_str = get_name_str_from_id(type)
+	#name_str = get_name_str_from_id(type)
+	name_str = GlobalText.get_item_name(type)
 	match type:
 		ItemTypes.PEASHOOTER:
 			id_str = "Peashooter"
@@ -291,18 +292,22 @@ func _on_player_entered(_body: Node2D) -> void:
 					GameCore.instance.player._toggle_weapon(3)
 				UICore.instance.update_weapon_icons(false)
 			ItemTypes.HEART_CONTAINER:
-				if Statics.is_in_boss_rush:
-					name_str = Statics.get_text("item_heartContainer_noNum")
-				else:
-					name_str = Statics.get_text("item_heartContainer") % Statics.check_item(ItemTypes.HEART_CONTAINER)
+				#if Statics.is_in_boss_rush:
+				#	name_str = Statics.get_text("item_heartContainer_noNum")
+				#else:
+				#	name_str = Statics.get_text("item_heartContainer") % Statics.check_item(ItemTypes.HEART_CONTAINER)
+				if not Statics.is_in_boss_rush:
+					name_str = tr(&"Heart Container #%d")
 				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 				GameCore.instance.player.health = GameCore.instance.player.max_health
 				UICore.instance.draw_new_hearts()
 			ItemTypes.HELIX_FRAGMENT:
-				if Statics.is_in_boss_rush:
-					name_str = Statics.get_text("item_helixFragment_noNum")
-				else:
-					name_str = Statics.get_text("item_helixFragment") % Statics.check_item(ItemTypes.HELIX_FRAGMENT)
+				#if Statics.is_in_boss_rush:
+				#	name_str = Statics.get_text("item_helixFragment_noNum")
+				#else:
+				#	name_str = Statics.get_text("item_helixFragment") % Statics.check_item(ItemTypes.HELIX_FRAGMENT)
+				if not Statics.is_in_boss_rush:
+					name_str = tr(&"Helix Fragment #%d")
 			#ItemTypes.RADAR_SHELL:
 			#ItemTypes.WEAPON_LOCK_TRAP:
 			#ItemTypes.GRAVITY_LOCK_TRAP:

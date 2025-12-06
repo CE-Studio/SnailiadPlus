@@ -6,31 +6,31 @@ const ICON_RADII:Vector2i = Vector2i(254, 80)
 const THETA_EASE_RATE:float = 10.0
 
 var tr_descs:Array = [
-	[tr(&"First of Four"), tr(&"Defeat Shellbreaker"), tr(&"Seek the Spherical Slinger of the Returning Shot")],
-	[tr(&"Stinky Toe"), tr(&"Defat Stompy"), tr(&"Follow the footsteps")],
-	[tr(&"Gravity Battle"), tr(&"Defeat Space Box"), tr(&"Deal a crushing blow to this Quadrilateral Quake-maker")],
-	[tr(&"Victory"), tr(&"Defeat Moon Snail and beat the game"), tr(&"Bring an end to your quest")],
-	[tr(&"Glass Cannon"), tr(&"Defeat Moon Snail without collecting Full Metal Snail"), tr(&"Defense is merely a suggestion")],
-	[tr(&"Explorer"), tr(&"Find 100% of the map"), tr(&"So much to do, so much to see")],
-	[tr(&"Happy Ending"), tr(&"Return Sun Snail's light"), tr(&"Like flicking a light switch")],
-	[tr(&"Treasure Hunter"), tr(&"Find 100% of all items"), tr(&"It's like your shell doubles as a backpack!")],
-	[tr(&"Homeless"), tr(&"Beat the game as Sluggy Slug"), tr(&"Conquer with the armorless one")],
-	[tr(&"Top Floor"), tr(&"Beat the game as Upside Snail"), tr(&"Conquer with the inverted one")],
-	[tr(&"Mansion"), tr(&"Beat the game as Leggy Snail"), tr(&"Conquer with the appendaged one")],
-	[tr(&"Just Renting"), tr(&"Beat the game as Blobby Blob"), tr(&"Conquer with the odd one out")],
-	[tr(&"Attic Dweller"), tr(&"Beat the game as Leechy Leech"), tr(&"Conquer with the hungry one")],
-	[tr(&"Speedrunner"), tr(&"Beat the game in under 30 minutes"), tr(&"Snails don't normally go that fast, do they?")],
-	[tr(&"The Gauntlet"), tr(&"Beat the Boss Rush"), tr(&"Looks like they want a rematch")],
-	[tr(&"Pilgrim"), tr(&"Find the Shrine of Iris"), tr(&"All truths revealed... a mere two screens to the left")],
-	[tr(&"Snelk Hunter A"), tr(&"Find the first Secret Snelk room"), tr(&"They're hiding... Somewhere pretty square")],
-	[tr(&"Snelk Hunter B"), tr(&"Find the second Secret Snelk room"), tr(&"They're still hiding... Somewhere pretty hot")],
-	[tr(&"Super Secret"), tr(&"Find the Super Secret Boomerang"), tr(&"A speedrunner's best friend")],
-	[tr(&"Counter-Snail"), tr(&"Find the Remake's original test rooms"), tr(&"Where it all began")],
-	[tr(&"Biologist"), tr(&"Unlock every entry in the bestiary"), tr(&"They're fun, once you get to know them")],
-	[tr(&"Where are we, Snaily?"), tr(&"Find the original test map"), tr(&"Where it all REALLY began")],
-	[tr(&"Omega Snail"), tr(&"Beat the game on Absurd difficulty"), tr(&"This... this is just ludicrous")],
-	[tr(&"How did you get up here?"), tr(&"Beat a randomized seed"), tr(&"Procedurally-generated replayability")],
-	[tr(&"Lost and Found"), tr(&"Discover the long-forgotten Gravity Shock item"), tr(&"Everything deserves a second chance, shocking as it may be")],
+	[tr(&"First of Four"), tr(&"Seek the Spherical Slinger of the Returning Shot"), tr(&"Defeat Shellbreaker")],
+	[tr(&"Stinky Toe"), tr(&"Follow the footsteps"), tr(&"Defat Stompy")],
+	[tr(&"Gravity Battle"), tr(&"Deal a crushing blow to this Quadrilateral Quake-maker"), tr(&"Defeat Space Box")],
+	[tr(&"Victory"), tr(&"Bring an end to your quest"), tr(&"Defeat Moon Snail and beat the game")],
+	[tr(&"Glass Cannon"), tr(&"Defense is merely a suggestion"), tr(&"Defeat Moon Snail without collecting Full Metal Snail")],
+	[tr(&"Explorer"), tr(&"So much to do, so much to see"), tr(&"Find 100% of the map")],
+	[tr(&"Happy Ending"), tr(&"Like flicking a light switch"), tr(&"Return Sun Snail's light")],
+	[tr(&"Treasure Hunter"), tr(&"It's like your shell doubles as a backpack!"), tr(&"Find 100% of all items")],
+	[tr(&"Homeless"), tr(&"Conquer with the armorless one"), tr(&"Beat the game as Sluggy Slug")],
+	[tr(&"Top Floor"), tr(&"Conquer with the inverted one"), tr(&"Beat the game as Upside Snail")],
+	[tr(&"Mansion"), tr(&"Conquer with the appendaged one"), tr(&"Beat the game as Leggy Snail")],
+	[tr(&"Just Renting"), tr(&"Conquer with the odd one out"), tr(&"Beat the game as Blobby Blob")],
+	[tr(&"Attic Dweller"), tr(&"Conquer with the hungry one"), tr(&"Beat the game as Leechy Leech")],
+	[tr(&"Speedrunner"), tr(&"Snails don't normally go that fast, do they?"), tr(&"Beat the game in under 30 minutes")],
+	[tr(&"The Gauntlet"), tr(&"Looks like they want a rematch"), tr(&"Beat the Boss Rush")],
+	[tr(&"Pilgrim"), tr(&"All truths revealed... a mere two screens to the left"), tr(&"Find the Shrine of Iris")],
+	[tr(&"Snelk Hunter A"), tr(&"They're hiding... Somewhere pretty square"), tr(&"Find the first Secret Snelk room")],
+	[tr(&"Snelk Hunter B"), tr(&"They're still hiding... Somewhere pretty hot"), tr(&"Find the second Secret Snelk room")],
+	[tr(&"Super Secret"), tr(&"A speedrunner's best friend"), tr(&"Find the Super Secret Boomerang")],
+	[tr(&"Counter-Snail"), tr(&"Where it all began"), tr(&"Find the Remake's original test rooms")],
+	[tr(&"Biologist"), tr(&"They're fun, once you get to know them"), tr(&"Unlock every entry in the bestiary")],
+	[tr(&"Where are we, Snaily?"), tr(&"Where it all REALLY began"), tr(&"Find the original test map")],
+	[tr(&"Omega Snail"), tr(&"This... this is just ludicrous"), tr(&"Beat the game on Absurd difficulty")],
+	[tr(&"How did you get up here?"), tr(&"Procedurally-generated replayability"), tr(&"Beat a randomized seed")],
+	[tr(&"Lost and Found"), tr(&"Everything deserves a second chance, shocking as it may be"), tr(&"Discover the long-forgotten Gravity Shock item")],
 ]
 
 var achievement_str_names:Array = AchievementCore.Achievements.keys()
@@ -128,12 +128,16 @@ func _on_scroller_pressed(_value: Variant) -> void:
 
 func _update_desc(mode:int) -> void:
 	desc_mode = mode
-	var new_desc := "menu_option_achievements_%s_%s"
-	match desc_mode:
-		0:
-			new_desc = new_desc % [ "locked", "desc" ]
-		1:
-			new_desc = new_desc % [ achievement_str_names[selected_achievement], "hint" ]
-		_:
-			new_desc = new_desc % [ achievement_str_names[selected_achievement], "desc" ]
-	desc_text.set_snaily_text(Statics.get_text(new_desc))
+	#var new_desc := "menu_option_achievements_%s_%s"
+	#match desc_mode:
+	#	0:
+	#		new_desc = new_desc % [ "locked", "desc" ]
+	#	1:
+	#		new_desc = new_desc % [ achievement_str_names[selected_achievement], "hint" ]
+	#	_:
+	#		new_desc = new_desc % [ achievement_str_names[selected_achievement], "desc" ]
+	#desc_text.set_snaily_text(Statics.get_text(new_desc))
+	if mode == 0:
+		desc_text.set_snaily_text_raw(&"You haven't unlocked this achievement yet")
+	else:
+		desc_text.set_snaily_text_raw(tr_descs[selected_achievement][mode])
