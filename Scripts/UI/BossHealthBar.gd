@@ -48,8 +48,20 @@ func instance(_boss:Boss) -> void:
 	boss = _boss
 	var _name:String = Enemy.EnemyTypes.keys()[_boss.my_type]
 	_name = _name.to_camel_case()
-	boss_name.set_snaily_text("boss_%s" % _name)
-	defeated.set_snaily_text("boss_defeated")
+	match _name:
+		"shellbreaker": boss_name.set_snaily_text(tr(&"Shellbreaker"))
+		"shellbreakerRush": boss_name.set_snaily_text(tr(&"Super Shellbreaker"))
+		"stompy": boss_name.set_snaily_text(tr(&"Stompy"))
+		"stompyRush": boss_name.set_snaily_text(tr(&"Vis Vires"))
+		"spacebox": boss_name.set_snaily_text(tr(&"Space Box"))
+		"spaceboxRush": boss_name.set_snaily_text(tr(&"Time Cube"))
+		"moonsnail": boss_name.set_snaily_text(tr(&"Moon Snail"))
+		"moonsnailRush": boss_name.set_snaily_text(tr(&"Sun Snail"))
+		"gigasnail": boss_name.set_snaily_text(tr(&"Giga Snail"))
+		"gigasnailRush": boss_name.set_snaily_text(tr(&"Giga Sun Snail"))
+		"cosmicsnail": boss_name.set_snaily_text(tr(&"Cosmic Snail"))
+		"cosmicsnailRush": boss_name.set_snaily_text(tr(&"Cosmic Sun Snail"))
+	defeated.set_snaily_text(tr(&"Defeated!!"))
 
 
 func _process(delta: float) -> void:

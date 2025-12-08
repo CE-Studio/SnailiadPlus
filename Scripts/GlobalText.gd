@@ -1,6 +1,30 @@
 extends Node
 
 
+var version_types:Array[StringName] = [
+	tr(&"Dev"),
+	tr(&"Demo"),
+	tr(&"Release")
+]
+
+var characters:Array = [
+	[tr(&"Snaily"), tr(&"Snaily Snail"),],
+	[tr(&"Sluggy"), tr(&"Sluggy Slug"),],
+	[tr(&"Upside"), tr(&"Upside Snail"),],
+	[tr(&"Leggy"), tr(&"Leggy Snail"),],
+	[tr(&"Blobby"), tr(&"Blobby Blob"),],
+	[tr(&"Leechy"), tr(&"Leechy Leech"),],
+]
+
+var species:Array = [
+	[tr(&"snail"), tr(&"snails"),],
+	[tr(&"slug"), tr(&"slugs"),],
+	[tr(&"snail"), tr(&"snails"),],
+	[tr(&"snail"), tr(&"snails"),],
+	[tr(&"blob"), tr(&"blobs"),],
+	[tr(&"leech"), tr(&"leeches"),],
+]
+
 var areas:Dictionary = {
 	"SnailTown": tr(&"Snail Town"),
 	"MareCarelia": tr(&"Mare Carelia"),

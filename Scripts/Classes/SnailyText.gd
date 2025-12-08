@@ -41,7 +41,7 @@ var internal_text:String = ""
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if quick_load_text.strip_edges() != "":
-			set_snaily_text_raw(quick_load_text.replace("\\n", "\n"))
+			set_snaily_text(quick_load_text.replace("\\n", "\n"))
 		if shadow_scale > 0:
 			add_shadow(shadow_scale)
 		if border_scale > 0:
@@ -49,11 +49,6 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
-	#set_snaily_text_raw(Statics.get_text(_text))
-	set_snaily_text_raw(_text)
-
-
-func set_snaily_text_raw(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:

@@ -41,7 +41,7 @@ func _ready() -> void:
 	
 	var number_str:String = Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version"))
 	var version_str:String = tr(&"Engine version") + "\n" + number_str
-	version_text.set_snaily_text_raw(version_str)
+	version_text.set_snaily_text(version_str)
 	version_text.add_shadow(1)
 
 	if is_main_menu:
@@ -66,7 +66,7 @@ func _ready() -> void:
 				is_main_awaiting_input = true
 			
 			click_play_text = $"ClickPlay"
-			click_play_text.set_snaily_text_raw(tr(&"Click or press %s or %s to play!!") % [
+			click_play_text.set_snaily_text(tr(&"Click or press %s or %s to play!!") % [
 				SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, 0), SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, 1)
 			])
 			click_play_text.add_border(1)

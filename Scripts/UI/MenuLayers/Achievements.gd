@@ -68,7 +68,6 @@ func _ready() -> void:
 		var new_text:String = tr(&"Locked")
 		if Statics.check_achievement(i):
 			new_text = tr_descs[i][0]
-			#new_text = "menu_option_achievements_%s_title" % achievement_str_names[i]
 		new_option_array.append(new_text)
 	main_scroller.remote_import_new_options(new_option_array)
 	
@@ -128,16 +127,7 @@ func _on_scroller_pressed(_value: Variant) -> void:
 
 func _update_desc(mode:int) -> void:
 	desc_mode = mode
-	#var new_desc := "menu_option_achievements_%s_%s"
-	#match desc_mode:
-	#	0:
-	#		new_desc = new_desc % [ "locked", "desc" ]
-	#	1:
-	#		new_desc = new_desc % [ achievement_str_names[selected_achievement], "hint" ]
-	#	_:
-	#		new_desc = new_desc % [ achievement_str_names[selected_achievement], "desc" ]
-	#desc_text.set_snaily_text(Statics.get_text(new_desc))
 	if mode == 0:
-		desc_text.set_snaily_text_raw(&"You haven't unlocked this achievement yet")
+		desc_text.set_snaily_text(tr(&"You haven't unlocked this achievement yet"))
 	else:
-		desc_text.set_snaily_text_raw(tr_descs[selected_achievement][mode])
+		desc_text.set_snaily_text(tr_descs[selected_achievement][mode])

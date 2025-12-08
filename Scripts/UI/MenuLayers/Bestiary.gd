@@ -89,9 +89,6 @@ func _ready() -> void:
 	parent_layer = get_parent()
 
 	var enemy_enums := Enemy.EnemyTypes.keys()
-	#for enemy in enemy_enums:
-	#	if enemy is String:
-	#		entity_list.append(enemy.to_camel_case())
 	for enemy in ENTRIES:
 		entity_list.append(enemy_enums[enemy].to_camel_case())
 
@@ -102,14 +99,12 @@ func _ready() -> void:
 			entry_states.append(false)
 		else:
 			entry_states.append(true)
-		#entity = NAME_STR % entity
 		var new_text:SnailyText = text_scene.instantiate()
 		new_text.text_scale = 1
 		new_text.max_width = 112
 		new_text.name = str(i)
 		new_text.modulate = text_color
-		#new_text.set_snaily_text(entity)
-		new_text.set_snaily_text_raw(_get_name(entity))
+		new_text.set_snaily_text(_get_name(entity))
 		scroll_list.add_child(new_text)
 		list_items.append(new_text)
 		#region Set focus
@@ -175,10 +170,8 @@ func _update_entry_display() -> void:
 		display_enemies.clear()
 	var has_entry := entry_states[selection]
 	var this_entity := entity_list[selection] if has_entry else "none"
-	#name_text.set_snaily_text(NAME_STR % this_entity)
-	#desc_text.set_snaily_text(DESC_STR % this_entity)
-	name_text.set_snaily_text_raw(_get_name(this_entity))
-	desc_text.set_snaily_text_raw(_get_desc(this_entity))
+	name_text.set_snaily_text(_get_name(this_entity))
+	desc_text.set_snaily_text(_get_desc(this_entity))
 	if has_entry:
 		spawn_display_entity(this_entity)
 

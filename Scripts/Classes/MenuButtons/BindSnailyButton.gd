@@ -49,8 +49,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		text.set_snaily_text(bind_str)
 	else:
-		#text.set_snaily_text(BIND_STR % bind_str)
-		text.set_snaily_text_raw(SInput.get_input_tr_str(bind))
+		text.set_snaily_text(SInput.get_input_tr_str(bind))
 		setup_bind_icons()
 		focus_flash_color = Statics.get_color(Vector2i(1, 8))
 
@@ -116,7 +115,7 @@ func setup_bind_icons() -> void:
 				else:
 					event_str = SInput.get_button_icon(event)
 			#bind_icons[event_ptr].set_snaily_text(BIND_BBCODE % event_str)
-			bind_icons[event_ptr].set_snaily_text_raw(SInput.get_icon_as_bbcode_from_string(event_str))
+			bind_icons[event_ptr].set_snaily_text(SInput.get_icon_as_bbcode_from_string(event_str))
 		else:
 			bind_frames[event_ptr].modulate.a = 0
 		event_ptr += 1

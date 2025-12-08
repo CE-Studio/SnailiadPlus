@@ -56,7 +56,7 @@ func inc_game_time(delta:float) -> void:
 	
 	if UICore.instance:
 		var time_str:String = Statics.get_igt_str()
-		UICore.instance.igt_text.set_snaily_text_raw(time_str)
+		UICore.instance.igt_text.set_snaily_text(time_str)
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:

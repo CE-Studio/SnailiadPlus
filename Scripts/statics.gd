@@ -249,9 +249,9 @@ static func get_igt_str(_profile:int = 0) -> String:
 			time = current_profile["game_time"]
 	var time_str:String = ""
 	if time[0] > 0:
-		time_str = Statics.get_text("hud_igt_hms") % [ time[0], time[1], time[2] ]
+		time_str = "%d:%02d:%05.2f" % [ time[0], time[1], time[2] ]
 	else:
-		time_str = Statics.get_text("hud_igt_ms") % [ time[1], time[2] ]
+		time_str = "%d:%05.2f" % [ time[1], time[2] ]
 	time_str = time_str.strip_edges()
 	return time_str
 #endregion
@@ -404,10 +404,10 @@ static func parse_version_to_text_string(version:String) -> String:
 	var number := version.substr(1)
 	var output:String
 	match prefix:
-		"b": output = get_text("menu_version_developer") + " "
-		"d": output = get_text("menu_version_demo") + " "
-		"r": output = get_text("menu_version_release") + " "
-	output += number
+		"b": output = GlobalText.version_types[0] # Dev/beta
+		"d": output = GlobalText.version_types[1] # Demo
+		"r": output = GlobalText.version_types[2] # Release
+	output = " ".join([output, number])
 	return output
 
 
@@ -467,15 +467,15 @@ static func has_shell(shell_id:int) -> bool:
 
 
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
-	var char_int := int(character)
-	var full_check:String = "full_" if full else ""
-	return get_text("char_%s%d" % [ full_check, char_int ])
+	var char_i:int = character as int
+	var full_i:int = 1 if full else 0
+	return GlobalText.characters[char_i][full_i]
 
 
 static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
-	var char_int := int(character)
-	var plural_check:String = "plural_" if plural else ""
-	return get_text("species_%s%d" % [ plural_check, char_int ])
+	var char_i:int = character as int
+	var plural_i:int = 1 if plural else 0
+	return GlobalText.characters[char_i][plural_i]
 #endregion
 
 
@@ -507,10 +507,10 @@ static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bo
 #endregion
 
 
-static func get_text(key:String) -> String:
-	if text_lib.has(key):
-		return text_lib[key]
-	return key
+#static func get_text(key:String) -> String:
+#	if text_lib.has(key):
+#		return text_lib[key]
+#	return key
 
 
 static func is_number(value:Variant, consider_strings := false) -> bool:
