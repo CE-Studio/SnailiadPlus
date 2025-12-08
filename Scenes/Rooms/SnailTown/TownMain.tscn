@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=4 uid="uid://dpj78o8gohp2f"]
+[gd_scene load_steps=8 format=4 uid="uid://dpj78o8gohp2f"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_64pjd"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_et545"]
+[ext_resource type="Resource" uid="uid://cucvtkmwuuh06" path="res://CutsceneScripts/TownMain.dialogue" id="2_g5a2g"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_05b5u"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_lgw5l"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_qyovo"]
@@ -16,6 +17,7 @@ point_count = 5
 [node name="TownMain" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_64pjd")
+cutscene_script = ExtResource("2_g5a2g")
 center_parallax_maps = true
 minimap_offset = Vector2i(10, 8)
 minimap_autofill = Array[Vector2i]([Vector2i(10, 8), Vector2i(11, 8), Vector2i(12, 8), Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(10, 10), Vector2i(11, 10), Vector2i(12, 10)])

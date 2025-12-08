@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cucvtkmwuuh06"
+path="res://.godot/imported/TownMain.dialogue-3de7202cca4637833608e78709eb9b13.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/TownMain.dialogue"
+dest_files=["res://.godot/imported/TownMain.dialogue-3de7202cca4637833608e78709eb9b13.tres"]
+
+[params]
+
+defaults=true

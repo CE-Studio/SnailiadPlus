@@ -6,6 +6,8 @@ extends CutsceneControllable
 #region Variables
 const GRAVITY:float = 1200.0
 const TERMINAL_VELOCITY:float = 500.0
+const TALK_RANGE:float = 64.0
+const TALK_COOLDOWN:float = 0.15
 
 @export var my_id:int
 @export_enum("Left", "Right", "Face player:-1") var face_mode:int = -1
@@ -20,6 +22,12 @@ const TERMINAL_VELOCITY:float = 500.0
 
 var facing_left:bool = false
 var process_ai:bool = true
+var can_talk:bool = true:
+	set(value):
+		can_talk = value
+		if value == false and bubble:
+			bubble.hide_bubble()
+var talk_cooldown:float = 0.0
 
 var cc_glide_origin:Vector2 = Vector2.ZERO
 var cc_glide_target:Vector2 = Vector2.ZERO
@@ -32,6 +40,7 @@ var cc_lookat_pos:Vector2 = Vector2.ZERO
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var body:CharacterBody2D = $"CharacterBody2D"
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
+@onready var bubble:SpeechBubble = $"SpeechBubble"
 var colorized_sprite:Texture2D
 #endregion
 
@@ -71,12 +80,13 @@ func spawn() -> void:
 	play_anim("idle")
 	sprite._process(0.0)
 	UICore.instance.darkness_layer.add_source(self, 32)
+	bubble.set_direction(surface)
 
 
 func _process(_delta: float) -> void:
 	if GameCore.instance == null or Engine.is_editor_hint() or not process_ai:
 		return
-
+	
 	var lookat_pos = cc_lookat_pos
 	if cc_lookat_node:
 		lookat_pos = cc_lookat_node.position
@@ -109,6 +119,22 @@ func _process(_delta: float) -> void:
 			elif not facing_left and lookat_pos.x > position.x:
 				facing_left = true;
 				play_anim("turnground")
+	
+	if Room.instance.cutscene_script:
+		var player:Player = GameCore.instance.player
+		if bubble.shown:
+			if (not can_talk or CutsceneController.running
+			or position.distance_to(player.position) > TALK_RANGE):
+				bubble.hide_bubble()
+			elif SInput.check_input(SInput.Inputs.SPEAK, true) and talk_cooldown <= 0.0:
+				Room.instance.start_cutscene(self)
+				talk_cooldown = TALK_COOLDOWN
+		else:
+			if (can_talk and not CutsceneController.running
+			and position.distance_to(player.position) < TALK_RANGE):
+				bubble.show_bubble()
+		if talk_cooldown > 0.0 and not CutsceneController.running:
+			talk_cooldown -= _delta
 
 
 func _physics_process(delta: float) -> void:
@@ -188,6 +214,7 @@ func set_gravity(new_dir:Statics.DirsSurface) -> void:
 		Statics.DirsSurface.CEILING:
 			body.set_deferred("rotation_degrees", 180.0)
 			body.up_direction = Vector2.DOWN
+	bubble.set_direction(new_dir)
 
 
 #region Cutscene functions
@@ -286,10 +313,10 @@ func perform_action(_action:String, _force:bool) -> bool:
 #endregion
 
 
-func _on_character_body_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if Engine.is_editor_hint():
-		return
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				Room.instance.start_cutscene(self)
+#func _on_character_body_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+#	if Engine.is_editor_hint():
+#		return
+#	if event is InputEventMouseButton:
+#		if event.button_index == MOUSE_BUTTON_LEFT:
+#			if event.pressed:
+#				Room.instance.start_cutscene(self)

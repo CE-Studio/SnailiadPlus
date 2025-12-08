@@ -1,0 +1,8 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+match CutsceneController.object_id
+	when "0"
+		NPC0: Hi, {{Player.player_name}}!!  Why don't you try climbing up the walls?\n     Just {{GlobalText.COL_CTRL}}hold "{{SInput.icon_up}}" and "{{SInput.icon_right}}"[/color].
+do CutsceneController.hide_textbox()
+=> END

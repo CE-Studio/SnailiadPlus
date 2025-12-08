@@ -1,6 +1,8 @@
 extends Node
 
 
+const COL_CTRL:String = "[color=#ffd48c]"
+
 var version_types:Array[StringName] = [
 	tr(&"Dev"),
 	tr(&"Demo"),
