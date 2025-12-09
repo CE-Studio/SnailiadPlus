@@ -39,95 +39,99 @@ var input_tr_strings:PackedStringArray = [
 #region Static icon variables
 var icon_left:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.LEFT)
+	get(): return get_icon_as_bbcode(Inputs.LEFT, cut_col)
 
 var icon_right:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.RIGHT)
+	get(): return get_icon_as_bbcode(Inputs.RIGHT, cut_col)
 
 var icon_up:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.UP)
+	get(): return get_icon_as_bbcode(Inputs.UP, cut_col)
 
 var icon_down:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.DOWN)
+	get(): return get_icon_as_bbcode(Inputs.DOWN, cut_col)
 
 var icon_jump:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.JUMP)
+	get(): return get_icon_as_bbcode(Inputs.JUMP, cut_col)
 
 var icon_shoot:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.SHOOT)
+	get(): return get_icon_as_bbcode(Inputs.SHOOT, cut_col)
 
 var icon_strafe:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.STRAFE)
+	get(): return get_icon_as_bbcode(Inputs.STRAFE, cut_col)
 
 var icon_speak:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.SPEAK)
+	get(): return get_icon_as_bbcode(Inputs.SPEAK, cut_col)
 
 var icon_gravity:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.GRAVITY)
+	get(): return get_icon_as_bbcode(Inputs.GRAVITY, cut_col)
 
 var icon_pause:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.PAUSE)
+	get(): return get_icon_as_bbcode(Inputs.PAUSE, cut_col)
 
 var icon_map:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.MAP)
+	get(): return get_icon_as_bbcode(Inputs.MAP, cut_col)
 
 var icon_weapon0:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.WEAPON0)
+	get(): return get_icon_as_bbcode(Inputs.WEAPON0, cut_col)
 
 var icon_weapon1:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.WEAPON1)
+	get(): return get_icon_as_bbcode(Inputs.WEAPON1, cut_col)
 
 var icon_weapon2:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.WEAPON2)
+	get(): return get_icon_as_bbcode(Inputs.WEAPON2, cut_col)
 
 var icon_weapon3:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.WEAPON3)
+	get(): return get_icon_as_bbcode(Inputs.WEAPON3, cut_col)
 
 var icon_aiml:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_L)
+	get(): return get_icon_as_bbcode(Inputs.AIM_L, cut_col)
 
 var icon_aimr:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_R)
+	get(): return get_icon_as_bbcode(Inputs.AIM_R, cut_col)
 
 var icon_aimu:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_U)
+	get(): return get_icon_as_bbcode(Inputs.AIM_U, cut_col)
 
 var icon_aimd:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_D)
+	get(): return get_icon_as_bbcode(Inputs.AIM_D, cut_col)
 
 var icon_debug:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.DEBUG)
+	get(): return get_icon_as_bbcode(Inputs.DEBUG, cut_col)
 
 var icon_uiclick:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.UI_CLICK)
+	get(): return get_icon_as_bbcode(Inputs.UI_CLICK, cut_col)
 
 var icon_uiaccept:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.UI_ACCEPT)
+	get(): return get_icon_as_bbcode(Inputs.UI_ACCEPT, cut_col)
 
 var icon_uiback:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.UI_BACK)
+	get(): return get_icon_as_bbcode(Inputs.UI_BACK, cut_col)
+
+var cut_col:String:
+	set(_V): pass
+	get(): return "Yellow"
 #endregion
 
 const INPUT_SLOTS:Array = [
@@ -341,11 +345,13 @@ func get_icon_from_enum(input:Inputs, con_mode:int = -1) -> String:
 	return get_key_icon(action[0])
 
 
-func get_icon_as_bbcode(input:Inputs, con_mode:int = -1) -> String:
-	return get_icon_as_bbcode_from_string(get_icon_from_enum(input, con_mode))
+func get_icon_as_bbcode(input:Inputs, variant:String = "", con_mode:int = -1) -> String:
+	return get_icon_as_bbcode_from_string(get_icon_from_enum(input, con_mode), variant)
 
 
-func get_icon_as_bbcode_from_string(input:String) -> String:
+func get_icon_as_bbcode_from_string(input:String, variant:String = "") -> String:
+	if variant.strip_edges() != "":
+		input = "/".join([variant, input])
 	return "[img=top,top]" + (ICON_PATH % input) + "[/img]"
 
 

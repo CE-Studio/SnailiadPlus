@@ -15,6 +15,7 @@ var boss:Boss = null
 var damage_update_timeout:float = 0.0
 var intro_fill:float = 0.0
 var name_shake_time:float = 0.0
+var programmatic_shake:bool = true
 var outro_shake:bool = false
 var defeated_origin:Vector2 = Vector2.ZERO
 
@@ -42,6 +43,10 @@ func _ready() -> void:
 	_update_main(_get_bar_pos_from_ratio(0))
 	_update_damaged(_get_bar_pos_from_ratio(0))
 	defeated_origin = defeated_container.position
+	if frame.meta.size() > 0 and frame.meta.keys().has("programmatic_shake"):
+		var shake = frame.meta["programmatic_shake"]
+		if shake is bool:
+			programmatic_shake = shake
 
 
 func instance(_boss:Boss) -> void:
@@ -84,7 +89,7 @@ func _process(delta: float) -> void:
 		)
 		boss_name_container.position = container_shake
 		defeated_container.position = container_shake + defeated_origin
-		if frame.meta["programmatic_shake"] == true:
+		if programmatic_shake:
 			frame.position.x += randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
 
 
@@ -125,7 +130,7 @@ func _despawn() -> void:
 func update() -> void:
 	_update_main()
 	damage_update_timeout = DAMAGE_UPDATE_TIMEOUT
-	if frame.meta["programmatic_shake"] == true:
+	if programmatic_shake:
 		frame.position.x += randf_range(-SHAKE_VARIANCE, SHAKE_VARIANCE)
 	frame.action = "frame_damage"
 	main.action = "bar_main_damage"

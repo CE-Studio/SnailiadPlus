@@ -3,13 +3,13 @@
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://UI/uitheme.tres" id="1_52xjo"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="1_kra6s"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kra6s"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hkub7"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7iv8x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yjrfy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7iv8x"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hkub7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kra6s"]
 
 [node name="SnailyText" type="RichTextLabel"]
 clip_contents = false
@@ -27,10 +27,10 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_52xjo")
 theme_override_font_sizes/normal_font_size = 16
-theme_override_styles/fill = SubResource("StyleBoxEmpty_kra6s")
-theme_override_styles/background = SubResource("StyleBoxEmpty_hkub7")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yjrfy")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7iv8x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yjrfy")
+theme_override_styles/background = SubResource("StyleBoxEmpty_hkub7")
+theme_override_styles/fill = SubResource("StyleBoxEmpty_kra6s")
 bbcode_enabled = true
 fit_content = true
 scroll_active = false

@@ -25,9 +25,10 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="SnailyText" parent="." instance=ExtResource("4_i51eu")]
 custom_minimum_size = Vector2(20, 0)
-offset_left = -9.0
+offset_left = -10.0
 offset_top = -11.0
-offset_right = 11.0
+offset_right = 10.0
 offset_bottom = 53.0
 text = "[img]res://Assets/Images/UI/ControlIcons/V.png[/img]"
 horizontal_alignment = 1
+border_scale = 1

@@ -475,7 +475,7 @@ static func get_character_name_string(character:Player.Players, full:bool = fals
 static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
 	var char_i:int = character as int
 	var plural_i:int = 1 if plural else 0
-	return GlobalText.characters[char_i][plural_i]
+	return GlobalText.species[char_i][plural_i]
 #endregion
 
 

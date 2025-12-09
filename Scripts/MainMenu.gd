@@ -67,7 +67,7 @@ func _ready() -> void:
 			
 			click_play_text = $"ClickPlay"
 			click_play_text.set_snaily_text(tr(&"Click or press %s or %s to play!!") % [
-				SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, 0), SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, 1)
+				SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 0), SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 1)
 			])
 			click_play_text.add_border(1)
 			click_play_text.add_shadow(2)
