@@ -146,6 +146,34 @@ static func get_actor(id:String) -> CutsceneControllable:
 	return null
 
 
+static func actor_left_of(id:String, x:float) -> bool:
+	var actor:CutsceneControllable = get_actor(id)
+	if not is_instance_valid(actor):
+		return false
+	return actor.position.x < x
+
+
+static func actor_right_of(id:String, x:float) -> bool:
+	var actor:CutsceneControllable = get_actor(id)
+	if not is_instance_valid(actor):
+		return false
+	return actor.position.x > x
+
+
+static func actor_above(id:String, y:float) -> bool:
+	var actor:CutsceneControllable = get_actor(id)
+	if not is_instance_valid(actor):
+		return false
+	return actor.position.y < y
+
+
+static func actor_below(id:String, y:float) -> bool:
+	var actor:CutsceneControllable = get_actor(id)
+	if not is_instance_valid(actor):
+		return false
+	return actor.position.y > y
+
+
 static func start(dia:DialogueResource, anim:AnimationPlayer, initiator:String) -> void:
 	if running:
 		return
@@ -179,3 +207,25 @@ static func set_textbox_color(_col:String) -> void:
 
 static func set_textbox_frame(_frame:int) -> void:
 	pass
+
+
+static func set_textbox_player_preset(_player:Player.Players) -> void:
+	match _player:
+		Player.Players.SNAILY:
+			set_textbox_color("#004457")
+			set_textbox_frame(0)
+		Player.Players.SLUGGY:
+			set_textbox_color("#005919")
+			set_textbox_frame(0)
+		Player.Players.UPSIDE:
+			set_textbox_color("#ae7c2a")
+			set_textbox_frame(0)
+		Player.Players.LEGGY:
+			set_textbox_color("#008991")
+			set_textbox_frame(2)
+		Player.Players.BLOBBY:
+			set_textbox_color("#960087")
+			set_textbox_frame(1)
+		Player.Players.LEECHY:
+			set_textbox_color("#606060")
+			set_textbox_frame(0)

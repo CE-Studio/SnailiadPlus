@@ -1,6 +1,7 @@
 ~ start
 do CutsceneController.lock_input()
 do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
 match CutsceneController.object_id
 	when "0"
 		if not Statics.check_item(Item.ItemTypes.PEASHOOTER)
@@ -99,8 +100,64 @@ match CutsceneController.object_id
 			NPC5: They say [color=#f6cdb5]Boss Rush[/color] is the true test of snail skill.[wait=0.3][speed=0.75]  But what about slug skill?
 	
 	when "6"
-		if Statics.check_item(Item.ItemTypes.HIGH_JUMP) or Statics.check_item(Item.ItemTypes.GRAVITY_SHELL)
+		if Statics.check_item(Item.ItemTypes.HIGH_JUMP) or Statics.check_item(Item.ItemTypes.GRAVITY_SHELL) or Player.instance.who_i_is == Player.Players.UPSIDE or Player.instance.who_i_is == Player.Players.LEGGY
 			NPC6: Don't you think it's weird that we all live in treehouses?
+		else
+			NPC6: Hey {{Player.player_name}},[wait=0.125] how'd you get up here?[wait=0.4]  And how do I get down?
+	
+	when "14"
+		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 15
+			NPC14: Hey, {{Player.player_name}}![wait=0.25]  Keep an eye out for [color=#dcb7f8]"Helix Fragments"[/color].[wait=0.25]  They look like spinning white shells!
+		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
+			NPC14: They say that the [color=#dcb7f8]Shrine of Iris[/color] is not located on any map!
+		else
+			NPC14: Wow, {{Player.player_name}}![wait=0.125]  You're pretty good at finding secrets![wait=0.25]  Maybe you should become a detective!
+	
+	when "15"
+		if Statics.get_item_percentage() < 20.0
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] Come back to town after each area to find secret items!
+		elif Statics.get_item_percentage() < 40.0
+			if Player.instance.who_i_is == Player.Players.SNAILY or Player.instance.who_i_is == Player.Players.UPSIDE
+				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a little hint:[wait=0.125] A shell can fit where a snail cannot!
+			elif Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
+				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a li'l hint:[wait=0.125] {{Player.player_species_plural}} may be more fragile than snails,[wait=0.125] but they're also faster!
+			elif Player.instance.who_i_is == Player.Players.LEGGY
+				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a tip:[wait=0.125] It may look too big,[wait=0.125] but your shell can fit in places that ours can!
+			else
+				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a little tip:[wait=0.125] You don't have to be on the ground to jump!
+		elif Statics.get_item_percentage() < 60.0
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] Sometimes, you'll miss a secret if you cling to a wall!
+		elif Statics.get_item_percentage() < 80.0
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] You can find the "high jump" before any other item!
+		elif Statics.get_item_percentage() < 100.0
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] There's a boomerang somewhere in Snail Town!
+		else
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] there's a secret somewhere in the main menu!
+	
+	when "16"
+		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
+			if not Player.instance.who_i_is == Player.Players.LEECHY
+				NPC16: If you ever get hurt,[wait=0.125] [color=#4bd867]eat some plants[/color]![wait=0.25]  You need to eat well to stay fit and healthy!
+			else
+				NPC16: If you ever get hurt,[wait=0.125] defeat enemies![wait=0.25]  As a leech,[wait=0.125] you can earn [color=#ff75f6]pink heath orbs[/color] off them!
+		elif CutsceneController.instance.actor_above("16", 710)
+			NPC16: I want to go for a ride!!!
+		else
+			# WaveHere SfxHere
+			NPC16: [speed=0.6]WHEEEE!![speed=1][wait=0.125]  That was fun, {{Player.player_name}}![wait=0.125]  Let's do it again!!
+	
+	when "17"
+		do CutsceneController.set_textbox_player_preset(Player.Players.UPSIDE)
+		if Statics.get_item_percentage() < 100.0
+			NPC17: There's a hidden room under the path into town.[wait=0.25]  I don't know how to get in yet, though...
+		else
+			NPC17: They call me [color=#ffb23d]upside-down snail[/color],[wait=0.25] but I think everyone else is upside down!
+	
+	when "25"
+		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
+			NPC25: Have you tried hitting {{GlobalText.COL_CTRL}}"{{SInput.icon_map}}"[/color] yet?[wait=0.25]  It makes the map big![wait=0.25]  Oh,[wait=0.125] and hit {{GlobalText.COL_CTRL}}"{{SInput.icon_pause}}"[/color] for the menu!
+		else
+			NPC25: Hey {{Player.player_name}},[wait=0.125] I'm hungry![wait=0.25]  Know any good plants around town?
 	
 do CutsceneController.hide_textbox()
 => END

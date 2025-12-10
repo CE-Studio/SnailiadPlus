@@ -6,7 +6,7 @@ extends CutsceneControllable
 #region Variables
 const GRAVITY:float = 1200.0
 const TERMINAL_VELOCITY:float = 500.0
-const TALK_RANGE:float = 64.0
+const TALK_RANGE:float = 30.0
 const TALK_COOLDOWN:float = 0.15
 
 @export var my_id:int

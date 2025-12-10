@@ -297,9 +297,9 @@ offset_bottom = 16.0
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/text"]
 self_modulate = Color(0, 0.2509804, 0.34509805, 1)
 layout_mode = 0
-offset_left = 8.0
-offset_right = 376.0
-offset_bottom = 64.0
+offset_left = 10.0
+offset_right = 374.0
+offset_bottom = 78.0
 theme_type_variation = &"textbg_1"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/text/PanelContainer"]
@@ -345,7 +345,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control/text/PanelContainer/advancearrow/Control"]
-position = Vector2(-8, 0)
+position = Vector2(-10, 1)
 sprite_frames = SubResource("SpriteFrames_fsgch")
 autoplay = "default"
 frame_progress = 0.78229266

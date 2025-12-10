@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="4_i51eu"]
 
 [node name="SpeechBubble" type="Node2D"]
+z_index = 650
 script = ExtResource("1_ydhss")
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
