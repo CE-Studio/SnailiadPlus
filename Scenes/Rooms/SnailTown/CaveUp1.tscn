@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://bh32pg4a5qd1r"]
+[gd_scene load_steps=9 format=4 uid="uid://bh32pg4a5qd1r"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_rw63q"]
+[ext_resource type="Resource" uid="uid://cpfpo3m5y7j71" path="res://CutsceneScripts/SnailTown/CaveUp1.dialogue" id="2_3myji"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_62bpk"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_o8l7n"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_xihqm"]
@@ -17,6 +18,7 @@ point_count = 3
 [node name="CaveUp1" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_rw63q")
+cutscene_script = ExtResource("2_3myji")
 center_parallax_maps = true
 minimap_offset = Vector2i(12, 7)
 

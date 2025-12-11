@@ -190,7 +190,7 @@ static func format_game_time(time:Array) -> String:
 	return time_string
 
 
-static func get_item_percentage(_profile:int = 0) -> float:
+static func get_item_percentage(_profile:int = 0, _snap:bool = false) -> float:
 	var inventory:Array
 	var _player:int
 	var difficulty:int
@@ -232,7 +232,11 @@ static func get_item_percentage(_profile:int = 0) -> float:
 	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
 	if counted_percentage == 100.0:
 		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
+		if _snap:
+			over_percentage = snappedf(over_percentage, 0.1)
 		return over_percentage
+	if _snap:
+		counted_percentage = snappedf(counted_percentage, 0.1)
 	return counted_percentage
 
 

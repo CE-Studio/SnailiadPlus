@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_64pjd"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_et545"]
-[ext_resource type="Resource" uid="uid://cucvtkmwuuh06" path="res://CutsceneScripts/TownMain.dialogue" id="2_g5a2g"]
+[ext_resource type="Resource" uid="uid://cucvtkmwuuh06" path="res://CutsceneScripts/SnailTown/TownMain.dialogue" id="2_g5a2g"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_05b5u"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_lgw5l"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_qyovo"]

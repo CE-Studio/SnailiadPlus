@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://c07hyvodc4n6d"]
+[gd_scene load_steps=9 format=4 uid="uid://c07hyvodc4n6d"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_wk23p"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_g8yq5"]
+[ext_resource type="Resource" uid="uid://bwu17vcgyqd17" path="res://CutsceneScripts/SnailTown/EntranceSave.dialogue" id="2_osddk"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_isxqa"]
 [ext_resource type="PackedScene" uid="uid://ba4iceix628de" path="res://Scenes/Entities/SavePoint.tscn" id="3_j5aks"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_yn82w"]
@@ -17,6 +18,7 @@ point_count = 1
 [node name="EntranceSave" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_wk23p")
+cutscene_script = ExtResource("2_osddk")
 minimap_offset = Vector2i(13, 8)
 song_change = 1
 tiled_layers = Array[String](["", "", "", "", "", "", ""])

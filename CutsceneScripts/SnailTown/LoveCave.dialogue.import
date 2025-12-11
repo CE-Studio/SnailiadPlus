@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cs4kyuitdny3e"
+path="res://.godot/imported/LoveCave.dialogue-e156ec691bfb5eea9bdb7105603813a8.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/LoveCave.dialogue"
+dest_files=["res://.godot/imported/LoveCave.dialogue-e156ec691bfb5eea9bdb7105603813a8.tres"]
+
+[params]
+
+defaults=true

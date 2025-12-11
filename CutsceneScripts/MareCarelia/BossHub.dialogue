@@ -1,0 +1,18 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1)
+	NPC41: Watch out, {{Player.player_name}}!![wait=0.25]\nA [color=#ff4f99]fierce monster[/color] is hiding in the next room!!
+elif not Statics.check_item(Item.ItemTypes.BOOMERANG)
+	NPC41: Oh hey,[wait=0.15] that [color=#babfc2]grey door[/color] below and to the left opened up![wait=0.3]  I wonder what's inside?
+elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
+	if Player.instance.who_i_is == Player.Players.SNAILY
+		NPC41: Good luck, {{Player.player_name}}![wait=0.15]  I'll wait here for you!![wait=0.25]  Let's have lots of baby snails later, okay?
+	else
+		NPC41: Good luck, {{Player.player_name}}!
+else
+	# WaveHere
+	NPC41: {{Player.player_full_name}}, you came back!![wait=0.15]  Yay!!
+=> END

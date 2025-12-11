@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://ipugr1u4imx3"]
+[gd_scene load_steps=10 format=4 uid="uid://ipugr1u4imx3"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_0cf4r"]
+[ext_resource type="Resource" uid="uid://dwdhrtvcun4ml" path="res://CutsceneScripts/SnailTown/CaveRight2.dialogue" id="2_g5sj0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_p5xmj"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_4edy5"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_omxio"]
@@ -19,6 +20,7 @@ point_count = 1
 z_as_relative = false
 script = ExtResource("1_0cf4r")
 darkness_level = 0.2
+cutscene_script = ExtResource("2_g5sj0")
 minimap_offset = Vector2i(12, 11)
 song_change = 1
 

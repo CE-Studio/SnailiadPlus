@@ -2,6 +2,7 @@
 do CutsceneController.lock_input()
 do CutsceneController.show_textbox()
 do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
 match CutsceneController.object_id
 	when "0"
 		if not Statics.check_item(Item.ItemTypes.PEASHOOTER)
@@ -95,7 +96,7 @@ match CutsceneController.object_id
 	
 	when "5"
 		if Statics.get_item_percentage() < 100.0
-			NPC5: There's a lot of secrets in and around [color=#b8f74f]Snail Town[/color].[wait=0.25]  Have you found them all?
+			NPC5: There's a lot of secrets in and around {{GlobalText.COL_TOWN}}Snail Town[/color].[wait=0.25]  Have you found them all?
 		else
 			NPC5: They say [color=#f6cdb5]Boss Rush[/color] is the true test of snail skill.[wait=0.3][speed=0.75]  But what about slug skill?
 	
@@ -107,9 +108,9 @@ match CutsceneController.object_id
 	
 	when "14"
 		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 15
-			NPC14: Hey, {{Player.player_name}}![wait=0.25]  Keep an eye out for [color=#dcb7f8]"Helix Fragments"[/color].[wait=0.25]  They look like spinning white shells!
+			NPC14: Hey, {{Player.player_name}}![wait=0.25]  Keep an eye out for {{GlobalText.COL_IRIS}}"Helix Fragments"[/color].[wait=0.25]  They look like spinning white shells!
 		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
-			NPC14: They say that the [color=#dcb7f8]Shrine of Iris[/color] is not located on any map!
+			NPC14: They say that the {{GlobalText.COL_IRIS}}Shrine of Iris[/color] is not located on any map!
 		else
 			NPC14: Wow, {{Player.player_name}}![wait=0.125]  You're pretty good at finding secrets![wait=0.25]  Maybe you should become a detective!
 	
@@ -130,7 +131,7 @@ match CutsceneController.object_id
 		elif Statics.get_item_percentage() < 80.0
 			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] You can find the "high jump" before any other item!
 		elif Statics.get_item_percentage() < 100.0
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] There's a boomerang somewhere in Snail Town!
+			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] There's a boomerang somewhere in {{GlobalText.COL_TOWN}}Snail Town[/color]!
 		else
 			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] there's a secret somewhere in the main menu!
 	

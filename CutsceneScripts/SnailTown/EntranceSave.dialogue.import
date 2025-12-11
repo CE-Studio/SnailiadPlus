@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bwu17vcgyqd17"
+path="res://.godot/imported/EntranceSave.dialogue-db55cae66754fa2d973474833c7a58e1.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/EntranceSave.dialogue"
+dest_files=["res://.godot/imported/EntranceSave.dialogue-db55cae66754fa2d973474833c7a58e1.tres"]
+
+[params]
+
+defaults=true

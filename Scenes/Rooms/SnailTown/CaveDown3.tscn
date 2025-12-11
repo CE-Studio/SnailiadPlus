@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://bfl1odwbrnfsv"]
+[gd_scene load_steps=9 format=4 uid="uid://bfl1odwbrnfsv"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_witgr"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_3cdmw"]
+[ext_resource type="Resource" uid="uid://d0w2rrxrqibbt" path="res://CutsceneScripts/SnailTown/CaveDown3.dialogue" id="2_lw33r"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_687hd"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_c74rn"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_15dgi"]
@@ -18,6 +19,7 @@ point_count = 1
 z_as_relative = false
 script = ExtResource("1_witgr")
 darkness_level = 0.4
+cutscene_script = ExtResource("2_lw33r")
 minimap_offset = Vector2i(11, 13)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

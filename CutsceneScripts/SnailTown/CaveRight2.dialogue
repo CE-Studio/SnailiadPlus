@@ -1,0 +1,11 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if Statics.solid_at_world_pos(Vector2(248, 136))
+	NPC8: There's something funny about that tree...
+else
+	# ShakeHere
+	NPC8: I[wait=0.125] knew[wait=0.125] there was something weird about that tree!!
+=> END
