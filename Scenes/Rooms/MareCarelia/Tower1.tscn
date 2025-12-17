@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=4 uid="uid://l35j5qi1lir0"]
+[gd_scene load_steps=14 format=4 uid="uid://l35j5qi1lir0"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_sc7m0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_15q6y"]
+[ext_resource type="Resource" uid="uid://dwe2yvuxog2a2" path="res://CutsceneScripts/MareCarelia/Tower1.dialogue" id="2_glmoh"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_o33p5"]
 [ext_resource type="PackedScene" uid="uid://ba4iceix628de" path="res://Scenes/Entities/SavePoint.tscn" id="3_qpxsq"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_qpcak"]
@@ -25,6 +26,7 @@ size = Vector2(496, 608)
 z_as_relative = false
 script = ExtResource("1_sc7m0")
 area_id = 1
+cutscene_script = ExtResource("2_glmoh")
 minimap_offset = Vector2i(17, 4)
 song_change = 3
 tiled_layers = Array[String](["", "", "", "", "", "", ""])

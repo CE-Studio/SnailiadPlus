@@ -1,0 +1,18 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if not Statics.check_item(Item.ItemTypes.GRAVITY_SHELL)
+	NPC43: I can't seem to crawl around these corners![wait=0.3]  I wonder if I'll ever be able to do it...
+else
+	if Player.instance.who_i_is == Player.Players.SNAILY or Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
+		NPC43: Ooh, {{Player.player_name}},[wait=0.15] can you crawl around ceiling corners now??[wait=0.4]  I wish I were a Gravity Snail!
+		# ShakeHere
+	elif Player.instance.who_i_is == Player.Players.UPSIDE
+		NPC43: Hey, {{Player.player_name}},[wait=0.2] what makes you fall up?[wait=0.4]  You're not even a Gravity Snail;[wait=0.2] how do you do it?!
+	elif Player.instance.who_i_is == Player.Players.LEGGY
+		NPC43: You're so lucky, {{Player.player_name}}![wait=0.2]  You don't deal with corners!![wait=0.6][speed=0.25]  ...[speed=1]How do you flip though?
+	elif Player.instance.who_i_is == Player.Players.BLOBBY
+		NPC43: Hey, {{Player.player_name}}![wait=0.2]  How do you treat corners?[wait=0.25]  Can you crawl?[wait=0.3]  I wanna know more about blobs!!
+=> END

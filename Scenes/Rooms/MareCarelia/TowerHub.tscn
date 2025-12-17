@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=4 uid="uid://1s6gmpiu2oac"]
+[gd_scene load_steps=15 format=4 uid="uid://1s6gmpiu2oac"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_8sp8v"]
+[ext_resource type="Resource" uid="uid://btsjswix6s3f3" path="res://CutsceneScripts/MareCarelia/TowerHub.dialogue" id="2_g5lqu"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_wdcwi"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_0aoln"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_32syt"]
@@ -9,6 +10,9 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="5_huffg"]
 [ext_resource type="Texture2D" uid="uid://bus4mys0ccidy" path="res://Assets/Images/Environments/EpicBanner.png" id="6_g5lqu"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="7_qcc3e"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="11_m3o81"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="12_ckfgm"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_mw3he"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -22,6 +26,7 @@ z_as_relative = false
 script = ExtResource("1_8sp8v")
 area_id = 1
 darkness_level = 0.15
+cutscene_script = ExtResource("2_g5lqu")
 minimap_offset = Vector2i(13, 11)
 song_change = 3
 tiled_corner = Vector2i(339, 177)
@@ -144,3 +149,18 @@ position = Vector2(400, 888)
 scale = Vector2(1, 3)
 my_id = 3
 exit_room = "uid://be4p17vnkct7y"
+
+[node name="Trigger" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("11_m3o81")]
+position = Vector2(304, 424.00003)
+scale = Vector2(7, 7)
+collision_mask = 128
+script = ExtResource("12_ckfgm")
+actor = NodePath("../48Fall")
+require_condition = false
+conditional_flag = 2
+conditional_value = null
+compare_mode = 0
+
+[node name="48Fall" parent="." instance=ExtResource("13_mw3he")]
+position = Vector2(472, 408)
+identifier = &"48Fall"

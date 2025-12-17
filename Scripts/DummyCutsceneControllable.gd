@@ -3,6 +3,22 @@ class_name DummyCutsceneControllable
 extends CutsceneControllable
 
 
+@export var cam_focus_point:Vector2 = Vector2.ZERO
+@export var cam_focus_node:Node2D = null
+
+
+func set_camera_focus_pos() -> void:
+	CutsceneController.set_camera_focus_pos(cam_focus_point)
+
+
+func set_camera_focus_node() -> void:
+	CutsceneController.set_camera_focus_node(cam_focus_node)
+
+
+func set_camera_focus_player() -> void:
+	CutsceneController.set_camera_focus_player()
+
+
 func is_in_top_half_of_screen() -> bool:
 	return Input.is_action_pressed(&"debug")
 

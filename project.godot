@@ -257,7 +257,7 @@ uiBack={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://CutsceneScripts/testcut.dialogue", "res://CutsceneScripts/SnailTown/TownMain.dialogue", "res://CutsceneScripts/SnailTown/CaveDown1.dialogue", "res://CutsceneScripts/SnailTown/CaveDown3.dialogue", "res://CutsceneScripts/SnailTown/CaveRight2.dialogue", "res://CutsceneScripts/SnailTown/CaveUp1.dialogue", "res://CutsceneScripts/SnailTown/CaveUp2.dialogue", "res://CutsceneScripts/SnailTown/EntranceSave.dialogue", "res://CutsceneScripts/SnailTown/GreenSecret1.dialogue", "res://CutsceneScripts/SnailTown/GreenSecret2.dialogue", "res://CutsceneScripts/SnailTown/LoveCave.dialogue", "res://CutsceneScripts/SnailTown/SuperSecret.dialogue", "res://CutsceneScripts/MareCarelia/BossHub.dialogue", "res://CutsceneScripts/MareCarelia/Cave2.dialogue", "res://CutsceneScripts/MareCarelia/Peashooter.dialogue")
+locale/translations_pot_files=PackedStringArray("res://CutsceneScripts/testcut.dialogue", "res://CutsceneScripts/SnailTown/TownMain.dialogue", "res://CutsceneScripts/SnailTown/CaveDown1.dialogue", "res://CutsceneScripts/SnailTown/CaveDown3.dialogue", "res://CutsceneScripts/SnailTown/CaveRight2.dialogue", "res://CutsceneScripts/SnailTown/CaveUp1.dialogue", "res://CutsceneScripts/SnailTown/CaveUp2.dialogue", "res://CutsceneScripts/SnailTown/EntranceSave.dialogue", "res://CutsceneScripts/SnailTown/GreenSecret1.dialogue", "res://CutsceneScripts/SnailTown/GreenSecret2.dialogue", "res://CutsceneScripts/SnailTown/LoveCave.dialogue", "res://CutsceneScripts/SnailTown/SuperSecret.dialogue", "res://CutsceneScripts/MareCarelia/BossHub.dialogue", "res://CutsceneScripts/MareCarelia/Cave2.dialogue", "res://CutsceneScripts/MareCarelia/Peashooter.dialogue", "res://CutsceneScripts/MareCarelia/Shellbreaker.dialogue", "res://CutsceneScripts/MareCarelia/Tower1.dialogue", "res://CutsceneScripts/MareCarelia/Tower3.dialogue", "res://CutsceneScripts/MareCarelia/TowerHub.dialogue")
 
 [layer_names]
 
@@ -270,6 +270,7 @@ locale/translations_pot_files=PackedStringArray("res://CutsceneScripts/testcut.d
 2d_physics/layer_5="Interactable"
 2d_physics/layer_6="PlayerBullet"
 2d_physics/layer_7="Enemy"
+2d_physics/layer_8="NPC"
 
 [rendering]
 

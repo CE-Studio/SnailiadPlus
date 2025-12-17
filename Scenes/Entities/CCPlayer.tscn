@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5idqni0vwlyv"]
+[gd_scene load_steps=4 format=3 uid="uid://b5idqni0vwlyv"]
 
 [ext_resource type="Texture2D" uid="uid://5lltd2ggtn4y" path="res://Editor/EditorMarkers/CCPlayer.png" id="1_5qbyk"]
+[ext_resource type="Script" uid="uid://bpp4sfi7g5a8x" path="res://Scripts/CCPlayer.gd" id="1_wqkpx"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_wqkpx"]
 
 [node name="CCPlayer" type="Node2D"]
+script = ExtResource("1_wqkpx")
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_5qbyk")

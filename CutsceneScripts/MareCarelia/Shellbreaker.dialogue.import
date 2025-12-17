@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c7blgg3k4ekps"
+path="res://.godot/imported/Shellbreaker.dialogue-ab210067ee492225102381a52b30be02.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/Shellbreaker.dialogue"
+dest_files=["res://.godot/imported/Shellbreaker.dialogue-ab210067ee492225102381a52b30be02.tres"]
+
+[params]
+
+defaults=true

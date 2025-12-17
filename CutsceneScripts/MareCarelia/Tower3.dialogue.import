@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bh0ikc6t1x18n"
+path="res://.godot/imported/Tower3.dialogue-6154d21fdfbdf84a7c29701f7b087f22.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/Tower3.dialogue"
+dest_files=["res://.godot/imported/Tower3.dialogue-6154d21fdfbdf84a7c29701f7b087f22.tres"]
+
+[params]
+
+defaults=true
