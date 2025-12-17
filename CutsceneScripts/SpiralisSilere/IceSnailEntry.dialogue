@@ -1,0 +1,10 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+if Statics.current_profile["difficulty"] != 2
+	NPC29: Don't worry about me, {{Player.player_name}}![wait=0.25]  I'm an [color=#00fbfa]Ice Snail[/color],[wait=0.15] so these ice guys and icicles can't hurt me!
+else
+	NPC29: Oh, no!![wait=0.2]  {{Player.player_name}}!![wait=0.2]  The "[color=#00fbfa]Ice {{Player.player_species}}[/color]" power-up is missing on absurd mode![wait=0.25]  Good luck without it!!
+=> END

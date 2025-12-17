@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://cqmmtm8f2051e"]
+[gd_scene load_steps=11 format=4 uid="uid://cqmmtm8f2051e"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_4kd0u"]
+[ext_resource type="Resource" uid="uid://d1qkqxl7w8y6s" path="res://CutsceneScripts/SpiralisSilere/BossSave.dialogue" id="2_pb3cm"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v1kyf"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_o7jjh"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_swlx5"]
@@ -21,6 +22,7 @@ z_as_relative = false
 script = ExtResource("1_4kd0u")
 area_id = 2
 darkness_level = 0.15
+cutscene_script = ExtResource("2_pb3cm")
 minimap_offset = Vector2i(7, 13)
 song_change = 4
 tiled_corner = Vector2i(183, 209)
@@ -68,6 +70,7 @@ rando_sphere = 1
 [node name="NPC40" parent="GroundLayer" instance=ExtResource("4_07axt")]
 position = Vector2(272, 200)
 my_id = 40
+identifier = &"40"
 
 [node name="SavePoint" parent="GroundLayer" instance=ExtResource("5_2oa57")]
 position = Vector2(96, 72)

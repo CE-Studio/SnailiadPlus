@@ -99,19 +99,19 @@ var icon_weapon3:String:
 
 var icon_aiml:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_L, cut_col)
+	get(): return get_icon_as_bbcode(Inputs.AIM_L, cut_col, 1)
 
 var icon_aimr:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_R, cut_col)
+	get(): return get_icon_as_bbcode(Inputs.AIM_R, cut_col, 1)
 
 var icon_aimu:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_U, cut_col)
+	get(): return get_icon_as_bbcode(Inputs.AIM_U, cut_col, 1)
 
 var icon_aimd:String:
 	set(_v): pass
-	get(): return get_icon_as_bbcode(Inputs.AIM_D, cut_col)
+	get(): return get_icon_as_bbcode(Inputs.AIM_D, cut_col, 1)
 
 var icon_debug:String:
 	set(_v): pass

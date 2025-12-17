@@ -1,0 +1,8 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+NPC50: Have you tried {{GlobalText.COL_CTRL}}hitting "{{SInput.icon_strafe}}"[/color] yet?[wait=0.25]  It lets you shoot while holding still!
+NPC50: Or,[wait=0.1] if you're on controller,[wait=0.15] you can {{GlobalText.COL_CTRL}}aim with "{{SInput.icon_aiml}}{{SInput.icon_aimd}}{{SInput.icon_aimu}}{{SInput.icon_aimr}}"[/color] in any direction!
+=> END

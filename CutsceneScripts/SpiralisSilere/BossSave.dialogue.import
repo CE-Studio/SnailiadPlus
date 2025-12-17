@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d1qkqxl7w8y6s"
+path="res://.godot/imported/BossSave.dialogue-7e39a1c0e376d3d882043aba10d52552.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/BossSave.dialogue"
+dest_files=["res://.godot/imported/BossSave.dialogue-7e39a1c0e376d3d882043aba10d52552.tres"]
+
+[params]
+
+defaults=true

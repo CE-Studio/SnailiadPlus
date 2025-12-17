@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://bkmifbyeo6e4m"]
+[gd_scene load_steps=10 format=4 uid="uid://bkmifbyeo6e4m"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_4tr63"]
+[ext_resource type="Resource" uid="uid://dmynl7b7t7ouf" path="res://CutsceneScripts/SpiralisSilere/IceSnailEntry.dialogue" id="2_kwdji"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_pf30o"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_i0mt0"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_nyojr"]
@@ -20,6 +21,7 @@ z_as_relative = false
 script = ExtResource("1_4tr63")
 area_id = 2
 darkness_level = 0.25
+cutscene_script = ExtResource("2_kwdji")
 center_parallax_maps = true
 minimap_offset = Vector2i(20, 19)
 tiled_corner = Vector2i(521, 305)
@@ -63,6 +65,7 @@ door_type = 1
 [node name="NPC29" parent="GroundLayer" instance=ExtResource("4_wp8yv")]
 position = Vector2(224, 504)
 my_id = 29
+identifier = &"29"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100
