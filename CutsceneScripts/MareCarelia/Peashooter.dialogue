@@ -1,0 +1,13 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if not Statics.is_random_game
+	if not Statics.check_item(Item.ItemTypes.PEASHOOTER)
+		NPC11: {{Player.player_name}},[wait=0.125] it's dangerous to go alone![wait=0.15]  Take this Pea Shooter![wait=0.3]  Press {{GlobalText.COL_CTRL}}"{{SInput.icon_shoot}}"[/color] to shoot with it!!
+	else
+		NPC11: Don't forget![wait=0.15]\nPress {{GlobalText.COL_CTRL}}"{{SInput.icon_shoot}}"[/color] to shoot your weapon at stuff!!
+else
+	NPC11: {{Player.player_name}},[wait=0.125] it's dangerous to go alone![wait=0.15]  Take this item![wait=0.3]  I'm sure it'll be useful!
+=> END

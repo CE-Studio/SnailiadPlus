@@ -1376,6 +1376,10 @@ func take_item(_id:Item.ItemTypes, _quantity:int) -> bool:
 
 func can_perform_action(_action:String) -> bool:
 	match _action:
+		"turn_around":
+			return true
+		"toggle_shell":
+			return _check_ability(shellable)
 		"jump":
 			return _check_ability(can_jump)
 	return false
@@ -1385,6 +1389,13 @@ func perform_action(_action:String, _force:bool) -> bool:
 	if not (can_perform_action(_action) or _force):
 		return false
 	match _action:
+		"turn_around":
+			facing_left = not facing_left
+			_play_anim("shell" if shelled else "turnground")
+			return true
+		"toggle_shell":
+			_toggle_shell()
+			_play_anim("shell" if shelled else "idle")
 		"jump":
 			_jump_decide_state()
 	return false

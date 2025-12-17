@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://d142ll0y7eglf"]
+
+[ext_resource type="Texture2D" uid="uid://cuplvghp2vv1b" path="res://Editor/EditorMarkers/DummyCutsceneControllable.png" id="1_8y7qu"]
+[ext_resource type="Script" uid="uid://d1k411wqqlvdb" path="res://Scripts/DummyCutsceneControllable.gd" id="1_qrsfc"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_qrsfc"]
+
+[node name="DummyCutsceneControllable" type="Node2D"]
+z_index = 2000
+script = ExtResource("1_qrsfc")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_8y7qu")
+script = ExtResource("2_qrsfc")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
