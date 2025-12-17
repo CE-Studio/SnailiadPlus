@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func instance(num:int, color:Color):
 	var text:SnailyText = $"SnailyText"
-	text.set_snaily_text_raw(str(num))
+	text.set_snaily_text(str(num))
 	text.modulate = color
 
 

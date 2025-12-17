@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://by0wiacu8b35e"
+path="res://.godot/imported/BossHub.dialogue-05572b823d059b4154d0d374a37412df.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/BossHub.dialogue"
+dest_files=["res://.godot/imported/BossHub.dialogue-05572b823d059b4154d0d374a37412df.tres"]
+
+[params]
+
+defaults=true

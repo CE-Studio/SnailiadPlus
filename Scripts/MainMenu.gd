@@ -38,13 +38,15 @@ var read_esc:bool = false
 
 func _ready() -> void:
 	save_icon.visible = false
-
-	var version_string := (Statics.get_text("menu_version_header") + "\n"
-	+ Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version")))
-	version_text.set_snaily_text_raw(version_string)
+	
+	var number_str:String = Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version"))
+	var version_str:String = tr(&"Engine version") + "\n" + number_str
+	version_text.set_snaily_text(version_str)
 	version_text.add_shadow(1)
 
 	if is_main_menu:
+		Statics.active_room = $"TitleRoom"
+		Statics.active_room.spawn(true)
 		get_tree().paused = false
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
@@ -54,17 +56,19 @@ func _ready() -> void:
 			var ver_compare := Statics.compare_versions(saved_ver, current_ver)
 			if ver_compare == 1:
 				version_panel = $"VersionWarnPanel"
-				version_panel.add_header(Statics.get_text("menu_olderVersion_header"), 2)
-				version_panel.set_text(Statics.get_text("menu_olderVersion_body"), 1)
-				version_panel.add_button(Statics.get_text("menu_olderVersion_confirm"), spawn_menu)
+				version_panel.add_header(tr(&"Woah there!!"), 2)
+				version_panel.set_text(tr(&"Looks like your current save is from a newer version of the game! Are you sure you wanna continue playing this version? Some data might get erased!! I'd recommend backing it up before continuing!"), 1)
+				version_panel.add_button(tr(&"Yeah, let me in!"), spawn_menu)
 				version_panel.can_focus = true
 				color_cover.set_new_fade(Color(0.0, 0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0, 0.4), 0.5)
 			else:
 				$"VersionWarnPanel".queue_free()
 				is_main_awaiting_input = true
-
+			
 			click_play_text = $"ClickPlay"
-			click_play_text.set_snaily_text("menu_play")
+			click_play_text.set_snaily_text(tr(&"Click or press %s or %s to play!!") % [
+				SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 0), SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 1)
+			])
 			click_play_text.add_border(1)
 			click_play_text.add_shadow(2)
 		else:

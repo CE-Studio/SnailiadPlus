@@ -26,7 +26,6 @@ extends RichTextLabel
 const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
 
-var menu_theme:Theme = load("res://Resources/MenuTheme.tres")
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
@@ -42,7 +41,7 @@ var internal_text:String = ""
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if quick_load_text.strip_edges() != "":
-			set_snaily_text(quick_load_text)
+			set_snaily_text(quick_load_text.replace("\\n", "\n"))
 		if shadow_scale > 0:
 			add_shadow(shadow_scale)
 		if border_scale > 0:
@@ -50,10 +49,6 @@ func _ready() -> void:
 
 
 func set_snaily_text(_text:String) -> void:
-	set_snaily_text_raw(Statics.get_text(_text))
-
-
-func set_snaily_text_raw(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
@@ -183,20 +178,3 @@ func format_extra_tags(_text:String) -> String:
 
 	internal_text = " ".join(internal_reassembled_str)
 	return " ".join(reassembled_str)
-	#var parsed_text:String = ""
-	#var parsed_tag:String = ""
-	#var current_timeout:float = DEFAULT_TIMEOUT
-	#var open_tag:bool = false
-	#for char in _text:
-	#	match char:
-	#		"[":
-	#			pass
-	#		"]":
-	#			pass
-	#		_:
-	#			if open_tag:
-	#				parsed_tag += char
-	#			else:
-	#				parsed_text += char
-	#				char_timeouts.append(current_timeout)
-	#return parsed_text

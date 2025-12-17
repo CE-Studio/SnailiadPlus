@@ -32,12 +32,6 @@ func _physics_process(_delta: float) -> void:
 
 func _double_check_player_collision() -> void:
 	var player:Player = GameCore.instance.player
-	#if contained_bodies.has(player.body):
-	#	var closest:Vector2 = get_closest_point(player.position)[0]
-	#	var distance:float = closest.distance_to(player.position)
-	#	if distance > PLAYER_CHECK_TOLERANCE:
-	#		var p_index:int = contained_bodies.find(player.body)
-	#		contained_bodies.remove_at(p_index)
 	if contained_bodies.has(player.body):
 		if not point_in_bounds(player.position):
 			var p_index:int = contained_bodies.find(player.body)

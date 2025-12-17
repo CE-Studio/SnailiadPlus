@@ -27,7 +27,8 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	sprite._process(0.0)
 	#endregion
 	player = GameCore.instance.player
-	return 9999
+	player.return_bullet = self
+	return cooldown
 
 
 func _physics_process(delta: float) -> void:
@@ -35,7 +36,7 @@ func _physics_process(delta: float) -> void:
 		position = position.move_toward(player.position, velocity * delta)
 		velocity += velocity_init * 1.5 * delta
 		if position.distance_to(player.position) <= RETURN_THRESHOLD:
-			player.fire_cooldown = cooldown
+			player.return_bullet = null
 			despawn()
 	else:
 		position += velocity * normalized_dir * delta

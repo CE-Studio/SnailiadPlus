@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://b0ht64lx178py"]
+[gd_scene load_steps=11 format=4 uid="uid://b0ht64lx178py"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_a73a0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_1rcoy"]
+[ext_resource type="Resource" uid="uid://clrksmb3vanqb" path="res://CutsceneScripts/SnailTown/CaveDown1.dialogue" id="2_i2c05"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_82vg5"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_tdcuk"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_08uyj"]
@@ -20,6 +21,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_a73a0")
 darkness_level = 0.35
+cutscene_script = ExtResource("2_i2c05")
 center_parallax_maps = true
 minimap_offset = Vector2i(9, 12)
 song_change = 1
@@ -61,15 +63,15 @@ position = Vector2(1608, 104)
 type = 14
 location_id = 9
 
-[node name="NPC23" parent="GroundLayer" instance=ExtResource("4_08uyj")]
-position = Vector2(608, 152)
-my_id = 23
-identifier = &"23"
-
 [node name="NPC22" parent="GroundLayer" instance=ExtResource("4_08uyj")]
 position = Vector2(1376, 216)
 my_id = 22
 identifier = &"22"
+
+[node name="NPC23" parent="GroundLayer" instance=ExtResource("4_08uyj")]
+position = Vector2(608, 152)
+my_id = 23
+identifier = &"23"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

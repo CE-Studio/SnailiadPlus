@@ -114,14 +114,14 @@ func _process(delta: float) -> void:
 	var fps_int = int(Engine.get_frames_per_second())
 	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")
 	if fps_setting == 0:
-		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps") % fps_int)
+		fps_text.set_snaily_text(tr(&"%d FPS") % fps_int)
 	else:
 		var target_fps:int = 60
 		match fps_setting:
 			1: target_fps = 30
 			2: target_fps = 60
 			3: target_fps = 120
-		fps_text.set_snaily_text_raw(Statics.get_text("hud_fps_target") % [ fps_int, target_fps ])
+		fps_text.set_snaily_text(tr(&"%d/%d FPS") % [ fps_int, target_fps ])
 	
 	#IGT is counted up in GameCore.gd, being an aspect of the game/profile itself and not purely a HUD element
 	
@@ -276,7 +276,7 @@ func show_item_collection_text(item_label:String) -> void:
 	header_label.position = Vector2i(200, 180)
 	var percentage_label = flashy_popup_scene.instantiate()
 	popup_layer.add_child(percentage_label)
-	percentage_label.instance(Statics.get_text("hud_collectedItemPercentage") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
+	percentage_label.instance(tr(&"Item collection %.1f%% complete!") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
 	percentage_label.position = Vector2i(200, 200)
 
 
@@ -293,7 +293,7 @@ func show_area_text(area_id:int) -> void:
 		4: area_color = Statics.get_color(Vector2i(0, 1))
 		5: area_color = Statics.get_color(Vector2i(3, 11))
 	var color_list:Array[Color] = [ Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE, area_color, Color.WHITE ]
-	area_label.instance(Statics.get_text("area_%s" % Room.areas[area_id]), color_list)
+	area_label.instance(GlobalText.areas[Room.areas[area_id]], color_list)
 	area_label.position = Vector2i(200, 100)
 	active_area_label = area_label
 	

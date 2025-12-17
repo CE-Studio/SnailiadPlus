@@ -48,6 +48,7 @@ var holding_shell:bool = false
 var axis_flag:bool
 var against_wall:bool
 var fire_cooldown:float
+var return_bullet:PlayerBullet
 var fire_mode:bool = false
 var idle_timer:Timer
 var is_idling:bool
@@ -166,6 +167,17 @@ var light_radius:int
 #endregion
 
 
+#region Cutscene control
+var process:bool = true
+
+var cc_glide_origin:Vector2 = Vector2.ZERO
+var cc_glide_target:Vector2 = Vector2.ZERO
+var cc_glide_duration:float = 0.0
+var cc_glide_active:bool = false
+var cc_glide_elapsed:float = 0.0
+#endregion
+
+
 #region Animation control
 enum AnimStates {
 	IDLE,
@@ -186,6 +198,10 @@ enum Players {
 	BLOBBY,
 	LEECHY,
 }
+var who_i_is:Players = Players.SNAILY
+
+
+static var instance:Player
 
 
 static var player_name:String:
@@ -245,6 +261,7 @@ var debug_print_adjustments:bool = false
 # It's used here to initialize certain variables and node references
 func _ready():
 	super()
+	instance = self
 	sprite = $"JsonSprite2D"
 	body = $"CharacterBody2D"
 	box_normal = $"CharacterBody2D/NormalRect"
@@ -279,31 +296,49 @@ func _ready():
 #region Movement
 # This function is called once every frame
 func _process(_delta):
+	if not process:
+		return
+	
 	if stun_timer > 0:
 		sprite.visible = not sprite.visible
 
 	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
-	if Input.is_action_just_pressed("gravity"):
-		Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
+	#if Input.is_action_just_pressed("gravity"):
+	#	Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
 
 
 # This function is called on a fixed interval of
 # 60 times per second, regardless of framerate
 func _physics_process(delta:float) -> void:
+	if not process:
+		return
+	
 	if Statics.noclip_mode:
 		box_normal.disabled = true
 		box_shell.disabled = true
 		var move_speed:float = 160.0
 		if SInput.input_pressed(SInput.Inputs.JUMP):
 			move_speed = 400.0
-		var move_dir = SInput.vector_move()
-		#body.velocity = move_dir * move_speed
+		var move_dir:Vector2 = SInput.vector_move()
+		body.velocity = move_dir * move_speed
 		body.move_and_slide()
 		position = body.position
 		return
-
+	
+	# Cutscenes can glide the player from point A to point B
+	# That's controlled here, and active glides prevent the rest of the
+	# function from going, so as to cancel gravity and other checks
+	if cc_glide_active:
+		cc_glide_elapsed = clampf(cc_glide_elapsed + delta, 0.0, cc_glide_duration)
+		var lerp_rate:float = inverse_lerp(0.0, cc_glide_duration, cc_glide_elapsed)
+		body.position = cc_glide_origin.lerp(cc_glide_target, lerp_rate)
+		position = body.position
+		if cc_glide_elapsed >= cc_glide_duration:
+			cc_glide_active = false
+		return
+	
 	if override_box_disable:
 		box_normal.disabled = true
 		box_shell.disabled = true
@@ -312,7 +347,8 @@ func _physics_process(delta:float) -> void:
 		box_shell.disabled = not shelled
 	# To start things off, we decrease the fire cooldown,
 	# and increase the coyote time and jump buffer as necessary
-	fire_cooldown = clampf(fire_cooldown - delta, 0.0, INF)
+	if return_bullet == null:
+		fire_cooldown = clampf(fire_cooldown - delta, 0.0, INF)
 	if SInput.input_pressed(SInput.Inputs.JUMP):
 		jump_buffer_counter += delta
 	else:
@@ -424,6 +460,7 @@ func reset_position(pos:Vector2) -> void:
 	body.global_position = pos
 	sprite.position = Vector2.ZERO
 	in_death_cutscene = false
+	fire_cooldown = 0.0
 	_play_anim("idle")
 
 
@@ -616,7 +653,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
 		_toggle_shell()
 	elif (rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable)
-	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE))):
+	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or stunned)):
 		_toggle_shell()
 
 	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
@@ -737,6 +774,9 @@ func _jump() -> float:
 	_play_anim("jump")
 	jump_buffer_counter = jump_buffer
 	coyote_time_counter = coyote_time
+	if Statics.get_shell_level() >= 2 and (who_i_is == Players.SNAILY
+	or who_i_is == Players.SLUGGY or who_i_is == Players.LEECHY):
+		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [_get_dir_opposite(gravity_dir), true])
 	return jump_power[read_i_jump] * jump_mod
 
 
@@ -1263,11 +1303,17 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 
 #region Cutscene functions
 func impulse(_direction:Vector2) -> bool:
-	return false
+	body.velocity += _direction
+	return true
 
 
 func glide_to(_position:Vector2, _duration:float) -> bool:
-	return false
+	cc_glide_origin = body.position
+	cc_glide_target = _position
+	cc_glide_duration = _duration
+	cc_glide_active = true
+	cc_glide_elapsed = 0.0
+	return true
 
 
 func get_dialogue_icon() -> Texture:
@@ -1279,29 +1325,67 @@ func fake_input(_event:InputEventAction, _hold_for:float) -> bool:
 
 
 func look_at_position(_pos:Vector2) -> bool:
-	return false
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR: facing_left = _pos.x < position.x
+		Statics.DirsSurface.LWALL: facing_left = _pos.y < position.y
+		Statics.DirsSurface.RWALL: facing_left = _pos.y > position.y
+		Statics.DirsSurface.CEILING: facing_left = _pos.x > position.x
+	_play_anim("idle")
+	return true
 
 
 func look_at_local(_pos:Vector2) -> bool:
-	return false
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR: facing_left = position.x + _pos.x < position.x
+		Statics.DirsSurface.LWALL: facing_left = position.y + _pos.y < position.y
+		Statics.DirsSurface.RWALL: facing_left = position.y + _pos.y > position.y
+		Statics.DirsSurface.CEILING: facing_left = position.x + _pos.x > position.x
+	_play_anim("idle")
+	return true
 
 
 func look_at_node(_node:Node2D) -> bool:
-	return false
+	match gravity_dir:
+		Statics.DirsSurface.FLOOR: facing_left = _node.position.x < position.x
+		Statics.DirsSurface.LWALL: facing_left = _node.position.y < position.y
+		Statics.DirsSurface.RWALL: facing_left = _node.position.y > position.y
+		Statics.DirsSurface.CEILING: facing_left = _node.position.x > position.x
+	_play_anim("idle")
+	return true
 
 
-func lock_inputs(_locked:bool) -> bool:
-	return false
+func disable_ai(_locked:bool) -> bool:
+	process = _locked
+	return true
 
 
 func has_item(_ID:Item.ItemTypes) -> bool:
-	return false
+	return Statics.check_item(_ID as int)
+
+
+func give_item(_id:Item.ItemTypes, _quantity:int) -> bool:
+	Statics.add_item(_id as int, _quantity)
+	return true
+
+
+func take_item(_id:Item.ItemTypes, _quantity:int) -> bool:
+	var enough_to_remove:bool = Statics.check_item(_id as int) <= _quantity
+	Statics.remove_item(_id as int, _quantity)
+	return enough_to_remove
 
 
 func can_perform_action(_action:String) -> bool:
+	match _action:
+		"jump":
+			return _check_ability(can_jump)
 	return false
 
 
 func perform_action(_action:String, _force:bool) -> bool:
+	if not (can_perform_action(_action) or _force):
+		return false
+	match _action:
+		"jump":
+			_jump_decide_state()
 	return false
 #endregion

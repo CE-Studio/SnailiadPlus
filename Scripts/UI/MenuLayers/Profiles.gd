@@ -44,10 +44,8 @@ func _ready() -> void:
 	layer.meta_info.append(0)
 	_update_profile_buttons()
 	panel.modulate.a = 0
-	panel.call_deferred("add_button",
-		Statics.get_text("menu_add_generic_no"), _on_panel_no, false)
-	panel.call_deferred("add_button",
-		Statics.get_text("menu_add_generic_yes"), _on_panel_yes, false)
+	panel.call_deferred("add_button", tr(&"No"), _on_panel_no, false)
+	panel.call_deferred("add_button", tr(&"Yes"), _on_panel_yes, false)
 
 
 func _process(delta: float) -> void:
@@ -104,17 +102,22 @@ func _update_profile_buttons() -> void:
 				pro3_layer = NEW_GAME_LAYER if pro3_empty else LOAD_GAME_LAYER
 				button = $"Profile3"
 		if not profile["is_empty"]:
-			var _char = str(int(profile["character"]))
-			button.set_text(Statics.get_text("char_" + _char) + " " + str(i + 1))
-			var stats = Statics.get_text("difficulty_" + str(int(profile["difficulty"])))
-			stats += " / " + Statics.format_game_time(profile["game_time"])
-			stats += " / %.1f%%" % profile["item_rate"]
+			var _char:String = Statics.get_character_name_string(profile["character"] as Player.Players)
+			button.set_text(" ".join([_char, str(i + 1)]))
+			var _diff:String
+			match roundi(profile["difficulty"]):
+				1: _diff = tr(&"Normal")
+				2: _diff = tr(&"Absurd")
+				_: _diff = tr(&"Easy")
+			var _time:String = Statics.format_game_time(profile["game_time"])
+			var _rate:String = "%.1f%%" % profile["item_rate"]
+			var stats:String = " / ".join([_diff, _time, _rate])
 			if profile["r_shuffle_level"] >= 0:
 				stats += " / %08d" % str(profile["r_seed"])
 			button.set_subtext(stats)
 		else:
-			button.set_text(Statics.get_text("menu_option_profile_empty"))
-			button.set_subtext(Statics.get_text("menu_option_profile_empty_context"))
+			button.set_text(tr(&"Empty profile"))
+			button.set_subtext(tr(&"Select to start a new one!"))
 
 
 func focus_panel() -> void:
@@ -122,11 +125,11 @@ func focus_panel() -> void:
 	layer.menu.read_inputs = false
 	panel_up = true
 	if layer_state == LayerState.COPY2:
-		var copy_str = Statics.get_text("menu_option_copyGame_popup")
+		var copy_str = tr(&"Copy file %d to slot %d?")
 		copy_str = copy_str % [ button_selection.x, button_selection.y ]
 		panel.set_text(copy_str, 2)
 	elif layer_state == LayerState.ERASE:
-		var erase_str = Statics.get_text("menu_option_eraseGame_popup")
+		var erase_str = tr(&"Really erase file %d?")
 		erase_str = erase_str % button_selection.x
 		panel.set_text(erase_str, 2)
 	panel.can_focus = true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cpfpo3m5y7j71"
+path="res://.godot/imported/CaveUp1.dialogue-e7a1ffa6c25e3c505240f8c6149f3bd5.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/CaveUp1.dialogue"
+dest_files=["res://.godot/imported/CaveUp1.dialogue-e7a1ffa6c25e3c505240f8c6149f3bd5.tres"]
+
+[params]
+
+defaults=true

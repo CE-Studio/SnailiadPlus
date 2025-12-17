@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://bn5hiirwyjxi6"]
+[gd_scene load_steps=11 format=4 uid="uid://bn5hiirwyjxi6"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_q73ju"]
+[ext_resource type="Resource" uid="uid://cs4kyuitdny3e" path="res://CutsceneScripts/SnailTown/LoveCave.dialogue" id="2_335u0"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_stu6g"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_6d8xp"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_ugt0k"]
@@ -19,6 +20,7 @@ point_count = 3
 [node name="LoveCave" type="Node2D"]
 z_as_relative = false
 script = ExtResource("1_q73ju")
+cutscene_script = ExtResource("2_335u0")
 minimap_offset = Vector2i(9, 9)
 
 [node name="SkyLayer" type="Parallax2D" parent="."]

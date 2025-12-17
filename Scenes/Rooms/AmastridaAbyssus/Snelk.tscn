@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://dt0ka7rvt44fp"]
+[gd_scene load_steps=11 format=4 uid="uid://dt0ka7rvt44fp"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_iop1f"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_04gch"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_dye22"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_gd21h"]
+[ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_clsdg"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_uxfee"]
 [ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="5_s02rt"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="6_dye22"]
@@ -58,6 +59,10 @@ tile_set = ExtResource("2_04gch")
 position = Vector2(496, 24)
 my_id = 47
 surface = 3
+
+[node name="Item" parent="GroundLayer" instance=ExtResource("4_clsdg")]
+position = Vector2(368, 112)
+location_id = 35
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

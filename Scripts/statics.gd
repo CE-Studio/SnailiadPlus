@@ -100,7 +100,6 @@ static var noclip_mode:bool = false
 static var damage_mult:bool = false
 static var show_entity_layer:bool = false
 static var show_invis_entites:bool = false
-static var draw_damage_numbers:bool = true
 static var stack_shells:bool = true
 static var stack_weapons:bool = true
 static var stack_weapon_mods:bool = true
@@ -125,6 +124,9 @@ static var cam:Camera2D
 static var active_room:Room
 
 static var text_lib:Dictionary
+
+static var particle_cache:Array[PackedScene] = []
+static var particle_table:Array[String] = []
 
 
 #region Game scene load information
@@ -184,11 +186,11 @@ enum CutsceneFlags {
 
 #region Profile functions
 static func format_game_time(time:Array) -> String:
-	var time_string := "%d:%02d:%.2f" % [ time[0], time[1], time[2] ]
+	var time_string := "%d:%02d:%05.2f" % [ time[0], time[1], time[2] ]
 	return time_string
 
 
-static func get_item_percentage(_profile:int = 0) -> float:
+static func get_item_percentage(_profile:int = 0, _snap:bool = false) -> float:
 	var inventory:Array
 	var _player:int
 	var difficulty:int
@@ -230,7 +232,11 @@ static func get_item_percentage(_profile:int = 0) -> float:
 	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
 	if counted_percentage == 100.0:
 		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
+		if _snap:
+			over_percentage = snappedf(over_percentage, 0.1)
 		return over_percentage
+	if _snap:
+		counted_percentage = snappedf(counted_percentage, 0.1)
 	return counted_percentage
 
 
@@ -247,9 +253,9 @@ static func get_igt_str(_profile:int = 0) -> String:
 			time = current_profile["game_time"]
 	var time_str:String = ""
 	if time[0] > 0:
-		time_str = Statics.get_text("hud_igt_hms") % [ time[0], time[1], time[2] ]
+		time_str = "%d:%02d:%05.2f" % [ time[0], time[1], time[2] ]
 	else:
-		time_str = Statics.get_text("hud_igt_ms") % [ time[1], time[2] ]
+		time_str = "%d:%05.2f" % [ time[1], time[2] ]
 	time_str = time_str.strip_edges()
 	return time_str
 #endregion
@@ -265,6 +271,8 @@ static func add_item(id:int, count:int) -> void:
 static func remove_item(id:int, count:int) -> void:
 	if id < len(current_profile["items"]):
 		current_profile["items"][id] -= count
+		if current_profile["items"][id] < 0:
+			current_profile["items"][id] = 0
 
 
 static func check_item(id:int) -> int:
@@ -400,10 +408,10 @@ static func parse_version_to_text_string(version:String) -> String:
 	var number := version.substr(1)
 	var output:String
 	match prefix:
-		"b": output = get_text("menu_version_developer") + " "
-		"d": output = get_text("menu_version_demo") + " "
-		"r": output = get_text("menu_version_release") + " "
-	output += number
+		"b": output = GlobalText.version_types[0] # Dev/beta
+		"d": output = GlobalText.version_types[1] # Demo
+		"r": output = GlobalText.version_types[2] # Release
+	output = " ".join([output, number])
 	return output
 
 
@@ -463,15 +471,15 @@ static func has_shell(shell_id:int) -> bool:
 
 
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
-	var char_int := int(character)
-	var full_check:String = "full_" if full else ""
-	return get_text("char_%s%d" % [ full_check, char_int ])
+	var char_i:int = character as int
+	var full_i:int = 1 if full else 0
+	return GlobalText.characters[char_i][full_i]
 
 
 static func get_character_species_string(character:Player.Players, plural:bool = false) -> String:
-	var char_int := int(character)
-	var plural_check:String = "plural_" if plural else ""
-	return get_text("species_%s%d" % [ plural_check, char_int ])
+	var char_i:int = character as int
+	var plural_i:int = 1 if plural else 0
+	return GlobalText.species[char_i][plural_i]
 #endregion
 
 
@@ -503,10 +511,10 @@ static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bo
 #endregion
 
 
-static func get_text(key:String) -> String:
-	if text_lib.has(key):
-		return text_lib[key]
-	return key
+#static func get_text(key:String) -> String:
+#	if text_lib.has(key):
+#		return text_lib[key]
+#	return key
 
 
 static func is_number(value:Variant, consider_strings := false) -> bool:
@@ -550,10 +558,17 @@ static func play_sfx_disconnected(sound:AudioStream, vol:float = 1.0) -> void:
 		new_discon_sound.load_and_play(sound, vol)
 
 
+static func play_sfx_limited(sound:AudioStream, sound_name:String, vol:float = 1.0) -> void:
+	GameCore.instance.lim_sfx_handler.play_sound(sound, sound_name, vol)
+
+
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
 	if active_room == null:
 		return null
-	var new_particle:Particle = load("res://Scenes/Particles/%s.tscn" % name).instantiate()
+	if not particle_table.has(name):
+		particle_table.append(name)
+		particle_cache.append(load("res://Scenes/Particles/%s.tscn" % name))
+	var new_particle:Particle = particle_cache[particle_table.find(name)].instantiate()
 	match layer:
 		Room.Layers.SKY: active_room.layer_sky.add_child(new_particle)
 		Room.Layers.BG2: active_room.layer_bg2.add_child(new_particle)

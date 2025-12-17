@@ -1,0 +1,25 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+match CutsceneController.object_id
+	when "One"
+		NPC One: Hello {{Player.player_name}}! This is test room 1!
+	when "Two"
+		NPC Two: I'm NPC two!
+	when "Three"
+		NPC Three: Remember to report bugs, {{Player.player_name}}!
+		NPC Three: ...Are snails bugs? Should you report us too?
+		NPC Three: Or are bugs strictly insects...
+		NPC Three: This may just be the greatest question of our time...
+	when "Four"
+		NPC Four: Watch {{Player.player_name}}! I'm going to jump off of this wall!
+		do CutsceneController.hide_textbox()
+		do CutsceneController.set_actor("Four")
+		do CutsceneController.perform_action("jump", true)
+		do wait(5)
+		do CutsceneController.show_textbox()
+		NPC Four: I'm on the ground now!
+	when "Five"
+		NPC Five: I'm testing buttons! Try pressing {{SInput.icon_gravity}}
+do CutsceneController.hide_textbox()
+=> END

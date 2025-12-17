@@ -28,6 +28,112 @@ enum Inputs {
 	UI_BACK,
 }
 
+var input_tr_strings:PackedStringArray = [
+	tr(&"Move left"), tr(&"Move right"), tr(&"Move up"), tr(&"Move down"), tr(&"Jump"),
+	tr(&"Shoot"), tr(&"Strafe"), tr(&"Speak"), tr(&"Gravity jump"), tr(&"Open menu"),
+	tr(&"Open map"), tr(&"Weapon 0"), tr(&"Weapon 1"), tr(&"Weapon 2"), tr(&"Weapon 3"),
+	tr(&"Aim left"), tr(&"Aim right"), tr(&"Aim up"), tr(&"Aim down"), tr(&"Open debug menu"),
+	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"), 
+]
+
+#region Static icon variables
+var icon_left:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.LEFT, cut_col)
+
+var icon_right:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.RIGHT, cut_col)
+
+var icon_up:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UP, cut_col)
+
+var icon_down:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.DOWN, cut_col)
+
+var icon_jump:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.JUMP, cut_col)
+
+var icon_shoot:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.SHOOT, cut_col)
+
+var icon_strafe:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.STRAFE, cut_col)
+
+var icon_speak:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.SPEAK, cut_col)
+
+var icon_gravity:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.GRAVITY, cut_col)
+
+var icon_pause:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.PAUSE, cut_col)
+
+var icon_map:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.MAP, cut_col)
+
+var icon_weapon0:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON0, cut_col)
+
+var icon_weapon1:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON1, cut_col)
+
+var icon_weapon2:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON2, cut_col)
+
+var icon_weapon3:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.WEAPON3, cut_col)
+
+var icon_aiml:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_L, cut_col)
+
+var icon_aimr:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_R, cut_col)
+
+var icon_aimu:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_U, cut_col)
+
+var icon_aimd:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.AIM_D, cut_col)
+
+var icon_debug:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.DEBUG, cut_col)
+
+var icon_uiclick:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_CLICK, cut_col)
+
+var icon_uiaccept:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_ACCEPT, cut_col)
+
+var icon_uiback:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.UI_BACK, cut_col)
+
+var cut_col:String:
+	set(_V): pass
+	get(): return "Yellow"
+#endregion
+
 const INPUT_SLOTS:Array = [
 	0b00001111, # Left
 	0b00001111, # Right
@@ -97,6 +203,7 @@ const ECHO_DELAY_REPEAT:float = 0.04
 const DEBUG_PRINT_INPUTS:bool = false
 
 var read_inputs:bool = true
+var cutscene_has_control:bool = false
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
 var ui_echo_delay:float = ECHO_DELAY_INITIAL
@@ -142,13 +249,13 @@ func _input(event: InputEvent) -> void:
 
 
 func pressed(action:String) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return Input.is_action_pressed(action)
 
 
 func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	if accept_con_echo:
 		return (Input.is_action_just_pressed(action) or
@@ -157,13 +264,13 @@ func just_pressed(action:String, accept_con_echo:bool = false) -> bool:
 
 
 func just_pressed_as_echo(action:String) -> bool:
-	if just_pressed(action) or not read_inputs:
+	if just_pressed(action) or not accepting_input():
 		return false
 	return just_pressed(action, true)
 
 
 func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	var this_action:String = get_input_str(action)
 	if just:
@@ -173,25 +280,25 @@ func check_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool
 
 func check_input_as_echo(action:Inputs) -> bool:
 	var this_action:String = get_input_str(action)
-	if just_pressed(this_action) or not read_inputs:
+	if just_pressed(this_action) or not accepting_input():
 		return false
 	return just_pressed(this_action, true)
 
 
 func input_pressed(action:Inputs) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return check_input(action, false)
 
 
 func input_just_pressed(action:Inputs) -> bool:
-	if not read_inputs:
+	if not accepting_input():
 		return false
 	return check_input(action, true)
 
 
 func vector_move(raw:bool = false) -> Vector2:
-	if not read_inputs:
+	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_move")
 	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
@@ -207,7 +314,7 @@ func vector_move(raw:bool = false) -> Vector2:
 
 
 func vector_aim() -> Vector2:
-	if not read_inputs:
+	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
@@ -229,13 +336,23 @@ func get_icon_from_enum_str(string:String) -> String:
 	return get_icon_from_enum(index as Inputs)
 
 
-func get_icon_from_enum(input:Inputs) -> String:
+func get_icon_from_enum(input:Inputs, con_mode:int = -1) -> String:
 	var action = pull_action(input)
-	if last_input_was_con:
+	if con_mode == 1 or (last_input_was_con and not con_mode == 0):
 		if action[2] is Vector2i:
 			return get_axis_icon(action[2])
 		return get_button_icon(action[2])
 	return get_key_icon(action[0])
+
+
+func get_icon_as_bbcode(input:Inputs, variant:String = "", con_mode:int = -1) -> String:
+	return get_icon_as_bbcode_from_string(get_icon_from_enum(input, con_mode), variant)
+
+
+func get_icon_as_bbcode_from_string(input:String, variant:String = "") -> String:
+	if variant.strip_edges() != "":
+		input = "/".join([variant, input])
+	return "[img=top,top]" + (ICON_PATH % input) + "[/img]"
 
 
 func get_input_icon(event:InputEvent) -> String:
@@ -254,6 +371,10 @@ func get_input_icon(event:InputEvent) -> String:
 func get_input_str(input:Inputs) -> StringName:
 	var string:String = Inputs.keys()[input]
 	return string.to_camel_case()
+
+
+func get_input_tr_str(input:Inputs) -> StringName:
+	return input_tr_strings[input as int]
 
 
 func _check_icon_exists(key:String) -> String:
@@ -359,3 +480,7 @@ func rebind_all() -> void:
 
 func load_from_project_settings() -> void:
 	pass
+
+
+func accepting_input() -> bool:
+	return read_inputs and not cutscene_has_control

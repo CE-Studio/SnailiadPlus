@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d0w2rrxrqibbt"
+path="res://.godot/imported/CaveDown3.dialogue-686d3a6fec9ceff3fb82a8bf31977721.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/CaveDown3.dialogue"
+dest_files=["res://.godot/imported/CaveDown3.dialogue-686d3a6fec9ceff3fb82a8bf31977721.tres"]
+
+[params]
+
+defaults=true

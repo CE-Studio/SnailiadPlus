@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bms4bml0e80ji"]
+[gd_scene load_steps=7 format=3 uid="uid://bms4bml0e80ji"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_6as5y"]
 [ext_resource type="Script" uid="uid://d0obh6jkecpl" path="res://Scripts/UI/MenuLayers/DisplayOptions.gd" id="2_0fbpc"]
 [ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="2_fqkyc"]
-[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_jxl7l"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_msw3w"]
 [ext_resource type="PackedScene" uid="uid://cm0i4dyk1srik" path="res://Scenes/UI/ToggleSnailyButton.tscn" id="4_jxl7l"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="6_45c1g"]
@@ -27,7 +26,6 @@ custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("2_jxl7l")
 theme_override_styles/panel = ExtResource("2_fqkyc")
 follow_focus = true
 scroll_horizontal_custom_step = 1.0
@@ -48,7 +46,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Ratio")
 focus_next = NodePath("../Ratio")
 focus_previous = NodePath("../../../Back")
-header_id = "menu_option_display_scale"
+header_text = "Window scale"
 auto_select_mode = true
 cycle_options = Array[String](["1x", "2x", "3x", "4x", "5x", "6x"])
 focus_option = 1
@@ -62,7 +60,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Fullscreen")
 focus_next = NodePath("../Fullscreen")
 focus_previous = NodePath("../Scale")
-header_id = "menu_option_display_ratio"
+header_text = "Aspect ratio"
 auto_select_mode = true
 cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10"])
 
@@ -74,7 +72,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Minimap")
 focus_next = NodePath("../Minimap")
 focus_previous = NodePath("../Ratio")
-text_id = "menu_option_display_fullscreen"
+button_text = "Fullscreen"
 
 [node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
 layout_mode = 2
@@ -84,9 +82,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../BottomKeys")
 focus_next = NodePath("../BottomKeys")
 focus_previous = NodePath("../Fullscreen")
-header_id = "menu_option_display_minimap"
+header_text = "Minimap display"
+cycle_option_text = "Hide|Map only|Map and room names"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_hide", "menu_add_mapOnly", "menu_add_mapAndNames"])
 focus_option = 2
 
 [node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
@@ -97,7 +95,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../InputMap")
 focus_next = NodePath("../InputMap")
 focus_previous = NodePath("../Minimap")
-text_id = "menu_option_display_bottomKeys"
+button_text = "Show weapon icons"
 
 [node name="InputMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -107,7 +105,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../InGameTime")
 focus_next = NodePath("../InGameTime")
 focus_previous = NodePath("../BottomKeys")
-text_id = "menu_option_display_keymap"
+button_text = "Show input display"
 
 [node name="InGameTime" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -117,7 +115,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Framerate")
 focus_next = NodePath("../Framerate")
 focus_previous = NodePath("../InputMap")
-text_id = "menu_option_display_gameTime"
+button_text = "Show in-game time"
 
 [node name="Framerate" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -127,7 +125,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Particles")
 focus_next = NodePath("../Particles")
 focus_previous = NodePath("../InGameTime")
-text_id = "menu_option_display_fps"
+button_text = "Show FPS"
 
 [node name="Particles" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
 layout_mode = 2
@@ -137,9 +135,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Darkness")
 focus_next = NodePath("../Darkness")
 focus_previous = NodePath("../Framerate")
-header_id = "menu_option_display_particles"
+header_text = "Particles"
+cycle_option_text = "None|Environments only|Entities only (Flash)|Entities only (all)|Flash|All"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_none", "menu_add_particles1", "menu_add_particles2", "menu_add_particles3", "menu_add_particles4", "menu_add_particles5"])
 focus_option = 5
 
 [node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
@@ -150,9 +148,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../PaletteShader")
 focus_next = NodePath("../PaletteShader")
 focus_previous = NodePath("../Particles")
-header_id = "menu_option_display_darkness"
+header_text = "Darkness level"
+cycle_option_text = "None|Minor|Half|Full"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_none", "menu_add_darkness_minor", "menu_add_darkness_half", "menu_add_darkness_full"])
 focus_option = 3
 
 [node name="PaletteShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
@@ -163,7 +161,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../DistortShader")
 focus_next = NodePath("../DistortShader")
 focus_previous = NodePath("../Darkness")
-text_id = "menu_option_display_paletteShader"
+button_text = "Limited palette"
 disabled = true
 
 [node name="DistortShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
@@ -174,7 +172,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../OpaqueAfterimages")
 focus_next = NodePath("../OpaqueAfterimages")
 focus_previous = NodePath("../PaletteShader")
-text_id = "menu_option_display_distortShader"
+button_text = "Distortion shaders"
 
 [node name="OpaqueAfterimages" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
 layout_mode = 2
@@ -184,7 +182,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../../Back")
 focus_next = NodePath("../../../Back")
 focus_previous = NodePath("../DistortShader")
-text_id = "menu_option_display_opaqueAfterimages"
+button_text = "Afterimages start\\nopaque"
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_45c1g")]
 self_modulate = Color(1, 1, 1, 0)
@@ -195,7 +193,7 @@ focus_neighbor_right = NodePath("../ScrollContainer/VBoxContainer/OpaqueAfterima
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Scale")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Scale")
 focus_previous = NodePath("../ScrollContainer/VBoxContainer/DistortShader")
-text_id = "menu_option_options_returnTo"
+button_text = "Back to options"
 back_one_layer = true
 hide_frame = true
 

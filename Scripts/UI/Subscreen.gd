@@ -97,7 +97,7 @@ func _ready() -> void:
 	var this_char = int(Statics.current_profile["character"])
 	body.action = str(this_char)
 	player_icon.action = str(this_char)
-	name_text.set_snaily_text("char_full_%d" % this_char)
+	name_text.set_snaily_text(GlobalText.get_player_name(this_char as Player.Players, true))
 	player_icon.position.x = name_box.position.x + name_text.get_width()
 	for sep in separators:
 		sep.action = "anim"
@@ -108,12 +108,12 @@ func _ready() -> void:
 	map_sel_origin = Vector2i(map.position) + map.MARKER_ZERO
 	map_selection = UICore.instance.minimap.last_player_pos
 	_init_item_slots()
-	desc_name.set_snaily_text_raw("")
-	desc_body.set_snaily_text_raw("")
+	desc_name.set_snaily_text("")
+	desc_body.set_snaily_text("")
 	sfx_open.play()
-	map_text.set_snaily_text_raw(map_text.text % Minimap.get_map_rate())
-	item_text.set_snaily_text_raw(item_text.text % Statics.get_item_percentage())
-	time_text.set_snaily_text_raw(time_text.text % Statics.get_igt_str())
+	map_text.set_snaily_text(map_text.text % Minimap.get_map_rate())
+	item_text.set_snaily_text(item_text.text % Statics.get_item_percentage())
+	time_text.set_snaily_text(time_text.text % Statics.get_igt_str())
 
 
 func _process(delta: float) -> void:
@@ -161,12 +161,12 @@ func _init_item_slots() -> void:
 		var count:int = _get_item_count(i)
 		if count > 0:
 			var spr = _add_list_spr(slist_weapon, i, "weapon", spr_offset)
-			_add_list_text(tlist_weapon, Item.get_name_str_from_id(i))
+			_add_list_text(tlist_weapon, GlobalText.get_item_name(i))
 			spr_offset += LIST_SPRITE_OFFSET
 			_add_item_selectable(spr, i)
 		total += count
 	if total == 0:
-		header_weapon.set_snaily_text("subscreen_header_unknown")
+		header_weapon.set_snaily_text(tr(&"?????"))
 	
 	total = 0
 	spr_offset = 0
@@ -174,12 +174,12 @@ func _init_item_slots() -> void:
 		var count:int = _get_item_count(i)
 		if count > 0:
 			var spr = _add_list_spr(slist_shell, i, "shell", spr_offset)
-			_add_list_text(tlist_shell, Item.get_name_str_from_id(i, true))
+			_add_list_text(tlist_shell, GlobalText.get_item_name(i, true))
 			spr_offset += LIST_SPRITE_OFFSET
 			_add_item_selectable(spr, i)
 		total += count
 	if total == 0:
-		header_shell.set_snaily_text("subscreen_header_unknown")
+		header_shell.set_snaily_text(tr(&"?????"))
 	
 	total = 0
 	spr_offset = 0
@@ -187,12 +187,12 @@ func _init_item_slots() -> void:
 		var count:int = _get_item_count(i)
 		if count > 0:
 			var spr = _add_list_spr(slist_ability, i, "ability", spr_offset)
-			_add_list_text(tlist_ability, Item.get_name_str_from_id(i))
+			_add_list_text(tlist_ability, GlobalText.get_item_name(i))
 			spr_offset += LIST_SPRITE_OFFSET
 			_add_item_selectable(spr, i)
 		total += count
 	if total == 0:
-		header_ability.set_snaily_text("subscreen_header_unknown")
+		header_ability.set_snaily_text(tr(&"?????"))
 
 
 func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> JsonSprite2D:
@@ -210,7 +210,7 @@ func _add_list_text(_group:VBoxContainer, _text:String) -> void:
 	new_text.shadow_scale = 1
 	new_text.text_scale = 1
 	_group.add_child(new_text)
-	new_text.set_snaily_text_raw(_text)
+	new_text.set_snaily_text(_text)
 
 
 func _add_item_selectable(_sprite:JsonSprite2D, _item_id:int) -> void:
@@ -279,20 +279,20 @@ func _test_for_move_selection() -> void:
 			_set_desc(selectable_items[selection][1])
 			map.modulate = Color(0.3, 0.3, 0.3)
 			marker_text.visible = false
-			select_text.set_snaily_text("subscreen_selection_list")
+			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
 			map.modulate = Color(0.3, 0.3, 0.3)
 			marker_text.visible = false
-			select_text.set_snaily_text("subscreen_selection_list")
+			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.MAP:
 			selector_target = sel_target_map.position
-			desc_name.set_snaily_text_raw("")
-			desc_body.set_snaily_text_raw("")
+			desc_name.set_snaily_text("")
+			desc_body.set_snaily_text("")
 			map.modulate = Color.WHITE
 			marker_text.visible = true
-			select_text.set_snaily_text("subscreen_selection")
+			select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 		MoveMode.GRID:
 			map_selection += grid_move
 			if map_selection.x < 0:
@@ -315,8 +315,8 @@ func _test_for_selection_events() -> void:
 				map_selector.visible = true
 				map_selector.action = "8"
 				map_selector.position = map_sel_origin + (map_selection * 8)
-				marker_text.set_snaily_text("subscreen_markers_place")
-				select_text.set_snaily_text("subscreen_markers_stop")
+				marker_text.set_snaily_text(tr(&"Place/remove marker - bind__UI_ACCEPT"))
+				select_text.set_snaily_text(tr(&"Return - bind__UI_BACK"))
 		1:
 			if map_focused:
 				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
@@ -326,48 +326,68 @@ func _test_for_selection_events() -> void:
 					sfx_select.play()
 					map_selector.action = "8_disable"
 					selection_depth -= 1
-					marker_text.set_snaily_text("subscreen_markers")
-					select_text.set_snaily_text("subscreen_selection")
+					marker_text.set_snaily_text(tr(&"Set markers - bind__UI_ACCEPT"))
+					select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 
 
 func _set_desc(id:int) -> void:
 	desc_name.visible = true
-	desc_name.set_snaily_text(Item.get_name_str_from_id(id, true))
+	desc_name.set_snaily_text(GlobalText.get_item_name(id, true))
 	var player = int(Statics.current_profile["character"])
+	var stacked_shells:StringName = tr(&"")
 	match id:
 		Item.ItemTypes.PEASHOOTER:
-			desc_body.set_snaily_text("subscreen_desc_peashooter")
+			desc_body.set_snaily_text(tr(&"The first line of defense.  This little gun lets you fire small yet hardy peas at any wayward foe.  They're not the most effective projectile, as they crumble from contact with enemy and surface alike, but they'll do in a pinch.\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.BOOMERANG:
-			desc_body.set_snaily_text("subscreen_desc_boomerang")
+			desc_body.set_snaily_text(tr(&"These little things can pack quite the punch!  Their points and edges are refined to catch wind and foe alike.  When tossed at just the right distance, the turnaround can score some big damage!\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.RAINBOW_WAVE:
-			desc_body.set_snaily_text("subscreen_desc_rainbowWave")
+			desc_body.set_snaily_text(tr(&"It's said that those who do good in the eyes of Iris are offered a small piece of her power.  Lucky you!! These sharpened shards of solid light can cut through just about any shell, wall, or particularly stubborn slime.\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.DEVASTATOR:
-			desc_body.set_snaily_text("subscreen_desc_devastator")
+			desc_body.set_snaily_text(tr(&"An old relic of unknown origin, said to empower the bearer with strength and fury to rival even the highest of gods.  At least, I think so; I may have slept through that class.  Regardless, having this on you powers up all of your attacks!  Neat, huh?"))
 		Item.ItemTypes.HIGH_JUMP:
 			if player == Player.Players.BLOBBY:
-				desc_body.set_snaily_text("subscreen_desc_wallGrab")
+				desc_body.set_snaily_text(tr(&"Contained inside is a ready-made meal crafted specifically to help make a blob's body stickier.  It's mostly hard candy.\n\n\n[color=#ffd48c]Hold toward a wall or ceiling while airborne to stick to it"))
 			else:
-				desc_body.set_snaily_text("subscreen_desc_highJump")
+				desc_body.set_snaily_text(tr(&"This badge is actually a container full of nothing but helium, allowing its wearer a little more air time when they jump!  Mind the fall, though; it doesn't cushion the landing very well.\n\n\n[color=#ffd48c]Hold the JUMP button to jump as high as possible"))
 		Item.ItemTypes.SHELL_SHIELD:
 			if player == Player.Players.BLOBBY:
-				desc_body.set_snaily_text("subscreen_desc_shelmet")
+				desc_body.set_snaily_text(tr(&"Now isn't this a nice find!!  This helmet looks just about sturdy enough to shrug off a hit or two and come out unscathed.  Plus, it's fashionable!!\n\n\n[color=#ffd48c]Press toward the ground to hide under it"))
 			else:
-				desc_body.set_snaily_text("subscreen_desc_shellShield")
+				desc_body.set_snaily_text(tr(&"With a little polish and protective slime, your shell is now capable of withstanding damage!  From the lightest graze to the heaviest blow, nothing is too much to handle anymore! Just remember to buff out the scratches when you get home.\n\n\n[color=#ffd48c]Press toward the ground to hide in your shell"))
 		Item.ItemTypes.RAPID_FIRE:
 			if player == Player.Players.LEECHY:
-				desc_body.set_snaily_text("subscreen_desc_backfire")
+				desc_body.set_snaily_text(tr(&"subscreen_desc_backfire"))
 			else:
-				desc_body.set_snaily_text("subscreen_desc_rapidFire")
-		Item.ItemTypes.NONE:
-			desc_body.set_snaily_text("subscreen_desc_normalShell")
-			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
-				desc_body.set_snaily_text("subscreen_desc_normalShell_afterWin")
+				desc_body.set_snaily_text(tr(&"An intriguing little gizmo.  Even just holding it makes you feel more nimble and energetic!  Throwing attacks at anything in your way should be much easier and quicker now."))
 		Item.ItemTypes.ICE_SHELL:
-			desc_body.set_snaily_text("subscreen_desc_iceShell")
+			desc_body.set_snaily_text(tr(&"This frosty relic grants its bearer a close attunement with the cold, preventing harm from any icy adversaries and environmental hazards.  It also gives your body a lovely shine!"))
+		Item.ItemTypes.GRAVITY_SHELL:
+			match player:
+				Player.Players.UPSIDE: desc_body.set_snaily_text(tr(&"subscreen_desc_magneticFoot"))
+				Player.Players.LEGGY: desc_body.set_snaily_text(tr(&"subscreen_desc_corkscrewJump"))
+				Player.Players.BLOBBY: desc_body.set_snaily_text(tr(&"subscreen_desc_angelJump"))
+				_: desc_body.set_snaily_text(tr(&"This badge is crafted from discarded gravity turtle scutes that still carry some of that innate control over the force.  With a little concentration, wearing this badge allows the wearer to redirect which direction they get pulled.\n\n\n[color=#ffd48c]Hold a direction and press the GRAVITY button to flip gravity"))
+			if Statics.stack_shells:
+				desc_body.set_snaily_text(desc_body.text + stacked_shells)
+		Item.ItemTypes.NONE:
+			desc_body.set_snaily_text(tr(&"It's you!\nThis is your normal self; how you've always known yourself.  You can take a hit or two, but not much else.  But hey, that just means there's room to grow!"))
+			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
+				desc_body.set_snaily_text(tr(&"Despite everything, it's still you.\nYou've come far.  You've changed.  Even through it all, though, it's never a bad idea to remember who you are at your core.  Self love is important, you know!"))
 		-2:
-			var pkeys = Player.Players.keys()
 			desc_name.visible = false
-			desc_body.set_snaily_text("subscreen_desc_" + pkeys[player].to_lower())
+			match player:
+				Player.Players.SNAILY:
+					desc_body.set_snaily_text(tr(&"Snaily is just your average slow-going, grass-eating, fun-loving snail.  There isn't much to separate them from the rest of Snail Town, except for one thing: their drive.  Snail Town picked them for this adventure knowing Snaily wouldn't shy away and would get it done, no matter how hard it would be.\n\nSnaily has the strength to climb up and around walls and ceilings, and sports a shell to hide in when things get scary."))
+				Player.Players.SLUGGY:
+					desc_body.set_snaily_text(tr(&"Slugs are not an uncommon sight around these parts, but none are quite as daring and adventurous as Sluggy!  Sluggy doesn't let the threat of danger scare them away from the adventure of a lifetime, and believes Snail Town's faith is not misplaced with them.\n\nSluggy's lack of a shell makes them take a little more damage, but also move faster and jump higher than a snail."))
+				Player.Players.UPSIDE:
+					desc_body.set_snaily_text(tr(&"Upside-Down Snail is a quirky one.  They're part gravity snail, but never quite figured out how exactly to get ahold of this power.  As such, they're locked to always falling upward.  They've gotten used to it, though, as have all their friends in town.\n\nIn spite of their strange gravity, Upside can climb walls and floors like any other snail, and their shell is just as good for hiding."))
+				Player.Players.LEGGY:
+					desc_body.set_snaily_text(tr(&"Leggy hasn't always lived in Snail Town, but it didn't take very long at all for him to be accepted into it.  After all, he's slow and has a shell!  When he's not tracking down missing snails, Leggy likes to relax and write music.\n\nLeggy is slower and can't climb walls, but he can flip his gravity off the bat."))
+				Player.Players.BLOBBY:
+					desc_body.set_snaily_text(tr(&"Not every blob is out to get you!!  Blobby is one such blob who has made peace with Snail Town, and has set out on this adventure to help its friends however it can.  Even if that means fighting off other blobs.\n\nBlobby can't climb walls, instead leaning into its innate talent for jumping and the unique abilities that come with being a blob."))
+				Player.Players.LEECHY:
+					desc_body.set_snaily_text(tr(&"Leechy desc"))
 		_:
-			desc_name.set_snaily_text_raw("")
-			desc_body.set_snaily_text_raw("")
+			desc_name.set_snaily_text("")
+			desc_body.set_snaily_text("")

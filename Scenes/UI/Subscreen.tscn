@@ -106,7 +106,7 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Name"
 text_scale = 1
-quick_load_text = "subscreen_header_name"
+quick_load_text = "Name"
 shadow_scale = 1
 
 [node name="PlayerIcon" type="Sprite2D" parent="GroupName"]
@@ -158,7 +158,7 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Weapon"
 text_scale = 1
-quick_load_text = "subscreen_header_weapon"
+quick_load_text = "Weapon"
 shadow_scale = 1
 
 [node name="SpriteGroup" type="Node2D" parent="GroupWeapon"]
@@ -194,7 +194,7 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Body"
 text_scale = 1
-quick_load_text = "subscreen_header_shell"
+quick_load_text = "Body"
 shadow_scale = 1
 
 [node name="SpriteGroup" type="Node2D" parent="GroupShell"]
@@ -230,7 +230,7 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Ability"
 text_scale = 1
-quick_load_text = "subscreen_header_ability"
+quick_load_text = "Ability"
 shadow_scale = 1
 
 [node name="SpriteGroup" type="Node2D" parent="GroupAbility"]
@@ -278,6 +278,7 @@ layout_mode = 2
 text = "Item descriptions"
 max_width = 192
 shadow_scale = 1
+border_scale = 1
 
 [node name="Body" parent="ItemDesc" instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
@@ -287,6 +288,7 @@ text = "This is where descriptions of whatever item is selected will go!"
 max_width = 192
 text_scale = 1
 shadow_scale = 1
+border_scale = 1
 
 [node name="MarkerPrompt" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
@@ -305,7 +307,7 @@ autowrap_mode = 0
 horizontal_alignment = 2
 max_width = 200
 text_scale = 1
-quick_load_text = "subscreen_markers"
+quick_load_text = "Set markers - bind__UI_ACCEPT"
 shadow_scale = 1
 
 [node name="SelectionPrompt" type="HBoxContainer" parent="."]
@@ -325,7 +327,7 @@ autowrap_mode = 0
 horizontal_alignment = 2
 max_width = 200
 text_scale = 1
-quick_load_text = "subscreen_selection"
+quick_load_text = "Swap selection - bind__LEFT bind__RIGHT"
 shadow_scale = 1
 
 [node name="MapRate" type="HBoxContainer" parent="."]
@@ -344,7 +346,7 @@ text = "Map
 0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "subscreen_mapRate"
+quick_load_text = "Map\\n%.1f%%"
 shadow_scale = 1
 
 [node name="ItemRate" type="HBoxContainer" parent="."]
@@ -363,7 +365,7 @@ text = "Items
 0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "subscreen_itemRate"
+quick_load_text = "Items\\n%.1f%%"
 shadow_scale = 1
 
 [node name="Time" type="HBoxContainer" parent="."]
@@ -382,7 +384,7 @@ text = "Time
 0:00:00.00"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "subscreen_time"
+quick_load_text = "Time\\n%s"
 shadow_scale = 1
 
 [node name="AudioGroup" type="Node" parent="."]

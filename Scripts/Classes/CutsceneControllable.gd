@@ -21,6 +21,10 @@ func _ready():
 	actors.append(self)
 
 
+func is_in_top_half_of_screen() -> bool:
+	return Input.is_action_pressed(&"debug")
+
+
 ## Apply a force to the object. Returns true if force was applied.
 @abstract func impulse(_direction:Vector2) -> bool
 
@@ -51,11 +55,20 @@ func _ready():
 
 
 ## Stops the object from accepting player inputs. Fake inputs should still be accepted. Returns true if locking or unlocking succeeded.
-@abstract func lock_inputs(_locked:bool) -> bool
+@abstract func disable_ai(_locked:bool) -> bool
 
 
-## Returns true of the object has the specified item
+## Returns true if the object has the specified item
 @abstract func has_item(_id:Item.ItemTypes) -> bool
+
+
+## Adds the specified item in the specified quantity to the object's inventory
+@abstract func give_item(_id:Item.ItemTypes, _quantity:int) -> bool
+
+
+## Removes the specified item in the specified quantity from the object's inventory
+## Returns true if the specified amount was successfully removed without surpassing a remaining count of zero
+@abstract func take_item(_id:Item.ItemTypes, _quantity:int) -> bool
 
 
 ## Returns true if the object can currently perform the diesired action, such as "fire_boomerang", or "gravity_up"

@@ -1,0 +1,22 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+match CutsceneController.object_id
+	when "22"
+		if Statics.get_item_percentage() < 100.0
+			# ShakeHere
+			NPC22: I are [color=#ff4f99]Cave Snail[/color]![wait=0.25] Thorgle Borgle!!!!
+		else
+			# ShakeHere
+			NPC22: Thorgle Borgle!!!!!!!
+	
+	when "23"
+		if Statics.get_item_percentage() < 100.0 and not Statics.get_world_flag(Statics.WorldFlags.HAS_SEEN_CAVE_SNAIL)
+			NPC23: [color=#ff4f99]Cave Snail[/color] scares me![wait=0.25] I'm staying over here!
+		elif Statics.get_item_percentage() < 60.0
+			NPC23: Hey,[wait=0.125] if you get stuck,[wait=0.125] just hit {{GlobalText.COL_CTRL}}"{{SInput.icon_pause}}"[/color] and warp straight to town![wait=0.125]  You won't lose any items!
+		else
+			NPC23: Do you think [color=#ff4f99]Cave Snail[/color] is single?
+=> END

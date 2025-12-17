@@ -24,7 +24,7 @@ enum Achievements {
 	SNELK_B,
 	SECRET_BOOMERANG,
 	REMAKE_TEST_ROOMS,
-	MAZE_BIRDS,
+	FILL_BESTIARY,
 	FLASH_TEST_ROOMS,
 	WIN_ABSURD,
 	WIN_RANDOMIZER,
@@ -74,7 +74,7 @@ func _add_to_queue(id:Achievements) -> void:
 		jingle.play()
 		panel.visible = true
 		panel.action = "open"
-		header.set_snaily_text("hud_achievement")
+		header.set_snaily_text(tr("Achievement!!"))
 
 
 func _on_timer_timeout() -> void:

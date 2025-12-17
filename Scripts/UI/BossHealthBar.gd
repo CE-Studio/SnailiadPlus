@@ -15,6 +15,7 @@ var boss:Boss = null
 var damage_update_timeout:float = 0.0
 var intro_fill:float = 0.0
 var name_shake_time:float = 0.0
+var programmatic_shake:bool = true
 var outro_shake:bool = false
 var defeated_origin:Vector2 = Vector2.ZERO
 
@@ -42,14 +43,30 @@ func _ready() -> void:
 	_update_main(_get_bar_pos_from_ratio(0))
 	_update_damaged(_get_bar_pos_from_ratio(0))
 	defeated_origin = defeated_container.position
+	if frame.meta.size() > 0 and frame.meta.keys().has("programmatic_shake"):
+		var shake = frame.meta["programmatic_shake"]
+		if shake is bool:
+			programmatic_shake = shake
 
 
 func instance(_boss:Boss) -> void:
 	boss = _boss
 	var _name:String = Enemy.EnemyTypes.keys()[_boss.my_type]
 	_name = _name.to_camel_case()
-	boss_name.set_snaily_text("boss_%s" % _name)
-	defeated.set_snaily_text("boss_defeated")
+	match _name:
+		"shellbreaker": boss_name.set_snaily_text(tr(&"Shellbreaker"))
+		"shellbreakerRush": boss_name.set_snaily_text(tr(&"Super Shellbreaker"))
+		"stompy": boss_name.set_snaily_text(tr(&"Stompy"))
+		"stompyRush": boss_name.set_snaily_text(tr(&"Vis Vires"))
+		"spacebox": boss_name.set_snaily_text(tr(&"Space Box"))
+		"spaceboxRush": boss_name.set_snaily_text(tr(&"Time Cube"))
+		"moonsnail": boss_name.set_snaily_text(tr(&"Moon Snail"))
+		"moonsnailRush": boss_name.set_snaily_text(tr(&"Sun Snail"))
+		"gigasnail": boss_name.set_snaily_text(tr(&"Giga Snail"))
+		"gigasnailRush": boss_name.set_snaily_text(tr(&"Giga Sun Snail"))
+		"cosmicsnail": boss_name.set_snaily_text(tr(&"Cosmic Snail"))
+		"cosmicsnailRush": boss_name.set_snaily_text(tr(&"Cosmic Sun Snail"))
+	defeated.set_snaily_text(tr(&"Defeated!!"))
 
 
 func _process(delta: float) -> void:
@@ -72,7 +89,7 @@ func _process(delta: float) -> void:
 		)
 		boss_name_container.position = container_shake
 		defeated_container.position = container_shake + defeated_origin
-		if frame.meta["programmatic_shake"] == true:
+		if programmatic_shake:
 			frame.position.x += randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
 
 
@@ -113,7 +130,7 @@ func _despawn() -> void:
 func update() -> void:
 	_update_main()
 	damage_update_timeout = DAMAGE_UPDATE_TIMEOUT
-	if frame.meta["programmatic_shake"] == true:
+	if programmatic_shake:
 		frame.position.x += randf_range(-SHAKE_VARIANCE, SHAKE_VARIANCE)
 	frame.action = "frame_damage"
 	main.action = "bar_main_damage"

@@ -19,10 +19,13 @@ var valid_chars:Array = [
 
 
 func _ready() -> void:
-	title_string = Statics.get_text("menu_title")
+	title_string = tr(&"snailiad+")
 	if randf() <= RARE_CHANCE:
-		var rare_id = ceili(randf() * 4)
-		title_string = Statics.get_text("menu_title_rare" + str(rare_id))
+		match floori(randf() * 4):
+			0: title_string = tr(&"snaliad+")
+			1: title_string = tr(&"snailaid+")
+			2: title_string = tr(&"snailidad+")
+			3: title_string = tr(&"snailad+")
 	title_string = title_string.to_lower()
 	var spawn_pos = Vector2.ZERO
 	var spawn_delay = 0.0

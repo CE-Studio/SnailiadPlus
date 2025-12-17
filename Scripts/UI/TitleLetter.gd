@@ -53,7 +53,14 @@ func spawn(new_letter:String, delay:float) -> int:
 	life_time = START_TIME - delay
 	var letter_id = letter_ids[letter]
 	y_loop = randf_range(-0.5, 0.5)
-	return sprite.meta["widths"][letter_id]
+	
+	var out_width:int = 32
+	if sprite.meta.size() > 0 and sprite.meta.keys().has("widths"):
+		if sprite.meta["widths"].size() > letter_id:
+			var width = sprite.meta["widths"][letter_id]
+			if Statics.is_number(width):
+				out_width = clampi(width, 0, 128)
+	return out_width
 
 
 func  _process(delta: float) -> void:

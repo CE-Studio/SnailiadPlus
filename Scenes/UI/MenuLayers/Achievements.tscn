@@ -31,7 +31,7 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 max_width = 380
 text_scale = 1
-quick_load_text = "menu_option_achievements_progress"
+quick_load_text = "%d/%d unlocked"
 border_scale = 1
 
 [node name="HintGuide" type="HBoxContainer" parent="MainVBox"]
@@ -45,7 +45,7 @@ theme_override_font_sizes/normal_font_size = 8
 autowrap_mode = 0
 max_width = 380
 text_scale = 1
-quick_load_text = "menu_option_achievements_guide"
+quick_load_text = "bind__UI_ACCEPT - Show achievement hint"
 border_scale = 1
 
 [node name="HSeparatorTop" type="HSeparator" parent="MainVBox"]
@@ -94,7 +94,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../MainScroller")
 focus_next = NodePath("../MainScroller")
 focus_previous = NodePath("../MainScroller")
-text_id = "menu_option_records_returnTo"
+button_text = "Return to records"
 back_one_layer = true
 hide_frame = true
 

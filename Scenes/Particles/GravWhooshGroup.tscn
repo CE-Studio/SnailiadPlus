@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://3nugcck47ndn"]
+
+[ext_resource type="Script" uid="uid://c10nkj1w60len" path="res://Scripts/Particles/GravWhooshGroup.gd" id="1_1hegb"]
+[ext_resource type="Texture2D" uid="uid://cn22rscu7mik0" path="res://Assets/Images/Particles/GravWhoosh.png" id="1_fb1ha"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_1hegb"]
+
+[node name="GravWhooshGroup" type="Node2D"]
+script = ExtResource("1_1hegb")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+position = Vector2(-2, -5)
+texture = ExtResource("1_fb1ha")
+hframes = 8
+vframes = 5
+frame = 8
+script = ExtResource("2_1hegb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite2" type="Sprite2D" parent="."]
+position = Vector2(7, -1)
+texture = ExtResource("1_fb1ha")
+hframes = 8
+vframes = 5
+frame = 9
+script = ExtResource("2_1hegb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite3" type="Sprite2D" parent="."]
+position = Vector2(-7, 2)
+texture = ExtResource("1_fb1ha")
+hframes = 8
+vframes = 5
+frame = 10
+script = ExtResource("2_1hegb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite4" type="Sprite2D" parent="."]
+position = Vector2(4, -21)
+texture = ExtResource("1_fb1ha")
+hframes = 8
+vframes = 5
+frame = 11
+script = ExtResource("2_1hegb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

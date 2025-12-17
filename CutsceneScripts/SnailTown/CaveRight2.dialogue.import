@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dwdhrtvcun4ml"
+path="res://.godot/imported/CaveRight2.dialogue-5255e506654d2642b3c9a0e6c367bcc0.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/CaveRight2.dialogue"
+dest_files=["res://.godot/imported/CaveRight2.dialogue-5255e506654d2642b3c9a0e6c367bcc0.tres"]
+
+[params]
+
+defaults=true

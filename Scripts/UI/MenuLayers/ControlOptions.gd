@@ -11,12 +11,9 @@ var panel_up:bool = false
 
 func _ready() -> void:
 	panel.modulate.a = 0
-	panel.call_deferred("set_text",
-		"menu_option_controls_default_confirm", 1)
-	panel.call_deferred("add_button",
-		Statics.get_text("menu_add_generic_no"), _on_panel_no, false)
-	panel.call_deferred("add_button",
-		Statics.get_text("menu_add_generic_yes"), _on_panel_yes, false)
+	panel.call_deferred("set_text", tr(&"Are you sure you want to reset all binds?"), 1)
+	panel.call_deferred("add_button", tr(&"No"), _on_panel_no, false)
+	panel.call_deferred("add_button", tr(&"Yes"), _on_panel_yes, false)
 
 
 func _process(delta: float) -> void:

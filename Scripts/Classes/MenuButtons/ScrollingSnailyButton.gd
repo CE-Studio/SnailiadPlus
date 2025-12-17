@@ -8,7 +8,8 @@ extends SnailyButton
 const HOVER_ARROW_MAX_ALPHA = 0.5
 const HOVER_ARROW_CYCLE_SPEED = 8.0
 
-@export var header_id:String = ""
+@export var header_text:String = ""
+@export var cycle_option_text:String = ""
 @export var auto_select_mode:bool = false # Automatically enable cycling when button is focused, and enable emitting of button_pressed
 @export var cycle_options:Array[String] = []
 @export var focus_option:int = 0
@@ -52,12 +53,17 @@ func _ready() -> void:
 	header.add_shadow(1)
 	option.add_shadow(1)
 	if not Engine.is_editor_hint():
-		if header_id.strip_edges() == "":
-			header.set_snaily_text_raw("Text!!")
+		if header_text.strip_edges() == "":
+			header.set_snaily_text(tr(&"Text!!"))
 		else:
-			header.set_snaily_text(header_id)
+			header.set_snaily_text(header_text.replace("\\n", "\n"))
+		if cycle_option_text.strip_edges() != "":
+			var options:PackedStringArray = cycle_option_text.split("|")
+			cycle_options.append_array(options)
+			for i in cycle_options.size():
+				cycle_options[i] = cycle_options[i].replace("\\n", "\n")
 		if cycle_options.size() == 0:
-			option.set_snaily_text("menu_option_scroller_none")
+			option.set_snaily_text(tr(&"[Empty array!]"))
 			selected_option = -1
 			disabled = true
 		else:
@@ -137,7 +143,7 @@ func _check_right() -> bool:
 
 
 func set_header(_text:String) -> void:
-	header.set_snaily_text_raw(_text)
+	header.set_snaily_text(_text)
 
 
 func remote_set_option(value:int) -> void:

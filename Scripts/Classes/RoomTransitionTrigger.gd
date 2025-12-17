@@ -29,5 +29,6 @@ func _on_player_enter(_area):
 	if exit_room != "" and not_exiting and spawn_buffer_frames == 0:
 		not_exiting = false
 		var offset = GameCore.instance.player.body.global_position - area.global_position
+		UICore.instance.color_cover.call_thread_safe("set_color", Color8(0, 0, 0, 120))
 		GameCore.instance.call_deferred("spawn_room", exit_room, exit_transition, offset)
 		UICore.instance.color_cover.set_new_fade(Color8(0, 0, 0, 255), Color8(0, 0, 0, 0), 0.25)

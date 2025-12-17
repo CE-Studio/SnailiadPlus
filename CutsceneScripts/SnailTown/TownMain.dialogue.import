@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cucvtkmwuuh06"
+path="res://.godot/imported/TownMain.dialogue-e23a665430b86ff0e03c38ac45e56910.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SnailTown/TownMain.dialogue"
+dest_files=["res://.godot/imported/TownMain.dialogue-e23a665430b86ff0e03c38ac45e56910.tres"]
+
+[params]
+
+defaults=true

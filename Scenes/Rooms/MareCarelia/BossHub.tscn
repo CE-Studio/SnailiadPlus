@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://ci45kbgwtux5p"]
+[gd_scene load_steps=10 format=4 uid="uid://ci45kbgwtux5p"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ud8rh"]
+[ext_resource type="Resource" uid="uid://by0wiacu8b35e" path="res://CutsceneScripts/MareCarelia/BossHub.dialogue" id="2_2lpra"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_exv6x"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_3xson"]
 [ext_resource type="PackedScene" uid="uid://ba4iceix628de" path="res://Scenes/Entities/SavePoint.tscn" id="3_lfm3l"]
@@ -19,6 +20,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_ud8rh")
 area_id = 1
+cutscene_script = ExtResource("2_2lpra")
 minimap_offset = Vector2i(14, 1)
 song_change = 3
 tiled_corner = Vector2i(365, 17)

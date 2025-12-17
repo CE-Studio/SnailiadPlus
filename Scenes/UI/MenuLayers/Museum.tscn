@@ -24,7 +24,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Gallery")
 focus_next = NodePath("../Gallery")
 focus_previous = NodePath("../Back")
-text_id = "menu_option_records_times"
+button_text = "Best times"
 quick_load_layer = "Times"
 grab_focus_on_load = true
 hide_frame = true
@@ -38,7 +38,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Achievements")
 focus_next = NodePath("../Achievements")
 focus_previous = NodePath("../Times")
-text_id = "menu_option_records_gallery"
+button_text = "Gallery"
 hide_frame = true
 
 [node name="Achievements" parent="MainVBox" instance=ExtResource("2_v7ejv")]
@@ -50,7 +50,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Bestiary")
 focus_next = NodePath("../Bestiary")
 focus_previous = NodePath("../Gallery")
-text_id = "menu_option_records_achievements"
+button_text = "Achievements"
 quick_load_layer = "Achievements"
 hide_frame = true
 
@@ -63,7 +63,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SoundTest")
 focus_next = NodePath("../SoundTest")
 focus_previous = NodePath("../Achievements")
-text_id = "menu_option_records_bestiary"
+button_text = "Bestiary"
 quick_load_layer = "Bestiary"
 hide_frame = true
 
@@ -76,7 +76,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../Bestiary")
-text_id = "menu_option_records_soundTest"
+button_text = "Sound test"
 hide_frame = true
 
 [node name="HSeparator" type="HSeparator" parent="MainVBox"]
@@ -93,6 +93,6 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Times")
 focus_next = NodePath("../Times")
 focus_previous = NodePath("../SoundTest")
-text_id = "menu_option_main_returnTo"
+button_text = "Back to main menu"
 back_one_layer = true
 hide_frame = true

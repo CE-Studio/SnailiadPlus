@@ -27,7 +27,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Default")
 focus_next = NodePath("../Default")
 focus_previous = NodePath("../Back")
-text_id = "menu_option_controls_remap"
+button_text = "Remap controls"
 quick_load_layer = "SetControls"
 grab_focus_on_load = true
 hide_frame = true
@@ -46,7 +46,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ConOptions")
 focus_next = NodePath("../ConOptions")
 focus_previous = NodePath("../ConOptions")
-text_id = "menu_option_controls_default"
+button_text = "Reset all to defaults"
 hide_frame = true
 
 [node name="ConOptions" parent="MainVBox" instance=ExtResource("2_mn8gm")]
@@ -58,7 +58,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../Default")
-text_id = "menu_option_controls_conSettings"
+button_text = "Controller settings"
 quick_load_layer = "ControllerOptions"
 hide_frame = true
 
@@ -76,7 +76,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Remap")
 focus_next = NodePath("../Remap")
 focus_previous = NodePath("../ConOptions")
-text_id = "menu_option_options_returnTo"
+button_text = "Back to options"
 back_one_layer = true
 hide_frame = true
 

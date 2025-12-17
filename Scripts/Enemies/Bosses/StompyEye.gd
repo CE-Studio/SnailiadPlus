@@ -43,8 +43,11 @@ func _ready() -> void:
 	pupil.action = "p0_left" if left else "p0_right"
 	eyelid.action = "p0_left_open" if left else "p0_right_open"
 	
-	if pupil.meta["clip"] and not display_mode:
-		pupil.reparent(sprite)
+	if pupil.meta.size() > 0 and pupil.meta.keys().has("clip"):
+		var clip = pupil.meta["clip"]
+		if clip is bool:
+			if clip and not display_mode:
+				pupil.reparent(sprite)
 	
 	if hard_mode:
 		SHOT_TIMEOUT *= 0.5

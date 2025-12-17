@@ -12,6 +12,7 @@ var current_room_name:String
 var current_area:int = -1
 var sfx_group:Node
 var music_manager:MusicManager
+var lim_sfx_handler:LimitedSoundHandler
 
 
 func _ready() -> void:
@@ -23,6 +24,7 @@ func _ready() -> void:
 	cam_layer = $"CameraLayer"
 	cam_layer.instantiate()
 	music_manager = $"MusicManager"
+	lim_sfx_handler = $"LimitedSoundHandler"
 	if current_room == null:
 		spawn_room(Statics.load_room)
 		player.reset_position(Statics.load_coords)
@@ -54,7 +56,7 @@ func inc_game_time(delta:float) -> void:
 	
 	if UICore.instance:
 		var time_str:String = Statics.get_igt_str()
-		UICore.instance.igt_text.set_snaily_text_raw(time_str)
+		UICore.instance.igt_text.set_snaily_text(time_str)
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:
@@ -107,7 +109,7 @@ func handle_cheats() -> void:
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, false)
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, false)
 					Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, false)
-					UICore.instance.show_flashy_popup(Statics.get_text("cheat_skyfish"))
+					UICore.instance.show_flashy_popup(tr(&"- Skyfish Flies Again -"))
 					cheat_executed = true
 			_:
 				pass

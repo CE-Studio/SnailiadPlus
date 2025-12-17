@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcnhusvdt66ym"]
+[gd_scene load_steps=7 format=3 uid="uid://bcnhusvdt66ym"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_uukgo"]
-[ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://Resources/MenuTheme.tres" id="2_2h4nq"]
 [ext_resource type="Script" uid="uid://bp2nv083jllbm" path="res://Scripts/UI/MenuLayers/GameplayOptions.gd" id="2_n8y14"]
 [ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="3_c8ry5"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="4_n8y14"]
@@ -27,7 +26,6 @@ custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("2_2h4nq")
 theme_override_styles/panel = ExtResource("3_c8ry5")
 follow_focus = true
 scroll_horizontal_custom_step = 1.0
@@ -48,7 +46,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ShootMode")
 focus_next = NodePath("../ShootMode")
 focus_previous = NodePath("../../../Back")
-text_id = "menu_option_gameplay_dynamicCam"
+button_text = "Dynamic camera"
 grab_focus_on_load = true
 
 [node name="ShootMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
@@ -59,9 +57,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Breakables")
 focus_next = NodePath("../Breakables")
 focus_previous = NodePath("../DynamicCamera")
-header_id = "menu_option_gameplay_shooting"
+header_text = "Shoot mode"
+cycle_option_text = "Normal|Toggle"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_shooting_normal", "menu_add_shooting_toggle"])
 
 [node name="Breakables" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -71,9 +69,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SecretMap")
 focus_next = NodePath("../SecretMap")
 focus_previous = NodePath("../ShootMode")
-header_id = "menu_option_gameplay_breakables"
+header_text = "Show breakables"
+cycle_option_text = "Off|Obvious,\\nany shot|All,\\nany shot|Obvious, permeating\\nshots only|All, permeating\\nshots only"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_off", "menu_add_breakables_some", "menu_add_breakables_all", "menu_add_breakables_some_permeating", "menu_add_breakables_all_permeating"])
 
 [node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
 layout_mode = 2
@@ -83,7 +81,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../TargetFPS")
 focus_next = NodePath("../TargetFPS")
 focus_previous = NodePath("../Breakables")
-text_id = "menu_option_gameplay_secretTiles"
+button_text = "Show secret map tiles"
 
 [node name="TargetFPS" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -93,9 +91,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ScreenShake")
 focus_next = NodePath("../ScreenShake")
 focus_previous = NodePath("../SecretMap")
-header_id = "menu_option_gameplay_frameLimit"
+header_text = "Target framerate"
+cycle_option_text = "Unlimited|30FPS|60FPS|120FPS"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_frameLimit_none", "menu_add_frameLimit_30", "menu_add_frameLimit_60", "menu_add_frameLimit_120"])
 focus_option = 2
 
 [node name="ScreenShake" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
@@ -103,25 +101,35 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../TargetFPS")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../StickAimMode")
-focus_next = NodePath("../StickAimMode")
+focus_neighbor_bottom = NodePath("../DamageNumbers")
+focus_next = NodePath("../DamageNumbers")
 focus_previous = NodePath("../TargetFPS")
-header_id = "menu_option_gameplay_screenShake"
+header_text = "Screen shake"
+cycle_option_text = "Off|Minimal|On|Minimal (no HUD shake)|On (no HUD shake)"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_generic_off", "menu_add_shake_minimal", "menu_add_generic_on", "menu_add_shake_minNoHud", "menu_add_shake_noHud"])
 focus_option = 2
 
-[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="DamageNumbers" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ScreenShake")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../StickAimMode")
+focus_next = NodePath("../StickAimMode")
+focus_previous = NodePath("../ScreenShake")
+button_text = "Show damage numbers"
+
+[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../DamageNumbers")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../GravSwap")
 focus_next = NodePath("../GravSwap")
-focus_previous = NodePath("../ScreenShake")
-header_id = "menu_option_gameplay_stickAimMode"
+focus_previous = NodePath("../DamageNumbers")
+header_text = "Stick aiming mode"
+cycle_option_text = "8-direction|360 degrees"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_stickAimMode_octo", "menu_add_stickAimMode_omni"])
 
 [node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -131,9 +139,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../GravKeep")
 focus_next = NodePath("../GravKeep")
 focus_previous = NodePath("../StickAimMode")
-header_id = "menu_option_gameplay_gravSwap"
+header_text = "Swap gravity direction on..."
+cycle_option_text = "Hold direction, tap jump|Hold jump, tap direction|Double-tap direction|Gravity button only"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_gravSwap_onJump", "menu_add_gravSwap_onDir", "menu_add_gravSwap_onDoubleTap", "menu_add_gravSwap_buttonOnly"])
 disabled = true
 
 [node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
@@ -144,9 +152,9 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../../Back")
 focus_next = NodePath("../../../Back")
 focus_previous = NodePath("../GravSwap")
-header_id = "menu_option_gameplay_gravKeep"
+header_text = "Keep gravity direction until..."
+cycle_option_text = "You stick to a wall|You gravity jump"
 auto_select_mode = true
-cycle_options = Array[String](["menu_add_gravKeep_onState", "menu_add_gravKeep_onJump"])
 disabled = true
 
 [node name="Back" parent="MainVBox" instance=ExtResource("5_1l54c")]
@@ -158,7 +166,6 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/DynamicCamera")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/DynamicCamera")
 focus_previous = NodePath("../ScrollContainer/VBoxContainer/GravKeep")
-text_id = "menu_option_options_returnTo"
 back_one_layer = true
 hide_frame = true
 
@@ -168,6 +175,7 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/SecretMap" to="MainVBox" method="_on_secret_map_tiles_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/TargetFPS" to="MainVBox" method="_on_target_fps_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="_on_screen_shake_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DamageNumbers" to="MainVBox" method="_on_damage_numbers_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/StickAimMode" to="MainVBox" method="_on_stick_aim_mode_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravSwap" to="MainVBox" method="_on_grav_swap_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/GravKeep" to="MainVBox" method="_on_grav_keep_cycled"]

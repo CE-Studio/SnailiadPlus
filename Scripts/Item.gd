@@ -65,7 +65,8 @@ func _ready() -> void:
 
 	var id_str
 	var character = int(Statics.current_profile["character"])
-	name_str = get_name_str_from_id(type)
+	#name_str = get_name_str_from_id(type)
+	name_str = GlobalText.get_item_name(type)
 	match type:
 		ItemTypes.PEASHOOTER:
 			id_str = "Peashooter"
@@ -132,84 +133,6 @@ func _ready() -> void:
 	sprite.action = "item"
 
 	UICore.instance.darkness_layer.add_source(self, 48)
-
-
-static func get_name_str_from_id(id:ItemTypes, specify_shell:bool = false) -> String:
-	var character = int(Statics.current_profile["character"])
-	var species = Statics.get_character_species_string(character)
-	var shell = Statics.get_text("subscreen_shell")
-	match id:
-		ItemTypes.PEASHOOTER:
-			return Statics.get_text("item_peashooter")
-		ItemTypes.BOOMERANG:
-			return Statics.get_text("item_boomerang")
-		ItemTypes.RAINBOW_WAVE:
-			return Statics.get_text("item_rainbowWave")
-		ItemTypes.DEVASTATOR:
-			return Statics.get_text("item_devastator")
-		ItemTypes.HIGH_JUMP:
-			if character == Player.Players.BLOBBY:
-				return Statics.get_text("item_wallGrab")
-			return Statics.get_text("item_highJump")
-		ItemTypes.SHELL_SHIELD:
-			if character == Player.Players.BLOBBY:
-				return Statics.get_text("item_shelmet")
-			return Statics.get_text("item_shellShield")
-		ItemTypes.RAPID_FIRE:
-			if character == Player.Players.LEECHY:
-				return Statics.get_text("item_backfire")
-			return Statics.get_text("item_rapidFire")
-		ItemTypes.ICE_SHELL:
-			return Statics.get_text("item_iceSnail") % species
-		ItemTypes.GRAVITY_SHELL:
-			match character:
-				Player.Players.UPSIDE:
-					return Statics.get_text("item_magneticFoot")
-				Player.Players.LEGGY:
-					return Statics.get_text("item_corkscrewJump")
-				Player.Players.BLOBBY:
-					return Statics.get_text("item_angelJump")
-				_:
-					return Statics.get_text("item_gravSnail") % species
-		ItemTypes.METAL_SHELL:
-			match character:
-				Player.Players.SLUGGY or Player.Players.LEECHY:
-					return Statics.get_text("item_fullMetalSnail_noShell") % species
-				Player.Players.BLOBBY:
-					return Statics.get_text("item_fullMetalSnail_blob") % species
-				_:
-					if specify_shell:
-						return Statics.get_text("item_fullMetalSnail_generic") % shell
-					return Statics.get_text("item_fullMetalSnail_generic") % species
-		ItemTypes.GRAVITY_SHOCK:
-			return Statics.get_text("item_gravityShock")
-		ItemTypes.SECRET_BOOMERANG:
-			return Statics.get_text("item_boomerang_secret")
-		ItemTypes.DEBUG_WAVE:
-			return Statics.get_text("item_rainbowWave_secret")
-		ItemTypes.HEART_CONTAINER:
-			return Statics.get_text("item_heartContainer_noNum")
-		ItemTypes.HELIX_FRAGMENT:
-			return Statics.get_text("item_helixFragment_noNum")
-		#ItemTypes.RADAR_SHELL:
-		ItemTypes.WEAPON_LOCK_TRAP:
-			return Statics.get_text("item_trapWeapon")
-		ItemTypes.GRAVITY_LOCK_TRAP:
-			return Statics.get_text("item_trapGravity")
-		ItemTypes.LULLABY_TRAP:
-			return Statics.get_text("item_trapLullaby")
-		ItemTypes.SPIDER_TRAP:
-			return Statics.get_text("item_trapSpider")
-		ItemTypes.WARP_TRAP:
-			return Statics.get_text("item_trapWarp")
-	if specify_shell:
-		var normal = Statics.get_text("subscreen_shellNormal")
-		match character:
-			Player.Players.SLUGGY or Player.Players.BLOBBY or Player.Players.LEECHY:
-				return normal % species
-			_:
-				return normal % shell
-	return "item_nothing"
 
 
 func _process(delta: float) -> void:
@@ -291,18 +214,14 @@ func _on_player_entered(_body: Node2D) -> void:
 					GameCore.instance.player._toggle_weapon(3)
 				UICore.instance.update_weapon_icons(false)
 			ItemTypes.HEART_CONTAINER:
-				if Statics.is_in_boss_rush:
-					name_str = Statics.get_text("item_heartContainer_noNum")
-				else:
-					name_str = Statics.get_text("item_heartContainer") % Statics.check_item(ItemTypes.HEART_CONTAINER)
+				if not Statics.is_in_boss_rush:
+					name_str = tr(&"Heart Container #%d")
 				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 				GameCore.instance.player.health = GameCore.instance.player.max_health
 				UICore.instance.draw_new_hearts()
 			ItemTypes.HELIX_FRAGMENT:
-				if Statics.is_in_boss_rush:
-					name_str = Statics.get_text("item_helixFragment_noNum")
-				else:
-					name_str = Statics.get_text("item_helixFragment") % Statics.check_item(ItemTypes.HELIX_FRAGMENT)
+				if not Statics.is_in_boss_rush:
+					name_str = tr(&"Helix Fragment #%d")
 			#ItemTypes.RADAR_SHELL:
 			#ItemTypes.WEAPON_LOCK_TRAP:
 			#ItemTypes.GRAVITY_LOCK_TRAP:

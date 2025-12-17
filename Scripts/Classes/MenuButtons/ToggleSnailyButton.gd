@@ -5,7 +5,7 @@ extends SnailyButton
 
 
 #region Variables
-@export var text_id:String = ""
+@export var button_text:String = ""
 @export var toggled_on:bool = false:
 	set(value):
 		toggled_on = value
@@ -26,10 +26,10 @@ func _ready() -> void:
 	text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	text.add_shadow(1)
 	if not Engine.is_editor_hint():
-		if text_id.strip_edges() == "":
-			text.set_snaily_text("Text!!")
+		if button_text.strip_edges() == "":
+			text.set_snaily_text(tr(&"Text!!"))
 		else:
-			text.set_snaily_text(Statics.get_text(text_id))
+			text.set_snaily_text(button_text.replace("\\n", "\n"))
 		text.modulate = COLOR_DISABLED if disabled else COLOR_ENABLED
 	toggled_on = toggled_on
 

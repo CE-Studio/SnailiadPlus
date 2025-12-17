@@ -70,14 +70,13 @@ theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(16, 0)
+custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/Z.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 16
-shadow_scale = 1
+max_width = 17
 
 [node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -94,14 +93,13 @@ theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(16, 0)
+custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/K.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 16
-shadow_scale = 1
+max_width = 17
 
 [node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -118,14 +116,13 @@ theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(16, 0)
+custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 16
-shadow_scale = 1
+max_width = 17
 
 [node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -142,14 +139,13 @@ theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" instance=ExtResource("3_atxd7")]
-custom_minimum_size = Vector2(16, 0)
+custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/R1.png[/img]"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
-max_width = 16
-shadow_scale = 1
+max_width = 17
 
 [node name="AudioGroup" type="Node" parent="."]
 
