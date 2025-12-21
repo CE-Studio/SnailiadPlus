@@ -42,6 +42,7 @@ var cc_lookat_pos:Vector2 = Vector2.ZERO
 @onready var body:CharacterBody2D = $"CharacterBody2D"
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
 @onready var bubble:SpeechBubble = $"SpeechBubble"
+@onready var emote:EmoteLayer = $"EmoteLayer"
 var colorized_sprite:Texture2D
 #endregion
 

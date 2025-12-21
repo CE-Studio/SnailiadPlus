@@ -252,6 +252,7 @@ var shell_casts:Array[RayCast2D]
 var shield_particle:Particle
 var timer_die_fade:Timer
 var timer_die_respawn:Timer
+var emote:EmoteLayer
 
 
 var debug_print_adjustments:bool = false
@@ -278,6 +279,7 @@ func _ready():
 	cast_group = $"CastGroup"
 	timer_die_fade = $"TimerGroup/DieFadeDelay"
 	timer_die_respawn = $"TimerGroup/RespawnDelay"
+	emote = $"EmoteLayer"
 
 	var rect := box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1

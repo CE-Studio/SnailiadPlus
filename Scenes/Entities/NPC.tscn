@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcnffsfter41s"]
+[gd_scene load_steps=9 format=3 uid="uid://bcnffsfter41s"]
 
 [ext_resource type="Script" uid="uid://nb8y0k81l61i" path="res://Scripts/NPC.gd" id="1_4a2w1"]
 [ext_resource type="Texture2D" uid="uid://cp668vus8s3n0" path="res://Assets/Images/Entities/NPC.png" id="2_4a2w1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_4a2w1"]
 [ext_resource type="AudioStream" uid="uid://q5frvpwnb3mn" path="res://Assets/Sounds/Sfx/Jump.ogg" id="5_yb3dg"]
 [ext_resource type="PackedScene" uid="uid://g7dqjpjrexfs" path="res://Scenes/UI/SpeechBubble.tscn" id="6_wjlaq"]
+[ext_resource type="PackedScene" uid="uid://n33i7arxa7t6" path="res://Scenes/internals/EmoteLayer.tscn" id="7_bloew"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yb3dg"]
 size = Vector2(24, 13)
@@ -45,5 +46,7 @@ bus = &"Sfx"
 
 [node name="SpeechBubble" parent="." instance=ExtResource("6_wjlaq")]
 position = Vector2(0, -20)
+
+[node name="EmoteLayer" parent="." instance=ExtResource("7_bloew")]
 
 [connection signal="input_event" from="CharacterBody2D" to="." method="_on_character_body_2d_input_event"]

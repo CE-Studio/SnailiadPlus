@@ -42,11 +42,14 @@ tracks/1/path = NodePath("CCPlayer")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [0, true],
 "method": &"set_active"
+}, {
+"args": [1, 1.0],
+"method": &"do_emote"
 }, {
 "args": [],
 "method": &"set_inactive"

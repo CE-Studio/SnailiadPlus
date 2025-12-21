@@ -4,11 +4,13 @@
 	"meta": {},
 	"animations": {
 		"idle": {
-			"fps": 2,
-			"loop": true,
+			"fps": 6,
+			"loop": false,
 			"loop_point": 0,
 			"randomize_start": true,
 			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
 				[0, 0, false, false],
 				[1, 0, false, false],
 			]

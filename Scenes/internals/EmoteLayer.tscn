@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://n33i7arxa7t6"]
+
+[ext_resource type="Script" uid="uid://dv1rfkij7op0u" path="res://Scripts/EmoteLayer.gd" id="1_3b7xs"]
+[ext_resource type="Texture2D" uid="uid://b3ms8iclo2adj" path="res://Assets/Images/Particles/Surprise.png" id="1_xguol"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_3b7xs"]
+
+[node name="EmoteLayer" type="Node2D"]
+z_index = 8
+script = ExtResource("1_3b7xs")
+
+[node name="MarkerSprite" type="Sprite2D" parent="."]
+position = Vector2(16, -8)
+texture = ExtResource("1_xguol")
+hframes = 2
+frame = 1
+script = ExtResource("2_3b7xs")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

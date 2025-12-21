@@ -46,3 +46,7 @@ func look_right() -> void:
 func set_direction(surface:Statics.DirsSurface, facing:bool = player.facing_left):
 	player._set_direction(surface, facing)
 #endregion
+
+
+func do_emote(emote:EmoteLayer.Emotes, duration:float = -1.0) -> void:
+	player.emote.emote_from_enum(emote, duration)
