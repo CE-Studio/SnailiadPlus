@@ -1,0 +1,17 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+# WaveHere
+if not Statics.check_item(Item.ItemTypes.GRAVITY_SHELL) and not Statics.check_item(Item.ItemTypes.METAL_SHELL)
+	if Statics.current_profile["difficulty"] < 2
+		if not Statics.check_item(Item.ItemTypes.ICE_SHELL)
+			NPC27: Watch out, {{Player.player_name}}![wait=0.15]  Without the "[color=#00fbfa]Ice {{Player.player_species}}[/color]" power,[wait=0.15] the area ahead will be too difficult!
+		else
+			NPC27: Oh, {{Player.player_name}},[wait=0.15]  you're an [color=#00fbfa]Ice {{Player.player_species}}[/color]![wait=0.25]  That means the icicles in the room ahead won't hurt you!
+	else
+		NPC27: Are you headed through, {{Player.player_name}}?[wait=0.2]  Well,[wait=0.1] good luck in there!![wait=0.15]  You're gonna need it.
+else
+	NPC27: Hey, {{Player.player_name}}![wait=0.15]  You came back to visit!![wait=0.2]  Yay!!
+=> END

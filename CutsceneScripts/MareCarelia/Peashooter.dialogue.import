@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://k4jsm3keixap"
+path="res://.godot/imported/Peashooter.dialogue-37d271f67da698f7db88d4eeab4e436d.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/Peashooter.dialogue"
+dest_files=["res://.godot/imported/Peashooter.dialogue-37d271f67da698f7db88d4eeab4e436d.tres"]
+
+[params]
+
+defaults=true

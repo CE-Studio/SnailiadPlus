@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://cawrupj66kxr8"]
+[gd_scene load_steps=13 format=4 uid="uid://cawrupj66kxr8"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_8n4r2"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_uuf3b"]
+[ext_resource type="Resource" uid="uid://k4jsm3keixap" path="res://CutsceneScripts/MareCarelia/Peashooter.dialogue" id="2_y7irb"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_0vjon"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_8xin6"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_3p1xf"]
@@ -25,6 +26,7 @@ z_as_relative = false
 script = ExtResource("1_8n4r2")
 area_id = 1
 darkness_level = 0.15
+cutscene_script = ExtResource("2_y7irb")
 minimap_offset = Vector2i(17, 11)
 tiled_corner = Vector2i(443, 177)
 tiled_range = Vector2i(51, 15)

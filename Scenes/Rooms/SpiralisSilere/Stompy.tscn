@@ -1,11 +1,16 @@
-[gd_scene load_steps=8 format=4 uid="uid://xge3tis8u5dn"]
+[gd_scene load_steps=16 format=4 uid="uid://xge3tis8u5dn"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_146y7"]
+[ext_resource type="Resource" uid="uid://cbooq5w86h52b" path="res://CutsceneScripts/SpiralisSilere/Stompy.dialogue" id="2_5iap5"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_mww64"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_e4s7d"]
 [ext_resource type="PackedScene" uid="uid://m1j84q4kx1aj" path="res://Scenes/Entities/Enemies/Bosses/Stompy.tscn" id="3_svpxf"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_yxyr3"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_pp60g"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="7_hwm4e"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="8_5iap5"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="9_q0230"]
+[ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="10_h4lc4"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -14,10 +19,90 @@ _data = {
 }
 point_count = 3
 
-[node name="Stompy" type="Node2D"]
+[sub_resource type="Animation" id="Animation_b50t3"]
+resource_name = "IntroDefaultFromRight"
+length = 5.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 4, 4.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5547849, 1),
+"update": 0,
+"values": [Vector2(808, 72), Vector2(770, 72), Vector2(763.6, 72.237), Vector2(757.2, 73.576), Vector2(750.8, 76.772), Vector2(744.4, 82.471), Vector2(738, 91.265), Vector2(731.6, 103.703), Vector2(725.2, 120.306), Vector2(718.8, 141.574), Vector2(712.4, 167.984), Vector2(706, 200), Vector2(296, 200), Vector2(408, 200)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CCPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0, true],
+"method": &"set_active"
+}, {
+"args": [1, 1.0],
+"method": &"do_emote"
+}, {
+"args": [],
+"method": &"set_inactive"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GroundLayer/Stompy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.8, 4.55, 5.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"intro_step_left"
+}, {
+"args": [],
+"method": &"intro_step_right"
+}, {
+"args": [],
+"method": &"intro_step_bar"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xpdxf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(408, 200)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wyobf"]
+_data = {
+&"IntroDefaultFromRight": SubResource("Animation_b50t3"),
+&"RESET": SubResource("Animation_xpdxf")
+}
+
+[node name="Stompy" type="Node2D" node_paths=PackedStringArray("cutscene_animator")]
 z_as_relative = false
 script = ExtResource("1_146y7")
 area_id = 2
+cutscene_script = ExtResource("2_5iap5")
+cutscene_animator = NodePath("AnimationPlayer")
 center_parallax_maps = true
 minimap_offset = Vector2i(5, 13)
 song_change = 4
@@ -118,3 +203,25 @@ rotation = 3.1415927
 scale = Vector2(1, 3)
 my_id = 1
 exit_room = "uid://boe8dkk4astod"
+
+[node name="StompyIntro" parent="." instance=ExtResource("7_hwm4e")]
+position = Vector2(408, -64)
+identifier = &"StompyIntro"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wyobf")
+}
+
+[node name="Trigger" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("8_5iap5")]
+position = Vector2(408, 48)
+scale = Vector2(60, 60)
+script = ExtResource("9_q0230")
+actor = NodePath("../StompyIntro")
+require_condition = true
+conditional_flag = 3
+conditional_value = false
+compare_mode = 0
+
+[node name="CCPlayer" parent="." instance=ExtResource("10_h4lc4")]
+position = Vector2(408, 200)

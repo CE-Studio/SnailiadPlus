@@ -1,0 +1,8 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+# WaveHere
+NPC35: Wow![wait=0.15] You found the secret room full of [color=#ff9957]Snelks[/color]!![wait=0.2]  _@_v!!
+=> END

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dmynl7b7t7ouf"
+path="res://.godot/imported/IceSnailEntry.dialogue-52d7a4102733ef99502cb578cd0b3dbb.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/IceSnailEntry.dialogue"
+dest_files=["res://.godot/imported/IceSnailEntry.dialogue-52d7a4102733ef99502cb578cd0b3dbb.tres"]
+
+[params]
+
+defaults=true

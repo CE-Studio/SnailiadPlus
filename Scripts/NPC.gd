@@ -21,6 +21,7 @@ const TALK_COOLDOWN:float = 0.15
 @export var inventory:Array[int] = []
 
 var facing_left:bool = false
+var shelled:bool = false
 var process_ai:bool = true
 var can_talk:bool = true:
 	set(value):
@@ -41,6 +42,7 @@ var cc_lookat_pos:Vector2 = Vector2.ZERO
 @onready var body:CharacterBody2D = $"CharacterBody2D"
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
 @onready var bubble:SpeechBubble = $"SpeechBubble"
+@onready var emote:EmoteLayer = $"EmoteLayer"
 var colorized_sprite:Texture2D
 #endregion
 
@@ -288,6 +290,20 @@ func take_item(_id:Item.ItemTypes, _quantity:int) -> bool:
 
 func can_perform_action(_action:String) -> bool:
 	match _action:
+		"turn_around":
+			return true
+		"toggle_shell":
+			return true
+		"face_left":
+			return true
+		"face_right":
+			return true
+		"face_player":
+			return true
+		"set_will_talk":
+			return true
+		"set_wont_talk":
+			return true
 		"jump":
 			return true
 	return false
@@ -297,6 +313,28 @@ func perform_action(_action:String, _force:bool) -> bool:
 	if not (can_perform_action(_action) or _force):
 		return false
 	match _action:
+		"turn_around":
+			facing_left = not facing_left
+			play_anim("shell" if shelled else "turnground")
+			return true
+		"toggle_shell":
+			shelled = not shelled
+			play_anim("shell" if shelled else "idle")
+		"face_left":
+			look_left()
+			return true
+		"face_right":
+			look_right()
+			return true
+		"face_player":
+			look_at_node(GameCore.instance.player)
+			return true
+		"set_will_talk":
+			can_talk = true
+			return true
+		"set_wont_talk":
+			can_talk = false
+			return true
 		"jump":
 			if surface == fall_direction:
 				match surface:

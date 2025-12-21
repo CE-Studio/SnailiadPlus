@@ -229,3 +229,15 @@ static func set_textbox_player_preset(_player:Player.Players) -> void:
 		Player.Players.LEECHY:
 			set_textbox_color("#606060")
 			set_textbox_frame(0)
+
+
+static func set_camera_focus_pos(_position:Vector2) -> void:
+	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_POINT, _position)
+
+
+static func set_camera_focus_node(_node:Node2D) -> void:
+	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_ENTITY, _node)
+
+
+static func set_camera_focus_player() -> void:
+	UICore.instance.cam.set_cam_mode()

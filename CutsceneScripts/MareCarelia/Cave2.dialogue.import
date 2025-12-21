@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c022wbfnpildg"
+path="res://.godot/imported/Cave2.dialogue-16338171efe4942453d2c942a9819b36.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/Cave2.dialogue"
+dest_files=["res://.godot/imported/Cave2.dialogue-16338171efe4942453d2c942a9819b36.tres"]
+
+[params]
+
+defaults=true

@@ -166,7 +166,7 @@ func _physics_process(delta) -> void:
 		sent_entry_once = true
 		Statics.add_bestiary_entry(my_type)
 
-	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active:
+	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active and not CutsceneController.running:
 		var can_hit = true
 		match my_element:
 			ElementTypes.ICE:

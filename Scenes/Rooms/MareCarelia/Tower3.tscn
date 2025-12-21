@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://dcg5h2uxdyiil"]
+[gd_scene load_steps=9 format=4 uid="uid://dcg5h2uxdyiil"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_ffctp"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_anl2v"]
+[ext_resource type="Resource" uid="uid://bh0ikc6t1x18n" path="res://CutsceneScripts/MareCarelia/Tower3.dialogue" id="2_ha6as"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_pnf0c"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_scfcq"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_3lwh1"]
@@ -18,6 +19,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_ffctp")
 area_id = 1
+cutscene_script = ExtResource("2_ha6as")
 minimap_offset = Vector2i(17, 0)
 tiled_corner = Vector2i(443, 1)
 tiled_range = Vector2i(25, 63)

@@ -2017,6 +2017,14 @@
 			"colors": [255, 952171775, 4231528703, 0, 4176935167],
 			"autoplay_next": "npc26.floor.left.idle",
 		},
+		"npc26.floor.right.shell": {
+			"inherit": "0.floor.right.shell",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+		},
+		"npc26.floor.left.shell": {
+			"inherit": "0.floor.left.shell",
+			"colors": [255, 952171775, 4231528703, 0, 4176935167],
+		},
 		"npc27.floor.right.idle": {
 			"inherit": "0.floor.right.idle",
 			"colors": [255, 3166749951, 1490573567, 0, 4176935167],

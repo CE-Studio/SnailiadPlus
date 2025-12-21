@@ -1,0 +1,12 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2)
+	# ShakeHere
+	NPC40: Be careful, {{Player.player_name}}!![wait=0.25]  I've heard some[speed=0.4] scary stuff[speed=1] happening in the next room!!
+else
+	# WaveHere
+	NPC40: Wow!![wait=0.2]  You defeated the evil monster??[wait=0.2]  You're my hero, {{Player.player_full_name}}!!
+=> END

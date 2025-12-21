@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://8qd3nw7f18jy"]
+[gd_scene load_steps=12 format=3 uid="uid://8qd3nw7f18jy"]
 
 [ext_resource type="Script" uid="uid://bc020ygx3nmwf" path="res://Scripts/Enemies/Angryblock.gd" id="1_bi7n5"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_bi7n5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bu7tr6nhyjh1i" path="res://Assets/Images/Entities/Angryblock.png" id="5_bi7n5"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_y32f1"]
 [ext_resource type="Texture2D" uid="uid://dkf8p163fny4q" path="res://Assets/Images/Entities/AngryblockFace.png" id="7_qnqel"]
+[ext_resource type="AudioStream" uid="uid://8mf68eytcjav" path="res://Assets/Sounds/Sfx/Enemy/AngryblockNoise.ogg" id="8_t37hc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
 size = Vector2(96, 64)
@@ -76,3 +77,7 @@ hframes = 3
 vframes = 4
 script = ExtResource("6_y32f1")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_t37hc")
+bus = &"Sfx"

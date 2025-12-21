@@ -53,7 +53,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 
 
 func _process(delta: float) -> void:
-	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried:
+	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried and not CutsceneController.running:
 		GameCore.instance.player.adjust_health(-damage)
 		if single_hit:
 			_despawn()

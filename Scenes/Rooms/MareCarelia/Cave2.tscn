@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://b5clr6tl36ik5"]
+[gd_scene load_steps=16 format=4 uid="uid://b5clr6tl36ik5"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_u0ncl"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_cw4nt"]
+[ext_resource type="Resource" uid="uid://c022wbfnpildg" path="res://CutsceneScripts/MareCarelia/Cave2.dialogue" id="2_rsl73"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_fjebi"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_vuc7b"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_gcet2"]
@@ -9,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="5_gcet2"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="7_rsl73"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="8_f8dn7"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="11_7hydi"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="12_dxkju"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_dxkju"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -25,6 +29,7 @@ z_as_relative = false
 script = ExtResource("1_u0ncl")
 area_id = 1
 darkness_level = 0.15
+cutscene_script = ExtResource("2_rsl73")
 minimap_offset = Vector2i(18, 3)
 tiled_corner = Vector2i(469, 49)
 tiled_range = Vector2i(77, 15)
@@ -123,3 +128,17 @@ shape = SubResource("RectangleShape2D_7hydi")
 material = ExtResource("8_f8dn7")
 polygon = PackedVector2Array(0, -48, 1232, -48, 1232, 288, 0, 288)
 uv = PackedVector2Array(-132.5, -64.5, 102.5, -53.5, 78.5, 75.5, -105.5, 49.5)
+
+[node name="Trigger" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("11_7hydi")]
+position = Vector2(1056, 120)
+scale = Vector2(12, 12)
+script = ExtResource("12_dxkju")
+actor = NodePath("../DummyCutsceneControllable")
+require_condition = false
+conditional_flag = 2
+conditional_value = null
+compare_mode = 0
+
+[node name="DummyCutsceneControllable" parent="." instance=ExtResource("13_dxkju")]
+position = Vector2(1056, 64)
+identifier = &"Set26Shell"

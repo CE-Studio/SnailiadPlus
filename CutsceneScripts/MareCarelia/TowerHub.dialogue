@@ -1,0 +1,16 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+match CutsceneController.object_id
+	when "48"
+		if CutsceneController.instance.actor_above("48", 360)
+			NPC48: Hey, {{Player.player_name}}, what's up?
+		else
+			# WaveHere
+			NPC48: Whew!![wait=0.25]  That was scary!!
+	when "48Fall"
+		# ShakeHere SfxHere
+		NPC48: [speed=1.25]YEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE
+=> END

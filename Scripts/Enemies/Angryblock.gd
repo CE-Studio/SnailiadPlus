@@ -17,6 +17,8 @@ const SHOT_DELAY:float = 0.15
 const BULLET_COUNT:int = 8
 const BULLET_SPEED:float = 148
 const BULLET_SPREAD:float = 0.135
+const MIN_NOISE_TIME:float = 10.0
+const MAX_NOISE_TIME:float = 30.0
 
 var phase_time:float = LONG_PHASE_ADD
 var face_player:bool = false
@@ -29,9 +31,11 @@ var bullet_count:int = 0
 var is_firing:bool = false
 var body_anim_ptr:int = 0
 var last_face_anim:String = ""
+var time_until_noise:float = 0.0
 
 @onready var face_spr:JsonSprite2D = $"Face"
 @onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var sfx_noise:AudioStreamPlayer = $"Noise"
 #endregion
 
 
@@ -41,12 +45,19 @@ func _ready() -> void:
 	sprite = $"Body"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
+	
+	time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return
+	
+	time_until_noise -= delta
+	if time_until_noise <= 0.0:
+		time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
+		sfx_noise.play()
 	
 	phase_time -= delta
 	var player_vector:Vector2 = Vector2.ZERO

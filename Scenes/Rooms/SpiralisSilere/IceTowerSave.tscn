@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://d2rbrn5aebh8f"]
+[gd_scene load_steps=11 format=4 uid="uid://d2rbrn5aebh8f"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_1ouj7"]
+[ext_resource type="Resource" uid="uid://3w1kbjwh4077" path="res://CutsceneScripts/SpiralisSilere/IceTowerSave.dialogue" id="2_4mh8o"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_ldo4h"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_0vnxo"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_s55km"]
@@ -21,6 +22,7 @@ z_as_relative = false
 script = ExtResource("1_1ouj7")
 area_id = 2
 darkness_level = 0.25
+cutscene_script = ExtResource("2_4mh8o")
 minimap_offset = Vector2i(12, 18)
 song_change = 4
 tiled_corner = Vector2i(313, 289)
@@ -73,6 +75,7 @@ characters_who_can_use_me = 4
 [node name="NPC27" parent="GroundLayer" instance=ExtResource("5_bjjgc")]
 position = Vector2(176, 168)
 my_id = 27
+identifier = &"27"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

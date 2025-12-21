@@ -52,7 +52,8 @@ func hide_bubble() -> void:
 
 
 func _update_text() -> void:
-	text.text = SInput.get_icon_as_bbcode(SInput.Inputs.SPEAK)
+	#text.text = SInput.get_icon_as_bbcode(SInput.Inputs.SPEAK)
+	text.set_snaily_text(SInput.get_icon_as_bbcode(SInput.Inputs.SPEAK))
 
 
 func set_direction(new_dir:Statics.DirsSurface, distance:int = 24) -> void:

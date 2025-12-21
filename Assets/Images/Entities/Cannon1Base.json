@@ -1,5 +1,5 @@
 {
-	"tiles": [2, 2],
+	"tiles": [4, 2],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -18,7 +18,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 0, false, false]
+				[0, 1, false, false]
 			]
 		},
 		"lwall_idle": {
@@ -36,7 +36,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 0, false, false]
+				[1, 1, false, false]
 			]
 		},
 		"rwall_idle": {
@@ -45,7 +45,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 1, false, false]
+				[3, 0, false, false]
 			]
 		},
 		"rwall_destroyed": {
@@ -54,7 +54,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 1, false, false]
+				[3, 1, false, false]
 			]
 		},
 		"ceiling_idle": {
@@ -63,7 +63,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 1, false, false]
+				[2, 0, false, false]
 			]
 		},
 		"ceiling_destroyed": {
@@ -72,7 +72,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 1, false, false]
+				[2, 1, false, false]
 			]
 		}
 	}

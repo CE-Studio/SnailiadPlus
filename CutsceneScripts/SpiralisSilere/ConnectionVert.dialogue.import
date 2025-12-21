@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dykm2rtq7saau"
+path="res://.godot/imported/ConnectionVert.dialogue-26b34350a715376e03d7824b06dd0d25.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/ConnectionVert.dialogue"
+dest_files=["res://.godot/imported/ConnectionVert.dialogue-26b34350a715376e03d7824b06dd0d25.tres"]
+
+[params]
+
+defaults=true

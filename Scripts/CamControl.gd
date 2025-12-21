@@ -46,7 +46,7 @@ func instantiate() -> void:
 	set_cam_mode()
 
 
-func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:
+func set_cam_mode(_state:CamStates = CamStates.NONE, _target:Variant = null) -> void:
 	if _state == CamStates.NONE:
 		if ProjectSettings.get_setting("game/visuals/dynamic_camera"):
 			state = CamStates.FOLLOW_NEW
@@ -54,6 +54,11 @@ func set_cam_mode(_state:CamStates = CamStates.NONE) -> void:
 			state = CamStates.FOLLOW_FLASH
 	else:
 		state = _state
+		if _target:
+			if _state == CamStates.TARGET_POINT and _target is Vector2:
+				target_point = _target
+			if _state == CamStates.TARGET_ENTITY and _target is Node2D:
+				target_entity = _target
 
 
 func _process(delta):
@@ -65,9 +70,13 @@ func _process(delta):
 		CamStates.FOLLOW_NEW:
 			pos = _tick_new_follow(pos, delta)
 		CamStates.TARGET_POINT:
-			pass
+			pos = pos.lerp(target_point - offset, ease_rate * delta)
 		CamStates.TARGET_ENTITY:
-			pass
+			if target_entity:
+				pos = pos.lerp(target_entity.position - offset, ease_rate * delta)
+			else:
+				target_point = pos - offset
+				state = CamStates.TARGET_POINT
 		_:
 			pass
 	if border != null:

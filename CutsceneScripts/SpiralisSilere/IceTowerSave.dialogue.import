@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://3w1kbjwh4077"
+path="res://.godot/imported/IceTowerSave.dialogue-067428f22afe18c941157c71a8ac5b47.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/IceTowerSave.dialogue"
+dest_files=["res://.godot/imported/IceTowerSave.dialogue-067428f22afe18c941157c71a8ac5b47.tres"]
+
+[params]
+
+defaults=true

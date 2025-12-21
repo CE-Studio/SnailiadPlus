@@ -1,0 +1,6 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.trigger_animation("IntroDefault", true)
+do wait(2.25)
+do CutsceneController.set_camera_focus_player()
+=> END

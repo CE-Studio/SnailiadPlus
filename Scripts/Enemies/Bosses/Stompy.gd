@@ -51,6 +51,7 @@ enum FootMode {
 
 var intro_step:int = 0
 var intro_from_left:bool = false
+var legacy_intro:bool = false
 var set_intro:bool = false
 var attack_mode:int = 0
 var boss_speed:float = 0.6
@@ -135,6 +136,20 @@ func _ready() -> void:
 		foot_r.can_damage = false
 
 
+func intro_step_left() -> void:
+	mode_l = FootMode.STOMP
+
+
+func intro_step_right() -> void:
+	mode_r = FootMode.STOMP
+
+
+func intro_step_bar() -> void:
+	if not Statics.is_in_boss_rush:
+		GameCore.instance.music_manager.play_song(battle_music)
+	health_bar = UICore.instance.show_boss_bar(self)
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if not ai_active:
@@ -150,34 +165,33 @@ func _physics_process(delta: float) -> void:
 		_tick_parts()
 	if intro_delay:
 	#region Intro
-		var player_pos:Vector2 = GameCore.instance.player.position
-		match intro_step:
-			0:
-				if intro_from_left and player_pos.x > position.x + 73.0:
-					mode_r = FootMode.STOMP
-					if player_pos.x > position.x + 93.0:
+		if legacy_intro:
+			var player_pos:Vector2 = GameCore.instance.player.position
+			match intro_step:
+				0:
+					if intro_from_left and player_pos.x > position.x + 73.0:
+						intro_step_right()
+						if player_pos.x > position.x + 93.0:
+							intro_step += 1
+					elif not intro_from_left and player_pos.x < position.x - 73.0:
+						intro_step_left()
+						if player_pos.x < position.x - 93.0:
+							intro_step += 1
+				1:
+					var mark_complete:bool = false
+					if intro_from_left and player_pos.x < position.x + 30.0:
+						intro_step_left()
+						if player_pos.x < position.x + 38.0:
+							mark_complete = true
+					elif not intro_from_left and player_pos.x > position.x - 30.0:
+						intro_step_right()
+						if player_pos.x > position.x - 38.0:
+							mark_complete = true
+					if mark_complete:
+						intro_step_bar()
 						intro_step += 1
-				elif not intro_from_left and player_pos.x < position.x - 73.0:
-					mode_l = FootMode.STOMP
-					if player_pos.x < position.x - 93.0:
-						intro_step += 1
-			1:
-				var mark_complete:bool = false
-				if intro_from_left and player_pos.x < position.x + 30.0:
-					mode_l = FootMode.STOMP
-					if player_pos.x < position.x + 38.0:
-						mark_complete = true
-				elif not intro_from_left and player_pos.x > position.x - 30.0:
-					mode_r = FootMode.STOMP
-					if player_pos.x > position.x - 38.0:
-						mark_complete = true
-				if mark_complete:
-					if not Statics.is_in_boss_rush:
-						GameCore.instance.music_manager.play_song(battle_music)
-					health_bar = UICore.instance.show_boss_bar(self)
-					intro_step += 1
-			_:
-				pass
+				_:
+					pass
 	#endregion
 	
 	else:
