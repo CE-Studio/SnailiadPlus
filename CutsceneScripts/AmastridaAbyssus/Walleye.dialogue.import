@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cp8mvby30t1d0"
+path="res://.godot/imported/Walleye.dialogue-7f9ddf5503548ba6d393a5af24616121.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/AmastridaAbyssus/Walleye.dialogue"
+dest_files=["res://.godot/imported/Walleye.dialogue-7f9ddf5503548ba6d393a5af24616121.tres"]
+
+[params]
+
+defaults=true

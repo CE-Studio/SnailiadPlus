@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://bhmsl4lmit5gy"]
+[gd_scene load_steps=12 format=4 uid="uid://bhmsl4lmit5gy"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_mtjo3"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_86nyw"]
+[ext_resource type="Resource" uid="uid://cp8mvby30t1d0" path="res://CutsceneScripts/AmastridaAbyssus/Walleye.dialogue" id="2_pbam3"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_1y65c"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_ja67e"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_722vc"]
@@ -23,6 +24,7 @@ size = Vector2(496, 336)
 z_as_relative = false
 script = ExtResource("1_mtjo3")
 area_id = 3
+cutscene_script = ExtResource("2_pbam3")
 minimap_offset = Vector2i(6, 9)
 tiled_corner = Vector2i(157, 145)
 tiled_range = Vector2i(25, 15)
@@ -59,6 +61,7 @@ tile_set = ExtResource("2_86nyw")
 [node name="NPC46" parent="GroundLayer" instance=ExtResource("3_ja67e")]
 position = Vector2(224, 184)
 my_id = 46
+identifier = &"46"
 
 [node name="Item" parent="GroundLayer" instance=ExtResource("4_722vc")]
 position = Vector2(256, 112)
