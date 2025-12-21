@@ -56,7 +56,7 @@ func spawn(grass_type:GrassTypes, home_surface:Statics.DirsSurface):
 
 
 func _process(delta: float) -> void:
-	if player_intersecting and running_bite_count > 0:
+	if player_intersecting and running_bite_count > 0 and not CutsceneController.running:
 		if current_nom_cooldown <= 0.0:
 			GameCore.instance.player.adjust_health(heal_amount)
 			current_nom_cooldown = nom_cooldown

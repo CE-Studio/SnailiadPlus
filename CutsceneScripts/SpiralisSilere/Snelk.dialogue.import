@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b2klit2nbu3tu"
+path="res://.godot/imported/Snelk.dialogue-b15b5efd289523e12047413225c5c1b8.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/Snelk.dialogue"
+dest_files=["res://.godot/imported/Snelk.dialogue-b15b5efd289523e12047413225c5c1b8.tres"]
+
+[params]
+
+defaults=true

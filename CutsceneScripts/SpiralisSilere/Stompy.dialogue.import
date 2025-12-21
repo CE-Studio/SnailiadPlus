@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cbooq5w86h52b"
+path="res://.godot/imported/Stompy.dialogue-ab5a40f86b4f1e6b165a952ec5a6902a.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/SpiralisSilere/Stompy.dialogue"
+dest_files=["res://.godot/imported/Stompy.dialogue-ab5a40f86b4f1e6b165a952ec5a6902a.tres"]
+
+[params]
+
+defaults=true

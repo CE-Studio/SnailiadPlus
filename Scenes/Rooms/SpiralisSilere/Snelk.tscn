@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://b0pahbkyyhrbp"]
+[gd_scene load_steps=12 format=4 uid="uid://b0pahbkyyhrbp"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_iop1f"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_04gch"]
+[ext_resource type="Resource" uid="uid://b2klit2nbu3tu" path="res://CutsceneScripts/SpiralisSilere/Snelk.dialogue" id="2_yxifw"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_gd21h"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_pucvx"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_ahe7n"]
@@ -23,6 +24,7 @@ script = ExtResource("1_iop1f")
 area_id = 2
 is_bonus_room = true
 darkness_level = 0.2
+cutscene_script = ExtResource("2_yxifw")
 minimap_offset = Vector2i(18, 15)
 song_change = 16
 tiled_corner = Vector2i(469, 241)
@@ -63,6 +65,7 @@ position = Vector2(392, 24)
 position = Vector2(160, 72)
 my_id = 35
 surface = 3
+identifier = &"35"
 
 [node name="Item" parent="GroundLayer" instance=ExtResource("9_yqjip")]
 position = Vector2(160, 128)
