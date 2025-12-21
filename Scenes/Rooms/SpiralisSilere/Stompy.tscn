@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://xge3tis8u5dn"]
+[gd_scene load_steps=17 format=4 uid="uid://xge3tis8u5dn"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_146y7"]
 [ext_resource type="Resource" uid="uid://cbooq5w86h52b" path="res://CutsceneScripts/SpiralisSilere/Stompy.dialogue" id="2_5iap5"]
@@ -48,7 +48,7 @@ tracks/1/keys = {
 "args": [0, true],
 "method": &"set_active"
 }, {
-"args": [1, 1.0],
+"args": [1, 0.75],
 "method": &"do_emote"
 }, {
 "args": [],
@@ -91,8 +91,66 @@ tracks/0/keys = {
 "values": [Vector2(408, 200)]
 }
 
+[sub_resource type="Animation" id="Animation_5iap5"]
+resource_name = "IntroDefaultFromLeft"
+length = 5.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 4, 4.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5547849, 1),
+"update": 0,
+"values": [Vector2(8, 72), Vector2(46, 72), Vector2(52.4, 72.237), Vector2(58.8, 73.576), Vector2(65.2, 76.772), Vector2(71.6, 82.471), Vector2(78, 91.265), Vector2(84.4, 103.703), Vector2(90.8, 120.306), Vector2(97.2, 141.574), Vector2(103.6, 167.984), Vector2(110, 200), Vector2(520, 200), Vector2(408, 200)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CCPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0, false],
+"method": &"set_active"
+}, {
+"args": [1, 0.75],
+"method": &"do_emote"
+}, {
+"args": [],
+"method": &"set_inactive"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GroundLayer/Stompy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.8, 4.55, 5.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"intro_step_right"
+}, {
+"args": [],
+"method": &"intro_step_left"
+}, {
+"args": [],
+"method": &"intro_step_bar"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyobf"]
 _data = {
+&"IntroDefaultFromLeft": SubResource("Animation_5iap5"),
 &"IntroDefaultFromRight": SubResource("Animation_b50t3"),
 &"RESET": SubResource("Animation_xpdxf")
 }

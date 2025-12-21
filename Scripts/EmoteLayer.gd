@@ -15,7 +15,6 @@ var clear_after_duration:bool = false
 
 
 func _process(delta: float) -> void:
-	print(active_duration)
 	if clear_after_duration:
 		active_duration -= delta
 		if active_duration <= 0.0:

@@ -393,7 +393,7 @@ static func set_world_flag(id:WorldFlags, value:Variant) -> void:
 static func get_world_flag(id:WorldFlags) -> Variant:
 	if id < len(current_profile["world_flags"]):
 		return current_profile["world_flags"][id]
-	return null
+	return false
 #endregion
 
 

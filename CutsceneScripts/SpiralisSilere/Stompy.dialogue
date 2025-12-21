@@ -1,6 +1,9 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.trigger_animation("IntroDefaultFromRight", true)
+if CutsceneController.actor_right_of("Player", 408)
+	do CutsceneController.trigger_animation("IntroDefaultFromRight", true)
+else
+	do CutsceneController.trigger_animation("IntroDefaultFromLeft", true)
 do wait(2.7)
 do CutsceneController.set_camera_focus_player()
 => END
