@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dy6264jql1j4"
+path="res://.godot/imported/Snelk.dialogue-d67310e7fb7bdb6a366af7d9014e92f8.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/AmastridaAbyssus/Snelk.dialogue"
+dest_files=["res://.godot/imported/Snelk.dialogue-d67310e7fb7bdb6a366af7d9014e92f8.tres"]
+
+[params]
+
+defaults=true
