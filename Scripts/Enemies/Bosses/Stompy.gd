@@ -91,6 +91,7 @@ var played_fall_on_step_r:bool = false
 @onready var eye_l:StompyEye = $"EyeL"
 @onready var eye_r:StompyEye = $"EyeR"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
+@onready var debug_states:RichTextLabel = $"DebugFootState"
 #endregion
 
 
@@ -163,10 +164,10 @@ func _physics_process(delta: float) -> void:
 	while elapsed > SEC_PER_TICK:
 		elapsed -= SEC_PER_TICK
 		_tick_parts()
+	var player_pos:Vector2 = GameCore.instance.player.position
 	if intro_delay:
 	#region Intro
 		if legacy_intro:
-			var player_pos:Vector2 = GameCore.instance.player.position
 			match intro_step:
 				0:
 					if intro_from_left and player_pos.x > position.x + 73.0:
@@ -215,8 +216,16 @@ func _physics_process(delta: float) -> void:
 			
 			BossMode.SYNC:
 				if mode_l == FootMode.MOVE and mode_r == FootMode.MOVE:
+					if abs(player_pos.x - pos_l.x) < abs(player_pos.x - pos_r.x):
+						mode_l = FootMode.STOMP
+						vel_l.y = STOMP_VEL
+					else:
+						mode_r = FootMode.STOMP
+						vel_r.y = STOMP_VEL
+				elif mode_l == FootMode.MOVE and mode_r == FootMode.RAISE:
 					mode_l = FootMode.STOMP
 					vel_l.y = STOMP_VEL
+				elif mode_l == FootMode.RAISE and mode_r == FootMode.MOVE:
 					mode_r = FootMode.STOMP
 					vel_r.y = STOMP_VEL
 				step_mode_timeout -= delta * boss_speed
@@ -241,6 +250,13 @@ func _physics_process(delta: float) -> void:
 					raise_timeout_r = 0
 					stomp_timeout_l = WAIT_RAISE_TIMEOUT
 					stomp_timeout_r = WAIT_RAISE_TIMEOUT
+	
+	if debug_states.visible:
+		debug_states.text = "Main - %s\nLeft - %s\nRight - %s" % [
+			BossMode.keys()[boss_mode],
+			FootMode.keys()[mode_l],
+			FootMode.keys()[mode_r]
+		]
 
 
 func _tick_parts() -> void:
