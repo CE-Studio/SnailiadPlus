@@ -25,6 +25,7 @@ static var _boxtrack := false
 @onready var textbox:Control = $CanvasLayer/Control/text
 @onready var textbg:Control = $CanvasLayer/Control/text/PanelContainer
 @onready var effects:AnimationPlayer = $effects
+@onready var sound:AudioStreamPlayer = $AudioStreamPlayer
 @onready var texlabel:DialogueLabel  = $CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel
 
 
@@ -76,6 +77,8 @@ func _ready() -> void:
 static func _process_dia() -> void:
 	if not is_instance_valid(instance):
 		return
+	reset_textbox_color()
+	set_sound()
 	running = true
 	current_scene.reset_state()
 	var line:DialogueLine = await current_scene.get_next_dialogue_line()
@@ -248,3 +251,40 @@ static func set_camera_focus_node(_node:Node2D) -> void:
 
 static func set_camera_focus_player() -> void:
 	UICore.instance.cam.set_cam_mode()
+
+
+static func _idmod(id:int) -> int:
+	if id == 39:
+		return 4
+	return id % 4
+
+
+static func set_sound(id := "-1") -> void:
+	if is_instance_valid(instance):
+		const pth := "res://Assets/Sounds/Sfx"
+		const typ := [".ogg", ".wav", ".mp3"]
+		if id == "":
+			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
+		if id == "-1":
+			id = object_id
+		if id.is_valid_int():
+			var idi := id.to_int()
+			instance.sound.stream = [
+				preload("uid://b3ixpp7kjia5k"),
+				preload("uid://dsn0n1srqm0ow"),
+				preload("uid://b60650li5d52q"),
+				preload("uid://dqs24itjujvno"),
+				preload("uid://d5d21n1acuqg"),
+			][_idmod(idi)]
+		else:
+			id = id.remove_chars("/.\\,<>|\'[]{}-=_+()*&^%$#@!~`?;:")
+			for i in typ:
+				var ipth = pth + id + i
+				if ResourceLoader.exists(ipth):
+					instance.sound.stream = load(ipth)
+					return
+			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
+
+
+func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+	sound.play()
