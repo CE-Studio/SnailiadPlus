@@ -46,3 +46,20 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="Stomp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_bc1og")
 bus = &"Sfx"
+
+[node name="DebugFootState" type="RichTextLabel" parent="."]
+visible = false
+custom_minimum_size = Vector2(256, 64)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 56.0
+offset_right = 64.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 2
+text = "Main - Stomp
+Left - stomp
+Right - stomp"
+horizontal_alignment = 1
