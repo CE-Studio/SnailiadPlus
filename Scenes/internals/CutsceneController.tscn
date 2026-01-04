@@ -396,6 +396,7 @@ size_flags_horizontal = 3
 text = "continue"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+visible = false
 offset_left = 4.0
 offset_top = 20.0
 offset_right = 14.0
