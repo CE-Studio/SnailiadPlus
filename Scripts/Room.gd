@@ -129,13 +129,13 @@ func spawn(_spawn_all:bool) -> void:
 			if fake_border is FakeCamBoundary:
 				fake_border.call_deferred("instance")
 				fake_border.original_room_name = room_path
-	
+
 	if song_change != MusicManager.Loops.None and play_song_on_enter:
 		GameCore.instance.music_manager.play_song(song_change)
-	
+
 	if center_parallax_maps:
 		center_maps()
-	
+
 	if UICore.instance and not display_room:
 		UICore.instance.minimap.room_offset = minimap_offset
 		for cell in minimap_autofill:
