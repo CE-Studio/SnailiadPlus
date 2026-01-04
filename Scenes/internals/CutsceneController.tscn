@@ -1,11 +1,27 @@
-[gd_scene load_steps=17 format=3 uid="uid://cn0i5sa8m78t3"]
+[gd_scene load_steps=19 format=3 uid="uid://cn0i5sa8m78t3"]
 
 [ext_resource type="Script" uid="uid://etemc37gjn6w" path="res://Scripts/Classes/CutsceneController.gd" id="1_ssxem"]
 [ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_mg7n4"]
+[ext_resource type="Texture2D" uid="uid://bihyoqtghtkdb" path="res://Assets/Images/UI/DialogueBox.png" id="2_opako"]
 [ext_resource type="Texture2D" uid="uid://bg12eipvp0s3v" path="res://UI/DialogueAdvance.png" id="3_n4pca"]
 [ext_resource type="AudioStream" uid="uid://hdwgx5v76x3e" path="res://Assets/Sounds/Sfx/SnailyError.ogg" id="4_8b4nq"]
 [ext_resource type="Texture2D" uid="uid://bxlv8jnxvlvfc" path="res://Assets/Images/UI/SnailyError.png" id="4_gc0g0"]
 [ext_resource type="Texture2D" uid="uid://d1bbnms8harwj" path="res://UI/cutplayingicon.png" id="5_xegkh"]
+
+[sub_resource type="GDScript" id="GDScript_opako"]
+script/source = "@tool
+extends Sprite2D
+
+
+@export_range(0, 7) var id:int = 0:
+	set(val):
+		id = val
+		frame_coords = Vector2i(tframe, id)
+@export_range(0, 3) var tframe:int = 3:
+	set(val):
+		tframe = val
+		frame_coords = Vector2i(tframe, id)
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_opako"]
 atlas = ExtResource("3_n4pca")
@@ -87,103 +103,79 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/path = NodePath("CanvasLayer/Control/text:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(10, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(364, 78)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/text/PanelContainer/Sprite2D:tframe")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
 
 [sub_resource type="Animation" id="Animation_n4pca"]
 resource_name = "appear"
-length = 0.30001
-step = 0.1
+length = 0.070001
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/path = NodePath("CanvasLayer/Control/text:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.009999998),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(184, 31), Vector2(8, 0)]
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(16, 16), Vector2(368, 64)]
+"times": PackedFloat32Array(0, 0.06000001, 0.07),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
+tracks/2/path = NodePath("CanvasLayer/Control/text/PanelContainer/Sprite2D:tframe")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.07),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.30001),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, false, true]
+"values": [0, 3]
 }
 
 [sub_resource type="Animation" id="Animation_mg7n4"]
@@ -193,46 +185,22 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/text/PanelContainer:position")
+tracks/0/path = NodePath("CanvasLayer/Control/text:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(184, 31)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer:size")
+tracks/1/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(16, 16)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/text:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -295,12 +263,21 @@ offset_right = 8.0
 offset_bottom = 16.0
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/text"]
-self_modulate = Color(0, 0.2509804, 0.34509805, 1)
+self_modulate = Color(0, 0.2509804, 0.34509805, 0)
 layout_mode = 0
 offset_left = 10.0
 offset_right = 374.0
-offset_bottom = 78.0
+offset_bottom = 64.0
 theme_type_variation = &"textbg_1"
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/text/PanelContainer"]
+self_modulate = Color(0, 0.2509804, 0.34509805, 1)
+texture = ExtResource("2_opako")
+centered = false
+hframes = 4
+vframes = 8
+frame = 3
+script = SubResource("GDScript_opako")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/text/PanelContainer"]
 layout_mode = 2
@@ -419,11 +396,10 @@ size_flags_horizontal = 3
 text = "continue"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-visible = false
-offset_left = 5.0
-offset_top = 14.0
-offset_right = 15.0
-offset_bottom = 24.0
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 14.0
+offset_bottom = 30.0
 mouse_filter = 2
 texture = ExtResource("5_xegkh")
 

@@ -23,7 +23,7 @@ static var _boxtrack := false
 @onready var bottargpos:Control = $CanvasLayer/Control/bottargpos
 @onready var notif:TextureRect = $CanvasLayer/TextureRect
 @onready var textbox:Control = $CanvasLayer/Control/text
-@onready var textbg:Control = $CanvasLayer/Control/text/PanelContainer
+@onready var textbg:Sprite2D = $CanvasLayer/Control/text/PanelContainer/Sprite2D
 @onready var effects:AnimationPlayer = $effects
 @onready var sound:AudioStreamPlayer = $AudioStreamPlayer
 @onready var texlabel:DialogueLabel  = $CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel
@@ -287,4 +287,6 @@ static func set_sound(id := "-1") -> void:
 
 
 func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+	if sound.playing:
+		return
 	sound.play()
