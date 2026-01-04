@@ -202,6 +202,9 @@ const ECHO_DELAY_INITIAL:float = 0.6
 const ECHO_DELAY_REPEAT:float = 0.04
 const DEBUG_PRINT_INPUTS:bool = false
 
+const DOUBLE_TAP_THRESHOLD:float = 0.25
+const STICK_DOUBLE_TOLERANCE:float = 0.1
+
 var read_inputs:bool = true
 var cutscene_has_control:bool = false
 var last_input_was_con:bool = false
@@ -209,6 +212,11 @@ var last_ten_keys:Array = []
 var ui_echo_delay:float = ECHO_DELAY_INITIAL
 var send_con_as_echo:bool = false
 var inputs_down:int = 0
+var last_key:Key = Key.KEY_UNKNOWN
+var last_con:JoyButton = JoyButton.JOY_BUTTON_INVALID
+var last_stick:Vector2i = Vector2i.ZERO
+var time_since_last_input:float = 0.0
+var double_tapped:bool = false
 #endregion
 
 
@@ -226,22 +234,35 @@ func _process(delta: float) -> void:
 			send_con_as_echo = true
 	else:
 		ui_echo_delay = ECHO_DELAY_INITIAL
+	
+	double_tapped = false
+	time_since_last_input += delta
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if DEBUG_PRINT_INPUTS:
 			(OS.get_keycode_string(event.physical_keycode))
-
 		last_input_was_con = false
 		if event.pressed:
 			last_ten_keys.append(event.keycode)
 			if last_ten_keys.size() > 10:
 				last_ten_keys.pop_front()
+			if event.keycode == last_key and time_since_last_input <= DOUBLE_TAP_THRESHOLD:
+				double_tapped = true
+			last_key = event.keycode
+			time_since_last_input = 0
+	
 	elif event is InputEventJoypadButton:
 		if DEBUG_PRINT_INPUTS:
 			print(event.button_index)
 		last_input_was_con = true
+		if event.pressed:
+			if event.button_index == last_con and time_since_last_input <= DOUBLE_TAP_THRESHOLD:
+				double_tapped = true
+			last_con = event.button_index
+			time_since_last_input = 0
+	
 	elif event is InputEventJoypadMotion:
 		if DEBUG_PRINT_INPUTS:
 			print(event)

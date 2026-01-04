@@ -31,9 +31,9 @@ func _spawn(_data:Array) -> void:
 		)
 		if flat:
 			if direction == Statics.DirsSurface.LWALL or direction == Statics.DirsSurface.RWALL:
-				rand_pos.x = position.x
+				rand_pos.x = position.x + (-BUMP_DIST if direction == Statics.DirsSurface.LWALL else BUMP_DIST)
 			else:
-				rand_pos.y = position.y
+				rand_pos.y = position.y + (BUMP_DIST if direction == Statics.DirsSurface.FLOOR else -BUMP_DIST)
 		if not flat:
 			match direction:
 				Statics.DirsSurface.FLOOR: rand_pos += Vector2(0, BUMP_DIST)

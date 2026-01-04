@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://cfcvxbvb8hyh1"]
+[gd_scene load_steps=20 format=4 uid="uid://cfcvxbvb8hyh1"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_4lnm5"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_1nkav"]
+[ext_resource type="Resource" uid="uid://bfyomxn57lb4c" path="res://CutsceneScripts/AmastridaAbyssus/GravitySnail.dialogue" id="2_b8yfj"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_0ck5i"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="3_k373b"]
 [ext_resource type="PackedScene" uid="uid://dvouhch0vvcvs" path="res://Scenes/internals/FakeCamBoundary.tscn" id="4_3krem"]
@@ -9,6 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_tsv1a"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="6_k373b"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="7_c37so"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="10_sws1f"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="11_8r1ll"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="12_b8yfj"]
+[ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="13_8r1ll"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -20,11 +25,142 @@ point_count = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqg6a"]
 size = Vector2(496, 624)
 
-[node name="GravitySnail" type="Node2D"]
+[sub_resource type="Animation" id="Animation_b8yfj"]
+resource_name = "GravitySnail"
+length = 7.75
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 3.25, 3.5, 3.6999998, 3.85, 3.86, 3.9499998, 3.9599998, 4.6, 4.61, 4.7, 4.71, 4.85),
+"transitions": PackedFloat32Array(3.0314324, 1, 1, 2.5491211, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(208, 648), Vector2(208, 664), Vector2(208, 664), Vector2(240, 664), Vector2(240, 680), Vector2(263, 680), Vector2(264, 674), Vector2(264, 660), Vector2(264, 664), Vector2(342, 664), Vector2(344, 656), Vector2(344, 644), Vector2(344, 648), Vector2(360, 648)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.25, 3.86, 3.96, 4.61, 4.71, 4.85, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0],
+"method": &"set_active"
+}, {
+"args": [],
+"method": &"look_right"
+}, {
+"args": [2, false],
+"method": &"set_direction"
+}, {
+"args": [0, false],
+"method": &"set_direction"
+}, {
+"args": [2, false],
+"method": &"set_direction"
+}, {
+"args": [0, false],
+"method": &"set_direction"
+}, {
+"args": [],
+"method": &"set_inactive"
+}, {
+"args": [8, Vector2(0, -1)],
+"method": &"shoot"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.15, 3.25, 3.5, 3.7, 3.86, 3.96, 4.61, 4.71, 4.9, 5.3, 5.8, 6.4, 7.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"reset_player_direction"
+}, {
+"args": ["fall"],
+"method": &"play_anim"
+}, {
+"args": ["idle"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": ["fall"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": ["walk"],
+"method": &"play_anim"
+}, {
+"args": [true],
+"method": &"jump"
+}, {
+"args": [3],
+"method": &"grav_jump"
+}, {
+"args": [1],
+"method": &"grav_jump"
+}, {
+"args": [2],
+"method": &"grav_jump"
+}, {
+"args": [0],
+"method": &"grav_jump"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3j1j3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(208, 648)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sks3c"]
+_data = {
+&"GravitySnail": SubResource("Animation_b8yfj"),
+&"RESET": SubResource("Animation_3j1j3")
+}
+
+[node name="GravitySnail" type="Node2D" node_paths=PackedStringArray("cutscene_animator")]
 z_as_relative = false
 script = ExtResource("1_4lnm5")
 area_id = 3
 darkness_level = 0.1
+cutscene_script = ExtResource("2_b8yfj")
+cutscene_animator = NodePath("CutAnim")
 minimap_offset = Vector2i(5, 19)
 tiled_corner = Vector2i(131, 305)
 tiled_range = Vector2i(25, 47)
@@ -69,6 +205,7 @@ is_super_unique = true
 [node name="NPC28" parent="GroundLayer" instance=ExtResource("4_c37so")]
 position = Vector2(272, 456)
 my_id = 28
+identifier = &"28"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100
@@ -89,7 +226,7 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAACAAsAAAAPABgAAAAVAAsAAAAPABgAAAABAAwAAAAPABgAAAAFAAwAAAAPABgAAAASAAwAAAAPABgAAAAWAAwAAAAPABgAAAAYAAwAAAAPABgAAAADAA0AAAAPABgAAAAGAA0AAAAPABgAAAATAA0AAAAPABgAAAAAAA4AAAAPABgAAAAEAA4AAAAPABgAAAARAA4AAAAPABgAAAAXAA4AAAAPABgAAAACABAAAAAPABgAAAAUABAAAAAPABgAAAAFABEAAAAPABgAAAASABEAAAAPABgAAAAWABIAAAAPABgAAAADABQAAAAPABgAAAAVABQAAAAPABgAAAAGABwAAAAOAAEAAAAQABwAAAAMAAMAAAAVAB0AAAAJAAQAAAAWAB0AAAAJAAQAAAAXAB0AAAAJAAQAAAAVAB4AAAAJAAQAAAAWAB4AAAAJAAQAAAAXAB4AAAAJAAQAAAAVAB8AAAAJAAQAAAAWAB8AAAAJAAQAAAAXAB8AAAAJAAQAAAAVACAAAAAJAAQAAAAWACAAAAAJAAQAAAAXACAAAAAJAAQAAAAKACoAAAALAAEAAAAPACoAAAALAAEAAAALACQAAAAMAB4AAAAOACQAAAAMAB4AAAA=")
+tile_map_data = PackedByteArray("AAACAAsAAAAPABgAAAAVAAsAAAAPABgAAAABAAwAAAAPABgAAAAFAAwAAAAPABgAAAASAAwAAAAPABgAAAAWAAwAAAAPABgAAAAYAAwAAAAPABgAAAADAA0AAAAPABgAAAAGAA0AAAAPABgAAAATAA0AAAAPABgAAAAAAA4AAAAPABgAAAAEAA4AAAAPABgAAAARAA4AAAAPABgAAAAXAA4AAAAPABgAAAACABAAAAAPABgAAAAUABAAAAAPABgAAAAFABEAAAAPABgAAAASABEAAAAPABgAAAAWABIAAAAPABgAAAADABQAAAAPABgAAAAVABQAAAAPABgAAAAGABwAAAAOAAEAAAAVAB0AAAAJAAQAAAAWAB0AAAAJAAQAAAAXAB0AAAAJAAQAAAAVAB4AAAAJAAQAAAAWAB4AAAAJAAQAAAAXAB4AAAAJAAQAAAAVAB8AAAAJAAQAAAAWAB8AAAAJAAQAAAAXAB8AAAAJAAQAAAAVACAAAAAJAAQAAAAWACAAAAAJAAQAAAAXACAAAAAJAAQAAAAKACoAAAALAAEAAAAPACoAAAALAAEAAAALACQAAAAMAB4AAAAOACQAAAAMAB4AAAA=")
 tile_set = ExtResource("2_1nkav")
 collision_enabled = false
 
@@ -118,8 +255,8 @@ position = Vector2(168, 456)
 position = Vector2(0, 80)
 rotation = 3.1415927
 scale = Vector2(1, 6)
-my_id = 1
 exit_room = "uid://b2333q1p6f6x4"
+exit_transition = 1
 
 [node name="WaterArea" parent="." instance=ExtResource("6_k373b")]
 bubble_count = 24
@@ -132,3 +269,28 @@ shape = SubResource("RectangleShape2D_hqg6a")
 material = ExtResource("7_c37so")
 polygon = PackedVector2Array(-48, 176, 448, 176, 448, 800, -48, 800)
 uv = PackedVector2Array(-47.5, -56.5, 244.5, -43.5, 219.5, 78.5, -16.5, 52.5)
+
+[node name="Trigger" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("10_sws1f")]
+position = Vector2(208, 648)
+scale = Vector2(1.75, 1.75)
+script = ExtResource("11_8r1ll")
+actor = NodePath("../GravCutscene")
+require_condition = true
+conditional_flag = 6
+conditional_value = false
+compare_mode = 0
+multi_trigger = true
+
+[node name="GravCutscene" parent="." instance=ExtResource("12_b8yfj")]
+modulate = Color(0.42226863, 0.9029814, 0.5941085, 1)
+position = Vector2(208, 608)
+identifier = &"GravCutscene"
+
+[node name="CCPlayer" parent="." instance=ExtResource("13_8r1ll")]
+position = Vector2(208, 648)
+
+[node name="CutAnim" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CCPlayer")
+libraries = {
+&"": SubResource("AnimationLibrary_sks3c")
+}

@@ -142,7 +142,6 @@ focus_previous = NodePath("../StickAimMode")
 header_text = "Swap gravity direction on..."
 cycle_option_text = "Hold direction, tap jump|Hold jump, tap direction|Double-tap direction|Gravity button only"
 auto_select_mode = true
-disabled = true
 
 [node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
 layout_mode = 2
@@ -155,7 +154,6 @@ focus_previous = NodePath("../GravSwap")
 header_text = "Keep gravity direction until..."
 cycle_option_text = "You stick to a wall|You gravity jump"
 auto_select_mode = true
-disabled = true
 
 [node name="Back" parent="MainVBox" instance=ExtResource("5_1l54c")]
 self_modulate = Color(1, 1, 1, 0)

@@ -74,7 +74,11 @@ var environment_exit_override:int = 0
 var respawn_i_frames:float = 0.0
 var outer_allowed:bool = false
 var just_jumped:int = 0
+var just_flipped:bool = false
+var force_full_jump:bool = false
 var shell_level_displayed:int = 0
+var set_home_on_any_flip:bool = true
+var suppress_retain_gravity:bool = false
 #endregion
 
 
@@ -237,6 +241,7 @@ var body:CharacterBody2D
 var box_normal:CollisionShape2D
 var box_shell:CollisionShape2D
 var sfx_jump:AudioStreamPlayer
+var sfx_jumpgrav:AudioStreamPlayer
 var sfx_shell:AudioStreamPlayer
 var sfx_hurt:AudioStreamPlayer
 var sfx_ping:AudioStreamPlayer
@@ -271,6 +276,7 @@ func _ready():
 	body.position = position
 	box_shell.disabled = true
 	sfx_jump = $"AudioGroup/Jump"
+	sfx_jumpgrav = $"AudioGroup/JumpGrav"
 	sfx_shell = $"AudioGroup/Shell"
 	sfx_hurt = $"AudioGroup/Hurt"
 	sfx_ping = $"AudioGroup/Ping"
@@ -329,6 +335,11 @@ func _physics_process(delta:float) -> void:
 		position = body.position
 		return
 	
+	set_home_on_any_flip = not ProjectSettings.get_setting("game/control/gravity_keep")
+	suppress_retain_gravity = not set_home_on_any_flip
+	if not _can_grav_jump():
+		set_home_on_any_flip = false
+	
 	# Cutscenes can glide the player from point A to point B
 	# That's controlled here, and active glides prevent the rest of the
 	# function from going, so as to cancel gravity and other checks
@@ -368,6 +379,7 @@ func _physics_process(delta:float) -> void:
 		grav_shock_timer += delta
 	else:
 		grav_shock_timer = 0
+	just_flipped = false
 	# We update our home direction assuming gravity keep
 	# behavior is set to any state change
 	if ProjectSettings.get_setting("game/control/gravity_keep") != 1:
@@ -393,6 +405,7 @@ func _physics_process(delta:float) -> void:
 	else:
 		read_i_speed = Statics.get_shell_level()
 		read_i_jump = read_i_speed + (4 if Statics.check_item(Item.ItemTypes.HIGH_JUMP) else 0)
+		_grav_jump()
 		match gravity_dir:
 			Statics.DirsSurface.FLOOR:
 				_case_down(delta)
@@ -507,7 +520,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		Statics.DirsSurface.FLOOR:
 			rel_axis = input_axis
 			rel_vel = Vector2(body.velocity.x, body.velocity.y)
-			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.DOWN)
+			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.DOWN) and not just_flipped
 			_rel_vectors = [
 				Vector2.DOWN,
 				Vector2.LEFT,
@@ -523,7 +536,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		Statics.DirsSurface.LWALL:
 			rel_axis = Vector2(input_axis.y, -input_axis.x)
 			rel_vel = Vector2(body.velocity.y, -body.velocity.x)
-			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.LEFT)
+			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.LEFT) and not just_flipped
 			_rel_vectors = [
 				Vector2.LEFT,
 				Vector2.UP,
@@ -539,7 +552,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		Statics.DirsSurface.RWALL:
 			rel_axis = Vector2(-input_axis.y, input_axis.x)
 			rel_vel = Vector2(-body.velocity.y, body.velocity.x)
-			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.RIGHT)
+			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.RIGHT) and not just_flipped
 			_rel_vectors = [
 				Vector2.RIGHT,
 				Vector2.DOWN,
@@ -555,7 +568,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		Statics.DirsSurface.CEILING:
 			rel_axis = -input_axis
 			rel_vel = Vector2(-body.velocity.x, -body.velocity.y)
-			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.UP)
+			rel_down_pressed = SInput.input_just_pressed(SInput.Inputs.UP) and not just_flipped
 			_rel_vectors = [
 				Vector2.UP,
 				Vector2.RIGHT,
@@ -635,6 +648,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				# * 60 (compensating move_and_slide dividing by physics tick rate)
 				grounded = true
 				outer_allowed = true
+				force_full_jump = false
 			else:
 				grounded = false
 	else:
@@ -643,7 +657,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			rel_vel.y = _jump()
 		else:
 			rel_vel.y += gravity[read_i_jump] * gravity_mod * delta
-			if rel_vel.y < 0.0 and not SInput.input_pressed(SInput.Inputs.JUMP):
+			if rel_vel.y < 0.0 and not SInput.input_pressed(SInput.Inputs.JUMP) and not force_full_jump:
 				rel_vel.y = Statics.integrate(rel_vel.y, 0.0, jump_floatiness[read_i_speed], delta)
 			rel_vel.y = clampf(rel_vel.y, -INF, terminal_velocity[read_i_jump])
 			if (rel_vel.y > 0.0
@@ -670,6 +684,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		elif not grounded:
 			grounded = true
 			outer_allowed = true
+			force_full_jump = false
 			adjustment = Vector2(-1 if facing_left else 1, 0)
 			if _check_ceil_casts()[0]:
 				adjustment.y += 1
@@ -698,18 +713,22 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			current_state = AnimStates.WALK
 			grounded = true
 			outer_allowed = true
+			force_full_jump = false
 			rel_vel.y = 720
 		elif body.is_on_ceiling():
 			if rel_axis.y < 0 and _can_grab_ceiling():
 				grounded = true
 				outer_allowed = true
+				force_full_jump = false
 				_set_direction(_get_dir_opposite(surface), not facing_left)
 				_play_anim("idle" if rel_axis.x == 0.0 else "walk")
 				current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 		elif body.is_on_floor() and rel_vel.y >= 0:
 			grounded = true
 			outer_allowed = true
-		elif not _check_ability(retain_gravity_on_airborne) and surface != home_gravity:
+			force_full_jump = false
+		elif ((not _check_ability(retain_gravity_on_airborne) or suppress_retain_gravity)
+		and surface != home_gravity and not SInput.cutscene_has_control):
 			var this_left = facing_left
 			if surface == _get_dir_opposite(home_gravity):
 				this_left = not this_left
@@ -794,16 +813,122 @@ func _jump_and_reorient() -> float:
 		_push_from_wall()
 		_set_direction(home_gravity, facing_left)
 	outer_allowed = false
-	current_state = AnimStates.FALL
-	_play_anim("fall")
+	if shelled:
+		_play_anim("shell")
+	else:
+		current_state = AnimStates.FALL
+		_play_anim("fall")
 	return 0.0
 
 
 func _jump_decide_state() -> float:
-	if gravity_dir != home_gravity and not _check_ability(retain_gravity_on_airborne):
+	if gravity_dir != home_gravity and (not _check_ability(retain_gravity_on_airborne) or suppress_retain_gravity):
 		return _jump_and_reorient()
 	else:
 		return _jump()
+
+
+func _full_jump() -> float:
+	force_full_jump = true
+	return _jump()
+
+
+func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> void:
+	if target_dir == Statics.DirsSurface.NONE:
+		target_dir = _check_can_grav_jump()
+	if target_dir != Statics.DirsSurface.NONE and target_dir != gravity_dir:
+		var is_opp = target_dir == _get_dir_opposite(gravity_dir)
+		if grounded and not is_opp:
+			_push_from_wall()
+		_set_direction(target_dir, not facing_left if is_opp else facing_left, true)
+		grounded = false
+		sfx_jumpgrav.play()
+		jump_buffer_counter = jump_buffer
+		coyote_time_counter = coyote_time
+		if shelled:
+			_play_anim("shell")
+		else:
+			current_state = AnimStates.JUMP
+			_play_anim("jump")
+		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
+		just_flipped = true
+
+
+func _check_can_grav_jump() -> Statics.DirsSurface:
+	var can_adj:bool = _check_ability(can_gravity_jump_adjacent)
+	var can_opp:bool = _check_ability(can_gravity_jump_opposite)
+	if not can_adj and not can_opp:
+		return Statics.DirsSurface.NONE
+	
+	var attempting:bool = SInput.check_input(SInput.Inputs.GRAVITY, true)
+	var target_dir:Statics.DirsSurface = gravity_dir
+	var move_vec:Vector2i = Vector2i(SInput.vector_move())
+	if not attempting:
+		match ProjectSettings.get_setting("game/control/gravity_swap"):
+			0:
+				if SInput.check_input(SInput.Inputs.JUMP, true):
+					if (move_vec == Vector2i.ZERO and not grounded) or not can_adj:
+						attempting = true
+						target_dir = _get_dir_opposite(target_dir)
+					elif move_vec != Vector2i.ZERO and not grounded:
+						attempting = true
+						target_dir = _get_viable_flip_dir(move_vec)
+			1:
+				if move_vec != Vector2i.ZERO and SInput.check_input(SInput.Inputs.JUMP, false) and not grounded:
+					var test_vec:Vector2i = Vector2i.ZERO
+					if move_vec.x < 0 and SInput.check_input(SInput.Inputs.LEFT, true):
+						test_vec.x = -1
+					elif move_vec.x > 0 and SInput.check_input(SInput.Inputs.RIGHT, true):
+						test_vec.x = 1
+					if move_vec.y < 0 and SInput.check_input(SInput.Inputs.UP, true):
+						test_vec.y = -1
+					elif move_vec.y > 0 and SInput.check_input(SInput.Inputs.DOWN, true):
+						test_vec.y = 1
+					if test_vec != Vector2i.ZERO:
+						attempting = true
+						target_dir = _get_viable_flip_dir(test_vec)
+			2:
+				pass
+	else:
+		target_dir = _get_viable_flip_dir(move_vec)
+	
+	if attempting:
+		return target_dir
+	return Statics.DirsSurface.NONE
+
+
+func _get_viable_flip_dir(input:Vector2i, force_different:bool = false) -> Statics.DirsSurface:
+	if force_different:
+		if input.y > 0 and gravity_dir != Statics.DirsSurface.FLOOR:
+			return Statics.DirsSurface.FLOOR
+		elif input.y < 0 and gravity_dir != Statics.DirsSurface.CEILING:
+			return Statics.DirsSurface.CEILING
+		elif input.x < 0 and gravity_dir != Statics.DirsSurface.LWALL:
+			return Statics.DirsSurface.LWALL
+		else:
+			return Statics.DirsSurface.RWALL
+	match input:
+		Vector2i(1, 0): return Statics.DirsSurface.RWALL
+		Vector2i(1, 1):
+			if gravity_dir == Statics.DirsSurface.FLOOR:
+				return Statics.DirsSurface.RWALL
+			return Statics.DirsSurface.FLOOR
+		Vector2i(0, 1): return Statics.DirsSurface.FLOOR
+		Vector2i(-1, 1):
+			if gravity_dir == Statics.DirsSurface.FLOOR:
+				return Statics.DirsSurface.LWALL
+			return Statics.DirsSurface.FLOOR
+		Vector2i(-1, 0): return Statics.DirsSurface.LWALL
+		Vector2i(-1, -1):
+			if gravity_dir == Statics.DirsSurface.CEILING:
+				return Statics.DirsSurface.LWALL
+			return Statics.DirsSurface.CEILING
+		Vector2i(0, -1): return Statics.DirsSurface.CEILING
+		Vector2i(1, -1):
+			if gravity_dir == Statics.DirsSurface.CEILING:
+				return Statics.DirsSurface.RWALL
+			return Statics.DirsSurface.CEILING
+	return gravity_dir
 
 
 func _push_from_wall() -> void:
@@ -878,6 +1003,10 @@ func _can_round_corner_outer() -> bool:
 		return can_outer
 	else:
 		return true
+
+
+func _can_grav_jump() -> bool:
+	return _check_ability(can_gravity_jump_adjacent) or _check_ability(can_gravity_jump_opposite)
 #endregion
 
 
@@ -890,11 +1019,11 @@ func _check_ability(ability:Array) -> bool:
 	var found = false
 	for i in ability:
 		if Statics.is_number(i):
-			if i == -1:
+			if i == -1 or Statics.check_item(i):
 				found = true
 		else:
 			for j in i:
-				if j == -1:
+				if j == -1 or Statics.check_item(j):
 					found = true
 	return found
 
@@ -906,7 +1035,7 @@ func _check_ability(ability:Array) -> bool:
 #        - whether or not the target surface should be set as the new "home" gravity
 func _set_direction(surface:Statics.DirsSurface, flipped:bool, set_home:bool = false):
 	gravity_dir = surface
-	if set_home:
+	if set_home or set_home_on_any_flip:
 		home_gravity = surface
 	facing_left = flipped
 	match surface:
@@ -1271,22 +1400,22 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 	var bullet_type:String = ""
 	#region Determine bullet type
 	if Statics.stack_weapons:
-		if selected_weapon & 1 > 0:
+		if _bullet_id & 1 > 0:
 			bullet_type += "A"
-		if selected_weapon & 2 > 0:
+		if _bullet_id & 2 > 0:
 			bullet_type += "B"
-		if selected_weapon & 4 > 0:
+		if _bullet_id & 4 > 0:
 			bullet_type += "C"
-		if selected_weapon & 8 > 0:
+		if _bullet_id & 8 > 0:
 			bullet_type += "D"
 	else:
-		if selected_weapon == 8:
+		if _bullet_id == 8:
 			bullet_type = "BD"
-		elif selected_weapon == 4:
+		elif _bullet_id == 4:
 			bullet_type = "BC"
-		elif selected_weapon == 2:
+		elif _bullet_id == 2:
 			bullet_type = "B"
-		elif selected_weapon == 1:
+		elif _bullet_id == 1:
 			bullet_type = "A"
 	#endregion
 	if Statics.check_item(Item.ItemTypes.DEVASTATOR):

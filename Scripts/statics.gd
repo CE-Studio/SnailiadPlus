@@ -173,6 +173,7 @@ enum WorldFlags {
 	DEFEATED_BOSS2,
 	DEFEATED_BOSS3,
 	DEFEATED_BOSS4,
+	SEEN_GRAVITY_CUTSCENE,
 }
 
 enum CutsceneFlags {

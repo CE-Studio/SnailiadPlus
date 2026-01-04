@@ -1,0 +1,44 @@
+~ start
+if Statics.is_random_game
+	=> END
+do CutsceneController.lock_input()
+match CutsceneController.object_id
+	when "28"
+		=> npc_speak
+	when "GravCutscene"
+		do CutsceneController.trigger_animation("GravitySnail", true)
+		do Statics.set_world_flag(Statics.WorldFlags.SEEN_GRAVITY_CUTSCENE, true)
+		=> npc_speak
+=> END
+
+~ npc_speak
+do CutsceneController.show_textbox()
+do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.set_textbox_frame(0)
+if not Statics.get_world_flag(Statics.WorldFlags.SEEN_GRAVITY_CUTSCENE)
+	NPC28: Oh, {{Player.player_name}}, it's you!![wait=0.15]  I'm saved!![wait=0.2]{{GlobalText.COL_MOON}}Moon Snail[/color] took me here![wait=0.15]  He's gone bad, {{Player.player_name}}!!
+else
+	if Player.instance.who_i_is == Player.Players.SNAILY or Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
+		NPC28: {{Player.player_name}}, you can [color=#4bd867]gravity jump[/color]!
+		do debug(ProjectSettings.get_setting("game/control/gravity_swap"))
+		match ProjectSettings.get_setting("game/control/gravity_swap")
+			when 0
+				NPC28: {{GlobalText.COL_CTRL}}Jump in the air,[wait=0.1] then hold any direction and press jump again[/color] to flip gravity!
+				NPC28: Alternatively,[wait=0.1] you can {{GlobalText.COL_CTRL}}hold a direction and press {{SInput.icon_gravity}}[/color] at any time.
+			when 1
+				NPC28: {{GlobalText.COL_CTRL}}Jump in the air,[wait=0.1] then keep jump held and press any direction[/color] to flip gravity!
+				NPC28: Alternatively,[wait=0.1] you can {{GlobalText.COL_CTRL}}hold a direction and press {{SInput.icon_gravity}}[/color] at any time.
+			when 2
+				NPC28: {{GlobalText.COL_CTRL}}Jump in the air,[wait=0.1] then double-tap any direction[/color] to flip gravity!
+				NPC28: Alternatively,[wait=0.1] you can {{GlobalText.COL_CTRL}}hold a direction and press {{SInput.icon_gravity}}[/color] at any time.
+			when 3
+				NPC28: {{GlobalText.COL_CTRL}}At any time,[wait=0.1] hold a direction and press {{SInput.icon_gravity}}[/color] to flip gravity!
+		NPC28: If you're unhappy with how it feels,[wait=0.1] the options menu might have a better scheme for you!
+	elif Player.instance.who_i_is == Player.Players.UPSIDE
+		NPC28: {{Player.player_name}}, you're a [color=#ff705f]magnet snail[/color]![wait=0.25]You can {{GlobalText.COL_CTRL}}round ceiling corners with no problem[/color]![wait=0.2]  Lucky you!!
+	elif Player.instance.who_i_is == Player.Players.LEGGY
+		NPC28: {{Player.player_name}}, you can [color=#ffb23d]corkscrew jump[/color]!
+		NPC28: Now you can flip multiple times before landing by {{GlobalText.COL_CTRL}}hitting {{SInput.icon_jump}} in the air or {{SInput.icon_gravity}} anytime[/color]!
+	elif Player.instance.who_i_is == Player.Players.BLOBBY
+		NPC28: {{Player.player_name}}, you're an [color=#dcb7f8]angelblob[/color]![wait=0.25]  You can {{GlobalText.COL_CTRL}}jump a few times mid-air before hitting the ground[/color]!
+=> END
