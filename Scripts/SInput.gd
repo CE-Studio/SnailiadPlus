@@ -33,7 +33,7 @@ var input_tr_strings:PackedStringArray = [
 	tr(&"Shoot"), tr(&"Strafe"), tr(&"Speak"), tr(&"Gravity jump"), tr(&"Open menu"),
 	tr(&"Open map"), tr(&"Weapon 0"), tr(&"Weapon 1"), tr(&"Weapon 2"), tr(&"Weapon 3"),
 	tr(&"Aim left"), tr(&"Aim right"), tr(&"Aim up"), tr(&"Aim down"), tr(&"Open debug menu"),
-	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"), 
+	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"),
 ]
 
 #region Static icon variables
@@ -234,7 +234,7 @@ func _process(delta: float) -> void:
 			send_con_as_echo = true
 	else:
 		ui_echo_delay = ECHO_DELAY_INITIAL
-	
+
 	double_tapped = false
 	time_since_last_input += delta
 
@@ -252,7 +252,7 @@ func _input(event: InputEvent) -> void:
 				double_tapped = true
 			last_key = event.keycode
 			time_since_last_input = 0
-	
+
 	elif event is InputEventJoypadButton:
 		if DEBUG_PRINT_INPUTS:
 			print(event.button_index)
@@ -262,7 +262,7 @@ func _input(event: InputEvent) -> void:
 				double_tapped = true
 			last_con = event.button_index
 			time_since_last_input = 0
-	
+
 	elif event is InputEventJoypadMotion:
 		if DEBUG_PRINT_INPUTS:
 			print(event)

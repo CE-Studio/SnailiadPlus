@@ -1,8 +1,11 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+if CutsceneController.object_id == "17"
+	do CutsceneController.set_textbox_player_preset(Player.Players.UPSIDE)
+else
+	do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 match CutsceneController.object_id
 	when "0"
 		if not Statics.check_item(Item.ItemTypes.PEASHOOTER)
@@ -148,7 +151,6 @@ match CutsceneController.object_id
 			NPC16: [speed=0.6]WHEEEE!![speed=1][wait=0.125]  That was fun, {{Player.player_name}}![wait=0.125]  Let's do it again!!
 	
 	when "17"
-		do CutsceneController.set_textbox_player_preset(Player.Players.UPSIDE)
 		if Statics.get_item_percentage() < 100.0
 			NPC17: There's a hidden room under the path into town.[wait=0.25]  I don't know how to get in yet, though...
 		else

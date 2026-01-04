@@ -23,6 +23,7 @@ static var _boxtrack := false
 @onready var bottargpos:Control = $CanvasLayer/Control/bottargpos
 @onready var notif:TextureRect = $CanvasLayer/TextureRect
 @onready var textbox:Control = $CanvasLayer/Control/text
+@onready var textbg:Control = $CanvasLayer/Control/text/PanelContainer
 @onready var effects:AnimationPlayer = $effects
 @onready var texlabel:DialogueLabel  = $CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel
 
@@ -202,7 +203,13 @@ static func trigger_animation_backwards(anim:String, wait:bool) -> void:
 
 
 static func set_textbox_color(_col:String) -> void:
-	pass
+	if is_instance_valid(instance):
+		instance.textbg.self_modulate = Color(_col)
+
+
+static func reset_textbox_color() -> void:
+	if is_instance_valid(instance):
+		instance.textbg.self_modulate = Color("#004058")
 
 
 static func set_textbox_frame(_frame:int) -> void:

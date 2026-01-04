@@ -38,7 +38,7 @@ var read_esc:bool = false
 
 func _ready() -> void:
 	save_icon.visible = false
-	
+
 	var number_str:String = Statics.parse_version_to_text_string(ProjectSettings.get_setting("application/config/version"))
 	var version_str:String = tr(&"Engine version") + "\n" + number_str
 	version_text.set_snaily_text(version_str)
@@ -64,7 +64,7 @@ func _ready() -> void:
 			else:
 				$"VersionWarnPanel".queue_free()
 				is_main_awaiting_input = true
-			
+
 			click_play_text = $"ClickPlay"
 			click_play_text.set_snaily_text(tr(&"Click or press %s or %s to play!!") % [
 				SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 0), SInput.get_icon_as_bbcode(SInput.Inputs.UI_ACCEPT, "", 1)

@@ -88,7 +88,7 @@ func spawn() -> void:
 func _process(_delta: float) -> void:
 	if GameCore.instance == null or Engine.is_editor_hint() or not process_ai:
 		return
-	
+
 	var lookat_pos = cc_lookat_pos
 	if cc_lookat_node:
 		lookat_pos = cc_lookat_node.position
@@ -121,7 +121,7 @@ func _process(_delta: float) -> void:
 			elif not facing_left and lookat_pos.x > position.x:
 				facing_left = true;
 				play_anim("turnground")
-	
+
 	if Room.instance.cutscene_script:
 		var player:Player = GameCore.instance.player
 		if bubble.shown:
@@ -142,7 +142,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if GameCore.instance == null or Engine.is_editor_hint() or not process_ai:
 		return
-	
+
 	if cc_glide_active:
 		cc_glide_elapsed = clampf(cc_glide_elapsed + delta, 0.0, cc_glide_duration)
 		var lerp_rate:float = inverse_lerp(0.0, cc_glide_duration, cc_glide_elapsed)
@@ -151,7 +151,7 @@ func _physics_process(delta: float) -> void:
 		if cc_glide_elapsed >= cc_glide_duration:
 			cc_glide_active = false
 		return
-	
+
 	match surface:
 		0:
 			body.velocity.y += GRAVITY * delta

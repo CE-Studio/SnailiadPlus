@@ -306,7 +306,7 @@ func _ready():
 func _process(_delta):
 	if not process:
 		return
-	
+
 	if stun_timer > 0:
 		sprite.visible = not sprite.visible
 
@@ -322,7 +322,7 @@ func _process(_delta):
 func _physics_process(delta:float) -> void:
 	if not process:
 		return
-	
+
 	if Statics.noclip_mode:
 		box_normal.disabled = true
 		box_shell.disabled = true
@@ -334,12 +334,12 @@ func _physics_process(delta:float) -> void:
 		body.move_and_slide()
 		position = body.position
 		return
-	
+
 	set_home_on_any_flip = not ProjectSettings.get_setting("game/control/gravity_keep")
 	suppress_retain_gravity = not set_home_on_any_flip
 	if not _can_grav_jump():
 		set_home_on_any_flip = false
-	
+
 	# Cutscenes can glide the player from point A to point B
 	# That's controlled here, and active glides prevent the rest of the
 	# function from going, so as to cancel gravity and other checks
@@ -351,7 +351,7 @@ func _physics_process(delta:float) -> void:
 		if cc_glide_elapsed >= cc_glide_duration:
 			cc_glide_active = false
 		return
-	
+
 	if override_box_disable:
 		box_normal.disabled = true
 		box_shell.disabled = true
@@ -859,7 +859,7 @@ func _check_can_grav_jump() -> Statics.DirsSurface:
 	var can_opp:bool = _check_ability(can_gravity_jump_opposite)
 	if not can_adj and not can_opp:
 		return Statics.DirsSurface.NONE
-	
+
 	var attempting:bool = SInput.check_input(SInput.Inputs.GRAVITY, true)
 	var target_dir:Statics.DirsSurface = gravity_dir
 	var move_vec:Vector2i = Vector2i(SInput.vector_move())
@@ -891,7 +891,7 @@ func _check_can_grav_jump() -> Statics.DirsSurface:
 				pass
 	else:
 		target_dir = _get_viable_flip_dir(move_vec)
-	
+
 	if attempting:
 		return target_dir
 	return Statics.DirsSurface.NONE
