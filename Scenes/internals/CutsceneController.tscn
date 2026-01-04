@@ -439,3 +439,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_wjrlc")
 }
 autoplay = "default"
+
+[connection signal="spoke" from="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel" to="." method="_on_dialogue_label_spoke"]
