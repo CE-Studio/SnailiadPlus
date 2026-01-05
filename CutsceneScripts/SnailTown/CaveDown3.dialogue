@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if not Statics.is_random_game
 	if not Statics.check_location_collected(10)
 		NPC24: Take this {{GlobalText.COL_IRIS}}Helix Fragment[/color]![wait=0.25] Legend says it is but one piece of {{GlobalText.COL_IRIS}}Iris, the Godsnail[/color]!

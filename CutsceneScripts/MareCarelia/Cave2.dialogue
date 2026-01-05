@@ -9,9 +9,9 @@ match CutsceneController.object_id
 				do CutsceneController.perform_action("set_wont_talk", false)
 	when "26"
 		do CutsceneController.lock_input()
-		do CutsceneController.show_textbox()
-		do CutsceneController.set_textbox_color("#004457")
+		do CutsceneController.reset_textbox_color()
 		do CutsceneController.set_textbox_frame(0)
+		do CutsceneController.show_textbox()
 		if not Statics.is_random_game
 			if Player.instance.who_i_is != Player.Players.BLOBBY
 				NPC26: With this "Shell Shield",[wait=0.1] you won't take any damage when you hide in your shell!

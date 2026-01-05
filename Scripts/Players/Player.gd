@@ -852,6 +852,7 @@ func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> vo
 			_play_anim("jump")
 		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
 		just_flipped = true
+		UICore.instance.cam.reset_new_follow()
 
 
 func _check_can_grav_jump() -> Statics.DirsSurface:

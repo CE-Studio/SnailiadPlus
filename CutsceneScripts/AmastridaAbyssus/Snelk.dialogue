@@ -1,7 +1,7 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
 do CutsceneController.set_textbox_color("#4028c4")
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 NPC47: So many [color=#ff9957]secret snelks[/color]![wait=0.15]  Have you found the other [color=#ff9957]secret snelk[/color] room yet?[wait=0.2]  _@_v!!
 => END

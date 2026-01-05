@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1)
 	NPC41: Watch out, {{Player.player_name}}!![wait=0.25]\nA [color=#ff4f99]fierce monster[/color] is hiding in the next room!!
 elif not Statics.check_item(Item.ItemTypes.BOOMERANG)

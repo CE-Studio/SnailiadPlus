@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 match CutsceneController.object_id
 	when "48"
 		if CutsceneController.instance.actor_above("48", 360)

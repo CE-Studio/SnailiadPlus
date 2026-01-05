@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 # WaveHere
 NPC10: [speed=0.5]Oh, {{Player.player_full_name}}![wait=0.25][speed=1]  My heart will forever belong to you!\n[wait=0.125]             [color=#ff75f6]<3
 => END

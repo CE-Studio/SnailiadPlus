@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if Statics.solid_at_world_pos(Vector2(248, 136))
 	NPC8: There's something funny about that tree...
 else

@@ -12,9 +12,9 @@ match CutsceneController.object_id
 => END
 
 ~ npc_speak
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if not Statics.get_world_flag(Statics.WorldFlags.SEEN_GRAVITY_CUTSCENE)
 	NPC28: Oh, {{Player.player_name}}, it's you!![wait=0.15]  I'm saved!![wait=0.2]{{GlobalText.COL_MOON}}Moon Snail[/color] took me here![wait=0.15]  He's gone bad, {{Player.player_name}}!!
 else

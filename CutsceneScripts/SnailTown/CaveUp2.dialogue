@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
 	NPC19: Hey, {{Player.player_name}}![wait=0.25]  If you had a boomerang,[wait=0.125] you could break all sorts of walls!
 else
