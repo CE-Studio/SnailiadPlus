@@ -106,8 +106,6 @@ my_id = 1
 exit_room = "uid://d1q6m587oc5pm"
 
 [node name="WaterArea" parent="." instance=ExtResource("5_esa2e")]
-bubble_count = 256
-fast_bubbles = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea"]
 position = Vector2(200, 1128)

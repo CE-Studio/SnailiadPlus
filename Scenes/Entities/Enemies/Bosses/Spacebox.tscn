@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://dusmlayp4ryxk"]
+
+[ext_resource type="Script" uid="uid://bcj3271l1ym6q" path="res://Scripts/Enemies/Bosses/Spacebox.gd" id="1_d4jgm"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_jxo7h"]
+[ext_resource type="Texture2D" uid="uid://b5sa3oaybgbqy" path="res://Assets/Images/Entities/Boss3.png" id="2_d4jgm"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wl53y"]
+[ext_resource type="AudioStream" uid="uid://3juje0o76t68" path="res://Assets/Sounds/Sfx/Enemy/Boss3Summon.ogg" id="5_fqrn0"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_q1uv8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jxo7h"]
+size = Vector2(128, 128)
+
+[node name="Spacebox" type="CharacterBody2D"]
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_d4jgm")
+battle_music = 10
+phase_changes = Array[float]([0.3])
+max_health = 5100
+attack = 4
+defense = 9
+light_radius = 128
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jxo7h")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_jxo7h")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2.4, 2.4)
+rect = Rect2(-26.666666, -26.666666, 53.333332, 53.333332)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("1_jxo7h")
+texture_path = "res://Assets/Images/Entities/Boss3.json"
+load_autoplay = Array[String](["p0_idle"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("2_d4jgm")
+hframes = 10
+vframes = 2
+frame = 9
+script = ExtResource("3_wl53y")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="ShieldLayer" type="Node2D" parent="."]
+
+[node name="Summon" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fqrn0")
+bus = &"Sfx"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_q1uv8")
+bus = &"Sfx"

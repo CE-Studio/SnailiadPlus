@@ -191,5 +191,5 @@ func set_layer_position(new_pos:Vector2):
 
 func reset_new_follow() -> void:
 	nf_delay_timer = 0
-	nf_return_timer = 0
-	nf_offset = Vector2.ZERO
+	nf_return_timer = NF_OFFSET_RETURN_DELAY
+	#nf_offset = Vector2.ZERO
