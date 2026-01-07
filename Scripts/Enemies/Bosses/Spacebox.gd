@@ -394,7 +394,6 @@ func kill() -> void:
 		for _shield in shields:
 			_shield.kill()
 		shields.clear()
-		print(babyboxes)
 		for _babybox in babyboxes:
 			if _babybox:
 				_babybox.kill()

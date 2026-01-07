@@ -215,13 +215,13 @@ func _on_player_entered(_body: Node2D) -> void:
 				UICore.instance.update_weapon_icons(false)
 			ItemTypes.HEART_CONTAINER:
 				if not Statics.is_in_boss_rush:
-					name_str = tr(&"Heart Container #%d")
+					name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
 				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 				GameCore.instance.player.health = GameCore.instance.player.max_health
 				UICore.instance.draw_new_hearts()
 			ItemTypes.HELIX_FRAGMENT:
 				if not Statics.is_in_boss_rush:
-					name_str = tr(&"Helix Fragment #%d")
+					name_str = tr(&"Helix Fragment #%d") % Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)
 			#ItemTypes.RADAR_SHELL:
 			#ItemTypes.WEAPON_LOCK_TRAP:
 			#ItemTypes.GRAVITY_LOCK_TRAP:

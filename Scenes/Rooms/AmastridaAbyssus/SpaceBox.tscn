@@ -219,7 +219,9 @@ exit_transition = 2
 
 [node name="RoomTransitionTrigger2" parent="." instance=ExtResource("3_ljn2i")]
 position = Vector2(400, 120)
+scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://3fxucfmwtgnb"
 
 [node name="StarLayer" parent="." instance=ExtResource("5_8ftww")]
 

@@ -328,7 +328,7 @@ func kill() -> void:
 		var p_range = kill_particle_range
 		var pos = Vector2(randi_range(-p_range.x, p_range.x), randi_range(-p_range.y, p_range.y))
 		var part = kill_particle_types[randi() % kill_particle_types.size()]
-		Statics.spawn_particle(part, Room.Layers.FG1, position + pos)
+		Statics.spawn_particle(part, Room.Layers.FG1, global_position + pos)
 	if Statics.current_profile["character"] == Player.Players.LEECHY:
 		spawn_health_orbs()
 	environment = null

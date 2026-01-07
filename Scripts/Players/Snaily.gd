@@ -112,6 +112,7 @@ func tick_death(delta:float) -> void:
 				facing_left = true
 		_play_anim("death")
 		velocity = Vector2(110 if facing_left else -110, -300)
+		sprite.visible = true
 	super(delta)
-	sprite.position = body.position
+	sprite.position += velocity * delta
 	velocity.y += gravity[read_i_jump] * delta

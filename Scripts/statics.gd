@@ -604,6 +604,14 @@ static func spawn_particle_cam_synced(name:String, layer:Room.Layers, pos:Vector
 	return new_particle
 
 
+static func clear_cam_synced_particles() -> void:
+	if not UICore.instance:
+		return
+	for particle in UICore.instance.particle_layer.get_children():
+		if particle is Particle:
+			particle.queue_free()
+
+
 static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:int) -> Texture2D:
 	var color_count := _palette.get_width()
 	var palette_image := _palette.get_image()
