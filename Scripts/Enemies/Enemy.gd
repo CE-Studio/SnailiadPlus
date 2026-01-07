@@ -114,7 +114,7 @@ enum EnemyTypes {
 	SHELLBREAKER,      # Shellbreaker
 	STOMPY,            # Stompy
 	SPACEBOX,          # Space Box
-	BABYBOX,           # Baby Box
+	SPACEBOX_BABYBOX,  # Baby Box
 	MOONSNAIL,         # Moon Snail
 	GIGASNAIL,         # Giga Moon Snail
 	COSMICSNAIL,       # Cosmic Moon Snail
@@ -240,7 +240,7 @@ func _physics_process(delta) -> void:
 		damage_timeout -= delta
 	ping_played = false
 
-	if sprite:
+	if sprite and not shield_entity:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
 

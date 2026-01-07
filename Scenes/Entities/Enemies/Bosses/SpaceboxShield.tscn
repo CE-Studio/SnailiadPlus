@@ -10,14 +10,18 @@ size = Vector2(16, 16)
 
 [node name="SpaceboxShield" type="CharacterBody2D"]
 z_index = -1
-collision_layer = 0
+collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_bb8v3")
 max_health = 100
 attack = 4
 defense = 1000
+can_be_pierced = false
 make_sound_on_ping = false
 shield_entity = true
+kill_particle_range = Vector2i(0, 0)
+kill_particle_types = Array[String](["ExplosionWhiteSmall"])
+kill_particle_count = 1
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vj7im")

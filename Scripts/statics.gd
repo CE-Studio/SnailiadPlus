@@ -583,6 +583,8 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 
 
 static func spawn_particle_cam_synced(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
+	if not UICore.instance:
+		return spawn_particle(name, layer, pos, data)
 	if active_room == null:
 		return null
 	if not particle_table.has(name):

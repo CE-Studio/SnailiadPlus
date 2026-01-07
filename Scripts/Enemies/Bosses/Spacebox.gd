@@ -11,11 +11,13 @@ const SHIELD_DAMAGE_THRESHOLD:int = 100
 const SHIELD_PERIOD:int = 4
 const MODE_TIMEOUT:float = 0.6
 const SPAWN_TIMEOUT:float = 2.5
+const SPAWN_COUNTER:int = 8
 const ACCEL:float = 210.0
 const CLUSTER_TIMEOUT:float = 4.1
 const SHOT_TIMEOUTS:Array[float] = [0.6, 0.2]
-const SHAKE_TIMELINE:Array[float] = [5.0, 0.7]
+const SHAKE_TIMELINE:Array[float] = [4.0, 0.7]
 const SHIELD_EXTENTS:Vector2 = Vector2(72, 72)
+const DIAG_SLOPE:Vector2 = Vector2(22.5, 19.0)
 
 const DECISION_TABLE:Array[float] = [
 	0.1640168826, 0.3892556902, 0.0336081053, 0.2246864975, 0.5434009453, 0.4227320437, 0.1017472328, 0.2041907897, 0.9950191347, 0.3634705228,
@@ -35,23 +37,26 @@ var babyboxes:Array[Enemy] = []
 var shield_count:int = 0
 var elapsed:float = 0.0
 var mode_timeout = MODE_TIMEOUT
-var last_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
+var last_mode:Statics.DirsCompass = Statics.DirsCompass.W
 var current_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
 var next_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
-var spawn_counter:int = MAX_BABYBOXES
-var phase_speed:float = 1.0
+var spawn_counter:int = MAX_BABYBOXES - 1
+var boss_speed:float = 1.0
 var decision_index:int = 0
 var is_shooting:bool = false
 var shot_max:int = 4
 var shot_count:int = 0
 var cluster_timeout:float = 0.0
 var shot_timeout:float = 0.0
+var accel_dir:Vector2 = Vector2.ZERO
 
+@onready var sfx_move:AudioStreamPlayer = $"Move"
 @onready var sfx_summon:AudioStreamPlayer = $"Summon"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
 @onready var shield_layer:Node2D = $"ShieldLayer"
 @onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotary.tscn")
 @onready var shield_scn:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/SpaceboxShield.tscn")
+@onready var babybox_scn:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/SpaceboxBabybox.tscn")
 #endregion
 
 
@@ -69,22 +74,40 @@ func _ready() -> void:
 	
 	if display_mode:
 		sprite.action = "display"
+		z_index = 0
 		return
+	else:
+		if not Statics.is_in_boss_rush:
+			GameCore.instance.music_manager.play_song(battle_music)
+		health_bar = UICore.instance.show_boss_bar(self)
+		can_damage = false
 	if hard_mode:
 		shot_max += 2
-		phase_speed += 0.2
+		boss_speed += 0.2
 	
 	nodes_to_wiggle.append(sprite)
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if not ai_active:
+		return
 	
 	elapsed += delta
-	#check_mode
-	#check_shoot
-	check_add_shields()
-	update_shield_positions()
+	
+	if not intro_delay:
+		check_mode(delta)
+		check_shoot(delta)
+		check_add_shields()
+		update_shield_positions()
+	velocity += accel_dir * ACCEL * delta
+	var stomp_vel:Vector2 = velocity
+	if stomp_vel != Vector2.ZERO and move_and_slide() and stomp_vel != velocity:
+		stomp(stomp_vel)
+	
+	for i in range(babyboxes.size() - 1, -1, -1):
+		if babyboxes[i] == null:
+			babyboxes.remove_at(i)
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
@@ -95,7 +118,14 @@ func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> Strin
 func advance_phase(count:int = 1) -> void:
 	super(count)
 	if phase == 1:
-		phase_speed += 0.5
+		boss_speed += 0.5
+	for babybox in babyboxes:
+		if babybox and babybox is SpaceboxBabybox:
+			babybox.play_phase_anim()
+
+
+func enable_damage() -> void:
+	can_damage = true
 
 
 func _get_decision() -> float:
@@ -103,19 +133,47 @@ func _get_decision() -> float:
 	return DECISION_TABLE[decision_index]
 
 
-func stomp() -> void:
-	if velocity.length() > 100.0:
+func stomp(impact_vel:Vector2) -> void:
+	var impact:bool = false
+	if impact_vel.length() > 100.0:
+		impact = true
 		sfx_stomp.play()
-		match current_mode:
-			Statics.DirsCompass.N or Statics.DirsCompass.S:
+	match current_mode:
+		Statics.DirsCompass.N:
+			if impact:
 				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2.UP, UICore.ShakeCallMode.OVERWRITE_ALL)
-			Statics.DirsCompass.NE or Statics.DirsCompass.SW:
+			play_phase_anim("U_land")
+		Statics.DirsCompass.NE:
+			if impact:
 				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2(1, -1).normalized(), UICore.ShakeCallMode.OVERWRITE_ALL)
-			Statics.DirsCompass.E or Statics.DirsCompass.W:
+			play_phase_anim("UR_land")
+		Statics.DirsCompass.E:
+			if impact:
 				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2.RIGHT, UICore.ShakeCallMode.OVERWRITE_ALL)
-			Statics.DirsCompass.SE or Statics.DirsCompass.NW:
+			play_phase_anim("R_land")
+		Statics.DirsCompass.SE:
+			if impact:
 				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2(1, 1).normalized(), UICore.ShakeCallMode.OVERWRITE_ALL)
+			play_phase_anim("DR_land")
+		Statics.DirsCompass.S:
+			if impact:
+				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2.DOWN, UICore.ShakeCallMode.OVERWRITE_ALL)
+			play_phase_anim("D_land")
+		Statics.DirsCompass.SW:
+			if impact:
+				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2(-1, 1).normalized(), UICore.ShakeCallMode.OVERWRITE_ALL)
+			play_phase_anim("DL_land")
+		Statics.DirsCompass.W:
+			if impact:
+				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2.LEFT, UICore.ShakeCallMode.OVERWRITE_ALL)
+			play_phase_anim("L_land")
+		Statics.DirsCompass.NW:
+			if impact:
+				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2(-1, -1).normalized(), UICore.ShakeCallMode.OVERWRITE_ALL)
+			play_phase_anim("UL_land")
+	position += impact_vel.normalized() * -0.25
 	velocity = Vector2.ZERO
+	accel_dir = Vector2.ZERO
 	last_mode = current_mode
 	current_mode = Statics.DirsCompass.NONE
 	mode_timeout = MODE_TIMEOUT
@@ -150,3 +208,200 @@ func update_shield_positions() -> void:
 		elif cycle_point < 36.0:
 			shields[i].position.x = -SHIELD_EXTENTS.x
 			shields[i].position.y = SHIELD_EXTENTS.y - (segment_point * 16.0)
+
+
+func make_babyboxes() -> void:
+	play_phase_anim("spawn")
+	sfx_summon.play()
+	current_mode = Statics.DirsCompass.NONE
+	mode_timeout = SPAWN_TIMEOUT
+	if babyboxes.size() < MAX_BABYBOXES:
+		if phase == 0:
+			spawn_new_babybox(Vector2.ZERO, true)
+			spawn_new_babybox(Vector2.ZERO, false)
+		else:
+			spawn_new_babybox(Vector2(-32, -32), false)
+			spawn_new_babybox(Vector2(32, -32), true)
+			spawn_new_babybox(Vector2(32, 32), false)
+			spawn_new_babybox(Vector2(-32, 32), true)
+
+
+func spawn_new_babybox(_position:Vector2, axis:bool) -> void:
+	var new_babybox:SpaceboxBabybox = babybox_scn.instantiate()
+	new_babybox.boss = self
+	new_babybox.last_mode = Statics.DirsCompass.N if axis else Statics.DirsCompass.W
+	GameCore.instance.current_room.layer_ground.add_child(new_babybox)
+	new_babybox.position = position + _position
+	babyboxes.append(new_babybox)
+
+
+func check_shoot(delta:float) -> void:
+	if max_health - health < 1500:
+		return
+	
+	if not is_shooting:
+		cluster_timeout -= delta * boss_speed
+		if cluster_timeout <= 0.0:
+			is_shooting = true
+			shot_count = shot_max
+			shot_timeout = 0.0
+	else:
+		shot_timeout -= delta * boss_speed
+		if shot_timeout <= 0.0:
+			shot_count -= 1
+			if shot_count <= 0:
+				is_shooting = false
+				cluster_timeout = CLUSTER_TIMEOUT
+			shot_timeout = SHOT_TIMEOUTS[phase]
+			_shoot(donut, Vector2(4.0, TAU / shot_max * shot_count), 60.0)
+
+
+func check_mode(delta:float) -> void:
+	mode_timeout -= delta * boss_speed
+	if current_mode == Statics.DirsCompass.NONE and mode_timeout <= 0.0:
+		spawn_counter -= 1
+		if spawn_counter < 0.0:
+			spawn_counter = SPAWN_COUNTER
+			make_babyboxes()
+		else:
+			sfx_move.play()
+			var decision:float = _get_decision()
+			if last_mode == Statics.DirsCompass.N or last_mode == Statics.DirsCompass.S:
+				if hard_mode:
+					if decision < 0.2:
+						charge_diag()
+					elif decision < 0.8:
+						charge_horiz()
+					else:
+						charge_vert()
+				else:
+					if decision < 0.75:
+						charge_horiz()
+					else:
+						charge_vert()
+			elif last_mode == Statics.DirsCompass.W or last_mode == Statics.DirsCompass.E:
+				if hard_mode:
+					if decision < 0.2:
+						charge_diag()
+					elif decision < 0.8:
+						charge_vert()
+					else:
+						charge_horiz()
+				else:
+					if decision < 0.75:
+						charge_vert()
+					else:
+						charge_horiz()
+			elif last_mode != Statics.DirsCompass.NONE:
+				if decision < 0.5:
+					charge_horiz()
+				else:
+					charge_vert()
+
+
+#region Charge functions
+func charge_n() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.N
+	play_phase_anim("U_move")
+	accel_dir = Vector2.UP
+
+
+func charge_ne() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.NE
+	play_phase_anim("UR_move")
+	accel_dir = Vector2(DIAG_SLOPE.x, -DIAG_SLOPE.y).normalized()
+
+
+func charge_e() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.E
+	play_phase_anim("R_move")
+	accel_dir = Vector2.RIGHT
+
+
+func charge_se() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.SE
+	play_phase_anim("DR_move")
+	accel_dir = DIAG_SLOPE.normalized()
+
+
+func charge_s() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.S
+	play_phase_anim("D_move")
+	accel_dir = Vector2.DOWN
+
+
+func charge_sw() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.SW
+	play_phase_anim("DL_move")
+	accel_dir = Vector2(-DIAG_SLOPE.x, DIAG_SLOPE.y).normalized()
+
+
+func charge_w() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.W
+	play_phase_anim("L_move")
+	accel_dir = Vector2.LEFT
+
+
+func charge_nw() -> void:
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.NW
+	play_phase_anim("UL_move")
+	accel_dir = -DIAG_SLOPE.normalized()
+
+
+func charge_horiz() -> void:
+	if GameCore.instance.player.position.x < position.x:
+		charge_w()
+	else:
+		charge_e()
+
+
+func charge_vert() -> void:
+	if GameCore.instance.player.position.y < position.y:
+		charge_n()
+	else:
+		charge_s()
+
+
+func charge_diag() -> void:
+	var player:Player = GameCore.instance.player
+	if player.position.x < position.x:
+		if player.position.y < position.y:
+			charge_nw()
+		else:
+			charge_sw()
+	else:
+		if player.position.y < position.y:
+			charge_ne()
+		else:
+			charge_se()
+#endregion
+
+
+func kill() -> void:
+	if not in_death_anim:
+		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SPACE_BOX)
+		if health_bar:
+			health_bar._toggle_outro_shake()
+		sprite.action = "defeat"
+		for _shield in shields:
+			_shield.kill()
+		shields.clear()
+		print(babyboxes)
+		for _babybox in babyboxes:
+			if _babybox:
+				_babybox.kill()
+		babyboxes.clear()
+		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position)
+		GameCore.instance.music_manager.stop_all(true)
+		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, true)
+	else:
+		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
+	super()

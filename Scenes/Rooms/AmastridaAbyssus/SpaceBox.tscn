@@ -1,12 +1,17 @@
-[gd_scene load_steps=9 format=4 uid="uid://cd6l4icupiad0"]
+[gd_scene load_steps=17 format=4 uid="uid://cd6l4icupiad0"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_2l4xp"]
+[ext_resource type="Resource" uid="uid://cae7geovo3tte" path="res://CutsceneScripts/AmastridaAbyssus/SpaceBox.dialogue" id="2_cusb5"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_g65hi"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_fwhfm"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="3_ljn2i"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_ucl44"]
 [ext_resource type="PackedScene" uid="uid://dusmlayp4ryxk" path="res://Scenes/Entities/Enemies/Bosses/Spacebox.tscn" id="4_h1u6w"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="5_8ftww"]
+[ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="8_tgtj1"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="9_vpsa4"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="10_ldoax"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="11_cusb5"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -15,11 +20,111 @@ _data = {
 }
 point_count = 3
 
-[node name="SpaceBox" type="Node2D"]
+[sub_resource type="Animation" id="Animation_ldoax"]
+resource_name = "IntroDefault"
+length = 2.9
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.2, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(16, 136), Vector2(16, 136), Vector2(48, 136)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CCPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0, false],
+"method": &"set_active"
+}, {
+"args": [1, 1.0],
+"method": &"do_emote"
+}, {
+"args": [],
+"method": &"set_inactive"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpaceBoxIntro")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 2.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"set_camera_focus_node"
+}, {
+"args": [],
+"method": &"set_camera_focus_player"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GroundLayer/Spacebox")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 2.01, 2.3, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"charge_n"
+}, {
+"args": [],
+"method": &"_get_decision"
+}, {
+"args": [],
+"method": &"charge_w"
+}, {
+"args": [],
+"method": &"enable_damage"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_cusb5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 136)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbhft"]
+_data = {
+&"IntroDefault": SubResource("Animation_ldoax"),
+&"RESET": SubResource("Animation_cusb5")
+}
+
+[node name="SpaceBox" type="Node2D" node_paths=PackedStringArray("cutscene_animator")]
 z_as_relative = false
 script = ExtResource("1_2l4xp")
 area_id = 3
 darkness_level = 0.35
+cutscene_script = ExtResource("2_cusb5")
+cutscene_animator = NodePath("IntroAnim")
 minimap_offset = Vector2i(7, 5)
 song_change = 5
 play_song_on_enter = false
@@ -89,7 +194,7 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer"]
-tile_map_data = PackedByteArray("AAAJAAsAAAAJAAEAAAAGABQAAAALAAEAAAAJABQAAAALAAEAAAARABQAAAALAAEAAAAEAAIAAAAMAB4AAAANAAIAAAAMAB4AAAATAAIAAAAMAB4AAAA=")
+tile_map_data = PackedByteArray("AAAGABQAAAALAAEAAAAJABQAAAALAAEAAAARABQAAAALAAEAAAAEAAIAAAAMAB4AAAANAAIAAAAMAB4AAAATAAIAAAAMAB4AAAA=")
 tile_set = ExtResource("2_g65hi")
 collision_enabled = false
 
@@ -117,3 +222,26 @@ position = Vector2(400, 120)
 my_id = 1
 
 [node name="StarLayer" parent="." instance=ExtResource("5_8ftww")]
+
+[node name="CCPlayer" parent="." instance=ExtResource("8_tgtj1")]
+position = Vector2(16, 136)
+
+[node name="SpaceBoxIntro" parent="." node_paths=PackedStringArray("cam_focus_node") instance=ExtResource("9_vpsa4")]
+position = Vector2(-72, 120)
+cam_focus_node = NodePath("../GroundLayer/Spacebox")
+identifier = &"SpaceBoxIntro"
+
+[node name="IntroAnim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fbhft")
+}
+
+[node name="Trigger" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("10_ldoax")]
+position = Vector2(32, 120)
+scale = Vector2(7, 7)
+script = ExtResource("11_cusb5")
+actor = NodePath("../SpaceBoxIntro")
+require_condition = true
+conditional_flag = 4
+conditional_value = false
+compare_mode = 0

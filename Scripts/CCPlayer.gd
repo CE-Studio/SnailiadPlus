@@ -24,6 +24,8 @@ func _physics_process(_delta: float) -> void:
 func set_active(surface:Statics.DirsSurface = player.gravity_dir, facing:bool = player.facing_left) -> void:
 	active = true
 	set_direction(surface, facing)
+	Player.instance.body.position = position
+	play_anim("idle")
 
 
 func set_inactive() -> void:

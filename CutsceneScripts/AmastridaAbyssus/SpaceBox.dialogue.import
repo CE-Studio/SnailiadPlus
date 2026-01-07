@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cae7geovo3tte"
+path="res://.godot/imported/SpaceBox.dialogue-a4d3be28c71cf8ad3c8bb8d9d0282b73.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/AmastridaAbyssus/SpaceBox.dialogue"
+dest_files=["res://.godot/imported/SpaceBox.dialogue-a4d3be28c71cf8ad3c8bb8d9d0282b73.tres"]
+
+[params]
+
+defaults=true

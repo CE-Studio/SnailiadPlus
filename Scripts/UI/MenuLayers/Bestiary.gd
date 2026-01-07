@@ -52,7 +52,7 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.SHELLBREAKER,
 	Enemy.EnemyTypes.STOMPY,
 	Enemy.EnemyTypes.SPACEBOX,
-	Enemy.EnemyTypes.BABYBOX,
+	Enemy.EnemyTypes.SPACEBOX_BABYBOX,
 	#Enemy.EnemyTypes.MOONSNAIL,
 	#Enemy.EnemyTypes.GIGASNAIL,
 	#Enemy.EnemyTypes.COSMICSNAIL,
@@ -279,7 +279,7 @@ func _get_name(key:String) -> StringName:
 		"shellbreaker": return tr(&"Shellbreaker")
 		"stompy": return tr(&"Stompy")
 		"spacebox": return tr(&"Space Box")
-		"babybox": return tr(&"Baby Box")
+		"spaceboxBabybox": return tr(&"Babybox")
 		"moonsnail": return tr(&"Moon Snail")
 		"gigasnail": return tr(&"Giga Snail")
 		"none": return tr(&"-- ??? --")
@@ -326,8 +326,8 @@ func _get_desc(key:String) -> StringName:
 		"balloon": return tr(&"")
 		"shellbreaker": return tr(&"Habitat: M.Carelia\nFeeling: a little grumpy\nAmmo supply: infinite\n\nAs a blob ages, funny things happen to its body.  Shellbreaker's once-fragile surface has hardened into a tough carapace, and they've gained a high level of control over their projectiles.  Their favorite music genre is drum & bass.")
 		"stompy": return tr(&"Habitat: S.Silere\nSmell: not great\nBody: unknown\n\nA menace to snails and biologists alike, this odd creature (pair of creatures?) guards its turf with an iron toe, making a ton of noise in the process.  It's a wonder the floors haven't cracked!")
-		"spacebox": return tr(&"")
-		"babybox": return tr(&"")
+		"spacebox": return tr(&"Habitat: A.Abyssus\nShell: hard metal\nForce: unstoppable\n\nA construct of unknown origin, Space Box finds great joy in ramming itself into surfaces until they're perfectly flat.  As a result, it seems to have all but forgotten its role as a fortress guard.  It still guards, but only for its own amusement.")
+		"spaceboxBabybox": return tr(&"Habitat: A.Abyssus\nAge: 6 seconds\nIntentions: unknowable\n\nA small satellite drone emitted by Space Box to aid its guard duty.  It has limited intelligence if any, and seems to aimlessly drift from wall to wall without purpose.  Even still, Space Box harbors an emotional attachment to it.")
 		"moonsnail": return tr(&"")
 		"gigasnail": return tr(&"")
 		"none": return tr(&"\n\nThis entry has not been discovered yet")

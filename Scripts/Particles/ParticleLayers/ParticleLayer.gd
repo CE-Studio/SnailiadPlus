@@ -44,7 +44,9 @@ func _process(delta: float) -> void:
 		_spawn_one()
 		spawn_cooldown = spawn_delay
 	
-	var cam_center = UICore.instance.get_cam_center_pos()
+	var cam_center = Vector2(200, 120)
+	if UICore.instance:
+		UICore.instance.get_cam_center_pos()
 	if static_position:
 		cam_center = STATIC_POSITION
 	elif move_with_camera:
