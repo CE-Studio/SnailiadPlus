@@ -5,6 +5,7 @@ do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 match CutsceneController.object_id
 	when "22"
+		do Statics.set_world_flag(Statics.WorldFlags.TALKED_TO_CAVE_SNAIL, true)
 		if Statics.get_item_percentage() < 100.0
 			# ShakeHere
 			NPC22: I are [color=#ff4f99]Cave Snail[/color]![wait=0.25] Thorgle Borgle!!!!

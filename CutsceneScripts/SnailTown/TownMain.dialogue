@@ -140,7 +140,7 @@ match CutsceneController.object_id
 	
 	when "16"
 		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-			if not Player.instance.who_i_is == Player.Players.LEECHY
+			if Player.instance.who_i_is != Player.Players.LEECHY
 				NPC16: If you ever get hurt,[wait=0.125] [color=#4bd867]eat some plants[/color]![wait=0.25]  You need to eat well to stay fit and healthy!
 			else
 				NPC16: If you ever get hurt,[wait=0.125] defeat enemies![wait=0.25]  As a leech,[wait=0.125] you can earn [color=#ff75f6]pink heath orbs[/color] off them!

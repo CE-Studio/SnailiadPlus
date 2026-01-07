@@ -1,0 +1,10 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.reset_textbox_color()
+do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
+if not Statics.check_item(Item.ItemTypes.BOOMERANG)
+	NPC21: Yay, {{Player.player_name}}, it's you!![wait=0.2]  Take this boomerang and break some walls open!!
+NPC21: By the way,[wait=0.1] you can toggle weapons by {{GlobalText.COL_CTRL}}pressing inputs like "{{SInput.icon_weapon1}}" and "{{SInput.icon_weapon2}}"[/color]!
+NPC21: If you're using a controller,[wait=0.15] you can {{GlobalText.COL_CTRL}}use {{SInput.icon_aiml}}{{SInput.icon_aimd}}{{SInput.icon_aimu}}{{SInput.icon_aimr}} to aim your weapon while moving around[/color]!
+=> END
