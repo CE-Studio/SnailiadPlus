@@ -56,4 +56,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Stomp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4ciwk")
+volume_db = -4.0
 bus = &"Sfx"
