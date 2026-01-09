@@ -852,6 +852,7 @@ func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> vo
 			_play_anim("jump")
 		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
 		just_flipped = true
+		UICore.instance.cam.reset_new_follow()
 
 
 func _check_can_grav_jump() -> Statics.DirsSurface:
@@ -888,7 +889,19 @@ func _check_can_grav_jump() -> Statics.DirsSurface:
 						attempting = true
 						target_dir = _get_viable_flip_dir(test_vec)
 			2:
-				pass
+				if SInput.double_tapped:
+					if SInput.check_input(SInput.Inputs.DOWN, true):
+						attempting = true
+						target_dir = Statics.DirsSurface.FLOOR
+					elif SInput.check_input(SInput.Inputs.UP, true):
+						attempting = true
+						target_dir = Statics.DirsSurface.CEILING
+					elif SInput.check_input(SInput.Inputs.LEFT, true):
+						attempting = true
+						target_dir = Statics.DirsSurface.LWALL
+					elif SInput.check_input(SInput.Inputs.RIGHT, true):
+						attempting = true
+						target_dir = Statics.DirsSurface.RWALL
 	else:
 		target_dir = _get_viable_flip_dir(move_vec)
 

@@ -46,7 +46,7 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	area.connect("body_entered", _on_body_entered)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
-	return cooldown
+	return cooldown / rapid_mult
 
 
 func _physics_process(delta: float) -> void:

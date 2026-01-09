@@ -212,11 +212,12 @@ static func set_textbox_color(_col:String) -> void:
 
 static func reset_textbox_color() -> void:
 	if is_instance_valid(instance):
-		instance.textbg.self_modulate = Color("#004058")
+		instance.textbg.self_modulate = Color("#004457")
 
 
 static func set_textbox_frame(_frame:int) -> void:
-	pass
+	if is_instance_valid(instance):
+		instance.textbg.id = _frame
 
 
 static func set_textbox_player_preset(_player:Player.Players) -> void:
@@ -286,7 +287,7 @@ static func set_sound(id := "-1") -> void:
 			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
 
 
-func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
 	if sound.playing:
 		return
 	sound.play()

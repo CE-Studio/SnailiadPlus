@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b74uveqoiwf7u"
+path="res://.godot/imported/Boomerang.dialogue-813267c29e8812d569bd9c682c471b21.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/MareCarelia/Boomerang.dialogue"
+dest_files=["res://.godot/imported/Boomerang.dialogue-813267c29e8812d569bd9c682c471b21.tres"]
+
+[params]
+
+defaults=true

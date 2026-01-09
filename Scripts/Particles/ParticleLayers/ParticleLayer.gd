@@ -13,6 +13,7 @@ const STATIC_POSITION:Vector2 = Vector2(200, 120)
 @export var spawn_all_at_once:bool = true
 @export var particle_count:int = 0
 @export var static_position:bool = false
+@export var move_with_camera:bool = false
 
 var active_particles:Array[Particle] = []
 var spawn_cooldown:float = 0.0
@@ -43,7 +44,13 @@ func _process(delta: float) -> void:
 		_spawn_one()
 		spawn_cooldown = spawn_delay
 	
-	var cam_center = STATIC_POSITION if static_position else UICore.instance.get_cam_center_pos()
+	var cam_center = Vector2(200, 120)
+	if UICore.instance:
+		UICore.instance.get_cam_center_pos()
+	if static_position:
+		cam_center = STATIC_POSITION
+	elif move_with_camera:
+		cam_center = Vector2(200, 120)
 	for particle in active_particles:
 		while particle.position.x < cam_center.x - WRAP_BOUNDS.x:
 			particle.position.x += WRAP_DIST.x

@@ -1,8 +1,8 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 if not Statics.check_item(Item.ItemTypes.GRAVITY_SHELL)
 	NPC43: I can't seem to crawl around these corners![wait=0.3]  I wonder if I'll ever be able to do it...
 else

@@ -136,7 +136,7 @@ quick_load_text = "subscreen_header_name"
 shadow_scale = 1
 
 [node name="GroupWeapon" type="Sprite2D" parent="."]
-position = Vector2(37, 80)
+position = Vector2(37, 72)
 script = ExtResource("1_i7mg0")
 texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
@@ -172,7 +172,7 @@ offset_bottom = 41.0
 theme_override_constants/separation = 2
 
 [node name="GroupShell" type="Sprite2D" parent="."]
-position = Vector2(37, 130)
+position = Vector2(37, 122)
 script = ExtResource("1_i7mg0")
 texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
@@ -208,7 +208,7 @@ offset_bottom = 41.0
 theme_override_constants/separation = 2
 
 [node name="GroupAbility" type="Sprite2D" parent="."]
-position = Vector2(37, 184)
+position = Vector2(37, 180)
 script = ExtResource("1_i7mg0")
 texture_path = "res://Assets/Images/UI/SubscreenSeparator.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

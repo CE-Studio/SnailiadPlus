@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://4w6iyanqj1ks"]
+
+[ext_resource type="Script" uid="uid://cqliimvj68ekg" path="res://Scripts/Enemies/Bosses/SpaceboxBabybox.gd" id="1_bd0kd"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4ciwk"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_eew36"]
+[ext_resource type="Texture2D" uid="uid://bf31hhii6t2tq" path="res://Assets/Images/Entities/Boss3Babybox.png" id="3_bd0kd"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_a4jov"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_4ciwk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
+size = Vector2(64, 64)
+
+[node name="SpaceboxBabybox" type="CharacterBody2D"]
+z_index = 4
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_bd0kd")
+max_health = 250
+attack = 4
+defense = 9
+kill_particle_range = Vector2i(16, 16)
+kill_particle_types = Array[String](["ExplosionBig", "ExplosionHuge"])
+kill_particle_count = 8
+
+[node name="BodyBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vj7im")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_vj7im")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(1.2, 1.2)
+rect = Rect2(-26.666666, -26.666666, 53.333332, 53.333332)
+
+[node name="HandGroup" type="Node2D" parent="."]
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_4ciwk")
+script = ExtResource("2_eew36")
+texture_path = "res://Assets/Images/Entities/Boss3Babybox.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("3_bd0kd")
+hframes = 4
+vframes = 2
+frame = 3
+script = ExtResource("4_a4jov")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4ciwk")
+volume_db = -4.0
+bus = &"Sfx"

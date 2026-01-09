@@ -1,7 +1,7 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
-do CutsceneController.set_textbox_color("#004457")
+do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
 NPC46: [color=#ff2024]Walleyes[/color] can't hurt you, {{Player.player_name}}![wait=0.25]\nYou can just crawl right past them,[wait=0.1] right on the same wall!
 => END

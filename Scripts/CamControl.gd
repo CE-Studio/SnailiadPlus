@@ -187,3 +187,9 @@ func _tick_new_follow(_pos:Vector2, delta:float) -> Vector2:
 func set_layer_position(new_pos:Vector2):
 	UICore.instance.position = new_pos - offset
 	pos = UICore.instance.position
+
+
+func reset_new_follow() -> void:
+	nf_delay_timer = 0
+	nf_return_timer = NF_OFFSET_RETURN_DELAY
+	#nf_offset = Vector2.ZERO

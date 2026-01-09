@@ -65,6 +65,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 		player.environment_exit_override = 2
 		player.reparent(self)
 		despawn_room(current_room)
+	Statics.clear_cam_synced_particles()
 	player.reset_position(Vector2(-999999, -999999))
 	
 	var new_room:Room = load(path).instantiate()

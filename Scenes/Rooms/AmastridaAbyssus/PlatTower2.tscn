@@ -24,7 +24,6 @@ z_as_relative = false
 script = ExtResource("1_57fd2")
 area_id = 3
 minimap_offset = Vector2i(5, 5)
-display_room = null
 tiled_corner = Vector2i(131, 81)
 tiled_range = Vector2i(25, 111)
 
@@ -196,6 +195,7 @@ exit_room = "uid://bhmsl4lmit5gy"
 position = Vector2(400, 888)
 scale = Vector2(1, 3)
 my_id = 4
+exit_room = "uid://dl80s5o6i0d4m"
 
 [node name="RoomTransitionTrigger6" parent="." instance=ExtResource("4_3ehc0")]
 position = Vector2(0, 632)
@@ -215,6 +215,8 @@ exit_room = "uid://dy1hvmsbes4aj"
 position = Vector2(400, 104)
 scale = Vector2(1, 5)
 my_id = 7
+exit_room = "uid://dl80s5o6i0d4m"
+exit_transition = 1
 
 [node name="WaterArea" parent="." instance=ExtResource("5_kkbur")]
 bubble_count = 64

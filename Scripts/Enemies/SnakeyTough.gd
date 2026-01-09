@@ -66,6 +66,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if is_on_wall() and last_vel.x != 0.0:
 		velocity.x = -last_vel.x
+		facing_left = not facing_left
+		_play_anim(true)
 	if is_on_floor() and last_grounded:
 		velocity.y = last_vel.y * -0.1
 	

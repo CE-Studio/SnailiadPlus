@@ -393,6 +393,8 @@ static func set_world_flag(id:WorldFlags, value:Variant) -> void:
 
 static func get_world_flag(id:WorldFlags) -> Variant:
 	if id < len(current_profile["world_flags"]):
+		if current_profile["world_flags"][id] == null:
+			return false
 		return current_profile["world_flags"][id]
 	return false
 #endregion
@@ -580,6 +582,36 @@ static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Arr
 	new_particle.position = pos
 	new_particle._spawn(data)
 	return new_particle
+
+
+static func spawn_particle_cam_synced(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
+	if not UICore.instance:
+		return spawn_particle(name, layer, pos, data)
+	if active_room == null:
+		return null
+	if not particle_table.has(name):
+		particle_table.append(name)
+		particle_cache.append(load("res://Scenes/Particles/%s.tscn" % name))
+	var new_particle:Particle = particle_cache[particle_table.find(name)].instantiate()
+	match layer:
+		Room.Layers.SKY: new_particle.z_index -= 300
+		Room.Layers.BG2: new_particle.z_index -= 200
+		Room.Layers.BG1: new_particle.z_index -= 100
+		Room.Layers.FG1: new_particle.z_index += 100
+		Room.Layers.FG2: new_particle.z_index += 200
+	new_particle.z_index -= UICore.instance.z_index
+	UICore.instance.particle_layer.add_child(new_particle)
+	new_particle.position = pos
+	new_particle._spawn(data)
+	return new_particle
+
+
+static func clear_cam_synced_particles() -> void:
+	if not UICore.instance:
+		return
+	for particle in UICore.instance.particle_layer.get_children():
+		if particle is Particle:
+			particle.queue_free()
 
 
 static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:int) -> Texture2D:

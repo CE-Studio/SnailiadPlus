@@ -1,7 +1,7 @@
 ~ start
 do CutsceneController.lock_input()
-do CutsceneController.show_textbox()
 do CutsceneController.set_textbox_player_preset(Player.Players.LEGGY)
+do CutsceneController.show_textbox()
 if Statics.get_item_percentage() < 70.0
 	NPC56: After this game is over,[wait=0.125] I'm going to get some pizza!!
 else

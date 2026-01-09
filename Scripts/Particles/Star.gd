@@ -36,8 +36,8 @@ func _spawn(_data:Array) -> void:
 
 func _process(delta: float) -> void:
 	var center:Vector2 = Vector2(200, 120)
-	if UICore.instance:
-		center = UICore.instance.get_cam_center_pos()
+	#if UICore.instance:
+	#	center = UICore.instance.get_cam_center_pos()
 	match border_mode:
 		1:
 			position = position.move_toward(center, speed * mod * delta)
@@ -56,9 +56,9 @@ func _process(delta: float) -> void:
 				var theta:float = randf() * TAU
 				direction = Vector2(cos(theta), sin(theta))
 			else:
-				direction = position.direction_to(UICore.instance.get_cam_center_pos()) * -1
+				direction = position.direction_to(center) * -1
 			position += direction * speed * mod * delta
 		_:
 			position += direction * speed * mod * delta
-	if UICore.instance:
-		position += UICore.instance.get_cam_movement_this_tick()
+	#if UICore.instance:
+	#	position += UICore.instance.get_cam_movement_this_tick()

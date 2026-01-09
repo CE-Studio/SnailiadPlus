@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://b0hjamj58gp3l"]
+[gd_scene load_steps=10 format=4 uid="uid://b0hjamj58gp3l"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_risgg"]
+[ext_resource type="Resource" uid="uid://b74uveqoiwf7u" path="res://CutsceneScripts/MareCarelia/Boomerang.dialogue" id="2_1kke3"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v80hh"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_a1ti8"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_huquc"]
@@ -19,6 +20,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_risgg")
 area_id = 1
+cutscene_script = ExtResource("2_1kke3")
 center_parallax_maps = true
 minimap_offset = Vector2i(12, 2)
 tiled_corner = Vector2i(313, 33)
@@ -68,10 +70,10 @@ position = Vector2(48, 48)
 type = 13
 location_id = 22
 
-[node name="NPC11" parent="GroundLayer" instance=ExtResource("5_1414l")]
+[node name="NPC21" parent="GroundLayer" instance=ExtResource("5_1414l")]
 position = Vector2(688, 200)
-my_id = 11
-identifier = &"11"
+my_id = 21
+identifier = &"21"
 
 [node name="FG1Layer" type="Parallax2D" parent="."]
 z_index = 100

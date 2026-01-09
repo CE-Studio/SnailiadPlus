@@ -31,6 +31,8 @@ position = Vector2(200, 120)
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
+[node name="CamAlignedParticleLayer" type="Node2D" parent="."]
+
 [node name="BL" type="Node2D" parent="."]
 position = Vector2(0, 240)
 

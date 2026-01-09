@@ -261,8 +261,8 @@ func get_item_name(id:Item.ItemTypes, specify_shell:bool = false) -> StringName:
 			return tr(&"Warp Trap")
 	if specify_shell:
 		match character:
-			Player.Players.SNAILY: return tr(&"Normal Slug")
+			Player.Players.SLUGGY: return tr(&"Normal Slug")
 			Player.Players.BLOBBY: return tr(&"Normal Blob")
-			Player.Players.SNAILY: return tr(&"Normal Leech")
+			Player.Players.LEECHY: return tr(&"Normal Leech")
 			_: return tr(&"Normal Shell")
 	return tr(&"Nothing")

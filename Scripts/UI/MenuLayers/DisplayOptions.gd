@@ -4,6 +4,7 @@ extends VBoxContainer
 func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/Scale".remote_set_option(int(ProjectSettings.get_setting("display/window/stretch/scale") - 1))
 	$"ScrollContainer/VBoxContainer/Ratio".remote_set_option(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
+	$"ScrollContainer/VBoxContainer/Fullscreen".toggled_on = get_window().mode == Window.MODE_FULLSCREEN
 	$"ScrollContainer/VBoxContainer/Minimap".remote_set_option(ProjectSettings.get_setting("game/ui/minimap"))
 	$"ScrollContainer/VBoxContainer/BottomKeys".toggled_on = ProjectSettings.get_setting("game/ui/bottom_keys")
 	$"ScrollContainer/VBoxContainer/InputMap".toggled_on = ProjectSettings.get_setting("game/ui/keymap")
@@ -30,21 +31,6 @@ func on_ratio_cycled(value) -> void:
 		UICore.instance.cam._process(0.0)
 
 
-func on_minimap_cycled(value) -> void:
-	ProjectSettings.set_setting("game/ui/minimap", value)
-
-
-func on_bottom_keys_toggled(value) -> void:
-	ProjectSettings.set_setting("game/ui/bottom_keys", value)
-
-
-func on_input_map_toggled(value) -> void:
-	ProjectSettings.set_setting("game/ui/keymap", value)
-
-
-func on_igt_toggled(value) -> void:
-	ProjectSettings.set_setting("game/ui/in_game_time", value)
-
 func on_fullscreen_toggled(value) -> void:
 	var window = get_window()
 	
@@ -60,6 +46,23 @@ func on_fullscreen_toggled(value) -> void:
 		var window_scale = ProjectSettings.get("display/window/stretch/scale") - 1
 		
 		set_window_size(window_scale, ratio)
+
+
+func on_minimap_cycled(value) -> void:
+	ProjectSettings.set_setting("game/ui/minimap", value)
+
+
+func on_bottom_keys_toggled(value) -> void:
+	ProjectSettings.set_setting("game/ui/bottom_keys", value)
+
+
+func on_input_map_toggled(value) -> void:
+	ProjectSettings.set_setting("game/ui/keymap", value)
+
+
+func on_igt_toggled(value) -> void:
+	ProjectSettings.set_setting("game/ui/in_game_time", value)
+
 
 func on_fps_toggled(value) -> void:
 	ProjectSettings.set_setting("game/ui/fps_counter", value)
