@@ -305,6 +305,7 @@ bbcode_enabled = true
 text = "AAAA"
 scroll_active = false
 script = ExtResource("2_mg7n4")
+skip_action = &"ui_accept"
 seconds_per_step = 0.03
 skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
 seconds_per_pause_step = 0.0
