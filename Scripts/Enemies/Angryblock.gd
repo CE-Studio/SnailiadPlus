@@ -49,7 +49,7 @@ func _ready() -> void:
 	time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return

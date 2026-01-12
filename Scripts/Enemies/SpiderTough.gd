@@ -35,7 +35,7 @@ func _ready() -> void:
 	move_timeout = WAIT_TABLE[move_index] * MOVE_TIMEOUT
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active:
 		return

@@ -35,7 +35,7 @@ func _ready() -> void:
 		elapsed += randf() * TAU
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return

@@ -207,6 +207,7 @@ const STICK_DOUBLE_TOLERANCE:float = 0.1
 
 var read_inputs:bool = true
 var cutscene_has_control:bool = false
+
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
 var ui_echo_delay:float = ECHO_DELAY_INITIAL

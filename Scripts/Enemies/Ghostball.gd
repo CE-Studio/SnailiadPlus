@@ -25,7 +25,7 @@ func _ready() -> void:
 	sprite.action = "right"
 
 
-func _physics_process(delta) -> void:
+func _process(delta) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return
