@@ -30,7 +30,9 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 	_sprite.modulate.a = inverse_lerp(0.0, MAX_LIFE_TIME, fade_time)
 	if not opaque:
-		_sprite.modulate.a *= 0.5
+		_sprite.modulate.a *= 0.4
+	else:
+		_sprite.modulate.a *= 0.8
 	fade_time -= delta
 	if fade_time <= 0.0:
 		despawn()

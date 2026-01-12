@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://b051o8jm6et2f" path="res://Scenes/internals/MusicManager.tscn" id="4_jwv4s"]
 [ext_resource type="PackedScene" uid="uid://d2376pjd403n3" path="res://Scenes/internals/LimitedSoundHandler.tscn" id="5_lohlh"]
 
-[node name="GameScene" type="Node2D"]
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("player", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler")]
 process_mode = 1
 script = ExtResource("1_x87qo")
+player = NodePath("Snaily")
+cam_layer = NodePath("CameraLayer")
+sfx_group = NodePath("SfxGroup")
+music_manager = NodePath("MusicManager")
+lim_sfx_handler = NodePath("LimitedSoundHandler")
 
 [node name="SfxGroup" type="Node" parent="."]
 

@@ -5,26 +5,19 @@ extends Node2D
 static var instance:GameCore
 
 
-var player:Player
-var cam_layer:UICore
 var current_room:Room
 var current_room_name:String
 var current_area:int = -1
-var sfx_group:Node
-var music_manager:MusicManager
-var lim_sfx_handler:LimitedSoundHandler
+@export var player:Player
+@export var cam_layer:UICore
+@export var sfx_group:Node
+@export var music_manager:MusicManager
+@export var lim_sfx_handler:LimitedSoundHandler
 
 
 func _ready() -> void:
 	instance = self
-	sfx_group = $"SfxGroup"
-	for child in get_children():
-		if child is Player:
-			player = child
-	cam_layer = $"CameraLayer"
 	cam_layer.instantiate()
-	music_manager = $"MusicManager"
-	lim_sfx_handler = $"LimitedSoundHandler"
 	if current_room == null:
 		spawn_room(Statics.load_room)
 		player.reset_position(Statics.load_coords)
