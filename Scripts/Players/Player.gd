@@ -795,9 +795,9 @@ func _jump() -> float:
 	_play_anim("jump")
 	jump_buffer_counter = jump_buffer
 	coyote_time_counter = coyote_time
-	if Statics.get_shell_level() >= 2 and (who_i_is == Players.SNAILY
-	or who_i_is == Players.SLUGGY or who_i_is == Players.LEECHY):
-		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [_get_dir_opposite(gravity_dir), true])
+	#if Statics.get_shell_level() >= 2 and (who_i_is == Players.SNAILY
+	#or who_i_is == Players.SLUGGY or who_i_is == Players.LEECHY):
+	#	Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [_get_dir_opposite(gravity_dir), true])
 	return jump_power[read_i_jump] * jump_mod
 
 

@@ -4,7 +4,7 @@ extends Node2D
 
 
 #region Variables
-const TICKS_BETWEEN_AFTERIMAGES:int = 2
+const TICKS_BETWEEN_AFTERIMAGES:int = 4
 
 @export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
 @export var damage:int = 0
@@ -46,6 +46,7 @@ func _spawn(dir:Vector2, rapid_shot:float) -> float:
 	area.connect("body_entered", _on_body_entered)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
+	afterimage_tick = randi_range(0, TICKS_BETWEEN_AFTERIMAGES - 1)
 	return cooldown / rapid_mult
 
 

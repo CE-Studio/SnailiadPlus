@@ -46,11 +46,12 @@ enum ElementTypes {
 	NONE = -1
 }
 
-var col:CollisionShape2D
-var hitbox:Area2D
-var sprite:JsonSprite2D
-var vis:VisibleOnScreenNotifier2D
-var environment:EnvironmentArea
+@export var col:CollisionShape2D
+@export var body:CharacterBody2D
+@export var hitbox:Area2D
+@export var sprite:JsonSprite2D
+@export var vis:VisibleOnScreenNotifier2D
+@export var environment:EnvironmentArea
 
 var spawn_conditions:Array[float] = []
 var origin:Vector2
