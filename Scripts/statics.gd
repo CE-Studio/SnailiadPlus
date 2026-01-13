@@ -106,7 +106,7 @@ static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer
 
-static var palette := preload("res://Assets/Images/Palette.png")
+static var palette:Image = preload("res://Assets/Images/Palette.png")
 static var missing := preload("res://Assets/Images/Missing.png")
 
 
@@ -633,8 +633,7 @@ static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:in
 
 
 static func get_color(coords:Vector2i) -> Color:
-	var palette_image := palette.get_image()
-	return palette_image.get_pixelv(coords)
+	return palette.get_pixelv(coords)
 
 
 static func get_all_children(_node:Node) -> Array[Node]:
