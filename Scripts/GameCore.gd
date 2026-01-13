@@ -13,6 +13,7 @@ var current_area:int = -1
 @export var sfx_group:Node
 @export var music_manager:MusicManager
 @export var lim_sfx_handler:LimitedSoundHandler
+@export var room_loader:RoomLoader
 
 
 func _ready() -> void:
@@ -61,7 +62,8 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	Statics.clear_cam_synced_particles()
 	player.reset_position(Vector2(-999999, -999999))
 	
-	var new_room:Room = load(path).instantiate()
+	#var new_room:Room = load(path).instantiate()
+	var new_room:Room = GameCore.instance.room_loader.get_room(path).instantiate()
 	add_child(new_room)
 	move_child(new_room, 0)
 	current_room = new_room
@@ -88,7 +90,8 @@ func despawn_room(room:Room) -> void:
 	for child in Statics.get_all_children(room):
 		if child is EnvironmentArea:
 			child.read_interactions = false
-	room.queue_free()
+	#room.queue_free()
+	room.despawn_room()
 
 
 func handle_cheats() -> void:

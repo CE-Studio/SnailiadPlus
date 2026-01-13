@@ -17,7 +17,10 @@ var spawn_buffer_frames:int = 4
 
 
 func _ready():
-	pass
+	if GameCore.instance:
+		GameCore.instance.room_loader.request_load(exit_room)
+		if get_parent() is Room:
+			get_parent().despawn.connect(_on_room_despawn)
 
 
 func _process(_delta: float) -> void:
@@ -32,3 +35,8 @@ func _on_player_enter(_area):
 		UICore.instance.color_cover.call_thread_safe("set_color", Color8(0, 0, 0, 120))
 		GameCore.instance.call_deferred("spawn_room", exit_room, exit_transition, offset)
 		UICore.instance.color_cover.set_new_fade(Color8(0, 0, 0, 255), Color8(0, 0, 0, 0), 0.25)
+
+
+func _on_room_despawn() -> void:
+	if GameCore.instance:
+		GameCore.instance.room_loader.request_clear(exit_room)

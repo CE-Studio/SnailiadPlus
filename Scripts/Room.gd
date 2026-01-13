@@ -59,6 +59,8 @@ var room_path:String
 var sp_cache:Array[PackedScene] = []
 var sp_table:Array[String] = []
 
+signal despawn
+
 @onready var layer_entity:Node2D = $"EntityLayer"
 @onready var map_entity1:TileMapLayer = $"EntityLayer/Map"
 @onready var map_entity2:TileMapLayer = $"EntityLayer/Map2"
@@ -739,6 +741,11 @@ func set_environment_visibility() -> void:
 	for child in get_children():
 		if child is EnvironmentArea:
 			child.update_shader_visibility()
+
+
+func despawn_room() -> void:
+	despawn.emit()
+	queue_free()
 #endregion
 
 

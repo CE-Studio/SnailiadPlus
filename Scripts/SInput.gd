@@ -26,6 +26,7 @@ enum Inputs {
 	UI_CLICK,
 	UI_ACCEPT,
 	UI_BACK,
+	SKIP_TALKING,
 }
 
 var input_tr_strings:PackedStringArray = [
@@ -33,7 +34,7 @@ var input_tr_strings:PackedStringArray = [
 	tr(&"Shoot"), tr(&"Strafe"), tr(&"Speak"), tr(&"Gravity jump"), tr(&"Open menu"),
 	tr(&"Open map"), tr(&"Weapon 0"), tr(&"Weapon 1"), tr(&"Weapon 2"), tr(&"Weapon 3"),
 	tr(&"Aim left"), tr(&"Aim right"), tr(&"Aim up"), tr(&"Aim down"), tr(&"Open debug menu"),
-	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"),
+	tr(&"Menu click"), tr(&"Menu select"), tr(&"Menu return"), tr(&"Skip dialogue")
 ]
 
 #region Static icon variables
@@ -129,6 +130,10 @@ var icon_uiback:String:
 	set(_v): pass
 	get(): return get_icon_as_bbcode(Inputs.UI_BACK, cut_col)
 
+var icon_skipdialogue:String:
+	set(_v): pass
+	get(): return get_icon_as_bbcode(Inputs.SKIP_TALKING, cut_col)
+
 var cut_col:String:
 	set(_V): pass
 	get(): return "Yellow"
@@ -158,6 +163,7 @@ const INPUT_SLOTS:Array = [
 	0b00001000, # UI click
 	0b00001111, # UI accept
 	0b00001111, # UI back
+	0b00001111, # Skip dialogue
 ]
 
 const CON_MAPPINGS:Array[Array] = [
@@ -194,6 +200,7 @@ const DEFAULTS:Array[Array] = [
 	[ KEY_NONE, KEY_NONE, JOY_BUTTON_INVALID, JOY_BUTTON_INVALID ],
 	[ KEY_Z, KEY_ENTER, JOY_BUTTON_A, JOY_BUTTON_A ],
 	[ KEY_X, KEY_ESCAPE, JOY_BUTTON_B, JOY_BUTTON_B ],
+	[ KEY_Z, KEY_X, JOY_BUTTON_A, JOY_BUTTON_B ],
 ]
 
 const ICON_PATH:String = "res://Assets/Images/UI/ControlIcons/%s.png"
