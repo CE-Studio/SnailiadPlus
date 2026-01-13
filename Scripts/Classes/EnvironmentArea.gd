@@ -51,8 +51,8 @@ func _on_body_enter(body) -> void:
 	if contained_bodies.has(body):
 		return
 	contained_bodies.append(body)
-	if body is Enemy:
-		body.environment = self
+	if body is Enemy and body.interact_with_environments:
+			body.environment = self
 
 
 func _on_body_exit(body) -> void:
@@ -62,7 +62,7 @@ func _on_body_exit(body) -> void:
 		if body.get_parent().environment_exit_override > 0:
 			return
 	contained_bodies.remove_at(contained_bodies.find(body))
-	if body is Enemy and body.environment == self:
+	if body is Enemy and body.environment == self and body.interact_with_environments:
 		body.environment = null
 
 

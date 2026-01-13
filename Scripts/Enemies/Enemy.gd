@@ -21,6 +21,7 @@ const DAMAGE_FADE_DECAY:float = 10.0
 @export var invulnerable:bool = false
 @export var can_damage:bool = true
 @export var shield_entity:bool = false
+@export var interact_with_environments:bool = true
 @export var health_orb_value:int = 0
 @export_range(0, 256, 1) var light_radius:int = 0
 @export var my_element:ElementTypes = ElementTypes.NONE

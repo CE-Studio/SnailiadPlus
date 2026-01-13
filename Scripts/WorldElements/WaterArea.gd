@@ -48,6 +48,8 @@ func _process(_delta: float) -> void:
 func _on_body_enter(body) -> void:
 	if contained_bodies.has(body):
 		return
+	if body is Enemy and not body.interact_with_environments:
+		return
 	if spawn_grace_frames <= 0 and read_interactions:
 		var edge_data:Array = get_closest_point(body.position)
 		var speed:float
@@ -62,6 +64,8 @@ func _on_body_enter(body) -> void:
 
 func _on_body_exit(body) -> void:
 	if not contained_bodies.has(body):
+		return
+	if body is Enemy and not body.interact_with_environments:
 		return
 	if body.get_parent() is Player:
 		if body.get_parent().environment_exit_override > 0:

@@ -26,6 +26,7 @@ max_health = 5
 attack = 6
 defense = 250
 can_be_pierced = false
+interact_with_environments = false
 health_orb_value = 2
 
 [node name="BodyBox" type="CollisionShape2D" parent="."]
