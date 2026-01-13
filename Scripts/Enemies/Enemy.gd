@@ -166,7 +166,7 @@ func _process(delta: float) -> void:
 	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
 		sent_entry_once = true
 		Statics.add_bestiary_entry(my_type)
-	
+
 	if sprite and not shield_entity:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
@@ -175,7 +175,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta) -> void:
 	if not intersecting_player and intersecting_pbullets.is_empty() and intersecting_ebullets.is_empty():
 		return
-	
+
 	if intersecting_player and not GameCore.instance.player.stunned and can_damage and ai_active and not CutsceneController.running:
 		var can_hit = true
 		match my_element:
@@ -185,7 +185,7 @@ func _physics_process(delta) -> void:
 				can_hit = not Statics.has_shell(3)
 		if can_hit:
 			GameCore.instance.player.adjust_health(-attack)
-	
+
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
 		var pbullets_to_despawn:Array = []
