@@ -57,6 +57,10 @@ enum Layers {
 var room_path:String
 
 var sp_cache:Dictionary[StringName, PackedScene] = {}
+var cells:Array[Vector2i] = []
+var spawned_sp:int = 0
+var spawned_all:bool = false
+const MAX_SP_PER_LOOP:int = 24
 
 signal despawn
 
@@ -110,8 +114,8 @@ func spawn(_spawn_all:bool) -> void:
 	get_room_name_from_filename()
 
 	# Get all entity tiles and spawn associated objects
-	_spawn_entities_from_layer(0)
 	_spawn_entities_from_layer(1)
+	_spawn_entities_from_layer(0)
 
 	# Properly spawn all objects in room
 	if _spawn_all:
@@ -142,6 +146,11 @@ func spawn(_spawn_all:bool) -> void:
 		for cell in minimap_autofill:
 			UICore.instance.minimap.fill_cell(cell)
 		UICore.instance.minimap.set_room_name(room_path)
+
+
+func _process(_delta: float) -> void:
+	if not spawned_all:
+		_spawn_entities_from_layer(0) 
 
 
 func get_room_name_from_filename() -> void:
@@ -192,9 +201,17 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 
 func _spawn_entities_from_layer(layer:int) -> void:
 	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
-	var cells := map.get_used_cells()
-	for tile in cells:
+	if cells.is_empty():
+		cells = map.get_used_cells()
+	var running_count:int = 0
+	if layer == 1:
+		running_count = MAX_SP_PER_LOOP - cells.size()
+	while spawned_sp < cells.size() and running_count < MAX_SP_PER_LOOP:
+		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)
+		spawned_sp += 1
+		running_count += 1
+		
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = _load(&"res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()
@@ -627,6 +644,10 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var fire:Fire = _load(&"res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
 				fire.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fire)
+	if spawned_sp >= cells.size():
+		cells.clear()
+		if layer == 0:
+			spawned_all = true
 
 
 func _load(path:StringName) -> PackedScene:
