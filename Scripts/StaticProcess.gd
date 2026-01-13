@@ -30,8 +30,13 @@ func _ready() -> void:
 	Statics.data_records = _load_data_dict("Records", template_records)
 
 	# If control array is empty, set default controls
-	if ProjectSettings.get_setting("game/control/controls").size() == 0:
+	var ctrls:Array = ProjectSettings.get_setting("game/control/controls")
+	if ctrls.size() == 0:
 		ProjectSettings.set_setting("game/control/controls", SInput.DEFAULTS.duplicate())
+	elif ctrls.size() < SInput.DEFAULTS.size():
+		for i in range(ctrls.size(), SInput.DEFAULTS.size()):
+			ctrls.append(SInput.DEFAULTS[i])
+		ProjectSettings.set_setting("game/control/controls", ctrls)
 
 	# Set important game systems according to newly loaded data
 	_set_game_settings()

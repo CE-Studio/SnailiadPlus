@@ -191,19 +191,16 @@ func _ready() -> void:
 		var layers:Dictionary[int, Image]
 		var img := texture.get_image()
 		var sz = img.get_size()
-		print(sz)
 		for x in sz.x:
 			for y in sz.y:
 				var col := img.get_pixel(x, y)
 				if col.a8 == 255:
 					var c32 := col.to_rgba32()
 					if not (c32 in layers):
-						print("%x" % c32)
 						layers[c32] = Image.create_empty(sz.x, sz.y, false, Image.FORMAT_RGBA8)
 						layers[c32].fill(Color.TRANSPARENT)
 					var l := layers[c32]
 					l.set_pixel(x, y, Color.WHITE)
-		print(layers)
 		var j := layers.keys()
 		j.sort()
 		for i in j:

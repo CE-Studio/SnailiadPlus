@@ -151,7 +151,7 @@ func intro_step_bar() -> void:
 	health_bar = UICore.instance.show_boss_bar(self)
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active:
 		return

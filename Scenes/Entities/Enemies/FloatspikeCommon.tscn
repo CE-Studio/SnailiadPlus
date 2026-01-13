@@ -42,6 +42,9 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-8, -8, 16, 16)
+
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 material = ExtResource("2_vixes")
 script = ExtResource("3_vixes")

@@ -17,7 +17,7 @@ func _ready() -> void:
 	theta = position.x * 0.7 + position.y * 1.3
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return

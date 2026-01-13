@@ -51,7 +51,7 @@ func _ready() -> void:
 		shot_timeout = SHOT_TIMEOUT + fmod(position.x / 96.0, 6.0)
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active:
 		return

@@ -242,20 +242,30 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../UIAccept")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../../../Back")
-focus_next = NodePath("../../../Back")
+focus_neighbor_bottom = NodePath("../SkipTalking")
+focus_next = NodePath("../SkipTalking")
 focus_previous = NodePath("../UIAccept")
 bind = 22
+
+[node name="SkipTalking" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_mugii")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../UIBack")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../../Back")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../UIBack")
+bind = 23
 
 [node name="Back" parent="MainVBox" instance=ExtResource("6_oamqp")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/UIBack")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/SkipTalking")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Left")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Left")
-focus_previous = NodePath("../ScrollContainer/VBoxContainer/UIBack")
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/SkipTalking")
 button_text = "Back to options"
 back_one_layer = true
 hide_frame = true

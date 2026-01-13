@@ -82,7 +82,7 @@ func _ready() -> void:
 	eyes.material = sprite.material
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not Engine.is_editor_hint():
 		eyes.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)

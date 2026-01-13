@@ -294,6 +294,6 @@ func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"skip_talking"):
+	if event.is_action_pressed(&"skipTalking"):
 		if texlabel.is_typing:
 			texlabel.skip_typing()

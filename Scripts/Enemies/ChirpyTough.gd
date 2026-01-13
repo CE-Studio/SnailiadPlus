@@ -43,7 +43,7 @@ func _ready() -> void:
 		fly_amplitude = 16.0
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 	if not ai_active and not display_mode:
 		return
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	
 	if taken_off:
 		theta += delta
-		move_and_slide()
+		position += velocity * delta
 		position.y = origin.y + sin(theta * theta_mult) * fly_amplitude
 		if position.y < origin.y and not going_up:
 			going_up = true
