@@ -40,10 +40,11 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="Header" parent="." instance=ExtResource("6_3q0xp")]
 offset_left = -34.0
 offset_top = -33.0
-offset_right = 32.0
+offset_right = 33.0
 offset_bottom = -21.0
 theme_override_font_sizes/normal_font_size = 8
 text = "Achievement!!"
+horizontal_alignment = 1
 text_scale = 1
 quick_load_text = "hud_achievement"
 shadow_scale = 1
