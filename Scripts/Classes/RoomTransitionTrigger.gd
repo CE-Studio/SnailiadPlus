@@ -17,7 +17,7 @@ var spawn_buffer_frames:int = 4
 
 
 func _ready():
-	if GameCore.instance:
+	if GameCore.instance and exit_room != "":
 		GameCore.instance.room_loader.request_load(exit_room)
 		if get_parent() is Room:
 			get_parent().despawn.connect(_on_room_despawn)

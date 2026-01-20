@@ -149,13 +149,13 @@ my_id = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="MovingPlatform" parent="." instance=ExtResource("9_a1iiw")]
-position = Vector2(24, 160)
+position = Vector2(32, 333)
 rotation = 1.5707941
 type = 1
 path_anim = &"AAup10"
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(24, 139)
+position = Vector2(32, 312)
 can_sleep = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]

@@ -761,6 +761,13 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	body.velocity *= MOVE_STEPS
 	position = body.position
 
+	# This prevents the player from sliding around weirdly on moving platforms
+	# I hate this fix, but it works
+	if body.is_on_floor() and body.get_last_slide_collision():
+		var vel:Vector2 = body.get_last_slide_collision().get_collider_velocity()
+		body.position -= vel * ((1.0 / 20.0) * 60.0 * delta)
+		position = body.position
+
 	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):
 		match surface:
 			Statics.DirsSurface.FLOOR:
