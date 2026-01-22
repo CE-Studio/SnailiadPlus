@@ -60,7 +60,7 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="MarkerSprite" type="Sprite2D" parent="Base"]
 material = SubResource("ShaderMaterial_ojica")
 texture = ExtResource("7_i1eaq")
-hframes = 2
+hframes = 4
 vframes = 2
 script = ExtResource("6_1xtnt")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

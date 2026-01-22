@@ -1,0 +1,159 @@
+{
+	"tiles": [8, 1],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"U_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"U_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "U_idle",
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"UR_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"UR_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "UR_idle",
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"R_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false]
+			]
+		},
+		"R_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "R_idle",
+			"frames": [
+				[4, 0, false, false]
+			]
+		},
+		"DR_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 0, false, false]
+			]
+		},
+		"DR_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "DR_idle",
+			"frames": [
+				[5, 0, false, false]
+			]
+		},
+		"D_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[6, 0, false, false]
+			]
+		},
+		"D_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "D_idle",
+			"frames": [
+				[6, 0, false, false]
+			]
+		},
+		"DL_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[7, 0, false, false]
+			]
+		},
+		"DL_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "DL_idle",
+			"frames": [
+				[7, 0, false, false]
+			]
+		},
+		"L_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"L_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "L_idle",
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"UL_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"UL_fire": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"autoplay_next": "UL_idle",
+			"frames": [
+				[1, 0, false, false]
+			]
+		}
+	}
+}

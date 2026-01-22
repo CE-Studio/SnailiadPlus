@@ -81,7 +81,7 @@ required_boss = 2
 [node name="Door2" parent="GroundLayer" instance=ExtResource("5_q2osu")]
 position = Vector2(808, 120)
 door_type = 2
-lock_type = 0
+lock_type = 1
 required_boss = 2
 
 [node name="Door3" parent="GroundLayer" instance=ExtResource("5_q2osu")]
@@ -141,3 +141,4 @@ exit_room = "uid://cc3qkpvlkcl82"
 position = Vector2(816, 120)
 scale = Vector2(1, 3)
 my_id = 2
+exit_room = "uid://b2x3emy12hv88"

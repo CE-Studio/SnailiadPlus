@@ -511,6 +511,30 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				floatspike.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(floatspike)
 
+			Vector2i(14, 26): # Non-canon (floor)
+				var noncanon:Noncanon = _load(&"res://Scenes/Entities/Enemies/Noncanon.tscn").instantiate()
+				noncanon.position = _tile_coords_to_vector_pos(tile)
+				noncanon.base_dir = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(noncanon)
+
+			Vector2i(15, 26): # Non-Canon (left wall)
+				var noncanon:Noncanon = _load(&"res://Scenes/Entities/Enemies/Noncanon.tscn").instantiate()
+				noncanon.position = _tile_coords_to_vector_pos(tile)
+				noncanon.base_dir = Statics.DirsSurface.LWALL
+				layer_ground.add_child(noncanon)
+
+			Vector2i(0, 27): # Non-Canon (right wall)
+				var noncanon:Noncanon = _load(&"res://Scenes/Entities/Enemies/Noncanon.tscn").instantiate()
+				noncanon.position = _tile_coords_to_vector_pos(tile)
+				noncanon.base_dir = Statics.DirsSurface.RWALL
+				layer_ground.add_child(noncanon)
+
+			Vector2i(1, 27): # Non-Canon (ceiling)
+				var noncanon:Noncanon = _load(&"res://Scenes/Entities/Enemies/Noncanon.tscn").instantiate()
+				noncanon.position = _tile_coords_to_vector_pos(tile)
+				noncanon.base_dir = Statics.DirsSurface.CEILING
+				layer_ground.add_child(noncanon)
+
 			Vector2i(2, 27): # Snelk
 				var snelk:Snelk = _load(&"res://Scenes/Entities/Enemies/Snelk.tscn").instantiate()
 				snelk.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)

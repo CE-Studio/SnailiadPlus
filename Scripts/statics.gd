@@ -409,11 +409,13 @@ static func get_window_size() -> Vector2:
 static func parse_version_to_text_string(version:String) -> String:
 	var prefix := version.substr(0, 1)
 	var number := version.substr(1)
+	if is_number(prefix):
+		number = version
 	var output:String
 	match prefix:
 		"b": output = GlobalText.version_types[0] # Dev/beta
 		"d": output = GlobalText.version_types[1] # Demo
-		"r": output = GlobalText.version_types[2] # Release
+		_: output = GlobalText.version_types[2]   # Release
 	output = " ".join([output, number])
 	return output
 

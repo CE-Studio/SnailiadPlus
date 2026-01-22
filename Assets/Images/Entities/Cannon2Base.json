@@ -1,0 +1,79 @@
+{
+	"tiles": [4, 2],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"floor_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"floor_destroyed": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false]
+			]
+		},
+		"lwall_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"lwall_destroyed": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false]
+			]
+		},
+		"rwall_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"rwall_destroyed": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false]
+			]
+		},
+		"ceiling_idle": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"ceiling_destroyed": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false]
+			]
+		}
+	}
+}

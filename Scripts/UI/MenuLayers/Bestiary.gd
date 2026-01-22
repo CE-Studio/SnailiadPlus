@@ -18,7 +18,7 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.FLOATSPIKE,
 	Enemy.EnemyTypes.BLOB_COMMON,
 	Enemy.EnemyTypes.BLOB_TOUGH,
-	#Enemy.EnemyTypes.BLOB_ANGEL,
+	Enemy.EnemyTypes.BLOB_ANGEL,
 	Enemy.EnemyTypes.BLOB_DEVIL,
 	Enemy.EnemyTypes.CHIRPY,
 	Enemy.EnemyTypes.BATTYBAT,
@@ -28,11 +28,11 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.SNELK,
 	Enemy.EnemyTypes.KITTY,
 	Enemy.EnemyTypes.CANON,
-	#Enemy.EnemyTypes.NONCANON,
+	Enemy.EnemyTypes.NONCANON,
 	#Enemy.EnemyTypes.FANON,
 	Enemy.EnemyTypes.ANGRYBLOCK,
 	Enemy.EnemyTypes.SNAKEY,
-	#Enemy.EnemyTypes.SKYVIPER,
+	Enemy.EnemyTypes.SKYVIPER,
 	Enemy.EnemyTypes.SPIDER_COMMON,
 	Enemy.EnemyTypes.SPIDER_TOUGH,
 	Enemy.EnemyTypes.TURTLE_COMMON,
@@ -42,19 +42,19 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.TALLFISH_COMMON,
 	Enemy.EnemyTypes.TALLFISH_TOUGH,
 	Enemy.EnemyTypes.WALLEYE,
-	#Enemy.EnemyTypes.PINCER_FLOOR,
+	Enemy.EnemyTypes.PINCER_FLOOR,
 	#Enemy.EnemyTypes.PINCER_WALL,
-	#Enemy.EnemyTypes.PINCER_CEILING,
-	#Enemy.EnemyTypes.GEAR_COMMON,
+	Enemy.EnemyTypes.PINCER_CEILING,
+	Enemy.EnemyTypes.GEAR_COMMON,
 	#Enemy.EnemyTypes.GEAR_TOUGH,
-	#Enemy.EnemyTypes.DRONE,
-	#Enemy.EnemyTypes.BALLOON,
+	Enemy.EnemyTypes.DRONE,
+	Enemy.EnemyTypes.BALLOON,
 	Enemy.EnemyTypes.SHELLBREAKER,
 	Enemy.EnemyTypes.STOMPY,
 	Enemy.EnemyTypes.SPACEBOX,
 	Enemy.EnemyTypes.SPACEBOX_BABYBOX,
-	#Enemy.EnemyTypes.MOONSNAIL,
-	#Enemy.EnemyTypes.GIGASNAIL,
+	Enemy.EnemyTypes.MOONSNAIL,
+	Enemy.EnemyTypes.GIGASNAIL,
 	#Enemy.EnemyTypes.COSMICSNAIL,
 	#Enemy.EnemyTypes.SHELLBREAKER_RUSH,
 	#Enemy.EnemyTypes.STOMPY_RUSH,
@@ -213,6 +213,10 @@ func spawn_display_entity(entity:String) -> void:
 			var canon = spawn_entity("canon")
 			enemy_spawn.add_child(canon)
 			canon.position = Vector2(8, 8)
+		"noncanon":
+			var noncanon = spawn_entity("noncanon")
+			enemy_spawn.add_child(noncanon)
+			noncanon.position = Vector2(-8, 8)
 		"stompy":
 			var stompy = spawn_entity("stompy")
 			enemy_spawn.add_child(stompy)
@@ -305,7 +309,7 @@ func _get_desc(key:String) -> StringName:
 		"snelk": return tr(&"Habitat: unknown\nVibe: mysterious\nFur: soft, snuggly\n\nSecret Snelks are a wondrous enigma.  They tend to hide away in and around spots most people don't know about, which makes even seeing one a rarity.  Some say they'd make great companions, if only you could get them to stop jumping.")
 		"kitty": return tr(&"Habitat: S.Silere\nAge: 8 years old\nPersonal space: huge\n\nKitty is territorial by nature, laying claim to all that it sees.  Strange, then, that all it seems to do in its zone when unbothered is sleep.  Some kitties like to gather in small groups and share the space.")
 		"canon": return tr(&"Habitat: diverse (L.Lirata)\nFinish: shiny\nHinges: freshly oiled\n\nThis heavy-duty machine is driven by a rudimentary machine-learning algorithm that receives positive feedback whenever it hits its mark. Unfortunately, the machine isn't quite precise enough to keep up with the algorithm's enthusiasm.")
-		"noncanon": return tr(&"")
+		"noncanon": return tr(&"Habitat: L.Lirata\nBarrel: wider\nIntelligence: slightly higher\n\nAn alternate model of the humble Canon, fit with a version 2 algorithm and refined barrel build for faster warm-up and firing. Unfortunately, these modifications have made its shell thinner, and thus much more susceptible to damage.")
 		"snakey": return tr(&"Habitat: diverse (A.Abyssus)\nSkin: fresh\nFlexibility: incredible\n\nA born explorer, Snakey likes to wind its way into places it really shouldn't be.  It collects little trinkets and oddities to hoard or resell later.  It loves to break out in dance when it hears music, too--an activity it finds slightly embarrassing.")
 		"skyviper": return tr(&"")
 		"spiderCommon": return tr(&"Habitat: A.Abyssus\nLimbs: plentiful\nSocial life: active\n\nSpiders like to keep close with one another, and are incredibly coordinated.  They do almost everything as a group--even things they don't need to be a team for.  One of their favorite group activities is throwing raves.")
