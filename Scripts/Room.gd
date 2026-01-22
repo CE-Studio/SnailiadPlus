@@ -206,7 +206,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
 	if cells.is_empty():
 		cells = map.get_used_cells()
-	print("%d - %d/%d" % [layer, spawned_sp, cells.size()])
+	#print("%d - %d/%d" % [layer, spawned_sp, cells.size()])
 	var running_count:int = 0
 	if layer == 1:
 		running_count = MAX_SP_PER_LOOP - cells.size()

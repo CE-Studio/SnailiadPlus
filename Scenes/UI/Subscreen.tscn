@@ -292,9 +292,9 @@ border_scale = 1
 
 [node name="MarkerPrompt" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
-offset_left = 48.0
+offset_left = 100.0
 offset_top = 203.0
-offset_right = 248.0
+offset_right = 300.0
 offset_bottom = 243.0
 alignment = 2
 
@@ -307,14 +307,14 @@ autowrap_mode = 0
 horizontal_alignment = 2
 max_width = 200
 text_scale = 1
-quick_load_text = "Set markers - bind__UI_ACCEPT"
+quick_load_text = "Set markers - bind__UI_ACCEPT   Zoom - bind__STRAFE"
 shadow_scale = 1
 
 [node name="SelectionPrompt" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
-offset_left = 48.0
+offset_left = 100.0
 offset_top = 219.0
-offset_right = 248.0
+offset_right = 300.0
 offset_bottom = 259.0
 alignment = 2
 
@@ -332,40 +332,38 @@ shadow_scale = 1
 
 [node name="MapRate" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(100, 0)
-offset_left = 196.0
-offset_top = 209.0
-offset_right = 296.0
-offset_bottom = 249.0
+offset_left = 292.0
+offset_top = 225.0
+offset_right = 392.0
+offset_bottom = 265.0
 alignment = 2
 
 [node name="Text" parent="MapRate" instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(18, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
-text = "Map
-0%"
+text = "Map - 0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Map\\n%.1f%%"
+quick_load_text = "Map - %.1f%%"
 shadow_scale = 1
 
 [node name="ItemRate" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(100, 0)
-offset_left = 244.0
-offset_top = 209.0
-offset_right = 344.0
-offset_bottom = 249.0
+offset_left = 292.0
+offset_top = 217.0
+offset_right = 392.0
+offset_bottom = 257.0
 alignment = 2
 
 [node name="Text" parent="ItemRate" instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(26, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
-text = "Items
-0%"
+text = "Items - 0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Items\\n%.1f%%"
+quick_load_text = "Items - %.1f%%"
 shadow_scale = 1
 
 [node name="Time" type="HBoxContainer" parent="."]
@@ -377,14 +375,13 @@ offset_bottom = 249.0
 alignment = 2
 
 [node name="Text" parent="Time" instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(41, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
-text = "Time
-0:00:00.00"
+text = "Time - 0:00:00.00"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Time\\n%s"
+quick_load_text = "Time - %s"
 shadow_scale = 1
 
 [node name="AudioGroup" type="Node" parent="."]

@@ -53,6 +53,9 @@ var map_selection:Vector2i = Vector2.ZERO
 var active:bool = true
 var exit_speed:float = 1.0
 
+var zoomed_map:Node2D = null
+var map_zoomed:bool = false
+
 @export var separators:Array[JsonSprite2D] = []
 @export var body:JsonSprite2D
 @export var player_icon:JsonSprite2D
@@ -89,6 +92,7 @@ var exit_speed:float = 1.0
 @export var item_text:SnailyText
 
 @onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
+@onready var zoomed_scn:PackedScene = preload("res://Scenes/UI/MinimapZoomed.tscn")
 #endregion
 
 
@@ -121,6 +125,14 @@ func _process(delta: float) -> void:
 	selector_spr.position.x = abs(sin(elapsed * 8)) * -2
 	
 	if active:
+		if map_zoomed and (SInput.check_input(SInput.Inputs.UI_BACK, true)
+		or SInput.check_input(SInput.Inputs.PAUSE, true)
+		or SInput.check_input(SInput.Inputs.STRAFE, true)):
+			sfx_select.play()
+			zoomed_map.queue_free()
+			map_zoomed = false
+			return
+		
 		var close_flag:bool = false
 		if selection_depth == 0:
 			if (SInput.check_input(SInput.Inputs.MAP, true)
@@ -131,6 +143,8 @@ func _process(delta: float) -> void:
 			if SInput.check_input(SInput.Inputs.PAUSE, true):
 				close_flag = true
 		if close_flag:
+			if zoomed_map:
+				zoomed_map.queue_free()
 			UICore.instance.pause_layer.unpause_fade_out()
 			active = false
 			UICore.instance.minimap.update_player()
@@ -146,6 +160,14 @@ func _process(delta: float) -> void:
 		_test_for_selection_events()
 		
 		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
+		
+		if not map_zoomed and SInput.check_input(SInput.Inputs.STRAFE, true):
+			sfx_select.play()
+			map_zoomed = true
+			zoomed_map = zoomed_scn.instantiate()
+			add_child(zoomed_map)
+			zoomed_map.position = Vector2(200, 120)
+			zoomed_map.init(map)
 	else:
 		position.y += exit_speed
 		exit_speed *= 1.0 + (SUBSCREEN_INACTIVE_ACCEL * delta)
@@ -229,6 +251,9 @@ func _get_item_count(id:Item.ItemTypes) -> int:
 
 
 func _test_for_move_selection() -> void:
+	if map_zoomed:
+		return
+	
 	var move_mode:MoveMode = MoveMode.NONE
 	var grid_move:Vector2i = Vector2i.ZERO
 	
@@ -307,6 +332,9 @@ func _test_for_move_selection() -> void:
 
 
 func _test_for_selection_events() -> void:
+	if map_zoomed:
+		return
+	
 	match selection_depth:
 		0:
 			if map_focused and SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
@@ -326,7 +354,7 @@ func _test_for_selection_events() -> void:
 					sfx_select.play()
 					map_selector.action = "8_disable"
 					selection_depth -= 1
-					marker_text.set_snaily_text(tr(&"Set markers - bind__UI_ACCEPT"))
+					marker_text.set_snaily_text(tr(&"Set markers - bind__UI_ACCEPT   Zoom - bind__STRAFE"))
 					select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 
 

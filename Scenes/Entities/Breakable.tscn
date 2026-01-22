@@ -27,6 +27,9 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-8, -8, 16, 16)
+
 [node name="MarkerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_xk0s4")
 script = ExtResource("4_2b18p")
