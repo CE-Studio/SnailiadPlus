@@ -217,6 +217,23 @@ func spawn_display_entity(entity:String) -> void:
 			var noncanon = spawn_entity("noncanon")
 			enemy_spawn.add_child(noncanon)
 			noncanon.position = Vector2(-8, 8)
+		"pincerFloor":
+			var pincer = spawn_entity("pincer")
+			pincer.direction = Statics.DirsSurface.FLOOR
+			enemy_spawn.add_child(pincer)
+		"pincerWall":
+			var pincer_l = spawn_entity("pincer")
+			pincer_l.direction = Statics.DirsSurface.LWALL
+			pincer_l.position.x -= 20.0
+			enemy_spawn.add_child(pincer_l)
+			var pincer_r = spawn_entity("pincer")
+			pincer_r.direction = Statics.DirsSurface.RWALL
+			pincer_r.position.x += 20.0
+			enemy_spawn.add_child(pincer_r)
+		"pincerCeiling":
+			var pincer = spawn_entity("pincer")
+			pincer.direction = Statics.DirsSurface.CEILING
+			enemy_spawn.add_child(pincer)
 		"stompy":
 			var stompy = spawn_entity("stompy")
 			enemy_spawn.add_child(stompy)
@@ -299,8 +316,8 @@ func _get_desc(key:String) -> StringName:
 		"floatspike": return tr(&"Habitat: diverse\nHead: empty\nLife: easy\n\nThese simple urchins tend to gravitate toward areas either full of water or otherwise verdant and damp.  They like to find a spot and sit idly for a long time.  The way they tend to gather has led to theories of unknown floatspike societies, but with little evidence.")
 		"blobCommon": return tr(&"Habitat: diverse\nTexture: slimy, pliable\nTaste: would not recommend\n\nThe blob is a humble creature.  Being made purely of slime, its malleable surface can be bent and reshaped to its whim.  Their appearance around where snails tend to reside makes one wonder if they rose from residual snail trails.")
 		"blobTough": return tr(&"Habitat: diverse\nSenses: heightened\nDiet: unknown\n\nBlobs have an impressive ability to adapt to their environments as they age.  Generally, this tends to involve a strengthening of surface tension and a change in pigmentation.  Blub also loves listening to music.")
-		"blobAngel": return tr(&"")
-		"blobDevil": return tr(&"")
+		"blobAngel": return tr(&"Habitat: L.Lirata\nPalette: shining\nEnergy: overflowing\n\nThanks to high altitudes, sun exposure, proximity to holy figures, or any combination of the three, some blobs can become embued with the attributes of light and sky.  They're not entirely sure what to do with these powers.")
+		"blobDevil": return tr(&"Habitat: S.Silere\nTemperature: toasty\nTemper: short\n\nBe it social isolation or simply proximity to fire, some blobs can develop into formidable beasts that are warm and tough to the touch and quick to aggravate.  If you can calm one down, however, they're surprisingly empathetic listeners.")
 		"chirpy": return tr(&"Habitat: diverse (M.Carelia)\nPlumage: well-groomed\nEnergy: endless\n\nChirpies never stay in the same place for long, always flying from one area to another and never quite settling in.  Some say they're adventurous by nature, always looking for new and interesting places to fly...")
 		"battybat": return tr(&"Habitat: diverse\nDemeanour: skittish\nEnergy: low\n\nBatty Bat doesn't want to cause harm.  It's just that when you sneak up on them while they're sleeping, and they startle as easily as they do, panic sets in fast.  Batty Bat's favorite cereal flavor is chocolate.")
 		"fireball": return tr(&"Habitat: diverse (A.Abyssus)\nFeeling: fired up\nTemperature: toasty\n\nA wandering nature spirit attuned to the element of heat.  Despite being a living ball of flame, they don't produce any smoke, and hardly ever ignite things around them.  They'd make perfect snuggle buddies, if only they weren't so darn hot!")
@@ -309,9 +326,9 @@ func _get_desc(key:String) -> StringName:
 		"snelk": return tr(&"Habitat: unknown\nVibe: mysterious\nFur: soft, snuggly\n\nSecret Snelks are a wondrous enigma.  They tend to hide away in and around spots most people don't know about, which makes even seeing one a rarity.  Some say they'd make great companions, if only you could get them to stop jumping.")
 		"kitty": return tr(&"Habitat: S.Silere\nAge: 8 years old\nPersonal space: huge\n\nKitty is territorial by nature, laying claim to all that it sees.  Strange, then, that all it seems to do in its zone when unbothered is sleep.  Some kitties like to gather in small groups and share the space.")
 		"canon": return tr(&"Habitat: diverse (L.Lirata)\nFinish: shiny\nHinges: freshly oiled\n\nThis heavy-duty machine is driven by a rudimentary machine-learning algorithm that receives positive feedback whenever it hits its mark. Unfortunately, the machine isn't quite precise enough to keep up with the algorithm's enthusiasm.")
-		"noncanon": return tr(&"Habitat: L.Lirata\nBarrel: wider\nIntelligence: slightly higher\n\nAn alternate model of the humble Canon, fit with a version 2 algorithm and refined barrel build for faster warm-up and firing. Unfortunately, these modifications have made its shell thinner, and thus much more susceptible to damage.")
+		"noncanon": return tr(&"Habitat: L.Lirata\nBarrel: wider\nIntelligence: slightly higher\n\nAn alternate model of the humble Canon, fit with a version 2 algorithm and refined barrel build for faster warm-up and firing.  Unfortunately, these modifications have made its shell thinner, and thus much more susceptible to damage.")
 		"snakey": return tr(&"Habitat: diverse (A.Abyssus)\nSkin: fresh\nFlexibility: incredible\n\nA born explorer, Snakey likes to wind its way into places it really shouldn't be.  It collects little trinkets and oddities to hoard or resell later.  It loves to break out in dance when it hears music, too--an activity it finds slightly embarrassing.")
-		"skyviper": return tr(&"")
+		"skyviper": return tr(&"Habitat: L.Lirata\nWings: leathery\nBody: aerodynamic\n\nIt's been long debated what Sky Viper is, biologically.  Some say it's simply a Snakey variant that evolved wings to better traverse the skyward fortress, but others argue it's a hybrid proving the existence of dragons.  ...or it's a bat hybrid, I dunno.")
 		"spiderCommon": return tr(&"Habitat: A.Abyssus\nLimbs: plentiful\nSocial life: active\n\nSpiders like to keep close with one another, and are incredibly coordinated.  They do almost everything as a group--even things they don't need to be a team for.  One of their favorite group activities is throwing raves.")
 		"spiderTough": return tr(&"Habitat: A.Abyssus\nSkills: slightly better\nAuthority: respected\n\nEvery good team needs a leader!  In spite of their ability to operate fine without one, groups of spiders often have a leader to guide the masses.  Their rule tends to be very lax, though, and they rarely ever need to issue big commands.")
 		"turtleCommon": return tr(&"Habitat: A.Abyssus\nShell: tough\nTop speed: 32 px/sec\n\nTurtles, oddly, are born with an innate control over their own gravity.  They claim it's a boon from the turtle god, who walks laps around the sky to keep it moving.  Fitting, then, that they often use this power as their own mode of transport.")
@@ -321,13 +338,13 @@ func _get_desc(key:String) -> StringName:
 		"tallfishCommon": return tr(&"Habitat: A.Abyssus\nAge: a lot older\nFeeling: a little irked\n\nA fully-grown sea creature that has migrated to an environment more suited to fit it.  Tallfish enjoy open seas, where they can swim freely with little risk of encountering other species (as it turns out, tallfish don't socialize well).")
 		"tallfishTough": return tr(&"Habitat: A.Abyssus\nAnger: unmanaged\nEnergy: surprisingly high\n\nAs if their poor social skills weren't enough, something's got this tallfish upset.  It's not clear what--maybe some other fish bothered it a bit too much?  Either way, this one needs some time and space to cool off.  Best not to get too close.")
 		"walleye": return tr(&"Habitat: diverse\nEyesight: really good\nReaction time: incredible\n\nWhat is a walleye?  Is it a volatile crystalline mass?  A creature in the shape of an eye as a sort of camouflage?  An actual eye embedded in the wall?  Nobody can get close enough long enough to investigate.")
-		"pincerFloor": return tr(&"")
+		"pincerFloor": return tr(&"Habitat: L.Lirata\nEnergy: boundless\nSense of direction: none\n\nIt's unclear whether Pincer is a heavily-plated beetle or a small drone on legs.  Any attempts to approach and figure this conundrum out have been met with multiple bites.  At least we know they like to dance, but they don't slow down a bit doing so.")
 		"pincerWall": return tr(&"")
-		"pincerCeiling": return tr(&"")
-		"gearCommon": return tr(&"")
+		"pincerCeiling": return tr(&"Habitat: L.Lirata\nDifferences: hardly any\nGravity: what's that?\n\nAn odd thing about the Pincer is its strange knack for defying gravity, in spite of any clear lack of turtle lineage.  They won't tell us how they do it.")
+		"gearCommon": return tr(&"Habitat: L.Lirata\nTeeth: 12\nTop speed: 240 RPM\n\nOnce a part of something greater, the spinnygear now aimlessly patrols the fortress it calls home.  It's unclear how intelligent they are, but the lack of guard duties makes it easy to chalk up their tendency to pounce from hiding as little else but personal enjoyment.")
 		"gearTough": return tr(&"")
-		"drone": return tr(&"")
-		"balloon": return tr(&"")
+		"drone": return tr(&"Habitat: L.Lirata\nOrigin: unknown\n")
+		"balloon": return tr(&"Habitat: L.Lirata\nSkin: surprisingly durable\nDestination: uncertain\n\nSome species of insect have the odd ability to inflate their abdomens to a comical degree and float away on the wind.  They don't seem to have anywhere specific in mind, however, choosing instead to go where the breeze takes them.")
 		"shellbreaker": return tr(&"Habitat: M.Carelia\nFeeling: a little grumpy\nAmmo supply: infinite\n\nAs a blob ages, funny things happen to its body.  Shellbreaker's once-fragile surface has hardened into a tough carapace, and they've gained a high level of control over their projectiles.  Their favorite music genre is drum & bass.")
 		"stompy": return tr(&"Habitat: S.Silere\nSmell: not great\nBody: unknown\n\nA menace to snails and biologists alike, this odd creature (pair of creatures?) guards its turf with an iron toe, making a ton of noise in the process.  It's a wonder the floors haven't cracked!")
 		"spacebox": return tr(&"Habitat: A.Abyssus\nShell: hard metal\nForce: unstoppable\n\nA construct of unknown origin, Space Box finds great joy in ramming itself into surfaces until they're perfectly flat.  As a result, it seems to have all but forgotten its role as a fortress guard.  It still guards, but only for its own amusement.")

@@ -430,6 +430,18 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				snakey.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(snakey)
 
+			Vector2i(9, 25): # Pincer
+				var pincer:Pincer = _load(&"res://Scenes/Entities/Enemies/Pincer.tscn").instantiate()
+				pincer.position = _tile_coords_to_vector_pos(tile)
+				pincer.direction = Statics.DirsSurface.FLOOR
+				layer_ground.add_child(pincer)
+
+			Vector2i(10, 25): # Sky Pincer
+				var pincer:Pincer = _load(&"res://Scenes/Entities/Enemies/Pincer.tscn").instantiate()
+				pincer.position = _tile_coords_to_vector_pos(tile)
+				pincer.direction = Statics.DirsSurface.CEILING
+				layer_ground.add_child(pincer)
+
 			Vector2i(11, 25): # Jellyfish
 				var jellyfish:Jellyfish = _load(&"res://Scenes/Entities/Enemies/Jellyfish.tscn").instantiate()
 				jellyfish.position = _tile_coords_to_vector_pos(tile)
@@ -489,6 +501,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				turtle.direction = Statics.DirsSurface.LWALL
 				layer_ground.add_child(turtle)
+
+			Vector2i(7, 26): # Balloon buster
+				var balloon:Balloon = _load(&"res://Scenes/Entities/Enemies/Balloon.tscn").instantiate()
+				balloon.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				layer_ground.add_child(balloon)
 
 			Vector2i(8, 26): # Batty bat
 				var bat:BattyBat = _load(&"res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
@@ -597,6 +614,23 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				turtle.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				turtle.direction = Statics.DirsSurface.CEILING
 				layer_ground.add_child(turtle)
+
+			Vector2i(3, 29): # Balloon buster generator
+				var gen:GeneratorBalloon = _load(&"res://Scenes/Entities/Enemies/Generators/GeneratorBalloon.tscn").instantiate()
+				gen.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(gen)
+
+			Vector2i(4, 29): # Pouncer (left)
+				var pincer:Pincer = _load(&"res://Scenes/Entities/Enemies/Pincer.tscn").instantiate()
+				pincer.position = _tile_coords_to_vector_pos(tile)
+				pincer.direction = Statics.DirsSurface.LWALL
+				layer_ground.add_child(pincer)
+
+			Vector2i(5, 29): # Pouncer (right)
+				var pincer:Pincer = _load(&"res://Scenes/Entities/Enemies/Pincer.tscn").instantiate()
+				pincer.position = _tile_coords_to_vector_pos(tile)
+				pincer.direction = Statics.DirsSurface.RWALL
+				layer_ground.add_child(pincer)
 
 			Vector2i(11, 30): # Angry block
 				var block:Angryblock = _load(&"res://Scenes/Entities/Enemies/Angryblock.tscn").instantiate()
