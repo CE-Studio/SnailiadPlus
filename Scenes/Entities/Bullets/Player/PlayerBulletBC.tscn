@@ -1,18 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgmlfyv6lecv1"]
+[gd_scene load_steps=9 format=3 uid="uid://cgmlfyv6lecv1"]
 
 [ext_resource type="Script" uid="uid://deopt64b388dy" path="res://Scripts/Bullets/Player/PlayerBulletBC.gd" id="1_ggt1q"]
 [ext_resource type="AudioStream" uid="uid://ckt6fktu66pkv" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBC.ogg" id="2_ggt1q"]
+[ext_resource type="AudioStream" uid="uid://p3gwucj4gfaf" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBCPower.ogg" id="3_7a7aq"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_kd8x0"]
 [ext_resource type="Texture2D" uid="uid://beuyura02ma23" path="res://Assets/Images/Bullets/Player/PlayerBulletBC.png" id="4_ggt1q"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_xvehh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kd8x0"]
+size = Vector2(26, 26)
+
 [node name="PlayerBulletBC" type="Node2D"]
 z_index = 150
 script = ExtResource("1_ggt1q")
 type = 6
 damage = 20
+damage_powered = 50
 cooldown = 0.3
 despawn_particle = "ExplosionWhiteSmall"
 
@@ -20,19 +25,28 @@ despawn_particle = "ExplosionWhiteSmall"
 collision_layer = 32
 collision_mask = 65
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_kd8x0")
+disabled = true
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
 [node name="AudioGroup" type="Node" parent="."]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("2_ggt1q")
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("3_7a7aq")
 bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
-rect = Rect2(-11.249999, -11.249999, 22.499998, 22.499998)
+rect = Rect2(-14.999998, -14.999998, 29.999996, 29.999996)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("3_kd8x0")

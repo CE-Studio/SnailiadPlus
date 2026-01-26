@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctqn1t6ytg45x"]
+[gd_scene load_steps=8 format=3 uid="uid://ctqn1t6ytg45x"]
 
 [ext_resource type="Script" uid="uid://c5i2l35mxtp7w" path="res://Scripts/Bullets/Player/PlayerBulletBCD.gd" id="1_66x8w"]
 [ext_resource type="AudioStream" uid="uid://cm7ypoocwhxdk" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBCD.ogg" id="2_66x8w"]
@@ -9,11 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
 size = Vector2(26, 26)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66x8w"]
+size = Vector2(40, 40)
+
 [node name="PlayerBulletBCD" type="Node2D"]
 z_index = 150
 script = ExtResource("1_66x8w")
 type = 14
 damage = 25
+damage_powered = 64
 cooldown = 0.22
 afterimages = 3
 despawn_particle = "ExplosionRainbowBig"
@@ -23,19 +27,28 @@ light_radius = 40
 collision_layer = 32
 collision_mask = 65
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_66x8w")
+disabled = true
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
 [node name="AudioGroup" type="Node" parent="."]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_66x8w")
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("2_66x8w")
 bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
-rect = Rect2(-16.249998, -16.249998, 32.499996, 32.499996)
+rect = Rect2(-24.999998, -24.999998, 49.999996, 49.999996)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("3_nhf1n")

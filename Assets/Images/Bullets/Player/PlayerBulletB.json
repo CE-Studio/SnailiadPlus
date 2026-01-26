@@ -1,5 +1,5 @@
 {
-	"tiles": [1, 1],
+	"tiles": [7, 1],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -12,6 +12,20 @@
 				[0, 0, false, false]
 			]
 		},
+		"U_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+			]
+		},
 		"UR": {
 			"fps": 1,
 			"loop": false,
@@ -19,6 +33,20 @@
 			"randomize_start": false,
 			"frames": [
 				[0, 0, false, false]
+			]
+		},
+		"UR_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
 			]
 		},
 		"R": {
@@ -30,6 +58,20 @@
 				[0, 0, false, false]
 			]
 		},
+		"R_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+			]
+		},
 		"DR": {
 			"fps": 1,
 			"loop": false,
@@ -37,6 +79,20 @@
 			"randomize_start": false,
 			"frames": [
 				[0, 0, false, false]
+			]
+		},
+		"DR_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
 			]
 		},
 		"D": {
@@ -48,6 +104,20 @@
 				[0, 0, false, false]
 			]
 		},
+		"D_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+			]
+		},
 		"DL": {
 			"fps": 1,
 			"loop": false,
@@ -55,6 +125,20 @@
 			"randomize_start": false,
 			"frames": [
 				[0, 0, false, false]
+			]
+		},
+		"DL_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
 			]
 		},
 		"L": {
@@ -66,6 +150,20 @@
 				[0, 0, false, false]
 			]
 		},
+		"L_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+			]
+		},
 		"UL": {
 			"fps": 1,
 			"loop": false,
@@ -73,6 +171,20 @@
 			"randomize_start": false,
 			"frames": [
 				[0, 0, false, false]
+			]
+		},
+		"UL_power": {
+			"fps": 45,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
 			]
 		}
 	}

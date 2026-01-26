@@ -1,19 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://x7hrhebs0a5y"]
+[gd_scene load_steps=9 format=3 uid="uid://x7hrhebs0a5y"]
 
 [ext_resource type="Script" uid="uid://darswjnbobhea" path="res://Scripts/Bullets/Player/PlayerBulletB.gd" id="1_0cs6w"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_4p8ps"]
+[ext_resource type="AudioStream" uid="uid://ctwgbaifvi3y" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBPower.ogg" id="3_0cs6w"]
 [ext_resource type="AudioStream" uid="uid://ds164wqn6h5yl" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotB.ogg" id="3_x2y1m"]
 [ext_resource type="Texture2D" uid="uid://bb137vifsvb6u" path="res://Assets/Images/Bullets/Player/PlayerBulletB.png" id="5_0cs6w"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_1le4m"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2y1m"]
 size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(26, 26)
 
 [node name="PlayerBulletB" type="Node2D"]
 z_index = 150
 script = ExtResource("1_0cs6w")
 type = 2
 damage = 10
+damage_powered = 45
 cooldown = 0.085
 despawn_offscreen = true
 collide_with_wall = true
@@ -26,18 +31,28 @@ despawn_offset = Vector2(4, 4)
 collision_layer = 32
 collision_mask = 65
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_x2y1m")
+debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0nsho")
+disabled = true
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
 [node name="AudioGroup" type="Node" parent="."]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("3_x2y1m")
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("3_0cs6w")
 bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.3, 0.3)
+rect = Rect2(-40, -40, 80, 80)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("2_4p8ps")
@@ -46,5 +61,6 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
 texture = ExtResource("5_0cs6w")
+hframes = 7
 script = ExtResource("6_1le4m")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

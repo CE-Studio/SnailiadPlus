@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvrifp0nton52"]
+[gd_scene load_steps=8 format=3 uid="uid://dvrifp0nton52"]
 
 [ext_resource type="Script" uid="uid://dbe1exqxfon5i" path="res://Scripts/Bullets/Player/PlayerBulletD.gd" id="1_0q70w"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_3xsxv"]
@@ -9,11 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5sfm3"]
 size = Vector2(26, 26)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnj2w"]
+size = Vector2(56, 56)
+
 [node name="PlayerBulletD" type="Node2D"]
 z_index = 150
 script = ExtResource("1_0q70w")
 type = 8
 damage = 20
+damage_powered = 55
 cooldown = 0.29
 despawn_particle = "ExplosionRainbowBig"
 light_radius = 32
@@ -22,19 +26,28 @@ light_radius = 32
 collision_layer = 32
 collision_mask = 65
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_5sfm3")
+debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_nnj2w")
+disabled = true
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
 [node name="AudioGroup" type="Node" parent="."]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_nnj2w")
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("2_nnj2w")
 bus = &"Sfx"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.8, 0.8)
-rect = Rect2(-16.249998, -16.249998, 32.499996, 32.499996)
+rect = Rect2(-34.999996, -34.999996, 69.99999, 69.99999)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="."]
 script = ExtResource("3_bborg")
@@ -44,6 +57,6 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
 texture = ExtResource("4_38kni")
 hframes = 6
-vframes = 2
+vframes = 4
 script = ExtResource("2_3xsxv")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

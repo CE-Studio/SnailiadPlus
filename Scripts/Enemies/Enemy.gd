@@ -210,11 +210,12 @@ func _physics_process(delta) -> void:
 		var was_hit:bool = false
 		for bullet in intersecting_pbullets:
 			was_hit = true
-			var this_damage:int = bullet.damage
+			var bullet_damage = bullet.damage_powered if bullet.powered else bullet.damage
+			var this_damage:int = bullet_damage
 			var this_color:Color = Statics.get_color(Vector2i(3, 1))
 			#gravity shock critical damage mult (1.35)
-			if not immunities.has(bullet.type) and bullet.damage - defense > 0:
-				this_damage = floori(bullet.damage - defense)
+			if not immunities.has(bullet.type) and bullet_damage - defense > 0:
+				this_damage = floori(bullet_damage - defense)
 				if weaknesses.has(bullet.type):
 					this_damage *= 2
 					this_color = Statics.get_color(Vector2i(2, 3))

@@ -8,6 +8,7 @@ const TICKS_BETWEEN_AFTERIMAGES:int = 4
 
 @export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
 @export var damage:int = 0
+@export var damage_powered:int = 0
 @export var cooldown:float = 0.0
 @export var rapid_mult:float = 1.0
 @export var powered:bool = false
@@ -31,18 +32,26 @@ var afterimage_tick:int = 0
 
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var area:Area2D = $"Area2D"
-@onready var box:CollisionShape2D = $"Area2D/Box"
-@onready var sfx_shoot:AudioStreamPlayer = $"AudioGroup/Shoot"
+@onready var box_normal:CollisionShape2D = $"Area2D/BoxNormal"
+@onready var box_power:CollisionShape2D = $"Area2D/BoxPower"
+@onready var sfx_shoot_normal:AudioStreamPlayer = $"AudioGroup/ShootNormal"
+@onready var sfx_shoot_power:AudioStreamPlayer = $"AudioGroup/ShootPower"
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 @onready var sfx_despawn:AudioStream = preload("res://Assets/Sounds/Sfx/ShotHit.ogg")
 @onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Player/PlayerBulletAfterimage.tscn")
 #endregion
 
 
-func _spawn(dir:Vector2, rapid_shot:float) -> float:
+func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 	normalized_dir = dir
 	rapid_mult = rapid_shot
-	sfx_shoot.play()
+	powered = power_shot
+	if power_shot:
+		box_normal.disabled = true
+		box_power.disabled = false
+		sfx_shoot_power.play()
+	else:
+		sfx_shoot_normal.play()
 	area.connect("body_entered", _on_body_entered)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)

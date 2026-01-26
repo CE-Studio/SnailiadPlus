@@ -1438,8 +1438,8 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 		elif _bullet_id == 1:
 			bullet_type = "A"
 	#endregion
-	if Statics.check_item(Item.ItemTypes.DEVASTATOR):
-		bullet_type += "Power"
+	#if Statics.check_item(Item.ItemTypes.DEVASTATOR):
+	#	bullet_type += "Power"
 	var bullet_scene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(new_bullet)
@@ -1447,7 +1447,10 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 	if pos == body.position:
 		new_bullet.position += normalized_velocity * Statics.FRAC_8
 	var rapid_mult:float = 2.0 if Statics.check_item(Item.ItemTypes.RAPID_FIRE) else 1.0
-	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult)
+	var powered:bool = Statics.check_item(Item.ItemTypes.DEVASTATOR)
+	if powered and Statics.stack_weapon_mods:
+		rapid_mult = 2.0
+	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult, powered)
 	return this_cooldown
 #endregion
 

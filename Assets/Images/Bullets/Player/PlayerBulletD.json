@@ -1,5 +1,5 @@
 {
-	"tiles": [6, 2],
+	"tiles": [6, 4],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -23,6 +23,26 @@
 				[5, 1, false, false],
 			]
 		},
+		"U_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
+			]
+		},
 		"UR": {
 			"fps": 14,
 			"loop": true,
@@ -41,6 +61,26 @@
 				[3, 1, false, false],
 				[4, 1, false, false],
 				[5, 1, false, false],
+			]
+		},
+		"UR_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
 			]
 		},
 		"R": {
@@ -63,6 +103,26 @@
 				[5, 1, false, false],
 			]
 		},
+		"R_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
+			]
+		},
 		"DR": {
 			"fps": 14,
 			"loop": true,
@@ -81,6 +141,26 @@
 				[3, 1, false, false],
 				[4, 1, false, false],
 				[5, 1, false, false],
+			]
+		},
+		"DR_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
 			]
 		},
 		"D": {
@@ -103,6 +183,26 @@
 				[5, 1, false, false],
 			]
 		},
+		"D_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
+			]
+		},
 		"DL": {
 			"fps": 14,
 			"loop": true,
@@ -121,6 +221,26 @@
 				[3, 1, false, false],
 				[4, 1, false, false],
 				[5, 1, false, false],
+			]
+		},
+		"DL_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
 			]
 		},
 		"L": {
@@ -143,6 +263,26 @@
 				[5, 1, false, false],
 			]
 		},
+		"L_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
+			]
+		},
 		"UL": {
 			"fps": 14,
 			"loop": true,
@@ -161,6 +301,26 @@
 				[3, 1, false, false],
 				[4, 1, false, false],
 				[5, 1, false, false],
+			]
+		},
+		"UL_power": {
+			"fps": 18,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[4, 2, false, false],
+				[5, 2, false, false],
+				[0, 3, false, false],
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[4, 3, false, false],
+				[5, 3, false, false],
 			]
 		}
 	}

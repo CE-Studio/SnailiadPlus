@@ -19,13 +19,22 @@ despawn_offscreen = true
 collision_layer = 32
 collision_mask = 64
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nsho")
+disabled = true
 debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
 
 [node name="AudioGroup" type="Node" parent="."]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
+stream = ExtResource("2_0p3iw")
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("2_0p3iw")
 bus = &"Sfx"
 

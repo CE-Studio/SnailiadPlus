@@ -13,7 +13,10 @@ var opaque:bool = ProjectSettings.get_setting("game/visuals/opaque_afterimages")
 
 func _spawn_afterimage(parent:PlayerBullet) -> void:
 	damage = floori(parent.damage * DAMAGE_MULT)
-	box.shape.size = parent.box.shape.size
+	box_normal.shape.size = parent.box_normal.shape.size
+	box_normal.disabled = parent.powered
+	box_power.shape.size = parent.box_power.shape.size
+	box_power.disabled = not parent.powered
 	vis.rect = parent.vis.rect
 	_sprite.texture = parent.sprite.texture
 	_sprite.hframes = parent.sprite.data["tiles"][0]
