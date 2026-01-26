@@ -234,9 +234,9 @@ func get_item_name(id:Item.ItemTypes, specify_shell:bool = false) -> StringName:
 				Player.Players.SNAILY: return tr(&"Gravity Leech")
 		Item.ItemTypes.METAL_SHELL:
 			match character:
-				Player.Players.SNAILY: return tr(&"Full Power Slug")
+				Player.Players.SLUGGY: return tr(&"Full Power Slug")
 				Player.Players.BLOBBY: return tr(&"Non-Newtonian Blob")
-				Player.Players.SNAILY: return tr(&"Full Power Leech")
+				Player.Players.LEECHY: return tr(&"Full Power Leech")
 				_: return tr(&"Full Metal Shell") if specify_shell else tr(&"Full Metal Snail")
 		Item.ItemTypes.GRAVITY_SHOCK:
 			return tr(&"Gravity Shock")

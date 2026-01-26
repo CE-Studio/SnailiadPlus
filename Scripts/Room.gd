@@ -420,6 +420,30 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				floatspike.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(floatspike)
 
+			Vector2i(3, 25): # Spinnygear (up)
+				var gear:GearCommon = _load(&"res://Scenes/Entities/Enemies/GearCommon.tscn").instantiate()
+				gear.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 8)
+				gear.direction = Statics.DirsCardinal.UP
+				layer_ground.add_child(gear)
+
+			Vector2i(4, 25): # Spinnygear (down)
+				var gear:GearCommon = _load(&"res://Scenes/Entities/Enemies/GearCommon.tscn").instantiate()
+				gear.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 8)
+				gear.direction = Statics.DirsCardinal.DOWN
+				layer_ground.add_child(gear)
+
+			Vector2i(5, 25): # Spinnygear (right)
+				var gear:GearCommon = _load(&"res://Scenes/Entities/Enemies/GearCommon.tscn").instantiate()
+				gear.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 8)
+				gear.direction = Statics.DirsCardinal.RIGHT
+				layer_ground.add_child(gear)
+
+			Vector2i(6, 25): # Spinnygear (left)
+				var gear:GearCommon = _load(&"res://Scenes/Entities/Enemies/GearCommon.tscn").instantiate()
+				gear.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 8)
+				gear.direction = Statics.DirsCardinal.LEFT
+				layer_ground.add_child(gear)
+
 			Vector2i(7, 25): # Aqua chirpy
 				var chirpy:ChirpyTough = _load(&"res://Scenes/Entities/Enemies/ChirpyTough.tscn").instantiate()
 				chirpy.position = _tile_coords_to_vector_pos(tile)
@@ -511,6 +535,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var bat:BattyBat = _load(&"res://Scenes/Entities/Enemies/Battybat.tscn").instantiate()
 				bat.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
 				layer_ground.add_child(bat)
+
+			Vector2i(9, 26): # Angelblob
+				var blob:BlobAngel = _load(&"res://Scenes/Entities/Enemies/BlobAngel.tscn").instantiate()
+				blob.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 0)
+				layer_ground.add_child(blob)
 
 			Vector2i(10, 26): # Angry tallfish
 				var tallfish:TallfishTough = _load(&"res://Scenes/Entities/Enemies/TallfishTough.tscn").instantiate()

@@ -60,13 +60,13 @@ func _physics_process(delta: float) -> void:
 		var player_pos:Vector2 = GameCore.instance.player.position
 		if abs(player_pos.x - position.x) <= REACT_DISTANCE and abs(player_pos.y - position.y) <= REACT_DISTANCE:
 			if move_timeout <= 0.0:
-				facing_left = player_pos.x < position.x
 				var aim:float = atan2(player_pos.y - position.y, player_pos.x - position.x)
 				aim += THETA_OFFSETS[theta_offset_index]
 				theta_offset_index = (theta_offset_index + 1) % THETA_OFFSETS.size()
 				velocity = Vector2(cos(aim) * SPEED.x, sin(aim) * SPEED.y)
 				move_timeout_index = (move_timeout_index + 1) % MOVE_TIMEOUTS.size()
 				move_timeout = MOVE_TIMEOUTS[move_timeout_index]
+				facing_left = velocity.x < 0.0
 				_play_anim(true)
 				sfx_move.play()
 			if shot_timeout <= 0.0 and hard_mode:

@@ -1,0 +1,20 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
+if Statics.is_random_game:
+	if not Statics.check_location_collected(48):
+		NPC45: There's a powerup ahead, {{Player.player_name}}![wait=0.2]  Why don't you take it?
+	else:
+		NPC45: Oh,[wait=0.15] hi, {{Player.player_name}}![wait=0.2]  What's up?
+elif not Statics.check_item(Item.ItemTypes.METAL_SHELL):
+	NPC45: Hey, {{Player.player_name}}![wait=0.15]  If you grab the [color=#ffb6f8]powerup[/color] ahead,[wait=0.1] you'll only take half damage from enemies!!
+else:
+	if Player.instance.who_i_is == Player.Players.SNAILY or Player.instance.who_i_is == Player.Players.UPSIDE or Player.instance.who_i_is == Player.Players.LEGGY:
+		NPC45: Ooh, a [color=#ffb6f8]Full Metal {{Player.player_species}}[/color]![wait=0.2]  Now you're as tough as iron,[wait=0.1] and as quick as Mercury!
+	elif Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY:
+		NPC45: Ooh, a [color=#ffb6f8]Full Power {{Player.player_species}}[/color],[wait=0.15] the fastest {{Player.player_species}} on earth!!
+	elif Player.instance.who_i_is == Player.Players.BLOBBY:
+		NPC45: Ooh, a [color=#ff2024]Non-Neutonian {{Player.player_species}}[/color]![wait=0.2]  The perfect blend of fluidity and indestructibility!!
+=> END

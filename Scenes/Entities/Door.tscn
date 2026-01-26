@@ -14,6 +14,9 @@ size = Vector2(16, 48)
 [node name="Door" type="Node2D"]
 script = ExtResource("1_yyb1i")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-24, -24, 48, 48)
+
 [node name="BoxGroup" type="Node2D" parent="."]
 
 [node name="BulletBox" type="Area2D" parent="BoxGroup"]

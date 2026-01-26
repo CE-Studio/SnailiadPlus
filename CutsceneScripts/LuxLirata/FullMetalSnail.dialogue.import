@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cnvedcd2ogyqe"
+path="res://.godot/imported/FullMetalSnail.dialogue-ba0f91a3bdc746c18b01036a62adedcf.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/LuxLirata/FullMetalSnail.dialogue"
+dest_files=["res://.godot/imported/FullMetalSnail.dialogue-ba0f91a3bdc746c18b01036a62adedcf.tres"]
+
+[params]
+
+defaults=true

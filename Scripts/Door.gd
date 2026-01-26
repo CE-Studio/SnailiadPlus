@@ -40,6 +40,7 @@ var is_locked:bool = false
 var spawned_open:bool = false
 var anim_prefix:String = ""
 
+@onready var vis = $"VisibleOnScreenNotifier2D"
 @onready var box_group = $"BoxGroup"
 @onready var body = $"BoxGroup/SolidBox"
 @onready var box = $"BoxGroup/SolidBox/CollisionShape2D"
@@ -132,6 +133,8 @@ func _set_editor_marker():
 
 
 func _on_bullet_entered(area:Area2D) -> void:
+	if not vis.is_on_screen():
+		return
 	var bullet = area.get_parent()
 	if is_locked:
 		sfx_ping.play()
