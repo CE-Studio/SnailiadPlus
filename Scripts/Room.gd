@@ -481,6 +481,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				tallfish.position = _tile_coords_to_vector_pos(tile) + Vector2(8, 16)
 				layer_ground.add_child(tallfish)
 
+			Vector2i(14, 25): # Federation drone
+				var drone:Drone = _load(&"res://Scenes/Entities/Enemies/Drone.tscn").instantiate()
+				drone.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(drone)
+
 			Vector2i(15, 25): # Walleye (right)
 				var walleye:Walleye = _load(&"res://Scenes/Entities/Enemies/Walleye.tscn").instantiate()
 				walleye.position = _tile_coords_to_vector_pos(tile)

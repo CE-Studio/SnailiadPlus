@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://ds11thbjujchh"]
+
+[ext_resource type="Script" uid="uid://c32s0j7ai67yd" path="res://Scripts/Enemies/Drone.gd" id="1_ibwj3"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_g1h82"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_4cirk"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_46eee"]
+[ext_resource type="Texture2D" uid="uid://mlslhhh6xjad" path="res://Assets/Images/Entities/Drone.png" id="5_ibwj3"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_12jmj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
+size = Vector2(22, 28)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
+shader = ExtResource("4_46eee")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="Drone" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_ibwj3")
+max_health = 1850
+attack = 4
+defense = 10
+health_orb_value = 2
+light_radius = 32
+kill_particle_range = Vector2i(12, 16)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v2c1n")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+rect = Rect2(-14.999998, -18.749998, 29.999996, 37.499996)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_g1h82")
+script = ExtResource("3_4cirk")
+texture_path = "res://Assets/Images/Entities/Drone.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_ojica")
+texture = ExtResource("5_ibwj3")
+hframes = 2
+script = ExtResource("6_12jmj")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

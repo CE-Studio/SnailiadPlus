@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bi6vx2hjt1jmo"
+path="res://.godot/imported/GravityShock.dialogue-9eb99dea9db59c958e193f969e2ec06b.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/LuxLirata/GravityShock.dialogue"
+dest_files=["res://.godot/imported/GravityShock.dialogue-9eb99dea9db59c958e193f969e2ec06b.tres"]
+
+[params]
+
+defaults=true

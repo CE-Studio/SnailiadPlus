@@ -27,5 +27,5 @@ func _spawn_one() -> void:
 		WRAP_BOUNDS.y
 	)
 	var target_layer:Room.Layers = (Room.Layers.BG2 + randi_range(0, 3)) as Room.Layers
-	var new_particle = Statics.spawn_particle(this_particle, target_layer, spawn_pos)
+	var new_particle = Statics.spawn_particle_cam_synced(this_particle, target_layer, spawn_pos)
 	active_particles.append(new_particle)

@@ -55,4 +55,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Charge" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_tkwwl")
+volume_db = -2.0
 bus = &"Sfx"

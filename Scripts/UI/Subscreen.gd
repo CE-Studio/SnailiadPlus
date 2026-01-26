@@ -397,6 +397,12 @@ func _set_desc(id:int) -> void:
 				_: desc_body.set_snaily_text(tr(&"This badge is crafted from discarded gravity turtle scutes that still carry some of that innate control over the force.  With a little concentration, wearing this badge allows the wearer to redirect which direction they get pulled.\n\n\n[color=#ffd48c]Hold a direction and press the GRAVITY button to flip gravity"))
 			if Statics.stack_shells:
 				desc_body.set_snaily_text(desc_body.text + stacked_shells)
+		Item.ItemTypes.METAL_SHELL:
+			desc_body.set_snaily_text(tr(&"A special shield that binds perfectly to anyone who wields it, protecting them from all manner of harm.  It even includes perfect thermal shielding, letting you finally step outside in the summer!"))
+			if Statics.stack_shells:
+				desc_body.set_snaily_text(desc_body.text + stacked_shells)
+		Item.ItemTypes.GRAVITY_SHOCK:
+			desc_body.set_snaily_text(tr(&"A relic long thought lost, this item allows anyone to build immense amounts of power and release it in a fireball of sheer destruction.  Use this power wisely, and you can bring down even the toughest of foes and walls with ease!\n\n\n[color=#ffd48c]Gravity jump toward your current gravity to activate.  Move while it's active to steer."))
 		Item.ItemTypes.NONE:
 			desc_body.set_snaily_text(tr(&"It's you!\nThis is your normal self; how you've always known yourself.  You can take a hit or two, but not much else.  But hey, that just means there's room to grow!"))
 			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):

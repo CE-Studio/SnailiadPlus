@@ -69,5 +69,9 @@ func _spawn_one() -> void:
 		randf_range(-WRAP_BOUNDS.x, WRAP_BOUNDS.x),
 		randf_range(-WRAP_BOUNDS.y, WRAP_BOUNDS.y)
 	)
-	var new_particle = Statics.spawn_particle(this_particle, Room.Layers.GROUND, spawn_pos)
+	var new_particle:Particle
+	if move_with_camera:
+		new_particle = Statics.spawn_particle_cam_synced(this_particle, Room.Layers.GROUND, spawn_pos)
+	else:
+		new_particle = Statics.spawn_particle(this_particle, Room.Layers.GROUND, spawn_pos)
 	active_particles.append(new_particle)

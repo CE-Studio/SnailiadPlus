@@ -128,7 +128,7 @@
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[2, 0, true, false]
+				[1, 0, true, false]
 			]
 		},
 		"UL_fire": {

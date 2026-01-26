@@ -44,4 +44,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
 stream = ExtResource("5_2awia")
+volume_db = -4.0
 bus = &"Sfx"

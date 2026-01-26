@@ -159,7 +159,7 @@ var room_names:Dictionary = {
 	"LuxLirata/SpaceSecret": tr(&"Space Balcony"),
 	"LuxLirata/GearTower": tr(&"Clocktower"),
 	"LuxLirata/Devastator": tr(&"The Vault"),
-	"LuxLirata/PincerPath": tr(&"Skyway"),
+	"LuxLirata/PincerPath": tr(&"   Skyway"),
 	"LuxLirata/Labyrinth": tr(&"The Other Labyrinth"),
 	"LuxLirata/GearHall": tr(&"Final Stretch"),
 	"LuxLirata/AngelItem": tr(&"Holy Hideaway"),
