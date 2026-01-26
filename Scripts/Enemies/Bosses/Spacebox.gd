@@ -35,7 +35,6 @@ const DECISION_TABLE:Array[float] = [
 var shields:Array[Enemy] = []
 var babyboxes:Array[Enemy] = []
 var shield_count:int = 0
-var elapsed:float = 0.0
 var mode_timeout = MODE_TIMEOUT
 var last_mode:Statics.DirsCompass = Statics.DirsCompass.W
 var current_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
@@ -93,7 +92,7 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	elapsed += delta
+	lifetime += delta
 	
 	if not intro_delay:
 		check_mode(delta)
@@ -194,7 +193,7 @@ func update_shield_positions() -> void:
 	var cycle_point:float
 	var segment_point:float
 	for i in range(shields.size()):
-		cycle_point = fmod(fmod(elapsed / SHIELD_PERIOD, 1.0) * MAX_SHIELD_SLOTS + fmod(17.0 * (i + 8), MAX_SHIELDS_ACTIVE), MAX_SHIELD_SLOTS)
+		cycle_point = fmod(fmod(lifetime / SHIELD_PERIOD, 1.0) * MAX_SHIELD_SLOTS + fmod(17.0 * (i + 8), MAX_SHIELDS_ACTIVE), MAX_SHIELD_SLOTS)
 		segment_point = fmod(cycle_point, 9.0)
 		if cycle_point < 9.0:
 			shields[i].position.x = -SHIELD_EXTENTS.x + (segment_point * 16.0)

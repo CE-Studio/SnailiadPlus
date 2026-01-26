@@ -28,6 +28,7 @@ var first_jump:bool = false
 
 @onready var sfx:AudioStreamPlayer = $"Sfx"
 @onready var sound:AudioStream = load("res://Assets/Sounds/Sfx/Enemy/Snelk.ogg")
+@onready var emote:EmoteLayer = $"EmoteLayer"
 #endregion
 
 
@@ -44,6 +45,8 @@ func _ready() -> void:
 	
 	if state == States.SLEEP or display_mode:
 		facing_left = randf() < 0.5
+		if state == States.SLEEP:
+			emote.zzz()
 	else:
 		facing_left = position.x > GameCore.instance.player.position.x
 	hop_num = abs(roundi(position.x)) % HOP_HEIGHTS.size()
@@ -59,6 +62,7 @@ func _physics_process(delta: float) -> void:
 		if position.distance_to(GameCore.instance.player.position) < WAKE_RANGE:
 			_play_sound()
 			state = States.RUN
+			emote.surprise(1.0)
 	else:
 		var jump:bool = false
 		var set_vel:bool = false

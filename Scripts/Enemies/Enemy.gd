@@ -10,6 +10,7 @@ const DAMAGE_FLASH_STRENGTH:float = 0.9
 const DAMAGE_FADE_DECAY:float = 10.0
 
 @export var max_health:int
+@export var max_health_easy:int
 @export var max_health_hard:int
 @export var attack:int
 @export var defense:int
@@ -38,6 +39,7 @@ var stun_invul:bool = false
 var ping_played:bool = false
 var sent_entry_once:bool = false
 var damaged_this_tick:bool = false
+var lifetime:float = 0.0
 
 var flash_mat:Material = preload("res://Resources/EnemyFlashMat.tres")
 
@@ -60,6 +62,7 @@ var intersecting_player:bool = false
 var intersecting_pbullets:Array[PlayerBullet] = []
 var intersecting_ebullets:Array[EnemyBullet] = []
 var ai_active:bool = true
+var easy_mode:bool = false
 var hard_mode:bool = false
 
 var flash_color:Color = Color.BLACK
@@ -132,8 +135,14 @@ enum EnemyTypes {
 
 
 func spawn(active:bool = true) -> void:
+	if not GameCore.instance:
+		return
+	
 	origin = position
 	ai_active = active
+	easy_mode = Statics.current_profile["difficulty"] == 0
+	if easy_mode and max_health_easy != 0:
+		max_health = max_health_easy
 	hard_mode = Statics.current_profile["difficulty"] == 2
 	if hard_mode and max_health_hard != 0:
 		max_health = max_health_hard
@@ -171,9 +180,13 @@ func _process(delta: float) -> void:
 	if sprite and not shield_entity:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
+	
+	lifetime += delta
 
 
 func _physics_process(delta) -> void:
+	if damage_timeout > 0.0:
+		damage_timeout -= delta
 	if not intersecting_player and intersecting_pbullets.is_empty() and intersecting_ebullets.is_empty():
 		return
 
@@ -247,8 +260,6 @@ func _physics_process(delta) -> void:
 		ebullets_to_despawn.clear()
 		if kill_flag:
 			kill()
-	if damage_timeout > 0.0:
-		damage_timeout -= delta
 	ping_played = false
 
 

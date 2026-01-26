@@ -4,6 +4,7 @@ extends Area2D
 
 #region Variables
 const PLAYER_CHECK_TOLERANCE:float = 18.0
+const MIN_ENTITY_LIFETIME:float = 0.25
 
 var spawn_grace_frames = 2
 var contained_bodies:Array = []
@@ -50,9 +51,11 @@ func update_shader_visibility() -> void:
 func _on_body_enter(body) -> void:
 	if contained_bodies.has(body):
 		return
-	contained_bodies.append(body)
-	if body is Enemy and body.interact_with_environments:
-			body.environment = self
+	var enemy:bool = body is Enemy
+	if not enemy or (enemy and body.lifetime > MIN_ENTITY_LIFETIME):
+		contained_bodies.append(body)
+	if enemy and body.interact_with_environments:
+		body.environment = self
 
 
 func _on_body_exit(body) -> void:

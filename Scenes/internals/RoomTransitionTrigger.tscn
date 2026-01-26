@@ -20,7 +20,7 @@ position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_gkfyc")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-4, 0)
+position = Vector2(-8, 0)
 
 [node name="MarkerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_wovne")

@@ -57,8 +57,6 @@ func _process(_delta: float) -> void:
 		icon.action = queue[0]
 		header.visible = true
 		timer.start()
-	if SInput.check_input(SInput.Inputs.SPEAK, true):
-		_add_to_queue(randi_range(0, Achievements.keys().size() - 1))
 
 
 func check_add(id:Achievements) -> void:

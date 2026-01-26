@@ -24,7 +24,6 @@ var hand_speed:float = 0.0
 var hand_radius:float = 0.0
 var hand_radius_mult:float = 1.0
 var hand_radius_target:float = 1.0
-var elapsed:float = 0.0
 var shot_pattern:int = 0
 var shot_timeout:float = 0.0
 var shot_pattern_timeout:float = 0.0
@@ -96,7 +95,7 @@ func _process(delta: float) -> void:
 	if not ai_active and not display_mode:
 		return
 	
-	elapsed += delta
+	lifetime += delta
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
 	
@@ -110,9 +109,9 @@ func _process(delta: float) -> void:
 		return
 	
 	position = origin + (PATH_RADIUS * Vector2(
-		cos(elapsed),
-		sin(elapsed)
-	) * sin(elapsed * PATH_RADIUS_CYCLE_MULT))
+		cos(lifetime),
+		sin(lifetime)
+	) * sin(lifetime * PATH_RADIUS_CYCLE_MULT))
 	var eye_pos_val:float = get_aim_dir()
 	eyes.position = Vector2(
 		cos(eye_pos_val),
@@ -121,11 +120,11 @@ func _process(delta: float) -> void:
 	
 	try_shoot()
 	
-	hand_radius = HAND_RADIUS_BASE + (HAND_RADIUS_MOD * sin(sin(elapsed * 5 / 3)))
+	hand_radius = HAND_RADIUS_BASE + (HAND_RADIUS_MOD * sin(sin(lifetime * 5 / 3)))
 	hand_radius = clampf(hand_radius, HAND_RADIUS_MIN, INF) * hand_radius_mult
 	hand_radius_mult = hand_radius_mult * 0.9 + hand_radius_target * 0.1
 	for i in hands.size():
-		hand_thetas[i] += hand_theta_speeds[i] * delta * (1.0 + sin(elapsed * 5 / 4)) * 1.2
+		hand_thetas[i] += hand_theta_speeds[i] * delta * (1.0 + sin(lifetime * 5 / 4)) * 1.2
 		hands[i].position = Vector2(
 			-sin(hand_thetas[i]),
 			cos(hand_thetas[i])

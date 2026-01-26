@@ -50,6 +50,9 @@ func _on_body_enter(body) -> void:
 		return
 	if body is Enemy and not body.interact_with_environments:
 		return
+	super(body)
+	if not contained_bodies.has(body):
+		return
 	if spawn_grace_frames <= 0 and read_interactions:
 		var edge_data:Array = get_closest_point(body.position)
 		var speed:float
@@ -59,7 +62,6 @@ func _on_body_enter(body) -> void:
 			speed = abs(body.velocity.x)
 		var lerped_speed = inverse_lerp(0.0, 512.0, speed)
 		call_splash(edge_data[0], edge_data[1], lerped_speed, edge_data[2])
-	super(body)
 
 
 func _on_body_exit(body) -> void:

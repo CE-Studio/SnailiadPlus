@@ -185,7 +185,7 @@ func center_maps() -> void:
 				room_size.x - (room_size.x / scroll.x),
 				room_size.y - (room_size.y / scroll.y)
 			) * 0.5 * scroll
-			this_layer.scroll_offset = new_offset
+			this_layer.scroll_offset += new_offset
 
 
 func get_actors() -> Array[CutsceneControllable]:
@@ -527,6 +527,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var floatspike:FloatspikeTough = _load(&"res://Scenes/Entities/Enemies/FloatspikeTough.tscn").instantiate()
 				floatspike.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(floatspike)
+
+			Vector2i(13, 26): # Sky viper
+				var snakey:Skyviper = _load(&"res://Scenes/Entities/Enemies/Skyviper.tscn").instantiate()
+				snakey.position = _tile_coords_to_vector_pos(tile)
+				layer_ground.add_child(snakey)
 
 			Vector2i(14, 26): # Non-canon (floor)
 				var noncanon:Noncanon = _load(&"res://Scenes/Entities/Enemies/Noncanon.tscn").instantiate()

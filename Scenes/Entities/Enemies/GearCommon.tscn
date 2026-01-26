@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://drnvl1gh88p4h"]
+
+[ext_resource type="Script" uid="uid://cu2rfjkk4wjm8" path="res://Scripts/Enemies/FloatspikeCommon.gd" id="1_me7no"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_05au3"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_24pq6"]
+[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_qyfsf"]
+[ext_resource type="Texture2D" uid="uid://cygsn5qs3h2cn" path="res://Assets/Images/Entities/Gear.png" id="5_ly6hl"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_bqk5t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
+size = Vector2(30, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
+shader = ExtResource("4_qyfsf")
+shader_parameter/flash_color = Color(0, 0, 0, 1)
+
+[node name="GearCommon" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_me7no")
+max_health = 5
+attack = 2
+defense = 59
+interact_with_environments = false
+health_orb_value = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v2c1n")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-16, -16, 32, 32)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_05au3")
+script = ExtResource("3_24pq6")
+texture_path = "res://Assets/Images/Entities/Floatspike1.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+material = SubResource("ShaderMaterial_ojica")
+texture = ExtResource("5_ly6hl")
+hframes = 3
+script = ExtResource("6_bqk5t")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

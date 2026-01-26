@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bxxcqyt05cebe"]
+[gd_scene load_steps=11 format=3 uid="uid://bxxcqyt05cebe"]
 
 [ext_resource type="Script" uid="uid://cgffkaop7cyhp" path="res://Scripts/Enemies/Snelk.gd" id="1_mlwfl"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_mlwfl"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://8ajluyxd0650" path="res://Assets/Images/Entities/Snelk.png" id="5_tt5hy"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_sjk62"]
 [ext_resource type="AudioStream" uid="uid://bnmmi3c2auem" path="res://Assets/Sounds/Sfx/Enemy/Snelk.ogg" id="7_mlwfl"]
+[ext_resource type="PackedScene" uid="uid://n33i7arxa7t6" path="res://Scenes/internals/EmoteLayer.tscn" id="8_vtb3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
 size = Vector2(24, 24)
@@ -52,3 +53,5 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 stream = ExtResource("7_mlwfl")
 max_polyphony = 2
 bus = &"Sfx"
+
+[node name="EmoteLayer" parent="." instance=ExtResource("8_vtb3o")]
