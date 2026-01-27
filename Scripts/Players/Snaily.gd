@@ -37,8 +37,8 @@ func _ready():
 	jump_buffer = 0.125
 	grav_shock_charge_time = 0.75
 	grav_shock_charge_mult = 0.5
-	grav_shock_speed = 40.0
-	grav_shock_steering = 2.5
+	grav_shock_speed = 640.0
+	grav_shock_steering = 40.0
 	damage_multiplier = 1
 	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4

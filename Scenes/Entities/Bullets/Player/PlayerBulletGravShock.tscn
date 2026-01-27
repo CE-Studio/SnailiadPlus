@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://br8mutha632sc"]
+
+[ext_resource type="Script" uid="uid://ch7xbqcf602dv" path="res://Scripts/Bullets/Player/PlayerBulletGravShock.gd" id="1_fu0lx"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_31s3v"]
+[ext_resource type="Texture2D" uid="uid://3ypt7anb0igi" path="res://Assets/Images/Bullets/Player/PlayerBulletGravShock.png" id="5_e2ltk"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_gedtp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xq3d5"]
+size = Vector2(64, 64)
+
+[node name="PlayerBulletGravShock" type="Node2D"]
+z_index = -1
+script = ExtResource("1_fu0lx")
+type = 14
+damage = 30
+damage_powered = 68
+cooldown = 0.17
+despawn_particle = "ExplosionRainbowHuge"
+light_radius = 40
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 65
+
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_xq3d5")
+disabled = true
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="AudioGroup" type="Node" parent="."]
+
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
+bus = &"Sfx"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(1.6, 1.6)
+rect = Rect2(-19.999998, -19.999998, 39.999996, 39.999996)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="."]
+script = ExtResource("4_31s3v")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletGravShock.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+texture = ExtResource("5_e2ltk")
+hframes = 8
+vframes = 6
+script = ExtResource("6_gedtp")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

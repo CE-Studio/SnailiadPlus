@@ -61,6 +61,8 @@ var force_face_x:int
 var force_face_y:int
 var grav_shock_state:int
 var grav_shock_timer:float
+var grav_shock_charge:Particle
+var grav_shock_bullet:PlayerBullet
 var time_since_shell:float
 var box_difference:float
 var box_adjust:Array = [
@@ -405,7 +407,8 @@ func _physics_process(delta:float) -> void:
 	else:
 		read_i_speed = Statics.get_shell_level()
 		read_i_jump = read_i_speed + (4 if Statics.check_item(Item.ItemTypes.HIGH_JUMP) else 0)
-		_grav_jump()
+		if grav_shock_state <= 0:
+			_grav_jump()
 		match gravity_dir:
 			Statics.DirsSurface.FLOOR:
 				_case_down(delta)
@@ -583,6 +586,50 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			]
 	last_rel_vel = rel_vel
 	#endregion
+
+	# Before any actual movement happens, we want to check for and process any active
+	# Gravity Shock state. We do this first because Gravity Shock being active cancels
+	# the rest of player movement
+
+	if grav_shock_state > 0:
+		# State 1 means we're in the initial pullback stage
+		# The player is still vulnerable in this state and can be damage out of the charge-up
+		if grav_shock_state == 1:
+			rel_vel = Vector2(0.0, -8.0)
+			var max_time:float = grav_shock_charge_time
+			if Statics.check_item(Item.ItemTypes.RAPID_FIRE):
+				max_time *= grav_shock_charge_mult
+			if grav_shock_timer >= max_time:
+				grav_shock_state = 2
+				if grav_shock_charge:
+					grav_shock_charge.queue_free()
+					grav_shock_charge = null
+				grav_shock_bullet = _shoot_grav_shock()
+				rel_vel = Vector2.ZERO
+		# State 2 means we've successfully fired
+		elif grav_shock_state == 2:
+			#rel_vel.y = grav_shock_speed * delta
+			rel_vel = Vector2(
+				rel_axis.x * grav_shock_steering,
+				grav_shock_speed
+			)
+		
+		match surface:
+			Statics.DirsSurface.FLOOR:
+				body.velocity = rel_vel
+			Statics.DirsSurface.LWALL:
+				body.velocity = Vector2(-rel_vel.y, rel_vel.x)
+			Statics.DirsSurface.RWALL:
+				body.velocity = Vector2(rel_vel.y, -rel_vel.x)
+			Statics.DirsSurface.CEILING:
+				body.velocity = -rel_vel
+		body.move_and_slide()
+		position = body.position
+		if body.is_on_floor() and grav_shock_state == 2:
+			grav_shock_bullet.despawn()
+			grav_shock_bullet = null
+			grav_shock_state = 0
+		return
 
 	# The way physics process works, we want to move as little and as late as possible
 	# Therefore, all checks should take place before actual movement, so as to keep things
@@ -843,23 +890,26 @@ func _full_jump() -> float:
 func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> void:
 	if target_dir == Statics.DirsSurface.NONE:
 		target_dir = _check_can_grav_jump()
-	if target_dir != Statics.DirsSurface.NONE and target_dir != gravity_dir:
-		var is_opp = target_dir == _get_dir_opposite(gravity_dir)
-		if grounded and not is_opp:
-			_push_from_wall()
-		_set_direction(target_dir, not facing_left if is_opp else facing_left, true)
-		grounded = false
-		sfx_jumpgrav.play()
-		jump_buffer_counter = jump_buffer
-		coyote_time_counter = coyote_time
-		if shelled:
-			_play_anim("shell")
-		else:
-			current_state = AnimStates.JUMP
-			_play_anim("jump")
-		Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
-		just_flipped = true
-		UICore.instance.cam.reset_new_follow()
+	if target_dir != Statics.DirsSurface.NONE:
+		if target_dir == gravity_dir and _check_ability(can_gravity_shock):
+			grav_shock_state = 1
+		elif target_dir != gravity_dir:
+			var is_opp = target_dir == _get_dir_opposite(gravity_dir)
+			if grounded and not is_opp:
+				_push_from_wall()
+			_set_direction(target_dir, not facing_left if is_opp else facing_left, true)
+			grounded = false
+			sfx_jumpgrav.play()
+			jump_buffer_counter = jump_buffer
+			coyote_time_counter = coyote_time
+			if shelled:
+				_play_anim("shell")
+			else:
+				current_state = AnimStates.JUMP
+				_play_anim("jump")
+			Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
+			just_flipped = true
+			UICore.instance.cam.reset_new_follow()
 
 
 func _check_can_grav_jump() -> Statics.DirsSurface:
@@ -1397,6 +1447,10 @@ func _on_respawn_timeout() -> void:
 	UICore.instance.clear_boss_bar()
 	adjust_health(999999)
 	stun_timer = MAX_STUN_TIMER
+	grav_shock_state = 0
+	if grav_shock_bullet:
+		grav_shock_bullet.despawn()
+	_set_direction(default_gravity, false)
 	reset_position(Statics.load_coords)
 	set_deferred("override_box_disable", false)
 #endregion
@@ -1419,7 +1473,10 @@ func _toggle_weapon(id:int) -> void:
 func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
 	var bullet_type:String = ""
 	#region Determine bullet type
-	if Statics.stack_weapons:
+	if _bullet_id < 0:
+		match _bullet_id:
+			-1: bullet_type = "GravShock"
+	elif Statics.stack_weapons:
 		if _bullet_id & 1 > 0:
 			bullet_type += "A"
 		if _bullet_id & 2 > 0:
@@ -1438,9 +1495,7 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 		elif _bullet_id == 1:
 			bullet_type = "A"
 	#endregion
-	#if Statics.check_item(Item.ItemTypes.DEVASTATOR):
-	#	bullet_type += "Power"
-	var bullet_scene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
+	var bullet_scene:PackedScene = load("res://Scenes/Entities/Bullets/Player/PlayerBullet" + bullet_type + ".tscn")
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(new_bullet)
 	new_bullet.position = pos
@@ -1452,6 +1507,21 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 		rapid_mult = 2.0
 	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult, powered)
 	return this_cooldown
+
+
+func _shoot_grav_shock() -> PlayerBullet:
+	var bullet_scene:PackedScene = load("res://Scenes/Entities/Bullets/Player/PlayerBulletGravShock.tscn")
+	var new_bullet:PlayerBullet = bullet_scene.instantiate()
+	var vel:Vector2
+	match gravity_dir:
+		Statics.DirsSurface.LWALL: vel = Vector2.LEFT
+		Statics.DirsSurface.RWALL: vel = Vector2.RIGHT
+		Statics.DirsSurface.CEILING: vel = Vector2.UP
+		_: vel = Vector2.DOWN
+	var powered = Statics.check_item(Item.ItemTypes.METAL_SHELL)
+	add_child(new_bullet)
+	new_bullet._spawn(vel, false, powered)
+	return new_bullet
 #endregion
 
 

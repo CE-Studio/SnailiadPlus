@@ -1,0 +1,103 @@
+{
+	"tiles": [8, 6],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"D_blue": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+			]
+		},
+		"U_blue": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, true],
+				[1, 0, false, true],
+				[2, 0, false, true],
+				[3, 0, false, true],
+			]
+		},
+		"L_blue": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[4, 0, true, false],
+				[5, 0, true, false],
+				[6, 0, true, false],
+				[7, 0, true, false],
+			]
+		},
+		"R_blue": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+				[7, 0, false, false],
+			]
+		},
+		"D_pink": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[2, 1, false, false],
+				[3, 1, false, false],
+			]
+		},
+		"U_pink": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, true],
+				[1, 1, false, true],
+				[2, 1, false, true],
+				[3, 1, false, true],
+			]
+		},
+		"L_pink": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[4, 1, true, false],
+				[5, 1, true, false],
+				[6, 1, true, false],
+				[7, 1, true, false],
+			]
+		},
+		"R_pink": {
+			"fps": 12,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[4, 1, false, false],
+				[5, 1, false, false],
+				[6, 1, false, false],
+				[7, 1, false, false],
+			]
+		},
+	}
+}
