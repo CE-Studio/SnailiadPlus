@@ -102,6 +102,14 @@ func _ready() -> void:
 		get_tree().call_deferred("change_scene_to_file", "res://Scenes/PreloadScene.tscn")
 	if UICore.instance:
 		UICore.instance.darkness_layer.call_deferred("update_col", darkness_level)
+	var ar:Array[CutsceneControllable] = get_actors()
+	var iar:Array[StringName]
+	for i in ar:
+		if i.identifier in iar:
+			push_error("Multiple actors are using the ID \"", i.identifier, "\"")
+		else:
+			iar.append(i.identifier)
+	CutsceneControllable.actors = ar
 
 
 func spawn(_spawn_all:bool) -> void:
@@ -189,7 +197,6 @@ func center_maps() -> void:
 
 
 func get_actors() -> Array[CutsceneControllable]:
-	assert(Engine.is_editor_hint(), "Only intended to be used in the editor")
 	var arr:Array[CutsceneControllable] = []
 	_recur_extr(arr, self)
 	return arr

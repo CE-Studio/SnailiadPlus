@@ -10,17 +10,6 @@ extends Node2D
 static var actors:Array[CutsceneControllable] = []
 
 
-func _ready():
-	var nr:Array[CutsceneControllable] = []
-	for i in actors:
-		if is_instance_valid(i):
-			nr.append(i)
-	actors = nr
-	for i in actors:
-		assert(not i.identifier == identifier, str(get_path()) + ": Identifier conflict! (" + identifier + ")")
-	actors.append(self)
-
-
 func is_in_top_half_of_screen() -> bool:
 	return Input.is_action_pressed(&"debug")
 

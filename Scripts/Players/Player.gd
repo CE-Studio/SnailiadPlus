@@ -274,7 +274,6 @@ var debug_print_adjustments:bool = false
 # _ready() is called every time this script is instanced
 # It's used here to initialize certain variables and node references
 func _ready():
-	super()
 	instance = self
 	sprite = $"JsonSprite2D"
 	body = $"CharacterBody2D"
