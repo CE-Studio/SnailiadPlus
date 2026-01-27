@@ -1,0 +1,455 @@
+{
+	"tiles": [12, 12],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"snaily.down.normal.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[-1, -1, false, false],
+				[4, 0, false, false],
+				[-1, -1, false, false],
+				[8, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.normal.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[-1, -1, false, false],
+				[5, 0, false, false],
+				[-1, -1, false, false],
+				[9, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.normal.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[-1, -1, false, false],
+				[6, 0, false, false],
+				[-1, -1, false, false],
+				[10, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.normal.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[-1, -1, false, false],
+				[7, 0, false, false],
+				[-1, -1, false, false],
+				[11, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.power.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false],
+				[-1, -1, false, false],
+				[4, 1, false, false],
+				[-1, -1, false, false],
+				[8, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.power.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false],
+				[-1, -1, false, false],
+				[5, 1, false, false],
+				[-1, -1, false, false],
+				[9, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.power.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false],
+				[-1, -1, false, false],
+				[6, 1, false, false],
+				[-1, -1, false, false],
+				[10, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.down.power.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false],
+				[-1, -1, false, false],
+				[7, 1, false, false],
+				[-1, -1, false, false],
+				[11, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.normal.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[-1, -1, false, false],
+				[4, 0, false, false],
+				[-1, -1, false, false],
+				[8, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.normal.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[-1, -1, false, false],
+				[5, 0, false, false],
+				[-1, -1, false, false],
+				[9, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.normal.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[-1, -1, false, false],
+				[6, 0, false, false],
+				[-1, -1, false, false],
+				[10, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.normal.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[-1, -1, false, false],
+				[7, 0, false, false],
+				[-1, -1, false, false],
+				[11, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.power.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false],
+				[-1, -1, false, false],
+				[4, 1, false, false],
+				[-1, -1, false, false],
+				[8, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.power.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false],
+				[-1, -1, false, false],
+				[5, 1, false, false],
+				[-1, -1, false, false],
+				[9, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.power.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false],
+				[-1, -1, false, false],
+				[6, 1, false, false],
+				[-1, -1, false, false],
+				[10, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.left.power.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false],
+				[-1, -1, false, false],
+				[7, 1, false, false],
+				[-1, -1, false, false],
+				[11, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.normal.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[-1, -1, false, false],
+				[4, 0, false, false],
+				[-1, -1, false, false],
+				[8, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.normal.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[-1, -1, false, false],
+				[5, 0, false, false],
+				[-1, -1, false, false],
+				[9, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.normal.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[-1, -1, false, false],
+				[6, 0, false, false],
+				[-1, -1, false, false],
+				[10, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.normal.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[-1, -1, false, false],
+				[7, 0, false, false],
+				[-1, -1, false, false],
+				[11, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.power.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false],
+				[-1, -1, false, false],
+				[4, 1, false, false],
+				[-1, -1, false, false],
+				[8, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.power.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false],
+				[-1, -1, false, false],
+				[5, 1, false, false],
+				[-1, -1, false, false],
+				[9, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.power.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false],
+				[-1, -1, false, false],
+				[6, 1, false, false],
+				[-1, -1, false, false],
+				[10, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.right.power.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false],
+				[-1, -1, false, false],
+				[7, 1, false, false],
+				[-1, -1, false, false],
+				[11, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.normal.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false],
+				[-1, -1, false, false],
+				[4, 0, false, false],
+				[-1, -1, false, false],
+				[8, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.normal.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false],
+				[-1, -1, false, false],
+				[5, 0, false, false],
+				[-1, -1, false, false],
+				[9, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.normal.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false],
+				[-1, -1, false, false],
+				[6, 0, false, false],
+				[-1, -1, false, false],
+				[10, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.normal.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false],
+				[-1, -1, false, false],
+				[7, 0, false, false],
+				[-1, -1, false, false],
+				[11, 0, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.power.0": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false],
+				[-1, -1, false, false],
+				[4, 1, false, false],
+				[-1, -1, false, false],
+				[8, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.power.1": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false],
+				[-1, -1, false, false],
+				[5, 1, false, false],
+				[-1, -1, false, false],
+				[9, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.power.2": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false],
+				[-1, -1, false, false],
+				[6, 1, false, false],
+				[-1, -1, false, false],
+				[10, 1, false, false],
+				[-1, -1, false, false],
+			]
+		},
+		"snaily.up.power.3": {
+			"fps": 16,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false],
+				[-1, -1, false, false],
+				[7, 1, false, false],
+				[-1, -1, false, false],
+				[11, 1, false, false],
+				[-1, -1, false, false],
+			]
+		}
+	}
+}

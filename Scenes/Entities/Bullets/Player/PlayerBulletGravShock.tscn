@@ -12,7 +12,7 @@ size = Vector2(48, 48)
 size = Vector2(64, 64)
 
 [node name="PlayerBulletGravShock" type="Node2D"]
-z_index = -1
+z_index = 150
 script = ExtResource("1_fu0lx")
 type = 14
 damage = 30

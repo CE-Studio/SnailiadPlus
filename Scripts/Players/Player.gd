@@ -11,6 +11,8 @@ extends CutsceneControllable
 const MAX_STUN_TIMER:float = 1.0
 const RESPAWN_INVIN_TIMER:float = 0.25
 const MOVE_STEPS:int = 4
+const GRAV_SHOCK_ANIM_STEPS:int = 4
+const SEC_PER_SHOCK_STEP:float = 0.04
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -81,6 +83,8 @@ var force_full_jump:bool = false
 var shell_level_displayed:int = 0
 var set_home_on_any_flip:bool = true
 var suppress_retain_gravity:bool = false
+var grav_shock_anim_time:float = 0.0
+var grav_shock_anim_step:int = 0
 #endregion
 
 
@@ -249,6 +253,8 @@ var sfx_hurt:AudioStreamPlayer
 var sfx_ping:AudioStreamPlayer
 var sfx_parry:AudioStreamPlayer
 var sfx_death:AudioStreamPlayer
+var sfx_shockcharge:AudioStreamPlayer
+var sfx_shocklaunch:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array[RayCast2D]
@@ -284,6 +290,8 @@ func _ready():
 	sfx_ping = $"AudioGroup/Ping"
 	sfx_parry = $"AudioGroup/Parry"
 	sfx_death = $"AudioGroup/Die"
+	sfx_shockcharge = $"AudioGroup/ShockCharge"
+	sfx_shocklaunch = $"AudioGroup/ShockLaunch"
 	cast_group = $"CastGroup"
 	timer_die_fade = $"TimerGroup/DieFadeDelay"
 	timer_die_respawn = $"TimerGroup/RespawnDelay"
@@ -463,7 +471,8 @@ func _physics_process(delta:float) -> void:
 		stun_timer -= delta
 		if stun_timer <= 0:
 			stunned = false
-			sprite.visible = true
+			if grav_shock_state != 2:
+				sprite.visible = true
 
 	if shield_particle:
 		var shield_offset := Vector2(
@@ -479,7 +488,7 @@ func reset_position(pos:Vector2) -> void:
 	sprite.position = Vector2.ZERO
 	in_death_cutscene = false
 	fire_cooldown = 0.0
-	_play_anim("idle")
+	#_play_anim("idle")
 
 
 # The floor case for player movement
@@ -605,14 +614,20 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 					grav_shock_charge.queue_free()
 					grav_shock_charge = null
 				grav_shock_bullet = _shoot_grav_shock()
+				sfx_shocklaunch.play()
 				rel_vel = Vector2.ZERO
 		# State 2 means we've successfully fired
 		elif grav_shock_state == 2:
-			#rel_vel.y = grav_shock_speed * delta
+			sprite.visible = false
 			rel_vel = Vector2(
 				rel_axis.x * grav_shock_steering,
 				grav_shock_speed
 			)
+			Statics.spawn_particle.call_deferred("GravShockBody", Room.Layers.GROUND, position, [grav_shock_anim_step])
+			grav_shock_anim_time += delta
+			while grav_shock_anim_time > SEC_PER_SHOCK_STEP:
+				grav_shock_anim_time -= SEC_PER_SHOCK_STEP
+				grav_shock_anim_step = (grav_shock_anim_step + 1) % GRAV_SHOCK_ANIM_STEPS
 		
 		match surface:
 			Statics.DirsSurface.FLOOR:
@@ -625,10 +640,14 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				body.velocity = -rel_vel
 		body.move_and_slide()
 		position = body.position
+		if grav_shock_charge:
+			grav_shock_charge.position = position
 		if body.is_on_floor() and grav_shock_state == 2:
 			grav_shock_bullet.despawn()
 			grav_shock_bullet = null
 			grav_shock_state = 0
+			sprite.visible = true
+			_play_anim("idle")
 		return
 
 	# The way physics process works, we want to move as little and as late as possible
@@ -893,6 +912,11 @@ func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> vo
 	if target_dir != Statics.DirsSurface.NONE:
 		if target_dir == gravity_dir and _check_ability(can_gravity_shock):
 			grav_shock_state = 1
+			if shelled:
+				_set_shell(false)
+			_play_anim("shock")
+			sfx_shockcharge.play()
+			grav_shock_charge = Statics.spawn_particle("GravShockCharge", Room.Layers.GROUND, position)
 		elif target_dir != gravity_dir:
 			var is_opp = target_dir == _get_dir_opposite(gravity_dir)
 			if grounded and not is_opp:
@@ -1381,9 +1405,17 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 		return
 
 	var shielded:bool = false
-	if amount < 0 and shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
-		amount = 0
-		shielded = true
+	if amount < 0:
+		if grav_shock_state == 1:
+			grav_shock_state = 0
+			if grav_shock_charge:
+				grav_shock_charge.queue_free()
+				grav_shock_charge = null
+		elif grav_shock_state == 2:
+			return
+		elif shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
+			amount = 0
+			shielded = true
 	health += amount
 	health = clampi(health, 0, max_health)
 	UICore.instance.update_hearts()
