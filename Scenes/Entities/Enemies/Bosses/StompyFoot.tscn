@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0k5iw8d1ap4w"]
+[gd_scene format=3 uid="uid://b0k5iw8d1ap4w"]
 
 [ext_resource type="Script" uid="uid://drn740vie8qti" path="res://Scripts/Enemies/Bosses/StompyFoot.gd" id="1_7uoty"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_5weyn"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bo5u8y4rqbe8k" path="res://Assets/Images/Entities/Boss2Foot.png" id="3_hia21"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0e6jo"]
 
-[node name="StompyFoot" type="CharacterBody2D"]
+[node name="StompyFoot" type="CharacterBody2D" unique_id=1583831825]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_7uoty")
@@ -18,24 +18,24 @@ kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String]([])
 kill_particle_count = 0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=280597873]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionPolygon2D" parent="Area2D"]
+[node name="HitBox" type="CollisionPolygon2D" parent="Area2D" unique_id=404975767]
 polygon = PackedVector2Array(-95, 78, 95, 78, 95, 34, -23, 34, -23, -78, -95, -78)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2026575354]
 scale = Vector2(2.4, 2.4)
 rect = Rect2(-36.666664, -30, 73.33333, 60)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1979592914]
 material = ExtResource("2_ibw0l")
 script = ExtResource("2_5weyn")
 texture_path = "res://Assets/Images/Entities/Boss2Foot.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1993672181]
 texture = ExtResource("3_hia21")
 hframes = 2
 script = ExtResource("4_0e6jo")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bod3nsu7mn3sh"]
+[gd_scene format=3 uid="uid://bod3nsu7mn3sh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_na4dm"]
 [ext_resource type="Script" uid="uid://bwe1tdvd8wgkg" path="res://Scripts/MovingPlatform.gd" id="1_v67sg"]
@@ -66,23 +66,23 @@ _data = {
 &"RESET": SubResource("Animation_5hvxo")
 }
 
-[node name="MovingPlatform" type="Node2D"]
+[node name="MovingPlatform" type="Node2D" unique_id=1641902085]
 script = ExtResource("1_v67sg")
 
-[node name="PlatBody" type="AnimatableBody2D" parent="."]
+[node name="PlatBody" type="AnimatableBody2D" parent="." unique_id=1710398524]
 collision_layer = 3
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatBody" unique_id=355837955]
 shape = SubResource("RectangleShape2D_5c5c1")
 debug_color = Color(1, 1, 1, 0.41960785)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="PlatBody"]
+[node name="JsonSprite2D" type="Sprite2D" parent="PlatBody" unique_id=785494069]
 script = ExtResource("1_na4dm")
 texture_path = "res://Assets/Images/Entities/Platform.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="PlatBody/JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="PlatBody/JsonSprite2D" unique_id=843947061]
 texture = ExtResource("2_v67sg")
 hframes = 2
 vframes = 4
@@ -90,7 +90,5 @@ frame = 2
 script = ExtResource("3_5hvxo")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_5c5c1")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1940180597]
+libraries/ = SubResource("AnimationLibrary_5c5c1")

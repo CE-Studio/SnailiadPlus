@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccfhxln12xn5"]
+[gd_scene format=3 uid="uid://ccfhxln12xn5"]
 
 [ext_resource type="Script" uid="uid://227t0ox5assx" path="res://Scripts/Enemies/Iceball.gd" id="1_70sqt"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_6kgun"]
@@ -17,7 +17,7 @@ size = Vector2(14, 14)
 shader = ExtResource("4_xpm8o")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Iceball" type="CharacterBody2D"]
+[node name="Iceball" type="CharacterBody2D" unique_id=658087331]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -28,62 +28,62 @@ defense = 25
 light_radius = 40
 my_element = 0
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=159628245]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_43bce")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1091527746]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1813272039]
 shape = SubResource("RectangleShape2D_6ijum")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2074235265]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=56578532]
 material = ExtResource("2_6kgun")
 script = ExtResource("3_ydo0v")
 texture_path = "res://Assets/Images/Entities/Fireball2.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=8229209]
 material = SubResource("ShaderMaterial_43bce")
 texture = ExtResource("5_70sqt")
 hframes = 4
 script = ExtResource("6_xc2qc")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="CastGroup" type="Node2D" parent="."]
+[node name="CastGroup" type="Node2D" parent="." unique_id=215996527]
 
-[node name="CWCheck" type="RayCast2D" parent="CastGroup"]
+[node name="CWCheck" type="RayCast2D" parent="CastGroup" unique_id=170146698]
 position = Vector2(-9, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CWBack" type="RayCast2D" parent="CastGroup"]
+[node name="CWBack" type="RayCast2D" parent="CastGroup" unique_id=1184742116]
 position = Vector2(8, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CCWCheck" type="RayCast2D" parent="CastGroup"]
+[node name="CCWCheck" type="RayCast2D" parent="CastGroup" unique_id=1758076375]
 position = Vector2(9, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CCWBack" type="RayCast2D" parent="CastGroup"]
+[node name="CCWBack" type="RayCast2D" parent="CastGroup" unique_id=1907100341]
 position = Vector2(-8, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="Center" type="RayCast2D" parent="CastGroup"]
+[node name="Center" type="RayCast2D" parent="CastGroup" unique_id=985397179]
 position = Vector2(0, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3

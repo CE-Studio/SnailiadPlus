@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://c2jiouympoi7d"]
+[gd_resource type="VisualShader" format=3 uid="uid://c2jiouympoi7d"]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_b0c6m"]
 input_name = "screen_uv"
@@ -23,64 +23,6 @@ parameter_name = "fade"
 hint = 1
 
 [resource]
-code = "shader_type canvas_item;
-render_mode blend_mix;
-
-uniform float fade : hint_range(0.0, 1.0);
-
-
-
-void fragment() {
-// Input:5
-	vec4 n_out5p0 = COLOR;
-
-
-// Input:2
-	vec2 n_out2p0 = SCREEN_UV;
-
-
-// VectorDecompose:4
-	float n_out4p0 = n_out2p0.x;
-	float n_out4p1 = n_out2p0.y;
-
-
-// FloatParameter:7
-	float n_out7p0 = fade;
-
-
-// VectorDecompose:6
-	float n_out6p0 = n_out5p0.x;
-	float n_out6p1 = n_out5p0.y;
-	float n_out6p2 = n_out5p0.z;
-	float n_out6p3 = n_out5p0.w;
-
-
-	vec3 n_out3p0;
-// If:3
-	float n_in3p2 = 0.00001;
-	vec3 n_in3p3 = vec3(0.00000, 0.00000, 0.00000);
-	vec3 n_in3p4 = vec3(0.00000, 0.00000, 0.00000);
-	if(abs(n_out4p1 - n_out7p0) < n_in3p2)
-	{
-		n_out3p0 = n_in3p3;
-	}
-	else if(n_out4p1 < n_out7p0)
-	{
-		n_out3p0 = vec3(n_out6p3);
-	}
-	else
-	{
-		n_out3p0 = n_in3p4;
-	}
-
-
-// Output:0
-	COLOR.rgb = vec3(n_out5p0.xyz);
-	COLOR.a = n_out3p0.x;
-
-
-}
-"
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(460, 160)

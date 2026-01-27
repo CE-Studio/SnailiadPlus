@@ -1,25 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj2rh6le58mwc"]
+[gd_scene format=3 uid="uid://cj2rh6le58mwc"]
 
-[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_vq8lx"]
+[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_vq8lx"]
 [ext_resource type="Texture2D" uid="uid://delm72qbdpn8e" path="res://Assets/Images/Particles/Dust.png" id="2_vq8lx"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vqwiu"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_4m343"]
 
-[node name="Dust" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Dust" type="Node2D" unique_id=1375726150 node_paths=PackedStringArray("sprite")]
 z_index = 215
 script = ExtResource("1_vq8lx")
 sprite = NodePath("JsonSprite2D")
 anim_name = "normal"
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1199283378]
 texture = ExtResource("2_vq8lx")
 hframes = 2
 vframes = 4
 script = ExtResource("3_vqwiu")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=592211498]
 script = ExtResource("4_4m343")
 texture_path = "res://Assets/Images/Particles/Dust.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

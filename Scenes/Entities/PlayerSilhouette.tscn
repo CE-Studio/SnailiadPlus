@@ -1,15 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://hk36as37xl0f"]
+[gd_scene format=3 uid="uid://hk36as37xl0f"]
 
 [ext_resource type="Script" uid="uid://cwc8rklj8vvii" path="res://Scripts/PlayerSilhouette.gd" id="1_wqjpd"]
 [ext_resource type="Texture2D" uid="uid://brv00uu770se5" path="res://Assets/Images/Players/Snaily.png" id="2_wqjpd"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_qnvb6"]
 
-[node name="PlayerSilhouette" type="Sprite2D"]
+[node name="PlayerSilhouette" type="Sprite2D" unique_id=1758983127]
 self_modulate = Color(0, 0, 0, 0.39215687)
 script = ExtResource("1_wqjpd")
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=178737998]
 self_modulate = Color(0, 0, 0, 0.39215687)
 texture = ExtResource("2_wqjpd")
 hframes = 12

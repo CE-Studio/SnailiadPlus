@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://dbtbq5hs1dmxo"]
+[gd_resource type="Theme" format=3 uid="uid://dbtbq5hs1dmxo"]
 
 [ext_resource type="Texture2D" uid="uid://bwghusmdaislc" path="res://Assets/Images/UI/ButtonDisabled.png" id="1_1wa7t"]
 [ext_resource type="FontFile" uid="uid://bo28bqj6d1u8m" path="res://Resources/SnailplanesExtended.ttf" id="2_gcu3v"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cudp1y80hdc5x"]
+[gd_scene format=3 uid="uid://cudp1y80hdc5x"]
 
 [ext_resource type="Script" uid="uid://elnjdf7pixyq" path="res://Scripts/Item.gd" id="1_foglj"]
 [ext_resource type="Texture2D" uid="uid://yoxnifvxoo04" path="res://Assets/Images/Items/ItemBoundaryVisual.png" id="2_qdhsi"]
@@ -7,23 +7,23 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdhsi"]
 size = Vector2(28, 28)
 
-[node name="Item" type="Node2D"]
+[node name="Item" type="Node2D" unique_id=1822403756]
 z_index = 10
 script = ExtResource("1_foglj")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=367415497]
 texture = ExtResource("2_qdhsi")
 script = ExtResource("3_ip5fe")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1790700486]
 collision_layer = 16
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1414694511]
 shape = SubResource("RectangleShape2D_qdhsi")
 
-[node name="CollectTimer" type="Timer" parent="."]
+[node name="CollectTimer" type="Timer" parent="." unique_id=1325347895]
 wait_time = 2.0
 one_shot = true
 

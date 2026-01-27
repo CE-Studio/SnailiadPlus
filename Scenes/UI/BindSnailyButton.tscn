@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://3mo5lvbvrnk3"]
+[gd_scene format=3 uid="uid://3mo5lvbvrnk3"]
 
 [ext_resource type="Script" uid="uid://jtdmrr03mk6n" path="res://Scripts/Classes/MenuButtons/BindSnailyButton.gd" id="1_8mtia"]
 [ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="2_8mtia"]
@@ -10,7 +10,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atxd7"]
 
-[node name="BindSnailyButton" type="PanelContainer"]
+[node name="BindSnailyButton" type="PanelContainer" unique_id=248408379]
 offset_right = 96.0
 offset_bottom = 22.0
 size_flags_horizontal = 4
@@ -19,31 +19,31 @@ focus_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3lbwi")
 script = ExtResource("1_8mtia")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=116928099]
 custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_atxd7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=1818572818]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Label" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+[node name="Label" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=1687014473]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("2_8mtia")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/Label"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/Label" unique_id=2024483972]
 layout_mode = 2
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="PanelContainer/HBoxContainer/Label/MarginContainer" instance=ExtResource("3_atxd7")]
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/Label/MarginContainer" unique_id=650392695 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(46, 0)
 layout_mode = 2
 text = "left"
@@ -51,25 +51,25 @@ scroll_active = true
 autowrap_mode = 0
 shadow_scale = 1
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/HBoxContainer" unique_id=1446189164]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="PriKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+[node name="PriKey" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=196501149]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("2_8mtia")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriKey"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriKey" unique_id=420266533]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" instance=ExtResource("3_atxd7")]
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" unique_id=697217096 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/Z.png[/img]"
@@ -78,21 +78,21 @@ autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
 
-[node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+[node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=1827876995]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("2_8mtia")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecKey"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecKey" unique_id=1536471606]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" instance=ExtResource("3_atxd7")]
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" unique_id=50223746 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/K.png[/img]"
@@ -101,21 +101,21 @@ autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
 
-[node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+[node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=988242342]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("2_8mtia")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriCon"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/PriCon" unique_id=2139272176]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" instance=ExtResource("3_atxd7")]
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" unique_id=1367704339 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img]"
@@ -124,21 +124,21 @@ autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
 
-[node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+[node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=671384923]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("2_8mtia")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecCon"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/SecCon" unique_id=702826301]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" instance=ExtResource("3_atxd7")]
+[node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" unique_id=1542517347 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
 text = "[img]res://Assets/Images/UI/ControlIcons/R1.png[/img]"
@@ -147,13 +147,13 @@ autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=43394940]
 
-[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup" unique_id=265048834]
 stream = ExtResource("5_s1r4d")
 bus = &"Sfx"
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=403534848]
 stream = ExtResource("6_vi03d")
 bus = &"Sfx"
 

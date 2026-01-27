@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://brx6hvienl8qy"]
+[gd_scene format=3 uid="uid://brx6hvienl8qy"]
 
 [ext_resource type="Script" uid="uid://d0tkoc84o7fdc" path="res://Scripts/Door.gd" id="1_yyb1i"]
 [ext_resource type="Texture2D" uid="uid://bnoc5snsu6wge" path="res://Assets/Images/Entities/Door.png" id="2_8i1hx"]
@@ -11,51 +11,51 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5rp22"]
 size = Vector2(16, 48)
 
-[node name="Door" type="Node2D"]
+[node name="Door" type="Node2D" unique_id=1487118064]
 script = ExtResource("1_yyb1i")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1806753399]
 rect = Rect2(-24, -24, 48, 48)
 
-[node name="BoxGroup" type="Node2D" parent="."]
+[node name="BoxGroup" type="Node2D" parent="." unique_id=510204595]
 
-[node name="BulletBox" type="Area2D" parent="BoxGroup"]
+[node name="BulletBox" type="Area2D" parent="BoxGroup" unique_id=479149603]
 collision_layer = 16
 collision_mask = 33
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/BulletBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/BulletBox" unique_id=1645188247]
 shape = SubResource("RectangleShape2D_5rp22")
 
-[node name="SolidBox" type="StaticBody2D" parent="BoxGroup"]
+[node name="SolidBox" type="StaticBody2D" parent="BoxGroup" unique_id=1093343832]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/SolidBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoxGroup/SolidBox" unique_id=58106364]
 shape = SubResource("RectangleShape2D_5rp22")
 disabled = true
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=457850982]
 script = ExtResource("2_gt038")
 texture_path = "res://Assets/Images/Entities/Door.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1123083120]
 texture = ExtResource("2_8i1hx")
 hframes = 18
 vframes = 5
 script = ExtResource("3_gt038")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=14534099]
 
-[node name="Open" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Open" type="AudioStreamPlayer" parent="AudioGroup" unique_id=780748372]
 stream = ExtResource("5_s521q")
 bus = &"Sfx"
 
-[node name="Close" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Close" type="AudioStreamPlayer" parent="AudioGroup" unique_id=2140445767]
 stream = ExtResource("6_3w6cd")
 bus = &"Sfx"
 
-[node name="Ping" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Ping" type="AudioStreamPlayer" parent="AudioGroup" unique_id=256534434]
 stream = ExtResource("7_p6ia1")
 bus = &"Sfx"
 

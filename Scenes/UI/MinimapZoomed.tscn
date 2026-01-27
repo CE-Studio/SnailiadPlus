@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1u1t0hvg2fob"]
+[gd_scene format=3 uid="uid://b1u1t0hvg2fob"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_a3qsn"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_lyu63"]
@@ -8,42 +8,42 @@
 [ext_resource type="Texture2D" uid="uid://b00si7wi86blt" path="res://Assets/Images/UI/MinimapIconsZoomed.png" id="5_wguc4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="7_iq3ic"]
 
-[node name="MinimapZoomed" type="Node2D"]
+[node name="MinimapZoomed" type="Node2D" unique_id=1431628628]
 script = ExtResource("1_n687f")
 
-[node name="BG" type="Sprite2D" parent="."]
+[node name="BG" type="Sprite2D" parent="." unique_id=1955870700]
 modulate = Color(0, 0, 0, 0.6666667)
 scale = Vector2(2, 2)
 texture = ExtResource("1_lyu63")
 
-[node name="MoveGroup" type="Node2D" parent="."]
+[node name="MoveGroup" type="Node2D" parent="." unique_id=1266186166]
 
-[node name="CellMask" type="Sprite2D" parent="MoveGroup"]
+[node name="CellMask" type="Sprite2D" parent="MoveGroup" unique_id=1705313669]
 clip_children = 1
 scale = Vector2(8, 8)
 
-[node name="Map" type="Sprite2D" parent="MoveGroup/CellMask"]
+[node name="Map" type="Sprite2D" parent="MoveGroup/CellMask" unique_id=1640318839]
 scale = Vector2(0.125, 0.125)
 script = ExtResource("1_a3qsn")
 texture_path = "res://Assets/Images/UI/MinimapZoomed.json"
 load_autoplay = Array[String](["subscreen"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/CellMask/Map"]
+[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/CellMask/Map" unique_id=935098993]
 texture = ExtResource("2_0n3sp")
 script = ExtResource("3_wguc4")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="MarkerGroup" type="Node2D" parent="MoveGroup"]
+[node name="MarkerGroup" type="Node2D" parent="MoveGroup" unique_id=1476701216]
 position = Vector2(-200, -168)
 
-[node name="PlayerMarker" type="Sprite2D" parent="MoveGroup"]
+[node name="PlayerMarker" type="Sprite2D" parent="MoveGroup" unique_id=813400959]
 script = ExtResource("1_a3qsn")
 texture_path = "res://Assets/Images/UI/MinimapIconsZoomed.json"
 load_autoplay = Array[String](["player_normal"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/PlayerMarker"]
+[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/PlayerMarker" unique_id=126161138]
 texture = ExtResource("5_wguc4")
 hframes = 6
 vframes = 2
@@ -51,7 +51,7 @@ frame = 2
 script = ExtResource("3_wguc4")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Controls" parent="." instance=ExtResource("7_iq3ic")]
+[node name="Controls" parent="." unique_id=1884031781 instance=ExtResource("7_iq3ic")]
 custom_minimum_size = Vector2(400, 0)
 offset_left = -198.0
 offset_top = 66.0

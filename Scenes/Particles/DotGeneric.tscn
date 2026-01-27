@@ -1,27 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://mci51t1gjv5b"]
+[gd_scene format=3 uid="uid://mci51t1gjv5b"]
 
 [ext_resource type="Script" uid="uid://cwqgnc6ee85t1" path="res://Scripts/Particles/DotGeneric.gd" id="1_dlbby"]
 [ext_resource type="Texture2D" uid="uid://bdpjsk8bgx3ib" path="res://Assets/Images/Particles/Dot.png" id="2_lh0v0"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_3qiiv"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_kecag"]
 
-[node name="DotGeneric" type="Node2D" node_paths=PackedStringArray("sprite", "timer")]
+[node name="DotGeneric" type="Node2D" unique_id=171062163 node_paths=PackedStringArray("sprite", "timer")]
 script = ExtResource("1_dlbby")
 sprite = NodePath("JsonSprite2D")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1439658985]
 texture = ExtResource("2_lh0v0")
 hframes = 4
 frame = 3
 script = ExtResource("3_3qiiv")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1866552921]
 script = ExtResource("4_kecag")
 texture_path = "res://Assets/Images/Particles/Dot.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=2138370153]
 wait_time = 0.8
 one_shot = true

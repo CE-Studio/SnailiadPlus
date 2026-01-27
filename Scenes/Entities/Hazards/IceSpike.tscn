@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b26tn7d2daaup"]
+[gd_scene format=3 uid="uid://b26tn7d2daaup"]
 
 [ext_resource type="Script" uid="uid://ceokqn6fpbmai" path="res://Scripts/Hazards/IceSpike.gd" id="1_li1xn"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_6j2gp"]
@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1k1m"]
 size = Vector2(16, 16)
 
-[node name="IceSpike" type="Area2D"]
+[node name="IceSpike" type="Area2D" unique_id=361646582]
 z_index = 25
 collision_layer = 8
 collision_mask = 4
@@ -16,15 +16,15 @@ script = ExtResource("1_li1xn")
 damage = 2
 element = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=953148995]
 shape = SubResource("RectangleShape2D_j1k1m")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=665568781]
 script = ExtResource("2_6j2gp")
 texture_path = "res://Assets/Images/Entities/IceSpike.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=100491240]
 texture = ExtResource("3_m5ayy")
 hframes = 5
 vframes = 2

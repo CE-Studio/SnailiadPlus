@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckorsdyiwbgow"]
+[gd_scene format=3 uid="uid://ckorsdyiwbgow"]
 
 [ext_resource type="Script" uid="uid://d24ostoyx12ou" path="res://Scripts/Breakable.gd" id="1_btjpg"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_5yyy2"]
@@ -8,29 +8,29 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_btjpg"]
 size = Vector2(16, 16)
 
-[node name="Breakable" type="Node2D"]
+[node name="Breakable" type="Node2D" unique_id=840600537]
 z_index = 1
 script = ExtResource("1_btjpg")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=118213334]
 collision_layer = 19
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2085101652]
 shape = SubResource("RectangleShape2D_btjpg")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1496482342]
 script = ExtResource("2_5yyy2")
 texture_path = "res://Assets/Images/Entities/BreakableIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=28232524]
 scale = Vector2(0.8, 0.8)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=63932753]
 rect = Rect2(-8, -8, 16, 16)
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1670093833]
 texture = ExtResource("3_xk0s4")
 script = ExtResource("4_2b18p")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

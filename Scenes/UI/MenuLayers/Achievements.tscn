@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://doje5txkym2iw"]
+[gd_scene format=3 uid="uid://doje5txkym2iw"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_6hqtr"]
 [ext_resource type="Script" uid="uid://cvlpcsjutsbmb" path="res://Scripts/UI/MenuLayers/Achievements.gd" id="2_7hqi4"]
@@ -6,26 +6,26 @@
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_rusrp"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="4_cshhb"]
 
-[node name="Achievements" type="Node2D"]
+[node name="Achievements" type="Node2D" unique_id=1065957483]
 script = ExtResource("1_6hqtr")
 
-[node name="IconGroup" type="Node2D" parent="."]
+[node name="IconGroup" type="Node2D" parent="." unique_id=2099060498]
 z_index = -1
 y_sort_enabled = true
 position = Vector2(200, 48)
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1563110484]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 62.0
 offset_right = 400.0
 offset_bottom = 212.0
 script = ExtResource("2_7hqi4")
 
-[node name="Counter" type="HBoxContainer" parent="MainVBox"]
+[node name="Counter" type="HBoxContainer" parent="MainVBox" unique_id=142321844]
 layout_mode = 2
 alignment = 1
 
-[node name="Text" parent="MainVBox/Counter" instance=ExtResource("4_cshhb")]
+[node name="Text" parent="MainVBox/Counter" unique_id=570653586 instance=ExtResource("4_cshhb")]
 custom_minimum_size = Vector2(380, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -34,11 +34,11 @@ text_scale = 1
 quick_load_text = "%d/%d unlocked"
 border_scale = 1
 
-[node name="HintGuide" type="HBoxContainer" parent="MainVBox"]
+[node name="HintGuide" type="HBoxContainer" parent="MainVBox" unique_id=814621153]
 layout_mode = 2
 alignment = 1
 
-[node name="Text" parent="MainVBox/HintGuide" instance=ExtResource("4_cshhb")]
+[node name="Text" parent="MainVBox/HintGuide" unique_id=733038516 instance=ExtResource("4_cshhb")]
 custom_minimum_size = Vector2(380, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -48,12 +48,12 @@ text_scale = 1
 quick_load_text = "bind__UI_ACCEPT - Show achievement hint"
 border_scale = 1
 
-[node name="HSeparatorTop" type="HSeparator" parent="MainVBox"]
+[node name="HSeparatorTop" type="HSeparator" parent="MainVBox" unique_id=605953320]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 68
 
-[node name="MainScroller" parent="MainVBox" instance=ExtResource("2_cshhb")]
+[node name="MainScroller" parent="MainVBox" unique_id=1510781671 instance=ExtResource("2_cshhb")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -67,11 +67,11 @@ auto_select_mode = true
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Description" type="HBoxContainer" parent="MainVBox"]
+[node name="Description" type="HBoxContainer" parent="MainVBox" unique_id=1890432340]
 layout_mode = 2
 alignment = 1
 
-[node name="Text" parent="MainVBox/Description" instance=ExtResource("4_cshhb")]
+[node name="Text" parent="MainVBox/Description" unique_id=2127571067 instance=ExtResource("4_cshhb")]
 custom_minimum_size = Vector2(380, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -80,12 +80,12 @@ text_scale = 1
 quick_load_text = "menu_option_achievements_locked_desc"
 border_scale = 1
 
-[node name="HSeparatorBottom" type="HSeparator" parent="MainVBox"]
+[node name="HSeparatorBottom" type="HSeparator" parent="MainVBox" unique_id=1295170467]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_rusrp")]
+[node name="Back" parent="MainVBox" unique_id=891230908 instance=ExtResource("2_rusrp")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

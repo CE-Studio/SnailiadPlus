@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4lwre5ij0y2k"]
+[gd_scene format=3 uid="uid://b4lwre5ij0y2k"]
 
 [ext_resource type="Script" uid="uid://dwf8prxoo6rmb" path="res://Scripts/Enemies/Skyviper.gd" id="1_dacsh"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4qjuh"]
@@ -24,7 +24,7 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("7_4qjuh")
 
-[node name="Skyviper" type="CharacterBody2D"]
+[node name="Skyviper" type="CharacterBody2D" unique_id=1754404888]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -36,35 +36,35 @@ defense = 10
 health_orb_value = 2
 kill_particle_range = Vector2i(12, 8)
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1042219054]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1136052249]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=683823479]
 shape = SubResource("RectangleShape2D_pfaec")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=142408735]
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-14.999998, -10, 29.999996, 20)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=238804307]
 material = ExtResource("2_4qjuh")
 script = ExtResource("3_3owy0")
 texture_path = "res://Assets/Images/Entities/Snake3.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=171232422]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("5_dacsh")
 vframes = 2
 script = ExtResource("6_e636f")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Move" type="AudioStreamPlayer" parent="."]
+[node name="Move" type="AudioStreamPlayer" parent="." unique_id=2054396274]
 stream = SubResource("AudioStreamRandomizer_3owy0")
 bus = &"Sfx"

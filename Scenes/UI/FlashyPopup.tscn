@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://cst46kauimrf6"]
+[gd_scene format=3 uid="uid://cst46kauimrf6"]
 
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="1_d1npl"]
 [ext_resource type="Script" uid="uid://csbmekkm0cwcc" path="res://Scripts/UI/FlashyPopup.gd" id="1_gw3v7"]
 
-[node name="FlashyPopup" type="Node2D"]
+[node name="FlashyPopup" type="Node2D" unique_id=354230684]
 script = ExtResource("1_gw3v7")
 
-[node name="SnailyText" parent="." instance=ExtResource("1_d1npl")]
+[node name="SnailyText" parent="." unique_id=570946645 instance=ExtResource("1_d1npl")]
 custom_minimum_size = Vector2(56, 0)
 offset_left = -28.0
 offset_top = -8.0

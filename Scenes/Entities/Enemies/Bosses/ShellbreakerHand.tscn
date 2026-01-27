@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjgywgga30eg1"]
+[gd_scene format=3 uid="uid://bjgywgga30eg1"]
 
 [ext_resource type="Script" uid="uid://pjdou48esmui" path="res://Scripts/Enemies/Bosses/ShellbreakerHand.gd" id="1_c3pwi"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_q7w5a"]
@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(24, 24)
 
-[node name="ShellbreakerHand" type="CharacterBody2D"]
+[node name="ShellbreakerHand" type="CharacterBody2D" unique_id=106042331]
 z_index = -1
 collision_layer = 0
 collision_mask = 0
@@ -19,29 +19,29 @@ defense = 1000
 make_sound_on_ping = false
 shield_entity = true
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1646517971]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=750220685]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=870810670]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1959203950]
 scale = Vector2(1.2, 1.2)
 
-[node name="HandGroup" type="Node2D" parent="."]
+[node name="HandGroup" type="Node2D" parent="." unique_id=553308781]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=688613725]
 script = ExtResource("2_q7w5a")
 texture_path = "res://Assets/Images/Entities/Boss1Hand.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Body"]
+[node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=144452456]
 texture = ExtResource("3_t5rnc")
 hframes = 3
 script = ExtResource("4_fb4ef")

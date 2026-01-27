@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgvs8pr1hn752"]
+[gd_scene format=3 uid="uid://cgvs8pr1hn752"]
 
 [ext_resource type="Script" uid="uid://jk6maf45ajin" path="res://Scripts/Hazards/Fire.gd" id="1_t0poj"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_7h38y"]
@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1k1m"]
 size = Vector2(16, 16)
 
-[node name="Fire" type="Area2D"]
+[node name="Fire" type="Area2D" unique_id=1698135851]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_t0poj")
@@ -16,17 +16,17 @@ damage = 4
 element = 1
 light_radius = 48
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1465172444]
 shape = SubResource("RectangleShape2D_j1k1m")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=870152583]
 z_index = 25
 script = ExtResource("2_7h38y")
 texture_path = "res://Assets/Images/Entities/Fire.json"
 load_autoplay = Array[String](["0", "1", "2", "3"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=41670903]
 texture = ExtResource("3_t0poj")
 hframes = 4
 script = ExtResource("4_kgmdq")

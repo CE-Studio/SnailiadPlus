@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://nkx3e8an1od7"]
+[gd_scene format=3 uid="uid://nkx3e8an1od7"]
 
 [ext_resource type="Script" uid="uid://bqkitle5uxf1r" path="res://Scripts/Classes/MenuButtons/HeaderlessScrollingSnailyButton.gd" id="1_3aiqj"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="2_1bw5m"]
@@ -17,7 +17,7 @@ region = Rect2(0, 0, 10, 16)
 atlas = ExtResource("3_w8nyp")
 region = Rect2(10, 0, 10, 16)
 
-[node name="HeaderlessScrollingSnailyButton" type="PanelContainer"]
+[node name="HeaderlessScrollingSnailyButton" type="PanelContainer" unique_id=1340122160]
 offset_right = 126.0
 offset_bottom = 22.0
 size_flags_horizontal = 4
@@ -26,48 +26,48 @@ focus_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rq7g3")
 script = ExtResource("1_3aiqj")
 
-[node name="Scroller" type="HBoxContainer" parent="."]
+[node name="Scroller" type="HBoxContainer" parent="." unique_id=1256773703]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Left" type="TextureRect" parent="Scroller"]
+[node name="Left" type="TextureRect" parent="Scroller" unique_id=758638601]
 layout_mode = 2
 texture = SubResource("AtlasTexture_rq7g3")
 stretch_mode = 3
 
-[node name="Frame" type="PanelContainer" parent="Scroller"]
+[node name="Frame" type="PanelContainer" parent="Scroller" unique_id=271907157]
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("4_21da7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Scroller/Frame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Scroller/Frame" unique_id=536602578]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="Scroller/Frame/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Scroller/Frame/HBoxContainer" unique_id=1968622706]
 layout_mode = 2
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="Scroller/Frame/HBoxContainer/MarginContainer" instance=ExtResource("2_1bw5m")]
+[node name="SnailyText" parent="Scroller/Frame/HBoxContainer/MarginContainer" unique_id=754332192 instance=ExtResource("2_1bw5m")]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 text = "Option"
 
-[node name="Right" type="TextureRect" parent="Scroller"]
+[node name="Right" type="TextureRect" parent="Scroller" unique_id=812159736]
 layout_mode = 2
 texture = SubResource("AtlasTexture_lckvt")
 stretch_mode = 3
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1111358506]
 
-[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup" unique_id=744395009]
 stream = ExtResource("5_ncoym")
 bus = &"Sfx"
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=424122749]
 stream = ExtResource("6_3vfb5")
 bus = &"Sfx"
 

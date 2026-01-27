@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b46jr7gaavci4"]
+[gd_scene format=3 uid="uid://b46jr7gaavci4"]
 
 [ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_dx4bq"]
 [ext_resource type="Script" uid="uid://dfxyydxyf4dee" path="res://Scripts/Classes/MenuButtons/ContextSnailyButton.gd" id="2_dx4bq"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_5a5rp"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_lkixa"]
 
-[node name="ContextSnailyButton" type="PanelContainer"]
+[node name="ContextSnailyButton" type="PanelContainer" unique_id=2025457225]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -24,32 +24,32 @@ focus_mode = 2
 theme_override_styles/panel = ExtResource("1_dx4bq")
 script = ExtResource("2_dx4bq")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1477765277]
 layout_mode = 2
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=55458253]
 layout_mode = 2
 alignment = 1
 
-[node name="BigContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="BigContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=858108514]
 layout_mode = 2
 alignment = 1
 
-[node name="BigSnailyText" parent="MarginContainer/VBoxContainer/BigContainer" instance=ExtResource("3_40i6t")]
+[node name="BigSnailyText" parent="MarginContainer/VBoxContainer/BigContainer" unique_id=1413561002 instance=ExtResource("3_40i6t")]
 custom_minimum_size = Vector2(56, 0)
 layout_mode = 2
 text = "Text!!"
 scroll_active = true
 autowrap_mode = 0
 
-[node name="SmallContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="SmallContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=441233737]
 layout_mode = 2
 alignment = 1
 
-[node name="SmallSnailyText" parent="MarginContainer/VBoxContainer/SmallContainer" instance=ExtResource("3_40i6t")]
+[node name="SmallSnailyText" parent="MarginContainer/VBoxContainer/SmallContainer" unique_id=180154752 instance=ExtResource("3_40i6t")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -58,13 +58,13 @@ scroll_active = true
 autowrap_mode = 0
 text_scale = 1
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1709654000]
 
-[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup" unique_id=897948140]
 stream = ExtResource("4_5a5rp")
 bus = &"Sfx"
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1747346891]
 stream = ExtResource("5_lkixa")
 bus = &"Sfx"
 

@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2845y87tiqct"]
+[gd_scene format=3 uid="uid://c2845y87tiqct"]
 
 [ext_resource type="Script" uid="uid://dn6e6hvesry1o" path="res://Scripts/Particles/ParticleLayers/StarLayer.gd" id="1_mkwfh"]
 [ext_resource type="Texture2D" uid="uid://1ga5lcmisuet" path="res://Editor/EditorMarkers/StarParticles.png" id="2_mkwfh"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_lpbxb"]
 
-[node name="StarLayer" type="Node2D"]
+[node name="StarLayer" type="Node2D" unique_id=532173821]
 z_index = 500
 z_as_relative = false
 script = ExtResource("1_mkwfh")
@@ -12,7 +12,7 @@ particles = Array[String](["Star"])
 particle_count = 60
 move_with_camera = true
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1311714626]
 texture = ExtResource("2_mkwfh")
 script = ExtResource("3_lpbxb")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

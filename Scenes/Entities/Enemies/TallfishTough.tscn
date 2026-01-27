@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckjvywaln26kx"]
+[gd_scene format=3 uid="uid://ckjvywaln26kx"]
 
 [ext_resource type="Script" uid="uid://x5acpt7o4081" path="res://Scripts/Enemies/TallfishTough.gd" id="1_huadt"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_ppw2a"]
@@ -17,7 +17,7 @@ size = Vector2(30, 46)
 shader = ExtResource("4_wnspn")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="TallfishTough" type="CharacterBody2D"]
+[node name="TallfishTough" type="CharacterBody2D" unique_id=822537904]
 z_index = 3
 collision_layer = 64
 collision_mask = 0
@@ -29,29 +29,29 @@ health_orb_value = 2
 kill_particle_range = Vector2i(16, 24)
 kill_particle_count = 6
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=594339693]
 shape = SubResource("RectangleShape2D_qrvrh")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=657100042]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1440010085]
 shape = SubResource("RectangleShape2D_v2c1n")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=838098493]
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-19.999998, -29.999996, 39.999996, 59.999992)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1948487066]
 material = ExtResource("2_ppw2a")
 script = ExtResource("3_swp6y")
 texture_path = "res://Assets/Images/Entities/Tallfish2.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=679418678]
 material = SubResource("ShaderMaterial_ojica")
 texture = ExtResource("5_ppw2a")
 hframes = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ctodnm477yhmh"]
+[gd_scene format=3 uid="uid://ctodnm477yhmh"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4o42s"]
 [ext_resource type="Script" uid="uid://cdwlvvcakwkh8" path="res://Scripts/CamControl.gd" id="1_gi4g0"]
@@ -19,30 +19,30 @@
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
 [ext_resource type="PackedScene" uid="uid://dd51oitsi3hyq" path="res://Scenes/internals/DarknessLayer.tscn" id="18_adkld"]
 
-[node name="CameraLayer" type="Node2D"]
+[node name="CameraLayer" type="Node2D" unique_id=1777678961]
 z_index = 1000
 z_as_relative = false
 script = ExtResource("1_vjeh6")
 
-[node name="DarknessLayer" parent="." instance=ExtResource("18_adkld")]
+[node name="DarknessLayer" parent="." unique_id=1667535732 instance=ExtResource("18_adkld")]
 position = Vector2(200, 120)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1724479086]
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
-[node name="CamAlignedParticleLayer" type="Node2D" parent="."]
+[node name="CamAlignedParticleLayer" type="Node2D" parent="." unique_id=1391776281]
 
-[node name="BL" type="Node2D" parent="."]
+[node name="BL" type="Node2D" parent="." unique_id=786240395]
 position = Vector2(0, 240)
 
-[node name="InGameTime" type="HBoxContainer" parent="BL"]
+[node name="InGameTime" type="HBoxContainer" parent="BL" unique_id=815931184]
 offset_left = 3.0
 offset_top = -12.0
 offset_right = 49.0
 offset_bottom = 28.0
 
-[node name="Text" parent="BL/InGameTime" instance=ExtResource("3_bgnuu")]
+[node name="Text" parent="BL/InGameTime" unique_id=298069678 instance=ExtResource("3_bgnuu")]
 custom_minimum_size = Vector2(46, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -50,13 +50,13 @@ text = "00:00:00.00"
 text_scale = 1
 border_scale = 1
 
-[node name="Framerate" type="HBoxContainer" parent="BL"]
+[node name="Framerate" type="HBoxContainer" parent="BL" unique_id=348355963]
 offset_left = 3.0
 offset_top = -20.0
 offset_right = 49.0
 offset_bottom = 20.0
 
-[node name="Text" parent="BL/Framerate" instance=ExtResource("3_bgnuu")]
+[node name="Text" parent="BL/Framerate" unique_id=1171561691 instance=ExtResource("3_bgnuu")]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -64,34 +64,34 @@ text = "00 FPS"
 text_scale = 1
 border_scale = 1
 
-[node name="InputDisplay" parent="BL" instance=ExtResource("4_22ldm")]
+[node name="InputDisplay" parent="BL" unique_id=1184225206 instance=ExtResource("4_22ldm")]
 position = Vector2(4, -4)
 
-[node name="BR" type="Node2D" parent="."]
+[node name="BR" type="Node2D" parent="." unique_id=521013137]
 position = Vector2(400, 240)
 
-[node name="WeaponIcons" type="Node2D" parent="BR"]
+[node name="WeaponIcons" type="Node2D" parent="BR" unique_id=290156469]
 
-[node name="Broom" type="Sprite2D" parent="BR/WeaponIcons"]
+[node name="Broom" type="Sprite2D" parent="BR/WeaponIcons" unique_id=423121534]
 position = Vector2(-64, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Broom"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Broom" unique_id=1085619789]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Peashooter" type="Sprite2D" parent="BR/WeaponIcons"]
+[node name="Peashooter" type="Sprite2D" parent="BR/WeaponIcons" unique_id=1883919780]
 position = Vector2(-50, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Peashooter"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Peashooter" unique_id=837954505]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -99,13 +99,13 @@ frame = 1
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Boomerang" type="Sprite2D" parent="BR/WeaponIcons"]
+[node name="Boomerang" type="Sprite2D" parent="BR/WeaponIcons" unique_id=227156912]
 position = Vector2(-36, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Boomerang"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/Boomerang" unique_id=1229224822]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -113,13 +113,13 @@ frame = 2
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="RainbowWave" type="Sprite2D" parent="BR/WeaponIcons"]
+[node name="RainbowWave" type="Sprite2D" parent="BR/WeaponIcons" unique_id=267387016]
 position = Vector2(-22, 0)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/WeaponIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/RainbowWave"]
+[node name="MarkerSprite" type="Sprite2D" parent="BR/WeaponIcons/RainbowWave" unique_id=231591893]
 texture = ExtResource("2_gi4g0")
 hframes = 4
 vframes = 2
@@ -127,60 +127,60 @@ frame = 3
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Sel0" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+[node name="Sel0" type="AudioStreamPlayer" parent="BR/WeaponIcons" unique_id=1126093076]
 stream = ExtResource("8_wbo4q")
 bus = &"Sfx"
 
-[node name="Sel1" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+[node name="Sel1" type="AudioStreamPlayer" parent="BR/WeaponIcons" unique_id=111647074]
 stream = ExtResource("9_adkld")
 bus = &"Sfx"
 
-[node name="Sel2" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+[node name="Sel2" type="AudioStreamPlayer" parent="BR/WeaponIcons" unique_id=1911758571]
 stream = ExtResource("10_yb2dk")
 bus = &"Sfx"
 
-[node name="Sel3" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+[node name="Sel3" type="AudioStreamPlayer" parent="BR/WeaponIcons" unique_id=276374444]
 stream = ExtResource("11_kf05q")
 bus = &"Sfx"
 
-[node name="Sel4" type="AudioStreamPlayer" parent="BR/WeaponIcons"]
+[node name="Sel4" type="AudioStreamPlayer" parent="BR/WeaponIcons" unique_id=40164919]
 stream = ExtResource("12_cac8p")
 bus = &"Sfx"
 
-[node name="SaveIcon" type="Sprite2D" parent="BR"]
+[node name="SaveIcon" type="Sprite2D" parent="BR" unique_id=1964132842]
 position = Vector2(-16, -16)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/SaveIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="BestiaryIcon" type="Sprite2D" parent="BR"]
+[node name="BestiaryIcon" type="Sprite2D" parent="BR" unique_id=207096764]
 position = Vector2(-16, -16)
 script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/BestiaryIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="TL" type="Node2D" parent="."]
+[node name="TL" type="Node2D" parent="." unique_id=1964127339]
 
-[node name="Hearts" type="Node2D" parent="TL"]
+[node name="Hearts" type="Node2D" parent="TL" unique_id=1450619440]
 
-[node name="AchivementPanel" parent="TL" instance=ExtResource("6_f5gkc")]
+[node name="AchivementPanel" parent="TL" unique_id=431099442 instance=ExtResource("6_f5gkc")]
 position = Vector2(39, 36)
 
-[node name="TR" type="Node2D" parent="."]
+[node name="TR" type="Node2D" parent="." unique_id=1755624991]
 position = Vector2(400, 0)
 
-[node name="Minimap" parent="TR" instance=ExtResource("8_g8fv5")]
+[node name="Minimap" parent="TR" unique_id=408040295 instance=ExtResource("8_g8fv5")]
 position = Vector2(-32, 24)
 
-[node name="PopupLayer" type="Node2D" parent="."]
+[node name="PopupLayer" type="Node2D" parent="." unique_id=412208806]
 
-[node name="ColorCover" parent="." instance=ExtResource("7_ygllc")]
+[node name="ColorCover" parent="." unique_id=283330542 instance=ExtResource("7_ygllc")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)
 scale = Vector2(2, 2)
 
-[node name="Border" type="Sprite2D" parent="."]
+[node name="Border" type="Sprite2D" parent="." unique_id=86311262]
 modulate = Color(0, 0, 0, 1)
 z_index = 10
 position = Vector2(200, 120)
@@ -188,14 +188,14 @@ script = ExtResource("1_4o42s")
 texture_path = "res://Assets/Images/UI/ScreenBorder.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Border"]
+[node name="MarkerSprite" type="Sprite2D" parent="Border" unique_id=1349930718]
 modulate = Color(1, 0.823529, 0.709804, 0.172549)
 texture = ExtResource("4_ygllc")
 vframes = 5
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="PauseLayer" type="Node2D" parent="."]
+[node name="PauseLayer" type="Node2D" parent="." unique_id=894734366]
 process_mode = 3
 z_index = 15
 script = ExtResource("9_qjw3k")

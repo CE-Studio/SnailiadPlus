@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://g7dqjpjrexfs"]
+[gd_scene format=3 uid="uid://g7dqjpjrexfs"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_ioben"]
 [ext_resource type="Script" uid="uid://b40woqdsqw3ne" path="res://Scripts/UI/SpeechBubble.gd" id="1_ydhss"]
@@ -6,17 +6,17 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_lt2gs"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="4_i51eu"]
 
-[node name="SpeechBubble" type="Node2D"]
+[node name="SpeechBubble" type="Node2D" unique_id=2122345088]
 z_index = 650
 script = ExtResource("1_ydhss")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=842956370]
 visible = false
 script = ExtResource("1_ioben")
 texture_path = "res://Assets/Images/UI/SpeechBubble.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=358828839]
 texture = ExtResource("2_ydhss")
 hframes = 7
 vframes = 2
@@ -24,7 +24,7 @@ frame = 6
 script = ExtResource("3_lt2gs")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="SnailyText" parent="." instance=ExtResource("4_i51eu")]
+[node name="SnailyText" parent="." unique_id=655591501 instance=ExtResource("4_i51eu")]
 custom_minimum_size = Vector2(20, 0)
 offset_left = -8.0
 offset_top = -11.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnxky6dicmdh3"]
+[gd_scene format=3 uid="uid://dnxky6dicmdh3"]
 
 [ext_resource type="Script" uid="uid://ch1m4bqjeeg2x" path="res://Scripts/Enemies/TurtleCommon.gd" id="1_701gh"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_sptuk"]
@@ -19,7 +19,7 @@ size = Vector2(30, 14)
 shader = ExtResource("4_p5ths")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="TurtleCommon" type="CharacterBody2D"]
+[node name="TurtleCommon" type="CharacterBody2D" unique_id=529981132]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -31,29 +31,29 @@ defense = 20
 health_orb_value = 2
 kill_particle_range = Vector2i(16, 8)
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=399596762]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=748123448]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=2092804903]
 shape = SubResource("RectangleShape2D_pfaec")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1598050189]
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-19.999998, -10, 39.999996, 20)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=11332290]
 material = ExtResource("2_sptuk")
 script = ExtResource("3_doklf")
 texture_path = "res://Assets/Images/Entities/GravTurtle1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1622013196]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("5_701gh")
 hframes = 3
@@ -61,10 +61,10 @@ vframes = 2
 script = ExtResource("6_e0fio")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Jump" type="AudioStreamPlayer" parent="."]
+[node name="Jump" type="AudioStreamPlayer" parent="." unique_id=997258751]
 stream = ExtResource("7_3mnm4")
 bus = &"Sfx"
 
-[node name="Flip" type="AudioStreamPlayer" parent="."]
+[node name="Flip" type="AudioStreamPlayer" parent="." unique_id=1277062519]
 stream = ExtResource("8_xlp1g")
 bus = &"Sfx"

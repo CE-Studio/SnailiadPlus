@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3wkjy4ddoab4"]
+[gd_scene format=3 uid="uid://b3wkjy4ddoab4"]
 
 [ext_resource type="Texture2D" uid="uid://bpo6uchb1gs50" path="res://Assets/Images/UI/Panel.png" id="1_dblng"]
 [ext_resource type="Script" uid="uid://dwu5pmk7aoep0" path="res://Scripts/UI/ContextPanel.gd" id="2_75715"]
@@ -13,7 +13,7 @@ texture_margin_bottom = 8.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="ContextPanel" type="PanelContainer"]
+[node name="ContextPanel" type="PanelContainer" unique_id=102659344]
 offset_right = 174.0
 offset_bottom = 22.0
 size_flags_horizontal = 4
@@ -21,7 +21,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_75715")
 script = ExtResource("2_75715")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=900740623]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -29,13 +29,13 @@ theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=738038980]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Text" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_xc2j4")]
+[node name="Text" parent="MarginContainer/VBoxContainer" unique_id=1153288796 instance=ExtResource("2_xc2j4")]
 custom_minimum_size = Vector2(118, 0)
 layout_mode = 2
 text = "Panel text"

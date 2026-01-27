@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dda3jgnbeg4jd"]
+[gd_scene format=3 uid="uid://dda3jgnbeg4jd"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_ghgvq"]
 [ext_resource type="Script" uid="uid://d2am8osmsm34i" path="res://Scripts/UI/MenuLayers/QuitToMenu.gd" id="2_5q3mp"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_h0fbv"]
 
-[node name="QuitToMenu" type="Node2D"]
+[node name="QuitToMenu" type="Node2D" unique_id=32144782]
 script = ExtResource("1_ghgvq")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1028666044]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -15,19 +15,19 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_5q3mp")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+[node name="Header" parent="MainVBox" unique_id=764426934 instance=ExtResource("2_h0fbv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Really return to menu?"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1843195488]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="QuitSave" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+[node name="QuitSave" parent="MainVBox" unique_id=1668687951 instance=ExtResource("2_h0fbv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -39,7 +39,7 @@ focus_previous = NodePath("../Back")
 button_text = "Save and quit"
 hide_frame = true
 
-[node name="QuitNoSave" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+[node name="QuitNoSave" parent="MainVBox" unique_id=1004659804 instance=ExtResource("2_h0fbv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -51,7 +51,7 @@ focus_previous = NodePath("../QuitSave")
 button_text = "Quit without saving"
 hide_frame = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_h0fbv")]
+[node name="Back" parent="MainVBox" unique_id=1138879477 instance=ExtResource("2_h0fbv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -65,7 +65,7 @@ back_one_layer = true
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Timer" type="Timer" parent="MainVBox"]
+[node name="Timer" type="Timer" parent="MainVBox" unique_id=1567030703]
 wait_time = 1.5
 one_shot = true
 

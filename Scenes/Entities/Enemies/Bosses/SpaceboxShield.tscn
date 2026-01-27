@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ka2xpbxbm32q"]
+[gd_scene format=3 uid="uid://ka2xpbxbm32q"]
 
 [ext_resource type="Script" uid="uid://c6xrv4xwlucqx" path="res://Scripts/Enemies/Bosses/SpaceboxShield.gd" id="1_bb8v3"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_j0t6a"]
@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(16, 16)
 
-[node name="SpaceboxShield" type="CharacterBody2D"]
+[node name="SpaceboxShield" type="CharacterBody2D" unique_id=1453314120]
 z_index = -1
 collision_layer = 64
 collision_mask = 0
@@ -23,30 +23,30 @@ kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String](["ExplosionWhiteSmall"])
 kill_particle_count = 1
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1726997841]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=858626240]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=258100751]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1652261233]
 scale = Vector2(1.2, 1.2)
 rect = Rect2(-6.6666665, -6.6666665, 13.333333, 13.333333)
 
-[node name="HandGroup" type="Node2D" parent="."]
+[node name="HandGroup" type="Node2D" parent="." unique_id=1965195270]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=2106613158]
 script = ExtResource("2_j0t6a")
 texture_path = "res://Assets/Images/Entities/Boss3Shield.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Body"]
+[node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=1831473167]
 texture = ExtResource("3_bb8v3")
 hframes = 6
 frame = 5

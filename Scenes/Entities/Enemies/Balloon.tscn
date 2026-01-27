@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjla3pfitceec"]
+[gd_scene format=3 uid="uid://cjla3pfitceec"]
 
 [ext_resource type="Script" uid="uid://bn7odeq72231g" path="res://Scripts/Enemies/Balloon.gd" id="1_pfxoy"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_0jw2l"]
@@ -14,7 +14,7 @@ size = Vector2(14, 30)
 shader = ExtResource("4_uskjm")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Balloon" type="CharacterBody2D"]
+[node name="Balloon" type="CharacterBody2D" unique_id=1484310694]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -24,25 +24,25 @@ max_health_hard = 250
 attack = 3
 defense = 1
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=18250590]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=598617051]
 shape = SubResource("RectangleShape2D_6ijum")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1548338439]
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-10, -19.999998, 20, 39.999996)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=744147930]
 material = ExtResource("2_0jw2l")
 script = ExtResource("3_puqts")
 texture_path = "res://Assets/Images/Entities/Balloon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=498501639]
 material = SubResource("ShaderMaterial_43bce")
 texture = ExtResource("5_pfxoy")
 script = ExtResource("6_ongtb")

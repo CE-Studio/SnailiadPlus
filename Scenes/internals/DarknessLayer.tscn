@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dd51oitsi3hyq"]
+[gd_scene format=3 uid="uid://dd51oitsi3hyq"]
 
 [ext_resource type="Material" uid="uid://ukn31olknvf6" path="res://Resources/DarknessLayerMat.tres" id="1_sqnwa"]
 [ext_resource type="Texture2D" uid="uid://cvtrvyj6w6k12" path="res://Assets/Images/Environments/DarknessMain.png" id="2_sqnwa"]
 [ext_resource type="Script" uid="uid://d0vweyfetg7nu" path="res://Scripts/Classes/DarknessLayer.gd" id="3_1qkrf"]
 
-[node name="DarknessLayer" type="Sprite2D"]
+[node name="DarknessLayer" type="Sprite2D" unique_id=967430898]
 z_index = 600
 z_as_relative = false
 material = ExtResource("1_sqnwa")

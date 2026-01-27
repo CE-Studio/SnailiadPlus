@@ -628,7 +628,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			while grav_shock_anim_time > SEC_PER_SHOCK_STEP:
 				grav_shock_anim_time -= SEC_PER_SHOCK_STEP
 				grav_shock_anim_step = (grav_shock_anim_step + 1) % GRAV_SHOCK_ANIM_STEPS
-		
+
 		match surface:
 			Statics.DirsSurface.FLOOR:
 				body.velocity = rel_vel

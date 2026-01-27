@@ -1,17 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://ng5l4n1it6u1"]
+[gd_scene format=3 uid="uid://ng5l4n1it6u1"]
 
 [ext_resource type="Script" uid="uid://dyggk1jdy233a" path="res://Scripts/Particles/Ember.gd" id="1_dgqvb"]
 [ext_resource type="Texture2D" uid="uid://dw8ivsvnyrim6" path="res://Assets/Images/Particles/Ember.png" id="2_mloa0"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_5jabk"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_1ft3f"]
 
-[node name="Ember" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Ember" type="Node2D" unique_id=1426647685 node_paths=PackedStringArray("sprite")]
 z_index = 20
 script = ExtResource("1_dgqvb")
 sprite = NodePath("JsonSprite2D")
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=374890804]
 texture = ExtResource("2_mloa0")
 hframes = 4
 vframes = 4
@@ -19,7 +18,7 @@ frame = 7
 script = ExtResource("3_5jabk")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=518317061]
 script = ExtResource("4_1ft3f")
 texture_path = "res://Assets/Images/Particles/Ember.json"
 load_autoplay = Array[String](["0_small_slow", "0_small_med", "0_small_fast", "0_med_slow", "0_med_med", "0_med_fast", "0_big_slow", "0_big_med", "0_big_fast", "1_small_slow", "1_small_med", "1_small_fast", "1_med_slow", "1_med_med", "1_med_fast", "1_big_slow", "1_big_med", "1_big_fast", "2_small_slow", "2_small_med", "2_small_fast", "2_med_slow", "2_med_med", "2_med_fast", "2_big_slow", "2_big_med", "2_big_fast", "3_small_slow", "3_small_med", "3_small_fast", "3_med_slow", "3_med_med", "3_med_fast", "3_big_slow", "3_big_med", "3_big_fast"])

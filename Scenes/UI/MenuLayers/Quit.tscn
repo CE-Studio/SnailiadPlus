@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvfrqrdlsbkao"]
+[gd_scene format=3 uid="uid://bvfrqrdlsbkao"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_argrp"]
 [ext_resource type="Script" uid="uid://dkwc06lwmcssc" path="res://Scripts/UI/MenuLayers/Quit.gd" id="2_6lq4w"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_feaba"]
 
-[node name="Quit" type="Node2D"]
+[node name="Quit" type="Node2D" unique_id=1415419949]
 script = ExtResource("1_argrp")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=337386258]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -15,19 +15,19 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_6lq4w")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("2_feaba")]
+[node name="Header" parent="MainVBox" unique_id=56127056 instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Really quit?"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=503223226]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Yes" parent="MainVBox" instance=ExtResource("2_feaba")]
+[node name="Yes" parent="MainVBox" unique_id=414475534 instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -39,7 +39,7 @@ focus_previous = NodePath("../No")
 button_text = "Yeah, I'm done playing for now"
 hide_frame = true
 
-[node name="No" parent="MainVBox" instance=ExtResource("2_feaba")]
+[node name="No" parent="MainVBox" unique_id=1138333082 instance=ExtResource("2_feaba")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

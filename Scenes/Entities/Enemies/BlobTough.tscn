@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://55mm0f4dr2j6"]
+[gd_scene format=3 uid="uid://55mm0f4dr2j6"]
 
 [ext_resource type="Script" uid="uid://qf6ly8gqgx03" path="res://Scripts/Enemies/BlobTough.gd" id="1_m0vag"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_1u7oy"]
@@ -18,7 +18,7 @@ size = Vector2(14, 14)
 shader = ExtResource("2_306ds")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="BlobCommon" type="CharacterBody2D"]
+[node name="BlobCommon" type="CharacterBody2D" unique_id=873099045]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -28,28 +28,28 @@ attack = 2
 defense = 10
 health_orb_value = 2
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1728890591]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1241797159]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=138070126]
 shape = SubResource("RectangleShape2D_pfaec")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2040578471]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=815478001]
 material = ExtResource("2_1u7oy")
 script = ExtResource("3_1u7oy")
 texture_path = "res://Assets/Images/Entities/Blob.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1772502463]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("4_4k86t")
 hframes = 4
@@ -58,6 +58,6 @@ frame = 4
 script = ExtResource("5_dq7ii")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Jump" type="AudioStreamPlayer" parent="."]
+[node name="Jump" type="AudioStreamPlayer" parent="." unique_id=1848472904]
 stream = ExtResource("6_mk0ps")
 bus = &"Sfx"

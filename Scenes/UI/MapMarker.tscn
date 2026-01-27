@@ -1,19 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlaal46coilv7"]
+[gd_scene format=3 uid="uid://dlaal46coilv7"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_bonff"]
 [ext_resource type="Script" uid="uid://cgjq2efrk1wfq" path="res://Scripts/UI/MapMarker.gd" id="1_s3jip"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="2_s3jip"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xrdwr"]
 
-[node name="MapMarker" type="Node2D"]
+[node name="MapMarker" type="Node2D" unique_id=1627086070]
 script = ExtResource("1_s3jip")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=773577644]
 script = ExtResource("1_bonff")
 texture_path = "res://Assets/Images/UI/MinimapIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=630208887]
 texture = ExtResource("2_s3jip")
 hframes = 6
 vframes = 2

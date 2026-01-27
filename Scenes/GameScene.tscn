@@ -1,13 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://ltxtlsrku2k0"]
+[gd_scene format=3 uid="uid://ltxtlsrku2k0"]
 
 [ext_resource type="Script" uid="uid://2jmosr6mcjwx" path="res://Scripts/GameCore.gd" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://ctodnm477yhmh" path="res://Scenes/internals/CameraLayer.tscn" id="2_3mbwn"]
 [ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
 [ext_resource type="PackedScene" uid="uid://b051o8jm6et2f" path="res://Scenes/internals/MusicManager.tscn" id="4_jwv4s"]
 [ext_resource type="PackedScene" uid="uid://d2376pjd403n3" path="res://Scenes/internals/LimitedSoundHandler.tscn" id="5_lohlh"]
-[ext_resource type="Script" uid="uid://o7gmlfvapbjh" path="res://Scripts/Classes/RoomLoader.gd" id="6_kilg5"]
+[ext_resource type="Script" path="res://Scripts/Classes/RoomLoader.gd" id="6_kilg5"]
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("player", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler", "room_loader")]
+[node name="GameScene" type="Node2D" unique_id=549691468 node_paths=PackedStringArray("player", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler", "room_loader")]
 process_mode = 1
 script = ExtResource("1_x87qo")
 player = NodePath("Snaily")
@@ -17,16 +17,16 @@ music_manager = NodePath("MusicManager")
 lim_sfx_handler = NodePath("LimitedSoundHandler")
 room_loader = NodePath("RoomLoader")
 
-[node name="SfxGroup" type="Node" parent="."]
+[node name="SfxGroup" type="Node" parent="." unique_id=757531976]
 
-[node name="CameraLayer" parent="." instance=ExtResource("2_3mbwn")]
+[node name="CameraLayer" parent="." unique_id=805642933 instance=ExtResource("2_3mbwn")]
 
-[node name="Snaily" parent="." instance=ExtResource("2_4bvgx")]
+[node name="Snaily" parent="." unique_id=782782552 instance=ExtResource("2_4bvgx")]
 position = Vector2(64, 96)
 
-[node name="MusicManager" parent="." instance=ExtResource("4_jwv4s")]
+[node name="MusicManager" parent="." unique_id=1382594556 instance=ExtResource("4_jwv4s")]
 
-[node name="LimitedSoundHandler" parent="." instance=ExtResource("5_lohlh")]
+[node name="LimitedSoundHandler" parent="." unique_id=1086621030 instance=ExtResource("5_lohlh")]
 
-[node name="RoomLoader" type="Node" parent="."]
+[node name="RoomLoader" type="Node" parent="." unique_id=1912718550]
 script = ExtResource("6_kilg5")

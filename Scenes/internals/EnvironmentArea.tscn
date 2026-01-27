@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2t8pt57vwsa7"]
+[gd_scene format=3 uid="uid://d2t8pt57vwsa7"]
 
 [ext_resource type="Script" uid="uid://cpjutnx0xn2up" path="res://Scripts/Classes/EnvironmentArea.gd" id="1_qudvo"]
 
-[node name="EnvironmentArea" type="Area2D"]
+[node name="EnvironmentArea" type="Area2D" unique_id=1003589594]
 collision_mask = 68
 script = ExtResource("1_qudvo")
 

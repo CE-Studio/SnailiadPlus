@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvrflv73h4dv5"]
+[gd_scene format=3 uid="uid://bvrflv73h4dv5"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5cqf1"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="2_l5ldk"]
 [ext_resource type="Script" uid="uid://budd1vnbooxos" path="res://Scripts/UI/MenuLayers/ProfileSpawn.gd" id="2_nahkj"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_nahkj"]
 
-[node name="ProfileSpawn" type="Node2D"]
+[node name="ProfileSpawn" type="Node2D" unique_id=1540109779]
 script = ExtResource("1_5cqf1")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1704835084]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -16,19 +16,19 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_nahkj")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="Header" parent="MainVBox" unique_id=1710761389 instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Okay, where would you\\nlike to start from?"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1796914181]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="SavePoint" parent="MainVBox" instance=ExtResource("2_l5ldk")]
+[node name="SavePoint" parent="MainVBox" unique_id=1943587925 instance=ExtResource("2_l5ldk")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -42,7 +42,7 @@ sub_text = "Area - Room"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="WorldSpawn" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="WorldSpawn" parent="MainVBox" unique_id=1254085430 instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -54,7 +54,7 @@ focus_previous = NodePath("../SavePoint")
 button_text = "Start from Snail Town"
 hide_frame = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("3_nahkj")]
+[node name="Back" parent="MainVBox" unique_id=652191573 instance=ExtResource("3_nahkj")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

@@ -1,24 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmuwfcdjum6hq"]
+[gd_scene format=3 uid="uid://bmuwfcdjum6hq"]
 
-[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_710nm"]
+[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_710nm"]
 [ext_resource type="Texture2D" uid="uid://bcy5wqyee2npo" path="res://Assets/Images/Particles/Zzz.png" id="2_710nm"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_jbgqq"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_vy02w"]
 
-[node name="Zzz" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Zzz" type="Node2D" unique_id=1575304498 node_paths=PackedStringArray("sprite")]
 z_index = 2
 script = ExtResource("1_710nm")
 sprite = NodePath("JsonSprite2D")
 anim_name = "idle"
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=926683021]
 texture = ExtResource("2_710nm")
 hframes = 2
 script = ExtResource("3_jbgqq")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=5064490]
 script = ExtResource("4_vy02w")
 texture_path = "res://Assets/Images/Particles/Zzz.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

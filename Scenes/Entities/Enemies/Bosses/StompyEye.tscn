@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5irbfjr44kke"]
+[gd_scene format=3 uid="uid://b5irbfjr44kke"]
 
 [ext_resource type="Script" uid="uid://c7g66sbiyd82b" path="res://Scripts/Enemies/Bosses/StompyEye.gd" id="1_8dq5x"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_an5j5"]
@@ -11,7 +11,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxpcm"]
 size = Vector2(100, 52)
 
-[node name="StompyEye" type="CharacterBody2D"]
+[node name="StompyEye" type="CharacterBody2D" unique_id=1390318715]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_8dq5x")
@@ -23,50 +23,50 @@ kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String]([])
 kill_particle_count = 0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1818548532]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1021529040]
 shape = SubResource("RectangleShape2D_mxpcm")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=29931932]
 scale = Vector2(2.4, 2.4)
 rect = Rect2(-20, -10, 40, 20)
 
-[node name="SpriteGroup" type="Node2D" parent="."]
+[node name="SpriteGroup" type="Node2D" parent="." unique_id=868863574]
 
-[node name="Eye" type="Sprite2D" parent="SpriteGroup"]
+[node name="Eye" type="Sprite2D" parent="SpriteGroup" unique_id=1444948013]
 clip_children = 2
 material = ExtResource("2_an5j5")
 script = ExtResource("2_tbccu")
 texture_path = "res://Assets/Images/Entities/Boss2Eye.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eye"]
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eye" unique_id=609789702]
 texture = ExtResource("3_an5j5")
 script = ExtResource("4_an5j5")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Pupil" type="Sprite2D" parent="SpriteGroup"]
+[node name="Pupil" type="Sprite2D" parent="SpriteGroup" unique_id=1101178711]
 material = ExtResource("2_an5j5")
 script = ExtResource("2_tbccu")
 texture_path = "res://Assets/Images/Entities/Boss2Pupil.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Pupil"]
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Pupil" unique_id=1657191665]
 texture = ExtResource("5_0oolt")
 script = ExtResource("4_an5j5")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Eyelid" type="Sprite2D" parent="SpriteGroup"]
+[node name="Eyelid" type="Sprite2D" parent="SpriteGroup" unique_id=1314163576]
 material = ExtResource("2_an5j5")
 script = ExtResource("2_tbccu")
 texture_path = "res://Assets/Images/Entities/Boss2Eyelid.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eyelid"]
+[node name="MarkerSprite" type="Sprite2D" parent="SpriteGroup/Eyelid" unique_id=1412321850]
 texture = ExtResource("6_07le3")
 hframes = 3
 vframes = 3

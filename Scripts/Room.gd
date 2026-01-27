@@ -107,7 +107,7 @@ func _ready() -> void:
 func spawn(_spawn_all:bool) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if Statics.show_entity_layer:
 		map_entity1.modulate = Color(1, 1, 1, 0.5)
 		map_entity2.modulate = Color(1, 1, 1, 0.5)
@@ -153,7 +153,7 @@ func spawn(_spawn_all:bool) -> void:
 
 func _process(_delta: float) -> void:
 	if not spawned_all and not Engine.is_editor_hint():
-		_spawn_entities_from_layer(0) 
+		_spawn_entities_from_layer(0)
 
 
 func get_room_name_from_filename() -> void:
@@ -215,7 +215,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		var tile_coords := map.get_cell_atlas_coords(tile)
 		spawned_sp += 1
 		running_count += 1
-		
+
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = _load(&"res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()

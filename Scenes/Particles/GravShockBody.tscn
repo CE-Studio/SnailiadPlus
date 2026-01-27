@@ -1,29 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfxrgf4gbvqon"]
+[gd_scene format=3 uid="uid://cfxrgf4gbvqon"]
 
 [ext_resource type="Script" uid="uid://grvm3enp64bf" path="res://Scripts/Particles/GravShockBody.gd" id="1_agyhw"]
 [ext_resource type="Texture2D" uid="uid://bnux6ly2tgfjn" path="res://Assets/Images/Particles/ShockChar.png" id="2_agyhw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_r5pax"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_pxo28"]
 
-[node name="GravShockBody" type="Node2D" node_paths=PackedStringArray("sprite", "timer")]
+[node name="GravShockBody" type="Node2D" unique_id=1082529802 node_paths=PackedStringArray("sprite", "timer")]
 z_index = 155
 script = ExtResource("1_agyhw")
 sprite = NodePath("JsonSprite2D")
 timer = NodePath("Timer")
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1792421723]
 texture = ExtResource("2_agyhw")
 hframes = 12
 vframes = 12
 script = ExtResource("3_r5pax")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=252234153]
 script = ExtResource("4_pxo28")
 texture_path = "res://Assets/Images/Particles/ShockChar.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1071214977]
 wait_time = 2.0
 autostart = true

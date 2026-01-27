@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdgewgqflvxlg"]
+[gd_scene format=3 uid="uid://bdgewgqflvxlg"]
 
 [ext_resource type="Script" uid="uid://dk0gc6mahojnf" path="res://Scripts/Enemies/BattyBat.gd" id="1_gjyyg"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_8dran"]
@@ -18,7 +18,7 @@ size = Vector2(30, 14)
 shader = ExtResource("2_u6hm7")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="BattyBat" type="CharacterBody2D"]
+[node name="BattyBat" type="CharacterBody2D" unique_id=1713233848]
 z_index = 3
 collision_layer = 64
 collision_mask = 0
@@ -29,28 +29,28 @@ defense = 10
 health_orb_value = 4
 kill_particle_range = Vector2i(16, 8)
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=384878823]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1687600946]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=197558495]
 shape = SubResource("RectangleShape2D_pfaec")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=905139315]
 scale = Vector2(1.6, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=953053720]
 material = ExtResource("2_8dran")
 script = ExtResource("3_odqp2")
 texture_path = "res://Assets/Images/Entities/Bat.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1830748777]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("4_gjyyg")
 vframes = 3
@@ -58,6 +58,6 @@ frame = 1
 script = ExtResource("5_0or7v")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Fly" type="AudioStreamPlayer" parent="."]
+[node name="Fly" type="AudioStreamPlayer" parent="." unique_id=1179145166]
 stream = ExtResource("6_gjyyg")
 bus = &"Sfx"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmunnfsuxjl88"]
+[gd_scene format=3 uid="uid://dmunnfsuxjl88"]
 
 [ext_resource type="Script" uid="uid://dfddcqcr2qmml" path="res://Scripts/Grass.gd" id="1_56jc0"]
 [ext_resource type="Texture2D" uid="uid://oeib4xc4tku7" path="res://Assets/Images/Entities/Grass.png" id="2_qrpkj"]
@@ -9,38 +9,38 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0pfo"]
 size = Vector2(16, 16)
 
-[node name="Grass" type="Node2D"]
+[node name="Grass" type="Node2D" unique_id=1542211841]
 z_index = 10
 script = ExtResource("1_56jc0")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=344802773]
 collision_layer = 16
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1681445843]
 shape = SubResource("RectangleShape2D_u0pfo")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1556221589]
 script = ExtResource("4_qrpkj")
 texture_path = "res://Assets/Images/Entities/Grass.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1945627830]
 
-[node name="Nom" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Nom" type="AudioStreamPlayer" parent="AudioGroup" unique_id=342619483]
 bus = &"Sfx"
 
-[node name="Grow" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Grow" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1067047218]
 stream = ExtResource("5_u0pfo")
 bus = &"Sfx"
 
-[node name="RegrowTimer" type="Timer" parent="."]
+[node name="RegrowTimer" type="Timer" parent="." unique_id=1544048730]
 one_shot = true
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1829474465]
 scale = Vector2(0.8, 0.8)
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1672360430]
 texture = ExtResource("2_qrpkj")
 hframes = 2
 vframes = 2

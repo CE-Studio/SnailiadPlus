@@ -1,17 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dks4oqiivnyxs"]
+[gd_scene format=3 uid="uid://dks4oqiivnyxs"]
 
 [ext_resource type="Script" uid="uid://ce6uvvdy8xfy4" path="res://Scripts/Particles/Snow.gd" id="1_chx2g"]
 [ext_resource type="Texture2D" uid="uid://cvr8j7op4rmt1" path="res://Assets/Images/Particles/Snow.png" id="2_4cbsi"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_aqn17"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_jump1"]
 
-[node name="Snow" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Snow" type="Node2D" unique_id=727798835 node_paths=PackedStringArray("sprite")]
 z_index = 20
 script = ExtResource("1_chx2g")
 sprite = NodePath("JsonSprite2D")
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=328305334]
 texture = ExtResource("2_4cbsi")
 hframes = 16
 vframes = 2
@@ -19,7 +18,7 @@ frame = 5
 script = ExtResource("3_aqn17")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2034792880]
 script = ExtResource("4_jump1")
 texture_path = "res://Assets/Images/Particles/Snow.json"
 load_autoplay = Array[String](["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"])

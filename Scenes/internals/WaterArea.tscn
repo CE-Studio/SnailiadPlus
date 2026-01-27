@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bh766f0xr0lo0"]
+[gd_scene format=3 uid="uid://bh766f0xr0lo0"]
 
 [ext_resource type="Script" uid="uid://4k5ip0ig6pil" path="res://Scripts/WorldElements/WaterArea.gd" id="1_11elw"]
 [ext_resource type="Texture2D" uid="uid://c5cidy12noycp" path="res://Editor/EditorMarkers/WaterArea.png" id="2_11elw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_0n57l"]
 
-[node name="WaterArea" type="Area2D"]
+[node name="WaterArea" type="Area2D" unique_id=744643921]
 z_index = 250
 collision_layer = 0
 collision_mask = 68
 script = ExtResource("1_11elw")
 metadata/_custom_type_script = "uid://cpjutnx0xn2up"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1254155189]
 texture = ExtResource("2_11elw")
 script = ExtResource("3_0n57l")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

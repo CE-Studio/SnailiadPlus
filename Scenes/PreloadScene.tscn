@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dntc0s7wr1h1g"]
+[gd_scene format=3 uid="uid://dntc0s7wr1h1g"]
 
 [ext_resource type="Script" uid="uid://gxiwgmgcbn2c" path="res://Scripts/Preloader.gd" id="1_bchyl"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="2_tikpu"]
@@ -6,21 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://chtwi4116b2uk" path="res://Assets/Images/UI/LoadingIcon.png" id="4_7trqf"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_bchyl"]
 
-[node name="Preloader" type="Node2D"]
+[node name="Preloader" type="Node2D" unique_id=898889616]
 script = ExtResource("1_bchyl")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1417680836]
 position = Vector2(200, 120)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=558855316]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("2_tikpu")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=678996107]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=760620652]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=984506949]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,11 +36,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer" unique_id=1012892146]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/Control"]
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/Control" unique_id=1566191880]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -52,33 +52,33 @@ offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="JsonSprite2D" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/Control/Control"]
+[node name="JsonSprite2D" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/Control/Control" unique_id=1339078749]
 unique_name_in_owner = true
 position = Vector2(24, 30.5)
 script = ExtResource("3_7trqf")
 texture_path = "res://Assets/Images/UI/LoadingIcon.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/Control/Control/JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/Control/Control/JsonSprite2D" unique_id=1691594569]
 texture = ExtResource("4_7trqf")
 hframes = 8
 script = ExtResource("5_bchyl")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="FileLabel" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="FileLabel" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=1488501676]
 unique_name_in_owner = true
 layout_mode = 2
 text = "a/a/a"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer" unique_id=922675422]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control/VBoxContainer/MarginContainer" unique_id=599777842]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2

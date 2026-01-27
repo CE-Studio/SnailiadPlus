@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://8bnhgx7rwmtx"]
+[gd_scene format=3 uid="uid://8bnhgx7rwmtx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_obrtw"]
 [ext_resource type="Script" uid="uid://gd3xw6sllvs8" path="res://Scripts/UI/MenuLayers/Museum.gd" id="2_e0tbj"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_v7ejv"]
 
-[node name="Museum" type="Node2D"]
+[node name="Museum" type="Node2D" unique_id=622460886]
 script = ExtResource("1_obrtw")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=85451384]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -15,7 +15,7 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_e0tbj")
 
-[node name="Times" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="Times" parent="MainVBox" unique_id=40521649 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -29,7 +29,7 @@ quick_load_layer = "Times"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Gallery" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="Gallery" parent="MainVBox" unique_id=12134742 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -41,7 +41,7 @@ focus_previous = NodePath("../Times")
 button_text = "Gallery"
 hide_frame = true
 
-[node name="Achievements" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="Achievements" parent="MainVBox" unique_id=985173233 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -54,7 +54,7 @@ button_text = "Achievements"
 quick_load_layer = "Achievements"
 hide_frame = true
 
-[node name="Bestiary" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="Bestiary" parent="MainVBox" unique_id=1295676370 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -67,7 +67,7 @@ button_text = "Bestiary"
 quick_load_layer = "Bestiary"
 hide_frame = true
 
-[node name="SoundTest" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="SoundTest" parent="MainVBox" unique_id=65999509 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -79,12 +79,12 @@ focus_previous = NodePath("../Bestiary")
 button_text = "Sound test"
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1027878539]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_v7ejv")]
+[node name="Back" parent="MainVBox" unique_id=280256550 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
