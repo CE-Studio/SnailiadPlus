@@ -1,15 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://x16f2foun0w1"]
+[gd_scene format=3 uid="uid://x16f2foun0w1"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4efbj"]
 [ext_resource type="Script" uid="uid://cplypknugk22t" path="res://Scripts/UI/MenuLayers/SoundOptions.gd" id="2_0h43h"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_p25fg"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_0h43h"]
 
-[node name="SoundOptions" type="Node2D"]
+[node name="SoundOptions" type="Node2D" unique_id=1226639279]
 script = ExtResource("1_4efbj")
 save_general_on_close = true
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1472635082]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -17,7 +17,7 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_0h43h")
 
-[node name="Master" parent="MainVBox" instance=ExtResource("2_p25fg")]
+[node name="Master" parent="MainVBox" unique_id=1538879454 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Back")
@@ -32,7 +32,7 @@ focus_option = 15
 loop = false
 grab_focus_on_load = true
 
-[node name="Sound" parent="MainVBox" instance=ExtResource("2_p25fg")]
+[node name="Sound" parent="MainVBox" unique_id=1408340578 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Master")
@@ -46,7 +46,7 @@ cycle_options = Array[String](["....................", "I...................", "
 focus_option = 15
 loop = false
 
-[node name="Music" parent="MainVBox" instance=ExtResource("2_p25fg")]
+[node name="Music" parent="MainVBox" unique_id=1090977405 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Sound")
@@ -60,12 +60,12 @@ cycle_options = Array[String](["....................", "I...................", "
 focus_option = 15
 loop = false
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=493538410]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("3_0h43h")]
+[node name="Back" parent="MainVBox" unique_id=1243034445 instance=ExtResource("3_0h43h")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b20cdl7cicldv"]
+[gd_scene format=3 uid="uid://b20cdl7cicldv"]
 
 [ext_resource type="Script" uid="uid://fdcmfss42swv" path="res://Scripts/UI/Minimap.gd" id="1_itplw"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lhiow"]
@@ -10,53 +10,53 @@
 [ext_resource type="Script" uid="uid://oki7wxtma4x4" path="res://Scripts/UI/PlayerMarkerLayer.gd" id="7_n2mc3"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="8_q7g0h"]
 
-[node name="Minimap" type="Node2D"]
+[node name="Minimap" type="Node2D" unique_id=104431523]
 script = ExtResource("1_itplw")
 
-[node name="Panel" type="Sprite2D" parent="."]
+[node name="Panel" type="Sprite2D" parent="." unique_id=610785312]
 script = ExtResource("1_lhiow")
 texture_path = "res://Assets/Images/UI/MinimapPanel.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Panel"]
+[node name="MarkerSprite" type="Sprite2D" parent="Panel" unique_id=1146129260]
 texture = ExtResource("2_6qi0o")
 script = ExtResource("3_a7d3d")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="PanelMask" type="Sprite2D" parent="."]
+[node name="PanelMask" type="Sprite2D" parent="." unique_id=1418538390]
 self_modulate = Color(1, 1, 1, 0)
 texture = ExtResource("5_gbsa2")
 
-[node name="MapGroup" type="Node2D" parent="."]
+[node name="MapGroup" type="Node2D" parent="." unique_id=1298782326]
 
-[node name="CellMask" type="Sprite2D" parent="MapGroup"]
+[node name="CellMask" type="Sprite2D" parent="MapGroup" unique_id=790416242]
 clip_children = 1
 scale = Vector2(8, 8)
 
-[node name="Map" type="Sprite2D" parent="MapGroup/CellMask"]
+[node name="Map" type="Sprite2D" parent="MapGroup/CellMask" unique_id=976395460]
 scale = Vector2(0.125, 0.125)
 script = ExtResource("1_lhiow")
 texture_path = "res://Assets/Images/UI/Minimap.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/CellMask/Map"]
+[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/CellMask/Map" unique_id=1100317821]
 texture = ExtResource("4_a7d3d")
 script = ExtResource("3_a7d3d")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="MarkerGroup" type="Node2D" parent="MapGroup"]
+[node name="MarkerGroup" type="Node2D" parent="MapGroup" unique_id=770304804]
 position = Vector2(-100, -84)
 
-[node name="PlayerMarkerGroup" type="Node2D" parent="MapGroup"]
+[node name="PlayerMarkerGroup" type="Node2D" parent="MapGroup" unique_id=745670867]
 position = Vector2(-100, -84)
 script = ExtResource("7_n2mc3")
 
-[node name="PlayerMarker" type="Sprite2D" parent="MapGroup"]
+[node name="PlayerMarker" type="Sprite2D" parent="MapGroup" unique_id=1341788155]
 script = ExtResource("1_lhiow")
 texture_path = "res://Assets/Images/UI/MinimapIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/PlayerMarker"]
+[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/PlayerMarker" unique_id=584117732]
 texture = ExtResource("7_enhm3")
 hframes = 6
 vframes = 2
@@ -64,7 +64,7 @@ frame = 2
 script = ExtResource("3_a7d3d")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="SnailyText" parent="." instance=ExtResource("8_q7g0h")]
+[node name="SnailyText" parent="." unique_id=1605319444 instance=ExtResource("8_q7g0h")]
 custom_minimum_size = Vector2(100, 0)
 anchors_preset = 1
 anchor_left = 1.0

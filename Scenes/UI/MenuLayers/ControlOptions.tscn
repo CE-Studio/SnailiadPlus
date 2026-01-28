@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqypqlra5aq78"]
+[gd_scene format=3 uid="uid://dqypqlra5aq78"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_cowbv"]
 [ext_resource type="Script" uid="uid://df8bix5jxs1sp" path="res://Scripts/UI/MenuLayers/ControlOptions.gd" id="2_mg6t5"]
@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="4_4b6qn"]
 [ext_resource type="AudioStream" uid="uid://bb4w3r2sh4uri" path="res://Assets/Sounds/Sfx/MenuControlsDefault.ogg" id="5_qhi02"]
 
-[node name="ControlOptions" type="Node2D"]
+[node name="ControlOptions" type="Node2D" unique_id=350374471]
 script = ExtResource("1_cowbv")
 save_general_on_close = true
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1557214152]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -18,7 +18,7 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_mg6t5")
 
-[node name="Remap" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+[node name="Remap" parent="MainVBox" unique_id=502255249 instance=ExtResource("2_mn8gm")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -32,12 +32,12 @@ quick_load_layer = "SetControls"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1727066644]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Default" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+[node name="Default" parent="MainVBox" unique_id=1586395500 instance=ExtResource("2_mn8gm")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -49,7 +49,7 @@ focus_previous = NodePath("../ConOptions")
 button_text = "Reset all to defaults"
 hide_frame = true
 
-[node name="ConOptions" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+[node name="ConOptions" parent="MainVBox" unique_id=727110493 instance=ExtResource("2_mn8gm")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -62,12 +62,12 @@ button_text = "Controller settings"
 quick_load_layer = "ControllerOptions"
 hide_frame = true
 
-[node name="HSeparator2" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator2" type="HSeparator" parent="MainVBox" unique_id=1585497284]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_mn8gm")]
+[node name="Back" parent="MainVBox" unique_id=276820752 instance=ExtResource("2_mn8gm")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -80,16 +80,16 @@ button_text = "Back to options"
 back_one_layer = true
 hide_frame = true
 
-[node name="ContextPanel" parent="." instance=ExtResource("4_4b6qn")]
+[node name="ContextPanel" parent="." unique_id=1823887501 instance=ExtResource("4_4b6qn")]
 custom_minimum_size = Vector2(200, 0)
 offset_left = 100.0
 offset_top = 240.0
 offset_right = 300.0
 offset_bottom = 262.0
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1181579440]
 
-[node name="Defaults" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Defaults" type="AudioStreamPlayer" parent="AudioGroup" unique_id=520654969]
 stream = ExtResource("5_qhi02")
 bus = &"Sfx"
 

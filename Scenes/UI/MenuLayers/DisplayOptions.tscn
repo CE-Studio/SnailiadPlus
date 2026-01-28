@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bms4bml0e80ji"]
+[gd_scene format=3 uid="uid://bms4bml0e80ji"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_6as5y"]
 [ext_resource type="Script" uid="uid://d0obh6jkecpl" path="res://Scripts/UI/MenuLayers/DisplayOptions.gd" id="2_0fbpc"]
@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://cm0i4dyk1srik" path="res://Scenes/UI/ToggleSnailyButton.tscn" id="4_jxl7l"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="6_45c1g"]
 
-[node name="DisplayOptions" type="Node2D"]
+[node name="DisplayOptions" type="Node2D" unique_id=1939240107]
 script = ExtResource("1_6as5y")
 save_general_on_close = true
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1210606179]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -21,7 +21,7 @@ size_flags_vertical = 4
 alignment = 1
 script = ExtResource("2_0fbpc")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainVBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainVBox" unique_id=346040413]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -32,13 +32,13 @@ scroll_horizontal_custom_step = 1.0
 scroll_vertical_custom_step = 1.0
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer" unique_id=484641950]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Scale" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Scale" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1278465963 instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../../Back")
@@ -52,7 +52,7 @@ cycle_options = Array[String](["1x", "2x", "3x", "4x", "5x", "6x"])
 focus_option = 1
 grab_focus_on_load = true
 
-[node name="Ratio" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Ratio" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=132726071 instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Scale")
@@ -64,7 +64,7 @@ header_text = "Aspect ratio"
 auto_select_mode = true
 cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10"])
 
-[node name="Fullscreen" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="Fullscreen" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=763072777 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Ratio")
@@ -74,7 +74,7 @@ focus_next = NodePath("../Minimap")
 focus_previous = NodePath("../Ratio")
 button_text = "Fullscreen"
 
-[node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Minimap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1171853963 instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Fullscreen")
@@ -87,7 +87,7 @@ cycle_option_text = "Hide|Map only|Map and room names"
 auto_select_mode = true
 focus_option = 2
 
-[node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="BottomKeys" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1140587859 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Minimap")
@@ -97,7 +97,7 @@ focus_next = NodePath("../InputMap")
 focus_previous = NodePath("../Minimap")
 button_text = "Show weapon icons"
 
-[node name="InputMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="InputMap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1708784748 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../BottomKeys")
@@ -107,7 +107,7 @@ focus_next = NodePath("../InGameTime")
 focus_previous = NodePath("../BottomKeys")
 button_text = "Show input display"
 
-[node name="InGameTime" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="InGameTime" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=2033658085 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../InputMap")
@@ -117,7 +117,7 @@ focus_next = NodePath("../Framerate")
 focus_previous = NodePath("../InputMap")
 button_text = "Show in-game time"
 
-[node name="Framerate" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="Framerate" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1723450619 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../InGameTime")
@@ -127,7 +127,7 @@ focus_next = NodePath("../Particles")
 focus_previous = NodePath("../InGameTime")
 button_text = "Show FPS"
 
-[node name="Particles" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Particles" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1894110342 instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Framerate")
@@ -140,7 +140,7 @@ cycle_option_text = "None|Environments only|Entities only (Flash)|Entities only 
 auto_select_mode = true
 focus_option = 5
 
-[node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("2_msw3w")]
+[node name="Darkness" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=472548602 instance=ExtResource("2_msw3w")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Particles")
@@ -153,7 +153,7 @@ cycle_option_text = "None|Minor|Half|Full"
 auto_select_mode = true
 focus_option = 3
 
-[node name="PaletteShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="PaletteShader" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=272695761 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Darkness")
@@ -164,7 +164,7 @@ focus_previous = NodePath("../Darkness")
 button_text = "Limited palette"
 disabled = true
 
-[node name="DistortShader" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="DistortShader" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1530278514 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../PaletteShader")
@@ -174,7 +174,7 @@ focus_next = NodePath("../OpaqueAfterimages")
 focus_previous = NodePath("../PaletteShader")
 button_text = "Distortion shaders"
 
-[node name="OpaqueAfterimages" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_jxl7l")]
+[node name="OpaqueAfterimages" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=2037928501 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../DistortShader")
@@ -184,7 +184,7 @@ focus_next = NodePath("../../../Back")
 focus_previous = NodePath("../DistortShader")
 button_text = "Afterimages start\\nopaque"
 
-[node name="Back" parent="MainVBox" instance=ExtResource("6_45c1g")]
+[node name="Back" parent="MainVBox" unique_id=1710854172 instance=ExtResource("6_45c1g")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

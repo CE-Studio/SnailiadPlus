@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c84sydpddlb6c"]
+[gd_scene format=3 uid="uid://c84sydpddlb6c"]
 
 [ext_resource type="Script" uid="uid://xexpkncfjycg" path="res://Scripts/MainMenu.gd" id="1_jucx6"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_f34c4"]
@@ -6,27 +6,27 @@
 [ext_resource type="PackedScene" uid="uid://dcat51drlm5u4" path="res://Scenes/UI/Title.tscn" id="5_tmbei"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="6_64eun"]
 
-[node name="IngameMenuScene" type="Node2D"]
+[node name="IngameMenuScene" type="Node2D" unique_id=1180411266]
 script = ExtResource("1_jucx6")
 
-[node name="LayerGroup" type="Node2D" parent="."]
+[node name="LayerGroup" type="Node2D" parent="." unique_id=1779281274]
 
-[node name="LeftSelector" type="Sprite2D" parent="."]
+[node name="LeftSelector" type="Sprite2D" parent="." unique_id=713405541]
 position = Vector2(200, 300)
 script = ExtResource("4_f34c4")
 texture_path = "res://Assets/Images/UI/MenuPlayers.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="RightSelector" type="Sprite2D" parent="."]
+[node name="RightSelector" type="Sprite2D" parent="." unique_id=638599673]
 position = Vector2(200, 300)
 script = ExtResource("4_f34c4")
 texture_path = "res://Assets/Images/UI/MenuPlayers.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="Title" parent="." instance=ExtResource("5_tmbei")]
+[node name="Title" parent="." unique_id=1918087793 instance=ExtResource("5_tmbei")]
 position = Vector2(200, 100)
 
-[node name="Version" parent="." instance=ExtResource("6_64eun")]
+[node name="Version" parent="." unique_id=750970133 instance=ExtResource("6_64eun")]
 custom_minimum_size = Vector2(76, 0)
 offset_left = 1.0
 offset_top = 222.0
@@ -37,14 +37,14 @@ text = "Version
 0.0.0"
 text_scale = 1
 
-[node name="ColorCover" parent="." instance=ExtResource("5_l2jss")]
+[node name="ColorCover" parent="." unique_id=1257416571 instance=ExtResource("5_l2jss")]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)
 scale = Vector2(2, 2)
 start_color = Color(0, 0, 0, 0)
 fade_time = 0.0
 
-[node name="SaveIcon" type="Sprite2D" parent="."]
+[node name="SaveIcon" type="Sprite2D" parent="." unique_id=1791191807]
 position = Vector2(384, 224)
 script = ExtResource("4_f34c4")
 texture_path = "res://Assets/Images/UI/SaveIcon.json"

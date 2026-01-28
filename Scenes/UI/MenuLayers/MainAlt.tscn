@@ -1,19 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://viroje58twmg"]
+[gd_scene format=3 uid="uid://viroje58twmg"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_l8yce"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_0j8kw"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=147070852]
 script = ExtResource("1_l8yce")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=229268017]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 
-[node name="Return" parent="MainVBox" instance=ExtResource("2_0j8kw")]
+[node name="Return" parent="MainVBox" unique_id=1954230756 instance=ExtResource("2_0j8kw")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -27,7 +27,7 @@ back_one_layer = true
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Warp" parent="MainVBox" instance=ExtResource("2_0j8kw")]
+[node name="Warp" parent="MainVBox" unique_id=2031161197 instance=ExtResource("2_0j8kw")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -40,12 +40,12 @@ button_text = "Warp somewhere"
 quick_load_layer = "ProfileWarp"
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=536728503]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Options" parent="MainVBox" instance=ExtResource("2_0j8kw")]
+[node name="Options" parent="MainVBox" unique_id=389361783 instance=ExtResource("2_0j8kw")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -58,7 +58,7 @@ button_text = "Options"
 quick_load_layer = "Options"
 hide_frame = true
 
-[node name="Museum" parent="MainVBox" instance=ExtResource("2_0j8kw")]
+[node name="Museum" parent="MainVBox" unique_id=795324494 instance=ExtResource("2_0j8kw")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -71,7 +71,7 @@ button_text = "Museum"
 quick_load_layer = "Museum"
 hide_frame = true
 
-[node name="Quit" parent="MainVBox" instance=ExtResource("2_0j8kw")]
+[node name="Quit" parent="MainVBox" unique_id=1306334097 instance=ExtResource("2_0j8kw")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

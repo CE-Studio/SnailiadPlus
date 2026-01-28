@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://biopitj8e1fre"]
+[gd_scene format=3 uid="uid://biopitj8e1fre"]
 
 [ext_resource type="Script" uid="uid://efhp2t5pddu8" path="res://Scripts/Classes/SpecialCollision.gd" id="1_ofchq"]
 
@@ -11,20 +11,20 @@ size = Vector2(16, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cksbo"]
 size = Vector2(8, 8)
 
-[node name="SpecialCollision" type="StaticBody2D"]
+[node name="SpecialCollision" type="StaticBody2D" unique_id=560894353]
 collision_mask = 0
 script = ExtResource("1_ofchq")
 
-[node name="Full" type="CollisionShape2D" parent="."]
+[node name="Full" type="CollisionShape2D" parent="." unique_id=393323579]
 shape = SubResource("RectangleShape2D_j7mom")
 
-[node name="HalfEdge" type="CollisionShape2D" parent="."]
+[node name="HalfEdge" type="CollisionShape2D" parent="." unique_id=1292179810]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_ofchq")
 
-[node name="HalfCenter" type="CollisionShape2D" parent="."]
+[node name="HalfCenter" type="CollisionShape2D" parent="." unique_id=441134601]
 shape = SubResource("RectangleShape2D_ofchq")
 
-[node name="Corner" type="CollisionShape2D" parent="."]
+[node name="Corner" type="CollisionShape2D" parent="." unique_id=713003322]
 position = Vector2(-4, 4)
 shape = SubResource("RectangleShape2D_cksbo")

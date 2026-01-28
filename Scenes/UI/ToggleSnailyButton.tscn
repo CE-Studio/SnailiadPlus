@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cm0i4dyk1srik"]
+[gd_scene format=3 uid="uid://cm0i4dyk1srik"]
 
 [ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_3lbwi"]
 [ext_resource type="Script" uid="uid://bnpm7rfsi0i2d" path="res://Scripts/Classes/MenuButtons/ToggleSnailyButton.gd" id="1_38v4y"]
@@ -14,7 +14,7 @@ resource_local_to_scene = true
 atlas = ExtResource("3_3lbwi")
 region = Rect2(0, 0, 22, 22)
 
-[node name="ToggleSnailyButton" type="PanelContainer"]
+[node name="ToggleSnailyButton" type="PanelContainer" unique_id=622407168]
 offset_right = 96.0
 offset_bottom = 22.0
 size_flags_horizontal = 4
@@ -23,47 +23,47 @@ focus_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3lbwi")
 script = ExtResource("1_38v4y")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2092135664]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1024810848]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = ExtResource("1_3lbwi")
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer" unique_id=672984721]
 layout_mode = 2
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="HBoxContainer/PanelContainer/MarginContainer" instance=ExtResource("1_vul1p")]
+[node name="SnailyText" parent="HBoxContainer/PanelContainer/MarginContainer" unique_id=294767652 instance=ExtResource("1_vul1p")]
 layout_mode = 2
 text = "Text!!"
 scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=1649480320]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_rrreg")
 stretch_mode = 2
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1735582994]
 
-[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup" unique_id=865693179]
 stream = ExtResource("2_38v4y")
 bus = &"Sfx"
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=30638755]
 stream = ExtResource("3_o7cfg")
 bus = &"Sfx"
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b58ibb88wc2y8"]
+[gd_scene format=3 uid="uid://b58ibb88wc2y8"]
 
 [ext_resource type="Script" uid="uid://ckhv12e4jbney" path="res://Scripts/Enemies/Generators/GeneratorBalloon.gd" id="1_ws8yb"]
 [ext_resource type="Texture2D" uid="uid://2lg8dqmi62ui" path="res://Assets/Images/Entities/Generators.png" id="2_nrh2c"]
@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g3f02"]
 size = Vector2(16, 16)
 
-[node name="GeneratorBalloon" type="CharacterBody2D"]
+[node name="GeneratorBalloon" type="CharacterBody2D" unique_id=1625204958]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_ws8yb")
@@ -15,11 +15,11 @@ invulnerable = true
 can_damage = false
 metadata/_custom_type_script = "uid://cai477htwvosf"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1256383568]
 shape = SubResource("RectangleShape2D_g3f02")
 debug_color = Color(0.564706, 0.564706, 0.564706, 0.262745)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2030540238]
 texture = ExtResource("2_nrh2c")
 hframes = 4
 frame = 3

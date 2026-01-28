@@ -274,7 +274,6 @@ var debug_print_adjustments:bool = false
 # _ready() is called every time this script is instanced
 # It's used here to initialize certain variables and node references
 func _ready():
-	super()
 	instance = self
 	sprite = $"JsonSprite2D"
 	body = $"CharacterBody2D"
@@ -628,7 +627,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			while grav_shock_anim_time > SEC_PER_SHOCK_STEP:
 				grav_shock_anim_time -= SEC_PER_SHOCK_STEP
 				grav_shock_anim_step = (grav_shock_anim_step + 1) % GRAV_SHOCK_ANIM_STEPS
-		
+
 		match surface:
 			Statics.DirsSurface.FLOOR:
 				body.velocity = rel_vel

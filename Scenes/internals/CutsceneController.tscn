@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cn0i5sa8m78t3"]
+[gd_scene format=3 uid="uid://cn0i5sa8m78t3"]
 
 [ext_resource type="Script" uid="uid://etemc37gjn6w" path="res://Scripts/Classes/CutsceneController.gd" id="1_ssxem"]
 [ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_mg7n4"]
@@ -214,13 +214,13 @@ _data = {
 &"default": SubResource("Animation_mg7n4")
 }
 
-[node name="CutsceneController" type="Node"]
+[node name="CutsceneController" type="Node" unique_id=57643327]
 process_mode = 3
 script = ExtResource("1_ssxem")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1705075541]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1121460318]
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
@@ -230,7 +230,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="toptargpos" type="Control" parent="CanvasLayer/Control"]
+[node name="toptargpos" type="Control" parent="CanvasLayer/Control" unique_id=935025892]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -241,7 +241,7 @@ offset_right = -192.0
 offset_bottom = 16.0
 grow_horizontal = 2
 
-[node name="bottargpos" type="Control" parent="CanvasLayer/Control"]
+[node name="bottargpos" type="Control" parent="CanvasLayer/Control" unique_id=107314781]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -255,14 +255,14 @@ offset_bottom = 61.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="text" type="Control" parent="CanvasLayer/Control"]
+[node name="text" type="Control" parent="CanvasLayer/Control" unique_id=163031728]
 anchors_preset = 0
 offset_left = 8.0
 offset_top = 16.0
 offset_right = 8.0
 offset_bottom = 16.0
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/text"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/text" unique_id=969726994]
 self_modulate = Color(0, 0.2509804, 0.34509805, 0)
 layout_mode = 0
 offset_left = 10.0
@@ -270,7 +270,7 @@ offset_right = 374.0
 offset_bottom = 64.0
 theme_type_variation = &"textbg_1"
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/text/PanelContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/text/PanelContainer" unique_id=24495796]
 self_modulate = Color(0, 0.2509804, 0.34509805, 1)
 position = Vector2(-18, 0)
 texture = ExtResource("2_opako")
@@ -280,22 +280,22 @@ vframes = 8
 frame = 6
 script = SubResource("GDScript_opako")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/text/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/text/PanelContainer" unique_id=1468682797]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer" unique_id=1341507298]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer" unique_id=922497544]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1793527341]
 visible = false
 layout_mode = 2
 
-[node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer" unique_id=491649037]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -310,11 +310,11 @@ skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", 
 seconds_per_pause_step = 0.0
 metadata/_custom_type_script = "uid://g32um0mltv5d"
 
-[node name="advancearrow" type="Control" parent="CanvasLayer/Control/text/PanelContainer"]
+[node name="advancearrow" type="Control" parent="CanvasLayer/Control/text/PanelContainer" unique_id=1900464257]
 visible = false
 layout_mode = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/text/PanelContainer/advancearrow"]
+[node name="Control" type="Control" parent="CanvasLayer/Control/text/PanelContainer/advancearrow" unique_id=1528349309]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -324,13 +324,13 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control/text/PanelContainer/advancearrow/Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control/text/PanelContainer/advancearrow/Control" unique_id=307577273]
 position = Vector2(-10, -6)
 sprite_frames = SubResource("SpriteFrames_fsgch")
 autoplay = "default"
 frame_progress = 0.78229266
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control" unique_id=103714304]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -343,10 +343,10 @@ theme_override_constants/margin_top = 65
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 65
 
-[node name="Panel2" type="Panel" parent="CanvasLayer/Control/MarginContainer"]
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control/MarginContainer" unique_id=169760054]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/Panel2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/Panel2" unique_id=40072499]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -358,45 +358,45 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer" unique_id=820331701]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer" unique_id=710759604]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1873792768]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer2" unique_id=1984707445]
 layout_mode = 2
 text = "Error!!"
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=283970025]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer/CenterContainer" unique_id=419356197]
 layout_mode = 2
 texture = ExtResource("4_gc0g0")
 stretch_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer" unique_id=246745400]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1701324834]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "copy"
 
-[node name="Button2" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button2" type="Button" parent="CanvasLayer/Control/MarginContainer/Panel2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=962224600]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "continue"
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1044008942]
 visible = false
 offset_left = 4.0
 offset_top = 20.0
@@ -405,17 +405,13 @@ offset_bottom = 30.0
 mouse_filter = 2
 texture = ExtResource("5_xegkh")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2146576682]
 
-[node name="warning" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_fv03o")
-}
+[node name="warning" type="AnimationPlayer" parent="." unique_id=1689516820]
+libraries/ = SubResource("AnimationLibrary_fv03o")
 
-[node name="effects" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_wjrlc")
-}
-autoplay = "default"
+[node name="effects" type="AnimationPlayer" parent="." unique_id=1553109839]
+libraries/ = SubResource("AnimationLibrary_wjrlc")
+autoplay = &"default"
 
 [connection signal="spoke" from="CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel" to="." method="_on_dialogue_label_spoke"]

@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://nkfen5qpu4v2"]
+[gd_scene format=3 uid="uid://nkfen5qpu4v2"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_p4vr5"]
-[ext_resource type="Script" uid="uid://dgpkjco60omt4" path="res://Scripts/UI/MenuLayers/ControllerOptions.gd" id="2_p4vr5"]
+[ext_resource type="Script" path="res://Scripts/UI/MenuLayers/ControllerOptions.gd" id="2_p4vr5"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="3_5vtdb"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="4_8sr6s"]
 
-[node name="ControllerOptions" type="Node2D"]
+[node name="ControllerOptions" type="Node2D" unique_id=1351973327]
 script = ExtResource("1_p4vr5")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=727964914]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -16,7 +16,7 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_p4vr5")
 
-[node name="ButtonStyle" parent="MainVBox" instance=ExtResource("3_5vtdb")]
+[node name="ButtonStyle" parent="MainVBox" unique_id=133397065 instance=ExtResource("3_5vtdb")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Back")
@@ -24,13 +24,12 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../MoveDeadzone")
 focus_next = NodePath("../MoveDeadzone")
 focus_previous = NodePath("../Back")
-header_id = "menu_option_controls_buttonType"
 header_text = "Button styling"
 cycle_option_text = "Xbox|Nintendo|PlayStation|Ouya"
 auto_select_mode = true
 grab_focus_on_load = true
 
-[node name="MoveDeadzone" parent="MainVBox" instance=ExtResource("3_5vtdb")]
+[node name="MoveDeadzone" parent="MainVBox" unique_id=933218317 instance=ExtResource("3_5vtdb")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ButtonStyle")
@@ -38,14 +37,13 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../AimDeadzone")
 focus_next = NodePath("../AimDeadzone")
 focus_previous = NodePath("../ButtonStyle")
-header_id = "menu_option_controls_deadzoneMove"
 header_text = "Movement deadzone"
 auto_select_mode = true
 cycle_options = Array[String](["0%", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%"])
 focus_option = 4
 loop = false
 
-[node name="AimDeadzone" parent="MainVBox" instance=ExtResource("3_5vtdb")]
+[node name="AimDeadzone" parent="MainVBox" unique_id=893475971 instance=ExtResource("3_5vtdb")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../MoveDeadzone")
@@ -53,19 +51,18 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../MoveDeadzone")
-header_id = "menu_option_controls_deadzoneAim"
 header_text = "Aiming deadzone"
 auto_select_mode = true
 cycle_options = Array[String](["0%", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%"])
 focus_option = 4
 loop = false
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=614026578]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("4_8sr6s")]
+[node name="Back" parent="MainVBox" unique_id=1533369291 instance=ExtResource("4_8sr6s")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -74,7 +71,6 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ButtonStyle")
 focus_next = NodePath("../ButtonStyle")
 focus_previous = NodePath("../AimDeadzone")
-text_id = "menu_option_options_returnTo"
 button_text = "Back to options"
 back_one_layer = true
 hide_frame = true

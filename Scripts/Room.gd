@@ -102,12 +102,20 @@ func _ready() -> void:
 		get_tree().call_deferred("change_scene_to_file", "res://Scenes/PreloadScene.tscn")
 	if UICore.instance:
 		UICore.instance.darkness_layer.call_deferred("update_col", darkness_level)
+	var ar:Array[CutsceneControllable] = get_actors()
+	var iar:Array[StringName]
+	for i in ar:
+		if i.identifier in iar:
+			push_error("Multiple actors are using the ID \"", i.identifier, "\"")
+		else:
+			iar.append(i.identifier)
+	CutsceneControllable.actors = ar
 
 
 func spawn(_spawn_all:bool) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if Statics.show_entity_layer:
 		map_entity1.modulate = Color(1, 1, 1, 0.5)
 		map_entity2.modulate = Color(1, 1, 1, 0.5)
@@ -153,7 +161,7 @@ func spawn(_spawn_all:bool) -> void:
 
 func _process(_delta: float) -> void:
 	if not spawned_all and not Engine.is_editor_hint():
-		_spawn_entities_from_layer(0) 
+		_spawn_entities_from_layer(0)
 
 
 func get_room_name_from_filename() -> void:
@@ -189,7 +197,6 @@ func center_maps() -> void:
 
 
 func get_actors() -> Array[CutsceneControllable]:
-	assert(Engine.is_editor_hint(), "Only intended to be used in the editor")
 	var arr:Array[CutsceneControllable] = []
 	_recur_extr(arr, self)
 	return arr
@@ -215,7 +222,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		var tile_coords := map.get_cell_atlas_coords(tile)
 		spawned_sp += 1
 		running_count += 1
-		
+
 		match tile_coords:
 			Vector2i(4, 0): # Blob
 				var blob:BlobCommon = _load(&"res://Scenes/Entities/Enemies/BlobCommon.tscn").instantiate()

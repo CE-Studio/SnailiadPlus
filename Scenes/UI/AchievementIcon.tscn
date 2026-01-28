@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://blm214ukusxkj"]
+[gd_scene format=3 uid="uid://blm214ukusxkj"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_2hb6l"]
 [ext_resource type="Script" uid="uid://5mgbnx3hi7qv" path="res://Scripts/UI/AchievementIcon.gd" id="1_bca4f"]
@@ -6,24 +6,24 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_gk2pu"]
 [ext_resource type="Texture2D" uid="uid://p7n0mc1vnka6" path="res://Assets/Images/UI/AchievementIcons.png" id="4_gk2pu"]
 
-[node name="AchivevementIcon" type="Sprite2D"]
+[node name="AchivevementIcon" type="Sprite2D" unique_id=420965754]
 y_sort_enabled = true
 script = ExtResource("1_bca4f")
 texture_path = "res://Assets/Images/UI/AchievementFrame.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1674047924]
 texture = ExtResource("2_ebifv")
 vframes = 2
 script = ExtResource("3_gk2pu")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="." unique_id=99583866]
 script = ExtResource("1_2hb6l")
 texture_path = "res://Assets/Images/UI/AchievementIcons.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Icon"]
+[node name="MarkerSprite" type="Sprite2D" parent="Icon" unique_id=83938141]
 texture = ExtResource("4_gk2pu")
 hframes = 5
 vframes = 6

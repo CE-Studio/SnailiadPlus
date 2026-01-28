@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcgwxtcgdpoep"]
+[gd_scene format=3 uid="uid://bcgwxtcgdpoep"]
 
 [ext_resource type="Script" uid="uid://4rglf0rlyduy" path="res://Scripts/Bullets/Enemy/EnemyBoomerangBlue.gd" id="1_1cqul"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_6t3vn"]
@@ -9,37 +9,37 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(24, 24)
 
-[node name="EnemyBoomerangBlue" type="Node2D"]
+[node name="EnemyBoomerangBlue" type="Node2D" unique_id=2038470674]
 z_index = 50
 script = ExtResource("1_1cqul")
 damage = 2
 max_life_time = 4.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
 collision_layer = 8
 collision_mask = 39
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=1528853263]
 shape = SubResource("RectangleShape2D_3p1tk")
 debug_color = Color(0.482353, 0.435294, 1, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1167675070]
 scale = Vector2(1.2, 1.2)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
 script = ExtResource("2_6t3vn")
 texture_path = "res://Assets/Images/Bullets/Enemy/EnemyBoomerangBlue.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
 texture = ExtResource("3_6t3vn")
 hframes = 8
 frame = 1
 script = ExtResource("4_y5cpl")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1819499505]
 stream = ExtResource("5_1cqul")
 bus = &"Sfx"

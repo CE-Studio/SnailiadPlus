@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpb8dlhby3uuf"]
+[gd_scene format=3 uid="uid://cpb8dlhby3uuf"]
 
 [ext_resource type="Script" uid="uid://dgvu7txtfbgxw" path="res://Scripts/Enemies/Ghostball.gd" id="1_ticem"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4y3yc"]
@@ -14,7 +14,7 @@ size = Vector2(14, 14)
 shader = ExtResource("4_3qmr4")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Ghostball" type="CharacterBody2D"]
+[node name="Ghostball" type="CharacterBody2D" unique_id=1051193514]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -24,24 +24,24 @@ max_health_hard = 250
 attack = 3
 defense = 1
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1006321637]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1657189342]
 shape = SubResource("RectangleShape2D_6ijum")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=711227304]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=262191413]
 material = ExtResource("2_4y3yc")
 script = ExtResource("3_pn6rq")
 texture_path = "res://Assets/Images/Entities/Dandelion.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=322729899]
 material = SubResource("ShaderMaterial_43bce")
 texture = ExtResource("5_ticem")
 script = ExtResource("6_s83xv")

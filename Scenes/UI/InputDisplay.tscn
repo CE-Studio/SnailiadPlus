@@ -1,33 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://wmn05t8atr6"]
+[gd_scene format=3 uid="uid://wmn05t8atr6"]
 
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_k7lrv"]
 [ext_resource type="Script" uid="uid://c5dps66xy2ucs" path="res://Scripts/UI/InputDisplay.gd" id="1_p4hb2"]
 [ext_resource type="Texture2D" uid="uid://b2kd06qn8b4jk" path="res://Assets/Images/UI/DebugKey.png" id="3_ct6f5"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_cv0em"]
 
-[node name="InputDisplay" type="Node2D"]
+[node name="InputDisplay" type="Node2D" unique_id=368493357]
 script = ExtResource("1_p4hb2")
 
-[node name="Left" type="Sprite2D" parent="."]
+[node name="Left" type="Sprite2D" parent="." unique_id=770494412]
 position = Vector2(4, -4)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Left"]
+[node name="MarkerSprite" type="Sprite2D" parent="Left" unique_id=646726118]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Down" type="Sprite2D" parent="."]
+[node name="Down" type="Sprite2D" parent="." unique_id=1977085838]
 position = Vector2(13, -4)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Down"]
+[node name="MarkerSprite" type="Sprite2D" parent="Down" unique_id=1514578655]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -35,13 +35,13 @@ frame = 1
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Up" type="Sprite2D" parent="."]
+[node name="Up" type="Sprite2D" parent="." unique_id=1874480387]
 position = Vector2(13, -13)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Up"]
+[node name="MarkerSprite" type="Sprite2D" parent="Up" unique_id=769011175]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -49,13 +49,13 @@ frame = 2
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Right" type="Sprite2D" parent="."]
+[node name="Right" type="Sprite2D" parent="." unique_id=1719297979]
 position = Vector2(22, -4)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Right"]
+[node name="MarkerSprite" type="Sprite2D" parent="Right" unique_id=2134047572]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -63,13 +63,13 @@ frame = 3
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Jump" type="Sprite2D" parent="."]
+[node name="Jump" type="Sprite2D" parent="." unique_id=247337447]
 position = Vector2(31, -4)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Jump"]
+[node name="MarkerSprite" type="Sprite2D" parent="Jump" unique_id=1565719440]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -77,13 +77,13 @@ frame = 4
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Shoot" type="Sprite2D" parent="."]
+[node name="Shoot" type="Sprite2D" parent="." unique_id=1367102660]
 position = Vector2(31, -13)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Shoot"]
+[node name="MarkerSprite" type="Sprite2D" parent="Shoot" unique_id=1318218210]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -91,13 +91,13 @@ frame = 5
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Strafe" type="Sprite2D" parent="."]
+[node name="Strafe" type="Sprite2D" parent="." unique_id=1171156798]
 position = Vector2(40, -13)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Strafe"]
+[node name="MarkerSprite" type="Sprite2D" parent="Strafe" unique_id=20079549]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3
@@ -105,13 +105,13 @@ frame = 6
 script = ExtResource("4_cv0em")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Gravity" type="Sprite2D" parent="."]
+[node name="Gravity" type="Sprite2D" parent="." unique_id=909633891]
 position = Vector2(40, -4)
 script = ExtResource("1_k7lrv")
 texture_path = "res://Assets/Images/UI/DebugKey.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Gravity"]
+[node name="MarkerSprite" type="Sprite2D" parent="Gravity" unique_id=1461645490]
 texture = ExtResource("3_ct6f5")
 hframes = 8
 vframes = 3

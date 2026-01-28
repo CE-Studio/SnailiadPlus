@@ -36,6 +36,7 @@ const _DATA_MATCH = {
 	set(value):
 		fade_lerp = value
 		_fade_color()
+@export var fps_mult := 1.0
 var data:Dictionary
 var is_ready := false
 var action:String:
@@ -236,7 +237,7 @@ func _fade_color() -> void:
 func _process(delta: float) -> void:
 	if _recheck:
 		_check_action()
-	_timer += delta
+	_timer += delta * fps_mult
 	_fade_color()
 	if _has_action:
 		var _action:Dictionary = data["animations"][action]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dke6r2335reau"]
+[gd_scene format=3 uid="uid://dke6r2335reau"]
 
 [ext_resource type="Theme" uid="uid://dbtbq5hs1dmxo" path="res://UI/uitheme.tres" id="1_52xjo"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="1_kra6s"]
@@ -11,7 +11,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kra6s"]
 
-[node name="SnailyText" type="RichTextLabel"]
+[node name="SnailyText" type="RichTextLabel" unique_id=326553468]
 clip_contents = false
 anchors_preset = 8
 anchor_left = 0.5

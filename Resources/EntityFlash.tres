@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://bday5amji1ndg"]
+[gd_resource type="VisualShader" format=3 uid="uid://bday5amji1ndg"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_g1srq"]
 output_port_for_preview = 0
@@ -22,39 +22,6 @@ input_name = "texture"
 
 [resource]
 resource_local_to_scene = true
-code = "shader_type canvas_item;
-render_mode blend_mix;
-
-uniform vec4 flash_color : source_color = vec4(0.000000, 0.000000, 0.000000, 1.000000);
-
-
-
-void fragment() {
-// Input:5
-	vec2 n_out5p0 = UV;
-
-
-	vec4 n_out4p0;
-// Texture2D:4
-	n_out4p0 = texture(TEXTURE, n_out5p0);
-	float n_out4p4 = n_out4p0.a;
-
-
-// ColorParameter:2
-	vec4 n_out2p0 = flash_color;
-
-
-// ColorOp:3
-	vec3 n_out3p0 = vec3(1.0) - (vec3(1.0) - vec3(n_out4p0.xyz)) * (vec3(1.0) - vec3(n_out2p0.xyz));
-
-
-// Output:0
-	COLOR.rgb = n_out3p0;
-	COLOR.a = n_out4p4;
-
-
-}
-"
 mode = 1
 flags/light_only = false
 nodes/vertex/0/position = Vector2(-220, 40)

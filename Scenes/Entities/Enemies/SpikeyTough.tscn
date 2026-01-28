@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdf57eyuaxew"]
+[gd_scene format=3 uid="uid://cdf57eyuaxew"]
 
 [ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Enemies/SpikeyTough.gd" id="1_eebw4"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_c741o"]
@@ -17,7 +17,7 @@ size = Vector2(14, 14)
 shader = ExtResource("2_xwnv8")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="SpikeyTough" type="CharacterBody2D"]
+[node name="SpikeyTough" type="CharacterBody2D" unique_id=268096219]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -25,29 +25,29 @@ script = ExtResource("1_eebw4")
 max_health = 340
 attack = 4
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=833362453]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_43bce")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=472185652]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1741154127]
 shape = SubResource("RectangleShape2D_6ijum")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=800491384]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1766472086]
 material = ExtResource("2_c741o")
 script = ExtResource("3_c741o")
 texture_path = "res://Assets/Images/Entities/Spikey2.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1995483262]
 material = SubResource("ShaderMaterial_43bce")
 texture = ExtResource("4_eebw4")
 hframes = 4
@@ -55,33 +55,33 @@ vframes = 4
 script = ExtResource("5_h6lg0")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="CastGroup" type="Node2D" parent="."]
+[node name="CastGroup" type="Node2D" parent="." unique_id=1029300862]
 
-[node name="CWCheck" type="RayCast2D" parent="CastGroup"]
+[node name="CWCheck" type="RayCast2D" parent="CastGroup" unique_id=887988367]
 position = Vector2(-9, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CWBack" type="RayCast2D" parent="CastGroup"]
+[node name="CWBack" type="RayCast2D" parent="CastGroup" unique_id=93908421]
 position = Vector2(8, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CCWCheck" type="RayCast2D" parent="CastGroup"]
+[node name="CCWCheck" type="RayCast2D" parent="CastGroup" unique_id=1309181763]
 position = Vector2(9, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="CCWBack" type="RayCast2D" parent="CastGroup"]
+[node name="CCWBack" type="RayCast2D" parent="CastGroup" unique_id=1430788319]
 position = Vector2(-8, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3
 hit_from_inside = true
 
-[node name="Center" type="RayCast2D" parent="CastGroup"]
+[node name="Center" type="RayCast2D" parent="CastGroup" unique_id=20862358]
 position = Vector2(0, 8)
 target_position = Vector2(0, 4)
 collision_mask = 3

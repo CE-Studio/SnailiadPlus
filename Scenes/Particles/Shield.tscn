@@ -1,18 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwry6rq434cmj"]
+[gd_scene format=3 uid="uid://bwry6rq434cmj"]
 
-[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_fboqi"]
+[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_fboqi"]
 [ext_resource type="Texture2D" uid="uid://4c21bfy532jn" path="res://Assets/Images/Particles/Shield.png" id="2_fboqi"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_3new5"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_xtx2w"]
 
-[node name="Shield" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Shield" type="Node2D" unique_id=630816073 node_paths=PackedStringArray("sprite")]
 z_index = 10
 script = ExtResource("1_fboqi")
 sprite = NodePath("JsonSprite2D")
 anim_name = "shield"
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=250415517]
 texture = ExtResource("2_fboqi")
 hframes = 4
 vframes = 4
@@ -20,7 +19,7 @@ frame = 3
 script = ExtResource("3_3new5")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1805252754]
 script = ExtResource("4_xtx2w")
 texture_path = "res://Assets/Images/Particles/Shield.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dd05sfukri46y"]
+[gd_scene format=3 uid="uid://dd05sfukri46y"]
 
 [ext_resource type="Script" uid="uid://c1ruwm0tmpexf" path="res://Scripts/Hazards/Muck.gd" id="1_bib2p"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_xj71n"]
@@ -8,25 +8,25 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1k1m"]
 size = Vector2(16, 14)
 
-[node name="Muck" type="Area2D"]
+[node name="Muck" type="Area2D" unique_id=534883944]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_bib2p")
 damage = 3
 element = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1009498517]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_j1k1m")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=872262123]
 z_index = 25
 script = ExtResource("2_xj71n")
 texture_path = "res://Assets/Images/Entities/Muck.json"
 load_autoplay = Array[String](["0", "1", "2", "3"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=333638798]
 texture = ExtResource("3_xj71n")
 hframes = 4
 vframes = 4

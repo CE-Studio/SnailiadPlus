@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ukn31olknvf6"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ukn31olknvf6"]
 
 [ext_resource type="Shader" uid="uid://c3ewgda5n7quq" path="res://Resources/Darkness.gdshader" id="1_06du1"]
 [ext_resource type="Texture2D" uid="uid://d1ixqbq4rwcm0" path="res://Assets/Images/Environments/DarknessDither.png" id="2_p2sbv"]

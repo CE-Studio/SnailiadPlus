@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c1erw7pm5hwxq"]
+[gd_scene format=3 uid="uid://c1erw7pm5hwxq"]
 
 [ext_resource type="Script" uid="uid://cc6t327f03yd0" path="res://Scripts/Enemies/SnakeyCommon.gd" id="1_5wkks"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_mpo03"]
@@ -24,7 +24,7 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("7_5wkks")
 
-[node name="SnakeyCommon" type="CharacterBody2D"]
+[node name="SnakeyCommon" type="CharacterBody2D" unique_id=1766049045]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -34,34 +34,34 @@ attack = 4
 defense = 10
 health_orb_value = 2
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=955284490]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1501311309]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1250417898]
 shape = SubResource("RectangleShape2D_pfaec")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=684843618]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1984286312]
 material = ExtResource("2_mpo03")
 script = ExtResource("3_0j0dq")
 texture_path = "res://Assets/Images/Entities/Snake1.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=977327782]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("5_5wkks")
 hframes = 2
 script = ExtResource("6_p6dis")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Move" type="AudioStreamPlayer" parent="."]
+[node name="Move" type="AudioStreamPlayer" parent="." unique_id=2021736879]
 stream = SubResource("AudioStreamRandomizer_5wkks")
 bus = &"Sfx"

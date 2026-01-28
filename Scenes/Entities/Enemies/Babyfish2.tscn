@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1c6vu6c3pekq"]
+[gd_scene format=3 uid="uid://c1c6vu6c3pekq"]
 
 [ext_resource type="Script" uid="uid://ccm3oe7si7fh5" path="res://Scripts/Enemies/Babyfish2.gd" id="1_ktni3"]
 [ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_bcva1"]
@@ -14,7 +14,7 @@ size = Vector2(14, 10)
 shader = ExtResource("2_bcva1")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Babyfish2" type="CharacterBody2D"]
+[node name="Babyfish2" type="CharacterBody2D" unique_id=2091890457]
 z_index = 3
 collision_layer = 64
 collision_mask = 3
@@ -24,20 +24,20 @@ invulnerable = true
 can_damage = false
 grant_bestiary_without_defeat = true
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=264398108]
 shape = SubResource("RectangleShape2D_yl0hf")
 debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=972001696]
 scale = Vector2(0.7, 0.5)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2083554216]
 material = ExtResource("2_t5ilg")
 script = ExtResource("3_t5ilg")
 texture_path = "res://Assets/Images/Entities/Babyfish.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1276233874]
 material = SubResource("ShaderMaterial_5ic2g")
 texture = ExtResource("4_gcr7w")
 hframes = 4

@@ -1,21 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl7ws8xml1qqx"]
+[gd_scene format=3 uid="uid://dl7ws8xml1qqx"]
 
-[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_0h730"]
+[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_0h730"]
 [ext_resource type="Texture2D" uid="uid://hwgs04edt07o" path="res://Assets/Images/Particles/Explosion.png" id="2_4rlir"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_h5nts"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_h0gxo"]
 [ext_resource type="AudioStream" uid="uid://jy74nugtx5w1" path="res://Assets/Sounds/Sfx/ShotHit.ogg" id="5_cnih1"]
 
-[node name="ExplosionTiny" type="Node2D" node_paths=PackedStringArray("sprite", "sound", "timer")]
+[node name="ExplosionTiny" type="Node2D" unique_id=2102124168 node_paths=PackedStringArray("sprite", "sound", "timer")]
 z_index = 15
 script = ExtResource("1_0h730")
 sprite = NodePath("JsonSprite2D")
 anim_name = "tiny"
 sound = NodePath("AudioStreamPlayer")
 timer = NodePath("Timer")
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=152646498]
 texture = ExtResource("2_4rlir")
 hframes = 5
 vframes = 8
@@ -23,13 +22,13 @@ frame = 2
 script = ExtResource("2_h5nts")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=601662461]
 script = ExtResource("3_h0gxo")
 texture_path = "res://Assets/Images/Particles/Explosion.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1928775236]
 stream = ExtResource("5_cnih1")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=2021436129]
 one_shot = true

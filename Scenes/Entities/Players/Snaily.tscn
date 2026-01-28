@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dgd76ibvdfk3c"]
+[gd_scene format=3 uid="uid://dgd76ibvdfk3c"]
 
 [ext_resource type="Script" uid="uid://d4nw14f3hljxw" path="res://Scripts/Players/Snaily.gd" id="1_k5eab"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_d17bl"]
@@ -21,202 +21,202 @@ size = Vector2(24, 13)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1sr1"]
 size = Vector2(12, 13)
 
-[node name="Snaily" type="Node2D"]
+[node name="Snaily" type="Node2D" unique_id=331529586]
 visibility_layer = 3
 z_index = 5
 script = ExtResource("1_k5eab")
 identifier = &"Player"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1876562228]
 visibility_layer = 3
 script = ExtResource("2_d17bl")
 texture_path = "res://Assets/Images/Players/Snaily.json"
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=755614246]
 top_level = true
 collision_layer = 4
 
-[node name="NormalRect" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="NormalRect" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1177653414]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_31aru")
 
-[node name="ShellRect" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="ShellRect" type="CollisionShape2D" parent="CharacterBody2D" unique_id=22072914]
 position = Vector2(-3, 1.5)
 shape = SubResource("RectangleShape2D_k1sr1")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1124084977]
 texture = ExtResource("3_d2ww3")
 hframes = 12
 vframes = 8
 script = ExtResource("4_h84e5")
 
-[node name="CastGroup" type="Node2D" parent="."]
+[node name="CastGroup" type="Node2D" parent="." unique_id=280108873]
 
-[node name="RoundCornerCast" type="RayCast2D" parent="CastGroup"]
+[node name="RoundCornerCast" type="RayCast2D" parent="CastGroup" unique_id=349090538]
 position = Vector2(-12, 9)
 target_position = Vector2(-8, 0)
 hit_from_inside = true
 
-[node name="Normal" type="Node2D" parent="CastGroup"]
+[node name="Normal" type="Node2D" parent="CastGroup" unique_id=405475740]
 
-[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=479977748]
 position = Vector2(-11, 8)
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=1796734172]
 position = Vector2(-4, 8)
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=1926312915]
 position = Vector2(4, 8)
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Normal" unique_id=26079936]
 position = Vector2(11, 8)
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=1559823613]
 position = Vector2(12, -4)
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=51803069]
 position = Vector2(12, 1.5)
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=1197982877]
 position = Vector2(12, 7)
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=1088624306]
 position = Vector2(11, -5)
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=434963619]
 position = Vector2(0, -5)
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Normal"]
+[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=43525777]
 position = Vector2(-11, -5)
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="Shell" type="Node2D" parent="CastGroup"]
+[node name="Shell" type="Node2D" parent="CastGroup" unique_id=2061531864]
 
-[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=1307133885]
 position = Vector2(-9, 8)
 enabled = false
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=460162891]
 position = Vector2(-5, 8)
 enabled = false
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=731791244]
 position = Vector2(-1, 8)
 enabled = false
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Shell" unique_id=1011301606]
 position = Vector2(3, 8)
 enabled = false
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
-[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=928828092]
 position = Vector2(3, -4)
 enabled = false
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=1285687975]
 position = Vector2(3, 1.5)
 enabled = false
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=1587127771]
 position = Vector2(3, 7)
 enabled = false
 target_position = Vector2(4, 0)
 hit_from_inside = true
 
-[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=1091658719]
 position = Vector2(3, -5)
 enabled = false
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=403128396]
 position = Vector2(-3, -5)
 enabled = false
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Shell"]
+[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=878522182]
 position = Vector2(-9, -5)
 enabled = false
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
-[node name="EmoteLayer" parent="." instance=ExtResource("5_41bsi")]
+[node name="EmoteLayer" parent="." unique_id=1037941853 instance=ExtResource("5_41bsi")]
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1329073509]
 
-[node name="Jump" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Jump" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1878444342]
 stream = ExtResource("5_usmsa")
 bus = &"Sfx"
 
-[node name="JumpGrav" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="JumpGrav" type="AudioStreamPlayer" parent="AudioGroup" unique_id=991478415]
 stream = ExtResource("7_k11v7")
 bus = &"Sfx"
 
-[node name="Shell" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Shell" type="AudioStreamPlayer" parent="AudioGroup" unique_id=942400695]
 stream = ExtResource("6_7e564")
 bus = &"Sfx"
 
-[node name="Hurt" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Hurt" type="AudioStreamPlayer" parent="AudioGroup" unique_id=230496846]
 stream = ExtResource("7_wqsw1")
 bus = &"Sfx"
 
-[node name="Ping" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Ping" type="AudioStreamPlayer" parent="AudioGroup" unique_id=738558311]
 stream = ExtResource("8_v1l34")
 bus = &"Sfx"
 
-[node name="Parry" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Parry" type="AudioStreamPlayer" parent="AudioGroup" unique_id=463193480]
 stream = ExtResource("9_evjxd")
 bus = &"Sfx"
 
-[node name="Die" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Die" type="AudioStreamPlayer" parent="AudioGroup" unique_id=98957409]
 stream = ExtResource("10_evjxd")
 bus = &"Sfx"
 
-[node name="ShockCharge" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShockCharge" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1794393687]
 stream = ExtResource("13_1cbof")
 bus = &"Sfx"
 
-[node name="ShockLaunch" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShockLaunch" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1610328169]
 stream = ExtResource("14_ijfmt")
 bus = &"Sfx"
 
-[node name="TimerGroup" type="Node" parent="."]
+[node name="TimerGroup" type="Node" parent="." unique_id=790729840]
 
-[node name="DieFadeDelay" type="Timer" parent="TimerGroup"]
+[node name="DieFadeDelay" type="Timer" parent="TimerGroup" unique_id=1163792789]
 one_shot = true
 
-[node name="RespawnDelay" type="Timer" parent="TimerGroup"]
+[node name="RespawnDelay" type="Timer" parent="TimerGroup" unique_id=1253376087]
 wait_time = 2.0
 one_shot = true
 

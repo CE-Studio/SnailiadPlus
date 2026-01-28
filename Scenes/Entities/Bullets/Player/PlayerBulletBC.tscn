@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgmlfyv6lecv1"]
+[gd_scene format=3 uid="uid://cgmlfyv6lecv1"]
 
 [ext_resource type="Script" uid="uid://deopt64b388dy" path="res://Scripts/Bullets/Player/PlayerBulletBC.gd" id="1_ggt1q"]
 [ext_resource type="AudioStream" uid="uid://ckt6fktu66pkv" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBC.ogg" id="2_ggt1q"]
@@ -12,7 +12,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kd8x0"]
 size = Vector2(26, 26)
 
-[node name="PlayerBulletBC" type="Node2D"]
+[node name="PlayerBulletBC" type="Node2D" unique_id=620470441]
 z_index = 150
 script = ExtResource("1_ggt1q")
 type = 6
@@ -21,39 +21,39 @@ damage_powered = 50
 cooldown = 0.3
 despawn_particle = "ExplosionWhiteSmall"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1660933302]
 collision_layer = 32
 collision_mask = 65
 
-[node name="BoxNormal" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D" unique_id=20832076]
 shape = SubResource("RectangleShape2D_0nsho")
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
-[node name="BoxPower" type="CollisionShape2D" parent="Area2D"]
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D" unique_id=677389087]
 shape = SubResource("RectangleShape2D_kd8x0")
 disabled = true
 debug_color = Color(0.489334, 0.554908, 0.515751, 0.42)
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1472936370]
 
-[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1845224264]
 stream = ExtResource("2_ggt1q")
 bus = &"Sfx"
 
-[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup" unique_id=825555217]
 stream = ExtResource("3_7a7aq")
 bus = &"Sfx"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1437316478]
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-14.999998, -14.999998, 29.999996, 29.999996)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1666362674]
 script = ExtResource("3_kd8x0")
 texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBC.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=316860838]
 texture = ExtResource("4_ggt1q")
 hframes = 8
 vframes = 2

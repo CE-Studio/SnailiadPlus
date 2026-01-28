@@ -1,19 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://by53y5fokn1xi"]
+[gd_scene format=3 uid="uid://by53y5fokn1xi"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4r5hr"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_ubp5x"]
 
-[node name="Options" type="Node2D"]
+[node name="Options" type="Node2D" unique_id=684947798]
 script = ExtResource("1_4r5hr")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=900144875]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 
-[node name="Sound" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Sound" parent="MainVBox" unique_id=1397595993 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -27,7 +27,7 @@ quick_load_layer = "SoundOptions"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="Display" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Display" parent="MainVBox" unique_id=406371246 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -40,7 +40,7 @@ button_text = "Display options"
 quick_load_layer = "DisplayOptions"
 hide_frame = true
 
-[node name="Controls" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Controls" parent="MainVBox" unique_id=255489612 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -53,7 +53,7 @@ button_text = "Control options"
 quick_load_layer = "ControlOptions"
 hide_frame = true
 
-[node name="Gameplay" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Gameplay" parent="MainVBox" unique_id=2057793909 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -66,7 +66,7 @@ button_text = "Gameplay options"
 quick_load_layer = "GameplayOptions"
 hide_frame = true
 
-[node name="AssetPacks" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="AssetPacks" parent="MainVBox" unique_id=658868804 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -79,12 +79,12 @@ button_text = "Asset packs"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=313264598]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_ubp5x")]
+[node name="Back" parent="MainVBox" unique_id=1507125723 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

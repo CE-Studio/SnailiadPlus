@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://capqop150dmrx"]
+[gd_scene format=3 uid="uid://capqop150dmrx"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_blq8n"]
 [ext_resource type="Texture2D" uid="uid://c21s6w3gptrlt" path="res://Assets/Images/UI/BestiaryBackground.png" id="2_jdu1y"]
@@ -16,27 +16,27 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
-[node name="Bestiary" type="Node2D"]
+[node name="Bestiary" type="Node2D" unique_id=162814530]
 script = ExtResource("1_blq8n")
 hide_global_menu_assets = true
 selector_opacity = 0.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=408094647]
 position = Vector2(200, 120)
 texture = ExtResource("2_jdu1y")
 script = ExtResource("3_8bw4w")
 
-[node name="Selector" type="Sprite2D" parent="Sprite2D"]
+[node name="Selector" type="Sprite2D" parent="Sprite2D" unique_id=947541506]
 position = Vector2(-168, -96)
 texture = ExtResource("3_gx5uf")
 
-[node name="EntityOrigin" type="Sprite2D" parent="Sprite2D"]
+[node name="EntityOrigin" type="Sprite2D" parent="Sprite2D" unique_id=764212214]
 clip_children = 1
 z_index = 10
 position = Vector2(103, -47)
 texture = ExtResource("4_obml4")
 
-[node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D"]
+[node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D" unique_id=331843503]
 offset_left = -160.0
 offset_top = -104.0
 offset_right = -24.0
@@ -46,11 +46,11 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_8bw4w")
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="EntityList" type="VBoxContainer" parent="Sprite2D/ScrollPanel"]
+[node name="EntityList" type="VBoxContainer" parent="Sprite2D/ScrollPanel" unique_id=2059375219]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Name" parent="Sprite2D" instance=ExtResource("5_obml4")]
+[node name="Name" parent="Sprite2D" unique_id=1303695191 instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
 offset_left = -157.0
 offset_top = -216.0
@@ -61,7 +61,7 @@ text = "Name here"
 max_width = 156
 text_scale = 1
 
-[node name="Description" parent="Sprite2D" instance=ExtResource("5_obml4")]
+[node name="Description" parent="Sprite2D" unique_id=642756905 instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
 offset_left = -176.0
 offset_top = -128.0
@@ -72,6 +72,6 @@ text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 max_width = 156
 text_scale = 1
 
-[node name="Beep" type="AudioStreamPlayer" parent="Sprite2D"]
+[node name="Beep" type="AudioStreamPlayer" parent="Sprite2D" unique_id=627416363]
 stream = ExtResource("6_wfk3g")
 bus = &"Sfx"

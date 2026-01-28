@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4w6iyanqj1ks"]
+[gd_scene format=3 uid="uid://4w6iyanqj1ks"]
 
 [ext_resource type="Script" uid="uid://cqliimvj68ekg" path="res://Scripts/Enemies/Bosses/SpaceboxBabybox.gd" id="1_bd0kd"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4ciwk"]
@@ -10,7 +10,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(64, 64)
 
-[node name="SpaceboxBabybox" type="CharacterBody2D"]
+[node name="SpaceboxBabybox" type="CharacterBody2D" unique_id=9073554]
 z_index = 4
 collision_layer = 64
 collision_mask = 3
@@ -22,31 +22,31 @@ kill_particle_range = Vector2i(16, 16)
 kill_particle_types = Array[String](["ExplosionBig", "ExplosionHuge"])
 kill_particle_count = 8
 
-[node name="BodyBox" type="CollisionShape2D" parent="."]
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1741564860]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=2091410869]
 collision_layer = 64
 collision_mask = 44
 
-[node name="HitBox" type="CollisionShape2D" parent="Area2D"]
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1500857718]
 shape = SubResource("RectangleShape2D_vj7im")
 debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1456542275]
 scale = Vector2(1.2, 1.2)
 rect = Rect2(-26.666666, -26.666666, 53.333332, 53.333332)
 
-[node name="HandGroup" type="Node2D" parent="."]
+[node name="HandGroup" type="Node2D" parent="." unique_id=1022105799]
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=621544336]
 material = ExtResource("2_4ciwk")
 script = ExtResource("2_eew36")
 texture_path = "res://Assets/Images/Entities/Boss3Babybox.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1426059906]
 texture = ExtResource("3_bd0kd")
 hframes = 4
 vframes = 2
@@ -54,7 +54,7 @@ frame = 3
 script = ExtResource("4_a4jov")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Stomp" type="AudioStreamPlayer" parent="."]
+[node name="Stomp" type="AudioStreamPlayer" parent="." unique_id=219756953]
 stream = ExtResource("6_4ciwk")
 volume_db = -4.0
 bus = &"Sfx"

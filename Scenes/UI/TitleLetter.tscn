@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://donkd6sq4tyf8"]
+[gd_scene format=3 uid="uid://donkd6sq4tyf8"]
 
 [ext_resource type="Script" uid="uid://dycgwmf2rhfuv" path="res://Scripts/UI/TitleLetter.gd" id="1_ha3te"]
 [ext_resource type="Texture2D" uid="uid://d174bbfmyslpm" path="res://Assets/Images/UI/TitleFont.png" id="1_ie5m7"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="1_mihxj"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_6imav"]
 
-[node name="TitleLetter" type="Node2D"]
+[node name="TitleLetter" type="Node2D" unique_id=150905934]
 script = ExtResource("1_ha3te")
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=171510924]
 texture = ExtResource("1_ie5m7")
 hframes = 26
 vframes = 9
@@ -16,7 +16,7 @@ frame = 44
 script = ExtResource("1_mihxj")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1923603418]
 script = ExtResource("4_6imav")
 texture_path = "res://Assets/Images/UI/TitleFont.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

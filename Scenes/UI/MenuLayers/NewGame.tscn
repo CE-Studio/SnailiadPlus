@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhed3tahgbbnt"]
+[gd_scene format=3 uid="uid://bhed3tahgbbnt"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_7m7tu"]
 [ext_resource type="Script" uid="uid://bqaubmbjk60pa" path="res://Scripts/UI/MenuLayers/NewGame.gd" id="2_3k7wi"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_7m7tu"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_pvyaf"]
 
-[node name="NewGame" type="Node2D"]
+[node name="NewGame" type="Node2D" unique_id=723504808]
 script = ExtResource("1_7m7tu")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=45044477]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -16,26 +16,26 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_3k7wi")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Header" parent="MainVBox" unique_id=1166298434 instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Game options"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=645972653]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox" unique_id=79968338]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="Difficulty" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
+[node name="Difficulty" parent="MainVBox/HBoxContainer" unique_id=1771403584 instance=ExtResource("2_pvyaf")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../Character")
@@ -52,7 +52,7 @@ minimum_x = 100
 grab_focus_on_load = true
 hide_frame = null
 
-[node name="Character" parent="MainVBox/HBoxContainer" instance=ExtResource("2_pvyaf")]
+[node name="Character" parent="MainVBox/HBoxContainer" unique_id=2083791689 instance=ExtResource("2_pvyaf")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../Difficulty")
@@ -68,7 +68,7 @@ emit_signal_on_load = true
 minimum_x = 100
 hide_frame = null
 
-[node name="Mods" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Mods" parent="MainVBox" unique_id=935856264 instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -80,7 +80,7 @@ focus_previous = NodePath("../HBoxContainer/Character")
 button_text = "Game modifiers"
 hide_frame = true
 
-[node name="Start" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Start" parent="MainVBox" unique_id=1447315003 instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -92,7 +92,7 @@ focus_previous = NodePath("../Mods")
 button_text = "Start new game!!"
 hide_frame = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_7m7tu")]
+[node name="Back" parent="MainVBox" unique_id=400202103 instance=ExtResource("2_7m7tu")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

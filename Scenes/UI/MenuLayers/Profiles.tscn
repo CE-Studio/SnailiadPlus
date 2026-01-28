@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cj1h0xrtfxbxg"]
+[gd_scene format=3 uid="uid://cj1h0xrtfxbxg"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_gdv3v"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_7epk8"]
@@ -9,10 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://c4eeyhh6lljon" path="res://Assets/Sounds/Sfx/MenuFileCopy.ogg" id="6_k6k8p"]
 [ext_resource type="AudioStream" uid="uid://c3x3vsxr3iq13" path="res://Assets/Sounds/Sfx/MenuFileErase.ogg" id="7_anahy"]
 
-[node name="Profiles" type="Node2D"]
+[node name="Profiles" type="Node2D" unique_id=1154904066]
 script = ExtResource("1_gdv3v")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1863807980]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -20,7 +20,7 @@ offset_bottom = 232.0
 alignment = 1
 script = ExtResource("2_xlkne")
 
-[node name="Profile1" parent="MainVBox" instance=ExtResource("3_7epk8")]
+[node name="Profile1" parent="MainVBox" unique_id=834819002 instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -33,7 +33,7 @@ main_text = "Empty profile"
 sub_text = "Select to start a new one!"
 grab_focus_on_load = true
 
-[node name="Profile2" parent="MainVBox" instance=ExtResource("3_7epk8")]
+[node name="Profile2" parent="MainVBox" unique_id=1518421472 instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -45,7 +45,7 @@ focus_previous = NodePath("../Profile1")
 main_text = "Empty profile"
 sub_text = "Select to start a new one!"
 
-[node name="Profile3" parent="MainVBox" instance=ExtResource("3_7epk8")]
+[node name="Profile3" parent="MainVBox" unique_id=1755130973 instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -57,14 +57,14 @@ focus_previous = NodePath("../Profile2")
 main_text = "Empty profile"
 sub_text = "Select to start a new one!"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox" unique_id=1726766174]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="Copy" parent="MainVBox/HBoxContainer" instance=ExtResource("2_7epk8")]
+[node name="Copy" parent="MainVBox/HBoxContainer" unique_id=593024745 instance=ExtResource("2_7epk8")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Erase")
 focus_neighbor_top = NodePath("../../Profile3")
@@ -74,7 +74,7 @@ focus_next = NodePath("../Erase")
 focus_previous = NodePath("../../Profile3")
 button_text = "Copy"
 
-[node name="Erase" parent="MainVBox/HBoxContainer" instance=ExtResource("2_7epk8")]
+[node name="Erase" parent="MainVBox/HBoxContainer" unique_id=358330030 instance=ExtResource("2_7epk8")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Copy")
 focus_neighbor_top = NodePath("../../Profile3")
@@ -84,7 +84,7 @@ focus_next = NodePath("../../Back")
 focus_previous = NodePath("../Copy")
 button_text = "Erase"
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_7epk8")]
+[node name="Back" parent="MainVBox" unique_id=632658858 instance=ExtResource("2_7epk8")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -97,24 +97,24 @@ button_text = "Back to main menu"
 back_one_layer = true
 hide_frame = true
 
-[node name="ContextPanel" parent="." instance=ExtResource("4_vuqlx")]
+[node name="ContextPanel" parent="." unique_id=1428466038 instance=ExtResource("4_vuqlx")]
 custom_minimum_size = Vector2(200, 0)
 offset_left = 100.0
 offset_top = 240.0
 offset_right = 300.0
 offset_bottom = 262.0
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=317701537]
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1459695931]
 stream = ExtResource("5_xlkne")
 bus = &"Sfx"
 
-[node name="Copy" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Copy" type="AudioStreamPlayer" parent="AudioGroup" unique_id=222761767]
 stream = ExtResource("6_k6k8p")
 bus = &"Sfx"
 
-[node name="Erase" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Erase" type="AudioStreamPlayer" parent="AudioGroup" unique_id=311710987]
 stream = ExtResource("7_anahy")
 bus = &"Sfx"
 

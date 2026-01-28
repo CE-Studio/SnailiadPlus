@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck2f53pdjx88q"]
+[gd_scene format=3 uid="uid://ck2f53pdjx88q"]
 
 [ext_resource type="Script" uid="uid://bftvkbcmljrxc" path="res://Scripts/Classes/RoomTransitionTrigger.gd" id="1_gkfyc"]
 [ext_resource type="Texture2D" uid="uid://d0cauv4lqxieg" path="res://Editor/EditorMarkers/RoomTransitionTrigger.png" id="2_wovne"]
@@ -7,22 +7,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkfyc"]
 size = Vector2(24, 16)
 
-[node name="RoomTransitionTrigger" type="Node2D"]
+[node name="RoomTransitionTrigger" type="Node2D" unique_id=1758231165]
 z_index = 999
 script = ExtResource("1_gkfyc")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=486798457]
 collision_layer = 16
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1047274992]
 position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_gkfyc")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=189886853]
 position = Vector2(-8, 0)
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1875403669]
 texture = ExtResource("2_wovne")
 script = ExtResource("3_5cwcu")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

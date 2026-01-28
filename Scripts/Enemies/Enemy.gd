@@ -137,7 +137,7 @@ enum EnemyTypes {
 func spawn(active:bool = true) -> void:
 	if not GameCore.instance:
 		return
-	
+
 	origin = position
 	ai_active = active
 	easy_mode = Statics.current_profile["difficulty"] == 0
@@ -180,7 +180,7 @@ func _process(delta: float) -> void:
 	if sprite and not shield_entity:
 		sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		flash_color = flash_color.lerp(Color.BLACK, DAMAGE_FADE_DECAY * delta)
-	
+
 	lifetime += delta
 
 

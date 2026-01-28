@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://q64glrswau4a"]
+[gd_scene format=3 uid="uid://q64glrswau4a"]
 
 [ext_resource type="Script" uid="uid://bxhlu0uaj5fhk" path="res://Scripts/Particles/ExplosionBossDefeat.gd" id="1_pjae3"]
 [ext_resource type="AudioStream" uid="uid://bt37e4rs2jw1g" path="res://Assets/Sounds/Sfx/EnemyKilled1.ogg" id="2_7pb1o"]
@@ -9,46 +9,46 @@
 [ext_resource type="AudioStream" uid="uid://cbkqdrvlo8gbo" path="res://Assets/Sounds/Sfx/Explode3.ogg" id="7_5vnic"]
 [ext_resource type="AudioStream" uid="uid://brxaghtx4yim" path="res://Assets/Sounds/Sfx/Explode4.ogg" id="8_a3kuf"]
 
-[node name="ExplosionBossDefeat" type="Node2D"]
+[node name="ExplosionBossDefeat" type="Node2D" unique_id=1827356931]
 script = ExtResource("1_pjae3")
 
-[node name="Boom1" type="AudioStreamPlayer" parent="."]
+[node name="Boom1" type="AudioStreamPlayer" parent="." unique_id=1436303257]
 stream = ExtResource("2_7pb1o")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="Boom2" type="AudioStreamPlayer" parent="."]
+[node name="Boom2" type="AudioStreamPlayer" parent="." unique_id=1888606188]
 stream = ExtResource("3_tpjhu")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="Boom3" type="AudioStreamPlayer" parent="."]
+[node name="Boom3" type="AudioStreamPlayer" parent="." unique_id=512568738]
 stream = ExtResource("4_m3iyu")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="SmallBoom1" type="AudioStreamPlayer" parent="."]
+[node name="SmallBoom1" type="AudioStreamPlayer" parent="." unique_id=790586990]
 stream = ExtResource("5_ciui8")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="SmallBoom2" type="AudioStreamPlayer" parent="."]
+[node name="SmallBoom2" type="AudioStreamPlayer" parent="." unique_id=98803539]
 stream = ExtResource("6_pu7gh")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="SmallBoom3" type="AudioStreamPlayer" parent="."]
+[node name="SmallBoom3" type="AudioStreamPlayer" parent="." unique_id=471444581]
 stream = ExtResource("7_5vnic")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
 
-[node name="SmallBoom4" type="AudioStreamPlayer" parent="."]
+[node name="SmallBoom4" type="AudioStreamPlayer" parent="." unique_id=833696538]
 stream = ExtResource("8_a3kuf")
 volume_db = -6.0
 max_polyphony = 2

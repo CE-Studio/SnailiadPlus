@@ -1,31 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://ct8xkkevelws5"]
+[gd_scene format=3 uid="uid://ct8xkkevelws5"]
 
-[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_xn0eq"]
+[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_xn0eq"]
 [ext_resource type="Texture2D" uid="uid://b3ms8iclo2adj" path="res://Assets/Images/Particles/Surprise.png" id="2_xn0eq"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_yf1so"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_0hnsm"]
 [ext_resource type="AudioStream" uid="uid://dimkvhpp0d7pf" path="res://Assets/Sounds/Sfx/CCSurprised.ogg" id="5_i0l1q"]
 
-[node name="Surprise" type="Node2D" node_paths=PackedStringArray("sprite", "sound")]
+[node name="Surprise" type="Node2D" unique_id=233369952 node_paths=PackedStringArray("sprite", "sound")]
 z_index = 2
 script = ExtResource("1_xn0eq")
 sprite = NodePath("JsonSprite2D")
 anim_name = "idle"
 sound = NodePath("AudioStreamPlayer")
-metadata/_custom_type_script = "uid://bjoxx2waxewlf"
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=265923861]
 texture = ExtResource("2_xn0eq")
 hframes = 2
 frame = 1
 script = ExtResource("3_yf1so")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=32075940]
 script = ExtResource("4_0hnsm")
 texture_path = "res://Assets/Images/Particles/Surprise.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=898180382]
 stream = ExtResource("5_i0l1q")
 bus = &"Sfx"

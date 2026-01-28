@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxome248ds403"]
+[gd_scene format=3 uid="uid://dxome248ds403"]
 
 [ext_resource type="Script" uid="uid://dtu5fbhadud3q" path="res://Scripts/Particles/ParticleLayers/EmberLayer.gd" id="1_4smfb"]
 [ext_resource type="Texture2D" uid="uid://40vtf6x1iom6" path="res://Editor/EditorMarkers/HeatEffect.png" id="2_djypw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_istr6"]
 
-[node name="EmberLayer" type="Node2D"]
+[node name="EmberLayer" type="Node2D" unique_id=1723334867]
 z_index = 500
 z_as_relative = false
 script = ExtResource("1_4smfb")
@@ -14,7 +14,7 @@ spawn_all_at_once = false
 particle_count = 16
 move_with_camera = true
 
-[node name="MarkerSprite" type="Sprite2D" parent="."]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1529065069]
 texture = ExtResource("2_djypw")
 script = ExtResource("3_istr6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

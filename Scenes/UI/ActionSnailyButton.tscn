@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cethpj66nvp1o"]
+[gd_scene format=3 uid="uid://cethpj66nvp1o"]
 
 [ext_resource type="StyleBox" uid="uid://xmi4tpii3cdq" path="res://Resources/ButtonStylebox.tres" id="1_ur6t0"]
 [ext_resource type="Script" uid="uid://c6tqeslh413vg" path="res://Scripts/Classes/MenuButtons/ActionSnailyButton.gd" id="2_ur6t0"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="4_ur6t0"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="5_beybx"]
 
-[node name="ActionSnailyButton" type="PanelContainer"]
+[node name="ActionSnailyButton" type="PanelContainer" unique_id=1748040070]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -24,13 +24,13 @@ focus_mode = 2
 theme_override_styles/panel = ExtResource("1_ur6t0")
 script = ExtResource("2_ur6t0")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1890051639]
 layout_mode = 2
 theme_override_constants/margin_top = -8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = -2
 
-[node name="SnailyText" parent="MarginContainer" instance=ExtResource("3_a4l7p")]
+[node name="SnailyText" parent="MarginContainer" unique_id=1603775490 instance=ExtResource("3_a4l7p")]
 custom_minimum_size = Vector2(56, 0)
 layout_mode = 2
 text = "Text!!"
@@ -38,13 +38,13 @@ scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=786894766]
 
-[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Focus" type="AudioStreamPlayer" parent="AudioGroup" unique_id=111726698]
 stream = ExtResource("4_ur6t0")
 bus = &"Sfx"
 
-[node name="Select" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Select" type="AudioStreamPlayer" parent="AudioGroup" unique_id=550833408]
 stream = ExtResource("5_beybx")
 bus = &"Sfx"
 

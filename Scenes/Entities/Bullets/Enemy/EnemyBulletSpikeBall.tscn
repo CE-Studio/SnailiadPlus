@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://nu02ausampyq"]
+[gd_scene format=3 uid="uid://nu02ausampyq"]
 
 [ext_resource type="Script" uid="uid://bew784mhp5pjr" path="res://Scripts/Bullets/Enemy/EnemyBulletSpikeBall.gd" id="1_gip5i"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_pb2i8"]
@@ -9,37 +9,37 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(28, 28)
 
-[node name="EnemyBulletSpikeBall" type="Node2D"]
+[node name="EnemyBulletSpikeBall" type="Node2D" unique_id=1139535486]
 z_index = 50
 script = ExtResource("1_gip5i")
 damage = 2
 despawn_offscreen = true
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=388000849]
 scale = Vector2(0.2, 0.2)
 rect = Rect2(-79.99999, -79.99999, 159.99998, 159.99998)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1745935800]
 collision_layer = 8
 collision_mask = 39
 
-[node name="Box" type="CollisionShape2D" parent="Area2D"]
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=1747935028]
 shape = SubResource("RectangleShape2D_3p1tk")
 debug_color = Color(0.483053, 0.436212, 1, 0.42)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="."]
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=899154723]
 script = ExtResource("2_pb2i8")
 texture_path = "res://Assets/Images/Bullets/Enemy/EnemySpikeBall.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D"]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=803928203]
 texture = ExtResource("3_gip5i")
 hframes = 2
 script = ExtResource("4_l8gkq")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="AudioGroup" type="Node" parent="."]
+[node name="AudioGroup" type="Node" parent="." unique_id=1353043615]
 
-[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup"]
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1395773618]
 stream = ExtResource("5_pb2i8")
 bus = &"Sfx"

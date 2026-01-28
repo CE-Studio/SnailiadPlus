@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2376pjd403n3"]
+[gd_scene format=3 uid="uid://d2376pjd403n3"]
 
 [ext_resource type="Script" uid="uid://cjctmyomukwg6" path="res://Scripts/Classes/LimitedSoundHandler.gd" id="1_y0x4p"]
 
-[node name="LimitedSoundHandler" type="Node2D"]
+[node name="LimitedSoundHandler" type="Node2D" unique_id=124694869]
 script = ExtResource("1_y0x4p")

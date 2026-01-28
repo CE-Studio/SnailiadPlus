@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcnhusvdt66ym"]
+[gd_scene format=3 uid="uid://bcnhusvdt66ym"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_uukgo"]
 [ext_resource type="Script" uid="uid://bp2nv083jllbm" path="res://Scripts/UI/MenuLayers/GameplayOptions.gd" id="2_n8y14"]
@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="5_1l54c"]
 [ext_resource type="PackedScene" uid="uid://cm0i4dyk1srik" path="res://Scenes/UI/ToggleSnailyButton.tscn" id="5_c8ry5"]
 
-[node name="GameplayOptions" type="Node2D"]
+[node name="GameplayOptions" type="Node2D" unique_id=477420121]
 script = ExtResource("1_uukgo")
 save_general_on_close = true
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1715559462]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -21,7 +21,7 @@ size_flags_vertical = 4
 alignment = 1
 script = ExtResource("2_n8y14")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainVBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainVBox" unique_id=570290117]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -32,13 +32,13 @@ scroll_horizontal_custom_step = 1.0
 scroll_vertical_custom_step = 1.0
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer" unique_id=1363041137]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="DynamicCamera" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
+[node name="DynamicCamera" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1705907214 instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../../Back")
@@ -49,7 +49,7 @@ focus_previous = NodePath("../../../Back")
 button_text = "Dynamic camera"
 grab_focus_on_load = true
 
-[node name="ShootMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="ShootMode" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1282552475 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../DynamicCamera")
@@ -61,7 +61,7 @@ header_text = "Shoot mode"
 cycle_option_text = "Normal|Toggle"
 auto_select_mode = true
 
-[node name="Breakables" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="Breakables" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=59849017 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ShootMode")
@@ -73,7 +73,7 @@ header_text = "Show breakables"
 cycle_option_text = "Off|Obvious,\\nany shot|All,\\nany shot|Obvious, permeating\\nshots only|All, permeating\\nshots only"
 auto_select_mode = true
 
-[node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
+[node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=742925757 instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Breakables")
@@ -83,7 +83,7 @@ focus_next = NodePath("../TargetFPS")
 focus_previous = NodePath("../Breakables")
 button_text = "Show secret map tiles"
 
-[node name="TargetFPS" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="TargetFPS" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1102593608 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../SecretMap")
@@ -96,7 +96,7 @@ cycle_option_text = "Unlimited|30FPS|60FPS|120FPS"
 auto_select_mode = true
 focus_option = 2
 
-[node name="ScreenShake" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="ScreenShake" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=178225905 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../TargetFPS")
@@ -109,7 +109,7 @@ cycle_option_text = "Off|Minimal|On|Minimal (no HUD shake)|On (no HUD shake)"
 auto_select_mode = true
 focus_option = 2
 
-[node name="DamageNumbers" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("5_c8ry5")]
+[node name="DamageNumbers" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=519782157 instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ScreenShake")
@@ -119,7 +119,7 @@ focus_next = NodePath("../StickAimMode")
 focus_previous = NodePath("../ScreenShake")
 button_text = "Show damage numbers"
 
-[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="StickAimMode" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1481481801 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../DamageNumbers")
@@ -131,7 +131,7 @@ header_text = "Stick aiming mode"
 cycle_option_text = "8-direction|360 degrees"
 auto_select_mode = true
 
-[node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="GravSwap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1986561751 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../StickAimMode")
@@ -143,7 +143,7 @@ header_text = "Swap gravity direction on..."
 cycle_option_text = "Hold direction, tap jump|Hold jump, tap direction|Double-tap direction|Gravity button only"
 auto_select_mode = true
 
-[node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" instance=ExtResource("4_n8y14")]
+[node name="GravKeep" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=387071955 instance=ExtResource("4_n8y14")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../GravSwap")
@@ -155,7 +155,7 @@ header_text = "Keep gravity direction until..."
 cycle_option_text = "You stick to a wall|You gravity jump"
 auto_select_mode = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("5_1l54c")]
+[node name="Back" parent="MainVBox" unique_id=1436889795 instance=ExtResource("5_1l54c")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")

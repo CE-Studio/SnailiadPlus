@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://mkxuxq84ey5a"]
+[gd_scene format=3 uid="uid://mkxuxq84ey5a"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_52spg"]
 [ext_resource type="Script" uid="uid://b1g2m4ukux2i4" path="res://Scripts/UI/MenuLayers/ProfileWarp.gd" id="2_3e4a6"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_gx5ja"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="3_3e4a6"]
 
-[node name="ProfileSpawn" type="Node2D"]
+[node name="ProfileSpawn" type="Node2D" unique_id=1837853876]
 script = ExtResource("1_52spg")
 
-[node name="MainVBox" type="VBoxContainer" parent="."]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=671092005]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -16,19 +16,19 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_3e4a6")
 
-[node name="Header" parent="MainVBox" instance=ExtResource("2_gx5ja")]
+[node name="Header" parent="MainVBox" unique_id=1009625063 instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Where would you\\nlike to warp?"
 disabled = true
 hide_frame = true
 
-[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=952366075]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="SavePoint" parent="MainVBox" instance=ExtResource("3_3e4a6")]
+[node name="SavePoint" parent="MainVBox" unique_id=1048442503 instance=ExtResource("3_3e4a6")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -42,7 +42,7 @@ sub_text = "Area - Room"
 grab_focus_on_load = true
 hide_frame = true
 
-[node name="WorldSpawn" parent="MainVBox" instance=ExtResource("2_gx5ja")]
+[node name="WorldSpawn" parent="MainVBox" unique_id=1288827504 instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -54,7 +54,7 @@ focus_previous = NodePath("../SavePoint")
 button_text = "Warp to Snail Town"
 hide_frame = true
 
-[node name="Back" parent="MainVBox" instance=ExtResource("2_gx5ja")]
+[node name="Back" parent="MainVBox" unique_id=944994603 instance=ExtResource("2_gx5ja")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -67,7 +67,7 @@ button_text = "Back to pause menu"
 back_one_layer = true
 hide_frame = true
 
-[node name="Timer" type="Timer" parent="MainVBox"]
+[node name="Timer" type="Timer" parent="MainVBox" unique_id=1048669485]
 wait_time = 0.75
 one_shot = true
 
