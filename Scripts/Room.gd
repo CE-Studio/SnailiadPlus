@@ -56,7 +56,7 @@ enum Layers {
 
 var room_path:String
 
-var sp_cache:Dictionary[StringName, PackedScene] = {}
+static var sp_cache:Dictionary[StringName, PackedScene] = {}
 var cells:Array[Vector2i] = []
 var spawned_sp:int = 0
 var spawned_all:bool = false
@@ -219,7 +219,10 @@ func _spawn_entities_from_layer(layer:int) -> void:
 	var running_count:int = 0
 	if layer == 1:
 		running_count = MAX_SP_PER_LOOP - cells.size()
-	while spawned_sp < cells.size() and running_count < MAX_SP_PER_LOOP:
+	var tpf:Array[int] = []
+	var fts := Time.get_ticks_msec()
+	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP) and ((Time.get_ticks_msec() - fts) < 23):
+		var ts := Time.get_ticks_msec()
 		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)
 		spawned_sp += 1
@@ -754,6 +757,9 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				var fire:Fire = _load(&"res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
 				fire.position = _tile_coords_to_vector_pos(tile)
 				layer_ground.add_child(fire)
+
+		tpf.append(Time.get_ticks_msec() - ts)
+	print_verbose(tpf)
 	if spawned_sp >= cells.size():
 		cells.clear()
 		spawned_sp = 0
@@ -764,6 +770,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 func _load(path:StringName) -> PackedScene:
 	if not sp_cache.has(path):
 		sp_cache[path] = load(path)
+		print_verbose("cache miss: ", path)
 	return sp_cache[path]
 
 
