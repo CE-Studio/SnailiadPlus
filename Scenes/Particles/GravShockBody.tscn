@@ -10,6 +10,7 @@ z_index = 155
 script = ExtResource("1_agyhw")
 sprite = NodePath("JsonSprite2D")
 timer = NodePath("Timer")
+anim_speed_max = 3.0
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1792421723]
 texture = ExtResource("2_agyhw")

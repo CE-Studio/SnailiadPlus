@@ -60,6 +60,7 @@ var sp_cache:Dictionary[StringName, PackedScene] = {}
 var cells:Array[Vector2i] = []
 var spawned_sp:int = 0
 var spawned_all:bool = false
+var skipped_first_process_spawn:bool = false
 const MAX_SP_PER_LOOP:int = 24
 
 signal despawn
@@ -160,8 +161,9 @@ func spawn(_spawn_all:bool) -> void:
 
 
 func _process(_delta: float) -> void:
-	if not spawned_all and not Engine.is_editor_hint():
+	if not spawned_all and not Engine.is_editor_hint() and skipped_first_process_spawn:
 		_spawn_entities_from_layer(0)
+	skipped_first_process_spawn = true
 
 
 func get_room_name_from_filename() -> void:
