@@ -60,8 +60,17 @@ static var sp_cache:Dictionary[StringName, PackedScene] = {}
 var cells:Array[Vector2i] = []
 var spawned_sp:int = 0
 var spawned_all:bool = false
+var spawned_secondary:bool = false
 var skipped_first_process_spawn:bool = false
-const MAX_SP_PER_LOOP:int = 24
+const MAX_SP_PER_LOOP:int = 48
+const MAX_MS_PER_LOOP:int = 23
+const BREAKABLE_IDS:Array[Vector2i] = [
+	Vector2i(8, 4),
+	Vector2i(9, 4),
+	Vector2i(10, 4),
+	Vector2i(1, 28),
+	Vector2i(2, 31),
+]
 
 signal despawn
 
@@ -211,17 +220,82 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 		arr.append(n)
 
 
+#region Cell sorting
+func _sort_tl(a:Vector2i, b:Vector2i) -> bool:
+	#if spawned_secondary:
+	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
+	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
+	#	if a_brk and not b_brk:
+	#		return false
+	#	elif b_brk and not a_brk:
+	#		return true
+	if a.x == b.x:
+		return a.y < b.y
+	return a.x < b.x
+
+
+func _sort_tr(a:Vector2i, b:Vector2i) -> bool:
+	#if spawned_secondary:
+	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
+	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
+	#	if a_brk and not b_brk:
+	#		return false
+	#	elif b_brk and not a_brk:
+	#		return true
+	if a.x == b.x:
+		return a.y < b.y
+	return a.x > b.x
+
+
+func _sort_bl(a:Vector2i, b:Vector2i) -> bool:
+	#if spawned_secondary:
+	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
+	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
+	#	if a_brk and not b_brk:
+	#		return false
+	#	elif b_brk and not a_brk:
+	#		return true
+	if a.x == b.x:
+		return a.y > b.y
+	return a.x < b.x
+
+
+func _sort_br(a:Vector2i, b:Vector2i) -> bool:
+	#if spawned_secondary:
+	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
+	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
+	#	if a_brk and not b_brk:
+	#		return false
+	#	elif b_brk and not a_brk:
+	#		return true
+	if a.x == b.x:
+		return a.y > b.y
+	return a.x > b.x
+#endregion
+
+
 func _spawn_entities_from_layer(layer:int) -> void:
 	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
 	if cells.is_empty():
 		cells = map.get_used_cells()
+		var center:Vector2 = bounds.get_center()
+		var player:Vector2 = GameCore.instance.player.position
+		if player.y > center.y:
+			if player.x > center.x:
+				cells.sort_custom(_sort_br)
+			else:
+				cells.sort_custom(_sort_bl)
+		elif player.x > center.x:
+			cells.sort_custom(_sort_tr)
+		else:
+			cells.sort_custom(_sort_tl)
 	#print("%d - %d/%d" % [layer, spawned_sp, cells.size()])
 	var running_count:int = 0
 	if layer == 1:
 		running_count = MAX_SP_PER_LOOP - cells.size()
 	var tpf:Array[int] = []
 	var fts := Time.get_ticks_msec()
-	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP) and ((Time.get_ticks_msec() - fts) < 23):
+	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP) and ((Time.get_ticks_msec() - fts) < MAX_MS_PER_LOOP):
 		var ts := Time.get_ticks_msec()
 		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)
@@ -765,6 +839,8 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		spawned_sp = 0
 		if layer == 0:
 			spawned_all = true
+		elif layer == 1:
+			spawned_secondary = true
 
 
 func _load(path:StringName) -> PackedScene:

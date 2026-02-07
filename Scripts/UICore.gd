@@ -373,9 +373,9 @@ func tick_screen_shake(delta:float) -> void:
 			var this_strength:float = lerpf(start_strength, end_strength, shake_elapsed / max_time)
 			if shake_dir == Vector2.ZERO:
 				current_shake_offset = Vector2(
-					randf_range(-this_strength, this_strength),
-					randf_range(-this_strength, this_strength)
-				).normalized()
+					randf_range(-1.0, 1.0),
+					randf_range(-1.0, 1.0)
+				).normalized() * this_strength
 			else:
 				current_shake_offset = shake_dir * this_strength
 				if flip_shake_dir:
@@ -386,6 +386,7 @@ func tick_screen_shake(delta:float) -> void:
 				shake_elapsed -= max_time
 				active_shake_timeline.remove_at(0)
 				active_shake_timeline.remove_at(0)
+				current_shake_offset = Vector2.ZERO
 		
 		if shake_setting == ShakeSetting.MINIMAL or shake_setting == ShakeSetting.MIN_NOHUD:
 			current_shake_offset *= MINIMAL_SHAKE_MOD

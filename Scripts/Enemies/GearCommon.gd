@@ -95,7 +95,8 @@ func _process(delta: float) -> void:
 	
 	if vis.is_on_screen() and going and not on_screen_once:
 		on_screen_once = true
-		sfx_charge.play()
+		if not StaticProcess.check_sound_played_this_frame(sfx_charge.stream.resource_path):
+			sfx_charge.play()
 		sprite.position = Vector2.ZERO
 		can_damage = true
 	

@@ -214,6 +214,7 @@ const STICK_DOUBLE_TOLERANCE:float = 0.1
 
 var read_inputs:bool = true
 var cutscene_has_control:bool = false
+var player_is_alive:bool = true
 
 var last_input_was_con:bool = false
 var last_ten_keys:Array = []
@@ -512,4 +513,4 @@ func load_from_project_settings() -> void:
 
 
 func accepting_input() -> bool:
-	return read_inputs and not cutscene_has_control
+	return read_inputs and not cutscene_has_control and player_is_alive

@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	shot_timeout -= delta
-	if cast1.is_colliding() and cast2.is_colliding():
+	if vis.is_on_screen() and cast1.is_colliding() and cast2.is_colliding():
 		if shot_timeout <= 0.0:
 			shot_timeout = SHOT_TIMEOUT
 			_shoot(laser, fire_dir, SHOT_SPEED)

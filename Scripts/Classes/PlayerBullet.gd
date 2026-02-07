@@ -84,6 +84,14 @@ func despawn(loudly:bool = false) -> void:
 	queue_free()
 
 
+func _spin_to_surface(surface:Statics.DirsSurface = Player.instance.gravity_dir) -> void:
+	match surface:
+		Statics.DirsSurface.FLOOR: area.rotation_degrees = 0.0
+		Statics.DirsSurface.LWALL: area.rotation_degrees = 90.0
+		Statics.DirsSurface.RWALL: area.rotation_degrees = -90.0
+		Statics.DirsSurface.CEILING: area.rotation_degrees = 180.0
+
+
 func _on_body_entered(body) -> void:
 	if body is not Enemy and collide_with_wall:
 		despawn(true)

@@ -5,6 +5,7 @@ var template_general
 var template_profile
 var template_records
 
+var sounds_played_this_frame:Array[String] = []
 
 signal cut_advance
 
@@ -40,6 +41,11 @@ func _ready() -> void:
 
 	# Set important game systems according to newly loaded data
 	_set_game_settings()
+
+
+func _process(_delta: float) -> void:
+	if not sounds_played_this_frame.is_empty():
+		sounds_played_this_frame.clear()
 
 
 func _set_game_settings() -> void:
@@ -94,3 +100,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		Statics.noclip_mode = not Statics.noclip_mode
 	if event.is_action_pressed(&"speak"):
 		cut_advance.emit()
+
+
+func check_sound_played_this_frame(sound:String) -> bool:
+	if not sounds_played_this_frame.has(sound):
+		sounds_played_this_frame.append(sound)
+		return false
+	return true

@@ -11,6 +11,7 @@ extends Node2D
 @export var collide_with_wall:bool = false
 @export var single_hit:bool = false
 @export var light_radius:int = 0
+@export var one_sound_per_frame:bool = false
 
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
@@ -43,7 +44,7 @@ var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
 func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	normalized_dir = dir
 	velocity_init = speed
-	if play_sound:
+	if play_sound and (not one_sound_per_frame or not StaticProcess.check_sound_played_this_frame(sfx.stream.resource_path)):
 		sfx.play()
 	area.connect("area_entered", _on_pbullet_collision)
 	area.connect("body_entered", _on_body_entered)

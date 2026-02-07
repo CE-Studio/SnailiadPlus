@@ -16,6 +16,7 @@ damage = 3
 max_life_time = 3.0
 despawn_offscreen = true
 light_radius = 16
+one_sound_per_frame = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1730275458]
 collision_layer = 8

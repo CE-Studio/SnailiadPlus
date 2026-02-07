@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://l7g3jlavks84"]
+
+[ext_resource type="Script" uid="uid://ch7xbqcf602dv" path="res://Scripts/Bullets/Player/PlayerBulletGravShock.gd" id="1_0n8u1"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_kwikd"]
+[ext_resource type="Texture2D" uid="uid://c5wxs3b06gcs8" path="res://Assets/Images/Bullets/Player/PlayerBulletShockwave.png" id="3_0n8u1"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_t2t3g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xq3d5"]
+size = Vector2(24, 24)
+
+[node name="PlayerBulletShockwave" type="Node2D" unique_id=479333128]
+z_index = 150
+script = ExtResource("1_0n8u1")
+type = 2
+damage = 30
+damage_powered = 68
+cooldown = 0.17
+despawn_particle = "ExplosionRainbowHuge"
+light_radius = 40
+
+[node name="Area2D" type="Area2D" parent="." unique_id=997170550]
+collision_layer = 32
+collision_mask = 65
+
+[node name="BoxNormal" type="CollisionShape2D" parent="Area2D" unique_id=433027229]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_0nsho")
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="BoxPower" type="CollisionShape2D" parent="Area2D" unique_id=146115737]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_xq3d5")
+disabled = true
+debug_color = Color(0.490196, 0.556863, 0.517647, 0.419608)
+
+[node name="AudioGroup" type="Node" parent="." unique_id=1016654869]
+
+[node name="ShootNormal" type="AudioStreamPlayer" parent="AudioGroup" unique_id=555948613]
+bus = &"Sfx"
+
+[node name="ShootPower" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1041561755]
+bus = &"Sfx"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1217870628]
+scale = Vector2(1.6, 1.6)
+rect = Rect2(-9.999999, -9.999999, 19.999998, 19.999998)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2009501991]
+script = ExtResource("2_kwikd")
+texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletGravShock.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=525362207]
+texture = ExtResource("3_0n8u1")
+hframes = 2
+vframes = 2
+script = ExtResource("4_t2t3g")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

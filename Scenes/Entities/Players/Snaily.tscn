@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://dux0aqxuer1ju" path="res://Assets/Sounds/Sfx/Death.ogg" id="10_evjxd"]
 [ext_resource type="AudioStream" uid="uid://tf26wffximvv" path="res://Assets/Sounds/Sfx/ShockCharge.ogg" id="13_1cbof"]
 [ext_resource type="AudioStream" uid="uid://ck7uvrbtyxcnl" path="res://Assets/Sounds/Sfx/ShockLaunch.ogg" id="14_ijfmt"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="15_ijfmt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
 size = Vector2(24, 13)
@@ -209,6 +210,10 @@ bus = &"Sfx"
 
 [node name="ShockLaunch" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1610328169]
 stream = ExtResource("14_ijfmt")
+bus = &"Sfx"
+
+[node name="ShockLand" type="AudioStreamPlayer" parent="AudioGroup" unique_id=119523955]
+stream = ExtResource("15_ijfmt")
 bus = &"Sfx"
 
 [node name="TimerGroup" type="Node" parent="." unique_id=790729840]
