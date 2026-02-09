@@ -11,7 +11,7 @@ func _ready():
 	retain_gravity_on_airborne = [ [Item.ItemTypes.GRAVITY_SHELL] ]
 	can_gravity_jump_opposite = [ [Item.ItemTypes.GRAVITY_SHELL] ]
 	can_gravity_jump_adjacent = [ [Item.ItemTypes.GRAVITY_SHELL] ]
-	can_gravity_shock = [ [-1] ]
+	can_gravity_shock = [ [Item.ItemTypes.GRAVITY_SHOCK] ]
 	shellable = [ [-1] ]
 	hop_while_moving = [ [-2] ]
 	hop_power = 0.0

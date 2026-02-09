@@ -1,0 +1,151 @@
+{
+	"tiles": [2, 2],
+	"layerize": false,
+	"meta": {},
+	"animations": {
+		"floor_L": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, true, false]
+			]
+		},
+		"floor_L_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, true, false]
+			]
+		},
+		"floor_R": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"floor_R_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false]
+			]
+		},
+		"lwall_U": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, true, true]
+			]
+		},
+		"lwall_U_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, true, true]
+			]
+		},
+		"lwall_D": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, true, false]
+			]
+		},
+		"lwall_D_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, true, false]
+			]
+		},
+		"rwall_U": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, true]
+			]
+		},
+		"rwall_U_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, true]
+			]
+		},
+		"rwall_D": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"rwall_D_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false]
+			]
+		},
+		"ceiling_L": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, true, true]
+			]
+		},
+		"ceiling_L_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, true, true]
+			]
+		},
+		"ceiling_R": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, true]
+			]
+		},
+		"ceiling_R_power": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, true]
+			]
+		}
+	}
+}

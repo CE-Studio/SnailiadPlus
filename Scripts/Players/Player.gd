@@ -655,6 +655,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			sprite.visible = true
 			_play_anim("idle")
 			sfx_shockland.play()
+			_shoot_shockwaves()
 			var shake_dir:Vector2 = Vector2.DOWN
 			match gravity_dir:
 				Statics.DirsSurface.LWALL: shake_dir = Vector2.LEFT
@@ -1568,6 +1569,26 @@ func _shoot_grav_shock() -> PlayerBullet:
 	add_child(new_bullet)
 	new_bullet._spawn(vel, false, powered)
 	return new_bullet
+
+
+func _shoot_shockwaves() -> void:
+	var wave_spawn_offset:float = 8.0
+	if gravity_dir == Statics.DirsSurface.LWALL or gravity_dir == Statics.DirsSurface.RWALL:
+		_instance_shockwave(Vector2.UP * wave_spawn_offset, Vector2.UP)
+		_instance_shockwave(Vector2.DOWN * wave_spawn_offset, Vector2.DOWN)
+	else:
+		_instance_shockwave(Vector2.LEFT * wave_spawn_offset, Vector2.LEFT)
+		_instance_shockwave(Vector2.RIGHT * wave_spawn_offset, Vector2.RIGHT)
+
+
+func _instance_shockwave(_position:Vector2, _direction:Vector2) -> void:
+	var bullet_scene:PackedScene = load("res://Scenes/Entities/Bullets/Player/PlayerBulletShockwave.tscn")
+	var ground:Node2D = GameCore.instance.current_room.layer_ground
+	
+	var new_wave:PlayerBullet = bullet_scene.instantiate()
+	ground.add_child(new_wave)
+	new_wave.position = position + _position
+	new_wave._spawn(_direction, 1.0, Statics.check_item(Item.ItemTypes.DEVASTATOR))
 #endregion
 
 

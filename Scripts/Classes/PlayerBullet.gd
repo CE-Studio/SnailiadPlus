@@ -102,3 +102,19 @@ func _can_create_afterimages() -> bool:
 		return afterimages == 1 or afterimages == 3
 	else:
 		return afterimages >= 2
+
+
+func _get_dir_string(dir:Statics.DirsSurface) -> String:
+	match dir:
+		Statics.DirsSurface.LWALL: return "left"
+		Statics.DirsSurface.RWALL: return "right"
+		Statics.DirsSurface.CEILING: return "up"
+	return "down"
+
+
+func _get_surface_string(dir:Statics.DirsSurface) -> String:
+	match dir:
+		Statics.DirsSurface.LWALL: return "lwall"
+		Statics.DirsSurface.RWALL: return "rwall"
+		Statics.DirsSurface.CEILING: return "ceiling"
+	return "floor"

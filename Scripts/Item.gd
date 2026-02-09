@@ -203,7 +203,8 @@ func _on_player_entered(_body: Node2D) -> void:
 				if is_super_unique:
 					played_unique_dust = true
 					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [3, true, true, 3])
-			#ItemTypes.GRAVITY_SHOCK:
+			ItemTypes.GRAVITY_SHOCK:
+				UICore.instance.achievement_core.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
 			ItemTypes.SECRET_BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)

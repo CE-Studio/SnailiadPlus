@@ -279,16 +279,17 @@ func _spawn_entities_from_layer(layer:int) -> void:
 	if cells.is_empty():
 		cells = map.get_used_cells()
 		var center:Vector2 = bounds.get_center()
-		var player:Vector2 = GameCore.instance.player.position
-		if player.y > center.y:
-			if player.x > center.x:
-				cells.sort_custom(_sort_br)
+		if GameCore.instance:
+			var player:Vector2 = GameCore.instance.player.position
+			if player.y > center.y:
+				if player.x > center.x:
+					cells.sort_custom(_sort_br)
+				else:
+					cells.sort_custom(_sort_bl)
+			elif player.x > center.x:
+				cells.sort_custom(_sort_tr)
 			else:
-				cells.sort_custom(_sort_bl)
-		elif player.x > center.x:
-			cells.sort_custom(_sort_tr)
-		else:
-			cells.sort_custom(_sort_tl)
+				cells.sort_custom(_sort_tl)
 	#print("%d - %d/%d" % [layer, spawned_sp, cells.size()])
 	var running_count:int = 0
 	if layer == 1:
