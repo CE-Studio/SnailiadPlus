@@ -35,7 +35,7 @@ func _spawn(_data:Array) -> void:
 
 
 func _process(delta: float) -> void:
-	var center:Vector2 = Vector2(200, 120)
+	var center:Vector2 = Statics.VECTOR_CENTER
 	#if UICore.instance:
 	#	center = UICore.instance.get_cam_center_pos()
 	match border_mode:

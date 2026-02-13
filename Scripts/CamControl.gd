@@ -16,7 +16,7 @@ var target_point:Vector2 = Vector2.ZERO
 var target_entity:Node2D
 var player:Player
 var ease_rate:float = 4.25
-var offset:Vector2 = Vector2(200, 120)
+var offset:Vector2 = Statics.VECTOR_CENTER
 var border:CameraBorder = null
 var shake_offset:Vector2 = Vector2.ZERO
 var do_screen_shake:bool = true
@@ -96,12 +96,16 @@ func _process(delta):
 						pos.y = clampf(pos.y, -INF, child.position.y + buffer)
 		#endregion
 	UICore.instance.position = pos
+	UICore.instance.border.position = Statics.VECTOR_CENTER
 	position = offset
 	if do_screen_shake:
 		if shake_cam_only:
 			position += shake_offset
 		else:
 			UICore.instance.position += shake_offset
+			var global_center:Vector2 = UICore.instance.position + Statics.VECTOR_CENTER
+			if border.get_closest_point_to(global_center) != global_center:
+				UICore.instance.border.position -= shake_offset
 
 
 func _tick_new_follow(_pos:Vector2, delta:float) -> Vector2:

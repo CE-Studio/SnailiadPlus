@@ -21,7 +21,7 @@ func spawn() -> void:
 
 func _spawn_one() -> void:
 	var this_particle:String = particles[randi_range(0, particles.size() - 1)]
-	var center = Vector2(200, 120) if static_position else UICore.instance.get_cam_center_pos()
+	var center = STATIC_POSITION if static_position else UICore.instance.get_cam_center_pos()
 	var spawn_pos = center + Vector2(
 		randf_range(-WRAP_BOUNDS.x, WRAP_BOUNDS.x),
 		WRAP_BOUNDS.y

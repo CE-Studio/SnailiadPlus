@@ -166,7 +166,7 @@ func _process(delta: float) -> void:
 			map_zoomed = true
 			zoomed_map = zoomed_scn.instantiate()
 			add_child(zoomed_map)
-			zoomed_map.position = Vector2(200, 120)
+			zoomed_map.position = Statics.VECTOR_CENTER
 			zoomed_map.init(map)
 	else:
 		position.y += exit_speed

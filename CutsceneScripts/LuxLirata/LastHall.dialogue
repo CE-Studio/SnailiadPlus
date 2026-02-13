@@ -1,0 +1,36 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
+match CutsceneController.object_id
+	when "30"
+		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
+			NPC30: Be careful, {{Player.player_name}}![wait=0.25]  With only\nthe powers you have now,[wait=0.1] {{GlobalText.COL_MOON}}Moon\nSnail[/color] will eat you for lunch!!
+		elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
+			NPC30: {{Player.player_name}},[wait=0.1] {{GlobalText.COL_MOON}}Moon Snail[/color]'s just ahead![wait=0.2]\nHe brought us here!![wait=0.15]  He's gone\nbad!![wait=0.15]  You need to defeat him!!
+		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
+			NPC30: {{Player.player_name}},[wait=0.1] search for the {{GlobalText.COL_IRIS}}helix\nfragments[/color]![wait=0.2]  Maybe {{GlobalText.COL_IRIS}}Iris[/color] can still\nrestore {{GlobalText.COL_MOON}}Moon Snail[/color]!!
+		else
+			NPC30: Congratulations, {{Player.player_name}}!![wait=0.2]  {{GlobalText.COL_MOON}}Moon\nSnail[/color] is saved!![wait=0.4]  Wait,[wait=0.2] is he a\nmoon snail or a sun snail?
+	when "31"
+		if not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
+			NPC31: {{GlobalText.COL_MOON}}Moon Snail[/color] is still a snail!![wait=0.2]  He\nwas once known as {{GlobalText.COL_SUN}}Sun Snail[/color]\nand enjoyed nomming on grass!!
+		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
+			NPC31: I've heard that the {{GlobalText.COL_IRIS}}Shrine of\nIris[/color] is not marked on any map![wait=0.25]\nHave you found it yet?
+		else
+			# ShakeHere SfxHere
+			NPC31: Don't moon snails live in the\nocean?[wait=0.35]  HEY,[wait=0.2] THIS GAME ISN'T\nREALISTIC!![wait=0.2]  WHAT GIVES??
+	when "32"
+		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
+			NPC32: Watch out, {{Player.player_name}}![wait=0.2]  You're not\nstrong enough to fight {{GlobalText.COL_MOON}}Moon\nSnail[/color] yet!![wait=0.15]  Turn back!!
+		elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
+			if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
+				NPC32: If only you had the power of\n{{GlobalText.COL_IRIS}}Iris[/color]![wait=0.2]  She could restore his\nlight once he's defeated!!
+			else
+				NPC32: Use the power of {{GlobalText.COL_IRIS}}Iris[/color], {{Player.player_name}}![wait=0.2]\nDefeat {{GlobalText.COL_MOON}}Moon Snail[/color], and restore\nhim to his former light!
+		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
+			NPC32: There are 30 {{GlobalText.COL_IRIS}}fragments[/color] hidden\naround Snaily World![wait=0.15]  Good luck\nfinding them, {{Player.player_name}}!!
+		else
+			NPC32: Amazing work, {{Player.player_name}}!![wait=0.5]  Hey,[wait=0.25]\nhow'd we get into outer space,\nanyway?
+=> END

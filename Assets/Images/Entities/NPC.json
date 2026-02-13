@@ -2079,6 +2079,60 @@
 			"colors": [255, 2766732543, 2021688575, 0, 4176935167],
 			"autoplay_next": "npc29.floor.left.idle",
 		},
+		"npc30.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 8951039, 3703110911, 0, 4176935167],
+		},
+		"npc30.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 8951039, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc30.floor.right.idle",
+		},
+		"npc30.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 8951039, 3703110911, 0, 4176935167],
+		},
+		"npc30.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 8951039, 3703110911, 0, 4176935167],
+			"autoplay_next": "npc30.floor.left.idle",
+		},
+		"npc31.floor.right.idle": {
+			"inherit": "1.floor.right.idle",
+			"colors": [255, 4242048255, 4235745535, 0, 4176935167],
+		},
+		"npc31.floor.right.turnground": {
+			"inherit": "1.floor.right.turnground",
+			"colors": [255, 4242048255, 4235745535, 0, 4176935167],
+			"autoplay_next": "npc31.floor.right.idle",
+		},
+		"npc31.floor.left.idle": {
+			"inherit": "1.floor.left.idle",
+			"colors": [255, 4242048255, 4235745535, 0, 4176935167],
+		},
+		"npc31.floor.left.turnground": {
+			"inherit": "1.floor.left.turnground",
+			"colors": [255, 4242048255, 4235745535, 0, 4176935167],
+			"autoplay_next": "npc31.floor.left.idle",
+		},
+		"npc32.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [255, 3103291647, 1753808127, 0, 4176935167],
+		},
+		"npc32.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [255, 3103291647, 1753808127, 0, 4176935167],
+			"autoplay_next": "npc32.floor.right.idle",
+		},
+		"npc32.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [255, 3103291647, 1753808127, 0, 4176935167],
+		},
+		"npc32.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [255, 3103291647, 1753808127, 0, 4176935167],
+			"autoplay_next": "npc32.floor.left.idle",
+		},
 		"npc35.ceiling.right.idle": {
 			"inherit": "2.ceiling.right.idle",
 			"colors": [255, 1749613823, 4233665791, 0, 4176935167],

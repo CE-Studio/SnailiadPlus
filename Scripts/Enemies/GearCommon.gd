@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 	
 	if not on_screen_once:
 		var ratio:int = ProjectSettings.get_setting("display/window/size/aspect_ratio")
-		var offset = Vector2i(200, 120) + Vector2i(Statics.ASPECT_RATIO_OFFSETS[ratio] * 0.5)
+		var offset = Vector2i(Statics.VECTOR_CENTER) + Vector2i(Statics.ASPECT_RATIO_OFFSETS[ratio] * 0.5)
 		match direction:
 			Statics.DirsCardinal.UP:
 				if abs(position.y - closest_onscreen_point.y) > offset.y:

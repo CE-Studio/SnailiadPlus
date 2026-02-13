@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cpd8vp2qdcx0g"
+path="res://.godot/imported/LastHall.dialogue-d1d9912e83ffdec03f38e6e83c06b20c.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/LuxLirata/LastHall.dialogue"
+dest_files=["res://.godot/imported/LastHall.dialogue-d1d9912e83ffdec03f38e6e83c06b20c.tres"]
+
+[params]
+
+defaults=true

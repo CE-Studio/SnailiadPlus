@@ -8,17 +8,36 @@
 [ext_resource type="PackedScene" uid="uid://gr8nakpbrhby" path="res://addons/dialogue_manager/components/search_and_replace.tscn" id="6_ylh0t"]
 [ext_resource type="PackedScene" uid="uid://cs8pwrxr5vxix" path="res://addons/dialogue_manager/components/errors_panel.tscn" id="7_5cvl4"]
 [ext_resource type="Script" uid="uid://klpiq4tk3t7a" path="res://addons/dialogue_manager/components/code_edit_syntax_highlighter.gd" id="7_necsa"]
-[ext_resource type="FontFile" uid="uid://bo28bqj6d1u8m" path="res://Resources/SnailplanesExtended.ttf" id="7_y6rqu"]
 [ext_resource type="Texture2D" uid="uid://cnm67htuohhlo" path="res://addons/dialogue_manager/assets/banner.png" id="9_y6rqu"]
 
-[sub_resource type="DPITexture" id="DPITexture_w0gko"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
-"
+[sub_resource type="Image" id="Image_faxki"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_ka3gk"]
+image = SubResource("Image_faxki")
+
+[sub_resource type="Image" id="Image_y6rqu"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_57eek"]
+image = SubResource("Image_y6rqu")
 
 [sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_mpdoc"]
 script = ExtResource("7_necsa")
 
-[node name="MainView" type="Control" unique_id=1510257730]
+[node name="MainView" type="Control" unique_id=1975859718]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
@@ -30,9 +49,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_h6qfq")
 
-[node name="ParseTimer" type="Timer" parent="." unique_id=603255789]
+[node name="ParseTimer" type="Timer" parent="." unique_id=1210958138]
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=577813855]
+[node name="Margin" type="MarginContainer" parent="." unique_id=424731994]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,412 +64,263 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 metadata/_edit_layout_mode = 1
 
-[node name="Content" type="HSplitContainer" parent="Margin" unique_id=424034355]
+[node name="Content" type="HSplitContainer" parent="Margin" unique_id=267962742]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+dragger_visibility = 1
 
-[node name="SidePanel" type="VBoxContainer" parent="Margin/Content" unique_id=1525045325]
+[node name="SidePanel" type="VBoxContainer" parent="Margin/Content" unique_id=408822052]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Toolbar" type="HBoxContainer" parent="Margin/Content/SidePanel" unique_id=741400649]
+[node name="Toolbar" type="HBoxContainer" parent="Margin/Content/SidePanel" unique_id=1890446441]
 layout_mode = 2
 
-[node name="NewButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=1355881741]
+[node name="NewButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=916776070]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Start a new file"
-icon = SubResource("DPITexture_w0gko")
 flat = true
 
-[node name="OpenButton" type="MenuButton" parent="Margin/Content/SidePanel/Toolbar" unique_id=245011020]
+[node name="OpenButton" type="MenuButton" parent="Margin/Content/SidePanel/Toolbar" unique_id=880106178]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open a file"
-icon = SubResource("DPITexture_w0gko")
-item_count = 6
+item_count = 9
 popup/item_0/text = "Open..."
-popup/item_0/icon = SubResource("DPITexture_w0gko")
+popup/item_0/icon = SubResource("ImageTexture_ka3gk")
 popup/item_0/id = 100
-popup/item_1/text = "Quick open..."
-popup/item_1/icon = SubResource("DPITexture_w0gko")
+popup/item_1/icon = SubResource("ImageTexture_ka3gk")
 popup/item_1/id = 101
 popup/item_2/id = -1
 popup/item_2/separator = true
-popup/item_3/text = "res://CutsceneScripts/SnailTown/TownMain.dialogue"
-popup/item_3/icon = SubResource("DPITexture_w0gko")
+popup/item_3/text = "res://examples/dialogue.dialogue"
+popup/item_3/icon = SubResource("ImageTexture_ka3gk")
 popup/item_3/id = 3
-popup/item_4/id = -1
-popup/item_4/separator = true
-popup/item_5/text = "Clear recent files"
-popup/item_5/id = 102
+popup/item_4/text = "res://examples/dialogue_with_input.dialogue"
+popup/item_4/icon = SubResource("ImageTexture_ka3gk")
+popup/item_4/id = 4
+popup/item_5/text = "res://examples/dialogue_for_point_n_click.dialogue"
+popup/item_5/icon = SubResource("ImageTexture_ka3gk")
+popup/item_5/id = 5
+popup/item_6/text = "res://examples/dialogue_for_visual_novel.dialogue"
+popup/item_6/icon = SubResource("ImageTexture_ka3gk")
+popup/item_6/id = 6
+popup/item_7/id = -1
+popup/item_7/separator = true
+popup/item_8/text = "Clear recent files"
+popup/item_8/id = 102
 
-[node name="SaveAllButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=1722172042]
+[node name="SaveAllButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=940841574]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "All"
-icon = SubResource("DPITexture_w0gko")
 flat = true
 
-[node name="FindInFilesButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=987883431]
+[node name="FindInFilesButton" type="Button" parent="Margin/Content/SidePanel/Toolbar" unique_id=213493052]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Find in Dialogue..."
-icon = SubResource("DPITexture_w0gko")
+tooltip_text = "Find in files..."
 flat = true
 
-[node name="Bookmarks" type="VSplitContainer" parent="Margin/Content/SidePanel" unique_id=1119127772]
+[node name="Bookmarks" type="VSplitContainer" parent="Margin/Content/SidePanel" unique_id=1966503844]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FilesList" parent="Margin/Content/SidePanel/Bookmarks" unique_id=1722986854 instance=ExtResource("2_npj2k")]
+[node name="FilesList" parent="Margin/Content/SidePanel/Bookmarks" unique_id=1460458494 instance=ExtResource("2_npj2k")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
-[node name="FilesPopupMenu" type="PopupMenu" parent="Margin/Content/SidePanel/Bookmarks/FilesList" unique_id=1938550280]
+[node name="FilesPopupMenu" type="PopupMenu" parent="Margin/Content/SidePanel/Bookmarks/FilesList" unique_id=253084069]
 unique_name_in_owner = true
 
-[node name="TitleList" parent="Margin/Content/SidePanel/Bookmarks" unique_id=1964459366 instance=ExtResource("2_onb4i")]
+[node name="TitleList" parent="Margin/Content/SidePanel/Bookmarks" unique_id=2063152064 instance=ExtResource("2_onb4i")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
-[node name="CodePanel" type="VBoxContainer" parent="Margin/Content" unique_id=2057634526]
+[node name="CodePanel" type="VBoxContainer" parent="Margin/Content" unique_id=2013417278]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="Toolbar" type="HBoxContainer" parent="Margin/Content/CodePanel" unique_id=131290014]
+[node name="Toolbar" type="HBoxContainer" parent="Margin/Content/CodePanel" unique_id=177899511]
 layout_mode = 2
 
-[node name="InsertButton" type="MenuButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=1664194188]
+[node name="InsertButton" type="MenuButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=1765432833]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Insert"
-icon = SubResource("DPITexture_w0gko")
 item_count = 15
 popup/item_0/text = "Wave BBCode"
-popup/item_0/icon = SubResource("DPITexture_w0gko")
+popup/item_0/icon = SubResource("ImageTexture_57eek")
 popup/item_0/id = 0
 popup/item_1/text = "Shake BBCode"
-popup/item_1/icon = SubResource("DPITexture_w0gko")
+popup/item_1/icon = SubResource("ImageTexture_57eek")
 popup/item_1/id = 1
 popup/item_2/id = -1
 popup/item_2/separator = true
 popup/item_3/text = "Typing pause"
-popup/item_3/icon = SubResource("DPITexture_w0gko")
+popup/item_3/icon = SubResource("ImageTexture_57eek")
 popup/item_3/id = 3
 popup/item_4/text = "Typing speed change"
-popup/item_4/icon = SubResource("DPITexture_w0gko")
+popup/item_4/icon = SubResource("ImageTexture_57eek")
 popup/item_4/id = 4
 popup/item_5/text = "Auto advance"
-popup/item_5/icon = SubResource("DPITexture_w0gko")
+popup/item_5/icon = SubResource("ImageTexture_57eek")
 popup/item_5/id = 5
 popup/item_6/text = "Templates"
 popup/item_6/id = -1
 popup/item_6/separator = true
 popup/item_7/text = "Title"
-popup/item_7/icon = SubResource("DPITexture_w0gko")
+popup/item_7/icon = SubResource("ImageTexture_57eek")
 popup/item_7/id = 6
 popup/item_8/text = "Dialogue"
-popup/item_8/icon = SubResource("DPITexture_w0gko")
+popup/item_8/icon = SubResource("ImageTexture_57eek")
 popup/item_8/id = 7
 popup/item_9/text = "Response"
-popup/item_9/icon = SubResource("DPITexture_w0gko")
+popup/item_9/icon = SubResource("ImageTexture_57eek")
 popup/item_9/id = 8
 popup/item_10/text = "Random lines"
-popup/item_10/icon = SubResource("DPITexture_w0gko")
+popup/item_10/icon = SubResource("ImageTexture_57eek")
 popup/item_10/id = 9
 popup/item_11/text = "Random text"
-popup/item_11/icon = SubResource("DPITexture_w0gko")
+popup/item_11/icon = SubResource("ImageTexture_57eek")
 popup/item_11/id = 10
 popup/item_12/text = "Actions"
 popup/item_12/id = -1
 popup/item_12/separator = true
 popup/item_13/text = "Jump to title"
-popup/item_13/icon = SubResource("DPITexture_w0gko")
+popup/item_13/icon = SubResource("ImageTexture_57eek")
 popup/item_13/id = 11
 popup/item_14/text = "End dialogue"
-popup/item_14/icon = SubResource("DPITexture_w0gko")
+popup/item_14/icon = SubResource("ImageTexture_57eek")
 popup/item_14/id = 12
 
-[node name="TranslationsButton" type="MenuButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=412435239]
+[node name="TranslationsButton" type="MenuButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=2010201295]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Translations"
-icon = SubResource("DPITexture_w0gko")
 item_count = 5
 popup/item_0/text = "Generate line IDs"
-popup/item_0/icon = SubResource("DPITexture_w0gko")
+popup/item_0/icon = SubResource("ImageTexture_57eek")
 popup/item_0/id = 100
 popup/item_1/id = -1
 popup/item_1/separator = true
 popup/item_2/text = "Save character names to CSV..."
-popup/item_2/icon = SubResource("DPITexture_w0gko")
+popup/item_2/icon = SubResource("ImageTexture_57eek")
 popup/item_2/id = 201
 popup/item_3/text = "Save lines to CSV..."
-popup/item_3/icon = SubResource("DPITexture_w0gko")
+popup/item_3/icon = SubResource("ImageTexture_57eek")
 popup/item_3/id = 202
 popup/item_4/text = "Import line changes from CSV..."
-popup/item_4/icon = SubResource("DPITexture_w0gko")
+popup/item_4/icon = SubResource("ImageTexture_57eek")
 popup/item_4/id = 203
 
-[node name="Separator" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=538729762]
+[node name="Separator" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=821562382]
 layout_mode = 2
 
-[node name="SearchButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=2033306798]
+[node name="SearchButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=121689358]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Search for text"
+disabled = true
 toggle_mode = true
-icon = SubResource("DPITexture_w0gko")
 flat = true
 
-[node name="Separator2" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=1684751991]
+[node name="Separator2" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=175043853]
 layout_mode = 2
 
-[node name="TestButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=964948411]
+[node name="TestButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1610822770]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Test dialogue from start of file"
-icon = SubResource("DPITexture_w0gko")
+tooltip_text = "Test dialogue"
+disabled = true
 flat = true
 
-[node name="TestLineButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1605891468]
+[node name="TestLineButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1575726308]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Test dialogue from current line"
-icon = SubResource("DPITexture_w0gko")
+tooltip_text = "Test dialogue"
+disabled = true
 flat = true
 
-[node name="Spacer2" type="Control" parent="Margin/Content/CodePanel/Toolbar" unique_id=1624018638]
+[node name="Spacer2" type="Control" parent="Margin/Content/CodePanel/Toolbar" unique_id=249482575]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SupportButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1267731539]
+[node name="SupportButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1042093313]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Support Dialogue Manager"
 text = "Sponsor"
-icon = SubResource("DPITexture_w0gko")
 flat = true
 
-[node name="Separator4" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=1696094518]
+[node name="Separator4" type="VSeparator" parent="Margin/Content/CodePanel/Toolbar" unique_id=321395257]
 layout_mode = 2
 
-[node name="DocsButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1604803124]
+[node name="DocsButton" type="Button" parent="Margin/Content/CodePanel/Toolbar" unique_id=1404920471]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Docs"
-icon = SubResource("DPITexture_w0gko")
 flat = true
 
-[node name="VersionLabel" type="Label" parent="Margin/Content/CodePanel/Toolbar" unique_id=1109008036]
+[node name="VersionLabel" type="Label" parent="Margin/Content/CodePanel/Toolbar" unique_id=630990714]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.490196)
 layout_mode = 2
-text = "v3.9.1"
+text = "v2.42.2"
 vertical_alignment = 1
 
-[node name="UpdateButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=2010016025 instance=ExtResource("2_ph3vs")]
+[node name="UpdateButton" parent="Margin/Content/CodePanel/Toolbar" unique_id=1595256128 instance=ExtResource("2_ph3vs")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "v2.44.1 available"
 
-[node name="SearchAndReplace" parent="Margin/Content/CodePanel" unique_id=631250213 instance=ExtResource("6_ylh0t")]
+[node name="SearchAndReplace" parent="Margin/Content/CodePanel" unique_id=2132004091 instance=ExtResource("6_ylh0t")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CodeEdit" parent="Margin/Content/CodePanel" unique_id=2083768913 instance=ExtResource("2_f73fm")]
+[node name="CodeEdit" parent="Margin/Content/CodePanel" unique_id=302141693 instance=ExtResource("2_f73fm")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.8025, 0.81, 0.8225, 1)
-theme_override_colors/background_color = Color(0.115499996, 0.132, 0.15949999, 1)
-theme_override_colors/current_line_color = Color(1, 1, 1, 0.07)
-theme_override_fonts/font = ExtResource("7_y6rqu")
+theme_override_colors/font_color = Color(0.972549, 0.972549, 0.94902, 1)
+theme_override_colors/background_color = Color(0.156863, 0.164706, 0.211765, 1)
+theme_override_colors/current_line_color = Color(0.266667, 0.278431, 0.352941, 0.243137)
 theme_override_font_sizes/font_size = 14
 theme_override_colors/bookmark_color = Color(1, 0.333333, 0.333333, 1)
 text = "~ start
-do CutsceneController.lock_input()
-if CutsceneController.object_id == \"17\"
-	do CutsceneController.set_textbox_player_preset(Player.Players.UPSIDE)
-else
-	do CutsceneController.reset_textbox_color()
-do CutsceneController.set_textbox_frame(0)
-do CutsceneController.show_textbox()
-match CutsceneController.object_id
-	when \"0\"
-		if not Statics.check_item(Item.ItemTypes.PEASHOOTER)
-			match Player.instance.who_i_is
-				when Player.Players.LEGGY
-					NPC0: Leggy placeholder
-				when Player.Players.BLOBBY
-					NPC0: Blobby placeholder
-				else
-					NPC0: Hi, {{Player.player_name}}!![wait=0.25]  Why don't you try climbing up the walls?\\n[wait=0.25]     Just {{GlobalText.COL_CTRL}}hold \"{{SInput.icon_up}}\" and \"{{SInput.icon_right}}\"[/color].
-		elif not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-			NPC0: Oh, [wait=0.125]nice pea shooter!  [wait=0.125]I heard you can shoot a [color=#007df4]blue door[/color] open with one of those!
-		elif not Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) and not Statics.check_item(Item.ItemTypes.DEBUG_WAVE)
-			NPC0: Wow, a boomerang!  [wait=0.125]You could break a [color=#ff75f6]pink door[/color] open with just one of those!
-		elif not Statics.check_item(Item.ItemTypes.DEVASTATOR)
-			NPC0: Is that a rainbow wave!?[wait=0.25]  Well, then![wait=0.25]  You can open a [color=#ff2024]red door[/color] with one of those!
-		elif Statics.get_item_percentage() < 100.0
-			# ShakeHere SfxHere
-			NPC0: A devastator!?[wait=0.4]  That opens up [color=#4bd867]green doors![/color][wait=0.25]  It also upgrades all three weapons!  Wow!!
-		else
-			# WaveHere
-			NPC0: I hope the next game has more weapons.[wait=0.25]  This game could have used a flame whip!
-	
-	when \"1\"
-		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.RAINBOW_WAVE)
-			NPC1: {{Player.player_name}},[wait=0.125] some snails are missing![wait=0.25] Do you think you could go look for them?[wait=0.25]  I'm getting worried!
-		elif Statics.get_item_percentage() < 100.0
-			NPC1: I have a goal in life.[wait=0.25]  One day, I will eat a pizza.[wait=0.4]  I mean it!![wait=0.4][speed=0.4]  Just you watch, [wait=0.0625]{{Player.player_name}}!!
-		else
-			# SfxHere WaveHere
-			NPC1: {{Player.player_name}},[wait=0.125] you missed it![wait=0.25]  I made a delicious pizza,[wait=0.125] and I ate the whole[wait=0.125] thing!!![wait=0.3][speed=0.5]  Om nom nom!
-	
-	when \"2\"
-		if not Statics.is_random_game
-			if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you finding a weapon somewhere under the water!
-			elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) and not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading to the upper right part of the map!!
-			elif not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-				NPC2: [color=#b9b8f7]I can see the past, {{Player.player_name}}![/color][wait=0.3]\\nI see you forgot to grab the boomerang after Shellbreaker!
-			elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading to the lower right part of the map!!
-			elif not Statics.check_item(Item.ItemTypes.RAINBOW_WAVE)
-				NPC2: [color=#b9b8f7]I can see the past, {{Player.player_name}}![/color][wait=0.3]\\nI see you forgot to grab the rainbow wave after Stompy!
-			elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading to the lower left part of the map!!
-			elif not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
-				NPC2: [color=#b9b8f7]I can see the past, {{Player.player_name}}![/color][wait=0.3]\\nI see you forgot to grab the rapid fire before Space Box!
-			elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading to the upper left part of the map!!
-			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading all over the map, finding little shells!
-			elif not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you heading precisely two screens to the left of here!!
-			else
-				# WaveHere
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\\nI see you having 18,000,000 baby {{Player.player_species_plural}}!![wait=0.25]  Congratulations!!
-		else
-			NPC2: Yeah,[wait=0.25] I have no idea what's going on here.[wait=0.3]  You're on your own, {{Player.player_name}}!
-	
-	when \"3\"
-		if not Statics.check_item(Item.ItemTypes.GRAVITY_SHELL)
-			NPC3: I wonder why I can't crawl on ceiling corners...[wait=0.25]  Do you think I'll ever be able to, {{Player.player_name}}?
-			if Player.instance.who_i_is == Player.Players.LEGGY
-				NPC3: Of course,[wait=0.125] you don't have to worry about them at all, do you?[wait=0.25]  I wish I could flip!
-		elif not Statics.check_item(Item.ItemTypes.METAL_SHELL)
-			if Player.instance.who_i_is == Player.Players.UPSIDE
-				NPC3: Oh, my,[wait=0.125] you're a [color=#ff705f]magnet snail[/color]![wait=0.25]  You must be really good at crawling around ceilings!!
-			elif Player.instance.who_i_is == Player.Players.LEGGY
-				NPC3: What's it like to flip, {{Player.player_name}}?[wait=0.25]  I wish I was a gravity snail!!
-			elif Player.instance.who_i_is == Player.Players.BLOBBY
-				NPC3: Oh, my,[wait=0.125] you're an [color=#dcb7f8]angelblob[/color]![wait=0.25]  I bet you could scale a whole room in one big jump!!
-			else
-				NPC3: Oh, my,[wait=0.125] you're a [color=#42f9a2]gravity {{Player.player_species}}[/color]![wait=0.25]  You must be really good at crawling around ceilings!!
-		else
-			if Player.instance.who_i_is == Player.Players.LEGGY
-				NPC3: What's it like to flip, {{Player.player_name}}?[wait=0.25]  I wish I was a gravity snail!!
-			elif Player.instance.who_i_is == Player.Players.BLOBBY
-				NPC3: Oh, my,[wait=0.125] you're a [color=#ff2024]devilblob[/color]![wait=0.25]  I bet you could scale a whole room in one big jump!!
-			elif Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
-				NPC3: Oh, my,[wait=0.125] you're a [color=#ffb6f8]full power {{Player.player_species}}[/color]![wait=0.25]  You must be really good at crawling around ceilings!!
-			else
-				NPC3: Oh, my,[wait=0.125] you're a [color=#ffb6f8]full metal {{Player.player_species}}[/color]![wait=0.25]  You must be really good at crawling around ceilings!!
-	
-	when \"4\"
-		if Statics.solid_at_world_pos(Vector2(552, 232))
-			NPC4: I wish I had some way to break green blocks.[wait=0.125]  Those suckers are always getting in my way!!
-		else
-			# WaveHere
-			NPC4: Whew![wait=0.25]  Thanks, {{Player.player_name}}![wait=0.125]  I think those blocks were planning to attack!![wait=0.125]  You saved the day!!
-	
-	when \"5\"
-		if Statics.get_item_percentage() < 100.0
-			NPC5: There's a lot of secrets in and around {{GlobalText.COL_TOWN}}Snail Town[/color].[wait=0.25]  Have you found them all?
-		else
-			NPC5: They say [color=#f6cdb5]Boss Rush[/color] is the true test of snail skill.[wait=0.3][speed=0.75]  But what about slug skill?
-	
-	when \"6\"
-		if Statics.check_item(Item.ItemTypes.HIGH_JUMP) or Statics.check_item(Item.ItemTypes.GRAVITY_SHELL) or Player.instance.who_i_is == Player.Players.UPSIDE or Player.instance.who_i_is == Player.Players.LEGGY
-			NPC6: Don't you think it's weird that we all live in treehouses?
-		else
-			NPC6: Hey {{Player.player_name}},[wait=0.125] how'd you get up here?[wait=0.4]  And how do I get down?
-	
-	when \"14\"
-		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 15
-			NPC14: Hey, {{Player.player_name}}![wait=0.25]  Keep an eye out for {{GlobalText.COL_IRIS}}\"Helix Fragments\"[/color].[wait=0.25]  They look like spinning white shells!
-		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
-			NPC14: They say that the {{GlobalText.COL_IRIS}}Shrine of Iris[/color] is not located on any map!
-		else
-			NPC14: Wow, {{Player.player_name}}![wait=0.125]  You're pretty good at finding secrets![wait=0.25]  Maybe you should become a detective!
-	
-	when \"15\"
-		if Statics.get_item_percentage() < 20.0
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] Come back to town after each area to find secret items!
-		elif Statics.get_item_percentage() < 40.0
-			if Player.instance.who_i_is == Player.Players.SNAILY or Player.instance.who_i_is == Player.Players.UPSIDE
-				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a little hint:[wait=0.125] A shell can fit where a snail cannot!
-			elif Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
-				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a li'l hint:[wait=0.125] {{Player.player_species_plural}} may be more fragile than snails,[wait=0.125] but they're also faster!
-			elif Player.instance.who_i_is == Player.Players.LEGGY
-				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a tip:[wait=0.125] It may look too big,[wait=0.125] but your shell can fit in places that ours can!
-			else
-				NPC15: Hi, {{Player.player_name}}![wait=0.125]  Here's a little tip:[wait=0.125] You don't have to be on the ground to jump!
-		elif Statics.get_item_percentage() < 60.0
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] Sometimes, you'll miss a secret if you cling to a wall!
-		elif Statics.get_item_percentage() < 80.0
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me give you a hint:[wait=0.125] You can find the \"high jump\" before any other item!
-		elif Statics.get_item_percentage() < 100.0
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] There's a boomerang somewhere in {{GlobalText.COL_TOWN}}Snail Town[/color]!
-		else
-			NPC15: Hi, {{Player.player_name}}![wait=0.125]  Let me tell you a secret:[wait=0.125] there's a secret somewhere in the main menu!
-	
-	when \"16\"
-		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-			if Player.instance.who_i_is != Player.Players.LEECHY
-				NPC16: If you ever get hurt,[wait=0.125] [color=#4bd867]eat some plants[/color]![wait=0.25]  You need to eat well to stay fit and healthy!
-			else
-				NPC16: If you ever get hurt,[wait=0.125] defeat enemies![wait=0.25]  As a leech,[wait=0.125] you can earn [color=#ff75f6]pink heath orbs[/color] off them!
-		elif CutsceneController.instance.actor_above(\"16\", 710)
-			NPC16: I want to go for a ride!!!
-		else
-			# WaveHere SfxHere
-			NPC16: [speed=0.6]WHEEEE!![speed=1][wait=0.125]  That was fun, {{Player.player_name}}![wait=0.125]  Let's do it again!!
-	
-	when \"17\"
-		if Statics.get_item_percentage() < 100.0
-			NPC17: There's a hidden room under the path into town.[wait=0.25]  I don't know how to get in yet, though...
-		else
-			NPC17: They call me [color=#ffb23d]upside-down snail[/color],[wait=0.25] but I think everyone else is upside down!
-	
-	when \"25\"
-		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-			NPC25: Have you tried hitting {{GlobalText.COL_CTRL}}\"{{SInput.icon_map}}\"[/color] yet?[wait=0.25]  It makes the map big![wait=0.25]  Oh,[wait=0.125] and hit {{GlobalText.COL_CTRL}}\"{{SInput.icon_pause}}\"[/color] for the menu!
-		else
-			NPC25: Hey {{Player.player_name}},[wait=0.125] I'm hungry![wait=0.25]  Know any good plants around town?
-	
-do CutsceneController.hide_textbox()
+
+Nathan: Hi, I'm Nathan and this is Coco.
+Coco: Meow.
+Nathan: Here are some response options.
+- First one
+	Nathan: You picked the first one.
+- Second one
+	Nathan: You picked the second one.
+- Start again => start
+- End the conversation => END
+Nathan: I hope this example is helpful.
+Coco: Meow.
+
 => END"
 scroll_smooth = true
-scroll_vertical = 2.0
 syntax_highlighter = SubResource("SyntaxHighlighter_mpdoc")
 
-[node name="ErrorsPanel" parent="Margin/Content/CodePanel" unique_id=1910676352 instance=ExtResource("7_5cvl4")]
+[node name="ErrorsPanel" parent="Margin/Content/CodePanel" unique_id=1975824789 instance=ExtResource("7_5cvl4")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Banner" type="CenterContainer" parent="." unique_id=1555822641]
+[node name="Banner" type="CenterContainer" parent="." unique_id=1848328987]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -460,11 +330,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="VBoxContainer" parent="Banner" unique_id=1602362952]
+[node name="PanelContainer" type="VBoxContainer" parent="Banner" unique_id=1211498578]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="BannerImage" type="TextureRect" parent="Banner/PanelContainer" unique_id=1254709865]
+[node name="BannerImage" type="TextureRect" parent="Banner/PanelContainer" unique_id=899616034]
 custom_minimum_size = Vector2(600, 200)
 layout_mode = 2
 mouse_filter = 0
@@ -472,43 +342,41 @@ mouse_default_cursor_shape = 2
 texture = ExtResource("9_y6rqu")
 expand_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Banner/PanelContainer" unique_id=501778417]
+[node name="HBoxContainer" type="HBoxContainer" parent="Banner/PanelContainer" unique_id=874356896]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="BannerNewButton" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=752154374]
+[node name="BannerNewButton" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=1034773049]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "New Dialogue..."
-icon = SubResource("DPITexture_w0gko")
 
-[node name="BannerQuickOpen" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=893981756]
+[node name="BannerQuickOpen" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=1614953837]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Quick open..."
-icon = SubResource("DPITexture_w0gko")
 
-[node name="BannerExamples" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=157683759]
+[node name="BannerExamples" type="Button" parent="Banner/PanelContainer/HBoxContainer" unique_id=1066745213]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Example projects..."
 
-[node name="NewDialog" type="FileDialog" parent="." unique_id=185482440]
+[node name="NewDialog" type="FileDialog" parent="." unique_id=458925087]
 size = Vector2i(900, 750)
 min_size = Vector2i(600, 500)
 dialog_hide_on_ok = true
 filters = PackedStringArray("*.dialogue ; Dialogue")
 
-[node name="SaveDialog" type="FileDialog" parent="." unique_id=1905449544]
+[node name="SaveDialog" type="FileDialog" parent="." unique_id=325906832]
 size = Vector2i(900, 750)
 min_size = Vector2i(600, 500)
 dialog_hide_on_ok = true
 filters = PackedStringArray("*.dialogue ; Dialogue")
 
-[node name="OpenDialog" type="FileDialog" parent="." unique_id=309284924]
+[node name="OpenDialog" type="FileDialog" parent="." unique_id=1252768767]
 title = "Open a File"
 size = Vector2i(900, 750)
 min_size = Vector2i(600, 500)
@@ -517,19 +385,19 @@ dialog_hide_on_ok = true
 file_mode = 0
 filters = PackedStringArray("*.dialogue ; Dialogue")
 
-[node name="QuickOpenDialog" type="ConfirmationDialog" parent="." unique_id=1250091350]
+[node name="QuickOpenDialog" type="ConfirmationDialog" parent="." unique_id=254740052]
 title = "Quick open"
 size = Vector2i(600, 900)
 min_size = Vector2i(400, 600)
 ok_button_text = "Open"
 
-[node name="QuickOpenFilesList" parent="QuickOpenDialog" unique_id=1765393954 instance=ExtResource("2_npj2k")]
+[node name="QuickOpenFilesList" parent="QuickOpenDialog" unique_id=1813408245 instance=ExtResource("2_npj2k")]
 
-[node name="ExportDialog" type="FileDialog" parent="." unique_id=1573800064]
+[node name="ExportDialog" type="FileDialog" parent="." unique_id=2035775999]
 size = Vector2i(900, 750)
 min_size = Vector2i(600, 500)
 
-[node name="ImportDialog" type="FileDialog" parent="." unique_id=636199614]
+[node name="ImportDialog" type="FileDialog" parent="." unique_id=1326083376]
 title = "Open a File"
 size = Vector2i(900, 750)
 min_size = Vector2i(600, 500)
@@ -537,22 +405,24 @@ ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.csv ; Translation CSV")
 
-[node name="ErrorsDialog" type="AcceptDialog" parent="." unique_id=1782017758]
+[node name="ErrorsDialog" type="AcceptDialog" parent="." unique_id=2100629189]
 title = "Error"
 dialog_text = "You have errors in your script. Fix them and then try again."
 
-[node name="BuildErrorDialog" type="AcceptDialog" parent="." unique_id=1890417459]
+[node name="BuildErrorDialog" type="AcceptDialog" parent="." unique_id=1879686579]
 title = "Errors"
 dialog_text = "You need to fix dialogue errors before you can run your game."
 
-[node name="CloseConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=892563451]
+[node name="CloseConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=1048140490]
 title = "Unsaved changes"
 ok_button_text = "Save changes"
 
-[node name="UpdatedDialog" type="AcceptDialog" parent="." unique_id=1294706687]
+[node name="UpdatedDialog" type="AcceptDialog" parent="." unique_id=955879802]
 title = "Updated"
 size = Vector2i(191, 100)
 dialog_text = "You're now up to date!"
+
+[node name="GenerateStaticIdsConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=1311101975]
 
 [connection signal="theme_changed" from="." to="." method="_on_main_view_theme_changed"]
 [connection signal="visibility_changed" from="." to="." method="_on_main_view_visibility_changed"]
@@ -594,3 +464,4 @@ dialog_text = "You're now up to date!"
 [connection signal="file_selected" from="ImportDialog" to="." method="_on_import_dialog_file_selected"]
 [connection signal="confirmed" from="CloseConfirmationDialog" to="." method="_on_close_confirmation_dialog_confirmed"]
 [connection signal="custom_action" from="CloseConfirmationDialog" to="." method="_on_close_confirmation_dialog_custom_action"]
+[connection signal="confirmed" from="GenerateStaticIdsConfirmationDialog" to="." method="_on_generate_static_ids_confirmation_dialog_confirmed"]

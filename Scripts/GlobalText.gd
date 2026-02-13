@@ -4,6 +4,7 @@ extends Node
 const COL_CTRL:String = "[color=#ffd48c]"
 const COL_IRIS:String = "[color=#dcb7f8]"
 const COL_MOON:String = "[color=#00c2f7]"
+const COL_SUN:String =  "[color=#ffd48c]"
 const COL_TOWN:String = "[color=#b8f74f]"
 
 var version_types:Array[StringName] = [

@@ -6,7 +6,7 @@ extends Node2D
 #region Variables
 const WRAP_BOUNDS:Vector2 = Vector2(232, 152)
 const WRAP_DIST:Vector2 = Vector2(464, 304)
-const STATIC_POSITION:Vector2 = Vector2(200, 120)
+const STATIC_POSITION:Vector2 = Statics.VECTOR_CENTER
 
 @export var particles:Array[String] = []
 @export var spawn_delay:float = 0.0
@@ -44,13 +44,13 @@ func _process(delta: float) -> void:
 		_spawn_one()
 		spawn_cooldown = spawn_delay
 	
-	var cam_center = Vector2(200, 120)
+	var cam_center = STATIC_POSITION
 	if UICore.instance:
 		UICore.instance.get_cam_center_pos()
 	if static_position:
 		cam_center = STATIC_POSITION
 	elif move_with_camera:
-		cam_center = Vector2(200, 120)
+		cam_center = STATIC_POSITION
 	for particle in active_particles:
 		while particle.position.x < cam_center.x - WRAP_BOUNDS.x:
 			particle.position.x += WRAP_DIST.x

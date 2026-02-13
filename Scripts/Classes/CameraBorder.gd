@@ -92,7 +92,7 @@ func _draw() -> void:
 	if Engine.is_editor_hint() and editor_show_borders:
 		for i in range(curve.point_count):
 			var pos:Vector2 = curve.get_point_position(i)
-			var bounds:Vector2 = Vector2(200, 120)
+			var bounds:Vector2 = Statics.VECTOR_CENTER
 			draw_line(
 				Vector2(pos.x - bounds.x, pos.y - bounds.y),
 				Vector2(pos.x - bounds.x, pos.y + bounds.y),
