@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b5lg3x7uga1mi"
+path="res://.godot/imported/LastHeart.dialogue-75766ec7ee6e9bc49b01fa8f3a3549e7.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/LuxLirata/LastHeart.dialogue"
+dest_files=["res://.godot/imported/LastHeart.dialogue-75766ec7ee6e9bc49b01fa8f3a3549e7.tres"]
+
+[params]
+
+defaults=true

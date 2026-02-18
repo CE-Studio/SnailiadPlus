@@ -10,7 +10,6 @@ z_as_relative = false
 script = ExtResource("1_w418i")
 particles = Array[String](["Snow"])
 particle_count = 60
-move_with_camera = true
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=494264938]
 texture = ExtResource("2_w418i")

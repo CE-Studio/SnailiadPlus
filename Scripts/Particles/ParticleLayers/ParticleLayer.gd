@@ -14,6 +14,7 @@ const STATIC_POSITION:Vector2 = Statics.VECTOR_CENTER
 @export var particle_count:int = 0
 @export var static_position:bool = false
 @export var move_with_camera:bool = false
+@export var wrap_at_edges:bool = true
 
 var active_particles:Array[Particle] = []
 var spawn_cooldown:float = 0.0
@@ -44,22 +45,28 @@ func _process(delta: float) -> void:
 		_spawn_one()
 		spawn_cooldown = spawn_delay
 	
-	var cam_center = STATIC_POSITION
+	var cam_center:Vector2 = STATIC_POSITION
+	var wrap_offset:Vector2 = Vector2.ZERO
 	if UICore.instance:
-		UICore.instance.get_cam_center_pos()
-	if static_position:
-		cam_center = STATIC_POSITION
-	elif move_with_camera:
-		cam_center = STATIC_POSITION
-	for particle in active_particles:
-		while particle.position.x < cam_center.x - WRAP_BOUNDS.x:
-			particle.position.x += WRAP_DIST.x
-		while particle.position.x > cam_center.x + WRAP_BOUNDS.x:
-			particle.position.x -= WRAP_DIST.x
-		while particle.position.y < cam_center.y - WRAP_BOUNDS.y:
-			particle.position.y += WRAP_DIST.y
-		while particle.position.y > cam_center.y + WRAP_BOUNDS.y:
-			particle.position.y -= WRAP_DIST.y
+		var center:Vector2 = UICore.instance.get_cam_center_pos()
+		if move_with_camera:
+			cam_center = center
+		else:
+			wrap_offset = center - STATIC_POSITION
+	#if static_position:
+	#	cam_center = STATIC_POSITION
+	#elif move_with_camera:
+	#	cam_center = STATIC_POSITION
+	if wrap_at_edges:
+		for particle in active_particles:
+			while particle.global_position.x < cam_center.x - WRAP_BOUNDS.x + wrap_offset.x:
+				particle.position.x += WRAP_DIST.x
+			while particle.global_position.x > cam_center.x + WRAP_BOUNDS.x + wrap_offset.x:
+				particle.position.x -= WRAP_DIST.x
+			while particle.global_position.y < cam_center.y - WRAP_BOUNDS.y + wrap_offset.y:
+				particle.position.y += WRAP_DIST.y
+			while particle.global_position.y > cam_center.y + WRAP_BOUNDS.y + wrap_offset.y:
+				particle.position.y -= WRAP_DIST.y
 
 
 func _spawn_one() -> void:

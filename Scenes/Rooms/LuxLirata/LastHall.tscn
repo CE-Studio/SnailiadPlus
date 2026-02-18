@@ -142,11 +142,14 @@ exit_transition = 1
 position = Vector2(0, 968)
 rotation = -3.1415927
 scale = Vector2(1, 3)
+my_id = 1
+exit_room = "uid://dpvprxslni1v6"
 
 [node name="RoomTransitionTrigger3" parent="." unique_id=726365045 instance=ExtResource("4_ucggp")]
 position = Vector2(200, 0)
 rotation = -1.5707964
 scale = Vector2(1, 3)
 my_id = 2
+exit_room = "uid://duyx50lmagngh"
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("8_d5brr")]

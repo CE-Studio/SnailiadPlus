@@ -12,7 +12,6 @@ particles = Array[String](["Ember"])
 spawn_delay = 0.03
 spawn_all_at_once = false
 particle_count = 16
-move_with_camera = true
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1529065069]
 texture = ExtResource("2_djypw")

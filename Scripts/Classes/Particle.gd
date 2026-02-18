@@ -10,6 +10,7 @@ extends Node2D
 @export var timer:Timer
 @export_range(0.1, 8.0, 0.01) var anim_speed_min:float = 1.0
 @export_range(0.1, 8.0, 0.01) var anim_speed_max:float = 1.0
+@export var follow_center:Vector2 = Vector2(200, 120)
 #endregion
 
 

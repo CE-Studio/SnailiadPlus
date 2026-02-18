@@ -24,8 +24,8 @@ func _spawn_one() -> void:
 	var center = STATIC_POSITION if static_position else UICore.instance.get_cam_center_pos()
 	var spawn_pos = center + Vector2(
 		randf_range(-WRAP_BOUNDS.x, WRAP_BOUNDS.x),
-		WRAP_BOUNDS.y
+		WRAP_BOUNDS.y - randf_range(0.0, 32.0)
 	)
 	var target_layer:Room.Layers = (Room.Layers.BG2 + randi_range(0, 3)) as Room.Layers
-	var new_particle = Statics.spawn_particle_cam_synced(this_particle, target_layer, spawn_pos)
+	var new_particle = Statics.spawn_particle(this_particle, target_layer, spawn_pos)
 	active_particles.append(new_particle)

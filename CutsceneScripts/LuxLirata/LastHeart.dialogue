@@ -1,0 +1,12 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
+if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
+	NPC33: Congratulations, {{Player.player_name}}!![wait=0.15]  You\ndefeated {{GlobalText.COL_MOON}}Moon Snail[/color]!![wait=0.15]  You're\nthe best {{Player.player_species}} ever!!
+elif not Statics.check_location_collected(55)
+	NPC33: {{Player.player_name}},[wait=0.1] take this heart![wait=0.2]  You'll\nneed all the help you can get\nto defeat {{GlobalText.COL_MOON}}Moon Snail[/color]!
+else
+	NPC33: Good luck, {{Player.player_name}}!!
+=> END
