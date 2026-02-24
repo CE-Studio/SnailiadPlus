@@ -197,7 +197,7 @@ func _physics_process(delta) -> void:
 				can_hit = not Statics.has_shell(1)
 			ElementTypes.FIRE:
 				can_hit = not Statics.has_shell(3)
-		if can_hit:
+		if can_hit and attack > 0:
 			GameCore.instance.player.adjust_health(-attack)
 
 	damaged_this_tick = false
