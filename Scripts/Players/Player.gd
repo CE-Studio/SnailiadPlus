@@ -326,9 +326,6 @@ func _process(_delta):
 	if UICore.instance and not UICore.instance.darkness_layer.sources.has(self):
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
-	#if Input.is_action_just_pressed("gravity"):
-	#	Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [randi_range(1, 6)])
-
 
 # This function is called on a fixed interval of
 # 60 times per second, regardless of framerate

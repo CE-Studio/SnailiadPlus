@@ -17,38 +17,43 @@
 [ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="15_bsn5p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
-size = Vector2(24, 13)
+size = Vector2(24, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1sr1"]
-size = Vector2(12, 13)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpe74"]
+size = Vector2(24, 14)
 
-[node name="Moonsnail" type="Node2D" unique_id=331529586]
+[node name="Moonsnail" type="CharacterBody2D" unique_id=1600867824]
 visibility_layer = 3
 z_index = 5
+collision_layer = 0
+collision_mask = 3
 script = ExtResource("1_bauxv")
 battle_music = 11
 phase_changes = Array[float]([0.5])
 max_health = 7000
 defense = 30
 
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1177653414]
+shape = SubResource("RectangleShape2D_31aru")
+debug_color = Color(0.9764706, 0, 0.41568628, 0.41960785)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=16773540]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=81778037]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_hpe74")
+debug_color = Color(0.9764706, 0, 0.41568628, 0.41960785)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1211885645]
+rect = Rect2(-12, -8, 24, 16)
+
 [node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1876562228]
-visibility_layer = 3
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4.json"
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=755614246]
-top_level = true
-collision_layer = 4
-
-[node name="NormalRect" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1177653414]
-position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_31aru")
-
-[node name="ShellRect" type="CollisionShape2D" parent="CharacterBody2D" unique_id=22072914]
-position = Vector2(-3, 1.5)
-shape = SubResource("RectangleShape2D_k1sr1")
-
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1124084977]
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1124084977]
 texture = ExtResource("3_bauxv")
 hframes = 6
 vframes = 2
@@ -175,6 +180,34 @@ enabled = false
 target_position = Vector2(0, -4)
 hit_from_inside = true
 
+[node name="ShadowballGroup" type="Node2D" parent="." unique_id=1306956093]
+z_index = 1
+
+[node name="Shadowball0" type="Sprite2D" parent="ShadowballGroup" unique_id=1859495870]
+script = ExtResource("2_fsqj2")
+texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Shadowball1" type="Sprite2D" parent="ShadowballGroup" unique_id=423961624]
+script = ExtResource("2_fsqj2")
+texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Shadowball2" type="Sprite2D" parent="ShadowballGroup" unique_id=1901286672]
+script = ExtResource("2_fsqj2")
+texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Shadowball3" type="Sprite2D" parent="ShadowballGroup" unique_id=334952585]
+script = ExtResource("2_fsqj2")
+texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Shadowball4" type="Sprite2D" parent="ShadowballGroup" unique_id=952742134]
+script = ExtResource("2_fsqj2")
+texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
 [node name="EmoteLayer" parent="." unique_id=1037941853 instance=ExtResource("5_fijcj")]
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1329073509]
@@ -227,6 +260,3 @@ one_shot = true
 [node name="RespawnDelay" type="Timer" parent="TimerGroup" unique_id=1253376087]
 wait_time = 2.0
 one_shot = true
-
-[connection signal="timeout" from="TimerGroup/DieFadeDelay" to="." method="_on_death_fade_timeout"]
-[connection signal="timeout" from="TimerGroup/RespawnDelay" to="." method="_on_respawn_timeout"]

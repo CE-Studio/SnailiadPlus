@@ -95,7 +95,6 @@ func _process(delta: float) -> void:
 	if not ai_active and not display_mode:
 		return
 	
-	lifetime += delta
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
 	

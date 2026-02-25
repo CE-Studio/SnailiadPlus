@@ -92,8 +92,6 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	lifetime += delta
-	
 	if not intro_delay:
 		check_mode(delta)
 		check_shoot(delta)
