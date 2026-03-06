@@ -22,7 +22,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	#endregion
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	position += velocity * normalized_dir * delta
 	velocity -= velocity_init * 1.5 * delta
-	super._process(delta)
+	super(delta)

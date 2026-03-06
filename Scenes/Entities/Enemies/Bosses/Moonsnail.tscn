@@ -59,153 +59,37 @@ hframes = 6
 vframes = 2
 script = ExtResource("4_l3h5y")
 
-[node name="CastGroup" type="Node2D" parent="." unique_id=280108873]
-
-[node name="RoundCornerCast" type="RayCast2D" parent="CastGroup" unique_id=349090538]
-position = Vector2(-12, 9)
-target_position = Vector2(-8, 0)
-hit_from_inside = true
-
-[node name="Normal" type="Node2D" parent="CastGroup" unique_id=405475740]
-
-[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=479977748]
-position = Vector2(-11, 8)
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=1796734172]
-position = Vector2(-4, 8)
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=1926312915]
-position = Vector2(4, 8)
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Normal" unique_id=26079936]
-position = Vector2(11, 8)
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=1559823613]
-position = Vector2(12, -4)
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=51803069]
-position = Vector2(12, 1.5)
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=1197982877]
-position = Vector2(12, 7)
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Normal" unique_id=1088624306]
-position = Vector2(11, -5)
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
-[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Normal" unique_id=434963619]
-position = Vector2(0, -5)
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
-[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Normal" unique_id=43525777]
-position = Vector2(-11, -5)
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
-[node name="Shell" type="Node2D" parent="CastGroup" unique_id=2061531864]
-
-[node name="GroundCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=1307133885]
-position = Vector2(-9, 8)
-enabled = false
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=460162891]
-position = Vector2(-5, 8)
-enabled = false
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=731791244]
-position = Vector2(-1, 8)
-enabled = false
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="GroundCast3" type="RayCast2D" parent="CastGroup/Shell" unique_id=1011301606]
-position = Vector2(3, 8)
-enabled = false
-target_position = Vector2(0, 4)
-hit_from_inside = true
-
-[node name="FrontCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=928828092]
-position = Vector2(3, -4)
-enabled = false
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="FrontCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=1285687975]
-position = Vector2(3, 1.5)
-enabled = false
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="FrontCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=1587127771]
-position = Vector2(3, 7)
-enabled = false
-target_position = Vector2(4, 0)
-hit_from_inside = true
-
-[node name="CeilingCast0" type="RayCast2D" parent="CastGroup/Shell" unique_id=1091658719]
-position = Vector2(3, -5)
-enabled = false
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
-[node name="CeilingCast1" type="RayCast2D" parent="CastGroup/Shell" unique_id=403128396]
-position = Vector2(-3, -5)
-enabled = false
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
-[node name="CeilingCast2" type="RayCast2D" parent="CastGroup/Shell" unique_id=878522182]
-position = Vector2(-9, -5)
-enabled = false
-target_position = Vector2(0, -4)
-hit_from_inside = true
-
 [node name="ShadowballGroup" type="Node2D" parent="." unique_id=1306956093]
 z_index = 1
 
 [node name="Shadowball0" type="Sprite2D" parent="ShadowballGroup" unique_id=1859495870]
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Shadowball1" type="Sprite2D" parent="ShadowballGroup" unique_id=423961624]
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Shadowball2" type="Sprite2D" parent="ShadowballGroup" unique_id=1901286672]
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Shadowball3" type="Sprite2D" parent="ShadowballGroup" unique_id=334952585]
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Shadowball4" type="Sprite2D" parent="ShadowballGroup" unique_id=952742134]
 script = ExtResource("2_fsqj2")
 texture_path = "res://Assets/Images/Entities/Boss4ShadowBall.json"
+load_autoplay = Array[String](["anim"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="EmoteLayer" parent="." unique_id=1037941853 instance=ExtResource("5_fijcj")]

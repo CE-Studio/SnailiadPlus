@@ -24,4 +24,5 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 
 func _physics_process(delta: float) -> void:
 	position += velocity * normalized_dir * delta
+	velocity += velocity_init * 18.0 * delta
 	super(delta)

@@ -4,6 +4,8 @@ extends Node2D
 
 
 #region Variables
+const TICKS_BETWEEN_AFTERIMAGES:int = 4
+
 @export var damage:int = 0
 @export var max_life_time:float = 1.6
 @export var rapid_mult:float = 1.0
@@ -12,6 +14,7 @@ extends Node2D
 @export var single_hit:bool = false
 @export var light_radius:int = 0
 @export var one_sound_per_frame:bool = false
+@export var afterimages:bool = false
 
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
@@ -20,6 +23,7 @@ var velocity_init:float = 0.0
 var source_enemy:Enemy
 var has_been_parried:bool = false
 var intersecting_player:bool = false
+var afterimage_tick:int = 0
 
 enum PBulletInteractions {
 	ALWAYS_DESTROY,
@@ -53,7 +57,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried and not CutsceneController.running:
 		GameCore.instance.player.adjust_health(-damage)
 		if single_hit:
@@ -63,6 +67,15 @@ func _process(delta: float) -> void:
 	if (life_timer > max_life_time
 	or (despawn_offscreen and life_timer >= 0.25 and not vis.is_on_screen())):
 		_despawn()
+	
+	#if afterimages:
+	#	afterimage_tick += 1
+	#	if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
+	#		var new_afterimage:PlayerBulletAfterimage = afterimage.instantiate()
+	#		GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
+	#		new_afterimage.position = position
+	#		new_afterimage._spawn_afterimage(self)
+	#		afterimage_tick -= TICKS_BETWEEN_AFTERIMAGES
 
 
 func parry_reshoot() -> void:

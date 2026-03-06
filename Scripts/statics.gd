@@ -553,6 +553,10 @@ static func integrate(num:float, target:float, speed:float, elapsed:float, thres
 	return num
 
 
+static func normalized_sigmoid(val:float, modifier:float = 12.0) -> float:
+	return 1.0 / (1.0 + exp(-(val * modifier - (modifier * 0.5))))
+
+
 static func play_sfx_disconnected(sound:AudioStream, vol:float = 1.0) -> void:
 	var active_sounds_of_type:int = 0
 	for sfx in GameCore.instance.sfx_group.get_children():

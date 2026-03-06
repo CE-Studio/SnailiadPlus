@@ -35,13 +35,13 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	#endregion
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	elapsed += delta
 	position = origin + vel_radius * elapsed * Vector2(
 		cos(elapsed * vel_theta + theta_offset),
 		sin(elapsed * vel_theta + theta_offset)
 	)
-	super._process(delta)
+	super(delta)
 
 
 func _update_anim(last_pos:Vector2) -> void:

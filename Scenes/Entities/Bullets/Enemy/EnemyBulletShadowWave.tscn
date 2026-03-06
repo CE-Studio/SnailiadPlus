@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://to26wfc5ofk5"]
+
+[ext_resource type="Script" uid="uid://cexm8xt3doh5" path="res://Scripts/Bullets/Enemy/EnemyBulletShadowWave.gd" id="1_52e2f"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_b4qjj"]
+[ext_resource type="Texture2D" uid="uid://wg0ov37lblr6" path="res://Assets/Images/Bullets/Enemy/EnemyShadowWave.png" id="3_52e2f"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0wkd3"]
+[ext_resource type="AudioStream" uid="uid://x1b81s6u8jp7" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyShadowWave.ogg" id="5_b4qjj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(48, 48)
+
+[node name="EnemyBulletShadowWave" type="Node2D" unique_id=2038470674]
+z_index = 50
+script = ExtResource("1_52e2f")
+damage = 16
+max_life_time = 2.0
+despawn_offscreen = true
+light_radius = 40
+afterimages = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=1528853263]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.482353, 0.435294, 1, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1167675070]
+scale = Vector2(1.2, 1.2)
+rect = Rect2(-20, -20, 40, 40)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
+script = ExtResource("2_b4qjj")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyShadowWave.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
+texture = ExtResource("3_52e2f")
+hframes = 3
+vframes = 2
+frame = 2
+script = ExtResource("4_0wkd3")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1819499505]
+stream = ExtResource("5_b4qjj")
+bus = &"Sfx"

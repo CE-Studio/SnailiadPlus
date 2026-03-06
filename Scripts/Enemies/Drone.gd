@@ -109,7 +109,7 @@ func _process(delta: float) -> void:
 func _update_position() -> void:
 	if mode == MoveMode.WAIT or mode == MoveMode.ATTACK:
 		return
-	var lerp_val:float = _normalized_sigmoid(elapsed / move_time)
+	var lerp_val:float = Statics.normalized_sigmoid(elapsed / move_time)
 	var move:Vector2 = Vector2.ZERO
 	match mode:
 		MoveMode.COS_UP_LEFT:
@@ -153,7 +153,3 @@ func _update_position() -> void:
 				radius.y * (1.0 - cos(lerp_val * PI))
 			)
 	position = move_origin + move
-
-
-func _normalized_sigmoid(val:float) -> float:
-	return 1.0 / (1.0 + exp(-(val * 12.0 - 6.0)))
