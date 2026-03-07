@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://d0r1jtwy6e5rq"]
+
+[ext_resource type="Script" uid="uid://4rglf0rlyduy" path="res://Scripts/Bullets/Enemy/EnemyBoomerangBlue.gd" id="1_ecw5w"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_ed8ol"]
+[ext_resource type="Texture2D" uid="uid://dyeqyhxtfxh6a" path="res://Assets/Images/Bullets/Enemy/EnemyBoomerangRed.png" id="3_ecw5w"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_c21ox"]
+[ext_resource type="AudioStream" uid="uid://ocux4qvqar8m" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyBoomerang.ogg" id="5_aogd0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(24, 24)
+
+[node name="EnemyBoomerangRed" type="Node2D" unique_id=2038470674]
+z_index = 50
+script = ExtResource("1_ecw5w")
+damage = 24
+rush_damage = 3
+max_life_time = 4.0
+light_radius = 24
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=1528853263]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.482353, 0.435294, 1, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1167675070]
+scale = Vector2(1.2, 1.2)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
+script = ExtResource("2_ed8ol")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyBoomerangRed.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
+texture = ExtResource("3_ecw5w")
+hframes = 8
+frame = 1
+script = ExtResource("4_c21ox")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1819499505]
+stream = ExtResource("5_aogd0")
+bus = &"Sfx"

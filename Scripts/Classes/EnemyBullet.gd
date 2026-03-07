@@ -7,6 +7,7 @@ extends Node2D
 const TICKS_BETWEEN_AFTERIMAGES:int = 4
 
 @export var damage:int = 0
+@export var rush_damage:int = 0
 @export var max_life_time:float = 1.6
 @export var rapid_mult:float = 1.0
 @export var despawn_offscreen:bool = false
@@ -42,6 +43,7 @@ var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
 @onready var box:CollisionShape2D = $"Area2D/Box"
 @onready var sfx:AudioStreamPlayer = $"AudioGroup/Shoot"
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
+@onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletAfterimage.tscn")
 #endregion
 
 
@@ -59,7 +61,10 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 
 func _physics_process(delta: float) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried and not CutsceneController.running:
-		GameCore.instance.player.adjust_health(-damage)
+		var this_damage:int = -damage
+		if Statics.is_in_boss_rush and rush_damage != 0:
+			this_damage = -rush_damage
+		GameCore.instance.player.adjust_health(-this_damage)
 		if single_hit:
 			_despawn()
 	
@@ -68,14 +73,14 @@ func _physics_process(delta: float) -> void:
 	or (despawn_offscreen and life_timer >= 0.25 and not vis.is_on_screen())):
 		_despawn()
 	
-	#if afterimages:
-	#	afterimage_tick += 1
-	#	if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
-	#		var new_afterimage:PlayerBulletAfterimage = afterimage.instantiate()
-	#		GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
-	#		new_afterimage.position = position
-	#		new_afterimage._spawn_afterimage(self)
-	#		afterimage_tick -= TICKS_BETWEEN_AFTERIMAGES
+	if afterimages:
+		afterimage_tick += 1
+		if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
+			var new_afterimage:EnemyBulletAfterimage = afterimage.instantiate()
+			GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
+			new_afterimage.position = position
+			new_afterimage._spawn_afterimage(self)
+			afterimage_tick -= TICKS_BETWEEN_AFTERIMAGES
 
 
 func parry_reshoot() -> void:

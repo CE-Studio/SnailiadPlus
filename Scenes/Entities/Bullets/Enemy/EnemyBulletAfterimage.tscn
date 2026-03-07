@@ -1,19 +1,18 @@
-[gd_scene format=3 uid="uid://to26wfc5ofk5"]
+[gd_scene format=3 uid="uid://bcpnu7gti14ph"]
 
-[ext_resource type="Script" uid="uid://cexm8xt3doh5" path="res://Scripts/Bullets/Enemy/EnemyBulletShadowWave.gd" id="1_52e2f"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_b4qjj"]
-[ext_resource type="Texture2D" uid="uid://wg0ov37lblr6" path="res://Assets/Images/Bullets/Enemy/EnemyShadowWave.png" id="3_52e2f"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0wkd3"]
-[ext_resource type="AudioStream" uid="uid://x1b81s6u8jp7" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyShadowWave.ogg" id="5_b4qjj"]
+[ext_resource type="Script" uid="uid://cvbyn4ij8l425" path="res://Scripts/Bullets/Enemy/EnemyBulletAfterimage.gd" id="1_imco8"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_uw112"]
+[ext_resource type="Texture2D" uid="uid://c5vurgp6h0w04" path="res://Assets/Images/Bullets/Enemy/EnemyLightWave.png" id="3_imco8"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0mhiq"]
+[ext_resource type="AudioStream" uid="uid://x1b81s6u8jp7" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyShadowWave.ogg" id="5_mdumg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(48, 48)
 
-[node name="EnemyBulletShadowWave" type="Node2D" unique_id=2038470674]
+[node name="EnemyBulletAfterimage" type="Node2D" unique_id=2038470674]
 z_index = 50
-script = ExtResource("1_52e2f")
+script = ExtResource("1_imco8")
 damage = 16
-rush_damage = 2
 max_life_time = 2.0
 despawn_offscreen = true
 light_radius = 40
@@ -32,20 +31,20 @@ scale = Vector2(1.2, 1.2)
 rect = Rect2(-20, -20, 40, 40)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
-script = ExtResource("2_b4qjj")
+script = ExtResource("2_uw112")
 texture_path = "res://Assets/Images/Bullets/Enemy/EnemyShadowWave.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
-texture = ExtResource("3_52e2f")
+texture = ExtResource("3_imco8")
 hframes = 3
-vframes = 2
-frame = 2
-script = ExtResource("4_0wkd3")
+vframes = 8
+frame = 14
+script = ExtResource("4_0mhiq")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1819499505]
-stream = ExtResource("5_b4qjj")
+stream = ExtResource("5_mdumg")
 bus = &"Sfx"

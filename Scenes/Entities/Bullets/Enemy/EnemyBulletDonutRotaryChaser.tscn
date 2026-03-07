@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://buae50mtgkrf5"]
+
+[ext_resource type="Script" uid="uid://c7h2ysjlh4a43" path="res://Scripts/Bullets/Enemy/EnemyBulletDonutRotaryChaser.gd" id="1_efoqt"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_dsway"]
+[ext_resource type="Texture2D" uid="uid://d2d63f4o5acdh" path="res://Assets/Images/Bullets/Enemy/EnemyDonut.png" id="3_rs0o7"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_qo8wr"]
+[ext_resource type="AudioStream" uid="uid://b8hwo683tykgl" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyDonut.ogg" id="5_vu5i7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(24, 24)
+
+[node name="EnemyBulletDonutRotaryChaser" type="Node2D" unique_id=688554147]
+z_index = 50
+script = ExtResource("1_efoqt")
+damage = 2
+max_life_time = 5.0
+despawn_offscreen = true
+light_radius = 24
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2102597611]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=522885480]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.482353, 0.435294, 1, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=61487291]
+scale = Vector2(1.2, 1.2)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1764327744]
+script = ExtResource("2_dsway")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyDonut.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1770602960]
+texture = ExtResource("3_rs0o7")
+hframes = 4
+frame = 3
+script = ExtResource("4_qo8wr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="." unique_id=237026136]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1812034924]
+stream = ExtResource("5_vu5i7")
+bus = &"Sfx"

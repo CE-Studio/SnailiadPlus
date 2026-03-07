@@ -7,6 +7,11 @@ var origin:Vector2 = Vector2.ZERO
 var vel_radius:float = 0.0
 var vel_theta:float = 0.0
 var theta_offset:float = 0.0
+
+var TURN_SPEED:float = 0.2
+var ACCELERATION:float = 150.0
+var current_speed:float = 0.0
+var move_theta:float = 0.0
 #endregion
 
 
@@ -33,16 +38,25 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	sprite.action = anim_name
 	sprite._process(0.0)
 	#endregion
+	
+	if Statics.current_profile["difficulty"] == 2:
+		TURN_SPEED = 0.4
+		ACCELERATION = 170.0
+	move_theta = atan2(
+		Player.instance.position.y - position.y,
+		Player.instance.position.x - position.x
+	)
 
 
 func _physics_process(delta: float) -> void:
 	elapsed += delta
-	var last_pos:Vector2 = position
+	var last_pos:Vector2 = position - origin
+	_update_origin(delta)
 	position = origin + vel_radius * elapsed * Vector2(
 		cos(elapsed * vel_theta + theta_offset),
 		sin(elapsed * vel_theta + theta_offset)
 	)
-	_update_anim(last_pos)
+	_update_anim(last_pos + origin)
 	super(delta)
 
 
@@ -60,3 +74,20 @@ func _update_anim(last_pos:Vector2) -> void:
 	anim_name += "_rotary"
 	if sprite.action != anim_name:
 		sprite.action = anim_name
+
+
+func _update_origin(delta:float) -> void:
+	var this_angle:float = atan2(
+		Player.instance.position.y - position.y,
+		Player.instance.position.x - position.x
+	)
+	var difference = this_angle - move_theta
+	while difference > PI:
+		difference -= TAU
+	while difference < -PI:
+		difference += TAU
+	if difference > 0.0:
+		move_theta += PI * delta * TURN_SPEED
+	
+	current_speed += ACCELERATION * delta
+	origin += current_speed * delta * Vector2(cos(move_theta), sin(move_theta))

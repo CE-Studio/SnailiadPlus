@@ -2,6 +2,7 @@ extends Boss
 
 
 #region Variables
+const RING_COUNT:int = 3
 const RING_TIMEOUT:float = 1.7
 const JUMP_LENGTH:float = 0.3
 const TELEPORT_TIME:float = 1.4
@@ -93,6 +94,9 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var sfx_shockcharge = $"AudioGroup/ShockCharge"
 @onready var sfx_shocklaunch = $"AudioGroup/ShockLaunch"
 @onready var sfx_shockland = $"AudioGroup/ShockLand"
+@onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangRed.tscn")
+@onready var shadow_wave:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletShadowWave.tscn")
+@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotaryChaser.tscn")
 #endregion
 
 
@@ -150,7 +154,7 @@ func _set_mode(new_mode:BossMode, try_shoot:bool = false) -> void:
 func _check_shoot_donuts() -> void:
 	if ring_timeout <= 0.0:
 		ring_timeout = RING_TIMEOUT
-		pass # Shoot donuts
+		_shoot_360_cluster_rotary(donut, Vector2(2.2, 0), 16.0, RING_COUNT)
 
 
 func _attack(delta:float) -> void:
@@ -198,6 +202,7 @@ func _attack(delta:float) -> void:
 		Statics.DirsCompass.SW: aim_vector = Vector2(-Statics.VECTOR_DIAG.x, Statics.VECTOR_DIAG.y)
 		Statics.DirsCompass.W: aim_vector = Vector2.LEFT
 		Statics.DirsCompass.NW: aim_vector = -Statics.VECTOR_DIAG
+	
 
 
 func _pick_move_target() -> void:

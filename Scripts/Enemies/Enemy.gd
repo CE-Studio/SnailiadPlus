@@ -294,27 +294,25 @@ func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float, _play_sound:bo
 	return bullet
 
 
-func _shoot_360_cluster(_scene:PackedScene, _init_angle:float, _speed:float, _count:int) -> EnemyBullet:
-	var return_bullet:EnemyBullet = null
+func _shoot_360_cluster(_scene:PackedScene, _init_angle:float, _speed:float, _count:int) -> Array[EnemyBullet]:
+	var return_bullets:Array[EnemyBullet] = []
 	var inc_amount:float = TAU / _count
 	for i in range(_count):
 		var direction:Vector2 = Vector2(cos(_init_angle), sin(_init_angle))
 		var bullet = _shoot(_scene, direction, _speed, i == 0)
 		_init_angle += inc_amount
-		if i == 0:
-			return_bullet = bullet
-	return return_bullet
+		return_bullets.append(bullet)
+	return return_bullets
 
 
-func _shoot_360_cluster_rotary(_scene:PackedScene, _direction:Vector2, _speed:float, _count:int) -> EnemyBullet:
-	var return_bullet:EnemyBullet = null
+func _shoot_360_cluster_rotary(_scene:PackedScene, _direction:Vector2, _speed:float, _count:int) -> Array[EnemyBullet]:
+	var return_bullets:Array[EnemyBullet] = []
 	var inc_amount:float = TAU / _count
 	for i in range(_count):
 		var bullet = _shoot(_scene, _direction, _speed, i == 0)
 		_direction.y += inc_amount
-		if i == 0:
-			return_bullet = bullet
-	return return_bullet
+		return_bullets.append(bullet)
+	return return_bullets
 
 
 func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> void:
