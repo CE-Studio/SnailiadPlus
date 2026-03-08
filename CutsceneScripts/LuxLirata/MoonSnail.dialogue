@@ -1,0 +1,4 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.trigger_animation("IntroDefault", true)
+=> END

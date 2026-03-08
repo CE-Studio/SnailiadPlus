@@ -1,11 +1,58 @@
 [gd_scene format=4 uid="uid://dpvprxslni1v6"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_l4mpi"]
+[ext_resource type="Resource" uid="uid://brbyqkjqp4x47" path="res://CutsceneScripts/LuxLirata/MoonSnail.dialogue" id="2_2kgid"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_qs2l6"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_4a7xu"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_h5m0k"]
+[ext_resource type="PackedScene" uid="uid://cetmpo4dp2s1y" path="res://Scenes/Entities/Enemies/Bosses/Moonsnail.tscn" id="4_7nt4p"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="5_7nt4p"]
+[ext_resource type="Script" uid="uid://dmceqidtnymwn" path="res://Scripts/Classes/Resources/EntityTarget.gd" id="5_pio0t"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="6_pio0t"]
+[ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="9_a1uc2"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="10_2kgid"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="11_bhrkl"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="12_o0v3x"]
+
+[sub_resource type="Resource" id="Resource_pio0t"]
+script = ExtResource("5_pio0t")
+position = Vector2i(96, 216)
+global_space = true
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_s5im6"]
+script = ExtResource("5_pio0t")
+position = Vector2i(304, 216)
+global_space = true
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_5fato"]
+script = ExtResource("5_pio0t")
+position = Vector2i(96, 24)
+global_space = true
+data = 3
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_fw4of"]
+script = ExtResource("5_pio0t")
+position = Vector2i(304, 24)
+global_space = true
+data = 3
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_a1uc2"]
+script = ExtResource("5_pio0t")
+position = Vector2i(24, 120)
+global_space = true
+data = 1
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_2kgid"]
+script = ExtResource("5_pio0t")
+position = Vector2i(376, 120)
+global_space = true
+data = 2
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -14,10 +61,112 @@ _data = {
 }
 point_count = 1
 
-[node name="MoonSnail" type="Node2D" unique_id=2129950979]
+[sub_resource type="Animation" id="Animation_a1uc2"]
+resource_name = "IntroDefault"
+length = 2.9
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(384, 216), Vector2(328, 216)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CCPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.65),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0, true],
+"method": &"set_active"
+}, {
+"args": [],
+"method": &"set_inactive"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("IntroCC")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 2.9),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"set_camera_focus_node"
+}, {
+"args": [],
+"method": &"set_camera_focus_player"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GroundLayer/Moonsnail")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"exit_intro"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GroundLayer/Door")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"close"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2kgid"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CCPlayer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(384, 216)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhrkl"]
+_data = {
+&"IntroDefault": SubResource("Animation_a1uc2"),
+&"RESET": SubResource("Animation_2kgid")
+}
+
+[node name="MoonSnail" type="Node2D" unique_id=2129950979 node_paths=PackedStringArray("cutscene_animator")]
 z_as_relative = false
 script = ExtResource("1_l4mpi")
 area_id = 4
+cutscene_script = ExtResource("2_2kgid")
+cutscene_animator = NodePath("IntroAnim")
 minimap_offset = Vector2i(1, 4)
 song_change = 6
 play_song_on_enter = false
@@ -64,6 +213,11 @@ direction = 3
 lock_type = 1
 required_boss = 3
 
+[node name="Moonsnail" parent="GroundLayer" unique_id=1600867824 instance=ExtResource("4_7nt4p")]
+position = Vector2(80, 152)
+move_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
+tele_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
+
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=605789709]
 z_index = 100
 
@@ -83,7 +237,6 @@ collision_enabled = false
 z_index = 300
 
 [node name="Map" type="TileMapLayer" parent="EntityLayer" unique_id=1775416765]
-tile_map_data = PackedByteArray("AAAEAAkAAAAKAAEAAAA=")
 tile_set = ExtResource("2_qs2l6")
 collision_enabled = false
 
@@ -111,3 +264,24 @@ scale = Vector2(1, 3)
 my_id = 1
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("6_pio0t")]
+
+[node name="CCPlayer" parent="." unique_id=1255845674 instance=ExtResource("9_a1uc2")]
+position = Vector2(384, 216)
+
+[node name="IntroAnim" type="AnimationPlayer" parent="." unique_id=1627843414]
+libraries/ = SubResource("AnimationLibrary_bhrkl")
+
+[node name="Trigger" parent="." unique_id=5522885 node_paths=PackedStringArray("actor") instance=ExtResource("10_2kgid")]
+position = Vector2(376, 200)
+scale = Vector2(9, 9)
+script = ExtResource("11_bhrkl")
+actor = NodePath("../IntroCC")
+require_condition = true
+conditional_flag = 5
+conditional_value = false
+compare_mode = 0
+
+[node name="IntroCC" parent="." unique_id=1305305038 node_paths=PackedStringArray("cam_focus_node") instance=ExtResource("12_o0v3x")]
+position = Vector2(488, 200)
+cam_focus_node = NodePath("../GroundLayer/Moonsnail")
+identifier = &"Intro"

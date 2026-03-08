@@ -61,9 +61,9 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 
 func _physics_process(delta: float) -> void:
 	if intersecting_player and not GameCore.instance.player.stunned and not has_been_parried and not CutsceneController.running:
-		var this_damage:int = -damage
+		var this_damage:int = damage
 		if Statics.is_in_boss_rush and rush_damage != 0:
-			this_damage = -rush_damage
+			this_damage = rush_damage
 		GameCore.instance.player.adjust_health(-this_damage)
 		if single_hit:
 			_despawn()

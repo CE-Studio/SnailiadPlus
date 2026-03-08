@@ -1,3 +1,4 @@
+@tool
 extends Boss
 
 
@@ -68,6 +69,8 @@ var shadowballs:Array[JsonSprite2D] = []
 var current_weapon:int = 2
 var just_hit_surface:bool = false
 var fall_frames:int = 0
+var last_anim:String = ""
+var intro_done:bool = false
 
 var frames_left:int = -1
 var frames_right:int = -1
@@ -94,6 +97,11 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var sfx_shockcharge = $"AudioGroup/ShockCharge"
 @onready var sfx_shocklaunch = $"AudioGroup/ShockLaunch"
 @onready var sfx_shockland = $"AudioGroup/ShockLand"
+@onready var shadowball_group:Node2D = $"ShadowballGroup"
+@onready var cast_group:Node2D = $"CastGroup"
+@onready var cast0:RayCast2D = $"CastGroup/RayCast2D0"
+@onready var cast1:RayCast2D = $"CastGroup/RayCast2D1"
+@onready var cast2:RayCast2D = $"CastGroup/RayCast2D2"
 @onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangRed.tscn")
 @onready var shadow_wave:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletShadowWave.tscn")
 @onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotaryChaser.tscn")
@@ -101,6 +109,9 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) == true and not display_mode:
 		queue_free()
 		return
@@ -112,22 +123,55 @@ func _ready() -> void:
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	if Statics.current_profile["difficulty"] == 2:
-		boss_speed += 0.1
-	for child in $"ShadowballGroup".get_children():
+	for child in shadowball_group.get_children():
 		if child is JsonSprite2D:
 			shadowballs.append(child)
+	shadowball_group.visible = false
+	
+	if display_mode:
+		sprite.action = "p0_floor_left_idle" if randf() < 0.5 else "p0_floor_right_idle"
+		return
+	else:
+		if not Statics.is_in_boss_rush:
+			GameCore.instance.music_manager.play_song(battle_music)
+		health_bar = UICore.instance.show_boss_bar(self)
+	
+	if Statics.current_profile["difficulty"] == 2:
+		boss_speed += 0.1
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+		return
+	if not ai_active:
+		return
+	
 	_update_ai(delta)
 	_fix_gravity()
 	if _pressed_jump(true) and jumping:
 		_do_gravity_jump()
-	_check_move_input()
+	_check_move_input(delta)
 	if _pressed_jump(true):
 		_do_jump()
-	# _attack()
+	_attack(delta)
+	move_and_slide()
+	if frames_down > 0:
+		frames_down += 1
+	if frames_left > 0:
+		frames_left += 1
+	if frames_right > 0:
+		frames_right += 1
+	if frames_up > 0:
+		frames_up += 1
+	if frames_jump > 0:
+		frames_jump += 1
+	super._physics_process(delta)
+
+
+func exit_intro() -> void:
+	intro_done = true
+	mode_elapsed = 0.0
 
 
 #region General utility
@@ -142,8 +186,7 @@ func _set_mode(new_mode:BossMode, try_shoot:bool = false) -> void:
 	mode_initialized = false
 	attacking = false
 	action_timeout = ACTION_TIMEOUT
-	for ball in shadowballs:
-		ball.visible = true
+	shadowball_group.visible = false
 	_release_all()
 	attack_start_timeout = ATTACK_START_TIMEOUT
 	attack_stop_timeout = ATTACK_STOP_TIMEOUT
@@ -202,7 +245,12 @@ func _attack(delta:float) -> void:
 		Statics.DirsCompass.SW: aim_vector = Vector2(-Statics.VECTOR_DIAG.x, Statics.VECTOR_DIAG.y)
 		Statics.DirsCompass.W: aim_vector = Vector2.LEFT
 		Statics.DirsCompass.NW: aim_vector = -Statics.VECTOR_DIAG
-	
+	match current_weapon:
+		1:
+			_shoot(boomerang, aim_vector, WEAPON_SPEED[1])
+		2:
+			_shoot(shadow_wave, aim_vector, WEAPON_SPEED[2])
+	weapon_cooldown = WEAPON_COOLDOWNS[2] * 0.5
 
 
 func _pick_move_target() -> void:
@@ -242,11 +290,36 @@ func _play_anim(action:String) -> void:
 			_surface = "ceiling"
 	var _dir:String = "left" if facing_left else "right"
 	var full_action:String = "_".join([_surface, _dir, action])
-	play_phase_anim(full_action)
+	if full_action != last_anim:
+		play_phase_anim(full_action)
+		last_anim = full_action
+
+
+func _casts_colliding() -> bool:
+	return cast0.is_colliding() or cast1.is_colliding() or cast2.is_colliding()
+
+
+func _draw() -> void:
+	if Engine.is_editor_hint() or Statics.show_invis_entites:
+		for tgt in move_targets:
+			var pos:Vector2 = tgt.position
+			if tgt.global_space:
+				pos -= position
+			draw_circle(pos, 8, Color(0.1, 0.6, 0.75, 0.3), true)
+		for tgt in tele_targets:
+			var pos:Vector2 = tgt.position
+			if tgt.global_space:
+				pos -= position
+			draw_circle(pos, 6, Color(0.6, 0.6, 0.6, 0.3), true)
 #endregion
 
 
 #region AI updating
+func _update_intro() -> void:
+	if mode_elapsed > 0.3 and intro_done:
+		_set_mode(BossMode.ATTACK)
+
+
 func _update_move() -> void:
 	if not mode_initialized:
 		mode_initialized = true
@@ -273,7 +346,7 @@ func _update_move() -> void:
 		_release_down() 
 		_release_up()
 	if not jumping:
-		pass # ai_jump
+		_prep_jump()
 	_check_shoot_donuts()
 	if position.distance_to(move_end) < MOVE_APPROACH_THRESHOLD:
 		_set_mode(BossMode.ATTACK)
@@ -288,7 +361,7 @@ func _update_teleport() -> void:
 		invulnerable = true
 		for ball in shadowballs:
 			ball.global_position = tele_start
-			ball.visible = true
+		shadowball_group.visible = true
 	var progress:float = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME, SIGMOID_MOD)
 	var this_sigmoid:float = 0.0
 	if progress <= 0.5:
@@ -300,10 +373,10 @@ func _update_teleport() -> void:
 	var i:int = 0
 	while i < shadowballs.size():
 		shadowballs[i].global_position = Vector2(
-			tele_start.x * (1.0 - this_sigmoid) + tele_end.x * this_sigmoid + cos(
+			tele_start.x * (1.0 - progress) + tele_end.x * progress + cos(
 				ball_theta + TAU / shadowballs.size() * i
 			) * ball_radius,
-			tele_start.y * (1.0 - this_sigmoid) + tele_end.y * this_sigmoid + sin(
+			tele_start.y * (1.0 - progress) + tele_end.y * progress + sin(
 				ball_theta + TAU / shadowballs.size() * i
 			) * ball_radius
 		)
@@ -314,6 +387,7 @@ func _update_teleport() -> void:
 		position = tele_end
 		_set_mode(BossMode.ATTACK, true)
 		_face_player()
+		sprite.visible = true
 
 
 func _update_attack(delta:float) -> void:
@@ -395,7 +469,7 @@ func _update_ai(delta:float) -> void:
 	action_timeout -= delta * boss_speed
 	match mode:
 		BossMode.INTRO:
-			pass
+			_update_intro()
 		BossMode.MOVE:
 			_update_move()
 		BossMode.ATTACK:
@@ -435,6 +509,7 @@ func _set_dir(dir:Statics.DirsSurface, left:bool) -> void:
 			rot_deg = 180.0
 	col.rotation_degrees = rot_deg
 	hitbox.rotation_degrees = rot_deg
+	cast_group.rotation_degrees = rot_deg
 
 
 func _face_player() -> void:
@@ -533,7 +608,7 @@ func _do_gravity_jump() -> void:
 				target_gravity = Statics.DirsSurface.LWALL
 
 
-func _check_move_input() -> void:
+func _check_move_input(delta:float) -> void:
 	if _pressed_up(true):
 		most_recent_dir = Statics.DirsCardinal.UP
 		most_recent_vert = Statics.DirsCardinal.UP
@@ -549,10 +624,17 @@ func _check_move_input() -> void:
 	var jump_state:int = 0
 	var turned:bool = false
 	var moving:bool = false
+	
+	if not jumping and not _casts_colliding():
+		jumping = true
+	elif jumping and is_on_floor():
+		jumping = false
+	
 	match gravity:
 		Statics.DirsSurface.FLOOR:
 			velocity.x = 0.0
 			if jumping:
+				velocity.y += GRAVITY * delta
 				jump_state = 1 if velocity.y < 0 else 2
 			if _pressed_left(false):
 				if not facing_left:
@@ -568,6 +650,7 @@ func _check_move_input() -> void:
 		Statics.DirsSurface.LWALL:
 			velocity.y = 0.0
 			if jumping:
+				velocity.x -= GRAVITY * delta
 				jump_state = 1 if velocity.x > 0 else 2
 			if _pressed_up(false):
 				if not facing_left:
@@ -583,6 +666,7 @@ func _check_move_input() -> void:
 		Statics.DirsSurface.RWALL:
 			velocity.y = 0.0
 			if jumping:
+				velocity.x += GRAVITY * delta
 				jump_state = 1 if velocity.x < 0 else 2
 			if _pressed_down(false):
 				if not facing_left:
@@ -598,6 +682,7 @@ func _check_move_input() -> void:
 		Statics.DirsSurface.CEILING:
 			velocity.x = 0.0
 			if jumping:
+				velocity.y -= GRAVITY * delta
 				jump_state = 1 if velocity.y > 0 else 2
 			if _pressed_right(false):
 				if not facing_left:

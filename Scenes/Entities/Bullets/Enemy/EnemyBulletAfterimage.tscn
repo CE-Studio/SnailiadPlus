@@ -16,7 +16,6 @@ damage = 16
 max_life_time = 2.0
 despawn_offscreen = true
 light_radius = 40
-afterimages = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
 collision_layer = 8
@@ -31,11 +30,14 @@ scale = Vector2(1.2, 1.2)
 rect = Rect2(-20, -20, 40, 40)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
+visible = false
 script = ExtResource("2_uw112")
 texture_path = "res://Assets/Images/Bullets/Enemy/EnemyShadowWave.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1853513725]
+
+[node name="MarkerSprite" type="Sprite2D" parent="Sprite2D" unique_id=1493599342]
 texture = ExtResource("3_imco8")
 hframes = 3
 vframes = 8

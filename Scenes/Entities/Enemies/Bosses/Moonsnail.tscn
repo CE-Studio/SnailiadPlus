@@ -94,6 +94,23 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="EmoteLayer" parent="." unique_id=1037941853 instance=ExtResource("5_fijcj")]
 
+[node name="CastGroup" type="Node2D" parent="." unique_id=268085078]
+
+[node name="RayCast2D0" type="RayCast2D" parent="CastGroup" unique_id=1589811796]
+position = Vector2(-12, 8)
+target_position = Vector2(0, 6)
+collision_mask = 3
+
+[node name="RayCast2D1" type="RayCast2D" parent="CastGroup" unique_id=354559902]
+position = Vector2(0, 8)
+target_position = Vector2(0, 6)
+collision_mask = 3
+
+[node name="RayCast2D2" type="RayCast2D" parent="CastGroup" unique_id=829010191]
+position = Vector2(12, 8)
+target_position = Vector2(0, 6)
+collision_mask = 3
+
 [node name="AudioGroup" type="Node" parent="." unique_id=1329073509]
 
 [node name="Jump" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1878444342]

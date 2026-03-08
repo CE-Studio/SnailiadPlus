@@ -43,8 +43,8 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 		TURN_SPEED = 0.4
 		ACCELERATION = 170.0
 	move_theta = atan2(
-		Player.instance.position.y - position.y,
-		Player.instance.position.x - position.x
+		Player.instance.position.y - origin.y,
+		Player.instance.position.x - origin.x
 	)
 
 
@@ -53,8 +53,8 @@ func _physics_process(delta: float) -> void:
 	var last_pos:Vector2 = position - origin
 	_update_origin(delta)
 	position = origin + vel_radius * elapsed * Vector2(
-		cos(elapsed * vel_theta + theta_offset),
-		sin(elapsed * vel_theta + theta_offset)
+		cos(elapsed * PI * vel_theta + theta_offset),
+		sin(elapsed * PI * vel_theta + theta_offset)
 	)
 	_update_anim(last_pos + origin)
 	super(delta)
@@ -78,16 +78,15 @@ func _update_anim(last_pos:Vector2) -> void:
 
 func _update_origin(delta:float) -> void:
 	var this_angle:float = atan2(
-		Player.instance.position.y - position.y,
-		Player.instance.position.x - position.x
+		Player.instance.position.y - origin.y,
+		Player.instance.position.x - origin.x
 	)
 	var difference = this_angle - move_theta
 	while difference > PI:
 		difference -= TAU
 	while difference < -PI:
 		difference += TAU
-	if difference > 0.0:
-		move_theta += PI * delta * TURN_SPEED
+	move_theta += PI * delta * TURN_SPEED * (-1.0 if difference < 0.0 else 1.0)
 	
 	current_speed += ACCELERATION * delta
 	origin += current_speed * delta * Vector2(cos(move_theta), sin(move_theta))
