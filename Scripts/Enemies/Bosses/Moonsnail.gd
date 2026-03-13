@@ -356,7 +356,7 @@ func _update_teleport() -> void:
 	if not mode_initialized:
 		mode_initialized = true
 		_pick_tele_target()
-		sprite.visible = false
+		sprite.modulate.a = 0.0
 		can_damage = false
 		invulnerable = true
 		for ball in shadowballs:
@@ -386,8 +386,9 @@ func _update_teleport() -> void:
 	if mode_elapsed / TELEPORT_TIME >= 1.0:
 		position = tele_end
 		_set_mode(BossMode.ATTACK, true)
+		_set_dir(target_gravity, facing_left)
 		_face_player()
-		sprite.visible = true
+		sprite.modulate.a = 1.0
 
 
 func _update_attack(delta:float) -> void:
@@ -518,22 +519,22 @@ func _face_player() -> void:
 		Statics.DirsSurface.FLOOR:
 			if p_pos.x > position.x and facing_left:
 				_tap_right()
-			else:
+			elif p_pos.x < position.x and not facing_left:
 				_tap_left()
 		Statics.DirsSurface.LWALL:
 			if p_pos.y > position.y and facing_left:
 				_tap_down()
-			else:
+			elif p_pos.y < position.x and not facing_left:
 				_tap_up()
 		Statics.DirsSurface.RWALL:
 			if p_pos.y < position.y and facing_left:
 				_tap_up()
-			else:
+			elif p_pos.y > position.x and not facing_left:
 				_tap_down()
 		Statics.DirsSurface.CEILING:
 			if p_pos.x < position.x and facing_left:
 				_tap_left()
-			else:
+			elif p_pos.x > position.x and not facing_left:
 				_tap_right()
 
 
