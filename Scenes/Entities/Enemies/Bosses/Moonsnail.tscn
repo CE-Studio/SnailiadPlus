@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://tf26wffximvv" path="res://Assets/Sounds/Sfx/ShockCharge.ogg" id="13_nlwi5"]
 [ext_resource type="AudioStream" uid="uid://ck7uvrbtyxcnl" path="res://Assets/Sounds/Sfx/ShockLaunch.ogg" id="14_1pu0k"]
 [ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="15_bsn5p"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="16_rmvb7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
 size = Vector2(24, 16)
@@ -161,3 +162,10 @@ one_shot = true
 [node name="RespawnDelay" type="Timer" parent="TimerGroup" unique_id=1253376087]
 wait_time = 2.0
 one_shot = true
+
+[node name="DebugLabel" parent="." unique_id=326553468 instance=ExtResource("16_rmvb7")]
+visible = false
+z_index = 500
+theme_override_font_sizes/normal_font_size = 8
+text_scale = 1
+border_scale = 1

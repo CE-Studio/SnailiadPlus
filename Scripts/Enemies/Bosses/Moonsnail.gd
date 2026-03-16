@@ -25,7 +25,7 @@ const DECISION_TABLE:Array[float] = [
 ]
 const ACTION_TIMEOUT:float = 0.7
 const JUMP_POWER:float = 428.0
-const RUN_SPEED:float = 370.0
+const RUN_SPEED:float = 170.0
 const MAX_SPEED:float = 600.0
 const GRAVITY:float = 1200.0
 const WEAPON_COOLDOWNS:Array[float] = [ 0.1, 0.3, 0.155 ]
@@ -68,6 +68,7 @@ var decision_table_index:int = 0
 var shadowballs:Array[JsonSprite2D] = []
 var current_weapon:int = 2
 var just_hit_surface:bool = false
+var just_grav_jumped:bool = false
 var fall_frames:int = 0
 var last_anim:String = ""
 var intro_done:bool = false
@@ -105,6 +106,7 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangRed.tscn")
 @onready var shadow_wave:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletShadowWave.tscn")
 @onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotaryChaser.tscn")
+@onready var debug_label:SnailyText = $"DebugLabel"
 #endregion
 
 
@@ -147,15 +149,25 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
+	just_grav_jumped = false
 	_update_ai(delta)
 	_fix_gravity()
 	if _pressed_jump(true) and jumping:
 		_do_gravity_jump()
 	_check_move_input(delta)
-	if _pressed_jump(true):
+	if _pressed_jump(true) and not jumping:
 		_do_jump()
 	_attack(delta)
 	move_and_slide()
+	if is_on_ceiling() or is_on_wall():
+		just_hit_surface = true
+	if is_on_floor():
+		just_hit_surface = false
+		match gravity:
+			Statics.DirsSurface.FLOOR: position.y -= 0.125
+			Statics.DirsSurface.LWALL: position.x += 0.125
+			Statics.DirsSurface.RWALL: position.x -= 0.125
+			Statics.DirsSurface.CEILING: position.y += 0.125
 	if frames_down > 0:
 		frames_down += 1
 	if frames_left > 0:
@@ -167,6 +179,19 @@ func _physics_process(delta: float) -> void:
 	if frames_jump > 0:
 		frames_jump += 1
 	super._physics_process(delta)
+	if debug_label.visible:
+		debug_label.global_position = Vector2(16, 16)
+		debug_label.set_snaily_text("\n".join([
+			"Mode - " + str(BossMode.keys()[mode]),
+			"Mode elapsed - " + str(mode_elapsed),
+			"Gravity - " + str(Statics.DirsSurface.keys()[gravity]),
+			"Target grav - " + str(Statics.DirsSurface.keys()[target_gravity]),
+			"Left - " + str(facing_left),
+			"Jumping - " + str(jumping),
+			"Fall frames - " + str(fall_frames),
+			"Move target - " + str(move_end),
+			"Tele target - " + str(tele_end)
+		]))
 
 
 func exit_intro() -> void:
@@ -324,6 +349,7 @@ func _update_move() -> void:
 	if not mode_initialized:
 		mode_initialized = true
 		_pick_move_target()
+		current_weapon = 1
 		_release_all()
 	if phase >= 1 or Statics.current_profile["difficulty"] == 2:
 		attacking = true
@@ -346,7 +372,10 @@ func _update_move() -> void:
 		_release_down() 
 		_release_up()
 	if not jumping:
-		_prep_jump()
+		if gravity != target_gravity:
+			_prep_jump(target_gravity)
+		else:
+			_prep_jump()
 	_check_shoot_donuts()
 	if position.distance_to(move_end) < MOVE_APPROACH_THRESHOLD:
 		_set_mode(BossMode.ATTACK)
@@ -501,13 +530,17 @@ func _set_dir(dir:Statics.DirsSurface, left:bool) -> void:
 	gravity = dir
 	facing_left = left
 	var rot_deg:float = 0.0
+	up_direction = Vector2.UP
 	match dir:
 		Statics.DirsSurface.LWALL:
 			rot_deg = 90.0
+			up_direction = Vector2.RIGHT
 		Statics.DirsSurface.RWALL:
 			rot_deg = -90.0
+			up_direction = Vector2.LEFT
 		Statics.DirsSurface.CEILING:
 			rot_deg = 180.0
+			up_direction = Vector2.DOWN
 	col.rotation_degrees = rot_deg
 	hitbox.rotation_degrees = rot_deg
 	cast_group.rotation_degrees = rot_deg
@@ -524,12 +557,12 @@ func _face_player() -> void:
 		Statics.DirsSurface.LWALL:
 			if p_pos.y > position.y and facing_left:
 				_tap_down()
-			elif p_pos.y < position.x and not facing_left:
+			elif p_pos.y < position.y and not facing_left:
 				_tap_up()
 		Statics.DirsSurface.RWALL:
 			if p_pos.y < position.y and facing_left:
 				_tap_up()
-			elif p_pos.y > position.x and not facing_left:
+			elif p_pos.y > position.y and not facing_left:
 				_tap_down()
 		Statics.DirsSurface.CEILING:
 			if p_pos.x < position.x and facing_left:
@@ -547,7 +580,8 @@ func _prep_jump(grav_jump_target:Statics.DirsSurface = Statics.DirsSurface.NONE,
 
 
 func _do_jump() -> void:
-	sfx_jump.play()
+	if not just_grav_jumped:
+		sfx_jump.play()
 	match gravity:
 		Statics.DirsSurface.FLOOR:
 			velocity.y = -JUMP_POWER
@@ -562,6 +596,8 @@ func _do_jump() -> void:
 func _do_gravity_jump() -> void:
 	var no_horiz:bool = not _pressed_left(false) and not _pressed_right(false)
 	var no_vert:bool = not _pressed_up(false) and not _pressed_down(false)
+	if no_horiz and no_vert:
+		return
 	var down:bool = (no_horiz or most_recent_dir == Statics.DirsCardinal.DOWN) and _pressed_down(false)
 	var left:bool = (no_vert or most_recent_dir == Statics.DirsCardinal.LEFT) and _pressed_left(false)
 	var right:bool = (no_vert or most_recent_dir == Statics.DirsCardinal.RIGHT) and _pressed_right(false)
@@ -607,6 +643,8 @@ func _do_gravity_jump() -> void:
 			elif left:
 				_set_dir(Statics.DirsSurface.LWALL, false)
 				target_gravity = Statics.DirsSurface.LWALL
+	sfx_jumpgrav.play()
+	just_grav_jumped = true
 
 
 func _check_move_input(delta:float) -> void:
@@ -628,8 +666,6 @@ func _check_move_input(delta:float) -> void:
 	
 	if not jumping and not _casts_colliding():
 		jumping = true
-	elif jumping and is_on_floor():
-		jumping = false
 	
 	match gravity:
 		Statics.DirsSurface.FLOOR:
@@ -673,12 +709,12 @@ func _check_move_input(delta:float) -> void:
 				if not facing_left:
 					turned = true
 				facing_left = true
-				velocity.y = -RUN_SPEED
+				velocity.y = RUN_SPEED
 			elif _pressed_up(false):
 				if facing_left:
 					turned = true
 				facing_left = false
-				velocity.y = RUN_SPEED
+				velocity.y = -RUN_SPEED
 			moving = velocity.y != 0.0
 		Statics.DirsSurface.CEILING:
 			velocity.x = 0.0
