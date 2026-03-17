@@ -250,7 +250,7 @@ func check_shoot(delta:float) -> void:
 				is_shooting = false
 				cluster_timeout = CLUSTER_TIMEOUT
 			shot_timeout = SHOT_TIMEOUTS[phase]
-			_shoot(donut, Vector2(4.0, TAU / shot_max * shot_count), 60.0)
+			bullets.append(_shoot(donut, Vector2(4.0, TAU / shot_max * shot_count), 60.0))
 
 
 func check_mode(delta:float) -> void:

@@ -16,6 +16,7 @@ damage = 2
 max_life_time = 3.6
 despawn_offscreen = true
 collide_with_wall = true
+despawn_particle = "ExplosionTiny"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1062969269]
 scale = Vector2(0.2, 0.2)

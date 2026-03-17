@@ -217,6 +217,7 @@ required_boss = 3
 position = Vector2(80, 152)
 move_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
 tele_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
+giga_spawn_pos = Vector2i(200, 120)
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=605789709]
 z_index = 100

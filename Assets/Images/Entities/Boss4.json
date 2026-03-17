@@ -1,5 +1,5 @@
 {
-	"tiles": [6, 2],
+	"tiles": [6, 3],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -1682,6 +1682,18 @@
 			"autoplay_next": "p1_ceiling_left_idle",
 			"randomize_start": false,
 			"frames": [ ]
+		},
+		"defeat": {
+			"fps": 3,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+			]
 		}
 	}
 }

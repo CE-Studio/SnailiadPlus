@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://tf26wffximvv" path="res://Assets/Sounds/Sfx/ShockCharge.ogg" id="13_nlwi5"]
 [ext_resource type="AudioStream" uid="uid://ck7uvrbtyxcnl" path="res://Assets/Sounds/Sfx/ShockLaunch.ogg" id="14_1pu0k"]
 [ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="15_bsn5p"]
+[ext_resource type="AudioStream" uid="uid://3yhmc05o2woj" path="res://Assets/Sounds/Sfx/Enemy/Boss4Teleport.ogg" id="16_qe0if"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="16_rmvb7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31aru"]
@@ -57,7 +58,7 @@ texture_path = "res://Assets/Images/Entities/Boss4.json"
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1124084977]
 texture = ExtResource("3_bauxv")
 hframes = 6
-vframes = 2
+vframes = 3
 script = ExtResource("4_l3h5y")
 
 [node name="ShadowballGroup" type="Node2D" parent="." unique_id=1306956093]
@@ -152,6 +153,10 @@ bus = &"Sfx"
 
 [node name="ShockLand" type="AudioStreamPlayer" parent="AudioGroup" unique_id=119523955]
 stream = ExtResource("15_bsn5p")
+bus = &"Sfx"
+
+[node name="Teleport" type="AudioStreamPlayer" parent="AudioGroup" unique_id=289229612]
+stream = ExtResource("16_qe0if")
 bus = &"Sfx"
 
 [node name="TimerGroup" type="Node" parent="." unique_id=790729840]

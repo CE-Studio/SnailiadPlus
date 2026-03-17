@@ -15,7 +15,10 @@ script = ExtResource("1_ecw5w")
 damage = 24
 rush_damage = 3
 max_life_time = 4.0
+despawn_particle = "ExplosionWhiteBig"
 light_radius = 24
+pbullets_that_i_destroy = Array[int]([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+pbullets_that_destroy_me = Array[int]([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
 collision_layer = 8

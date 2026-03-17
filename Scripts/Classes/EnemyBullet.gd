@@ -13,9 +13,15 @@ const TICKS_BETWEEN_AFTERIMAGES:int = 4
 @export var despawn_offscreen:bool = false
 @export var collide_with_wall:bool = false
 @export var single_hit:bool = false
+@export var despawn_particle:String = "ExplosionSmall"
+@export var despawn_offset:Vector2 = Vector2.ZERO
 @export var light_radius:int = 0
 @export var one_sound_per_frame:bool = false
 @export var afterimages:bool = false
+@export_group("Player bullet interactions")
+@export var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
+@export var pbullets_that_i_destroy:Array[int] = []
+@export var pbullets_that_destroy_me:Array[int] = []
 
 var normalized_dir:Vector2 = Vector2.ZERO
 var life_timer:float = 0.0
@@ -33,10 +39,6 @@ enum PBulletInteractions {
 	DESTROY_PERPENDICULAR,
 	DESTROY_PERPENDICULAR_WIDE
 }
-
-var pbullets_that_i_destroy:Array = []
-var pbullets_that_destroy_me:Array = []
-var pbullet_interaction:PBulletInteractions = PBulletInteractions.ALWAYS_DESTROY
 
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
 @onready var area:Area2D = $"Area2D"
@@ -104,7 +106,7 @@ func _on_body_exited(_body) -> void:
 
 func _on_pbullet_collision(_area:Area2D) -> void:
 	var bullet = _area.get_parent()
-	if bullet is PlayerBullet:
+	if bullet is PlayerBullet and not bullet is PlayerBulletAfterimage:
 		var i_destroy:bool = pbullets_that_i_destroy.has(bullet.type)
 		var destroys_me:bool = pbullets_that_destroy_me.has(bullet.type)
 		var angle = rad_to_deg(normalized_dir.angle_to(bullet.normalized_dir))
@@ -123,10 +125,15 @@ func _on_pbullet_collision(_area:Area2D) -> void:
 				destroy_flag = angle >= 22.5 and angle <= 157.5
 		if destroy_flag:
 			if i_destroy:
-				bullet._despawn(true)
+				bullet.despawn(true)
 			if destroys_me:
 				_despawn(true)
 
 
 func _despawn(_loudly:bool = false) -> void:
+	if _loudly and vis.is_on_screen() and despawn_particle.strip_edges() != "":
+		Statics.spawn_particle(despawn_particle, Room.Layers.FG1, Vector2(
+			randf_range(-despawn_offset.x, despawn_offset.x),
+			randf_range(-despawn_offset.y, despawn_offset.y)
+		) + position)
 	queue_free()

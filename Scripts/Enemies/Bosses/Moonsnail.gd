@@ -88,6 +88,7 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 
 @export var move_targets:Array[EntityTarget] = []
 @export var tele_targets:Array[EntityTarget] = []
+@export var giga_spawn_pos:Vector2i = Vector2i.ZERO
 
 @onready var sfx_jump = $"AudioGroup/Jump"
 @onready var sfx_jumpgrav = $"AudioGroup/JumpGrav"
@@ -98,6 +99,7 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var sfx_shockcharge = $"AudioGroup/ShockCharge"
 @onready var sfx_shocklaunch = $"AudioGroup/ShockLaunch"
 @onready var sfx_shockland = $"AudioGroup/ShockLand"
+@onready var sfx_teleport = $"AudioGroup/Teleport"
 @onready var shadowball_group:Node2D = $"ShadowballGroup"
 @onready var cast_group:Node2D = $"CastGroup"
 @onready var cast0:RayCast2D = $"CastGroup/RayCast2D0"
@@ -147,6 +149,8 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 		return
 	if not ai_active:
+		if in_death_anim:
+			_tick_death(delta)
 		return
 	
 	just_grav_jumped = false
@@ -199,6 +203,16 @@ func exit_intro() -> void:
 	mode_elapsed = 0.0
 
 
+func _tick_death(delta:float) -> void:
+	pass
+
+
+func kill() -> void:
+	if not in_death_anim:
+		sprite.action = "defeat"
+	super()
+
+
 #region General utility
 func _get_decision() -> float:
 	decision_table_index = (decision_table_index + 1) % DECISION_TABLE.size()
@@ -222,7 +236,7 @@ func _set_mode(new_mode:BossMode, try_shoot:bool = false) -> void:
 func _check_shoot_donuts() -> void:
 	if ring_timeout <= 0.0:
 		ring_timeout = RING_TIMEOUT
-		_shoot_360_cluster_rotary(donut, Vector2(2.2, 0), 16.0, RING_COUNT)
+		bullets.append_array(_shoot_360_cluster_rotary(donut, Vector2(2.2, 0), 16.0, RING_COUNT))
 
 
 func _attack(delta:float) -> void:
@@ -272,10 +286,10 @@ func _attack(delta:float) -> void:
 		Statics.DirsCompass.NW: aim_vector = -Statics.VECTOR_DIAG
 	match current_weapon:
 		1:
-			_shoot(boomerang, aim_vector, WEAPON_SPEED[1])
+			bullets.append(_shoot(boomerang, aim_vector, WEAPON_SPEED[1]))
 		2:
-			_shoot(shadow_wave, aim_vector, WEAPON_SPEED[2])
-	weapon_cooldown = WEAPON_COOLDOWNS[2] * 0.5
+			bullets.append(_shoot(shadow_wave, aim_vector, WEAPON_SPEED[2]))
+	weapon_cooldown = WEAPON_COOLDOWNS[current_weapon] * 0.5
 
 
 func _pick_move_target() -> void:
@@ -324,6 +338,14 @@ func _casts_colliding() -> bool:
 	return cast0.is_colliding() or cast1.is_colliding() or cast2.is_colliding()
 
 
+func advance_phase(count:int = 1) -> void:
+	super(count)
+	if phase == 1:
+		boss_speed += 0.3
+		for shadowball in shadowballs:
+			shadowball.action = "anim_panic"
+
+
 func _draw() -> void:
 	if Engine.is_editor_hint() or Statics.show_invis_entites:
 		for tgt in move_targets:
@@ -336,6 +358,7 @@ func _draw() -> void:
 			if tgt.global_space:
 				pos -= position
 			draw_circle(pos, 6, Color(0.6, 0.6, 0.6, 0.3), true)
+		draw_circle(giga_spawn_pos - Vector2i(position), 8, Color(0.95, 0.1, 0.5, 0.3), true)
 #endregion
 
 
@@ -391,6 +414,10 @@ func _update_teleport() -> void:
 		for ball in shadowballs:
 			ball.global_position = tele_start
 		shadowball_group.visible = true
+		sfx_teleport.play()
+		var particle_state:int = ProjectSettings.get_setting("game/world/particles")
+		if particle_state == Statics.ParticleOptions.ENTITIES_ALL or particle_state == Statics.ParticleOptions.ALL:
+			Statics.spawn_particle("MoonTeleport", Room.Layers.GROUND, tele_start)
 	var progress:float = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME, SIGMOID_MOD)
 	var this_sigmoid:float = 0.0
 	if progress <= 0.5:
@@ -418,6 +445,8 @@ func _update_teleport() -> void:
 		_set_dir(target_gravity, facing_left)
 		_face_player()
 		sprite.modulate.a = 1.0
+		can_damage = true
+		invulnerable = false
 
 
 func _update_attack(delta:float) -> void:
@@ -645,6 +674,7 @@ func _do_gravity_jump() -> void:
 				target_gravity = Statics.DirsSurface.LWALL
 	sfx_jumpgrav.play()
 	just_grav_jumped = true
+	Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity, false])
 
 
 func _check_move_input(delta:float) -> void:

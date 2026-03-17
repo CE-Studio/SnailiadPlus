@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bajtvf2df5rj2"]
+
+[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_7foew"]
+[ext_resource type="Texture2D" uid="uid://diyle5b2qvp1v" path="res://Assets/Images/Particles/MoonTeleport.png" id="2_d6ho7"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xqeo3"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_ureov"]
+
+[node name="MoonTeleport" type="Node2D" unique_id=139135886 node_paths=PackedStringArray("sprite", "timer")]
+z_index = 99
+script = ExtResource("1_7foew")
+sprite = NodePath("JsonSprite2D")
+anim_name = "anim"
+timer = NodePath("Timer")
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=693572842]
+texture = ExtResource("2_d6ho7")
+hframes = 4
+vframes = 2
+frame = 3
+script = ExtResource("3_xqeo3")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=64294929]
+script = ExtResource("4_ureov")
+texture_path = "res://Assets/Images/Particles/MoonTeleport.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Timer" type="Timer" parent="." unique_id=921194533]
+wait_time = 2.0
+autostart = true
