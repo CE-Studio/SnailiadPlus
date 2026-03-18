@@ -7,10 +7,11 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_wy6dv"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_h8xqe"]
 
-[node name="DebugMenu" type="Node2D" unique_id=521542018 node_paths=PackedStringArray("sprites", "selector")]
+[node name="DebugMenu" type="Node2D" unique_id=521542018 node_paths=PackedStringArray("sprites", "selector", "desc")]
 script = ExtResource("1_wy6dv")
 sprites = [NodePath("ButtonIcons/Peashooter"), NodePath("ButtonIcons/Boomerang"), NodePath("ButtonIcons/RainbowWave"), NodePath("ButtonIcons/Devastator"), NodePath("ButtonIcons/HighJump"), null, NodePath("ButtonIcons/Boss1"), NodePath("ButtonIcons/Boss2"), NodePath("ButtonIcons/Boss3"), NodePath("ButtonIcons/Boss4"), NodePath("ButtonIcons/ShellShield"), NodePath("ButtonIcons/RapidFire"), NodePath("ButtonIcons/IceSnail"), NodePath("ButtonIcons/GravitySnail"), NodePath("ButtonIcons/FullMetalSnail"), null, null, null, null, null, NodePath("ButtonIcons/GravityShock"), NodePath("ButtonIcons/Broom"), NodePath("ButtonIcons/RadarShell"), NodePath("ButtonIcons/HeartContainer"), NodePath("ButtonIcons/HelixFragment"), null, NodePath("ButtonIcons/Noclip"), NodePath("ButtonIcons/AttackMult"), NodePath("ButtonIcons/ShowHidden"), null, null, null, null, null, null, null, null, null, null, null, NodePath("ButtonIcons/WeaponTrap"), NodePath("ButtonIcons/GravityTrap"), NodePath("ButtonIcons/LullabyTrap"), NodePath("ButtonIcons/SpiderTrap"), NodePath("ButtonIcons/WarpTrap"), null, null, null, null, NodePath("ButtonIcons/EditSave")]
 selector = NodePath("Selector")
+desc = NodePath("LabelParent/Description")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2097573476]
 offset_left = -8.0
@@ -232,9 +233,23 @@ frame = 6
 script = ExtResource("4_wy6dv")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Description" parent="." unique_id=326553468 instance=ExtResource("5_h8xqe")]
-offset_left = 1.0
-offset_top = 88.0
-offset_right = 2.0
-offset_bottom = 88.0
-shadow_scale = 1
+[node name="LabelParent" type="Node2D" parent="." unique_id=224497262]
+position = Vector2(0, 88)
+
+[node name="Description" parent="LabelParent" unique_id=326553468 instance=ExtResource("5_h8xqe")]
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+theme_override_font_sizes/normal_font_size = 8
+max_width = 200
+text_scale = 1
+border_scale = 1

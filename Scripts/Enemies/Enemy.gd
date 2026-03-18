@@ -211,6 +211,8 @@ func _physics_process(delta) -> void:
 		for bullet in intersecting_pbullets:
 			was_hit = true
 			var bullet_damage = bullet.damage_powered if bullet.powered else bullet.damage
+			if Statics.damage_mult:
+				bullet_damage *= Statics.DAMAGE_MULT
 			var this_damage:int = bullet_damage
 			var this_color:Color = Statics.get_color(Vector2i(3, 1))
 			#gravity shock critical damage mult (1.35)

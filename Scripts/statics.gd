@@ -72,6 +72,8 @@ const HEALTH_PER_HEART = [ 8, 4, 2 ]
 const HEALTH_ORB_VALUES = [ 1, 2, 4 ]
 const HEALTH_ORB_MULTS = [ 1.25, 0.6, 0.125 ]
 
+const DAMAGE_MULT = 10
+
 
 const ROOM_PATH:String = "res://Scenes/Rooms/%s.tscn"
 const WORLD_SPAWN:Array = [

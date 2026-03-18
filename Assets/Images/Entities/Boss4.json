@@ -1685,7 +1685,7 @@
 		},
 		"defeat": {
 			"fps": 3,
-			"loop": false,
+			"loop": true,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [

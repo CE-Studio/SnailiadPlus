@@ -21,7 +21,7 @@ var health_bar:BossHealthBar = null
 #endregion
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	super(delta)
 
 	while phase < phase_changes.size() and health < max_health * phase_changes[phase]:

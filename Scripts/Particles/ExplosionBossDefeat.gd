@@ -1,8 +1,11 @@
 extends Particle
 
 
+const FREE_BUFFER:float = -1.25
+
 var life_time:float = 1.8
 var play_sound:bool = true
+var awaiting_free:bool = false
 
 @onready var boom1:AudioStreamPlayer = $"Boom1"
 @onready var boom2:AudioStreamPlayer = $"Boom2"
@@ -24,10 +27,13 @@ func _spawn(_data:Array) -> void:
 
 func _physics_process(delta: float) -> void:
 	if life_time <= 0.0:
-		_call_batched(true)
-		_call_batched(true)
-		_call_batched(true)
-		queue_free()
+		if awaiting_free and life_time <= FREE_BUFFER:
+			queue_free()
+		elif not awaiting_free:
+			_call_batched(true)
+			_call_batched(true)
+			_call_batched(true)
+			awaiting_free = true
 	else:
 		_call_batched(false)
 	life_time -= delta

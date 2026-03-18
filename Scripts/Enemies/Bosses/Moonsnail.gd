@@ -35,8 +35,8 @@ const MOVE_END_THRESHOLD:float = 10.0
 const MOVE_APPROACH_THRESHOLD:float = 40.0
 const PROX_TELE_THRESHOLD:float = 60.0
 const SIGMOID_MOD:float = 8.0
-const DEATH_TIME:float = 3.5
-const DEATH_MOVE_TIME:float = 2.75
+const DEATH_TIME:float = 4.5
+const DEATH_MOVE_TIME:float = 3.25
 
 enum BossMode {
 	INTRO,
@@ -211,11 +211,10 @@ func exit_intro() -> void:
 
 func _tick_death(delta:float) -> void:
 	mode_elapsed += delta
-	sprite.fps_mult = 1.0 + (mode_elapsed * 0.125)
-	if mode_elapsed > DEATH_MOVE_TIME:
-		position = giga_spawn_pos
-	else:
-		position = death_start.lerp(giga_spawn_pos, sin(mode_elapsed * PI / DEATH_MOVE_TIME))
+	sprite.fps_mult = 1.0 + mode_elapsed
+	var progress:float = Statics.normalized_sigmoid(mode_elapsed / DEATH_MOVE_TIME, SIGMOID_MOD)
+	progress = clampf(progress, 0.0, 1.0)
+	position = death_start.lerp(giga_spawn_pos, progress)
 	if death_boom != null:
 		death_boom.position = position
 
@@ -226,7 +225,8 @@ func kill() -> void:
 		set_timer = true
 		sprite.action = "defeat"
 		death_start = position
-		death_boom = Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position, [true, 3.5])
+		death_boom = Statics.spawn_particle("ExplosionBossDefeat",
+			Room.Layers.GROUND, position, [true, DEATH_TIME])
 		mode_elapsed = 0.0
 		GameCore.instance.music_manager.stop_all(true)
 	super()
