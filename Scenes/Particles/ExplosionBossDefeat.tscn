@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://fxp56us7em3w" path="res://Assets/Sounds/Sfx/Explode2.ogg" id="6_pu7gh"]
 [ext_resource type="AudioStream" uid="uid://cbkqdrvlo8gbo" path="res://Assets/Sounds/Sfx/Explode3.ogg" id="7_5vnic"]
 [ext_resource type="AudioStream" uid="uid://brxaghtx4yim" path="res://Assets/Sounds/Sfx/Explode4.ogg" id="8_a3kuf"]
+[ext_resource type="Texture2D" uid="uid://hwgs04edt07o" path="res://Assets/Images/Particles/Explosion.png" id="9_m3iyu"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="10_ciui8"]
 
 [node name="ExplosionBossDefeat" type="Node2D" unique_id=1827356931]
 script = ExtResource("1_pjae3")
@@ -53,3 +55,38 @@ stream = ExtResource("8_a3kuf")
 volume_db = -6.0
 max_polyphony = 2
 bus = &"Sfx"
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1796653791]
+texture = ExtResource("9_m3iyu")
+hframes = 5
+vframes = 8
+frame = 12
+script = ExtResource("10_ciui8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite2" type="Sprite2D" parent="." unique_id=738529602]
+position = Vector2(13, -9)
+texture = ExtResource("9_m3iyu")
+hframes = 5
+vframes = 8
+frame = 7
+script = ExtResource("10_ciui8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite3" type="Sprite2D" parent="." unique_id=134612374]
+position = Vector2(-15, 4)
+texture = ExtResource("9_m3iyu")
+hframes = 5
+vframes = 8
+frame = 7
+script = ExtResource("10_ciui8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MarkerSprite4" type="Sprite2D" parent="." unique_id=1456300716]
+position = Vector2(13, 13)
+texture = ExtResource("9_m3iyu")
+hframes = 5
+vframes = 8
+frame = 7
+script = ExtResource("10_ciui8")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

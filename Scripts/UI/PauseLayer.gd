@@ -9,6 +9,7 @@ var subscreen:Subscreen = null
 @onready var game:GameCore = GameCore.instance
 @onready var menu_scene:PackedScene = preload("res://Scenes/IngameMenuScene.tscn")
 @onready var subscreen_scene:PackedScene = preload("res://Scenes/UI/Subscreen.tscn")
+@onready var debug_scene:PackedScene = preload("res://Scenes/UI/DebugMenu.tscn")
 #endregion
 
 
@@ -26,11 +27,21 @@ func _physics_process(_delta: float) -> void:
 		subscreen = subscreen_scene.instantiate()
 		add_child(subscreen)
 		subscreen.position = Vector2(0, 240)
+	if SInput.input_just_pressed(SInput.Inputs.DEBUG) and not get_tree().paused:
+		pause_no_fade()
+		add_child(debug_scene.instantiate())
 
 
 func pause_fade_in() -> void:
 	get_tree().paused = true
 	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.6), 0.25)
+	cam.popup_layer.visible = false
+	if subscreen:
+		subscreen = null
+
+
+func pause_no_fade() -> void:
+	get_tree().paused = true
 	cam.popup_layer.visible = false
 	if subscreen:
 		subscreen = null

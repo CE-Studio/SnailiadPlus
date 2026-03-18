@@ -18,6 +18,8 @@ func _spawn(_data:Array) -> void:
 	
 	if _data.size() > 0 and _data[0] is bool:
 		play_sound = _data[0]
+	if _data.size() > 1 and _data[1] is float:
+		life_time = abs(_data[1])
 
 
 func _physics_process(delta: float) -> void:
