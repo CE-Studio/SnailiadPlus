@@ -2,10 +2,13 @@ extends Particle
 
 
 const FREE_BUFFER:float = -1.25
+const GIGA_QUIET_DB:float = -6.0
 
 var life_time:float = 1.8
+var this_max_time:float = 1.8
 var play_sound:bool = true
 var awaiting_free:bool = false
+var is_giga:bool = false
 
 @onready var boom1:AudioStreamPlayer = $"Boom1"
 @onready var boom2:AudioStreamPlayer = $"Boom2"
@@ -23,6 +26,9 @@ func _spawn(_data:Array) -> void:
 		play_sound = _data[0]
 	if _data.size() > 1 and _data[1] is float:
 		life_time = abs(_data[1])
+		this_max_time = life_time
+	if _data.size() > 2 and _data[2] is bool:
+		is_giga = _data[2]
 
 
 func _physics_process(delta: float) -> void:
@@ -36,6 +42,10 @@ func _physics_process(delta: float) -> void:
 			awaiting_free = true
 	else:
 		_call_batched(false)
+	if is_giga:
+		var this_weight:float = inverse_lerp(this_max_time, 0.0, life_time)
+		var this_vol:float = lerpf(0.0, GIGA_QUIET_DB, this_weight)
+		_set_all_vol_db(this_vol)
 	life_time -= delta
 
 
@@ -79,3 +89,13 @@ func _create_radial(part_name:String, radius_max:float, front:bool = false) -> v
 	var new_part = Statics.spawn_particle(
 		part_name, Room.Layers.FG1 if front else Room.Layers.BG1, this_pos)
 	new_part.sound.stop()
+
+
+func _set_all_vol_db(db:float) -> void:
+	boom1.volume_db = db
+	boom2.volume_db = db
+	boom3.volume_db = db
+	small_boom1.volume_db = db
+	small_boom2.volume_db = db
+	small_boom3.volume_db = db
+	small_boom4.volume_db = db

@@ -26,7 +26,7 @@ size = Vector2(24, 14)
 
 [node name="Moonsnail" type="CharacterBody2D" unique_id=1600867824]
 visibility_layer = 3
-z_index = 5
+z_index = 1
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_bauxv")

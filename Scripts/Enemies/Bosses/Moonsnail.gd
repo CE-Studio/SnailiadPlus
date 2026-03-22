@@ -1,4 +1,5 @@
 @tool
+class_name Moonsnail
 extends Boss
 
 
@@ -226,9 +227,13 @@ func kill() -> void:
 		sprite.action = "defeat"
 		death_start = position
 		death_boom = Statics.spawn_particle("ExplosionBossDefeat",
-			Room.Layers.GROUND, position, [true, DEATH_TIME])
+			Room.Layers.GROUND, position, [true, DEATH_TIME, true])
 		mode_elapsed = 0.0
 		GameCore.instance.music_manager.stop_all(true)
+	else:
+		var giga:Gigasnail = load("res://Scenes/Entities/Enemies/Bosses/Gigasnail.tscn").instantiate()
+		giga.position = giga_spawn_pos
+		GameCore.instance.current_room.layer_ground.add_child(giga)
 	super()
 	if set_timer:
 		death_timer = DEATH_TIME

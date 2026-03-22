@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://shycd53058d3"]
+
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lpx3v"]
+[ext_resource type="Script" uid="uid://b7u2jogwkx8ah" path="res://Scripts/Enemies/Bosses/Gigasnail.gd" id="1_y7363"]
+[ext_resource type="Texture2D" uid="uid://urtb8cusuv1s" path="res://Assets/Images/Entities/Boss4SecondForm.png" id="2_lpx3v"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xnkwp"]
+[ext_resource type="AudioStream" uid="uid://43obmnyp8lgi" path="res://Assets/Sounds/Sfx/Enemy/Boss4bSpawn.ogg" id="5_xnkwp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xi7f"]
+size = Vector2(80, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qsnex"]
+size = Vector2(80, 44)
+
+[node name="Gigasnail" type="CharacterBody2D" unique_id=498866783]
+z_index = 1
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_y7363")
+battle_music = 12
+phase_changes = Array[float]([0.4])
+max_health = 34000
+attack = 6
+invulnerable = true
+
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1544009433]
+shape = SubResource("RectangleShape2D_7xi7f")
+debug_color = Color(0.9764706, 0, 0.41568628, 0.41960785)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1003423611]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1623668035]
+shape = SubResource("RectangleShape2D_qsnex")
+debug_color = Color(0.9764706, 0, 0.41568628, 0.41960785)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1591926309]
+rect = Rect2(-40, -40, 80, 80)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2033641804]
+script = ExtResource("1_lpx3v")
+texture_path = "res://Assets/Images/Entities/Boss4.json"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=728863104]
+texture = ExtResource("2_lpx3v")
+hframes = 12
+vframes = 2
+script = ExtResource("3_xnkwp")
+
+[node name="AudioGroup" type="Node" parent="." unique_id=2112818080]
+
+[node name="Spawn" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1790032628]
+stream = ExtResource("5_xnkwp")
+autoplay = true
+bus = &"Sfx"

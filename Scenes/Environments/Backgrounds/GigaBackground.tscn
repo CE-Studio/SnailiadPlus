@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dmdtjuqvtffgq"]
+
+[ext_resource type="Texture2D" uid="uid://behwbll7mwhb" path="res://Assets/Images/Backgrounds/GigaBGIntro.png" id="1_o4fht"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_b5734"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_b5734"]
+
+[node name="GigaBackground" type="Node2D" unique_id=52244755]
+
+[node name="Marker0" type="Sprite2D" parent="." unique_id=1295946045]
+position = Vector2(72, 32)
+texture = ExtResource("1_o4fht")
+flip_h = true
+hframes = 8
+vframes = 4
+frame = 9
+script = ExtResource("2_b5734")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Marker1" type="Sprite2D" parent="." unique_id=394150429]
+position = Vector2(328, 32)
+texture = ExtResource("1_o4fht")
+hframes = 8
+vframes = 4
+frame = 9
+script = ExtResource("2_b5734")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Marker2" type="Sprite2D" parent="." unique_id=1680769794]
+position = Vector2(72, 208)
+texture = ExtResource("1_o4fht")
+flip_h = true
+flip_v = true
+hframes = 8
+vframes = 4
+frame = 9
+script = ExtResource("2_b5734")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Marker3" type="Sprite2D" parent="." unique_id=1975795611]
+position = Vector2(328, 208)
+texture = ExtResource("1_o4fht")
+flip_v = true
+hframes = 8
+vframes = 4
+frame = 9
+script = ExtResource("2_b5734")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Intro" type="Node2D" parent="." unique_id=1143797347]
+
+[node name="TL" type="Sprite2D" parent="Intro" unique_id=1945437915]
+position = Vector2(72, 32)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
+load_autoplay = Array[String](["TL"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="TR" type="Sprite2D" parent="Intro" unique_id=1638765437]
+position = Vector2(328, 32)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
+load_autoplay = Array[String](["TR"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BL" type="Sprite2D" parent="Intro" unique_id=773798233]
+position = Vector2(72, 208)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
+load_autoplay = Array[String](["BL"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="BR" type="Sprite2D" parent="Intro" unique_id=1589398734]
+position = Vector2(328, 208)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
+load_autoplay = Array[String](["BR"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
