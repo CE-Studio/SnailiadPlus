@@ -1,27 +1,30 @@
 [gd_scene format=3 uid="uid://dmdtjuqvtffgq"]
 
 [ext_resource type="Texture2D" uid="uid://behwbll7mwhb" path="res://Assets/Images/Backgrounds/GigaBGIntro.png" id="1_o4fht"]
+[ext_resource type="Script" uid="uid://3g36xhgxcknw" path="res://Scripts/WorldElements/Backgrounds/GigaBackground.gd" id="1_obpjw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_b5734"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_b5734"]
 
-[node name="GigaBackground" type="Node2D" unique_id=52244755]
+[node name="GigaBackground" type="Node2D" unique_id=52244755 node_paths=PackedStringArray("intro")]
+script = ExtResource("1_obpjw")
+intro = NodePath("Intro")
 
 [node name="Marker0" type="Sprite2D" parent="." unique_id=1295946045]
 position = Vector2(72, 32)
 texture = ExtResource("1_o4fht")
 flip_h = true
-hframes = 8
-vframes = 4
-frame = 9
+hframes = 9
+vframes = 3
+frame = 10
 script = ExtResource("2_b5734")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Marker1" type="Sprite2D" parent="." unique_id=394150429]
 position = Vector2(328, 32)
 texture = ExtResource("1_o4fht")
-hframes = 8
-vframes = 4
-frame = 9
+hframes = 9
+vframes = 3
+frame = 10
 script = ExtResource("2_b5734")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
@@ -30,9 +33,9 @@ position = Vector2(72, 208)
 texture = ExtResource("1_o4fht")
 flip_h = true
 flip_v = true
-hframes = 8
-vframes = 4
-frame = 9
+hframes = 9
+vframes = 3
+frame = 10
 script = ExtResource("2_b5734")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
@@ -40,9 +43,9 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 position = Vector2(328, 208)
 texture = ExtResource("1_o4fht")
 flip_v = true
-hframes = 8
-vframes = 4
-frame = 9
+hframes = 9
+vframes = 3
+frame = 10
 script = ExtResource("2_b5734")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 

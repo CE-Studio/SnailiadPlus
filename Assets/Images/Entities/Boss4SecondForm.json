@@ -1,0 +1,23 @@
+{
+	"tiles": [12, 2],
+	"layerize": false,
+	"meta": { "change_anim_if_both_are_shell": false },
+	"animations": {
+		"intro": {
+			"fps": 16,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+				[7, 0, false, false],
+				[8, 0, false, false],
+				[9, 0, false, false],
+				[10, 0, false, false],
+				[11, 0, false, false],
+			]
+		}
+	}
+}

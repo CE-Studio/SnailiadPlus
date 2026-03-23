@@ -40,7 +40,8 @@ rect = Rect2(-40, -40, 80, 80)
 
 [node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2033641804]
 script = ExtResource("1_lpx3v")
-texture_path = "res://Assets/Images/Entities/Boss4.json"
+texture_path = "res://Assets/Images/Entities/Boss4SecondForm.json"
+load_autoplay = Array[String](["intro"])
 
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=728863104]
 texture = ExtResource("2_lpx3v")

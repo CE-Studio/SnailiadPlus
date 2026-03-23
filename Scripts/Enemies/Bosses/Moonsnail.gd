@@ -38,6 +38,9 @@ const PROX_TELE_THRESHOLD:float = 60.0
 const SIGMOID_MOD:float = 8.0
 const DEATH_TIME:float = 4.5
 const DEATH_MOVE_TIME:float = 3.25
+const DEATH_FADE_START:float = 2.5
+const DEATH_FADE_END:float = 4.5
+const DEATH_FADE_COLOR:Color = Color("00c2f7")
 
 enum BossMode {
 	INTRO,
@@ -213,6 +216,8 @@ func exit_intro() -> void:
 func _tick_death(delta:float) -> void:
 	mode_elapsed += delta
 	sprite.fps_mult = 1.0 + mode_elapsed
+	var lerp_prog:float = inverse_lerp(DEATH_FADE_START, DEATH_FADE_END, mode_elapsed)
+	flash_color = Color.BLACK.lerp(DEATH_FADE_COLOR, clampf(lerp_prog, 0.0, 1.0))
 	var progress:float = Statics.normalized_sigmoid(mode_elapsed / DEATH_MOVE_TIME, SIGMOID_MOD)
 	progress = clampf(progress, 0.0, 1.0)
 	position = death_start.lerp(giga_spawn_pos, progress)

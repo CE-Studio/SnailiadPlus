@@ -961,6 +961,81 @@ func set_environment_visibility() -> void:
 func despawn_room() -> void:
 	despawn.emit()
 	queue_free()
+
+
+func fade_layer(_layer:Layers, _color:Color, _time:float) -> void:
+	var tween:Tween = create_tween()
+	var layer:Node2D = layer_ground
+	match _layer:
+		Layers.SKY: layer = layer_sky
+		Layers.BG2: layer = layer_bg2
+		Layers.BG1: layer = layer_bg1
+		Layers.FG1: layer = layer_fg1
+		Layers.FG2: layer = layer_fg2
+		Layers.ENTITY: layer = layer_entity
+	tween.tween_property(layer, "modulate", _color, _time)
+
+
+func fade_all_layers(_color:Color, _time:float) -> void:
+	fade_layer(Layers.SKY, _color, _time)
+	fade_layer(Layers.BG2, _color, _time)
+	fade_layer(Layers.BG1, _color, _time)
+	fade_layer(Layers.GROUND, _color, _time)
+	fade_layer(Layers.FG1, _color, _time)
+	fade_layer(Layers.FG2, _color, _time)
+	fade_layer(Layers.ENTITY, _color, _time)
+
+
+func fade_map(_layer:Layers, _color:Color, _time:float) -> void:
+	var tween:Tween = create_tween()
+	var layer:Node2D = map_ground
+	match _layer:
+		Layers.SKY: layer = map_sky
+		Layers.BG2: layer = map_bg2
+		Layers.BG1: layer = map_bg1
+		Layers.FG1: layer = map_fg1
+		Layers.FG2: layer = map_fg2
+		Layers.ENTITY: layer = map_entity1
+	tween.tween_property(layer, "modulate", _color, _time)
+	
+
+
+func fade_all_maps(_color:Color, _time:float) -> void:
+	fade_map(Layers.SKY, _color, _time)
+	fade_map(Layers.BG2, _color, _time)
+	fade_map(Layers.BG1, _color, _time)
+	fade_map(Layers.GROUND, _color, _time)
+	fade_map(Layers.FG1, _color, _time)
+	fade_map(Layers.FG2, _color, _time)
+	fade_map(Layers.ENTITY, _color, _time)
+
+
+func set_map_visible(_layer:Layers, _visible:bool) -> void:
+	var layer:Node2D = map_ground
+	match _layer:
+		Layers.SKY: layer = map_sky
+		Layers.BG2: layer = map_bg2
+		Layers.BG1: layer = map_bg1
+		Layers.FG1: layer = map_fg1
+		Layers.FG2: layer = map_fg2
+		Layers.ENTITY: layer = map_entity1
+	layer.visible = _visible
+	if _layer == Layers.ENTITY:
+		map_entity2.visible = _visible
+
+
+func set_all_maps_visible(_visible:bool) -> void:
+	set_map_visible(Layers.SKY, _visible)
+	set_map_visible(Layers.BG2, _visible)
+	set_map_visible(Layers.BG1, _visible)
+	set_map_visible(Layers.GROUND, _visible)
+	set_map_visible(Layers.FG1, _visible)
+	set_map_visible(Layers.FG2, _visible)
+	set_map_visible(Layers.ENTITY, _visible)
+
+
+func set_ground_collision(_enabled:bool) -> void:
+	map_ground.collision_enabled = _enabled
 #endregion
 
 
