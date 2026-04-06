@@ -111,11 +111,16 @@ func _enable_boss() -> void:
 		boss.intro_delay = false
 
 
-func _toggle_outro_shake() -> void:
+func _refill() -> void:
+	anim.play("Refill")
+
+
+func _toggle_outro_shake(lite:bool = false) -> void:
 	outro_shake = not outro_shake
 	if outro_shake:
 		_update_main(_get_bar_pos_from_ratio(0))
-		anim.play("Defeated")
+		if not lite:
+			anim.play("Defeated")
 	else:
 		boss_name_container.position = Vector2.ZERO
 		defeated_container.position = defeated_origin

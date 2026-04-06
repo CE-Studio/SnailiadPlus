@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cbl5iirl5b3ev"]
+
+[ext_resource type="Script" uid="uid://bofgk64x7w4rb" path="res://Scripts/RemoteFullHeal.gd" id="1_qlelp"]
+[ext_resource type="AudioStream" uid="uid://b5fm4idf3r04d" path="res://Assets/Sounds/Sfx/RemoteHeal.ogg" id="2_2rhlv"]
+
+[node name="RemoteFullHeal" type="Node2D" unique_id=201122224 node_paths=PackedStringArray("sfx_heal")]
+script = ExtResource("1_qlelp")
+sfx_heal = NodePath("Heal")
+
+[node name="Heal" type="AudioStreamPlayer" parent="." unique_id=531479595]
+stream = ExtResource("2_2rhlv")
+max_polyphony = 4
+bus = &"Sfx"

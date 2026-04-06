@@ -228,6 +228,8 @@ func _tick_death(delta:float) -> void:
 func kill() -> void:
 	var set_timer:bool = false
 	if not in_death_anim:
+		if health_bar:
+			health_bar._toggle_outro_shake(true)
 		set_timer = true
 		sprite.action = "defeat"
 		death_start = position
@@ -235,9 +237,11 @@ func kill() -> void:
 			Room.Layers.GROUND, position, [true, DEATH_TIME, true])
 		mode_elapsed = 0.0
 		GameCore.instance.music_manager.stop_all(true)
+		Player.instance.do_moon_snail_heal()
 	else:
 		var giga:Gigasnail = load("res://Scenes/Entities/Enemies/Bosses/Gigasnail.tscn").instantiate()
 		giga.position = giga_spawn_pos
+		giga.health_bar = health_bar
 		GameCore.instance.current_room.layer_ground.add_child(giga)
 	super()
 	if set_timer:

@@ -32,8 +32,10 @@ collision_mask = 3
 script = ExtResource("1_bauxv")
 battle_music = 11
 phase_changes = Array[float]([0.5])
+death_wiggle_mult = 0.4
 max_health = 7000
 defense = 30
+kill_particle_count = 0
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1177653414]
 shape = SubResource("RectangleShape2D_31aru")

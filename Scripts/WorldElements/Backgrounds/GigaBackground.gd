@@ -25,11 +25,12 @@ var spawn_fade_timeout:float = SPAWN_FADE_TIMEOUT
 
 func _ready() -> void:
 	if dim_and_hide_room and GameCore.instance.current_room:
-		var fade_col:Color = Color(1.0, 1.0, 1.0, 0.0)
-		GameCore.instance.current_room.fade_map(Room.Layers.BG2, fade_col, MAP_FADE_TIME)
-		GameCore.instance.current_room.fade_map(Room.Layers.BG1, fade_col, MAP_FADE_TIME)
-		GameCore.instance.current_room.fade_map(Room.Layers.GROUND, fade_col, MAP_FADE_TIME)
-		GameCore.instance.current_room.fade_map(Room.Layers.FG1, fade_col, MAP_FADE_TIME)
+		GameCore.instance.current_room.set_map_visible(Room.Layers.FG1, false)
+		#var fade_col:Color = Color(1.0, 1.0, 1.0, 0.0)
+		#GameCore.instance.current_room.fade_map(Room.Layers.BG2, fade_col, MAP_FADE_TIME)
+		#GameCore.instance.current_room.fade_map(Room.Layers.BG1, fade_col, MAP_FADE_TIME)
+		#GameCore.instance.current_room.fade_map(Room.Layers.GROUND, fade_col, MAP_FADE_TIME)
+		#GameCore.instance.current_room.fade_map(Room.Layers.FG1, fade_col, MAP_FADE_TIME)
 	for child in intro.get_children():
 		if child is JsonSprite2D:
 			spr_intro.append(child)

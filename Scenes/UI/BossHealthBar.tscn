@@ -189,6 +189,179 @@ tracks/6/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_h3gxo"]
+resource_name = "Refill"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 1.03333, 1.06667, 1.1, 1.13333, 1.16667, 1.2, 1.23333, 1.26667, 1.3, 1.33333, 1.36667, 1.4, 1.43333, 1.46667, 1.5, 1.53333, 1.56667, 1.6, 1.63333, 1.66667, 1.7, 1.73333, 1.76667, 1.8, 1.83333, 1.86667, 1.9, 1.93333, 1.96667, 2, 2.03333, 2.06667, 2.1, 2.13333, 2.16667, 2.2, 2.23333, 2.26667, 2.3, 2.33333, 2.36667, 2.4, 2.43333, 2.46667, 2.5, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"play_beep"
+}, {
+"args": [],
+"method": &"_enable_boss"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_begin_intro_fill"
+}, {
+"args": [],
+"method": &"_end_intro_fill"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_lknyw"]
 resource_name = "Spawn"
 length = 3.0
@@ -390,6 +563,7 @@ tracks/3/keys = {
 _data = {
 &"Defeated": SubResource("Animation_0ogdg"),
 &"RESET": SubResource("Animation_gahxl"),
+&"Refill": SubResource("Animation_h3gxo"),
 &"Spawn": SubResource("Animation_lknyw")
 }
 

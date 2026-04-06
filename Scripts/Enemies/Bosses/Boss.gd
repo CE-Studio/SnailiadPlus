@@ -8,6 +8,7 @@ const DEATH_WIGGLE_TIME:float = 1.8
 
 @export var battle_music:MusicManager.Loops = MusicManager.Loops.Boss1
 @export var phase_changes:Array[float] = [ 0 ]
+@export var death_wiggle_mult:float = 1.0
 
 var intro_delay:bool = true
 var phase:int = 0
@@ -32,7 +33,7 @@ func _process(delta: float) -> void:
 			node.position = Vector2(
 				randf_range(-DEATH_WIGGLE_RANGE, DEATH_WIGGLE_RANGE),
 				randf_range(-DEATH_WIGGLE_RANGE, DEATH_WIGGLE_RANGE)
-			)
+			) * death_wiggle_mult
 		if death_timer <= 0.0:
 			kill()
 		death_timer -= delta

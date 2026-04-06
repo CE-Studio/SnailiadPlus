@@ -22,6 +22,7 @@ phase_changes = Array[float]([0.4])
 max_health = 34000
 attack = 6
 invulnerable = true
+can_damage = false
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1544009433]
 shape = SubResource("RectangleShape2D_7xi7f")

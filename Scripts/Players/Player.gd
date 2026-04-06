@@ -269,6 +269,7 @@ var shield_particle:Particle
 var timer_die_fade:Timer
 var timer_die_respawn:Timer
 var emote:EmoteLayer
+var remote_heal:RemoteFullHeal
 
 
 var debug_print_adjustments:bool = false
@@ -299,6 +300,7 @@ func _ready():
 	timer_die_fade = $"TimerGroup/DieFadeDelay"
 	timer_die_respawn = $"TimerGroup/RespawnDelay"
 	emote = $"EmoteLayer"
+	remote_heal = $"RemoteFullHeal"
 
 	var rect := box_normal.shape.get_rect()
 	box_difference = ((rect.size.x - rect.size.y) * 0.5) + 1
@@ -312,6 +314,8 @@ func _ready():
 		shell_level_displayed = 1 << (shell_level - 1) if shell_level > 0 else 0
 	else:
 		shell_level_displayed = Statics.get_shell_level(1)
+	
+	remote_heal.heal.connect(adjust_health)
 
 
 #region Movement
@@ -1451,6 +1455,15 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 			sfx_ping.play()
 		else:
 			sfx_hurt.play()
+
+
+func do_moon_snail_heal() -> void:
+	var heal_amount:int = 2
+	if Statics.current_profile["difficulty"] == 0:
+		heal_amount = 4
+	elif Statics.current_profile["difficulty"] == 2:
+		heal_amount = 1
+	remote_heal.setup_heal(max_health - health, heal_amount, 2.0, -1, 1.25)
 
 
 func tick_death(_delta:float) -> void:

@@ -12,6 +12,7 @@ const WAVE_SPEED:float = 30.0
 const WAVE_TIMEOUT:float = 0.9
 const ZZZ_TIMEOUT:float = 0.3
 const ZZZ_MAX:int = 3
+const INTRO_DELAY:float = 1.25
 const STRAFE_TIMEOUT:float = 0.03
 const STRAFE_SPEED:float = 400.0
 const SMASH_SPEED:float = 400.0
@@ -64,9 +65,10 @@ var stomped:bool = false
 var aimed:bool = false
 var grav_jump_timeout:float = 99999.0
 var jump_timeout:float = 0.0
+var boss_speed:float = 1.0
 
-var body_rect:RectangleShape2D
-var area_rect:RectangleShape2D
+var body_rect:RectangleShape2D = null
+var area_rect:RectangleShape2D = null
 #endregion
 
 
@@ -78,12 +80,86 @@ func _ready() -> void:
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
+	if display_mode:
+		#sprite.action = "p0_floor_left_idle" if randf() < 0.5 else "p0_floor_right_idle"
+		return
+	
 	if col and col.shape and col.shape is RectangleShape2D:
 		body_rect = col.shape
 	var _hitbox:CollisionShape2D = $"Area2D/HitBox"
 	if _hitbox and _hitbox.shape and _hitbox.shape is RectangleShape2D:
 		area_rect = _hitbox.shape
+	assert(body_rect, "Giga Snail requires a collision shape for wall interactions!")
+	assert(area_rect, "Giga Snail requires a collision shape for his hitbox!")
+	body_rect.size = BOX_SIZE_SHELL
+	area_rect.size = AREA_SIZE_SHELL
+	
+	if Statics.current_profile["difficulty"] == 2:
+		boss_speed += 0.2
 	
 	GameCore.instance.current_room.layer_ground.add_child(
 		load("res://Scenes/Environments/Backgrounds/GigaBackground.tscn").instantiate()
 	)
+	
+	sprite._process(0.0)
+	if health_bar and health_bar.outro_shake:
+		health_bar._toggle_outro_shake()
+
+
+func _physics_process(delta) -> void:
+	if Engine.is_editor_hint():
+		return
+	if not ai_active:
+		#if in_death_anim:
+		#	_tick_death(delta)
+		return
+	
+	wave_timeout -= delta * boss_speed
+	mode_timeout -= delta * boss_speed
+	strafe_timeout -= delta * boss_speed
+	stomp_timeout -= delta * boss_speed
+	mode_elapsed += delta * boss_speed
+	match mode:
+		BossMode.INTRO:
+			_update_intro()
+		BossMode.STOMP:
+			_update_stomp()
+		BossMode.STRAFE:
+			_update_strafe()
+		BossMode.SMASH:
+			_update_smash()
+		BossMode.SLEEP:
+			_update_sleep()
+	super._physics_process(delta)
+
+
+#region General utility
+func _get_decision() -> float:
+	decision_table_index = (decision_table_index + 1) % DECISION_TABLE.size()
+	return DECISION_TABLE[decision_table_index]
+#endregion
+
+
+#region AI updating
+func _update_intro() -> void:
+	if mode_elapsed > INTRO_DELAY and not mode_initialized:
+		mode_initialized = true
+		GameCore.instance.music_manager.play_song(battle_music)
+		health_bar._refill()
+
+
+func _update_stomp() -> void:
+	pass
+
+
+func _update_strafe() -> void:
+	pass
+
+
+func _update_smash() -> void:
+	pass
+
+
+func _update_sleep() -> void:
+	pass
+#endregion
