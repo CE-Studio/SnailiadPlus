@@ -82,19 +82,19 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Floor" parent="." unique_id=473466438 instance=ExtResource("5_1edw1")]
 position = Vector2(200, 232)
-segments = 11
+segments = 31
 
 [node name="LWall" parent="." unique_id=1258643994 instance=ExtResource("5_1edw1")]
 position = Vector2(8, 120)
-segments = 9
+segments = 13
 surface = 1
 
 [node name="RWall" parent="." unique_id=809398269 instance=ExtResource("5_1edw1")]
 position = Vector2(392, 120)
-segments = 9
+segments = 13
 surface = 2
 
 [node name="Ceiling" parent="." unique_id=753372925 instance=ExtResource("5_1edw1")]
 position = Vector2(200, 8)
-segments = 11
+segments = 31
 surface = 3

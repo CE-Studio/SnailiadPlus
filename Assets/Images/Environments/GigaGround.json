@@ -1,79 +1,83 @@
 {
-	"tiles": [2, 2],
+	"tiles": [8, 6],
 	"layerize": false,
 	"meta": {},
 	"animations": {
-		"floor_main": {
-			"fps": 1,
+		"floor_intro": {
+			"fps": 4,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 0, false, false]
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
 			]
 		},
-		"floor_effect": {
-			"fps": 1,
+		"lwall_intro": {
+			"fps": 4,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 1, false, false]
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[4, 0, true, false],
+				[5, 0, true, false],
+				[6, 0, true, false],
+				[7, 0, true, false],
 			]
 		},
-		"lwall_main": {
-			"fps": 1,
+		"rwall_intro": {
+			"fps": 4,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 0, true, false]
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[4, 0, false, false],
+				[5, 0, false, false],
+				[6, 0, false, false],
+				[7, 0, false, false],
 			]
 		},
-		"lwall_effect": {
-			"fps": 1,
+		"ceiling_intro": {
+			"fps": 4,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[1, 1, true, false]
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[-1, -1, false, false],
+				[0, 0, false, true],
+				[1, 0, false, true],
+				[2, 0, false, true],
+				[3, 0, false, true],
 			]
 		},
-		"rwall_main": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[1, 0, false, false]
-			]
-		},
-		"rwall_effect": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[1, 1, false, false]
-			]
-		},
-		"ceiling_main": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[0, 0, false, true]
-			]
-		},
-		"ceiling_effect": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[0, 1, false, true]
-			]
-		}
 	}
 }

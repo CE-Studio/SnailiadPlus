@@ -9,30 +9,15 @@
 z_index = 2
 script = ExtResource("1_e336a")
 
-[node name="Main" type="Sprite2D" parent="." unique_id=1575348885]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1575348885]
 script = ExtResource("1_3qe6u")
 texture_path = "res://Assets/Images/Environments/GigaGround.json"
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Main" unique_id=426348530]
+[node name="MarkerSprite" type="Sprite2D" parent="Sprite" unique_id=426348530]
 texture = ExtResource("2_i3l3e")
-hframes = 2
-vframes = 2
+hframes = 8
+vframes = 6
+frame = 8
 script = ExtResource("3_e336a")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="EffectGroup0" type="Node2D" parent="." unique_id=1425957069]
-z_index = -1
-
-[node name="Effect" type="Sprite2D" parent="EffectGroup0" unique_id=672785554]
-script = ExtResource("1_3qe6u")
-texture_path = "res://Assets/Images/Environments/GigaGround.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="EffectGroup1" type="Node2D" parent="." unique_id=537364193]
-z_index = -1
-
-[node name="Effect" type="Sprite2D" parent="EffectGroup1" unique_id=2118015964]
-script = ExtResource("1_3qe6u")
-texture_path = "res://Assets/Images/Environments/GigaGround.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
