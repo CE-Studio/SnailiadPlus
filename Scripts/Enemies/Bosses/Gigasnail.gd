@@ -17,6 +17,7 @@ const STRAFE_TIMEOUT:float = 0.03
 const STRAFE_SPEED:float = 400.0
 const SMASH_SPEED:float = 400.0
 const STOMP_TIMEOUT:float = 0.25
+const STOMP_TARGET_MIN_DIST:float = 130.0
 const BOX_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
 const BOX_SIZE_SHELL:Vector2i = Vector2i(44, 44)
 const AREA_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
@@ -46,6 +47,7 @@ var last_mode:BossMode = BossMode.INTRO
 var mode_elapsed:float = 0.0
 var mode_initialized:bool = false
 var mode_timeout:float = 0.0
+var target:Vector2 = Vector2.ZERO
 
 var last_hit_dir:Statics.DirsSurface = Statics.DirsSurface.NONE
 var stomps_this_cycle:int = 0
@@ -67,8 +69,12 @@ var grav_jump_timeout:float = 99999.0
 var jump_timeout:float = 0.0
 var boss_speed:float = 1.0
 
+var boss_environment:GigaEnvironment
+
 var body_rect:RectangleShape2D = null
 var area_rect:RectangleShape2D = null
+
+@export var stomp_targets:Array[EntityTarget]
 #endregion
 
 
@@ -97,9 +103,9 @@ func _ready() -> void:
 	if Statics.current_profile["difficulty"] == 2:
 		boss_speed += 0.2
 	
-	GameCore.instance.current_room.layer_ground.add_child(
-		load("res://Scenes/Environments/Backgrounds/GigaBackground.tscn").instantiate()
-	)
+	boss_environment = load("res://Scenes/Environments/GigaEnvironment.tscn").instantiate()
+	GameCore.instance.current_room.layer_ground.add_child(boss_environment)
+	boss_environment.connect_giga(self)
 	
 	sprite._process(0.0)
 	if health_bar and health_bar.outro_shake:
@@ -137,6 +143,25 @@ func _physics_process(delta) -> void:
 func _get_decision() -> float:
 	decision_table_index = (decision_table_index + 1) % DECISION_TABLE.size()
 	return DECISION_TABLE[decision_table_index]
+
+
+func _pick_stomp_target() -> void:
+	target = position
+	while position.distance_to(target) < STOMP_TARGET_MIN_DIST:
+		var i:int = floori(_get_decision() * stomp_targets.size())
+		var _target:EntityTarget = stomp_targets[i]
+		target = _target.position
+		if not _target.global_space:
+			target += position
+
+
+func _draw() -> void:
+	if Engine.is_editor_hint() or Statics.show_invis_entites:
+		for tgt in stomp_targets:
+			var pos:Vector2 = tgt.position
+			if tgt.global_space:
+				pos -= position
+			draw_circle(pos, 8, Color(0.1, 0.75, 0.4, 0.3), true)
 #endregion
 
 
@@ -146,6 +171,7 @@ func _update_intro() -> void:
 		mode_initialized = true
 		GameCore.instance.music_manager.play_song(battle_music)
 		health_bar._refill()
+		GameCore.instance.current_room.set_ground_collision(false)
 
 
 func _update_stomp() -> void:

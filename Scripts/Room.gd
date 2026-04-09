@@ -62,6 +62,7 @@ var spawned_sp:int = 0
 var spawned_all:bool = false
 var spawned_secondary:bool = false
 var skipped_first_process_spawn:bool = false
+var collision_enabled:bool = true
 const MAX_SP_PER_LOOP:int = 48
 const MAX_MS_PER_LOOP:int = 23
 const BREAKABLE_IDS:Array[Vector2i] = [
@@ -1036,6 +1037,7 @@ func set_all_maps_visible(_visible:bool) -> void:
 
 func set_ground_collision(_enabled:bool) -> void:
 	map_ground.collision_enabled = _enabled
+	collision_enabled = _enabled
 #endregion
 
 

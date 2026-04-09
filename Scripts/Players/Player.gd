@@ -849,7 +849,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		body.position -= vel * ((1.0 / 20.0) * 60.0 * delta)
 		position = body.position
 
-	if GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16)):
+	if (GameCore.instance.current_room.collision_enabled and
+	GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16))):
 		match surface:
 			Statics.DirsSurface.FLOOR:
 				if corner_cast.is_colliding():
@@ -1530,6 +1531,8 @@ func _toggle_weapon(id:int) -> void:
 
 
 func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
+	if GameCore.instance.room_time < Statics.FRAC_32:
+		return 0.0
 	var bullet_type:String = ""
 	#region Determine bullet type
 	if _bullet_id < 0:

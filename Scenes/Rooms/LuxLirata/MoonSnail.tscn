@@ -54,6 +54,62 @@ global_space = true
 data = 2
 metadata/_custom_type_script = "uid://dmceqidtnymwn"
 
+[sub_resource type="Resource" id="Resource_bhrkl"]
+script = ExtResource("5_pio0t")
+position = Vector2i(304, 200)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_o0v3x"]
+script = ExtResource("5_pio0t")
+position = Vector2i(96, 200)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_ouqtk"]
+script = ExtResource("5_pio0t")
+position = Vector2i(304, 40)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_u8v1g"]
+script = ExtResource("5_pio0t")
+position = Vector2i(96, 40)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_o5ljr"]
+script = ExtResource("5_pio0t")
+position = Vector2i(304, 120)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_jygi3"]
+script = ExtResource("5_pio0t")
+position = Vector2i(96, 120)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_03iak"]
+script = ExtResource("5_pio0t")
+position = Vector2i(200, 200)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
+[sub_resource type="Resource" id="Resource_lprx7"]
+script = ExtResource("5_pio0t")
+position = Vector2i(200, 40)
+global_space = true
+data = 5
+metadata/_custom_type_script = "uid://dmceqidtnymwn"
+
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
 _data = {
@@ -218,6 +274,7 @@ required_boss = 3
 position = Vector2(80, 152)
 move_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
 tele_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_pio0t"), SubResource("Resource_s5im6"), SubResource("Resource_5fato"), SubResource("Resource_fw4of"), SubResource("Resource_a1uc2"), SubResource("Resource_2kgid")])
+stomp_targets = Array[ExtResource("5_pio0t")]([SubResource("Resource_bhrkl"), SubResource("Resource_o0v3x"), SubResource("Resource_ouqtk"), SubResource("Resource_u8v1g"), SubResource("Resource_o5ljr"), SubResource("Resource_jygi3"), SubResource("Resource_03iak"), SubResource("Resource_lprx7")])
 giga_spawn_pos = Vector2i(200, 120)
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=605789709]

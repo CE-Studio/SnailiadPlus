@@ -1,16 +1,20 @@
+class_name GigaGround
 extends Node2D
 
 
 #region Variables
 const SPR_SIZE:int = 16
-const FADE_ALPHA:float = 0.1
-const FADE_MIN:float = 16.0
-const FADE_DISTANCE:float = 128.0
+const FADE_ALPHA:float = 0.0
+const FADE_MIN:float = 24.0
+const FADE_DISTANCE:float = 64.0
 
 var elapsed:float = 0.0
 var effect_dir:Vector2 = Vector2.DOWN
 var anim_prefix:String = "floor_"
 var anim_path:String = ""
+var environment:GigaEnvironment
+var env_linked:bool = false
+var do_fade_effects:bool = false
 
 @export var segments:int = 1
 @export var surface:Statics.DirsSurface
@@ -56,11 +60,19 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	#pass
-	if Player.instance:
+	if Player.instance and do_fade_effects:
 		var p_pos:Vector2 = Player.instance.position
+		var g_pos:Vector2 = Vector2(9999, 9999)
+		if env_linked:
+			g_pos = environment.giga.position
 		for spr in sprites:
 			spr.modulate.a = FADE_ALPHA
-			var dist:float = spr.global_position.distance_to(p_pos)
+			var p_dist:float = spr.global_position.distance_to(p_pos)
+			var g_dist:float = spr.global_position.distance_to(g_pos)
+			var dist:float = minf(p_dist, g_dist)
 			if dist < FADE_DISTANCE:
 				var weight:float = inverse_lerp(FADE_MIN, FADE_DISTANCE, dist)
 				spr.modulate.a = lerpf(1.0, FADE_ALPHA, clampf(weight, 0.0, 1.0))
+			if env_linked:
+				spr.modulate.a += environment.ground_glow
+				spr.modulate.a += environment.get_stripe_glow_at_y(spr.global_position.y)

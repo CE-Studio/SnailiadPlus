@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://3g36xhgxcknw" path="res://Scripts/WorldElements/Backgrounds/GigaBackground.gd" id="1_obpjw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_b5734"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_b5734"]
-[ext_resource type="PackedScene" uid="uid://ccxsfn66gb7w8" path="res://Scenes/Environments/Backgrounds/GigaGround.tscn" id="5_1edw1"]
 
 [node name="GigaBackground" type="Node2D" unique_id=52244755 node_paths=PackedStringArray("intro")]
 script = ExtResource("1_obpjw")
@@ -79,22 +78,3 @@ script = ExtResource("3_b5734")
 texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
 load_autoplay = Array[String](["BR"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="Floor" parent="." unique_id=473466438 instance=ExtResource("5_1edw1")]
-position = Vector2(200, 232)
-segments = 31
-
-[node name="LWall" parent="." unique_id=1258643994 instance=ExtResource("5_1edw1")]
-position = Vector2(8, 120)
-segments = 13
-surface = 1
-
-[node name="RWall" parent="." unique_id=809398269 instance=ExtResource("5_1edw1")]
-position = Vector2(392, 120)
-segments = 13
-surface = 2
-
-[node name="Ceiling" parent="." unique_id=753372925 instance=ExtResource("5_1edw1")]
-position = Vector2(200, 8)
-segments = 31
-surface = 3

@@ -133,7 +133,7 @@ func _set_editor_marker():
 
 
 func _on_bullet_entered(area:Area2D) -> void:
-	if not vis.is_on_screen():
+	if not vis.is_on_screen() or not GameCore.instance.current_room.collision_enabled:
 		return
 	var bullet = area.get_parent()
 	if is_locked:

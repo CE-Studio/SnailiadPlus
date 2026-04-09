@@ -96,6 +96,7 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 
 @export var move_targets:Array[EntityTarget] = []
 @export var tele_targets:Array[EntityTarget] = []
+@export var stomp_targets:Array[EntityTarget] = []
 @export var giga_spawn_pos:Vector2i = Vector2i.ZERO
 
 @onready var sfx_jump = $"AudioGroup/Jump"
@@ -242,6 +243,7 @@ func kill() -> void:
 		var giga:Gigasnail = load("res://Scenes/Entities/Enemies/Bosses/Gigasnail.tscn").instantiate()
 		giga.position = giga_spawn_pos
 		giga.health_bar = health_bar
+		giga.stomp_targets.append_array(stomp_targets)
 		GameCore.instance.current_room.layer_ground.add_child(giga)
 	super()
 	if set_timer:
@@ -393,6 +395,20 @@ func _draw() -> void:
 			if tgt.global_space:
 				pos -= position
 			draw_circle(pos, 6, Color(0.6, 0.6, 0.6, 0.3), true)
+		for tgt in stomp_targets:
+			var pos:Vector2 = tgt.position
+			if tgt.global_space:
+				pos -= position
+			draw_circle(pos, 7, Color(0.1, 0.75, 0.4, 0.3), true)
+			if tgt.data >= 1 and tgt.data <= 15:
+				if tgt.data & 1 > 0:
+					draw_line(pos, pos + Vector2(0, 8), Color(0.1, 0.85, 0.25, 0.7), 1.0)
+				if tgt.data & 2 > 0:
+					draw_line(pos, pos + Vector2(-8, 0), Color(0.1, 0.85, 0.25, 0.7), 1.0)
+				if tgt.data & 4 > 0:
+					draw_line(pos, pos + Vector2(0, -8), Color(0.1, 0.85, 0.25, 0.7), 1.0)
+				if tgt.data & 8 > 0:
+					draw_line(pos, pos + Vector2(8, 0), Color(0.1, 0.85, 0.25, 0.7), 1.0)
 		draw_circle(giga_spawn_pos - Vector2i(position), 8, Color(0.95, 0.1, 0.5, 0.3), true)
 #endregion
 

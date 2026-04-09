@@ -8,6 +8,7 @@ static var instance:GameCore
 var current_room:Room
 var current_room_name:String
 var current_area:int = -1
+var room_time:float = 0.0
 @export var player:Player
 @export var cam_layer:UICore
 @export var sfx_group:Node
@@ -31,6 +32,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	inc_game_time(delta)
+	room_time += delta
 	handle_cheats()
 
 
@@ -84,6 +86,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	if new_room.area_id != current_area:
 		UICore.instance.show_area_text(new_room.area_id)
 		current_area = new_room.area_id
+	room_time = 0.0
 
 
 func despawn_room(room:Room) -> void:

@@ -42,7 +42,7 @@ func setup_heal(_amount:int, _amount_per_step:int, _duration:float, _easing:int,
 	if _amount <= 0:
 		return
 	amount_per_step = _amount_per_step
-	steps = ceili(float(_amount) / float(_amount_per_step))
+	steps = floori(float(_amount) / float(_amount_per_step))
 	steps_done = 0
 	duration = _duration
 	elapsed = -abs(_delay)

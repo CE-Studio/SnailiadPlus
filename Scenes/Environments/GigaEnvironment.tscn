@@ -1,0 +1,37 @@
+[gd_scene format=4 uid="uid://dbb85h70js6kh"]
+
+[ext_resource type="Script" uid="uid://cjhu1t5cvon8d" path="res://Scripts/WorldElements/GigaEnvironment.gd" id="1_iney5"]
+[ext_resource type="PackedScene" uid="uid://dmdtjuqvtffgq" path="res://Scenes/Environments/Backgrounds/GigaBackground.tscn" id="1_v1dvd"]
+[ext_resource type="PackedScene" uid="uid://ccxsfn66gb7w8" path="res://Scenes/Environments/Backgrounds/GigaGround.tscn" id="2_iney5"]
+[ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="4_jbur0"]
+
+[node name="GigaEnvironment" type="Node2D" unique_id=1466494751 node_paths=PackedStringArray("bg", "ground")]
+script = ExtResource("1_iney5")
+bg = NodePath("GigaBackground")
+ground = [NodePath("Floor"), NodePath("LWall"), NodePath("RWall"), NodePath("Ceiling")]
+
+[node name="GigaBackground" parent="." unique_id=52244755 instance=ExtResource("1_v1dvd")]
+
+[node name="Floor" parent="." unique_id=473466438 instance=ExtResource("2_iney5")]
+position = Vector2(200, 232)
+segments = 31
+
+[node name="LWall" parent="." unique_id=349498001 instance=ExtResource("2_iney5")]
+position = Vector2(8, 120)
+segments = 13
+surface = 1
+
+[node name="RWall" parent="." unique_id=1663746648 instance=ExtResource("2_iney5")]
+position = Vector2(392, 120)
+segments = 13
+surface = 2
+
+[node name="Ceiling" parent="." unique_id=1680311515 instance=ExtResource("2_iney5")]
+position = Vector2(200, 8)
+segments = 31
+surface = 3
+
+[node name="Map" type="TileMapLayer" parent="." unique_id=1720129943]
+modulate = Color(1, 1, 1, 0)
+tile_map_data = PackedByteArray("AAAAAAAAAAAGAJkAAAABAAAAAAAGAJkAAAACAAAAAAAGAJkAAAADAAAAAAAGAJkAAAAEAAAAAAAGAJkAAAAFAAAAAAAGAJkAAAAGAAAAAAAGAJkAAAAHAAAAAAAGAJkAAAAIAAAAAAAGAJkAAAAJAAAAAAAGAJkAAAAKAAAAAAAGAJkAAAALAAAAAAAGAJkAAAAMAAAAAAAGAJkAAAANAAAAAAAGAJkAAAAOAAAAAAAGAJkAAAAPAAAAAAAGAJkAAAAQAAAAAAAGAJkAAAARAAAAAAAGAJkAAAASAAAAAAAGAJkAAAATAAAAAAAGAJkAAAAUAAAAAAAGAJkAAAAVAAAAAAAGAJkAAAAWAAAAAAAGAJkAAAAXAAAAAAAGAJkAAAAYAAAAAAAGAJkAAAAAAAEAAAAGAJkAAAAYAAEAAAAGAJkAAAAAAAIAAAAGAJkAAAAYAAIAAAAGAJkAAAAAAAMAAAAGAJkAAAAYAAMAAAAGAJkAAAAAAAQAAAAGAJkAAAAYAAQAAAAGAJkAAAAAAAUAAAAGAJkAAAAYAAUAAAAGAJkAAAAAAAYAAAAGAJkAAAAYAAYAAAAGAJkAAAAAAAcAAAAGAJkAAAAYAAcAAAAGAJkAAAAAAAgAAAAGAJkAAAAYAAgAAAAGAJkAAAAAAAkAAAAGAJkAAAAYAAkAAAAGAJkAAAAAAAoAAAAGAJkAAAAYAAoAAAAGAJkAAAAAAA4AAAAGAJkAAAABAA4AAAAGAJkAAAACAA4AAAAGAJkAAAADAA4AAAAGAJkAAAAEAA4AAAAGAJkAAAAFAA4AAAAGAJkAAAAGAA4AAAAGAJkAAAAHAA4AAAAGAJkAAAAIAA4AAAAGAJkAAAAJAA4AAAAGAJkAAAAKAA4AAAAGAJkAAAALAA4AAAAGAJkAAAAMAA4AAAAGAJkAAAANAA4AAAAGAJkAAAAOAA4AAAAGAJkAAAAPAA4AAAAGAJkAAAAQAA4AAAAGAJkAAAARAA4AAAAGAJkAAAASAA4AAAAGAJkAAAATAA4AAAAGAJkAAAAUAA4AAAAGAJkAAAAVAA4AAAAGAJkAAAAWAA4AAAAGAJkAAAAXAA4AAAAGAJkAAAAYAA4AAAAGAJkAAAAAAA0AAAAGAJkAAAAAAAwAAAAGAJkAAAAAAAsAAAAGAJkAAAAYAA0AAAAGAJkAAAAYAAwAAAAGAJkAAAAYAAsAAAAGAJkAAAA=")
+tile_set = ExtResource("4_jbur0")
