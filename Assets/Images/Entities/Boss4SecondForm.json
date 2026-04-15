@@ -1,9 +1,15 @@
 {
-	"tiles": [12, 2],
+	"tiles": [12, 6],
 	"layerize": false,
-	"meta": { "change_anim_if_both_are_shell": false },
+	"meta": {
+		"change_anim_if_both_are_shell": false,
+		"afterimage_y_stomp": [2, 2],
+		"afterimage_y_smash": [3, 3],
+		"afterimage_y_strafe": [4, 4],
+		"afterimage_y_sleep": [5, 5],
+	},
 	"animations": {
-		"intro": {
+		"shellspin_p0": {
 			"fps": 16,
 			"loop": true,
 			"loop_point": 0,
@@ -18,6 +24,353 @@
 				[10, 0, false, false],
 				[11, 0, false, false],
 			]
-		}
+		},
+		"intro": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_n": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_ne": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_e": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_se": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_s": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_sw": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_w": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_stomp_move_nw": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_n": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_ne": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_e": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_se": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_s": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_sw": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_w": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_smash_move_nw": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_strafe_charge": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_strafe_shoot": {
+			"inherit": "shellspin_p0",
+		},
+		"p0_shell_sleep_fall": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false],
+			]
+		},
+		"p0_shell_sleep_land": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false],
+			]
+		},
+		"p0_stomp_unshell_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_unshell_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_idle_floor_right": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false],
+				[5, 0, false, false],
+			]
+		},
+		"p0_stomp_idle_floor_left": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, true, false],
+				[5, 0, true, false],
+			]
+		},
+		"p0_stomp_turnground_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_turnground_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_jump_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_jump_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_fall_floor_right": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false],
+				[5, 0, false, false],
+			]
+		},
+		"p0_stomp_fall_floor_left": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, true, false],
+				[5, 0, true, false],
+			]
+		},
+		"p0_stomp_turnair_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_turnair_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_flip_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_flip_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_land_floor_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_land_floor_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_floor_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_unshell_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_unshell_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_idle_lwall_right": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[6, 0, true, false],
+				[7, 0, true, false],
+			]
+		},
+		"p0_stomp_idle_lwall_left": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[6, 0, true, true],
+				[7, 0, true, true],
+			]
+		},
+		"p0_stomp_turnground_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_turnground_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_jump_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_jump_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_fall_lwall_right": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[6, 0, true, false],
+				[7, 0, true, false],
+			]
+		},
+		"p0_stomp_fall_lwall_left": {
+			"fps": 4,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[6, 0, true, true],
+				[7, 0, true, true],
+			]
+		},
+		"p0_stomp_turnair_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_turnair_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_flip_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_flip_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_fall_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_land_lwall_right": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_right",
+			"randomize_start": false,
+			"frames": []
+		},
+		"p0_stomp_land_lwall_left": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"autoplay_next": "p0_stomp_idle_lwall_left",
+			"randomize_start": false,
+			"frames": []
+		},
 	}
 }

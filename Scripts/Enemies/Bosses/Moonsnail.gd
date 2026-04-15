@@ -156,9 +156,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Statics.show_invis_entites:
 		queue_redraw()
-		return
+		if Engine.is_editor_hint():
+			return
 	if not ai_active:
 		if in_death_anim:
 			_tick_death(delta)
@@ -395,6 +396,7 @@ func _draw() -> void:
 			if tgt.global_space:
 				pos -= position
 			draw_circle(pos, 6, Color(0.6, 0.6, 0.6, 0.3), true)
+	if Engine.is_editor_hint():
 		for tgt in stomp_targets:
 			var pos:Vector2 = tgt.position
 			if tgt.global_space:

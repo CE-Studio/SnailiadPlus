@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://urtb8cusuv1s" path="res://Assets/Images/Entities/Boss4SecondForm.png" id="2_lpx3v"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xnkwp"]
 [ext_resource type="AudioStream" uid="uid://43obmnyp8lgi" path="res://Assets/Sounds/Sfx/Enemy/Boss4bSpawn.ogg" id="5_xnkwp"]
+[ext_resource type="AudioStream" uid="uid://q5frvpwnb3mn" path="res://Assets/Sounds/Sfx/Jump.ogg" id="6_770ae"]
+[ext_resource type="AudioStream" uid="uid://dblbxfm2e1nob" path="res://Assets/Sounds/Sfx/JumpGrav.ogg" id="7_d2rwt"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="8_4j6ro"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xi7f"]
 size = Vector2(80, 44)
@@ -47,7 +50,7 @@ load_autoplay = Array[String](["intro"])
 [node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=728863104]
 texture = ExtResource("2_lpx3v")
 hframes = 12
-vframes = 2
+vframes = 6
 script = ExtResource("3_xnkwp")
 
 [node name="AudioGroup" type="Node" parent="." unique_id=2112818080]
@@ -55,4 +58,20 @@ script = ExtResource("3_xnkwp")
 [node name="Spawn" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1790032628]
 stream = ExtResource("5_xnkwp")
 autoplay = true
+bus = &"Sfx"
+
+[node name="Jump" type="AudioStreamPlayer" parent="AudioGroup" unique_id=659108856]
+stream = ExtResource("6_770ae")
+bus = &"Sfx"
+
+[node name="GravJump" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1092648969]
+stream = ExtResource("7_d2rwt")
+bus = &"Sfx"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1649695435]
+stream = ExtResource("8_4j6ro")
+bus = &"Sfx"
+
+[node name="Sleep" type="AudioStreamPlayer" parent="AudioGroup" unique_id=704155856]
+stream = ExtResource("5_xnkwp")
 bus = &"Sfx"
