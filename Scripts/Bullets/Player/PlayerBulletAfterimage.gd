@@ -31,7 +31,7 @@ func _spawn_afterimage(parent:PlayerBullet) -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	_sprite.modulate.a = inverse_lerp(-0.25, MAX_LIFE_TIME, fade_time)
+	_sprite.modulate.a = inverse_lerp(0.0, MAX_LIFE_TIME, fade_time) - 0.25
 	if not opaque:
 		_sprite.modulate.a *= 0.4
 	else:

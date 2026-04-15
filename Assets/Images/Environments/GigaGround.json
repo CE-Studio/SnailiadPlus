@@ -79,5 +79,389 @@
 				[3, 0, false, true],
 			]
 		},
+		"floor_stomp_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 4, false, false],
+				[2, 4, false, false],
+				[3, 4, false, false],
+				[0, 4, false, false],
+			]
+		},
+		"lwall_stomp_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 4, true, false],
+				[6, 4, true, false],
+				[7, 4, true, false],
+				[4, 4, true, false],
+			]
+		},
+		"rwall_stomp_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 4, false, false],
+				[6, 4, false, false],
+				[7, 4, false, false],
+				[4, 4, false, false],
+			]
+		},
+		"ceiling_stomp_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 4, false, true],
+				[2, 4, false, true],
+				[3, 4, false, true],
+				[0, 4, false, true],
+			]
+		},
+		"floor_stomp_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 4, false, false],
+				[2, 4, false, false],
+				[3, 4, false, false],
+				[0, 4, false, false],
+			]
+		},
+		"lwall_stomp_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 4, true, false],
+				[6, 4, true, false],
+				[7, 4, true, false],
+				[4, 4, true, false],
+			]
+		},
+		"rwall_stomp_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 4, false, false],
+				[6, 4, false, false],
+				[7, 4, false, false],
+				[4, 4, false, false],
+			]
+		},
+		"ceiling_stomp_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 4, false, true],
+				[2, 4, false, true],
+				[3, 4, false, true],
+				[0, 4, false, true],
+			]
+		},
+		"floor_strafe_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 2, false, false],
+				[2, 2, false, false],
+				[3, 2, false, false],
+				[0, 2, false, false],
+			]
+		},
+		"lwall_strafe_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 2, true, false],
+				[6, 2, true, false],
+				[7, 2, true, false],
+				[4, 2, true, false],
+			]
+		},
+		"rwall_strafe_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 2, false, false],
+				[6, 2, false, false],
+				[7, 2, false, false],
+				[4, 2, false, false],
+			]
+		},
+		"ceiling_strafe_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 2, false, true],
+				[2, 2, false, true],
+				[3, 2, false, true],
+				[0, 2, false, true],
+			]
+		},
+		"floor_strafe_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false],
+				[2, 1, false, false],
+				[3, 1, false, false],
+				[0, 1, false, false],
+			]
+		},
+		"lwall_strafe_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 1, true, false],
+				[6, 1, true, false],
+				[7, 1, true, false],
+				[4, 1, true, false],
+			]
+		},
+		"rwall_strafe_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 1, false, false],
+				[6, 1, false, false],
+				[7, 1, false, false],
+				[4, 1, false, false],
+			]
+		},
+		"ceiling_strafe_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, true],
+				[2, 1, false, true],
+				[3, 1, false, true],
+				[0, 1, false, true],
+			]
+		},
+		"floor_smash_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[0, 3, false, false],
+			]
+		},
+		"lwall_smash_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 3, true, false],
+				[6, 3, true, false],
+				[7, 3, true, false],
+				[4, 3, true, false],
+			]
+		},
+		"rwall_smash_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 3, false, false],
+				[6, 3, false, false],
+				[7, 3, false, false],
+				[4, 3, false, false],
+			]
+		},
+		"ceiling_smash_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, true],
+				[2, 3, false, true],
+				[3, 3, false, true],
+				[0, 3, false, true],
+			]
+		},
+		"floor_smash_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, false],
+				[2, 3, false, false],
+				[3, 3, false, false],
+				[0, 3, false, false],
+			]
+		},
+		"lwall_smash_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 3, true, false],
+				[6, 3, true, false],
+				[7, 3, true, false],
+				[4, 3, true, false],
+			]
+		},
+		"rwall_smash_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 3, false, false],
+				[6, 3, false, false],
+				[7, 3, false, false],
+				[4, 3, false, false],
+			]
+		},
+		"ceiling_smash_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 3, false, true],
+				[2, 3, false, true],
+				[3, 3, false, true],
+				[0, 3, false, true],
+			]
+		},
+		"floor_sleep_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 5, false, false],
+				[2, 5, false, false],
+				[3, 5, false, false],
+				[0, 5, false, false],
+			]
+		},
+		"lwall_sleep_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 5, true, false],
+				[6, 5, true, false],
+				[7, 5, true, false],
+				[4, 5, true, false],
+			]
+		},
+		"rwall_sleep_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 5, false, false],
+				[6, 5, false, false],
+				[7, 5, false, false],
+				[4, 5, false, false],
+			]
+		},
+		"ceiling_sleep_0": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 5, false, true],
+				[2, 5, false, true],
+				[3, 5, false, true],
+				[0, 5, false, true],
+			]
+		},
+		"floor_sleep_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 5, false, false],
+				[2, 5, false, false],
+				[3, 5, false, false],
+				[0, 5, false, false],
+			]
+		},
+		"lwall_sleep_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 5, true, false],
+				[6, 5, true, false],
+				[7, 5, true, false],
+				[4, 5, true, false],
+			]
+		},
+		"rwall_sleep_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[5, 5, false, false],
+				[6, 5, false, false],
+				[7, 5, false, false],
+				[4, 5, false, false],
+			]
+		},
+		"ceiling_sleep_1": {
+			"fps": 12,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 5, false, true],
+				[2, 5, false, true],
+				[3, 5, false, true],
+				[0, 5, false, true],
+			]
+		}
 	}
 }

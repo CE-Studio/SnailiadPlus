@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dl78x5wkkhuaw"]
+
+[ext_resource type="Script" uid="uid://8kx4qoikvx2n" path="res://Scripts/Bullets/Enemy/EnemyBulletGigaWave.gd" id="1_olclx"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_xftor"]
+[ext_resource type="Texture2D" uid="uid://bhuh4gjumojh2" path="res://Assets/Images/Bullets/Enemy/EnemyGigaWave.png" id="3_olclx"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_qn5cg"]
+[ext_resource type="AudioStream" uid="uid://bmr6w6qarjjyp" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyGigaWave.ogg" id="5_xftor"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
+size = Vector2(34, 96)
+
+[node name="EnemyBulletGigaWave" type="Node2D" unique_id=2038470674]
+z_index = 50
+script = ExtResource("1_olclx")
+damage = 12
+rush_damage = 2
+max_life_time = 2.0
+despawn_offscreen = true
+despawn_particle = ""
+light_radius = 40
+afterimages = true
+pbullet_interaction = 2
+pbullets_that_i_destroy = Array[int]([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+pbullets_that_destroy_me = Array[int]([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1037034492]
+collision_layer = 8
+collision_mask = 39
+
+[node name="Box" type="CollisionShape2D" parent="Area2D" unique_id=1528853263]
+shape = SubResource("RectangleShape2D_3p1tk")
+debug_color = Color(0.482353, 0.435294, 1, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1167675070]
+scale = Vector2(1.2, 1.2)
+rect = Rect2(-40, -40, 80, 80)
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
+script = ExtResource("2_xftor")
+texture_path = "res://Assets/Images/Bullets/Enemy/EnemyGigaWave.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
+texture = ExtResource("3_olclx")
+hframes = 4
+vframes = 4
+script = ExtResource("4_qn5cg")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1819499505]
+stream = ExtResource("5_xftor")
+bus = &"Sfx"

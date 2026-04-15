@@ -5,9 +5,13 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_b5734"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_b5734"]
 
-[node name="GigaBackground" type="Node2D" unique_id=52244755 node_paths=PackedStringArray("intro")]
+[node name="GigaBackground" type="Node2D" unique_id=52244755 node_paths=PackedStringArray("intro", "stomp", "smash", "strafe", "sleep")]
 script = ExtResource("1_obpjw")
 intro = NodePath("Intro")
+stomp = NodePath("Stomp")
+smash = NodePath("Smash")
+strafe = NodePath("Strafe")
+sleep = NodePath("Sleep")
 
 [node name="Marker0" type="Sprite2D" parent="." unique_id=1295946045]
 position = Vector2(72, 32)
@@ -77,4 +81,32 @@ position = Vector2(328, 208)
 script = ExtResource("3_b5734")
 texture_path = "res://Assets/Images/Backgrounds/GigaBGIntro.json"
 load_autoplay = Array[String](["BR"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Stomp" type="Sprite2D" parent="." unique_id=572666184]
+position = Vector2(200, 120)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGStomp.json"
+load_autoplay = Array[String](["0"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Smash" type="Sprite2D" parent="." unique_id=7260173]
+position = Vector2(200, 120)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGSmash.json"
+load_autoplay = Array[String](["0"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Strafe" type="Sprite2D" parent="." unique_id=1783614895]
+position = Vector2(200, 120)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGStrafe.json"
+load_autoplay = Array[String](["0"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Sleep" type="Sprite2D" parent="." unique_id=807059824]
+position = Vector2(200, 120)
+script = ExtResource("3_b5734")
+texture_path = "res://Assets/Images/Backgrounds/GigaBGSleep.json"
+load_autoplay = Array[String](["0"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"

@@ -12,6 +12,8 @@ const STRIPE_ALPHA:float = 0.8
 const STRIPE_FADE_MULT:float = 12.0
 
 var giga:Gigasnail
+var state:String = "intro"
+var phase:int = 0
 
 var ground_glow:float = 4.0
 var ground_stripe_y:float = STRIPE_START
@@ -46,3 +48,10 @@ func get_stripe_glow_at_y(spr_y:float) -> float:
 	var weight:float = inverse_lerp(0.0, upper, difference)
 	weight = clampf(weight, 0.0, 1.0)
 	return lerpf(STRIPE_ALPHA, 0.0, weight)
+
+
+func set_state(_state:String) -> void:
+	state = _state
+	phase = giga.phase
+	for surface in ground:
+		surface.update_all_anim()

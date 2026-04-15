@@ -1,0 +1,55 @@
+{
+	"tiles": [4, 4],
+	"layerize": false,
+	"meta": { "afterimage_offset_x": 0, "afterimage_offset_y": 2 },
+	"animations": {
+		"U": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, false],
+				[1, 1, false, false],
+				[2, 1, false, false],
+				[3, 1, false, false],
+			]
+		},
+		"R": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, false, false],
+				[1, 0, false, false],
+				[2, 0, false, false],
+				[3, 0, false, false],
+			]
+		},
+		"D": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 1, false, true],
+				[1, 1, false, true],
+				[2, 1, false, true],
+				[3, 1, false, true],
+			]
+		},
+		"L": {
+			"fps": 30,
+			"loop": true,
+			"loop_point": 0,
+			"randomize_start": true,
+			"frames": [
+				[0, 0, true, false],
+				[1, 0, true, false],
+				[2, 0, true, false],
+				[3, 0, true, false],
+			]
+		}
+	}
+}

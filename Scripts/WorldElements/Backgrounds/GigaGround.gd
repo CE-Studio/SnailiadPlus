@@ -4,17 +4,20 @@ extends Node2D
 
 #region Variables
 const SPR_SIZE:int = 16
-const FADE_ALPHA:float = 0.0
-const FADE_MIN:float = 24.0
+const FADE_ALPHA:float = 0.25
+const FADE_MIN:float = 32.0
 const FADE_DISTANCE:float = 64.0
+const FLASH_PROXIMITY:float = 20.0
 
 var elapsed:float = 0.0
 var effect_dir:Vector2 = Vector2.DOWN
-var anim_prefix:String = "floor_"
+var anim_prefix:String = "floor"
 var anim_path:String = ""
 var environment:GigaEnvironment
 var env_linked:bool = false
 var do_fade_effects:bool = false
+var do_flash_effects:bool = false
+var sprites_close_enough:Array[bool] = []
 
 @export var segments:int = 1
 @export var surface:Statics.DirsSurface
@@ -34,14 +37,14 @@ func _ready() -> void:
 		Statics.DirsSurface.LWALL:
 			effect_dir = Vector2.LEFT
 			extend_dir = Vector2.DOWN
-			anim_prefix = "lwall_"
+			anim_prefix = "lwall"
 		Statics.DirsSurface.RWALL:
 			effect_dir = Vector2.RIGHT
 			extend_dir = Vector2.DOWN
-			anim_prefix = "rwall_"
+			anim_prefix = "rwall"
 		Statics.DirsSurface.CEILING:
 			effect_dir = Vector2.UP
-			anim_prefix = "ceiling_"
+			anim_prefix = "ceiling"
 	
 	segments -= 1
 	sprites[0].position -= extend_dir * segments * (SPR_SIZE * 0.5)
@@ -54,25 +57,43 @@ func _ready() -> void:
 		sprites.append(new_main)
 		new_main.position = origin + extend_dir * j * SPR_SIZE
 	for spr in sprites:
-		spr.action = anim_prefix + "intro"
+		spr.action = "_".join([anim_prefix, "intro"])
 		spr._process(0.0)
+		sprites_close_enough.append(false)
 
 
 func _process(_delta: float) -> void:
-	#pass
-	if Player.instance and do_fade_effects:
+	if Player.instance and (do_fade_effects or do_flash_effects):
 		var p_pos:Vector2 = Player.instance.position
 		var g_pos:Vector2 = Vector2(9999, 9999)
 		if env_linked:
 			g_pos = environment.giga.position
+		var i:int = 0
 		for spr in sprites:
-			spr.modulate.a = FADE_ALPHA
 			var p_dist:float = spr.global_position.distance_to(p_pos)
 			var g_dist:float = spr.global_position.distance_to(g_pos)
 			var dist:float = minf(p_dist, g_dist)
-			if dist < FADE_DISTANCE:
-				var weight:float = inverse_lerp(FADE_MIN, FADE_DISTANCE, dist)
-				spr.modulate.a = lerpf(1.0, FADE_ALPHA, clampf(weight, 0.0, 1.0))
-			if env_linked:
-				spr.modulate.a += environment.ground_glow
-				spr.modulate.a += environment.get_stripe_glow_at_y(spr.global_position.y)
+			if do_fade_effects:
+				spr.modulate.a = FADE_ALPHA
+				if dist < FADE_DISTANCE:
+					var weight:float = inverse_lerp(FADE_MIN, FADE_DISTANCE, dist)
+					spr.modulate.a = lerpf(1.0, FADE_ALPHA, clampf(weight, 0.0, 1.0))
+				if env_linked:
+					spr.modulate.a += environment.ground_glow
+					spr.modulate.a += environment.get_stripe_glow_at_y(spr.global_position.y)
+			if do_flash_effects and environment.state != "intro":
+				if dist <= FLASH_PROXIMITY and not sprites_close_enough[i]:
+					sprites_close_enough[i] = true
+					update_one_anim(i)
+				elif dist > FLASH_PROXIMITY and sprites_close_enough[i]:
+					sprites_close_enough[i] = false
+			i += 1
+
+
+func update_all_anim() -> void:
+	for i in range(sprites.size()):
+		update_one_anim(i)
+
+
+func update_one_anim(i:int) -> void:
+	sprites[i].action = "_".join([anim_prefix, environment.state, environment.phase])
