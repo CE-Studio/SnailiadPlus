@@ -1,0 +1,197 @@
+{
+	"tiles": [5, 2],
+	"layerize": false,
+	"meta": {
+		"col_intro": [ "fcb8fc", "fc78fc", "dc00d4" ],
+		"col_stomp0": [ "58d858", "00a800", "007800" ],
+		"col_stomp1": [ "58d858", "00a800", "007800" ],
+		"col_smash0": [ "fc7858", "fc3800", "ac1000" ],
+		"col_smash1": [ "fc7858", "fc3800", "ac1000" ],
+		"col_strafe0": [ "fcb8fc", "fc78fc", "dc00d4" ],
+		"col_strafe1": [ "a4e8fc", "38c0fc", "0088fc" ],
+		"col_sleep0": [ "fcd884", "fcb800", "fca048" ],
+		"col_sleep1": [ "fcd884", "fcb800", "fca048" ],
+	},
+	"animations": {
+		"floor0": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, false]
+			]
+		},
+		"floor1": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"floor2": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"floor3": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, false]
+			]
+		},
+		"floor4": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, false]
+			]
+		},
+		"lwall0": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, false, false]
+			]
+		},
+		"lwall1": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, false, false]
+			]
+		},
+		"lwall2": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, false, false]
+			]
+		},
+		"lwall3": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, false, false]
+			]
+		},
+		"lwall4": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 1, false, false]
+			]
+		},
+		"rwall0": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 1, true, false]
+			]
+		},
+		"rwall1": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 1, true, false]
+			]
+		},
+		"rwall2": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 1, true, false]
+			]
+		},
+		"rwall3": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 1, true, false]
+			]
+		},
+		"rwall4": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 1, true, false]
+			]
+		},
+		"ceiling0": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 0, false, true]
+			]
+		},
+		"ceiling1": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, true]
+			]
+		},
+		"ceiling2": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, true]
+			]
+		},
+		"ceiling3": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[3, 0, false, true]
+			]
+		},
+		"ceiling4": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[4, 0, false, true]
+			]
+		}
+	}
+}

@@ -14,7 +14,7 @@ ground = [NodePath("Floor"), NodePath("LWall"), NodePath("RWall"), NodePath("Cei
 
 [node name="Floor" parent="." unique_id=473466438 instance=ExtResource("2_iney5")]
 position = Vector2(200, 232)
-segments = 31
+segments = 23
 
 [node name="LWall" parent="." unique_id=349498001 instance=ExtResource("2_iney5")]
 position = Vector2(8, 120)
@@ -28,7 +28,7 @@ surface = 2
 
 [node name="Ceiling" parent="." unique_id=1680311515 instance=ExtResource("2_iney5")]
 position = Vector2(200, 8)
-segments = 31
+segments = 23
 surface = 3
 
 [node name="Map" type="TileMapLayer" parent="." unique_id=1720129943]

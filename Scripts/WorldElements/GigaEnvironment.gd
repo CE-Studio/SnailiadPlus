@@ -38,6 +38,7 @@ func connect_giga(_giga:Gigasnail) -> void:
 	for surface in ground:
 		surface.environment = self
 		surface.env_linked = true
+	bg.environment = self
 
 
 func get_stripe_glow_at_y(spr_y:float) -> float:
@@ -55,3 +56,4 @@ func set_state(_state:String) -> void:
 	phase = giga.phase
 	for surface in ground:
 		surface.update_all_anim()
+	bg.update_visible()

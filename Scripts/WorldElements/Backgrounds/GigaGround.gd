@@ -4,6 +4,8 @@ extends Node2D
 
 #region Variables
 const SPR_SIZE:int = 16
+const MIN_LENGTH_ADV:int = 2
+const MAX_LENGTH_ADV:int = 12
 const FADE_ALPHA:float = 0.25
 const FADE_MIN:float = 32.0
 const FADE_DISTANCE:float = 64.0
@@ -18,11 +20,14 @@ var env_linked:bool = false
 var do_fade_effects:bool = false
 var do_flash_effects:bool = false
 var sprites_close_enough:Array[bool] = []
+var use_grid:bool = false
+var extend_dir:Vector2 = Vector2.RIGHT
 
 @export var segments:int = 1
 @export var surface:Statics.DirsSurface
 
 @onready var sprites:Array[JsonSprite2D] = [ $"Sprite" ]
+@onready var circle:PackedScene = preload("res://Scenes/Environments/Backgrounds/GigaGroundPart.tscn")
 #endregion
 
 
@@ -30,9 +35,6 @@ func _ready() -> void:
 	if segments < 1:
 		segments = 1
 	
-	anim_path = sprites[0].texture_path
-	
-	var extend_dir:Vector2 = Vector2.RIGHT
 	match surface:
 		Statics.DirsSurface.LWALL:
 			effect_dir = Vector2.LEFT
@@ -45,6 +47,20 @@ func _ready() -> void:
 		Statics.DirsSurface.CEILING:
 			effect_dir = Vector2.UP
 			anim_prefix = "ceiling"
+	
+	if use_grid:
+		_spawn_grid()
+	else:
+		_spawn_circles()
+		match surface:
+			Statics.DirsSurface.FLOOR: position += Vector2(0, -8)
+			Statics.DirsSurface.LWALL: position += Vector2(8, 0)
+			Statics.DirsSurface.RWALL: position += Vector2(-8, 0)
+			Statics.DirsSurface.CEILING: position += Vector2(0, 8)
+
+
+func _spawn_grid() -> void:
+	anim_path = sprites[0].texture_path
 	
 	segments -= 1
 	sprites[0].position -= extend_dir * segments * (SPR_SIZE * 0.5)
@@ -62,8 +78,33 @@ func _ready() -> void:
 		sprites_close_enough.append(false)
 
 
+func _spawn_circles() -> void:
+	sprites[0].queue_free()
+	sprites.clear()
+	
+	var length:int = 0
+	var goal:int = (segments - 1) * SPR_SIZE
+	var start:Vector2 = extend_dir * goal * -0.5
+	var placed_all:bool = false
+	var shimmer_state:bool = true
+	while not placed_all:
+		var new_spr:JsonSprite2D = circle.instantiate()
+		new_spr.position = start + (length * extend_dir)
+		new_spr.action = anim_prefix + str(randi_range(0, 4))
+		new_spr.shimmer = shimmer_state
+		sprites.append(new_spr)
+		add_child(new_spr)
+		new_spr._process(0.0)
+		if length == goal:
+			placed_all = true
+		else:
+			length += randi_range(MIN_LENGTH_ADV, MAX_LENGTH_ADV)
+			length = clampi(length, 0, goal)
+		shimmer_state = not shimmer_state
+
+
 func _process(_delta: float) -> void:
-	if Player.instance and (do_fade_effects or do_flash_effects):
+	if Player.instance and (do_fade_effects or do_flash_effects) and use_grid:
 		var p_pos:Vector2 = Player.instance.position
 		var g_pos:Vector2 = Vector2(9999, 9999)
 		if env_linked:
@@ -96,4 +137,7 @@ func update_all_anim() -> void:
 
 
 func update_one_anim(i:int) -> void:
-	sprites[i].action = "_".join([anim_prefix, environment.state, environment.phase])
+	if use_grid:
+		sprites[i].action = "_".join([anim_prefix, environment.state, environment.phase])
+	else:
+		sprites[i].update_state(environment.state, environment.phase)

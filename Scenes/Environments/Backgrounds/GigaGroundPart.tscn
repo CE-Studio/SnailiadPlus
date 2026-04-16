@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c2d3jobu0nn2a"]
+
+[ext_resource type="Script" uid="uid://cgygewxsomsrv" path="res://Scripts/WorldElements/GigaGroundPart.gd" id="1_dlhjk"]
+[ext_resource type="Texture2D" uid="uid://dxigl6lsqyhfa" path="res://Assets/Images/Environments/GigaGround2.png" id="2_gtk34"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_4m5lw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dlhjk"]
+blend_mode = 1
+
+[node name="GigaGroundPart" type="Sprite2D" unique_id=257369346]
+material = SubResource("CanvasItemMaterial_dlhjk")
+script = ExtResource("1_dlhjk")
+texture_path = "res://Assets/Images/Environments/GigaGround2.json"
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1705994407]
+texture = ExtResource("2_gtk34")
+hframes = 5
+vframes = 2
+frame = 4
+script = ExtResource("3_4m5lw")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
