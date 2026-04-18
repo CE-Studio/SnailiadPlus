@@ -69,6 +69,11 @@ func instance(_boss:Boss) -> void:
 	defeated.set_snaily_text(tr(&"Defeated!!"))
 
 
+func pass_control(new_boss:Boss) -> void:
+	boss = new_boss
+	boss.health_bar = self
+
+
 func _process(delta: float) -> void:
 	if damage_update_timeout <= 0.0:
 		var lerp_amount = lerpf(damaged_mask.position.x, main_mask.position.x, DAMAGE_LERP_SPEED * delta)

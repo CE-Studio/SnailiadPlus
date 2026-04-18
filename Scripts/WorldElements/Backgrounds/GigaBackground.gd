@@ -58,3 +58,8 @@ func hide_intro() -> void:
 func update_visible() -> void:
 	hide_intro()
 	active = environment.state
+	match active:
+		"stomp": stomp.action = str(environment.phase)
+		"strafe": strafe.action = str(environment.phase)
+		"smash": smash.action = str(environment.phase)
+		"sleep": sleep.action = str(environment.phase)

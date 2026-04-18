@@ -243,7 +243,7 @@ func kill() -> void:
 	else:
 		var giga:Gigasnail = load("res://Scenes/Entities/Enemies/Bosses/Gigasnail.tscn").instantiate()
 		giga.position = giga_spawn_pos
-		giga.health_bar = health_bar
+		health_bar.pass_control(giga)
 		giga.stomp_targets.append_array(stomp_targets)
 		GameCore.instance.current_room.layer_ground.add_child(giga)
 	super()
