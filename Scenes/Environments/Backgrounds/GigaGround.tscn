@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_e336a"]
 
 [node name="GigaGround" type="Node2D" unique_id=473466438]
-z_index = 2
+z_index = 5
 script = ExtResource("1_e336a")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1575348885]

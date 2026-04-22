@@ -24,6 +24,8 @@ const STOMP_TIMEOUT:float = 0.25
 const STOMP_TARGET_MIN_DIST:float = 130.0
 const STOMP_TARGET_APPROACH_DIST:float = 10.0
 const STOMP_MAX_ATTACKS_SINCE:int = 4
+const STOMP_ALLOW_FLIPS:bool = false
+const SLEEP_X_DIFF_FORGIVENESS:float = 40.0
 const MODE_TIMEOUT_STOMP:float = 6.0
 const MODE_TIMEOUT_STRAFE:float = 5.2
 const MODE_TIMEOUT_SMASH:float = 6.0
@@ -31,9 +33,10 @@ const MODE_TIMEOUT_SLEEP:float = 6.2
 const SHAKE_TIMELINE:Array[float] = [4.0, 0.7]
 const BOX_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
 const BOX_SIZE_SHELL:Vector2i = Vector2i(44, 44)
-const BOX_SIZE_SLEEP:Vector2i = Vector2i(44, 32)
 const AREA_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
 const AREA_SIZE_SHELL:Vector2i = Vector2i(44, 44)
+const AFTERIMAGE_MIN_DIST:float = 24.0
+const DEATH_TIME:float = 8.0
 const DECISION_TABLE:Array[float] = [
 	0.1640168826, 0.3892556902, 0.0336081053, 0.2246864975, 0.5434009453, 0.4227320437, 0.1017472328, 0.2041907897, 0.9950191347, 0.3634705228,
 	0.0779175897, 0.384822732,  0.3284047846, 0.0951552057, 0.1941055446, 0.496359046,  0.2428007567, 0.8280672868, 0.852732986,  0.6928913176,
@@ -87,6 +90,7 @@ var facing_left:bool = false
 var grav_jump_timeout:float = 99999.0
 var jump_timeout:float = 0.0
 var boss_speed:float = 1.0
+var last_afterimage_spawn:Vector2 = Vector2.ZERO
 
 var update_if_shell:bool = false
 var afterimage_y:Array = []
@@ -203,7 +207,7 @@ func _physics_process(delta:float) -> void:
 				if is_on_wall():
 					velocity.x = -last_vel.x
 					position.x += 0.5 * sign(velocity.x)
-		if is_on_floor():
+		if is_on_floor() and mode_elapsed > 0.0:
 			_stomp()
 	#endregion
 	#region Move smash
@@ -233,9 +237,31 @@ func _physics_process(delta:float) -> void:
 			move_and_slide()
 			if is_on_floor():
 				_stomp()
+				position.y += 4.0
 	#endregion
 	
 	super._physics_process(delta)
+	
+	if (last_state != "stomp" and mode != BossMode.INTRO
+	and position.distance_to(last_afterimage_spawn) >= AFTERIMAGE_MIN_DIST):
+		_spawn_afterimage()
+
+
+func kill() -> void:
+	if not in_death_anim:
+		if health_bar:
+			health_bar._toggle_outro_shake(true)
+		sprite.action = "defeat"
+		for bullet in bullets:
+			bullet._despawn()
+		death_timer = DEATH_TIME
+		Statics.spawn_particle("ExplosionBossDefeat",
+			Room.Layers.FG1, position, [true, DEATH_TIME, true])
+		GameCore.instance.music_manager.stop_all(true)
+		SInput.read_inputs = false
+	else:
+		pass
+	super()
 
 
 #region General utility
@@ -359,7 +385,19 @@ func _play_anim(action:String, state:String, dir_target:Vector2 = Vector2.ZERO) 
 	
 	if full_action != last_anim:
 		play_phase_anim(full_action)
+		sprite._process(0.0)
 		last_anim = full_action
+
+
+func _spawn_afterimage() -> void:
+	var frame_coords:Vector2i = sprite.frame_coords
+	match mode:
+		BossMode.STOMP: frame_coords.y = afterimage_y[0][phase]
+		BossMode.SMASH: frame_coords.y = afterimage_y[1][phase]
+		BossMode.STRAFE: frame_coords.y = afterimage_y[2][phase]
+		BossMode.SLEEP: frame_coords.y = afterimage_y[3][phase]
+	sprite.call_deferred("create_afterimage", 0.8, 0.0, 0.75, z_index - 1, frame_coords)
+	last_afterimage_spawn = position
 
 
 func _set_hitboxes(state:int) -> void:
@@ -376,9 +414,6 @@ func _set_hitboxes(state:int) -> void:
 			body_rect.size = Vector2(BOX_SIZE_NORMAL.y, BOX_SIZE_NORMAL.x)
 			area_rect.size = Vector2(AREA_SIZE_NORMAL.y, AREA_SIZE_NORMAL.x)
 			invulnerable = false
-		2:
-			body_rect.size = BOX_SIZE_SLEEP
-			invulnerable = true
 
 
 func advance_phase(count:int = 1) -> void:
@@ -426,6 +461,7 @@ func _update_stomp(delta:float) -> void:
 		_play_anim("shell_stomp_move", "shell", target)
 		_set_hitboxes(0)
 		_face_player(false)
+		_spawn_afterimage()
 	if last_state == "shell":
 		if position.distance_to(target) < STOMP_TARGET_APPROACH_DIST:
 			_face_player(true, true)
@@ -464,7 +500,7 @@ func _update_stomp(delta:float) -> void:
 				jump_timeout = 99999.0
 				_play_anim("stomp_jump", "stomp")
 				sfx_jump.play()
-		elif not stomped and phase > 0:
+		elif not stomped and phase > 0 and STOMP_ALLOW_FLIPS:
 			grav_jump_timeout -= delta
 			if grav_jump_timeout <= 0.0:
 				if _get_decision() > 0.66:
@@ -502,6 +538,7 @@ func _update_strafe(delta:float) -> void:
 		_set_hitboxes(0)
 		target = origin
 		aimed = false
+		_spawn_afterimage()
 	position = Vector2(
 		Statics.integrate(position.x, target.x, 1.7, delta * boss_speed),
 		Statics.integrate(position.y, target.y, 1.7, delta * boss_speed)
@@ -544,6 +581,7 @@ func _update_smash() -> void:
 		_play_anim("shell_smash_move", "shell", position + smash_dir)
 		velocity = Vector2.ZERO
 		up_direction = Vector2.UP
+		_spawn_afterimage()
 	if stomped:
 		stomped = false
 		if _get_decision() > 0.7 or phase > 0:
@@ -562,6 +600,10 @@ func _update_smash() -> void:
 
 func _update_sleep(delta:float) -> void:
 	if not mode_initialized:
+		if (position.x - Player.instance.position.x < SLEEP_X_DIFF_FORGIVENESS
+		and Player.instance.position.y > position.y):
+			_set_mode(BossMode.STOMP)
+			return
 		mode_initialized = true
 		mode_timeout = MODE_TIMEOUT_SLEEP
 		_play_anim("shell_sleep_fall", "sleep")
@@ -573,8 +615,9 @@ func _update_sleep(delta:float) -> void:
 			mode_timeout *= 1.23
 		velocity = Vector2.ZERO
 		sfx_sleep.play()
-		_set_hitboxes(2)
+		_set_hitboxes(0)
 		up_direction = Vector2.UP
+		_spawn_afterimage()
 	if stomped:
 		zzz_timeout -= delta * boss_speed
 		if zzz_timeout <= 0.0 and zzz_count > 0:

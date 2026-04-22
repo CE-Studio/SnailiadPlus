@@ -280,3 +280,20 @@ func _process(delta: float) -> void:
 		i.frame = frame
 		i.flip_h = flip_h
 		i.flip_v = flip_v
+
+
+func create_afterimage(_start_a:float, _end_a:float, _fade_time:float, _z_index:int, _frame_coords:Vector2i = frame_coords) -> void:
+	var afterimage:AfterimageSprite = AfterimageSprite.new()
+	afterimage.setup(self, _frame_coords, _start_a, _end_a, _fade_time, _z_index)
+	Statics.active_room.layer_ground.add_child(afterimage)
+
+
+func create_afterimage_with_offset(_start_a:float, _end_a:float, _fade_time:float, _z_index:int, _coord_offset:Vector2i) -> void:
+	var coords:Vector2i = frame_coords + _coord_offset
+	while coords.x < 0:
+		coords.x += hframes
+	coords.x = coords.x % hframes
+	while coords.y < 0:
+		coords.y += vframes
+	coords.y = coords.y % vframes
+	create_afterimage(_start_a, _end_a, _fade_time, _z_index, coords)

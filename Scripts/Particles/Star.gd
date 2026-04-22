@@ -27,8 +27,7 @@ func _spawn(_data:Array) -> void:
 				6: direction = Vector2.LEFT
 				7: direction = Statics.VECTOR_DIAG * -1
 				8: border_mode = 1
-				9:
-					border_mode = 2
+				9: border_mode = 2
 		if _data.size() > 1 and _data[1] is float:
 			mod = _data[1]
 		super(_data)
@@ -36,8 +35,6 @@ func _spawn(_data:Array) -> void:
 
 func _process(delta: float) -> void:
 	var center:Vector2 = Statics.VECTOR_CENTER
-	#if UICore.instance:
-	#	center = UICore.instance.get_cam_center_pos()
 	match border_mode:
 		1:
 			position = position.move_toward(center, speed * mod * delta)
@@ -60,5 +57,3 @@ func _process(delta: float) -> void:
 			position += direction * speed * mod * delta
 		_:
 			position += direction * speed * mod * delta
-	#if UICore.instance:
-	#	position += UICore.instance.get_cam_movement_this_tick()

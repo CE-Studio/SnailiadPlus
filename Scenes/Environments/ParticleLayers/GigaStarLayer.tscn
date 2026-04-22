@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://tab3k1ll1cwd"]
+
+[ext_resource type="Script" uid="uid://ocfek1qgov5o" path="res://Scripts/Particles/ParticleLayers/GigaStarLayer.gd" id="1_8d5b4"]
+[ext_resource type="Texture2D" uid="uid://dw68fgexmt2t7" path="res://Editor/EditorMarkers/GigaStarLayer.png" id="2_8d5b4"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_r6rwr"]
+
+[node name="GigaStarLayer" type="Node2D" unique_id=532173821]
+z_index = 500
+z_as_relative = false
+script = ExtResource("1_8d5b4")
+particles = Array[String](["GigaStar"])
+particle_count = 60
+move_with_camera = true
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1311714626]
+texture = ExtResource("2_8d5b4")
+script = ExtResource("3_r6rwr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

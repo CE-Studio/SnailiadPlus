@@ -141,6 +141,8 @@ func _ready() -> void:
 			shadowballs.append(child)
 	shadowball_group.visible = false
 	
+	invulnerable = true
+	
 	if display_mode:
 		sprite.action = "p0_floor_left_idle" if randf() < 0.5 else "p0_floor_right_idle"
 		return
@@ -213,6 +215,7 @@ func _physics_process(delta: float) -> void:
 func exit_intro() -> void:
 	intro_done = true
 	mode_elapsed = 0.0
+	invulnerable = false
 
 
 func _tick_death(delta:float) -> void:

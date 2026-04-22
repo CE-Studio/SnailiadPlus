@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://72unbkpt1o20"]
+
+[ext_resource type="Script" uid="uid://i67my7l7ct3r" path="res://Scripts/Particles/GigaStar.gd" id="1_e4ryy"]
+[ext_resource type="Texture2D" uid="uid://bvdtdc71vrf80" path="res://Assets/Images/Particles/Star.png" id="2_36bfp"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_cu8pb"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_0akef"]
+
+[node name="GigaStar" type="Node2D" unique_id=1251398939 node_paths=PackedStringArray("sprite")]
+z_index = 1
+script = ExtResource("1_e4ryy")
+sprite = NodePath("JsonSprite2D")
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=587448431]
+texture = ExtResource("2_36bfp")
+hframes = 16
+vframes = 2
+frame = 3
+script = ExtResource("3_cu8pb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1310030405]
+script = ExtResource("4_0akef")
+texture_path = "res://Assets/Images/Particles/Star.json"
+load_autoplay = Array[String](["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"

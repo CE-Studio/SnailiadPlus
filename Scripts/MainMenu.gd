@@ -89,7 +89,8 @@ func _process(delta: float) -> void:
 	if click_play_text:
 		if is_main_awaiting_input:
 			input_delay_timer += delta
-		click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
+		#click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
+		click_play_text.modulate.a = input_delay_timer * 0.6
 		if input_delay_timer >= -1.5:
 			if ((SInput.input_pressed(SInput.Inputs.UI_CLICK)
 			or SInput.input_pressed(SInput.Inputs.UI_ACCEPT))

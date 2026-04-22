@@ -20,6 +20,7 @@ var ground_stripe_y:float = STRIPE_START
 
 @export var bg:GigaBackground
 @export var ground:Array[GigaGround] = []
+@export var stars:GigaStarLayer
 #endregion
 
 
@@ -39,6 +40,8 @@ func connect_giga(_giga:Gigasnail) -> void:
 		surface.environment = self
 		surface.env_linked = true
 	bg.environment = self
+	stars.environment = self
+	stars.spawn()
 
 
 func get_stripe_glow_at_y(spr_y:float) -> float:
@@ -57,6 +60,7 @@ func set_state(_state:String) -> void:
 	for surface in ground:
 		surface.update_all_anim()
 	bg.update_visible()
+	stars.update_mode(_state)
 
 
 func impact_ground(impact_point:Vector2) -> void:
