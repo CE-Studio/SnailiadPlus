@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds3fhawq3fp2i"
-path="res://.godot/imported/Boss4RushZzz.png-d1e21af219aeff0a75f72381c9a62199.ctex"
+uid="uid://dab2qbmhi857d"
+path="res://.godot/imported/EnemyZzz.png-3a85ec578de0c1e7c4ab146a32e5a54c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/Boss4RushZzz.png"
-dest_files=["res://.godot/imported/Boss4RushZzz.png-d1e21af219aeff0a75f72381c9a62199.ctex"]
+source_file="res://Assets/Images/Bullets/Enemy/EnemyZzz.png"
+dest_files=["res://.godot/imported/EnemyZzz.png-3a85ec578de0c1e7c4ab146a32e5a54c.ctex"]
 
 [params]
 

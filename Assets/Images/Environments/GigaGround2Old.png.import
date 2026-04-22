@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dab2qbmhi857d"
-path="res://.godot/imported/Boss4Zzz.png-93875b5504e21e40e5a510c066e29734.ctex"
+uid="uid://cao7n4qgh641h"
+path="res://.godot/imported/GigaGround2Old.png-0cb52dc4fbc022e28230f7716049c878.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Entities/Boss4Zzz.png"
-dest_files=["res://.godot/imported/Boss4Zzz.png-93875b5504e21e40e5a510c066e29734.ctex"]
+source_file="res://Assets/Images/Environments/GigaGround2Old.png"
+dest_files=["res://.godot/imported/GigaGround2Old.png-0cb52dc4fbc022e28230f7716049c878.ctex"]
 
 [params]
 

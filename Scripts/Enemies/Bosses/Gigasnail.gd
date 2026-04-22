@@ -13,6 +13,7 @@ const WAVE_SPEED:float = 30.0
 const WAVE_TIMEOUT:float = 0.9
 const ZZZ_TIMEOUT:float = 0.3
 const ZZZ_MAX:int = 3
+const ZZZ_BUFFER:float = 24.0
 const INTRO_DELAY:float = 1.25
 const INTRO_END:float = 4.0
 const STRAFE_TIMEOUT:float = 0.03
@@ -30,6 +31,7 @@ const MODE_TIMEOUT_SLEEP:float = 6.2
 const SHAKE_TIMELINE:Array[float] = [4.0, 0.7]
 const BOX_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
 const BOX_SIZE_SHELL:Vector2i = Vector2i(44, 44)
+const BOX_SIZE_SLEEP:Vector2i = Vector2i(44, 32)
 const AREA_SIZE_NORMAL:Vector2i = Vector2i(80, 44)
 const AREA_SIZE_SHELL:Vector2i = Vector2i(44, 44)
 const DECISION_TABLE:Array[float] = [
@@ -72,6 +74,9 @@ var strafe_theta:float = 0.0
 var strafe_theta_vel:float = 0.0
 var strafe_theta_accel:float = 0.0
 var strafe_timeout:float = 0.0
+var zzz_count:int = 0
+var zzz_i:int = 0
+var zzz_timeout:float = 0.0
 var waiting_to_jump:bool = false
 var stomp_timeout:float = 0.0
 var wave_timeout:float = 0.0
@@ -93,12 +98,14 @@ var area_rect:RectangleShape2D = null
 
 @export var stomp_targets:Array[EntityTarget]
 
+@onready var sfx_spawn:AudioStreamPlayer = $"AudioGroup/Spawn"
 @onready var sfx_jump:AudioStreamPlayer = $"AudioGroup/Jump"
 @onready var sfx_gravjump:AudioStreamPlayer = $"AudioGroup/GravJump"
 @onready var sfx_stomp:AudioStreamPlayer = $"AudioGroup/Stomp"
 @onready var sfx_sleep:AudioStreamPlayer = $"AudioGroup/Sleep"
 @onready var wave:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletGigaWave.tscn")
 @onready var pea:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletGigaPea.tscn")
+@onready var zzz:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletZzz.tscn")
 #endregion
 
 
@@ -127,6 +134,9 @@ func _ready() -> void:
 	if Statics.current_profile["difficulty"] == 2:
 		boss_speed += 0.2
 	
+	decision_table_index = floori(Player.instance.position.x) % DECISION_TABLE.size()
+	
+	sfx_spawn.play()
 	boss_environment = load("res://Scenes/Environments/GigaEnvironment.tscn").instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(boss_environment)
 	boss_environment.connect_giga(self)
@@ -166,10 +176,10 @@ func _physics_process(delta:float) -> void:
 		BossMode.SMASH:
 			_update_smash()
 		BossMode.SLEEP:
-			_update_sleep()
+			_update_sleep(delta)
 	
 	#region Move stomp
-	if mode == BossMode.STOMP and not stomped and last_state != "shell":
+	if mode == BossMode.STOMP and not stomped and last_state == "stomp":
 		var last_vel:Vector2 = velocity
 		move_and_slide()
 		match stomp_gravity:
@@ -214,6 +224,15 @@ func _physics_process(delta:float) -> void:
 				position.x -= 0.5
 			_stomp()
 			velocity = Vector2.ZERO
+			last_hit_dir = stomp_gravity
+	#endregion
+	#region Move sleep
+	if mode == BossMode.SLEEP:
+		if not stomped:
+			velocity.y += GRAVITY * delta
+			move_and_slide()
+			if is_on_floor():
+				_stomp()
 	#endregion
 	
 	super._physics_process(delta)
@@ -307,13 +326,13 @@ func _pick_smash_target(force_target_player:bool) -> void:
 		smash_dir.x *= -1.0
 
 
-func _play_anim(action:String, shell:bool, dir_target:Vector2 = Vector2.ZERO) -> void:
-	if last_state == "shell" and shell and not update_if_shell:
+func _play_anim(action:String, state:String, dir_target:Vector2 = Vector2.ZERO) -> void:
+	if last_state == "shell" and state == "shell" and not update_if_shell:
 		return
-	last_state = "shell" if shell else "stomp"
+	last_state = state
 	
 	var full_action:String = action
-	if not shell:
+	if state == "stomp":
 		var _surface:String = "floor"
 		match stomp_gravity:
 			Statics.DirsSurface.LWALL:
@@ -357,6 +376,15 @@ func _set_hitboxes(state:int) -> void:
 			body_rect.size = Vector2(BOX_SIZE_NORMAL.y, BOX_SIZE_NORMAL.x)
 			area_rect.size = Vector2(AREA_SIZE_NORMAL.y, AREA_SIZE_NORMAL.x)
 			invulnerable = false
+		2:
+			body_rect.size = BOX_SIZE_SLEEP
+			invulnerable = true
+
+
+func advance_phase(count:int = 1) -> void:
+	super(count)
+	if phase == 1:
+		boss_speed += 0.5
 
 
 func _draw() -> void:
@@ -395,7 +423,7 @@ func _update_stomp(delta:float) -> void:
 		mode_initialized = true
 		mode_timeout = MODE_TIMEOUT_STOMP
 		_pick_stomp_target()
-		_play_anim("shell_stomp_move", true, target)
+		_play_anim("shell_stomp_move", "shell", target)
 		_set_hitboxes(0)
 		_face_player(false)
 	if last_state == "shell":
@@ -434,7 +462,7 @@ func _update_stomp(delta:float) -> void:
 						velocity.x = WALK_SPEED if facing_left else -WALK_SPEED
 				grav_jump_timeout = GRAV_JUMP_TIMEOUT
 				jump_timeout = 99999.0
-				_play_anim("stomp_jump", false)
+				_play_anim("stomp_jump", "stomp")
 				sfx_jump.play()
 		elif not stomped and phase > 0:
 			grav_jump_timeout -= delta
@@ -449,9 +477,9 @@ func _update_stomp(delta:float) -> void:
 							stomp_gravity = Statics.DirsSurface.LWALL
 						Statics.DirsSurface.CEILING:
 							stomp_gravity = Statics.DirsSurface.FLOOR
+					_play_anim("stomp_flip", "stomp")
+					sfx_gravjump.play()
 				grav_jump_timeout = 99999.0
-				_play_anim("stomp_flip", false)
-				sfx_gravjump.play()
 	if ((phase == 0 and mode_elapsed > START_ATTACK_TIME * 2.5)
 	or (phase > 0 and mode_elapsed > START_ATTACK_TIME * 3.2)):
 		_shoot_wave()
@@ -470,7 +498,7 @@ func _update_strafe(delta:float) -> void:
 	if not mode_initialized:
 		mode_initialized = true
 		mode_timeout = MODE_TIMEOUT_STRAFE
-		_play_anim("shell_strafe_charge", true)
+		_play_anim("shell_strafe_charge", "shell")
 		_set_hitboxes(0)
 		target = origin
 		aimed = false
@@ -513,18 +541,18 @@ func _update_smash() -> void:
 		mode_initialized = true
 		mode_timeout = MODE_TIMEOUT_SMASH
 		_pick_smash_target(false)
-		_play_anim("shell_smash_move", true, position + smash_dir)
+		_play_anim("shell_smash_move", "shell", position + smash_dir)
 		velocity = Vector2.ZERO
 		up_direction = Vector2.UP
 	if stomped:
 		stomped = false
 		if _get_decision() > 0.7 or phase > 0:
 			_pick_smash_target(true)
-		elif is_on_floor() or is_on_ceiling():
+		elif last_hit_dir == Statics.DirsSurface.FLOOR or last_hit_dir == Statics.DirsSurface.CEILING:
 			smash_dir.y *= -1.0
 		else:
 			smash_dir.x *= -1.0
-		_play_anim("shell_smash_move", true, position + smash_dir)
+		_play_anim("shell_smash_move", "shell", position + smash_dir)
 	if mode_timeout <= 0.0:
 		if _get_decision() > 0.5:
 			_set_mode(BossMode.STOMP)
@@ -532,8 +560,33 @@ func _update_smash() -> void:
 			_set_mode(BossMode.STRAFE)
 
 
-func _update_sleep() -> void:
-	pass
+func _update_sleep(delta:float) -> void:
+	if not mode_initialized:
+		mode_initialized = true
+		mode_timeout = MODE_TIMEOUT_SLEEP
+		_play_anim("shell_sleep_fall", "sleep")
+		zzz_i = 0
+		zzz_count = ZZZ_MAX
+		zzz_timeout = 0.0
+		if Statics.current_profile["difficulty"] == 2:
+			zzz_count += 2
+			mode_timeout *= 1.23
+		velocity = Vector2.ZERO
+		sfx_sleep.play()
+		_set_hitboxes(2)
+		up_direction = Vector2.UP
+	if stomped:
+		zzz_timeout -= delta * boss_speed
+		if zzz_timeout <= 0.0 and zzz_count > 0:
+			_shoot(zzz, Vector2(position.x + 40.0 + ZZZ_BUFFER * zzz_i, position.y), 3.0)
+			zzz_timeout = ZZZ_TIMEOUT
+			zzz_count -= 1
+			zzz_i += 1
+	if mode_timeout <= 0.0:
+		if _get_decision() > 0.5:
+			_set_mode(BossMode.STOMP)
+		else:
+			_set_mode(BossMode.STRAFE)
 #endregion
 
 
@@ -556,9 +609,9 @@ func _face_player(play_anim:bool, unshell:bool = false) -> void:
 			up_direction = Vector2.DOWN
 	if play_anim:
 		if unshell:
-			_play_anim("stomp_unshell", false)
+			_play_anim("stomp_unshell", "stomp")
 		elif facing_left != old_left:
-			_play_anim("stomp_turnground" if stomped else "stomp_turnair", false)
+			_play_anim("stomp_turnground" if stomped else "stomp_turnair", "stomp")
 
 
 func _stomp() -> void:
@@ -576,8 +629,9 @@ func _stomp() -> void:
 			SHAKE_TIMELINE, stomp_dir, UICore.ShakeCallMode.OVERWRITE_ALL)
 		sfx_stomp.play()
 		stomp_timeout = STOMP_TIMEOUT
+		boss_environment.impact_ground(position)
 	if mode == BossMode.STOMP:
-		_play_anim("stomp_land", false)
+		_play_anim("stomp_land", "stomp")
 	stomped = true
 	grav_jump_timeout = 99999.0
 #endregion

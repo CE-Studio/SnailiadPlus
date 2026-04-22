@@ -5,6 +5,10 @@ extends JsonSprite2D
 const MAX_MULT:float = 0.4
 const PLAYER_PROX_MULT:float = 0.3
 const ADD_OFFSET:float = 0.05
+const IMPACT_DECAY:float = 0.8
+const IMPACT_FALLOFF:float = 0.15
+const IMPACT_ADD_MULT:float = 0.3
+const IMPACT_DELAY_MULT:float = Statics.FRAC_64
 
 var rand_cycle_0:float
 var rand_cycle_1:float
@@ -14,6 +18,10 @@ var decay_rate:float = 0.0
 var col_fade_rate:float = 0.0
 var current_col_array:Array = []
 var shimmer:bool = true
+var impact_add:float = 0.0
+var impact_elapsed:float = 0.0
+var last_impact_add:float = 0.0
+var last_impact_elapsed:float = 0.0
 
 var elapsed:float = 0.0
 var intro_fade:float = 4.0
@@ -52,6 +60,19 @@ func _process(delta: float) -> void:
 			current_prox_add = this_prox
 	this_a += current_prox_add * PLAYER_PROX_MULT
 	
+	var impact_a:float = 0.0
+	if impact_elapsed > 0.0 and impact_elapsed < IMPACT_DECAY:
+		impact_a = inverse_lerp(IMPACT_DECAY, 0.0, impact_elapsed)
+		impact_a = clampf(impact_a, 0.0, 1.0) * impact_add * IMPACT_ADD_MULT
+	if last_impact_elapsed > 0.0 and last_impact_elapsed < IMPACT_DECAY:
+		var last_impact_a = inverse_lerp(IMPACT_DECAY, 0.0, last_impact_elapsed)
+		last_impact_a = clampf(last_impact_a, 0.0, 1.0) * last_impact_add * IMPACT_ADD_MULT
+		if last_impact_a > impact_a:
+			impact_a = last_impact_a
+	this_a += impact_a
+	impact_elapsed += delta
+	last_impact_elapsed += delta
+	
 	modulate.a = this_a
 	last_a = this_a
 	elapsed += delta
@@ -72,3 +93,12 @@ func set_color(col_array:Array, instant:bool = false) -> void:
 
 func update_state(state:String, phase:int) -> void:
 	set_color(meta["col_" + state + str(phase)])
+
+
+func set_impact_flash(impact_point:Vector2) -> void:
+	last_impact_add = impact_add
+	last_impact_elapsed = impact_elapsed
+	var dist:float = impact_point.distance_to(global_position)
+	var prox:float = clampf(16.0 - dist * IMPACT_FALLOFF, 0.0, 1.0)
+	impact_add = prox
+	impact_elapsed = dist * Statics.FRAC_16 * -IMPACT_DELAY_MULT

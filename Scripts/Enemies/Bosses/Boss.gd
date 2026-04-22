@@ -23,6 +23,9 @@ var health_bar:BossHealthBar = null
 
 
 func _process(delta: float) -> void:
+	if display_mode:
+		return
+	
 	super(delta)
 
 	while phase < phase_changes.size() and health < max_health * phase_changes[phase]:

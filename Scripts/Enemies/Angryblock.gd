@@ -119,7 +119,7 @@ func _process(delta: float) -> void:
 
 
 func _update_body_anim() -> void:
-	if body_anim_ptr >= sprite.meta.size():
+	if body_anim_ptr >= sprite.meta.size() or display_mode:
 		return
 	var hp_ratio:int = ceili((float(health) / float(max_health)) * 100.0)
 	if hp_ratio <= sprite.meta[str(body_anim_ptr)]:

@@ -57,3 +57,8 @@ func set_state(_state:String) -> void:
 	for surface in ground:
 		surface.update_all_anim()
 	bg.update_visible()
+
+
+func impact_ground(impact_point:Vector2) -> void:
+	for surface in ground:
+		surface.impact_ground(impact_point)

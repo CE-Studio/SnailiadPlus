@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://q5frvpwnb3mn" path="res://Assets/Sounds/Sfx/Jump.ogg" id="6_770ae"]
 [ext_resource type="AudioStream" uid="uid://dblbxfm2e1nob" path="res://Assets/Sounds/Sfx/JumpGrav.ogg" id="7_d2rwt"]
 [ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="8_4j6ro"]
+[ext_resource type="AudioStream" uid="uid://cyyfofel3rwoj" path="res://Assets/Sounds/Sfx/Shell.ogg" id="9_d2rwt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xi7f"]
 size = Vector2(80, 44)
@@ -20,32 +21,12 @@ z_index = 1
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_y7363")
-stomp_targets = null
 battle_music = 12
 phase_changes = Array[float]([0.4])
-death_wiggle_mult = null
 max_health = 34000
-max_health_easy = null
-max_health_hard = null
 attack = 6
-defense = null
-weaknesses = null
-resistances = null
-immunities = null
-can_be_pierced = null
-make_sound_on_ping = null
 invulnerable = true
 can_damage = false
-shield_entity = null
-interact_with_environments = null
-health_orb_value = null
-light_radius = null
-my_element = null
-kill_particle_range = null
-kill_particle_types = null
-kill_particle_count = null
-grant_bestiary_without_defeat = null
-display_mode = null
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1544009433]
 shape = SubResource("RectangleShape2D_7xi7f")
@@ -77,7 +58,6 @@ script = ExtResource("3_xnkwp")
 
 [node name="Spawn" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1790032628]
 stream = ExtResource("5_xnkwp")
-autoplay = true
 bus = &"Sfx"
 
 [node name="Jump" type="AudioStreamPlayer" parent="AudioGroup" unique_id=659108856]
@@ -93,5 +73,5 @@ stream = ExtResource("8_4j6ro")
 bus = &"Sfx"
 
 [node name="Sleep" type="AudioStreamPlayer" parent="AudioGroup" unique_id=704155856]
-stream = ExtResource("5_xnkwp")
+stream = ExtResource("9_d2rwt")
 bus = &"Sfx"

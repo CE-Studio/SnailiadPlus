@@ -135,6 +135,14 @@ enum EnemyTypes {
 
 
 func spawn(active:bool = true) -> void:
+	if display_mode:
+		ai_active = false
+		can_damage = false
+		invulnerable = true
+		can_be_pierced = true
+		make_sound_on_ping = false
+		configure_display_mode()
+		return
 	if not GameCore.instance:
 		return
 
@@ -156,16 +164,8 @@ func spawn(active:bool = true) -> void:
 		hitbox.connect("body_entered", _on_player_entered)
 		hitbox.connect("body_exited", _on_player_exited)
 
-	if display_mode:
-		ai_active = false
-		can_damage = false
-		invulnerable = true
-		can_be_pierced = true
-		make_sound_on_ping = false
-		configure_display_mode()
-	else:
-		if light_radius > 0:
-			UICore.instance.darkness_layer.add_source(self, light_radius)
+	if light_radius > 0:
+		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
 func configure_display_mode() -> void:
@@ -173,6 +173,9 @@ func configure_display_mode() -> void:
 
 
 func _process(delta: float) -> void:
+	if display_mode:
+		return
+	
 	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
 		sent_entry_once = true
 		Statics.add_bestiary_entry(my_type)
@@ -185,6 +188,9 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta) -> void:
+	if display_mode:
+		return
+	
 	if damage_timeout > 0.0:
 		damage_timeout -= delta
 	if not intersecting_player and intersecting_pbullets.is_empty() and intersecting_ebullets.is_empty():

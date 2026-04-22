@@ -141,3 +141,8 @@ func update_one_anim(i:int) -> void:
 		sprites[i].action = "_".join([anim_prefix, environment.state, environment.phase])
 	else:
 		sprites[i].update_state(environment.state, environment.phase)
+
+
+func impact_ground(impact_point:Vector2) -> void:
+	for part in sprites:
+		part.set_impact_flash(impact_point)

@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
-	if not ai_active and not display_mode:
+	if not ai_active or display_mode:
 		return
 	
 	theta += delta

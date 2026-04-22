@@ -33,7 +33,8 @@ func _ready() -> void:
 		Statics.DirsCardinal.RIGHT: position.x -= START_OFFSET
 	sprite.action = "idle"
 	
-	closest_onscreen_point = GameCore.instance.current_room.bounds.get_closest_point_to(origin)
+	if not display_mode:
+		closest_onscreen_point = GameCore.instance.current_room.bounds.get_closest_point_to(origin)
 
 
 func _process(delta: float) -> void:

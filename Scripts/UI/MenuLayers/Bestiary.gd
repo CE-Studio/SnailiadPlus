@@ -350,6 +350,6 @@ func _get_desc(key:String) -> StringName:
 		"spacebox": return tr(&"Habitat: A.Abyssus\nShell: hard metal\nForce: unstoppable\n\nA construct of unknown origin, Space Box finds great joy in ramming itself into surfaces until they're perfectly flat.  As a result, it seems to have all but forgotten its role as a fortress guard.  It still guards, but only for its own amusement.")
 		"spaceboxBabybox": return tr(&"Habitat: A.Abyssus\nAge: 6 seconds\nIntentions: unknowable\n\nA small satellite drone emitted by Space Box to aid its guard duty.  It has limited intelligence if any, and seems to aimlessly drift from wall to wall without purpose.  Even still, Space Box harbors an emotional attachment to it.")
 		"moonsnail": return tr(&"Habitat: L.Lirata\nStrength: formidable\nMotive: unknown\n\nOnce the absolute peak of mortal snaildom, something happened in Moon Snail's psyche to twist his once-holy powers into a force of malice.  The only way to reverse such a change would be to subdue him, though few can stand to pose a challenge.")
-		"gigasnail": return tr(&"")
+		"gigasnail": return tr(&"Habitat: L.Lirata\nPower: heightened, unstable\nRage: building rapidly")
 		"none": return tr(&"\n\nThis entry has not been discovered yet")
 	return tr(&"This slot is missing an entry.  Either something was misspelled or it simply does not exist.")
