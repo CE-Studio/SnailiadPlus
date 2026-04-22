@@ -87,7 +87,7 @@ func _create_radial(part_name:String, radius_max:float, front:bool = false) -> v
 	var this_pos = Vector2(cos(this_angle), sin(this_angle)) * this_radius
 	this_pos += position
 	var new_part = Statics.spawn_particle(
-		part_name, Room.Layers.FG1 if front else Room.Layers.BG1, this_pos)
+		part_name, Room.Layers.FG2 if front else Room.Layers.FG1, this_pos)
 	new_part.sound.stop()
 
 

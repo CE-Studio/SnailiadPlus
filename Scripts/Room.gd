@@ -414,7 +414,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 			Vector2i(15, 1): # Smoke effect tile
 				var smoke_tile:JsonSprite2D = _load(&"res://Scenes/Environments/SmokeTile.tscn").instantiate()
 				smoke_tile.position = _tile_coords_to_vector_pos(tile)
-				layer_bg1.add_child(smoke_tile)
+				layer_fg2.add_child(smoke_tile)
 
 			Vector2i(8, 4): # Boomerang breakable
 				var boom_tile:Breakable = breakable_scene.instantiate()

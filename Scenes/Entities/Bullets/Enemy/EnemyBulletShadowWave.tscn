@@ -10,7 +10,7 @@
 size = Vector2(48, 48)
 
 [node name="EnemyBulletShadowWave" type="Node2D" unique_id=2038470674]
-z_index = 50
+z_index = 150
 script = ExtResource("1_52e2f")
 damage = 16
 rush_damage = 2

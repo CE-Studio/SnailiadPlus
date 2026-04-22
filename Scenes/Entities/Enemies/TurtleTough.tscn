@@ -20,7 +20,7 @@ shader = ExtResource("4_0gxbd")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="TurtleTough" type="CharacterBody2D" unique_id=1829495854]
-z_index = 3
+z_index = 103
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_lc45k")

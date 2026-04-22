@@ -10,7 +10,7 @@
 size = Vector2(24, 24)
 
 [node name="EnemyBoomerangRed" type="Node2D" unique_id=2038470674]
-z_index = 50
+z_index = 150
 script = ExtResource("1_ecw5w")
 damage = 24
 rush_damage = 3

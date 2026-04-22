@@ -19,7 +19,7 @@ shader = ExtResource("4_1wqbc")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="BlobAngel" type="CharacterBody2D" unique_id=663207148]
-z_index = 3
+z_index = 103
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_4ala4")

@@ -10,7 +10,7 @@
 size = Vector2(24, 24)
 
 [node name="EnemyBulletDonutRotaryChaser" type="Node2D" unique_id=688554147]
-z_index = 50
+z_index = 150
 script = ExtResource("1_efoqt")
 damage = 2
 max_life_time = 5.0

@@ -11,7 +11,7 @@
 size = Vector2(24, 32)
 
 [node name="EnemyBulletZzz" type="Node2D" unique_id=1435270692]
-z_index = 50
+z_index = 150
 script = ExtResource("1_f88vw")
 damage = 6
 max_life_time = 2.0

@@ -16,7 +16,7 @@ shader = ExtResource("4_qyfsf")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="GearCommon" type="CharacterBody2D" unique_id=1516178241]
-z_index = 3
+z_index = 103
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_ly6hl")

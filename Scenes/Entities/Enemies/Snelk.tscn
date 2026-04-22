@@ -17,7 +17,7 @@ shader = ExtResource("4_ourwp")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="Snelk" type="CharacterBody2D" unique_id=1559879025]
-z_index = 3
+z_index = 103
 collision_layer = 64
 script = ExtResource("1_mlwfl")
 max_health = 50

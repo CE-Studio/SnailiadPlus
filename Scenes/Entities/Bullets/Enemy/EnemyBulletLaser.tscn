@@ -10,7 +10,7 @@
 size = Vector2(24, 6)
 
 [node name="EnemyBulletLaser" type="Node2D" unique_id=358427844]
-z_index = 50
+z_index = 150
 script = ExtResource("1_hvoa8")
 damage = 3
 max_life_time = 3.0

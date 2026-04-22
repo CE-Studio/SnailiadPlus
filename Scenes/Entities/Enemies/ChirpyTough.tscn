@@ -19,7 +19,7 @@ shader = ExtResource("2_a730g")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
 [node name="ChirpyTough" type="CharacterBody2D" unique_id=1754002772]
-z_index = 3
+z_index = 103
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_7nja0")
