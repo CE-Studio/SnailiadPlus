@@ -31,7 +31,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	inc_game_time(delta)
+	if Statics.increment_igt:
+		inc_game_time(delta)
 	room_time += delta
 	handle_cheats()
 

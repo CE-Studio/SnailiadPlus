@@ -66,3 +66,8 @@ func set_state(_state:String) -> void:
 func impact_ground(impact_point:Vector2) -> void:
 	for surface in ground:
 		surface.impact_ground(impact_point)
+
+
+func despawn() -> void:
+	stars.despawn()
+	queue_free()

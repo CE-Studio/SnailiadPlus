@@ -15,10 +15,12 @@ const STATIC_POSITION:Vector2 = Statics.VECTOR_CENTER
 @export var static_position:bool = false
 @export var move_with_camera:bool = false
 @export var wrap_at_edges:bool = true
+@export var z_override:int = 0
 
 var active_particles:Array[Particle] = []
 var spawn_cooldown:float = 0.0
 var initialized:bool = false
+var always_process:bool = false
 #endregion
 
 
@@ -81,4 +83,23 @@ func _spawn_one() -> void:
 		new_particle = Statics.spawn_particle_cam_synced(this_particle, Room.Layers.GROUND, spawn_pos)
 	else:
 		new_particle = Statics.spawn_particle(this_particle, Room.Layers.GROUND, spawn_pos)
+	if z_override != 0:
+		new_particle.z_index = z_override
+		new_particle.z_as_relative = false
+	if always_process:
+		new_particle.process_mode = Node.PROCESS_MODE_ALWAYS
 	active_particles.append(new_particle)
+
+
+func despawn() -> void:
+	for particle in active_particles:
+		particle.queue_free()
+	queue_free()
+
+
+func force_process() -> void:
+	always_process = true
+	print("Parse")
+	for particle in active_particles:
+		particle.process_mode = Node.PROCESS_MODE_ALWAYS
+		print("Hit")

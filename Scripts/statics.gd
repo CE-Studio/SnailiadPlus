@@ -95,6 +95,7 @@ static var is_menu_open:bool = false
 static var shortcut_load_game_scene:bool = false
 
 static var is_in_boss_rush:bool = false
+static var increment_igt:bool = true
 static var increment_boss_rush_timer:bool = false
 static var is_random_game:bool = false
 

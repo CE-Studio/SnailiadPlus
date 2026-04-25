@@ -73,3 +73,4 @@ func _on_timer_timeout() -> void:
 	UICore.instance.clear_boss_bar()
 	get_tree().paused = false
 	layer.menu.queue_free()
+	Statics.increment_igt = true

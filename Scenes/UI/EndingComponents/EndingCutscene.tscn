@@ -1,0 +1,276 @@
+[gd_scene format=3 uid="uid://ctwoi3ed7m371"]
+
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_8ficc"]
+[ext_resource type="Script" uid="uid://f22im3cbh6yp" path="res://Scripts/UI/EndingComponents/EndingCutscene.gd" id="1_rel1c"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_afgk6"]
+[ext_resource type="Texture2D" uid="uid://bewig4ibx8mm" path="res://Assets/Images/Backgrounds/EndingBG.png" id="2_q2pro"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_lnog6"]
+[ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="4_2vmc0"]
+[ext_resource type="Texture2D" uid="uid://drfavrb4msd46" path="res://Assets/Images/Environments/EndingSpotlight.png" id="6_u4rgk"]
+[ext_resource type="Texture2D" uid="uid://dkxwvlw8prl3c" path="res://Assets/Images/Entities/EndingMoonSnail.png" id="7_u4rgk"]
+[ext_resource type="AudioStream" uid="uid://gjmmcnxl7qkq" path="res://Assets/Sounds/Music/EndingIntro.ogg" id="8_eplnd"]
+
+[sub_resource type="Animation" id="Animation_rel1c"]
+resource_name = "Moon"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MoonSnail0:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 5, 6.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MoonSnail1:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 6.5, 10.5, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MoonSnail2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 10.5, 12, 16, 17.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MoonSnail3:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 16, 17.5, 25.5, 28.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spotlight:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 1.8, 24.25, 27.5),
+"transitions": PackedFloat32Array(1, 1, 0.35, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FadeCover:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 3.9, 6.2, 24, 27),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Music")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ws1ke"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MoonSnail0:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MoonSnail1:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MoonSnail2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MoonSnail3:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spotlight:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FadeCover:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ginrr"]
+_data = {
+&"Moon": SubResource("Animation_rel1c"),
+&"RESET": SubResource("Animation_ws1ke")
+}
+
+[node name="EndingCutscene" type="Node2D" unique_id=252453626 node_paths=PackedStringArray("anim", "stars", "cover", "first_moon", "spotlight")]
+process_mode = 3
+z_index = 1000
+z_as_relative = false
+script = ExtResource("1_rel1c")
+anim = NodePath("AnimationPlayer")
+stars = NodePath("StarLayer")
+cover = NodePath("FadeCover")
+first_moon = NodePath("MoonSnail0")
+spotlight = NodePath("Spotlight")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=624316069]
+z_index = -2
+position = Vector2(200, 120)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Backgrounds/EndingBG.json"
+load_autoplay = Array[String](["moon"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="BG" unique_id=1024487071]
+texture = ExtResource("2_q2pro")
+hframes = 2
+vframes = 2
+script = ExtResource("3_lnog6")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("4_2vmc0")]
+direction = 9
+particle_count = 16
+z_override = 999
+
+[node name="FadeCover" type="Sprite2D" parent="." unique_id=1521657387]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("1_8ficc")
+
+[node name="Spotlight" type="Sprite2D" parent="." unique_id=1617582884]
+position = Vector2(200, 80)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Environments/EndingSpotlight.json"
+load_autoplay = Array[String](["anim"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Spotlight" unique_id=322941863]
+texture = ExtResource("6_u4rgk")
+script = ExtResource("3_lnog6")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MoonSnail0" type="Sprite2D" parent="." unique_id=670981982]
+position = Vector2(200, 172)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
+load_autoplay = Array[String](["0"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="MoonSnail0" unique_id=488351202]
+texture = ExtResource("7_u4rgk")
+hframes = 2
+vframes = 5
+script = ExtResource("3_lnog6")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="MoonSnail1" type="Sprite2D" parent="." unique_id=1798575524]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(200, 172)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
+load_autoplay = Array[String](["1"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MoonSnail2" type="Sprite2D" parent="." unique_id=1590992189]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(200, 172)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
+load_autoplay = Array[String](["2"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MoonSnail3" type="Sprite2D" parent="." unique_id=1305973664]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(200, 172)
+script = ExtResource("2_afgk6")
+texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
+load_autoplay = Array[String](["shell"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1274005023]
+libraries/ = SubResource("AnimationLibrary_ginrr")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1532211198]
+stream = ExtResource("8_eplnd")
+bus = &"Music"

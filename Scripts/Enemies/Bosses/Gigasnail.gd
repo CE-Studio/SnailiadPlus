@@ -135,6 +135,8 @@ func _ready() -> void:
 	body_rect.size = BOX_SIZE_SHELL
 	area_rect.size = AREA_SIZE_SHELL
 	
+	nodes_to_wiggle.append(sprite)
+	
 	if Statics.current_profile["difficulty"] == 2:
 		boss_speed += 0.2
 	
@@ -161,8 +163,6 @@ func _physics_process(delta:float) -> void:
 	if Engine.is_editor_hint():
 		return
 	if not ai_active:
-		#if in_death_anim:
-		#	_tick_death(delta)
 		return
 	
 	wave_timeout -= delta * boss_speed
@@ -248,20 +248,26 @@ func _physics_process(delta:float) -> void:
 
 
 func kill() -> void:
+	var set_timer:bool = false
 	if not in_death_anim:
 		if health_bar:
 			health_bar._toggle_outro_shake(true)
 		sprite.action = "defeat"
 		for bullet in bullets:
 			bullet._despawn()
-		death_timer = DEATH_TIME
+		set_timer = true
 		Statics.spawn_particle("ExplosionBossDefeat",
-			Room.Layers.FG1, position, [true, DEATH_TIME, true])
+			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
 		GameCore.instance.music_manager.stop_all(true)
 		SInput.read_inputs = false
+		Statics.increment_igt = false
+		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
 	else:
-		pass
+		GameCore.instance.current_room.set_ground_collision(true)
+		boss_environment.despawn()
 	super()
+	if set_timer:
+		death_timer = DEATH_TIME
 
 
 #region General utility

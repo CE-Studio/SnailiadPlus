@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://crgwv7a4ws03t"]
+
+[ext_resource type="Script" uid="uid://c7ve3ch8glcau" path="res://Scripts/UI/EndingComponents/EndingFade.gd" id="1_4jf7l"]
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="2_mbggb"]
+
+[node name="EndingFade" type="Node2D" unique_id=621947627]
+z_index = 110
+z_as_relative = false
+script = ExtResource("1_4jf7l")
+
+[node name="FadeCover" type="Sprite2D" parent="." unique_id=1097996251]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("2_mbggb")

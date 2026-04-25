@@ -36,6 +36,8 @@ enum ShakeSetting {
 	ON_NOHUD
 }
 var shake_setting:ShakeSetting = ShakeSetting.ON
+var igt_flash_elapsed:float = 0.0
+var igt_flash_col:Color = Statics.get_color(Vector2i(2, 4))
 
 static var instance:UICore
 
@@ -125,6 +127,15 @@ func _process(delta: float) -> void:
 		fps_text.set_snaily_text(tr(&"%d/%d FPS") % [ fps_int, target_fps ])
 	
 	#IGT is counted up in GameCore.gd, being an aspect of the game/profile itself and not purely a HUD element
+	if igt.visible:
+		if Statics.increment_igt:
+			igt_flash_elapsed = 0.0
+		else:
+			igt_flash_elapsed += delta
+			if ceili(cos(igt_flash_elapsed * 16.0)) == 1:
+				igt.modulate = igt_flash_col
+			else:
+				igt.modulate = Color.WHITE
 	
 	tick_screen_shake(delta)
 
@@ -397,3 +408,10 @@ func tick_screen_shake(delta:float) -> void:
 		shake_elapsed = 0.0
 		shake_dir = Vector2.ZERO
 		flip_shake_dir = false
+
+
+func fade_ui(to_a:float, duration:float) -> void:
+	var fade_col:Color = modulate
+	fade_col.a = to_a
+	var fade:Tween = create_tween()
+	fade.tween_property(self, "modulate", fade_col, duration)

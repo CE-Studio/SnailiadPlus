@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bewig4ibx8mm"
-path="res://.godot/imported/EndingBackground.png-adb0af87b03572fda55cb31223c306f3.ctex"
+uid="uid://drfavrb4msd46"
+path="res://.godot/imported/EndingSpotlight.png-8509ec4f823d9ee56a1b82cd2e76e4ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Backgrounds/EndingBackground.png"
-dest_files=["res://.godot/imported/EndingBackground.png-adb0af87b03572fda55cb31223c306f3.ctex"]
+source_file="res://Assets/Images/Environments/EndingSpotlight.png"
+dest_files=["res://.godot/imported/EndingSpotlight.png-8509ec4f823d9ee56a1b82cd2e76e4ed.ctex"]
 
 [params]
 

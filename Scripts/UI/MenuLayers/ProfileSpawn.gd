@@ -52,3 +52,4 @@ func _on_world_spawn_pressed(_value) -> void:
 	flags.assign(Statics.current_profile["cutscene_flags"])
 	CutsceneController.load_flags(flags)
 	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
+	Statics.increment_igt = true

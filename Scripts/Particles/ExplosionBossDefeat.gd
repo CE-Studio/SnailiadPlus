@@ -9,6 +9,7 @@ var this_max_time:float = 1.8
 var play_sound:bool = true
 var awaiting_free:bool = false
 var is_giga:bool = false
+var huge:bool = false
 
 @onready var boom1:AudioStreamPlayer = $"Boom1"
 @onready var boom2:AudioStreamPlayer = $"Boom2"
@@ -29,6 +30,8 @@ func _spawn(_data:Array) -> void:
 		this_max_time = life_time
 	if _data.size() > 2 and _data[2] is bool:
 		is_giga = _data[2]
+	if _data.size() > 3 and _data[3] is bool:
+		huge = _data[3]
 
 
 func _physics_process(delta: float) -> void:
@@ -60,6 +63,13 @@ func _call_batched(front:bool = false) -> void:
 		_random_boom()
 	if randf() * 10.0 > 7.0:
 		_random_small_boom()
+	if huge:
+		_create_radial("ExplosionSmall", randf() * 280, front)
+		_create_radial("ExplosionSmall", randf() * 360, front)
+		_create_radial("ExplosionBig", randf() * 240, front)
+		_create_radial("ExplosionBig", randf() * 310, front)
+		_create_radial("ExplosionBig", randf() * 430, front)
+		_create_radial("ExplosionHuge", randf() * 430, front)
 
 
 func _random_boom() -> void:
