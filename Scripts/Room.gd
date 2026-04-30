@@ -59,6 +59,7 @@ var room_path:String
 static var sp_cache:Dictionary[StringName, PackedScene] = {}
 var cells:Array[Vector2i] = []
 var spawned_sp:int = 0
+var last_spawned_layer:int = -1
 var spawned_all:bool = false
 var spawned_secondary:bool = false
 var skipped_first_process_spawn:bool = false
@@ -171,9 +172,11 @@ func spawn(_spawn_all:bool) -> void:
 
 
 func _process(_delta: float) -> void:
+	# Try to spawn objects if not all of them have been placed yet, but avoid first tick of _process
 	if not spawned_all and not Engine.is_editor_hint() and skipped_first_process_spawn:
 		_spawn_entities_from_layer(0)
 	skipped_first_process_spawn = true
+	pass
 
 
 func get_room_name_from_filename() -> void:
@@ -223,52 +226,24 @@ func _recur_extr(arr:Array[CutsceneControllable], n:Node) -> void:
 
 #region Cell sorting
 func _sort_tl(a:Vector2i, b:Vector2i) -> bool:
-	#if spawned_secondary:
-	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
-	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
-	#	if a_brk and not b_brk:
-	#		return false
-	#	elif b_brk and not a_brk:
-	#		return true
 	if a.x == b.x:
 		return a.y < b.y
 	return a.x < b.x
 
 
 func _sort_tr(a:Vector2i, b:Vector2i) -> bool:
-	#if spawned_secondary:
-	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
-	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
-	#	if a_brk and not b_brk:
-	#		return false
-	#	elif b_brk and not a_brk:
-	#		return true
 	if a.x == b.x:
 		return a.y < b.y
 	return a.x > b.x
 
 
 func _sort_bl(a:Vector2i, b:Vector2i) -> bool:
-	#if spawned_secondary:
-	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
-	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
-	#	if a_brk and not b_brk:
-	#		return false
-	#	elif b_brk and not a_brk:
-	#		return true
 	if a.x == b.x:
 		return a.y > b.y
 	return a.x < b.x
 
 
 func _sort_br(a:Vector2i, b:Vector2i) -> bool:
-	#if spawned_secondary:
-	#	var a_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(a))
-	#	var b_brk:bool = BREAKABLE_IDS.has(map_entity1.get_cell_atlas_coords(b))
-	#	if a_brk and not b_brk:
-	#		return false
-	#	elif b_brk and not a_brk:
-	#		return true
 	if a.x == b.x:
 		return a.y > b.y
 	return a.x > b.x
@@ -277,8 +252,14 @@ func _sort_br(a:Vector2i, b:Vector2i) -> bool:
 
 func _spawn_entities_from_layer(layer:int) -> void:
 	var map:TileMapLayer = map_entity1 if layer == 0 else map_entity2
-	if cells.is_empty():
+	if cells.is_empty() or last_spawned_layer != layer:
+		if last_spawned_layer != layer:
+			spawned_sp = 0
+		last_spawned_layer = layer
 		cells = map.get_used_cells()
+		if layer == 1 and cells.is_empty():
+			spawned_secondary = true
+			return
 		var center:Vector2 = bounds.get_center()
 		if GameCore.instance:
 			var player:Vector2 = GameCore.instance.player.position
@@ -297,7 +278,8 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		running_count = MAX_SP_PER_LOOP - cells.size()
 	var tpf:Array[int] = []
 	var fts := Time.get_ticks_msec()
-	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP) and ((Time.get_ticks_msec() - fts) < MAX_MS_PER_LOOP):
+	while ((spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP)
+	and ((Time.get_ticks_msec() - fts) < MAX_MS_PER_LOOP)):
 		var ts := Time.get_ticks_msec()
 		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)

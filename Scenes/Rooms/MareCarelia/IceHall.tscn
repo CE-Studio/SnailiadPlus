@@ -95,7 +95,7 @@ tile_set = ExtResource("2_e501o")
 collision_enabled = false
 
 [node name="Map2" type="TileMapLayer" parent="EntityLayer" unique_id=1110480871]
-tile_map_data = PackedByteArray("AAADAAwAAAAMAAAAAAAQAAwAAAAMAAAAAAAjAAwAAAAMAAAAAAA0AAwAAAAMAAAAAAA/AAwAAAAMAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAAwAAAAMAAAAAAAjAAwAAAAMAAAAAAA0AAwAAAAMAAAAAAA/AAwAAAAMAAAAAAADAAwAAAAMAAAAAAA=")
 tile_set = ExtResource("2_e501o")
 collision_enabled = false
 

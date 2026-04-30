@@ -11,7 +11,7 @@
 size = Vector2(64, 64)
 
 [node name="SpaceboxBabybox" type="CharacterBody2D" unique_id=9073554]
-z_index = 104
+z_index = 121
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_bd0kd")

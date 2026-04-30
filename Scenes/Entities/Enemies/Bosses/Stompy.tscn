@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b0k5iw8d1ap4w" path="res://Scenes/Entities/Enemies/Bosses/StompyFoot.tscn" id="6_wsny0"]
 
 [node name="Stompy" type="CharacterBody2D" unique_id=1927054974]
-z_index = 114
+z_index = 125
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_asfk8")

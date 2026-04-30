@@ -30,3 +30,4 @@ func _process(delta: float) -> void:
 			elapsed = 1.0
 			GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingCutscene.tscn").instantiate())
 			get_tree().paused = true
+			queue_free()

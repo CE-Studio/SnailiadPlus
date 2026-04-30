@@ -9,10 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://drfavrb4msd46" path="res://Assets/Images/Environments/EndingSpotlight.png" id="6_u4rgk"]
 [ext_resource type="Texture2D" uid="uid://dkxwvlw8prl3c" path="res://Assets/Images/Entities/EndingMoonSnail.png" id="7_u4rgk"]
 [ext_resource type="AudioStream" uid="uid://gjmmcnxl7qkq" path="res://Assets/Sounds/Music/EndingIntro.ogg" id="8_eplnd"]
+[ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="10_ws1ke"]
 
 [sub_resource type="Animation" id="Animation_rel1c"]
 resource_name = "Moon"
 length = 30.0
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,7 +70,7 @@ tracks/4/path = NodePath("Spotlight:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 1.8, 24.25, 27.5),
+"times": PackedFloat32Array(0, 0.1, 1.8, 19, 25),
 "transitions": PackedFloat32Array(1, 1, 0.35, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0)]
@@ -80,7 +82,7 @@ tracks/5/path = NodePath("FadeCover:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 3.9, 6.2, 24, 27),
+"times": PackedFloat32Array(0, 3.9, 6.2, 22.5, 27.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
@@ -97,6 +99,35 @@ tracks/6/keys = {
 "values": [{
 "args": [0.0],
 "method": &"play"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.2, 6, 7.5, 13.5, 15, 25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0],
+"method": &"set_text"
+}, {
+"args": [],
+"method": &"fade_text"
+}, {
+"args": [1],
+"method": &"set_text"
+}, {
+"args": [],
+"method": &"fade_text"
+}, {
+"args": [2],
+"method": &"set_text"
+}, {
+"args": [],
+"method": &"fade_text"
 }]
 }
 
@@ -181,7 +212,7 @@ _data = {
 &"RESET": SubResource("Animation_ws1ke")
 }
 
-[node name="EndingCutscene" type="Node2D" unique_id=252453626 node_paths=PackedStringArray("anim", "stars", "cover", "first_moon", "spotlight")]
+[node name="EndingCutscene" type="Node2D" unique_id=252453626 node_paths=PackedStringArray("anim", "stars", "cover", "first_moon", "spotlight", "dialogue")]
 process_mode = 3
 z_index = 1000
 z_as_relative = false
@@ -191,6 +222,7 @@ stars = NodePath("StarLayer")
 cover = NodePath("FadeCover")
 first_moon = NodePath("MoonSnail0")
 spotlight = NodePath("Spotlight")
+dialogue = NodePath("Dialogue")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=624316069]
 z_index = -2
@@ -210,7 +242,9 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("4_2vmc0")]
 direction = 9
 particle_count = 16
+move_with_camera = false
 z_override = 999
+always_process = true
 
 [node name="FadeCover" type="Sprite2D" parent="." unique_id=1521657387]
 modulate = Color(0, 0, 0, 0)
@@ -219,7 +253,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_8ficc")
 
 [node name="Spotlight" type="Sprite2D" parent="." unique_id=1617582884]
-position = Vector2(200, 80)
+position = Vector2(264, 80)
 script = ExtResource("2_afgk6")
 texture_path = "res://Assets/Images/Environments/EndingSpotlight.json"
 load_autoplay = Array[String](["anim"])
@@ -231,7 +265,7 @@ script = ExtResource("3_lnog6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="MoonSnail0" type="Sprite2D" parent="." unique_id=670981982]
-position = Vector2(200, 172)
+position = Vector2(264, 172)
 script = ExtResource("2_afgk6")
 texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
 load_autoplay = Array[String](["0"])
@@ -246,7 +280,7 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="MoonSnail1" type="Sprite2D" parent="." unique_id=1798575524]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(200, 172)
+position = Vector2(264, 172)
 script = ExtResource("2_afgk6")
 texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
 load_autoplay = Array[String](["1"])
@@ -254,7 +288,7 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MoonSnail2" type="Sprite2D" parent="." unique_id=1590992189]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(200, 172)
+position = Vector2(264, 172)
 script = ExtResource("2_afgk6")
 texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
 load_autoplay = Array[String](["2"])
@@ -262,15 +296,29 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MoonSnail3" type="Sprite2D" parent="." unique_id=1305973664]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(200, 172)
+position = Vector2(264, 172)
 script = ExtResource("2_afgk6")
 texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
 load_autoplay = Array[String](["shell"])
 metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
+[node name="Dialogue" parent="." unique_id=326553468 instance=ExtResource("10_ws1ke")]
+custom_minimum_size = Vector2(400, 0)
+offset_left = 0.0
+offset_top = 32.0
+offset_right = 400.0
+offset_bottom = 176.0
+text = "     And so..."
+max_width = 400
+shadow_scale = 1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1274005023]
 libraries/ = SubResource("AnimationLibrary_ginrr")
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1532211198]
+stream = ExtResource("8_eplnd")
+bus = &"Music"
+
+[node name="DialogueBeep" type="AudioStreamPlayer" parent="." unique_id=1609405683]
 stream = ExtResource("8_eplnd")
 bus = &"Music"

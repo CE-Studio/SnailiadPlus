@@ -13,7 +13,7 @@
 size = Vector2(128, 128)
 
 [node name="Spacebox" type="CharacterBody2D" unique_id=405972433]
-z_index = 103
+z_index = 120
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_d4jgm")

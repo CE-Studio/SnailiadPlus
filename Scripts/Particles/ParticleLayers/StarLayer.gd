@@ -33,5 +33,11 @@ func _spawn_one() -> void:
 		randf_range(-WRAP_BOUNDS.y, WRAP_BOUNDS.y)
 	)
 	var target_layer:Room.Layers = Room.Layers.SKY if randf() < 0.5 else Room.Layers.BG2
-	var new_particle = Statics.spawn_particle_cam_synced(this_particle, target_layer, spawn_pos, [direction, speed_mod])
+	var new_particle:Particle
+	if move_with_camera:
+		new_particle = Statics.spawn_particle_cam_synced(this_particle,
+		target_layer, spawn_pos, [direction, speed_mod])
+	else:
+		new_particle = Statics.spawn_particle(this_particle,
+		target_layer, spawn_pos, [direction, speed_mod])
 	active_particles.append(new_particle)
