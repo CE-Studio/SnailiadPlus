@@ -60,7 +60,7 @@ text_editor/theme/highlighting/line_number_color=Color(1, 0, 0, 1)
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/gdLinter/plugin.cfg")
+enabled=PackedStringArray("res://addons/ce-tweaks/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/gdLinter/plugin.cfg")
 
 [game]
 

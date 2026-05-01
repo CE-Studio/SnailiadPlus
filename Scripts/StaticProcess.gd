@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 extends Node
 
 
@@ -46,6 +48,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not sounds_played_this_frame.is_empty():
 		sounds_played_this_frame.clear()
+	if SInput.check_input(SInput.Inputs.SPEAK, true):
+		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
 
 
 func _set_game_settings() -> void:

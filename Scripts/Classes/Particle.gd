@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/Particle.svg")
 class_name Particle
 extends Node2D

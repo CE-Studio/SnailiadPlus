@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
 class_name ToggleSnailyButton
@@ -13,7 +14,9 @@ extends SnailyButton
 
 signal button_toggled(value)
 
+## The [SnailyText] label displayed over the button
 @onready var text:SnailyText
+## The [TextureRect] that displays whether this button's corresponding setting is set to true or false
 @onready var toggle_box:TextureRect
 #endregion
 
@@ -44,5 +47,6 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 
 
+## Sets the setting text
 func set_text(_text:String) -> void:
 	text.set_snaily_text(_text)

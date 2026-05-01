@@ -1,11 +1,18 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 extends EnemyBullet
 
 
 #region Variables
+## How much time has passed since this bullet was spawned
 var elapsed:float = 0.0
+## The position at which this bullet was spawned
 var origin:Vector2 = Vector2.ZERO
+## The speed at which this bullet travels outward from the origin
 var vel_radius:float = 0.0
+## The speed at which this bullet rotates around the origin
 var vel_theta:float = 0.0
+## The initial offset applied to the theta at spawn
 var theta_offset:float = 0.0
 #endregion
 

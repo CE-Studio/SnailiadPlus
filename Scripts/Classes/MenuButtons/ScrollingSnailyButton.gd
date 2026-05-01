@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
 class_name ScrollingSnailyButton
@@ -20,11 +21,16 @@ const HOVER_ARROW_CYCLE_SPEED = 8.0
 		minimum_x = value
 		custom_minimum_size.x = minimum_x
 
+## Index into the option array representing the current selection
 var selected_option:int
+## Used to calculate and apply color oscillation to the button's arrows when hovering focus on the button
 var arrow_flash_cycle:float
+## Used to track if the mouse is currently rolled over either arrow, in order to handle mouse input to scroll
 var arrow_hover_state:Array[bool] = [ false, false ]
+## Tracks which horizontal input was last handled, to prevent incorrect repeated inputs on subsequent frames
 var scroll_state:int = 0
 
+## Set to [code]true[/code] if this button is currently in a state where options can be scrolled
 var selected:bool = false
 
 signal option_cycled(value)
@@ -32,10 +38,15 @@ signal cycled_left(value)
 signal cycled_right(value)
 signal button_pressed(value)
 
+## Header [SnailyText] drawn above the button
 @onready var header:SnailyText
+## Main body of the button
 @onready var scroller:Control
+## [SnailyText] label that displays the currently selected option
 @onready var option:SnailyText
+## Left arrow texture, used to indicate scrolling and handle mouse input
 @onready var tex_left:TextureRect
+## Right arrow texture, used to indicate scrolling and handle mouse input
 @onready var tex_right:TextureRect
 #endregion
 
@@ -128,6 +139,7 @@ func _process(delta: float) -> void:
 	super._process(delta)
 
 
+## Returns [code]true[/code] if any valid left input has been handled
 func _check_left() -> bool:
 	var norm:bool = SInput.just_pressed("left", true)
 	var ui:bool = SInput.just_pressed("ui_left", true)
@@ -135,6 +147,7 @@ func _check_left() -> bool:
 	return norm or ui or mouse
 
 
+## Returns [code]true[/code] if any valid right input has been handled
 func _check_right() -> bool:
 	var norm:bool = SInput.just_pressed("right", true)
 	var ui:bool = SInput.just_pressed("ui_right", true)
@@ -142,10 +155,14 @@ func _check_right() -> bool:
 	return norm or ui or mouse
 
 
+## Sets the header text
 func set_header(_text:String) -> void:
 	header.set_snaily_text(_text)
 
 
+## Can be called externally to force select an option. Usually called by the parent
+## [MenuLayer] on spawn to set the option in accordance with the last saved state of
+## the corresponding setting.
 func remote_set_option(value:int) -> void:
 	while value < 0:
 		value += cycle_options.size()
@@ -153,12 +170,15 @@ func remote_set_option(value:int) -> void:
 	option.set_snaily_text(cycle_options[selected_option])
 
 
+## Can be called externally to overwrite this button's existing list of options with a new one
 func remote_import_new_options(new_array:Array[String]) -> void:
 	cycle_options = new_array.duplicate()
 	selected_option %= cycle_options.size()
 	option.set_snaily_text(cycle_options[selected_option])
 
 
+## Sets this button to be in a selected state, where options can be scrolled through and
+## focus will not be shifted to horizontally adjacent [Control] nodes
 func set_selected() -> void:
 	selected = true
 	sfx_select.play()
@@ -166,6 +186,8 @@ func set_selected() -> void:
 	parent_layer.menu.read_inputs = false
 
 
+## Sets this button to no longer be in a selected state, where options will not be scrolled
+## and neighboring nodes can gain focus again
 func deselect() -> void:
 	selected = false
 	sfx_select.play()
@@ -173,17 +195,21 @@ func deselect() -> void:
 	parent_layer.menu.set_deferred("read_inputs", true)
 
 
+## Alerts the button when the mouse rolls over the left arrow
 func _on_left_mouse_entered() -> void:
 	arrow_hover_state[0] = true
 
 
+## Alerts the button when the mouse leaves the left arrow
 func _on_left_mouse_exited() -> void:
 	arrow_hover_state[0] = false
 
 
+## Alerts the button when the mouse rolls over the right arrow
 func _on_right_mouse_entered() -> void:
 	arrow_hover_state[1] = true
 
 
+## Alerts the button when the mouse leaves the right arrow
 func _on_right_mouse_exited() -> void:
 	arrow_hover_state[1] = false

@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/BGSpawner.svg")
 class_name BGSpawner
 extends Node2D

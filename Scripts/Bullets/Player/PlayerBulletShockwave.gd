@@ -1,6 +1,8 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 extends PlayerBullet
 
 
+## Used to find ground in the direction of fire
 @onready var cast:RayCast2D = $"Area2D/GroundCast"
 
 

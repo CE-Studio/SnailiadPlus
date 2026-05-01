@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @tool
 @icon("res://Editor/ico/SnailyText.svg")
 class_name SnailyText

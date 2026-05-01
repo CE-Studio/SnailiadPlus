@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
 class_name BindSnailyButton
@@ -15,23 +16,34 @@ const FOCUS_FLASH_SPEED:float = 6.5
 
 signal pressed(value:int)
 
+## Byte representation of the active state of each bind cell in this button.[br]
+## For easy readability, the byte is logged in reverse--1 (0001) represents the left cell
+## and 8 (1000) represents the right cell
 var active_buttons:int = 0
+## String representation of the control being set. This is what's displayed on the button
 var bind_str:String = ""
+## The color that the currently selected cell will flash, assuming this button has focus
 var focus_flash_color:Color = Color.WHITE
+## The time since this button was created
 var elapsed:float = 0.0
+## Tracks how many cells the mouse is currently hovering over
 var slots_moused_over:int = 0:
 	set(value):
 		slots_moused_over = value
 		mouse_over = slots_moused_over > 0
+## Tracks which horizontal input was last handled, to prevent incorrect repeated inputs on subsequent frames
 var scroll_state:int = 0
 
+## [SnailyText] component used to display which action this button is set to configure
 @onready var text:SnailyText = $"PanelContainer/HBoxContainer/Label/MarginContainer/SnailyText"
+## Reference array to the [PanelContainer] nodes for each bind cell
 @onready var bind_frames:Array[PanelContainer] = [
 	$"PanelContainer/HBoxContainer/PriKey",
 	$"PanelContainer/HBoxContainer/SecKey",
 	$"PanelContainer/HBoxContainer/PriCon",
 	$"PanelContainer/HBoxContainer/SecCon",
 ]
+## Reference array to the [SnailyText] nodes within each bind cell
 @onready var bind_icons:Array[SnailyText] = [
 	$"PanelContainer/HBoxContainer/PriKey/MarginContainer/SnailyText",
 	$"PanelContainer/HBoxContainer/SecKey/MarginContainer/SnailyText",
@@ -84,18 +96,21 @@ func _process(delta: float) -> void:
 				bind_icons[i].modulate = Color.WHITE.lerp(focus_flash_color, abs(sin(elapsed)))
 
 
+## Returns [code]true[/code] if any left input has just been pressed
 func _check_left() -> bool:
 	var norm:bool = SInput.just_pressed("left", true)
 	var ui:bool = SInput.just_pressed("ui_left", true)
 	return norm or ui
 
 
+## Returns [code]true[/code] if any right input has just been pressed
 func _check_right() -> bool:
 	var norm:bool = SInput.just_pressed("right", true)
 	var ui:bool = SInput.just_pressed("ui_right", true)
 	return norm or ui
 
 
+## Initialized each bind cell in accordance with the input this button has been set to configure
 func setup_bind_icons() -> void:
 	var events:Array = SInput.pull_action(bind)
 	var event_ptr:int = 0
@@ -121,11 +136,13 @@ func setup_bind_icons() -> void:
 		event_ptr += 1
 
 
+## Returns [code]true[/code] if the queried bind cell is selectable on this button
 func check_slot_active(slot_id:int) -> bool:
 	var bitwise_id = 1 << abs(slot_id - SLOT_COUNT + 1)
 	return bitwise_id & active_buttons > 0
 
 
+## Shifts focus to the next available leftward cell. If none are available, focus wraps
 func focus_left(iterations:int = 0) -> void:
 	parent_layer.meta_info[0] -= 1
 	if parent_layer.meta_info[0] < 0:
@@ -134,6 +151,7 @@ func focus_left(iterations:int = 0) -> void:
 		focus_left(iterations + 1)
 
 
+## Shifts focus to the next available rightward cell. If none are available, focus wraps
 func focus_right(iterations:int = 0) -> void:
 	parent_layer.meta_info[0] += 1
 	if parent_layer.meta_info[0] >= SLOT_COUNT:
@@ -142,6 +160,7 @@ func focus_right(iterations:int = 0) -> void:
 		focus_right(iterations + 1)
 
 
+## Ensures focus properly lands on the nearest available cell when this button gains focus
 func _on_focus() -> void:
 	super()
 	if Engine.is_editor_hint() or not parent_layer:
@@ -154,6 +173,7 @@ func _on_focus() -> void:
 			focus_left()
 
 
+## Ensures the highlight flash returns to white when this button loses focus
 func _on_exit_focus() -> void:
 	super()
 	if Engine.is_editor_hint():
@@ -163,6 +183,7 @@ func _on_exit_focus() -> void:
 		icon.modulate = Color.WHITE
 
 
+## Called when the mouse rolls over slot 0 (left) and alerts the button and parent layer
 func _on_mouse_entered_0() -> void:
 	if check_slot_active(0):
 		parent_layer.meta_info[0] = 0
@@ -173,6 +194,7 @@ func _on_mouse_entered_0() -> void:
 	slots_moused_over += 1
 
 
+## Called when the mouse rolls over slot 1 (middle-left) and alerts the button and parent layer
 func _on_mouse_entered_1() -> void:
 	if check_slot_active(1):
 		parent_layer.meta_info[0] = 1
@@ -183,6 +205,7 @@ func _on_mouse_entered_1() -> void:
 	slots_moused_over += 1
 
 
+## Called when the mouse rolls over slot 2 (middle-right) and alerts the button and parent layer
 func _on_mouse_entered_2() -> void:
 	if check_slot_active(2):
 		parent_layer.meta_info[0] = 2
@@ -193,6 +216,7 @@ func _on_mouse_entered_2() -> void:
 	slots_moused_over += 1
 
 
+## Called when the mouse rolls over slot 3 (right) and alerts the button and parent layer
 func _on_mouse_entered_3() -> void:
 	if check_slot_active(3):
 		parent_layer.meta_info[0] = 3
@@ -203,5 +227,6 @@ func _on_mouse_entered_3() -> void:
 	slots_moused_over += 1
 
 
+## Called when the mouse exits any cell
 func _on_mouse_exit_slot() -> void:
 	slots_moused_over -= 1

@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @tool
 @icon("res://Editor/ico/SnailyButton.svg")
 class_name ActionSnailyButton
@@ -11,6 +12,7 @@ extends SnailyButton
 
 signal button_pressed(value)
 
+## [SnailyText] component
 @onready var text:SnailyText
 #endregion
 
@@ -40,5 +42,6 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 
 
+## Sets the button text
 func set_text(_text:String) -> void:
 	text.set_snaily_text(_text)

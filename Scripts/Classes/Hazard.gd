@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/Hazard.svg")
 class_name Hazard
 extends Area2D

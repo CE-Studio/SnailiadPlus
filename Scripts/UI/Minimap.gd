@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 @icon("res://Editor/ico/Minimap.svg")
 class_name Minimap
 extends Node2D

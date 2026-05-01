@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/CutsceneControllable.svg")
 @abstract class_name CutsceneControllable
 extends Node2D
@@ -7,9 +8,12 @@ extends Node2D
 @export var identifier:StringName
 
 
+## Tracks all currently active cutscene actors
 static var actors:Array[CutsceneControllable] = []
 
 
+## Returns if the player is within the top half of the screen
+## @deprecated
 func is_in_top_half_of_screen() -> bool:
 	return Input.is_action_pressed(&"debug")
 

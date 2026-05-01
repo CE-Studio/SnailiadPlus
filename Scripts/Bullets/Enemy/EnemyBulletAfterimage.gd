@@ -1,10 +1,13 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name EnemyBulletAfterimage
 extends EnemyBullet
 
 const DAMAGE_MULT:float = 0.25
 const MAX_LIFE_TIME:float = 0.3
 
+## How long it takes the sprite to fade out
 var fade_time:float = MAX_LIFE_TIME
+## A boolean inferred from the game settings that controls how opaque the afterimage is upon spawning
 var opaque:bool = ProjectSettings.get_setting("game/visuals/opaque_afterimages")
 
 @onready var _sprite:Sprite2D = $"Sprite2D"

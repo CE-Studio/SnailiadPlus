@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("uid://el86xs2vjg0b")
 @tool
 class_name CameraBorder
@@ -12,7 +13,10 @@ extends Path2D
 
 const EDITOR_BORDER_WIDTH:int = 3
 
+## Array that tracks the original positions of all points in the border, in order to properly
+## offset each point for different aspect ratios.
 var point_origins:Array[Vector2i] = []
+## Ensures that the curve remains intact while in the editor
 var last_state:Curve2D = curve
 
 
@@ -40,6 +44,7 @@ func _process(_delta: float) -> void:
 				queue_redraw()
 
 
+## Rebuilds the border in accordance with any offsets required by the current aspect ratio
 func replot_points(offsets:Vector2i) -> void:
 	curve.clear_points()
 	for i in range(point_origins.size()):
@@ -50,12 +55,14 @@ func replot_points(offsets:Vector2i) -> void:
 		curve.add_point(point_origins[i] + Vector2i(offsets * normalized_offset * 0.5))
 
 
+## Returns the closest point along the border to the input point in world space
 func get_closest_point_to(pos:Vector2) -> Vector2:
 	if Geometry2D.is_point_in_polygon(pos, curve.get_baked_points()):
 		return Vector2(pos)
 	return curve.get_closest_point(pos)
 
 
+## Returns the lowest and highest points along both axes that the border reaches
 func get_bound_extremes() -> Vector4:
 	var lower:Vector2 = Vector2(999999, 999999)
 	var upper:Vector2 = Vector2(-999999, -999999)
@@ -72,6 +79,7 @@ func get_bound_extremes() -> Vector4:
 	return Vector4(lower.x, lower.y, upper.x, upper.y)
 
 
+## Returns the size of the smallest rectangle that fully encloses the border
 func get_bound_size() -> Vector2:
 	var bounds = get_bound_extremes()
 	return Vector2(
@@ -80,6 +88,7 @@ func get_bound_size() -> Vector2:
 	)
 
 
+## Returns the center of the border in world space relative to its extremes
 func get_center() -> Vector2:
 	var bounds = get_bound_extremes()
 	return Vector2(

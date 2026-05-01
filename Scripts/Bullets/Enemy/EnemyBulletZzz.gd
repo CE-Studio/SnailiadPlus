@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 extends EnemyBullet
 
 
@@ -7,12 +9,17 @@ const THETA_AMPLITUDE:float = 14.0
 const WIGGLE_THRESHOLD:float = 0.5
 const WIGGLE_SCALE:float = 3.0
 
+## The position this bullet is set to rest before properly firing at the player
 var target_position:Vector2 = Vector2.ZERO
+## How long it takes for the bullet to target and move toward the player
 var fire_delay:float = 3.0
+## Used to calculate and apply vertical oscillation before being fired
 var theta:float = 0.0
+## Whether or not this bullet has "fired," or targeted and started pursuing the player
 var fired:bool = false
+## Used as a substitute for this bullet's Y position when moving toward the target, to negate vertical oscillation
 var base_y:float = 0.0
-
+## Additional [AudioStreamPlayer] played when this bullet fires
 @onready var sfx_fire:AudioStreamPlayer = $"AudioGroup/ActuallyShoot"
 
 

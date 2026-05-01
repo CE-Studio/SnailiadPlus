@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/EnvironmentArea.svg")
 class_name EnvironmentArea
 extends Area2D

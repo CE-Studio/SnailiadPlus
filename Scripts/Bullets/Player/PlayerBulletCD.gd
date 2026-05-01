@@ -1,8 +1,12 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 extends PlayerBullet
 
 
 const RETURN_THRESHOLD:float = 1.5
+## Set to true when this bullet starts to return to the player
 var is_returning:bool = false
+## Player
 var player:Player
 
 

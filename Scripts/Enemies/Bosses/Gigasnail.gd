@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 class_name Gigasnail
 extends Boss
 
@@ -259,7 +261,8 @@ func kill() -> void:
 		Statics.spawn_particle("ExplosionBossDefeat",
 			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
 		GameCore.instance.music_manager.stop_all(true)
-		SInput.read_inputs = false
+		#SInput.read_inputs = false
+		PauseLayer.suppress_menuing = true
 		Statics.increment_igt = false
 		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
 	else:

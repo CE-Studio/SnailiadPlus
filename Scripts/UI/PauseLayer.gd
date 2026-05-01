@@ -1,9 +1,13 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name PauseLayer
 extends Node2D
 
 
 #region Variables
 var subscreen:Subscreen = null
+
+## If [code]true[/code], will prevent any menu from being opened even when the player has control.
+static var suppress_menuing:bool = false
 
 @onready var cam:UICore = UICore.instance
 @onready var game:GameCore = GameCore.instance
@@ -18,6 +22,8 @@ func _physics_process(_delta: float) -> void:
 		cam = UICore.instance
 	if not game and GameCore.instance:
 		game = GameCore.instance
+	if suppress_menuing:
+		return
 	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
 		add_child(menu_scene.instantiate())

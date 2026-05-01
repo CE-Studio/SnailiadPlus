@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/JsonSprite2D.svg")
 class_name JsonSprite2D
 extends Sprite2D

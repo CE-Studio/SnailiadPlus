@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name CamControl
 extends Node2D
 
@@ -22,6 +23,7 @@ var shake_offset:Vector2 = Vector2.ZERO
 var do_screen_shake:bool = true
 var shake_cam_only:bool = false
 var last_pos:Vector2 = Vector2.ZERO
+var last_non_static_pos:Vector2 = Vector2.ZERO
 
 #region New follow vars
 const NF_OFFSET_MAX:Vector2 = Vector2(40.0, 32.0)
@@ -197,3 +199,12 @@ func reset_new_follow() -> void:
 	nf_delay_timer = 0
 	nf_return_timer = NF_OFFSET_RETURN_DELAY
 	#nf_offset = Vector2.ZERO
+
+
+func set_to_static_pos() -> void:
+	last_non_static_pos = UICore.instance.position
+	UICore.instance.position = Vector2.ZERO
+
+
+func reset_from_static_pos() -> void:
+	UICore.instance.position = last_non_static_pos

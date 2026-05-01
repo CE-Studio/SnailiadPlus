@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 extends Node2D
 
 
@@ -27,9 +29,12 @@ var dialogue_visible:bool = false
 @export var first_moon:JsonSprite2D
 @export var spotlight:JsonSprite2D
 @export var dialogue:SnailyText
+@export var sfx_dialogue:AudioStreamPlayer
 
 
 func _ready() -> void:
+	UICore.instance.cam.set_to_static_pos()
+	GameCore.instance.music_manager.stop_all()
 	cover.modulate.a = 1.0
 	first_moon.modulate.a = 0.0
 	spotlight.modulate.a = 0.0
@@ -53,6 +58,7 @@ func _process(delta: float) -> void:
 				this_char = target_str[current_char]
 				dialogue.set_snaily_text(dialogue.text + this_char)
 				current_char += 1
+			sfx_dialogue.play()
 		else:
 			char_timeout -= delta
 

@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 @icon("res://Editor/ico/MenuLayer.svg")
 class_name MenuLayer
 extends Node2D

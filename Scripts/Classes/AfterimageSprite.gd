@@ -1,14 +1,21 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name AfterimageSprite
 extends Sprite2D
 
 
+## The alpha (from 0.0 to 1.0) that this sprite starts at
 var start_a:float = 1.0
+## The alpha (from 0.0 to 1.0) that this sprite should approach over its lifetime
 var end_a:float = 0.0
+## How long it should take in seconds for this sprite to fade to its target alpha
 var fade_time:float = 1.0
 
+## How much time in seconds has passed since this sprite was spawned
 var elapsed:float = 0.0
 
 
+## Properly initializes this sprite with whatever alpha, fade time, and other configurations
+## are required
 func setup(_source_sprite:JsonSprite2D, _frame_coords:Vector2i, _start_a:float, _end_a:float, _fade_time:float, _z:int) -> void:
 	texture = _source_sprite.texture
 	hframes = _source_sprite.hframes
