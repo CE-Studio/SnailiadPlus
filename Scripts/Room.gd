@@ -20,7 +20,7 @@ extends Node2D
 @export var center_parallax_maps:bool = false
 @export var minimap_offset:Vector2i = Vector2i.ZERO
 @export var minimap_autofill:Array[Vector2i] = []
-@export var song_change:MusicManager.Loops = MusicManager.Loops.None
+@export var song_change:MusicManager.Loops = MusicManager.Loops.NONE
 @export var play_song_on_enter:bool = true
 @export var display_room:bool = false
 
@@ -160,7 +160,7 @@ func spawn(_spawn_all:bool) -> void:
 				fake_border.call_deferred("instance")
 				fake_border.original_room_name = room_path
 
-	if song_change != MusicManager.Loops.None and play_song_on_enter:
+	if song_change != MusicManager.Loops.NONE and play_song_on_enter:
 		GameCore.instance.music_manager.play_song(song_change)
 
 	if center_parallax_maps:

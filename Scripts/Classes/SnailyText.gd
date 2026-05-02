@@ -27,14 +27,21 @@ extends RichTextLabel
 const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
 
+## Quick reference to the font file
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
+## The color of the text shadow/border
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
 
+## No idea
+## @deprecated
 var char_timeouts:Array[float] = []
+## Internal copy of whatever [String] is being displayed, before any special parsing occurs
 var internal_text:String = ""
 
+## Array containing any additional label components used for shadows or borders
 @onready var sub_text:Array[RichTextLabel] = []
+## Array containing the positional offsets for each child text node
 @onready var sub_text_offsets:Array = []
 #endregion
 
@@ -49,6 +56,7 @@ func _ready() -> void:
 			add_border(border_scale)
 
 
+## Sets the displayed text to the new [String]
 func set_snaily_text(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
@@ -57,6 +65,7 @@ func set_snaily_text(_text:String) -> void:
 	reset_label_size.call_deferred()
 
 
+## Sets the text alignment
 func set_alignment(horiz:int, vert:int) -> void:
 	horizontal_alignment = horiz as HorizontalAlignment
 	vertical_alignment = vert as VerticalAlignment
@@ -65,6 +74,7 @@ func set_alignment(horiz:int, vert:int) -> void:
 		sub_label.vertical_alignment = vert as VerticalAlignment
 
 
+## Recalculates the label's size based on the set maximum size and text contained within
 func reset_label_size() -> void:
 	var longest_line = get_width()
 	var scale_mod = float(text_scale) * 0.5
@@ -79,16 +89,20 @@ func reset_label_size() -> void:
 		sub_text[i].position = sub_text_offsets[i]
 
 
+## Seems to have once been meant to center the text? Doesn't seem finished
+## @deprecated
 func center_position() -> void:
 	position.x = custom_minimum_size.x * -0.5
 
 
+## Frees all child text nodes, removing active shadows and borders
 func clear_sub_text() -> void:
 	for sub_label in sub_text:
 		sub_label.queue_free()
 	sub_text_offsets.clear()
 
 
+## Adds a shadow, offset down-right from the main text by the given number of pixels
 func add_shadow(distance:int) -> void:
 	var shadow = create_new_label()
 	shadow.modulate = shadow_color
@@ -98,6 +112,8 @@ func add_shadow(distance:int) -> void:
 	sub_text_offsets.append(offset)
 
 
+## Adds a border made of four chid text nodes offset in each cardinal direction from the main text
+## by the given number of pixels
 func add_border(distance:int) -> void:
 	for i in range(4):
 		var border_part = create_new_label()
@@ -113,6 +129,7 @@ func add_border(distance:int) -> void:
 		sub_text_offsets.append(offset)
 
 
+## Instances and sets up a new [RichTextLabel] for use as a child
 func create_new_label() -> RichTextLabel:
 	var new_label = RichTextLabel.new()
 	add_child(new_label)
@@ -133,18 +150,21 @@ func create_new_label() -> RichTextLabel:
 	return new_label
 
 
+## Sets the number of visible characters this text can display
 func set_visible_chars_count(count:int) -> void:
 	visible_characters = count
 	for sub_label in sub_text:
 		sub_label.visible_characters = count
 
 
+## Sets the number of visible characters this text can display based on a ratio from 0.0 to 1.0
 func set_visible_chars_ratio(ratio:float) -> void:
 	visible_ratio = clamp(ratio, 0.0, 1.0)
 	for sub_label in sub_text:
 		sub_label.visible_ratio = clamp(ratio, 0.0, 1.0)
 
 
+## Returns the maximum width of this text object, inferred from the longest line of text
 func get_width(_text:String = text) -> int:
 	var longest_line = 0
 	var lines = internal_text.split("\n")
@@ -155,6 +175,8 @@ func get_width(_text:String = text) -> int:
 	return longest_line
 
 
+## Parses custom tags for things like control inputs, converting them into a format that can be
+## read and handled by BBcode
 func format_extra_tags(_text:String) -> String:
 	var split_words:PackedStringArray = _text.split(" ")
 	var reassembled_str:PackedStringArray = []

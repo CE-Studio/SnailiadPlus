@@ -16,6 +16,7 @@ enum ElementTypes {
 	NONE = -1
 }
 
+## Tracks whether or not the player is currently intersecting this hazard
 var intersecting_player:bool = false
 #endregion
 

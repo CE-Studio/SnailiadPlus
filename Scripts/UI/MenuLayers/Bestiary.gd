@@ -64,24 +64,41 @@ const ENTRIES:Array = [
 	#Enemy.EnemyTypes.GIGASNAIL_RUSH,
 ]
 
+## The home menu layer
 var parent_layer:MenuLayer
+## The color that all menu text should use by default
 var text_color:Color = Statics.get_color(Vector2i(0, 4))
+## Array holding all selectable text entries on the left side of the menu
 var list_items:Array[SnailyText] = []
+## Array holding the entity names corresponding with the same entries in the [SnailyText] array
 var entity_list:Array[String] = []
+## Array tracking which entries have been discovered
 var entry_states:Array[bool] = []
+## Time in seconds since this menu was spawned. Used to cycle the selection icon and color
 var elapsed:float = 0.0
+## Quick reference to the currently selected [SnailyText]
 var focused_text:SnailyText = null
+## Home X position of the selector icon, which it will oscillate around
 var selector_origin_x:float = 0.0
+## Tracks which item in the menu list is currently selected
 var selection:int = 0
 
 
+## Quick reference to the custom text scene
 @onready var text_scene:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
+## Container holding all selectable text
 @onready var scroll_list:VBoxContainer = $"ScrollPanel/EntityList"
+## Sound that plays when an item in the list is selected
 @onready var sfx_beep:AudioStreamPlayer = $"Beep"
+## Icon used to mark which item is currently selected
 @onready var selector:Node2D = $"Selector"
+## Text for displaying the currently selected enemy's name
 @onready var name_text:SnailyText = $"Name"
+## Text for displaying the currently selected enemy's description
 @onready var desc_text:SnailyText = $"Description"
+## Array holding all enemy objects that were spawned when selecting a given item
 @onready var display_enemies:Array[Enemy] = []
+## Point in space at which to spawn enemies
 @onready var enemy_spawn:Node2D = $"EntityOrigin"
 #endregion
 
@@ -157,6 +174,7 @@ func _process(delta: float) -> void:
 	)
 
 
+## Called whenever an item in the list is selected
 func _on_text_focused() -> void:
 	focused_text = get_viewport().gui_get_focus_owner()
 	sfx_beep.play()
@@ -164,6 +182,7 @@ func _on_text_focused() -> void:
 	_update_entry_display()
 
 
+## Updates the name/description text and displayed enemy when selecting a new item
 func _update_entry_display() -> void:
 	if display_enemies.size() > 0:
 		for enemy in display_enemies:
@@ -177,6 +196,7 @@ func _update_entry_display() -> void:
 		spawn_display_entity(this_entity)
 
 
+## Handles any special cases for adding multi-part entities
 func spawn_display_entity(entity:String) -> void:
 	match entity:
 		"babyfish":
@@ -247,6 +267,7 @@ func spawn_display_entity(entity:String) -> void:
 			general_enemy.position = Vector2.ZERO
 
 
+## Spawns the given entity in display mode
 func spawn_entity(entity:String) -> Enemy:
 	entity = entity.to_pascal_case()
 	var new_enemy:Enemy = null
@@ -260,6 +281,7 @@ func spawn_entity(entity:String) -> Enemy:
 	return new_enemy
 
 
+## Returns the displayed string representation of the name of the given internal name
 func _get_name(key:String) -> StringName:
 	match key:
 		"spikeyCommon": return tr(&"Spikey (blue)")
@@ -308,6 +330,7 @@ func _get_name(key:String) -> StringName:
 	return tr(&"Unrecognized")
 
 
+## Returns the displayed description for the entity of the given internal name
 func _get_desc(key:String) -> StringName:
 	match key:
 		"spikeyCommon": return tr(&"Habitat: diverse (M.Carelia)\nDemeanour: reserved\nTexture: prickly\n\nThese small creatures wander the surfaces of their homes, looking for plants to eat.  They don't like to be bothered much, so they've developed spiky shells to discourage hugs.")

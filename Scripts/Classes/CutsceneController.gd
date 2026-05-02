@@ -11,48 +11,70 @@ enum Status {
 }
 
 
+## The currently active instance of the [CutsceneController] class
 static var instance:CutsceneController
+## Fallback actor to reference during cutscenes, usually set as whichever actor started a cutscene
 static var object_id:String
+## The actor currently being targeted for action calls
 static var active_object_id:String
+## The current [DialogueResource] script attached to the active cutscene
 static var current_scene:DialogueResource
+## The current [AnimationPlayer] tied to the active cutscene
 static var current_animator:AnimationPlayer
+## Set to [code]true[/code] if a cutscene is currently active
 static var running := false
+## Records whether or not the dialogue box is currently open
 static var _boxtrack := false
 
+## A small arrow texture drawn on the dialogue box when advancing dialogue is available
 @onready var advancearrow: Control = $CanvasLayer/Control/text/PanelContainer/advancearrow
+## Marks the screen position the dialogue box should rest at when in the top half of the screen
 @onready var toptargpos:Control = $CanvasLayer/Control/toptargpos
+## Marks the screen position the dialogue box should rest at when in the bottom half of the screen
 @onready var bottargpos:Control = $CanvasLayer/Control/bottargpos
+## A small icon that shows whenever a cutscene currently has control over the player
 @onready var notif:TextureRect = $CanvasLayer/TextureRect
+## The text component of the dialogue box
+## @deprecated
 @onready var textbox:Control = $CanvasLayer/Control/text
+## The sprite component of the dialogue box
 @onready var textbg:Sprite2D = $CanvasLayer/Control/text/PanelContainer/Sprite2D
+## The animation component that makes the dialogue box appear and disappear
 @onready var effects:AnimationPlayer = $effects
+## Plays a sound whenever a new character is added to the dialogue box
 @onready var sound:AudioStreamPlayer = $AudioStreamPlayer
+## The text component of the dialogue box
 @onready var texlabel:DialogueLabel  = $CanvasLayer/Control/text/PanelContainer/HBoxContainer/VBoxContainer/DialogueLabel
 
 
+## Adds the given flag to this instance's flag array
 static func store_flag(flag:StringName) -> void:
 	assert(flag.is_valid_ascii_identifier(), "Invalid flag name!")
 	if is_instance_valid(instance):
 		instance.set_meta(flag, true)
 
 
+## Removes the given flag from this instance's flag array
 static func clear_flag(flag:StringName) -> void:
 	if is_instance_valid(instance):
 		instance.set_meta(flag, null)
 
 
+## Checks if the given flag is currently within this instance's flag array
 static func has_flag(flag:StringName) -> bool:
 	if is_instance_valid(instance):
 		return instance.has_meta(flag)
 	return false
 
 
+## Saves the current instance's flag array
 static func save_flags() -> Array[StringName]:
 	if is_instance_valid(instance):
 		return instance.get_meta_list()
 	return []
 
 
+## Loads the current instance's flag array
 static func load_flags(flags:Array[StringName]) -> void:
 	if is_instance_valid(instance):
 		var old_flags := instance.get_meta_list()
@@ -75,6 +97,8 @@ func _ready() -> void:
 	instance = self
 
 
+## Standalone process subroutine for the dialogue box. Called once to open it, after which
+## it rains open until it exhausts all dialogue in the current cutscene script
 static func _process_dia() -> void:
 	if not is_instance_valid(instance):
 		return
@@ -105,6 +129,7 @@ static func _process_dia() -> void:
 	unlock_input()
 
 
+## Shows the dialogue box
 static func show_textbox() -> void:
 	if is_instance_valid(instance):
 		if not _boxtrack:
@@ -113,6 +138,7 @@ static func show_textbox() -> void:
 			await instance.effects.animation_finished
 
 
+## Hides the dialogue box
 static func hide_textbox() -> void:
 	if is_instance_valid(instance):
 		if _boxtrack:
@@ -121,22 +147,26 @@ static func hide_textbox() -> void:
 			await instance.effects.animation_finished
 
 
+## Revokes control from the player by marking the input flag for an active cutscene as true
 static func lock_input() -> void:
 	SInput.cutscene_has_control = true
 	if is_instance_valid(instance):
 		instance.notif.visible = true
 
 
+## Returns control to the player by marking the input flag for an active cutscene as false
 static func unlock_input() -> void:
 	SInput.cutscene_has_control = false
 	if is_instance_valid(instance):
 		instance.notif.visible = false
 
 
+## Marks the given actor as the currently active object, making it able to receive action calls
 static func set_actor(actor:String) -> void:
 	active_object_id = actor
 
 
+## Passes an action call to the currently active actor, which it will handle in its own script
 static func perform_action(action:String, force:bool) -> void:
 	var actor := get_actor(active_object_id)
 	if not is_instance_valid(actor):
@@ -144,6 +174,7 @@ static func perform_action(action:String, force:bool) -> void:
 	actor.perform_action(action, force)
 
 
+## Finds and returns an actor based on its [String] identifier
 static func get_actor(id:String) -> CutsceneControllable:
 	for i in CutsceneControllable.actors:
 		if i.identifier == id:
@@ -151,6 +182,7 @@ static func get_actor(id:String) -> CutsceneControllable:
 	return null
 
 
+## Returns [code]true[/code] if the given actor is to the left of the given X position
 static func actor_left_of(id:String, x:float) -> bool:
 	var actor:CutsceneControllable = get_actor(id)
 	if not is_instance_valid(actor):
@@ -158,6 +190,7 @@ static func actor_left_of(id:String, x:float) -> bool:
 	return actor.position.x < x
 
 
+## Returns [code]true[/code] if the given actor is to the right of the given X position
 static func actor_right_of(id:String, x:float) -> bool:
 	var actor:CutsceneControllable = get_actor(id)
 	if not is_instance_valid(actor):
@@ -165,6 +198,7 @@ static func actor_right_of(id:String, x:float) -> bool:
 	return actor.position.x > x
 
 
+## Returns [code]true[/code] if the given actor is above the given Y position
 static func actor_above(id:String, y:float) -> bool:
 	var actor:CutsceneControllable = get_actor(id)
 	if not is_instance_valid(actor):
@@ -172,6 +206,7 @@ static func actor_above(id:String, y:float) -> bool:
 	return actor.position.y < y
 
 
+## Returns [code]true[/code] if the given actor is below the given Y position
 static func actor_below(id:String, y:float) -> bool:
 	var actor:CutsceneControllable = get_actor(id)
 	if not is_instance_valid(actor):
@@ -179,6 +214,7 @@ static func actor_below(id:String, y:float) -> bool:
 	return actor.position.y > y
 
 
+## Begins a cutscene in accordance with the given dialogue resource
 static func start(dia:DialogueResource, anim:AnimationPlayer, initiator:String) -> void:
 	if running:
 		return
@@ -190,6 +226,7 @@ static func start(dia:DialogueResource, anim:AnimationPlayer, initiator:String) 
 	_process_dia()
 
 
+## Plays an animation in this instance's attached [AnimationPlayer]
 static func trigger_animation(anim:String, wait:bool) -> void:
 	if is_instance_valid(instance):
 		if instance.current_animator.has_animation(anim):
@@ -198,6 +235,7 @@ static func trigger_animation(anim:String, wait:bool) -> void:
 				await instance.current_animator.animation_finished
 
 
+## Plays an animation in this instance's attached [AnimationPlayer] in reverse
 static func trigger_animation_backwards(anim:String, wait:bool) -> void:
 	if is_instance_valid(instance):
 		if instance.current_animator.has_animation(anim):
@@ -206,21 +244,25 @@ static func trigger_animation_backwards(anim:String, wait:bool) -> void:
 				await instance.current_animator.animation_finished
 
 
+## Sets the color of the dialogue box
 static func set_textbox_color(_col:String) -> void:
 	if is_instance_valid(instance):
 		instance.textbg.self_modulate = Color(_col)
 
 
+## Returns the dialogue box to a default color
 static func reset_textbox_color() -> void:
 	if is_instance_valid(instance):
 		instance.textbg.self_modulate = Color("#004457")
 
 
+## Sets the frame shape of the dialogue box
 static func set_textbox_frame(_frame:int) -> void:
 	if is_instance_valid(instance):
 		instance.textbg.id = _frame
 
 
+## Sets the dialogue box's color and shape to one of six presets based on the player character requested
 static func set_textbox_player_preset(_player:Player.Players) -> void:
 	match _player:
 		Player.Players.SNAILY:
@@ -243,24 +285,30 @@ static func set_textbox_player_preset(_player:Player.Players) -> void:
 			set_textbox_frame(0)
 
 
+## Focuses the camera on a specific point in world space, which it will focus on until given a new target
 static func set_camera_focus_pos(_position:Vector2) -> void:
 	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_POINT, _position)
 
 
+## Focuses the camera on a specific node, which it will track until given a new target
 static func set_camera_focus_node(_node:Node2D) -> void:
 	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_ENTITY, _node)
 
 
+## Focuses the camera on the player, returning it to default follow behavior
 static func set_camera_focus_player() -> void:
 	UICore.instance.cam.set_cam_mode()
 
 
+## Retrieves a default dialogue sound to use based on a numerical NPC identifier
 static func _idmod(id:int) -> int:
 	if id == 39:
 		return 4
 	return id % 4
 
 
+## Sets the sound played when drawing dialogue to a given [AudioStream] based on its filename.
+## Can also set a default sound based on a numerical identifier 
 static func set_sound(id := "-1") -> void:
 	if is_instance_valid(instance):
 		const pth := "res://Assets/Sounds/Sfx"
@@ -288,6 +336,7 @@ static func set_sound(id := "-1") -> void:
 			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
 
 
+## Called whenever a dialogue sound is played
 func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
 	if sound.playing:
 		return

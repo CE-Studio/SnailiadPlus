@@ -13,25 +13,45 @@ const SHAKE_VARIANCE:float = 2.0
 const INTRO_FILL_TIME:float = 1.5
 const OUTRO_SHAKE:float = 2.0
 
+## The boss that this health bar is connected to
 var boss:Boss = null
+## Delay timer that must zero out before the secondary bar starts to decrease
 var damage_update_timeout:float = 0.0
+## A timer that controls the fill-up animation played when the bar is first created
 var intro_fill:float = 0.0
-var name_shake_time:float = 0.0
+## If [code]true[/code], the bar will randomly bump its position by a random amount when damage is
+## received. This value is controlled by the sprite's JSON and can be disabled there if the spritesheet
+## contains a shake animation
 var programmatic_shake:bool = true
+## Will be set to [code]true[/code] if the bar is shaking as part of the boss' death animation
 var outro_shake:bool = false
+## The original position at creation of the parent node of the "defeated!" text
 var defeated_origin:Vector2 = Vector2.ZERO
 
+## The main sprite representing the frame of the bar
 @onready var frame:JsonSprite2D = $"Frame"
+## The sprite representing the main bar, which always updates when damage is received
 @onready var main:JsonSprite2D = $"Frame/BarMainMask/BarMain"
+## The supplimentary sprite that masks the main bar out
 @onready var main_mask:JsonSprite2D = $"Frame/BarMainMask"
+## The sprite representing the secondary damage bar, which hangs at the previous health value
+## until enough time has passed
 @onready var damaged:JsonSprite2D = $"Frame/BarDamagedMask/BarDamaged"
+## The supplimentary sprite the masks the damage bar out
 @onready var damaged_mask:JsonSprite2D = $"Frame/BarDamagedMask"
+## The text component that displays the boss' name
 @onready var boss_name:SnailyText = $"BossName/HBox/SnailyText"
+## The container for the boss name text
 @onready var boss_name_container:Node2D = $"BossName"
+## The text component that displays "defeated!"
 @onready var defeated:SnailyText = $"Defeated/HBox/SnailyText"
+## The container for the defeated text
 @onready var defeated_container:Node2D = $"Defeated"
+## The sound that plays when the bar is filling up initially
 @onready var sfx_beep:AudioStreamPlayer = $"AudioGroup/Beep"
+## The sound that plays when the bar has finished filling up
 @onready var sfx_full:AudioStreamPlayer = $"AudioGroup/Full"
+## Drives the appear and defeat animations
 @onready var anim:AnimationPlayer = $"AnimationPlayer"
 #endregion
 
@@ -51,6 +71,8 @@ func _ready() -> void:
 			programmatic_shake = shake
 
 
+## Connects an active [Boss] to this health bar and sets the displayed representation of their
+## name to the [SnailyText]
 func instance(_boss:Boss) -> void:
 	boss = _boss
 	var _name:String = Enemy.EnemyTypes.keys()[_boss.my_type]
@@ -71,6 +93,7 @@ func instance(_boss:Boss) -> void:
 	defeated.set_snaily_text(tr(&"Defeated!!"))
 
 
+## Hands control of this bar to a new [Boss] without needing to create an entirely new bar
 func pass_control(new_boss:Boss) -> void:
 	boss = new_boss
 	boss.health_bar = self
@@ -101,10 +124,12 @@ func _process(delta: float) -> void:
 
 
 #region AnimationPlayer functions
+## Sets the intro fill timer. It will automatically begin to decrease and fill the bar
 func _begin_intro_fill() -> void:
 	intro_fill = INTRO_FILL_TIME
 
 
+## Ends the intro fill animation
 func _end_intro_fill() -> void:
 	intro_fill = 0.0
 	_update_main(0)
@@ -113,15 +138,18 @@ func _end_intro_fill() -> void:
 	sfx_full.play()
 
 
+## Disables the intro state of the connected boss
 func _enable_boss() -> void:
 	if boss:
 		boss.intro_delay = false
 
 
+## Plays a lightened version of the fill animation if this bar was previously passed to a new [Boss]
 func _refill() -> void:
 	anim.play("Refill")
 
 
+## Enables or disables the outro shake effect
 func _toggle_outro_shake(lite:bool = false) -> void:
 	outro_shake = not outro_shake
 	if outro_shake:
@@ -133,12 +161,14 @@ func _toggle_outro_shake(lite:bool = false) -> void:
 		defeated_container.position = defeated_origin
 
 
+## Safely frees this bar and opens all boss doors
 func _despawn() -> void:
 	UICore.instance.clear_boss_bar()
 	GameCore.instance.current_room.open_all_boss_doors()
 #endregion
 
 
+## Updates the position of the main and damage bars according to the health of the connected [Boss]
 func update() -> void:
 	_update_main()
 	damage_update_timeout = DAMAGE_UPDATE_TIMEOUT
@@ -148,20 +178,24 @@ func update() -> void:
 	main.action = "bar_main_damage"
 
 
+## Plays the sound set when filling the bar
 func play_beep() -> void:
 	sfx_beep.play()
 
 
+## Updates the position of the main bar
 func _update_main(value:float = _get_bar_pos_from_health()) -> void:
 	main_mask.position.x = value
 	main.position.x = -value
 
 
+## Updates the position of the damage bar
 func _update_damaged(value:float) -> void:
 	damaged_mask.position.x = value
 	damaged.position.x = -value
 
 
+## Returns an X position for the bar masks based on what the connected [Boss]'s health and max health are
 func _get_bar_pos_from_health() -> float:
 	if not boss:
 		return WIDTH * 0.5
@@ -171,5 +205,6 @@ func _get_bar_pos_from_health() -> float:
 	return -WIDTH + ceili(ratio * WIDTH)
 
 
+## Returns an X position for the bar masks based on a float value from 0.0 to 1.0
 func _get_bar_pos_from_ratio(ratio:float) -> float:
 	return -WIDTH + ceili(ratio * WIDTH)

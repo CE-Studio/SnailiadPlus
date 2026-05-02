@@ -8,12 +8,15 @@ extends Node2D
 @export_file("*.tscn") var exit_room:String
 @export var exit_transition:int
 
-
+## The collidable area component of this trigger
 @onready var area:Area2D = $"Area2D"
+## The marker the player will spawn relative to if exiting a transition through this trigger
 @onready var exit_marker:Marker2D = $"Marker2D"
 
-
-var not_exiting := true
+## Set as long as the player has not entered this area. As soon as the player enters and the spawn
+## buffer has elapsed, this is set to [code]false[/code]
+var not_exiting:bool = true
+## The amount of frames this trigger will wait before detecting any sort of player collision
 var spawn_buffer_frames:int = 4
 
 
@@ -29,6 +32,7 @@ func _process(_delta: float) -> void:
 		spawn_buffer_frames -= 1
 
 
+## Called when the player enters this trigger's area
 func _on_player_enter(_area):
 	if exit_room != "" and not_exiting and spawn_buffer_frames == 0:
 		not_exiting = false
@@ -38,6 +42,7 @@ func _on_player_enter(_area):
 		UICore.instance.color_cover.set_new_fade(Color8(0, 0, 0, 255), Color8(0, 0, 0, 0), 0.25)
 
 
+## Called when this trigger's parent room is despawned
 func _on_room_despawn() -> void:
 	if GameCore.instance:
 		GameCore.instance.room_loader.request_clear(exit_room)

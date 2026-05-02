@@ -6,57 +6,70 @@ extends Node
 
 #region Variables
 enum Loops {
-	Menu,
-	Town1, Town2,
-	Carelia,
-	Spiralis,
-	Abyssus,
-	Lirata,
-	Shrine,
-	Boss1, Boss2, Boss3, Boss4, FinalBoss,
-	CreditsIntro, Credits, CreditsAlt,
-	Snelk,
-	BossRush,
-	None = -1
+	MENU,
+	TOWN1, TOWN2,
+	CARELIA,
+	SPIRALIS,
+	ABYSSUS,
+	LIRATA,
+	SHRINE,
+	BOSS1, BOSS2, BOSS3, BOSS4, FINAL_BOSS,
+	CREDITS_INTRO, CREDITS, CREDITS_ALT,
+	SNELK,
+	BOSS_RUSH,
+	NONE = -1
 }
 
 const FILES:Dictionary = {
-	Loops.Menu: "res://Assets/Sounds/Music/TitleSong.ogg",
-	Loops.Town1: "res://Assets/Sounds/Music/SnailTown.ogg",
-	Loops.Town2: "res://Assets/Sounds/Music/TestZone.ogg",
-	Loops.Carelia: "res://Assets/Sounds/Music/MareCarelia.ogg",
-	Loops.Spiralis: "res://Assets/Sounds/Music/SpiralisSilere.ogg",
-	Loops.Abyssus: "res://Assets/Sounds/Music/AmastridaAbyssus.ogg",
-	Loops.Lirata: "res://Assets/Sounds/Music/LuxLirata.ogg",
-	Loops.Shrine: "res://Assets/Sounds/Music/ShrineOfIris.ogg",
-	Loops.Boss1: "res://Assets/Sounds/Music/Boss1.ogg",
-	Loops.Boss2: "res://Assets/Sounds/Music/Boss2.ogg",
-	Loops.Boss3: "res://Assets/Sounds/Music/Boss3.ogg",
-	Loops.Boss4: "res://Assets/Sounds/Music/Boss4.ogg",
-	Loops.FinalBoss: "res://Assets/Sounds/Music/Boss4b.ogg",
-	Loops.CreditsIntro: "res://Assets/Sounds/Music/EndingIntro.ogg",
-	Loops.Credits: "res://Assets/Sounds/Music/EndingCredts.ogg",
-	Loops.CreditsAlt: "res://Assets/Sounds/Music/EndingCreditsAlt.ogg",
-	Loops.Snelk: "res://Assets/Sounds/Music/Snelk.ogg",
-	Loops.BossRush: "res://Assets/Sounds/Music/BossRush.ogg",
-	Loops.None: "res://Assets/Sounds/Sfx/BossHpBleep.ogg"
+	Loops.MENU: "res://Assets/Sounds/Music/TitleSong.ogg",
+	Loops.TOWN1: "res://Assets/Sounds/Music/SnailTown.ogg",
+	Loops.TOWN2: "res://Assets/Sounds/Music/TestZone.ogg",
+	Loops.CARELIA: "res://Assets/Sounds/Music/MareCarelia.ogg",
+	Loops.SPIRALIS: "res://Assets/Sounds/Music/SpiralisSilere.ogg",
+	Loops.ABYSSUS: "res://Assets/Sounds/Music/AmastridaAbyssus.ogg",
+	Loops.LIRATA: "res://Assets/Sounds/Music/LuxLirata.ogg",
+	Loops.SHRINE: "res://Assets/Sounds/Music/ShrineOfIris.ogg",
+	Loops.BOSS1: "res://Assets/Sounds/Music/Boss1.ogg",
+	Loops.BOSS2: "res://Assets/Sounds/Music/Boss2.ogg",
+	Loops.BOSS3: "res://Assets/Sounds/Music/Boss3.ogg",
+	Loops.BOSS4: "res://Assets/Sounds/Music/Boss4.ogg",
+	Loops.FINAL_BOSS: "res://Assets/Sounds/Music/Boss4b.ogg",
+	Loops.CREDITS_INTRO: "res://Assets/Sounds/Music/EndingIntro.ogg",
+	Loops.CREDITS: "res://Assets/Sounds/Music/EndingCredts.ogg",
+	Loops.CREDITS_ALT: "res://Assets/Sounds/Music/EndingCreditsAlt.ogg",
+	Loops.SNELK: "res://Assets/Sounds/Music/Snelk.ogg",
+	Loops.BOSS_RUSH: "res://Assets/Sounds/Music/BossRush.ogg",
+	Loops.NONE: "res://Assets/Sounds/Sfx/BossHpBleep.ogg"
 }
 
+## Used to group certain loops together so that they can play simultaneously and fade in/out.
+## Mainly used for area theme variations
 const GROUPS:Array = [
-	[ Loops.Town1, Loops.Town2 ]
+	[ Loops.TOWN1, Loops.TOWN2 ]
 ]
 
+## The time in seconds it takes to fade between loops in a group
 const GROUP_FADE_TIME_SECONDS:float = 1.0
 
-var active_players:Array = [ ] # Stores AudioStreamPlayers
-var active_loops:Array = [ ] # Stores corresponding Loops values
-var current_song:Loops = Loops.None
+## Array storing the [AudioStreamPlayer] nodes that actually play music
+var active_players:Array = [ ]
+## Array storing the corresponding loop values for each [AudioStreamPlayer]
+var active_loops:Array = [ ]
+## Tracks which song is currently being played
+var current_song:Loops = Loops.NONE
+## Tracks which song out of a group is being played
 var group_focus:int = 0
+## Will be set if the currently active loop is part of a group
 var is_group_song:bool = false
+## Will be set if not all loops have finished loading into memory yet
 var awaiting_load:bool = false
+## Multiplier applied to the volume of all [AudioStreamPlayer] nodes
 var global_vol_mult:float = 1.0
+## Target value to fade the volume multiplier toward
 var global_vol_fade:float = 1.0
+## The rate at which the volume multiplier is faded
 var global_vol_fade_spd:float = 1.0
+## The time in seconds that the volume fade is set to delay
 var global_vol_fade_delay:float = 0.0
 #endregion
 
@@ -65,12 +78,9 @@ func _process(delta: float) -> void:
 	if global_vol_mult != global_vol_fade:
 		if global_vol_fade_delay > 0:
 			global_vol_fade_delay -= delta
-		else:
+		elif global_vol_mult != global_vol_fade:
 			var this_delta = delta * global_vol_fade_spd
-			if abs(global_vol_fade - global_vol_mult) < this_delta:
-				global_vol_mult = global_vol_fade
-			else:
-				global_vol_mult += this_delta if (global_vol_fade > global_vol_mult) else -this_delta
+			global_vol_mult = move_toward(global_vol_mult, global_vol_fade, this_delta)
 	
 	if awaiting_load:
 		var all_loaded = true
@@ -94,6 +104,7 @@ func _process(delta: float) -> void:
 			player.volume_linear = global_vol_mult
 
 
+## Plays the specified loop
 func play_song(loop:Loops) -> void:
 	# If new and current songs are the same then just return
 	if loop == current_song:
@@ -103,16 +114,15 @@ func play_song(loop:Loops) -> void:
 	# Else if current song is not None
 	#   Delete all sources of current song
 	var new_song_group = find_song_in_groups(loop)
-	if current_song != Loops.None:
+	if current_song != Loops.NONE:
 		if new_song_group != -1 and new_song_group == find_song_in_groups(current_song):
 			group_focus = find_song_id_in_group(loop, new_song_group)
 			current_song = loop
 			return
-		else:
-			stop_all(false)
+		stop_all(false)
 	# If new song is not None
 	#   Create sources for new song (and Group if part of one)
-	if loop != Loops.None:
+	if loop != Loops.NONE:
 		if new_song_group != -1:
 			#var loop_count = GROUPS[new_song_group].size()
 			#var active_id = find_song_id_in_group(loop, new_song_group)
@@ -137,15 +147,17 @@ func play_song(loop:Loops) -> void:
 	current_song = loop
 
 
+## Stops all active loops
 func stop_all(reset_current:bool = true) -> void:
 	for player in active_players:
 		player.queue_free()
 	active_players.clear()
 	active_loops.clear()
 	if reset_current:
-		current_song = Loops.None
+		current_song = Loops.NONE
 
 
+## Takes the specified loop and locates which group it happens to exist in
 func find_song_in_groups(loop:Loops) -> int:
 	var found_group:int = -1
 	for i in range(GROUPS.size()):
@@ -154,6 +166,7 @@ func find_song_in_groups(loop:Loops) -> int:
 	return found_group
 
 
+## Takes the specified loop and group and returns the indext at which the loop appears in the group
 func find_song_id_in_group(loop:Loops, group:int) -> int:
 	if not GROUPS[group].has(loop):
 		return -1
@@ -164,6 +177,7 @@ func find_song_id_in_group(loop:Loops, group:int) -> int:
 	return song_id
 
 
+## Creates a new [AudioStreamPlayer] with the specified loop
 func create_new_player(loop:Loops) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.stream = load(FILES[loop])
@@ -173,11 +187,13 @@ func create_new_player(loop:Loops) -> AudioStreamPlayer:
 	return player
 
 
+## Sets the volume multiplier with no fade
 func set_global_volume(vol:float) -> void:
 	global_vol_mult = vol
 	global_vol_fade = vol
 
 
+## Sets a target for the volume multiplier to fade toward and a speed at which to fade
 func set_fade(fade:float, speed:float = 1.0, delay:float = 0.0) -> void:
 	global_vol_fade = fade
 	global_vol_fade_spd = speed

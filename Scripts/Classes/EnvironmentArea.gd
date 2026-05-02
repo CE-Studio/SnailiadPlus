@@ -7,10 +7,15 @@ extends Area2D
 const PLAYER_CHECK_TOLERANCE:float = 18.0
 const MIN_ENTITY_LIFETIME:float = 0.25
 
+## How many frames this area will wait before emitting any enter/exit effects
 var spawn_grace_frames = 2
+## Array tracking any bodies that are currently inside this area
 var contained_bodies:Array = []
+## Array of all [CollisionShape2D] nodes that make up where this area can be entered
 var boxes:Array[CollisionShape2D] = []
+## Array lf all [Polygon2D] nodes that make up any visual shader effects this area produces
 var polys:Array[Polygon2D] = []
+## If [code]true[/code], this area can track intersecting bodies and create entry/exit effects
 var read_interactions:bool = true
 #endregion
 
@@ -32,6 +37,7 @@ func _physics_process(_delta: float) -> void:
 			_double_check_player_collision.call_deferred()
 
 
+## Addition check to confirm whether or not the player is within the bounds of this area's collision
 func _double_check_player_collision() -> void:
 	var player:Player = GameCore.instance.player
 	if contained_bodies.has(player.body):
@@ -40,6 +46,7 @@ func _double_check_player_collision() -> void:
 			contained_bodies.remove_at(p_index)
 
 
+## Enables or disables visual shader effects depending on the settings
 func update_shader_visibility() -> void:
 	var distort = ProjectSettings.get_setting("game/visuals/distortion_shader")
 	for poly in polys:
@@ -49,6 +56,7 @@ func update_shader_visibility() -> void:
 			poly.material.set("shader_parameter/aspect_ratio", Statics.ASPECT_RATIOS[ratio_id])
 
 
+## Called when a body enters this area
 func _on_body_enter(body) -> void:
 	if contained_bodies.has(body):
 		return
@@ -59,6 +67,7 @@ func _on_body_enter(body) -> void:
 		body.environment = self
 
 
+## Called when a body exits this area
 func _on_body_exit(body) -> void:
 	if not contained_bodies.has(body):
 		return
@@ -70,6 +79,7 @@ func _on_body_exit(body) -> void:
 		body.environment = null
 
 
+## Returns the closest point within this area's collision to the given point in world space
 func get_closest_point(in_point:Vector2) -> Array:
 	var shortest_distance = -1
 	var out_point = Vector2.ZERO
@@ -118,6 +128,7 @@ func get_closest_point(in_point:Vector2) -> Array:
 	return [ out_point, normal_dir, closest_box ]
 
 
+## Returns [code]true[/code] if the given point in world space is within this area's collision
 func point_in_bounds(in_point:Vector2) -> bool:
 	var within:bool = false
 	for box in boxes:

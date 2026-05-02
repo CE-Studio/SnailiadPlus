@@ -33,14 +33,23 @@ enum Achievements {
 	GRAVITY_SHOCK
 }
 
+## Array of achievements that have been queued up to show as earned. As long as there are
+## achievements in the queue, the popup will remain active
 var queue:Array[String] = []
+## Will be set to [code]true[/code] if the popup is currently visible
 var currently_open:bool = false
+## Will be set to [code]true[/code] if the icon of the earliest queued achievement is being displayed
 var currently_displaying:bool = false
 
+## Main background component of the popup
 @onready var panel:JsonSprite2D = $"Panel"
+## Achievement icon component of the popup
 @onready var icon:JsonSprite2D = $"Icon"
+## Text component at the top of the popup
 @onready var header:SnailyText = $"Header"
+## Sound played when the popup first appears
 @onready var jingle:AudioStreamPlayer = $"Jingle"
+## Timer that controls how long achievements should remain visible in the popup
 @onready var timer:Timer = $"Timer"
 #endregion
 
@@ -61,6 +70,7 @@ func _process(_delta: float) -> void:
 		timer.start()
 
 
+## Checks if the given achievement has been earned, and adds it to the queue if not
 func check_add(id:Achievements) -> void:
 	if not Statics.check_achievement(id):
 		Statics.add_achievement(id)
@@ -68,6 +78,7 @@ func check_add(id:Achievements) -> void:
 		Statics.save_records()
 
 
+## Adds the given achievement to the queue
 func _add_to_queue(id:Achievements) -> void:
 	var ach_str:String = Achievements.keys()[id]
 	ach_str = ach_str.to_camel_case()
@@ -80,6 +91,8 @@ func _add_to_queue(id:Achievements) -> void:
 		header.set_snaily_text(tr("Achievement!!"))
 
 
+## Called when the icon display timer times out, and either restarts the timer with the next
+## achievement in the queue or closes the popup if the queue is empty
 func _on_timer_timeout() -> void:
 	if queue.size() == 0 or not currently_open:
 		return

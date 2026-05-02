@@ -1,3 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
+# Original code Copyright 2011 Auriplane, used with permission
 @icon("res://Editor/ico/EnemyBullet.svg")
 class_name EnemyBullet
 extends Node2D
@@ -23,32 +25,49 @@ const TICKS_BETWEEN_AFTERIMAGES:int = 4
 @export var pbullets_that_i_destroy:Array[int] = []
 @export var pbullets_that_destroy_me:Array[int] = []
 
+## The direction this bullet should travel
 var normalized_dir:Vector2 = Vector2.ZERO
+## The amount of time in seconds since this bullet was spawned
 var life_timer:float = 0.0
+## The speed at which this bullet should travel
 var velocity:float = 0.0
+## The speed set when this bullet was spawned
 var velocity_init:float = 0.0
+## The [Enemy] that spawned this bullet
 var source_enemy:Enemy
+## Will be set to [code]true[/code] if this bullet has been reflected by a Perfect Parry
 var has_been_parried:bool = false
+## Will be set to [code]true[/code] if this bullet is currently overlapping the player's hitbox
 var intersecting_player:bool = false
+## If this bullet is set to create afterimage hitboxes, this value tracks how many frames have passed
+## since the last afterimage was spawned
 var afterimage_tick:int = 0
 
+## Determines what interactions with any set [PlayerBullet] nodes this bullet should have
 enum PBulletInteractions {
-	ALWAYS_DESTROY,
-	DESTROY_PARALLEL,
-	DESTROY_PARALLEL_WIDE,
-	DESTROY_PERPENDICULAR,
-	DESTROY_PERPENDICULAR_WIDE
+	ALWAYS_DESTROY, ## Any collision angle will cause an interaction
+	DESTROY_PARALLEL, ## Bullets must be traveling parallel to each other to cause an interaction
+	DESTROY_PARALLEL_WIDE, ## Bullets must be traveling anywhere near parallel to cause an interaction
+	DESTROY_PERPENDICULAR, ## Bullets must be traveling perpendicular to each other to cause an interaction
+	DESTROY_PERPENDICULAR_WIDE ## Bullets must be traveling anywhere near perpendicular to cause an interaction
 }
 
+## The sprite component of this bullet
 @onready var sprite:JsonSprite2D = $"JsonSprite2D"
+## The bullet's hitbox for tracking entity collisions
 @onready var area:Area2D = $"Area2D"
+## The bullet's hitbox for tracking world collisions
 @onready var box:CollisionShape2D = $"Area2D/Box"
+## The sound that plays when this bullet is initially fired
 @onready var sfx:AudioStreamPlayer = $"AudioGroup/Shoot"
+## The area that is read to determine if the bullet is currently on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
+## A persistent reference to the [EnemyBulletAfterimage] scene
 @onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletAfterimage.tscn")
 #endregion
 
 
+## Initializes this bullet with a direction and speed to travel in
 func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	normalized_dir = dir
 	velocity_init = speed
@@ -85,6 +104,7 @@ func _physics_process(delta: float) -> void:
 			afterimage_tick -= TICKS_BETWEEN_AFTERIMAGES
 
 
+## Performs a secondary fire after being reflected by a Perfect Parry
 func parry_reshoot() -> void:
 	normalized_dir = Vector2(source_enemy.position - position).normalized()
 	life_timer = 0.0
@@ -92,6 +112,7 @@ func parry_reshoot() -> void:
 	damage = damage * 32 * (Statics.get_shell_level() + 1)
 
 
+## Called whenever this bullet intersects with another body
 func _on_body_entered(_body) -> void:
 	if _body.get_parent() is Player:
 		intersecting_player = true
@@ -99,11 +120,13 @@ func _on_body_entered(_body) -> void:
 		_despawn(true)
 
 
+## Called whenever this bullet exits another body
 func _on_body_exited(_body) -> void:
 	if _body.get_parent() is Player:
 		intersecting_player = false
 
 
+## Called whenever this bullet intersects with a [PlayerBullet] in order to handle collision interactions
 func _on_pbullet_collision(_area:Area2D) -> void:
 	var bullet = _area.get_parent()
 	if bullet is PlayerBullet and not bullet is PlayerBulletAfterimage:
@@ -130,6 +153,7 @@ func _on_pbullet_collision(_area:Area2D) -> void:
 				_despawn(true)
 
 
+## Will free this bullet with any required particles and sounds
 func _despawn(_loudly:bool = false) -> void:
 	if _loudly and vis.is_on_screen() and despawn_particle.strip_edges() != "":
 		Statics.spawn_particle(despawn_particle, Room.Layers.FG1, Vector2(

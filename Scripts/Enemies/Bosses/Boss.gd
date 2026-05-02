@@ -8,7 +8,7 @@ extends Enemy
 const DEATH_WIGGLE_RANGE:float = 2.0
 const DEATH_WIGGLE_TIME:float = 1.8
 
-@export var battle_music:MusicManager.Loops = MusicManager.Loops.Boss1
+@export var battle_music:MusicManager.Loops = MusicManager.Loops.BOSS1
 @export var phase_changes:Array[float] = [ 0 ]
 @export var death_wiggle_mult:float = 1.0
 

@@ -6,11 +6,17 @@ extends Node2D
 const CELL_SIZE:Vector2i = Vector2i(16, 16)
 const SELECTOR_OFFSET:Vector2i = Vector2i(8, 8)
 
+## The currently selected cell
 var selected_cell:int = 0
+## Whether or not a scrollable option is currently having its value set by the player
 var scrolling:bool = false
+## How many frames the menu will wait before being able to be closed
 var buffer_frames:int = 4
+## The description component of the currently selected option
 var cell_desc:String = ""
+## The input type component of the currently selected option's description
 var ctrl_prompt:String = ""
+## The input type of the currently selected option
 var select_type:SelectTypes = SelectTypes.NONE
 
 enum SelectTypes {
@@ -58,6 +64,7 @@ func _process(_delta: float) -> void:
 		buffer_frames -= 1
 
 
+## Moves selection in the direction requested
 func _move_selection(dir:Vector2i) -> void:
 	var current_row:int = floori(selected_cell / grid_size.x)
 	selected_cell += roundi(dir.x + (dir.y * grid_size.x))
@@ -84,6 +91,7 @@ func _move_selection(dir:Vector2i) -> void:
 		_clear_desc()
 
 
+## Handles general selection input by deferring to functions specific to a selection type
 func _handle_select() -> void:
 	match select_type:
 		SelectTypes.NONE:
@@ -92,6 +100,7 @@ func _handle_select() -> void:
 			_handle_toggle_cases(sprites[selected_cell])
 
 
+## Handles the input of any togglable options
 func _handle_toggle_cases(spr:Sprite2D) -> void:
 	match spr.name:
 		"Boss1":
@@ -116,37 +125,44 @@ func _handle_toggle_cases(spr:Sprite2D) -> void:
 	_update_sprite(spr)
 
 
+## Sets the sprite of a given option to be highlighted or deselected
 func _generic_set_sprite(spr:Sprite2D, condition:bool) -> void:
 	spr.frame_coords.x = int(condition)
 
 
+## Sets the displayed description of item options, including how many the player owns
 func _set_item_desc(_name:String, _count:int) -> void:
 	cell_desc = "%s - %d in inventory" % [_name, _count]
 	_set_desc_common()
 
 
+## Sets the displayed description of boss options, including if the boss is alive
 func _set_boss_desc(_name:String, _alive:bool) -> void:
 	cell_desc = "%s - currently %s" % [_name, "alive" if _alive else "dead"]
 	_set_desc_common()
 
 
+## Sets the displayed description of tool options
 func _set_tool_desc(_name:String) -> void:
 	cell_desc = _name
 	_set_desc_common()
 
 
+## Sets the control prompt for options that can be scrolled
 func _set_scroll_prompt() -> void:
 	ctrl_prompt = "Select to change"
 	_set_desc_common()
 	select_type = SelectTypes.SCROLL
 
 
+## Sets the control prompt for options that can be toggled
 func _set_toggle_prompt() -> void:
 	ctrl_prompt = "Select to toggle"
 	_set_desc_common()
 	select_type = SelectTypes.TOGGLE
 
 
+## Clears the description entirely
 func _clear_desc() -> void:
 	cell_desc = ""
 	ctrl_prompt = ""
@@ -154,11 +170,13 @@ func _clear_desc() -> void:
 	select_type = SelectTypes.NONE
 
 
+## Sets the [SnailyText] node to display the current description and control prompt
 func _set_desc_common() -> void:
 	if desc:
 		desc.set_snaily_text("\n".join([cell_desc, ctrl_prompt]))
 
 
+## Updates the current sprite based on the corresponding option
 func _update_sprite(spr:Sprite2D) -> void:
 	match spr.name:
 		"Peashooter":
@@ -217,6 +235,7 @@ func _update_sprite(spr:Sprite2D) -> void:
 			_generic_set_sprite(spr, Statics.show_entity_layer)
 
 
+## Updates the description based on the current option
 func _update_desc_action(spr:Sprite2D) -> void:
 	match spr.name:
 		"Peashooter":

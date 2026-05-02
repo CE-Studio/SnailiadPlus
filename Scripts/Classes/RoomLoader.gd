@@ -4,9 +4,13 @@ extends Node
 
 
 #region Variables
+## Queue of rooms that need to be loaded into memory
 var load_queue:Array[String] = []
+## Queue of rooms that need to be cleared from memory
 var clear_queue:Array[String] = []
+## List of rooms that have been currently loaded
 var stored_rooms:Array[Resource] = []
+## List of string keys for each loaded room
 var room_keys:Array[String] = []
 #endregion
 
@@ -35,12 +39,15 @@ func _process(_delta):
 		clear_queue = new_queue.duplicate()
 
 
+## Adds a room to the load queue
 func request_load(path:String):
 	load_queue.append(path)
 	ResourceLoader.load_threaded_request(path)
 	#print("Added %s to the queue" % path)
 
 
+## Retrieves a room by its key. If the room has been loaded fully, it can be passed with no issue.
+## If it's still loading, the game will wait for it to be fully loaded
 func get_room(path:String) -> Resource:
 	if room_keys.has(path): # If the room is loaded, return it from storage
 		return stored_rooms[room_keys.find(path)]
@@ -49,6 +56,7 @@ func get_room(path:String) -> Resource:
 	return load(path) # Else, load it normally
 
 
+## Adds a room to the clear queue to properly free it from memory
 func request_clear(path:String):
 	clear_queue.append(path)
 	#print("Attempting to remove %s" % path)

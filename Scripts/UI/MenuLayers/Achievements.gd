@@ -6,6 +6,8 @@ extends VBoxContainer
 const ICON_RADII:Vector2i = Vector2i(254, 80)
 const THETA_EASE_RATE:float = 10.0
 
+## Array of translatable strings for each achievement, containing each achievement's
+## name, unlock hint, and description
 var tr_descs:Array = [
 	[tr(&"First of Four"), tr(&"Seek the Spherical Slinger of the Returning Shot"), tr(&"Defeat Shellbreaker")],
 	[tr(&"Stinky Toe"), tr(&"Follow the footsteps"), tr(&"Defat Stompy")],
@@ -34,21 +36,37 @@ var tr_descs:Array = [
 	[tr(&"Lost and Found"), tr(&"Everything deserves a second chance, shocking as it may be"), tr(&"Discover the long-forgotten Gravity Shock item")],
 ]
 
+## Array of internal achievement names inferred from the associated enums
 var achievement_str_names:Array = AchievementCore.Achievements.keys()
+## Total achievement count inferred from the enum list
 var achievement_count:int = achievement_str_names.size()
+## Theta offset applied when displaying the achievement menu
 var theta_add_value:float = 0.0
+## Array of achievement icons used when displaying the achievement menu
 var icons:Array = []
 
+## Current theta of the rotary achievement menu
 var theta:float = 0.0
+## Target theta of the rotary achievement menu
 var target_theta:float = 0.0
+## Tracks which achievement in the menu is currently highlighted
 var selected_achievement:int = 0
+## Set to determine what type of text should be shown under the currently selected achievement's name.[br]
+## Can be set to 0 to show a generic "haven't unlocked" message, 1 to show a hint on how to earn the
+## achievement, and 2 to show the real unlock condition
 var desc_mode:int = 0
 
+## The scrolling button that drives the menu
 @onready var main_scroller:HeaderlessScrollingSnailyButton = $"MainScroller"
+## Text component that displays how many of the total achievements you've earned
 @onready var counter_text:SnailyText = $"Counter/Text"
+## Text that displays how to show achievement hints
 @onready var hint_text:SnailyText = $"HintGuide/Text"
+## Text that describes the currently selected achievement
 @onready var desc_text:SnailyText = $"Description/Text"
+## Parent node for all achievement icons
 @onready var icon_group:Node2D = $"../IconGroup"
+## Scene reference for the achievement icon
 @onready var icon_scene:PackedScene = preload("res://Scenes/UI/AchievementIcon.tscn")
 #endregion
 
@@ -102,6 +120,7 @@ func _process(delta: float) -> void:
 		icon.visible = icon.position.y > 0
 
 
+## Called when the menu is scrolled to the left
 func _on_cycle_left(value: Variant) -> void:
 	target_theta -= theta_add_value
 	icons[selected_achievement].action = "idle"
@@ -111,6 +130,7 @@ func _on_cycle_left(value: Variant) -> void:
 	main_scroller.sfx_focus.play()
 
 
+## Called when the menu is scrolled to the right
 func _on_cycle_right(value: Variant) -> void:
 	target_theta += theta_add_value
 	icons[selected_achievement].action = "idle"
@@ -120,12 +140,14 @@ func _on_cycle_right(value: Variant) -> void:
 	main_scroller.sfx_focus.play()
 
 
+## Called when the scroll button is pressed
 func _on_scroller_pressed(_value: Variant) -> void:
 	if desc_mode == 0:
 		_update_desc(desc_mode + 1)
 	main_scroller.sfx_select.play()
 
 
+## Updates the description text using the given text mode
 func _update_desc(mode:int) -> void:
 	desc_mode = mode
 	if mode == 0:
