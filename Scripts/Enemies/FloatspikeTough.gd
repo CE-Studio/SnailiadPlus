@@ -15,7 +15,10 @@ func _ready() -> void:
 	super.spawn()
 
 	sprite.action = "idle"
-	theta = position.x * position.x * 1.1 + position.y * 3.2 + 0.7
+	if display_mode:
+		theta = randf() * TAU
+	else:
+		theta = position.x * position.x * 1.1 + position.y * 3.2 + 0.7
 
 
 func _process(delta: float) -> void:

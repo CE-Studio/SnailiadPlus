@@ -9,11 +9,12 @@
 [ext_resource type="AudioStream" uid="uid://gvg8vnbcsicb" path="res://Assets/Sounds/Music/EndingCredits.ogg" id="7_btlfq"]
 [ext_resource type="AudioStream" uid="uid://cu2eoyt3dkuw" path="res://Assets/Sounds/Music/EndingCreditsAlt.ogg" id="8_ratej"]
 
-[node name="EndingCredits" type="Node2D" unique_id=1385196641 node_paths=PackedStringArray("stars", "cover", "music_main", "music_alt")]
+[node name="EndingCredits" type="Node2D" unique_id=1385196641 node_paths=PackedStringArray("credits_parent", "stars", "cover", "music_main", "music_alt")]
 process_mode = 3
 z_index = 1000
 z_as_relative = false
 script = ExtResource("1_ltg0p")
+credits_parent = NodePath("ScrollParent")
 stars = NodePath("StarLayer")
 cover = NodePath("FadeCover")
 music_main = NodePath("MusicMain")
@@ -36,7 +37,7 @@ script = ExtResource("4_2i2ny")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("5_aydux")]
-particle_count = 16
+particle_count = 32
 move_with_camera = false
 z_override = 999
 always_process = true

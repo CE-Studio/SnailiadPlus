@@ -68,6 +68,17 @@ func _ready() -> void:
 	play_anim("idle")
 
 
+func configure_display_mode(_credits:bool = false, _data:int = 0) -> void:
+	if _credits:
+		if _data == 0:
+			direction = Statics.DirsSurface.FLOOR
+		elif _data == 1:
+			direction = Statics.DirsSurface.CEILING
+		else:
+			direction = Statics.DirsSurface.LWALL
+		play_anim("idle")
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if not ai_active:

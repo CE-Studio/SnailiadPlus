@@ -40,7 +40,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not ai_active and not display_mode:
+	if not ai_active:
 		return
 	
 	shot_timeout -= delta

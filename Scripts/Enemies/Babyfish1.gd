@@ -28,7 +28,7 @@ func _ready() -> void:
 		play_anim("idle")
 
 
-func configure_display_mode() -> void:
+func configure_display_mode(_credits:bool = false, _data:int = 0) -> void:
 	elapsed = randf_range(0, TAU)
 	sprite.action = "1_display"
 

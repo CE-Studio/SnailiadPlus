@@ -5,6 +5,7 @@ extends Node2D
 
 const CHAR_TIMEOUT:float = 0.067
 const DIALOGUE_FADE_RATE:float = 0.9
+const SKIP_THRESHOLD:float = 1.0
 
 ## The dialogue to be displayed during the Moon Snail version of the cutscene
 var dialogue_moon:PackedStringArray = [
@@ -19,6 +20,8 @@ var dialogue_sun:PackedStringArray = [
 	tr(&"    And became the\n        legendary Sun Snail"),
 ]
 
+## The time in seconds since the cutscene was spawned
+var elapsed:float = 0.0
 ## If [code]true[/code], the Sun Snail version of the cutscene is being played
 var is_sun:bool = false
 ## The string that should be displayed
@@ -29,6 +32,8 @@ var current_char:int = 0
 var char_timeout:float = 0.0
 ## Whether or not the dialogue string should be shown
 var dialogue_visible:bool = false
+## Will be set if the cutscene is currently being skipped
+var skipping:bool = false
 
 ## The [AnimationPlayer] that drives most of the cutscene
 @export var anim:AnimationPlayer
@@ -36,12 +41,16 @@ var dialogue_visible:bool = false
 @export var stars:StarLayer
 ## The fade that appears over everything except Moon Snail
 @export var cover:Sprite2D
+## The fade that appears over everything if the cutscene is skipped
+@export var skip_cover:Sprite2D
 ## The first sprite instance of Moon Snail
 @export var first_moon:JsonSprite2D
 ## The spotlight sprite
 @export var spotlight:JsonSprite2D
 ## The dialogue node
 @export var dialogue:SnailyText
+## The music that plays during the cutscene
+@export var music:AudioStreamPlayer
 ## The sound that plays when a character is added to the string
 @export var sfx_dialogue:AudioStreamPlayer
 
@@ -62,6 +71,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	elapsed += delta
 	if not dialogue_visible and dialogue.modulate.a > 0.0:
 		dialogue.modulate.a -= delta * DIALOGUE_FADE_RATE
 	if current_char < target_str.length():
@@ -75,6 +85,13 @@ func _process(delta: float) -> void:
 			sfx_dialogue.play()
 		else:
 			char_timeout -= delta
+	if SInput.check_input(SInput.Inputs.PAUSE, true) and elapsed >= SKIP_THRESHOLD and not skipping:
+		skipping = true
+	if skipping:
+		skip_cover.modulate.a += delta
+		music.volume_linear = move_toward(music.volume_linear, 0.0, delta)
+		if skip_cover.modulate.a >= 1.25:
+			spawn_credits()
 
 
 ## Sets the target string to a string out of the necessary dialogue array using the given index

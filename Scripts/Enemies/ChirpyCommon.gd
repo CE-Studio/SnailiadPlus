@@ -63,9 +63,11 @@ func _process(delta: float) -> void:
 		elif position.y > origin.y and going_up:
 			going_up = false
 			_play_anim(false)
+		if display_mode:
+			return
 		if vis.is_on_screen():
 			off_screen_time = 0
-			if hard_mode and not display_mode:
+			if hard_mode:
 				shot_timeout -= delta
 				if shot_timeout <= 0.0:
 					shot_timeout = SHOT_TIMEOUT

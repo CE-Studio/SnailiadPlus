@@ -40,7 +40,7 @@ func _process(delta) -> void:
 	
 	if vis.is_on_screen():
 		on_screen_once = true
-	if on_screen_once and not vis.is_on_screen():
+	if on_screen_once and not vis.is_on_screen() and not display_mode:
 		queue_free()
 	
 	theta += delta

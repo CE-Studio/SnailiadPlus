@@ -170,7 +170,7 @@ func spawn(active:bool = true) -> void:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
-func configure_display_mode() -> void:
+func configure_display_mode(_credits:bool = false, _data:int = 0) -> void:
 	pass
 
 

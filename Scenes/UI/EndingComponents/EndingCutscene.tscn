@@ -240,7 +240,7 @@ _data = {
 &"RESET": SubResource("Animation_ws1ke")
 }
 
-[node name="EndingCutscene" type="Node2D" unique_id=252453626 node_paths=PackedStringArray("anim", "stars", "cover", "first_moon", "spotlight", "dialogue", "sfx_dialogue")]
+[node name="EndingCutscene" type="Node2D" unique_id=252453626 node_paths=PackedStringArray("anim", "stars", "cover", "skip_cover", "first_moon", "spotlight", "dialogue", "music", "sfx_dialogue")]
 process_mode = 3
 z_index = 1000
 z_as_relative = false
@@ -248,9 +248,11 @@ script = ExtResource("1_rel1c")
 anim = NodePath("AnimationPlayer")
 stars = NodePath("StarLayer")
 cover = NodePath("FadeCover")
+skip_cover = NodePath("SkipFade")
 first_moon = NodePath("MoonSnail0")
 spotlight = NodePath("Spotlight")
 dialogue = NodePath("Dialogue")
+music = NodePath("Music")
 sfx_dialogue = NodePath("DialogueBeep")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=624316069]
