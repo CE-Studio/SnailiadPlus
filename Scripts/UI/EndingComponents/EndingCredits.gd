@@ -5,11 +5,14 @@ extends Node2D
 
 #region Variables
 const ENEMY_PATH:String = "res://Scenes/Entities/Enemies/%s.tscn"
-const ENEMY_SPACING_Y:float = 24.0
+const PIXEL_PEOPLE_PATH:String = "res://Assets/Images/Entities/PixelPeople.json"
+const ENEMY_SPACING_Y:float = 32.0
+const PIXEL_PEOPLE_SPACING_Y:float = 48.0
 const SCROLL_DELAY:float = 3.2
 const SCROLL_SPEED:float = -33.0
 const SCROLL_SPEED_DOWN:float = -192.0
 const SCROLL_SPEED_UP:float = 48.0
+const FADE_DISTANCE:float = 24.0
 
 ## The amount of time in seconds since the credits were spawned
 var elapsed:float = 0.0
@@ -23,6 +26,10 @@ var group_i:int = 0
 var spawn_stage:int = 0
 ## Will be set if the credits have been fully spawned
 var finished_spawning:bool = false
+## Array of specialized labels that should fade in
+var fade_labels:Array[SnailyText] = []
+## Compantion array for fading labels that tracks at what Y positions they should start fading in at
+var fade_heights:Array[float] = []
 
 ## The parent to all credits objects. Will scroll up slowly overtime
 @export var credits_parent:Node2D
@@ -67,6 +74,14 @@ func _process(delta: float) -> void:
 		credits_parent.position.y += this_scroll_speed * delta
 	if not finished_spawning:
 		_create_credits()
+	for i in range(fade_labels.size()):
+		var this_label:SnailyText = fade_labels[i]
+		if this_label.modulate.a < 1.0:
+			var this_a:float = inverse_lerp(fade_heights[i],
+			fade_heights[i] - FADE_DISTANCE, this_label.global_position.y)
+			this_a = clampf(this_a, 0.0, 1.0)
+			if this_a > this_label.modulate.a:
+				this_label.modulate.a = this_a
 
 
 ## Standalone function for organizing and creating the credits. Spawning each enemy or enemy
@@ -161,30 +176,125 @@ func _create_credits() -> void:
 			_add_label(tr(&"Walleye"))
 			_add_y(ENEMY_SPACING_Y)
 		22:
+			_add_enemy("Angryblock", Vector2(0, 24), 64)
+			_add_label(tr(&"This guy"))
+			_add_y(ENEMY_SPACING_Y)
+		23:
 			_add_enemy_group(["Pincer", "Pincer"], 34, 8)
 			_add_label(tr(&"Pincer and Sky Pincer"))
 			_add_y(ENEMY_SPACING_Y)
-		23:
-			_add_enemy("GearCommon", Vector2(0, 16), 40)
+		24:
+			_add_enemy("GearCommon", Vector2(0, 16), 36)
 			_add_label(tr(&"Spinnygear"))
 			_add_y(ENEMY_SPACING_Y)
-		24:
+		25:
 			_add_enemy("Drone", Vector2(0, 14), 36)
 			_add_label(tr(&"Federation Drone"))
 			_add_y(ENEMY_SPACING_Y)
-		25:
+		26:
 			_add_enemy("Balloon", Vector2(0, 16), 40)
 			_add_label(tr(&"Balloon Buster"))
-			_add_y(ENEMY_SPACING_Y)
-		26:
+			_add_y(ENEMY_SPACING_Y + 8)
+		27:
 			_add_y(52)
 			_add_enemy("Bosses/Shellbreaker", Vector2(0, 24), 56)
 			_add_label(tr(&"Shellbreaker"))
-			_add_y(ENEMY_SPACING_Y)
-		27:
+			_add_y(ENEMY_SPACING_Y + 8)
+		28:
 			_add_enemy("Bosses/Stompy", Vector2(0, 56), 216)
 			_add_label(tr(&"Stompy"))
-			_add_y(ENEMY_SPACING_Y)
+			_add_y(ENEMY_SPACING_Y + 8)
+		29:
+			_add_scene("res://Scenes/Entities/Deco/CreditsSpacebox.tscn", 64, 136)
+			_add_label(tr(&"Space Box"))
+			_add_fade_label(tr(&"and Babybox"), 170)
+			_add_y(ENEMY_SPACING_Y + 8)
+		30:
+			_add_enemy("Bosses/Moonsnail", Vector2(0, 8))
+			_add_label(tr(&"Moon Snail"))
+			_add_y(ENEMY_SPACING_Y + 8)
+		31:
+			_add_enemy("Bosses/Gigasnail", Vector2(0, 24), 56)
+			_add_label(tr(&"Giga Snail"))
+			_add_y(ENEMY_SPACING_Y + 8)
+		32:
+			match Player.instance.who_i_is:
+				Player.Players.SNAILY:
+					_add_sprite("res://Assets/Images/Players/Snaily.json", "0.floor.right.idle",
+					Vector2(0, 8))
+					_add_label(tr(&"Snaily Snail"))
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		33:
+			_add_pixel_person("newstarshipsmell")
+			_add_label(tr(&"Newstarshipsmell"))
+			_add_label(tr(&"Tested Flash Snailiad extensively"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		34:
+			_add_pixel_person("xdanond")
+			_add_label(tr(&"xdanond"))
+			_add_label(tr(&"Drew several of Flash Snailiad's sprites"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		35:
+			_add_pixel_person("adamatomic")
+			_add_label(tr(&"Adamatomic"))
+			_add_label(tr(&"Created Flixel, without which snaily game would not exist!"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		36:
+			_add_pixel_person("auriplane")
+			_add_label(tr(&"Auriplane"))
+			_add_label(tr(&"Author artist composer etc etc, allowed this project to exist"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		37:
+			_add_pixel_person("epsilon")
+			_add_label(tr(&"Epsilon"))
+			_add_label(tr(&"Ported snaily game to Godot and piled a crap ton of stuff onto it"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		38:
+			_add_pixel_person("clarence")
+			_add_label(tr(&"clarence112"))
+			_add_label(tr(&"Being infinitely better at coding than I am, and also very cute"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		39:
+			_add_pixel_person("broomie")
+			_add_label(tr(&"Broomietunes"))
+			_add_label(tr(&"Wrote a bunch of new songs for the new content and has excellent game design sense"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		40:
+			_add_pixel_person("zettex")
+			_add_label(tr(&"Zettex"))
+			_add_label(tr(&"Originally designed two of the new playable characters"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		41:
+			_add_pixel_person("minervo")
+			_add_label(tr(&"Minervo Ionni"))
+			_add_label(tr(&"Designed another character and let me bounce a bunch of ideas off it"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		42:
+			_add_pixel_person("goldguy")
+			_add_label(tr(&"Goldguy40"))
+			_add_label(tr(&"Drew a handful of new tiles for me"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		43:
+			_add_pixel_person("xander")
+			_add_label(tr(&"They Call Me Xander"))
+			_add_label(tr(&"Call him an entomologist the way he discovers those bugs"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		44:
+			_add_pixel_person("ehseezed")
+			_add_label(tr(&"Ehseezed"))
+			_add_label(tr(&"Heading official Archipelago integration for me"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		45:
+			_add_pixel_person("discord")
+			_add_label(tr(&"The Snailiad Discord"))
+			_add_label(tr(&"Testing, feedback, ideas, memes, encouragement, and being patient. Seriously, y'all are amazing and I'm happy to be a part of this community _@_V!!"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		46:
+			if randf() > 0.125:
+				_add_sprite("res://Assets/Images/Entities/ForTheFunny.json", "anim", Vector2(0, 16), 40)
+				_add_y(PIXEL_PEOPLE_SPACING_Y)
+		47:
+			_add_label(tr(&"And you\n\n\nBecause seriously, why not\n\n\nAll the other games put \"And You\" in the credits, so I figure, \"And You\" must be someone pretty cool\n\n\nThanks, And You!!"))
 		_:
 			finished_spawning = true
 	spawn_stage += 1
@@ -195,11 +305,11 @@ func _add_y(space:float) -> void:
 	spawn_y += space
 
 
-## Adds the given text to 
-func _add_label(_text:String, _size:int = 2) -> void:
+## Adds the given text
+func _add_label(_text:String, _size:int = 2) -> SnailyText:
 	var new_text:SnailyText = text.instantiate()
 	credits_parent.add_child(new_text)
-	new_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
+	#new_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	new_text.max_width = 400
 	new_text.text_scale = _size
 	new_text.add_shadow(1)
@@ -207,6 +317,15 @@ func _add_label(_text:String, _size:int = 2) -> void:
 	new_text.position = Vector2((new_text.get_width() * -0.5) * 0.5 * _size, spawn_y)
 	var line_count:int = new_text.get_line_count()
 	_add_y((8 * _size) * line_count + 2)
+	return new_text
+
+
+## Adds the given text as a fading label that only appears at a certain Y level
+func _add_fade_label(_text:String, _threshold:float, _size:int = 2) -> void:
+	var new_text = _add_label(_text, _size)
+	fade_labels.append(new_text)
+	fade_heights.append(_threshold)
+	new_text.modulate.a = 0.0
 
 
 ## Adds the requested enemy at the given offset
@@ -230,3 +349,26 @@ func _add_enemy_group(_paths:PackedStringArray, _spacing:float, _y_offset:float,
 		group_i += 1
 	_add_y(_y_add)
 	group_i = 0
+
+
+## Adds a generic [JsonSprite2D] to the credits
+func _add_sprite(_path:String, _anim:String, _offset:Vector2, _y_add:float = 24) -> void:
+	var new_spr:JsonSprite2D = JsonSprite2D.new()
+	new_spr.texture_path = _path
+	credits_parent.add_child(new_spr)
+	new_spr.position = Vector2(_offset.x, spawn_y + _offset.y)
+	new_spr.action = _anim
+	_add_y(_y_add)
+
+
+## Adds a credits entry based on the credits-specific PixelPeople spritesheet
+func _add_pixel_person(_anim:String) -> void:
+	_add_sprite(PIXEL_PEOPLE_PATH, _anim, Vector2(0, 16), 40)
+
+
+## Adds a non-enemy scene to the credits
+func _add_scene(_path:String, _y_offset:float, _y_add:float = 24) -> void:
+	var scn:Node2D = load(_path).instantiate()
+	credits_parent.add_child(scn)
+	scn.position = Vector2(0.0, spawn_y + _y_offset)
+	_add_y(_y_add)

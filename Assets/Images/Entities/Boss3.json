@@ -1,5 +1,5 @@
 {
-	"tiles": [10, 2],
+	"tiles": [10, 3],
 	"layerize": false,
 	"meta": {},
 	"animations": {
@@ -346,6 +346,16 @@
 				[2, 0, false, false],
 				[6, 0, false, false],
 				[4, 0, false, false],
+			]
+		},
+		"display_smile": {
+			"fps": 0.8,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[0, 2, false, false],
+				[1, 2, false, false],
 			]
 		}
 	}

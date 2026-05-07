@@ -1,21 +1,36 @@
 {
-	"tiles": [4, 2],
+	"tiles": [15, 1],
 	"layerize": false,
 	"meta": {},
 	"animations": {
-		"p0_spawn": {
-			"fps": 20,
+		"xdanond": {
+			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[0, 0, false, false],
-				[1, 0, false, false],
-				[2, 0, false, false],
-				[3, 0, false, false],
+				[0, 0, false, false]
 			]
 		},
-		"p0_U_move": {
+		"auriplane": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[1, 0, false, false]
+			]
+		},
+		"adamatomic": {
+			"fps": 1,
+			"loop": false,
+			"loop_point": 0,
+			"randomize_start": false,
+			"frames": [
+				[2, 0, false, false]
+			]
+		},
+		"newstarshipsmell": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
@@ -24,169 +39,103 @@
 				[3, 0, false, false]
 			]
 		},
-		"p0_U_land": {
+		"epsilon": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[4, 0, false, false]
 			]
 		},
-		"p0_R_move": {
+		"clarence": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[5, 0, false, false]
 			]
 		},
-		"p0_R_land": {
+		"nat": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[6, 0, false, false]
 			]
 		},
-		"p0_D_move": {
+		"zettex": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[7, 0, false, false]
 			]
 		},
-		"p0_D_land": {
+		"minervo": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[8, 0, false, false]
 			]
 		},
-		"p0_L_move": {
+		"broomie": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[9, 0, false, false]
 			]
 		},
-		"p0_L_land": {
+		"orange": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 0, false, false]
+				[10, 0, false, false]
 			]
 		},
-		"p1_spawn": {
-			"fps": 20,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[0, 1, false, false],
-				[1, 1, false, false],
-				[2, 1, false, false],
-				[3, 1, false, false],
-			]
-		},
-		"p1_U_move": {
+		"goldguy": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, false]
+				[11, 0, false, false]
 			]
 		},
-		"p1_U_land": {
+		"discord": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, false]
+				[12, 0, false, false]
 			]
 		},
-		"p1_R_move": {
+		"xander": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, false]
+				[13, 0, false, false]
 			]
 		},
-		"p1_R_land": {
+		"ehseezed": {
 			"fps": 1,
 			"loop": false,
 			"loop_point": 0,
 			"randomize_start": false,
 			"frames": [
-				[3, 1, false, false]
-			]
-		},
-		"p1_D_move": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[3, 1, false, false]
-			]
-		},
-		"p1_D_land": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[3, 1, false, false]
-			]
-		},
-		"p1_L_move": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[3, 1, false, false]
-			]
-		},
-		"p1_L_land": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": false,
-			"frames": [
-				[3, 1, false, false]
-			]
-		},
-		"display": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": true,
-			"frames": [
-				[3, 0, false, false]
-			]
-		},
-		"display_hit": {
-			"fps": 1,
-			"loop": false,
-			"loop_point": 0,
-			"randomize_start": true,
-			"frames": [
-				[3, 0, false, false]
+				[14, 0, false, false]
 			]
 		}
 	}

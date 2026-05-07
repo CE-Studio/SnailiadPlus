@@ -191,7 +191,8 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 [node name="MarkerSprite" type="Sprite2D" parent="Border" unique_id=1349930718]
 modulate = Color(1, 0.823529, 0.709804, 0.172549)
 texture = ExtResource("4_ygllc")
-vframes = 5
+hframes = 2
+vframes = 3
 script = ExtResource("3_vjeh6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 

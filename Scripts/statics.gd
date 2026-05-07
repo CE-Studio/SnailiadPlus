@@ -49,11 +49,12 @@ const VECTOR_CENTER:Vector2 = Vector2(200.0, 120.0)
 
 
 const ASPECT_RATIOS:Array = [
-	Vector2i(400, 240),
-	Vector2i(400, 320),
-	Vector2i(400, 300),
-	Vector2i(448, 252),
-	Vector2i(400, 250)
+	Vector2i(400, 240), # 5:3
+	Vector2i(400, 320), # 5:4
+	Vector2i(400, 300), # 4:3
+	Vector2i(448, 252), # 16:9
+	Vector2i(400, 250), # 16:10
+	Vector2i(402, 268), # 3:2
 ]
 const ASPECT_RATIO_OFFSETS:Array = [
 	Vector2i(0, 0),
@@ -61,6 +62,7 @@ const ASPECT_RATIO_OFFSETS:Array = [
 	Vector2i(0, 60),
 	Vector2i(48, 12),
 	Vector2i(0, 10),
+	Vector2i(2, 28),
 ]
 const TARGET_FRAMERATES:Array = [
 	0,

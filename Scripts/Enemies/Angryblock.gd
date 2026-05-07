@@ -56,10 +56,11 @@ func _process(delta: float) -> void:
 	if not ai_active and not display_mode:
 		return
 	
-	time_until_noise -= delta
-	if time_until_noise <= 0.0:
-		time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
-		sfx_noise.play()
+	if not display_mode:
+		time_until_noise -= delta
+		if time_until_noise <= 0.0:
+			time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
+			sfx_noise.play()
 	
 	phase_time -= delta
 	var player_vector:Vector2 = Vector2.ZERO

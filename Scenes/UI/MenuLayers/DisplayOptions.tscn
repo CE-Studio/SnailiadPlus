@@ -62,7 +62,7 @@ focus_next = NodePath("../Fullscreen")
 focus_previous = NodePath("../Scale")
 header_text = "Aspect ratio"
 auto_select_mode = true
-cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10"])
+cycle_options = Array[String](["5:3", "5:4", "4:3", "16:9", "16:10", "3:2"])
 
 [node name="Fullscreen" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=763072777 instance=ExtResource("4_jxl7l")]
 layout_mode = 2
