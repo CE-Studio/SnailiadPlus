@@ -309,7 +309,7 @@ func _add_y(space:float) -> void:
 func _add_label(_text:String, _size:int = 2) -> SnailyText:
 	var new_text:SnailyText = text.instantiate()
 	credits_parent.add_child(new_text)
-	#new_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
+	new_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
 	new_text.max_width = 400
 	new_text.text_scale = _size
 	new_text.add_shadow(1)
