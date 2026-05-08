@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="11_kf05q"]
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
 [ext_resource type="PackedScene" uid="uid://dd51oitsi3hyq" path="res://Scenes/internals/DarknessLayer.tscn" id="18_adkld"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="19_yb2dk"]
 
 [node name="CameraLayer" type="Node2D" unique_id=1777678961]
 z_index = 1000
@@ -43,7 +44,7 @@ offset_right = 49.0
 offset_bottom = 28.0
 
 [node name="Text" parent="BL/InGameTime" unique_id=298069678 instance=ExtResource("3_bgnuu")]
-custom_minimum_size = Vector2(46, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "00:00:00.00"
@@ -57,7 +58,7 @@ offset_right = 49.0
 offset_bottom = 20.0
 
 [node name="Text" parent="BL/Framerate" unique_id=1171561691 instance=ExtResource("3_bgnuu")]
-custom_minimum_size = Vector2(34, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "00 FPS"
@@ -200,3 +201,19 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 process_mode = 3
 z_index = 15
 script = ExtResource("9_qjw3k")
+
+[node name="SnailyText" type="RichTextLabel" parent="." unique_id=1623987236]
+clip_contents = false
+offset_left = 24.0
+offset_top = 120.0
+offset_right = 360.0
+offset_bottom = 184.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Awawawawa test test test test test all the testing all the time"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("19_yb2dk")
+shadow_scale = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

@@ -24,11 +24,11 @@ func instance(new_text:String, new_list:Array[Color], lifetime:float = 4.5, text
 	color_list = new_list.duplicate()
 	max_lifetime = lifetime
 	offset_base = TOTAL_FADE_IN_TIME / raw_text.length()
-	text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_CENTER)
+	#text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER)
 	text.text_scale = text_scale
-	text.add_border(1)
+	#text.add_border(1)
 	text.set_snaily_text(new_text)
-	text.call_deferred("center_position")
+	#text.call_deferred("center_position")
 	life_timer = -abs(delay)
 
 

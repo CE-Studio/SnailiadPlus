@@ -33,11 +33,11 @@ var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 ## The color of the text shadow/border
 var shadow_color:Color = Color(0.0, 0.0, 0.0)
 
-## No idea
-## @deprecated
-var char_timeouts:Array[float] = []
 ## Internal copy of whatever [String] is being displayed, before any special parsing occurs
 var internal_text:String = ""
+## This label's parent label, if any exists. If none is set, this label will act as a standalone/parent.
+## If it is set, this label will ignore outside influence and follow its parent's settings and position.
+var parent_label:SnailyText = null
 
 ## Array containing any additional label components used for shadows or borders
 @onready var sub_text:Array[RichTextLabel] = []
@@ -47,6 +47,11 @@ var internal_text:String = ""
 
 
 func _ready() -> void:
+	bbcode_enabled = true
+	fit_content = true
+	scroll_active = false
+	clip_contents = false
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if not Engine.is_editor_hint():
 		if quick_load_text.strip_edges() != "":
 			set_snaily_text(quick_load_text.replace("\\n", "\n"))
@@ -56,13 +61,39 @@ func _ready() -> void:
 			add_border(border_scale)
 
 
+func _process(_delta: float) -> void:
+	if parent_label:
+		size = parent_label.size
+		text = parent_label.text
+		text_scale = parent_label.text_scale
+		internal_text = parent_label.internal_text
+		horizontal_alignment = parent_label.horizontal_alignment
+		vertical_alignment = parent_label.vertical_alignment
+
+
+## Sets this [SnailyText] up as a shadow/border child of another [SnailyText]
+func setup_as_child(_parent:SnailyText, _offset:Vector2i) -> void:
+	parent_label = _parent
+	modulate = Color.BLACK
+	show_behind_parent = true
+	size = _parent.size
+	text = _parent.text
+	text_scale = _parent.text_scale
+	internal_text = _parent.internal_text
+	horizontal_alignment = _parent.horizontal_alignment
+	vertical_alignment = _parent.vertical_alignment
+	parent_label.add_child(self)
+	position = _offset
+
+
 ## Sets the displayed text to the new [String]
 func set_snaily_text(_text:String) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
-	reset_label_size.call_deferred()
+	#reset_label_size.call_deferred()
+	# Expand label size if necessary?
 
 
 ## Sets the text alignment
@@ -89,8 +120,7 @@ func reset_label_size() -> void:
 		sub_text[i].position = sub_text_offsets[i]
 
 
-## Seems to have once been meant to center the text? Doesn't seem finished
-## @deprecated
+## Moves the text to be centered horizontally on its previous position
 func center_position() -> void:
 	position.x = custom_minimum_size.x * -0.5
 
@@ -104,29 +134,42 @@ func clear_sub_text() -> void:
 
 ## Adds a shadow, offset down-right from the main text by the given number of pixels
 func add_shadow(distance:int) -> void:
-	var shadow = create_new_label()
-	shadow.modulate = shadow_color
-	sub_text.append(shadow)
-	var offset = Vector2(distance, distance)
-	shadow.position = offset
+	var offset:Vector2i = Vector2i(distance, distance)
+	sub_text.append(create_child_text(offset))
 	sub_text_offsets.append(offset)
+	#return
+	#var shadow = create_new_label()
+	#shadow.modulate = shadow_color
+	#sub_text.append(shadow)
+	#var offset = Vector2(distance, distance)
+	#shadow.position = offset
+	#sub_text_offsets.append(offset)
 
 
 ## Adds a border made of four chid text nodes offset in each cardinal direction from the main text
 ## by the given number of pixels
 func add_border(distance:int) -> void:
+	var offset:Vector2i = Vector2i(0, -distance)
 	for i in range(4):
-		var border_part = create_new_label()
-		border_part.modulate = shadow_color
-		sub_text.append(border_part)
-		var offset:Vector2
 		match i:
-			0: offset = Vector2(0, -distance)
-			1: offset = Vector2(distance, 0)
-			2: offset = Vector2(0, distance)
-			3: offset = Vector2(-distance, 0)
-		border_part.position = offset
+			1: offset = Vector2i(distance, 0)
+			2: offset = Vector2i(0, distance)
+			3: offset = Vector2i(-distance, 0)
+		sub_text.append(create_child_text(offset))
 		sub_text_offsets.append(offset)
+	#return
+	#for i in range(4):
+	#	var border_part = create_new_label()
+	#	border_part.modulate = shadow_color
+	#	sub_text.append(border_part)
+	#	var offset:Vector2
+	#	match i:
+	#		0: offset = Vector2(0, -distance)
+	#		1: offset = Vector2(distance, 0)
+	#		2: offset = Vector2(0, distance)
+	#		3: offset = Vector2(-distance, 0)
+	#	border_part.position = offset
+	#	sub_text_offsets.append(offset)
 
 
 ## Instances and sets up a new [RichTextLabel] for use as a child
@@ -148,6 +191,14 @@ func create_new_label() -> RichTextLabel:
 	new_label.text = text
 	new_label.autowrap_mode = self.autowrap_mode
 	return new_label
+
+
+## Instances and sets up a new [SnailyText] for use as a child
+func create_child_text(_offset:Vector2i) -> SnailyText:
+	var new_text:SnailyText = SnailyText.new()
+	#add_child(new_text)
+	new_text.setup_as_child(self, _offset)
+	return new_text
 
 
 ## Sets the number of visible characters this text can display

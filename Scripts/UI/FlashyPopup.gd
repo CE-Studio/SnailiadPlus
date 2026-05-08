@@ -21,11 +21,11 @@ func instance(new_text:String, lifetime:float = 3.5, text_scale:int = 2, delay:f
 	raw_text = new_text
 	max_lifetime = lifetime
 	offset_base = TOTAL_FADE_IN_TIME / raw_text.length()
-	text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP)
+	#text.set_alignment(HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP)
 	text.text_scale = text_scale
-	text.add_border(1)
+	#text.add_border(1)
 	text.set_snaily_text(new_text)
-	text.call_deferred("center_position")
+	#text.call_deferred("center_position")
 	life_timer = -abs(delay)
 
 

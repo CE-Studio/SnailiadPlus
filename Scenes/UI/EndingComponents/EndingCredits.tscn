@@ -58,3 +58,14 @@ bus = &"Music"
 [node name="MusicAlt" type="AudioStreamPlayer" parent="." unique_id=552461907]
 stream = ExtResource("8_ratej")
 bus = &"Music"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=253663738]
+offset_left = 55.56
+offset_top = 24.0
+offset_right = 256.55997
+offset_bottom = 51.0
+bbcode_enabled = true
+text = "awawawawawawawa"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1

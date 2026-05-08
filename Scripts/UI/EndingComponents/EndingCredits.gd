@@ -260,40 +260,50 @@ func _create_credits() -> void:
 			_add_label(tr(&"Wrote a bunch of new songs for the new content and has excellent game design sense"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		40:
+			_add_pixel_person("orange")
+			_add_label(tr(&"ImpossibleOrange"))
+			_add_label(tr(&"Helped draw some new sprites"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		41:
 			_add_pixel_person("zettex")
 			_add_label(tr(&"Zettex"))
 			_add_label(tr(&"Originally designed two of the new playable characters"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		41:
+		42:
 			_add_pixel_person("minervo")
 			_add_label(tr(&"Minervo Ionni"))
 			_add_label(tr(&"Designed another character and let me bounce a bunch of ideas off it"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		42:
+		43:
+			_add_pixel_person("helispark")
+			_add_label(tr(&"Helispark"))
+			_add_label(tr(&"Playtesting and flavor text"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		44:
 			_add_pixel_person("goldguy")
 			_add_label(tr(&"Goldguy40"))
 			_add_label(tr(&"Drew a handful of new tiles for me"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		43:
+		45:
 			_add_pixel_person("xander")
 			_add_label(tr(&"They Call Me Xander"))
 			_add_label(tr(&"Call him an entomologist the way he discovers those bugs"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		44:
+		46:
 			_add_pixel_person("ehseezed")
 			_add_label(tr(&"Ehseezed"))
 			_add_label(tr(&"Heading official Archipelago integration for me"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		45:
+		47:
 			_add_pixel_person("discord")
 			_add_label(tr(&"The Snailiad Discord"))
 			_add_label(tr(&"Testing, feedback, ideas, memes, encouragement, and being patient. Seriously, y'all are amazing and I'm happy to be a part of this community _@_V!!"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		46:
+		48:
 			if randf() > 0.125:
 				_add_sprite("res://Assets/Images/Entities/ForTheFunny.json", "anim", Vector2(0, 16), 40)
 				_add_y(PIXEL_PEOPLE_SPACING_Y)
-		47:
+		49:
 			_add_label(tr(&"And you\n\n\nBecause seriously, why not\n\n\nAll the other games put \"And You\" in the credits, so I figure, \"And You\" must be someone pretty cool\n\n\nThanks, And You!!"))
 		_:
 			finished_spawning = true

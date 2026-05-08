@@ -7,8 +7,10 @@
 script = ExtResource("1_heu8w")
 
 [node name="SnailyText" parent="." unique_id=5090357 instance=ExtResource("1_6xv1x")]
-offset_left = -28.0
+offset_left = -200.0
 offset_top = -8.0
-offset_right = 28.0
+offset_right = 200.0
 offset_bottom = 8.0
 text = "Text!!"
+horizontal_alignment = 1
+border_scale = 1

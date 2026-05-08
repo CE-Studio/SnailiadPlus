@@ -8,8 +8,17 @@ script = ExtResource("1_gw3v7")
 
 [node name="SnailyText" parent="." unique_id=570946645 instance=ExtResource("1_d1npl")]
 custom_minimum_size = Vector2(56, 0)
-offset_left = -28.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
 offset_top = -8.0
-offset_right = 28.0
+offset_right = 200.0
 offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Text!!"
+horizontal_alignment = 1
+border_scale = 1

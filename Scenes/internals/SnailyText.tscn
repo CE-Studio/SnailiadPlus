@@ -13,17 +13,7 @@
 
 [node name="SnailyText" type="RichTextLabel" unique_id=326553468]
 clip_contents = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -120.0
-offset_right = -199.0
-offset_bottom = -120.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1.0
 mouse_filter = 2
 theme = ExtResource("1_52xjo")
 theme_override_font_sizes/normal_font_size = 16
