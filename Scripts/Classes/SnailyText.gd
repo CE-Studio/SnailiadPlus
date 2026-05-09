@@ -69,6 +69,7 @@ func _process(_delta: float) -> void:
 		internal_text = parent_label.internal_text
 		horizontal_alignment = parent_label.horizontal_alignment
 		vertical_alignment = parent_label.vertical_alignment
+		visible_ratio = parent_label.visible_ratio
 
 
 ## Sets this [SnailyText] up as a shadow/border child of another [SnailyText]

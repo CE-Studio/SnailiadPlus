@@ -33,6 +33,12 @@ var species:Array = [
 	[tr(&"leech"), tr(&"leeches"),],
 ]
 
+var difficulties:Array = [
+	tr(&"Easy"),
+	tr(&"Normal"),
+	tr(&"Absurd"),
+]
+
 var areas:Dictionary = {
 	"SnailTown": tr(&"Snail Town"),
 	"MareCarelia": tr(&"Mare Carelia"),

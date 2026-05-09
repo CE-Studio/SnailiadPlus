@@ -14,7 +14,8 @@ const SCROLL_SPEED_DOWN:float = -192.0
 const SCROLL_SPEED_UP:float = 48.0
 const FADE_DISTANCE:float = 24.0
 const TILEMAP_SCROLL_MULT:float = 0.4125
-const END_PAUSE_THRESHOLD:float = 6.0
+const END_PAUSE_THRESHOLD:float = 4.5
+const SKIP_THRESHOLD:float = 1.0
 
 ## The amount of time in seconds since the credits were spawned
 var elapsed:float = 0.0
@@ -51,6 +52,8 @@ var stop_y:float = 1024.0
 @export var music_alt:AudioStreamPlayer
 ## The tilemap that scrolls behind the credits
 @export var tilemap:TileMapLayer
+## The stats screen
+@export var stats:Node2D
 
 ## Quick reference to the custom text scene
 @onready var text:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
@@ -91,6 +94,10 @@ func _process(delta: float) -> void:
 		scroll_end_time += delta
 		if scroll_end_time >= END_PAUSE_THRESHOLD:
 			end_visible = true
+			stats.start_anim()
+	if elapsed >= SKIP_THRESHOLD and not end_visible and SInput.check_input(SInput.Inputs.PAUSE, true):
+		end_visible = true
+		stats.start_anim()
 	
 	if not finished_spawning:
 		_create_credits()
