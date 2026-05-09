@@ -87,13 +87,14 @@ func setup_as_child(_parent:SnailyText, _offset:Vector2i) -> void:
 
 
 ## Sets the displayed text to the new [String]
-func set_snaily_text(_text:String) -> void:
+func set_snaily_text(_text:String, _rescale:bool = false) -> void:
 	_text = format_extra_tags(_text)
 	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
 	#reset_label_size.call_deferred()
-	# Expand label size if necessary?
+	if _rescale:
+		rescale_horizontal(true)
 
 
 ## Sets the text alignment
@@ -118,6 +119,24 @@ func reset_label_size() -> void:
 		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
 		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
 		sub_text[i].position = sub_text_offsets[i]
+
+
+## Recalculates the minimum size of the label to match the longest line of text
+func rescale_horizontal(_limit:bool = false) -> void:
+	var longest_line:int = get_width()
+	var scale_mod:float = float(text_scale) * 0.5
+	custom_minimum_size.x = ceili(longest_line * scale_mod)
+	if _limit and custom_minimum_size.x > 400:
+		custom_minimum_size.x = 400
+	for _text in sub_text:
+		_text.custom_minimum_size.x = custom_minimum_size.x
+
+
+## Resets the minimum size of the label
+func reset_rescale() -> void:
+	custom_minimum_size.x = 0.0
+	for _text in sub_text:
+		_text.custom_minimum_size.x = 0
 
 
 ## Moves the text to be centered horizontally on its previous position

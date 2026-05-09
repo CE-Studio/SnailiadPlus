@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://pupxar4osuo0"]
+
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_w3dvm"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_72yjm"]
+[ext_resource type="Texture2D" uid="uid://dnlvoym7mocsg" path="res://Assets/Images/Endings/EndingBackground.png" id="3_3bpwr"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_yfkq1"]
+[ext_resource type="Texture2D" uid="uid://baded8o60aqlq" path="res://Assets/Images/Endings/EndingNormal.png" id="5_wfbin"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_yfkq1"]
+
+[node name="EndingStats" type="Node2D" unique_id=774344908]
+
+[node name="FadeCover" type="Sprite2D" parent="." unique_id=588289153]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("1_w3dvm")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=2127892930]
+position = Vector2(200, 120)
+script = ExtResource("2_72yjm")
+texture_path = "res://Assets/Images/Endings/EndingBackground.json"
+load_autoplay = Array[String](["normal"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Background" unique_id=387159985]
+texture = ExtResource("3_3bpwr")
+script = ExtResource("4_yfkq1")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Snail" type="Sprite2D" parent="." unique_id=404753541]
+position = Vector2(200, 120)
+script = ExtResource("2_72yjm")
+texture_path = "res://Assets/Images/Endings/EndingNormal.json"
+load_autoplay = Array[String](["anim"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="Snail" unique_id=1602874636]
+texture = ExtResource("5_wfbin")
+script = ExtResource("4_yfkq1")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="CongratsHeader" type="RichTextLabel" parent="." unique_id=248810681]
+clip_contents = false
+offset_top = 56.0
+offset_right = 400.0
+offset_bottom = 87.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Congratulations!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="CharDiff" type="RichTextLabel" parent="." unique_id=500644217]
+clip_contents = false
+offset_top = 104.0
+offset_right = 400.0
+offset_bottom = 135.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Snaily - Normal"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="ItemContainer" type="HBoxContainer" parent="." unique_id=770029073]
+offset_top = 136.0
+offset_right = 400.0
+offset_bottom = 176.0
+alignment = 1
+
+[node name="ItemHeader" type="RichTextLabel" parent="ItemContainer" unique_id=470990984]
+clip_contents = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Items collected:"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="VSeparator" type="VSeparator" parent="ItemContainer" unique_id=119310953]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ItemCount" type="RichTextLabel" parent="ItemContainer" unique_id=1834417836]
+clip_contents = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "0%"
+fit_content = true
+scroll_active = false
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="TimeContainer" type="HBoxContainer" parent="." unique_id=1295013542]
+offset_top = 160.0
+offset_right = 400.0
+offset_bottom = 200.0
+alignment = 1
+
+[node name="TimeHeader" type="RichTextLabel" parent="TimeContainer" unique_id=421990909]
+clip_contents = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Clear time:"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="VSeparator" type="VSeparator" parent="TimeContainer" unique_id=1755217309]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TimeCount" type="RichTextLabel" parent="TimeContainer" unique_id=656720110]
+clip_contents = false
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "0:00:00.00"
+fit_content = true
+scroll_active = false
+script = ExtResource("6_yfkq1")
+shadow_scale = 2
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

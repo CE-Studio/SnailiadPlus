@@ -6,13 +6,15 @@ extends Node2D
 #region Variables
 const ENEMY_PATH:String = "res://Scenes/Entities/Enemies/%s.tscn"
 const PIXEL_PEOPLE_PATH:String = "res://Assets/Images/Entities/PixelPeople.json"
-const ENEMY_SPACING_Y:float = 32.0
-const PIXEL_PEOPLE_SPACING_Y:float = 48.0
+const ENEMY_SPACING_Y:float = 40.0
+const PIXEL_PEOPLE_SPACING_Y:float = 56.0
 const SCROLL_DELAY:float = 3.2
 const SCROLL_SPEED:float = -33.0
 const SCROLL_SPEED_DOWN:float = -192.0
 const SCROLL_SPEED_UP:float = 48.0
 const FADE_DISTANCE:float = 24.0
+const TILEMAP_SCROLL_MULT:float = 0.4125
+const END_PAUSE_THRESHOLD:float = 6.0
 
 ## The amount of time in seconds since the credits were spawned
 var elapsed:float = 0.0
@@ -30,6 +32,12 @@ var finished_spawning:bool = false
 var fade_labels:Array[SnailyText] = []
 ## Compantion array for fading labels that tracks at what Y positions they should start fading in at
 var fade_heights:Array[float] = []
+## Whether or not the end screen has started showing or not
+var end_visible:bool = false
+## How long the credits have sat at the bottom "the end" sprite
+var scroll_end_time:float = 0.0
+## The Y position the credits should stop scrolling at
+var stop_y:float = 1024.0
 
 ## The parent to all credits objects. Will scroll up slowly overtime
 @export var credits_parent:Node2D
@@ -41,6 +49,8 @@ var fade_heights:Array[float] = []
 @export var music_main:AudioStreamPlayer
 ## The alternate credits music
 @export var music_alt:AudioStreamPlayer
+## The tilemap that scrolls behind the credits
+@export var tilemap:TileMapLayer
 
 ## Quick reference to the custom text scene
 @onready var text:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
@@ -65,13 +75,23 @@ func _process(delta: float) -> void:
 	elapsed += delta
 	if not fading_out:
 		cover.modulate.a = move_toward(cover.modulate.a, 0.0, delta)
-	if elapsed > SCROLL_DELAY:
+	
+	if scroll_end_time == 0.0 and elapsed > SCROLL_DELAY:
 		var this_scroll_speed:float = SCROLL_SPEED
 		if SInput.vector_move().y > 0:
 			this_scroll_speed = SCROLL_SPEED_DOWN
 		elif SInput.vector_move().y < 0:
 			this_scroll_speed = SCROLL_SPEED_UP
 		credits_parent.position.y += this_scroll_speed * delta
+		tilemap.position.y += this_scroll_speed * delta * TILEMAP_SCROLL_MULT
+		if credits_parent.position.y <= stop_y:
+			credits_parent.position.y = stop_y
+			scroll_end_time += delta
+	elif scroll_end_time > 0.0 and not end_visible:
+		scroll_end_time += delta
+		if scroll_end_time >= END_PAUSE_THRESHOLD:
+			end_visible = true
+	
 	if not finished_spawning:
 		_create_credits()
 	for i in range(fade_labels.size()):
@@ -108,7 +128,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Blob, Blub, Angelblob, and Devilblob"))
 			_add_y(ENEMY_SPACING_Y)
 		5:
-			_add_enemy_group(["ChirpyCommon", "ChirpyTough"], 28, 24, 48)
+			_add_enemy_group(["ChirpyCommon", "ChirpyTough"], 28, 24, 40)
 			_add_label(tr(&"Chirpy"))
 			_add_y(ENEMY_SPACING_Y)
 		6:
@@ -120,7 +140,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Fireball and Iceball"))
 			_add_y(ENEMY_SPACING_Y)
 		8:
-			_add_enemy("Snelk", Vector2(0, 12), 32)
+			_add_enemy("Snelk", Vector2(0, 12), 24)
 			_add_label(tr(&"Secret Snelk"))
 			_add_y(ENEMY_SPACING_Y)
 		9:
@@ -132,7 +152,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Ghost Dandelion"))
 			_add_y(ENEMY_SPACING_Y)
 		11:
-			_add_enemy_group(["Canon", "Noncanon"], 60, 24, 40)
+			_add_enemy_group(["Canon", "Noncanon"], 60, 24, 32)
 			_add_label(tr(&"Canon and Non-canon"))
 			_add_y(ENEMY_SPACING_Y)
 		12:
@@ -152,11 +172,11 @@ func _create_credits() -> void:
 			_add_label(tr(&"Spider Mama"))
 			_add_y(ENEMY_SPACING_Y)
 		16:
-			_add_enemy("TurtleCommon", Vector2(0, 16), 40)
+			_add_enemy("TurtleCommon", Vector2(0, 16), 32)
 			_add_label(tr(&"Gravity Turtle"))
 			_add_y(ENEMY_SPACING_Y)
 		17:
-			_add_enemy("TurtleTough", Vector2(0, 16), 40)
+			_add_enemy("TurtleTough", Vector2(0, 16), 32)
 			_add_label(tr(&"Gravity Turtle (Cherry Red Finish)"))
 			_add_y(ENEMY_SPACING_Y)
 		18:
@@ -164,11 +184,11 @@ func _create_credits() -> void:
 			_add_label(tr(&"Jellyfish"))
 			_add_y(ENEMY_SPACING_Y)
 		19:
-			_add_enemy("Seahorse", Vector2(0, 16), 40)
+			_add_enemy("Seahorse", Vector2(0, 16), 32)
 			_add_label(tr(&"Syngnathida"))
 			_add_y(ENEMY_SPACING_Y)
 		20:
-			_add_enemy_group(["TallfishCommon", "TallfishTough"], 52, 24, 56)
+			_add_enemy_group(["TallfishCommon", "TallfishTough"], 52, 24, 48)
 			_add_label(tr(&"Tallfish and Angry Tallfish"))
 			_add_y(ENEMY_SPACING_Y)
 		21:
@@ -176,7 +196,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Walleye"))
 			_add_y(ENEMY_SPACING_Y)
 		22:
-			_add_enemy("Angryblock", Vector2(0, 24), 64)
+			_add_enemy("Angryblock", Vector2(0, 24), 56)
 			_add_label(tr(&"This guy"))
 			_add_y(ENEMY_SPACING_Y)
 		23:
@@ -184,28 +204,28 @@ func _create_credits() -> void:
 			_add_label(tr(&"Pincer and Sky Pincer"))
 			_add_y(ENEMY_SPACING_Y)
 		24:
-			_add_enemy("GearCommon", Vector2(0, 16), 36)
+			_add_enemy("GearCommon", Vector2(0, 16), 32)
 			_add_label(tr(&"Spinnygear"))
 			_add_y(ENEMY_SPACING_Y)
 		25:
-			_add_enemy("Drone", Vector2(0, 14), 36)
+			_add_enemy("Drone", Vector2(0, 14), 28)
 			_add_label(tr(&"Federation Drone"))
 			_add_y(ENEMY_SPACING_Y)
 		26:
-			_add_enemy("Balloon", Vector2(0, 16), 40)
+			_add_enemy("Balloon", Vector2(0, 16), 32)
 			_add_label(tr(&"Balloon Buster"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		27:
 			_add_y(52)
-			_add_enemy("Bosses/Shellbreaker", Vector2(0, 24), 56)
+			_add_enemy("Bosses/Shellbreaker", Vector2(0, 24), 48)
 			_add_label(tr(&"Shellbreaker"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		28:
-			_add_enemy("Bosses/Stompy", Vector2(0, 56), 216)
+			_add_enemy("Bosses/Stompy", Vector2(0, 56), 208)
 			_add_label(tr(&"Stompy"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		29:
-			_add_scene("res://Scenes/Entities/Deco/CreditsSpacebox.tscn", 64, 136)
+			_add_scene("res://Scenes/Entities/Deco/CreditsSpacebox.tscn", 64, 128)
 			_add_label(tr(&"Space Box"))
 			_add_fade_label(tr(&"and Babybox"), 170)
 			_add_y(ENEMY_SPACING_Y + 8)
@@ -214,7 +234,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Moon Snail"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		31:
-			_add_enemy("Bosses/Gigasnail", Vector2(0, 24), 56)
+			_add_enemy("Bosses/Gigasnail", Vector2(0, 24), 48)
 			_add_label(tr(&"Giga Snail"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		32:
@@ -300,11 +320,15 @@ func _create_credits() -> void:
 			_add_label(tr(&"Testing, feedback, ideas, memes, encouragement, and being patient. Seriously, y'all are amazing and I'm happy to be a part of this community _@_V!!"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		48:
-			if randf() > 0.125:
-				_add_sprite("res://Assets/Images/Entities/ForTheFunny.json", "anim", Vector2(0, 16), 40)
+			if randf() <= 0.125:
+				_add_sprite("res://Assets/Images/Entities/ForTheFunny.json", "anim", Vector2(0, 16), 32)
 				_add_y(PIXEL_PEOPLE_SPACING_Y)
 		49:
 			_add_label(tr(&"And you\n\n\nBecause seriously, why not\n\n\nAll the other games put \"And You\" in the credits, so I figure, \"And You\" must be someone pretty cool\n\n\nThanks, And You!!"))
+			_add_y(PIXEL_PEOPLE_SPACING_Y + 32)
+		50:
+			_add_sprite("res://Assets/Images/Endings/TheEnd.json", "anim", Vector2i(0, 61), 61)
+			stop_y = -spawn_y + 120
 		_:
 			finished_spawning = true
 	spawn_stage += 1
@@ -317,14 +341,14 @@ func _add_y(space:float) -> void:
 
 ## Adds the given text
 func _add_label(_text:String, _size:int = 2) -> SnailyText:
-	var new_text:SnailyText = text.instantiate()
+	var new_text:SnailyText = SnailyText.new()
 	credits_parent.add_child(new_text)
 	new_text.set_alignment(HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_TOP)
-	new_text.max_width = 400
+	new_text.size.x = 400
 	new_text.text_scale = _size
 	new_text.add_shadow(1)
 	new_text.set_snaily_text(_text)
-	new_text.position = Vector2((new_text.get_width() * -0.5) * 0.5 * _size, spawn_y)
+	new_text.position = Vector2(-200.0, spawn_y)
 	var line_count:int = new_text.get_line_count()
 	_add_y((8 * _size) * line_count + 2)
 	return new_text
@@ -339,7 +363,7 @@ func _add_fade_label(_text:String, _threshold:float, _size:int = 2) -> void:
 
 
 ## Adds the requested enemy at the given offset
-func _add_enemy(_path:String, _offset:Vector2, _y_add:float = 24) -> void:
+func _add_enemy(_path:String, _offset:Vector2, _y_add:float = 16) -> void:
 	var enemy:Enemy = load(ENEMY_PATH % _path).instantiate()
 	enemy.display_mode = true
 	enemy.z_index = -1
@@ -351,7 +375,7 @@ func _add_enemy(_path:String, _offset:Vector2, _y_add:float = 24) -> void:
 
 
 ## Adds a group of enemies on the same Y coordinate
-func _add_enemy_group(_paths:PackedStringArray, _spacing:float, _y_offset:float, _y_add:float = 24) -> void:
+func _add_enemy_group(_paths:PackedStringArray, _spacing:float, _y_offset:float, _y_add:float = 16) -> void:
 	var this_offset:float = (_paths.size() - 1) * -0.5 * _spacing
 	for path in _paths:
 		_add_enemy(path, Vector2(this_offset, _y_offset), 0)
@@ -362,7 +386,7 @@ func _add_enemy_group(_paths:PackedStringArray, _spacing:float, _y_offset:float,
 
 
 ## Adds a generic [JsonSprite2D] to the credits
-func _add_sprite(_path:String, _anim:String, _offset:Vector2, _y_add:float = 24) -> void:
+func _add_sprite(_path:String, _anim:String, _offset:Vector2, _y_add:float = 16) -> void:
 	var new_spr:JsonSprite2D = JsonSprite2D.new()
 	new_spr.texture_path = _path
 	credits_parent.add_child(new_spr)
@@ -373,11 +397,11 @@ func _add_sprite(_path:String, _anim:String, _offset:Vector2, _y_add:float = 24)
 
 ## Adds a credits entry based on the credits-specific PixelPeople spritesheet
 func _add_pixel_person(_anim:String) -> void:
-	_add_sprite(PIXEL_PEOPLE_PATH, _anim, Vector2(0, 16), 40)
+	_add_sprite(PIXEL_PEOPLE_PATH, _anim, Vector2(0, 16), 32)
 
 
 ## Adds a non-enemy scene to the credits
-func _add_scene(_path:String, _y_offset:float, _y_add:float = 24) -> void:
+func _add_scene(_path:String, _y_offset:float, _y_add:float = 16) -> void:
 	var scn:Node2D = load(_path).instantiate()
 	credits_parent.add_child(scn)
 	scn.position = Vector2(0.0, spawn_y + _y_offset)

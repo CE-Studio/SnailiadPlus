@@ -18,7 +18,6 @@
 [ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="11_kf05q"]
 [ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="12_cac8p"]
 [ext_resource type="PackedScene" uid="uid://dd51oitsi3hyq" path="res://Scenes/internals/DarknessLayer.tscn" id="18_adkld"]
-[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="19_yb2dk"]
 
 [node name="CameraLayer" type="Node2D" unique_id=1777678961]
 z_index = 1000
@@ -201,19 +200,3 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 process_mode = 3
 z_index = 15
 script = ExtResource("9_qjw3k")
-
-[node name="SnailyText" type="RichTextLabel" parent="." unique_id=1623987236]
-clip_contents = false
-offset_left = 24.0
-offset_top = 120.0
-offset_right = 360.0
-offset_bottom = 184.0
-mouse_filter = 2
-bbcode_enabled = true
-text = "Awawawawa test test test test test all the testing all the time"
-fit_content = true
-scroll_active = false
-horizontal_alignment = 1
-script = ExtResource("19_yb2dk")
-shadow_scale = 2
-metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

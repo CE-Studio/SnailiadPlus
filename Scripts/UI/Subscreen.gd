@@ -93,7 +93,7 @@ var map_zoomed:bool = false
 @export var time_text:SnailyText
 @export var item_text:SnailyText
 
-@onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
+#@onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 @onready var zoomed_scn:PackedScene = preload("res://Scenes/UI/MinimapZoomed.tscn")
 #endregion
 
@@ -230,11 +230,11 @@ func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> JsonSprite
 
 
 func _add_list_text(_group:VBoxContainer, _text:String) -> void:
-	var new_text = text_scn.instantiate()
+	var new_text:SnailyText = SnailyText.new() #text_scn.instantiate()
 	new_text.shadow_scale = 1
 	new_text.text_scale = 1
 	_group.add_child(new_text)
-	new_text.set_snaily_text(_text)
+	new_text.set_snaily_text(_text, true)
 
 
 func _add_item_selectable(_sprite:JsonSprite2D, _item_id:int) -> void:

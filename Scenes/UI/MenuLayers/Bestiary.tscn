@@ -52,10 +52,10 @@ theme_override_constants/separation = 2
 
 [node name="Name" parent="Sprite2D" unique_id=1303695191 instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
-offset_left = -157.0
-offset_top = -216.0
-offset_right = -1.0
-offset_bottom = -56.0
+offset_left = 42.0
+offset_top = -96.0
+offset_right = 198.0
+offset_bottom = 64.0
 theme_override_font_sizes/normal_font_size = 8
 text = "Name here"
 max_width = 156
@@ -63,10 +63,10 @@ text_scale = 1
 
 [node name="Description" parent="Sprite2D" unique_id=642756905 instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
-offset_left = -176.0
-offset_top = -128.0
-offset_right = -20.0
-offset_bottom = 32.0
+offset_left = 23.0
+offset_top = -8.0
+offset_right = 179.0
+offset_bottom = 152.0
 theme_override_font_sizes/normal_font_size = 8
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 max_width = 156

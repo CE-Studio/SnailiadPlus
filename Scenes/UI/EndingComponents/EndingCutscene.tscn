@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://drfavrb4msd46" path="res://Assets/Images/Environments/EndingSpotlight.png" id="6_u4rgk"]
 [ext_resource type="Texture2D" uid="uid://dkxwvlw8prl3c" path="res://Assets/Images/Entities/EndingMoonSnail.png" id="7_u4rgk"]
 [ext_resource type="AudioStream" uid="uid://gjmmcnxl7qkq" path="res://Assets/Sounds/Music/EndingIntro.ogg" id="8_eplnd"]
+[ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="10_7865d"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="10_ws1ke"]
 [ext_resource type="AudioStream" uid="uid://dsn0n1srqm0ow" path="res://Assets/Sounds/Sfx/Dialogue1.ogg" id="11_ginrr"]
 
@@ -343,13 +344,17 @@ metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="Dialogue" parent="." unique_id=326553468 instance=ExtResource("10_ws1ke")]
 custom_minimum_size = Vector2(400, 0)
-offset_left = 0.0
 offset_top = 32.0
 offset_right = 400.0
 offset_bottom = 176.0
 text = "     And so..."
 max_width = 400
 shadow_scale = 1
+
+[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=889279033]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("10_7865d")
 
 [node name="SkipFade" type="Sprite2D" parent="." unique_id=1010079891]
 modulate = Color(0, 0, 0, 0)
