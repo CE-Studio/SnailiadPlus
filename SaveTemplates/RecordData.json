@@ -19,6 +19,9 @@
 		"leechy_insane": [ 0.0, 0.0, 0.0 ],
 		"leechy_rush": [ 0.0, 0.0, 0.0 ],
 	},
+	"lowest_percents": [
+		[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]
+	],
 	"achievements": [ ],
 	"unlocks": [ ],
 	"bestiary": [ ]

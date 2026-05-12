@@ -31,6 +31,7 @@ func _ready() -> void:
 	Statics.data_profile2 = _load_data_dict("Profile2", template_profile)
 	Statics.data_profile3 = _load_data_dict("Profile3", template_profile)
 	Statics.data_records = _load_data_dict("Records", template_records)
+	Statics.save_all()
 
 	# If control array is empty, set default controls
 	var ctrls:Array = ProjectSettings.get_setting("game/control/controls")

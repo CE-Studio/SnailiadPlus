@@ -405,6 +405,78 @@ static func get_world_flag(id:WorldFlags) -> Variant:
 			return false
 		return current_profile["world_flags"][id]
 	return false
+
+
+static func get_time(id:String) -> Array:
+	if data_records["times"].has(id):
+		return data_records["times"][id]
+	return [0.0, 0.0, 0.0]
+
+
+static func has_time(id:String) -> bool:
+	var time:Array = get_time(id)
+	return time != [0.0, 0.0, 0.0]
+
+
+static func infer_time_id() -> String:
+	var character:String = "snaily"
+	match Player.instance.who_i_is:
+		Player.Players.SLUGGY: character = "sluggy"
+		Player.Players.UPSIDE: character = "upside"
+		Player.Players.LEGGY: character = "leggy"
+		Player.Players.BLOBBY: character = "blobby"
+		Player.Players.LEECHY: character = "leechy"
+	var mode:String = "normal"
+	if is_in_boss_rush: mode = "rush"
+	elif current_profile["difficulty"] == 2: mode = "insane"
+	return "_".join([character, mode])
+
+
+static func has_times_for_character(character:Player.Players) -> bool:
+	match character:
+		Player.Players.SNAILY:
+			return has_time("snaily_normal") or has_time("snaily_insane") or has_time("snaily_rush")
+		Player.Players.SLUGGY:
+			return has_time("sluggy_normal") or has_time("sluggy_insane") or has_time("sluggy_rush")
+		Player.Players.UPSIDE:
+			return has_time("upside_normal") or has_time("upside_insane") or has_time("upside_rush")
+		Player.Players.LEGGY:
+			return has_time("leggy_normal") or has_time("leggy_insane") or has_time("leggy_rush")
+		Player.Players.BLOBBY:
+			return has_time("blobby_normal") or has_time("blobby_insane") or has_time("blobby_rush")
+		Player.Players.LEECHY:
+			return has_time("leechy_normal") or has_time("leechy_insane") or has_time("leechy_rush")
+	return false
+
+
+static func has_times_for_mode(mode:String) -> bool:
+	return (has_time("snaily_" + mode) or has_time("sluggy_" + mode) or has_time("upside_" + mode)
+	or has_time("leggy_" + mode) or has_time("blobby_" + mode) or has_time("leechy_" + mode))
+
+
+static func save_time(id:String, time:Array) -> void:
+	if data_records["times"].keys().has(id):
+		data_records["times"] = time.duplicate()
+
+
+## Compares two game times, and returns a value equal to the result of the comparison.
+## Will return -1 if [code]compare[/code] is less than [code]against[/code], 1 if more than, and 0 if equal
+static func compare_times(compare:Array, against:Array) -> int:
+	if compare[0] < against[0]: return -1
+	if compare[0] > against[0]: return 1
+	if compare[1] < against[1]: return -1
+	if compare[1] > against[1]: return 1
+	if compare[2] < against[2]: return -1
+	if compare[2] > against[2]: return 1
+	return 0
+
+
+static func save_lowest_percent(character:Player.Players, difficulty:int, rate:float) -> void:
+	data_records["lowest_percents"][character as int][difficulty] = rate
+
+
+static func get_lowest_percent(character:Player.Players, difficulty:int) -> float:
+	return data_records["lowest_percents"][character as int][difficulty]
 #endregion
 
 
@@ -524,12 +596,6 @@ static func is_point_on_screen(pos:Vector2, buffer:Vector2 = Vector2.ZERO) -> bo
 #endregion
 
 
-#static func get_text(key:String) -> String:
-#	if text_lib.has(key):
-#		return text_lib[key]
-#	return key
-
-
 static func is_number(value:Variant, consider_strings := false) -> bool:
 	if value is int:
 		return true
@@ -546,10 +612,6 @@ static func is_number(value:Variant, consider_strings := false) -> bool:
 			if value.is_valid_hex_number(true):
 				return true
 	return false
-
-
-static func round_to_places(number:float, decimal_places:int) -> float:
-	return round(number * pow(10, decimal_places)) / pow(10, decimal_places)
 
 
 static func integrate(num:float, target:float, speed:float, elapsed:float, threshold:float = 0.1) -> float:

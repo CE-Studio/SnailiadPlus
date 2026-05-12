@@ -27,6 +27,11 @@ extends RichTextLabel
 const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
 
+const RAINBOW_CYCLE_TIME:float = 0.0625
+var rainbow_colors:Array[Color] = [
+	Statics.get_color(Vector2i(0, 0))
+]
+
 ## Quick reference to the font file
 var font:FontFile = load("res://Resources/SnailplanesExtended.ttf")
 
@@ -38,6 +43,15 @@ var internal_text:String = ""
 ## This label's parent label, if any exists. If none is set, this label will act as a standalone/parent.
 ## If it is set, this label will ignore outside influence and follow its parent's settings and position.
 var parent_label:SnailyText = null
+
+## Whether or not the text is cycling through rainbow colors
+var rainbow_active:bool = false
+## Whether or not the text is cycling through rainbow colors in a scrolling manner
+var rainbow_scroll_active:bool = false
+## How long it has been since the last rainbow color change
+var rainbow_elapsed:float = 0.0
+## The current color index that will be pulled next for the rainbow effect
+var rainbow_index:int = 0
 
 ## Array containing any additional label components used for shadows or borders
 @onready var sub_text:Array[RichTextLabel] = []
@@ -59,9 +73,10 @@ func _ready() -> void:
 			add_shadow(shadow_scale)
 		if border_scale > 0:
 			add_border(border_scale)
+	reset_rainbow()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if parent_label:
 		size = parent_label.size
 		text = parent_label.text
@@ -70,6 +85,16 @@ func _process(_delta: float) -> void:
 		horizontal_alignment = parent_label.horizontal_alignment
 		vertical_alignment = parent_label.vertical_alignment
 		visible_ratio = parent_label.visible_ratio
+	
+	if rainbow_active or rainbow_scroll_active:
+		rainbow_elapsed += delta
+		if rainbow_elapsed >= RAINBOW_CYCLE_TIME:
+			rainbow_elapsed -= RAINBOW_CYCLE_TIME
+			rainbow_index = (rainbow_index + 1) % rainbow_colors.size()
+			if rainbow_active:
+				modulate = rainbow_colors[rainbow_index]
+			elif rainbow_scroll_active:
+				apply_rainbow_scroll()
 
 
 ## Sets this [SnailyText] up as a shadow/border child of another [SnailyText]
@@ -93,7 +118,6 @@ func set_snaily_text(_text:String, _rescale:bool = false) -> void:
 	text = _text
 	for sub_label in sub_text:
 		sub_label.text = _text
-	#reset_label_size.call_deferred()
 	if _rescale:
 		rescale_horizontal(true)
 
@@ -157,13 +181,6 @@ func add_shadow(distance:int) -> void:
 	var offset:Vector2i = Vector2i(distance, distance)
 	sub_text.append(create_child_text(offset))
 	sub_text_offsets.append(offset)
-	#return
-	#var shadow = create_new_label()
-	#shadow.modulate = shadow_color
-	#sub_text.append(shadow)
-	#var offset = Vector2(distance, distance)
-	#shadow.position = offset
-	#sub_text_offsets.append(offset)
 
 
 ## Adds a border made of four chid text nodes offset in each cardinal direction from the main text
@@ -177,19 +194,6 @@ func add_border(distance:int) -> void:
 			3: offset = Vector2i(-distance, 0)
 		sub_text.append(create_child_text(offset))
 		sub_text_offsets.append(offset)
-	#return
-	#for i in range(4):
-	#	var border_part = create_new_label()
-	#	border_part.modulate = shadow_color
-	#	sub_text.append(border_part)
-	#	var offset:Vector2
-	#	match i:
-	#		0: offset = Vector2(0, -distance)
-	#		1: offset = Vector2(distance, 0)
-	#		2: offset = Vector2(0, distance)
-	#		3: offset = Vector2(-distance, 0)
-	#	border_part.position = offset
-	#	sub_text_offsets.append(offset)
 
 
 ## Instances and sets up a new [RichTextLabel] for use as a child
@@ -216,7 +220,6 @@ func create_new_label() -> RichTextLabel:
 ## Instances and sets up a new [SnailyText] for use as a child
 func create_child_text(_offset:Vector2i) -> SnailyText:
 	var new_text:SnailyText = SnailyText.new()
-	#add_child(new_text)
 	new_text.setup_as_child(self, _offset)
 	return new_text
 
@@ -272,3 +275,76 @@ func format_extra_tags(_text:String) -> String:
 
 	internal_text = " ".join(internal_reassembled_str)
 	return " ".join(reassembled_str)
+
+
+## Sets the text color
+func set_color(col:Color) -> void:
+	modulate = col
+	rainbow_active = false
+	rainbow_scroll_active = false
+
+## Sets the text color using a given palette ID
+func set_color_from_id(id:Vector2i) -> void:
+	modulate = Statics.get_color(id)
+	rainbow_active = false
+	rainbow_scroll_active = false
+
+
+## Enables the flashing rainbow effect
+func enable_rainbow() -> void:
+	if rainbow_colors.size() == 0:
+		return
+	rainbow_active = true
+	rainbow_scroll_active = false
+	rainbow_elapsed = 0.0
+	rainbow_index = 0
+	modulate = rainbow_colors[0]
+
+
+## Enables the scrolling rainbow effect
+func enable_rainbow_scroll() -> void:
+	if rainbow_colors.size() == 0:
+		return
+	rainbow_scroll_active = true
+	rainbow_active = false
+	rainbow_elapsed = 0.0
+	rainbow_index = 0
+	apply_rainbow_scroll()
+
+
+## Applies a new color array to rainbow mode
+func overwrite_rainbow(new_list:Array[Color]) -> void:
+	rainbow_colors = new_list.duplicate()
+
+
+## Resets the rainbow to its initial true rainbow state
+func reset_rainbow() -> void:
+	rainbow_colors = [
+		Statics.get_color(Vector2i(1, 2)),
+		Statics.get_color(Vector2i(2, 2)),
+		Statics.get_color(Vector2i(2, 3)),
+		Statics.get_color(Vector2i(2, 4)),
+		Statics.get_color(Vector2i(3, 4)),
+		Statics.get_color(Vector2i(2, 5)),
+		Statics.get_color(Vector2i(2, 7)),
+		Statics.get_color(Vector2i(2, 6)),
+		Statics.get_color(Vector2i(2, 8)),
+		Statics.get_color(Vector2i(2, 9)),
+		Statics.get_color(Vector2i(1, 9)),
+		Statics.get_color(Vector2i(0, 9)),
+		Statics.get_color(Vector2i(0, 11)),
+		Statics.get_color(Vector2i(0, 12)),
+		Statics.get_color(Vector2i(1, 12)),
+		Statics.get_color(Vector2i(1, 13)),
+	]
+
+
+## Applies a rainbow scroll to the visible text
+func apply_rainbow_scroll() -> void:
+	var this_i:int = rainbow_index
+	var in_str:String = internal_text
+	var out_str:String = ""
+	for chr in in_str:
+		out_str += "[color=%s]%s" % [rainbow_colors[this_i].to_html(), chr]
+		this_i = (this_i + 1) % rainbow_colors.size()
+	text = out_str

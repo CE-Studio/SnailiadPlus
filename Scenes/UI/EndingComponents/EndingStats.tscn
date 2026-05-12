@@ -7,6 +7,12 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_yfkq1"]
 [ext_resource type="Texture2D" uid="uid://baded8o60aqlq" path="res://Assets/Images/Endings/EndingNormal.png" id="5_wfbin"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_yfkq1"]
+[ext_resource type="AudioStream" uid="uid://rdsa7iqbba60" path="res://Assets/Sounds/Sfx/EndingStatAppear.ogg" id="8_q7rhw"]
+[ext_resource type="AudioStream" uid="uid://b3ixpp7kjia5k" path="res://Assets/Sounds/Sfx/Dialogue0.ogg" id="9_ooj1n"]
+[ext_resource type="AudioStream" uid="uid://dqs24itjujvno" path="res://Assets/Sounds/Sfx/Dialogue3.ogg" id="10_e1msr"]
+[ext_resource type="AudioStream" uid="uid://cgqsmx4p7xp4s" path="res://Assets/Sounds/Sfx/EndingStatBest.ogg" id="10_xgspa"]
+[ext_resource type="AudioStream" uid="uid://dsn0n1srqm0ow" path="res://Assets/Sounds/Sfx/Dialogue1.ogg" id="11_ty743"]
+[ext_resource type="AudioStream" uid="uid://b60650li5d52q" path="res://Assets/Sounds/Sfx/Dialogue2.ogg" id="12_3tbo3"]
 
 [sub_resource type="Animation" id="Animation_yfkq1"]
 resource_name = "Ending"
@@ -127,10 +133,115 @@ tracks/9/path = NodePath("TimeContainer:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 7, 8.25),
+"times": PackedFloat32Array(0, 8.55, 9.8),
 "transitions": PackedFloat32Array(1, 0.25, 1),
 "update": 0,
 "values": [Vector2(0, 288), Vector2(0, 288), Vector2(0, 160)]
+}
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("StatAppear")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(4.05, 5.6, 8.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(6.6, 9.65),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_ticking_items"
+}, {
+"args": [],
+"method": &"start_ticking_time"
+}]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("HeaderAppear")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1.75, 1.8000001, 1.85, 1.9, 1.95, 2, 2.05, 2.1000001, 2.15, 2.2, 2.25, 2.3, 2.3500001, 2.4, 2.45, 2.5, 2.55, 2.6000001, 2.65),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_wfbin"]
@@ -262,7 +373,15 @@ _data = {
 &"RESET": SubResource("Animation_wfbin")
 }
 
-[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic", "header", "char_diff", "item_container", "item_header", "item_counter", "time_container", "time_header", "time_counter")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ooj1n"]
+playback_mode = 2
+streams_count = 4
+stream_0/stream = ExtResource("9_ooj1n")
+stream_1/stream = ExtResource("10_e1msr")
+stream_2/stream = ExtResource("11_ty743")
+stream_3/stream = ExtResource("12_3tbo3")
+
+[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic", "header", "char_diff", "item_container", "item_header", "item_counter", "new_lowest_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best")]
 script = ExtResource("1_wfbin")
 anim = NodePath("AnimationPlayer")
 end_bg = NodePath("Background")
@@ -272,9 +391,13 @@ char_diff = NodePath("CharDiff")
 item_container = NodePath("ItemContainer")
 item_header = NodePath("ItemContainer/ItemHeader")
 item_counter = NodePath("ItemContainer/ItemCount")
+new_lowest_items = NodePath("NewLowestItems")
 time_container = NodePath("TimeContainer")
 time_header = NodePath("TimeContainer/TimeHeader")
 time_counter = NodePath("TimeContainer/TimeCount")
+new_best_time = NodePath("NewBestTime")
+sfx_tick = NodePath("StatTick")
+sfx_best = NodePath("StatBest")
 
 [node name="FadeCover" type="Sprite2D" parent="." unique_id=588289153]
 modulate = Color(0, 0, 0, 0)
@@ -310,7 +433,7 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 clip_contents = false
 offset_top = 56.0
 offset_right = 400.0
-offset_bottom = 87.00017
+offset_bottom = 87.00014
 mouse_filter = 2
 bbcode_enabled = true
 text = "Congratulations!!"
@@ -423,5 +546,59 @@ shadow_scale = 2
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
+[node name="NewLowestItems" type="RichTextLabel" parent="." unique_id=1491655041]
+clip_contents = false
+offset_left = -32.0
+offset_top = 136.0
+offset_right = 368.0
+offset_bottom = 167.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "New lowest!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("6_yfkq1")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="NewBestTime" type="RichTextLabel" parent="." unique_id=2034152556]
+clip_contents = false
+offset_left = -72.0
+offset_top = 160.0
+offset_right = 328.0
+offset_bottom = 191.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "New best!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("6_yfkq1")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=885390479]
 libraries/ = SubResource("AnimationLibrary_wfbin")
+
+[node name="HeaderAppear" type="AudioStreamPlayer" parent="." unique_id=1964979562]
+stream = ExtResource("12_3tbo3")
+
+[node name="StatAppear" type="AudioStreamPlayer" parent="." unique_id=738843945]
+stream = ExtResource("8_q7rhw")
+bus = &"Sfx"
+
+[node name="StatTick" type="AudioStreamPlayer" parent="." unique_id=2012255878]
+stream = SubResource("AudioStreamRandomizer_ooj1n")
+volume_db = -5.0
+bus = &"Sfx"
+
+[node name="StatBest" type="AudioStreamPlayer" parent="." unique_id=799628325]
+stream = ExtResource("10_xgspa")
+bus = &"Sfx"
