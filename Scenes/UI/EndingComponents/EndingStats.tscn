@@ -13,10 +13,11 @@
 [ext_resource type="AudioStream" uid="uid://cgqsmx4p7xp4s" path="res://Assets/Sounds/Sfx/EndingStatBest.ogg" id="10_xgspa"]
 [ext_resource type="AudioStream" uid="uid://dsn0n1srqm0ow" path="res://Assets/Sounds/Sfx/Dialogue1.ogg" id="11_ty743"]
 [ext_resource type="AudioStream" uid="uid://b60650li5d52q" path="res://Assets/Sounds/Sfx/Dialogue2.ogg" id="12_3tbo3"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="14_e1msr"]
 
 [sub_resource type="Animation" id="Animation_yfkq1"]
 resource_name = "Ending"
-length = 15.0
+length = 13.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -145,7 +146,7 @@ tracks/10/path = NodePath("StatAppear")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(4.05, 5.6, 8.75),
+"times": PackedFloat32Array(4.05, 5.6, 8.7),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [0.0],
@@ -381,23 +382,25 @@ stream_1/stream = ExtResource("10_e1msr")
 stream_2/stream = ExtResource("11_ty743")
 stream_3/stream = ExtResource("12_3tbo3")
 
-[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic", "header", "char_diff", "item_container", "item_header", "item_counter", "new_lowest_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best")]
+[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic_parent", "header", "char_diff", "item_container", "item_header", "item_counter", "new_best_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best", "sfx_continue", "continue_prompt")]
 script = ExtResource("1_wfbin")
 anim = NodePath("AnimationPlayer")
 end_bg = NodePath("Background")
-end_pic = NodePath("Snail")
+end_pic_parent = NodePath("Snail")
 header = NodePath("CongratsHeader")
 char_diff = NodePath("CharDiff")
 item_container = NodePath("ItemContainer")
 item_header = NodePath("ItemContainer/ItemHeader")
 item_counter = NodePath("ItemContainer/ItemCount")
-new_lowest_items = NodePath("NewLowestItems")
+new_best_items = NodePath("NewBestItems")
 time_container = NodePath("TimeContainer")
 time_header = NodePath("TimeContainer/TimeHeader")
 time_counter = NodePath("TimeContainer/TimeCount")
 new_best_time = NodePath("NewBestTime")
 sfx_tick = NodePath("StatTick")
 sfx_best = NodePath("StatBest")
+sfx_continue = NodePath("Continue")
+continue_prompt = NodePath("PressToContinue")
 
 [node name="FadeCover" type="Sprite2D" parent="." unique_id=588289153]
 modulate = Color(0, 0, 0, 0)
@@ -417,12 +420,8 @@ texture = ExtResource("3_3bpwr")
 script = ExtResource("4_yfkq1")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[node name="Snail" type="Sprite2D" parent="." unique_id=404753541]
+[node name="Snail" type="Node2D" parent="." unique_id=284474218]
 position = Vector2(200, 120)
-script = ExtResource("2_72yjm")
-texture_path = "res://Assets/Images/Endings/EndingNormal.json"
-load_autoplay = Array[String](["anim"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Snail" unique_id=1602874636]
 texture = ExtResource("5_wfbin")
@@ -546,7 +545,7 @@ shadow_scale = 2
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="NewLowestItems" type="RichTextLabel" parent="." unique_id=1491655041]
+[node name="NewBestItems" type="RichTextLabel" parent="." unique_id=1491655041]
 clip_contents = false
 offset_left = -32.0
 offset_top = 136.0
@@ -555,7 +554,7 @@ offset_bottom = 167.0
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "New lowest!!"
+text = "New best!!"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 2
@@ -584,6 +583,25 @@ text_scale = 1
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
+[node name="PressToContinue" type="RichTextLabel" parent="." unique_id=1902920544]
+clip_contents = false
+offset_left = -8.0
+offset_top = 200.0
+offset_right = 392.0
+offset_bottom = 231.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Press anything to continue"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("6_yfkq1")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=885390479]
 libraries/ = SubResource("AnimationLibrary_wfbin")
 
@@ -601,4 +619,8 @@ bus = &"Sfx"
 
 [node name="StatBest" type="AudioStreamPlayer" parent="." unique_id=799628325]
 stream = ExtResource("10_xgspa")
+bus = &"Sfx"
+
+[node name="Continue" type="AudioStreamPlayer" parent="." unique_id=2054474547]
+stream = ExtResource("14_e1msr")
 bus = &"Sfx"

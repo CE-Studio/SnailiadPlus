@@ -6,6 +6,8 @@ extends Node2D
 const ITEM_TICK_TIME:float = 1.0
 const TIME_TICK_TIME:float = 2.0
 
+## Will be set if the stats screen animation has finished playing
+var has_started:bool = false
 ## Will be set if the item percentage is currently ticking up
 var ticking_items:bool = false
 ## The target item percentage to count toward
@@ -18,21 +20,25 @@ var ticking_time:bool = false
 var final_time:float = 0.0
 ## The current progress of the clear time counter, from 0.0 to 1.0
 var progress_time:float = 0.0
-## Will be set if the item percentage is lower than the lowest saved percentage
-var is_new_lowest_items:bool = false
+## Will be set if the item percentage is lower than the lowest saved percentage or higher than the best saved
+var is_new_best_items:bool = false
 ## Will be set if the clear time is lower than the best saved time
 var is_new_best_time:bool = false
 ## Will ensure that the tick sound is played only every other frame
 var tick_flag:bool = true
 ## The time ID that needs to be saved
 var time_id:String = ""
+## Time counter that controls the flashing of the continue prompt
+var elapsed:float = -PI
+## Will be set if the stats screen is currently fading out
+var fading_out:bool = false
 
 ## The animation node that drives the entire stats screen
 @export var anim:AnimationPlayer
 ## The background sprite
 @export var end_bg:JsonSprite2D
-## The snail sprite
-@export var end_pic:JsonSprite2D
+## The node that acts as a parent to the snail sprite
+@export var end_pic_parent:Node2D
 ## The "congratulations!" header text
 @export var header:SnailyText
 ## The text that displays the character and difficulty played with
@@ -44,7 +50,7 @@ var time_id:String = ""
 ## The percentage counter for item collection
 @export var item_counter:SnailyText
 ## The label that shows when a new lowest item percentage is scored
-@export var new_lowest_items:SnailyText
+@export var new_best_items:SnailyText
 ## The container that holds all time text
 @export var time_container:HBoxContainer
 ## The "completion time" text
@@ -57,12 +63,16 @@ var time_id:String = ""
 @export var sfx_tick:AudioStreamPlayer
 ## The sound that plays when a new best is recorded on a counter
 @export var sfx_best:AudioStreamPlayer
+## The sound that plays when the stats screen is advanced
+@export var sfx_continue:AudioStreamPlayer
+## The label that prompts any input to advance out of the ending
+@export var continue_prompt:SnailyText
 #endregion
 
 
 func _ready() -> void:
 	end_bg.modulate.a = 0.0
-	end_pic.modulate.a = 0.0
+	end_pic_parent.modulate.a = 0.0
 	header.visible_ratio = 0.0
 	header.set_snaily_text(tr(&"Congratulations!!"), true)
 	char_diff.position.y += 240
@@ -73,9 +83,9 @@ func _ready() -> void:
 	item_container.position.y += 240
 	item_header.set_snaily_text(tr(&"Items collected:"), true)
 	item_counter.set_snaily_text("0.0%", true)
-	new_lowest_items.set_snaily_text("New lowest!!")
-	new_lowest_items.visible = false
-	new_lowest_items.enable_rainbow()
+	new_best_items.set_snaily_text("New best!!")
+	new_best_items.visible = false
+	new_best_items.enable_rainbow()
 	time_container.position.y += 240
 	time_header.set_snaily_text(tr(&"Completion time:"), true)
 	time_counter.set_snaily_text("0:00:00.00", true)
@@ -83,29 +93,61 @@ func _ready() -> void:
 	new_best_time.visible = false
 	new_best_time.enable_rainbow()
 	header.enable_rainbow_scroll()
+	continue_prompt.modulate.a = 0.0
+	continue_prompt.set_snaily_text("Press anything to save and continue")
 	
 	final_items = Statics.get_item_percentage()
+	var highest_items:float = Statics.get_highest_percent(
+		Statics.current_profile["character"] as int, Statics.current_profile["difficulty"]
+	)
+	if highest_items != -1 and highest_items < final_items:
+		is_new_best_items = true
 	var lowest_items:float = Statics.get_lowest_percent(
 		Statics.current_profile["character"] as int, Statics.current_profile["difficulty"]
 	)
 	if lowest_items != -1 and lowest_items > final_items:
-		is_new_lowest_items = true
+		is_new_best_items = true
+		new_best_items.set_snaily_text("New lowest!!")
 	
 	var time:Array = Statics.current_profile["game_time"]
 	final_time = (time[0] * 60.0 * 60.0) + (time[1] * 60) + time[2]
 	time_id = Statics.infer_time_id()
 	if Statics.has_time(time_id) and Statics.compare_times(Statics.get_time(time_id), time) > 0:
 		is_new_best_time = true
+	
+	var end_pic:JsonSprite2D = JsonSprite2D.new()
+	if Statics.current_profile["difficulty"] == 2:
+		end_bg.action = "insane"
+		end_pic.texture_path = "res://Assets/Images/Endings/EndingInsane.json"
+	elif Statics.compare_times(time, [0, 30, 0.0]) < 0:
+		end_bg.action = "sub_30_min"
+		end_pic.texture_path = "res://Assets/Images/Endings/EndingSub30.json"
+	elif final_items >= 100.0:
+		end_bg.action = "100"
+		end_pic.texture_path = "res://Assets/Images/Endings/Ending100.json"
+	else:
+		end_bg.action = "normal"
+		end_pic.texture_path = "res://Assets/Images/Endings/EndingNormal.json"
+	end_pic_parent.add_child(end_pic)
+	end_pic.action = "anim"
 
 
 func _process(delta: float) -> void:
 	_tick_items(delta)
 	_tick_time(delta)
+	
+	if has_started and not anim.is_playing():
+		elapsed += delta * 4.0
+		continue_prompt.modulate.a = cos(elapsed) + 1.0
+		if SInput.check_any_button():
+			fading_out = true
+			sfx_continue.play()
 
 
 ## Starts the stats animation
 func start_anim() -> void:
 	anim.play(&"Ending")
+	has_started = true
 
 
 ## Ticks up the item percentage counter
@@ -118,17 +160,17 @@ func _tick_items(delta:float) -> void:
 	var played_sound:bool = false
 	if progress_items == 1.0:
 		ticking_items = false
-		if final_items >= 100.0 or is_new_lowest_items:
+		if final_items >= 100.0 or is_new_best_items:
 			item_counter.enable_rainbow_scroll()
 			sfx_best.play()
 			played_sound = true
-			if is_new_lowest_items:
-				new_lowest_items.visible = true
-				new_lowest_items.position.x = (
-					item_counter.global_position.x - new_lowest_items.size.x
+			if is_new_best_items:
+				new_best_items.visible = true
+				new_best_items.position.x = (
+					item_counter.global_position.x - new_best_items.size.x
 					+ item_counter.size.x + 16
 				)
-				new_lowest_items.position.y = item_counter.global_position.y + 4
+				new_best_items.position.y = item_counter.global_position.y + 4
 	if not played_sound:
 		if tick_flag:
 			sfx_tick.play()

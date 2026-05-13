@@ -41,6 +41,9 @@ var currently_open:bool = false
 ## Will be set to [code]true[/code] if the icon of the earliest queued achievement is being displayed
 var currently_displaying:bool = false
 
+## The active instance of this script
+static var instance:AchievementCore
+
 ## Main background component of the popup
 @onready var panel:JsonSprite2D = $"Panel"
 ## Achievement icon component of the popup
@@ -55,6 +58,7 @@ var currently_displaying:bool = false
 
 
 func _ready() -> void:
+	instance = self
 	panel.visible = false
 	icon.visible = false
 	header.visible = false

@@ -260,11 +260,34 @@ func kill() -> void:
 		set_timer = true
 		Statics.spawn_particle("ExplosionBossDefeat",
 			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
+		UICore.instance.call_screen_shake_radial([4.0, 5.0, 4.0, 3.0, 0.0], UICore.ShakeCallMode.OVERWRITE_ALL)
 		GameCore.instance.music_manager.stop_all(true)
 		#SInput.read_inputs = false
 		PauseLayer.suppress_menuing = true
 		Statics.increment_igt = false
 		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
+		#region Achievements
+		AchievementCore.instance.check_add(AchievementCore.Achievements.BEAT_MOON_SNAIL)
+		if not Statics.check_item(Item.ItemTypes.METAL_SHELL):
+			AchievementCore.instance.check_add(AchievementCore.Achievements.BEAT_MOON_SNAIL_NO_ARMOR)
+		if Statics.current_profile["difficulty"] == 2:
+			AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_ABSURD)
+		if Statics.is_random_game:
+			AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_RANDOMIZER)
+		match Statics.current_profile["character"]:
+			Player.Players.SLUGGY:
+				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_SLUGGY)
+			Player.Players.UPSIDE:
+				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_UPSIDE)
+			Player.Players.LEGGY:
+				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_LEGGY)
+			Player.Players.BLOBBY:
+				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_BLOBBY)
+			Player.Players.LEECHY:
+				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_LEECHY)
+		if Statics.compare_times(Statics.current_profile["game_time"], [0, 30, 0.0]) < 0:
+			AchievementCore.instance.check_add(AchievementCore.Achievements.UNDER_30_MIN)
+		#endregion
 	else:
 		GameCore.instance.current_room.set_ground_collision(true)
 		boss_environment.despawn()

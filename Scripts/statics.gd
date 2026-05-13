@@ -471,6 +471,14 @@ static func compare_times(compare:Array, against:Array) -> int:
 	return 0
 
 
+static func save_highest_percent(character:Player.Players, difficulty:int, rate:float) -> void:
+	data_records["highest_percents"][character as int][difficulty] = rate
+
+
+static func get_highest_percent(character:Player.Players, difficulty:int) -> float:
+	return data_records["highest_percents"][character as int][difficulty]
+
+
 static func save_lowest_percent(character:Player.Players, difficulty:int, rate:float) -> void:
 	data_records["lowest_percents"][character as int][difficulty] = rate
 

@@ -316,6 +316,17 @@ func check_input_as_echo(action:Inputs) -> bool:
 	return just_pressed(this_action, true)
 
 
+func check_any_button() -> bool:
+	if not accepting_input():
+		return false
+	return (check_input(Inputs.JUMP, true) or check_input(Inputs.SHOOT, true)
+	or check_input(Inputs.STRAFE, true) or check_input(Inputs.SPEAK, true)
+	or check_input(Inputs.GRAVITY, true) or check_input(Inputs.PAUSE, true)
+	or check_input(Inputs.MAP, true) or check_input(Inputs.UI_CLICK, true)
+	or check_input(Inputs.WEAPON0, true) or check_input(Inputs.WEAPON1, true)
+	or check_input(Inputs.WEAPON2, true) or check_input(Inputs.WEAPON3, true))
+
+
 func input_pressed(action:Inputs) -> bool:
 	if not accepting_input():
 		return false
