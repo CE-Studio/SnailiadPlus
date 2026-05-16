@@ -1,0 +1,237 @@
+[gd_scene format=3 uid="uid://coblsm7tj56n"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_1qkdj"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_p7585"]
+[ext_resource type="Script" uid="uid://c064h3is7whkl" path="res://Scripts/UI/MenuLayers/Scores.gd" id="2_vy23i"]
+[ext_resource type="PackedScene" uid="uid://nkx3e8an1od7" path="res://Scenes/UI/HeaderlessScrollingSnailyButton.tscn" id="2_wi5ko"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="4_vy23i"]
+
+[node name="Scores" type="Node2D" unique_id=166392794]
+script = ExtResource("1_1qkdj")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1666941628 node_paths=PackedStringArray("header_easy", "header_normal", "header_absurd", "header_rush", "stats_easy", "stats_normal", "stats_absurd", "stats_rush")]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 62.0
+offset_right = 400.0
+offset_bottom = 226.0
+alignment = 1
+script = ExtResource("2_vy23i")
+header_easy = NodePath("../Easy/Header")
+header_normal = NodePath("../Normal/Header")
+header_absurd = NodePath("../Absurd/Header")
+header_rush = NodePath("../Rush/Header")
+stats_easy = NodePath("../Easy/Stats")
+stats_normal = NodePath("../Normal/Stats")
+stats_absurd = NodePath("../Absurd/Stats")
+stats_rush = NodePath("../Rush/Stats")
+
+[node name="Character" parent="MainVBox" unique_id=1340122160 instance=ExtResource("2_wi5ko")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Back")
+cycle_option_text = "Snaily"
+auto_select_mode = true
+grab_focus_on_load = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1052320130]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 120
+
+[node name="Back" parent="MainVBox" unique_id=1362907497 instance=ExtResource("2_p7585")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Character")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Character")
+focus_next = NodePath("../Character")
+focus_previous = NodePath("../Character")
+button_text = "Back to Museum"
+back_one_layer = true
+hide_frame = true
+
+[node name="Easy" type="Node2D" parent="." unique_id=1665130993]
+position = Vector2(112, 96)
+
+[node name="Header" type="RichTextLabel" parent="Easy" unique_id=629256003]
+modulate = Color(0.7019608, 0.972549, 0.52156866, 1)
+clip_contents = false
+custom_minimum_size = Vector2(192, 0)
+offset_left = -96.0
+offset_top = 1.0
+offset_right = 96.0
+offset_bottom = 118.0
+mouse_filter = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-- Easy mode --"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Stats" type="RichTextLabel" parent="Easy" unique_id=1116321474]
+clip_contents = false
+offset_left = -96.0
+offset_top = 12.0
+offset_right = 96.0
+offset_bottom = 129.0
+mouse_filter = 2
+theme_override_constants/line_separation = 4
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Best time:   0:00:00.00
+Best item rate:   0.0%
+Lowest item rate:   0.0%"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 4
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Normal" type="Node2D" parent="." unique_id=887188949]
+position = Vector2(288, 96)
+
+[node name="Header" type="RichTextLabel" parent="Normal" unique_id=665263618]
+modulate = Color(0.6117647, 0.9137255, 0.98039216, 1)
+clip_contents = false
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 117.0
+mouse_filter = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-- Normal mode --"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Stats" type="RichTextLabel" parent="Normal" unique_id=1848223419]
+clip_contents = false
+offset_left = -96.0
+offset_top = 12.0
+offset_right = 96.0
+offset_bottom = 129.0
+mouse_filter = 2
+theme_override_constants/line_separation = 4
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Best time:   0:00:00.00
+Best item rate:   0.0%
+Lowest item rate:   0.0%"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 4
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Absurd" type="Node2D" parent="." unique_id=1053746319]
+position = Vector2(112, 152)
+
+[node name="Header" type="RichTextLabel" parent="Absurd" unique_id=1102809446]
+modulate = Color(0.9647059, 0.8039216, 0.70980394, 1)
+clip_contents = false
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 117.0
+mouse_filter = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-- Absurd mode --"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Stats" type="RichTextLabel" parent="Absurd" unique_id=31471984]
+clip_contents = false
+offset_left = -96.0
+offset_top = 12.0
+offset_right = 96.0
+offset_bottom = 129.0
+mouse_filter = 2
+theme_override_constants/line_separation = 4
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Best time:   0:00:00.00
+Best item rate:   0.0%
+Lowest item rate:   0.0%"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 4
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Rush" type="Node2D" parent="." unique_id=501880716]
+position = Vector2(288, 152)
+
+[node name="Header" type="RichTextLabel" parent="Rush" unique_id=746819424]
+modulate = Color(0.8627451, 0.7176471, 0.972549, 1)
+clip_contents = false
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 117.0
+mouse_filter = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-- Boss rush --"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Stats" type="RichTextLabel" parent="Rush" unique_id=58992670]
+clip_contents = false
+offset_left = -96.0
+offset_top = 12.0
+offset_right = 96.0
+offset_bottom = 129.0
+mouse_filter = 2
+theme_override_constants/line_separation = 4
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Best time:   0:00:00.00
+Fewest items:"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_vy23i")
+text_scale = 1
+border_scale = 1
+line_separation = 4
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

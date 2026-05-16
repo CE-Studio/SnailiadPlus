@@ -321,6 +321,7 @@ position = Vector2(0, 200)
 rotation = -3.1415927
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://ba7e71sqwre1h"
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("6_pio0t")]
 

@@ -49,8 +49,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not sounds_played_this_frame.is_empty():
 		sounds_played_this_frame.clear()
-	if SInput.check_input(SInput.Inputs.SPEAK, true):
-		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
+	#if SInput.check_input(SInput.Inputs.SPEAK, true):
+	#	GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
 
 
 func _set_game_settings() -> void:
@@ -101,8 +101,6 @@ func _load_json_to_dict(path:String) -> Dictionary[String, Variant]:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	#if event.is_action_pressed("debug") and not Statics.is_menu_open:
-	#	Statics.noclip_mode = not Statics.noclip_mode
 	if event.is_action_pressed(&"speak"):
 		cut_advance.emit()
 

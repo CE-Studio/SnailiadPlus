@@ -15,7 +15,7 @@ offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_e0tbj")
 
-[node name="Times" parent="MainVBox" unique_id=40521649 instance=ExtResource("2_v7ejv")]
+[node name="Scores" parent="MainVBox" unique_id=40521649 instance=ExtResource("2_v7ejv")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -24,8 +24,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Gallery")
 focus_next = NodePath("../Gallery")
 focus_previous = NodePath("../Back")
-button_text = "Best times"
-quick_load_layer = "Times"
+button_text = "Best scores"
+quick_load_layer = "Scores"
 grab_focus_on_load = true
 hide_frame = true
 
@@ -33,11 +33,11 @@ hide_frame = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Times")
+focus_neighbor_top = NodePath("../Scores")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Achievements")
 focus_next = NodePath("../Achievements")
-focus_previous = NodePath("../Times")
+focus_previous = NodePath("../Scores")
 button_text = "Gallery"
 hide_frame = true
 
@@ -90,8 +90,8 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../SoundTest")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Times")
-focus_next = NodePath("../Times")
+focus_neighbor_bottom = NodePath("../Scores")
+focus_next = NodePath("../Scores")
 focus_previous = NodePath("../SoundTest")
 button_text = "Back to main menu"
 back_one_layer = true

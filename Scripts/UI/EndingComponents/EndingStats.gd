@@ -1,4 +1,5 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
+class_name EndingStats
 extends Node2D
 
 
@@ -21,17 +22,24 @@ var final_time:float = 0.0
 ## The current progress of the clear time counter, from 0.0 to 1.0
 var progress_time:float = 0.0
 ## Will be set if the item percentage is lower than the lowest saved percentage or higher than the best saved
-var is_new_best_items:bool = false
+var is_new_best_items:int = 0
 ## Will be set if the clear time is lower than the best saved time
 var is_new_best_time:bool = false
 ## Will ensure that the tick sound is played only every other frame
 var tick_flag:bool = true
 ## The time ID that needs to be saved
 var time_id:String = ""
+## The time that needs to be saved
+var time_to_save:Array = []
+## The item rate that needs to be saved
+var items_to_save:float = 0.0
 ## Time counter that controls the flashing of the continue prompt
 var elapsed:float = -PI
 ## Will be set if the stats screen is currently fading out
 var fading_out:bool = false
+
+## Reference to the credits instance that spawns this results screen
+var credits:EndingCredits
 
 ## The animation node that drives the entire stats screen
 @export var anim:AnimationPlayer
@@ -67,6 +75,8 @@ var fading_out:bool = false
 @export var sfx_continue:AudioStreamPlayer
 ## The label that prompts any input to advance out of the ending
 @export var continue_prompt:SnailyText
+## The sprite that covers the entire stats screen to fade it out
+@export var fade_cover:Sprite2D
 #endregion
 
 
@@ -97,19 +107,21 @@ func _ready() -> void:
 	continue_prompt.set_snaily_text("Press anything to save and continue")
 	
 	final_items = Statics.get_item_percentage()
+	items_to_save = final_items
 	var highest_items:float = Statics.get_highest_percent(
 		Statics.current_profile["character"] as int, Statics.current_profile["difficulty"]
 	)
-	if highest_items != -1 and highest_items < final_items:
-		is_new_best_items = true
+	if highest_items != -1 and highest_items < final_items and absf(highest_items - final_items) >= 0.1:
+		is_new_best_items = 1
 	var lowest_items:float = Statics.get_lowest_percent(
 		Statics.current_profile["character"] as int, Statics.current_profile["difficulty"]
 	)
-	if lowest_items != -1 and lowest_items > final_items:
-		is_new_best_items = true
+	if lowest_items != -1 and lowest_items > final_items and absf(lowest_items - final_items) >= 0.1:
+		is_new_best_items = -1
 		new_best_items.set_snaily_text("New lowest!!")
 	
 	var time:Array = Statics.current_profile["game_time"]
+	time_to_save = time.duplicate()
 	final_time = (time[0] * 60.0 * 60.0) + (time[1] * 60) + time[2]
 	time_id = Statics.infer_time_id()
 	if Statics.has_time(time_id) and Statics.compare_times(Statics.get_time(time_id), time) > 0:
@@ -140,8 +152,16 @@ func _process(delta: float) -> void:
 		elapsed += delta * 4.0
 		continue_prompt.modulate.a = cos(elapsed) + 1.0
 		if SInput.check_any_button():
+			_save_scores()
 			fading_out = true
 			sfx_continue.play()
+	if fading_out:
+		fade_cover.modulate.a += delta * 0.5
+		credits.music_main.volume_linear = move_toward(
+			credits.music_main.volume_linear, 0.0, delta * 0.5)
+		credits.music_alt.volume_linear = credits.music_main.volume_linear
+		if fade_cover.modulate.a > 1.25 and not credits.is_queued_for_deletion():
+			credits.despawn()
 
 
 ## Starts the stats animation
@@ -160,11 +180,11 @@ func _tick_items(delta:float) -> void:
 	var played_sound:bool = false
 	if progress_items == 1.0:
 		ticking_items = false
-		if final_items >= 100.0 or is_new_best_items:
+		if final_items >= 100.0 or is_new_best_items != 0:
 			item_counter.enable_rainbow_scroll()
 			sfx_best.play()
 			played_sound = true
-			if is_new_best_items:
+			if is_new_best_items != 0:
 				new_best_items.visible = true
 				new_best_items.position.x = (
 					item_counter.global_position.x - new_best_items.size.x
@@ -218,3 +238,16 @@ func _tick_time(delta:float) -> void:
 ## Starts ticking the item rate
 func start_ticking_time() -> void:
 	ticking_time = true
+
+
+## Saves the best time and item rate to file if applicable
+func _save_scores() -> void:
+	if is_new_best_time or not Statics.has_time(time_id):
+		Statics.save_time(time_id, time_to_save)
+	var character:Player.Players = Player.instance.who_i_is
+	var difficulty:int = Statics.current_profile["difficulty"]
+	if is_new_best_items == 1 or Statics.get_highest_percent(character, difficulty) == -1:
+		Statics.save_highest_percent(character, difficulty, items_to_save)
+	if is_new_best_items == -1 or Statics.get_lowest_percent(character, difficulty) == -1:
+		Statics.save_lowest_percent(character, difficulty, items_to_save)
+	Statics.save_records()

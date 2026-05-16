@@ -428,25 +428,21 @@ static func infer_time_id() -> String:
 		Player.Players.LEECHY: character = "leechy"
 	var mode:String = "normal"
 	if is_in_boss_rush: mode = "rush"
+	elif current_profile["difficulty"] == 0: mode = "easy"
 	elif current_profile["difficulty"] == 2: mode = "insane"
 	return "_".join([character, mode])
 
 
 static func has_times_for_character(character:Player.Players) -> bool:
+	var ch_str:String = "snaily"
 	match character:
-		Player.Players.SNAILY:
-			return has_time("snaily_normal") or has_time("snaily_insane") or has_time("snaily_rush")
-		Player.Players.SLUGGY:
-			return has_time("sluggy_normal") or has_time("sluggy_insane") or has_time("sluggy_rush")
-		Player.Players.UPSIDE:
-			return has_time("upside_normal") or has_time("upside_insane") or has_time("upside_rush")
-		Player.Players.LEGGY:
-			return has_time("leggy_normal") or has_time("leggy_insane") or has_time("leggy_rush")
-		Player.Players.BLOBBY:
-			return has_time("blobby_normal") or has_time("blobby_insane") or has_time("blobby_rush")
-		Player.Players.LEECHY:
-			return has_time("leechy_normal") or has_time("leechy_insane") or has_time("leechy_rush")
-	return false
+		Player.Players.SLUGGY: ch_str = "sluggy"
+		Player.Players.UPSIDE: ch_str = "upside"
+		Player.Players.LEGGY: ch_str = "leggy"
+		Player.Players.BLOBBY: ch_str = "blobby"
+		Player.Players.LEECHY: ch_str = "leechy"
+	return (has_time(ch_str + "_easy") or has_time(ch_str + "_normal")
+		or has_time(ch_str + "_insane") or has_time(ch_str + "_rush"))
 
 
 static func has_times_for_mode(mode:String) -> bool:
@@ -456,7 +452,7 @@ static func has_times_for_mode(mode:String) -> bool:
 
 static func save_time(id:String, time:Array) -> void:
 	if data_records["times"].keys().has(id):
-		data_records["times"] = time.duplicate()
+		data_records["times"][id] = time.duplicate()
 
 
 ## Compares two game times, and returns a value equal to the result of the comparison.

@@ -1,3 +1,4 @@
+class_name ExplosionBossDefeat
 extends Particle
 
 
@@ -48,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	if is_giga:
 		var this_weight:float = inverse_lerp(this_max_time, 0.0, life_time)
 		var this_vol:float = lerpf(0.0, GIGA_QUIET_DB, this_weight)
-		_set_all_vol_db(this_vol)
+		set_all_vol_db(this_vol)
 	life_time -= delta
 
 
@@ -101,7 +102,7 @@ func _create_radial(part_name:String, radius_max:float, front:bool = false) -> v
 	new_part.sound.stop()
 
 
-func _set_all_vol_db(db:float) -> void:
+func set_all_vol_db(db:float) -> void:
 	boom1.volume_db = db
 	boom2.volume_db = db
 	boom3.volume_db = db
@@ -109,3 +110,7 @@ func _set_all_vol_db(db:float) -> void:
 	small_boom2.volume_db = db
 	small_boom3.volume_db = db
 	small_boom4.volume_db = db
+
+
+func set_all_vol_linear(amount:float) -> void:
+	set_all_vol_db(linear_to_db(amount))

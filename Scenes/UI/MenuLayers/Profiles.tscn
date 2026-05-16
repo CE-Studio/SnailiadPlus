@@ -5,8 +5,11 @@
 [ext_resource type="Script" uid="uid://cmsv300xsfl3u" path="res://Scripts/UI/MenuLayers/Profiles.gd" id="2_xlkne"]
 [ext_resource type="PackedScene" uid="uid://b46jr7gaavci4" path="res://Scenes/UI/ContextSnailyButton.tscn" id="3_7epk8"]
 [ext_resource type="PackedScene" uid="uid://b3wkjy4ddoab4" path="res://Scenes/UI/ContextPanel.tscn" id="4_vuqlx"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_y0kux"]
+[ext_resource type="Texture2D" uid="uid://dswcbho42v5mn" path="res://Assets/Images/UI/ProfileMarker.png" id="5_s5u8s"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="5_xlkne"]
 [ext_resource type="AudioStream" uid="uid://c4eeyhh6lljon" path="res://Assets/Sounds/Sfx/MenuFileCopy.ogg" id="6_k6k8p"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_ka7yr"]
 [ext_resource type="AudioStream" uid="uid://c3x3vsxr3iq13" path="res://Assets/Sounds/Sfx/MenuFileErase.ogg" id="7_anahy"]
 
 [node name="Profiles" type="Node2D" unique_id=1154904066]
@@ -33,6 +36,19 @@ main_text = "Empty profile"
 sub_text = "Select to start a new one!"
 grab_focus_on_load = true
 
+[node name="Status" type="Sprite2D" parent="MainVBox/Profile1" unique_id=289480506]
+position = Vector2(12, 24)
+script = ExtResource("4_y0kux")
+texture_path = "res://Assets/Images/UI/ProfileMarker.json"
+load_autoplay = Array[String](["none"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="MainVBox/Profile1/Status" unique_id=1654755105]
+texture = ExtResource("5_s5u8s")
+hframes = 2
+script = ExtResource("6_ka7yr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
 [node name="Profile2" parent="MainVBox" unique_id=1518421472 instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
@@ -45,6 +61,19 @@ focus_previous = NodePath("../Profile1")
 main_text = "Empty profile"
 sub_text = "Select to start a new one!"
 
+[node name="Status" type="Sprite2D" parent="MainVBox/Profile2" unique_id=1952265860]
+position = Vector2(12, 24)
+script = ExtResource("4_y0kux")
+texture_path = "res://Assets/Images/UI/ProfileMarker.json"
+load_autoplay = Array[String](["none"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="MainVBox/Profile2/Status" unique_id=495720595]
+texture = ExtResource("5_s5u8s")
+hframes = 2
+script = ExtResource("6_ka7yr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
 [node name="Profile3" parent="MainVBox" unique_id=1755130973 instance=ExtResource("3_7epk8")]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
@@ -56,6 +85,19 @@ focus_next = NodePath("../HBoxContainer/Copy")
 focus_previous = NodePath("../Profile2")
 main_text = "Empty profile"
 sub_text = "Select to start a new one!"
+
+[node name="Status" type="Sprite2D" parent="MainVBox/Profile3" unique_id=1767305382]
+position = Vector2(12, 24)
+script = ExtResource("4_y0kux")
+texture_path = "res://Assets/Images/UI/ProfileMarker.json"
+load_autoplay = Array[String](["none"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="MainVBox/Profile3/Status" unique_id=968965458]
+texture = ExtResource("5_s5u8s")
+hframes = 2
+script = ExtResource("6_ka7yr")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainVBox" unique_id=1726766174]
 custom_minimum_size = Vector2(280, 0)

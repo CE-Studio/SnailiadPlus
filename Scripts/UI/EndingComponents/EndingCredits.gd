@@ -1,5 +1,6 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
 # Original code Copyright 2011 Auriplane, used with permission
+class_name EndingCredits
 extends Node2D
 
 
@@ -53,7 +54,7 @@ var stop_y:float = 1024.0
 ## The tilemap that scrolls behind the credits
 @export var tilemap:TileMapLayer
 ## The stats screen
-@export var stats:Node2D
+@export var stats:EndingStats
 
 ## Quick reference to the custom text scene
 @onready var text:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
@@ -72,6 +73,7 @@ func setup(white:bool) -> void:
 	else:
 		music_main.play()
 	_create_credits()
+	stats.credits = self
 
 
 func _process(delta: float) -> void:
@@ -413,3 +415,11 @@ func _add_scene(_path:String, _y_offset:float, _y_add:float = 16) -> void:
 	credits_parent.add_child(scn)
 	scn.position = Vector2(0.0, spawn_y + _y_offset)
 	_add_y(_y_add)
+
+
+## Properly and safely frees the credits
+func despawn() -> void:
+	stars.despawn()
+	UICore.instance.cam.reset_from_static_pos()
+	get_tree().paused = false
+	queue_free()

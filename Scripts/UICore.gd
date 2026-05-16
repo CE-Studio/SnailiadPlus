@@ -132,6 +132,7 @@ func _process(delta: float) -> void:
 	if igt.visible:
 		if Statics.increment_igt:
 			igt_flash_elapsed = 0.0
+			igt.modulate = Color.WHITE
 		else:
 			igt_flash_elapsed += delta
 			if ceili(cos(igt_flash_elapsed * 16.0)) == 1:
@@ -346,6 +347,7 @@ func clear_boss_bar() -> void:
 
 func call_screen_shake_radial(timeline:Array[float], mode:ShakeCallMode) -> void:
 	assert(timeline.size() >= 2, "Screen shake timeline must be at minimum two values in length!")
+	shake_dir = Vector2.ZERO
 	if mode != ShakeCallMode.OVERWRITE_ALL:
 		active_shake_timeline.append_array(timeline)
 	else:

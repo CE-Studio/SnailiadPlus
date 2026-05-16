@@ -22,7 +22,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FadeCover:modulate")
+tracks/0/path = NodePath("FadeBackCover:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -250,7 +250,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FadeCover:modulate")
+tracks/0/path = NodePath("FadeBackCover:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -382,7 +382,7 @@ stream_1/stream = ExtResource("10_e1msr")
 stream_2/stream = ExtResource("11_ty743")
 stream_3/stream = ExtResource("12_3tbo3")
 
-[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic_parent", "header", "char_diff", "item_container", "item_header", "item_counter", "new_best_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best", "sfx_continue", "continue_prompt")]
+[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic_parent", "header", "char_diff", "item_container", "item_header", "item_counter", "new_best_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best", "sfx_continue", "continue_prompt", "fade_cover")]
 script = ExtResource("1_wfbin")
 anim = NodePath("AnimationPlayer")
 end_bg = NodePath("Background")
@@ -401,8 +401,9 @@ sfx_tick = NodePath("StatTick")
 sfx_best = NodePath("StatBest")
 sfx_continue = NodePath("Continue")
 continue_prompt = NodePath("PressToContinue")
+fade_cover = NodePath("FadeOutCover")
 
-[node name="FadeCover" type="Sprite2D" parent="." unique_id=588289153]
+[node name="FadeBackCover" type="Sprite2D" parent="." unique_id=588289153]
 modulate = Color(0, 0, 0, 0)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
@@ -601,6 +602,12 @@ script = ExtResource("6_yfkq1")
 text_scale = 1
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="FadeOutCover" type="Sprite2D" parent="." unique_id=163513442]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("1_w3dvm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=885390479]
 libraries/ = SubResource("AnimationLibrary_wfbin")

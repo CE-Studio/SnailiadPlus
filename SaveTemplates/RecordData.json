@@ -1,20 +1,26 @@
 {
 	"times": {
+		"snaily_easy": [ 0.0, 0.0, 0.0 ],
 		"snaily_normal": [ 0.0, 0.0, 0.0 ],
 		"snaily_insane": [ 0.0, 0.0, 0.0 ],
 		"snaily_rush": [ 0.0, 0.0, 0.0 ],
+		"sluggy_easy": [ 0.0, 0.0, 0.0 ],
 		"sluggy_normal": [ 0.0, 0.0, 0.0 ],
 		"sluggy_insane": [ 0.0, 0.0, 0.0 ],
 		"sluggy_rush": [ 0.0, 0.0, 0.0 ],
+		"upside_easy": [ 0.0, 0.0, 0.0 ],
 		"upside_normal": [ 0.0, 0.0, 0.0 ],
 		"upside_insane": [ 0.0, 0.0, 0.0 ],
 		"upside_rush": [ 0.0, 0.0, 0.0 ],
+		"leggy_easy": [ 0.0, 0.0, 0.0 ],
 		"leggy_normal": [ 0.0, 0.0, 0.0 ],
 		"leggy_insane": [ 0.0, 0.0, 0.0 ],
 		"leggy_rush": [ 0.0, 0.0, 0.0 ],
+		"blobby_easy": [ 0.0, 0.0, 0.0 ],
 		"blobby_normal": [ 0.0, 0.0, 0.0 ],
 		"blobby_insane": [ 0.0, 0.0, 0.0 ],
 		"blobby_rush": [ 0.0, 0.0, 0.0 ],
+		"leechy_easy": [ 0.0, 0.0, 0.0 ],
 		"leechy_normal": [ 0.0, 0.0, 0.0 ],
 		"leechy_insane": [ 0.0, 0.0, 0.0 ],
 		"leechy_rush": [ 0.0, 0.0, 0.0 ],
@@ -25,6 +31,7 @@
 	"lowest_percents": [
 		[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]
 	],
+	"lowest_rush_inv": [ [], [], [], [], [], [] ],
 	"achievements": [ ],
 	"unlocks": [ ],
 	"bestiary": [ ]

@@ -1,5 +1,6 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
 # Original code Copyright 2011 Auriplane, used with permission
+class_name EndingCutscene
 extends Node2D
 
 
@@ -35,6 +36,7 @@ var dialogue_visible:bool = false
 ## Will be set if the cutscene is currently being skipped
 var skipping:bool = false
 
+
 ## The [AnimationPlayer] that drives most of the cutscene
 @export var anim:AnimationPlayer
 ## The [StarLayer] shown between the background and everything else
@@ -43,8 +45,12 @@ var skipping:bool = false
 @export var cover:Sprite2D
 ## The fade that appears over everything if the cutscene is skipped
 @export var skip_cover:Sprite2D
+## The background sprite
+@export var bg:JsonSprite2D
 ## The first sprite instance of Moon Snail
 @export var first_moon:JsonSprite2D
+## The final sprite instance of Moon Snail, which can either be shelled or Sun Snail
+@export var last_moon:JsonSprite2D
 ## The spotlight sprite
 @export var spotlight:JsonSprite2D
 ## The dialogue node
@@ -56,6 +62,7 @@ var skipping:bool = false
 
 
 func _ready() -> void:
+	get_tree().paused = true
 	UICore.instance.cam.set_to_static_pos()
 	GameCore.instance.music_manager.stop_all()
 	cover.modulate.a = 1.0
@@ -65,6 +72,7 @@ func _ready() -> void:
 	if Statics.get_item_percentage() >= 100:
 		is_sun = true
 		anim.play(&"Sun")
+		last_moon.action = "sun"
 	else:
 		anim.play(&"Moon")
 	dialogue.set_snaily_text("")
@@ -94,6 +102,11 @@ func _process(delta: float) -> void:
 			spawn_credits()
 
 
+## Updates the background animation to the desired state
+func update_bg(action:String) -> void:
+	bg.action = action
+
+
 ## Sets the target string to a string out of the necessary dialogue array using the given index
 func set_text(id:int) -> void:
 	dialogue_visible = true
@@ -115,7 +128,7 @@ func fade_text() -> void:
 ## Spawns and configures the fade for the credits
 func spawn_credits() -> void:
 	stars.despawn()
-	var credits:Node2D = load("res://Scenes/UI/EndingComponents/EndingCredits.tscn").instantiate()
+	var credits:EndingCredits = load("res://Scenes/UI/EndingComponents/EndingCredits.tscn").instantiate()
 	GameCore.instance.add_child(credits)
 	credits.setup(is_sun)
 	queue_free()

@@ -32,6 +32,9 @@ var layer_state:LayerState = LayerState.NORMAL
 @onready var btn_pro1:ContextSnailyButton = $"Profile1"
 @onready var btn_pro2:ContextSnailyButton = $"Profile2"
 @onready var btn_pro3:ContextSnailyButton = $"Profile3"
+@onready var marker_pro1:JsonSprite2D = $"Profile1/Status"
+@onready var marker_pro2:JsonSprite2D = $"Profile2/Status"
+@onready var marker_pro3:JsonSprite2D = $"Profile3/Status"
 @onready var btn_copy:ActionSnailyButton = $"HBoxContainer/Copy"
 @onready var btn_erase:ActionSnailyButton = $"HBoxContainer/Erase"
 @onready var panel:ContextPanel = $"../ContextPanel"
@@ -86,22 +89,26 @@ func _update_profile_buttons() -> void:
 	for i in range(3):
 		var profile:Dictionary
 		var button:ContextSnailyButton
+		var marker:JsonSprite2D
 		match i:
 			0:
 				profile = Statics.data_profile1
 				pro1_empty = profile["is_empty"]
 				pro1_layer = NEW_GAME_LAYER if pro1_empty else LOAD_GAME_LAYER
-				button = $"Profile1"
+				button = btn_pro1
+				marker = marker_pro1
 			1:
 				profile = Statics.data_profile2
 				pro2_empty = profile["is_empty"]
 				pro2_layer = NEW_GAME_LAYER if pro2_empty else LOAD_GAME_LAYER
-				button = $"Profile2"
+				button = btn_pro2
+				marker = marker_pro2
 			2:
 				profile = Statics.data_profile3
 				pro3_empty = profile["is_empty"]
 				pro3_layer = NEW_GAME_LAYER if pro3_empty else LOAD_GAME_LAYER
-				button = $"Profile3"
+				button = btn_pro3
+				marker = marker_pro3
 		if not profile["is_empty"]:
 			var _char:String = Statics.get_character_name_string(profile["character"] as Player.Players)
 			button.set_text(" ".join([_char, str(i + 1)]))
@@ -116,9 +123,17 @@ func _update_profile_buttons() -> void:
 			if profile["r_shuffle_level"] >= 0:
 				stats += " / %08d" % str(profile["r_seed"])
 			button.set_subtext(stats)
+			marker.action = "none"
+			if (profile["world_flags"].size() >= (Statics.WorldFlags.DEFEATED_BOSS4 as int) - 1
+			and profile["world_flags"][Statics.WorldFlags.DEFEATED_BOSS4]):
+				if profile["item_rate"] >= 100.0:
+					marker.action = "beaten_100"
+				else:
+					marker.action = "beaten"
 		else:
 			button.set_text(tr(&"Empty profile"))
 			button.set_subtext(tr(&"Select to start a new one!"))
+			marker.action = "none"
 
 
 func focus_panel() -> void:

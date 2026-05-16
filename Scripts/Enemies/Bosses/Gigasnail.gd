@@ -258,14 +258,17 @@ func kill() -> void:
 		for bullet in bullets:
 			bullet._despawn()
 		set_timer = true
+		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, true)
 		Statics.spawn_particle("ExplosionBossDefeat",
 			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
-		UICore.instance.call_screen_shake_radial([4.0, 5.0, 4.0, 3.0, 0.0], UICore.ShakeCallMode.OVERWRITE_ALL)
+		UICore.instance.call_screen_shake_radial([2.0, 4.0, 2.0, 4.0, 0.0], UICore.ShakeCallMode.OVERWRITE_ALL)
 		GameCore.instance.music_manager.stop_all(true)
 		#SInput.read_inputs = false
 		PauseLayer.suppress_menuing = true
 		Statics.increment_igt = false
-		GameCore.instance.add_child(load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate())
+		var fade:EndingFade = load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate()
+		fade.explosion_point = position
+		GameCore.instance.add_child(fade)
 		#region Achievements
 		AchievementCore.instance.check_add(AchievementCore.Achievements.BEAT_MOON_SNAIL)
 		if not Statics.check_item(Item.ItemTypes.METAL_SHELL):
@@ -291,6 +294,7 @@ func kill() -> void:
 	else:
 		GameCore.instance.current_room.set_ground_collision(true)
 		boss_environment.despawn()
+		UICore.instance.clear_boss_bar()
 	super()
 	if set_timer:
 		death_timer = DEATH_TIME

@@ -70,16 +70,16 @@ position = Vector2(200, 120)
 
 [node name="EndingStats" parent="." unique_id=774344908 instance=ExtResource("7_ok857")]
 
-[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=340259625]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(200, 120)
-texture = ExtResource("7_4xj2h")
-
 [node name="FadeCover" type="Sprite2D" parent="." unique_id=1698956398]
 modulate = Color(0, 0, 0, 0)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("6_2i2ny")
+
+[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=340259625]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("7_4xj2h")
 
 [node name="MusicMain" type="AudioStreamPlayer" parent="." unique_id=1490311719]
 stream = ExtResource("7_btlfq")

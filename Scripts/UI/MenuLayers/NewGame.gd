@@ -84,6 +84,7 @@ func _on_start_pressed(_value) -> void:
 	layer.menu.save_profile(pro_id)
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
+	Statics.increment_igt = true
 	var flags:Array[StringName] = []
 	flags.assign(Statics.current_profile["cutscene_flags"])
 	CutsceneController.load_flags(flags)

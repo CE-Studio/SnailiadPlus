@@ -23,6 +23,10 @@ extends RichTextLabel
 @export var quick_load_text:String = ""
 @export var shadow_scale:int = 0
 @export var border_scale:int = 0
+@export var line_separation:int = 0:
+	set(value):
+		line_separation = value
+		add_theme_constant_override("line_separation", value)
 
 const CONTROL_PATH:String = "[img]res://Assets/Images/UI/ControlIcons/%s.png[/img]"
 const DEFAULT_TIMEOUT:float = 0.02
@@ -108,6 +112,7 @@ func setup_as_child(_parent:SnailyText, _offset:Vector2i) -> void:
 	internal_text = _parent.internal_text
 	horizontal_alignment = _parent.horizontal_alignment
 	vertical_alignment = _parent.vertical_alignment
+	line_separation = _parent.line_separation
 	parent_label.add_child(self)
 	position = _offset
 
@@ -207,7 +212,7 @@ func create_new_label() -> RichTextLabel:
 	new_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	new_label.horizontal_alignment = horizontal_alignment
 	new_label.vertical_alignment = vertical_alignment
-	new_label.add_theme_constant_override("line_separation", get_theme_constant("line_separation"))
+	new_label.add_theme_constant_override("line_separation", line_separation)
 	new_label.add_theme_font_size_override("normal_font_size", 8 * text_scale)
 	new_label.clip_contents = false
 	new_label.size = size

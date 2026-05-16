@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b6hbdk7tiq2ns"
+path="res://.godot/imported/AfterMoonSnail.dialogue-c5f7e699effbd37bfb5e6fa50d32773e.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/LuxLirata/AfterMoonSnail.dialogue"
+dest_files=["res://.godot/imported/AfterMoonSnail.dialogue-c5f7e699effbd37bfb5e6fa50d32773e.tres"]
+
+[params]
+
+defaults=true

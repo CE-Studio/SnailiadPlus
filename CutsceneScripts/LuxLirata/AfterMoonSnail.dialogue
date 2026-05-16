@@ -1,0 +1,10 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.set_textbox_color("#4028c4")
+do CutsceneController.set_textbox_frame(0)
+do CutsceneController.show_textbox()
+if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS) == false
+	NPC34: {{Player.player_name}},[wait=0.15] search for the {{GlobalText.COL_IRIS}}Helix\nFragments[/color]![wait=0.25]  Once you have them\nall,[wait=0.15] find the {{GlobalText.COL_IRIS}}Shrine of Iris[/color]!
+else
+	NPC34: Amazing work, {{Player.player_name}}!![wait=0.25]  You've\nsaved {{GlobalText.COL_SUN}}Sun Snail[/color] using the power\nof {{GlobalText.COL_IRIS}}Iris[/color]!!
+=> END
