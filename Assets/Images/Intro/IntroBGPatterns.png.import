@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxr3fdcpf2243"
-path="res://.godot/imported/IntroBGPatterns.png-dff412576e79bf4b5916cd9a4774f8fa.ctex"
+path="res://.godot/imported/IntroBGPatterns.png-3290b058dbcb747571ed35bde4c54d2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Particles/IntroBGPatterns.png"
-dest_files=["res://.godot/imported/IntroBGPatterns.png-dff412576e79bf4b5916cd9a4774f8fa.ctex"]
+source_file="res://Assets/Images/Intro/IntroBGPatterns.png"
+dest_files=["res://.godot/imported/IntroBGPatterns.png-3290b058dbcb747571ed35bde4c54d2e.ctex"]
 
 [params]
 
