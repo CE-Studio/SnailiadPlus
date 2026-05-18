@@ -284,15 +284,20 @@ func show_flashy_popup(text:String) -> void:
 	popup_label.position = Vector2i(200, 180)
 
 
-func show_item_collection_text(item_label:String) -> void:
+func show_item_collection_text(item_label:String, is_100:bool) -> void:
 	var header_label = flashy_popup_scene.instantiate()
 	popup_layer.add_child(header_label)
 	header_label.instance(item_label)
-	header_label.position = Vector2i(200, 180)
+	header_label.position = Vector2i(200, 166)
 	var percentage_label = flashy_popup_scene.instantiate()
 	popup_layer.add_child(percentage_label)
-	percentage_label.instance(tr(&"Item collection %.1f%% complete!") % Statics.current_profile["item_rate"], 3.0, 1, 0.2)
-	percentage_label.position = Vector2i(200, 200)
+	if is_100:
+		percentage_label.instance(tr(&"Item collection 100% complete!!\nFind the Shrine of Iris!!"),
+			5.0, 2, 0.2)
+	else:
+		percentage_label.instance(tr(&"Item collection %.1f%% complete!") %
+			Statics.current_profile["item_rate"], 3.0, 1, 0.2)
+	percentage_label.position = Vector2i(200, 192)
 
 
 func show_area_text(area_id:int) -> void:

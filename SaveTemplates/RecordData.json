@@ -34,5 +34,6 @@
 	"lowest_rush_inv": [ [], [], [], [], [], [] ],
 	"achievements": [ ],
 	"unlocks": [ ],
+	"unlock_conditions": [ ],
 	"bestiary": [ ]
 }

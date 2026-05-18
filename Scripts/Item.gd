@@ -234,11 +234,15 @@ func _on_player_entered(_body: Node2D) -> void:
 			#_:
 		if is_super_unique and not played_unique_dust:
 			Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [0, true, true])
+		var is_100_rate:bool = Statics.get_item_percentage(0, true, true) == 100.0
 		Statics.save_profile(Statics.current_profile_id)
 		UICore.instance.play_save_anim()
-		UICore.instance.show_item_collection_text(name_str)
+		UICore.instance.show_item_collection_text(name_str, is_100_rate)
 		UICore.instance.minimap.update_markers(UICore.instance.minimap.last_drawn_cells)
 		UICore.instance.minimap.update_player()
+		if is_100_rate:
+			if Statics.add_achievement(AchievementCore.Achievements.ITEMS_100):
+				Statics.add_unlock_condition(Statics.Unlocks.ITEM_RANDO)
 
 
 func _on_collect_timer_timeout() -> void:

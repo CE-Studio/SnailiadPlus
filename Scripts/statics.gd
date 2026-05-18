@@ -199,7 +199,7 @@ static func format_game_time(time:Array) -> String:
 	return time_string
 
 
-static func get_item_percentage(_profile:int = 0, _snap:bool = false) -> float:
+static func get_item_percentage(_profile:int = 0, _snap:bool = false, _only_counted:bool = false) -> float:
 	var inventory:Array
 	var _player:int
 	var difficulty:int
@@ -239,7 +239,7 @@ static func get_item_percentage(_profile:int = 0, _snap:bool = false) -> float:
 					collected_items += clampi(inventory[i], 0, COUNTED_INVENTORY[i])
 					max_items += COUNTED_INVENTORY[i]
 	var counted_percentage:float = (float(collected_items) / float(max_items)) * 100.0
-	if counted_percentage == 100.0:
+	if counted_percentage == 100.0 and not _only_counted:
 		var over_percentage:float = (float(total_items) / float(max_items)) * 100.0
 		if _snap:
 			over_percentage = snappedf(over_percentage, 0.1)
@@ -353,12 +353,38 @@ static func has_unlock(unlock:Unlocks) -> bool:
 	return data_records["unlocks"].has(unlock)
 
 
-static func add_achievement(id:int) -> void:
+static func can_unlock(unlock:Unlocks) -> bool:
+	if len(data_records["unlock_conditions"]) < unlock:
+		return false
+	return data_records["unlock_conditions"][unlock]
+
+
+static func add_unlock(unlock:Unlocks) -> bool:
+	if has_unlock(unlock):
+		return false
+	while unlock >= len(data_records["unlocks"]):
+		data_records["unlocks"].append(false)
+	data_records["unlocks"][unlock as int] = true
+	add_unlock_condition(unlock)
+	return true
+
+
+static func add_unlock_condition(unlock:Unlocks) -> bool:
+	if can_unlock(unlock):
+		return false
+	while unlock >= len(data_records["unlock_conditions"]):
+		data_records["unlock_conditions"].append(false)
+	data_records["unlock_conditions"][unlock as int] = true
+	return true
+
+
+static func add_achievement(id:int) -> bool:
 	if check_achievement(id):
-		return
+		return false
 	while id >= len(data_records["achievements"]):
 		data_records["achievements"].append(false)
 	data_records["achievements"][id] = true
+	return true
 
 
 static func check_achievement(id:int) -> bool:
@@ -376,14 +402,15 @@ static func get_achievement_count() -> int:
 	return earned
 
 
-static func add_bestiary_entry(id:int) -> void:
+static func add_bestiary_entry(id:int) -> bool:
 	if check_bestiary_entry(id):
-		return
+		return false
 	while id >= len(data_records["bestiary"]):
 		data_records["bestiary"].append(false)
 	data_records["bestiary"][id] = true
 	UICore.instance.play_bestiary_anim()
 	save_records()
+	return true
 
 
 static func check_bestiary_entry(id:int) -> bool:

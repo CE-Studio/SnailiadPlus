@@ -290,6 +290,8 @@ func kill() -> void:
 				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_LEECHY)
 		if Statics.compare_times(Statics.current_profile["game_time"], [0, 30, 0.0]) < 0:
 			AchievementCore.instance.check_add(AchievementCore.Achievements.UNDER_30_MIN)
+			Statics.add_unlock_condition(Statics.Unlocks.ABSURD_DIFF)
+		Statics.add_unlock_condition(Statics.Unlocks.BOSS_RUSH)
 		#endregion
 	else:
 		GameCore.instance.current_room.set_ground_collision(true)
