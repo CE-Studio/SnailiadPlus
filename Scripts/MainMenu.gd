@@ -29,6 +29,8 @@ var read_inputs:bool = true:
 			read_esc = value
 var read_esc:bool = false
 
+var music:AudioStreamPlayer
+
 @onready var title:Node2D = $"Title"
 @onready var version_text:SnailyText = $"Version"
 @onready var layer_group:Node2D = $"LayerGroup"
@@ -50,6 +52,7 @@ func _ready() -> void:
 		Statics.active_room = $"TitleRoom"
 		Statics.active_room.spawn(true)
 		get_tree().paused = false
+		music = $"MenuLoop"
 		selectors[0].action = "left_0"
 		selectors[1].action = "right_0"
 		if not Statics.main_menu_booted_once:

@@ -88,4 +88,12 @@ func _on_start_pressed(_value) -> void:
 	var flags:Array[StringName] = []
 	flags.assign(Statics.current_profile["cutscene_flags"])
 	CutsceneController.load_flags(flags)
-	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
+	if _value:
+		get_tree().change_scene_to_file("uid://ltxtlsrku2k0")
+	else:
+		var intro:IntroCinematic = load("uid://lubilnhf0dul").instantiate()
+		intro.menu = layer.menu
+		layer.menu.add_child(intro)
+		intro.setup_player(character as Player.Players)
+		layer.can_focus = false
+		layer.menu.read_inputs = false
