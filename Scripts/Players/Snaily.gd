@@ -101,6 +101,14 @@ func _ready():
 	]
 
 
+func set_idle_anim(state:bool) -> void:
+	super(state)
+	if state:
+		if not shelled:
+			_toggle_shell()
+		emote.zzz()
+
+
 func tick_death(delta:float) -> void:
 	if not in_death_cutscene:
 		match gravity_dir:

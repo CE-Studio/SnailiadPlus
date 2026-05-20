@@ -56,7 +56,7 @@ var against_wall:bool
 var fire_cooldown:float
 var return_bullet:PlayerBullet
 var fire_mode:bool = false
-var idle_timer:Timer
+var idle_timer:float
 var is_idling:bool
 var read_i_speed:int
 var read_i_jump:int
@@ -101,82 +101,83 @@ var grav_shock_anim_step:int = 0
 # Example: setting hopWhileMoving to [ [ 4, 7 ], [ 8 ] ] will make Snaily hop along the
 # ground if they find either (High Jump AND Ice Snail) OR Gravity Snail
 
-# Determines the default direction gravity pulls the player
+## Determines the default direction gravity pulls the player
 var default_gravity:Statics.DirsSurface
-# [I] Determines if the player can jump
+## [I] Determines if the player can jump
 var can_jump:Array[PackedInt32Array]
-# [I] Determines if the player can change their gravity state
+## [I] Determines if the player can change their gravity state
 var can_swap_gravity:Array[PackedInt32Array]
-# [I] Determines whether or not player keeps their current gravity when in the air
+## [I] Determines whether or not player keeps their current gravity when in the air
 var retain_gravity_on_airborne:Array[PackedInt32Array]
-# [I] Determines if the player can change their gravity mid-air to the opposite direction
+## [I] Determines if the player can change their gravity mid-air to the opposite direction
 var can_gravity_jump_opposite:Array[PackedInt32Array]
-# [I] Determines if the player can change their gravity mid-air relatively left or relatively right
+## [I] Determines if the player can change their gravity mid-air relatively left or relatively right
 var can_gravity_jump_adjacent:Array[PackedInt32Array]
-# [I] Determines if the player is capable of using Gravity Shock
+## [I] Determines if the player is capable of using Gravity Shock
 var can_gravity_shock:Array[PackedInt32Array]
-# [I] Determines if the player can retract into a shell
+## [I] Determines if the player can retract into a shell
 var shellable:Array[PackedInt32Array]
-# [I] Determines if the player bounces along the ground when they move
+## [I] Determines if the player bounces along the ground when they move
 var hop_while_moving:Array[PackedInt32Array]
-# The power of a walking bounce
+## The power of a walking bounce
 var hop_power:float
-# [I] Determines if the player can round inside corners
+## [I] Determines if the player can round inside corners
 var can_round_inner_corners:Array[PackedInt32Array]
-# [I] Determines if the player can round outside corners
+## [I] Determines if the player can round outside corners
 var can_round_outer_corners:Array[PackedInt32Array]
-# [I] Determines if the player can round outside corners opposite the default gravity
+## [I] Determines if the player can round outside corners opposite the default gravity
 var can_round_opposite_outer_corners:Array[PackedInt32Array]
-# [I] Determines if the player returns to their default gravity when taking damage
+## [I] Determines if the player returns to their default gravity when taking damage
 var stick_to_walls_when_hurt:Array[PackedInt32Array]
-# Contains the speed at which the player moves with each shell upgrade
+## Contains the speed at which the player moves with each shell upgrade
 var run_speed:Array[float]
-# Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
+## Contains the player's jump power with each shell upgrade. The second half of the array assumes High Jump
 var jump_power:Array[float]
-# Contains the gravity scale with each shell upgrade
+## Contains the gravity scale with each shell upgrade
 var gravity:Array[float]
-# Contains the player's terminal velocity with each shell upgrade
+## Contains the player's terminal velocity with each shell upgrade
 var terminal_velocity:Array[float]
-# Contains how floaty the player's jump is when the jump button is held with each shell upgrade + High Jump
+## Contains how floaty the player's jump is when the jump button is held with each shell upgrade + High Jump
 var jump_floatiness:Array[float]
-# Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
+## Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
 var weapon_cooldowns:Array[float]
-# Determines if collecting Rapid Fire affects bullet velocity
+## Determines if collecting Rapid Fire affects bullet velocity
 var apply_rapid_fire_multiplier:bool
-# Determines how long the player must remain idle before playing an idle animation
-#public List<Particle> idleParticles; // -------------------------- Contains every particle used in the player's idle animation so that they can be despawned easily
+## Determines how long the player must remain idle before playing an idle animation
 var time_until_idle:float
-# The size of the player's hitbox
+## Array to hold every particle used in the player's idle animation so that they can be despawned easily
+var idle_particles:Array[Particle]
+## The size of the player's hitbox
 var hitbox_size_normal:Vector2
-# The size of the player's hitbox while in their shell
+## The size of the player's hitbox while in their shell
 var hitbox_size_shell:Vector2
-# The offset of the player's hitbox
+## The offset of the player's hitbox
 var hitbox_offset_normal:Vector2
-# The offset of the player's hitbox while in their shell
+## The offset of the player's hitbox while in their shell
 var hitbox_offset_shell:Vector2
-# The amount the player's position is adjusted by when unshelling near a wall
+## The amount the player's position is adjusted by when unshelling near a wall
 var unshell_adjust:float
-# The amount the player's position is adjusted when turning around in the air while shelled
+## The amount the player's position is adjusted when turning around in the air while shelled
 var shell_turnaround_adjust:float
-# How long after leaving the ground via falling the player is still able to jump for
+## How long after leaving the ground via falling the player is still able to jump for
 var coyote_time:float
-# How long after pressing the jump button the player will continue to try to jump, in case of an early press
+## How long after pressing the jump button the player will continue to try to jump, in case of an early press
 var jump_buffer:float
-# How long it takes for Gravity Shock to fire off after charging
+## How long it takes for Gravity Shock to fire off after charging
 var grav_shock_charge_time:float
-# A fractional multiplier applied to Gravity Shock's charge time when Rapid Fire has been acquired
+## A fractional multiplier applied to Gravity Shock's charge time when Rapid Fire has been acquired
 var grav_shock_charge_mult:float
-# How fast Gravity Shock travels
+## How fast Gravity Shock travels
 var grav_shock_speed:float
-# How fast Gravity Shock can be steered perpendicular to its fire direction
+## How fast Gravity Shock can be steered perpendicular to its fire direction
 var grav_shock_steering:float
-# A fractional multiplier applied to any damage taken to increase/decrease characters' defense
+## A fractional multiplier applied to any damage taken to increase/decrease characters' defense
 var damage_multiplier:float
-# An offset from the center of the player used to align any shield particle effect. Should be set as if the player is on the ground facing right
+## An offset from the center of the player used to align any shield particle effect. Should be set as if the player is on the ground facing right
 var shield_particle_offset:Vector2i
-# How much health you recover from a Perfect Parry
+## How much health you recover from a Perfect Parry
 var health_gain_from_parry:int
-# How large the light emitted by the player should be
+## How large the light emitted by the player should be
 var light_radius:int
 #endregion
 
@@ -351,6 +352,15 @@ func _physics_process(delta:float) -> void:
 		position = body.position
 		return
 
+	if not in_death_cutscene and not CutsceneController.instance.running:
+		idle_timer += delta
+	if idle_timer >= time_until_idle and not is_idling:
+		set_idle_anim(true)
+	elif SInput.check_any_button() or SInput.vector_move():
+		if is_idling:
+			set_idle_anim(false)
+		idle_timer = 0.0
+
 	set_home_on_any_flip = not ProjectSettings.get_setting("game/control/gravity_keep")
 	suppress_retain_gravity = not set_home_on_any_flip
 	if not _can_grav_jump():
@@ -495,7 +505,17 @@ func reset_position(pos:Vector2) -> void:
 	in_death_cutscene = false
 	SInput.player_is_alive = true
 	fire_cooldown = 0.0
+	idle_timer = 0.0
 	#_play_anim("idle")
+
+
+func set_idle_anim(state:bool) -> void:
+	is_idling = state
+	if not state:
+		for particle in idle_particles:
+			particle.queue_free()
+		idle_particles.clear()
+		emote.clear()
 
 
 # The floor case for player movement

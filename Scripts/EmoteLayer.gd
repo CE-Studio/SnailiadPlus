@@ -57,7 +57,7 @@ func zzz(duration:float = -1.0) -> void:
 	clear()
 	var particle:Particle = Statics.spawn_particle("Zzz", Room.Layers.GROUND, position)
 	particle.reparent(self)
-	particle.position = apply_offset(actor_size * Vector2(1, -1))
+	particle.position = apply_offset(actor_size * Vector2(1, -1) + Vector2(0, 4))
 	active_particles.append(particle)
 	set_duration(duration)
 
