@@ -17,6 +17,7 @@ const GRAV_SHOCK_ANIM_STEPS:int = 4
 const GRAV_SHOCK_SHAKE_LAUNCH:Array[float] = [5.0, 0.25]
 const GRAV_SHOCK_SHAKE_LAND:Array[float] = [5.0, 0.5]
 const SEC_PER_SHOCK_STEP:float = 0.04
+const PARRY_WINDOW:float = 0.15
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -396,6 +397,9 @@ func _physics_process(delta:float) -> void:
 		coyote_time_counter += delta
 	else:
 		coyote_time_counter = 0.0
+	# We also tick up the shell timer in case we're shelled. This timer is used for parrying
+	if shelled:
+		time_since_shell += delta
 	if environment_exit_override > 0:
 		environment_exit_override -= 1
 	# We increment the Gravity Shock timer in case that happens to be active
@@ -1213,6 +1217,7 @@ func _set_shell(state:bool):
 		current_state = AnimStates.SHELL
 		if Statics.check_item(Item.ItemTypes.SHELL_SHIELD):
 			shield_particle = Statics.spawn_particle("Shield", Room.Layers.GROUND, position)
+		time_since_shell = 0.0
 	else:
 		_play_anim("unshell")
 		if shield_particle:
@@ -1299,7 +1304,6 @@ func _play_anim(action:String):
 	full_action += action
 	if sprite.action != full_action:
 		sprite.action = full_action
-	#print(full_action)
 
 
 # Externally called; updates which animation set the player uses based on shell level
@@ -1438,9 +1442,11 @@ func set_box_disable_override(state:bool) -> void:
 		box_shell.set_deferred("disabled", not shelled)
 
 
-func adjust_health(amount:int, ignore_defense:bool = false) -> void:
+## Adds to or subtracts from the player's current health by the given amount.
+## Will return [code]true[/code] if any attempted damage has been parried.
+func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 	if amount < 0 and in_death_cutscene:
-		return
+		return false
 
 	var shielded:bool = false
 	if amount < 0:
@@ -1451,7 +1457,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 				grav_shock_charge = null
 				_play_anim("fall")
 		elif grav_shock_state == 2:
-			return
+			return false
 		elif shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
 			amount = 0
 			shielded = true
@@ -1475,9 +1481,14 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> void:
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
 		if shielded:
-			sfx_ping.play()
+			if time_since_shell <= PARRY_WINDOW:
+				sfx_parry.play()
+				return true
+			else:
+				sfx_ping.play()
 		else:
 			sfx_hurt.play()
+	return false
 
 
 func do_moon_snail_heal() -> void:
