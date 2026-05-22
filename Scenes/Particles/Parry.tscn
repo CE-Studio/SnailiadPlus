@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://hf8fph13k0w6"]
+
+[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_m5mgb"]
+[ext_resource type="Texture2D" uid="uid://c7t2sr22rgwvv" path="res://Assets/Images/Particles/Parry.png" id="2_62ivl"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vd60y"]
+[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_340f1"]
+
+[node name="Parry" type="Node2D" unique_id=808283967 node_paths=PackedStringArray("sprite", "sound", "timer")]
+z_index = 275
+script = ExtResource("1_m5mgb")
+sprite = NodePath("JsonSprite2D")
+anim_name = "anim"
+sound = NodePath("")
+timer = NodePath("Timer")
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1758689635]
+texture = ExtResource("2_62ivl")
+hframes = 6
+vframes = 4
+frame = 7
+script = ExtResource("3_vd60y")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=623663304]
+script = ExtResource("4_340f1")
+texture_path = "res://Assets/Images/Particles/Parry.json"
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="Timer" type="Timer" parent="." unique_id=246683095]
+wait_time = 3.0
+one_shot = true

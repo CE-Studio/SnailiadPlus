@@ -85,8 +85,9 @@ func _physics_process(delta: float) -> void:
 		var this_damage:int = damage
 		if Statics.is_in_boss_rush and rush_damage != 0:
 			this_damage = rush_damage
-		GameCore.instance.player.adjust_health(-this_damage)
-		if single_hit:
+		if GameCore.instance.player.adjust_health(-this_damage):
+			parry_reshoot()
+		elif single_hit:
 			_despawn()
 	
 	life_timer += delta
@@ -106,7 +107,11 @@ func _physics_process(delta: float) -> void:
 
 ## Performs a secondary fire after being reflected by a Perfect Parry
 func parry_reshoot() -> void:
-	normalized_dir = Vector2(source_enemy.position - position).normalized()
+	has_been_parried = true
+	if source_enemy:
+		normalized_dir = Vector2(source_enemy.position - position).normalized()
+	else:
+		normalized_dir *= -1
 	life_timer = 0.0
 	velocity = velocity_init
 	damage = damage * 32 * (Statics.get_shell_level() + 1)
@@ -128,6 +133,8 @@ func _on_body_exited(_body) -> void:
 
 ## Called whenever this bullet intersects with a [PlayerBullet] in order to handle collision interactions
 func _on_pbullet_collision(_area:Area2D) -> void:
+	if has_been_parried:
+		return
 	var bullet = _area.get_parent()
 	if bullet is PlayerBullet and not bullet is PlayerBulletAfterimage:
 		var i_destroy:bool = pbullets_that_i_destroy.has(bullet.type)

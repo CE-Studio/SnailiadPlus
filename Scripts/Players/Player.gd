@@ -18,6 +18,7 @@ const GRAV_SHOCK_SHAKE_LAUNCH:Array[float] = [5.0, 0.25]
 const GRAV_SHOCK_SHAKE_LAND:Array[float] = [5.0, 0.5]
 const SEC_PER_SHOCK_STEP:float = 0.04
 const PARRY_WINDOW:float = 0.15
+const PARRY_HEAL:int = 2
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -1483,6 +1484,10 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 		if shielded:
 			if time_since_shell <= PARRY_WINDOW:
 				sfx_parry.play()
+				adjust_health(PARRY_HEAL)
+				if (Statics.get_particle_setting(Statics.ParticleOptions.ENTITIES_ALL)
+				or Statics.get_particle_setting(Statics.ParticleOptions.ALL)):
+					Statics.spawn_particle("Parry", Room.Layers.GROUND, position)
 				return true
 			else:
 				sfx_ping.play()

@@ -721,6 +721,10 @@ static func clear_cam_synced_particles() -> void:
 			particle.queue_free()
 
 
+static func get_particle_setting(mode:ParticleOptions) -> bool:
+	return ProjectSettings.get_setting("game/world/particles") == mode
+
+
 static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:int) -> Texture2D:
 	var color_count := _palette.get_width()
 	var palette_image := _palette.get_image()

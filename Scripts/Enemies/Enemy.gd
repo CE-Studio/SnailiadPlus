@@ -10,6 +10,7 @@ const DAMAGE_TIMEOUT:float = 0.025
 const DAMAGE_FLASH_COLOR:Color = Color(0.9, 0.9, 0.9)
 const DAMAGE_FLASH_STRENGTH:float = 0.9
 const DAMAGE_FADE_DECAY:float = 10.0
+const PARRY_DAMAGE_MULT:float = 12.0
 
 @export var max_health:int
 @export var max_health_easy:int
@@ -206,7 +207,10 @@ func _physics_process(delta) -> void:
 			ElementTypes.FIRE:
 				can_hit = not Statics.has_shell(3)
 		if can_hit and attack > 0:
-			GameCore.instance.player.adjust_health(-attack)
+			if GameCore.instance.player.adjust_health(-attack):
+				parry_damage = floori(attack * PARRY_DAMAGE_MULT)
+				if Statics.check_item(Item.ItemTypes.METAL_SHELL):
+					parry_damage *= 2
 
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
@@ -301,6 +305,7 @@ func _shoot(_scene:PackedScene, _direction:Vector2, _speed:float, _play_sound:bo
 	bullet.global_position = global_position
 	Statics.active_room.layer_ground.add_child(bullet)
 	bullet._spawn(_direction, _speed, _play_sound)
+	bullet.source_enemy = self
 	return bullet
 
 
