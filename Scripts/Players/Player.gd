@@ -503,7 +503,7 @@ func _physics_process(delta:float) -> void:
 		shield_particle.position = position + _spin_vector_to_surface(shield_offset, gravity_dir)
 
 
-func reset_position(pos:Vector2) -> void:
+func reset_position(pos:Vector2, reset_anim:bool = false) -> void:
 	global_position = pos.round()
 	body.global_position = pos
 	sprite.position = Vector2.ZERO
@@ -511,7 +511,8 @@ func reset_position(pos:Vector2) -> void:
 	SInput.player_is_alive = true
 	fire_cooldown = 0.0
 	idle_timer = 0.0
-	#_play_anim("idle")
+	if reset_anim:
+		_play_anim("idle")
 
 
 func set_idle_anim(state:bool) -> void:
@@ -1549,7 +1550,7 @@ func _on_respawn_timeout() -> void:
 	if grav_shock_bullet:
 		grav_shock_bullet.despawn()
 	_set_direction(default_gravity, false)
-	reset_position(Statics.load_coords)
+	reset_position(Statics.load_coords, true)
 	set_deferred("override_box_disable", false)
 #endregion
 
