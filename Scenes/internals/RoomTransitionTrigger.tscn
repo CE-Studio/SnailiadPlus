@@ -7,17 +7,28 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkfyc"]
 size = Vector2(24, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wovne"]
+size = Vector2(12, 16)
+
 [node name="RoomTransitionTrigger" type="Node2D" unique_id=1758231165]
 z_index = 999
 script = ExtResource("1_gkfyc")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=486798457]
+[node name="PlayerArea" type="Area2D" parent="." unique_id=486798457]
 collision_layer = 16
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1047274992]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea" unique_id=1047274992]
 position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_gkfyc")
+
+[node name="EnemyArea" type="Area2D" parent="." unique_id=1353880637]
+collision_layer = 16
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea" unique_id=1672647236]
+position = Vector2(30, 0)
+shape = SubResource("RectangleShape2D_wovne")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=189886853]
 position = Vector2(-8, 0)
@@ -27,4 +38,5 @@ texture = ExtResource("2_wovne")
 script = ExtResource("3_5cwcu")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_player_enter"]
+[connection signal="body_entered" from="PlayerArea" to="." method="_on_player_enter"]
+[connection signal="body_entered" from="EnemyArea" to="." method="_on_body_enter"]
