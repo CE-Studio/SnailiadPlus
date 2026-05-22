@@ -45,7 +45,7 @@ var areas:Dictionary = {
 	"SpiralisSilere": tr(&"Spiralis Silere"),
 	"AmastridaAbyssus": tr(&"Amastrida Abyssus"),
 	"LuxLirata": tr(&"Lux Lirata"),
-	"Iris": tr(&"Shrine of Iris"),
+	"ShrineOfIris": tr(&"Shrine of Iris"),
 	"BossRush": tr(&"Boss Rush")
 }
 

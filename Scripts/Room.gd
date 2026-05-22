@@ -43,6 +43,15 @@ static var areas:Array = [
 	"ShrineOfIris",
 	"BossRush"
 ]
+enum Areas {
+	SNAIL_TOWN,
+	MARE_CARELIA,
+	SPIRALIS_SILERE,
+	AMASTRIDA_ABYSSUS,
+	LUX_LIRATA,
+	SHRINE_OF_IRIS,
+	BOSS_RUSH
+}
 
 static var instance:Room
 

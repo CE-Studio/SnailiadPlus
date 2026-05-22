@@ -87,7 +87,9 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	new_room.spawn(true)
 	player.set_box_disable_override.call_deferred(false)
 	if new_room.area_id != current_area:
-		UICore.instance.show_area_text(new_room.area_id)
+		if not (new_room.area_id == Room.Areas.SHRINE_OF_IRIS
+		and not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)):
+			UICore.instance.show_area_text(new_room.area_id)
 		current_area = new_room.area_id
 	room_time = 0.0
 
