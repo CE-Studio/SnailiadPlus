@@ -67,7 +67,7 @@ func _on_timer_timeout() -> void:
 	UICore.instance.pause_layer.unpause_fade_out()
 	UICore.instance.color_cover.set_new_fade(fade_color, fade_color_a, 0.25)
 	GameCore.instance.spawn_room(Statics.load_room)
-	GameCore.instance.player.reset_position(Statics.load_coords)
+	GameCore.instance.player.reset_position(Statics.load_coords, true)
 	GameCore.instance.player.adjust_health(999999)
 	UICore.instance.cam.set_layer_position(Statics.load_coords)
 	UICore.instance.clear_area_text()

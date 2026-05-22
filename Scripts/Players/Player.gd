@@ -503,7 +503,7 @@ func _physics_process(delta:float) -> void:
 		shield_particle.position = position + _spin_vector_to_surface(shield_offset, gravity_dir)
 
 
-func reset_position(pos:Vector2, reset_anim:bool = false) -> void:
+func reset_position(pos:Vector2, full_reset:bool = false) -> void:
 	global_position = pos.round()
 	body.global_position = pos
 	sprite.position = Vector2.ZERO
@@ -511,7 +511,8 @@ func reset_position(pos:Vector2, reset_anim:bool = false) -> void:
 	SInput.player_is_alive = true
 	fire_cooldown = 0.0
 	idle_timer = 0.0
-	if reset_anim:
+	if full_reset:
+		_set_direction(default_gravity, false)
 		_play_anim("idle")
 
 
