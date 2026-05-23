@@ -1,30 +1,81 @@
 [gd_scene format=3 uid="uid://biopitj8e1fre"]
 
 [ext_resource type="Script" uid="uid://efhp2t5pddu8" path="res://Scripts/Classes/SpecialCollision.gd" id="1_ofchq"]
+[ext_resource type="Texture2D" uid="uid://c3oor88heiy53" path="res://Editor/EditorMarkers/SpecialCollision.png" id="2_cksbo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7mom"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wi2dh"]
+size = Vector2(16, 12)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofchq"]
 size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewrk4"]
+size = Vector2(16, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cksbo"]
 size = Vector2(8, 8)
 
-[node name="SpecialCollision" type="StaticBody2D" unique_id=560894353]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpwuj"]
+size = Vector2(16, 16)
+
+[node name="SpecialCollision" type="StaticBody2D" unique_id=560894353 node_paths=PackedStringArray("box_main", "box_three_quarter", "box_half_edge", "box_half_center", "box_quarter", "box_corner", "area", "area_box", "sprite")]
 collision_mask = 0
 script = ExtResource("1_ofchq")
+box_main = NodePath("Full")
+box_three_quarter = NodePath("ThreeQuarterEdge")
+box_half_edge = NodePath("HalfEdge")
+box_half_center = NodePath("HalfCenter")
+box_quarter = NodePath("QuarterEdge")
+box_corner = NodePath("Corner")
+area = NodePath("Area2D")
+area_box = NodePath("Area2D/CollisionShape2D")
+sprite = NodePath("Sprite2D")
 
 [node name="Full" type="CollisionShape2D" parent="." unique_id=393323579]
 shape = SubResource("RectangleShape2D_j7mom")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
+
+[node name="ThreeQuarterEdge" type="CollisionShape2D" parent="." unique_id=276440069]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_wi2dh")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
 
 [node name="HalfEdge" type="CollisionShape2D" parent="." unique_id=1292179810]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_ofchq")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
 
 [node name="HalfCenter" type="CollisionShape2D" parent="." unique_id=441134601]
 shape = SubResource("RectangleShape2D_ofchq")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
+
+[node name="QuarterEdge" type="CollisionShape2D" parent="." unique_id=1215721311]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_ewrk4")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
 
 [node name="Corner" type="CollisionShape2D" parent="." unique_id=713003322]
 position = Vector2(-4, 4)
 shape = SubResource("RectangleShape2D_cksbo")
+debug_color = Color(0, 0.6, 0.69803923, 0.03137255)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1884968082]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1623419127]
+shape = SubResource("RectangleShape2D_gpwuj")
+debug_color = Color(0, 0.6509804, 0.11372549, 0.05882353)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=42102434]
+z_index = 301
+texture = ExtResource("2_cksbo")
+hframes = 4
+vframes = 9
+frame = 3
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_player_enter"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_player_exit"]

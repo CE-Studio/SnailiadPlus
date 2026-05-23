@@ -1445,6 +1445,15 @@ func set_box_disable_override(state:bool) -> void:
 		box_shell.set_deferred("disabled", not shelled)
 
 
+func get_box_size() -> Vector2:
+	var this_shape:RectangleShape2D = box_normal.shape
+	if shelled: this_shape = box_shell.shape
+	var this_size:Vector2 = this_shape.size
+	if gravity_dir == Statics.DirsSurface.LWALL or gravity_dir == Statics.DirsSurface.RWALL:
+		this_size = Vector2(this_size.y, this_size.x)
+	return this_size
+
+
 ## Adds to or subtracts from the player's current health by the given amount.
 ## Will return [code]true[/code] if any attempted damage has been parried.
 func adjust_health(amount:int, ignore_defense:bool = false) -> bool:

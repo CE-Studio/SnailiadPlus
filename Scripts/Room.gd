@@ -817,6 +817,89 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				walleye.direction = 5
 				layer_ground.add_child(walleye)
 
+#region Special collision
+			Vector2i(0, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.QUARTER_FORCE, Statics.DirsCardinal.DOWN)
+			Vector2i(1, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_FORCE, Statics.DirsCardinal.DOWN)
+			Vector2i(2, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE, Statics.DirsCardinal.DOWN)
+			Vector2i(3, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE, Statics.DirsCardinal.DOWN)
+
+			Vector2i(4, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.QUARTER_FORCE, Statics.DirsCardinal.LEFT)
+			Vector2i(5, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_FORCE, Statics.DirsCardinal.LEFT)
+			Vector2i(6, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE, Statics.DirsCardinal.LEFT)
+			Vector2i(7, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE, Statics.DirsCardinal.LEFT)
+
+			Vector2i(8, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.QUARTER_FORCE, Statics.DirsCardinal.RIGHT)
+			Vector2i(9, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_FORCE, Statics.DirsCardinal.RIGHT)
+			Vector2i(10, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE, Statics.DirsCardinal.RIGHT)
+			Vector2i(11, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE, Statics.DirsCardinal.RIGHT)
+
+			Vector2i(12, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.QUARTER_FORCE, Statics.DirsCardinal.UP)
+			Vector2i(13, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_FORCE, Statics.DirsCardinal.UP)
+			Vector2i(14, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE, Statics.DirsCardinal.UP)
+			Vector2i(15, 37): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE, Statics.DirsCardinal.UP)
+
+			Vector2i(0, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_EDGE, Statics.DirsCardinal.DOWN)
+			Vector2i(1, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_EDGE, Statics.DirsCardinal.LEFT)
+			Vector2i(2, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_EDGE, Statics.DirsCardinal.RIGHT)
+			Vector2i(3, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_EDGE, Statics.DirsCardinal.UP)
+
+			Vector2i(4, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.CORNER_SOLID, Statics.DirsCardinal.DOWN)
+			Vector2i(5, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.CORNER_SOLID, Statics.DirsCardinal.LEFT)
+			Vector2i(6, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.CORNER_SOLID, Statics.DirsCardinal.RIGHT)
+			Vector2i(7, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.CORNER_SOLID, Statics.DirsCardinal.UP)
+
+			Vector2i(8, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_CENTERED, Statics.DirsCardinal.DOWN)
+			Vector2i(9, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.HALF_SOLID_CENTERED, Statics.DirsCardinal.LEFT)
+			Vector2i(10, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE_DUALEND, Statics.DirsCardinal.DOWN)
+			Vector2i(11, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.FULL_FORCE_DUALEND, Statics.DirsCardinal.LEFT)
+
+			Vector2i(12, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE_DUALEND, Statics.DirsCardinal.DOWN)
+			Vector2i(13, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE_DUALEND, Statics.DirsCardinal.LEFT)
+			Vector2i(14, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE_DUALEND, Statics.DirsCardinal.RIGHT)
+			Vector2i(15, 38): _spawn_special_collision(tile,
+				SpecialCollision.Modes.THREEQUARTER_FORCE_DUALEND, Statics.DirsCardinal.UP)
+
+			Vector2i(0, 39): _spawn_special_collision(tile,
+				SpecialCollision.Modes.ONEWAY, Statics.DirsCardinal.DOWN)
+			Vector2i(1, 39): _spawn_special_collision(tile,
+				SpecialCollision.Modes.ONEWAY, Statics.DirsCardinal.LEFT)
+			Vector2i(2, 39): _spawn_special_collision(tile,
+				SpecialCollision.Modes.ONEWAY, Statics.DirsCardinal.RIGHT)
+			Vector2i(3, 39): _spawn_special_collision(tile,
+				SpecialCollision.Modes.ONEWAY, Statics.DirsCardinal.UP)
+#endregion
+
 			Vector2i(12, 70): # Fire
 				var fire:Fire = _load(&"res://Scenes/Entities/Hazards/Fire.tscn").instantiate()
 				fire.position = _tile_coords_to_vector_pos(tile)
@@ -836,6 +919,13 @@ func _spawn_entities_from_layer(layer:int) -> void:
 			spawned_all = true
 		elif layer == 1:
 			spawned_secondary = true
+
+
+func _spawn_special_collision(tile:Vector2i, mode:SpecialCollision.Modes, dir:Statics.DirsCardinal) -> void:
+	var col:SpecialCollision = _load(&"res://Scenes/Entities/SpecialCollision.tscn").instantiate()
+	col.position = _tile_coords_to_vector_pos(tile)
+	layer_ground.add_child(col)
+	col.set_mode(mode, dir)
 
 
 func _load(path:StringName) -> PackedScene:
