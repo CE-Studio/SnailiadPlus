@@ -2223,6 +2223,50 @@
 			"colors": [255, 4238362879, 2766732543, 0, 4176935167],
 			"autoplay_next": "npc37.floor.left.idle",
 		},
+		"npc38.floor.right.idle": {
+			"inherit": "0.floor.right.idle",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+		},
+		"npc38.floor.right.turnground": {
+			"inherit": "0.floor.right.turnground",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+			"autoplay_next": "npc38.floor.right.idle",
+		},
+		"npc38.floor.left.idle": {
+			"inherit": "0.floor.left.idle",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+		},
+		"npc38.floor.left.turnground": {
+			"inherit": "0.floor.left.turnground",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+			"autoplay_next": "npc38.floor.left.idle",
+		},
+		"npc38.floor.right.shell": {
+			"inherit": "0.floor.right.shell",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+		},
+		"npc38.floor.left.shell": {
+			"inherit": "0.floor.left.shell",
+			"colors": [741092607, 4176935167, 4242584831, 0, 4176935167],
+		},
+		"npc39.floor.right.idle": {
+			"inherit": "5.floor.right.idle",
+			"colors": [255, 3703110911, 4176935167, 1076413695, 4176935167],
+		},
+		"npc39.floor.right.turnground": {
+			"inherit": "5.floor.right.turnground",
+			"colors": [255, 3703110911, 4176935167, 1076413695, 4176935167],
+			"autoplay_next": "npc39.floor.right.idle",
+		},
+		"npc39.floor.left.idle": {
+			"inherit": "5.floor.left.idle",
+			"colors": [255, 3703110911, 4176935167, 1076413695, 4176935167],
+		},
+		"npc39.floor.left.turnground": {
+			"inherit": "5.floor.left.turnground",
+			"colors": [255, 3703110911, 4176935167, 1076413695, 4176935167],
+			"autoplay_next": "npc39.floor.left.idle",
+		},
 		"npc40.floor.right.idle": {
 			"inherit": "1.floor.right.idle",
 			"colors": [255, 4239981823, 4239917311, 0, 4176935167],

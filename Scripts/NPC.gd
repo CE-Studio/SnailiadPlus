@@ -10,11 +10,14 @@ const GRAVITY:float = 1200.0
 const TERMINAL_VELOCITY:float = 500.0
 const TALK_RANGE:float = 30.0
 const TALK_COOLDOWN:float = 0.15
+const FLOAT_SPEED:float = 0.5
+const FLOAT_AMPLITUDE:float = 5.0
 
 @export var my_id:int
 @export_enum("Left", "Right", "Face player:-1") var face_mode:int = -1
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var surface:int = 0
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var fall_direction:int = 0
+@export var floating:bool = false
 @export_enum(
 	"Snail", "Slug", "Cone-shell snail", "Spikey shell snail",
 	"Spikey cone-shell snail", "Large-shelled snail", "Turtle",
@@ -31,6 +34,7 @@ var can_talk:bool = true:
 		if value == false and bubble:
 			bubble.hide_bubble()
 var talk_cooldown:float = 0.0
+var float_cycle:float = 0.0
 
 var cc_glide_origin:Vector2 = Vector2.ZERO
 var cc_glide_target:Vector2 = Vector2.ZERO
@@ -85,6 +89,7 @@ func spawn() -> void:
 	sprite._process(0.0)
 	UICore.instance.darkness_layer.add_source(self, 32)
 	bubble.set_direction(surface)
+	float_cycle = randf() * TAU
 
 
 func _process(_delta: float) -> void:
@@ -154,21 +159,26 @@ func _physics_process(delta: float) -> void:
 			cc_glide_active = false
 		return
 
-	match surface:
-		0:
-			body.velocity.y += GRAVITY * delta
-			body.velocity.y = clampf(body.velocity.y, -INF, TERMINAL_VELOCITY)
-		1:
-			body.velocity.x -= GRAVITY * delta
-			body.velocity.x = clampf(body.velocity.x, -TERMINAL_VELOCITY, INF)
-		2:
-			body.velocity.x += GRAVITY * delta
-			body.velocity.x = clampf(body.velocity.x, -INF, TERMINAL_VELOCITY)
-		3:
-			body.velocity.y -= GRAVITY * delta
-			body.velocity.y = clampf(body.velocity.y, -TERMINAL_VELOCITY, INF)
-	body.move_and_slide()
-	position = body.position
+	if floating:
+		float_cycle += delta
+		sprite.position.y = sin(float_cycle * FLOAT_SPEED) * FLOAT_AMPLITUDE
+	else:
+		sprite.position.y = 0.0
+		match surface:
+			0:
+				body.velocity.y += GRAVITY * delta
+				body.velocity.y = clampf(body.velocity.y, -INF, TERMINAL_VELOCITY)
+			1:
+				body.velocity.x -= GRAVITY * delta
+				body.velocity.x = clampf(body.velocity.x, -TERMINAL_VELOCITY, INF)
+			2:
+				body.velocity.x += GRAVITY * delta
+				body.velocity.x = clampf(body.velocity.x, -INF, TERMINAL_VELOCITY)
+			3:
+				body.velocity.y -= GRAVITY * delta
+				body.velocity.y = clampf(body.velocity.y, -TERMINAL_VELOCITY, INF)
+		body.move_and_slide()
+		position = body.position
 
 
 func play_anim(state:String) -> void:

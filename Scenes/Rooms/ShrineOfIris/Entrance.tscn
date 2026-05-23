@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_e1y5m"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_gf8lp"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="5_kjxm0"]
+[ext_resource type="PackedScene" uid="uid://css5bki2vjmuv" path="res://Scenes/Environments/ParticleLayers/GlitchLayer.tscn" id="6_ihkto"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -87,7 +88,7 @@ curve = SubResource("Curve2D_67xdc")
 script = ExtResource("3_e1y5m")
 
 [node name="DefaultSpawn" type="Marker2D" parent="." unique_id=129416027]
-position = Vector2(200, 120)
+position = Vector2(176, 232)
 
 [node name="RoomTransitionTrigger" parent="." unique_id=1758231165 instance=ExtResource("5_kjxm0")]
 position = Vector2(360, 240)
@@ -101,3 +102,7 @@ position = Vector2(0, 120)
 rotation = -3.1415927
 scale = Vector2(1, 3)
 my_id = 1
+exit_room = "uid://chtapd73pbjgw"
+
+[node name="GlitchLayer" parent="." unique_id=145676287 instance=ExtResource("6_ihkto")]
+density = 0.7999999999999999
