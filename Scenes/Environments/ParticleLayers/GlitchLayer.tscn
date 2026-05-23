@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://css5bki2vjmuv"]
+
+[ext_resource type="Script" uid="uid://bkyccmkld0c3p" path="res://Scripts/Particles/ParticleLayers/GlitchLayer.gd" id="1_jpmgl"]
+[ext_resource type="Texture2D" uid="uid://bwpmn8uow4tht" path="res://Editor/EditorMarkers/GlitchLayer.png" id="2_jpmgl"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_mqi1i"]
+
+[node name="GlitchLayer" type="Node2D" unique_id=145676287]
+z_index = 500
+z_as_relative = false
+script = ExtResource("1_jpmgl")
+particles = Array[String](["GlitchTile"])
+particle_count = 24
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=494264938]
+texture = ExtResource("2_jpmgl")
+script = ExtResource("3_mqi1i")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

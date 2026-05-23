@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dgmyqgnjjp4hw"]
+
+[ext_resource type="Script" uid="uid://b1j32airni4a7" path="res://Scripts/Particles/GlitchTile.gd" id="1_4aybu"]
+[ext_resource type="Texture2D" uid="uid://d21ff4inqcpyw" path="res://Assets/Images/Tilesheet.png" id="1_5bla5"]
+[ext_resource type="Texture2D" uid="uid://rdi8ck7qb61x" path="res://Assets/Images/Missing.png" id="1_rjbsg"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="2_5bla5"]
+
+[node name="GlitchTile" type="Node2D" unique_id=1589655738 node_paths=PackedStringArray("spr")]
+script = ExtResource("1_4aybu")
+spr = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1180633325]
+position = Vector2(8, 8)
+texture = ExtResource("1_5bla5")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1433559344]
+position = Vector2(8, 8)
+texture = ExtResource("1_rjbsg")
+script = ExtResource("2_5bla5")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
