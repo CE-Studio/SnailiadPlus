@@ -10,6 +10,8 @@ const SELECTOR_OFFSET:Vector2i = Vector2i(8, 8)
 var selected_cell:int = 0
 ## Whether or not a scrollable option is currently having its value set by the player
 var scrolling:bool = false
+## The current scroll value. Initialized when a scrolling setting is selected and applied when deselected
+var scroll_value:int = 0
 ## How many frames the menu will wait before being able to be closed
 var buffer_frames:int = 4
 ## The description component of the currently selected option
@@ -18,6 +20,8 @@ var cell_desc:String = ""
 var ctrl_prompt:String = ""
 ## The input type of the currently selected option
 var select_type:SelectTypes = SelectTypes.NONE
+## The last option name to be displayed in the description
+var last_name:String = ""
 
 enum SelectTypes {
 	NONE,
@@ -30,6 +34,7 @@ enum SelectTypes {
 @export var sprites:Array[Sprite2D] = []
 @export var selector:JsonSprite2D
 @export var desc:SnailyText
+@export var scroll_text:SnailyText
 #endregion
 
 
@@ -54,7 +59,12 @@ func _process(_delta: float) -> void:
 	)
 	if intended_dir != Vector2.ZERO:
 		if scrolling:
-			pass
+			if intended_dir.x > 0:
+				scroll_value += 1
+				_update_scroll_text()
+			elif intended_dir.x < 0:
+				scroll_value -= 1
+				_update_scroll_text()
 		else:
 			_move_selection(intended_dir)
 	if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
@@ -98,6 +108,8 @@ func _handle_select() -> void:
 			pass
 		SelectTypes.TOGGLE:
 			_handle_toggle_cases(sprites[selected_cell])
+		SelectTypes.SCROLL:
+			_handle_scroll_cases(sprites[selected_cell])
 
 
 ## Handles the input of any togglable options
@@ -106,15 +118,19 @@ func _handle_toggle_cases(spr:Sprite2D) -> void:
 		"Boss1":
 			Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1,
 			not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1))
+			_set_boss_desc(last_name, Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1))
 		"Boss2":
 			Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2,
 			not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2))
+			_set_boss_desc(last_name, Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2))
 		"Boss3":
 			Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3,
 			not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3))
+			_set_boss_desc(last_name, Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3))
 		"Boss4":
 			Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4,
 			not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4))
+			_set_boss_desc(last_name, Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4))
 		"Noclip":
 			Statics.noclip_mode = not Statics.noclip_mode
 		"AttackMult":
@@ -123,6 +139,58 @@ func _handle_toggle_cases(spr:Sprite2D) -> void:
 			Statics.show_entity_layer = not Statics.show_entity_layer
 			Statics.show_invis_entites = not Statics.show_invis_entites
 	_update_sprite(spr)
+
+
+## Handles the input of any scrollable options
+func _handle_scroll_cases(spr:Sprite2D) -> void:
+	var item_case:int = Item.ItemTypes.NONE
+	match spr.name:
+		"Peashooter": item_case = Item.ItemTypes.PEASHOOTER
+		"Boomerang": item_case = Item.ItemTypes.BOOMERANG
+		"RainbowWave": item_case = Item.ItemTypes.RAINBOW_WAVE
+		"Devastator": item_case = Item.ItemTypes.DEVASTATOR
+		"HighJump": item_case = Item.ItemTypes.HIGH_JUMP
+		"ShellShield": item_case = Item.ItemTypes.SHELL_SHIELD
+		"RapidFire": item_case = Item.ItemTypes.RAPID_FIRE
+		"IceSnail": item_case = Item.ItemTypes.ICE_SHELL
+		"GravitySnail": item_case = Item.ItemTypes.GRAVITY_SHELL
+		"FullMetalSnail": item_case = Item.ItemTypes.METAL_SHELL
+		"GravityShock": item_case = Item.ItemTypes.GRAVITY_SHOCK
+		"Broom": item_case = Item.ItemTypes.BROOM
+		"RadarShell": item_case = Item.ItemTypes.RADAR_SHELL
+		"HeartContainer": item_case = Item.ItemTypes.HEART_CONTAINER
+		"HelixFragment": item_case = Item.ItemTypes.HELIX_FRAGMENT
+	if item_case != Item.ItemTypes.NONE:
+		if scrolling:
+			Statics.set_item(item_case, scroll_value)
+			_update_sprite(spr)
+			_set_item_desc(last_name, scroll_value)
+			match spr.name:
+				"Peashooter":
+					if Player.instance.selected_weapon & 2 > 0:
+						Player.instance.selected_weapon -= 2
+					UICore.instance.update_weapon_icons(false)
+				"Boomerang":
+					if Player.instance.selected_weapon & 4 > 0:
+						Player.instance.selected_weapon -= 4
+					UICore.instance.update_weapon_icons(false)
+				"RainbowWave":
+					if Player.instance.selected_weapon & 8 > 0:
+						Player.instance.selected_weapon -= 8
+					UICore.instance.update_weapon_icons(false)
+				"Broom":
+					if Player.instance.selected_weapon & 1 > 0:
+						Player.instance.selected_weapon -= 1
+					UICore.instance.update_weapon_icons(false)
+				"HeartContainer":
+					Player.instance.max_health = ((3 + Statics.check_item(item_case))
+						* Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]])
+					Player.instance.health = Player.instance.max_health
+					UICore.instance.draw_new_hearts()
+		else:
+			scroll_value = Statics.check_item(item_case)
+	scrolling = not scrolling
+	_update_scroll_text()
 
 
 ## Sets the sprite of a given option to be highlighted or deselected
@@ -134,18 +202,21 @@ func _generic_set_sprite(spr:Sprite2D, condition:bool) -> void:
 func _set_item_desc(_name:String, _count:int) -> void:
 	cell_desc = "%s - %d in inventory" % [_name, _count]
 	_set_desc_common()
+	last_name = _name
 
 
 ## Sets the displayed description of boss options, including if the boss is alive
-func _set_boss_desc(_name:String, _alive:bool) -> void:
-	cell_desc = "%s - currently %s" % [_name, "alive" if _alive else "dead"]
+func _set_boss_desc(_name:String, _dead:bool) -> void:
+	cell_desc = "%s - currently %s" % [_name, "dead" if _dead else "alive"]
 	_set_desc_common()
+	last_name = _name
 
 
 ## Sets the displayed description of tool options
 func _set_tool_desc(_name:String) -> void:
 	cell_desc = _name
 	_set_desc_common()
+	last_name = _name
 
 
 ## Sets the control prompt for options that can be scrolled
@@ -284,16 +355,16 @@ func _update_desc_action(spr:Sprite2D) -> void:
 			_set_item_desc("Helix Fragment", Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT))
 			_set_scroll_prompt()
 		"Boss1":
-			_set_boss_desc("Shellbreaker", Statics.WorldFlags.DEFEATED_BOSS1)
+			_set_boss_desc("Shellbreaker", Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1))
 			_set_toggle_prompt()
 		"Boss2":
-			_set_boss_desc("Stompy", Statics.WorldFlags.DEFEATED_BOSS2)
+			_set_boss_desc("Stompy", Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2))
 			_set_toggle_prompt()
 		"Boss3":
-			_set_boss_desc("Space Box", Statics.WorldFlags.DEFEATED_BOSS3)
+			_set_boss_desc("Space Box", Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3))
 			_set_toggle_prompt()
 		"Boss4":
-			_set_boss_desc("Moon Snail", Statics.WorldFlags.DEFEATED_BOSS4)
+			_set_boss_desc("Moon Snail", Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4))
 			_set_toggle_prompt()
 		"WeaponTrap":
 			pass
@@ -314,3 +385,8 @@ func _update_desc_action(spr:Sprite2D) -> void:
 		"ShowHidden":
 			_set_tool_desc("Show entity layer/invis entites")
 			_set_toggle_prompt()
+
+
+## Updates the text displaying the current scroll value
+func _update_scroll_text() -> void:
+	scroll_text.set_snaily_text(("< %d >" % scroll_value) if scrolling else "")

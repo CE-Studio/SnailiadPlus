@@ -284,6 +284,12 @@ static func remove_item(id:int, count:int) -> void:
 			current_profile["items"][id] = 0
 
 
+static func set_item(id:int, count:int) -> void:
+	while id >= len(current_profile["items"]):
+		current_profile["items"].append(0)
+	current_profile["items"][id] = clampi(count, 0, 9999)
+
+
 static func check_item(id:int) -> int:
 	var output:int = 0
 	if id < len(current_profile["items"]):
