@@ -255,7 +255,7 @@ func _process(delta: float) -> void:
 	#	tick_minimap(false, false, true)
 
 	var fade_d:float = delta * FADE_SPEED
-	if modulate.a != fade_override:
+	if modulate.a != fade_override and not subscreen_mode:
 		modulate.a = move_toward(modulate.a, fade_override, fade_d)
 	#var subscreen_target_a = 0.0 if subscreen_mode else 1.0
 	#panel.modulate.a = move_toward(panel.modulate.a, subscreen_target_a, fade_d)

@@ -34,6 +34,8 @@ const SELECTOR_SPEED:float = 20.0
 const SUBSCREEN_ENTER_SPEED:float = 16.0
 const SUBSCREEN_INACTIVE_ACCEL:float = 16.0
 
+const MAP_TRANSPARENT:Color = Color(0.0, 0.0, 0.0, 0.0)
+
 enum MoveMode {
 	NONE = -1,
 	LIST,
@@ -54,6 +56,7 @@ var map_sel_origin:Vector2i
 var map_selection:Vector2i = Vector2.ZERO
 var active:bool = true
 var exit_speed:float = 1.0
+var backing_visible:bool = false
 
 var zoomed_map:Node2D = null
 var map_zoomed:bool = false
@@ -85,6 +88,7 @@ var map_zoomed:bool = false
 #@export var map_target:Marker2D
 @export var map:Minimap
 @export var map_selector:JsonSprite2D
+@export var map_backing:JsonSprite2D
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
 @export var marker_text:SnailyText
@@ -304,13 +308,21 @@ func _test_for_move_selection() -> void:
 			selector_target -= Vector2i(UICore.instance.global_position)
 			selector_target += SELECTOR_LIST_OFFSET
 			_set_desc(selectable_items[selection][1])
-			map.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = MAP_TRANSPARENT
+			map.marker_group.visible = false
+			if not backing_visible:
+				backing_visible = true
+				map_backing.action = "enabled"
 			marker_text.visible = false
 			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
 			_set_desc(-2)
-			map.modulate = Color(0.3, 0.3, 0.3)
+			map.modulate = MAP_TRANSPARENT
+			map.marker_group.visible = false
+			if not backing_visible:
+				backing_visible = true
+				map_backing.action = "enabled"
 			marker_text.visible = false
 			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.MAP:
@@ -318,6 +330,10 @@ func _test_for_move_selection() -> void:
 			desc_name.set_snaily_text("")
 			desc_body.set_snaily_text("")
 			map.modulate = Color.WHITE
+			map.marker_group.visible = true
+			if backing_visible:
+				backing_visible = false
+				map_backing.action = "disabled"
 			marker_text.visible = true
 			select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 		MoveMode.GRID:
@@ -367,23 +383,23 @@ func _set_desc(id:int) -> void:
 	var stacked_shells:StringName = tr(&"")
 	match id:
 		Item.ItemTypes.PEASHOOTER:
-			desc_body.set_snaily_text(tr(&"The first line of defense.  This little gun lets you fire small yet hardy peas at any wayward foe.  They're not the most effective projectile, as they crumble from contact with enemy and surface alike, but they'll do in a pinch.\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
+			desc_body.set_snaily_text(tr(&"The first line of defense.  This little gun lets you fire small yet hardy peas at any wayward foe.  They're not the most effective projectile, as they crumble from contact with enemy and surface alike, but they'll do in a pinch.\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.BOOMERANG:
-			desc_body.set_snaily_text(tr(&"These little things can pack quite the punch!  Their points and edges are refined to catch wind and foe alike.  When tossed at just the right distance, the turnaround can score some big damage!\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
+			desc_body.set_snaily_text(tr(&"These little things can pack quite the punch!  Their points and edges are refined to catch wind and foe alike.  When tossed at just the right distance, the turnaround can score some big damage!\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.RAINBOW_WAVE:
-			desc_body.set_snaily_text(tr(&"It's said that those who do good in the eyes of Iris are offered a small piece of her power.  Lucky you!! These sharpened shards of solid light can cut through just about any shell, wall, or particularly stubborn slime.\n\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
+			desc_body.set_snaily_text(tr(&"It's said that those who do good in the eyes of Iris are offered a small piece of her power.  Lucky you!! These sharpened shards of solid light can cut through just about any shell, wall, or particularly stubborn slime.\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.DEVASTATOR:
 			desc_body.set_snaily_text(tr(&"An old relic of unknown origin, said to empower the bearer with strength and fury to rival even the highest of gods.  At least, I think so; I may have slept through that class.  Regardless, having this on you powers up all of your attacks!  Neat, huh?"))
 		Item.ItemTypes.HIGH_JUMP:
 			if player == Player.Players.BLOBBY:
-				desc_body.set_snaily_text(tr(&"Contained inside is a ready-made meal crafted specifically to help make a blob's body stickier.  It's mostly hard candy.\n\n\n[color=#ffd48c]Hold toward a wall or ceiling while airborne to stick to it"))
+				desc_body.set_snaily_text(tr(&"Contained inside is a ready-made meal crafted specifically to help make a blob's body stickier.  It's mostly hard candy.\n\n[color=#ffd48c]Hold toward a wall or ceiling while airborne to stick to it"))
 			else:
-				desc_body.set_snaily_text(tr(&"This badge is actually a container full of nothing but helium, allowing its wearer a little more air time when they jump!  Mind the fall, though; it doesn't cushion the landing very well.\n\n\n[color=#ffd48c]Hold the JUMP button to jump as high as possible"))
+				desc_body.set_snaily_text(tr(&"This badge is actually a container full of nothing but helium, allowing its wearer a little more air time when they jump!  Mind the fall, though; it doesn't cushion the landing very well.\n\n[color=#ffd48c]Hold the JUMP button to jump as high as possible"))
 		Item.ItemTypes.SHELL_SHIELD:
 			if player == Player.Players.BLOBBY:
-				desc_body.set_snaily_text(tr(&"Now isn't this a nice find!!  This helmet looks just about sturdy enough to shrug off a hit or two and come out unscathed.  Plus, it's fashionable!!\n\n\n[color=#ffd48c]Press toward the ground to hide under it"))
+				desc_body.set_snaily_text(tr(&"Now isn't this a nice find!!  This helmet looks just about sturdy enough to shrug off a hit or two and come out unscathed.  Plus, it's fashionable!!\n\n[color=#ffd48c]Press toward the ground to hide under it"))
 			else:
-				desc_body.set_snaily_text(tr(&"With a little polish and protective slime, your shell is now capable of withstanding damage!  From the lightest graze to the heaviest blow, nothing is too much to handle anymore! Just remember to buff out the scratches when you get home.\n\n\n[color=#ffd48c]Press toward the ground to hide in your shell"))
+				desc_body.set_snaily_text(tr(&"With a little polish and protective slime, your shell is now capable of withstanding damage!  From the lightest graze to the heaviest blow, nothing is too much to handle anymore! Just remember to buff out the scratches when you get home.\n\n[color=#ffd48c]Press toward the ground to hide in your shell"))
 		Item.ItemTypes.RAPID_FIRE:
 			if player == Player.Players.LEECHY:
 				desc_body.set_snaily_text(tr(&"subscreen_desc_backfire"))
@@ -396,7 +412,7 @@ func _set_desc(id:int) -> void:
 				Player.Players.UPSIDE: desc_body.set_snaily_text(tr(&"subscreen_desc_magneticFoot"))
 				Player.Players.LEGGY: desc_body.set_snaily_text(tr(&"subscreen_desc_corkscrewJump"))
 				Player.Players.BLOBBY: desc_body.set_snaily_text(tr(&"subscreen_desc_angelJump"))
-				_: desc_body.set_snaily_text(tr(&"This badge is crafted from discarded gravity turtle scutes that still carry some of that innate control over the force.  With a little concentration, wearing this badge allows the wearer to redirect which direction they get pulled.\n\n\n[color=#ffd48c]Hold a direction and press the GRAVITY button to flip gravity"))
+				_: desc_body.set_snaily_text(tr(&"This badge is crafted from discarded gravity turtle scutes that still carry some of that innate control over the force.  With a little concentration, wearing this badge allows the wearer to redirect which direction they get pulled.\n\n[color=#ffd48c]Hold a direction and press the GRAVITY button to flip gravity"))
 			if Statics.stack_shells:
 				desc_body.set_snaily_text(desc_body.text + stacked_shells)
 		Item.ItemTypes.METAL_SHELL:
@@ -404,7 +420,7 @@ func _set_desc(id:int) -> void:
 			if Statics.stack_shells:
 				desc_body.set_snaily_text(desc_body.text + stacked_shells)
 		Item.ItemTypes.GRAVITY_SHOCK:
-			desc_body.set_snaily_text(tr(&"A relic long thought lost, this item allows anyone to build immense amounts of power and release it in a fireball of sheer destruction.  Use this power wisely, and you can bring down even the toughest of foes and walls with ease!\n\n\n[color=#ffd48c]Gravity jump toward your current gravity to activate.  Move while it's active to steer."))
+			desc_body.set_snaily_text(tr(&"A relic long thought lost, this item allows anyone to build immense amounts of power and release it in a fireball of sheer destruction.  Use this power wisely, and you can bring down even the toughest of foes and walls with ease!\n\n[color=#ffd48c]Gravity jump toward your current gravity to activate.  Move while it's active to steer."))
 		Item.ItemTypes.NONE:
 			desc_body.set_snaily_text(tr(&"It's you!\nThis is your normal self; how you've always known yourself.  You can take a hit or two, but not much else.  But hey, that just means there's room to grow!"))
 			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
