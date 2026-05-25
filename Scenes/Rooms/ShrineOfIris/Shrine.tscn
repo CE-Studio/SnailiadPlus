@@ -2,11 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_x8ix1"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_scfow"]
+[ext_resource type="Resource" uid="uid://cemssgbqeq2ne" path="res://CutsceneScripts/ShrineOfIris/Shrine.dialogue" id="2_wl4gl"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="3_x8bni"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_x16q0"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_voi8l"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="5_63m4q"]
 [ext_resource type="PackedScene" uid="uid://css5bki2vjmuv" path="res://Scenes/Environments/ParticleLayers/GlitchLayer.tscn" id="6_x8bni"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="9_d3c3d"]
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="10_4lg8b"]
+[ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="11_4lg8b"]
+[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="11_a1pyx"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -19,6 +24,7 @@ point_count = 3
 z_as_relative = false
 script = ExtResource("1_x8ix1")
 area_id = 5
+cutscene_script = ExtResource("2_wl4gl")
 minimap_offset = Vector2i(7, 9)
 tiled_corner = Vector2i(183, 145)
 tiled_range = Vector2i(51, 15)
@@ -111,3 +117,23 @@ exit_transition = 2
 [node name="GlitchLayer" parent="." unique_id=145676287 instance=ExtResource("6_x8bni")]
 position = Vector2(32, 0)
 density = 0.2
+
+[node name="TriggerCutscene" parent="." unique_id=5522885 node_paths=PackedStringArray("actor") instance=ExtResource("9_d3c3d")]
+position = Vector2(240, 192)
+scale = Vector2(12, 12)
+script = ExtResource("10_4lg8b")
+actor = NodePath("../DummyCutsceneControllable")
+require_condition = false
+conditional_flag = 2
+conditional_value = null
+compare_mode = 0
+
+[node name="TriggerAchievement" parent="." unique_id=1606664893 instance=ExtResource("9_d3c3d")]
+position = Vector2(240, 192)
+scale = Vector2(12, 12)
+script = ExtResource("11_4lg8b")
+achievement = 15
+
+[node name="DummyCutsceneControllable" parent="." unique_id=1305305038 instance=ExtResource("11_a1pyx")]
+position = Vector2(128, 256)
+identifier = &"Set38Shell"

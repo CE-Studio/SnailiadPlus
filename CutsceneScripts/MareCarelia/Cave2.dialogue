@@ -5,7 +5,7 @@ match CutsceneController.object_id
 			if Player.instance.who_i_is == Player.Players.SLUGGY or Player.instance.who_i_is == Player.Players.LEECHY
 				do CutsceneController.set_actor("26")
 				do CutsceneController.perform_action("face_right", false)
-				do CutsceneController.perform_action("toggle_shell", false)
+				do CutsceneController.perform_action("sleep", false)
 				do CutsceneController.perform_action("set_wont_talk", false)
 	when "26"
 		do CutsceneController.lock_input()

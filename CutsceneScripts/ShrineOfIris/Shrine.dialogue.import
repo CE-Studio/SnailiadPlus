@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cemssgbqeq2ne"
+path="res://.godot/imported/Shrine.dialogue-6e1b28228e31ab428634043125fb2563.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/ShrineOfIris/Shrine.dialogue"
+dest_files=["res://.godot/imported/Shrine.dialogue-6e1b28228e31ab428634043125fb2563.tres"]
+
+[params]
+
+defaults=true

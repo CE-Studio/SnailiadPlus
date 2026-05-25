@@ -9,6 +9,7 @@ extends CutsceneControllable
 const GRAVITY:float = 1200.0
 const TERMINAL_VELOCITY:float = 500.0
 const TALK_RANGE:float = 30.0
+const TALK_RANGE_FLOATING:float = 64.0
 const TALK_COOLDOWN:float = 0.15
 const FLOAT_SPEED:float = 0.5
 const FLOAT_AMPLITUDE:float = 5.0
@@ -103,44 +104,44 @@ func _process(_delta: float) -> void:
 		Statics.DirsSurface.FLOOR:
 			if facing_left and lookat_pos.x > position.x:
 				facing_left = false
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 			elif not facing_left and lookat_pos.x < position.x:
 				facing_left = true;
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 		Statics.DirsSurface.LWALL:
 			if facing_left and lookat_pos.y > position.y:
 				facing_left = false
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 			elif not facing_left and lookat_pos.y < position.y:
 				facing_left = true;
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 		Statics.DirsSurface.RWALL:
 			if facing_left and lookat_pos.y < position.y:
 				facing_left = false
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 			elif not facing_left and lookat_pos.y > position.y:
 				facing_left = true;
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 		Statics.DirsSurface.CEILING:
 			if facing_left and lookat_pos.x < position.x:
 				facing_left = false
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 			elif not facing_left and lookat_pos.x > position.x:
 				facing_left = true;
-				play_anim("turnground")
+				play_anim("shell" if shelled else "turnground")
 
 	if Room.instance.cutscene_script:
 		var player:Player = GameCore.instance.player
 		if bubble.shown:
 			if (not can_talk or CutsceneController.running
-			or position.distance_to(player.position) > TALK_RANGE):
+			or position.distance_to(player.position) > (TALK_RANGE_FLOATING if floating else TALK_RANGE)):
 				bubble.hide_bubble()
 			elif SInput.check_input(SInput.Inputs.SPEAK, true) and talk_cooldown <= 0.0:
 				Room.instance.start_cutscene(self)
 				talk_cooldown = TALK_COOLDOWN
 		else:
 			if (can_talk and not CutsceneController.running
-			and position.distance_to(player.position) < TALK_RANGE):
+			and position.distance_to(player.position) < (TALK_RANGE_FLOATING if floating else TALK_RANGE)):
 				bubble.show_bubble()
 		if talk_cooldown > 0.0 and not CutsceneController.running:
 			talk_cooldown -= _delta
@@ -153,7 +154,9 @@ func _physics_process(delta: float) -> void:
 	if cc_glide_active:
 		cc_glide_elapsed = clampf(cc_glide_elapsed + delta, 0.0, cc_glide_duration)
 		var lerp_rate:float = inverse_lerp(0.0, cc_glide_duration, cc_glide_elapsed)
-		body.position = cc_glide_origin.lerp(cc_glide_target, lerp_rate)
+		if cc_glide_duration == 0.0:
+			lerp_rate = 1.0
+		body.position = cc_glide_origin.lerp(cc_glide_target, clampf(lerp_rate, 0.0, 1.0))
 		position = body.position
 		if cc_glide_elapsed >= cc_glide_duration:
 			cc_glide_active = false
@@ -198,19 +201,19 @@ func play_anim(state:String) -> void:
 func look_left() -> void:
 	cc_lookat_node = null
 	match surface:
-		Statics.DirsSurface.FLOOR: cc_lookat_pos = position + Vector2.LEFT
-		Statics.DirsSurface.LWALL: cc_lookat_pos = position + Vector2.UP
-		Statics.DirsSurface.RWALL: cc_lookat_pos = position + Vector2.DOWN
-		Statics.DirsSurface.CEILING: cc_lookat_pos = position + Vector2.RIGHT
+		Statics.DirsSurface.FLOOR: cc_lookat_pos = position + Vector2.LEFT * 16 * 16
+		Statics.DirsSurface.LWALL: cc_lookat_pos = position + Vector2.UP * 16 * 16
+		Statics.DirsSurface.RWALL: cc_lookat_pos = position + Vector2.DOWN * 16 * 16
+		Statics.DirsSurface.CEILING: cc_lookat_pos = position + Vector2.RIGHT * 16 * 16
 
 
 func look_right() -> void:
 	cc_lookat_node = null
 	match surface:
-		Statics.DirsSurface.FLOOR: cc_lookat_pos = position + Vector2.RIGHT
-		Statics.DirsSurface.LWALL: cc_lookat_pos = position + Vector2.DOWN
-		Statics.DirsSurface.RWALL: cc_lookat_pos = position + Vector2.UP
-		Statics.DirsSurface.CEILING: cc_lookat_pos = position + Vector2.LEFT
+		Statics.DirsSurface.FLOOR: cc_lookat_pos = position + Vector2.RIGHT * 16 * 16
+		Statics.DirsSurface.LWALL: cc_lookat_pos = position + Vector2.DOWN * 16 * 16
+		Statics.DirsSurface.RWALL: cc_lookat_pos = position + Vector2.UP * 16 * 16
+		Statics.DirsSurface.CEILING: cc_lookat_pos = position + Vector2.LEFT * 16 * 16
 
 
 func set_gravity(new_dir:Statics.DirsSurface) -> void:
@@ -316,7 +319,13 @@ func can_perform_action(_action:String) -> bool:
 			return true
 		"set_wont_talk":
 			return true
+		"set_will_float":
+			return true
+		"set_wont_float":
+			return true
 		"jump":
+			return true
+		"sleep":
 			return true
 	return false
 
@@ -332,6 +341,7 @@ func perform_action(_action:String, _force:bool) -> bool:
 		"toggle_shell":
 			shelled = not shelled
 			play_anim("shell" if shelled else "idle")
+			emote.clear()
 		"face_left":
 			look_left()
 			return true
@@ -347,6 +357,12 @@ func perform_action(_action:String, _force:bool) -> bool:
 		"set_wont_talk":
 			can_talk = false
 			return true
+		"set_will_float":
+			floating = true
+			return true
+		"set_wont_float":
+			floating = false
+			return true
 		"jump":
 			if surface == fall_direction:
 				match surface:
@@ -359,6 +375,10 @@ func perform_action(_action:String, _force:bool) -> bool:
 				play_anim("idle")
 			sfx_jump.play()
 			return true
+		"sleep":
+			shelled = true
+			play_anim("shell")
+			emote.zzz()
 	return false
 #endregion
 

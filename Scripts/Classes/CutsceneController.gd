@@ -166,11 +166,19 @@ static func set_actor(actor:String) -> void:
 	active_object_id = actor
 
 
+## Passes a glide call to the currently active actor, which it will handle in its own script
+static func glide_to(_position:Vector2, _duration:float) -> void:
+	var actor := get_actor(active_object_id)
+	if not is_instance_valid(actor):
+		return
+	actor.glide_to(_position, _duration)
+
+
 ## Passes an action call to the currently active actor, which it will handle in its own script
 static func perform_action(action:String, force:bool) -> void:
 	var actor := get_actor(active_object_id)
 	if not is_instance_valid(actor):
-			return
+		return
 	actor.perform_action(action, force)
 
 
