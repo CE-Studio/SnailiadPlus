@@ -18,6 +18,7 @@ const HAND_RADIUS_MIN:float = 50.0
 const HAND_RADIUS_BASE:float = 40.0
 const HAND_RADIUS_MOD:float = 90.0
 const BLINK_TIMEOUT_MAX:float = 3.0
+const GRAV_SHOCK_AHEAD_RADIUS:float = 24.0
 
 var hands:Array[Enemy] = []
 var hand_thetas:Array[float] = []
@@ -32,6 +33,8 @@ var shot_pattern_timeout:float = 0.0
 var shot_count:int = 0
 var is_firing:bool = false
 var blink_timeout:float = 0.0
+var grav_shock_kill:bool = false
+var grav_shock_dir:Vector2 = Vector2.ZERO
 
 @onready var eyes:JsonSprite2D = $"Eyes"
 @onready var hand:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/ShellbreakerHand.tscn")
@@ -84,6 +87,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if grav_shock_kill:
+		if Player.instance.grav_shock_state == 2:
+			position = Player.instance.position + grav_shock_dir * GRAV_SHOCK_AHEAD_RADIUS
+		else:
+			sprite.visible = false
+			kill()
+		return
+	
 	super(delta)
 	if not Engine.is_editor_hint():
 		eyes.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
@@ -131,6 +142,34 @@ func _process(delta: float) -> void:
 			cos(hand_thetas[i])
 		) * hand_radius
 		hands[i].invulnerable = hand_radius_target == 0.0
+
+
+func _physics_process(delta) -> void:
+	if grav_shock_kill:
+		return
+	for bullet in intersecting_pbullets:
+		if bullet is PlayerBulletGravShock:
+			grav_shock_kill = true
+			match Player.instance.gravity_dir:
+				Statics.DirsSurface.FLOOR:
+					play_phase_anim("shock_down")
+					grav_shock_dir = Vector2.DOWN
+				Statics.DirsSurface.LWALL:
+					play_phase_anim("shock_left")
+					grav_shock_dir = Vector2.LEFT
+				Statics.DirsSurface.RWALL:
+					play_phase_anim("shock_right")
+					grav_shock_dir = Vector2.RIGHT
+				Statics.DirsSurface.CEILING:
+					play_phase_anim("shock_up")
+					grav_shock_dir = Vector2.UP
+			eyes.visible = false
+			for _hand in hands:
+				_hand.kill()
+			hands.clear()
+			col.disabled = true
+			return
+	super(delta)
 
 
 func try_shoot() -> void:
