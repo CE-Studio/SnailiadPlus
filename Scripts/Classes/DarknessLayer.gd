@@ -49,8 +49,8 @@ func _process(delta: float) -> void:
 		else:
 			var ui_pos:Vector2 = UICore.instance.position
 			var new_pos:Vector3 = Vector3(
-				sources[i].position.x - ui_pos.x + BUFFER.x,
-				sources[i].position.y - ui_pos.y + BUFFER.y,
+				sources[i].global_position.x - ui_pos.x + BUFFER.x,
+				sources[i].global_position.y - ui_pos.y + BUFFER.y,
 				source_radii[i]
 			)
 			array_state[i] = new_pos
