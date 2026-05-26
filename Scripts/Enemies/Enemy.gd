@@ -245,7 +245,7 @@ func _physics_process(delta) -> void:
 				ping_played  = true
 				if max_damage == 0:
 					max_color = Statics.get_color(Vector2i(3, 0))
-			if not can_be_pierced or bullet.single_hit:
+			if (not can_be_pierced and not bullet.always_pierce) or bullet.single_hit:
 				pbullets_to_despawn.append(bullet)
 		for bullet in intersecting_ebullets:
 			if bullet.has_been_parried:
@@ -257,7 +257,7 @@ func _physics_process(delta) -> void:
 					if make_sound_on_ping and not ping_played:
 						Statics.play_sfx_disconnected(sfx_ping)
 					ping_played  = true
-				if not can_be_pierced:
+				if (not can_be_pierced and not bullet.always_pierce) or bullet.single_hit:
 					ebullets_to_despawn.append(bullet)
 		if was_hit:
 			_spawn_damage_num(max_damage, max_color)

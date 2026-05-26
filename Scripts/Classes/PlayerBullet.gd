@@ -20,6 +20,7 @@ const TICKS_BETWEEN_AFTERIMAGES:int = 4
 @export var despawn_offscreen:bool = false
 @export var collide_with_wall:bool
 @export var single_hit:bool
+@export var always_pierce:bool
 @export var ping_on_breakables:bool = true
 @export var despawn_particle:String = "ExplosionSmall"
 @export var despawn_offset:Vector2 = Vector2.ZERO

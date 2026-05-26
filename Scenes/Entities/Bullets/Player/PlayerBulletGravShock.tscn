@@ -18,6 +18,7 @@ type = 14
 damage = 200
 damage_powered = 450
 cooldown = 0.17
+always_pierce = true
 despawn_particle = "ExplosionRainbowHuge"
 light_radius = 40
 
