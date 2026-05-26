@@ -64,6 +64,7 @@ var origin:Vector2
 var intersecting_player:bool = false
 var intersecting_pbullets:Array[PlayerBullet] = []
 var intersecting_ebullets:Array[EnemyBullet] = []
+var last_damage_num:DamageNumber = null
 var ai_active:bool = true
 var easy_mode:bool = false
 var hard_mode:bool = false
@@ -346,10 +347,15 @@ func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> voi
 func _spawn_damage_num(num:int, color:Color) -> void:
 	if not ProjectSettings.get_setting("game/world/damage_numbers"):
 		return
+	if (last_damage_num and last_damage_num.is_same_color(color)
+	and last_damage_num.is_below_hit_threshold()):
+		last_damage_num.add(num)
+		return
 	var new_num:DamageNumber = Statics.damage_number.instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(new_num)
 	new_num.position = position + Vector2(0, -8)
 	new_num.instance(num, color)
+	last_damage_num = new_num
 
 
 func kill() -> void:

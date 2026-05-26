@@ -10,7 +10,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SnailyText:position")
+tracks/0/path = NodePath("TextParent/SnailyText:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,7 +51,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SnailyText:position")
+tracks/0/path = NodePath("TextParent/SnailyText:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -79,22 +79,18 @@ _data = {
 &"RESET": SubResource("Animation_udoty")
 }
 
-[node name="DamageNumber" type="Node2D" unique_id=334495705]
+[node name="DamageNumber" type="Node2D" unique_id=334495705 node_paths=PackedStringArray("text", "anim")]
 z_index = 400
 script = ExtResource("1_dtwba")
+text = NodePath("TextParent/SnailyText")
+anim = NodePath("AnimationPlayer")
 
-[node name="SnailyText" parent="." unique_id=1949097589 instance=ExtResource("1_a1pdj")]
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
+[node name="TextParent" type="Node2D" parent="." unique_id=1486830045]
+position = Vector2(-20, 0)
+
+[node name="SnailyText" parent="TextParent" unique_id=1949097589 instance=ExtResource("1_a1pdj")]
 offset_right = 40.0
 offset_bottom = 16.0
-grow_horizontal = 1
-grow_vertical = 1
 theme_override_font_sizes/normal_font_size = 8
 text = "0000"
 autowrap_mode = 0
