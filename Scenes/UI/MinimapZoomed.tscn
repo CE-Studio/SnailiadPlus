@@ -5,11 +5,23 @@
 [ext_resource type="Script" uid="uid://bu15bb60f6med" path="res://Scripts/UI/MinimapZoomed.gd" id="1_n687f"]
 [ext_resource type="Texture2D" uid="uid://be2rycrbaveew" path="res://Assets/Images/UI/MinimapZoomed.png" id="2_0n3sp"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wguc4"]
+[ext_resource type="Texture2D" uid="uid://3cgvd4c3gjym" path="res://Assets/Images/UI/MinimapZoomedFrame.png" id="4_n687f"]
 [ext_resource type="Texture2D" uid="uid://b00si7wi86blt" path="res://Assets/Images/UI/MinimapIconsZoomed.png" id="5_wguc4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="7_iq3ic"]
+[ext_resource type="Texture2D" uid="uid://cac3dcskaen7v" path="res://Assets/Images/UI/MinimapZoomedArrow.png" id="9_v7w2u"]
 
-[node name="MinimapZoomed" type="Node2D" unique_id=1431628628]
+[node name="MinimapZoomed" type="Node2D" unique_id=1431628628 node_paths=PackedStringArray("move_group", "cell_mask", "map", "p_marker", "marker_group", "ctrl_text", "arrow_u", "arrow_d", "arrow_l", "arrow_r")]
 script = ExtResource("1_n687f")
+move_group = NodePath("MoveGroup")
+cell_mask = NodePath("MoveGroup/CellMask")
+map = NodePath("MoveGroup/CellMask/Map")
+p_marker = NodePath("MoveGroup/PlayerMarker")
+marker_group = NodePath("MoveGroup/MarkerGroup")
+ctrl_text = NodePath("Controls")
+arrow_u = NodePath("ArrowUp")
+arrow_d = NodePath("ArrowDown")
+arrow_l = NodePath("ArrowLeft")
+arrow_r = NodePath("ArrowRight")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=1955870700]
 modulate = Color(0, 0, 0, 0.6666667)
@@ -17,6 +29,17 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_lyu63")
 
 [node name="MoveGroup" type="Node2D" parent="." unique_id=1266186166]
+
+[node name="Frame" type="Sprite2D" parent="MoveGroup" unique_id=418883002]
+script = ExtResource("1_a3qsn")
+texture_path = "res://Assets/Images/UI/MinimapZoomedFrame.json"
+load_autoplay = Array[String](["anim"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/Frame" unique_id=1611523553]
+texture = ExtResource("4_n687f")
+script = ExtResource("3_wguc4")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="CellMask" type="Sprite2D" parent="MoveGroup" unique_id=1705313669]
 clip_children = 1
@@ -51,14 +74,82 @@ frame = 2
 script = ExtResource("3_wguc4")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
+[node name="TextBG" type="Sprite2D" parent="." unique_id=1673258853]
+modulate = Color(0, 0, 0, 0.6666667)
+position = Vector2(-176, 136)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_lyu63")
+
 [node name="Controls" parent="." unique_id=1884031781 instance=ExtResource("7_iq3ic")]
 custom_minimum_size = Vector2(400, 0)
-offset_left = -198.0
-offset_top = 66.0
-offset_right = 202.0
-offset_bottom = 146.0
+offset_left = -208.0
+offset_top = 80.0
+offset_right = 192.0
+offset_bottom = 160.0
+theme_override_font_sizes/normal_font_size = 8
 text = "Pan - <V^>
 Hide markers - Z
 Return - X"
+text_scale = 1
 quick_load_text = "Pan - Move\\nHide markers - bind__UI_ACCEPT \\nReturn - bind__UI_BACK"
 border_scale = 1
+
+[node name="ArrowUp" type="Sprite2D" parent="." unique_id=1904589485]
+position = Vector2(0, -88)
+script = ExtResource("1_a3qsn")
+texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
+load_autoplay = Array[String](["U"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="ArrowUp" unique_id=415120417]
+texture = ExtResource("9_v7w2u")
+hframes = 2
+vframes = 2
+script = ExtResource("3_wguc4")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="ArrowDown" type="Sprite2D" parent="." unique_id=1927410389]
+position = Vector2(0, 88)
+script = ExtResource("1_a3qsn")
+texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
+load_autoplay = Array[String](["D"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="ArrowDown" unique_id=46771263]
+texture = ExtResource("9_v7w2u")
+flip_v = true
+hframes = 2
+vframes = 2
+script = ExtResource("3_wguc4")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="ArrowLeft" type="Sprite2D" parent="." unique_id=805806948]
+position = Vector2(-168, 0)
+script = ExtResource("1_a3qsn")
+texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
+load_autoplay = Array[String](["L"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="ArrowLeft" unique_id=1772980295]
+texture = ExtResource("9_v7w2u")
+flip_h = true
+hframes = 2
+vframes = 2
+frame = 2
+script = ExtResource("3_wguc4")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="ArrowRight" type="Sprite2D" parent="." unique_id=810657288]
+position = Vector2(168, 0)
+script = ExtResource("1_a3qsn")
+texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
+load_autoplay = Array[String](["R"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="ArrowRight" unique_id=2012933666]
+texture = ExtResource("9_v7w2u")
+hframes = 2
+vframes = 2
+frame = 2
+script = ExtResource("3_wguc4")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

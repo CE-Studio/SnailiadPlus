@@ -7,15 +7,21 @@ const MARKER_PATH:String = "res://Assets/Images/UI/MinimapIconsZoomed.json"
 const BOUNDS:Vector2 = Vector2(96, 112)
 const SPEED:float = 128.0
 
-@onready var move_group:Node2D = $"MoveGroup"
-@onready var cell_mask:Sprite2D = $"MoveGroup/CellMask"
-@onready var map:JsonSprite2D = $"MoveGroup/CellMask/Map"
-@onready var p_marker:JsonSprite2D = $"MoveGroup/PlayerMarker"
-@onready var marker_group:Node2D = $"MoveGroup/MarkerGroup"
+@export var move_group:Node2D
+@export var cell_mask:Sprite2D
+@export var map:JsonSprite2D
+@export var p_marker:JsonSprite2D
+@export var marker_group:Node2D
+@export var ctrl_text:SnailyText
+@export var arrow_u:JsonSprite2D
+@export var arrow_d:JsonSprite2D
+@export var arrow_l:JsonSprite2D
+@export var arrow_r:JsonSprite2D
 
 
 func _ready() -> void:
 	modulate.a = 0.0
+	ctrl_text.set_snaily_text(" bind__UI_ACCEPT - Hide markers\n bind__UI_BACK - Return")
 
 
 func init(minimap:Minimap) -> void:
@@ -48,3 +54,8 @@ func _process(delta: float) -> void:
 	var hide_markers:bool = SInput.check_input(SInput.Inputs.UI_ACCEPT, false)
 	marker_group.modulate.a = 0.0 if hide_markers else 1.0
 	p_marker.modulate.a = 0.2 if hide_markers else 1.0
+	
+	arrow_u.modulate.a = 1.0 if move_group.position.y < BOUNDS.y else 0.0
+	arrow_d.modulate.a = 1.0 if move_group.position.y > -BOUNDS.y else 0.0
+	arrow_l.modulate.a = 1.0 if move_group.position.x < BOUNDS.x else 0.0
+	arrow_r.modulate.a = 1.0 if move_group.position.x > -BOUNDS.x else 0.0
