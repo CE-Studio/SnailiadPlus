@@ -8,9 +8,8 @@ match CutsceneController.object_id
 		if CutsceneController.instance.actor_above("48", 360)
 			NPC48: Hey, {{Player.player_name}}, what's up?
 		else
-			# WaveHere
-			NPC48: Whew!![wait=0.25]  That was scary!!
+			NPC48: {{GlobalText.EFF_WAVE}}Whew!![wait=0.25][/wave]  That was scary!!
 	when "48Fall"
-		# ShakeHere SfxHere
-		NPC48: [speed=1.25]YEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		do CutsceneController.set_sound("2")
+		NPC48: {{GlobalText.EFF_SHAKE}}[speed=1.25]YEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEEEEEEEEEE
 => END

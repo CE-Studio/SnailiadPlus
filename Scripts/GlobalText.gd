@@ -9,6 +9,10 @@ const COL_MOON:String = "[color=#00c2f7]"
 const COL_SUN:String =  "[color=#ffd48c]"
 const COL_TOWN:String = "[color=#b8f74f]"
 
+const EFF_SHAKE:String = "[shake rate=30.0 level=6]"
+const EFF_WAVE:String = "[wave amp=30 freq=6]"
+const EFF_TORNADO:String = "[tornado radius=3 freq=6]"
+
 var version_types:Array[StringName] = [
 	tr(&"Dev"),
 	tr(&"Demo"),

@@ -4,8 +4,7 @@ do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 if Statics.solid_at_world_pos(Vector2(248, 136))
-	NPC8: There's something funny about that tree...
+	NPC8: There's something funny about\nthat tree...
 else
-	# ShakeHere
-	NPC8: I[wait=0.125] knew[wait=0.125] there was something weird about that tree!!
+	NPC8: I[wait=0.125] {{GlobalText.EFF_SHAKE}}knew[wait=0.125][/shake] there was something\nweird about that tree!!
 => END

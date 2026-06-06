@@ -14,9 +14,9 @@ match CutsceneController.object_id
 		do CutsceneController.show_textbox()
 		if not Statics.is_random_game
 			if Player.instance.who_i_is != Player.Players.BLOBBY
-				NPC26: With this "Shell Shield",[wait=0.1] you won't take any damage when you hide in your shell!
+				NPC26: With this "Shell Shield",[wait=0.1] you\nwon't take any damage when you\nhide in your shell!
 			else
-				NPC26: Take this "Shelmet"![wait=0.25]  You can hide in it to avoid taking damage!
+				NPC26: Take this "Shelmet"![wait=0.25]  You can\nhide in it to avoid taking\ndamage!
 		else
-			NPC26: Here, take this[speed=0.25]...[speed=1][wait=0.2] thing![wait=0.3]  I'm not sure what it is,[wait=0.25] but surely it's helpful![wait=0.5]  Right?
+			NPC26: Here, take this[speed=0.25]...[speed=1][wait=0.2] thing![wait=0.3]\nI'm not sure what it is,[wait=0.25] but\nsurely it's helpful![wait=0.5]  Right?
 => END

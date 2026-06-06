@@ -5,9 +5,9 @@ do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 if not Statics.is_random_game
 	if not Statics.check_location_collected(10)
-		NPC24: Take this {{GlobalText.COL_IRIS}}Helix Fragment[/color]![wait=0.25] Legend says it is but one piece of {{GlobalText.COL_IRIS}}Iris, the Godsnail[/color]!
+		NPC24: Take this {{GlobalText.COL_IRIS}}Helix Fragment[/color]![wait=0.25]\nLegend says it is but one\npiece of {{GlobalText.COL_IRIS}}Iris, the Godsnail[/color]!
 	else
-		NPC24: {{Player.player_name}},[wait=0.125] legend says the {{GlobalText.COL_IRIS}}Shrine of Iris[/color] is somewhere very close to Snail Town!!
+		NPC24: {{Player.player_name}},[wait=0.125] legend says the\n{{GlobalText.COL_IRIS}}Shrine of Iris[/color] is somewhere\nvery close to Snail Town!!
 else
-	NPC24: I heard that some doors in the world can only be opened with small amounts of {{GlobalText.COL_IRIS}}Iris[/color]' power!
+	NPC24: I heard that some doors in the\nworld can only be opened with\nsmall amounts of {{GlobalText.COL_IRIS}}Iris[/color]' power!
 => END

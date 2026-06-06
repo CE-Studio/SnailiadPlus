@@ -10,6 +10,7 @@ enum Status {
 	UNKOWN_ERROR,
 }
 
+const MIN_SOUND_ELAPSED:float = 0.0333
 
 ## The currently active instance of the [CutsceneController] class
 static var instance:CutsceneController
@@ -25,6 +26,8 @@ static var current_animator:AnimationPlayer
 static var running := false
 ## Records whether or not the dialogue box is currently open
 static var _boxtrack := false
+## The time in seconds since the last time the dialogue sound was played
+static var _sound_elapsed:float = 0.0
 
 ## A small arrow texture drawn on the dialogue box when advancing dialogue is available
 @onready var advancearrow: Control = $CanvasLayer/Control/text/PanelContainer/advancearrow
@@ -91,6 +94,8 @@ func _process(delta: float) -> void:
 		else:
 			textbox.position = textbox.position.lerp(toptargpos.position, delta * 10.0)
 	textbox.position = textbox.position.lerp(toptargpos.position, delta * 10.0)
+	if running:
+		_sound_elapsed += delta
 
 
 func _ready() -> void:
@@ -231,6 +236,7 @@ static func start(dia:DialogueResource, anim:AnimationPlayer, initiator:String) 
 	current_scene = dia
 	current_animator = anim
 	object_id = initiator
+	_sound_elapsed = MIN_SOUND_ELAPSED
 	_process_dia()
 
 
@@ -346,9 +352,10 @@ static func set_sound(id := "-1") -> void:
 
 ## Called whenever a dialogue sound is played
 func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
-	if sound.playing:
+	if _sound_elapsed < MIN_SOUND_ELAPSED or _letter == "\n" or _letter == " ":
 		return
 	sound.play()
+	_sound_elapsed = 0.0
 
 
 func _input(event: InputEvent) -> void:

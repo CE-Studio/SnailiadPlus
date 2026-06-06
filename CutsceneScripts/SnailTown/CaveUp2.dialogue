@@ -4,7 +4,7 @@ do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 if not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-	NPC19: Hey, {{Player.player_name}}![wait=0.25]  If you had a boomerang,[wait=0.125] you could break all sorts of walls!
+	NPC19: Hey, {{Player.player_name}}![wait=0.25]  If you had a\nboomerang,[wait=0.125] you could break\nall sorts of walls!
 else
-	NPC19: [color=#00c2f7]Up,[wait=0.125] up,[wait=0.125] down,[wait=0.125] down,[wait=0.125] left,[wait=0.25][speed=0.9] right...[wait=0.25][speed=1][/color]  Wait,[wait=0.125] never mind,[wait=0.25] that's for some other game.
+	NPC19: [color=#00c2f7]Up,[wait=0.125] up,[wait=0.125] down,[wait=0.125] down,[wait=0.125] left,[wait=0.25][speed=0.9]\nright...[wait=0.25][speed=1][/color]  Wait,[wait=0.125] never mind,[wait=0.25]\nthat's for some other game.
 => END

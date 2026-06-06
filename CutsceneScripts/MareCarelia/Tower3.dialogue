@@ -4,10 +4,9 @@ do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 if not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
-	NPC20: There's some kind of secret passage to the right,[wait=0.15] but I'm not sure how to get through...
+	NPC20: There's some kind of secret\npassage to the right,[wait=0.15] but I'm\nnot sure how to get through...
 elif Statics.get_item_percentage() < 100.0
-	NPC20: I hope you can find all the other snails![wait=0.2]  They're not all as brave as me, you know!!
+	NPC20: I hope you can find all the\nother snails![wait=0.2]  They're not all\nas brave as me, you know!!
 else
-	# WaveHere
-	NPC20: {{Player.player_name}}!![wait=0.25]  Yay!!
+	NPC20: {{Player.player_name}}!![wait=0.25]  {{GlobalText.EFF_WAVE}}Yay!!
 => END
