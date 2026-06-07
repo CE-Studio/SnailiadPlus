@@ -20,7 +20,7 @@ match CutsceneController.object_id
 			NPC31: I've heard that the {{GlobalText.COL_IRIS}}Shrine of\nIris[/color] is not marked on any map![wait=0.25]\nHave you found it yet?
 		else
 			# ShakeHere SfxHere
-			NPC31: Don't moon snails live in the\nocean?[wait=0.35]  HEY,[wait=0.2] THIS GAME ISN'T\nREALISTIC!![wait=0.2]  WHAT GIVES??
+			NPC31: Don't moon snails live in the\nocean?[wait=0.35]  {{GlobalText.EFF_SHAKE}}HEY,[wait=0.2][/shake] THIS GAME ISN'T\nREALISTIC!![wait=0.2]  WHAT GIVES??
 	when "32"
 		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
 			NPC32: Watch out, {{Player.player_name}}![wait=0.2]  You're not\nstrong enough to fight {{GlobalText.COL_MOON}}Moon\nSnail[/color] yet!![wait=0.15]  Turn back!!

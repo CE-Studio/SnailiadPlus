@@ -3,6 +3,5 @@ do CutsceneController.lock_input()
 do CutsceneController.set_textbox_color("#4028c4")
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
-# WaveHere
-NPC35: Wow![wait=0.15] You found the secret room full of [color=#ff9957]Snelks[/color]!![wait=0.2]  _@_v!!
+NPC35: Wow![wait=0.15] You found the secret room\nfull of [color=#ff9957]Snelks[/color]!![wait=0.2]  {{GlobalText.EFF_WAVE}}_@_v!!
 => END

@@ -4,8 +4,8 @@ do CutsceneController.set_textbox_color("#4028c4")
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 if not Statics.is_random_game:
-	NPC36: Heya, {{Player.player_name}}![wait=0.15]  [color=#ffb23d]Gravity Shock[/color] upgrades your [color=#4bd867]gravity jump[/color]![wait=0.25]  Pretty neat, huh?
-	NPC36: While in the air,[wait=0.2] {{GlobalText.COL_CTRL}}gravity jump in the direction you're falling[/color] to unleash a powerful attack!!
+	NPC36: Heya, {{Player.player_name}}![wait=0.15]  [color=#ffb23d]Gravity Shock[/color]\nupgrades your [color=#4bd867]gravity jump[/color]![wait=0.25]\nPretty neat, huh?
+	NPC36: While in the air,[wait=0.2] {{GlobalText.COL_CTRL}}gravity jump\nin the direction you're falling[/color]\nto unleash a powerful attack!!
 else:
-	NPC36: I don't get many visitors out here.[wait=0.25]  Admittedly, it gets kinda lonely.[wait=0.3]  Thanks for stopping by.
+	NPC36: I don't get many visitors out\nhere.[wait=0.25]  Admittedly, it gets kinda\nlonely.[wait=0.3]  Thanks for stopping by.
 => END

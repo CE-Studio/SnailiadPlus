@@ -15,7 +15,7 @@ match CutsceneController.object_id:
 		do CutsceneController.set_textbox_frame(4)
 		do CutsceneController.show_textbox()
 		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
-			NPC38: [speed=0.4]zzzzz...[wait=0.1]  4,978,213...[wait=0.1]  zzzzz...[wait=0.1]\n7,723,297...[wait=0.1]  zzzzz...[wait=0.1]  6,017,093...[wait=0.1]\nzzzzz...[wait=0.1]  2,425,991...[wait=0.1]  zzzzz...
+			NPC38: [tornado radius=3 freq=1][speed=0.4]zzzzz...[wait=0.1]  4,978,213...[wait=0.1]  zzzzz...[wait=0.1]\n7,723,297...[wait=0.1]  zzzzz...[wait=0.1]  6,017,093...[wait=0.1]\nzzzzz...[wait=0.1]  2,425,991...[wait=0.1]  zzzzz...
 		else
 			NPC38: {{Player.player_name}}, thank you for helping\nme![wait=0.3]  Now I can get back to my\nhobby:[wait=0.2] collecting prime numbers!
 	when "39"
@@ -26,22 +26,22 @@ match CutsceneController.object_id:
 		do Statics.set_world_flag(Statics.WorldFlags.TALKED_TO_IRIS, true)
 		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) != true
 			if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) == 0
-				NPC39: Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But without the {{GlobalText.COL_IRIS}}Helix\nFragments[/color],[wait=0.15] I am powerless...
+				NPC39: [wave amp=16 freq=1]Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But without the {{GlobalText.COL_IRIS}}Helix\nFragments[/color],[wait=0.15] I am powerless...
 			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) == 1
-				NPC39: Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But with only 1 {{GlobalText.COL_IRIS}}Helix\nFragment[/color],[wait=0.15] I am powerless...
+				NPC39: [wave amp=16 freq=1]Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But with only 1 {{GlobalText.COL_IRIS}}Helix\nFragment[/color],[wait=0.15] I am powerless...
 			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 25
-				NPC39: Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But with only {{Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}} {{GlobalText.COL_IRIS}}Helix\nFragments[/color],[wait=0.15] I am powerless...
+				NPC39: [wave amp=16 freq=1]Hello, {{Player.player_name}}![wait=0.2]  I am {{GlobalText.COL_IRIS}}Iris, the\nGodsnail[/color].[wait=0.25]  But with only {{Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}} {{GlobalText.COL_IRIS}}Helix\nFragments[/color],[wait=0.15] I am powerless...
 			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 29
-				NPC39: I can feel my power returning!\n[wait=0.25]With {{30 - Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}} more {{GlobalText.COL_IRIS}}Helix Fragments[/color],\n[wait=0.15]perhaps we can save {{GlobalText.COL_MOON}}Moon Snail[/color]!
+				NPC39: [wave amp=16 freq=1]I can feel my power returning!\n[wait=0.25]With {{30 - Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}} more {{GlobalText.COL_IRIS}}Helix Fragments[/color],\n[wait=0.15]perhaps we can save {{GlobalText.COL_MOON}}Moon Snail[/color]!
 			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
-				NPC39: I can feel my power returning!\n[wait=0.25]With 1 more {{GlobalText.COL_IRIS}}Helix Fragment[/color],\n[wait=0.15]perhaps we can save {{GlobalText.COL_MOON}}Moon Snail[/color]!
+				NPC39: [wave amp=16 freq=1]I can feel my power returning!\n[wait=0.25]With 1 more {{GlobalText.COL_IRIS}}Helix Fragment[/color],\n[wait=0.15]perhaps we can save {{GlobalText.COL_MOON}}Moon Snail[/color]!
 			else
-				NPC39: My power has returned![wait=0.25] Now go,\n[wait=0.1]{{Player.player_name}},[wait=0.15] and defeat {{GlobalText.COL_MOON}}Moon Snail[/color]!\n[wait=0.25]My power will restore him!
+				NPC39: [wave amp=16 freq=1]My power has returned![wait=0.25] Now go,\n[wait=0.1]{{Player.player_name}},[wait=0.15] and defeat {{GlobalText.COL_MOON}}Moon Snail[/color]!\n[wait=0.25]My power will restore him!
 		else
 			if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 29
-				NPC39: [speed=0.75]{{GlobalText.COL_MOON}}Moon Snail[/color] rests fitfully\nupon the shrine steps...  [wait=0.3][speed=1.0]Find {{30 - Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}}\nmore {{GlobalText.COL_IRIS}}fragments[/color], {{Player.player_full_name}}!
+				NPC39: [wave amp=16 freq=1][speed=0.75]{{GlobalText.COL_MOON}}Moon Snail[/color] rests fitfully\nupon the shrine steps...  [wait=0.3][speed=1.0]Find {{30 - Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)}}\nmore {{GlobalText.COL_IRIS}}fragments[/color], {{Player.player_full_name}}!
 			elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
-				NPC39: [speed=0.75]{{GlobalText.COL_MOON}}Moon Snail[/color] rests fitfully\nupon the shrine steps...  [wait=0.3][speed=1.0]Find 1\nmore {{GlobalText.COL_IRIS}}fragment[/color], {{Player.player_full_name}}!
+				NPC39: [wave amp=16 freq=1][speed=0.75]{{GlobalText.COL_MOON}}Moon Snail[/color] rests fitfully\nupon the shrine steps...  [wait=0.3][speed=1.0]Find 1\nmore {{GlobalText.COL_IRIS}}fragment[/color], {{Player.player_full_name}}!
 			else
-				NPC39: Congratulations, {{Player.player_name}}![wait=0.25]  Thanks\nto you, {{GlobalText.COL_MOON}}Moon Snail[/color] is restored,\n[wait=0.15]and is now the {{GlobalText.COL_SUN}}Sun Snail[/color]!
+				NPC39: [wave amp=16 freq=1]Congratulations, {{Player.player_name}}![wait=0.25]  Thanks\nto you, {{GlobalText.COL_MOON}}Moon Snail[/color] is restored,\n[wait=0.15]and is now the {{GlobalText.COL_SUN}}Sun Snail[/color]!
 => END
