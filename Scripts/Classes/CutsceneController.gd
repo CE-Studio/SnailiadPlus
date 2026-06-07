@@ -11,6 +11,7 @@ enum Status {
 }
 
 const MIN_SOUND_ELAPSED:float = 0.0333
+const DEFAULT_NEXT_TIMEOUT:float = 3.0
 
 ## The currently active instance of the [CutsceneController] class
 static var instance:CutsceneController
@@ -28,6 +29,10 @@ static var running := false
 static var _boxtrack := false
 ## The time in seconds since the last time the dialogue sound was played
 static var _sound_elapsed:float = 0.0
+## The time in seconds any non-controlling dialogue waits before advancing to the next line
+static var _next_line_timeout:float = DEFAULT_NEXT_TIMEOUT
+## Will be set if the currently printed line needs to be skipped or not as per an external call
+static var _remote_skip_flag:bool = false
 
 ## A small arrow texture drawn on the dialogue box when advancing dialogue is available
 @onready var advancearrow: Control = $CanvasLayer/Control/text/PanelContainer/advancearrow
@@ -96,6 +101,13 @@ func _process(delta: float) -> void:
 	textbox.position = textbox.position.lerp(toptargpos.position, delta * 10.0)
 	if running:
 		_sound_elapsed += delta
+	
+	if _remote_skip_flag:
+		if running:
+			if texlabel.is_typing:
+				texlabel.skip_typing()
+			StaticProcess.cut_advance.emit()
+		_remote_skip_flag = false
 
 
 func _ready() -> void:
@@ -103,7 +115,7 @@ func _ready() -> void:
 
 
 ## Standalone process subroutine for the dialogue box. Called once to open it, after which
-## it rains open until it exhausts all dialogue in the current cutscene script
+## it remains open until it exhausts all dialogue in the current cutscene script
 static func _process_dia() -> void:
 	if not is_instance_valid(instance):
 		return
@@ -125,7 +137,8 @@ static func _process_dia() -> void:
 			await StaticProcess.cut_advance
 			instance.advancearrow.hide()
 		else:
-			await StaticProcess.get_tree().create_timer(3).timeout
+			await StaticProcess.get_tree().create_timer(_next_line_timeout).timeout
+			_next_line_timeout = DEFAULT_NEXT_TIMEOUT
 		print("wait for line")
 		line = await current_scene.get_next_dialogue_line(line.next_id)
 	print("done")
@@ -350,6 +363,11 @@ static func set_sound(id := "-1") -> void:
 			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
 
 
+## Sets a custom duration for any non-controlling dialogue to wait before advancing
+static func set_next_timeout(time:float) -> void:
+	_next_line_timeout = time
+
+
 ## Called whenever a dialogue sound is played
 func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
 	if _sound_elapsed < MIN_SOUND_ELAPSED or _letter == "\n" or _letter == " ":
@@ -360,7 +378,12 @@ func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"skipTalking"):
-		if texlabel.is_typing:
+		if texlabel.is_typing and SInput.cutscene_has_control:
 			texlabel.skip_typing()
 		else:
 			StaticProcess.cut_advance.emit()
+
+
+## Called externally to skip a line of dialogue
+static func remote_skip_line() -> void:
+	_remote_skip_flag = true
