@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_voi8l"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="5_63m4q"]
 [ext_resource type="PackedScene" uid="uid://css5bki2vjmuv" path="res://Scenes/Environments/ParticleLayers/GlitchLayer.tscn" id="6_x8bni"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="9_d3c3d"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="9_d3c3d"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="10_4lg8b"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="11_4lg8b"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="11_a1pyx"]

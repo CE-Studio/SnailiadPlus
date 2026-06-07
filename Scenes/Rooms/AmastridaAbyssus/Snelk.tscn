@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_gd21h"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_clsdg"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_uxfee"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="5_s02rt"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="5_s02rt"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="6_dye22"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="8_fvjie"]
 

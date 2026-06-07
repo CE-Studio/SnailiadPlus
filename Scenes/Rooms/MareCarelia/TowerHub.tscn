@@ -10,9 +10,10 @@
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="5_huffg"]
 [ext_resource type="Texture2D" uid="uid://bus4mys0ccidy" path="res://Assets/Images/Environments/EpicBanner.png" id="6_g5lqu"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="7_qcc3e"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="11_m3o81"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="11_m3o81"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="12_ckfgm"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_mw3he"]
+[ext_resource type="PackedScene" uid="uid://ccbbpx2kxbml2" path="res://Scenes/internals/Triggers/DialogueSkipTrigger.tscn" id="14_ckfgm"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -164,3 +165,11 @@ compare_mode = 0
 [node name="48Fall" parent="." unique_id=1736832797 instance=ExtResource("13_mw3he")]
 position = Vector2(472, 408)
 identifier = &"48Fall"
+
+[node name="DialogueSkipTrigger" parent="." unique_id=5522885 instance=ExtResource("14_ckfgm")]
+position = Vector2(440, 496)
+scale = Vector2(8, 64)
+
+[node name="DialogueSkipTrigger2" parent="." unique_id=195450310 instance=ExtResource("14_ckfgm")]
+position = Vector2(-40, 496)
+scale = Vector2(8, 64)

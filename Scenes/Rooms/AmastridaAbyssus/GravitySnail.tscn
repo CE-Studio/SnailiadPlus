@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_tsv1a"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="6_k373b"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="7_c37so"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="10_sws1f"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="10_sws1f"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="11_8r1ll"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="12_b8yfj"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="13_8r1ll"]

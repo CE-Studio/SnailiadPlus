@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_pucvx"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_ahe7n"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_hbv0h"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="7_go4si"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="7_go4si"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="8_yqjip"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="9_yqjip"]
 

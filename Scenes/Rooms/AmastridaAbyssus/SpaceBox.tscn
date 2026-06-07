@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="5_8ftww"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="8_tgtj1"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="9_vpsa4"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="10_ldoax"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="10_ldoax"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="11_cusb5"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]

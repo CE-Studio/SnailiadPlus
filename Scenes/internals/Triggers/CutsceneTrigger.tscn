@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dkdexfbemo04x"]
+
+[ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="1_13k6w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_545qp"]
+size = Vector2(16, 16)
+
+[node name="CutsceneTrigger" type="Area2D" unique_id=5522885]
+z_index = 999
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_13k6w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748008560]
+shape = SubResource("RectangleShape2D_545qp")
+debug_color = Color(0.2627451, 1, 0.5921569, 0.039215688)
+
+[connection signal="body_entered" from="." to="." method="_on_player_enter"]
+[connection signal="body_exited" from="." to="." method="_on_player_exit"]

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://da62go5bytmwc" path="res://Scenes/Entities/Enemies/Bosses/Shellbreaker.tscn" id="4_254gw"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_wsp43"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="8_2pxvw"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="9_symjg"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="9_symjg"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="10_tetqu"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="11_tetqu"]
 

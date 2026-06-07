@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="5_gcet2"]
 [ext_resource type="PackedScene" uid="uid://bh766f0xr0lo0" path="res://Scenes/internals/WaterArea.tscn" id="7_rsl73"]
 [ext_resource type="Material" uid="uid://dcvwjbxqfn1ax" path="res://Resources/WaterShaderMat.tres" id="8_f8dn7"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="11_7hydi"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="11_7hydi"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="12_dxkju"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_dxkju"]
 

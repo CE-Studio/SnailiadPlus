@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_jjgcd"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="4_hi3re"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_s1sah"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="7_xjc6k"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="7_xjc6k"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="8_o6ueh"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjgcd"]

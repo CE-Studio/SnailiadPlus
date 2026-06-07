@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_yxyr3"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_pp60g"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="7_hwm4e"]
-[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Trigger.tscn" id="8_5iap5"]
+[ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="8_5iap5"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="9_q0230"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="10_h4lc4"]
 
