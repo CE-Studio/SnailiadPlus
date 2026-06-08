@@ -21,10 +21,17 @@ script = ExtResource("1_blq8n")
 hide_global_menu_assets = true
 selector_opacity = 0.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=408094647]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=408094647 node_paths=PackedStringArray("scroll_list", "sfx_beep", "selector", "name_text", "desc_text", "enemy_spawn", "return_text")]
 position = Vector2(200, 120)
 texture = ExtResource("2_jdu1y")
 script = ExtResource("3_8bw4w")
+scroll_list = NodePath("ScrollPanel/EntityList")
+sfx_beep = NodePath("Beep")
+selector = NodePath("Selector")
+name_text = NodePath("Name")
+desc_text = NodePath("Description")
+enemy_spawn = NodePath("EntityOrigin")
+return_text = NodePath("ScrollPanel/EntityList/-1")
 
 [node name="Selector" type="Sprite2D" parent="Sprite2D" unique_id=947541506]
 position = Vector2(-168, -96)
@@ -35,20 +42,6 @@ clip_children = 1
 z_index = 10
 position = Vector2(103, -47)
 texture = ExtResource("4_obml4")
-
-[node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D" unique_id=331843503]
-offset_left = -160.0
-offset_top = -104.0
-offset_right = -24.0
-offset_bottom = 104.0
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_8bw4w")
-follow_focus = true
-horizontal_scroll_mode = 0
-
-[node name="EntityList" type="VBoxContainer" parent="Sprite2D/ScrollPanel" unique_id=2059375219]
-layout_mode = 2
-theme_override_constants/separation = 2
 
 [node name="Name" parent="Sprite2D" unique_id=1303695191 instance=ExtResource("5_obml4")]
 custom_minimum_size = Vector2(156, 0)
@@ -71,6 +64,32 @@ theme_override_font_sizes/normal_font_size = 8
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 max_width = 156
 text_scale = 1
+
+[node name="ScrollPanel" type="ScrollContainer" parent="Sprite2D" unique_id=331843503]
+offset_left = -160.0
+offset_top = -104.0
+offset_right = -22.0
+offset_bottom = 104.0
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_8bw4w")
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="EntityList" type="VBoxContainer" parent="Sprite2D/ScrollPanel" unique_id=2059375219]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="-1" parent="Sprite2D/ScrollPanel/EntityList" unique_id=326553468 instance=ExtResource("5_obml4")]
+modulate = Color(0.3254902, 0.19607843, 0.05882353, 1)
+custom_minimum_size = Vector2(112, 0)
+layout_mode = 2
+focus_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+text = "Back to museum"
+max_width = 112
+text_scale = 1
+quick_load_text = "Back to museum"
 
 [node name="Beep" type="AudioStreamPlayer" parent="Sprite2D" unique_id=627416363]
 stream = ExtResource("6_wfk3g")

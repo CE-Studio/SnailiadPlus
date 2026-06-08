@@ -82,24 +82,26 @@ var focused_text:SnailyText = null
 var selector_origin_x:float = 0.0
 ## Tracks which item in the menu list is currently selected
 var selection:int = 0
+## Array holding all enemy objects that were spawned when selecting a given item
+var display_enemies:Array[Enemy] = []
 
 
 ## Quick reference to the custom text scene
 @onready var text_scene:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 ## Container holding all selectable text
-@onready var scroll_list:VBoxContainer = $"ScrollPanel/EntityList"
+@export var scroll_list:VBoxContainer
 ## Sound that plays when an item in the list is selected
-@onready var sfx_beep:AudioStreamPlayer = $"Beep"
+@export var sfx_beep:AudioStreamPlayer
 ## Icon used to mark which item is currently selected
-@onready var selector:Node2D = $"Selector"
+@export var selector:Node2D
 ## Text for displaying the currently selected enemy's name
-@onready var name_text:SnailyText = $"Name"
+@export var name_text:SnailyText
 ## Text for displaying the currently selected enemy's description
-@onready var desc_text:SnailyText = $"Description"
-## Array holding all enemy objects that were spawned when selecting a given item
-@onready var display_enemies:Array[Enemy] = []
+@export var desc_text:SnailyText
 ## Point in space at which to spawn enemies
-@onready var enemy_spawn:Node2D = $"EntityOrigin"
+@export var enemy_spawn:Node2D
+## Label representing the option to return to the museum menu
+@export var return_text:SnailyText
 #endregion
 
 
@@ -109,7 +111,8 @@ func _ready() -> void:
 	var enemy_enums := Enemy.EnemyTypes.keys()
 	for enemy in ENTRIES:
 		entity_list.append(enemy_enums[enemy].to_camel_case())
-
+	
+	list_items.append(return_text)
 	for i in range(entity_list.size()):
 		var entity := entity_list[i]
 		if not Statics.check_bestiary_entry(ENTRIES[i]):
@@ -131,9 +134,9 @@ func _ready() -> void:
 		var last_focus = "../" + str(i - 1)
 		var next_focus = "../" + str(i + 1)
 		if i == 0:
-			last_focus = "../" + str(entity_list.size() - 1)
+			last_focus = "../-1"
 		if i == entity_list.size() - 1:
-			next_focus = "../" + str(0)
+			next_focus = "../-1"
 		new_text.focus_neighbor_left = this_focus
 		new_text.focus_neighbor_right = this_focus
 		new_text.focus_neighbor_bottom = next_focus
@@ -142,9 +145,16 @@ func _ready() -> void:
 		new_text.focus_previous = last_focus
 		#endregion
 		new_text.focus_entered.connect(_on_text_focused)
+	return_text.focus_neighbor_left = "../-1"
+	return_text.focus_neighbor_right = "../-1"
+	return_text.focus_neighbor_bottom = "../0"
+	return_text.focus_next = "../0"
+	return_text.focus_neighbor_top = "../" + str(entity_list.size() - 1)
+	return_text.focus_previous = "../" + str(entity_list.size() - 1)
+	return_text.focus_entered.connect(_on_text_focused)
 
 	if list_items.size() > 0:
-		list_items[0].grab_focus()
+		list_items[1].grab_focus()
 
 	selector_origin_x = selector.position.x
 
@@ -188,6 +198,10 @@ func _update_entry_display() -> void:
 		for enemy in display_enemies:
 			enemy.queue_free()
 		display_enemies.clear()
+	if selection == -1:
+		name_text.set_snaily_text("")
+		desc_text.set_snaily_text(tr(&"Select to return to museum"))
+		return
 	var has_entry := entry_states[selection]
 	var this_entity := entity_list[selection] if has_entry else "none"
 	name_text.set_snaily_text(_get_name(this_entity))
@@ -279,6 +293,24 @@ func spawn_entity(entity:String) -> Enemy:
 	display_enemies.append(new_enemy)
 	new_enemy.z_index = -5
 	return new_enemy
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("uiAccept") or event.is_action_pressed("uiClick"):
+		if selection == -1:
+			parent_layer.menu.clear_top_layer(0)
+		elif event.is_action_pressed("uiClick"):
+			var closest_item:SnailyText = null
+			var mouse_pos:Vector2 = get_viewport().get_mouse_position()
+			var last_check_pos:Vector2 = Vector2.ZERO
+			for text in list_items:
+				var check_pos:Vector2 = text.global_position + (Vector2.DOWN * 12)
+				if closest_item == null:
+					closest_item = text
+				elif check_pos.distance_to(mouse_pos) < last_check_pos.distance_to(mouse_pos):
+					closest_item = text
+				last_check_pos = check_pos
+			closest_item.grab_focus()
 
 
 ## Returns the displayed string representation of the name of the given internal name
