@@ -1483,7 +1483,8 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 	elif amount < 0 or shielded:
 		if shelled:
 			_set_shell(false)
-		if not _check_ability(stick_to_walls_when_hurt) and gravity_dir != home_gravity and not _check_ceil_casts()[0]:
+		if (not _check_ability(stick_to_walls_when_hurt) and gravity_dir != home_gravity and not _check_ceil_casts()[0]
+		and not (shielded and time_since_shell <= PARRY_WINDOW)):
 			if gravity_dir != _get_dir_opposite(home_gravity):
 				_push_from_wall()
 			_set_direction(home_gravity, facing_left)
