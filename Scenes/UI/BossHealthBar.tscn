@@ -626,9 +626,10 @@ grow_horizontal = 2
 alignment = 1
 
 [node name="SnailyText" parent="BossName/HBox" unique_id=1939526976 instance=ExtResource("5_g7p6m")]
-custom_minimum_size = Vector2(138, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 text = "Shellbreaker"
+horizontal_alignment = 1
 border_scale = 1
 
 [node name="Defeated" type="Node2D" parent="." unique_id=1693284118]
@@ -649,9 +650,10 @@ pivot_offset = Vector2(200, 0)
 alignment = 1
 
 [node name="SnailyText" parent="Defeated/HBox" unique_id=81567789 instance=ExtResource("5_g7p6m")]
-custom_minimum_size = Vector2(104, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 text = "Defeated!!"
+horizontal_alignment = 1
 border_scale = 1
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1743190733]
