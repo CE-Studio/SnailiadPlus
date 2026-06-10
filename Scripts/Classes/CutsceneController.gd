@@ -240,6 +240,54 @@ static func actor_below(id:String, y:float) -> bool:
 	return actor.position.y > y
 
 
+## Returns [code]true[/code] if the given X position is to the left of the given X position
+static func point_left_of(in_x:float, check_x:float) -> bool:
+	return in_x < check_x
+
+
+## Returns [code]true[/code] if the given X position is to the right of the given X position
+static func point_right_of(in_x:float, check_x:float) -> bool:
+	return in_x > check_x
+
+
+## Returns [code]true[/code] if the given Y position is above the given Y position
+static func point_above(in_y:float, check_y:float) -> bool:
+	return in_y < check_y
+
+
+## Returns [code]true[/code] if the given Y position is below the given Y position
+static func point_below(in_y:float, check_y:float) -> bool:
+	return in_y > check_y
+
+
+## Returns [code]true[/code] if the player is to the left of the given X position
+static func player_left_of(x:float) -> bool:
+	if not Player.instance:
+		return false
+	return Player.instance.position.x < x
+
+
+## Returns [code]true[/code] if the player is to the right of the given X position
+static func player_right_of(x:float) -> bool:
+	if not Player.instance:
+		return false
+	return Player.instance.position.x > x
+
+
+## Returns [code]true[/code] if the player is above the given Y position
+static func player_above(y:float) -> bool:
+	if not Player.instance:
+		return false
+	return Player.instance.position.y < y
+
+
+## Returns [code]true[/code] if the player is below the given Y position
+static func player_below(y:float) -> bool:
+	if not Player.instance:
+		return false
+	return Player.instance.position.y > y
+
+
 ## Begins a cutscene in accordance with the given dialogue resource
 static func start(dia:DialogueResource, anim:AnimationPlayer, initiator:String) -> void:
 	if running:

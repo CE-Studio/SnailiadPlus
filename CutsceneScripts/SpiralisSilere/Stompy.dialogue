@@ -1,6 +1,6 @@
 ~ start
 do CutsceneController.lock_input()
-if CutsceneController.actor_right_of("Player", 408)
+if CutsceneController.player_right_of(408)
 	do CutsceneController.trigger_animation("IntroDefaultFromRight", true)
 else
 	do CutsceneController.trigger_animation("IntroDefaultFromLeft", true)
