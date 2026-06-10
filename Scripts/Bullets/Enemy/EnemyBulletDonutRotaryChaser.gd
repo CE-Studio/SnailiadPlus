@@ -71,6 +71,14 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 
 
+func parry_reshoot() -> void:
+	origin = position
+	elapsed = 0.0
+	current_speed = 0.0
+	move_theta = 0.0
+	super()
+
+
 func _update_anim(last_pos:Vector2) -> void:
 	var dir = last_pos.direction_to(position)
 	var anim_name = ""
@@ -88,9 +96,10 @@ func _update_anim(last_pos:Vector2) -> void:
 
 
 func _update_origin(delta:float) -> void:
+	var target:Vector2 = source_enemy.position if has_been_parried else Player.instance.position
 	var this_angle:float = atan2(
-		Player.instance.position.y - origin.y,
-		Player.instance.position.x - origin.x
+		target.y - origin.y,
+		target.x - origin.x
 	)
 	var difference = this_angle - move_theta
 	while difference > PI:

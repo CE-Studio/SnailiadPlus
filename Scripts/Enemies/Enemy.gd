@@ -267,7 +267,6 @@ func _physics_process(delta) -> void:
 				kill_flag = true
 			else:
 				_damage(max_damage)
-		parry_damage = 0
 		for bullet in pbullets_to_despawn:
 			bullet.despawn(true)
 		for bullet in ebullets_to_despawn:
@@ -276,6 +275,7 @@ func _physics_process(delta) -> void:
 		ebullets_to_despawn.clear()
 		if kill_flag:
 			kill()
+	parry_damage = 0
 	ping_played = false
 
 
