@@ -289,9 +289,11 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		running_count = MAX_SP_PER_LOOP - cells.size()
 	var tpf:Array[int] = []
 	var fts := Time.get_ticks_msec()
-	while ((spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP)
-	and ((Time.get_ticks_msec() - fts) < MAX_MS_PER_LOOP)):
+	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP):
 		var ts := Time.get_ticks_msec()
+		if (ts - fts) > MAX_MS_PER_LOOP:
+			print("Timeout")
+			break
 		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)
 		spawned_sp += 1
@@ -1081,7 +1083,7 @@ func fade_map(_layer:Layers, _color:Color, _time:float) -> void:
 		Layers.FG2: layer = map_fg2
 		Layers.ENTITY: layer = map_entity1
 	tween.tween_property(layer, "modulate", _color, _time)
-	
+
 
 
 func fade_all_maps(_color:Color, _time:float) -> void:
