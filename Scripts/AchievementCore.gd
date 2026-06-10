@@ -75,11 +75,11 @@ func _process(_delta: float) -> void:
 
 
 ## Checks if the given achievement has been earned, and adds it to the queue if not
-func check_add(id:Achievements) -> void:
+func check_add(id:Achievements) -> bool:
 	if not Statics.check_achievement(id):
 		Statics.add_achievement(id)
 		_add_to_queue(id)
-		Statics.save_records()
+	return false
 
 
 ## Adds the given achievement to the queue

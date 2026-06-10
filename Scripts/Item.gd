@@ -206,12 +206,12 @@ func _on_player_entered(_body: Node2D) -> void:
 					played_unique_dust = true
 					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [3, true, true, 3])
 			ItemTypes.GRAVITY_SHOCK:
-				UICore.instance.achievement_core.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
+				AchievementCore.instance.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
 			ItemTypes.SECRET_BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
 				UICore.instance.update_weapon_icons(false)
-				UICore.instance.achievement_core.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
+				AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
 			ItemTypes.DEBUG_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)
@@ -241,8 +241,8 @@ func _on_player_entered(_body: Node2D) -> void:
 		UICore.instance.minimap.update_markers(UICore.instance.minimap.last_drawn_cells)
 		UICore.instance.minimap.update_player()
 		if is_100_rate:
-			if Statics.add_achievement(AchievementCore.Achievements.ITEMS_100):
-				Statics.add_unlock_condition(Statics.Unlocks.ITEM_RANDO)
+			AchievementCore.instance.check_add(AchievementCore.Achievements.ITEMS_100)
+			Statics.add_unlock_condition(Statics.Unlocks.ITEM_RANDO)
 
 
 func _on_collect_timer_timeout() -> void:

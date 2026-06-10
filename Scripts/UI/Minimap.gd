@@ -372,8 +372,8 @@ func fill_cell(coords:Vector2i) -> int:
 			Statics.current_profile["map_tiles"][cell_index] += P_MARKER_ID_OFFSET
 	
 	if get_map_rate() >= 100.0:
-		if not Statics.add_achievement(AchievementCore.Achievements.MAP_100):
-			Statics.add_unlock_condition(Statics.Unlocks.OPEN_MAP)
+		AchievementCore.instance.check_add(AchievementCore.Achievements.MAP_100)
+		Statics.add_unlock_condition(Statics.Unlocks.OPEN_MAP)
 	
 	return true_cell
 
