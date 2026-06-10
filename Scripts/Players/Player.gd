@@ -314,12 +314,8 @@ func _ready():
 	max_health *= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 	health = max_health
 
-	if Statics.stack_shells:
-		var shell_level := Statics.get_shell_level()
-		shell_level_displayed = 1 << (shell_level - 1) if shell_level > 0 else 0
-	else:
-		shell_level_displayed = Statics.get_shell_level(1)
-	
+	quick_update_shell_displayed()
+
 	remote_heal.heal.connect(adjust_health)
 
 
@@ -1324,6 +1320,15 @@ func update_shell_displayed(new_shell:int, mode:int) -> void:
 		2:
 			shell_level_displayed = shell_level_displayed ^ new_shell
 	_play_anim("idle")
+
+
+# Shortcut function to extrapolate a shell level from the player's current inventory
+func quick_update_shell_displayed() -> void:
+	if Statics.stack_shells:
+		var shell_level := Statics.get_shell_level()
+		shell_level_displayed = 1 << (shell_level - 1) if shell_level > 0 else 0
+	else:
+		shell_level_displayed = Statics.get_shell_level(1)
 
 
 # Takes a surface direction and outputs the direction 90 degrees clockwise from it

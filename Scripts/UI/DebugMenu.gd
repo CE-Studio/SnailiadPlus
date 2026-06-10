@@ -178,6 +178,12 @@ func _handle_scroll_cases(spr:Sprite2D) -> void:
 					if Player.instance.selected_weapon & 8 > 0:
 						Player.instance.selected_weapon -= 8
 					UICore.instance.update_weapon_icons(false)
+				"IceSnail":
+					Player.instance.quick_update_shell_displayed()
+				"GravitySnail":
+					Player.instance.quick_update_shell_displayed()
+				"FullMetalSnail":
+					Player.instance.quick_update_shell_displayed()
 				"Broom":
 					if Player.instance.selected_weapon & 1 > 0:
 						Player.instance.selected_weapon -= 1
