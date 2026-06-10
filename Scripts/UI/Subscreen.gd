@@ -96,8 +96,9 @@ var map_zoomed:bool = false
 @export var map_text:SnailyText
 @export var time_text:SnailyText
 @export var item_text:SnailyText
+@export var helix_count:SnailyText
+@export var radar:SnailyText
 
-#@onready var text_scn:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
 @onready var zoomed_scn:PackedScene = preload("res://Scenes/UI/MinimapZoomed.tscn")
 #endregion
 
@@ -124,6 +125,25 @@ func _ready() -> void:
 	map_text.set_snaily_text(map_text.text % Minimap.get_map_rate())
 	item_text.set_snaily_text(item_text.text % Statics.get_item_percentage())
 	time_text.set_snaily_text(time_text.text % Statics.get_igt_str())
+	UICore.instance.heart_group.z_index = 30
+	helix_count.set_snaily_text("x " + str(Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)))
+	if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
+		var ratio:Vector2i = Statics.get_area_item_ratio(GameCore.instance.current_area)
+		radar.set_snaily_text(tr(&"Area items found: %d/%d") %  [ratio.x, ratio.y])
+		if ratio.x == ratio.y and ratio.y != 0:
+			radar.overwrite_rainbow([
+				Statics.get_color(Vector2i(0, 1)),
+				Statics.get_color(Vector2i(0, 1)),
+				Statics.get_color(Vector2i(3, 3)),
+				Statics.get_color(Vector2i(3, 3)),
+				Statics.get_color(Vector2i(3, 13)),
+				Statics.get_color(Vector2i(3, 13)),
+				Statics.get_color(Vector2i(3, 7)),
+				Statics.get_color(Vector2i(3, 7)),
+			])
+			radar.enable_rainbow_scroll()
+	else:
+		radar.visible = false
 
 
 func _process(delta: float) -> void:
@@ -155,6 +175,7 @@ func _process(delta: float) -> void:
 			active = false
 			UICore.instance.minimap.update_player()
 			UICore.instance.minimap.update_p_marker_layer()
+			UICore.instance.heart_group.z_index = 0
 			sfx_close.play()
 			return
 		

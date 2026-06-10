@@ -15,8 +15,10 @@
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="10_pai4i"]
 [ext_resource type="AudioStream" uid="uid://c1f8m5y7axavq" path="res://Assets/Sounds/Sfx/SubscreenUp.ogg" id="11_upi3e"]
 [ext_resource type="AudioStream" uid="uid://dgmxh721jnbu1" path="res://Assets/Sounds/Sfx/SubscreenDown.ogg" id="12_cf02a"]
+[ext_resource type="Texture2D" uid="uid://rhbdvj511ewo" path="res://Assets/Images/Items/HelixFragment.png" id="16_w2fvd"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="17_j127p"]
 
-[node name="Subscreen" type="Node2D" unique_id=1432611865 node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sel_target_name", "sel_target_map", "map", "map_selector", "map_backing", "desc_name", "desc_body", "marker_text", "select_text", "map_text", "time_text", "item_text")]
+[node name="Subscreen" type="Node2D" unique_id=1432611865 node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sel_target_name", "sel_target_map", "map", "map_selector", "map_backing", "desc_name", "desc_body", "marker_text", "select_text", "map_text", "time_text", "item_text", "helix_count", "radar")]
 process_mode = 3
 script = ExtResource("1_gcfo6")
 separators = [NodePath("GroupName"), NodePath("GroupWeapon"), NodePath("GroupShell"), NodePath("GroupAbility")]
@@ -53,6 +55,8 @@ select_text = NodePath("SelectionPrompt/Text")
 map_text = NodePath("MapRate/Text")
 time_text = NodePath("Time/Text")
 item_text = NodePath("ItemRate/Text")
+helix_count = NodePath("HelixCount")
+radar = NodePath("Radar")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=1193525127]
 position = Vector2(200, 144)
@@ -417,3 +421,53 @@ bus = &"Sfx"
 [node name="Close" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1297632802]
 stream = ExtResource("12_cf02a")
 bus = &"Sfx"
+
+[node name="HelixIcon" type="Sprite2D" parent="." unique_id=922052809]
+position = Vector2(88, 12)
+script = ExtResource("1_i7mg0")
+texture_path = "res://Assets/Images/Items/HelixFragment.json"
+load_autoplay = Array[String](["item"])
+metadata/_custom_type_script = "uid://dedkfqojjyx57"
+
+[node name="MarkerSprite" type="Sprite2D" parent="HelixIcon" unique_id=1070812545]
+texture = ExtResource("16_w2fvd")
+hframes = 8
+script = ExtResource("3_shvbi")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="HelixCount" type="RichTextLabel" parent="." unique_id=2061925988]
+clip_contents = false
+offset_left = 101.0
+offset_top = 6.0
+offset_right = 229.0
+offset_bottom = 22.0
+pivot_offset = Vector2(80, 8)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "x 0"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Radar" type="RichTextLabel" parent="." unique_id=409422092]
+clip_contents = false
+offset_left = 168.0
+offset_top = 6.0
+offset_right = 392.0
+offset_bottom = 22.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Area items found: ##/##"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

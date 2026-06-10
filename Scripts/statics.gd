@@ -90,8 +90,19 @@ const WORLD_SPAWN:Array = [
 ]
 
 
-# Maximum counts of each item in Item.ItemTypes for a save to be considered 100% complete
-const COUNTED_INVENTORY:Array = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 11, 30, 1, 0, 0, 0, 0, 0, 0 ]
+## Maximum counts of each item in Item.ItemTypes for a save to be considered 100% complete
+const COUNTED_INVENTORY:Array = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 11, 30, 0, 0, 0, 0, 0, 0, 0 ]
+## Locations designated for each area, for the radar to track.
+## Divided between "major," "minor," and "secret" locations
+const AREA_LOCATIONS:Array = [
+	[[],           [1, 2, 4, 5, 6, 7, 8, 9, 10],         [0, 3]],   # Snail Town
+	[[13, 18, 21], [11, 12, 14, 15, 16, 17, 19, 20, 22], []],       # Mare Carelia
+	[[24, 30, 32], [25, 26, 27, 28, 29, 31, 33],         [23]],     # Spiralis Silere
+	[[44, 45],     [34, 37, 38, 39, 40, 41, 42, 43, 46], [35, 36]], # Amastrida Abyssus
+	[[48, 51],     [47, 49, 50, 52, 53, 55],             [54]],     # Lux Lirata
+	[[],           [56],                                 []],       # Shrine of Iris
+]
+
 
 
 static var main_menu_booted_once:bool = false
@@ -249,6 +260,29 @@ static func get_item_percentage(_profile:int = 0, _snap:bool = false, _only_coun
 	return counted_percentage
 
 
+static func get_area_item_ratio(area:int) -> Vector2i:
+	if area >= AREA_LOCATIONS.size():
+		return Vector2i.ZERO
+	var check_locations:Array = AREA_LOCATIONS[area]
+	var total_locations:int = 0
+	var collected_locations:int = 0
+	
+	for i in check_locations[0]:
+		total_locations += 1
+		if check_location_collected(i):
+			collected_locations += 1
+	for i in check_locations[1]:
+		total_locations += 1
+		if check_location_collected(i):
+			collected_locations += 1
+	for i in check_locations[2]:
+		if check_location_collected(i):
+			total_locations += 1
+			collected_locations += 1
+	
+	return Vector2(collected_locations, total_locations)
+
+
 static func get_igt_str(_profile:int = 0) -> String:
 	var time:Array = []
 	match _profile:
@@ -291,10 +325,9 @@ static func set_item(id:int, count:int) -> void:
 
 
 static func check_item(id:int) -> int:
-	var output:int = 0
 	if id < len(current_profile["items"]):
-		output = current_profile["items"][id]
-	return output
+		return current_profile["items"][id]
+	return 0
 
 
 static func mark_item_location(id:int, state:bool = true) -> void:
@@ -304,10 +337,9 @@ static func mark_item_location(id:int, state:bool = true) -> void:
 
 
 static func check_location_collected(id:int) -> bool:
-	var output := false
 	if id < len(current_profile["locations"]):
-		output = current_profile["locations"][id]
-	return output
+		return current_profile["locations"][id]
+	return false
 
 
 static func save_general() -> void:
@@ -356,13 +388,15 @@ static func delete_profile(iprofile:int) -> void:
 
 
 static func has_unlock(unlock:Unlocks) -> bool:
+	if len(data_records["unlocks"]) < unlock:
+		return false
 	return data_records["unlocks"].has(unlock)
 
 
 static func can_unlock(unlock:Unlocks) -> bool:
-	if len(data_records["unlock_conditions"]) < unlock:
-		return false
-	return data_records["unlock_conditions"][unlock]
+	if unlock < len(data_records["unlock_conditions"]):
+		return data_records["unlock_conditions"][unlock]
+	return false
 
 
 static func add_unlock(unlock:Unlocks) -> bool:
@@ -381,6 +415,7 @@ static func add_unlock_condition(unlock:Unlocks) -> bool:
 	while unlock >= len(data_records["unlock_conditions"]):
 		data_records["unlock_conditions"].append(false)
 	data_records["unlock_conditions"][unlock as int] = true
+	save_records()
 	return true
 
 
@@ -390,14 +425,14 @@ static func add_achievement(id:int) -> bool:
 	while id >= len(data_records["achievements"]):
 		data_records["achievements"].append(false)
 	data_records["achievements"][id] = true
+	save_records()
 	return true
 
 
 static func check_achievement(id:int) -> bool:
-	var output := false
 	if id < len(data_records["achievements"]):
-		output = data_records["achievements"][id]
-	return output
+		return data_records["achievements"][id]
+	return false
 
 
 static func get_achievement_count() -> int:
@@ -486,6 +521,7 @@ static func has_times_for_mode(mode:String) -> bool:
 static func save_time(id:String, time:Array) -> void:
 	if data_records["times"].keys().has(id):
 		data_records["times"][id] = time.duplicate()
+	save_records()
 
 
 ## Compares two game times, and returns a value equal to the result of the comparison.

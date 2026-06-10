@@ -302,7 +302,7 @@ func show_item_collection_text(item_label:String, is_100:bool) -> void:
 
 func show_area_text(area_id:int) -> void:
 	clear_area_text()
-	var area_label = color_popup_scene.instantiate()
+	var area_label:ColorPopup = color_popup_scene.instantiate()
 	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE
 	match area_id:
@@ -324,7 +324,15 @@ func show_area_text(area_id:int) -> void:
 			bookend.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
 			area_label.add_child(bookend)
 			bookend.action = ("%d_left" if (i == 0) else "%d_right") % area_id
-			bookend.position = Vector2i((text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
+			bookend.position = Vector2i(roundi(text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
+		
+		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
+			var collection_label:ColorPopup = color_popup_scene.instantiate()
+			area_label.add_child(collection_label)
+			var ratio:Vector2i = Statics.get_area_item_ratio(area_id)
+			var ratio_text:String = tr(&"Items found: %d/%d") % [ratio.x, ratio.y]
+			collection_label.instance(ratio_text, [Color.WHITE], 4.5, 1, 0.4)
+			collection_label.position.y += 20
 
 
 func clear_area_text() -> void:
