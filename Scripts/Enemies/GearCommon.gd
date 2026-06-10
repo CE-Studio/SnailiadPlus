@@ -13,6 +13,7 @@ const FAST_IDLE_MIN:float = 1.5
 const FAST_IDLE_MAX:float = 6.0
 
 @export var direction:Statics.DirsCardinal = Statics.DirsCardinal.DOWN
+var velocity:Vector2 = Vector2.ZERO
 var going:bool = false
 var fast_idle_timer:float = randf_range(FAST_IDLE_MIN, FAST_IDLE_MAX)
 var on_screen_once:bool = false
@@ -58,7 +59,7 @@ func _process(delta: float) -> void:
 					velocity.y = -SPEED.y
 					sprite.action = "charge_up"
 			else:
-				move_and_slide()
+				position += velocity * delta
 				velocity.y += ACCEL.y * delta
 				if position.y >= origin.y + START_OFFSET + 8:
 					queue_free()
@@ -69,7 +70,7 @@ func _process(delta: float) -> void:
 					velocity.x = -SPEED.x
 					sprite.action = "charge_left"
 			else:
-				move_and_slide()
+				position += velocity * delta
 				velocity.x += ACCEL.x * delta
 				if position.x >= origin.x + START_OFFSET + 8:
 					queue_free()
@@ -80,7 +81,7 @@ func _process(delta: float) -> void:
 					velocity.y = SPEED.y
 					sprite.action = "charge_down"
 			else:
-				move_and_slide()
+				position += velocity * delta
 				velocity.y -= ACCEL.y * delta
 				if position.y <= origin.y - START_OFFSET - 8:
 					queue_free()
@@ -91,7 +92,7 @@ func _process(delta: float) -> void:
 					velocity.x = SPEED.x
 					sprite.action = "charge_right"
 			else:
-				move_and_slide()
+				position += velocity * delta
 				velocity.x -= ACCEL.x * delta
 				if position.x <= origin.x - START_OFFSET - 8:
 					queue_free()

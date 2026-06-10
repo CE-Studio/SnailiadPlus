@@ -8,20 +8,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(24, 24)
 
-[node name="ShellbreakerHand" type="CharacterBody2D" unique_id=106042331]
+[node name="ShellbreakerHand" type="Node2D" unique_id=1842650276]
 z_index = -1
-collision_layer = 0
-collision_mask = 0
 script = ExtResource("1_c3pwi")
 max_health = 100
 attack = 1
 defense = 1000
 make_sound_on_ping = false
 shield_entity = true
-
-[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1646517971]
-shape = SubResource("RectangleShape2D_vj7im")
-debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=750220685]
 collision_layer = 64

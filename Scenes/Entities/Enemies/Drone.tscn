@@ -14,10 +14,8 @@ size = Vector2(22, 28)
 shader = ExtResource("4_46eee")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Drone" type="CharacterBody2D" unique_id=1103248246]
+[node name="Drone" type="Node2D" unique_id=2053652137]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_ibwj3")
 max_health = 1850
 attack = 4

@@ -51,8 +51,9 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	if vis.is_on_screen():
-		velocity.y += GRAVITY * delta
+	var real = self
+	if real is CharacterBody2D and vis.is_on_screen():
+		real.velocity.y += GRAVITY * delta
 		shot_timeout -= delta
 		if is_attacking and shot_timeout <= 0.0 and shot_counter > 0:
 			shot_counter -= 1
@@ -71,27 +72,27 @@ func _physics_process(delta: float) -> void:
 					next_attack -= 1
 					is_attacking = false
 					if position.x > GameCore.instance.player.position.x:
-						velocity.x = -VEL_X
+						real.velocity.x = -VEL_X
 						facing_right = false
 					else:
-						velocity.x = VEL_X
+						real.velocity.x = VEL_X
 						facing_right = true
-					velocity.y = JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
+					real.velocity.y = JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
 					play_anim("jump")
 					sfx_jump.play()
 				hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
 				hop_timeout = HOP_TIMEOUTS[hop_ptr]
 				fall_flag = false
-		var air_flag:bool = not is_on_floor()
-		move_and_slide()
-		if is_on_wall():
+		var air_flag:bool = not real.is_on_floor()
+		real.move_and_slide()
+		if real.is_on_wall():
 			facing_right = not facing_right
-			velocity.x = VEL_X if facing_right else -VEL_X
+			real.velocity.x = VEL_X if facing_right else -VEL_X
 			play_anim("fall" if fall_flag else "jump")
-		if is_on_floor() and air_flag:
+		if real.is_on_floor() and air_flag:
 			play_anim("land")
-			velocity.x = 0
-		elif not is_on_floor() and velocity.y > 0 and not fall_flag:
+			real.velocity.x = 0
+		elif not real.is_on_floor() and real.velocity.y > 0 and not fall_flag:
 			fall_flag = true
 			play_anim("fall")
 

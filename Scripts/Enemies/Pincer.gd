@@ -48,21 +48,22 @@ func _ready() -> void:
 	
 	timeout_ptr = int(position.x / 16 + position.y / 8) % MOVE_TIMEOUTS.size()
 	move_timeout = MOVE_TIMEOUTS[timeout_ptr]
-	if not display_mode:
+	var real = self
+	if real is CharacterBody2D and not display_mode:
 		var player:Player = GameCore.instance.player
 		match direction:
 			Statics.DirsSurface.FLOOR:
 				facing_right = player.position.x > position.x
-				up_direction = Vector2.UP
+				real.up_direction = Vector2.UP
 			Statics.DirsSurface.LWALL:
 				facing_right = player.position.y > position.y
-				up_direction = Vector2.RIGHT
+				real.up_direction = Vector2.RIGHT
 			Statics.DirsSurface.RWALL:
 				facing_right = player.position.y < position.y
-				up_direction = Vector2.LEFT
+				real.up_direction = Vector2.LEFT
 			Statics.DirsSurface.CEILING:
 				facing_right = player.position.x < position.x
-				up_direction = Vector2.DOWN
+				real.up_direction = Vector2.DOWN
 	else:
 		facing_right = randf() >= 0.5
 	play_anim("idle")
@@ -84,40 +85,42 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	if vis.is_on_screen():
-		move_timeout -= delta
-		if move_timeout <= 0.0 and _player_close():
-			timeout_ptr = (timeout_ptr + 1) % MOVE_TIMEOUTS.size()
-			move_timeout = MOVE_TIMEOUTS[timeout_ptr]
-			_setup_move()
-	if rel_velocity.x != 0.0:
-		last_nonzero_x = rel_velocity.x
-	_relative_to_actual()
-	move_and_slide()
-	_actual_to_relative()
-	rel_velocity.y += GRAVITY * delta
-	rel_velocity.x = move_toward(rel_velocity.x, 0.0, DECEL * delta)
-	
-	if is_on_wall():
-		if (facing_right and last_nonzero_x > 0.0) or (not facing_right and last_nonzero_x < 0.0):
-			facing_right = not facing_right
-			rel_velocity.x = -last_nonzero_x
-			play_anim("idle" if not grounded else "pounce")
-	
-	if is_on_floor() and rel_velocity.y >= 0.0 and not grounded:
-		grounded = true
-		play_anim("idle")
-		rel_velocity.y *= -0.1
-	
-	if hard_mode:
-		shot_timeout -= delta
-		if shot_timeout <= 0.0:
-			shot_timeout = SHOT_TIMEOUT
-			var aim:float = atan2(
-				GameCore.instance.player.position.y - position.y,
-				GameCore.instance.player.position.x - position.x
-			)
-			_shoot(donut, Vector2(sin(aim), cos(aim)), WEAPON_SPEED)
+	var real = self
+	if real is CharacterBody2D:
+		if vis.is_on_screen():
+			move_timeout -= delta
+			if move_timeout <= 0.0 and _player_close():
+				timeout_ptr = (timeout_ptr + 1) % MOVE_TIMEOUTS.size()
+				move_timeout = MOVE_TIMEOUTS[timeout_ptr]
+				_setup_move()
+		if rel_velocity.x != 0.0:
+			last_nonzero_x = rel_velocity.x
+		_relative_to_actual()
+		real.move_and_slide()
+		_actual_to_relative()
+		rel_velocity.y += GRAVITY * delta
+		rel_velocity.x = move_toward(rel_velocity.x, 0.0, DECEL * delta)
+		
+		if real.is_on_wall():
+			if (facing_right and last_nonzero_x > 0.0) or (not facing_right and last_nonzero_x < 0.0):
+				facing_right = not facing_right
+				rel_velocity.x = -last_nonzero_x
+				play_anim("idle" if not grounded else "pounce")
+		
+		if real.is_on_floor() and rel_velocity.y >= 0.0 and not grounded:
+			grounded = true
+			play_anim("idle")
+			rel_velocity.y *= -0.1
+		
+		if hard_mode:
+			shot_timeout -= delta
+			if shot_timeout <= 0.0:
+				shot_timeout = SHOT_TIMEOUT
+				var aim:float = atan2(
+					GameCore.instance.player.position.y - position.y,
+					GameCore.instance.player.position.x - position.x
+				)
+				_shoot(donut, Vector2(sin(aim), cos(aim)), WEAPON_SPEED)
 
 
 func play_anim(modifier:String = "") -> void:
@@ -162,16 +165,20 @@ func _setup_move() -> void:
 
 
 func _relative_to_actual() -> void:
-	match direction:
-		Statics.DirsSurface.FLOOR: velocity = rel_velocity
-		Statics.DirsSurface.LWALL: velocity = Vector2(-rel_velocity.y, rel_velocity.x)
-		Statics.DirsSurface.RWALL: velocity = Vector2(rel_velocity.y, -rel_velocity.x)
-		Statics.DirsSurface.CEILING: velocity = -rel_velocity
+	var real = self
+	if real is CharacterBody2D:
+		match direction:
+			Statics.DirsSurface.FLOOR: real.velocity = rel_velocity
+			Statics.DirsSurface.LWALL: real.velocity = Vector2(-rel_velocity.y, rel_velocity.x)
+			Statics.DirsSurface.RWALL: real.velocity = Vector2(rel_velocity.y, -rel_velocity.x)
+			Statics.DirsSurface.CEILING: real.velocity = -rel_velocity
 
 
 func _actual_to_relative() -> void:
-	match direction:
-		Statics.DirsSurface.FLOOR: rel_velocity = velocity
-		Statics.DirsSurface.LWALL: rel_velocity = Vector2(velocity.y, -velocity.x)
-		Statics.DirsSurface.LWALL: rel_velocity = Vector2(velocity.y, -velocity.x)
-		Statics.DirsSurface.CEILING: rel_velocity = -velocity
+	var real = self
+	if real is CharacterBody2D:
+		match direction:
+			Statics.DirsSurface.FLOOR: rel_velocity = real.velocity
+			Statics.DirsSurface.LWALL: rel_velocity = Vector2(real.velocity.y, -real.velocity.x)
+			Statics.DirsSurface.LWALL: rel_velocity = Vector2(real.velocity.y, -real.velocity.x)
+			Statics.DirsSurface.CEILING: rel_velocity = -real.velocity

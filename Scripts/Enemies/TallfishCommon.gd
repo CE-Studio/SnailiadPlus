@@ -14,6 +14,7 @@ const DECEL:float = SPEED * 0.6
 const SINE_AMPLITUDE:float = 4.0
 
 var elapsed:float = 0.0
+var velocity:Vector2 = Vector2.ZERO
 var move_timeout:float = MOVE_TIMEOUT * 0.125
 var shot_timeout:float = 0.0
 var shot_num:int = 0

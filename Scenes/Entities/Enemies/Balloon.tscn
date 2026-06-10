@@ -14,10 +14,8 @@ size = Vector2(14, 30)
 shader = ExtResource("4_uskjm")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Balloon" type="CharacterBody2D" unique_id=1484310694]
+[node name="Balloon" type="Node2D" unique_id=817401358]
 z_index = 103
-collision_layer = 64
-collision_mask = 3
 script = ExtResource("1_pfxoy")
 max_health = 50
 max_health_hard = 250

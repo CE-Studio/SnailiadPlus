@@ -184,63 +184,65 @@ func _physics_process(delta:float) -> void:
 		BossMode.SLEEP:
 			_update_sleep(delta)
 	
-	#region Move stomp
-	if mode == BossMode.STOMP and not stomped and last_state == "stomp":
-		var last_vel:Vector2 = velocity
-		move_and_slide()
-		match stomp_gravity:
-			Statics.DirsSurface.FLOOR:
-				velocity.y += GRAVITY * delta
-				if is_on_wall():
-					velocity.x = -last_vel.x
-					position.x += 0.5 * sign(velocity.x)
-			Statics.DirsSurface.LWALL:
-				velocity.x -= GRAVITY * delta
-				if is_on_wall():
-					velocity.y = -last_vel.y
-					position.y += 0.5 * sign(velocity.y)
-			Statics.DirsSurface.RWALL:
-				velocity.x += GRAVITY * delta
-				if is_on_wall():
-					velocity.y = -last_vel.y
-					position.y += 0.5 * sign(velocity.y)
-			Statics.DirsSurface.CEILING:
-				velocity.y -= GRAVITY * delta
-				if is_on_wall():
-					velocity.x = -last_vel.x
-					position.x += 0.5 * sign(velocity.x)
-		if is_on_floor() and mode_elapsed > 0.0:
-			_stomp()
-	#endregion
-	#region Move smash
-	if mode == BossMode.SMASH:
-		velocity += smash_dir * SMASH_SPEED * boss_speed * delta
-		if move_and_slide():
-			if is_on_floor():
-				stomp_gravity = Statics.DirsSurface.FLOOR
-				position.y -= 0.5
-			elif is_on_ceiling():
-				stomp_gravity = Statics.DirsSurface.CEILING
-				position.y += 0.5
-			elif get_last_slide_collision().get_position().x < position.x:
-				stomp_gravity = Statics.DirsSurface.LWALL
-				position.x += 0.5
-			else:
-				stomp_gravity = Statics.DirsSurface.RWALL
-				position.x -= 0.5
-			_stomp()
-			velocity = Vector2.ZERO
-			last_hit_dir = stomp_gravity
-	#endregion
-	#region Move sleep
-	if mode == BossMode.SLEEP:
-		if not stomped:
-			velocity.y += GRAVITY * delta
-			move_and_slide()
-			if is_on_floor():
+	var real = self
+	if real is CharacterBody2D:
+		#region Move stomp
+		if mode == BossMode.STOMP and not stomped and last_state == "stomp":
+			var last_vel:Vector2 = real.velocity
+			real.move_and_slide()
+			match stomp_gravity:
+				Statics.DirsSurface.FLOOR:
+					real.velocity.y += GRAVITY * delta
+					if real.is_on_wall():
+						real.velocity.x = -last_vel.x
+						position.x += 0.5 * sign(real.velocity.x)
+				Statics.DirsSurface.LWALL:
+					real.velocity.x -= GRAVITY * delta
+					if real.is_on_wall():
+						real.velocity.y = -last_vel.y
+						position.y += 0.5 * sign(real.velocity.y)
+				Statics.DirsSurface.RWALL:
+					real.velocity.x += GRAVITY * delta
+					if real.is_on_wall():
+						real.velocity.y = -last_vel.y
+						position.y += 0.5 * sign(real.velocity.y)
+				Statics.DirsSurface.CEILING:
+					real.velocity.y -= GRAVITY * delta
+					if real.is_on_wall():
+						real.velocity.x = -last_vel.x
+						position.x += 0.5 * sign(real.velocity.x)
+			if real.is_on_floor() and mode_elapsed > 0.0:
 				_stomp()
-				position.y += 4.0
-	#endregion
+		#endregion
+		#region Move smash
+		if mode == BossMode.SMASH:
+			real.velocity += smash_dir * SMASH_SPEED * boss_speed * delta
+			if real.move_and_slide():
+				if real.is_on_floor():
+					stomp_gravity = Statics.DirsSurface.FLOOR
+					position.y -= 0.5
+				elif real.is_on_ceiling():
+					stomp_gravity = Statics.DirsSurface.CEILING
+					position.y += 0.5
+				elif real.get_last_slide_collision().get_position().x < position.x:
+					stomp_gravity = Statics.DirsSurface.LWALL
+					position.x += 0.5
+				else:
+					stomp_gravity = Statics.DirsSurface.RWALL
+					position.x -= 0.5
+				_stomp()
+				real.velocity = Vector2.ZERO
+				last_hit_dir = stomp_gravity
+		#endregion
+		#region Move sleep
+		if mode == BossMode.SLEEP:
+			if not stomped:
+				real.velocity.y += GRAVITY * delta
+				real.move_and_slide()
+				if real.is_on_floor():
+					_stomp()
+					position.y += 4.0
+		#endregion
 	
 	super._physics_process(delta)
 	
@@ -309,28 +311,30 @@ func _get_decision() -> float:
 
 
 func _set_mode(new_mode:BossMode) -> void:
-	if new_mode == BossMode.STOMP:
-		attacks_since_stomp = 0
-	else:
-		attacks_since_stomp += 1
-	if attacks_since_stomp >= STOMP_MAX_ATTACKS_SINCE:
-		new_mode = BossMode.STOMP
-		attacks_since_stomp = 0
-	
-	last_mode = mode
-	mode = new_mode
-	mode_initialized = false
-	stomped = false
-	velocity = Vector2.ZERO
-	mode_elapsed = 0.0
-	waiting_to_jump = false
-	_set_hitboxes(0)
-	
-	match new_mode:
-		BossMode.STOMP: boss_environment.set_state("stomp")
-		BossMode.STRAFE: boss_environment.set_state("strafe")
-		BossMode.SMASH: boss_environment.set_state("smash")
-		BossMode.SLEEP: boss_environment.set_state("sleep")
+	var real = self
+	if real is CharacterBody2D:
+		if new_mode == BossMode.STOMP:
+			attacks_since_stomp = 0
+		else:
+			attacks_since_stomp += 1
+		if attacks_since_stomp >= STOMP_MAX_ATTACKS_SINCE:
+			new_mode = BossMode.STOMP
+			attacks_since_stomp = 0
+		
+		last_mode = mode
+		mode = new_mode
+		mode_initialized = false
+		stomped = false
+		real.velocity = Vector2.ZERO
+		mode_elapsed = 0.0
+		waiting_to_jump = false
+		_set_hitboxes(0)
+		
+		match new_mode:
+			BossMode.STOMP: boss_environment.set_state("stomp")
+			BossMode.STRAFE: boss_environment.set_state("strafe")
+			BossMode.SMASH: boss_environment.set_state("smash")
+			BossMode.SLEEP: boss_environment.set_state("sleep")
 
 
 func _shoot_wave() -> void:
@@ -521,19 +525,21 @@ func _update_stomp(delta:float) -> void:
 			if waiting_to_jump and jump_timeout <= 0.0:
 				waiting_to_jump = false
 				stomped = false
-				match stomp_gravity:
-					Statics.DirsSurface.FLOOR:
-						velocity.y = -JUMP_POWER
-						velocity.x = -WALK_SPEED if facing_left else WALK_SPEED
-					Statics.DirsSurface.LWALL:
-						velocity.x = JUMP_POWER
-						velocity.y = -WALK_SPEED if facing_left else WALK_SPEED
-					Statics.DirsSurface.RWALL:
-						velocity.x = -JUMP_POWER
-						velocity.y = WALK_SPEED if facing_left else -WALK_SPEED
-					Statics.DirsSurface.CEILING:
-						velocity.y = JUMP_POWER
-						velocity.x = WALK_SPEED if facing_left else -WALK_SPEED
+				var real = self
+				if real is CharacterBody2D:
+					match stomp_gravity:
+						Statics.DirsSurface.FLOOR:
+							real.velocity.y = -JUMP_POWER
+							real.velocity.x = -WALK_SPEED if facing_left else WALK_SPEED
+						Statics.DirsSurface.LWALL:
+							real.velocity.x = JUMP_POWER
+							real.velocity.y = -WALK_SPEED if facing_left else WALK_SPEED
+						Statics.DirsSurface.RWALL:
+							real.velocity.x = -JUMP_POWER
+							real.velocity.y = WALK_SPEED if facing_left else -WALK_SPEED
+						Statics.DirsSurface.CEILING:
+							real.velocity.y = JUMP_POWER
+							real.velocity.x = WALK_SPEED if facing_left else -WALK_SPEED
 				grav_jump_timeout = GRAV_JUMP_TIMEOUT
 				jump_timeout = 99999.0
 				_play_anim("stomp_jump", "stomp")
@@ -612,13 +618,14 @@ func _update_strafe(delta:float) -> void:
 
 
 func _update_smash() -> void:
-	if not mode_initialized:
+	var real = self
+	if real is CharacterBody2D and not mode_initialized:
 		mode_initialized = true
 		mode_timeout = MODE_TIMEOUT_SMASH
 		_pick_smash_target(false)
 		_play_anim("shell_smash_move", "shell", position + smash_dir)
-		velocity = Vector2.ZERO
-		up_direction = Vector2.UP
+		real.velocity = Vector2.ZERO
+		real.up_direction = Vector2.UP
 		_spawn_afterimage()
 	if stomped:
 		stomped = false
@@ -637,7 +644,8 @@ func _update_smash() -> void:
 
 
 func _update_sleep(delta:float) -> void:
-	if not mode_initialized:
+	var real = self
+	if real is CharacterBody2D and not mode_initialized:
 		if (position.x - Player.instance.position.x < SLEEP_X_DIFF_FORGIVENESS
 		and Player.instance.position.y > position.y):
 			_set_mode(BossMode.STOMP)
@@ -651,10 +659,10 @@ func _update_sleep(delta:float) -> void:
 		if Statics.current_profile["difficulty"] == 2:
 			zzz_count += 2
 			mode_timeout *= 1.23
-		velocity = Vector2.ZERO
+		real.velocity = Vector2.ZERO
 		sfx_sleep.play()
 		_set_hitboxes(0)
-		up_direction = Vector2.UP
+		real.up_direction = Vector2.UP
 		_spawn_afterimage()
 	if stomped:
 		zzz_timeout -= delta * boss_speed
@@ -674,45 +682,49 @@ func _update_sleep(delta:float) -> void:
 
 #region Movement handling
 func _face_player(play_anim:bool, unshell:bool = false) -> void:
-	var old_left:bool = facing_left
-	match stomp_gravity:
-		Statics.DirsSurface.FLOOR:
-			facing_left = Player.instance.position.x < position.x
-			up_direction = Vector2.UP
-		Statics.DirsSurface.LWALL:
-			facing_left = Player.instance.position.y < position.y
-			up_direction = Vector2.RIGHT
-		Statics.DirsSurface.RWALL:
-			facing_left = Player.instance.position.y > position.y
-			up_direction = Vector2.LEFT
-		Statics.DirsSurface.CEILING:
-			facing_left = Player.instance.position.x > position.x
-			up_direction = Vector2.DOWN
-	if play_anim:
-		if unshell:
-			_play_anim("stomp_unshell", "stomp")
-		elif facing_left != old_left:
-			_play_anim("stomp_turnground" if stomped else "stomp_turnair", "stomp")
+	var real = self
+	if real is CharacterBody2D:
+		var old_left:bool = facing_left
+		match stomp_gravity:
+			Statics.DirsSurface.FLOOR:
+				facing_left = Player.instance.position.x < position.x
+				real.up_direction = Vector2.UP
+			Statics.DirsSurface.LWALL:
+				facing_left = Player.instance.position.y < position.y
+				real.up_direction = Vector2.RIGHT
+			Statics.DirsSurface.RWALL:
+				facing_left = Player.instance.position.y > position.y
+				real.up_direction = Vector2.LEFT
+			Statics.DirsSurface.CEILING:
+				facing_left = Player.instance.position.x > position.x
+				real.up_direction = Vector2.DOWN
+		if play_anim:
+			if unshell:
+				_play_anim("stomp_unshell", "stomp")
+			elif facing_left != old_left:
+				_play_anim("stomp_turnground" if stomped else "stomp_turnair", "stomp")
 
 
 func _stomp() -> void:
-	velocity = Vector2.ZERO
-	if stomp_timeout <= 0.0:
-		var stomp_dir:Vector2 = Vector2.DOWN
-		match stomp_gravity:
-			Statics.DirsSurface.LWALL:
-				stomp_dir = Vector2.LEFT
-			Statics.DirsSurface.RWALL:
-				stomp_dir = Vector2.RIGHT
-			Statics.DirsSurface.CEILING:
-				stomp_dir = Vector2.UP
-		UICore.instance.call_screen_shake_linear(
-			SHAKE_TIMELINE, stomp_dir, UICore.ShakeCallMode.OVERWRITE_ALL)
-		sfx_stomp.play()
-		stomp_timeout = STOMP_TIMEOUT
-		boss_environment.impact_ground(position)
-	if mode == BossMode.STOMP:
-		_play_anim("stomp_land", "stomp")
-	stomped = true
-	grav_jump_timeout = 99999.0
+	var real = self
+	if real is CharacterBody2D:
+		real.velocity = Vector2.ZERO
+		if stomp_timeout <= 0.0:
+			var stomp_dir:Vector2 = Vector2.DOWN
+			match stomp_gravity:
+				Statics.DirsSurface.LWALL:
+					stomp_dir = Vector2.LEFT
+				Statics.DirsSurface.RWALL:
+					stomp_dir = Vector2.RIGHT
+				Statics.DirsSurface.CEILING:
+					stomp_dir = Vector2.UP
+			UICore.instance.call_screen_shake_linear(
+				SHAKE_TIMELINE, stomp_dir, UICore.ShakeCallMode.OVERWRITE_ALL)
+			sfx_stomp.play()
+			stomp_timeout = STOMP_TIMEOUT
+			boss_environment.impact_ground(position)
+		if mode == BossMode.STOMP:
+			_play_anim("stomp_land", "stomp")
+		stomped = true
+		grav_jump_timeout = 99999.0
 #endregion

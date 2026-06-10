@@ -36,35 +36,37 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	if vis.is_on_screen():
-		move_timeout -= delta
-		var player_x:float = GameCore.instance.player.position.x
-		if move_timeout <= 0.0 and abs(player_x - position.x) <= REACT_DISTANCE:
-			if player_x < position.x:
-				facing_left = true
-				velocity.x = -SPEED
-			else:
-				facing_left = false
-				velocity.x = SPEED
+	var real = self
+	if real is CharacterBody2D:
+		if vis.is_on_screen():
+			move_timeout -= delta
+			var player_x:float = GameCore.instance.player.position.x
+			if move_timeout <= 0.0 and abs(player_x - position.x) <= REACT_DISTANCE:
+				if player_x < position.x:
+					facing_left = true
+					real.velocity.x = -SPEED
+				else:
+					facing_left = false
+					real.velocity.x = SPEED
+				_play_anim(true)
+				move_timeout = MOVE_TIMEOUT
+				sfx_move.play()
+		
+		var last_vel:Vector2 = real.velocity
+		var last_grounded:bool = real.is_on_floor()
+		real.move_and_slide()
+		if real.is_on_wall() and last_vel.x != 0.0:
+			real.velocity.x = -last_vel.x
+			facing_left = not facing_left
 			_play_anim(true)
-			move_timeout = MOVE_TIMEOUT
-			sfx_move.play()
-	
-	var last_vel:Vector2 = velocity
-	var last_grounded:bool = is_on_floor()
-	move_and_slide()
-	if is_on_wall() and last_vel.x != 0.0:
-		velocity.x = -last_vel.x
-		facing_left = not facing_left
-		_play_anim(true)
-	if is_on_floor() and last_grounded:
-		velocity.y = last_vel.y * -0.1
-	
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
-	velocity.x = move_toward(velocity.x, 0.0, DECEL * delta)
-	if abs(velocity.x) < RETURN_SPEED:
-		_play_anim(false)
+		if real.is_on_floor() and last_grounded:
+			real.velocity.y = last_vel.y * -0.1
+		
+		if not real.is_on_floor():
+			real.velocity.y += GRAVITY * delta
+		real.velocity.x = move_toward(real.velocity.x, 0.0, DECEL * delta)
+		if abs(real.velocity.x) < RETURN_SPEED:
+			_play_anim(false)
 
 
 func _play_anim(moving:bool) -> void:

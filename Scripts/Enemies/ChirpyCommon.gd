@@ -10,6 +10,7 @@ const SHOT_TIMEOUT = 2.2
 const SIN_ACCEL = 700
 const MAX_OFF_SCREEN_TIME = 3.0
 
+var velocity:Vector2 = Vector2.ZERO
 var theta:float = 0.0
 var theta_mult:float = 5.0
 var fly_speed:float = 140.0

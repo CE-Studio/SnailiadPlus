@@ -20,6 +20,7 @@ const WAIT_TABLE:Array[float] = [
 	0.9890385972, 0.9199415992, 0.0593612118, 0.5765849264, 0.7873382929, 0.827340683,  0.1771514581, 0.7038809678, 0.5615721056, 0.6086805593
 ]
 
+var velocity:Vector2 = Vector2.ZERO
 var move_timeout:float = 0.0
 var move_index:int = 0
 #endregion

@@ -49,19 +49,21 @@ func _ready() -> void:
 		facing_left = randf() <= 0.5
 	else:
 		var player:Player = GameCore.instance.player
-		match direction:
-			Statics.DirsSurface.FLOOR:
-				facing_left = player.position.x < position.x
-				velocity = Vector2(-speed if facing_left else speed, 0.0)
-			Statics.DirsSurface.LWALL:
-				facing_left = player.position.y < position.y
-				velocity = Vector2(0.0, -speed if facing_left else speed)
-			Statics.DirsSurface.RWALL:
-				facing_left = player.position.y > position.y
-				velocity = Vector2(0.0, speed if facing_left else -speed)
-			Statics.DirsSurface.FLOOR:
-				facing_left = player.position.x < position.x
-				velocity = Vector2(speed if facing_left else -speed, 0.0)
+		var real = self
+		if real is CharacterBody2D:
+			match direction:
+				Statics.DirsSurface.FLOOR:
+					facing_left = player.position.x < position.x
+					real.velocity = Vector2(-speed if facing_left else speed, 0.0)
+				Statics.DirsSurface.LWALL:
+					facing_left = player.position.y < position.y
+					real.velocity = Vector2(0.0, -speed if facing_left else speed)
+				Statics.DirsSurface.RWALL:
+					facing_left = player.position.y > position.y
+					real.velocity = Vector2(0.0, speed if facing_left else -speed)
+				Statics.DirsSurface.FLOOR:
+					facing_left = player.position.x < position.x
+					real.velocity = Vector2(speed if facing_left else -speed, 0.0)
 	_play_anim("walk")
 
 
@@ -91,95 +93,99 @@ func _physics_process(delta: float) -> void:
 			turn_timeout = TURNAROUND_TIMEOUT
 			turn = true
 	
-	var player:Player = GameCore.instance.player
-	velocity += GRAVITY * delta * -up_direction
-	match direction:
-		Statics.DirsSurface.FLOOR:
-			if vis.is_on_screen():
-				if is_on_wall() or (turn and (
-					(facing_left and player.position.x > position.x) or
-					(not facing_left and player.position.x < position.x)
-				)):
-					facing_left = not facing_left
-					_play_anim("turn" if is_on_floor() else "fall")
-				velocity.x = -speed if facing_left else speed
-				if jump:
-					velocity.y = -JUMP_POWER
-					_play_anim("jump")
-				if flip:
-					_set_gravity(Statics.DirsSurface.CEILING)
-					facing_left = not facing_left
-					_play_anim("flip")
-					Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
-			else:
-				velocity.x = 0.0
-		Statics.DirsSurface.LWALL:
-			if vis.is_on_screen():
-				if is_on_wall() or (turn and (
-					(facing_left and player.position.y > position.y) or
-					(not facing_left and player.position.y < position.y)
-				)):
-					facing_left = not facing_left
-					_play_anim("turn" if is_on_floor() else "fall")
-				velocity.y = -speed if facing_left else speed
-				if jump:
-					velocity.x = JUMP_POWER
-					_play_anim("jump")
-				if flip:
-					_set_gravity(Statics.DirsSurface.RWALL)
-					facing_left = not facing_left
-					_play_anim("flip")
-					Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
-			else:
-				velocity.y = 0.0
-		Statics.DirsSurface.RWALL:
-			if vis.is_on_screen():
-				if is_on_wall() or (turn and (
-					(facing_left and player.position.y < position.y) or
-					(not facing_left and player.position.y > position.y)
-				)):
-					facing_left = not facing_left
-					_play_anim("turn" if is_on_floor() else "fall")
-				velocity.y = speed if facing_left else -speed
-				if jump:
-					velocity.x = -JUMP_POWER
-					_play_anim("jump")
-				if flip:
-					_set_gravity(Statics.DirsSurface.LWALL)
-					facing_left = not facing_left
-					_play_anim("flip")
-					Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
-			else:
-				velocity.y = 0.0
-		Statics.DirsSurface.CEILING:
-			if vis.is_on_screen():
-				if is_on_wall() or (turn and (
-					(facing_left and player.position.x < position.x) or
-					(not facing_left and player.position.x > position.x)
-				)):
-					facing_left = not facing_left
-					_play_anim("turn" if is_on_floor() else "fall")
-				velocity.x = speed if facing_left else -speed
-				if jump:
-					velocity.y = JUMP_POWER
-					_play_anim("jump")
-				if flip:
-					_set_gravity(Statics.DirsSurface.FLOOR)
-					facing_left = not facing_left
-					_play_anim("flip")
-					Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
-			else:
-				velocity.x = 0.0
-	move_and_slide()
+	var real = self
+	if real is CharacterBody2D:
+		var player:Player = GameCore.instance.player
+		real.velocity += GRAVITY * delta * -real.up_direction
+		match direction:
+			Statics.DirsSurface.FLOOR:
+				if vis.is_on_screen():
+					if real.is_on_wall() or (turn and (
+						(facing_left and player.position.x > position.x) or
+						(not facing_left and player.position.x < position.x)
+					)):
+						facing_left = not facing_left
+						_play_anim("turn" if real.is_on_floor() else "fall")
+					real.velocity.x = -speed if facing_left else speed
+					if jump:
+						real.velocity.y = -JUMP_POWER
+						_play_anim("jump")
+					if flip:
+						_set_gravity(Statics.DirsSurface.CEILING)
+						facing_left = not facing_left
+						_play_anim("flip")
+						Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
+				else:
+					real.velocity.x = 0.0
+			Statics.DirsSurface.LWALL:
+				if vis.is_on_screen():
+					if real.is_on_wall() or (turn and (
+						(facing_left and player.position.y > position.y) or
+						(not facing_left and player.position.y < position.y)
+					)):
+						facing_left = not facing_left
+						_play_anim("turn" if real.is_on_floor() else "fall")
+					real.velocity.y = -speed if facing_left else speed
+					if jump:
+						real.velocity.x = JUMP_POWER
+						_play_anim("jump")
+					if flip:
+						_set_gravity(Statics.DirsSurface.RWALL)
+						facing_left = not facing_left
+						_play_anim("flip")
+						Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
+				else:
+					real.velocity.y = 0.0
+			Statics.DirsSurface.RWALL:
+				if vis.is_on_screen():
+					if real.is_on_wall() or (turn and (
+						(facing_left and player.position.y < position.y) or
+						(not facing_left and player.position.y > position.y)
+					)):
+						facing_left = not facing_left
+						_play_anim("turn" if real.is_on_floor() else "fall")
+					real.velocity.y = speed if facing_left else -speed
+					if jump:
+						real.velocity.x = -JUMP_POWER
+						_play_anim("jump")
+					if flip:
+						_set_gravity(Statics.DirsSurface.LWALL)
+						facing_left = not facing_left
+						_play_anim("flip")
+						Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
+				else:
+					real.velocity.y = 0.0
+			Statics.DirsSurface.CEILING:
+				if vis.is_on_screen():
+					if real.is_on_wall() or (turn and (
+						(facing_left and player.position.x < position.x) or
+						(not facing_left and player.position.x > position.x)
+					)):
+						facing_left = not facing_left
+						_play_anim("turn" if real.is_on_floor() else "fall")
+					real.velocity.x = speed if facing_left else -speed
+					if jump:
+						real.velocity.y = JUMP_POWER
+						_play_anim("jump")
+					if flip:
+						_set_gravity(Statics.DirsSurface.FLOOR)
+						facing_left = not facing_left
+						_play_anim("flip")
+						Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [direction])
+				else:
+					real.velocity.x = 0.0
+		real.move_and_slide()
 
 
 func _set_gravity(new_dir:Statics.DirsSurface) -> void:
 	direction = new_dir
-	match new_dir:
-		Statics.DirsSurface.FLOOR: up_direction = Vector2.UP
-		Statics.DirsSurface.LWALL: up_direction = Vector2.RIGHT
-		Statics.DirsSurface.RWALL: up_direction = Vector2.LEFT
-		Statics.DirsSurface.CEILING: up_direction = Vector2.DOWN
+	var real = self
+	if real is CharacterBody2D:
+		match new_dir:
+			Statics.DirsSurface.FLOOR: real.up_direction = Vector2.UP
+			Statics.DirsSurface.LWALL: real.up_direction = Vector2.RIGHT
+			Statics.DirsSurface.RWALL: real.up_direction = Vector2.LEFT
+			Statics.DirsSurface.CEILING: real.up_direction = Vector2.DOWN
 	if new_dir == Statics.DirsSurface.LWALL or new_dir == Statics.DirsSurface.RWALL:
 		col.rotation_degrees = 90
 		hitbox.rotation_degrees = 90

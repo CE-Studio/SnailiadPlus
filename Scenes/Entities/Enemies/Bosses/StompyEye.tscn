@@ -11,9 +11,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxpcm"]
 size = Vector2(100, 52)
 
-[node name="StompyEye" type="CharacterBody2D" unique_id=1390318715]
-collision_layer = 0
-collision_mask = 0
+[node name="StompyEye" type="Node2D" unique_id=566129591]
 script = ExtResource("1_8dq5x")
 max_health = 2000
 max_health_hard = 4000

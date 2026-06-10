@@ -15,10 +15,8 @@ size = Vector2(46, 46)
 shader = ExtResource("4_pcoba")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Canon" type="CharacterBody2D" unique_id=186045931]
+[node name="Canon" type="Node2D" unique_id=1337681332]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_7x2o5")
 max_health = 2000
 can_damage = false

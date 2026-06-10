@@ -2,7 +2,7 @@
 # Original code Copyright 2011 Auriplane, used with permission
 @icon("res://Editor/ico/Enemy.svg")
 class_name Enemy
-extends CharacterBody2D
+extends Node2D
 
 
 #region Vaariables

@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://b3h5jqbxfw8mx" path="res://Assets/Images/Entities/Tallfish1.png" id="5_ahqjg"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_ijpss"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrvrh"]
-size = Vector2(32, 48)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(30, 46)
 
@@ -17,10 +14,8 @@ size = Vector2(30, 46)
 shader = ExtResource("4_ykcgw")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="TallfishCommon" type="CharacterBody2D" unique_id=2144086700]
+[node name="TallfishCommon" type="Node2D" unique_id=696439526]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_ahqjg")
 max_health = 500
 attack = 4
@@ -28,10 +23,6 @@ defense = 10
 health_orb_value = 2
 kill_particle_range = Vector2i(16, 24)
 kill_particle_count = 6
-
-[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=215247486]
-shape = SubResource("RectangleShape2D_qrvrh")
-debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1688438767]
 collision_layer = 64

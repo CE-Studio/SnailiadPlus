@@ -8,9 +8,6 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_5f0x0"]
 [ext_resource type="AudioStream" uid="uid://wg5300r3cxrj" path="res://Assets/Sounds/Sfx/Enemy/Chirp.ogg" id="6_rc8po"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
-size = Vector2(16, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
@@ -18,18 +15,12 @@ size = Vector2(14, 14)
 shader = ExtResource("2_a730g")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="ChirpyTough" type="CharacterBody2D" unique_id=1754002772]
+[node name="ChirpyTough" type="Node2D" unique_id=22532425]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_7nja0")
 max_health = 1
 attack = 3
 health_orb_value = 1
-
-[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=980056041]
-shape = SubResource("RectangleShape2D_43bce")
-debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=689466839]
 collision_layer = 64

@@ -8,10 +8,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(16, 16)
 
-[node name="SpaceboxShield" type="CharacterBody2D" unique_id=1453314120]
+[node name="SpaceboxShield" type="Node2D" unique_id=1841395489]
 z_index = -1
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_bb8v3")
 max_health = 100
 attack = 4
@@ -22,10 +20,6 @@ shield_entity = true
 kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String](["ExplosionWhiteSmall"])
 kill_particle_count = 1
-
-[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1726997841]
-shape = SubResource("RectangleShape2D_vj7im")
-debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=858626240]
 collision_layer = 64

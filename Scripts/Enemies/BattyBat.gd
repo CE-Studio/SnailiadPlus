@@ -9,6 +9,7 @@ const MOVE_TIMEOUT:float = 1.2
 const REACT_DISTANCE:float = 110
 const SPEED:float = 70
 
+var velocity:Vector2 = Vector2.ZERO
 var move_timeout:float = MOVE_TIMEOUT
 var is_flying:bool = false
 var facing_left:bool = false
@@ -53,7 +54,7 @@ func _physics_process(delta: float) -> void:
 			sprite.action = "idle_" + ("left" if facing_left else "right")
 	else:
 		velocity.y -= SPEED * 2 * delta
-	move_and_slide()
+	position += velocity * delta
 
 
 func _get_left() -> bool:

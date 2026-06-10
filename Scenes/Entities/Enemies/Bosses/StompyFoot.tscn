@@ -6,9 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bo5u8y4rqbe8k" path="res://Assets/Images/Entities/Boss2Foot.png" id="3_hia21"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0e6jo"]
 
-[node name="StompyFoot" type="CharacterBody2D" unique_id=1583831825]
-collision_layer = 0
-collision_mask = 0
+[node name="StompyFoot" type="Node2D" unique_id=1149713511]
 script = ExtResource("1_7uoty")
 max_health = 2000
 max_health_hard = 4000

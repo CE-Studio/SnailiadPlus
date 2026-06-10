@@ -8,9 +8,6 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_0or7v"]
 [ext_resource type="AudioStream" uid="uid://bbfm1qc6s5joh" path="res://Assets/Sounds/Sfx/Enemy/BatFly.ogg" id="6_gjyyg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
-size = Vector2(32, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(30, 14)
 
@@ -18,20 +15,14 @@ size = Vector2(30, 14)
 shader = ExtResource("2_u6hm7")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="BattyBat" type="CharacterBody2D" unique_id=1713233848]
+[node name="BattyBat" type="Node2D" unique_id=300709986]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_gjyyg")
 max_health = 120
 attack = 3
 defense = 10
 health_orb_value = 4
 kill_particle_range = Vector2i(16, 8)
-
-[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=384878823]
-shape = SubResource("RectangleShape2D_yl0hf")
-debug_color = Color(0.976029, 0, 0.414963, 0.42)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1687600946]
 collision_layer = 64

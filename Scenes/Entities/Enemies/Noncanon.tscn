@@ -15,10 +15,8 @@ size = Vector2(46, 46)
 shader = ExtResource("4_t2eo6")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="Noncanon" type="CharacterBody2D" unique_id=868099007]
+[node name="Noncanon" type="Node2D" unique_id=696436906]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_xuow6")
 max_health = 650
 can_damage = false

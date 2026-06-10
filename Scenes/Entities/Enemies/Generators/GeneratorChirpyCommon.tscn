@@ -3,21 +3,11 @@
 [ext_resource type="Script" uid="uid://bgjlk85xrejpx" path="res://Scripts/Enemies/Generators/GeneratorChirpyCommon.gd" id="1_b3i1h"]
 [ext_resource type="Texture2D" uid="uid://2lg8dqmi62ui" path="res://Assets/Images/Entities/Generators.png" id="2_b3i1h"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3f02"]
-size = Vector2(16, 16)
-
-[node name="GeneratorChirpyCommon" type="CharacterBody2D" unique_id=1859593574]
-collision_layer = 0
-collision_mask = 0
+[node name="GeneratorChirpyCommon" type="Node2D" unique_id=608385580]
 script = ExtResource("1_b3i1h")
 make_sound_on_ping = false
 invulnerable = true
 can_damage = false
-metadata/_custom_type_script = "uid://cai477htwvosf"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2024953960]
-shape = SubResource("RectangleShape2D_g3f02")
-debug_color = Color(0.564706, 0.564706, 0.564706, 0.262745)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=332126349]
 texture = ExtResource("2_b3i1h")

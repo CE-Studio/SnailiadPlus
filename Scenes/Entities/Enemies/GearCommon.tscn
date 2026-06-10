@@ -15,10 +15,8 @@ size = Vector2(30, 30)
 shader = ExtResource("4_qyfsf")
 shader_parameter/flash_color = Color(0, 0, 0, 1)
 
-[node name="GearCommon" type="CharacterBody2D" unique_id=1516178241]
+[node name="GearCommon" type="Node2D" unique_id=1030936440]
 z_index = 103
-collision_layer = 64
-collision_mask = 0
 script = ExtResource("1_ly6hl")
 max_health = 500
 attack = 4

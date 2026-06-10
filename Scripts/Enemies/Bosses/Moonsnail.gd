@@ -169,49 +169,51 @@ func _physics_process(delta: float) -> void:
 			_tick_death(delta)
 		return
 	
-	just_grav_jumped = false
-	_update_ai(delta)
-	_fix_gravity()
-	if _pressed_jump(true) and jumping:
-		_do_gravity_jump()
-	_check_move_input(delta)
-	if _pressed_jump(true) and not jumping:
-		_do_jump()
-	_attack(delta)
-	move_and_slide()
-	if is_on_ceiling() or is_on_wall():
-		just_hit_surface = true
-	if is_on_floor():
-		just_hit_surface = false
-		match gravity:
-			Statics.DirsSurface.FLOOR: position.y -= 0.125
-			Statics.DirsSurface.LWALL: position.x += 0.125
-			Statics.DirsSurface.RWALL: position.x -= 0.125
-			Statics.DirsSurface.CEILING: position.y += 0.125
-	if frames_down > 0:
-		frames_down += 1
-	if frames_left > 0:
-		frames_left += 1
-	if frames_right > 0:
-		frames_right += 1
-	if frames_up > 0:
-		frames_up += 1
-	if frames_jump > 0:
-		frames_jump += 1
-	super._physics_process(delta)
-	if debug_label.visible:
-		debug_label.global_position = Vector2(16, 16)
-		debug_label.set_snaily_text("\n".join([
-			"Mode - " + str(BossMode.keys()[mode]),
-			"Mode elapsed - " + str(mode_elapsed),
-			"Gravity - " + str(Statics.DirsSurface.keys()[gravity]),
-			"Target grav - " + str(Statics.DirsSurface.keys()[target_gravity]),
-			"Left - " + str(facing_left),
-			"Jumping - " + str(jumping),
-			"Fall frames - " + str(fall_frames),
-			"Move target - " + str(move_end),
-			"Tele target - " + str(tele_end)
-		]))
+	var real = self
+	if real is CharacterBody2D:
+		just_grav_jumped = false
+		_update_ai(delta)
+		_fix_gravity()
+		if _pressed_jump(true) and jumping:
+			_do_gravity_jump()
+		_check_move_input(delta)
+		if _pressed_jump(true) and not jumping:
+			_do_jump()
+		_attack(delta)
+		real.move_and_slide()
+		if real.is_on_ceiling() or real.is_on_wall():
+			just_hit_surface = true
+		if real.is_on_floor():
+			just_hit_surface = false
+			match gravity:
+				Statics.DirsSurface.FLOOR: position.y -= 0.125
+				Statics.DirsSurface.LWALL: position.x += 0.125
+				Statics.DirsSurface.RWALL: position.x -= 0.125
+				Statics.DirsSurface.CEILING: position.y += 0.125
+		if frames_down > 0:
+			frames_down += 1
+		if frames_left > 0:
+			frames_left += 1
+		if frames_right > 0:
+			frames_right += 1
+		if frames_up > 0:
+			frames_up += 1
+		if frames_jump > 0:
+			frames_jump += 1
+		super._physics_process(delta)
+		if debug_label.visible:
+			debug_label.global_position = Vector2(16, 16)
+			debug_label.set_snaily_text("\n".join([
+				"Mode - " + str(BossMode.keys()[mode]),
+				"Mode elapsed - " + str(mode_elapsed),
+				"Gravity - " + str(Statics.DirsSurface.keys()[gravity]),
+				"Target grav - " + str(Statics.DirsSurface.keys()[target_gravity]),
+				"Left - " + str(facing_left),
+				"Jumping - " + str(jumping),
+				"Fall frames - " + str(fall_frames),
+				"Move target - " + str(move_end),
+				"Tele target - " + str(tele_end)
+			]))
 
 
 func exit_intro() -> void:
@@ -463,48 +465,50 @@ func _update_move() -> void:
 
 
 func _update_teleport() -> void:
-	if not mode_initialized:
-		mode_initialized = true
-		_pick_tele_target()
-		sprite.modulate.a = 0.0
-		can_damage = false
-		invulnerable = true
-		for ball in shadowballs:
-			ball.global_position = tele_start
-		shadowball_group.visible = true
-		sfx_teleport.play()
-		var particle_state:int = ProjectSettings.get_setting("game/world/particles")
-		if particle_state == Statics.ParticleOptions.ENTITIES_ALL or particle_state == Statics.ParticleOptions.ALL:
-			Statics.spawn_particle("MoonTeleport", Room.Layers.GROUND, tele_start)
-	var progress:float = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME, SIGMOID_MOD)
-	var this_sigmoid:float = 0.0
-	if progress <= 0.5:
-		this_sigmoid = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME * 2, SIGMOID_MOD)
-	else:
-		this_sigmoid = Statics.normalized_sigmoid((1 - mode_elapsed / TELEPORT_TIME) * 2, SIGMOID_MOD)
-	var ball_radius:float = SHADOW_BALL_RADIUS * this_sigmoid
-	var ball_theta:float = TAU * this_sigmoid
-	var i:int = 0
-	while i < shadowballs.size():
-		shadowballs[i].global_position = Vector2(
-			tele_start.x * (1.0 - progress) + tele_end.x * progress + cos(
-				ball_theta + TAU / shadowballs.size() * i
-			) * ball_radius,
-			tele_start.y * (1.0 - progress) + tele_end.y * progress + sin(
-				ball_theta + TAU / shadowballs.size() * i
-			) * ball_radius
-		)
-		i += 1
-	velocity = Vector2.ZERO
-	_release_jump()
-	if mode_elapsed / TELEPORT_TIME >= 1.0:
-		position = tele_end
-		_set_mode(BossMode.ATTACK, true)
-		_set_dir(target_gravity, facing_left)
-		_face_player()
-		sprite.modulate.a = 1.0
-		can_damage = true
-		invulnerable = false
+	var real = self
+	if real is CharacterBody2D:
+		if not mode_initialized:
+			mode_initialized = true
+			_pick_tele_target()
+			sprite.modulate.a = 0.0
+			can_damage = false
+			invulnerable = true
+			for ball in shadowballs:
+				ball.global_position = tele_start
+			shadowball_group.visible = true
+			sfx_teleport.play()
+			var particle_state:int = ProjectSettings.get_setting("game/world/particles")
+			if particle_state == Statics.ParticleOptions.ENTITIES_ALL or particle_state == Statics.ParticleOptions.ALL:
+				Statics.spawn_particle("MoonTeleport", Room.Layers.GROUND, tele_start)
+		var progress:float = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME, SIGMOID_MOD)
+		var this_sigmoid:float = 0.0
+		if progress <= 0.5:
+			this_sigmoid = Statics.normalized_sigmoid(mode_elapsed / TELEPORT_TIME * 2, SIGMOID_MOD)
+		else:
+			this_sigmoid = Statics.normalized_sigmoid((1 - mode_elapsed / TELEPORT_TIME) * 2, SIGMOID_MOD)
+		var ball_radius:float = SHADOW_BALL_RADIUS * this_sigmoid
+		var ball_theta:float = TAU * this_sigmoid
+		var i:int = 0
+		while i < shadowballs.size():
+			shadowballs[i].global_position = Vector2(
+				tele_start.x * (1.0 - progress) + tele_end.x * progress + cos(
+					ball_theta + TAU / shadowballs.size() * i
+				) * ball_radius,
+				tele_start.y * (1.0 - progress) + tele_end.y * progress + sin(
+					ball_theta + TAU / shadowballs.size() * i
+				) * ball_radius
+			)
+			i += 1
+		real.velocity = Vector2.ZERO
+		_release_jump()
+		if mode_elapsed / TELEPORT_TIME >= 1.0:
+			position = tele_end
+			_set_mode(BossMode.ATTACK, true)
+			_set_dir(target_gravity, facing_left)
+			_face_player()
+			sprite.modulate.a = 1.0
+			can_damage = true
+			invulnerable = false
 
 
 func _update_attack(delta:float) -> void:
@@ -614,23 +618,25 @@ func _update_ai(delta:float) -> void:
 
 #region Movement handling
 func _set_dir(dir:Statics.DirsSurface, left:bool) -> void:
-	gravity = dir
-	facing_left = left
-	var rot_deg:float = 0.0
-	up_direction = Vector2.UP
-	match dir:
-		Statics.DirsSurface.LWALL:
-			rot_deg = 90.0
-			up_direction = Vector2.RIGHT
-		Statics.DirsSurface.RWALL:
-			rot_deg = -90.0
-			up_direction = Vector2.LEFT
-		Statics.DirsSurface.CEILING:
-			rot_deg = 180.0
-			up_direction = Vector2.DOWN
-	col.rotation_degrees = rot_deg
-	hitbox.rotation_degrees = rot_deg
-	cast_group.rotation_degrees = rot_deg
+	var real = self
+	if real is CharacterBody2D:
+		gravity = dir
+		facing_left = left
+		var rot_deg:float = 0.0
+		real.up_direction = Vector2.UP
+		match dir:
+			Statics.DirsSurface.LWALL:
+				rot_deg = 90.0
+				real.up_direction = Vector2.RIGHT
+			Statics.DirsSurface.RWALL:
+				rot_deg = -90.0
+				real.up_direction = Vector2.LEFT
+			Statics.DirsSurface.CEILING:
+				rot_deg = 180.0
+				real.up_direction = Vector2.DOWN
+		col.rotation_degrees = rot_deg
+		hitbox.rotation_degrees = rot_deg
+		cast_group.rotation_degrees = rot_deg
 
 
 func _face_player() -> void:
@@ -669,15 +675,17 @@ func _prep_jump(grav_jump_target:Statics.DirsSurface = Statics.DirsSurface.NONE,
 func _do_jump() -> void:
 	if not just_grav_jumped:
 		sfx_jump.play()
-	match gravity:
-		Statics.DirsSurface.FLOOR:
-			velocity.y = -JUMP_POWER
-		Statics.DirsSurface.LWALL:
-			velocity.x = JUMP_POWER
-		Statics.DirsSurface.RWALL:
-			velocity.x = -JUMP_POWER
-		Statics.DirsSurface.CEILING:
-			velocity.y = JUMP_POWER
+	var real = self
+	if real is CharacterBody2D:
+		match gravity:
+			Statics.DirsSurface.FLOOR:
+				real.velocity.y = -JUMP_POWER
+			Statics.DirsSurface.LWALL:
+				real.velocity.x = JUMP_POWER
+			Statics.DirsSurface.RWALL:
+				real.velocity.x = -JUMP_POWER
+			Statics.DirsSurface.CEILING:
+				real.velocity.y = JUMP_POWER
 
 
 func _do_gravity_jump() -> void:
@@ -755,71 +763,73 @@ func _check_move_input(delta:float) -> void:
 	if not jumping and not _casts_colliding():
 		jumping = true
 	
-	match gravity:
-		Statics.DirsSurface.FLOOR:
-			velocity.x = 0.0
-			if jumping:
-				velocity.y += GRAVITY * delta
-				jump_state = 1 if velocity.y < 0 else 2
-			if _pressed_left(false):
-				if not facing_left:
-					turned = true
-				facing_left = true
-				velocity.x = -RUN_SPEED
-			elif _pressed_right(false):
-				if facing_left:
-					turned = true
-				facing_left = false
-				velocity.x = RUN_SPEED
-			moving = velocity.x != 0.0
-		Statics.DirsSurface.LWALL:
-			velocity.y = 0.0
-			if jumping:
-				velocity.x -= GRAVITY * delta
-				jump_state = 1 if velocity.x > 0 else 2
-			if _pressed_up(false):
-				if not facing_left:
-					turned = true
-				facing_left = true
-				velocity.y = -RUN_SPEED
-			elif _pressed_down(false):
-				if facing_left:
-					turned = true
-				facing_left = false
-				velocity.y = RUN_SPEED
-			moving = velocity.y != 0.0
-		Statics.DirsSurface.RWALL:
-			velocity.y = 0.0
-			if jumping:
-				velocity.x += GRAVITY * delta
-				jump_state = 1 if velocity.x < 0 else 2
-			if _pressed_down(false):
-				if not facing_left:
-					turned = true
-				facing_left = true
-				velocity.y = RUN_SPEED
-			elif _pressed_up(false):
-				if facing_left:
-					turned = true
-				facing_left = false
-				velocity.y = -RUN_SPEED
-			moving = velocity.y != 0.0
-		Statics.DirsSurface.CEILING:
-			velocity.x = 0.0
-			if jumping:
-				velocity.y -= GRAVITY * delta
-				jump_state = 1 if velocity.y > 0 else 2
-			if _pressed_right(false):
-				if not facing_left:
-					turned = true
-				facing_left = true
-				velocity.x = RUN_SPEED
-			elif _pressed_left(false):
-				if facing_left:
-					turned = true
-				facing_left = false
-				velocity.x = -RUN_SPEED
-			moving = velocity.x != 0.0
+	var real = self
+	if real is CharacterBody2D:
+		match gravity:
+			Statics.DirsSurface.FLOOR:
+				real.velocity.x = 0.0
+				if jumping:
+					real.velocity.y += GRAVITY * delta
+					jump_state = 1 if real.velocity.y < 0 else 2
+				if _pressed_left(false):
+					if not facing_left:
+						turned = true
+					facing_left = true
+					real.velocity.x = -RUN_SPEED
+				elif _pressed_right(false):
+					if facing_left:
+						turned = true
+					facing_left = false
+					real.velocity.x = RUN_SPEED
+				moving = real.velocity.x != 0.0
+			Statics.DirsSurface.LWALL:
+				real.velocity.y = 0.0
+				if jumping:
+					real.velocity.x -= GRAVITY * delta
+					jump_state = 1 if real.velocity.x > 0 else 2
+				if _pressed_up(false):
+					if not facing_left:
+						turned = true
+					facing_left = true
+					real.velocity.y = -RUN_SPEED
+				elif _pressed_down(false):
+					if facing_left:
+						turned = true
+					facing_left = false
+					real.velocity.y = RUN_SPEED
+				moving = real.velocity.y != 0.0
+			Statics.DirsSurface.RWALL:
+				real.velocity.y = 0.0
+				if jumping:
+					real.velocity.x += GRAVITY * delta
+					jump_state = 1 if real.velocity.x < 0 else 2
+				if _pressed_down(false):
+					if not facing_left:
+						turned = true
+					facing_left = true
+					real.velocity.y = RUN_SPEED
+				elif _pressed_up(false):
+					if facing_left:
+						turned = true
+					facing_left = false
+					real.velocity.y = -RUN_SPEED
+				moving = real.velocity.y != 0.0
+			Statics.DirsSurface.CEILING:
+				real.velocity.x = 0.0
+				if jumping:
+					real.velocity.y -= GRAVITY * delta
+					jump_state = 1 if real.velocity.y > 0 else 2
+				if _pressed_right(false):
+					if not facing_left:
+						turned = true
+					facing_left = true
+					real.velocity.x = RUN_SPEED
+				elif _pressed_left(false):
+					if facing_left:
+						turned = true
+					facing_left = false
+					real.velocity.x = -RUN_SPEED
+				moving = real.velocity.x != 0.0
 	
 	if jumping:
 		if turned:
@@ -833,45 +843,47 @@ func _check_move_input(delta:float) -> void:
 
 
 func _fix_gravity() -> void:
-	match gravity:
-		Statics.DirsSurface.FLOOR:
-			if not jumping and velocity.y > 0 and _pressed_down(false) and not just_hit_surface:
-				if not facing_left and _pressed_right(false):
-					facing_left = true
-				elif facing_left and _pressed_left(false):
-					facing_left = false
-				_play_anim("walk")
-			jumping = velocity.y != 0.0
-		Statics.DirsSurface.LWALL:
-			if not jumping and velocity.x < 0 and _pressed_left(false) and not just_hit_surface:
-				if not facing_left and _pressed_down(false):
-					facing_left = true
-				elif facing_left and _pressed_up(false):
-					facing_left = false
-				_play_anim("walk")
-			jumping = velocity.x != 0.0
-		Statics.DirsSurface.RWALL:
-			if not jumping and velocity.x > 0 and _pressed_right(false) and not just_hit_surface:
-				if not facing_left and _pressed_up(false):
-					facing_left = true
-				elif facing_left and _pressed_down(false):
-					facing_left = false
-				_play_anim("walk")
-			jumping = velocity.x != 0.0
-		Statics.DirsSurface.CEILING:
-			if not jumping and velocity.y < 0 and _pressed_up(false) and not just_hit_surface:
-				if not facing_left and _pressed_left(false):
-					facing_left = true
-				elif facing_left and _pressed_right(false):
-					facing_left = false
-				_play_anim("walk")
-			jumping = velocity.y != 0.0
-	if jumping:
-		fall_frames += 1
-	else:
-		fall_frames = 0
-	if fall_frames == 1:
-		_play_anim("jump")
+	var real = self
+	if real is CharacterBody2D:
+		match gravity:
+			Statics.DirsSurface.FLOOR:
+				if not jumping and real.velocity.y > 0 and _pressed_down(false) and not just_hit_surface:
+					if not facing_left and _pressed_right(false):
+						facing_left = true
+					elif facing_left and _pressed_left(false):
+						facing_left = false
+					_play_anim("walk")
+				jumping = real.velocity.y != 0.0
+			Statics.DirsSurface.LWALL:
+				if not jumping and real.velocity.x < 0 and _pressed_left(false) and not just_hit_surface:
+					if not facing_left and _pressed_down(false):
+						facing_left = true
+					elif facing_left and _pressed_up(false):
+						facing_left = false
+					_play_anim("walk")
+				jumping = real.velocity.x != 0.0
+			Statics.DirsSurface.RWALL:
+				if not jumping and real.velocity.x > 0 and _pressed_right(false) and not just_hit_surface:
+					if not facing_left and _pressed_up(false):
+						facing_left = true
+					elif facing_left and _pressed_down(false):
+						facing_left = false
+					_play_anim("walk")
+				jumping = real.velocity.x != 0.0
+			Statics.DirsSurface.CEILING:
+				if not jumping and real.velocity.y < 0 and _pressed_up(false) and not just_hit_surface:
+					if not facing_left and _pressed_left(false):
+						facing_left = true
+					elif facing_left and _pressed_right(false):
+						facing_left = false
+					_play_anim("walk")
+				jumping = real.velocity.y != 0.0
+		if jumping:
+			fall_frames += 1
+		else:
+			fall_frames = 0
+		if fall_frames == 1:
+			_play_anim("jump")
 #endregion
 
 

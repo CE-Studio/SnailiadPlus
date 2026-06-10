@@ -121,68 +121,70 @@ func _physics_process(delta: float) -> void:
 			var speed = PEA_SPEED * (PEA_MOD if hard_mode else 1.0)
 			_shoot(pea, target, speed)
 	
-	if is_falling:
-		vel += GRAVITY * delta
-		velocity = FALL_DIR * vel
-		move_and_slide()
-		if is_on_floor():
-			is_falling = false
-			set_dir(Statics.DirsSurface.FLOOR)
-			play_anim()
-	elif not stopped:
-		elapsed += delta
-		var this_tick_speed = SEC_PER_TICK_FAST if hard_mode else SEC_PER_TICK_SLOW
-		while elapsed > this_tick_speed:
-			elapsed -= this_tick_speed
-			vel = 0.0
-			var front_cast = cast_ccw_check if ccw else cast_cw_check
-			var back_cast = cast_ccw_back if ccw else cast_cw_back
-			var turn_outer:bool = true
-			if (front_cast.is_colliding() or back_cast.is_colliding() or cast_center.is_colliding()
-			or grace_period > 0.0):
-				turn_outer = false
-				match direction:
-					Statics.DirsSurface.FLOOR:
-						velocity = (Vector2.RIGHT if ccw else Vector2.LEFT) * SPEED
-					Statics.DirsSurface.LWALL:
-						velocity = (Vector2.DOWN if ccw else Vector2.UP) * SPEED
-					Statics.DirsSurface.RWALL:
-						velocity = (Vector2.UP if ccw else Vector2.DOWN) * SPEED
-					Statics.DirsSurface.CEILING:
-						velocity = (Vector2.LEFT if ccw else Vector2.RIGHT) * SPEED
-				move_and_slide()
-				if is_on_wall():
-					if cast_center.is_colliding():
-						turn(ccw)
-						play_anim("_turnto_inner")
-					else:
-						turn_outer = true
-			if turn_outer:
-				var turns = 0
-				is_falling = true
-				while turns < 4 and is_falling:
-					turn(not ccw)
-					if is_corner_solid():
-						is_falling = false
-						grace_period = 4
-						play_anim("_turnto_outer")
-						match direction:
-							Statics.DirsSurface.FLOOR:
-								position.y = roundi(position.y * 0.25) * 4.0
-								position.y -= Statics.FRAC_16
-							Statics.DirsSurface.LWALL:
-								position.x = roundi(position.x * 0.25) * 4.0
-								position.x += Statics.FRAC_16
-							Statics.DirsSurface.RWALL:
-								position.x = roundi(position.x * 0.25) * 4.0
-								position.x -= Statics.FRAC_16
-							Statics.DirsSurface.CEILING:
-								position.y = roundi(position.y * 0.25) * 4.0
-								position.y += Statics.FRAC_16
-					turns += 1
-				if is_falling:
-					up_direction = Vector2.UP
-	grace_period -= 1
+	var real = self
+	if real is CharacterBody2D:
+		if is_falling:
+			vel += GRAVITY * delta
+			real.velocity = FALL_DIR * vel
+			real.move_and_slide()
+			if real.is_on_floor():
+				is_falling = false
+				set_dir(Statics.DirsSurface.FLOOR)
+				play_anim()
+		elif not stopped:
+			elapsed += delta
+			var this_tick_speed = SEC_PER_TICK_FAST if hard_mode else SEC_PER_TICK_SLOW
+			while elapsed > this_tick_speed:
+				elapsed -= this_tick_speed
+				vel = 0.0
+				var front_cast = cast_ccw_check if ccw else cast_cw_check
+				var back_cast = cast_ccw_back if ccw else cast_cw_back
+				var turn_outer:bool = true
+				if (front_cast.is_colliding() or back_cast.is_colliding() or cast_center.is_colliding()
+				or grace_period > 0.0):
+					turn_outer = false
+					match direction:
+						Statics.DirsSurface.FLOOR:
+							real.velocity = (Vector2.RIGHT if ccw else Vector2.LEFT) * SPEED
+						Statics.DirsSurface.LWALL:
+							real.velocity = (Vector2.DOWN if ccw else Vector2.UP) * SPEED
+						Statics.DirsSurface.RWALL:
+							real.velocity = (Vector2.UP if ccw else Vector2.DOWN) * SPEED
+						Statics.DirsSurface.CEILING:
+							real.velocity = (Vector2.LEFT if ccw else Vector2.RIGHT) * SPEED
+					real.move_and_slide()
+					if real.is_on_wall():
+						if cast_center.is_colliding():
+							turn(ccw)
+							play_anim("_turnto_inner")
+						else:
+							turn_outer = true
+				if turn_outer:
+					var turns = 0
+					is_falling = true
+					while turns < 4 and is_falling:
+						turn(not ccw)
+						if is_corner_solid():
+							is_falling = false
+							grace_period = 4
+							play_anim("_turnto_outer")
+							match direction:
+								Statics.DirsSurface.FLOOR:
+									position.y = roundi(position.y * 0.25) * 4.0
+									position.y -= Statics.FRAC_16
+								Statics.DirsSurface.LWALL:
+									position.x = roundi(position.x * 0.25) * 4.0
+									position.x += Statics.FRAC_16
+								Statics.DirsSurface.RWALL:
+									position.x = roundi(position.x * 0.25) * 4.0
+									position.x -= Statics.FRAC_16
+								Statics.DirsSurface.CEILING:
+									position.y = roundi(position.y * 0.25) * 4.0
+									position.y += Statics.FRAC_16
+						turns += 1
+					if is_falling:
+						real.up_direction = Vector2.UP
+		grace_period -= 1
 
 
 func turn(_ccw:bool) -> void:
@@ -205,25 +207,27 @@ func is_corner_solid() -> bool:
 
 
 func set_dir(new_dir:Statics.DirsSurface) -> void:
-	direction = new_dir
-	match new_dir:
-		Statics.DirsSurface.FLOOR:
-			cast_group.rotation_degrees = 0.0
-			up_direction = Vector2.UP
-			box.rotation_degrees = 0.0
-		Statics.DirsSurface.LWALL:
-			cast_group.rotation_degrees = 90.0
-			up_direction = Vector2.RIGHT
-			box.rotation_degrees = 90.0
-		Statics.DirsSurface.RWALL:
-			cast_group.rotation_degrees = -90.0
-			up_direction = Vector2.LEFT
-			box.rotation_degrees = 90.0
-		Statics.DirsSurface.CEILING:
-			cast_group.rotation_degrees = 180.0
-			up_direction = Vector2.DOWN
-			box.rotation_degrees = 0.0
-	box.position = -up_direction
+	var real = self
+	if real is CharacterBody2D:
+		direction = new_dir
+		match new_dir:
+			Statics.DirsSurface.FLOOR:
+				cast_group.rotation_degrees = 0.0
+				real.up_direction = Vector2.UP
+				box.rotation_degrees = 0.0
+			Statics.DirsSurface.LWALL:
+				cast_group.rotation_degrees = 90.0
+				real.up_direction = Vector2.RIGHT
+				box.rotation_degrees = 90.0
+			Statics.DirsSurface.RWALL:
+				cast_group.rotation_degrees = -90.0
+				real.up_direction = Vector2.LEFT
+				box.rotation_degrees = 90.0
+			Statics.DirsSurface.CEILING:
+				cast_group.rotation_degrees = 180.0
+				real.up_direction = Vector2.DOWN
+				box.rotation_degrees = 0.0
+		box.position = -real.up_direction
 
 
 func play_anim(modifier:String = "") -> void:
