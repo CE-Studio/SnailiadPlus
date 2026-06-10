@@ -89,7 +89,8 @@ func spawn() -> void:
 
 
 func _check_boss_locked() -> bool:
-	if lock_type == LockTypes.LOCKED_BY_BOSS or lock_type == LockTypes.LOCKED_BY_BOSS_IN_RANDOMIZER:
+	if (lock_type == LockTypes.LOCKED_BY_BOSS
+	or (Statics.is_random_game and lock_type == LockTypes.LOCKED_BY_BOSS_IN_RANDOMIZER)):
 		match required_boss:
 			0:
 				if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) != true:
