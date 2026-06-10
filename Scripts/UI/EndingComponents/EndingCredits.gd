@@ -40,6 +40,8 @@ var end_visible:bool = false
 var scroll_end_time:float = 0.0
 ## The Y position the credits should stop scrolling at
 var stop_y:float = 1024.0
+## Debug tool to scroll credits up/down faster
+var can_scroll_manually:bool = false
 
 ## The parent to all credits objects. Will scroll up slowly overtime
 @export var credits_parent:Node2D
@@ -83,10 +85,11 @@ func _process(delta: float) -> void:
 	
 	if scroll_end_time == 0.0 and elapsed > SCROLL_DELAY:
 		var this_scroll_speed:float = SCROLL_SPEED
-		if SInput.vector_move().y > 0:
-			this_scroll_speed = SCROLL_SPEED_DOWN
-		elif SInput.vector_move().y < 0:
-			this_scroll_speed = SCROLL_SPEED_UP
+		if can_scroll_manually:
+			if SInput.vector_move().y > 0:
+				this_scroll_speed = SCROLL_SPEED_DOWN
+			elif SInput.vector_move().y < 0:
+				this_scroll_speed = SCROLL_SPEED_UP
 		credits_parent.position.y += this_scroll_speed * delta
 		tilemap.position.y += this_scroll_speed * delta * TILEMAP_SCROLL_MULT
 		if credits_parent.position.y <= stop_y:
@@ -422,4 +425,5 @@ func despawn() -> void:
 	stars.despawn()
 	UICore.instance.cam.reset_from_static_pos()
 	get_tree().paused = false
+	PauseLayer.suppress_menuing = false
 	queue_free()
