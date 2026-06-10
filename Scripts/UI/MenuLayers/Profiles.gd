@@ -124,7 +124,7 @@ func _update_profile_buttons() -> void:
 				stats += " / %08d" % str(profile["r_seed"])
 			button.set_subtext(stats)
 			marker.action = "none"
-			if (profile["world_flags"].size() >= (Statics.WorldFlags.DEFEATED_BOSS4 as int) - 1
+			if (profile["world_flags"].size() > (Statics.WorldFlags.DEFEATED_BOSS4 as int)
 			and profile["world_flags"][Statics.WorldFlags.DEFEATED_BOSS4]):
 				if profile["item_rate"] >= 100.0:
 					marker.action = "beaten_100"
