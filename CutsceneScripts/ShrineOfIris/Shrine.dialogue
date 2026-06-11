@@ -7,6 +7,8 @@ match CutsceneController.object_id:
 			do CutsceneController.perform_action("sleep", false)
 			do CutsceneController.perform_action("set_wont_float", false)
 			do CutsceneController.glide_to(Vector2(496, 184), 0)
+		else
+			do AchievementCore.instance.check_add(AchievementCore.Achievements.SUN_SNAIL)
 		if Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS) != true
 			do UICore.instance.show_area_text(Room.Areas.SHRINE_OF_IRIS)
 	when "38"
