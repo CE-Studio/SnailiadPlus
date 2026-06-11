@@ -33,7 +33,7 @@ match CutsceneController.object_id
 		elif Statics.get_item_percentage() < 100.0
 			NPC1: I have a goal in life.[wait=0.25]  One day,\nI will eat a pizza.[wait=0.4]  I mean it!![wait=0.4][speed=0.4]\nJust you watch, [wait=0.0625]{{Player.player_name}}!!
 		else
-			NPC1: {{Player.player_name}},[wait=0.125] you missed it![wait=0.25]  I made a\ndelicious pizza,[wait=0.125] and I ate the\nwhole[wait=0.125] thing!!![wait=0.3][speed=0.5]  {{GlobalText.EFF_SHAKE}}Om nom nom!
+			NPC1: {{Player.player_name}},[wait=0.125] you missed it![wait=0.25]  I made a\ndelicious pizza,[wait=0.125] and I ate the\nwhole[wait=0.125] thing!!![wait=0.3][speed=0.5]  {{GlobalText.EFF_WAVE}}Om nom nom!
 	
 	when "2"
 		if not Statics.is_random_game

@@ -8,5 +8,5 @@ if not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
 elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3)
 	NPC42: {{GlobalText.COL_MOON}}Moon Snail[/color] brought me here!\n[wait=0.15]Isn't he nice?[wait=0.15]  {{GlobalText.EFF_WAVE}}All the [color=#ff75f6]pink\ngrass[/color] I could ever eat!!
 else
-	NPC42: What?[wait=0.15]  There was a [color=#ff4f99]monster[/color]\nin the next room??[wait=0.45]  [speed=0.9]Are you trying\nto scare me, {{Player.player_name}}??
+	NPC42: What?[wait=0.15]  There was a [color=#ff4f99]monster[/color]\nin the next room??[wait=0.45]  [speed=0.9]Are you\ntrying to scare me, {{Player.player_name}}??
 => END
