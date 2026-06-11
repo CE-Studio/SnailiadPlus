@@ -179,7 +179,7 @@ func configure_display_mode(_credits:bool = false, _data:int = 0) -> void:
 func _process(delta: float) -> void:
 	if display_mode:
 		return
-	
+
 	if vis and vis.is_on_screen() and grant_bestiary_without_defeat and not sent_entry_once:
 		sent_entry_once = true
 		Statics.add_bestiary_entry(my_type)
@@ -194,7 +194,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta) -> void:
 	if display_mode:
 		return
-	
+
 	if damage_timeout > 0.0:
 		damage_timeout -= delta
 	if not intersecting_player and intersecting_pbullets.is_empty() and intersecting_ebullets.is_empty():
@@ -282,6 +282,7 @@ func _physics_process(delta) -> void:
 func _on_player_entered(_body) -> void:
 	intersecting_player = true
 
+
 func _on_bullet_entered(_area) -> void:
 	var bullet = _area.get_parent()
 	if bullet is PlayerBullet:
@@ -292,6 +293,7 @@ func _on_bullet_entered(_area) -> void:
 
 func _on_player_exited(_body) -> void:
 	intersecting_player = false
+
 
 func _on_bullet_exited(_area) -> void:
 	var bullet = _area.get_parent()
