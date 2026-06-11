@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cqpbt7vcrq3af"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_4q1mp"]
+[ext_resource type="Texture2D" uid="uid://dnlvoym7mocsg" path="res://Assets/Images/Endings/EndingBackground.png" id="2_4q1mp"]
+[ext_resource type="Texture2D" uid="uid://baded8o60aqlq" path="res://Assets/Images/Endings/EndingNormal.png" id="3_hxanu"]
+[ext_resource type="PackedScene" uid="uid://nkx3e8an1od7" path="res://Scenes/UI/HeaderlessScrollingSnailyButton.tscn" id="4_d06b4"]
+[ext_resource type="Script" uid="uid://dj6c07r7qv3u" path="res://Scripts/UI/MenuLayers/Gallery.gd" id="4_hxanu"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="5_2ghfo"]
+[ext_resource type="Texture2D" uid="uid://dkxkef70iyah0" path="res://Assets/Images/Endings/EndingBossRush.png" id="5_7yd1g"]
+[ext_resource type="Texture2D" uid="uid://vlc5vftc13kp" path="res://Assets/Images/Endings/Ending100.png" id="6_4iwkh"]
+[ext_resource type="Texture2D" uid="uid://bxsv368macrl5" path="res://Assets/Images/Endings/EndingSub30.png" id="7_pjuwu"]
+[ext_resource type="Texture2D" uid="uid://cvo8qw0jy8utd" path="res://Assets/Images/Endings/EndingInsane.png" id="8_ojrqj"]
+[ext_resource type="Texture2D" uid="uid://e8hs3bu1t4rk" path="res://Assets/Images/Endings/EndingLocked.png" id="9_vgp7s"]
+
+[node name="Gallery" type="Node2D" unique_id=1065957483]
+script = ExtResource("1_4q1mp")
+hide_global_menu_assets = true
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1536872357]
+position = Vector2(200, 112)
+texture = ExtResource("2_4q1mp")
+
+[node name="Pics" type="Sprite2D" parent="." unique_id=303848986]
+position = Vector2(200, 104)
+texture = ExtResource("3_hxanu")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1563110484 node_paths=PackedStringArray("bg", "pic", "main_scroller")]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 184.0
+offset_right = 400.0
+offset_bottom = 334.0
+script = ExtResource("4_hxanu")
+bg = NodePath("../Background")
+pic = NodePath("../Pics")
+main_scroller = NodePath("MainScroller")
+pic_normal = ExtResource("3_hxanu")
+pic_rush = ExtResource("5_7yd1g")
+pic_100 = ExtResource("6_4iwkh")
+pic_sub30 = ExtResource("7_pjuwu")
+pic_absurd = ExtResource("8_ojrqj")
+pic_locked = ExtResource("9_vgp7s")
+
+[node name="MainScroller" parent="MainVBox" unique_id=1510781671 instance=ExtResource("4_d06b4")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Back")
+cycle_options = Array[String](["menu_option_achievements_locked_title"])
+auto_select_mode = true
+grab_focus_on_load = true
+
+[node name="Back" parent="MainVBox" unique_id=891230908 instance=ExtResource("5_2ghfo")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../MainScroller")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../MainScroller")
+focus_next = NodePath("../MainScroller")
+focus_previous = NodePath("../MainScroller")
+button_text = "Return to museum"
+back_one_layer = true
+hide_frame = true
+
+[connection signal="option_cycled" from="MainVBox/MainScroller" to="MainVBox" method="_on_option_cycled"]

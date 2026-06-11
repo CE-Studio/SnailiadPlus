@@ -94,7 +94,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../MainScroller")
 focus_next = NodePath("../MainScroller")
 focus_previous = NodePath("../MainScroller")
-button_text = "Return to records"
+button_text = "Return to museum"
 back_one_layer = true
 hide_frame = true
 

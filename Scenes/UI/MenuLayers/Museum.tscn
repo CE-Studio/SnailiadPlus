@@ -39,6 +39,7 @@ focus_neighbor_bottom = NodePath("../Achievements")
 focus_next = NodePath("../Achievements")
 focus_previous = NodePath("../Scores")
 button_text = "Gallery"
+quick_load_layer = "Gallery"
 hide_frame = true
 
 [node name="Achievements" parent="MainVBox" unique_id=985173233 instance=ExtResource("2_v7ejv")]
