@@ -49,7 +49,6 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.SHELLBREAKER
-	col = $"BodyBox"
 	sprite = $"Body"
 	hitbox = $"Area2D"
 	vis = $"VisibleOnScreenNotifier2D"
@@ -167,7 +166,6 @@ func _physics_process(delta) -> void:
 			for _hand in hands:
 				_hand.kill()
 			hands.clear()
-			col.disabled = true
 			return
 	super(delta)
 
