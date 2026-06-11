@@ -258,6 +258,15 @@ func _sort_br(a:Vector2i, b:Vector2i) -> bool:
 	if a.x == b.x:
 		return a.y > b.y
 	return a.x > b.x
+
+
+func _sort_positional(a:Vector2i, b:Vector2i) -> bool:
+	var r_a := (a * 16) + Vector2i(8, 8)
+	var r_b := (b * 16) + Vector2i(8, 8)
+	var comp := Vector2i.ZERO
+	if is_instance_valid(Player.instance):
+		comp = Vector2i(Player.instance.global_position)
+	return r_a.distance_squared_to(comp) < r_b.distance_squared_to(comp)
 #endregion
 
 
@@ -271,18 +280,19 @@ func _spawn_entities_from_layer(layer:int) -> void:
 		if layer == 1 and cells.is_empty():
 			spawned_secondary = true
 			return
-		var center:Vector2 = bounds.get_center()
-		if GameCore.instance:
-			var player:Vector2 = GameCore.instance.player.position
-			if player.y > center.y:
-				if player.x > center.x:
-					cells.sort_custom(_sort_br)
-				else:
-					cells.sort_custom(_sort_bl)
-			elif player.x > center.x:
-				cells.sort_custom(_sort_tr)
-			else:
-				cells.sort_custom(_sort_tl)
+		#var center:Vector2 = bounds.get_center()
+		#if GameCore.instance:
+			#var player:Vector2 = GameCore.instance.player.position
+			#if player.y > center.y:
+				#if player.x > center.x:
+					#cells.sort_custom(_sort_br)
+				#else:
+					#cells.sort_custom(_sort_bl)
+			#elif player.x > center.x:
+				#cells.sort_custom(_sort_tr)
+			#else:
+				#cells.sort_custom(_sort_tl)
+		cells.sort_custom(_sort_positional)
 	#print("%d - %d/%d" % [layer, spawned_sp, cells.size()])
 	var running_count:int = 0
 	if layer == 1:
