@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bk6hmfxa0ad1c"]
 
-[ext_resource type="Script" path="res://Scripts/Particles/BGSpawner.gd" id="1_uvhul"]
+[ext_resource type="Script" uid="uid://b6kon3xh5pvkq" path="res://Scripts/Particles/BGSpawner.gd" id="1_uvhul"]
 
 [node name="BGSpawner" type="Area2D" unique_id=977259055]
 collision_layer = 0

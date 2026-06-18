@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7hk1dssrcct4"]
 
-[ext_resource type="Script" path="res://Scripts/Particles/BGBird.gd" id="1_ypp7s"]
+[ext_resource type="Script" uid="uid://dngoea22fbdkr" path="res://Scripts/Particles/BGBird.gd" id="1_ypp7s"]
 [ext_resource type="Texture2D" uid="uid://ck7eivtpt6146" path="res://Assets/Images/Particles/BGBird.png" id="2_ypp7s"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_0mmox"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_pel1u"]

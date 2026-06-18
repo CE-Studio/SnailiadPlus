@@ -42,7 +42,6 @@ alignment = 1
 custom_minimum_size = Vector2(56, 0)
 layout_mode = 2
 text = "Text!!"
-scroll_active = true
 autowrap_mode = 0
 
 [node name="SmallContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=441233737]
@@ -54,7 +53,6 @@ custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "Small text!!"
-scroll_active = true
 autowrap_mode = 0
 text_scale = 1
 

@@ -5,12 +5,11 @@
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vd60y"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_340f1"]
 
-[node name="Parry" type="Node2D" unique_id=808283967 node_paths=PackedStringArray("sprite", "sound", "timer")]
+[node name="Parry" type="Node2D" unique_id=808283967 node_paths=PackedStringArray("sprite", "timer")]
 z_index = 275
 script = ExtResource("1_m5mgb")
 sprite = NodePath("JsonSprite2D")
 anim_name = "anim"
-sound = NodePath("")
 timer = NodePath("Timer")
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1758689635]

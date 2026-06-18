@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
 [ext_resource type="PackedScene" uid="uid://b051o8jm6et2f" path="res://Scenes/internals/MusicManager.tscn" id="4_jwv4s"]
 [ext_resource type="PackedScene" uid="uid://d2376pjd403n3" path="res://Scenes/internals/LimitedSoundHandler.tscn" id="5_lohlh"]
-[ext_resource type="Script" path="res://Scripts/Classes/RoomLoader.gd" id="6_kilg5"]
+[ext_resource type="Script" uid="uid://o7gmlfvapbjh" path="res://Scripts/Classes/RoomLoader.gd" id="6_kilg5"]
 
 [node name="GameScene" type="Node2D" unique_id=549691468 node_paths=PackedStringArray("player", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler", "room_loader")]
 process_mode = 1

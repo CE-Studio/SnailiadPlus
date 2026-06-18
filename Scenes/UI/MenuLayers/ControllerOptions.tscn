@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nkfen5qpu4v2"]
 
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_p4vr5"]
-[ext_resource type="Script" path="res://Scripts/UI/MenuLayers/ControllerOptions.gd" id="2_p4vr5"]
+[ext_resource type="Script" uid="uid://dgpkjco60omt4" path="res://Scripts/UI/MenuLayers/ControllerOptions.gd" id="2_p4vr5"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="3_5vtdb"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="4_8sr6s"]
 
