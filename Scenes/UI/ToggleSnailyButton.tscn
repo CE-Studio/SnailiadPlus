@@ -46,7 +46,6 @@ theme_override_constants/margin_bottom = -2
 [node name="SnailyText" parent="HBoxContainer/PanelContainer/MarginContainer" unique_id=294767652 instance=ExtResource("1_vul1p")]
 layout_mode = 2
 text = "Text!!"
-scroll_active = true
 autowrap_mode = 0
 horizontal_alignment = 1
 

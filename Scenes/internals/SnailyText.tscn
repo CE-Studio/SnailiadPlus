@@ -7,10 +7,6 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yjrfy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hkub7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kra6s"]
-
 [node name="SnailyText" type="RichTextLabel" unique_id=326553468]
 clip_contents = false
 offset_right = 1.0
@@ -19,8 +15,6 @@ theme = ExtResource("1_52xjo")
 theme_override_font_sizes/normal_font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7iv8x")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yjrfy")
-theme_override_styles/background = SubResource("StyleBoxEmpty_hkub7")
-theme_override_styles/fill = SubResource("StyleBoxEmpty_kra6s")
 bbcode_enabled = true
 fit_content = true
 scroll_active = false

@@ -71,6 +71,7 @@ shape = SubResource("RectangleShape2D_gpwuj")
 debug_color = Color(0, 0.6509804, 0.11372549, 0.05882353)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=42102434]
+visible = false
 z_index = 301
 texture = ExtResource("2_cksbo")
 hframes = 4

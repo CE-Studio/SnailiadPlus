@@ -60,8 +60,8 @@ position = Vector2(112, 96)
 
 [node name="Header" type="RichTextLabel" parent="Easy" unique_id=629256003]
 modulate = Color(0.7019608, 0.972549, 0.52156866, 1)
-clip_contents = false
 custom_minimum_size = Vector2(192, 0)
+clip_contents = false
 offset_left = -96.0
 offset_top = 1.0
 offset_right = 96.0

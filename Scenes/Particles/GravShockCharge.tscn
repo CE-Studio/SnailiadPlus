@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bp7ee3koqr18a"]
 
-[ext_resource type="Script" path="res://Scripts/Classes/Particle.gd" id="1_1trfw"]
+[ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_1trfw"]
 [ext_resource type="Texture2D" uid="uid://5tfbanrh15tt" path="res://Assets/Images/Particles/ShockCharge.png" id="2_1trfw"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_7eh64"]
 [ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_nxyei"]

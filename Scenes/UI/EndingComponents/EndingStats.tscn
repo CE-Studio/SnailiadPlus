@@ -469,8 +469,8 @@ offset_bottom = 176.00003
 alignment = 1
 
 [node name="ItemHeader" type="RichTextLabel" parent="ItemContainer" unique_id=470990984]
-clip_contents = false
 custom_minimum_size = Vector2(200, 0)
+clip_contents = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 16
@@ -490,8 +490,8 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="ItemCount" type="RichTextLabel" parent="ItemContainer" unique_id=1834417836]
-clip_contents = false
 custom_minimum_size = Vector2(32, 0)
+clip_contents = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 16
@@ -511,8 +511,8 @@ offset_bottom = 200.00003
 alignment = 1
 
 [node name="TimeHeader" type="RichTextLabel" parent="TimeContainer" unique_id=421990909]
-clip_contents = false
 custom_minimum_size = Vector2(120, 0)
+clip_contents = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 16
@@ -532,8 +532,8 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="TimeCount" type="RichTextLabel" parent="TimeContainer" unique_id=656720110]
-clip_contents = false
 custom_minimum_size = Vector2(92, 0)
+clip_contents = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 16
