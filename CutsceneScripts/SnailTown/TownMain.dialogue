@@ -149,7 +149,7 @@ match CutsceneController.object_id
 		if Statics.get_item_percentage() < 100.0
 			NPC17: There's a hidden room under the\npath into town.[wait=0.25]  I don't know\nhow to get in yet, though...
 		else
-			NPC17: They call me [color=#ffb23d]upside-down snail[/color],[wait=0.25]\nbut I think everyone else is\nupside down!
+			NPC17: They call me [color=#fcd884]upside-down snail[/color],[wait=0.25]\nbut I think everyone else is\nupside down!
 	
 	when "25"
 		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.BOOMERANG) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG)
