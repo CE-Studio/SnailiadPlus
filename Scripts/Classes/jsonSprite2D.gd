@@ -74,6 +74,10 @@ func _check_action():
 
 
 func _ready() -> void:
+	if get_parent():
+		push_warning("Instance of deprecated JsonSprite2D has been created as child of " + str(get_parent().name) + ". This class has been deprecated. Please swap this instance to a Sprite2D or AnimatedSprite2D.")
+	else:
+		push_warning("Instance of deprecated JsonSprite has been created. This class has been deprecated. Please swap this instance to a Sprite2D or AnimatedSprite2D.")
 	var pathtrimmed := texture_path.get_basename()
 	if not texture_path.get_extension().to_lower() == "json":
 		assert(false, "Path is not a json file!")
