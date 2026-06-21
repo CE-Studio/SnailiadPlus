@@ -13,7 +13,6 @@ var unprocessed_marker_positions:Array = []
 
 
 func _ready() -> void:
-	%"JsonSprite2D".action = "idle"
 	if gui_debug:
 		return
 	SInput.rebind_all()
