@@ -10,6 +10,7 @@ extends RichTextLabel
 
 
 #region Variables
+## @deprecated
 @export var max_width:int = 0:
 	set(value):
 		max_width = value
@@ -137,6 +138,7 @@ func set_alignment(horiz:int, vert:int) -> void:
 
 
 ## Recalculates the label's size based on the set maximum size and text contained within
+## @deprecated
 func reset_label_size() -> void:
 	var longest_line = get_width()
 	var scale_mod = float(text_scale) * 0.5
@@ -155,18 +157,20 @@ func reset_label_size() -> void:
 func rescale_horizontal(_limit:bool = false) -> void:
 	var longest_line:int = get_width()
 	var scale_mod:float = float(text_scale) * 0.5
-	custom_minimum_size.x = ceili(longest_line * scale_mod)
-	if _limit and custom_minimum_size.x > 400:
-		custom_minimum_size.x = 400
+	custom_maximum_size.x = ceili(longest_line * scale_mod)
+	if _limit and custom_maximum_size.x > 400:
+		custom_maximum_size.x = 400
 	for _text in sub_text:
-		_text.custom_minimum_size.x = custom_minimum_size.x
+		_text.custom_maximum_size.x = custom_maximum_size.x
 
 
 ## Resets the minimum size of the label
 func reset_rescale() -> void:
 	custom_minimum_size.x = 0.0
+	custom_maximum_size.x = -1.0
 	for _text in sub_text:
-		_text.custom_minimum_size.x = 0
+		_text.custom_minimum_size.x = 0.0
+		_text.custom_maximum_size.x = -1.0
 
 
 ## Moves the text to be centered horizontally on its previous position
