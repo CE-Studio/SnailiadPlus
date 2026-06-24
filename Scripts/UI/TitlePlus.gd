@@ -9,8 +9,6 @@ const START_DELAY = -2.0
 var origin:Vector2
 var life_time:float = 0.0
 var started_playing:bool = false
-
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
 #endregion
 
 
@@ -20,9 +18,7 @@ func spawn(delay:float) -> void:
 
 
 func _process(delta: float) -> void:
-	#if life_time >= 0.0 and sprite.action == "":
 	if life_time >= 0.0 and not is_playing() and not started_playing:
-		#sprite.action = "spawn"
 		play("appear")
 		started_playing = true
 	life_time += delta

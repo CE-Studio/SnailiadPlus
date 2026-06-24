@@ -6,12 +6,14 @@ extends Node2D
 
 #region Variables
 const LETTER_SPACING:int = 4
+const WHITE_SPACING:int = 24
+const PLUS_SPACING:int = 32
 const LETTER_DELAY:float = PI / 11.0
 const RARE_CHANCE:float = 0.005
 
 var title_string:String = ""
-var letter:PackedScene = load("res://Scenes/UI/TitleLetter.tscn")
-var plus:PackedScene = load("res://Scenes/UI/TitlePlus.tscn")
+var letter:PackedScene = load("uid://donkd6sq4tyf8")
+var plus:PackedScene = load("uid://u1e2wjuormfp")
 
 var valid_chars:Array = [
 	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -35,7 +37,7 @@ func _ready() -> void:
 		var this_char = title_string[i]
 		match this_char:
 			" ":
-				spawn_pos.x += 24
+				spawn_pos.x += WHITE_SPACING
 			"+":
 				var new_plus = plus.instantiate()
 				add_child(new_plus)
@@ -43,7 +45,7 @@ func _ready() -> void:
 				new_plus.position.x -= 4
 				new_plus.spawn(spawn_delay)
 				if i != title_string.length() - 1:
-					spawn_pos.x += 32 + LETTER_SPACING - 8
+					spawn_pos.x += PLUS_SPACING + LETTER_SPACING - 8
 				spawn_delay += LETTER_DELAY
 			_:
 				if valid_chars.has(this_char):

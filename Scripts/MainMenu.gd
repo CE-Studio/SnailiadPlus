@@ -31,12 +31,12 @@ var read_esc:bool = false
 
 var music:AudioStreamPlayer
 
-@onready var title:Node2D = $"Title"
-@onready var version_text:SnailyText = $"Version"
-@onready var layer_group:Node2D = $"LayerGroup"
-@onready var selectors:Array = [ $"LeftSelector", $"RightSelector" ]
-@onready var save_icon:JsonSprite2D = $"SaveIcon"
-@onready var color_cover:ColorCover = $"ColorCover"
+@export var title:Node2D
+@export var version_text:SnailyText
+@export var layer_group:Node2D
+@export var selectors:Array[SnailySprite2D]
+@export var save_icon:SnailySprite2D
+@export var color_cover:ColorCover
 #endregion
 
 
@@ -53,8 +53,6 @@ func _ready() -> void:
 		Statics.active_room.spawn(true)
 		get_tree().paused = false
 		music = $"MenuLoop"
-		selectors[0].action = "left_0"
-		selectors[1].action = "right_0"
 		if not Statics.main_menu_booted_once:
 			var saved_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/old_version"))
 			var current_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/version"))
@@ -85,8 +83,8 @@ func _ready() -> void:
 
 	else:
 		title.position.y = TITLE_REST_Y
-		selectors[0].action = "left_%d" % int(Statics.current_profile["character"])
-		selectors[1].action = "right_%d" % int(Statics.current_profile["character"])
+		selectors[0].play(str(int(Statics.current_profile["character"])))
+		selectors[1].play(str(int(Statics.current_profile["character"])))
 		create_layer("MainAlt")
 
 
@@ -94,7 +92,6 @@ func _process(delta: float) -> void:
 	if click_play_text:
 		if is_main_awaiting_input:
 			input_delay_timer += delta
-		#click_play_text.set_visible_chars_ratio(input_delay_timer * 0.6)
 		click_play_text.modulate.a = input_delay_timer * 0.6
 		if input_delay_timer >= -1.5:
 			if ((SInput.input_pressed(SInput.Inputs.UI_CLICK)
@@ -265,4 +262,4 @@ func save_profile(id:int) -> void:
 
 func play_save_anim() -> void:
 	save_icon.visible = true
-	save_icon.action = "anim"
+	save_icon.play("default")
