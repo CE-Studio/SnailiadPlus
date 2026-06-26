@@ -3,6 +3,8 @@ class_name SnailySprite2D
 extends AnimatedSprite2D
 
 
+var autoplay_next:String = ""
+
 @export var meta_info:Array = []
 @export var start_on_random_frame:Array[String] = []
 @export var start_all_on_random:bool = false
@@ -43,6 +45,9 @@ func _on_anim_changed() -> void:
 
 
 ## Called when the current animation finishes. Used here to check if the sprite should be hidden when
-## the animation is finished
+## the animation is finished, as well as to check for queued autoplay animations
 func _on_anim_finished() -> void:
-	if hide_on_finish: visible = false
+	if autoplay_next != "":
+		play(autoplay_next)
+		autoplay_next = ""
+	elif hide_on_finish: visible = false
