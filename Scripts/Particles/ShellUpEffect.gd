@@ -16,7 +16,7 @@ const DYNAMIC_SHRINK_MULT:float = 1.0
 const DYNAMIC_SPIN_MULT:float = 0.25
 const DYNAMIC_SPIN_MOD_MAX:float = 1.2
 const DYNAMIC_SPIN_MOD_TIME:float = 2.6
-const TYPES:Array = [ "normal", "ice", "gravity", "metal", "magnet", "corkscrew", "angel" ]
+const TYPES:Array = [ "default", "ice", "gravity", "metal", "magnet", "corkscrew", "angel" ]
 
 var legacy_anim:bool = false
 var dynamic_main_mult:float = 1.0
@@ -46,7 +46,7 @@ func _spawn(_data:Array) -> void:
 	
 	for i in range(DUST_COUNT):
 		dusts.append(Statics.spawn_particle("Dust", Room.Layers.GROUND, position))
-		dusts[i].sprite.action = TYPES[type]
+		dusts[i].sprite.play(TYPES[type])
 		radii.append(LEGACY_START_RADIUS if legacy_anim else DYNAMIC_MAX_RADIUS)
 	if legacy_anim:
 		_tick_legacy(0.0)

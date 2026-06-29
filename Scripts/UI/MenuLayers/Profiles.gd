@@ -32,9 +32,9 @@ var layer_state:LayerState = LayerState.NORMAL
 @onready var btn_pro1:ContextSnailyButton = $"Profile1"
 @onready var btn_pro2:ContextSnailyButton = $"Profile2"
 @onready var btn_pro3:ContextSnailyButton = $"Profile3"
-@onready var marker_pro1:JsonSprite2D = $"Profile1/Status"
-@onready var marker_pro2:JsonSprite2D = $"Profile2/Status"
-@onready var marker_pro3:JsonSprite2D = $"Profile3/Status"
+@onready var marker_pro1:Sprite2D = $"Profile1/Status"
+@onready var marker_pro2:Sprite2D = $"Profile2/Status"
+@onready var marker_pro3:Sprite2D = $"Profile3/Status"
 @onready var btn_copy:ActionSnailyButton = $"HBoxContainer/Copy"
 @onready var btn_erase:ActionSnailyButton = $"HBoxContainer/Erase"
 @onready var panel:ContextPanel = $"../ContextPanel"
@@ -89,7 +89,7 @@ func _update_profile_buttons() -> void:
 	for i in range(3):
 		var profile:Dictionary
 		var button:ContextSnailyButton
-		var marker:JsonSprite2D
+		var marker:Sprite2D
 		match i:
 			0:
 				profile = Statics.data_profile1
@@ -123,13 +123,11 @@ func _update_profile_buttons() -> void:
 			if profile["r_shuffle_level"] >= 0:
 				stats += " / %08d" % str(profile["r_seed"])
 			button.set_subtext(stats)
-			marker.action = "none"
 			if (profile["world_flags"].size() > (Statics.WorldFlags.DEFEATED_BOSS4 as int)
 			and profile["world_flags"][Statics.WorldFlags.DEFEATED_BOSS4]):
 				if profile["item_rate"] >= 100.0:
-					marker.action = "beaten_100"
-				else:
-					marker.action = "beaten"
+					marker.frame = 1
+			else: marker.visible = false
 		else:
 			button.set_text(tr(&"Empty profile"))
 			button.set_subtext(tr(&"Select to start a new one!"))

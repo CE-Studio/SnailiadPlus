@@ -1,17 +1,149 @@
 [gd_scene format=3 uid="uid://dmunnfsuxjl88"]
 
 [ext_resource type="Script" uid="uid://dfddcqcr2qmml" path="res://Scripts/Grass.gd" id="1_56jc0"]
+[ext_resource type="AudioStream" uid="uid://5gb10bym8tug" path="res://Assets/Sounds/Sfx/EatGrass.ogg" id="2_30g6j"]
 [ext_resource type="Texture2D" uid="uid://oeib4xc4tku7" path="res://Assets/Images/Entities/Grass.png" id="2_qrpkj"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_u0pfo"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_qrpkj"]
+[ext_resource type="AudioStream" uid="uid://cks4p2t77ysm1" path="res://Assets/Sounds/Sfx/EatPowerGrass.ogg" id="3_5adfe"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_qrpkj"]
 [ext_resource type="AudioStream" uid="uid://b4whedlpssk6c" path="res://Assets/Sounds/Sfx/GrassGrow.ogg" id="5_u0pfo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0pfo"]
 size = Vector2(16, 16)
 
-[node name="Grass" type="Node2D" unique_id=1542211841]
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0pfo"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exlm5"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30g6j"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0cks"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5adfe"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n43ev"]
+atlas = ExtResource("2_qrpkj")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0pfo")
+}],
+"loop": 1,
+"name": &"normal_ceil_default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exlm5")
+}],
+"loop": 0,
+"name": &"normal_ceil_eaten",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0pfo")
+}],
+"loop": 0,
+"name": &"normal_ceil_regrow",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30g6j")
+}],
+"loop": 1,
+"name": &"normal_floor_default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exlm5")
+}],
+"loop": 0,
+"name": &"normal_floor_eaten",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0cks")
+}],
+"loop": 0,
+"name": &"normal_floor_regrow",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5adfe")
+}],
+"loop": 1,
+"name": &"power_ceil_default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exlm5")
+}],
+"loop": 0,
+"name": &"power_ceil_eaten",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5adfe")
+}],
+"loop": 0,
+"name": &"power_ceil_regrow",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n43ev")
+}],
+"loop": 1,
+"name": &"power_floor_default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exlm5")
+}],
+"loop": 0,
+"name": &"power_floor_eaten",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n43ev")
+}],
+"loop": 0,
+"name": &"power_floor_regrow",
+"speed": 1.0
+}]
+
+[node name="Grass" type="Node2D" unique_id=1542211841 node_paths=PackedStringArray("sprite", "box", "sfx_nom", "sfx_grow", "timer", "vis")]
 z_index = 10
 script = ExtResource("1_56jc0")
+sprite = NodePath("SnailySprite2D")
+box = NodePath("Area2D/CollisionShape2D")
+sfx_nom = NodePath("AudioGroup/Nom")
+sfx_grow = NodePath("AudioGroup/Grow")
+stream_nom_normal = ExtResource("2_30g6j")
+stream_nom_power = ExtResource("3_5adfe")
+timer = NodePath("RegrowTimer")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=344802773]
 collision_layer = 16
@@ -20,10 +152,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1681445843]
 shape = SubResource("RectangleShape2D_u0pfo")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1556221589]
-script = ExtResource("4_qrpkj")
-texture_path = "res://Assets/Images/Entities/Grass.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=864990889]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"normal_floor_default"
+script = ExtResource("3_qrpkj")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1945627830]
 
@@ -39,13 +173,6 @@ one_shot = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1829474465]
 scale = Vector2(0.8, 0.8)
-
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1672360430]
-texture = ExtResource("2_qrpkj")
-hframes = 2
-vframes = 2
-script = ExtResource("3_u0pfo")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_player_exited"]

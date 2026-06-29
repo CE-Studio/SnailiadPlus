@@ -5,8 +5,7 @@ extends Node2D
 
 
 #region Variables
-@export var sprite:JsonSprite2D
-@export var anim_name:String
+@export var sprite:SnailySprite2D
 @export var sound:AudioStreamPlayer
 @export var timer:Timer
 @export_range(0.1, 8.0, 0.01) var anim_speed_min:float = 1.0
@@ -17,9 +16,7 @@ extends Node2D
 
 func _spawn(_data:Array) -> void:
 	if sprite != null:
-		sprite.fps_mult = randf_range(anim_speed_min, anim_speed_max)
-		if anim_name != "":
-			sprite.action = anim_name
+		sprite.set_speed(anim_speed_min, anim_speed_max)
 	if sound != null:
 		sound.play()
 	if timer != null:

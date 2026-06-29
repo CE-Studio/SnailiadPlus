@@ -19,7 +19,6 @@ var fast:bool = false
 
 func _spawn(_data:Array) -> void:
 	super(_data)
-	sprite.action = str(randi_range(0, 7))
 	up_speed = 4 + randf() * 16
 	center_x = position.x
 	if _data.size() != 0:

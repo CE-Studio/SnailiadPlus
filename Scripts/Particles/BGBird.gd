@@ -34,27 +34,21 @@ func _spawn(_data:Array) -> void:
 	glide_timeout = randf() * MAX_GLIDE_TIME
 	turnaround_timeout = randf_range(MIN_TURNAROUND_TIME, MAX_TURNAROUND_TIME)
 	left = randf() > 0.5
-	_play_anim("idle")
+	sprite.animation_finished.connect(_on_sprite_anim_finished)
+	_play_anim("default")
 	velocity = Vector2(SPEED.x * (-1 if left else 1), 0.0)
 	dir_change_timeout = randf() * MAX_DIR_CHANGE_TIME
 	y_cycle = randf() * TAU
 
 
 func _process(delta: float) -> void:
-	if sprite.action == "await":
-		if flaps > 0:
-			_play_anim("flap")
-			flaps -= 1
-		else:
-			_play_anim("idle")
-	
 	var bound_state:Vector2i = _in_bounds()
 	if bound_state.x == 0:
 		turnaround_timeout -= delta
 		if turnaround_timeout <= 0.0:
 			turnaround_timeout = randf_range(MIN_TURNAROUND_TIME, MAX_TURNAROUND_TIME)
 			left = not left
-			_play_anim("turnToward")
+			_play_anim("turn")
 	else:
 		left = false if bound_state.x == -1 else true
 	
@@ -111,6 +105,13 @@ func _in_bounds() -> Vector2i:
 
 
 func _play_anim(anim:String) -> void:
-	var new_anim:String = "left." if left else "right."
-	new_anim += anim
-	sprite.action = new_anim
+	sprite.play(anim)
+	sprite.flip_h = left
+
+
+func _on_sprite_anim_finished() -> void:
+	if flaps > 0:
+		_play_anim("flap")
+		flaps -= 1
+	else:
+		_play_anim("default")

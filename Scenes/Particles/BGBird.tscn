@@ -2,21 +2,88 @@
 
 [ext_resource type="Script" uid="uid://dngoea22fbdkr" path="res://Scripts/Particles/BGBird.gd" id="1_ypp7s"]
 [ext_resource type="Texture2D" uid="uid://ck7eivtpt6146" path="res://Assets/Images/Particles/BGBird.png" id="2_ypp7s"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_0mmox"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_pel1u"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_aeh04"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypp7s"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s14hs"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mmox"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pel1u"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqusq"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l278k"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6vp2"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k7ty"]
+atlas = ExtResource("2_ypp7s")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypp7s")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s14hs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mmox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pel1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqusq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l278k")
+}],
+"loop": 0,
+"name": &"flap",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6vp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k7ty")
+}],
+"loop": 0,
+"name": &"turn",
+"speed": 1.0
+}]
 
 [node name="BGBird" type="Node2D" unique_id=902842116 node_paths=PackedStringArray("sprite")]
 z_index = 5
 script = ExtResource("1_ypp7s")
-sprite = NodePath("JsonSprite2D")
+sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1203301667]
-texture = ExtResource("2_ypp7s")
-hframes = 7
-script = ExtResource("3_0mmox")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1148314930]
-script = ExtResource("4_pel1u")
-texture_path = "res://Assets/Images/Particles/BGBird.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2118126690]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+script = ExtResource("3_aeh04")
+metadata/_custom_type_script = "uid://boee2837la0pr"

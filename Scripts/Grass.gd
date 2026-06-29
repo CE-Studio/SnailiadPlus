@@ -21,12 +21,14 @@ var bite_count:int
 var can_regrow:bool
 var running_bite_count:int
 var current_nom_cooldown:float
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
-@onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
-@onready var sfx_nom:AudioStreamPlayer = $"AudioGroup/Nom"
-@onready var sfx_grow:AudioStreamPlayer = $"AudioGroup/Grow"
-@onready var timer:Timer = $"RegrowTimer"
-@onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
+@export var sprite:SnailySprite2D
+@export var box:CollisionShape2D
+@export var sfx_nom:AudioStreamPlayer
+@export var sfx_grow:AudioStreamPlayer
+@export var stream_nom_normal:AudioStream
+@export var stream_nom_power:AudioStream
+@export var timer:Timer
+@export var vis:VisibleOnScreenNotifier2D
 #endregion
 
 
@@ -52,9 +54,9 @@ func spawn(grass_type:GrassTypes, home_surface:Statics.DirsSurface):
 	running_bite_count = bite_count
 	surface = home_surface
 	match home_surface:
-		Statics.DirsSurface.CEILING: anim += "ceiling_"
-		_: anim += "ground_"
-	sprite.action = anim + "idle"
+		Statics.DirsSurface.CEILING: anim += "ceil_"
+		_: anim += "floor_"
+	sprite.play(anim + "default")
 
 
 func _process(delta: float) -> void:
@@ -66,7 +68,7 @@ func _process(delta: float) -> void:
 			Statics.spawn_particle("Nom", Room.Layers.GROUND, position + Vector2(0, -8))
 			running_bite_count -= 1
 			if running_bite_count == 0:
-				sprite.action = anim + "eaten"
+				sprite.play(anim + "eaten")
 				if can_regrow:
 					timer.start()
 	current_nom_cooldown -= delta
@@ -84,6 +86,7 @@ func _on_player_exited(_body: Node2D) -> void:
 
 func _on_regrow_timer_timeout() -> void:
 	running_bite_count = bite_count
-	sprite.action = anim + "regrow"
+	sprite.play(anim + "regrow")
+	sprite.autoplay_next = anim + "default"
 	if vis.is_on_screen():
 		sfx_grow.play()

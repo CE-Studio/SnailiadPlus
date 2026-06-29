@@ -2,26 +2,103 @@
 
 [ext_resource type="Script" uid="uid://cwqgnc6ee85t1" path="res://Scripts/Particles/DotGeneric.gd" id="1_dlbby"]
 [ext_resource type="Texture2D" uid="uid://bdpjsk8bgx3ib" path="res://Assets/Images/Particles/Dot.png" id="2_lh0v0"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_3qiiv"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_kecag"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_x33vd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlbby"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh0v0"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qiiv"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kecag"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcg7p"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pp5ow"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajdhy"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ramd2"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b70f0"]
+atlas = ExtResource("2_lh0v0")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlbby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh0v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qiiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kecag")
+}],
+"loop": 0,
+"name": &"fade_big",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcg7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pp5ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajdhy")
+}],
+"loop": 0,
+"name": &"fade_med",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ramd2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b70f0")
+}],
+"loop": 0,
+"name": &"fade_small",
+"speed": 2.0
+}]
 
 [node name="DotGeneric" type="Node2D" unique_id=171062163 node_paths=PackedStringArray("sprite", "timer")]
 script = ExtResource("1_dlbby")
-sprite = NodePath("JsonSprite2D")
+sprite = NodePath("SnailySprite2D")
 timer = NodePath("Timer")
+anim_speed_min = 0.7999999999999999
+anim_speed_max = 2.0
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1439658985]
-texture = ExtResource("2_lh0v0")
-hframes = 4
-frame = 3
-script = ExtResource("3_3qiiv")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1866552921]
-script = ExtResource("4_kecag")
-texture_path = "res://Assets/Images/Particles/Dot.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2072250247]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"fade_big"
+script = ExtResource("3_x33vd")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Timer" type="Timer" parent="." unique_id=2138370153]
-wait_time = 0.8
+wait_time = 5.0
 one_shot = true

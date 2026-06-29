@@ -2,23 +2,82 @@
 
 [ext_resource type="Script" uid="uid://tcl5b1h6am1x" path="res://Scripts/Particles/Bubble.gd" id="1_hnf7c"]
 [ext_resource type="Texture2D" uid="uid://debdo8vfuuncs" path="res://Assets/Images/Particles/Bubble.png" id="2_jswqg"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xhvnq"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_tqava"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_omuhq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnf7c"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jswqg"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yp6r0"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhvnq"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqava"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyhls"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(8, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1unqp"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(16, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pdx2"]
+atlas = ExtResource("2_jswqg")
+region = Rect2(24, 8, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnf7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jswqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yp6r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhvnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqava")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyhls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1unqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pdx2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 0.0
+}]
 
 [node name="Bubble" type="Node2D" unique_id=1847831834 node_paths=PackedStringArray("sprite")]
 z_index = 20
 script = ExtResource("1_hnf7c")
-sprite = NodePath("JsonSprite2D")
+sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=309772202]
-texture = ExtResource("2_jswqg")
-hframes = 4
-vframes = 2
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=191728140]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 6
-script = ExtResource("3_xhvnq")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1505443325]
-script = ExtResource("4_tqava")
-texture_path = "res://Assets/Images/Particles/Bubble.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+frame_progress = 0.30030826
+script = ExtResource("3_omuhq")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"

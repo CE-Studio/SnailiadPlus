@@ -11,16 +11,12 @@ func _spawn(_data:Array) -> void:
 		queue_free()
 		return
 	
-	var direction:String = "up"
+	var direction:String = "v"
 	if _data.size() > 0 and _data[0] is Statics.DirsSurface:
-		match _data[0]:
-			Statics.DirsSurface.FLOOR: direction = "down"
-			Statics.DirsSurface.LWALL: direction = "left"
-			Statics.DirsSurface.RWALL: direction = "right"
-			Statics.DirsSurface.CEILING: direction = "up"
-	var type:int = randi_range(0, 3)
-	var speed:String = "slow"
-	match randi_range(0, 2):
-		1: speed = "med"
-		2: speed = "fast"
-	sprite.action = "_".join([str(type), direction, speed])
+		if _data[0] == Statics.DirsSurface.LWALL or _data[0] == Statics.DirsSurface.RWALL:
+			direction = "h"
+		if _data[0] == Statics.DirsSurface.RWALL:
+			sprite.flip_h = true
+		if _data[0] == Statics.DirsSurface.FLOOR:
+			sprite.flip_v = true
+	sprite.play(direction + str(randi_range(0, 3)))
