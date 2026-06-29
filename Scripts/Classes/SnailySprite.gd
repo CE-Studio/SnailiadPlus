@@ -7,13 +7,18 @@ var autoplay_next:String = ""
 
 @export var meta_info:Array = []
 @export var start_on_random_frame:Array[String] = []
-@export var start_all_on_random:bool = false
+@export var start_all_on_random_frame:bool = false
 @export var hide_on_finish:bool = false
 
 
 func _ready() -> void:
 	connect("animation_changed", _on_anim_changed)
 	connect("animation_finished", _on_anim_finished)
+	if autoplay != "":
+		if (start_all_on_random_frame or start_on_random_frame.has(autoplay)):
+			_set_random_frame()
+		else:
+			frame = 0
 
 
 ## Takes an array of animations and selects one at random to play
@@ -39,9 +44,8 @@ func set_speed(_min:float, _max:float = -1.0) -> void:
 ## and apply it if so
 func _on_anim_changed() -> void:
 	visible = true
-	if start_all_on_random or start_on_random_frame.has(animation):
-		var frame_count:int = sprite_frames.get_frame_count(animation)
-		frame = randi_range(0, frame_count - 1)
+	if start_all_on_random_frame or start_on_random_frame.has(animation):
+		_set_random_frame()
 
 
 ## Called when the current animation finishes. Used here to check if the sprite should be hidden when
@@ -51,3 +55,9 @@ func _on_anim_finished() -> void:
 		play(autoplay_next)
 		autoplay_next = ""
 	elif hide_on_finish: visible = false
+
+
+## Sets the current frame of the active animation to a random frame
+func _set_random_frame() -> void:
+	var frame_count:int = sprite_frames.get_frame_count(animation)
+	frame = randi_range(0, frame_count - 1)
